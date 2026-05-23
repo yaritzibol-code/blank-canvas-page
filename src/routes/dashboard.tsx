@@ -1,169 +1,195 @@
-import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import {
-  LayoutDashboard,
-  BookOpen,
-  Target,
-  Zap,
-  Play,
-  Library,
-  BarChart3,
-  Bell,
-  Timer,
-  NotebookPen,
-  User,
-  LogOut,
-  Menu,
-  X,
-  ChevronRight,
-  Flame,
-  MessageSquare,
-  Settings,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardLayout,
 });
 
-const NAV_ITEMS = [
-  { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard", id: "dashboard" },
-  { icon: BookOpen, label: "Materias", path: "/dashboard/materias", id: "materias" },
-  { icon: Target, label: "Banco de Preguntas", path: "/dashboard/banco", id: "banco" },
-  { icon: Play, label: "Simulador CIAAC", path: "/dashboard/simulador", id: "simulador", badge: "310 Preguntas" },
-  { icon: Zap, label: "Flashcards", path: "/dashboard/flashcards", id: "flashcards" },
-  { icon: Play, label: "Clases Grabadas", path: "/dashboard/clases", id: "clases" },
-  { icon: Library, label: "Biblioteca", path: "/dashboard/biblioteca", id: "biblioteca" },
-  { icon: BarChart3, label: "Análisis", path: "/dashboard/analisis", id: "analisis" },
-  { icon: Bell, label: "Recordatorios", path: "/dashboard/recordatorios", id: "recordatorios" },
-  { icon: Timer, label: "Estudiemos Juntos", path: "/dashboard/sesiones", id: "sesiones" },
-  { icon: NotebookPen, label: "Bitácora de Vuelo", path: "/dashboard/bitacora", id: "bitacora" },
-  { icon: User, label: "Mi Perfil", path: "/dashboard/perfil", id: "perfil" },
+const NAV_SECTIONS = [
+  {
+    label: "Principal",
+    items: [
+      { icon: "🏠", label: "Inicio", path: "/dashboard" },
+      { icon: "📚", label: "Mis materias", path: "/dashboard/materias" },
+      { icon: "❓", label: "Cuestionarios", path: "/dashboard/banco" },
+      { icon: "📝", label: "Simulador CIAAC", path: "/dashboard/simulador" },
+    ],
+  },
+  {
+    label: "Recursos",
+    items: [
+      { icon: "📖", label: "Biblioteca", path: "/dashboard/biblioteca" },
+      { icon: "🃏", label: "Flashcards", path: "/dashboard/flashcards" },
+      { icon: "🎬", label: "Clases grabadas", path: "/dashboard/clases" },
+    ],
+  },
+  {
+    label: "Mi progreso",
+    items: [
+      { icon: "📊", label: "Análisis", path: "/dashboard/analisis" },
+      { icon: "🔔", label: "Recordatorios", path: "/dashboard/recordatorios" },
+    ],
+  },
+  {
+    label: "Cuenta",
+    items: [
+      { icon: "👤", label: "Mi perfil", path: "/dashboard/perfil" },
+      { icon: "⚙️", label: "Configuración", path: "/dashboard/configuracion" },
+    ],
+  },
 ];
 
-function NavLink({
-  item,
-  active,
-  onClick,
-}: {
-  item: (typeof NAV_ITEMS)[0];
-  active: boolean;
-  onClick?: () => void;
-}) {
-  const Icon = item.icon;
-  return (
-    <Link
-      to={item.path as "/dashboard"}
-      onClick={onClick}
-      className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 group ${
-        active
-          ? "bg-[#F2AEBC]/20 text-[#F2AEBC]"
-          : "text-[#F2DCDB]/70 hover:text-[#F2DCDB] hover:bg-white/10"
-      }`}
-    >
-      <Icon className={`w-4 h-4 flex-shrink-0 ${active ? "text-[#F2AEBC]" : ""}`} />
-      <span className="truncate">{item.label}</span>
-      {item.badge && (
-        <Badge className="ml-auto bg-[#F2AEBC]/20 text-[#F2AEBC] border-0 text-xs px-1.5 py-0 font-medium">
-          {item.badge}
-        </Badge>
-      )}
-    </Link>
-  );
-}
+function Sidebar({ onClose }: { onClose?: () => void }) {
+  const location = useLocation();
+  const currentPath = location.pathname;
 
-function Sidebar({
-  onClose,
-  currentPath,
-}: {
-  onClose?: () => void;
-  currentPath: string;
-}) {
   return (
-    <div className="flex flex-col h-full">
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-5 border-b border-white/10">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-[#F2AEBC] flex items-center justify-center">
-            <span className="text-[#6C0820] font-extrabold text-base leading-none">F</span>
+    <div
+      style={{
+        fontFamily: "'DM Sans', sans-serif",
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        background: "#1a1a2e",
+      }}
+    >
+      {/* Logo */}
+      <div
+        style={{
+          padding: "24px 20px",
+          borderBottom: "1px solid rgba(255,255,255,0.08)",
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+        }}
+      >
+        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+          <div
+            style={{
+              width: 36, height: 36, background: "#3D5D91", borderRadius: 8,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              color: "white", fontSize: "1rem", fontWeight: 700,
+            }}
+          >
+            F✈
           </div>
-          <span className="font-extrabold text-white text-lg">FlightPath</span>
-        </div>
+          <span
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "1.3rem",
+              color: "white",
+              fontWeight: 700,
+            }}
+          >
+            Flight<span style={{ color: "#F2AEBC" }}>Path</span>
+          </span>
+        </Link>
         {onClose && (
-          <button onClick={onClose} className="text-[#F2DCDB]/70 hover:text-[#F2DCDB] md:hidden">
-            <X className="w-5 h-5" />
+          <button
+            onClick={onClose}
+            style={{
+              marginLeft: "auto", background: "none", border: "none",
+              color: "rgba(255,255,255,0.5)", cursor: "pointer", fontSize: "1.2rem", lineHeight: 1,
+            }}
+          >
+            ✕
           </button>
         )}
       </div>
 
-      {/* Pathy streak widget */}
-      <div className="mx-3 mt-4 bg-white/10 rounded-2xl p-3">
-        <div className="flex items-center gap-3">
-          <div className="text-2xl">☁️</div>
-          <div className="flex-1 min-w-0">
-            <p className="text-[#F2AEBC] font-bold text-sm">¡Pathy Lapis!</p>
-            <div className="flex items-center gap-1">
-              <Flame className="w-3.5 h-3.5 text-orange-400" />
-              <p className="text-[#F2DCDB] text-xs">14 días de racha</p>
+      {/* Nav */}
+      <nav style={{ flex: 1, padding: "16px 0", overflowY: "auto" }}>
+        {NAV_SECTIONS.map((section) => (
+          <div key={section.label}>
+            <div
+              style={{
+                padding: "8px 20px",
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "1.5px",
+                color: "rgba(255,255,255,0.3)",
+                marginTop: 8,
+              }}
+            >
+              {section.label}
             </div>
+            {section.items.map((item) => {
+              const isActive =
+                item.path === "/dashboard"
+                  ? currentPath === "/dashboard" || currentPath === "/dashboard/"
+                  : currentPath.startsWith(item.path);
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path as "/dashboard"}
+                  onClick={onClose}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 12,
+                    padding: "11px 20px",
+                    color: isActive ? "white" : "rgba(255,255,255,0.6)",
+                    textDecoration: "none",
+                    fontSize: "0.88rem",
+                    fontWeight: 500,
+                    transition: "all 0.2s",
+                    borderLeft: `3px solid ${isActive ? "#F2AEBC" : "transparent"}`,
+                    background: isActive ? "rgba(61,93,145,0.3)" : "transparent",
+                  }}
+                >
+                  <span style={{ fontSize: "1.1rem", width: 20, textAlign: "center" }}>
+                    {item.icon}
+                  </span>
+                  {item.label}
+                </Link>
+              );
+            })}
           </div>
-          <ChevronRight className="w-3.5 h-3.5 text-[#F2DCDB]/40 flex-shrink-0" />
-        </div>
-      </div>
-
-      {/* Navigation */}
-      <nav className="flex-1 px-3 py-3 space-y-0.5 overflow-y-auto">
-        <p className="px-3 py-2 text-xs font-semibold text-[#F2DCDB]/40 uppercase tracking-wider">
-          Principal
-        </p>
-        {NAV_ITEMS.slice(0, 4).map((item) => (
-          <NavLink
-            key={item.id}
-            item={item}
-            active={currentPath === item.path || (item.path === "/dashboard" && currentPath === "/dashboard")}
-            onClick={onClose}
-          />
-        ))}
-
-        <p className="px-3 py-2 mt-2 text-xs font-semibold text-[#F2DCDB]/40 uppercase tracking-wider">
-          Herramientas
-        </p>
-        {NAV_ITEMS.slice(4, 9).map((item) => (
-          <NavLink
-            key={item.id}
-            item={item}
-            active={currentPath === item.path}
-            onClick={onClose}
-          />
-        ))}
-
-        <p className="px-3 py-2 mt-2 text-xs font-semibold text-[#F2DCDB]/40 uppercase tracking-wider">
-          Estudio
-        </p>
-        {NAV_ITEMS.slice(9).map((item) => (
-          <NavLink
-            key={item.id}
-            item={item}
-            active={currentPath === item.path}
-            onClick={onClose}
-          />
         ))}
       </nav>
 
-      {/* Bottom */}
-      <div className="px-3 py-3 border-t border-white/10 space-y-1">
-        <button className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium text-[#F2DCDB]/70 hover:text-[#F2DCDB] hover:bg-white/10 transition-all">
-          <Settings className="w-4 h-4" />
-          Configuración
-        </button>
-        <Link
-          to="/"
-          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#F2DCDB]/50 hover:text-[#F2DCDB] hover:bg-white/10 transition-all"
+      {/* Footer */}
+      <div
+        style={{
+          padding: "16px 20px",
+          borderTop: "1px solid rgba(255,255,255,0.08)",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+          <div
+            style={{
+              width: 36, height: 36, background: "#3D5D91", borderRadius: "50%",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              color: "white", fontSize: "0.85rem", fontWeight: 700, flexShrink: 0,
+            }}
+          >
+            MG
+          </div>
+          <div>
+            <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "white" }}>
+              María González
+            </div>
+            <div style={{ fontSize: "0.7rem", color: "#F2AEBC", fontWeight: 500 }}>
+              ✈ Plan Anual
+            </div>
+          </div>
+        </div>
+        <button
+          style={{
+            width: "100%", padding: 10,
+            background: "linear-gradient(135deg, #3D5D91, #5A86CB)",
+            color: "white", border: "none", borderRadius: 10,
+            fontSize: "0.85rem", fontWeight: 700, cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+            transition: "all 0.2s",
+            fontFamily: "'DM Sans', sans-serif",
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.9"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "none"; }}
         >
-          <LogOut className="w-4 h-4" />
-          Cerrar sesión
-        </Link>
+          🤖 Pregúntale a Yaris
+        </button>
       </div>
     </div>
   );
@@ -172,76 +198,141 @@ function Sidebar({
 function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
-  const currentPath = location.pathname;
+
+  const currentLabel =
+    NAV_SECTIONS.flatMap((s) => s.items).find((i) =>
+      i.path === "/dashboard"
+        ? location.pathname === "/dashboard" || location.pathname === "/dashboard/"
+        : location.pathname.startsWith(i.path)
+    )?.label ?? "Dashboard";
+
+  const now = new Date();
+  const days = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+  const dateStr = `${days[now.getDay()]}, ${now.getDate()} de ${
+    ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"][now.getMonth()]
+  } ${now.getFullYear()}`;
 
   return (
-    <div className="min-h-screen bg-slate-50 flex">
-      {/* Desktop Sidebar */}
-      <aside className="hidden md:flex flex-col w-60 bg-[#3D5D91] fixed inset-y-0 left-0 z-30">
-        <Sidebar currentPath={currentPath} />
+    <div
+      style={{
+        fontFamily: "'DM Sans', sans-serif",
+        background: "#f5f7fc",
+        minHeight: "100vh",
+        display: "flex",
+      }}
+    >
+      {/* Desktop sidebar */}
+      <aside
+        style={{
+          width: 260, background: "#1a1a2e",
+          position: "fixed", top: 0, left: 0, bottom: 0,
+          display: "flex", flexDirection: "column",
+          zIndex: 100,
+        }}
+        className="hidden md:flex"
+      >
+        <Sidebar />
       </aside>
 
-      {/* Mobile Sidebar Overlay */}
+      {/* Mobile overlay */}
       {sidebarOpen && (
-        <div className="fixed inset-0 z-50 md:hidden">
-          <div
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={() => setSidebarOpen(false)}
-          />
-          <aside className="absolute left-0 top-0 bottom-0 w-72 bg-[#3D5D91] z-50 shadow-2xl">
-            <Sidebar currentPath={currentPath} onClose={() => setSidebarOpen(false)} />
-          </aside>
-        </div>
+        <div
+          style={{
+            position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 99,
+          }}
+          onClick={() => setSidebarOpen(false)}
+        />
       )}
 
-      {/* Main content */}
-      <div className="flex-1 md:ml-60 flex flex-col min-h-screen">
-        {/* Mobile Header */}
-        <header className="md:hidden sticky top-0 z-20 bg-white border-b border-slate-200 px-4 h-14 flex items-center justify-between">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="p-2 -ml-2 text-slate-600 hover:text-[#3D5D91]"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-[#3D5D91] flex items-center justify-center">
-              <span className="text-[#F2AEBC] font-bold text-sm">F</span>
-            </div>
-            <span className="font-bold text-[#3D5D91]">FlightPath</span>
-          </div>
-          <button className="p-2 -mr-2 text-slate-600 relative">
-            <Bell className="w-5 h-5" />
-            <span className="absolute top-2 right-2 w-2 h-2 bg-[#F2AEBC] rounded-full" />
-          </button>
-        </header>
+      {/* Mobile sidebar */}
+      <aside
+        style={{
+          width: 260, background: "#1a1a2e",
+          position: "fixed", top: 0, left: 0, bottom: 0,
+          zIndex: 200,
+          transform: sidebarOpen ? "translateX(0)" : "translateX(-100%)",
+          transition: "transform 0.3s",
+        }}
+        className="md:hidden flex flex-col"
+      >
+        <Sidebar onClose={() => setSidebarOpen(false)} />
+      </aside>
 
-        {/* Desktop top bar */}
-        <header className="hidden md:flex sticky top-0 z-20 bg-white/90 backdrop-blur-sm border-b border-slate-100 px-6 h-14 items-center justify-between">
-          <div className="text-sm text-slate-400">
-            FlightPath /{" "}
-            <span className="text-[#3D5D91] font-medium">
-              {NAV_ITEMS.find((n) => n.path === currentPath)?.label ?? "Dashboard"}
-            </span>
-          </div>
-          <div className="flex items-center gap-3">
-            <button className="relative p-2 text-slate-500 hover:text-[#3D5D91] transition-colors">
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#F2AEBC] rounded-full border-2 border-white" />
+      {/* Main */}
+      <div style={{ marginLeft: 0, flex: 1, display: "flex", flexDirection: "column", minHeight: "100vh" }}
+        className="md:ml-[260px]">
+
+        {/* Topbar */}
+        <div
+          style={{
+            background: "white",
+            borderBottom: "1px solid rgba(61,93,145,0.08)",
+            padding: "0 32px",
+            height: 64,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            position: "sticky",
+            top: 0,
+            zIndex: 50,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <button
+              onClick={() => setSidebarOpen(true)}
+              style={{
+                display: "flex", flexDirection: "column", gap: 5,
+                cursor: "pointer", background: "none", border: "none", padding: 4,
+              }}
+              className="md:hidden"
+            >
+              <span style={{ display: "block", width: 22, height: 2, background: "#1a1a2e", borderRadius: 2 }} />
+              <span style={{ display: "block", width: 22, height: 2, background: "#1a1a2e", borderRadius: 2 }} />
+              <span style={{ display: "block", width: 22, height: 2, background: "#1a1a2e", borderRadius: 2 }} />
             </button>
-            <button className="p-2 text-slate-500 hover:text-[#3D5D91] transition-colors">
-              <MessageSquare className="w-5 h-5" />
-            </button>
-            <div className="w-8 h-8 bg-[#3D5D91] rounded-full flex items-center justify-center text-white text-sm font-bold">
-              M
+            <div>
+              <h1
+                style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: "1.3rem",
+                  color: "#1a1a2e",
+                  lineHeight: 1.2,
+                }}
+              >
+                {currentLabel}
+              </h1>
+              <p style={{ fontSize: "0.78rem", color: "#888" }}>{dateStr}</p>
             </div>
           </div>
-        </header>
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <div
+              style={{
+                display: "flex", alignItems: "center", gap: 8,
+                background: "#F2DCDB", borderRadius: 20,
+                padding: "6px 14px",
+                fontSize: "0.85rem", fontWeight: 700,
+                color: "#6C0820",
+              }}
+            >
+              🔥 14 días
+            </div>
+            <div
+              style={{
+                width: 36, height: 36,
+                background: "#3D5D91", borderRadius: "50%",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "white", fontSize: "0.85rem", fontWeight: 700,
+              }}
+            >
+              MG
+            </div>
+          </div>
+        </div>
 
-        {/* Page content */}
-        <main className="flex-1 p-4 sm:p-6">
+        {/* Content */}
+        <div style={{ padding: "32px", flex: 1 }} className="sm:p-8 p-4">
           <Outlet />
-        </main>
+        </div>
       </div>
     </div>
   );
