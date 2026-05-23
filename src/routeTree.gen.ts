@@ -14,6 +14,8 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/materias/index'
+import { Route as DashboardMateriasSubjectIdRouteImport } from './routes/dashboard/materias/$subjectId'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -40,6 +42,17 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardMateriasIndexRoute = DashboardMateriasIndexRouteImport.update({
+  id: '/materias/',
+  path: '/materias/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardMateriasSubjectIdRoute =
+  DashboardMateriasSubjectIdRouteImport.update({
+    id: '/materias/$subjectId',
+    path: '/materias/$subjectId',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,12 +60,16 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
+  '/dashboard/materias/': typeof DashboardMateriasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
+  '/dashboard/materias': typeof DashboardMateriasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,13 +78,36 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
+  '/dashboard/materias/': typeof DashboardMateriasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/login' | '/register' | '/dashboard/'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/login'
+    | '/register'
+    | '/dashboard/'
+    | '/dashboard/materias/$subjectId'
+    | '/dashboard/materias/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/register' | '/dashboard'
-  id: '__root__' | '/' | '/dashboard' | '/login' | '/register' | '/dashboard/'
+  to:
+    | '/'
+    | '/login'
+    | '/register'
+    | '/dashboard'
+    | '/dashboard/materias/$subjectId'
+    | '/dashboard/materias'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/login'
+    | '/register'
+    | '/dashboard/'
+    | '/dashboard/materias/$subjectId'
+    | '/dashboard/materias/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -114,15 +154,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/materias/': {
+      id: '/dashboard/materias/'
+      path: '/materias'
+      fullPath: '/dashboard/materias/'
+      preLoaderRoute: typeof DashboardMateriasIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/materias/$subjectId': {
+      id: '/dashboard/materias/$subjectId'
+      path: '/materias/$subjectId'
+      fullPath: '/dashboard/materias/$subjectId'
+      preLoaderRoute: typeof DashboardMateriasSubjectIdRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
 interface DashboardRouteChildren {
   DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardMateriasSubjectIdRoute: typeof DashboardMateriasSubjectIdRoute
+  DashboardMateriasIndexRoute: typeof DashboardMateriasIndexRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardIndexRoute: DashboardIndexRoute,
+  DashboardMateriasSubjectIdRoute: DashboardMateriasSubjectIdRoute,
+  DashboardMateriasIndexRoute: DashboardMateriasIndexRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
