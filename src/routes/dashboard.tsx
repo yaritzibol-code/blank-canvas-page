@@ -199,6 +199,8 @@ function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
 
+  const isSubjectDetail = /^\/dashboard\/materias\/.+/.test(location.pathname);
+
   const currentLabel =
     NAV_SECTIONS.flatMap((s) => s.items).find((i) =>
       i.path === "/dashboard"
@@ -262,77 +264,83 @@ function DashboardLayout() {
       <div style={{ marginLeft: 0, flex: 1, display: "flex", flexDirection: "column", minHeight: "100vh" }}
         className="md:ml-[260px]">
 
-        {/* Topbar */}
-        <div
-          style={{
-            background: "white",
-            borderBottom: "1px solid rgba(61,93,145,0.08)",
-            padding: "0 32px",
-            height: 64,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            position: "sticky",
-            top: 0,
-            zIndex: 50,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <button
-              onClick={() => setSidebarOpen(true)}
-              style={{
-                display: "flex", flexDirection: "column", gap: 5,
-                cursor: "pointer", background: "none", border: "none", padding: 4,
-              }}
-              className="md:hidden"
-            >
-              <span style={{ display: "block", width: 22, height: 2, background: "#1a1a2e", borderRadius: 2 }} />
-              <span style={{ display: "block", width: 22, height: 2, background: "#1a1a2e", borderRadius: 2 }} />
-              <span style={{ display: "block", width: 22, height: 2, background: "#1a1a2e", borderRadius: 2 }} />
-            </button>
-            <div>
-              <h1
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: "1.3rem",
-                  color: "#1a1a2e",
-                  lineHeight: 1.2,
-                }}
-              >
-                {currentLabel}
-              </h1>
-              <p style={{ fontSize: "0.78rem", color: "#888" }}>{dateStr}</p>
-            </div>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <div
-              style={{
-                display: "flex", alignItems: "center", gap: 8,
-                background: "#F2DCDB", borderRadius: 20,
-                padding: "6px 14px",
-                fontSize: "0.85rem", fontWeight: 700,
-                color: "#6C0820",
-              }}
-            >
-              🔥 14 días
-            </div>
-            <div
-              style={{
-                width: 36, height: 36,
-                background: "#3D5D91", borderRadius: "50%",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                color: "white", fontSize: "0.85rem", fontWeight: 700,
-              }}
-            >
-              MG
-            </div>
-          </div>
-        </div>
-
-        {/* Content */}
-        <div style={{ padding: "32px", flex: 1 }} className="sm:p-8 p-4">
+        {isSubjectDetail ? (
           <Outlet />
-        </div>
+        ) : (
+          <>
+            {/* Topbar */}
+            <div
+              style={{
+                background: "white",
+                borderBottom: "1px solid rgba(61,93,145,0.08)",
+                padding: "0 32px",
+                height: 64,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                position: "sticky",
+                top: 0,
+                zIndex: 50,
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                <button
+                  onClick={() => setSidebarOpen(true)}
+                  style={{
+                    display: "flex", flexDirection: "column", gap: 5,
+                    cursor: "pointer", background: "none", border: "none", padding: 4,
+                  }}
+                  className="md:hidden"
+                >
+                  <span style={{ display: "block", width: 22, height: 2, background: "#1a1a2e", borderRadius: 2 }} />
+                  <span style={{ display: "block", width: 22, height: 2, background: "#1a1a2e", borderRadius: 2 }} />
+                  <span style={{ display: "block", width: 22, height: 2, background: "#1a1a2e", borderRadius: 2 }} />
+                </button>
+                <div>
+                  <h1
+                    style={{
+                      fontFamily: "'Playfair Display', serif",
+                      fontSize: "1.3rem",
+                      color: "#1a1a2e",
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    {currentLabel}
+                  </h1>
+                  <p style={{ fontSize: "0.78rem", color: "#888" }}>{dateStr}</p>
+                </div>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                <div
+                  style={{
+                    display: "flex", alignItems: "center", gap: 8,
+                    background: "#F2DCDB", borderRadius: 20,
+                    padding: "6px 14px",
+                    fontSize: "0.85rem", fontWeight: 700,
+                    color: "#6C0820",
+                  }}
+                >
+                  🔥 14 días
+                </div>
+                <div
+                  style={{
+                    width: 36, height: 36,
+                    background: "#3D5D91", borderRadius: "50%",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    color: "white", fontSize: "0.85rem", fontWeight: 700,
+                  }}
+                >
+                  MG
+                </div>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div style={{ padding: "32px", flex: 1 }} className="sm:p-8 p-4">
+              <Outlet />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
