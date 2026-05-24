@@ -16,6 +16,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CuestionarioRouteImport } from './routes/cuestionario'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as DashboardRecordatoriosRouteImport } from './routes/dashboard/recordatorios'
 import { Route as DashboardFlashcardsRouteImport } from './routes/dashboard/flashcards'
 import { Route as DashboardClasesRouteImport } from './routes/dashboard/clases'
 import { Route as DashboardBibliotecaRouteImport } from './routes/dashboard/biblioteca'
@@ -57,6 +58,11 @@ const IndexRoute = IndexRouteImport.update({
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardRecordatoriosRoute = DashboardRecordatoriosRouteImport.update({
+  id: '/recordatorios',
+  path: '/recordatorios',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardFlashcardsRoute = DashboardFlashcardsRouteImport.update({
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
   '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
+  '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
   '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
+  '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/dashboard': typeof DashboardIndexRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/dashboard/materias': typeof DashboardMateriasIndexRoute
@@ -140,6 +148,7 @@ export interface FileRoutesById {
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
   '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
+  '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
     | '/dashboard/biblioteca'
     | '/dashboard/clases'
     | '/dashboard/flashcards'
+    | '/dashboard/recordatorios'
     | '/dashboard/'
     | '/dashboard/materias/$subjectId'
     | '/dashboard/materias/'
@@ -173,6 +183,7 @@ export interface FileRouteTypes {
     | '/dashboard/biblioteca'
     | '/dashboard/clases'
     | '/dashboard/flashcards'
+    | '/dashboard/recordatorios'
     | '/dashboard'
     | '/dashboard/materias/$subjectId'
     | '/dashboard/materias'
@@ -189,6 +200,7 @@ export interface FileRouteTypes {
     | '/dashboard/biblioteca'
     | '/dashboard/clases'
     | '/dashboard/flashcards'
+    | '/dashboard/recordatorios'
     | '/dashboard/'
     | '/dashboard/materias/$subjectId'
     | '/dashboard/materias/'
@@ -254,6 +266,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/recordatorios': {
+      id: '/dashboard/recordatorios'
+      path: '/recordatorios'
+      fullPath: '/dashboard/recordatorios'
+      preLoaderRoute: typeof DashboardRecordatoriosRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/flashcards': {
       id: '/dashboard/flashcards'
       path: '/flashcards'
@@ -312,6 +331,7 @@ interface DashboardRouteChildren {
   DashboardBibliotecaRoute: typeof DashboardBibliotecaRoute
   DashboardClasesRoute: typeof DashboardClasesRoute
   DashboardFlashcardsRoute: typeof DashboardFlashcardsRoute
+  DashboardRecordatoriosRoute: typeof DashboardRecordatoriosRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardMateriasSubjectIdRoute: typeof DashboardMateriasSubjectIdRoute
   DashboardMateriasIndexRoute: typeof DashboardMateriasIndexRoute
@@ -323,6 +343,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardBibliotecaRoute: DashboardBibliotecaRoute,
   DashboardClasesRoute: DashboardClasesRoute,
   DashboardFlashcardsRoute: DashboardFlashcardsRoute,
+  DashboardRecordatoriosRoute: DashboardRecordatoriosRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardMateriasSubjectIdRoute: DashboardMateriasSubjectIdRoute,
   DashboardMateriasIndexRoute: DashboardMateriasIndexRoute,
