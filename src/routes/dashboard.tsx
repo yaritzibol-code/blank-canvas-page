@@ -261,7 +261,7 @@ function DashboardLayout() {
       </aside>
 
       {/* Main */}
-      <div style={{ marginLeft: 0, flex: 1, display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: "100vh" }}
         className="md:ml-[260px]">
 
         {isSubjectDetail ? (
