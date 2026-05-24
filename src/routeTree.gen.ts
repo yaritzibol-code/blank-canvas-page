@@ -17,6 +17,7 @@ import { Route as CuestionarioRouteImport } from './routes/cuestionario'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as DashboardFlashcardsRouteImport } from './routes/dashboard/flashcards'
+import { Route as DashboardClasesRouteImport } from './routes/dashboard/clases'
 import { Route as DashboardBibliotecaRouteImport } from './routes/dashboard/biblioteca'
 import { Route as DashboardBancoRouteImport } from './routes/dashboard/banco'
 import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/materias/index'
@@ -62,6 +63,11 @@ const DashboardFlashcardsRoute = DashboardFlashcardsRouteImport.update({
   path: '/flashcards',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardClasesRoute = DashboardClasesRouteImport.update({
+  id: '/clases',
+  path: '/clases',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardBibliotecaRoute = DashboardBibliotecaRouteImport.update({
   id: '/biblioteca',
   path: '/biblioteca',
@@ -93,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/simulador': typeof SimuladorRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
+  '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
@@ -106,6 +113,7 @@ export interface FileRoutesByTo {
   '/simulador': typeof SimuladorRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
+  '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard': typeof DashboardIndexRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
@@ -121,6 +129,7 @@ export interface FileRoutesById {
   '/simulador': typeof SimuladorRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
+  '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
@@ -137,6 +146,7 @@ export interface FileRouteTypes {
     | '/simulador'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
+    | '/dashboard/clases'
     | '/dashboard/flashcards'
     | '/dashboard/'
     | '/dashboard/materias/$subjectId'
@@ -150,6 +160,7 @@ export interface FileRouteTypes {
     | '/simulador'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
+    | '/dashboard/clases'
     | '/dashboard/flashcards'
     | '/dashboard'
     | '/dashboard/materias/$subjectId'
@@ -164,6 +175,7 @@ export interface FileRouteTypes {
     | '/simulador'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
+    | '/dashboard/clases'
     | '/dashboard/flashcards'
     | '/dashboard/'
     | '/dashboard/materias/$subjectId'
@@ -237,6 +249,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardFlashcardsRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/clases': {
+      id: '/dashboard/clases'
+      path: '/clases'
+      fullPath: '/dashboard/clases'
+      preLoaderRoute: typeof DashboardClasesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/biblioteca': {
       id: '/dashboard/biblioteca'
       path: '/biblioteca'
@@ -271,6 +290,7 @@ declare module '@tanstack/react-router' {
 interface DashboardRouteChildren {
   DashboardBancoRoute: typeof DashboardBancoRoute
   DashboardBibliotecaRoute: typeof DashboardBibliotecaRoute
+  DashboardClasesRoute: typeof DashboardClasesRoute
   DashboardFlashcardsRoute: typeof DashboardFlashcardsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardMateriasSubjectIdRoute: typeof DashboardMateriasSubjectIdRoute
@@ -280,6 +300,7 @@ interface DashboardRouteChildren {
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardBancoRoute: DashboardBancoRoute,
   DashboardBibliotecaRoute: DashboardBibliotecaRoute,
+  DashboardClasesRoute: DashboardClasesRoute,
   DashboardFlashcardsRoute: DashboardFlashcardsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardMateriasSubjectIdRoute: DashboardMateriasSubjectIdRoute,
