@@ -20,6 +20,7 @@ import { Route as DashboardFlashcardsRouteImport } from './routes/dashboard/flas
 import { Route as DashboardClasesRouteImport } from './routes/dashboard/clases'
 import { Route as DashboardBibliotecaRouteImport } from './routes/dashboard/biblioteca'
 import { Route as DashboardBancoRouteImport } from './routes/dashboard/banco'
+import { Route as DashboardAnalisisRouteImport } from './routes/dashboard/analisis'
 import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/materias/index'
 import { Route as DashboardMateriasSubjectIdRouteImport } from './routes/dashboard/materias/$subjectId'
 
@@ -78,6 +79,11 @@ const DashboardBancoRoute = DashboardBancoRouteImport.update({
   path: '/banco',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardAnalisisRoute = DashboardAnalisisRouteImport.update({
+  id: '/analisis',
+  path: '/analisis',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardMateriasIndexRoute = DashboardMateriasIndexRouteImport.update({
   id: '/materias/',
   path: '/materias/',
@@ -97,6 +103,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
+  '/dashboard/analisis': typeof DashboardAnalisisRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
   '/dashboard/clases': typeof DashboardClasesRoute
@@ -111,6 +118,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
+  '/dashboard/analisis': typeof DashboardAnalisisRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
   '/dashboard/clases': typeof DashboardClasesRoute
@@ -127,6 +135,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
+  '/dashboard/analisis': typeof DashboardAnalisisRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
   '/dashboard/clases': typeof DashboardClasesRoute
@@ -144,6 +153,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/simulador'
+    | '/dashboard/analisis'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
     | '/dashboard/clases'
@@ -158,6 +168,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/simulador'
+    | '/dashboard/analisis'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
     | '/dashboard/clases'
@@ -173,6 +184,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/simulador'
+    | '/dashboard/analisis'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
     | '/dashboard/clases'
@@ -270,6 +282,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardBancoRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/analisis': {
+      id: '/dashboard/analisis'
+      path: '/analisis'
+      fullPath: '/dashboard/analisis'
+      preLoaderRoute: typeof DashboardAnalisisRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/materias/': {
       id: '/dashboard/materias/'
       path: '/materias'
@@ -288,6 +307,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface DashboardRouteChildren {
+  DashboardAnalisisRoute: typeof DashboardAnalisisRoute
   DashboardBancoRoute: typeof DashboardBancoRoute
   DashboardBibliotecaRoute: typeof DashboardBibliotecaRoute
   DashboardClasesRoute: typeof DashboardClasesRoute
@@ -298,6 +318,7 @@ interface DashboardRouteChildren {
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardAnalisisRoute: DashboardAnalisisRoute,
   DashboardBancoRoute: DashboardBancoRoute,
   DashboardBibliotecaRoute: DashboardBibliotecaRoute,
   DashboardClasesRoute: DashboardClasesRoute,
