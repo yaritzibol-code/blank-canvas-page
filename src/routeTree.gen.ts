@@ -16,6 +16,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CuestionarioRouteImport } from './routes/cuestionario'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as DashboardBibliotecaRouteImport } from './routes/dashboard/biblioteca'
 import { Route as DashboardBancoRouteImport } from './routes/dashboard/banco'
 import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/materias/index'
 import { Route as DashboardMateriasSubjectIdRouteImport } from './routes/dashboard/materias/$subjectId'
@@ -55,6 +56,11 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardBibliotecaRoute = DashboardBibliotecaRouteImport.update({
+  id: '/biblioteca',
+  path: '/biblioteca',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardBancoRoute = DashboardBancoRouteImport.update({
   id: '/banco',
   path: '/banco',
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
   '/dashboard/banco': typeof DashboardBancoRoute
+  '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
   '/dashboard/banco': typeof DashboardBancoRoute
+  '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
   '/dashboard': typeof DashboardIndexRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/dashboard/materias': typeof DashboardMateriasIndexRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
   '/dashboard/banco': typeof DashboardBancoRoute
+  '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/simulador'
     | '/dashboard/banco'
+    | '/dashboard/biblioteca'
     | '/dashboard/'
     | '/dashboard/materias/$subjectId'
     | '/dashboard/materias/'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/simulador'
     | '/dashboard/banco'
+    | '/dashboard/biblioteca'
     | '/dashboard'
     | '/dashboard/materias/$subjectId'
     | '/dashboard/materias'
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/simulador'
     | '/dashboard/banco'
+    | '/dashboard/biblioteca'
     | '/dashboard/'
     | '/dashboard/materias/$subjectId'
     | '/dashboard/materias/'
@@ -206,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/biblioteca': {
+      id: '/dashboard/biblioteca'
+      path: '/biblioteca'
+      fullPath: '/dashboard/biblioteca'
+      preLoaderRoute: typeof DashboardBibliotecaRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/banco': {
       id: '/dashboard/banco'
       path: '/banco'
@@ -232,6 +251,7 @@ declare module '@tanstack/react-router' {
 
 interface DashboardRouteChildren {
   DashboardBancoRoute: typeof DashboardBancoRoute
+  DashboardBibliotecaRoute: typeof DashboardBibliotecaRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardMateriasSubjectIdRoute: typeof DashboardMateriasSubjectIdRoute
   DashboardMateriasIndexRoute: typeof DashboardMateriasIndexRoute
@@ -239,6 +259,7 @@ interface DashboardRouteChildren {
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardBancoRoute: DashboardBancoRoute,
+  DashboardBibliotecaRoute: DashboardBibliotecaRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardMateriasSubjectIdRoute: DashboardMateriasSubjectIdRoute,
   DashboardMateriasIndexRoute: DashboardMateriasIndexRoute,
