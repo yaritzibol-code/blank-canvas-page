@@ -229,6 +229,12 @@ function Navbar() {
           <a href="#precios" className="py-2 text-slate-600 font-medium" onClick={() => setMobileOpen(false)}>
             Precios
           </a>
+          <Link to="/dashboard" className="py-2 text-slate-600 font-medium" onClick={() => setMobileOpen(false)}>
+            Dashboard
+          </Link>
+          <Link to="/simulador" className="py-2 text-slate-600 font-medium" onClick={() => setMobileOpen(false)}>
+            Simulador
+          </Link>
           <div className="flex flex-col gap-2 pt-2 border-t border-[#F2DCDB]">
             <Link to="/login" onClick={() => setMobileOpen(false)}>
               <Button variant="outline" className="w-full border-[#3D5D91] text-[#3D5D91]">
@@ -243,6 +249,7 @@ function Navbar() {
           </div>
         </div>
       )}
+
     </nav>
   );
 }
