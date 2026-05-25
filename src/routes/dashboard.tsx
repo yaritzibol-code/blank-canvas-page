@@ -13,6 +13,7 @@ const NAV_SECTIONS = [
       { icon: "📚", label: "Mis materias", path: "/dashboard/materias" },
       { icon: "❓", label: "Cuestionarios", path: "/dashboard/banco" },
       { icon: "📝", label: "Simulador CIAAC", path: "/simulador" },
+      { icon: "⏱️", label: "Estudiemos Juntos", path: "/estudiemos" },
     ],
   },
   {
