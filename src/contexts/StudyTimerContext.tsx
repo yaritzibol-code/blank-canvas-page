@@ -1,6 +1,6 @@
 import { createContext, useContext, useRef, useState, useEffect, type ReactNode } from "react";
 
-/* ── TECH DATA (exported so EstudemosPage can use it) ── */
+/* ── TECH DATA ── */
 export const TECH_DATA = [
   { work: 25, brk: 5,  cycles: 4, name: "🍅 Pomodoro",       icon: "🍅", title: "Pomodoro",        desc: "25 min de enfoque + 5 de descanso. Clásico y comprobado para retención.",            badge: "25+5 min · 4 ciclos",  bg: "#e8eef7", fg: "#2a4068", accent: "#3D5D91" },
   { work: 52, brk: 17, cycles: 3, name: "⚡ 52/17",           icon: "⚡", title: "52/17",            desc: "52 min de trabajo profundo + 17 de pausa activa. Para materias densas.",            badge: "52+17 min · 3 ciclos", bg: "#e8f0fb", fg: "#1a4a8a", accent: "#5A86CB" },
@@ -12,7 +12,7 @@ export const TECH_DATA = [
 
 export function pad(n: number) { return String(n).padStart(2, "0"); }
 
-/* ── PATHY SVG (exported so EstudemosPage can use it too) ── */
+/* ── PATHY SVG ── */
 export function PathySVG({ size = 64, overlay = false, smiling = true }: { size?: number; overlay?: boolean; smiling?: boolean }) {
   const cloud = overlay ? "rgba(255,255,255,.2)" : "#e8eef7";
   const hat   = overlay ? "rgba(255,255,255,.9)" : "#3D5D91";
@@ -37,7 +37,7 @@ export function PathySVG({ size = 64, overlay = false, smiling = true }: { size?
   );
 }
 
-/* ── CONTEXT TYPES ── */
+/* ── TYPES ── */
 interface TimerState {
   rem: number; isWork: boolean; curCycle: number; running: boolean;
   workSecs: number; breakSecs: number; totalCycles: number; techIdx: number;
@@ -75,19 +75,13 @@ export function TimerProvider({ children }: { children: ReactNode }) {
   const [s, setS] = useState<TimerState>(INIT);
   const [toast, setToast] = useState<string | null>(null);
 
-  // Live mutable ref — interval always reads from here (no stale closures)
   const T = useRef({ ...INIT });
-  const ivRef  = useRef<ReturnType<typeof setInterval> | null>(null);
+  const ivRef   = useRef<ReturnType<typeof setInterval> | null>(null);
   const tickRef = useRef<() => void>(() => {});
 
   function showToast(msg: string) { setToast(msg); setTimeout(() => setToast(null), 2800); }
+  function startIv() { clearInterval(ivRef.current!); ivRef.current = setInterval(() => tickRef.current(), 1000); }
 
-  function startIv() {
-    clearInterval(ivRef.current!);
-    ivRef.current = setInterval(() => tickRef.current(), 1000);
-  }
-
-  /* tick — runs every second */
   function tick() {
     const t = T.current;
     if (t.rem <= 0) {
@@ -108,15 +102,14 @@ export function TimerProvider({ children }: { children: ReactNode }) {
     if (t.isWork) t.todaySecs++;
     setS(p => ({ ...p, rem: t.rem, todaySecs: t.todaySecs }));
   }
-  tickRef.current = tick; // always up-to-date
+  tickRef.current = tick;
 
-  /* actions */
   function selectTech(idx: number) {
     const d = TECH_DATA[idx];
     clearInterval(ivRef.current!); ivRef.current = null;
     const upd = { running: false, isWork: true, curCycle: 0, workSecs: d.work * 60, breakSecs: d.brk * 60, totalCycles: d.cycles, techIdx: idx, rem: d.work * 60 };
     Object.assign(T.current, upd);
-    setS(p => ({ ...p, ...upd, smiling: true, timerLabel: d.name + " seleccionado · ¡Dale play para arrancar!" }));
+    setS(p => ({ ...p, ...upd, smiling: true, timerLabel: d.name + " seleccionado · ¡Dale play!" }));
     showToast(d.name + " seleccionada ✓");
   }
 
@@ -167,116 +160,148 @@ export function TimerProvider({ children }: { children: ReactNode }) {
   function closeFloat() {
     clearInterval(ivRef.current!); ivRef.current = null;
     T.current.running = false; T.current.visible = false;
-    setS(p => ({ ...p, running: false, visible: false, timerLabel: "⏸ Timer cerrado" }));
-    showToast("Sesión finalizada · Tu progreso se guardó 💾");
+    setS(p => ({ ...p, running: false, visible: false, timerLabel: "⏸ Sesión finalizada" }));
+    showToast("Sesión finalizada · Buen vuelo piloto ✈️");
   }
 
   useEffect(() => () => { clearInterval(ivRef.current!); }, []);
 
-  /* progress bar computation (% of current phase elapsed) */
+  /* ── Flight phase calculation ── */
   const phaseDur = s.isWork ? s.workSecs : s.breakSecs;
-  const progressPct = Math.min(100, ((phaseDur - s.rem) / phaseDur) * 100);
+  const progressPct = phaseDur > 0 ? Math.min(100, ((phaseDur - s.rem) / phaseDur) * 100) : 0;
+  const flightPhase = !s.isWork ? "ESCALA" :
+    progressPct < 10 ? "DESPEGUE" :
+    progressPct < 30 ? "ASCENSO" :
+    progressPct < 75 ? "CRUCERO" :
+    progressPct < 90 ? "DESCENSO" : "ATERRIZAJE";
 
   return (
     <TimerCtx.Provider value={{ ...s, toast, selectTech, startSession, toggleTimer, resetTimer, skipPhase, toggleFloat, closeFloat }}>
       {children}
 
-      {/* ── FLOATING WIDGET — persists across all dashboard routes ── */}
+      {/* ══════════════════════════════════════════════════════════
+          AVIATION WIDGET — persiste en toda la aplicación
+      ══════════════════════════════════════════════════════════ */}
       {s.visible && (
         <div
           role="button"
           tabIndex={0}
           onClick={() => { window.location.href = "/dashboard/estudiemos"; }}
           style={{
-            position: "fixed", bottom: 24, right: 24,
-            background: "linear-gradient(160deg, #1e2d4a 0%, #1a1a2e 100%)",
-            borderRadius: 20, padding: "14px 16px",
-            display: "flex", alignItems: "center", gap: 12,
-            zIndex: 250, width: 310,
-            boxShadow: "0 12px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.07)",
+            position: "fixed", bottom: 24, right: 24, zIndex: 250,
+            width: 320, cursor: "pointer",
+            background: "linear-gradient(160deg, #060f1e 0%, #0d1f38 55%, #111d35 100%)",
+            borderRadius: 16,
+            border: "1px solid rgba(90,134,203,.22)",
+            boxShadow: "0 20px 60px rgba(0,0,0,.65), 0 0 0 1px rgba(90,134,203,.07), inset 0 1px 0 rgba(255,255,255,.04)",
             fontFamily: "'DM Sans', sans-serif",
-            cursor: "pointer",
+            overflow: "hidden",
           }}
         >
-          {/* Pathy mascot */}
-          <div style={{ flexShrink: 0, animation: "fp-float 2.5s ease-in-out infinite" }}>
-            <PathySVG size={46} overlay smiling={s.smiling} />
-          </div>
-
-          {/* Timer info */}
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 30, fontWeight: 900, color: "white", letterSpacing: -1, lineHeight: 1 }}>
-              {pad(Math.floor(s.rem / 60))}:{pad(s.rem % 60)}
-            </div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,.55)", marginTop: 3, display: "flex", alignItems: "center", gap: 5 }}>
-              <div style={{
-                width: 6, height: 6, borderRadius: "50%", flexShrink: 0,
-                background: s.running ? "#4ade80" : "#fbbf24",
-                animation: s.running ? "fp-pulse 1.5s ease infinite" : "none",
-              }} />
-              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                {s.floatLabel}
+          {/* Top status bar */}
+          <div style={{ background: "rgba(90,134,203,.08)", borderBottom: "1px solid rgba(90,134,203,.12)", padding: "8px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <div style={{ width: 5, height: 5, borderRadius: "50%", background: s.running ? "#4ade80" : "#fbbf24", animation: s.running ? "fp-pulse 1.5s ease infinite" : "none" }} />
+              <span style={{ fontSize: 10, color: "#5A86CB", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase" }}>
+                ✈ FlightPath Study
               </span>
             </div>
-            {/* Phase progress bar */}
-            <div style={{ marginTop: 8, height: 3, background: "rgba(255,255,255,.12)", borderRadius: 99, overflow: "hidden" }}>
-              <div style={{
-                height: "100%", borderRadius: 99,
-                width: `${progressPct}%`,
-                background: s.isWork ? "#5A86CB" : "#4ade80",
-                transition: "width 1s linear",
-              }} />
-            </div>
-            <div style={{ marginTop: 5, fontSize: 10, color: "rgba(255,255,255,.3)", display: "flex", justifyContent: "space-between" }}>
-              <span>{s.isWork ? "Enfoque" : "Descanso"}</span>
-              <span>Ciclo {s.curCycle + 1}/{s.totalCycles}</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <span style={{ fontSize: 9.5, color: "rgba(255,255,255,.25)", background: "rgba(255,255,255,.05)", padding: "2px 7px", borderRadius: 4, letterSpacing: ".06em" }}>
+                {flightPhase}
+              </span>
+              <span style={{ fontSize: 9.5, color: "rgba(255,255,255,.2)" }}>C{s.curCycle + 1}/{s.totalCycles}</span>
             </div>
           </div>
 
-          {/* Controls — stopPropagation so clicks don't navigate */}
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }}
-            onClick={e => e.stopPropagation()}
-          >
-            <button
-              onClick={toggleFloat}
-              title={s.running ? "Pausar" : "Reanudar"}
-              style={{
-                background: "rgba(255,255,255,.12)", border: "none", borderRadius: 9,
-                width: 34, height: 34, cursor: "pointer", color: "white",
-                display: "flex", alignItems: "center", justifyContent: "center",
-              }}
-            >
-              {s.running
-                ? <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-                : <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>}
-            </button>
-            <button
-              onClick={closeFloat}
-              title="Finalizar sesión"
-              style={{
-                background: "rgba(220,38,38,.15)", border: "1px solid rgba(220,38,38,.3)", borderRadius: 9,
-                width: 34, height: 34, cursor: "pointer", color: "#f87171",
-                display: "flex", alignItems: "center", justifyContent: "center",
-              }}
-            >
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-              </svg>
-            </button>
+          <div style={{ padding: "14px 16px" }}>
+            {/* Timer — cockpit display */}
+            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 12 }}>
+              <div style={{ flexShrink: 0, animation: "fp-float 2.5s ease-in-out infinite" }}>
+                <PathySVG size={40} overlay smiling={s.smiling} />
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: 38, fontWeight: 900,
+                  color: s.isWork ? "#4ade80" : "#fbbf24",
+                  letterSpacing: -1.5, lineHeight: 1,
+                  textShadow: s.isWork
+                    ? "0 0 24px rgba(74,222,128,.35)"
+                    : "0 0 24px rgba(251,191,36,.35)",
+                }}>
+                  {pad(Math.floor(s.rem / 60))}:{pad(s.rem % 60)}
+                </div>
+                <div style={{ fontSize: 9.5, color: s.isWork ? "rgba(74,222,128,.55)" : "rgba(251,191,36,.55)", marginTop: 2, letterSpacing: ".07em" }}>
+                  {s.isWork ? "FASE DE ENFOQUE" : "ESCALA TÉCNICA"}
+                </div>
+              </div>
+              <div style={{ textAlign: "right", flexShrink: 0 }}>
+                <div style={{ fontSize: 9, color: "rgba(255,255,255,.3)", letterSpacing: ".05em" }}>HOY</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "#5A86CB" }}>
+                  {pad(Math.floor(s.todaySecs / 60))}m
+                </div>
+              </div>
+            </div>
+
+            {/* Flight route bar with moving plane */}
+            <div style={{ marginBottom: 10, padding: "6px 0", position: "relative" }}>
+              {/* Track */}
+              <div style={{ height: 2, background: "rgba(255,255,255,.1)", borderRadius: 99, position: "relative" }}>
+                <div style={{ height: "100%", borderRadius: 99, background: "linear-gradient(90deg, #3D5D91, #5A86CB)", width: `${progressPct}%`, transition: "width 1s linear" }} />
+              </div>
+              {/* Departure dot */}
+              <div style={{ position: "absolute", left: 0, top: "50%", transform: "translateY(-50%)", width: 6, height: 6, borderRadius: "50%", background: "#5A86CB" }} />
+              {/* Arrival dot */}
+              <div style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)", width: 6, height: 6, borderRadius: "50%", background: "rgba(255,255,255,.15)", border: "1px solid rgba(255,255,255,.2)" }} />
+              {/* Moving plane */}
+              <div style={{
+                position: "absolute", top: "50%",
+                left: `calc(${Math.min(progressPct, 90)}% + 2px)`,
+                transform: "translateY(-50%)",
+                fontSize: 13, lineHeight: 1,
+                transition: "left 1s linear",
+                filter: "drop-shadow(0 0 6px rgba(90,134,203,.9))",
+              }}>✈</div>
+              {/* Phase labels */}
+              <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5, fontSize: 8.5, color: "rgba(255,255,255,.2)", letterSpacing: ".05em" }}>
+                <span>DEP</span>
+                <span style={{ color: "rgba(255,255,255,.35)" }}>{flightPhase}</span>
+                <span>ARR</span>
+              </div>
+            </div>
+
+            {/* Subject pill */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12, padding: "7px 10px", background: "rgba(255,255,255,.03)", borderRadius: 8, border: "1px solid rgba(255,255,255,.06)" }}>
+              <span style={{ fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,.7)" }}>{s.activeSubject}</span>
+              <span style={{ fontSize: 11, color: "rgba(255,255,255,.3)" }}>{TECH_DATA[s.techIdx].title}</span>
+            </div>
+
+            {/* Controls */}
+            <div style={{ display: "flex", gap: 8 }} onClick={e => e.stopPropagation()}>
+              <button
+                onClick={toggleFloat}
+                style={{ flex: 1, border: "1px solid rgba(90,134,203,.28)", borderRadius: 8, background: "rgba(90,134,203,.1)", color: "rgba(255,255,255,.85)", padding: "9px 12px", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
+              >
+                {s.running
+                  ? <><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>Pausar</>
+                  : <><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>Reanudar</>}
+              </button>
+              <button
+                onClick={closeFloat}
+                style={{ border: "1px solid rgba(220,38,38,.28)", borderRadius: 8, background: "rgba(220,38,38,.1)", color: "#f87171", padding: "9px 12px", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap" }}
+              >
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                Finalizar
+              </button>
+            </div>
           </div>
         </div>
       )}
 
-      {/* ── TOAST ── */}
+      {/* TOAST */}
       {toast && (
-        <div style={{
-          position: "fixed", bottom: s.visible ? 120 : 30, left: "50%", transform: "translateX(-50%)",
-          background: "#1a1a2e", color: "white", padding: "10px 22px",
-          borderRadius: 8, fontSize: 13, fontWeight: 500, pointerEvents: "none",
-          whiteSpace: "nowrap", zIndex: 400, transition: "bottom .3s",
-          boxShadow: "0 4px 16px rgba(0,0,0,.3)",
-        }}>
+        <div style={{ position: "fixed", bottom: s.visible ? 124 : 30, left: "50%", transform: "translateX(-50%)", background: "#1a1a2e", color: "white", padding: "10px 22px", borderRadius: 8, fontSize: 13, fontWeight: 500, pointerEvents: "none", whiteSpace: "nowrap", zIndex: 400, transition: "bottom .3s", boxShadow: "0 4px 16px rgba(0,0,0,.35)" }}>
           {toast}
         </div>
       )}
