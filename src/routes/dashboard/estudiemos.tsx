@@ -1,588 +1,1068 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
-import { useTimer, TECH_DATA, PathySVG, pad } from "../../contexts/StudyTimerContext";
+import { PathySVG, pad } from "../../contexts/StudyTimerContext";
 
 export const Route = createFileRoute("/dashboard/estudiemos")({
   component: EstudemosJuntosPage,
 });
 
-/* ── SUBJECT DATA ── */
-const SUBJECT_DATA = {
-  meteo: {
-    name: "Meteorología", emoji: "🌤", topic: "Tema 5: Tipos de nubes", score: 62, daysSince: 4,
-    reasons: [
-      "Llevas 4 días sin repasarla — tu cerebro ya está borrando las nubes.",
-      "Es tu segunda materia con menor promedio (62%).",
-      "Tienes 8 preguntas pendientes en el cuestionario.",
-      "El CIAAC destina un 25 % de sus preguntas a Meteorología.",
-    ],
-  },
-  fh: {
-    name: "Factores Humanos", emoji: "🧠", topic: "Cap. 3: Modelo IMSAFE", score: 52, daysSince: 2,
-    reasons: [
-      "Es tu materia con menor promedio del momento (52 %).",
-      "Llevas 2 días sin repasar — el modelo IMSAFE se olvida rápido.",
-      "3 preguntas de examen reciente vinieron de este capítulo.",
-      "Solo 30 min hoy pueden subirte 8 puntos en el simulador.",
-    ],
-  },
-  nav: {
-    name: "Navegación", emoji: "🗺️", topic: "Navegación instrumental básica", score: 91, daysSince: 0,
-    reasons: [
-      "Estás al día — ¡piloto impecable en Navegación!",
-      "Reforzar ahora consolida tu promedio de 91 %.",
-      "Algunos conceptos de VOR / NDB merecen un repaso rápido.",
-      "El intercalado entre materias mejora la retención un 35 %.",
-    ],
-  },
-} as const;
+/* ── Types ── */
+type ActivityType = "calentamiento" | "vuelo" | "descanso" | "debriefing";
+type ActivitySubtype = "contenido" | "flashcards" | "ciaac" | "explicaselo" | "descarga";
 
-type SubjectKey = keyof typeof SUBJECT_DATA;
+interface PlanActivity {
+  id: string;
+  type: ActivityType;
+  subtype?: ActivitySubtype;
+  duration: number;
+  title: string;
+  desc: string;
+  icon: string;
+  pathyMsg: string;
+}
 
-/* ── QUICK OPTIONS ── */
-type QuickOpt =
-  | { icon: string; label: string; path: string }
-  | { icon: string; label: string; subjectKey: SubjectKey }
-  | { icon: string; label: string; surprise: true };
+type FlowStep = "bienvenida" | "plan" | "sesion" | "completado";
 
-const QUICK_OPTIONS: QuickOpt[] = [
-  { icon: "📚", label: "Ver todas las materias",     path: "/dashboard/materias" },
-  { icon: "🎯", label: "Materia más débil",           subjectKey: "fh" },
-  { icon: "🔥", label: "Reforzar errores recientes",  path: "/dashboard/banco" },
-  { icon: "📝", label: "Resolver cuestionario",       path: "/dashboard/banco" },
-  { icon: "🃏", label: "Repasar flashcards",          path: "/dashboard/flashcards" },
-  { icon: "📖", label: "Leer biblioteca",              path: "/dashboard/biblioteca" },
-  { icon: "⏳", label: "Continuar donde me quedé",    path: "/dashboard/materias" },
-  { icon: "🎲", label: "Sorpréndeme Pathy",           surprise: true },
-  { icon: "✍️", label: "Elegir libremente",            path: "/dashboard/materias" },
+/* ── Mock Data ── */
+const FLASHCARDS = [
+  { q: "¿Cuál es la clasificación de nubes altas según la OACI?", a: "Cirrus (Ci), Cirrocumulus (Cc) y Cirrostratus (Cs). Se forman por encima de los 6,000 m en latitudes medias." },
+  { q: "¿Qué es un METAR y con qué frecuencia se emite?", a: "Mensaje de Observación Meteorológica de Aeródromo. Se emite cada 30 minutos (en horarios :20 y :50 UTC en México)." },
+  { q: "¿Qué fenómeno indica TS en un TAF?", a: "Tormenta eléctrica (Thunderstorm). Implica condiciones IMC severas: turbulencia, granizo, cizalladura y visibilidad reducida." },
+  { q: "¿Qué es la inversión de temperatura?", a: "Condición en la que la temperatura aumenta con la altitud. Favorece niebla, smog y acumulación de contaminantes. Peligrosa en despegue." },
+  { q: "Define CAVOK y sus condiciones.", a: "Ceiling And Visibility OK. Visibilidad ≥10 km, sin nubes por debajo de 5,000 ft, sin CB en ninguna capa y sin fenómenos significativos." },
 ];
 
-/* ── YARIS DATA ── */
-const YARIS_REPLIES = [
-  "Buena pregunta. En Meteorología CIAAC esto es fundamental. Los frentes determinan las condiciones de vuelo. Estudia el diagrama de Cap. 4 del Jeppesen.\n\n📖 Meteorología Aeronáutica · Cap. 4, p. 82",
-  "Exacto, eso entra bastante en el examen. Recuerda la regla mnemónica y practica con las cartas sinópticas del simulador.\n\n📖 Manual OACI · Doc. 8896",
-  "¡Muy buena pregunta! Ese concepto apareció en el examen de 2024. Te recomiendo repasar los manuales AIP MX también.\n\n📖 AIP México · ENR 1.1",
-];
-const INIT_YARIS = [
-  { text: "¡Hola, piloto! Pathy me dijo que hoy toca Meteorología. ¿Empezamos por frentes o por cartas sinópticas?", isYaris: true },
-  { text: "Explícame frente frío vs frente ocluido", isYaris: false },
-  { text: "El frente frío es como un jugador que entra de golpe al campo — rápido, tormentas cortas e intensas. El ocluido es el veterano cansado: el aire frío alcanzó al cálido, todo se levantó y da lluvia prolongada y suave.\n\n📖 Jeppesen Meteorología · Cap. 4, p. 82", isYaris: true },
+const CIAAC_QUESTIONS = [
+  { q: "Un piloto observa cumulonimbus con cimas que superan los 40,000 ft. ¿Cuál es la acción MÁS SEGURA?", opts: ["Sobrevolar el CB a 1,000 ft por encima de la cima", "Rodear el CB a una distancia mínima de 20 NM", "Atravesar la base del CB a velocidad reducida", "Descender bajo la base del CB para evitar granizo"], correct: 1, exp: "Los cumulonimbus deben rodearse a mínimo 20 NM. Sobrevolarlos es imposible para la mayoría de aeronaves de aviación general y exponerse a turbulencia severa, granizo y cizalladura." },
+  { q: "¿Qué condiciones meteorológicas favorecen la formación de niebla por radiación?", opts: ["Viento fuerte, cielo despejado y alta humedad relativa", "Viento en calma, cielo despejado, alta humedad y superficie fría", "Frente cálido activo con lluvias moderadas", "Inversión de temperatura en los niveles medios"], correct: 1, exp: "La niebla por radiación se forma con cielo despejado (enfriamiento radiativo máximo), viento en calma, alta humedad y superficie fría. El viento disipa la niebla." },
+  { q: "¿Qué indica una presión QNH de 1013 hPa en el altímetro?", opts: ["El avión está en la altitud de presión estándar", "La presión al nivel del aeródromo es estándar ISA", "La presión al nivel del mar en el aeródromo coincide con ISA", "El QNH es siempre igual al QFE"], correct: 2, exp: "QNH es la presión ajustada al nivel del mar en las condiciones actuales del aeródromo. Cuando es 1013 hPa coincide con la atmósfera estándar ISA. Con QNH el altímetro indica altitud sobre el nivel del mar." },
 ];
 
-/* ══════════════════════════════════════════════════════════
+const PATHY_QUESTIONS = [
+  "Bien, empecemos. ¿Qué es exactamente un frente frío? Descríbelo con tus propias palabras, como si yo no supiera nada.",
+  "Interesante. ¿Qué nubes y fenómenos meteorológicos PRECEDEN al paso de un frente frío?",
+  "Muy bien. ¿Qué pasa DESPUÉS de que el frente cruzó el aeródromo? ¿Cómo cambian el viento, la temperatura y la visibilidad?",
+  "Último reto: si ves en un TAF la sigla 'BECMG FM1200 VRB05KT TSRA BKN015CB', ¿qué le dirías al comandante?",
+];
+
+/* ── Plan Generator ── */
+function makeAct(type: ActivityType, subtype: ActivitySubtype | undefined, duration: number, title: string, desc: string, icon: string, pathyMsg: string): PlanActivity {
+  return { id: `${type}-${subtype ?? "none"}-${Math.random()}`, type, subtype, duration, title, desc, icon, pathyMsg };
+}
+
+function makePlan(totalMin: number): PlanActivity[] {
+  if (totalMin <= 30) return [
+    makeAct("calentamiento", "descarga", 5, "Descarga de Cabina", "Escribe todo lo que sabes de Meteorología en 5 minutos sin parar.", "🧠", "Antes de estudiar, activa lo que ya sabes. Escribe sin filtro — todo lo que te venga a la mente sobre Meteorología."),
+    makeAct("vuelo", "contenido", 20, "Vuelo de Contenido", "Estudia el material: nubes, frentes y METAR.", "📖", "Enfócate en leer activamente. Subraya, anota dudas. En 20 minutos puedes cubrir 2-3 conceptos clave del CIAAC."),
+    makeAct("debriefing", undefined, 5, "Debriefing", "3 preguntas rápidas para cerrar el vuelo y guardar en tu bitácora.", "📋", "¡Lo lograste! Antes de irte, revisemos qué llevamos en el equipaje de hoy."),
+  ];
+
+  if (totalMin <= 60) return [
+    makeAct("calentamiento", "descarga", 10, "Descarga de Cabina", "Activa tu memoria: escribe todo lo que sabes de Meteorología.", "🧠", "El calentamiento cognitivo mejora la retención un 35%. ¡Escribe sin pensar, solo vuela!"),
+    makeAct("vuelo", "contenido", 25, "Vuelo 1 — Contenido", "Estudia frentes y nubes: lee el material, anota conceptos clave.", "📖", "Primer vuelo del día. Lectura activa — cuando leas algo importante, pausa y escríbelo en tus propias palabras."),
+    makeAct("descanso", undefined, 5, "Escala Técnica", "Levántate, toma agua, respira. Tu cerebro lo necesita.", "✈️", "Las escalas no son perder el tiempo — son cuando tu cerebro consolida lo que aprendió. ¡Levántate y camina 2 minutos!"),
+    makeAct("vuelo", "flashcards", 15, "Vuelo 2 — Flashcards", "Repasa con tarjetas: METAR, CAVOK, tipos de niebla y nubes.", "🃏", "Las flashcards activan la recuperación activa — la herramienta más poderosa para el CIAAC. ¡Sin trampa!"),
+    makeAct("debriefing", undefined, 5, "Debriefing", "3 preguntas de cierre para tu bitácora de vuelo.", "📋", "Aterrizaje suave. Tres preguntas rápidas y guardamos el vuelo de hoy."),
+  ];
+
+  if (totalMin <= 120) return [
+    makeAct("calentamiento", "descarga", 10, "Descarga de Cabina", "Activa todo tu conocimiento previo de Meteorología.", "🧠", "Arrancamos con un volcado mental. Escribe sin filtro por 10 minutos — activa todas las conexiones neuronales."),
+    makeAct("vuelo", "contenido", 25, "Vuelo 1 — Contenido", "Estudio profundo: frentes, masas de aire, nubes y fenómenos.", "📖", "Primer bloque de vuelo. Pausa cada 10 minutos para resumir en 2 frases. Lectura sin resumen no consolida."),
+    makeAct("descanso", undefined, 5, "Escala 1", "Levántate, estira, hidratate.", "✈️", "Primera escala. Tu cerebro está procesando — no desperdicies este tiempo con el celular."),
+    makeAct("vuelo", "flashcards", 20, "Vuelo 2 — Flashcards", "Recuperación activa con tarjetas de Meteorología CIAAC.", "🃏", "El secreto del CIAAC es la recuperación activa. ¿Cuántas puedes acertar sin ver la respuesta?"),
+    makeAct("descanso", undefined, 5, "Escala 2", "Pausa activa — camina o haz respiración diafragmática.", "✈️", "Segunda escala. Esta pausa vale más que 5 minutos extra de estudio. Confía en el proceso."),
+    makeAct("vuelo", "ciaac", 20, "Vuelo 3 — Alerta CIAAC", "Preguntas tipo examen real. Condiciones de simulacro.", "✈️", "Modo examen activado. Condiciones reales: tiempo límite, una sola oportunidad por pregunta. ¡Confía en lo que estudiaste!"),
+    makeAct("descanso", undefined, 5, "Escala 3", "Última pausa antes del aterrizaje.", "✈️", "Queda poco. Respira y piensa en una cosa que aprendiste hoy."),
+    makeAct("debriefing", undefined, 10, "Debriefing de vuelo", "Cierre reflexivo: ¿qué aprendí, qué fue difícil, qué repaso mañana?", "📋", "Aterrizaje. Este es el momento más importante — reflexionar consolida el aprendizaje."),
+  ];
+
+  if (totalMin <= 180) return [
+    makeAct("calentamiento", "descarga", 15, "Descarga de Cabina", "Activa todo tu conocimiento previo de Meteorología.", "🧠", "Sesión larga hoy, piloto. El calentamiento es crucial — volcar lo que ya sabes prepara el terreno para lo nuevo."),
+    makeAct("vuelo", "contenido", 30, "Vuelo 1 — Contenido profundo", "Lectura activa de frentes, nubes y METAR/TAF.", "📖", "Primer bloque largo. Pausa cada 15 minutos para resumir en 2 frases. Lectura sin resumen no consolida."),
+    makeAct("descanso", undefined, 10, "Escala 1", "Pausa activa: camina, estira, toma agua.", "✈️", "Escala de 10 minutos — sal a caminar si puedes. El movimiento físico consolida la memoria a largo plazo."),
+    makeAct("vuelo", "flashcards", 25, "Vuelo 2 — Flashcards intensivo", "Recuperación activa: METAR, nubes, frentes, CAVOK, vientos.", "🃏", "Bloque de flashcards. Si no sabes la respuesta, la tensión es buena — el esfuerzo crea la memoria."),
+    makeAct("descanso", undefined, 10, "Escala 2", "Descansa — hidratate y ventila el espacio.", "✈️", "Segunda escala. Cierra los ojos 2 minutos y deja que tu cerebro procese."),
+    makeAct("vuelo", "ciaac", 25, "Vuelo 3 — Simulacro CIAAC", "Preguntas de examen real. Tiempo límite. Sin ayudas.", "✈️", "Modo examen activado. Condiciones reales: tiempo límite, una sola oportunidad por pregunta."),
+    makeAct("descanso", undefined, 10, "Escala 3", "Penúltima pausa.", "✈️", "Tu cerebro está al límite. Dale el descanso que merece."),
+    makeAct("vuelo", "explicaselo", 25, "Vuelo 4 — Explícaselo a Pathy", "Enséñame lo que aprendiste. Yo hago las preguntas difíciles.", "🤖", "El método de enseñanza es el más efectivo para detectar vacíos. Si puedes explicarlo, lo sabes."),
+    makeAct("descanso", undefined, 5, "Última escala", "Un minuto de respiración profunda.", "✈️", "Casi en casa. Respira antes del debriefing final."),
+    makeAct("debriefing", undefined, 15, "Debriefing completo", "Reflexión profunda de la sesión. Guardamos en tu bitácora.", "📋", "Aterrizaje completo. Con una sesión tan larga, el debriefing es clave para consolidar todo lo que viviste."),
+  ];
+
+  // Modo CIAAC — 5 horas
+  return [
+    makeAct("calentamiento", "descarga", 20, "Descarga de Cabina CIAAC", "Activa todo tu conocimiento previo durante 20 minutos.", "🧠", "Modo CIAAC activado. Esta es la simulación más cercana al examen real. El calentamiento prepara tu mente para un vuelo largo."),
+    makeAct("vuelo", "contenido", 45, "Bloque 1 — Revisión de contenido", "Repasa manuales, apuntes y conceptos clave de Meteorología.", "📖", "Primer bloque largo. Lectura activa con pausas cada 15 minutos. Hoy cubrimos el temario completo."),
+    makeAct("descanso", undefined, 15, "Escala 1 — 15 min", "Sal a caminar. Hidratate. No toques el celular.", "✈️", "15 minutos reales — sal a caminar al menos 5 minutos."),
+    makeAct("vuelo", "flashcards", 40, "Bloque 2 — Flashcards exhaustivas", "Todos los conceptos METAR, TAF, nubes, frentes, vientos.", "🃏", "Bloque de recuperación activa intensivo. El CIAAC tiene 120 preguntas — entrenamos velocidad y precisión."),
+    makeAct("descanso", undefined, 15, "Escala 2", "Pausa activa. Come algo ligero si es necesario.", "✈️", "Tu glucosa cerebral necesita reponerse. Un snack ligero aquí es válido."),
+    makeAct("vuelo", "ciaac", 50, "Bloque 3 — Simulacro CIAAC completo", "Modo examen real: preguntas con tiempo límite.", "✈️", "Simulacro de máxima intensidad. Condiciones 100% reales. Confianza en lo que estudiaste."),
+    makeAct("descanso", undefined, 20, "Escala 3 — Descanso largo", "20 minutos completos. Sal, camina, desconéctate.", "✈️", "Después del simulacro tu cerebro necesita procesar. No estudies — descansa de verdad."),
+    makeAct("vuelo", "explicaselo", 45, "Bloque 4 — Explícaselo a Pathy", "Enseña todo lo que sabes. Yo defiendo, pregunto y evalúo.", "🤖", "El bloque más poderoso del día. Enseñar es la prueba final del conocimiento. Aquí detectamos los últimos vacíos."),
+    makeAct("descanso", undefined, 15, "Escala 4", "Descansa antes del debriefing final.", "✈️", "Cuarta y penúltima escala. Estás muy cerca de completar el Modo CIAAC. Respira."),
+    makeAct("debriefing", undefined, 25, "Debriefing CIAAC completo", "Análisis profundo: fortalezas, debilidades, plan de mañana.", "📋", "Aterrizaje del Modo CIAAC. Este debriefing es tan importante como el vuelo. Sé honesto contigo mismo."),
+  ];
+}
+
+function actColor(a: PlanActivity) {
+  if (a.type === "calentamiento") return "#b45309";
+  if (a.type === "debriefing") return "#7c3aed";
+  if (a.type === "descanso") return "#059669";
+  if (a.subtype === "ciaac") return "#d97706";
+  if (a.subtype === "explicaselo") return "#3D5D91";
+  if (a.subtype === "flashcards") return "#db2777";
+  return "#3D5D91";
+}
+
+/* ═══════════════════════════════════════════════════════════
    MAIN COMPONENT
-══════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════════════════ */
 function EstudemosJuntosPage() {
-  const timer = useTimer();
+  const [flowStep, setFlowStep] = useState<FlowStep>("bienvenida");
+  const [selectedMin, setSelectedMin] = useState(60);
+  const [customMin, setCustomMin] = useState("");
+  const [showCustom, setShowCustom] = useState(false);
+  const [plan, setPlan] = useState<PlanActivity[]>([]);
+  const [actIdx, setActIdx] = useState(0);
+  const [actSecs, setActSecs] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
-  const [tab, setTab]         = useState<"estudiar" | "yaris">("estudiar");
-  const [flowStep, setFlowStep] = useState<"tecnicas" | "pathy" | "active">(
-    timer.visible ? "active" : "tecnicas"
-  );
-  const [pathyKey, setPathyKey] = useState<SubjectKey>("meteo");
-  const [music, setMusic]       = useState("🔇 Silencio");
+  const [dcText, setDcText] = useState("");
+  const [fcIdx, setFcIdx] = useState(0);
+  const [fcFlipped, setFcFlipped] = useState(false);
+  const [fcCorrect, setFcCorrect] = useState<boolean[]>([]);
+  const [ciaacQ, setCiaacQ] = useState(0);
+  const [ciaacAnswer, setCiaacAnswer] = useState<number | null>(null);
+  const [ciaacResults, setCiaacResults] = useState<{ correct: boolean }[]>([]);
+  const [pathyStep, setPathyStep] = useState(0);
+  const [pathyInput, setPathyInput] = useState("");
+  const [pathyResponses, setPathyResponses] = useState<string[]>([]);
+  const [debriefing, setDebriefing] = useState({ aprendiste: "", dificil: "", repasar: "" });
 
-  /* yaris */
-  const [yarisMessages, setYarisMessages] = useState(INIT_YARIS);
-  const [yarisInput, setYarisInput]       = useState("");
-  const [yarisIdx, setYarisIdx]           = useState(0);
-  const [yarisTyping, setYarisTyping]     = useState(false);
-  const yarisEndRef = useRef<HTMLDivElement>(null);
+  const actTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const totalElapsedRef = useRef(0);
+  const [totalElapsed, setTotalElapsed] = useState(0);
+  const contentRef = useRef<HTMLDivElement>(null);
 
-  /* sync flowStep when timer changes from outside */
   useEffect(() => {
-    if (timer.visible && flowStep !== "active") setFlowStep("active");
-    if (!timer.visible && flowStep === "active")  setFlowStep("tecnicas");
-  }, [timer.visible]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    yarisEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [yarisMessages, yarisTyping]);
-
-  /* ── actions ── */
-  function startSession(navTo?: string) {
-    const subj     = SUBJECT_DATA[pathyKey];
-    const techShort = TECH_DATA[timer.techIdx].title;
-    timer.startSession(`${subj.emoji} ${subj.name} · ${techShort}`, subj.name, subj.topic);
-    setFlowStep("active");
-    if (navTo) setTimeout(() => { window.location.href = navTo; }, 500);
-  }
-
-  function handleQuick(opt: QuickOpt) {
-    if ("subjectKey" in opt)  { setPathyKey(opt.subjectKey); return; }
-    if ("surprise" in opt) {
-      const keys = Object.keys(SUBJECT_DATA) as SubjectKey[];
-      setPathyKey(keys[Math.floor(Math.random() * keys.length)]);
+    if (flowStep !== "sesion" || isPaused) {
+      clearInterval(actTimerRef.current!);
+      actTimerRef.current = null;
       return;
     }
-    startSession(opt.path);
+    actTimerRef.current = setInterval(() => {
+      setActSecs(s => s + 1);
+      totalElapsedRef.current += 1;
+      setTotalElapsed(totalElapsedRef.current);
+    }, 1000);
+    return () => clearInterval(actTimerRef.current!);
+  }, [flowStep, isPaused, actIdx]);
+
+  useEffect(() => {
+    setActSecs(0);
+    setFcIdx(0); setFcFlipped(false);
+    setCiaacQ(0); setCiaacAnswer(null);
+    setPathyStep(0); setPathyInput(""); setPathyResponses([]);
+    contentRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+  }, [actIdx]);
+
+  function startPlan() {
+    const minutes = showCustom && customMin ? Math.max(10, parseInt(customMin) || 60) : selectedMin;
+    setPlan(makePlan(minutes));
+    setActIdx(0); setActSecs(0);
+    setFlowStep("plan");
   }
 
-  function sendYaris() {
-    const txt = yarisInput.trim(); if (!txt) return;
-    setYarisMessages(m => [...m, { text: txt, isYaris: false }]);
-    setYarisInput(""); setYarisTyping(true);
-    setTimeout(() => {
-      setYarisTyping(false);
-      setYarisMessages(m => [...m, { text: YARIS_REPLIES[yarisIdx % YARIS_REPLIES.length], isYaris: true }]);
-      setYarisIdx(i => i + 1);
-      setTimeout(() => yarisEndRef.current?.scrollIntoView({ behavior: "smooth" }), 50);
-    }, 1300);
+  function startSession() {
+    setIsPaused(false);
+    setFlowStep("sesion");
   }
 
-  const subj = SUBJECT_DATA[pathyKey];
-  const tech = TECH_DATA[timer.techIdx];
+  function advanceActivity() {
+    if (actIdx < plan.length - 1) setActIdx(i => i + 1);
+    else setFlowStep("completado");
+  }
 
-  /* phase progress for active session bar */
-  const phaseDur  = timer.isWork ? timer.workSecs : timer.breakSecs;
-  const phaseElap = phaseDur - timer.rem;
-  const phasePct  = phaseDur > 0 ? Math.min(100, (phaseElap / phaseDur) * 100) : 0;
+  function endSession() {
+    clearInterval(actTimerRef.current!);
+    setFlowStep("completado");
+  }
 
-  /* ─────────────────────────────────────────── RENDER ─── */
+  const currentAct = plan[actIdx];
+  const actPct = currentAct ? Math.min(100, (actSecs / (currentAct.duration * 60)) * 100) : 0;
+  const actMinRem = currentAct ? Math.max(0, currentAct.duration * 60 - actSecs) : 0;
+
+  if (flowStep === "bienvenida") return (
+    <BienvenidaScreen
+      selectedMin={selectedMin} setSelectedMin={setSelectedMin}
+      showCustom={showCustom} setShowCustom={setShowCustom}
+      customMin={customMin} setCustomMin={setCustomMin}
+      onContinue={startPlan}
+    />
+  );
+
+  if (flowStep === "plan") return (
+    <PlanScreen
+      plan={plan}
+      onStart={startSession}
+      onBack={() => setFlowStep("bienvenida")}
+    />
+  );
+
+  if (flowStep === "sesion" && currentAct) return (
+    <SesionScreen
+      plan={plan} actIdx={actIdx} currentAct={currentAct}
+      actSecs={actSecs} actPct={actPct} actMinRem={actMinRem}
+      isPaused={isPaused} setIsPaused={setIsPaused}
+      totalElapsed={totalElapsed}
+      dcText={dcText} setDcText={setDcText}
+      fcIdx={fcIdx} setFcIdx={setFcIdx}
+      fcFlipped={fcFlipped} setFcFlipped={setFcFlipped}
+      fcCorrect={fcCorrect} setFcCorrect={setFcCorrect}
+      ciaacQ={ciaacQ} setCiaacQ={setCiaacQ}
+      ciaacAnswer={ciaacAnswer} setCiaacAnswer={setCiaacAnswer}
+      ciaacResults={ciaacResults} setCiaacResults={setCiaacResults}
+      pathyStep={pathyStep} setPathyStep={setPathyStep}
+      pathyInput={pathyInput} setPathyInput={setPathyInput}
+      pathyResponses={pathyResponses} setPathyResponses={setPathyResponses}
+      debriefing={debriefing} setDebriefing={setDebriefing}
+      contentRef={contentRef}
+      onNext={advanceActivity}
+      onEnd={endSession}
+    />
+  );
+
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif" }}>
-      <style>{`
-        @keyframes float-a{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-        @keyframes run-a{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-        @keyframes pulse-a{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-        @keyframes fadeIn-a{from{opacity:0}to{opacity:1}}
-        @keyframes slideUp-a{from{transform:translateY(18px);opacity:0}to{transform:translateY(0);opacity:1}}
-        .p-float{animation:float-a 2.5s ease-in-out infinite}
-        .p-run{animation:run-a .7s ease-in-out infinite}
-        .radar-dot{animation:pulse-a 1.5s ease infinite}
-        .tech-hover:hover{transform:translateY(-2px)!important;box-shadow:0 8px 24px rgba(61,93,145,.14)!important}
-        .quick-hover:hover{border-color:#3D5D91!important;color:#3D5D91!important;background:#e8eef7!important}
-        .go-btn:hover{opacity:.88!important}
-      `}</style>
+    <CompletadoScreen
+      plan={plan} totalElapsed={totalElapsed}
+      debriefing={debriefing} setDebriefing={setDebriefing}
+      ciaacResults={ciaacResults} fcCorrect={fcCorrect}
+      onRestart={() => {
+        setFlowStep("bienvenida"); setPlan([]); setActIdx(0); setActSecs(0);
+        totalElapsedRef.current = 0; setTotalElapsed(0);
+        setDcText(""); setFcCorrect([]); setCiaacResults([]);
+        setDebriefing({ aprendiste: "", dificil: "", repasar: "" });
+      }}
+    />
+  );
+}
 
-      {/* ── TAB BAR ── */}
-      <div style={{ background: "white", borderBottom: "1px solid rgba(61,93,145,.1)", display: "flex", borderRadius: "12px 12px 0 0", overflow: "hidden" }}>
-        {([
-          { id: "estudiar" as const, label: "✈ Sesión de estudio" },
-          { id: "yaris"    as const, label: "🧑‍✈️ Modo Yaris" },
-        ] as const).map(t => (
-          <button key={t.id} onClick={() => setTab(t.id)}
-            style={{ padding: "13px 22px", fontSize: 13.5, fontWeight: 500, color: tab === t.id ? "#3D5D91" : "#999", background: "none", border: "none", borderBottom: `2.5px solid ${tab === t.id ? "#3D5D91" : "transparent"}`, cursor: "pointer", transition: "all .2s", fontFamily: "'DM Sans', sans-serif" }}>
-            {t.label}
+/* ═══════════════════════════════════════════════════════════
+   BIENVENIDA SCREEN
+═══════════════════════════════════════════════════════════ */
+function BienvenidaScreen({ selectedMin, setSelectedMin, showCustom, setShowCustom, customMin, setCustomMin, onContinue }: {
+  selectedMin: number; setSelectedMin: (n: number) => void;
+  showCustom: boolean; setShowCustom: (v: boolean) => void;
+  customMin: string; setCustomMin: (v: string) => void;
+  onContinue: () => void;
+}) {
+  const options = [
+    { min: 30, label: "30 min", desc: "Sesión exprés", icon: "⚡", color: "#3D5D91" },
+    { min: 60, label: "1 hora", desc: "Sesión estándar", icon: "📚", color: "#3D5D91", recommended: true },
+    { min: 120, label: "2 horas", desc: "Sesión profunda", icon: "🎯", color: "#6C0820" },
+    { min: 180, label: "3 horas", desc: "Maratón de estudio", icon: "🔥", color: "#b45309" },
+    { min: 300, label: "Modo CIAAC", desc: "Simulación completa 5h", icon: "✈️", color: "#059669" },
+  ];
+
+  return (
+    <div style={{ fontFamily: "'DM Sans', sans-serif", maxWidth: 700, margin: "0 auto" }}>
+      {/* Pathy greeting */}
+      <div style={{ background: "white", border: "1px solid rgba(61,93,145,.12)", borderRadius: 20, padding: "28px 28px 24px", marginBottom: 24, boxShadow: "0 4px 24px rgba(61,93,145,.08)" }}>
+        <div style={{ display: "flex", gap: 18, alignItems: "flex-start" }}>
+          <div style={{ flexShrink: 0, animation: "fp-float 2.5s ease-in-out infinite" }}>
+            <PathySVG size={72} />
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 10, lineHeight: 1.25 }}>
+              ¡Listo para despegar, piloto! ✈️
+            </div>
+            <p style={{ fontSize: 14.5, color: "#444", lineHeight: 1.7, marginBottom: 14 }}>
+              Soy <strong>Pathy</strong>, tu copiloto de estudio. Hoy me encargo de construir tu <strong>Plan de Vuelo</strong> completo — tú solo dime cuánto tiempo tienes y yo me encargo del resto.
+            </p>
+            <div style={{ background: "#f0f4fb", border: "1px solid rgba(61,93,145,.12)", borderRadius: 10, padding: "11px 15px", fontSize: 13.5, color: "#3D5D91", fontWeight: 500 }}>
+              📌 Hoy Pathy recomienda: <strong>Meteorología — Frentes y nubes</strong> · Llevas 4 días sin repasarla
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Time selector */}
+      <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderRadius: 18, padding: "24px 24px 20px", marginBottom: 16, boxShadow: "0 2px 12px rgba(61,93,145,.06)" }}>
+        <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".1em", color: "#aaa", marginBottom: 16 }}>
+          ¿Cuánto tiempo tienes hoy?
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 12 }}>
+          {options.map(opt => (
+            <button key={opt.min}
+              onClick={() => { setSelectedMin(opt.min); setShowCustom(false); }}
+              style={{
+                border: `${selectedMin === opt.min && !showCustom ? 2 : 1.5}px solid ${selectedMin === opt.min && !showCustom ? opt.color : "rgba(61,93,145,.12)"}`,
+                borderRadius: 12, padding: "14px 16px",
+                background: selectedMin === opt.min && !showCustom ? `${opt.color}0d` : "white",
+                cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
+                display: "flex", alignItems: "center", gap: 12, textAlign: "left",
+                transition: "all .18s", position: "relative",
+              }}>
+              <span style={{ fontSize: 24, flexShrink: 0 }}>{opt.icon}</span>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 14.5, fontWeight: 700, color: selectedMin === opt.min && !showCustom ? opt.color : "#1a1a2e" }}>{opt.label}</div>
+                <div style={{ fontSize: 11.5, color: "#aaa", marginTop: 2 }}>{opt.desc}</div>
+              </div>
+              {opt.recommended && (
+                <span style={{ fontSize: 9.5, fontWeight: 700, color: "#3D5D91", background: "#e8eef7", borderRadius: 99, padding: "3px 8px", flexShrink: 0 }}>★ Recomendado</span>
+              )}
+            </button>
+          ))}
+          <button
+            onClick={() => setShowCustom(v => !v)}
+            style={{
+              border: `${showCustom ? 2 : 1.5}px solid ${showCustom ? "#3D5D91" : "rgba(61,93,145,.12)"}`,
+              borderRadius: 12, padding: "14px 16px",
+              background: showCustom ? "#e8eef7" : "white",
+              cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
+              display: "flex", alignItems: "center", gap: 12, textAlign: "left",
+              transition: "all .18s",
+            }}>
+            <span style={{ fontSize: 24 }}>⏱️</span>
+            <div>
+              <div style={{ fontSize: 14.5, fontWeight: 700, color: showCustom ? "#3D5D91" : "#1a1a2e" }}>Personalizado</div>
+              <div style={{ fontSize: 11.5, color: "#aaa", marginTop: 2 }}>Elige tus minutos</div>
+            </div>
           </button>
-        ))}
-        {/* Active session badge */}
-        {timer.visible && (
-          <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", paddingRight: 16, gap: 6 }}>
-            <div className="radar-dot" style={{ width: 7, height: 7, borderRadius: "50%", background: timer.running ? "#4ade80" : "#fbbf24" }} />
-            <span style={{ fontSize: 11, fontWeight: 600, color: timer.running ? "#166534" : "#92400e" }}>
-              {timer.running ? "Sesión activa" : "En pausa"}
-            </span>
+        </div>
+
+        {showCustom && (
+          <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 16px", background: "#f8f9fc", borderRadius: 10, border: "1px solid rgba(61,93,145,.1)", marginBottom: 4 }}>
+            <span style={{ fontSize: 13, color: "#888", flexShrink: 0 }}>Duración:</span>
+            <input
+              type="number" min={10} max={480}
+              value={customMin}
+              onChange={e => setCustomMin(e.target.value)}
+              placeholder="ej. 45"
+              style={{ flex: 1, border: "1px solid rgba(61,93,145,.2)", borderRadius: 8, padding: "9px 12px", fontSize: 15, fontWeight: 700, color: "#1a1a2e", background: "white", fontFamily: "'DM Sans', sans-serif", outline: "none", maxWidth: 100 }}
+            />
+            <span style={{ fontSize: 13, color: "#888" }}>minutos</span>
           </div>
         )}
       </div>
 
-      {/* ════════════════════════ ESTUDIAR TAB ════════════════════════ */}
-      {tab === "estudiar" && (
-        <div style={{ animation: "fadeIn-a .25s ease" }}>
+      {/* CTA */}
+      <button
+        onClick={onContinue}
+        style={{ width: "100%", background: "linear-gradient(135deg, #3D5D91 0%, #5A86CB 100%)", color: "white", border: "none", borderRadius: 14, padding: "16px", fontSize: 16, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 12, boxShadow: "0 6px 24px rgba(61,93,145,.3)", transition: "opacity .2s" }}
+        onMouseEnter={e => { e.currentTarget.style.opacity = ".9"; }}
+        onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+      >
+        <PathySVG size={28} overlay />
+        Ver mi Plan de Vuelo →
+      </button>
+      <div style={{ textAlign: "center", fontSize: 12, color: "#ccc", marginTop: 10 }}>
+        Pathy construirá tu plan cognitivo completo en segundos ✨
+      </div>
+    </div>
+  );
+}
 
-          {/* ───────── PASO 1: ELEGIR TÉCNICA ───────── */}
-          {flowStep === "tecnicas" && (
-            <div style={{ paddingTop: 18 }}>
+/* ═══════════════════════════════════════════════════════════
+   PLAN SCREEN
+═══════════════════════════════════════════════════════════ */
+function PlanScreen({ plan, onStart, onBack }: { plan: PlanActivity[]; onStart: () => void; onBack: () => void; }) {
+  const totalMin = plan.reduce((s, a) => s + a.duration, 0);
+  const vuelos = plan.filter(a => a.type === "vuelo").length;
+  const escalas = plan.filter(a => a.type === "descanso").length;
 
-              {/* Pathy recommendation card */}
-              <div style={{ background: "white", border: "1px solid rgba(61,93,145,.12)", borderLeft: "4px solid #3D5D91", borderRadius: 14, padding: "16px 20px", marginBottom: 18, display: "flex", alignItems: "flex-start", gap: 16, boxShadow: "0 2px 12px rgba(61,93,145,.06)" }}>
-                <div className="p-float" style={{ flexShrink: 0 }}><PathySVG size={64} /></div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 10.5, fontWeight: 700, color: "#3D5D91", textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 6 }}>Pathy recomienda hoy</div>
-                  <p style={{ fontSize: 13.5, lineHeight: 1.65, color: "#1a1a2e", marginBottom: 12 }}>
-                    Llevas <strong>4 días</strong> sin repasar <strong>Meteorología</strong> — tu cerebro ya está borrando esas nubes. ¿Arrancamos con {tech.work} minutos hoy?
-                  </p>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                    {([
-                      { key: "meteo" as const, label: "🌤 Meteorología · 4 días", type: "urgent" },
-                      { key: "fh"    as const, label: "🧠 Factores Humanos · 2 días", type: "warn" },
-                      { key: "nav"   as const, label: "✅ Navegación · al día", type: "ok" },
-                    ]).map(p => (
-                      <span key={p.key} onClick={() => setPathyKey(p.key)}
-                        style={{
-                          fontSize: 11.5, padding: "4px 12px", borderRadius: 99, fontWeight: 500, cursor: "pointer",
-                          background: p.type === "urgent" ? "#fef2f2" : p.type === "warn" ? "#fffbeb" : "#f0fdf4",
-                          border: `1.5px solid ${p.type === "urgent" ? (pathyKey === p.key ? "#ef4444" : "#fca5a5") : p.type === "warn" ? (pathyKey === p.key ? "#f59e0b" : "#fcd34d") : (pathyKey === p.key ? "#22c55e" : "#86efac")}`,
-                          color: p.type === "urgent" ? "#991b1b" : p.type === "warn" ? "#92400e" : "#166534",
-                          fontWeight: pathyKey === p.key ? 700 : 500,
-                        }}>
-                        {p.label}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Technique grid */}
-              <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "#aaa", marginBottom: 12 }}>
-                Elige tu técnica de estudio
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 24 }}>
-                {TECH_DATA.map((t, i) => (
-                  <div key={i} className="tech-hover" onClick={() => timer.selectTech(i)}
-                    style={{
-                      background: timer.techIdx === i ? "#e8eef7" : "white",
-                      border: `${timer.techIdx === i ? 2 : 1.5}px solid ${timer.techIdx === i ? "#3D5D91" : "rgba(61,93,145,.12)"}`,
-                      borderRadius: 14, padding: 15, cursor: "pointer",
-                      position: "relative", overflow: "hidden",
-                      transition: "all .2s", boxShadow: "0 2px 12px rgba(61,93,145,.05)",
-                    }}>
-                    <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 4, background: t.accent, borderRadius: "12px 0 0 12px" }} />
-                    <span style={{ fontSize: 22, marginBottom: 8, display: "block" }}>{t.icon}</span>
-                    <div style={{ fontSize: 13.5, fontWeight: 700, color: "#1a1a2e", marginBottom: 4 }}>{t.title}</div>
-                    <div style={{ fontSize: 11.5, color: "#888", lineHeight: 1.5 }}>{t.desc}</div>
-                    <span style={{ display: "inline-block", fontSize: 11, fontWeight: 600, padding: "3px 9px", borderRadius: 99, marginTop: 8, background: t.bg, color: t.fg }}>{t.badge}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* CTA */}
-              <div style={{ textAlign: "center" }}>
-                <button className="go-btn" onClick={() => setFlowStep("pathy")}
-                  style={{ background: "linear-gradient(135deg, #3D5D91, #5A86CB)", color: "white", border: "none", borderRadius: 12, padding: "14px 36px", fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "inline-flex", alignItems: "center", gap: 10, boxShadow: "0 4px 20px rgba(61,93,145,.28)", transition: "opacity .2s" }}>
-                  Continuar con Pathy →
-                </button>
-                <div style={{ fontSize: 12, color: "#bbb", marginTop: 8 }}>
-                  {tech.icon} {tech.title} seleccionado · {tech.badge}
-                </div>
-              </div>
+  return (
+    <div style={{ fontFamily: "'DM Sans', sans-serif", maxWidth: 760, margin: "0 auto" }}>
+      {/* Header */}
+      <div style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #0d1f38 100%)", borderRadius: 18, padding: "24px 28px", marginBottom: 20, color: "white" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <div style={{ animation: "fp-float 2.5s ease-in-out infinite", flexShrink: 0 }}>
+            <PathySVG size={60} overlay />
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 10.5, color: "rgba(255,255,255,.45)", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 6 }}>✈️ Tu Plan de Vuelo está listo</div>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 700, lineHeight: 1.25, marginBottom: 8 }}>
+              Sesión de Meteorología
             </div>
-          )}
-
-          {/* ───────── PASO 2: RECOMENDACIÓN DE PATHY ───────── */}
-          {flowStep === "pathy" && (
-            <div style={{ paddingTop: 18, animation: "slideUp-a .3s ease" }}>
-
-              <button onClick={() => setFlowStep("tecnicas")}
-                style={{ background: "none", border: "none", color: "#aaa", fontSize: 13, cursor: "pointer", padding: "0 0 14px", display: "flex", alignItems: "center", gap: 5, fontFamily: "'DM Sans', sans-serif" }}>
-                ← Cambiar técnica
-              </button>
-
-              {/* Main Pathy card */}
-              <div style={{ background: "white", border: "2px solid rgba(61,93,145,.14)", borderRadius: 18, overflow: "hidden", marginBottom: 18, boxShadow: "0 4px 24px rgba(61,93,145,.1)" }}>
-                {/* Gradient header */}
-                <div style={{ background: "linear-gradient(135deg, #3D5D91 0%, #5A86CB 100%)", padding: "22px 24px", display: "flex", alignItems: "center", gap: 16 }}>
-                  <div className="p-float"><PathySVG size={68} overlay /></div>
-                  <div>
-                    <div style={{ fontSize: 10.5, color: "rgba(255,255,255,.65)", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 5 }}>✈️ Recomendación de Pathy</div>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: "white", fontWeight: 700, lineHeight: 1.2 }}>¿Qué estudiamos hoy?</div>
-                    <div style={{ fontSize: 12.5, color: "rgba(255,255,255,.7)", marginTop: 5 }}>
-                      Técnica: <strong style={{ color: "white" }}>{tech.icon} {tech.title}</strong> · {tech.badge}
-                    </div>
-                  </div>
-                </div>
-
-                <div style={{ padding: "22px 24px" }}>
-                  {/* Subject recommendation */}
-                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 18 }}>
-                    <div style={{ fontSize: 30, lineHeight: 1 }}>{subj.emoji}</div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 11, color: "#aaa", marginBottom: 3 }}>Te recomiendo estudiar</div>
-                      <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 700, color: "#1a1a2e" }}>{subj.name}</div>
-                    </div>
-                    <div style={{
-                      background: subj.score >= 80 ? "#f0fdf4" : subj.score >= 65 ? "#fffbeb" : "#fef2f2",
-                      border: `1px solid ${subj.score >= 80 ? "#86efac" : subj.score >= 65 ? "#fcd34d" : "#fca5a5"}`,
-                      borderRadius: 99, padding: "5px 13px", fontSize: 13, fontWeight: 700,
-                      color: subj.score >= 80 ? "#166534" : subj.score >= 65 ? "#92400e" : "#991b1b",
-                      flexShrink: 0,
-                    }}>
-                      {subj.score}% promedio
-                    </div>
-                  </div>
-
-                  {/* Motivos */}
-                  <div style={{ marginBottom: 22 }}>
-                    <div style={{ fontSize: 11, fontWeight: 700, color: "#aaa", textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 }}>Motivos</div>
-                    {subj.reasons.map((r, i) => (
-                      <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "9px 0", borderBottom: i < subj.reasons.length - 1 ? "1px solid rgba(61,93,145,.07)" : "none" }}>
-                        <div style={{ width: 22, height: 22, borderRadius: "50%", background: "#e8eef7", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: "#3D5D91", flexShrink: 0, marginTop: 1 }}>{i + 1}</div>
-                        <div style={{ fontSize: 13.5, color: "#444", lineHeight: 1.55 }}>{r}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Primary CTA */}
-                  <button className="go-btn" onClick={() => startSession()}
-                    style={{ width: "100%", background: "linear-gradient(135deg, #3D5D91, #5A86CB)", color: "white", border: "none", borderRadius: 12, padding: "15px", fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, boxShadow: "0 4px 20px rgba(61,93,145,.28)", marginBottom: 10, transition: "opacity .2s" }}>
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    Iniciar sesión — {subj.emoji} {subj.name}
-                  </button>
-                  <div style={{ textAlign: "center", fontSize: 11.5, color: "#ccc" }}>
-                    El timer seguirá activo aunque navegues a otra sección ✈️
-                  </div>
-                </div>
-              </div>
-
-              {/* Quick options */}
-              <div style={{ fontSize: 11, fontWeight: 700, color: "#bbb", textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 }}>
-                O elige otra opción:
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
-                {QUICK_OPTIONS.map((opt, i) => (
-                  <button key={i} className="quick-hover" onClick={() => handleQuick(opt)}
-                    style={{ background: "white", border: "1.5px solid rgba(61,93,145,.1)", borderRadius: 10, padding: "11px 10px", cursor: "pointer", display: "flex", alignItems: "center", gap: 8, fontSize: 12.5, color: "#666", fontFamily: "'DM Sans', sans-serif", fontWeight: 500, textAlign: "left", transition: "all .2s", boxShadow: "0 1px 4px rgba(61,93,145,.04)" }}>
-                    <span style={{ fontSize: 17, flexShrink: 0 }}>{opt.icon}</span>
-                    <span style={{ lineHeight: 1.3 }}>{opt.label}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* ───────── PASO 3: SESIÓN ACTIVA ───────── */}
-          {flowStep === "active" && (
-            <div style={{ paddingTop: 18, animation: "slideUp-a .3s ease" }}>
-
-              {/* Cockpit timer card */}
-              <div style={{ background: "linear-gradient(160deg, #06101f 0%, #0d1f38 60%, #111d35 100%)", borderRadius: 18, padding: "22px 24px", marginBottom: 16, border: "1px solid rgba(90,134,203,.2)", boxShadow: "0 8px 40px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04)" }}>
-
-                {/* Phase label */}
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 18 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                    <div className="radar-dot" style={{ width: 7, height: 7, borderRadius: "50%", background: timer.running ? "#4ade80" : "#fbbf24" }} />
-                    <span style={{ fontSize: 10.5, color: timer.running ? "#4ade80" : "#fbbf24", fontWeight: 700, letterSpacing: ".09em", textTransform: "uppercase" }}>
-                      {timer.running ? "✈ Sesión activa" : "⏸ En pausa"}
-                    </span>
-                  </div>
-                  <span style={{ fontSize: 10, color: "rgba(255,255,255,.3)" }}>
-                    {tech.icon} {tech.title} · C{timer.curCycle + 1}/{timer.totalCycles}
-                  </span>
-                </div>
-
-                {/* Big timer + Pathy */}
-                <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 20 }}>
-                  <div className={timer.running ? "p-run" : "p-float"} style={{ flexShrink: 0 }}>
-                    <PathySVG size={56} overlay smiling={timer.smiling} />
-                  </div>
-                  <div>
-                    <div style={{
-                      fontFamily: "'Playfair Display', serif",
-                      fontSize: 60, fontWeight: 900,
-                      color: timer.isWork ? "#4ade80" : "#fbbf24",
-                      letterSpacing: -2, lineHeight: 1,
-                      textShadow: timer.isWork
-                        ? "0 0 40px rgba(74,222,128,.4)"
-                        : "0 0 40px rgba(251,191,36,.4)",
-                    }}>
-                      {pad(Math.floor(timer.rem / 60))}:{pad(timer.rem % 60)}
-                    </div>
-                    <div style={{ fontSize: 11, color: timer.isWork ? "rgba(74,222,128,.55)" : "rgba(251,191,36,.55)", marginTop: 4, letterSpacing: ".07em" }}>
-                      {timer.isWork ? "FASE DE ENFOQUE" : "ESCALA TÉCNICA — DESCANSA"}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Phase progress bar */}
-                <div style={{ marginBottom: 18 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 9.5, color: "rgba(255,255,255,.3)", marginBottom: 6, letterSpacing: ".05em" }}>
-                    <span>INICIO</span>
-                    <span>{timer.isWork ? "ENFOQUE" : "DESCANSO"} · {pad(Math.floor(timer.rem / 60))}:{pad(timer.rem % 60)} restantes</span>
-                    <span>FIN</span>
-                  </div>
-                  <div style={{ height: 6, background: "rgba(255,255,255,.08)", borderRadius: 99, overflow: "hidden", position: "relative" }}>
-                    <div style={{ height: "100%", borderRadius: 99, width: `${phasePct}%`, transition: "width 1s linear", background: timer.isWork ? "linear-gradient(90deg, #3D5D91, #5A86CB)" : "linear-gradient(90deg, #166534, #4ade80)" }} />
-                    {/* plane on bar */}
-                    <div style={{ position: "absolute", top: "50%", left: `calc(${Math.min(phasePct, 90)}% - 6px)`, transform: "translateY(-50%)", fontSize: 11, transition: "left 1s linear", filter: "drop-shadow(0 0 5px rgba(90,134,203,.8))" }}>✈</div>
-                  </div>
-                </div>
-
-                {/* Controls */}
-                <div style={{ display: "flex", gap: 8 }}>
-                  <button onClick={timer.toggleTimer}
-                    style={{ flex: 1, border: `1px solid ${timer.running ? "rgba(74,222,128,.3)" : "rgba(90,134,203,.3)"}`, borderRadius: 10, background: timer.running ? "rgba(74,222,128,.1)" : "rgba(90,134,203,.1)", color: timer.running ? "#4ade80" : "#5A86CB", padding: "11px", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-                    {timer.running
-                      ? <><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>Pausar</>
-                      : <><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>Reanudar</>}
-                  </button>
-                  <button onClick={timer.skipPhase}
-                    style={{ border: "1px solid rgba(255,255,255,.1)", borderRadius: 10, background: "rgba(255,255,255,.05)", color: "rgba(255,255,255,.45)", padding: "11px 14px", fontSize: 12, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
-                    Skip
-                  </button>
-                  <button onClick={() => { timer.closeFloat(); setFlowStep("tecnicas"); }}
-                    style={{ border: "1px solid rgba(220,38,38,.25)", borderRadius: 10, background: "rgba(220,38,38,.08)", color: "#f87171", padding: "11px 14px", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", whiteSpace: "nowrap" }}>
-                    Finalizar
-                  </button>
-                </div>
-              </div>
-
-              {/* Session info grid */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 14 }}>
-                {/* Materia */}
-                <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderLeft: "4px solid #3D5D91", borderRadius: 12, padding: "14px 16px", boxShadow: "0 2px 8px rgba(61,93,145,.05)" }}>
-                  <div style={{ fontSize: 9.5, color: "#3D5D91", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 }}>Materia</div>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: "#1a1a2e" }}>{SUBJECT_DATA[pathyKey].emoji} {timer.activeSubject}</div>
-                  <div style={{ fontSize: 11.5, color: "#aaa", marginTop: 3 }}>{timer.activeTopic}</div>
-                </div>
-                {/* Tiempo hoy */}
-                <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderLeft: "4px solid #22a06b", borderRadius: 12, padding: "14px 16px", boxShadow: "0 2px 8px rgba(61,93,145,.05)" }}>
-                  <div style={{ fontSize: 9.5, color: "#166534", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 }}>Enfoque hoy</div>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, fontWeight: 700, color: "#166534" }}>
-                    {pad(Math.floor(timer.todaySecs / 60))}:{pad(timer.todaySecs % 60)}
-                  </div>
-                </div>
-                {/* Racha */}
-                <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderLeft: "4px solid #d97706", borderRadius: 12, padding: "14px 16px", boxShadow: "0 2px 8px rgba(61,93,145,.05)" }}>
-                  <div style={{ fontSize: 9.5, color: "#92400e", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 }}>Racha activa</div>
-                  <div style={{ fontSize: 20, fontWeight: 700, color: "#92400e" }}>🔥 14 días</div>
-                </div>
-                {/* Ciclos */}
-                <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderLeft: "4px solid #6C0820", borderRadius: 12, padding: "14px 16px", boxShadow: "0 2px 8px rgba(61,93,145,.05)" }}>
-                  <div style={{ fontSize: 9.5, color: "#6C0820", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 8 }}>Ciclos</div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                    {Array.from({ length: Math.min(timer.totalCycles, 6) }).map((_, i) => (
-                      <div key={i} style={{ width: 13, height: 13, borderRadius: "50%", transition: "background .3s", background: i < timer.curCycle ? "#3D5D91" : i === timer.curCycle ? "#6C0820" : "rgba(61,93,145,.1)" }} />
-                    ))}
-                    <span style={{ fontSize: 11, color: "#aaa", marginLeft: 4 }}>{timer.curCycle}/{timer.totalCycles}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Objetivo */}
-              <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderRadius: 12, padding: "14px 16px", marginBottom: 14, boxShadow: "0 2px 8px rgba(61,93,145,.05)" }}>
-                <div style={{ fontSize: 9.5, color: "#8a4a10", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 5 }}>Objetivo de la sesión</div>
-                <div style={{ fontSize: 13.5, color: "#1a1a2e", fontWeight: 500 }}>{timer.sessionObjective}</div>
-              </div>
-
-              {/* Ir a estudiar */}
-              <div style={{ fontSize: 10, fontWeight: 700, color: "#bbb", textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 }}>Ir a estudiar</div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 8, marginBottom: 18 }}>
-                {[
-                  { icon: "📖", label: "Tema",        path: "/dashboard/materias" },
-                  { icon: "🃏", label: "Flashcards",  path: "/dashboard/flashcards" },
-                  { icon: "❓", label: "Cuestionario", path: "/dashboard/banco" },
-                  { icon: "📝", label: "Notas",        path: "/dashboard/bitacora" },
-                  { icon: "📚", label: "Biblioteca",   path: "/dashboard/biblioteca" },
-                ].map(a => (
-                  <button key={a.label} onClick={() => { window.location.href = a.path; }}
-                    style={{ background: "white", border: "1.5px solid rgba(61,93,145,.1)", borderRadius: 10, padding: "12px 6px", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: 5, fontSize: 11, color: "#888", fontFamily: "'DM Sans', sans-serif", fontWeight: 500, transition: "all .2s", boxShadow: "0 2px 6px rgba(61,93,145,.04)" }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = "#3D5D91"; e.currentTarget.style.color = "#3D5D91"; e.currentTarget.style.background = "#e8eef7"; }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(61,93,145,.1)"; e.currentTarget.style.color = "#888"; e.currentTarget.style.background = "white"; }}>
-                    <span style={{ fontSize: 20 }}>{a.icon}</span>
-                    <span>{a.label}</span>
-                  </button>
-                ))}
-              </div>
-
-              {/* Música */}
-              <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", paddingTop: 14, borderTop: "1px solid rgba(61,93,145,.07)" }}>
-                <span style={{ fontSize: 12, color: "#ccc" }}>🎵 Ambiente:</span>
-                {["🔇 Silencio", "☕ Lo-fi", "🌧 Lluvia", "🚀 Space"].map(m => (
-                  <button key={m} onClick={() => setMusic(m)}
-                    style={{ border: `1px solid ${music === m ? "#3D5D91" : "rgba(61,93,145,.1)"}`, borderRadius: 99, padding: "5px 13px", fontSize: 12, fontWeight: 500, cursor: "pointer", background: music === m ? "#3D5D91" : "white", color: music === m ? "white" : "#888", fontFamily: "'DM Sans', sans-serif", transition: "all .2s" }}>
-                    {m}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+            <p style={{ fontSize: 13.5, color: "rgba(255,255,255,.65)", lineHeight: 1.6 }}>
+              Preparé un plan con <strong style={{ color: "white" }}>{vuelos} vuelos de estudio</strong>, {escalas} escalas técnicas y debriefing. Duración total: <strong style={{ color: "white" }}>{totalMin} min</strong>.
+            </p>
+          </div>
         </div>
-      )}
-
-      {/* ════════════════════════ YARIS TAB ════════════════════════ */}
-      {tab === "yaris" && (
-        <div style={{ paddingTop: 18 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-
-            {/* Chat */}
-            <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderRadius: 14, display: "flex", flexDirection: "column", height: 480, boxShadow: "0 2px 12px rgba(61,93,145,.06)" }}>
-              <div style={{ padding: "12px 16px", borderBottom: "1px solid rgba(61,93,145,.1)", display: "flex", alignItems: "center", gap: 10 }}>
-                <div style={{ width: 36, height: 36, borderRadius: "50%", background: "#3D5D91", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, flexShrink: 0 }}>🧑‍✈️</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 13.5, fontWeight: 700, color: "#1a1a2e" }}>Yaris — Tutora IA</div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                    <div className="radar-dot" style={{ width: 7, height: 7, borderRadius: "50%", background: "#22c55e" }} />
-                    <span style={{ fontSize: 11, color: "#aaa" }}>En línea · FlightPath</span>
-                  </div>
-                </div>
-                <span style={{ fontSize: 11, color: "#aaa" }}>Meteorología activa</span>
-              </div>
-              <div style={{ flex: 1, overflowY: "auto", padding: 12, display: "flex", flexDirection: "column", gap: 10 }}>
-                {yarisMessages.map((msg, i) => (
-                  <div key={i} style={{ maxWidth: "85%", padding: "10px 14px", borderRadius: 14, fontSize: 13, lineHeight: 1.55, whiteSpace: "pre-wrap", alignSelf: msg.isYaris ? "flex-start" : "flex-end", borderBottomLeftRadius: msg.isYaris ? 4 : 14, borderBottomRightRadius: msg.isYaris ? 14 : 4, background: msg.isYaris ? "#e8eef7" : "#3D5D91", color: msg.isYaris ? "#2a4068" : "white" }}>
-                    {msg.text}
-                  </div>
-                ))}
-                {yarisTyping && (
-                  <div style={{ maxWidth: "85%", padding: "10px 14px", borderRadius: "14px 14px 14px 4px", fontSize: 13, background: "#e8eef7", color: "#2a4068", alignSelf: "flex-start" }}>
-                    ✍️ Yaris está escribiendo…
-                  </div>
-                )}
-                <div ref={yarisEndRef} />
-              </div>
-              <div style={{ padding: 10, borderTop: "1px solid rgba(61,93,145,.1)", display: "flex", gap: 6, alignItems: "flex-end" }}>
-                <textarea
-                  value={yarisInput}
-                  onChange={e => setYarisInput(e.target.value)}
-                  onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendYaris(); } }}
-                  rows={2}
-                  placeholder="Pregúntale a Yaris sobre cualquier tema CIAAC…"
-                  style={{ flex: 1, border: "1px solid rgba(61,93,145,.12)", borderRadius: 8, padding: "9px 13px", fontSize: 13, resize: "none", background: "#f8f7f4", color: "#1a1a2e", fontFamily: "'DM Sans', sans-serif", outline: "none" }}
-                  onFocus={e => (e.target.style.borderColor = "#3D5D91")}
-                  onBlur={e => (e.target.style.borderColor = "rgba(61,93,145,.12)")}
-                />
-                <button onClick={sendYaris} style={{ background: "#3D5D91", border: "none", borderRadius: 8, width: 38, height: 38, cursor: "pointer", color: "white", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                </button>
-              </div>
+        {/* Stats strip */}
+        <div style={{ display: "flex", gap: 16, marginTop: 20, paddingTop: 18, borderTop: "1px solid rgba(255,255,255,.1)" }}>
+          {[
+            { label: "Actividades", value: plan.length, icon: "📋" },
+            { label: "Vuelos", value: vuelos, icon: "✈️" },
+            { label: "Escalas", value: escalas, icon: "⏸️" },
+            { label: "Minutos totales", value: totalMin, icon: "⏱️" },
+          ].map(s => (
+            <div key={s.label} style={{ flex: 1, textAlign: "center" }}>
+              <div style={{ fontSize: 18 }}>{s.icon}</div>
+              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 700, color: "white" }}>{s.value}</div>
+              <div style={{ fontSize: 10.5, color: "rgba(255,255,255,.4)", marginTop: 2 }}>{s.label}</div>
             </div>
+          ))}
+        </div>
+      </div>
 
-            {/* Yaris sidebar */}
-            <div>
-              {/* Quick questions */}
-              <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderRadius: 14, padding: 14, marginBottom: 12, boxShadow: "0 2px 12px rgba(61,93,145,.06)" }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: "#1a1a2e", marginBottom: 10, display: "flex", alignItems: "center", gap: 6 }}>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3D5D91" strokeWidth="2.5" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                  Preguntas rápidas
+      {/* Timeline */}
+      <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderRadius: 16, padding: "20px 24px", marginBottom: 16, boxShadow: "0 2px 12px rgba(61,93,145,.06)" }}>
+        <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".1em", color: "#aaa", marginBottom: 16 }}>Itinerario de vuelo</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+          {plan.map((act, i) => {
+            const color = actColor(act);
+            const isLast = i === plan.length - 1;
+            return (
+              <div key={act.id} style={{ display: "flex", gap: 16, paddingBottom: isLast ? 0 : 4 }}>
+                {/* Timeline connector */}
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0, width: 32 }}>
+                  <div style={{ width: 32, height: 32, borderRadius: "50%", background: `${color}15`, border: `2px solid ${color}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, flexShrink: 0 }}>
+                    {act.icon}
+                  </div>
+                  {!isLast && <div style={{ width: 2, flex: 1, minHeight: 12, background: "rgba(61,93,145,.08)", margin: "4px 0" }} />}
                 </div>
-                {[
-                  { emoji: "🌤", label: "METAR vs TAF", q: "¿Cuál es la diferencia entre METAR y TAF?" },
-                  { emoji: "🌫", label: "Tipos de niebla", q: "Explícame los tipos de niebla para el CIAAC" },
-                  { emoji: "💨", label: "Cizalladura de viento", q: "¿Qué es la cizalladura de viento y por qué es peligrosa?" },
-                  { emoji: "☁️", label: "Mnemónico nubes", q: "Dame un mnemónico para los tipos de nubes" },
-                  { emoji: "📋", label: "Top preguntas CIAAC", q: "¿Qué preguntas de Meteorología caen más en el CIAAC?" },
-                ].map(p => (
-                  <div key={p.label} className="quick-hover" onClick={() => { setYarisInput(p.q); setTab("yaris"); }}
-                    style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 10px", border: "1px solid rgba(61,93,145,.1)", borderRadius: 8, cursor: "pointer", marginBottom: 6, fontSize: 12.5, color: "#888", background: "#f8f7f4", transition: "all .2s" }}>
-                    {p.emoji} {p.label}
+                {/* Content */}
+                <div style={{ flex: 1, paddingBottom: isLast ? 0 : 12 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                    <span style={{ fontSize: 14, fontWeight: 700, color: "#1a1a2e" }}>{act.title}</span>
+                    <span style={{ fontSize: 11, fontWeight: 600, color, background: `${color}12`, padding: "2px 8px", borderRadius: 99 }}>
+                      {act.duration} min
+                    </span>
+                    {act.type === "descanso" && (
+                      <span style={{ fontSize: 10.5, color: "#059669", background: "#ecfdf5", padding: "2px 8px", borderRadius: 99, fontWeight: 600 }}>Escala</span>
+                    )}
                   </div>
-                ))}
+                  <div style={{ fontSize: 12.5, color: "#888", marginTop: 3, lineHeight: 1.5 }}>{act.desc}</div>
+                </div>
               </div>
+            );
+          })}
+        </div>
+      </div>
 
-              {/* Progress */}
-              <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderRadius: 14, padding: 14, marginBottom: 12, boxShadow: "0 2px 12px rgba(61,93,145,.06)" }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: "#1a1a2e", marginBottom: 10 }}>Tu progreso CIAAC</div>
-                {[
-                  { label: "Meteorología", pct: 62, color: "#dc2626" },
-                  { label: "Factores Humanos", pct: 52, color: "#d97706" },
-                  { label: "Navegación", pct: 91, color: "#16a34a" },
-                  { label: "Reglamentos", pct: 65, color: "#3D5D91" },
-                ].map(p => (
-                  <div key={p.label}>
-                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12.5, padding: "4px 0" }}>
-                      <span style={{ color: "#888" }}>{p.label}</span>
-                      <span style={{ fontWeight: 700, color: p.color }}>{p.pct}%</span>
-                    </div>
-                    <div style={{ height: 5, background: "#f0f4f8", borderRadius: 99, margin: "4px 0", overflow: "hidden" }}>
-                      <div style={{ height: "100%", width: `${p.pct}%`, background: p.color, borderRadius: 99 }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
+      {/* CTAs */}
+      <div style={{ display: "flex", gap: 10 }}>
+        <button onClick={onBack}
+          style={{ padding: "14px 20px", background: "white", border: "1.5px solid rgba(61,93,145,.15)", borderRadius: 12, fontSize: 14, fontWeight: 600, color: "#888", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "all .2s" }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = "#3D5D91"; e.currentTarget.style.color = "#3D5D91"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(61,93,145,.15)"; e.currentTarget.style.color = "#888"; }}>
+          ← Cambiar duración
+        </button>
+        <button onClick={onStart}
+          style={{ flex: 1, background: "linear-gradient(135deg, #3D5D91 0%, #5A86CB 100%)", color: "white", border: "none", borderRadius: 12, padding: "14px", fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, boxShadow: "0 6px 24px rgba(61,93,145,.3)", transition: "opacity .2s" }}
+          onMouseEnter={e => { e.currentTarget.style.opacity = ".9"; }}
+          onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Iniciar vuelo ✈️
+        </button>
+      </div>
+    </div>
+  );
+}
 
-              {/* Intercalado */}
-              <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderLeft: "3px solid #3D5D91", borderRadius: 14, padding: 14, boxShadow: "0 2px 12px rgba(61,93,145,.06)" }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: "#1a1a2e", marginBottom: 6 }}>⏱ Intercalado sugerido</div>
-                <p style={{ fontSize: 12.5, color: "#888", lineHeight: 1.6 }}>
-                  Después de Meteorología, Yaris sugiere cambiar a <strong style={{ color: "#1a1a2e" }}>Factores Humanos</strong> — así entrenas el intercalado que usa el CIAAC real.
-                </p>
+/* ═══════════════════════════════════════════════════════════
+   SESION SCREEN
+═══════════════════════════════════════════════════════════ */
+interface SesionProps {
+  plan: PlanActivity[]; actIdx: number; currentAct: PlanActivity;
+  actSecs: number; actPct: number; actMinRem: number;
+  isPaused: boolean; setIsPaused: (v: boolean) => void;
+  totalElapsed: number;
+  dcText: string; setDcText: (v: string) => void;
+  fcIdx: number; setFcIdx: (v: number) => void;
+  fcFlipped: boolean; setFcFlipped: (v: boolean) => void;
+  fcCorrect: boolean[]; setFcCorrect: (v: boolean[]) => void;
+  ciaacQ: number; setCiaacQ: (v: number) => void;
+  ciaacAnswer: number | null; setCiaacAnswer: (v: number | null) => void;
+  ciaacResults: { correct: boolean }[]; setCiaacResults: (v: { correct: boolean }[]) => void;
+  pathyStep: number; setPathyStep: (v: number) => void;
+  pathyInput: string; setPathyInput: (v: string) => void;
+  pathyResponses: string[]; setPathyResponses: (v: string[]) => void;
+  debriefing: { aprendiste: string; dificil: string; repasar: string };
+  setDebriefing: (v: { aprendiste: string; dificil: string; repasar: string }) => void;
+  contentRef: React.RefObject<HTMLDivElement | null>;
+  onNext: () => void; onEnd: () => void;
+}
+
+function SesionScreen(props: SesionProps) {
+  const { plan, actIdx, currentAct, actSecs, actPct, actMinRem, isPaused, setIsPaused, totalElapsed, contentRef, onNext, onEnd } = props;
+  const color = actColor(currentAct);
+  const isLast = actIdx === plan.length - 1;
+
+  return (
+    <div style={{ fontFamily: "'DM Sans', sans-serif", display: "grid", gridTemplateColumns: "1fr 300px", gap: 20, alignItems: "start" }}>
+
+      {/* ── LEFT: Main content ── */}
+      <div>
+        {/* Activity header */}
+        <div style={{ background: "white", border: `2px solid ${color}25`, borderTop: `4px solid ${color}`, borderRadius: 16, padding: "20px 22px", marginBottom: 16, boxShadow: "0 2px 12px rgba(61,93,145,.06)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
+            <div style={{ fontSize: 28 }}>{currentAct.icon}</div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color, marginBottom: 3 }}>
+                Actividad {actIdx + 1} de {plan.length}
               </div>
+              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", fontWeight: 700, color: "#1a1a2e" }}>{currentAct.title}</div>
+            </div>
+            {/* Pause/resume */}
+            <button onClick={() => setIsPaused(!isPaused)}
+              style={{ border: `1px solid ${isPaused ? "#d97706" : "rgba(61,93,145,.2)"}`, borderRadius: 10, padding: "8px 14px", background: isPaused ? "#fffbeb" : "white", color: isPaused ? "#d97706" : "#888", fontSize: 12.5, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", gap: 6 }}>
+              {isPaused ? <>▶ Reanudar</> : <>⏸ Pausar</>}
+            </button>
+          </div>
+
+          {/* Progress bar */}
+          <div style={{ height: 5, background: "rgba(61,93,145,.08)", borderRadius: 99, overflow: "hidden", marginBottom: 8 }}>
+            <div style={{ height: "100%", background: color, borderRadius: 99, width: `${actPct}%`, transition: "width 1s linear" }} />
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11.5, color: "#aaa" }}>
+            <span>{pad(Math.floor(actSecs / 60))}:{pad(actSecs % 60)} transcurridos</span>
+            <span style={{ color: actMinRem < 60 ? "#d97706" : "#aaa", fontWeight: actMinRem < 60 ? 700 : 400 }}>
+              {pad(Math.floor(actMinRem / 60))}:{pad(actMinRem % 60)} restantes
+            </span>
+          </div>
+        </div>
+
+        {/* Activity content */}
+        <div ref={contentRef} style={{ maxHeight: "calc(100vh - 340px)", overflowY: "auto" }}>
+          <ActivityView {...props} />
+        </div>
+
+        {/* Next button */}
+        <div style={{ marginTop: 16, display: "flex", gap: 10 }}>
+          <button onClick={onEnd}
+            style={{ padding: "13px 18px", background: "white", border: "1.5px solid rgba(220,38,38,.2)", borderRadius: 12, fontSize: 13, fontWeight: 600, color: "#ef4444", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
+            Finalizar sesión
+          </button>
+          <button onClick={onNext}
+            style={{ flex: 1, background: isLast ? "linear-gradient(135deg, #7c3aed, #a855f7)" : `linear-gradient(135deg, ${color}, ${color}cc)`, color: "white", border: "none", borderRadius: 12, padding: "13px", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, boxShadow: `0 4px 16px ${color}35`, transition: "opacity .2s" }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = ".9"; }}
+            onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}>
+            {isLast ? "Completar vuelo ✈️" : `Siguiente: ${plan[actIdx + 1]?.title} →`}
+          </button>
+        </div>
+      </div>
+
+      {/* ── RIGHT: Sidebar ── */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+
+        {/* Pathy message */}
+        <div style={{ background: "linear-gradient(135deg, #1a1a2e, #0d1f38)", borderRadius: 14, padding: "16px 18px", color: "white" }}>
+          <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+            <div style={{ flexShrink: 0, animation: "fp-float 2.5s ease-in-out infinite" }}>
+              <PathySVG size={38} overlay />
+            </div>
+            <div>
+              <div style={{ fontSize: 10, color: "rgba(255,255,255,.4)", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 5 }}>Pathy dice</div>
+              <p style={{ fontSize: 12.5, color: "rgba(255,255,255,.8)", lineHeight: 1.65 }}>{currentAct.pathyMsg}</p>
             </div>
           </div>
         </div>
+
+        {/* Session stats */}
+        <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderRadius: 14, padding: "14px 16px", boxShadow: "0 2px 8px rgba(61,93,145,.05)" }}>
+          <div style={{ fontSize: 10.5, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "#aaa", marginBottom: 12 }}>Sesión de hoy</div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+            <span style={{ fontSize: 12.5, color: "#888" }}>Tiempo total</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: "#3D5D91" }}>{pad(Math.floor(totalElapsed / 60))}:{pad(totalElapsed % 60)}</span>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span style={{ fontSize: 12.5, color: "#888" }}>Progreso del plan</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: "#3D5D91" }}>{actIdx + 1}/{plan.length}</span>
+          </div>
+          <div style={{ height: 4, background: "rgba(61,93,145,.08)", borderRadius: 99, marginTop: 10, overflow: "hidden" }}>
+            <div style={{ height: "100%", background: "#3D5D91", borderRadius: 99, width: `${((actIdx + 1) / plan.length) * 100}%`, transition: "width .4s ease" }} />
+          </div>
+        </div>
+
+        {/* Plan timeline mini */}
+        <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderRadius: 14, padding: "14px 16px", boxShadow: "0 2px 8px rgba(61,93,145,.05)" }}>
+          <div style={{ fontSize: 10.5, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "#aaa", marginBottom: 12 }}>Plan de vuelo</div>
+          {plan.map((act, i) => {
+            const c = actColor(act);
+            const isDone = i < actIdx;
+            const isCurrent = i === actIdx;
+            return (
+              <div key={act.id} style={{ display: "flex", gap: 10, alignItems: "center", padding: "6px 0", borderBottom: i < plan.length - 1 ? "1px solid rgba(61,93,145,.05)" : "none", opacity: isDone ? 0.45 : 1 }}>
+                <div style={{ width: 22, height: 22, borderRadius: "50%", border: `2px solid ${isCurrent ? c : isDone ? "#4ade80" : "rgba(61,93,145,.15)"}`, background: isDone ? "#4ade8018" : isCurrent ? `${c}12` : "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, flexShrink: 0 }}>
+                  {isDone ? "✓" : act.icon}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 12, fontWeight: isCurrent ? 700 : 500, color: isCurrent ? c : isDone ? "#aaa" : "#444", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{act.title}</div>
+                </div>
+                <span style={{ fontSize: 10.5, color: "#ccc", flexShrink: 0 }}>{act.duration}m</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Activity View router ── */
+function ActivityView(props: SesionProps) {
+  const { currentAct } = props;
+  if (currentAct.subtype === "descarga" || currentAct.type === "calentamiento") return <CalentamientoView {...props} />;
+  if (currentAct.subtype === "flashcards") return <FlashcardsView {...props} />;
+  if (currentAct.subtype === "ciaac") return <CIAACView {...props} />;
+  if (currentAct.subtype === "explicaselo") return <ExplicaseloView {...props} />;
+  if (currentAct.type === "descanso") return <DescansoView {...props} />;
+  if (currentAct.type === "debriefing") return <DebriefingView {...props} />;
+  return <ContenidoView {...props} />;
+}
+
+/* ── Calentamiento (Descarga de Cabina) ── */
+function CalentamientoView({ dcText, setDcText }: SesionProps) {
+  return (
+    <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderRadius: 14, padding: "20px 22px", boxShadow: "0 2px 8px rgba(61,93,145,.05)" }}>
+      <div style={{ marginBottom: 14 }}>
+        <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 8 }}>🧠 Descarga de Cabina</div>
+        <p style={{ fontSize: 13.5, color: "#666", lineHeight: 1.65 }}>
+          Escribe <strong>todo lo que ya sabes</strong> sobre Meteorología. Sin filtros, sin orden, sin buscar — solo deja que fluya. El objetivo es activar tu memoria antes de estudiar.
+        </p>
+      </div>
+      <textarea
+        value={dcText}
+        onChange={e => setDcText(e.target.value)}
+        placeholder="Escribe aquí todo lo que recuerdas: nubes, frentes, METAR, vientos, presión... ¡todo vale!"
+        style={{ width: "100%", minHeight: 220, border: "1.5px solid rgba(61,93,145,.15)", borderRadius: 10, padding: "14px 16px", fontSize: 14, color: "#1a1a2e", fontFamily: "'DM Sans', sans-serif", resize: "vertical", background: "#fafbfd", outline: "none", lineHeight: 1.7, boxSizing: "border-box" }}
+        onFocus={e => { e.target.style.borderColor = "#3D5D91"; }}
+        onBlur={e => { e.target.style.borderColor = "rgba(61,93,145,.15)"; }}
+      />
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8, fontSize: 12, color: "#ccc" }}>
+        <span>Sin límite — escribe todo</span>
+        <span>{dcText.length} caracteres · {dcText.split(/\s+/).filter(Boolean).length} palabras</span>
+      </div>
+    </div>
+  );
+}
+
+/* ── Contenido ── */
+function ContenidoView({ currentAct }: SesionProps) {
+  const topics = [
+    { title: "Frentes atmosféricos", items: ["Frente frío: avance rápido, Cb, chubascos", "Frente cálido: avance lento, As/Ns, lluvia continua", "Frente ocluido: frío alcanza al cálido, lluvia prolongada"] },
+    { title: "Tipos de nubes OACI", items: ["Altas (>6,000m): Ci, Cc, Cs", "Medias (2,000-6,000m): Ac, As", "Bajas (<2,000m): St, Sc, Ns", "Desarrollo vertical: Cu, Cb"] },
+    { title: "METAR/TAF — Claves CIAAC", items: ["CAVOK: vis≥10km, sin nubes<5,000ft, sin Wx sig", "TSRA: Tormenta + lluvia (indicador crítico)", "BKN/OVC: >5 octas — condición IMC", "BECMG/TEMPO: cambios previstos en TAF"] },
+  ];
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      {topics.map((topic, i) => (
+        <div key={i} style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderRadius: 14, padding: "18px 20px", boxShadow: "0 2px 8px rgba(61,93,145,.05)" }}>
+          <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ width: 24, height: 24, borderRadius: "50%", background: "#3D5D91", color: "white", fontSize: 12, fontWeight: 700, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{i + 1}</span>
+            {topic.title}
+          </div>
+          {topic.items.map((item, j) => (
+            <div key={j} style={{ display: "flex", gap: 10, padding: "8px 0", borderBottom: j < topic.items.length - 1 ? "1px solid rgba(61,93,145,.06)" : "none" }}>
+              <span style={{ color: "#3D5D91", fontWeight: 700, flexShrink: 0, fontSize: 13 }}>→</span>
+              <span style={{ fontSize: 13.5, color: "#444", lineHeight: 1.55 }}>{item}</span>
+            </div>
+          ))}
+        </div>
+      ))}
+      <div style={{ background: "#fef3c7", border: "1px solid #fcd34d", borderRadius: 12, padding: "14px 16px", fontSize: 13, color: "#92400e" }}>
+        💡 <strong>Tip de Pathy:</strong> Después de cada sección, cierra los ojos y trata de recordar los 3 puntos más importantes. La recuperación activa triplica la retención.
+      </div>
+    </div>
+  );
+}
+
+/* ── Flashcards ── */
+function FlashcardsView({ fcIdx, setFcIdx, fcFlipped, setFcFlipped, fcCorrect, setFcCorrect, onNext }: SesionProps) {
+  const card = FLASHCARDS[fcIdx];
+  const remaining = FLASHCARDS.length - fcIdx;
+  const correctCount = fcCorrect.filter(Boolean).length;
+
+  function handleAnswer(correct: boolean) {
+    setFcCorrect([...fcCorrect, correct]);
+    if (fcIdx < FLASHCARDS.length - 1) {
+      setFcIdx(fcIdx + 1);
+      setFcFlipped(false);
+    } else {
+      onNext();
+    }
+  }
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      {/* Score */}
+      <div style={{ display: "flex", gap: 10 }}>
+        <div style={{ flex: 1, background: "white", border: "1px solid rgba(61,93,145,.1)", borderRadius: 10, padding: "10px 14px", display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ fontSize: 20 }}>🃏</span>
+          <div>
+            <div style={{ fontSize: 11, color: "#aaa" }}>Tarjeta</div>
+            <div style={{ fontWeight: 700, color: "#1a1a2e" }}>{fcIdx + 1} / {FLASHCARDS.length}</div>
+          </div>
+        </div>
+        <div style={{ flex: 1, background: "white", border: "1px solid rgba(61,93,145,.1)", borderRadius: 10, padding: "10px 14px", display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ fontSize: 20 }}>✅</span>
+          <div>
+            <div style={{ fontSize: 11, color: "#aaa" }}>Correctas</div>
+            <div style={{ fontWeight: 700, color: "#16a34a" }}>{correctCount}</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Card */}
+      <div
+        onClick={() => setFcFlipped(!fcFlipped)}
+        style={{ background: fcFlipped ? "linear-gradient(135deg, #1a1a2e, #0d1f38)" : "white", border: `2px solid ${fcFlipped ? "rgba(90,134,203,.3)" : "rgba(61,93,145,.12)"}`, borderRadius: 16, padding: "28px 24px", minHeight: 180, cursor: "pointer", boxShadow: "0 4px 20px rgba(61,93,145,.1)", transition: "all .3s", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center" }}>
+        <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".1em", color: fcFlipped ? "rgba(255,255,255,.35)" : "#aaa", marginBottom: 16 }}>
+          {fcFlipped ? "✓ Respuesta" : "❓ Pregunta"} · toca para {fcFlipped ? "ocultar" : "revelar"}
+        </div>
+        <p style={{ fontSize: 15.5, lineHeight: 1.7, color: fcFlipped ? "rgba(255,255,255,.85)" : "#1a1a2e", fontWeight: fcFlipped ? 400 : 600 }}>
+          {fcFlipped ? card.a : card.q}
+        </p>
+      </div>
+
+      {/* Answer buttons (only when flipped) */}
+      {fcFlipped && (
+        <div style={{ display: "flex", gap: 10 }}>
+          <button onClick={() => handleAnswer(false)}
+            style={{ flex: 1, border: "2px solid #fca5a5", borderRadius: 12, padding: "13px", background: "#fef2f2", color: "#dc2626", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
+            ✗ No lo sabía
+          </button>
+          <button onClick={() => handleAnswer(true)}
+            style={{ flex: 1, border: "2px solid #86efac", borderRadius: 12, padding: "13px", background: "#f0fdf4", color: "#16a34a", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
+            ✓ Lo sabía
+          </button>
+        </div>
       )}
+
+      {!fcFlipped && (
+        <div style={{ textAlign: "center", fontSize: 12.5, color: "#ccc" }}>
+          Toca la tarjeta para ver la respuesta
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── CIAAC ── */
+function CIAACView({ ciaacQ, setCiaacQ, ciaacAnswer, setCiaacAnswer, ciaacResults, setCiaacResults, onNext }: SesionProps) {
+  const q = CIAAC_QUESTIONS[ciaacQ];
+  const answered = ciaacAnswer !== null;
+  const isCorrect = ciaacAnswer === q.correct;
+
+  function handleSelect(idx: number) {
+    if (answered) return;
+    setCiaacAnswer(idx);
+    setCiaacResults([...ciaacResults, { correct: idx === q.correct }]);
+  }
+
+  function handleNext() {
+    if (ciaacQ < CIAAC_QUESTIONS.length - 1) {
+      setCiaacQ(ciaacQ + 1);
+      setCiaacAnswer(null);
+    } else {
+      onNext();
+    }
+  }
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      {/* Header */}
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div style={{ flex: 1, height: 6, background: "rgba(61,93,145,.08)", borderRadius: 99, overflow: "hidden" }}>
+          <div style={{ height: "100%", background: "#d97706", borderRadius: 99, width: `${((ciaacQ + 1) / CIAAC_QUESTIONS.length) * 100}%`, transition: "width .4s ease" }} />
+        </div>
+        <span style={{ fontSize: 12, fontWeight: 700, color: "#d97706", flexShrink: 0 }}>{ciaacQ + 1}/{CIAAC_QUESTIONS.length}</span>
+      </div>
+
+      {/* Question */}
+      <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderRadius: 14, padding: "20px 22px", boxShadow: "0 2px 8px rgba(61,93,145,.05)" }}>
+        <div style={{ fontSize: 10.5, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "#d97706", marginBottom: 10 }}>✈ Pregunta CIAAC</div>
+        <p style={{ fontSize: 15, fontWeight: 600, color: "#1a1a2e", lineHeight: 1.65 }}>{q.q}</p>
+      </div>
+
+      {/* Options */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {q.opts.map((opt, i) => {
+          let bg = "white", border = "1.5px solid rgba(61,93,145,.12)", color = "#444";
+          if (answered) {
+            if (i === q.correct) { bg = "#f0fdf4"; border = "2px solid #4ade80"; color = "#166534"; }
+            else if (i === ciaacAnswer && !isCorrect) { bg = "#fef2f2"; border = "2px solid #f87171"; color = "#dc2626"; }
+          } else if (ciaacAnswer === i) {
+            border = "2px solid #3D5D91"; bg = "#e8eef7";
+          }
+          return (
+            <button key={i} onClick={() => handleSelect(i)}
+              style={{ border, borderRadius: 12, padding: "13px 16px", background: bg, color, cursor: answered ? "default" : "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: 14, textAlign: "left", transition: "all .2s", display: "flex", gap: 10, alignItems: "flex-start" }}>
+              <span style={{ fontWeight: 700, flexShrink: 0, width: 20 }}>{["A", "B", "C", "D"][i]}.</span>
+              <span style={{ lineHeight: 1.5 }}>{opt}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Explanation */}
+      {answered && (
+        <div style={{ background: isCorrect ? "#f0fdf4" : "#fef2f2", border: `1px solid ${isCorrect ? "#86efac" : "#fca5a5"}`, borderRadius: 12, padding: "14px 16px" }}>
+          <div style={{ fontWeight: 700, color: isCorrect ? "#166534" : "#dc2626", marginBottom: 6 }}>
+            {isCorrect ? "✓ ¡Correcto!" : "✗ Incorrecto"}
+          </div>
+          <p style={{ fontSize: 13, color: isCorrect ? "#166534" : "#991b1b", lineHeight: 1.65 }}>{q.exp}</p>
+        </div>
+      )}
+
+      {answered && (
+        <button onClick={handleNext}
+          style={{ background: "#d97706", color: "white", border: "none", borderRadius: 12, padding: "13px", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
+          {ciaacQ < CIAAC_QUESTIONS.length - 1 ? "Siguiente pregunta →" : "Completar CIAAC ✓"}
+        </button>
+      )}
+    </div>
+  );
+}
+
+/* ── Explícaselo a Pathy ── */
+function ExplicaseloView({ pathyStep, setPathyStep, pathyInput, setPathyInput, pathyResponses, setPathyResponses, onNext }: SesionProps) {
+  const q = PATHY_QUESTIONS[pathyStep];
+  const done = pathyStep >= PATHY_QUESTIONS.length;
+
+  function submit() {
+    const text = pathyInput.trim();
+    if (!text) return;
+    setPathyResponses([...pathyResponses, text]);
+    setPathyInput("");
+    if (pathyStep < PATHY_QUESTIONS.length - 1) setPathyStep(pathyStep + 1);
+    else setPathyStep(PATHY_QUESTIONS.length);
+  }
+
+  if (done) return (
+    <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderRadius: 14, padding: "28px 24px", textAlign: "center", boxShadow: "0 2px 8px rgba(61,93,145,.05)" }}>
+      <div style={{ animation: "fp-float 2.5s ease-in-out infinite", display: "inline-block", marginBottom: 16 }}>
+        <PathySVG size={72} />
+      </div>
+      <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 10 }}>¡Excelente explicación, piloto!</div>
+      <p style={{ fontSize: 13.5, color: "#666", lineHeight: 1.65, marginBottom: 20 }}>
+        Respondiste {pathyResponses.length} preguntas de Pathy. La capacidad de explicar un concepto es la prueba definitiva de que lo dominas para el CIAAC.
+      </p>
+      <button onClick={onNext}
+        style={{ background: "linear-gradient(135deg, #3D5D91, #5A86CB)", color: "white", border: "none", borderRadius: 12, padding: "13px 28px", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
+        Continuar →
+      </button>
+    </div>
+  );
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      {/* Progress */}
+      <div style={{ display: "flex", gap: 6 }}>
+        {PATHY_QUESTIONS.map((_, i) => (
+          <div key={i} style={{ flex: 1, height: 4, borderRadius: 99, background: i < pathyStep ? "#3D5D91" : i === pathyStep ? "#5A86CB" : "rgba(61,93,145,.1)" }} />
+        ))}
+      </div>
+
+      {/* Pathy question */}
+      <div style={{ background: "linear-gradient(135deg, #1a1a2e, #0d1f38)", borderRadius: 14, padding: "18px 20px", display: "flex", gap: 14, alignItems: "flex-start" }}>
+        <div style={{ flexShrink: 0, animation: "fp-float 2.5s ease-in-out infinite" }}>
+          <PathySVG size={48} overlay />
+        </div>
+        <div>
+          <div style={{ fontSize: 10, color: "rgba(255,255,255,.4)", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 8 }}>Pathy pregunta ({pathyStep + 1}/{PATHY_QUESTIONS.length})</div>
+          <p style={{ fontSize: 14.5, color: "rgba(255,255,255,.85)", lineHeight: 1.65 }}>{q}</p>
+        </div>
+      </div>
+
+      {/* Previous responses */}
+      {pathyResponses.length > 0 && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          {pathyResponses.map((r, i) => (
+            <div key={i} style={{ background: "#f8f9fc", border: "1px solid rgba(61,93,145,.1)", borderRadius: 10, padding: "12px 14px", fontSize: 13.5, color: "#444", lineHeight: 1.6, opacity: 0.65 }}>
+              <span style={{ fontSize: 10.5, fontWeight: 700, color: "#aaa", textTransform: "uppercase", marginRight: 8 }}>Tu respuesta {i + 1}:</span>
+              {r}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Input */}
+      <div style={{ background: "white", border: "1px solid rgba(61,93,145,.12)", borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 8px rgba(61,93,145,.05)" }}>
+        <textarea
+          value={pathyInput}
+          onChange={e => setPathyInput(e.target.value)}
+          placeholder="Explícale a Pathy con tus propias palabras..."
+          rows={5}
+          style={{ width: "100%", border: "none", padding: "16px 18px", fontSize: 14, color: "#1a1a2e", fontFamily: "'DM Sans', sans-serif", resize: "none", background: "transparent", outline: "none", lineHeight: 1.7, boxSizing: "border-box" }}
+        />
+        <div style={{ padding: "10px 14px", borderTop: "1px solid rgba(61,93,145,.08)", display: "flex", justifyContent: "flex-end" }}>
+          <button onClick={submit}
+            style={{ background: "#3D5D91", color: "white", border: "none", borderRadius: 8, padding: "9px 20px", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
+            Enviar respuesta →
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Descanso ── */
+function DescansoView({ actMinRem }: SesionProps) {
+  const tips = [
+    "Levántate de la silla y camina 2 minutos — activa la circulación.",
+    "Toma agua. La hidratación mejora la concentración hasta un 20%.",
+    "Mira a 6 metros de distancia durante 30 segundos — descansa tus ojos.",
+    "Respira profundo: 4 segundos inhala, 7 retienes, 8 exhalas.",
+    "Estira cuello y hombros — la postura afecta tu concentración.",
+  ];
+  const tip = tips[Math.floor(Date.now() / 10000) % tips.length];
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      <div style={{ background: "white", border: "1px solid rgba(5,150,105,.2)", borderRadius: 16, padding: "28px 24px", textAlign: "center", boxShadow: "0 2px 12px rgba(5,150,105,.08)" }}>
+        <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "3.5rem", fontWeight: 700, color: "#059669", letterSpacing: -2, lineHeight: 1 }}>
+          {pad(Math.floor(actMinRem / 60))}:{pad(actMinRem % 60)}
+        </div>
+        <div style={{ fontSize: 13, color: "#059669", opacity: .65, marginTop: 6, letterSpacing: ".08em" }}>ESCALA TÉCNICA — DESCANSA</div>
+      </div>
+
+      <div style={{ background: "linear-gradient(135deg, #059669, #10b981)", borderRadius: 14, padding: "18px 20px", display: "flex", gap: 14, alignItems: "flex-start" }}>
+        <div style={{ animation: "fp-float 2.5s ease-in-out infinite", flexShrink: 0 }}>
+          <PathySVG size={44} overlay />
+        </div>
+        <div>
+          <div style={{ fontSize: 10, color: "rgba(255,255,255,.5)", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 6 }}>Pathy recomienda</div>
+          <p style={{ fontSize: 14, color: "rgba(255,255,255,.9)", lineHeight: 1.65, fontWeight: 500 }}>{tip}</p>
+        </div>
+      </div>
+
+      <div style={{ background: "#f0fdf4", border: "1px solid #86efac", borderRadius: 12, padding: "14px 16px", fontSize: 13, color: "#166534", lineHeight: 1.65 }}>
+        Las escalas técnicas no son tiempo perdido — son cuando tu cerebro consolida lo que acaba de aprender. Honra la pausa y el siguiente vuelo será más efectivo.
+      </div>
+    </div>
+  );
+}
+
+/* ── Debriefing ── */
+function DebriefingView({ debriefing, setDebriefing, onNext }: SesionProps) {
+  const questions = [
+    { key: "aprendiste" as const, label: "¿Qué aprendiste hoy?", placeholder: "Los conceptos, ideas o conexiones que se quedaron contigo..." },
+    { key: "dificil" as const, label: "¿Qué fue difícil o quedó sin entender?", placeholder: "Lo que se me resistió, lo que me generó duda..." },
+    { key: "repasar" as const, label: "¿Qué necesito repasar mañana?", placeholder: "Los temas específicos que debo reforzar en la próxima sesión..." },
+  ];
+  const allFilled = debriefing.aprendiste && debriefing.dificil && debriefing.repasar;
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      <div style={{ display: "flex", gap: 14, alignItems: "flex-start", background: "linear-gradient(135deg, #7c3aed, #a855f7)", borderRadius: 14, padding: "18px 20px" }}>
+        <div style={{ animation: "fp-float 2.5s ease-in-out infinite", flexShrink: 0 }}>
+          <PathySVG size={44} overlay />
+        </div>
+        <div>
+          <div style={{ fontSize: 10, color: "rgba(255,255,255,.5)", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 6 }}>Debriefing — Cierre de vuelo</div>
+          <p style={{ fontSize: 13.5, color: "rgba(255,255,255,.85)", lineHeight: 1.65 }}>
+            Este es el momento más importante de la sesión. La reflexión post-vuelo consolida lo que aprendiste y define tu próxima misión.
+          </p>
+        </div>
+      </div>
+
+      {questions.map(q => (
+        <div key={q.key} style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderRadius: 14, padding: "18px 20px", boxShadow: "0 2px 8px rgba(61,93,145,.05)" }}>
+          <label style={{ display: "block", fontSize: 13, fontWeight: 700, color: "#1a1a2e", marginBottom: 10 }}>{q.label}</label>
+          <textarea
+            value={debriefing[q.key]}
+            onChange={e => setDebriefing({ ...debriefing, [q.key]: e.target.value })}
+            placeholder={q.placeholder}
+            rows={3}
+            style={{ width: "100%", border: "1.5px solid rgba(61,93,145,.12)", borderRadius: 8, padding: "11px 14px", fontSize: 13.5, color: "#1a1a2e", fontFamily: "'DM Sans', sans-serif", resize: "none", background: "#fafbfd", outline: "none", lineHeight: 1.65, boxSizing: "border-box" }}
+            onFocus={e => { e.target.style.borderColor = "#7c3aed"; }}
+            onBlur={e => { e.target.style.borderColor = "rgba(61,93,145,.12)"; }}
+          />
+        </div>
+      ))}
+
+      <button onClick={onNext} disabled={!allFilled}
+        style={{ background: allFilled ? "linear-gradient(135deg, #7c3aed, #a855f7)" : "rgba(61,93,145,.1)", color: allFilled ? "white" : "#aaa", border: "none", borderRadius: 12, padding: "14px", fontSize: 14.5, fontWeight: 700, cursor: allFilled ? "pointer" : "not-allowed", fontFamily: "'DM Sans', sans-serif", transition: "all .2s" }}>
+        {allFilled ? "Guardar en bitácora y aterrizar ✈️" : "Completa las 3 preguntas para continuar"}
+      </button>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   COMPLETADO SCREEN
+═══════════════════════════════════════════════════════════ */
+function CompletadoScreen({ plan, totalElapsed, debriefing, setDebriefing, ciaacResults, fcCorrect, onRestart }: {
+  plan: PlanActivity[]; totalElapsed: number;
+  debriefing: { aprendiste: string; dificil: string; repasar: string };
+  setDebriefing: (v: { aprendiste: string; dificil: string; repasar: string }) => void;
+  ciaacResults: { correct: boolean }[]; fcCorrect: boolean[];
+  onRestart: () => void;
+}) {
+  const vuelos = plan.filter(a => a.type === "vuelo").length;
+  const ciaacScore = ciaacResults.length > 0 ? Math.round((ciaacResults.filter(r => r.correct).length / ciaacResults.length) * 100) : null;
+  const fcScore = fcCorrect.length > 0 ? Math.round((fcCorrect.filter(Boolean).length / fcCorrect.length) * 100) : null;
+
+  return (
+    <div style={{ fontFamily: "'DM Sans', sans-serif", maxWidth: 700, margin: "0 auto" }}>
+      {/* Hero */}
+      <div style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #0d1f38 100%)", borderRadius: 20, padding: "32px 28px", marginBottom: 20, color: "white", textAlign: "center" }}>
+        <div style={{ animation: "fp-float 2.5s ease-in-out infinite", display: "inline-block", marginBottom: 16 }}>
+          <PathySVG size={80} overlay />
+        </div>
+        <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "2rem", fontWeight: 700, lineHeight: 1.2, marginBottom: 12 }}>
+          ¡Aterrizaje exitoso! ✈️
+        </div>
+        <p style={{ fontSize: 14.5, color: "rgba(255,255,255,.65)", lineHeight: 1.65 }}>
+          Completaste {vuelos} vuelo{vuelos !== 1 ? "s" : ""} de estudio · {pad(Math.floor(totalElapsed / 60))}:{pad(totalElapsed % 60)} de sesión
+        </p>
+
+        {/* Stats */}
+        <div style={{ display: "flex", gap: 1, marginTop: 24, background: "rgba(255,255,255,.05)", borderRadius: 12, overflow: "hidden" }}>
+          {[
+            { label: "Minutos", value: `${Math.floor(totalElapsed / 60)}`, icon: "⏱️" },
+            ciaacScore !== null ? { label: "CIAAC score", value: `${ciaacScore}%`, icon: "✈️" } : null,
+            fcScore !== null ? { label: "Flashcards", value: `${fcScore}%`, icon: "🃏" } : null,
+            { label: "Vuelos", value: String(vuelos), icon: "📚" },
+          ].filter(Boolean).map((s, i) => (
+            <div key={i} style={{ flex: 1, padding: "16px 8px", borderRight: i < 3 ? "1px solid rgba(255,255,255,.07)" : "none", textAlign: "center" }}>
+              <div style={{ fontSize: 18 }}>{s!.icon}</div>
+              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 700, color: "white", marginTop: 4 }}>{s!.value}</div>
+              <div style={{ fontSize: 10.5, color: "rgba(255,255,255,.35)", marginTop: 2 }}>{s!.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Debriefing summary */}
+      {(debriefing.aprendiste || debriefing.dificil || debriefing.repasar) && (
+        <div style={{ background: "white", border: "1px solid rgba(61,93,145,.1)", borderRadius: 16, padding: "20px 22px", marginBottom: 16, boxShadow: "0 2px 12px rgba(61,93,145,.06)" }}>
+          <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 16 }}>📋 Tu bitácora de vuelo</div>
+          {[
+            { label: "Aprendiste", text: debriefing.aprendiste, color: "#3D5D91" },
+            { label: "Fue difícil", text: debriefing.dificil, color: "#d97706" },
+            { label: "Repasar mañana", text: debriefing.repasar, color: "#7c3aed" },
+          ].filter(r => r.text).map(r => (
+            <div key={r.label} style={{ padding: "12px 0", borderBottom: "1px solid rgba(61,93,145,.07)" }}>
+              <div style={{ fontSize: 10.5, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: r.color, marginBottom: 5 }}>{r.label}</div>
+              <p style={{ fontSize: 13.5, color: "#444", lineHeight: 1.6 }}>{r.text}</p>
+            </div>
+          ))}
+          <div style={{ marginTop: 12, padding: "10px 14px", background: "#f0fdf4", border: "1px solid #86efac", borderRadius: 8, fontSize: 12.5, color: "#166534", fontWeight: 500 }}>
+            ✓ Guardado en tu Bitácora de vuelo
+          </div>
+        </div>
+      )}
+
+      {/* CTAs */}
+      <div style={{ display: "flex", gap: 10 }}>
+        <button onClick={onRestart}
+          style={{ flex: 1, background: "white", border: "2px solid #3D5D91", borderRadius: 14, padding: "15px", fontSize: 14.5, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", color: "#3D5D91", transition: "all .2s" }}
+          onMouseEnter={e => { e.currentTarget.style.background = "#e8eef7"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "white"; }}>
+          ✈️ Nueva sesión
+        </button>
+        <button onClick={() => { window.location.href = "/dashboard/banco"; }}
+          style={{ flex: 1, background: "linear-gradient(135deg, #3D5D91 0%, #5A86CB 100%)", color: "white", border: "none", borderRadius: 14, padding: "15px", fontSize: 14.5, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", boxShadow: "0 6px 20px rgba(61,93,145,.3)", transition: "opacity .2s" }}
+          onMouseEnter={e => { e.currentTarget.style.opacity = ".9"; }}
+          onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}>
+          Ir al Cuestionario CIAAC →
+        </button>
+      </div>
     </div>
   );
 }
