@@ -150,3 +150,9 @@
     color: var(--color-foreground);
   }
 }
+
+/* FlightPath global animations — needed by the floating timer widget on all routes */
+@keyframes fp-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+@keyframes fp-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+@keyframes fp-fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes fp-slideUp { from{transform:translateY(14px);opacity:0} to{transform:translateY(0);opacity:1} }
