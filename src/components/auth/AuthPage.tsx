@@ -28,7 +28,7 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
 
   function handleRegister() {
     setLoading(true);
-    setTimeout(() => navigate({ to: "/dashboard" }), 800);
+    setTimeout(() => { window.location.href = "/dashboard"; }, 800);
   }
 
   return (
@@ -168,7 +168,7 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
 
   function handleLogin() {
     setLoading(true);
-    setTimeout(() => navigate({ to: "/dashboard" }), 800);
+    setTimeout(() => { window.location.href = "/dashboard"; }, 800);
   }
 
   return (
