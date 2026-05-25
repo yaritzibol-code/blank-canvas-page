@@ -147,7 +147,7 @@ function secToHM(sec: number): string {
 
 type Phase = "warning" | "exam" | "result" | "review";
 
-export default function SimuladorPage() {
+function SimuladorPage() {
   const [phase, setPhase] = useState<Phase>("warning");
   const [agreed, setAgreed] = useState(false);
   const [questions, setQuestions] = useState<QState[]>(buildQuestions);
