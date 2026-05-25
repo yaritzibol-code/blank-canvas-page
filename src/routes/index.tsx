@@ -188,6 +188,12 @@ function Navbar() {
           <a href="#precios" className="hover:text-[#3D5D91] transition-colors">
             Precios
           </a>
+          <Link to="/dashboard" className="hover:text-[#3D5D91] transition-colors">
+            Dashboard
+          </Link>
+          <Link to="/simulador" className="hover:text-[#3D5D91] transition-colors">
+            Simulador
+          </Link>
         </div>
 
         <div className="hidden md:flex items-center gap-3">
@@ -202,6 +208,7 @@ function Navbar() {
             </Button>
           </Link>
         </div>
+
 
         <button
           className="md:hidden p-2 text-slate-600"
