@@ -42,11 +42,12 @@ interface TimerState {
   rem: number; isWork: boolean; curCycle: number; running: boolean;
   workSecs: number; breakSecs: number; totalCycles: number; techIdx: number;
   visible: boolean; smiling: boolean; timerLabel: string; floatLabel: string;
+  activeSubject: string; activeTopic: string; sessionObjective: string; todaySecs: number;
 }
 interface TimerCtx extends TimerState {
   toast: string | null;
   selectTech: (idx: number) => void;
-  startSession: (floatLabel: string) => void;
+  startSession: (floatLabel: string, subject?: string, topic?: string, objective?: string) => void;
   toggleTimer: () => void;
   resetTimer: () => void;
   skipPhase: () => void;
@@ -60,6 +61,10 @@ const INIT: TimerState = {
   visible: false, smiling: true,
   timerLabel: "🍅 Pomodoro seleccionado · ¡Dale play para arrancar!",
   floatLabel: "Meteorología · Pomodoro",
+  activeSubject: "Meteorología",
+  activeTopic: "Tema 5: Tipos de nubes",
+  sessionObjective: "Repasar el material de hoy",
+  todaySecs: 0,
 };
 
 const TimerCtx = createContext<TimerCtx>(null!);
@@ -100,7 +105,8 @@ export function TimerProvider({ children }: { children: ReactNode }) {
       return;
     }
     t.rem--;
-    setS(p => ({ ...p, rem: t.rem }));
+    if (t.isWork) t.todaySecs++;
+    setS(p => ({ ...p, rem: t.rem, todaySecs: t.todaySecs }));
   }
   tickRef.current = tick; // always up-to-date
 
@@ -114,10 +120,11 @@ export function TimerProvider({ children }: { children: ReactNode }) {
     showToast(d.name + " seleccionada ✓");
   }
 
-  function startSession(floatLabel: string) {
+  function startSession(floatLabel: string, subject = "Meteorología", topic = "Tema 5: Tipos de nubes", objective = "Repasar el material de hoy") {
     T.current.running = true; T.current.visible = true;
     T.current.rem = T.current.workSecs; T.current.isWork = true; T.current.curCycle = 0;
-    setS(p => ({ ...p, running: true, visible: true, rem: T.current.workSecs, isWork: true, curCycle: 0, smiling: true, timerLabel: "🔴 Sesión activa", floatLabel }));
+    T.current.activeSubject = subject; T.current.activeTopic = topic;
+    setS(p => ({ ...p, running: true, visible: true, rem: T.current.workSecs, isWork: true, curCycle: 0, smiling: true, timerLabel: "🔴 Sesión activa", floatLabel, activeSubject: subject, activeTopic: topic, sessionObjective: objective }));
     startIv();
   }
 
@@ -153,7 +160,7 @@ export function TimerProvider({ children }: { children: ReactNode }) {
   function toggleFloat() {
     T.current.running = !T.current.running;
     const r = T.current.running;
-    setS(p => ({ ...p, running: r }));
+    setS(p => ({ ...p, running: r, timerLabel: r ? "🔴 Sesión activa" : "⏸ En pausa" }));
     if (r) startIv(); else { clearInterval(ivRef.current!); ivRef.current = null; }
   }
 
@@ -161,48 +168,115 @@ export function TimerProvider({ children }: { children: ReactNode }) {
     clearInterval(ivRef.current!); ivRef.current = null;
     T.current.running = false; T.current.visible = false;
     setS(p => ({ ...p, running: false, visible: false, timerLabel: "⏸ Timer cerrado" }));
-    showToast("Timer cerrado · Tu progreso se guardó 💾");
+    showToast("Sesión finalizada · Tu progreso se guardó 💾");
   }
 
   useEffect(() => () => { clearInterval(ivRef.current!); }, []);
+
+  /* progress bar computation (% of current phase elapsed) */
+  const phaseDur = s.isWork ? s.workSecs : s.breakSecs;
+  const progressPct = Math.min(100, ((phaseDur - s.rem) / phaseDur) * 100);
 
   return (
     <TimerCtx.Provider value={{ ...s, toast, selectTech, startSession, toggleTimer, resetTimer, skipPhase, toggleFloat, closeFloat }}>
       {children}
 
-      {/* ── FLOATING TIMER (persists across all dashboard routes) ── */}
+      {/* ── FLOATING WIDGET — persists across all dashboard routes ── */}
       {s.visible && (
-        <div style={{ position: "fixed", bottom: 24, right: 24, background: "#3D5D91", borderRadius: 18, padding: "12px 18px", display: "flex", alignItems: "center", gap: 14, zIndex: 250, minWidth: 240, boxShadow: "0 8px 32px rgba(61,93,145,.35)", fontFamily: "'DM Sans', sans-serif" }}>
-          <div style={{ animation: "fp-float 2s ease-in-out infinite", flexShrink: 0 }}>
-            <PathySVG size={38} overlay smiling={s.smiling} />
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => { window.location.href = "/dashboard/estudiemos"; }}
+          style={{
+            position: "fixed", bottom: 24, right: 24,
+            background: "linear-gradient(160deg, #1e2d4a 0%, #1a1a2e 100%)",
+            borderRadius: 20, padding: "14px 16px",
+            display: "flex", alignItems: "center", gap: 12,
+            zIndex: 250, width: 310,
+            boxShadow: "0 12px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.07)",
+            fontFamily: "'DM Sans', sans-serif",
+            cursor: "pointer",
+          }}
+        >
+          {/* Pathy mascot */}
+          <div style={{ flexShrink: 0, animation: "fp-float 2.5s ease-in-out infinite" }}>
+            <PathySVG size={46} overlay smiling={s.smiling} />
           </div>
-          <div>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, fontWeight: 900, color: "white", letterSpacing: -.5, lineHeight: 1 }}>
+
+          {/* Timer info */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 30, fontWeight: 900, color: "white", letterSpacing: -1, lineHeight: 1 }}>
               {pad(Math.floor(s.rem / 60))}:{pad(s.rem % 60)}
             </div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,.7)", marginTop: 2, display: "flex", alignItems: "center", gap: 5 }}>
-              <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", animation: "fp-pulse 1.5s ease infinite" }} />
-              {s.floatLabel}
+            <div style={{ fontSize: 11, color: "rgba(255,255,255,.55)", marginTop: 3, display: "flex", alignItems: "center", gap: 5 }}>
+              <div style={{
+                width: 6, height: 6, borderRadius: "50%", flexShrink: 0,
+                background: s.running ? "#4ade80" : "#fbbf24",
+                animation: s.running ? "fp-pulse 1.5s ease infinite" : "none",
+              }} />
+              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                {s.floatLabel}
+              </span>
+            </div>
+            {/* Phase progress bar */}
+            <div style={{ marginTop: 8, height: 3, background: "rgba(255,255,255,.12)", borderRadius: 99, overflow: "hidden" }}>
+              <div style={{
+                height: "100%", borderRadius: 99,
+                width: `${progressPct}%`,
+                background: s.isWork ? "#5A86CB" : "#4ade80",
+                transition: "width 1s linear",
+              }} />
+            </div>
+            <div style={{ marginTop: 5, fontSize: 10, color: "rgba(255,255,255,.3)", display: "flex", justifyContent: "space-between" }}>
+              <span>{s.isWork ? "Enfoque" : "Descanso"}</span>
+              <span>Ciclo {s.curCycle + 1}/{s.totalCycles}</span>
             </div>
           </div>
-          <div style={{ display: "flex", gap: 6, marginLeft: "auto" }}>
-            <button onClick={toggleFloat} title={s.running ? "Pausar" : "Reanudar"}
-              style={{ background: "rgba(255,255,255,.15)", border: "none", borderRadius: 9, width: 30, height: 30, cursor: "pointer", color: "white", display: "flex", alignItems: "center", justifyContent: "center" }}>
+
+          {/* Controls — stopPropagation so clicks don't navigate */}
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }}
+            onClick={e => e.stopPropagation()}
+          >
+            <button
+              onClick={toggleFloat}
+              title={s.running ? "Pausar" : "Reanudar"}
+              style={{
+                background: "rgba(255,255,255,.12)", border: "none", borderRadius: 9,
+                width: 34, height: 34, cursor: "pointer", color: "white",
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}
+            >
               {s.running
-                ? <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-                : <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>}
+                ? <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                : <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>}
             </button>
-            <button onClick={closeFloat} title="Cerrar timer"
-              style={{ background: "rgba(255,255,255,.15)", border: "none", borderRadius: 9, width: 30, height: 30, cursor: "pointer", color: "white", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            <button
+              onClick={closeFloat}
+              title="Finalizar sesión"
+              style={{
+                background: "rgba(220,38,38,.15)", border: "1px solid rgba(220,38,38,.3)", borderRadius: 9,
+                width: 34, height: 34, cursor: "pointer", color: "#f87171",
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}
+            >
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
             </button>
           </div>
         </div>
       )}
 
-      {/* ── TOAST (persists across all dashboard routes) ── */}
+      {/* ── TOAST ── */}
       {toast && (
-        <div style={{ position: "fixed", bottom: s.visible ? 110 : 30, left: "50%", transform: "translateX(-50%)", background: "#1a1a2e", color: "white", padding: "10px 22px", borderRadius: 8, fontSize: 13, fontWeight: 500, pointerEvents: "none", whiteSpace: "nowrap", zIndex: 400, transition: "bottom .3s" }}>
+        <div style={{
+          position: "fixed", bottom: s.visible ? 120 : 30, left: "50%", transform: "translateX(-50%)",
+          background: "#1a1a2e", color: "white", padding: "10px 22px",
+          borderRadius: 8, fontSize: 13, fontWeight: 500, pointerEvents: "none",
+          whiteSpace: "nowrap", zIndex: 400, transition: "bottom .3s",
+          boxShadow: "0 4px 16px rgba(0,0,0,.3)",
+        }}>
           {toast}
         </div>
       )}

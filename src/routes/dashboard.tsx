@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TimerProvider } from "../contexts/StudyTimerContext";
 
 export const Route = createFileRoute("/dashboard")({
@@ -200,7 +200,13 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
 
 function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [radarN, setRadarN] = useState(47);
   const location = useLocation();
+
+  useEffect(() => {
+    const iv = setInterval(() => setRadarN(n => Math.max(30, Math.min(80, n + Math.floor(Math.random() * 5) - 2))), 4000);
+    return () => clearInterval(iv);
+  }, []);
 
   const isSubjectDetail = /^\/dashboard\/materias\/.+/.test(location.pathname);
 
@@ -336,6 +342,26 @@ function DashboardLayout() {
                 >
                   MG
                 </div>
+              </div>
+            </div>
+
+            {/* Radar Bar — global across all dashboard pages */}
+            <div style={{
+              background: "#3D5D91", color: "white",
+              padding: "7px 32px",
+              display: "flex", alignItems: "center", justifyContent: "space-between",
+              fontSize: 12.5, fontWeight: 500,
+              fontFamily: "'DM Sans', sans-serif",
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4ade80", flexShrink: 0, animation: "fp-pulse 1.5s ease infinite" }} />
+                <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 15, fontWeight: 700 }}>{radarN}</span>
+                <span>pilotos estudiando ahora mismo</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 16, opacity: .85 }}>
+                <span>✈️ Materia más activa: <strong>Meteorología</strong></span>
+                <span style={{ opacity: .6 }}>|</span>
+                <span>Promedio de sesión: <strong>47 min</strong></span>
               </div>
             </div>
 

@@ -32,7 +32,6 @@ function EstudemosJuntosPage() {
   const [tab, setTab] = useState<"tecnicas" | "yaris">("tecnicas");
   const [modalOpen, setModalOpen] = useState(false);
   const [music, setMusic] = useState("silencio");
-  const [radarN, setRadarN] = useState(47);
   const [pathyKey, setPathyKey] = useState<"meteo" | "fh" | "nav">("meteo");
 
   // Yaris chat
@@ -52,10 +51,17 @@ function EstudemosJuntosPage() {
     timer.toggleTimer();
   }
 
+  const SUBJECT_MAP: Record<"meteo" | "fh" | "nav", { name: string; topic: string; emoji: string }> = {
+    meteo: { name: "Meteorología",     topic: "Tema 5: Tipos de nubes",         emoji: "🌤" },
+    fh:    { name: "Factores Humanos", topic: "Cap. 3: Modelo IMSAFE",           emoji: "🧠" },
+    nav:   { name: "Navegación",       topic: "Navegación instrumental básica",  emoji: "🗺️" },
+  };
+
   function irA(dest: string) {
     setModalOpen(false);
     const techShort = TECH_DATA[timer.techIdx].title;
-    timer.startSession("Meteorología · " + techShort);
+    const subj = SUBJECT_MAP[pathyKey];
+    timer.startSession(`${subj.emoji} ${subj.name} · ${techShort}`, subj.name, subj.topic);
     const msgs: Record<string, string> = {
       materia: "📖 Yendo al tema activo — el timer corre mientras estudias",
       flashcards: "🃏 Abriendo flashcards — el timer flotante te acompaña",
@@ -88,11 +94,6 @@ function EstudemosJuntosPage() {
 
   /* ── EFFECTS ── */
   useEffect(() => {
-    const iv = setInterval(() => setRadarN(n => Math.max(30, Math.min(80, n + Math.floor(Math.random() * 5) - 2))), 4000);
-    return () => clearInterval(iv);
-  }, []);
-
-  useEffect(() => {
     yarisEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [yarisMessages, yarisTyping]);
 
@@ -119,16 +120,6 @@ function EstudemosJuntosPage() {
         .sc-pill-btn:hover{border-color:#3D5D91!important;color:#3D5D91!important;background:#e8eef7!important}
         .pathy-cta-btn:hover{background:#2a4068!important}
       `}</style>
-
-      {/* ── RADAR BAR ── */}
-      <div style={{ background: "#3D5D91", color: "white", padding: "8px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 12.5, fontWeight: 500, borderRadius: 12, marginBottom: 16 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div className="radar-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#4ade80", flexShrink: 0 }} />
-          <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 16, fontWeight: 700 }}>{radarN}</span>
-          <span>pilotos estudiando ahora mismo</span>
-        </div>
-        <span style={{ fontSize: 11.5, opacity: .75 }}>Materia más activa: Meteorología</span>
-      </div>
 
       {/* ── TAB BAR ── */}
       <div style={{ background: "white", borderBottom: "1px solid rgba(61,93,145,.12)", display: "flex", borderRadius: "12px 12px 0 0", overflow: "hidden" }}>
@@ -243,6 +234,94 @@ function EstudemosJuntosPage() {
               ))}
             </div>
           </div>
+
+          {/* ── ACTIVE SESSION PANEL — appears once session starts ── */}
+          {timer.visible && (
+            <div style={{ background: "white", border: "1px solid rgba(61,93,145,.12)", borderRadius: 14, padding: 20, marginTop: 16, boxShadow: "0 2px 12px rgba(61,93,145,.06)", animation: "fp-slideUp .3s ease" }}>
+              {/* Header */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: timer.running ? "#4ade80" : "#fbbf24", animation: timer.running ? "fp-pulse 1.5s ease infinite" : "none" }} />
+                  <span style={{ fontSize: 11, fontWeight: 700, color: timer.running ? "#166534" : "#92400e", textTransform: "uppercase", letterSpacing: ".08em" }}>
+                    {timer.running ? "Sesión activa" : "Sesión en pausa"}
+                  </span>
+                </div>
+                <span style={{ fontSize: 11, color: "#aaa" }}>
+                  {TECH_DATA[timer.techIdx].name} · {timer.isWork ? "Fase de enfoque" : "Descanso activo"}
+                </span>
+              </div>
+
+              {/* Stats grid */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10, marginBottom: 16 }}>
+                {/* Subject */}
+                <div style={{ background: "#e8eef7", borderRadius: 10, padding: "12px 14px" }}>
+                  <div style={{ fontSize: 10, color: "#3D5D91", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4 }}>Materia</div>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: "#1a1a2e" }}>{SUBJECT_MAP[pathyKey].emoji} {timer.activeSubject}</div>
+                </div>
+                {/* Topic */}
+                <div style={{ background: "#f8f7f4", borderRadius: 10, padding: "12px 14px" }}>
+                  <div style={{ fontSize: 10, color: "#888", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4 }}>Tema</div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: "#1a1a2e", lineHeight: 1.3 }}>{timer.activeTopic}</div>
+                </div>
+                {/* Objective */}
+                <div style={{ background: "#fdf3ea", borderRadius: 10, padding: "12px 14px" }}>
+                  <div style={{ fontSize: 10, color: "#8a4a10", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4 }}>Objetivo</div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: "#1a1a2e" }}>{timer.sessionObjective}</div>
+                </div>
+                {/* Today time */}
+                <div style={{ background: "#f0fdf4", borderRadius: 10, padding: "12px 14px" }}>
+                  <div style={{ fontSize: 10, color: "#166534", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4 }}>Tiempo de enfoque hoy</div>
+                  <div style={{ fontSize: 20, fontFamily: "'Playfair Display', serif", fontWeight: 700, color: "#166534" }}>
+                    {pad(Math.floor(timer.todaySecs / 60))}:{pad(timer.todaySecs % 60)}
+                  </div>
+                </div>
+                {/* Cycles */}
+                <div style={{ gridColumn: "span 2", background: "#f8f7f4", borderRadius: 10, padding: "12px 14px", display: "flex", alignItems: "center", gap: 14 }}>
+                  <div>
+                    <div style={{ fontSize: 10, color: "#888", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 6 }}>Ciclos completados</div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      {Array.from({ length: Math.min(timer.totalCycles, 6) }).map((_, i) => (
+                        <div key={i} style={{
+                          width: 14, height: 14, borderRadius: "50%", transition: "background .3s",
+                          background: i < timer.curCycle ? "#3D5D91" : i === timer.curCycle ? "#6C0820" : "rgba(61,93,145,.12)",
+                        }} />
+                      ))}
+                      <span style={{ fontSize: 12, color: "#888", marginLeft: 4 }}>{timer.curCycle} / {timer.totalCycles}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick access */}
+              <div style={{ borderTop: "1px solid rgba(61,93,145,.12)", paddingTop: 14 }}>
+                <div style={{ fontSize: 10, fontWeight: 700, color: "#aaa", textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 10 }}>Acceso rápido</div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
+                  {[
+                    { icon: "📖", label: "Abrir tema",    path: "/dashboard/materias" },
+                    { icon: "🃏", label: "Flashcards",    path: "/dashboard/flashcards" },
+                    { icon: "❓", label: "Cuestionario",  path: "/dashboard/banco" },
+                    { icon: "📝", label: "Tomar notas",   path: "/dashboard/bitacora" },
+                  ].map(a => (
+                    <button
+                      key={a.label}
+                      onClick={() => { window.location.href = a.path; }}
+                      style={{
+                        background: "#f8f7f4", border: "1.5px solid rgba(61,93,145,.12)", borderRadius: 10,
+                        padding: "12px 8px", cursor: "pointer", display: "flex", flexDirection: "column",
+                        alignItems: "center", gap: 5, fontSize: 11.5, color: "#888",
+                        fontFamily: "'DM Sans', sans-serif", fontWeight: 500, transition: "all .2s",
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = "#3D5D91"; e.currentTarget.style.color = "#3D5D91"; e.currentTarget.style.background = "#e8eef7"; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(61,93,145,.12)"; e.currentTarget.style.color = "#888"; e.currentTarget.style.background = "#f8f7f4"; }}
+                    >
+                      <span style={{ fontSize: 20 }}>{a.icon}</span>
+                      <span style={{ textAlign: "center", lineHeight: 1.3 }}>{a.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
