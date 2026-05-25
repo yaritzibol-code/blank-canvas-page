@@ -898,7 +898,7 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef 
   onInput: (v: string) => void;
   onSend: () => void;
   onClose: () => void;
-  msgsEndRef: React.RefObject<HTMLDivElement>;
+  msgsEndRef: React.RefObject<HTMLDivElement | null>;
 }) {
   return (
     <>
