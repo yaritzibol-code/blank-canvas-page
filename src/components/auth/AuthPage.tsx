@@ -26,14 +26,13 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  function handleRegister() {
     setLoading(true);
-    setTimeout(() => navigate({ to: "/dashboard" }), 1000);
+    setTimeout(() => navigate({ to: "/dashboard" }), 800);
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       {/* Free badge */}
       <div style={{
         background: "linear-gradient(135deg, #3D5D91, #5A86CB)",
@@ -144,9 +143,9 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
 
       <Divider />
 
-      <GoogleButton />
+      <GoogleButton onClick={handleRegister} />
 
-      <SubmitButton loading={loading}>Crear cuenta gratis →</SubmitButton>
+      <SubmitButton loading={loading} onClick={handleRegister}>Crear cuenta gratis →</SubmitButton>
 
       <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#aaa", marginTop: 4 }}>
         ¿Ya tienes cuenta?{" "}
@@ -158,7 +157,7 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
           Inicia sesión aquí
         </button>
       </p>
-    </form>
+    </div>
   );
 }
 
@@ -167,14 +166,13 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  function handleLogin() {
     setLoading(true);
-    setTimeout(() => navigate({ to: "/dashboard" }), 1000);
+    setTimeout(() => navigate({ to: "/dashboard" }), 800);
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
         <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "#1a1a2e" }}>
           Correo electrónico
@@ -182,7 +180,6 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
         <input
           type="email"
           placeholder="tu@correo.com"
-          required
           style={inputStyle}
           onFocus={(e) => (e.target.style.borderColor = "#3D5D91")}
           onBlur={(e) => (e.target.style.borderColor = "#F2DCDB")}
@@ -197,7 +194,6 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
           <input
             type={showPw ? "text" : "password"}
             placeholder="Tu contraseña"
-            required
             style={{ ...inputStyle, paddingRight: 44 }}
             onFocus={(e) => (e.target.style.borderColor = "#3D5D91")}
             onBlur={(e) => (e.target.style.borderColor = "#F2DCDB")}
@@ -221,11 +217,11 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
         </a>
       </div>
 
-      <SubmitButton loading={loading}>Iniciar sesión →</SubmitButton>
+      <SubmitButton loading={loading} onClick={handleLogin}>Iniciar sesión →</SubmitButton>
 
       <Divider />
 
-      <GoogleButton />
+      <GoogleButton onClick={handleLogin} />
 
       <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#aaa", marginTop: 4 }}>
         ¿No tienes cuenta?{" "}
@@ -237,7 +233,7 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
           Regístrate gratis
         </button>
       </p>
-    </form>
+    </div>
   );
 }
 
@@ -265,11 +261,12 @@ function Divider() {
   );
 }
 
-function GoogleButton() {
+function GoogleButton({ onClick }: { onClick?: () => void }) {
   const [hovered, setHovered] = useState(false);
   return (
     <button
       type="button"
+      onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -290,11 +287,12 @@ function GoogleButton() {
   );
 }
 
-function SubmitButton({ children, loading }: { children: React.ReactNode; loading: boolean }) {
+function SubmitButton({ children, loading, onClick }: { children: React.ReactNode; loading: boolean; onClick?: () => void }) {
   const [hovered, setHovered] = useState(false);
   return (
     <button
-      type="submit"
+      type="button"
+      onClick={onClick}
       disabled={loading}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
