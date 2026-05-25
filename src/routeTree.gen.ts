@@ -20,6 +20,7 @@ import { Route as DashboardRecordatoriosRouteImport } from './routes/dashboard/r
 import { Route as DashboardPerfilRouteImport } from './routes/dashboard/perfil'
 import { Route as DashboardFlashcardsRouteImport } from './routes/dashboard/flashcards'
 import { Route as DashboardClasesRouteImport } from './routes/dashboard/clases'
+import { Route as DashboardBitacoraRouteImport } from './routes/dashboard/bitacora'
 import { Route as DashboardBibliotecaRouteImport } from './routes/dashboard/biblioteca'
 import { Route as DashboardBancoRouteImport } from './routes/dashboard/banco'
 import { Route as DashboardAnalisisRouteImport } from './routes/dashboard/analisis'
@@ -82,6 +83,11 @@ const DashboardClasesRoute = DashboardClasesRouteImport.update({
   path: '/clases',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardBitacoraRoute = DashboardBitacoraRouteImport.update({
+  id: '/bitacora',
+  path: '/bitacora',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardBibliotecaRoute = DashboardBibliotecaRouteImport.update({
   id: '/biblioteca',
   path: '/biblioteca',
@@ -125,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/analisis': typeof DashboardAnalisisRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
+  '/dashboard/bitacora': typeof DashboardBitacoraRoute
   '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
@@ -143,6 +150,7 @@ export interface FileRoutesByTo {
   '/dashboard/analisis': typeof DashboardAnalisisRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
+  '/dashboard/bitacora': typeof DashboardBitacoraRoute
   '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
@@ -163,6 +171,7 @@ export interface FileRoutesById {
   '/dashboard/analisis': typeof DashboardAnalisisRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
+  '/dashboard/bitacora': typeof DashboardBitacoraRoute
   '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
@@ -184,6 +193,7 @@ export interface FileRouteTypes {
     | '/dashboard/analisis'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
+    | '/dashboard/bitacora'
     | '/dashboard/clases'
     | '/dashboard/flashcards'
     | '/dashboard/perfil'
@@ -202,6 +212,7 @@ export interface FileRouteTypes {
     | '/dashboard/analisis'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
+    | '/dashboard/bitacora'
     | '/dashboard/clases'
     | '/dashboard/flashcards'
     | '/dashboard/perfil'
@@ -221,6 +232,7 @@ export interface FileRouteTypes {
     | '/dashboard/analisis'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
+    | '/dashboard/bitacora'
     | '/dashboard/clases'
     | '/dashboard/flashcards'
     | '/dashboard/perfil'
@@ -319,6 +331,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardClasesRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/bitacora': {
+      id: '/dashboard/bitacora'
+      path: '/bitacora'
+      fullPath: '/dashboard/bitacora'
+      preLoaderRoute: typeof DashboardBitacoraRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/biblioteca': {
       id: '/dashboard/biblioteca'
       path: '/biblioteca'
@@ -368,6 +387,7 @@ interface DashboardRouteChildren {
   DashboardAnalisisRoute: typeof DashboardAnalisisRoute
   DashboardBancoRoute: typeof DashboardBancoRoute
   DashboardBibliotecaRoute: typeof DashboardBibliotecaRoute
+  DashboardBitacoraRoute: typeof DashboardBitacoraRoute
   DashboardClasesRoute: typeof DashboardClasesRoute
   DashboardFlashcardsRoute: typeof DashboardFlashcardsRoute
   DashboardPerfilRoute: typeof DashboardPerfilRoute
@@ -381,6 +401,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardAnalisisRoute: DashboardAnalisisRoute,
   DashboardBancoRoute: DashboardBancoRoute,
   DashboardBibliotecaRoute: DashboardBibliotecaRoute,
+  DashboardBitacoraRoute: DashboardBitacoraRoute,
   DashboardClasesRoute: DashboardClasesRoute,
   DashboardFlashcardsRoute: DashboardFlashcardsRoute,
   DashboardPerfilRoute: DashboardPerfilRoute,

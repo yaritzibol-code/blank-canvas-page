@@ -21,6 +21,7 @@ const NAV_SECTIONS = [
       { icon: "📖", label: "Biblioteca", path: "/dashboard/biblioteca" },
       { icon: "🃏", label: "Flashcards", path: "/dashboard/flashcards" },
       { icon: "🎬", label: "Clases grabadas", path: "/dashboard/clases" },
+      { icon: "📓", label: "Mi Bitácora", path: "/dashboard/bitacora" },
     ],
   },
   {
