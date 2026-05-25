@@ -95,7 +95,7 @@ type SwipeDir = "left" | "right" | null;
 
 /* ─── Main component ─────────────────────────────────────── */
 
-export default function FlashcardsPage() {
+function FlashcardsPage() {
   const [screen, setScreen] = useState<Screen>("materias");
   const [materiaIdx, setMateriaIdx] = useState(0);
   const [temaIdx, setTemaIdx] = useState(0);
