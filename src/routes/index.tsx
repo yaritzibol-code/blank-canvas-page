@@ -285,14 +285,17 @@ function LandingPage() {
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </Link>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-[#3D5D91] text-[#3D5D91] hover:bg-[#F2DCDB] px-8 py-6 text-base font-semibold w-full sm:w-auto"
-                >
-                  <Play className="w-4 h-4 mr-2" />
-                  Ver demo
-                </Button>
+                <Link to="/dashboard">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-[#3D5D91] text-[#3D5D91] hover:bg-[#F2DCDB] px-8 py-6 text-base font-semibold w-full sm:w-auto"
+                  >
+                    <Play className="w-4 h-4 mr-2" />
+                    Ver demo del Dashboard
+                  </Button>
+                </Link>
+
               </div>
               <div className="flex flex-wrap justify-center lg:justify-start gap-6 text-sm text-slate-500">
                 <div className="flex items-center gap-2">
