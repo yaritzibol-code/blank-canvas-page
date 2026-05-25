@@ -1,5 +1,6 @@
 import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { TimerProvider } from "../contexts/StudyTimerContext";
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardLayout,
@@ -13,7 +14,7 @@ const NAV_SECTIONS = [
       { icon: "📚", label: "Mis materias", path: "/dashboard/materias" },
       { icon: "❓", label: "Cuestionarios", path: "/dashboard/banco" },
       { icon: "📝", label: "Simulador CIAAC", path: "/simulador" },
-      { icon: "⏱️", label: "Estudiemos Juntos", path: "/estudiemos" },
+      { icon: "⏱️", label: "Estudiemos Juntos", path: "/dashboard/estudiemos" },
     ],
   },
   {
@@ -217,6 +218,7 @@ function DashboardLayout() {
   } ${now.getFullYear()}`;
 
   return (
+    <TimerProvider>
     <div
       style={{
         fontFamily: "'DM Sans', sans-serif",
@@ -345,5 +347,6 @@ function DashboardLayout() {
         )}
       </div>
     </div>
+    </TimerProvider>
   );
 }

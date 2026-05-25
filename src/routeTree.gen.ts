@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SimuladorRouteImport } from './routes/simulador'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as EstudiemosRouteImport } from './routes/estudiemos'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CuestionarioRouteImport } from './routes/cuestionario'
 import { Route as IndexRouteImport } from './routes/index'
@@ -20,6 +19,7 @@ import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as DashboardRecordatoriosRouteImport } from './routes/dashboard/recordatorios'
 import { Route as DashboardPerfilRouteImport } from './routes/dashboard/perfil'
 import { Route as DashboardFlashcardsRouteImport } from './routes/dashboard/flashcards'
+import { Route as DashboardEstudiemosRouteImport } from './routes/dashboard/estudiemos'
 import { Route as DashboardConfiguracionRouteImport } from './routes/dashboard/configuracion'
 import { Route as DashboardClasesRouteImport } from './routes/dashboard/clases'
 import { Route as DashboardBitacoraRouteImport } from './routes/dashboard/bitacora'
@@ -43,11 +43,6 @@ const RegisterRoute = RegisterRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EstudiemosRoute = EstudiemosRouteImport.update({
-  id: '/estudiemos',
-  path: '/estudiemos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -83,6 +78,11 @@ const DashboardPerfilRoute = DashboardPerfilRouteImport.update({
 const DashboardFlashcardsRoute = DashboardFlashcardsRouteImport.update({
   id: '/flashcards',
   path: '/flashcards',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardEstudiemosRoute = DashboardEstudiemosRouteImport.update({
+  id: '/estudiemos',
+  path: '/estudiemos',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardConfiguracionRoute = DashboardConfiguracionRouteImport.update({
@@ -136,7 +136,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cuestionario': typeof CuestionarioRoute
   '/dashboard': typeof DashboardRouteWithChildren
-  '/estudiemos': typeof EstudiemosRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
@@ -147,6 +146,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/bitacora': typeof DashboardBitacoraRoute
   '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/configuracion': typeof DashboardConfiguracionRoute
+  '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
@@ -157,7 +157,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cuestionario': typeof CuestionarioRoute
-  '/estudiemos': typeof EstudiemosRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
@@ -168,6 +167,7 @@ export interface FileRoutesByTo {
   '/dashboard/bitacora': typeof DashboardBitacoraRoute
   '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/configuracion': typeof DashboardConfiguracionRoute
+  '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
@@ -180,7 +180,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/cuestionario': typeof CuestionarioRoute
   '/dashboard': typeof DashboardRouteWithChildren
-  '/estudiemos': typeof EstudiemosRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
@@ -191,6 +190,7 @@ export interface FileRoutesById {
   '/dashboard/bitacora': typeof DashboardBitacoraRoute
   '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/configuracion': typeof DashboardConfiguracionRoute
+  '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
@@ -204,7 +204,6 @@ export interface FileRouteTypes {
     | '/'
     | '/cuestionario'
     | '/dashboard'
-    | '/estudiemos'
     | '/login'
     | '/register'
     | '/simulador'
@@ -215,6 +214,7 @@ export interface FileRouteTypes {
     | '/dashboard/bitacora'
     | '/dashboard/clases'
     | '/dashboard/configuracion'
+    | '/dashboard/estudiemos'
     | '/dashboard/flashcards'
     | '/dashboard/perfil'
     | '/dashboard/recordatorios'
@@ -225,7 +225,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cuestionario'
-    | '/estudiemos'
     | '/login'
     | '/register'
     | '/simulador'
@@ -236,6 +235,7 @@ export interface FileRouteTypes {
     | '/dashboard/bitacora'
     | '/dashboard/clases'
     | '/dashboard/configuracion'
+    | '/dashboard/estudiemos'
     | '/dashboard/flashcards'
     | '/dashboard/perfil'
     | '/dashboard/recordatorios'
@@ -247,7 +247,6 @@ export interface FileRouteTypes {
     | '/'
     | '/cuestionario'
     | '/dashboard'
-    | '/estudiemos'
     | '/login'
     | '/register'
     | '/simulador'
@@ -258,6 +257,7 @@ export interface FileRouteTypes {
     | '/dashboard/bitacora'
     | '/dashboard/clases'
     | '/dashboard/configuracion'
+    | '/dashboard/estudiemos'
     | '/dashboard/flashcards'
     | '/dashboard/perfil'
     | '/dashboard/recordatorios'
@@ -270,7 +270,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CuestionarioRoute: typeof CuestionarioRoute
   DashboardRoute: typeof DashboardRouteWithChildren
-  EstudiemosRoute: typeof EstudiemosRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   SimuladorRoute: typeof SimuladorRoute
@@ -298,13 +297,6 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/estudiemos': {
-      id: '/estudiemos'
-      path: '/estudiemos'
-      fullPath: '/estudiemos'
-      preLoaderRoute: typeof EstudiemosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -354,6 +346,13 @@ declare module '@tanstack/react-router' {
       path: '/flashcards'
       fullPath: '/dashboard/flashcards'
       preLoaderRoute: typeof DashboardFlashcardsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/estudiemos': {
+      id: '/dashboard/estudiemos'
+      path: '/estudiemos'
+      fullPath: '/dashboard/estudiemos'
+      preLoaderRoute: typeof DashboardEstudiemosRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/dashboard/configuracion': {
@@ -429,6 +428,7 @@ interface DashboardRouteChildren {
   DashboardBitacoraRoute: typeof DashboardBitacoraRoute
   DashboardClasesRoute: typeof DashboardClasesRoute
   DashboardConfiguracionRoute: typeof DashboardConfiguracionRoute
+  DashboardEstudiemosRoute: typeof DashboardEstudiemosRoute
   DashboardFlashcardsRoute: typeof DashboardFlashcardsRoute
   DashboardPerfilRoute: typeof DashboardPerfilRoute
   DashboardRecordatoriosRoute: typeof DashboardRecordatoriosRoute
@@ -444,6 +444,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardBitacoraRoute: DashboardBitacoraRoute,
   DashboardClasesRoute: DashboardClasesRoute,
   DashboardConfiguracionRoute: DashboardConfiguracionRoute,
+  DashboardEstudiemosRoute: DashboardEstudiemosRoute,
   DashboardFlashcardsRoute: DashboardFlashcardsRoute,
   DashboardPerfilRoute: DashboardPerfilRoute,
   DashboardRecordatoriosRoute: DashboardRecordatoriosRoute,
@@ -460,7 +461,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CuestionarioRoute: CuestionarioRoute,
   DashboardRoute: DashboardRouteWithChildren,
-  EstudiemosRoute: EstudiemosRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   SimuladorRoute: SimuladorRoute,
