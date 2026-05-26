@@ -14,13 +14,10 @@ import {
   Zap,
   Trophy,
   Users,
-  MessageSquare,
-  Shield,
   Play,
   ArrowRight,
   Sparkles,
   Target,
-  TrendingUp,
   Gift,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -188,12 +185,6 @@ function Navbar() {
           <a href="#precios" className="hover:text-[#3D5D91] transition-colors">
             Precios
           </a>
-          <Link to="/dashboard" className="hover:text-[#3D5D91] transition-colors">
-            Dashboard
-          </Link>
-          <Link to="/simulador" className="hover:text-[#3D5D91] transition-colors">
-            Simulador
-          </Link>
         </div>
 
         <div className="hidden md:flex items-center gap-3">
@@ -229,12 +220,6 @@ function Navbar() {
           <a href="#precios" className="py-2 text-slate-600 font-medium" onClick={() => setMobileOpen(false)}>
             Precios
           </a>
-          <Link to="/dashboard" className="py-2 text-slate-600 font-medium" onClick={() => setMobileOpen(false)}>
-            Dashboard
-          </Link>
-          <Link to="/simulador" className="py-2 text-slate-600 font-medium" onClick={() => setMobileOpen(false)}>
-            Simulador
-          </Link>
           <div className="flex flex-col gap-2 pt-2 border-t border-[#F2DCDB]">
             <Link to="/login" onClick={() => setMobileOpen(false)}>
               <Button variant="outline" className="w-full border-[#3D5D91] text-[#3D5D91]">
@@ -285,17 +270,16 @@ function LandingPage() {
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </Link>
-                <Link to="/dashboard">
+                <a href="#funciones">
                   <Button
                     size="lg"
                     variant="outline"
                     className="border-[#3D5D91] text-[#3D5D91] hover:bg-[#F2DCDB] px-8 py-6 text-base font-semibold w-full sm:w-auto"
                   >
                     <Play className="w-4 h-4 mr-2" />
-                    Ver demo del Dashboard
+                    Ver funciones
                   </Button>
-                </Link>
-
+                </a>
               </div>
               <div className="flex flex-wrap justify-center lg:justify-start gap-6 text-sm text-slate-500">
                 <div className="flex items-center gap-2">
