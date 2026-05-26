@@ -72,19 +72,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "FlightPath — Aprende, Domina y Vuela ✈️" },
+      { name: "description", content: "La plataforma de estudio interactiva para aprobar el examen CIAAC a la primera." },
+      { name: "author", content: "FlightPath" },
+      { property: "og:title", content: "FlightPath — Aprende, Domina y Vuela ✈️" },
+      { property: "og:description", content: "La plataforma de estudio interactiva para aprobar el examen CIAAC a la primera." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "FlightPath — Aprende, Domina y Vuela ✈️" },
+      { name: "twitter:description", content: "La plataforma de estudio interactiva para aprobar el examen CIAAC a la primera." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b671a928-2bb0-4560-b004-883c163a4e5e/id-preview-d7afc2b8--3c6f9dde-9dcd-4a00-8fe8-8fe4bbf710b1.lovable.app-1779568660138.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b671a928-2bb0-4560-b004-883c163a4e5e/id-preview-d7afc2b8--3c6f9dde-9dcd-4a00-8fe8-8fe4bbf710b1.lovable.app-1779568660138.png" },
     ],
     links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
       {
         rel: "stylesheet",
-        href: appCss,
+        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap",
       },
     ],
   }),
@@ -96,7 +102,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <head>
         <HeadContent />
       </head>

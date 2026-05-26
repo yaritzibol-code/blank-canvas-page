@@ -9,38 +9,330 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SimuladorRouteImport } from './routes/simulador'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as EstudiemosRouteImport } from './routes/estudiemos'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as CuestionarioRouteImport } from './routes/cuestionario'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as DashboardRecordatoriosRouteImport } from './routes/dashboard/recordatorios'
+import { Route as DashboardPerfilRouteImport } from './routes/dashboard/perfil'
+import { Route as DashboardFlashcardsRouteImport } from './routes/dashboard/flashcards'
+import { Route as DashboardEstudiemosRouteImport } from './routes/dashboard/estudiemos'
+import { Route as DashboardConfiguracionRouteImport } from './routes/dashboard/configuracion'
+import { Route as DashboardClasesRouteImport } from './routes/dashboard/clases'
+import { Route as DashboardBitacoraRouteImport } from './routes/dashboard/bitacora'
+import { Route as DashboardBibliotecaRouteImport } from './routes/dashboard/biblioteca'
+import { Route as DashboardBancoRouteImport } from './routes/dashboard/banco'
+import { Route as DashboardAnalisisRouteImport } from './routes/dashboard/analisis'
+import { Route as AdminPerfilRouteImport } from './routes/admin/perfil'
+import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/materias/index'
+import { Route as DashboardMateriasSubjectIdRouteImport } from './routes/dashboard/materias/$subjectId'
 
+const SimuladorRoute = SimuladorRouteImport.update({
+  id: '/simulador',
+  path: '/simulador',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstudiemosRoute = EstudiemosRouteImport.update({
+  id: '/estudiemos',
+  path: '/estudiemos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CuestionarioRoute = CuestionarioRouteImport.update({
+  id: '/cuestionario',
+  path: '/cuestionario',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardRecordatoriosRoute = DashboardRecordatoriosRouteImport.update({
+  id: '/recordatorios',
+  path: '/recordatorios',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardPerfilRoute = DashboardPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardFlashcardsRoute = DashboardFlashcardsRouteImport.update({
+  id: '/flashcards',
+  path: '/flashcards',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardEstudiemosRoute = DashboardEstudiemosRouteImport.update({
+  id: '/estudiemos',
+  path: '/estudiemos',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardConfiguracionRoute = DashboardConfiguracionRouteImport.update({
+  id: '/configuracion',
+  path: '/configuracion',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardClasesRoute = DashboardClasesRouteImport.update({
+  id: '/clases',
+  path: '/clases',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardBitacoraRoute = DashboardBitacoraRouteImport.update({
+  id: '/bitacora',
+  path: '/bitacora',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardBibliotecaRoute = DashboardBibliotecaRouteImport.update({
+  id: '/biblioteca',
+  path: '/biblioteca',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardBancoRoute = DashboardBancoRouteImport.update({
+  id: '/banco',
+  path: '/banco',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAnalisisRoute = DashboardAnalisisRouteImport.update({
+  id: '/analisis',
+  path: '/analisis',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const AdminPerfilRoute = AdminPerfilRouteImport.update({
+  id: '/admin/perfil',
+  path: '/admin/perfil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardMateriasIndexRoute = DashboardMateriasIndexRouteImport.update({
+  id: '/materias/',
+  path: '/materias/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardMateriasSubjectIdRoute =
+  DashboardMateriasSubjectIdRouteImport.update({
+    id: '/materias/$subjectId',
+    path: '/materias/$subjectId',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cuestionario': typeof CuestionarioRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/estudiemos': typeof EstudiemosRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/simulador': typeof SimuladorRoute
+  '/admin/perfil': typeof AdminPerfilRoute
+  '/dashboard/analisis': typeof DashboardAnalisisRoute
+  '/dashboard/banco': typeof DashboardBancoRoute
+  '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
+  '/dashboard/bitacora': typeof DashboardBitacoraRoute
+  '/dashboard/clases': typeof DashboardClasesRoute
+  '/dashboard/configuracion': typeof DashboardConfiguracionRoute
+  '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
+  '/dashboard/flashcards': typeof DashboardFlashcardsRoute
+  '/dashboard/perfil': typeof DashboardPerfilRoute
+  '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
+  '/dashboard/materias/': typeof DashboardMateriasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cuestionario': typeof CuestionarioRoute
+  '/estudiemos': typeof EstudiemosRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/simulador': typeof SimuladorRoute
+  '/admin/perfil': typeof AdminPerfilRoute
+  '/dashboard/analisis': typeof DashboardAnalisisRoute
+  '/dashboard/banco': typeof DashboardBancoRoute
+  '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
+  '/dashboard/bitacora': typeof DashboardBitacoraRoute
+  '/dashboard/clases': typeof DashboardClasesRoute
+  '/dashboard/configuracion': typeof DashboardConfiguracionRoute
+  '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
+  '/dashboard/flashcards': typeof DashboardFlashcardsRoute
+  '/dashboard/perfil': typeof DashboardPerfilRoute
+  '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
+  '/dashboard': typeof DashboardIndexRoute
+  '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
+  '/dashboard/materias': typeof DashboardMateriasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cuestionario': typeof CuestionarioRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/estudiemos': typeof EstudiemosRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/simulador': typeof SimuladorRoute
+  '/admin/perfil': typeof AdminPerfilRoute
+  '/dashboard/analisis': typeof DashboardAnalisisRoute
+  '/dashboard/banco': typeof DashboardBancoRoute
+  '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
+  '/dashboard/bitacora': typeof DashboardBitacoraRoute
+  '/dashboard/clases': typeof DashboardClasesRoute
+  '/dashboard/configuracion': typeof DashboardConfiguracionRoute
+  '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
+  '/dashboard/flashcards': typeof DashboardFlashcardsRoute
+  '/dashboard/perfil': typeof DashboardPerfilRoute
+  '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
+  '/dashboard/materias/': typeof DashboardMateriasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/cuestionario'
+    | '/dashboard'
+    | '/estudiemos'
+    | '/login'
+    | '/register'
+    | '/simulador'
+    | '/admin/perfil'
+    | '/dashboard/analisis'
+    | '/dashboard/banco'
+    | '/dashboard/biblioteca'
+    | '/dashboard/bitacora'
+    | '/dashboard/clases'
+    | '/dashboard/configuracion'
+    | '/dashboard/estudiemos'
+    | '/dashboard/flashcards'
+    | '/dashboard/perfil'
+    | '/dashboard/recordatorios'
+    | '/dashboard/'
+    | '/dashboard/materias/$subjectId'
+    | '/dashboard/materias/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/cuestionario'
+    | '/estudiemos'
+    | '/login'
+    | '/register'
+    | '/simulador'
+    | '/admin/perfil'
+    | '/dashboard/analisis'
+    | '/dashboard/banco'
+    | '/dashboard/biblioteca'
+    | '/dashboard/bitacora'
+    | '/dashboard/clases'
+    | '/dashboard/configuracion'
+    | '/dashboard/estudiemos'
+    | '/dashboard/flashcards'
+    | '/dashboard/perfil'
+    | '/dashboard/recordatorios'
+    | '/dashboard'
+    | '/dashboard/materias/$subjectId'
+    | '/dashboard/materias'
+  id:
+    | '__root__'
+    | '/'
+    | '/cuestionario'
+    | '/dashboard'
+    | '/estudiemos'
+    | '/login'
+    | '/register'
+    | '/simulador'
+    | '/admin/perfil'
+    | '/dashboard/analisis'
+    | '/dashboard/banco'
+    | '/dashboard/biblioteca'
+    | '/dashboard/bitacora'
+    | '/dashboard/clases'
+    | '/dashboard/configuracion'
+    | '/dashboard/estudiemos'
+    | '/dashboard/flashcards'
+    | '/dashboard/perfil'
+    | '/dashboard/recordatorios'
+    | '/dashboard/'
+    | '/dashboard/materias/$subjectId'
+    | '/dashboard/materias/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CuestionarioRoute: typeof CuestionarioRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
+  EstudiemosRoute: typeof EstudiemosRoute
+  LoginRoute: typeof LoginRoute
+  RegisterRoute: typeof RegisterRoute
+  SimuladorRoute: typeof SimuladorRoute
+  AdminPerfilRoute: typeof AdminPerfilRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/simulador': {
+      id: '/simulador'
+      path: '/simulador'
+      fullPath: '/simulador'
+      preLoaderRoute: typeof SimuladorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estudiemos': {
+      id: '/estudiemos'
+      path: '/estudiemos'
+      fullPath: '/estudiemos'
+      preLoaderRoute: typeof EstudiemosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cuestionario': {
+      id: '/cuestionario'
+      path: '/cuestionario'
+      fullPath: '/cuestionario'
+      preLoaderRoute: typeof CuestionarioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +340,152 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/recordatorios': {
+      id: '/dashboard/recordatorios'
+      path: '/recordatorios'
+      fullPath: '/dashboard/recordatorios'
+      preLoaderRoute: typeof DashboardRecordatoriosRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/perfil': {
+      id: '/dashboard/perfil'
+      path: '/perfil'
+      fullPath: '/dashboard/perfil'
+      preLoaderRoute: typeof DashboardPerfilRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/flashcards': {
+      id: '/dashboard/flashcards'
+      path: '/flashcards'
+      fullPath: '/dashboard/flashcards'
+      preLoaderRoute: typeof DashboardFlashcardsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/estudiemos': {
+      id: '/dashboard/estudiemos'
+      path: '/estudiemos'
+      fullPath: '/dashboard/estudiemos'
+      preLoaderRoute: typeof DashboardEstudiemosRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/configuracion': {
+      id: '/dashboard/configuracion'
+      path: '/configuracion'
+      fullPath: '/dashboard/configuracion'
+      preLoaderRoute: typeof DashboardConfiguracionRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/clases': {
+      id: '/dashboard/clases'
+      path: '/clases'
+      fullPath: '/dashboard/clases'
+      preLoaderRoute: typeof DashboardClasesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/bitacora': {
+      id: '/dashboard/bitacora'
+      path: '/bitacora'
+      fullPath: '/dashboard/bitacora'
+      preLoaderRoute: typeof DashboardBitacoraRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/biblioteca': {
+      id: '/dashboard/biblioteca'
+      path: '/biblioteca'
+      fullPath: '/dashboard/biblioteca'
+      preLoaderRoute: typeof DashboardBibliotecaRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/banco': {
+      id: '/dashboard/banco'
+      path: '/banco'
+      fullPath: '/dashboard/banco'
+      preLoaderRoute: typeof DashboardBancoRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/analisis': {
+      id: '/dashboard/analisis'
+      path: '/analisis'
+      fullPath: '/dashboard/analisis'
+      preLoaderRoute: typeof DashboardAnalisisRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/admin/perfil': {
+      id: '/admin/perfil'
+      path: '/admin/perfil'
+      fullPath: '/admin/perfil'
+      preLoaderRoute: typeof AdminPerfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/materias/': {
+      id: '/dashboard/materias/'
+      path: '/materias'
+      fullPath: '/dashboard/materias/'
+      preLoaderRoute: typeof DashboardMateriasIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/materias/$subjectId': {
+      id: '/dashboard/materias/$subjectId'
+      path: '/materias/$subjectId'
+      fullPath: '/dashboard/materias/$subjectId'
+      preLoaderRoute: typeof DashboardMateriasSubjectIdRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
+interface DashboardRouteChildren {
+  DashboardAnalisisRoute: typeof DashboardAnalisisRoute
+  DashboardBancoRoute: typeof DashboardBancoRoute
+  DashboardBibliotecaRoute: typeof DashboardBibliotecaRoute
+  DashboardBitacoraRoute: typeof DashboardBitacoraRoute
+  DashboardClasesRoute: typeof DashboardClasesRoute
+  DashboardConfiguracionRoute: typeof DashboardConfiguracionRoute
+  DashboardEstudiemosRoute: typeof DashboardEstudiemosRoute
+  DashboardFlashcardsRoute: typeof DashboardFlashcardsRoute
+  DashboardPerfilRoute: typeof DashboardPerfilRoute
+  DashboardRecordatoriosRoute: typeof DashboardRecordatoriosRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardMateriasSubjectIdRoute: typeof DashboardMateriasSubjectIdRoute
+  DashboardMateriasIndexRoute: typeof DashboardMateriasIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardAnalisisRoute: DashboardAnalisisRoute,
+  DashboardBancoRoute: DashboardBancoRoute,
+  DashboardBibliotecaRoute: DashboardBibliotecaRoute,
+  DashboardBitacoraRoute: DashboardBitacoraRoute,
+  DashboardClasesRoute: DashboardClasesRoute,
+  DashboardConfiguracionRoute: DashboardConfiguracionRoute,
+  DashboardEstudiemosRoute: DashboardEstudiemosRoute,
+  DashboardFlashcardsRoute: DashboardFlashcardsRoute,
+  DashboardPerfilRoute: DashboardPerfilRoute,
+  DashboardRecordatoriosRoute: DashboardRecordatoriosRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+  DashboardMateriasSubjectIdRoute: DashboardMateriasSubjectIdRoute,
+  DashboardMateriasIndexRoute: DashboardMateriasIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CuestionarioRoute: CuestionarioRoute,
+  DashboardRoute: DashboardRouteWithChildren,
+  EstudiemosRoute: EstudiemosRoute,
+  LoginRoute: LoginRoute,
+  RegisterRoute: RegisterRoute,
+  SimuladorRoute: SimuladorRoute,
+  AdminPerfilRoute: AdminPerfilRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
