@@ -238,7 +238,7 @@ function DashboardLayout() {
         style={{
           width: 260, background: "#1a1a2e",
           position: "fixed", top: 0, left: 0, bottom: 0,
-          display: "flex", flexDirection: "column",
+          flexDirection: "column",
           zIndex: 100,
         }}
         className="hidden md:flex"
@@ -283,7 +283,6 @@ function DashboardLayout() {
               style={{
                 background: "white",
                 borderBottom: "1px solid rgba(61,93,145,0.08)",
-                padding: "0 32px",
                 height: 64,
                 display: "flex",
                 alignItems: "center",
@@ -292,6 +291,7 @@ function DashboardLayout() {
                 top: 0,
                 zIndex: 50,
               }}
+              className="px-4 md:px-8"
             >
               <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                 <button
@@ -320,14 +320,15 @@ function DashboardLayout() {
                   <p style={{ fontSize: "0.78rem", color: "#888" }}>{dateStr}</p>
                 </div>
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <div
                   style={{
                     display: "flex", alignItems: "center", gap: 8,
                     background: "#F2DCDB", borderRadius: 20,
-                    padding: "6px 14px",
-                    fontSize: "0.85rem", fontWeight: 700,
+                    padding: "6px 12px",
+                    fontSize: "0.8rem", fontWeight: 700,
                     color: "#6C0820",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   🔥 14 días
@@ -338,6 +339,7 @@ function DashboardLayout() {
                     background: "#3D5D91", borderRadius: "50%",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     color: "white", fontSize: "0.85rem", fontWeight: 700,
+                    flexShrink: 0,
                   }}
                 >
                   MG
@@ -346,19 +348,22 @@ function DashboardLayout() {
             </div>
 
             {/* Radar Bar — global across all dashboard pages */}
-            <div style={{
-              background: "#3D5D91", color: "white",
-              padding: "7px 32px",
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-              fontSize: 12.5, fontWeight: 500,
-              fontFamily: "'DM Sans', sans-serif",
-            }}>
+            <div
+              style={{
+                background: "#3D5D91", color: "white",
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                fontSize: 12.5, fontWeight: 500,
+                fontFamily: "'DM Sans', sans-serif",
+                flexWrap: "wrap", gap: 4,
+              }}
+              className="px-4 md:px-8 py-2"
+            >
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4ade80", flexShrink: 0, animation: "fp-pulse 1.5s ease infinite" }} />
                 <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 15, fontWeight: 700 }}>{radarN}</span>
                 <span>pilotos estudiando ahora mismo</span>
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 16, opacity: .85 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, opacity: .85 }} className="hidden sm:flex">
                 <span>✈️ Materia más activa: <strong>Meteorología</strong></span>
                 <span style={{ opacity: .6 }}>|</span>
                 <span>Promedio de sesión: <strong>47 min</strong></span>
@@ -366,7 +371,7 @@ function DashboardLayout() {
             </div>
 
             {/* Content */}
-            <div style={{ padding: "32px", flex: 1 }} className="sm:p-8 p-4">
+            <div style={{ flex: 1 }} className="p-4 sm:p-6 md:p-8">
               <Outlet />
             </div>
           </>
