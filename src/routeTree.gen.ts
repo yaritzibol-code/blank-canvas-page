@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SimuladorRouteImport } from './routes/simulador'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as EstudiemosRouteImport } from './routes/estudiemos'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CuestionarioRouteImport } from './routes/cuestionario'
 import { Route as IndexRouteImport } from './routes/index'
@@ -44,11 +43,6 @@ const RegisterRoute = RegisterRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EstudiemosRoute = EstudiemosRouteImport.update({
-  id: '/estudiemos',
-  path: '/estudiemos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -142,7 +136,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cuestionario': typeof CuestionarioRoute
   '/dashboard': typeof DashboardRouteWithChildren
-  '/estudiemos': typeof EstudiemosRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
@@ -164,7 +157,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cuestionario': typeof CuestionarioRoute
-  '/estudiemos': typeof EstudiemosRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
@@ -188,7 +180,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/cuestionario': typeof CuestionarioRoute
   '/dashboard': typeof DashboardRouteWithChildren
-  '/estudiemos': typeof EstudiemosRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
@@ -213,7 +204,6 @@ export interface FileRouteTypes {
     | '/'
     | '/cuestionario'
     | '/dashboard'
-    | '/estudiemos'
     | '/login'
     | '/register'
     | '/simulador'
@@ -235,7 +225,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cuestionario'
-    | '/estudiemos'
     | '/login'
     | '/register'
     | '/simulador'
@@ -258,7 +247,6 @@ export interface FileRouteTypes {
     | '/'
     | '/cuestionario'
     | '/dashboard'
-    | '/estudiemos'
     | '/login'
     | '/register'
     | '/simulador'
@@ -282,7 +270,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CuestionarioRoute: typeof CuestionarioRoute
   DashboardRoute: typeof DashboardRouteWithChildren
-  EstudiemosRoute: typeof EstudiemosRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   SimuladorRoute: typeof SimuladorRoute
@@ -310,13 +297,6 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/estudiemos': {
-      id: '/estudiemos'
-      path: '/estudiemos'
-      fullPath: '/estudiemos'
-      preLoaderRoute: typeof EstudiemosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -481,7 +461,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CuestionarioRoute: CuestionarioRoute,
   DashboardRoute: DashboardRouteWithChildren,
-  EstudiemosRoute: EstudiemosRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   SimuladorRoute: SimuladorRoute,
