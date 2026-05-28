@@ -55,6 +55,17 @@ export interface SvgDiagramSpec {
   descripcion: string;
 }
 
+export interface TablaRow {
+  categoria: string;
+  descripcion: string;
+  ejemplos?: string[];
+}
+
+export interface TablaAdicional {
+  titulo: string;
+  items: string[];
+}
+
 export interface ConceptExplanationBlockData {
   titulo?: string;
   texto: string;
@@ -64,6 +75,9 @@ export interface ConceptExplanationBlockData {
   // SVG: old = raw markup string, new = descriptor object (diagram placeholder)
   svg_diagram?: string | SvgDiagramSpec;
   nota_adicional?: string;
+  // Structured table rows (tema-1-3+)
+  tabla?: TablaRow[];
+  adicional?: TablaAdicional;
   fuente?: string;
 }
 

@@ -42,6 +42,8 @@ export function ConceptExplanationBlock({
   destacado,
   svg_diagram,
   nota_adicional,
+  tabla,
+  adicional,
   fuente,
 }: ConceptExplanationBlockData) {
   return (
@@ -211,6 +213,95 @@ export function ConceptExplanationBlock({
           }}
         >
           💡 {nota_adicional}
+        </div>
+      )}
+
+      {/* Structured table rows (tema-1-3+) */}
+      {tabla && tabla.length > 0 && (
+        <div
+          style={{
+            border: "1px solid #F2DCDB",
+            borderRadius: 12,
+            overflow: "hidden",
+            marginTop: 16,
+          }}
+        >
+          {tabla.map((row, i) => (
+            <div
+              key={i}
+              style={{
+                padding: "14px 18px",
+                borderBottom: i < tabla.length - 1 ? "1px solid #F2DCDB" : "none",
+                background: i % 2 === 0 ? "white" : "rgba(242,220,219,0.15)",
+              }}
+            >
+              <p
+                style={{
+                  margin: "0 0 4px",
+                  fontSize: "0.84rem",
+                  fontWeight: 700,
+                  color: "#1a1a2e",
+                }}
+              >
+                {row.categoria}
+              </p>
+              <p style={{ margin: "0 0 6px", fontSize: "0.85rem", color: "#555", lineHeight: 1.55 }}>
+                {row.descripcion}
+              </p>
+              {row.ejemplos && row.ejemplos.length > 0 && (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {row.ejemplos.map((ej, j) => (
+                    <span
+                      key={j}
+                      style={{
+                        background: "rgba(61,93,145,0.07)",
+                        color: "#3D5D91",
+                        fontSize: "0.75rem",
+                        padding: "2px 10px",
+                        borderRadius: 20,
+                        fontStyle: "italic",
+                      }}
+                    >
+                      {ej}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Additional section with bullet list (tema-1-3+) */}
+      {adicional && (
+        <div
+          style={{
+            background: "rgba(61,93,145,0.04)",
+            border: "1px solid rgba(61,93,145,0.12)",
+            borderRadius: 10,
+            padding: "14px 18px",
+            marginTop: 16,
+          }}
+        >
+          <p
+            style={{
+              fontSize: "0.8rem",
+              fontWeight: 700,
+              color: "#3D5D91",
+              textTransform: "uppercase",
+              letterSpacing: "0.4px",
+              margin: "0 0 8px",
+            }}
+          >
+            {adicional.titulo}
+          </p>
+          <ul style={{ margin: 0, padding: "0 0 0 18px" }}>
+            {adicional.items.map((item, i) => (
+              <li key={i} style={{ fontSize: "0.85rem", color: "#555", lineHeight: 1.6, marginBottom: 4 }}>
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 

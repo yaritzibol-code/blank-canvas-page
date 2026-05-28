@@ -1,0 +1,254 @@
+{
+  "id": "aerodinamica-1-3",
+  "materia": "Aerodinámica",
+  "bloque": 1,
+  "bloque_titulo": "Definiciones y propiedades del aire",
+  "tema": 3,
+  "title": "Densidad del aire y factores que la afectan",
+  "subtitle": "Altitud densimétrica, Atmósfera Estándar y presiones",
+  "duracion_min": 15,
+  "blocks": [
+    {
+      "type": "preflight_check",
+      "data": {
+        "instruccion": "Antes de arrancar — responde con lo que ya sabes:",
+        "pregunta": "¿Cuál de estas condiciones crea el escenario de mayor riesgo para el despegue de una aeronave?",
+        "opciones": [
+          "Aeropuerto al nivel del mar en un día de invierno muy frío y alta presión",
+          "Aeropuerto elevado en las montañas en un día de verano caluroso y húmedo",
+          "Aeropuerto de gran altitud con temperaturas bajo cero y aire totalmente seco"
+        ],
+        "respuesta_correcta": 1,
+        "feedback_correcto": "¡Exacto! Elevación + calor + humedad = las 3H. La peor combinación posible para el rendimiento del avión.",
+        "feedback_incorrecto": "Esto es exactamente lo que vas a entender hoy. La combinación de altitud, temperatura y humedad puede hacer imposible un despegue seguro."
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "¿Qué es la densidad del aire?",
+        "texto": "La densidad del aire es la masa de aire ocupada por la unidad de volumen. Se expresa con la fórmula ρ = Masa / Volumen. A nivel del mar en condiciones estándar, la densidad del aire es de 1.225 kg/m³ — el valor de referencia que todo piloto debe conocer.",
+        "destacado": {
+          "tipo": "dato_clave",
+          "contenido": "Densidad estándar al nivel del mar: 1.225 kg/m³ (Sistema Métrico) = 0.002377 slug/ft³ (Sistema Inglés). Temperatura: 15°C. Presión: 1013.25 mb / 29.92 inHg."
+        },
+        "fuente": "Aerodinámica Básica — CIAAC / Manual del Piloto FAA"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Factores que afectan la densidad del aire",
+        "texto": "Cuatro factores determinan qué tan denso o ralo está el aire en un momento dado. Todos afectan el rendimiento del avión directamente.",
+        "tabla": [
+          {
+            "categoria": "Altitud ↑ → Densidad ↓",
+            "descripcion": "A mayor altitud, la presión desciende y el aire se expande. Una misma columna de aire contiene menos masa. Efecto dominante en operaciones de ruta.",
+            "ejemplos": ["A 18,000 ft la densidad es aproximadamente la mitad que al nivel del mar"]
+          },
+          {
+            "categoria": "Temperatura ↑ → Densidad ↓",
+            "descripcion": "El aire caliente se expande y ocupa más espacio, volviéndose menos denso. La densidad varía inversamente con la temperatura.",
+            "ejemplos": ["Un día de 40°C vs 15°C puede reducir significativamente el rendimiento en despegue"]
+          },
+          {
+            "categoria": "Humedad ↑ → Densidad ↓",
+            "descripcion": "El vapor de agua es más ligero que el aire seco. El aire húmedo es menos denso que el aire seco — dato que sorprende a muchos.",
+            "ejemplos": ["Humedad alta aumenta la altitud densimétrica y empobrece el rendimiento"]
+          },
+          {
+            "categoria": "Presión ↑ → Densidad ↑",
+            "descripcion": "La densidad es directamente proporcional a la presión. Mayor presión comprime el aire, aumentando su densidad. Es el único factor que actúa en el mismo sentido.",
+            "ejemplos": ["Días de alta presión favorecen el rendimiento del avión"]
+          }
+        ],
+        "fuente": "Aerodinámica Básica — CIAAC / Manual del Piloto FAA"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Altitud Densimétrica (Density Altitude)",
+        "texto": "La altitud densimétrica es la altitud en la atmósfera estándar donde se encuentra una densidad específica. No es una referencia de altura geométrica — es el índice fundamental para predecir el rendimiento aerodinámico y del motor. El avión operará exactamente como si estuviera a esa altitud en un día estándar.",
+        "destacado": {
+          "tipo": "advertencia",
+          "contenido": "Alta altitud densimétrica (aire ralo) reduce TODO el rendimiento: menos potencia (motor aspira menos oxígeno), menos empuje (hélice menos eficiente) y menos sustentación (alas generan menos fuerza). Un avión que necesita 1,000 ft de pista al nivel del mar necesitará ~2,000 ft con altitud densimétrica de 5,000 ft."
+        },
+        "fuente": "Manual del Piloto FAA"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Atmósfera Estándar Internacional (ISA)",
+        "texto": "La ISA es un modelo atmosférico ideal definido por la OACI que establece distribuciones fijas de presión, temperatura y densidad. Sirve como referencia inalterable para calibrar instrumentos y comparar el rendimiento de aeronaves.",
+        "tabla": [
+          {
+            "categoria": "Temperatura al nivel del mar",
+            "descripcion": "15°C (59°F)",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Presión al nivel del mar",
+            "descripcion": "1013.25 mb / 29.92 inHg / 760 mmHg",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Densidad al nivel del mar",
+            "descripcion": "1.225 kg/m³",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Gradiente térmico en troposfera",
+            "descripcion": "La temperatura disminuye 2°C por cada 1,000 ft (6.5°C por cada 1,000 m) hasta la tropopausa a ~36,000 ft, donde se estabiliza en -56.5°C.",
+            "ejemplos": []
+          }
+        ],
+        "fuente": "Aerodinámica Básica — CIAAC / Manual del Piloto FAA"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Presión estática, dinámica y total",
+        "texto": "El avión usa tres tipos de presión para medir velocidad y altitud. Entenderlas es clave para interpretar correctamente los instrumentos.",
+        "tabla": [
+          {
+            "categoria": "Presión Estática",
+            "descripcion": "Presión ambiente del aire puro a la altitud de vuelo, sin perturbaciones. La miden los puertos estáticos en el fuselaje. La usa el altímetro para medir altitud.",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Presión Dinámica",
+            "descripcion": "Presión generada por la velocidad a la que el avión choca contra el aire. A mayor velocidad, mayor presión dinámica.",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Presión Total",
+            "descripcion": "Presión estática + presión dinámica. La recoge el tubo Pitot apuntando hacia adelante. Según Bernoulli: P_estática + P_dinámica = Constante (Presión Total).",
+            "ejemplos": []
+          }
+        ],
+        "adicional": {
+          "titulo": "¿Cómo los usa el avión?",
+          "items": [
+            "Velocímetro: Presión Total (Pitot) − Presión Estática = Presión Dinámica → velocidad respecto al aire",
+            "Altímetro: solo Presión Estática → traduce la caída de presión en ganancia de altitud según la ISA"
+          ]
+        },
+        "fuente": "Aerodinámica Básica — CIAAC"
+      }
+    },
+    {
+      "type": "highlight_note",
+      "data": {
+        "tipo": "yaris",
+        "titulo": "Nemotecnia de Yaris ✨",
+        "contenido": "Para recordar cómo la densidad afecta el rendimiento, piensa en Sopa vs. Caldo. El aire denso a baja altitud en día frío es como una sopa espesa — las alas se apoyan firme, la hélice muerde bien y el motor tiene sustancia (oxígeno). El aire en una montaña calurosa y húmeda es como un caldo aguado — las alas no se pueden sujetar, la hélice resbala y al motor le falta combustible. ¿Tu avión está nadando en sopa o en caldo?",
+        "fuente": null
+      }
+    },
+    {
+      "type": "highlight_note",
+      "data": {
+        "tipo": "advertencia",
+        "titulo": "Regla de oro del altímetro",
+        "contenido": "High to Low, Look Out Below. Si vuelas desde una zona de alta presión hacia una de baja presión sin ajustar el altímetro, el instrumento te dirá que estás más alto de lo que realmente estás. Peligro crítico sobre terreno escarpado.",
+        "fuente": "Manual del Piloto FAA"
+      }
+    },
+    {
+      "type": "active_recall",
+      "data": {
+        "tipo": "match",
+        "instruccion": "Relaciona cada concepto con su descripción correcta.",
+        "items": [
+          {
+            "id": 1,
+            "concepto": "Altitud densimétrica alta",
+            "descripcion": "Aire ralo que reduce potencia, empuje y sustentación simultáneamente"
+          },
+          {
+            "id": 2,
+            "concepto": "Presión dinámica",
+            "descripcion": "Presión generada por la velocidad del avión contra el aire — la usa el velocímetro"
+          },
+          {
+            "id": 3,
+            "concepto": "Gradiente térmico ISA",
+            "descripcion": "La temperatura baja 2°C por cada 1,000 ft hasta la tropopausa a 36,000 ft"
+          },
+          {
+            "id": 4,
+            "concepto": "Las 3H",
+            "descripcion": "High + Hot + Humid — la peor combinación para el rendimiento en despegue"
+          },
+          {
+            "id": 5,
+            "concepto": "Presión estática",
+            "descripcion": "Presión ambiente sin perturbaciones — la usa el altímetro para medir altitud"
+          }
+        ]
+      }
+    },
+    {
+      "type": "think_like_pilot",
+      "data": {
+        "pregunta": "Estás en crucero recto y nivelado y de repente cruzas una barrera frontal de aire excepcionalmente frío. Tu altímetro sigue marcando tu altitud de crucero. ¿En realidad estás volando más alto, más bajo o exactamente a la altitud que ves en el instrumento?",
+        "pista": "Recuerda: 'High to Low, Look Out Below.' En aire frío y denso, las isobaras de presión se agrupan en menor distancia vertical.",
+        "respuesta_sugerida": "En realidad estás volando más bajo de lo que indica el altímetro. El aire frío es más denso — las isobaras caen físicamente. Al mantener constante la presión estática en el altímetro, el avión desciende físicamente sin que el instrumento lo muestre. Riesgo crítico sobre terreno montañoso."
+      }
+    },
+    {
+      "type": "debrief",
+      "data": {
+        "puntos_clave": [
+          "Las 3H matan el rendimiento: High (altitud) + Hot (temperatura) + Humid (humedad) = aire ralo = altitud densimétrica alta. La peor combinación para despegar.",
+          "La altitud densimétrica es lo que 'siente' el avión — no la altitud física. A la aerodinámica no le importa cuántos pies hay hasta el suelo, sino cuántas partículas de aire hay alrededor.",
+          "El velocímetro resta presiones: Presión Total (Pitot) − Presión Estática = Presión Dinámica = velocidad respecto al aire.",
+          "Regla de oro del altímetro: High to Low, Look Out Below. Volar de alta a baja presión sin ajustar hace que el altímetro mienta — te dice que estás más arriba de lo real."
+        ],
+        "pregunta_metacognitiva": "¿Cómo te sentiste con este tema?",
+        "opciones_dificultad": [
+          { "valor": 1, "etiqueta": "Muy fácil" },
+          { "valor": 2, "etiqueta": "Fácil" },
+          { "valor": 3, "etiqueta": "Normal" },
+          { "valor": 4, "etiqueta": "Difícil" },
+          { "valor": 5, "etiqueta": "Muy difícil" }
+        ]
+      }
+    },
+    {
+      "type": "flashcards",
+      "data": {
+        "cards": [
+          {
+            "id": 1,
+            "pregunta": "¿A qué altitud deja de bajar la temperatura en la ISA y qué valor toma?",
+            "respuesta": "En la tropopausa, alrededor de los 36,000 ft (11 km). La temperatura se estabiliza en -56.5°C y permanece constante en toda la estratosfera."
+          },
+          {
+            "id": 2,
+            "pregunta": "¿Por qué el aire húmedo es menos denso que el aire seco? (La respuesta sorprende)",
+            "respuesta": "Porque el vapor de agua es más ligero que el nitrógeno y oxígeno que componen el aire seco. Al aumentar el contenido de vapor, las moléculas más pesadas son desplazadas por moléculas más ligeras, reduciendo la densidad total."
+          },
+          {
+            "id": 3,
+            "pregunta": "¿Qué marca el altímetro cuando su subescala está fijada en 29.92 inHg?",
+            "respuesta": "La altitud de presión — la altura equivalente en la atmósfera estándar ISA basada únicamente en la presión estática, sin corregir por temperatura."
+          },
+          {
+            "id": 4,
+            "pregunta": "Según Bernoulli, ¿qué es la Presión Total?",
+            "respuesta": "Presión Total = Presión Estática + Presión Dinámica. Es una constante en flujo laminar — si la presión dinámica sube (más velocidad), la estática baja, y viceversa."
+          },
+          {
+            "id": 5,
+            "pregunta": "Al volar de alta presión hacia baja presión sin ajustar el altímetro, ¿tu altitud real es mayor o menor a la indicada?",
+            "respuesta": "Menor. El altímetro indica más altitud de la real. Regla: High to Low, Look Out Below — estás más cerca del terreno de lo que crees."
+          }
+        ]
+      }
+    }
+  ]
+}
