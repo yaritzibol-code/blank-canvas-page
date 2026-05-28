@@ -1,0 +1,267 @@
+{
+  "id": "aerodinamica-1-5",
+  "materia": "Aerodinámica",
+  "bloque": 1,
+  "bloque_titulo": "Definiciones y propiedades del aire",
+  "tema": 5,
+  "title": "Principio de Bernoulli y ecuación de continuidad",
+  "subtitle": "Velocidad, presión, sustentación y el sistema Pitot",
+  "duracion_min": 15,
+  "blocks": [
+    {
+      "type": "preflight_check",
+      "data": {
+        "instruccion": "Antes de arrancar — responde con lo que ya sabes:",
+        "pregunta": "Una masa de aire se ve obligada a pasar por un estrechamiento entre dos montañas. ¿Qué sucede con la presión del aire en ese punto más estrecho?",
+        "opciones": [
+          "La presión aumenta drásticamente y la velocidad disminuye",
+          "La presión y la velocidad se mantienen constantes",
+          "La velocidad aumenta y la presión disminuye"
+        ],
+        "respuesta_correcta": 2,
+        "feedback_correcto": "¡Exacto! Al reducirse el área, el fluido acelera (Ecuación de Continuidad) y esa energía extra para la velocidad se paga reduciendo la presión estática (Bernoulli).",
+        "feedback_incorrecto": "Esto es exactamente lo que vas a entender hoy — la relación entre velocidad y presión es el secreto detrás de por qué vuela un avión."
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Principio de Bernoulli",
+        "texto": "En un flujo laminar, la presión estática más la presión dinámica es igual a una constante. En términos simples: si la velocidad del aire aumenta, su presión estática disminuye proporcionalmente para mantener la energía total constante. Un aumento de velocidad se traduce en disminución de presión — y viceversa.",
+        "destacado": {
+          "tipo": "definicion",
+          "contenido": "Aplicado al ala: el aire sobre el extradós (parte superior curva) debe recorrer más distancia y acelera. Al acelerar, su presión baja — creando una zona de succión que jala el ala hacia arriba. En el intradós (parte inferior), el aire va más lento y la presión es mayor — empujando hacia arriba. La diferencia de presiones genera la sustentación."
+        },
+        "fuente": "Aerodinámica Básica — CIAAC"
+      }
+    },
+    {
+      "type": "formula_block",
+      "data": {
+        "nombre": "Principio de Bernoulli",
+        "formula": "p + ½ · ρ · V² = constante",
+        "formula_latex": "p + \\frac{1}{2} \\rho V^2 = C",
+        "variables": [
+          {
+            "simbolo": "p",
+            "nombre": "Presión estática",
+            "descripcion": "Presión del aire en reposo en ese punto del flujo. Disminuye cuando la velocidad aumenta."
+          },
+          {
+            "simbolo": "ρ",
+            "nombre": "Densidad del aire",
+            "descripcion": "Masa por unidad de volumen del fluido."
+          },
+          {
+            "simbolo": "V²",
+            "nombre": "Velocidad al cuadrado",
+            "descripcion": "Representa la energía cinética del fluido. Aumenta cuando la presión estática disminuye."
+          },
+          {
+            "simbolo": "C",
+            "nombre": "Constante (Presión Total)",
+            "descripcion": "La suma siempre es igual — la energía total del fluido se conserva."
+          }
+        ],
+        "nota": "Relación clave: velocidad ↑ → presión estática ↓. Velocidad ↓ → presión estática ↑. Son inversamente proporcionales en flujo laminar."
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Ecuación de continuidad",
+        "texto": "Es el principio de conservación de masa aplicado a los fluidos. La masa de fluido que pasa por segundo a través de una sección inicial es exactamente igual a la que pasa por cualquier sección posterior del tubo de corriente. Si el área se reduce, la velocidad debe aumentar obligatoriamente para que pase la misma cantidad de masa en el mismo tiempo.",
+        "destacado": {
+          "tipo": "dato_clave",
+          "contenido": "Sobre el extradós: la curvatura del ala acerca las líneas de corriente entre sí, reduciendo la sección disponible. El flujo se acelera (Continuidad) y la presión cae (Bernoulli). En el intradós ocurre lo contrario — flujo más lento, mayor presión."
+        },
+        "fuente": "Aerodinámica Básica — CIAAC"
+      }
+    },
+    {
+      "type": "formula_block",
+      "data": {
+        "nombre": "Ecuación de Continuidad",
+        "formula": "S₁ · V₁ = S₂ · V₂",
+        "formula_latex": "S_1 \\cdot V_1 = S_2 \\cdot V_2",
+        "variables": [
+          {
+            "simbolo": "S₁",
+            "nombre": "Área de sección inicial",
+            "descripcion": "Área de la sección de entrada del flujo."
+          },
+          {
+            "simbolo": "V₁",
+            "nombre": "Velocidad inicial",
+            "descripcion": "Velocidad del fluido en la sección inicial."
+          },
+          {
+            "simbolo": "S₂",
+            "nombre": "Área de sección final",
+            "descripcion": "Área de la sección de salida. Si S₂ < S₁, entonces V₂ > V₁."
+          },
+          {
+            "simbolo": "V₂",
+            "nombre": "Velocidad final",
+            "descripcion": "Velocidad del fluido en la sección final. Aumenta cuando el área disminuye."
+          }
+        ],
+        "nota": "El producto área × velocidad siempre es constante. Si el área se reduce a la mitad, la velocidad se duplica."
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "El tubo de Venturi y el perfil alar",
+        "texto": "El tubo de Venturi es un tubo de sección variable con una entrada ancha que se estrecha hacia una garganta y luego vuelve a ensancharse. Al pasar por el estrechamiento, el fluido acelera y la presión estática disminuye. El perfil aerodinámico del ala funciona exactamente como un tubo de Venturi modificado — la curvatura del extradós crea una constricción que acelera el aire y baja la presión.",
+        "destacado": {
+          "tipo": "dato_clave",
+          "contenido": "Usos del efecto Venturi en aviación: medir velocidad mediante diferencias de presión, accionar instrumentos giroscópicos (indicador de viraje e inclinación) y en sistemas de carburación de motores recíprocos."
+        },
+        "fuente": "Aerodinámica Básica — CIAAC"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Bernoulli + Newton: el trabajo en equipo de la sustentación",
+        "texto": "Ninguna teoría explica la sustentación completamente por sí sola. Ambas coexisten y se complementan.",
+        "tabla": [
+          {
+            "categoria": "Bernoulli — 75% del levantamiento",
+            "descripcion": "La depresión (succión) en el extradós por el aire acelerado jala el ala hacia arriba. Es el efecto dominante en vuelo normal.",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Newton — 25% del levantamiento",
+            "descripcion": "El ala desvía físicamente una gran masa de aire hacia abajo (acción). La reacción igual y opuesta empuja el ala hacia arriba.",
+            "ejemplos": []
+          }
+        ],
+        "adicional": {
+          "titulo": "Explicación integrada",
+          "items": [
+            "Tanto Bernoulli como Newton operan siempre que un perfil aerodinámico genera sustentación",
+            "El ala acelera el aire en el extradós creando fuerte baja presión (Bernoulli)",
+            "Al mismo tiempo deflecta el flujo hacia abajo en el borde de salida generando reacción hacia arriba (Newton)"
+          ]
+        },
+        "fuente": "Aerodinámica Básica — CIAAC / Manual del Piloto FAA"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "El sistema Pitot-Estático y el tubo Pitot",
+        "texto": "El avión usa el Principio de Bernoulli para medir velocidad. El tubo Pitot capta frontalmente la Presión Total (estática + dinámica). Los puertos estáticos laterales captan la Presión Estática pura del ambiente. El velocímetro resta mecánicamente la estática a la total, obteniendo únicamente la Presión Dinámica — que traduce en velocidad respecto al aire.",
+        "destacado": {
+          "tipo": "advertencia",
+          "contenido": "Pitot bloqueado por hielo — dos escenarios críticos: 1) Entrada bloqueada + drenaje abierto: la presión dinámica escapa y el velocímetro cae a CERO. 2) Entrada bloqueada + drenaje también bloqueado: la Presión Total queda atrapada. Al ascender, la Presión Estática baja — el velocímetro indica velocidad FALSAMENTE alta. Al descender, indica velocidad falsamente baja. El velocímetro actúa como un altímetro y MIENTE al piloto."
+        },
+        "fuente": "Aerodinámica Básica — CIAAC / Manual del Piloto FAA"
+      }
+    },
+    {
+      "type": "highlight_note",
+      "data": {
+        "tipo": "yaris",
+        "titulo": "Nemotecnia de Yaris ✨",
+        "contenido": "Para entender Continuidad y Bernoulli juntos, imagina la manguera del jardín. Sin boquilla, el agua sale lenta e inofensiva. Pones el pulgar tapando la mitad de la salida — reduces el área (Ecuación de Continuidad). El agua acelera brutalmente y sale disparada. Esa agua rápida tiene tanta energía hacia adelante que ejerce menos presión lateral (Bernoulli). En el ala, esa falta de presión lateral de la corriente acelerada sobre el extradós es la succión que jala el avión hacia arriba. ¡Tu pulgar y la curvatura del ala hacen exactamente lo mismo!",
+        "fuente": null
+      }
+    },
+    {
+      "type": "active_recall",
+      "data": {
+        "tipo": "match",
+        "instruccion": "Relaciona cada concepto con su descripción correcta.",
+        "items": [
+          {
+            "id": 1,
+            "concepto": "Principio de Bernoulli",
+            "descripcion": "Velocidad ↑ = Presión estática ↓. La energía total del fluido se conserva."
+          },
+          {
+            "id": 2,
+            "concepto": "Ecuación de continuidad",
+            "descripcion": "S₁·V₁ = S₂·V₂. Si el área disminuye, la velocidad aumenta obligatoriamente."
+          },
+          {
+            "id": 3,
+            "concepto": "Tubo Pitot bloqueado (ambos orificios)",
+            "descripcion": "El velocímetro actúa como altímetro — indica velocidad falsa según la altitud."
+          },
+          {
+            "id": 4,
+            "concepto": "Extradós del ala",
+            "descripcion": "Zona de baja presión por flujo acelerado — genera el 75% del levantamiento."
+          },
+          {
+            "id": 5,
+            "concepto": "Tubo de Venturi",
+            "descripcion": "Tubo de sección variable que acelera el fluido en su garganta y reduce su presión."
+          }
+        ]
+      }
+    },
+    {
+      "type": "think_like_pilot",
+      "data": {
+        "pregunta": "Vuelas en condiciones de engelamiento y olvidaste encender el calentador del tubo Pitot. Al iniciar un ascenso con la misma potencia y ángulo de ataque, tu velocímetro empieza a marcar cada vez más velocidad de manera inusual. ¿Qué acaba de suceder en tu sistema Pitot-Estático?",
+        "pista": "Velocidad indicada = Presión Total (Pitot) − Presión Estática. Si el tubo está completamente bloqueado por hielo, la Presión Total queda atrapada y constante. ¿Qué le pasa a la Presión Estática mientras asciendes?",
+        "respuesta_sugerida": "El hielo bloqueó completamente el tubo Pitot y su drenaje, atrapando una Presión Total constante. Al ascender, la Presión Estática del ambiente disminuye. El velocímetro resta un número cada vez más pequeño a una presión total constante — resulta en una presión dinámica falsamente grande. El velocímetro está actuando como un altímetro y mintiendo. Acción inmediata: encender Pitot Heat y confiar en otros instrumentos (altímetro, variométro)."
+      }
+    },
+    {
+      "type": "debrief",
+      "data": {
+        "puntos_clave": [
+          "La balanza de la energía (Bernoulli): si el aire acelera su velocidad, su presión estática invariablemente cae. Este intercambio velocidad-presión es el motor oculto de la aviación.",
+          "El estrangulamiento acelera (Continuidad): la curvatura del extradós estrecha el paso del aire, forzándolo a acelerar. Menos área = más velocidad = menos presión = succión hacia arriba.",
+          "El vuelo es trabajo en equipo: 75% succión aerodinámica (Bernoulli) + 25% reacción física al desviar aire hacia abajo (Newton). Ninguna teoría explica todo sola.",
+          "La trampa del Pitot con hielo: tubo completamente bloqueado convierte el velocímetro en altímetro. En ascenso indica velocidad falsamente alta — en descenso, falsamente baja. Pitot Heat siempre activo en condiciones de engelamiento."
+        ],
+        "pregunta_metacognitiva": "¿Cómo te sentiste con este tema?",
+        "opciones_dificultad": [
+          { "valor": 1, "etiqueta": "Muy fácil" },
+          { "valor": 2, "etiqueta": "Fácil" },
+          { "valor": 3, "etiqueta": "Normal" },
+          { "valor": 4, "etiqueta": "Difícil" },
+          { "valor": 5, "etiqueta": "Muy difícil" }
+        ]
+      }
+    },
+    {
+      "type": "flashcards",
+      "data": {
+        "cards": [
+          {
+            "id": 1,
+            "pregunta": "¿Cómo se enuncia matemáticamente el Principio de Bernoulli?",
+            "respuesta": "p + ½·ρ·V² = Constante. Presión estática + Presión dinámica = Presión Total constante. Si la velocidad (V) sube, la presión estática (p) baja proporcionalmente."
+          },
+          {
+            "id": 2,
+            "pregunta": "¿Qué establece la Ecuación de Continuidad sobre área y velocidad?",
+            "respuesta": "S₁·V₁ = S₂·V₂. El producto área × velocidad es constante. Si el área disminuye, la velocidad aumenta obligatoriamente para conservar el gasto másico."
+          },
+          {
+            "id": 3,
+            "pregunta": "¿Qué porcentaje del levantamiento genera la depresión en el extradós y cuál genera la sobrepresión en el intradós?",
+            "respuesta": "El extradós (succión por flujo acelerado) genera aproximadamente el 75% del levantamiento. El intradós (sobrepresión) genera el 25% restante."
+          },
+          {
+            "id": 4,
+            "pregunta": "¿Qué dos presiones usa el velocímetro para calcular la velocidad indicada?",
+            "respuesta": "Velocidad indicada = Presión Total (captada por el tubo Pitot frontal) − Presión Estática (captada por los puertos estáticos laterales). El resultado es la Presión Dinámica = ½·ρ·V²."
+          },
+          {
+            "id": 5,
+            "pregunta": "¿Qué indica el velocímetro en un descenso si el tubo Pitot está completamente bloqueado por hielo?",
+            "respuesta": "Indicará una velocidad falsamente baja — actúa como altímetro inverso. La Presión Total queda atrapada (constante) y al descender la Presión Estática sube, reduciendo falsamente la diferencia que el velocímetro interpreta como velocidad."
+          }
+        ]
+      }
+    }
+  ]
+}
