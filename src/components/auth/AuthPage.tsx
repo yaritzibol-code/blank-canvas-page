@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { Eye, EyeOff } from "lucide-react";
 
 type Tab = "register" | "login";
@@ -22,13 +22,12 @@ const GOOGLE_SVG = (
 );
 
 function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
-  const navigate = useNavigate();
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
 
   function handleRegister() {
     setLoading(true);
-    setTimeout(() => navigate({ to: "/dashboard" }), 800);
+    setTimeout(() => { window.location.href = "/dashboard"; }, 800);
   }
 
   return (
@@ -162,13 +161,12 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
 }
 
 function LoginForm({ onSwitch }: { onSwitch: () => void }) {
-  const navigate = useNavigate();
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
 
   function handleLogin() {
     setLoading(true);
-    setTimeout(() => navigate({ to: "/dashboard" }), 800);
+    setTimeout(() => { window.location.href = "/dashboard"; }, 800);
   }
 
   return (
