@@ -1,0 +1,269 @@
+{
+  "id": "aerodinamica-1-4",
+  "materia": "Aerodinámica",
+  "bloque": 1,
+  "bloque_titulo": "Definiciones y propiedades del aire",
+  "tema": 4,
+  "title": "Leyes de Newton aplicadas al vuelo",
+  "subtitle": "Inercia, fuerza, acción-reacción y factor de carga",
+  "duracion_min": 14,
+  "blocks": [
+    {
+      "type": "preflight_check",
+      "data": {
+        "instruccion": "Antes de arrancar — responde con lo que ya sabes:",
+        "pregunta": "Un avión comercial vuela a 35,000 ft con velocidad y dirección constantes. Desde el punto de vista de Newton, ¿cuál es el estado de las fuerzas que actúan sobre él?",
+        "opciones": [
+          "El empuje debe ser ligeramente mayor a la resistencia para evitar que se frene",
+          "Todas las fuerzas están en equilibrio exacto y el avión vuela puramente por inercia",
+          "El levantamiento es mucho mayor que el peso, lo cual cancela la gravedad"
+        ],
+        "respuesta_correcta": 1,
+        "feedback_correcto": "¡Exacto! Primera Ley de Newton — para mantener movimiento uniforme no debe existir fuerza desbalanceada. Empuje = Resistencia, Levantamiento = Peso.",
+        "feedback_incorrecto": "Esto es exactamente lo que vas a entender hoy. La Primera Ley de Newton explica por qué un avión en crucero no necesita 'esfuerzo extra' para mantenerse volando."
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Primera Ley de Newton — Inercia",
+        "texto": "Todo cuerpo permanece en su estado de reposo o de movimiento rectilíneo y uniforme mientras que no actúe ninguna fuerza sobre él. En el vuelo esto significa que si las cuatro fuerzas (Levantamiento, Peso, Empuje y Resistencia) están en perfecto equilibrio, la inercia mantendrá al avión volando en la misma dirección y velocidad sin alteración alguna.",
+        "destacado": {
+          "tipo": "definicion",
+          "contenido": "Ejemplo: Un avión estacionado permanecerá en reposo hasta que el empuje venza su inercia estática. En crucero recto y nivelado, seguirá esa trayectoria estable hasta que el piloto introduzca una fuerza desbalanceada."
+        },
+        "fuente": "Manual del Piloto de Conocimientos Aeronáuticos — FAA"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Segunda Ley de Newton — Fuerza",
+        "texto": "Si un cuerpo de masa m está sometido a una fuerza F, experimenta una aceleración a proporcional a la fuerza. La aceleración es directamente proporcional a la fuerza e inversamente proporcional a la masa. Aplica para aceleraciones positivas (ganar velocidad), negativas (frenar) y cambios de dirección.",
+        "destacado": {
+          "tipo": "dato_clave",
+          "contenido": "Ejemplo en despegue: La fuerza aceleradora = Empuje − (Resistencia aerodinámica + Fricción de pista). Si el empuje supera ampliamente estas resistencias, la aceleración es grande. Un avión más pesado con el mismo empuje acelera más lento."
+        },
+        "fuente": "Manual del Piloto de Conocimientos Aeronáuticos — FAA"
+      }
+    },
+    {
+      "type": "formula_block",
+      "data": {
+        "nombre": "Segunda Ley de Newton",
+        "formula": "F = m · a",
+        "formula_latex": "F = m \\cdot a",
+        "variables": [
+          {
+            "simbolo": "F",
+            "nombre": "Fuerza",
+            "descripcion": "Fuerza neta aplicada al cuerpo (Newtons o libras-fuerza)."
+          },
+          {
+            "simbolo": "m",
+            "nombre": "Masa",
+            "descripcion": "Cantidad de materia del cuerpo. A mayor masa, menor aceleración con la misma fuerza."
+          },
+          {
+            "simbolo": "a",
+            "nombre": "Aceleración",
+            "descripcion": "Cambio de velocidad por unidad de tiempo. Directamente proporcional a F e inversamente proporcional a m."
+          }
+        ],
+        "nota": "En aviación: un avión comercial a máximo peso requiere mucha más pista para acelerar y mucha más anticipación para frenar que el mismo avión ligero."
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Tercera Ley de Newton — Acción y Reacción",
+        "texto": "Si un cuerpo ejerce una fuerza sobre otro, este ejerce una fuerza igual y de sentido contrario sobre el primero. Esta ley explica tanto la sustentación del ala como el empuje del motor.",
+        "tabla": [
+          {
+            "categoria": "Sustentación del ala",
+            "descripcion": "El ala desvía el flujo de aire hacia abajo (acción). La reacción a esta masa de aire acelerada hacia abajo produce una fuerza aerodinámica igual y opuesta hacia arriba (levantamiento).",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Empuje del reactor",
+            "descripcion": "El motor expulsa gases calientes hacia atrás (acción). La reacción igual y opuesta empuja al motor y al avión hacia adelante.",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Efecto del par motor (Torque)",
+            "descripcion": "Al girar la hélice en el sentido de las manecillas del reloj (acción), aparece un par igual y contrario que tiende a girar el fuselaje en sentido opuesto (reacción), obligando al piloto a usar el timón de dirección para compensarlo.",
+            "ejemplos": []
+          }
+        ],
+        "fuente": "Manual del Piloto de Conocimientos Aeronáuticos — FAA"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Las 3 leyes y las 4 fuerzas del vuelo",
+        "texto": "Las tres leyes de Newton trabajan juntas para explicar cada estado de vuelo posible.",
+        "tabla": [
+          {
+            "categoria": "Vuelo recto nivelado (1ª Ley)",
+            "descripcion": "L = W y T = D. Fuerzas en equilibrio. El avión mantiene rumbo y altitud por inercia sin fuerza neta.",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Aceleración / maniobra (2ª Ley)",
+            "descripcion": "Cuando empuje supera resistencia o levantamiento supera peso, se crea fuerza desbalanceada que acelera el avión según F = m·a.",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Generación de empuje y sustentación (3ª Ley)",
+            "descripcion": "El ala desvía aire hacia abajo para recibir fuerza hacia arriba. El motor expulsa gases hacia atrás para recibir fuerza hacia adelante.",
+            "ejemplos": []
+          }
+        ],
+        "fuente": "Manual del Piloto de Conocimientos Aeronáuticos — FAA"
+      }
+    },
+    {
+      "type": "formula_block",
+      "data": {
+        "nombre": "Factor de Carga (Load Factor)",
+        "formula": "n = L / W = 1 / cos β",
+        "formula_latex": "n = \\frac{L}{W} = \\frac{1}{\\cos \\beta}",
+        "variables": [
+          {
+            "simbolo": "n",
+            "nombre": "Factor de carga",
+            "descripcion": "Número adimensional que indica cuántos múltiplos del peso propio soporta la estructura. Se expresa en fuerzas G."
+          },
+          {
+            "simbolo": "L",
+            "nombre": "Levantamiento",
+            "descripcion": "Fuerza de sustentación total generada por las alas en la maniobra."
+          },
+          {
+            "simbolo": "W",
+            "nombre": "Peso",
+            "descripcion": "Peso real de la aeronave."
+          },
+          {
+            "simbolo": "β",
+            "nombre": "Ángulo de banqueo",
+            "descripcion": "Ángulo de inclinación lateral del avión en el viraje."
+          }
+        ],
+        "nota": "0° banqueo = 1.0 G | 45° banqueo = 1.41 G | 60° banqueo = 2.0 G. A mayor factor de carga, mayor velocidad de desplome."
+      }
+    },
+    {
+      "type": "highlight_note",
+      "data": {
+        "tipo": "advertencia",
+        "titulo": "El engaño del peso en los virajes",
+        "contenido": "Un viraje de 60° duplica literalmente el peso aparente del avión (2 Gs). Esto exige generar el doble de levantamiento, estresa la estructura y eleva severamente la velocidad de desplome. La aerodinámica no perdona las matemáticas.",
+        "fuente": "Manual del Piloto de Conocimientos Aeronáuticos — FAA"
+      }
+    },
+    {
+      "type": "highlight_note",
+      "data": {
+        "tipo": "yaris",
+        "titulo": "Nemotecnia de Yaris ✨",
+        "contenido": "Imagina que vuelas en un patín del diablo espacial. 1ª Ley (Inercia): si ya vas rodando a 20 km/h y te quedas congelado sin empujar ni frenar, seguirás a 20 km/h para siempre — ese es el crucero. 2ª Ley (F=ma): si traes una mochila de 50 kg, la misma patada te da menos aceleración que si estuvieras ligero — avión pesado, más pista. 3ª Ley (Acción-Reacción): para ir hacia adelante, lanzas la patada hacia atrás contra el piso y el piso te empuja hacia adelante — exactamente igual que la hélice con el aire.",
+        "fuente": null
+      }
+    },
+    {
+      "type": "active_recall",
+      "data": {
+        "tipo": "match",
+        "instruccion": "Relaciona cada Ley de Newton con su aplicación en el vuelo.",
+        "items": [
+          {
+            "id": 1,
+            "concepto": "1ª Ley — Inercia",
+            "descripcion": "Avión en crucero recto nivelado mantiene velocidad y rumbo sin fuerza extra"
+          },
+          {
+            "id": 2,
+            "concepto": "2ª Ley — F = m·a",
+            "descripcion": "Avión más pesado necesita más pista para alcanzar velocidad de despegue"
+          },
+          {
+            "id": 3,
+            "concepto": "3ª Ley — Acción/Reacción",
+            "descripcion": "El motor expulsa gases hacia atrás y el avión es empujado hacia adelante"
+          },
+          {
+            "id": 4,
+            "concepto": "Factor de carga 2.0 G",
+            "descripcion": "Viraje a 60° de banqueo — el ala debe generar el doble del peso en sustentación"
+          },
+          {
+            "id": 5,
+            "concepto": "Par motor (Torque)",
+            "descripcion": "La hélice gira en un sentido y el fuselaje tiende a girar en sentido contrario"
+          }
+        ]
+      }
+    },
+    {
+      "type": "think_like_pilot",
+      "data": {
+        "pregunta": "Iniciaste la rotación para despegue en un bimotor y de pronto falla el motor derecho. El avión jala la nariz violentamente hacia la derecha. ¿Cómo aplicas la Segunda y Tercera Ley de Newton con los mandos para no salirte de la pista?",
+        "pista": "Tienes mucho empuje a la izquierda y nada a la derecha — fuerza desbalanceada (2ª Ley). ¿Qué debes crear con el timón de dirección (acción/reacción) para contrarrestar?",
+        "respuesta_sugerida": "El motor izquierdo genera gran empuje pero la ausencia del derecho crea un momento asimétrico que acelera la nariz a la derecha (2ª Ley). Uso mi pie izquierdo para deflectar el timón hacia la izquierda — esto desvía bruscamente el viento relativo en la cola (acción) generando una fuerza lateral aerodinámica opuesta (reacción — 3ª Ley) que frena la aceleración no deseada y restaura el equilibrio direccional (1ª Ley)."
+      }
+    },
+    {
+      "type": "debrief",
+      "data": {
+        "puntos_clave": [
+          "La inercia rige el equilibrio: en crucero recto nivelado L=W y T=D. Las fuerzas se cancelan y el avión fluye por la 1ª Ley sin esfuerzo adicional.",
+          "Masas grandes requieren grandes fuerzas (F=ma): un avión pesado tarda más pista en acelerar y requiere frenar con más anticipación que el mismo avión ligero.",
+          "El vuelo es el arte de arrojar aire: las alas desvían aire hacia abajo para recibir sustentación hacia arriba, y el motor expulsa gases hacia atrás para recibir empuje hacia adelante — pura 3ª Ley.",
+          "Factor de carga en virajes: 60° de banqueo = 2.0 G = el ala debe generar el doble del peso. Eleva la velocidad de desplome y estresa la estructura."
+        ],
+        "pregunta_metacognitiva": "¿Cómo te sentiste con este tema?",
+        "opciones_dificultad": [
+          { "valor": 1, "etiqueta": "Muy fácil" },
+          { "valor": 2, "etiqueta": "Fácil" },
+          { "valor": 3, "etiqueta": "Normal" },
+          { "valor": 4, "etiqueta": "Difícil" },
+          { "valor": 5, "etiqueta": "Muy difícil" }
+        ]
+      }
+    },
+    {
+      "type": "flashcards",
+      "data": {
+        "cards": [
+          {
+            "id": 1,
+            "pregunta": "¿Qué establece la Primera Ley de Newton y cómo se aplica al vuelo en crucero?",
+            "respuesta": "Ley de Inercia: todo cuerpo se mantiene en reposo o movimiento rectilíneo uniforme salvo que fuerzas externas lo cambien. En crucero, L=W y T=D — fuerzas equilibradas — el avión mantiene rumbo y velocidad por inercia sin fuerza extra."
+          },
+          {
+            "id": 2,
+            "pregunta": "¿Qué nos dice F = m·a sobre un avión pesado intentando despegar?",
+            "respuesta": "Segunda Ley de Newton: a mayor masa (m), menor aceleración (a) con la misma fuerza (F). Un avión a máximo peso con el mismo empuje acelerará más lento, necesitará más pista y más anticipación para frenar."
+          },
+          {
+            "id": 3,
+            "pregunta": "¿Qué Ley de Newton explica que el ala genere sustentación al desviar aire hacia abajo?",
+            "respuesta": "Tercera Ley — Acción y Reacción. El ala desvía el flujo de aire hacia abajo (acción). La reacción igual y opuesta es la fuerza aerodinámica hacia arriba (levantamiento)."
+          },
+          {
+            "id": 4,
+            "pregunta": "¿Cuál es el factor de carga en vuelo recto nivelado y qué significa?",
+            "respuesta": "n = 1.0 (1 G). El levantamiento es exactamente igual al peso (L = W). La estructura soporta únicamente el peso normal de la aeronave sin esfuerzos adicionales."
+          },
+          {
+            "id": 5,
+            "pregunta": "¿Cuál es el factor de carga en un viraje a 60° de banqueo y qué implica?",
+            "respuesta": "n = 2.0 G. El levantamiento requerido es el doble del peso. La estructura soporta el doble de esfuerzo y la velocidad de desplome aumenta significativamente."
+          }
+        ]
+      }
+    }
+  ]
+}
