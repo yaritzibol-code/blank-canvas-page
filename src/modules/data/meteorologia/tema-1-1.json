@@ -1,0 +1,151 @@
+{
+  "id": "meteorologia-1-1",
+  "materia": "Meteorología",
+  "bloque": 1,
+  "tema": 1,
+  "title": "La Atmósfera Terrestre",
+  "subtitle": "Composición, capas y la ISA (Atmósfera Estándar Internacional)",
+  "duracion_min": 14,
+  "blocks": [
+    {
+      "type": "preflight_check",
+      "data": {
+        "pregunta": "¿En qué capa de la atmósfera se produce la mayor parte del tiempo meteorológico y vuelan las aeronaves comerciales?",
+        "opciones": [
+          "Estratósfera",
+          "Tropósfera",
+          "Mesósfera",
+          "Termósfera"
+        ],
+        "respuesta_correcta": 1,
+        "explicacion": "La tropósfera es la capa más baja y densa. Contiene el 75% de la masa atmosférica y casi todo el vapor de agua. Es donde se producen nubes, lluvia y viento, y donde vuelan los aviones comerciales."
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "texto": "La atmósfera es la envoltura gaseosa que rodea la Tierra, retenida por la gravedad. Está compuesta principalmente por nitrógeno (78%), oxígeno (21%) y gases traza como argón y CO₂ (1%). Se divide en capas según el gradiente de temperatura: tropósfera, estratósfera, mesósfera y termósfera. La pausa entre cada capa (tropopausa, estratopausa, mesopausa) marca una inversión del gradiente de temperatura.",
+        "destacados": [
+          "Tropósfera (0–12 km): todo el tiempo meteorológico, temperatura disminuye con la altitud a razón de ~2°C/300 m (DALR) en promedio.",
+          "Estratósfera (12–50 km): el ozono absorbe UV y la temperatura aumenta; aquí vuela el Concorde y la mayoría de los globos de investigación.",
+          "Mesósfera (50–85 km): la capa más fría, hasta -90°C. Los meteoritos se incineran aquí.",
+          "Termósfera (>85 km): temperatura sube hasta miles de °C por absorción de radiación solar de alta energía."
+        ],
+        "fuente": "OACI Documento 8168 — PANS-OPS; Manual de Meteorología OACI (Doc 8896)"
+      }
+    },
+    {
+      "type": "formula_block",
+      "data": {
+        "nombre": "ISA — Valores estándar al nivel del mar",
+        "formula_latex": "T_0 = 15°C \\quad P_0 = 1013.25\\,hPa \\quad \\rho_0 = 1.225\\,kg/m^3",
+        "variables": [
+          { "simbolo": "T₀", "descripcion": "Temperatura estándar al nivel del mar: 15 °C (288.15 K)" },
+          { "simbolo": "P₀", "descripcion": "Presión estándar al nivel del mar: 1013.25 hPa (29.92 inHg)" },
+          { "simbolo": "ρ₀", "descripcion": "Densidad del aire estándar: 1.225 kg/m³" },
+          { "simbolo": "DALR", "descripcion": "Gradiente de temperatura seco adiabático: -2 °C / 300 m (aprox.)" }
+        ],
+        "nota": "La ISA es el modelo teórico de referencia. El aire real casi nunca coincide exactamente con estos valores, pero todos los instrumentos y tablas de rendimiento están calibrados contra ella."
+      }
+    },
+    {
+      "type": "highlight_note",
+      "data": {
+        "tipo": "definicion",
+        "contenido": "Tropopausa: límite entre la tropósfera y la estratósfera. Varía entre 8 km sobre los polos y 16-18 km sobre el ecuador. La temperatura deja de disminuir y permanece constante (≈ -56.5 °C en ISA).",
+        "fuente": "OACI, Atmósfera Estándar Internacional (ISA)"
+      }
+    },
+    {
+      "type": "highlight_note",
+      "data": {
+        "tipo": "dato_clave",
+        "contenido": "El CIAAC pregunta frecuentemente: temperatura ISA al nivel del mar = 15 °C, presión ISA = 1013.25 hPa. Memorízalos. También: por cada 1,000 ft de altitud, la temperatura ISA baja aproximadamente 2 °C.",
+        "fuente": null
+      }
+    },
+    {
+      "type": "highlight_note",
+      "data": {
+        "tipo": "yaris",
+        "contenido": "Para las capas de la atmósfera usa: 'Todos Somos Más Tranquilos' → Tropósfera, Estratósfera, Mesósfera, Termósfera. ¡De abajo hacia arriba, y el tiempo meteorológico solo ocurre en la primera!",
+        "fuente": null
+      }
+    },
+    {
+      "type": "active_recall",
+      "data": {
+        "tipo": "ordenar",
+        "instruccion": "Ordena las capas de la atmósfera de menor a mayor altitud (de la superficie hacia el espacio):",
+        "items": [
+          { "id": "a", "texto": "Tropósfera", "orden": 1 },
+          { "id": "b", "texto": "Estratósfera", "orden": 2 },
+          { "id": "c", "texto": "Mesósfera", "orden": 3 },
+          { "id": "d", "texto": "Termósfera", "orden": 4 }
+        ]
+      }
+    },
+    {
+      "type": "active_recall",
+      "data": {
+        "tipo": "match",
+        "instruccion": "Relaciona cada característica con la capa atmosférica correcta:",
+        "items": [
+          { "id": "1", "left": "Donde se forman las nubes y la lluvia", "right": "Tropósfera" },
+          { "id": "2", "left": "Capa de ozono, temperatura sube", "right": "Estratósfera" },
+          { "id": "3", "left": "Capa más fría, incineran meteoritos", "right": "Mesósfera" },
+          { "id": "4", "left": "Temperatura >1,000 °C, satélites LEO", "right": "Termósfera" }
+        ]
+      }
+    },
+    {
+      "type": "think_like_pilot",
+      "data": {
+        "pregunta": "Si tu altímetro está calibrado a 1013.25 hPa pero la presión real al nivel del mar ese día es 990 hPa, ¿tu altímetro indicará más o menos altitud de la real?",
+        "pista": "Un altímetro mide presión. Si la presión real es menor que la de referencia ISA, el instrumento 'cree' que estás más alto de lo que estás.",
+        "respuesta_sugerida": "El altímetro indicará una altitud MAYOR a la real. La presión más baja que la ISA hace que el instrumento 'interprete' que hay menos masa de aire sobre él, lo que normalmente significa más altitud. Este error puede ser fatal cerca del terreno — por eso los controladores dan el QNH (presión al nivel del mar real) antes de aterrizar: para que el piloto calibre correctamente su altímetro."
+      }
+    },
+    {
+      "type": "debrief",
+      "data": {
+        "puntos_clave": [
+          "La atmósfera tiene 4 capas principales: Tropósfera → Estratósfera → Mesósfera → Termósfera.",
+          "Todo el tiempo meteorológico ocurre en la tropósfera (0–12 km aprox.).",
+          "ISA al nivel del mar: T = 15 °C, P = 1013.25 hPa, ρ = 1.225 kg/m³.",
+          "La temperatura en la tropósfera disminuye con la altitud (~2 °C cada 300 m).",
+          "La tropopausa (límite troposfera/estratosfera) varía: ~8 km en polos, ~16 km en ecuador."
+        ],
+        "pregunta_metacognitiva": "¿Cómo te sentiste con este tema?",
+        "opciones_dificultad": ["Muy fácil", "Fácil", "Normal", "Difícil", "Muy difícil"]
+      }
+    },
+    {
+      "type": "flashcards",
+      "data": {
+        "cards": [
+          {
+            "pregunta": "¿Cuál es la composición porcentual principal de la atmósfera?",
+            "respuesta": "Nitrógeno (N₂): 78%, Oxígeno (O₂): 21%, Gases traza (Ar, CO₂, otros): ~1%."
+          },
+          {
+            "pregunta": "¿Cuáles son los valores ISA al nivel del mar? (temperatura, presión, densidad)",
+            "respuesta": "Temperatura: 15 °C (288.15 K) | Presión: 1013.25 hPa | Densidad: 1.225 kg/m³."
+          },
+          {
+            "pregunta": "¿En qué capa se produce todo el tiempo meteorológico relevante para la aviación?",
+            "respuesta": "En la tropósfera, la capa más baja (0–12 km aproximadamente). Contiene el 75% de la masa atmosférica y casi todo el vapor de agua."
+          },
+          {
+            "pregunta": "¿Qué es la tropopausa y a qué temperatura aproximada está en ISA?",
+            "respuesta": "Es el límite entre la tropósfera y la estratósfera. En ISA, la temperatura es de -56.5 °C. Su altitud varía entre 8 km (polos) y 16-18 km (ecuador)."
+          },
+          {
+            "pregunta": "¿A qué ritmo disminuye la temperatura en la tropósfera según ISA?",
+            "respuesta": "Aproximadamente 2 °C por cada 300 metros de ascenso (o 6.5 °C por km). Este valor se llama gradiente de temperatura estándar o DALR (Dry Adiabatic Lapse Rate en condiciones secas)."
+          }
+        ]
+      }
+    }
+  ]
+}

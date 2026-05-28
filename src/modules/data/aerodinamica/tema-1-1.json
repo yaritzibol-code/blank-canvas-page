@@ -1,0 +1,150 @@
+{
+  "id": "aerodinamica-1-1",
+  "materia": "Aerodinámica",
+  "bloque": 1,
+  "tema": 1,
+  "title": "¿Qué es una aeronave?",
+  "subtitle": "Definición OACI, clasificación y principio de vuelo",
+  "duracion_min": 12,
+  "blocks": [
+    {
+      "type": "preflight_check",
+      "data": {
+        "pregunta": "¿Cuál de las siguientes describe correctamente a una aeronave más pesada que el aire?",
+        "opciones": [
+          "Utiliza gas para flotar, como un globo aerostático",
+          "Genera sustentación aerodinámica mediante sus superficies en movimiento",
+          "Solo puede volar sin motor a bordo",
+          "No puede superar los 3,000 metros de altitud"
+        ],
+        "respuesta_correcta": 1,
+        "explicacion": "Las aeronaves más pesadas que el aire (aviones, helicópteros) generan sustentación activamente mediante superficies aerodinámicas. Las más ligeras (globos, dirigibles) flotan por flotabilidad gaseosa (principio de Arquímedes)."
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "texto": "Una aeronave es todo aparato que puede sustentarse y circular por el espacio aéreo. Se clasifican en dos grandes grupos: más ligeras que el aire (aeróstatos) y más pesadas que el aire (aerodinos). Los aeróstatos flotan porque su masa es menor que la del volumen de aire que desplazan. Los aerodinos, en cambio, generan sustentación activamente mediante superficies aerodinámicas en movimiento relativo con el aire.",
+        "destacados": [
+          "Aeróstatos: globo aerostático, dirigible — flotan por flotabilidad gaseosa.",
+          "Aerodinos: avión, helicóptero, planeador — generan sustentación aerodinámica.",
+          "Un planeador es aerodino aunque no tenga motor: la sustentación depende de la velocidad, no del empuje."
+        ],
+        "fuente": "OACI Anexo 7 — Marcas de Nacionalidad y Matrícula de Aeronaves"
+      }
+    },
+    {
+      "type": "formula_block",
+      "data": {
+        "nombre": "Principio de Arquímedes — flotabilidad de aeróstatos",
+        "formula_latex": "F_b = \\rho_{aire} \\times V \\times g",
+        "variables": [
+          { "simbolo": "F_b", "descripcion": "Fuerza de flotabilidad (N)" },
+          { "simbolo": "ρ_aire", "descripcion": "Densidad del aire en el nivel de vuelo (kg/m³)" },
+          { "simbolo": "V", "descripcion": "Volumen del gas desplazado (m³)" },
+          { "simbolo": "g", "descripcion": "Aceleración gravitacional (9.81 m/s²)" }
+        ],
+        "nota": "Para que el aeróstato flote, F_b debe ser mayor que el peso total (estructura + gas + carga + tripulación)."
+      }
+    },
+    {
+      "type": "highlight_note",
+      "data": {
+        "tipo": "definicion",
+        "contenido": "Aeronave: Toda máquina que puede sustentarse en la atmósfera por reacciones del aire que no sean las reacciones del aire contra la superficie de la tierra.",
+        "fuente": "OACI, Convenio sobre Aviación Civil Internacional, Anexo 7"
+      }
+    },
+    {
+      "type": "highlight_note",
+      "data": {
+        "tipo": "advertencia",
+        "contenido": "Los aerodeslizadores (hovercraft) NO son aeronaves según la OACI porque se sustentan por la reacción directa del aire contra la superficie de la tierra — justo lo que excluye la definición.",
+        "fuente": null
+      }
+    },
+    {
+      "type": "highlight_note",
+      "data": {
+        "tipo": "yaris",
+        "contenido": "Para recordar la clasificación: AERÓSTATO = ESTÁ quieto flotando (Arquímedes manda). AERODINO = DINO necesita MOVIMIENTO para volar. El triceratops tiene que correr, el globo no. ¡Funciona siempre!",
+        "fuente": null
+      }
+    },
+    {
+      "type": "active_recall",
+      "data": {
+        "tipo": "match",
+        "instruccion": "Relaciona cada aeronave con su principio de vuelo. Primero selecciona un elemento de la izquierda, luego su par de la derecha.",
+        "items": [
+          { "id": "1", "left": "Globo aerostático", "right": "Flotabilidad gaseosa" },
+          { "id": "2", "left": "Avión comercial", "right": "Sustentación aerodinámica" },
+          { "id": "3", "left": "Dirigible (Zeppelin)", "right": "Flotabilidad + propulsión" },
+          { "id": "4", "left": "Helicóptero", "right": "Rotor de palas giratorias" }
+        ]
+      }
+    },
+    {
+      "type": "active_recall",
+      "data": {
+        "tipo": "completar",
+        "instruccion": "Completa las frases con las palabras del banco:",
+        "template": "Los ___ flotan por ___ gaseosa, mientras que los ___ generan ___ aerodinámica mediante sus superficies.",
+        "banco": ["aeróstatos", "flotabilidad", "aerodinos", "sustentación", "resistencia", "empuje"],
+        "respuestas": ["aeróstatos", "flotabilidad", "aerodinos", "sustentación"]
+      }
+    },
+    {
+      "type": "think_like_pilot",
+      "data": {
+        "pregunta": "Si estás en un avión y los motores se apagan completamente a crucero, ¿la aeronave dejará inmediatamente de volar?",
+        "pista": "Piensa en planeadores. ¿Qué genera la sustentación: el motor o la velocidad del aire sobre las alas?",
+        "respuesta_sugerida": "No inmediatamente. La sustentación depende de la velocidad relativa del aire sobre las alas, no de los motores. Sin empuje, la aeronave perderá velocidad gradualmente mientras desciende en planeo. Los pilotos tendrán minutos (no segundos) para reiniciar los motores o seleccionar un campo de aterrizaje de emergencia. La relación planeo de un avión comercial es de aproximadamente 15:1 — por cada metro que baja, avanza 15."
+      }
+    },
+    {
+      "type": "debrief",
+      "data": {
+        "puntos_clave": [
+          "Las aeronaves se dividen en más ligeras (aeróstatos) y más pesadas (aerodinos) que el aire.",
+          "Los aeróstatos flotan por principio de Arquímedes; los aerodinos generan sustentación aerodinámica activamente.",
+          "La definición OACI excluye aparatos sustentados por reacción directa del aire contra el suelo (aerodeslizadores).",
+          "La sustentación en aerodinos no depende de los motores — depende de la velocidad relativa del aire."
+        ],
+        "pregunta_metacognitiva": "¿Cómo te sentiste con este tema?",
+        "opciones_dificultad": ["Muy fácil", "Fácil", "Normal", "Difícil", "Muy difícil"]
+      }
+    },
+    {
+      "type": "flashcards",
+      "data": {
+        "cards": [
+          {
+            "pregunta": "¿Cuál es la definición oficial de aeronave según OACI?",
+            "respuesta": "Toda máquina que puede sustentarse en la atmósfera por reacciones del aire que no sean las reacciones del aire contra la superficie de la tierra."
+          },
+          {
+            "pregunta": "¿Qué son los aeróstatos? Da un ejemplo.",
+            "respuesta": "Aeronaves más ligeras que el aire que flotan por flotabilidad gaseosa (Arquímedes). Ejemplo: globo aerostático y dirigible."
+          },
+          {
+            "pregunta": "¿Qué son los aerodinos? Da un ejemplo.",
+            "respuesta": "Aeronaves más pesadas que el aire que generan sustentación aerodinámica activa mediante superficies en movimiento. Ejemplo: avión y helicóptero."
+          },
+          {
+            "pregunta": "¿Un planeador puede volar sin motor? ¿Por qué?",
+            "respuesta": "Sí. La sustentación se genera por el movimiento del aire sobre las alas, no por los motores. El planeador aprovecha corrientes ascendentes y desciende en planeo controlado."
+          },
+          {
+            "pregunta": "¿Un aerodeslizador (hovercraft) es una aeronave según OACI?",
+            "respuesta": "No. Se sustenta por la reacción directa del aire contra la superficie de la tierra, lo cual está expresamente excluido en la definición OACI."
+          },
+          {
+            "pregunta": "¿En qué Anexo OACI se define el término 'aeronave'?",
+            "respuesta": "Anexo 7 — Marcas de Nacionalidad y Matrícula de Aeronaves."
+          }
+        ]
+      }
+    }
+  ]
+}
