@@ -11,6 +11,13 @@ import type {
 // ─── Match ────────────────────────────────────────────────────────────────────
 
 function MatchActivity({ items }: { items: MatchItem[] }) {
+  // Normalize both old (left/right) and new (concepto/descripcion) field names
+  const normalized = items.map((item) => ({
+    id: String(item.id),
+    left: item.left ?? item.concepto ?? "",
+    right: item.right ?? item.descripcion ?? "",
+  }));
+
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
   // leftId -> rightText (user connection)
   const [connections, setConnections] = useState<Record<string, string>>({});
@@ -18,7 +25,7 @@ function MatchActivity({ items }: { items: MatchItem[] }) {
 
   // Shuffle right column once on mount
   const [rightCol] = useState<string[]>(() =>
-    [...items].map((i) => i.right).sort(() => Math.random() - 0.5)
+    [...normalized].map((i) => i.right).sort(() => Math.random() - 0.5)
   );
 
   // Which right texts are already connected
@@ -41,10 +48,10 @@ function MatchActivity({ items }: { items: MatchItem[] }) {
     setChecked(false);
   }
 
-  const allConnected = Object.keys(connections).length === items.length;
+  const allConnected = Object.keys(connections).length === normalized.length;
 
   function isCorrect(id: string) {
-    const correct = items.find((i) => i.id === id)?.right;
+    const correct = normalized.find((i) => i.id === id)?.right;
     return connections[id] === correct;
   }
 
@@ -53,7 +60,7 @@ function MatchActivity({ items }: { items: MatchItem[] }) {
       <div style={{ display: "flex", gap: 16, marginBottom: 16 }}>
         {/* Left column */}
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
-          {items.map((item) => {
+          {normalized.map((item) => {
             const connected = item.id in connections;
             const isSelected = selectedLeft === item.id;
             let borderColor = "#F2DCDB";

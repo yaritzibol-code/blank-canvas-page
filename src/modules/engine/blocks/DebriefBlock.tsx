@@ -124,7 +124,7 @@ export function DebriefBlock({
         {pregunta_metacognitiva}
       </p>
 
-      {/* Difficulty options */}
+      {/* Difficulty options — normalize both string[] and {valor, etiqueta}[] */}
       <div
         style={{
           display: "flex",
@@ -134,6 +134,7 @@ export function DebriefBlock({
         }}
       >
         {opciones_dificultad.map((opcion, i) => {
+          const label = typeof opcion === "string" ? opcion : (opcion as { etiqueta: string }).etiqueta;
           const isSelected = selected === i;
           return (
             <button
@@ -160,7 +161,7 @@ export function DebriefBlock({
               }}
             >
               <span style={{ fontSize: "1.2rem" }}>{DIFFICULTY_EMOJIS[i]}</span>
-              {opcion}
+              {label}
             </button>
           );
         })}

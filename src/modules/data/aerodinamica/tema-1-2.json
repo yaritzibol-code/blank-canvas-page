@@ -1,0 +1,159 @@
+{
+  "id": "aerodinamica-1-2",
+  "materia": "Aerodinámica",
+  "bloque": 1,
+  "bloque_titulo": "Definiciones y propiedades del aire",
+  "tema": 2,
+  "title": "Fluido, flujo laminar y turbulento",
+  "subtitle": "Capa límite, Número de Reynolds y sus efectos en el vuelo",
+  "duracion_min": 14,
+  "blocks": [
+    {
+      "type": "preflight_check",
+      "data": {
+        "instruccion": "Antes de arrancar — responde con lo que ya sabes:",
+        "pregunta": "La superficie de las alas de los aviones comerciales está cuidadosamente pulida y sus remaches son embutidos. ¿Cuál es el principal objetivo aerodinámico de esto?",
+        "opciones": [
+          "Aumentar la densidad del aire alrededor del avión para mejorar el levantamiento",
+          "Prevenir que el flujo laminar se convierta prematuramente en flujo turbulento, reduciendo la resistencia por fricción",
+          "Reducir el ángulo de ataque efectivo en la punta de las alas para evitar el desplome"
+        ],
+        "respuesta_correcta": 1,
+        "feedback_correcto": "¡Exacto! Las superficies lisas retrasan el punto de transición de capa límite laminar a turbulenta, reduciendo la resistencia al avance.",
+        "feedback_incorrecto": "Interesante elección. Lo que vas a aprender hoy explica exactamente por qué los ingenieros son tan obsesivos con la suavidad de las alas."
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "¿Qué es un fluido?",
+        "texto": "Un fluido es una materia capaz de fluir. Este término abarca tanto los líquidos (que encuentran su propio nivel) como los gases (que llenan el recinto que los contiene). El aire se considera un fluido porque es una mezcla de gases en la atmósfera que rodea la tierra — sumamente ligero, pero capaz de fluir, llenando cualquier espacio, y con masa y peso propios.",
+        "destacado": {
+          "tipo": "dato_clave",
+          "contenido": "Los parámetros fundamentales que definen al aire como fluido para la aerodinámica son: densidad, presión, temperatura, viscosidad y compresibilidad."
+        },
+        "fuente": "Aerodinámica Básica — CIAAC"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Flujo laminar",
+        "texto": "Se llama flujo laminar cuando un fluido tiene un movimiento continuo y uniforme, en el que las partículas siguen trayectorias paralelas entre sí. Las capas moleculares del fluido se mueven en forma de láminas paralelas deslizando suavemente unas sobre otras sin cruzarse. Los cambios de dirección son poco pronunciados.",
+        "destacado": {
+          "tipo": "definicion",
+          "contenido": "El flujo laminar ocurre normalmente en los puntos más próximos al borde de ataque de un perfil o sobre superficies lisas, donde el Número de Reynolds es relativamente pequeño."
+        },
+        "nota_adicional": "Es altamente deseable porque genera menor resistencia de fricción. Si se lograra mantener flujo laminar sobre toda el ala, se podría esperar hasta un 30% de disminución en la resistencia del avión. Sin embargo, es un estado frágil y propenso a desorganizarse.",
+        "fuente": "Aerodinámica Básica — CIAAC"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Flujo turbulento",
+        "texto": "Si el flujo tiene que seguir una trayectoria con cambios de dirección muy marcados, las líneas de corriente no pueden seguirlos y se desorganizan. A este flujo desorganizado y lleno de remolinos se le conoce como flujo turbulento. Existe una agitación continua en dirección transversal — las partículas mezclan y transmiten energía cinética entre capas.",
+        "destacado": {
+          "tipo": "advertencia",
+          "contenido": "El flujo turbulento genera mayor resistencia de fricción superficial. Ocurre cuando el fluido pasa por un punto de transición y se desorganiza — acelerado por un Número de Reynolds grande, obstáculos o rugosidad en la superficie (remaches, suciedad)."
+        },
+        "nota_adicional": "Dato no obvio: aunque genera más resistencia, la capa límite turbulenta tiende a permanecer adherida al ala soportando mejor los gradientes adversos de presión, retrasando el desprendimiento y el desplome.",
+        "fuente": "Aerodinámica Básica — CIAAC"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Capa límite (Boundary Layer)",
+        "texto": "La capa límite es la película de aire que existe entre la superficie del ala (donde la velocidad del aire es nula por rozamiento) y la corriente libre (donde la viscosidad ya no influye y el aire corre a la velocidad normal del vuelo). Nace en el borde de ataque como capa límite laminar y, conforme el aire recorre el ala y pierde energía por fricción, cruza un punto de transición y se transforma en capa límite turbulenta, la cual es más gruesa.",
+        "svg_diagram": {
+          "tipo": "capa_limite",
+          "descripcion": "Diagrama mostrando perfil alar con zona laminar (borde de ataque), punto de transición, zona turbulenta y desprendimiento al final del ala"
+        },
+        "destacado": {
+          "tipo": "advertencia",
+          "contenido": "Cuando el ángulo de ataque es muy grande, las partículas en la capa límite pierden velocidad hasta detenerse e invierten su sentido. La capa límite se desprende del ala provocando el desplome — destruyendo la sustentación y aumentando radicalmente la resistencia."
+        },
+        "fuente": "Aerodinámica Básica — CIAAC"
+      }
+    },
+    {
+      "type": "formula_block",
+      "data": {
+        "nombre": "Número de Reynolds (RN)",
+        "formula": "RN = V · l / ν",
+        "formula_latex": "RN = \\frac{V \\cdot l}{\\nu} = \\frac{\\rho \\cdot V \\cdot l}{\\mu}",
+        "variables": [
+          { "simbolo": "V",  "nombre": "Velocidad",              "descripcion": "Velocidad del flujo de aire relativo al cuerpo." },
+          { "simbolo": "l",  "nombre": "Longitud característica","descripcion": "Distancia recorrida por el flujo sobre la superficie (cuerda del ala)." },
+          { "simbolo": "ν",  "nombre": "Viscosidad cinemática",  "descripcion": "Coeficiente cinemático de viscosidad del fluido." },
+          { "simbolo": "ρ",  "nombre": "Densidad del aire",      "descripcion": "Masa por unidad de volumen del fluido." },
+          { "simbolo": "μ",  "nombre": "Viscosidad absoluta",    "descripcion": "Coeficiente absoluto de viscosidad del fluido." }
+        ],
+        "nota": "RN pequeño → capa límite laminar. RN grande → capa límite turbulenta. Es el parámetro que predice dónde el orden del aire será vencido por las fuerzas inerciales."
+      }
+    },
+    {
+      "type": "highlight_note",
+      "data": {
+        "tipo": "yaris",
+        "titulo": "Nemotecnia de Yaris ✨",
+        "contenido": "Para distinguir flujo laminar de turbulento, imagina una autopista. El flujo laminar es la autopista libre: todos los autos (partículas de aire) van en su carril, paralelos, rápidos y silenciosos. El flujo turbulento es la calle sin líneas en hora pico: los autos se cruzan de carril, frenan, se mezclan — hay caos total. Ese desorden crea 'arrastre' (resistencia). La rugosidad del ala es como los baches que convierten tu autopista en caos.",
+        "fuente": null
+      }
+    },
+    {
+      "type": "active_recall",
+      "data": {
+        "tipo": "match",
+        "instruccion": "Relaciona cada concepto con su descripción correcta.",
+        "items": [
+          { "id": 1, "concepto": "Flujo laminar",                  "descripcion": "Partículas en trayectorias paralelas ordenadas — menor resistencia de fricción" },
+          { "id": 2, "concepto": "Flujo turbulento",               "descripcion": "Partículas desorganizadas con remolinos — mayor resistencia pero mejor adherencia al ala" },
+          { "id": 3, "concepto": "Capa límite",                    "descripcion": "Zona entre la superficie del ala (velocidad nula) y la corriente libre" },
+          { "id": 4, "concepto": "Número de Reynolds",             "descripcion": "Parámetro adimensional que predice si el flujo será laminar o turbulento" },
+          { "id": 5, "concepto": "Desprendimiento de capa límite", "descripcion": "Provoca el desplome — destruye la sustentación y dispara la resistencia" }
+        ]
+      }
+    },
+    {
+      "type": "think_like_pilot",
+      "data": {
+        "pregunta": "Acabas de atravesar una zona con intensa cantidad de insectos que dejaron severamente sucio el borde de ataque de tus alas. Durante el crucero a alta velocidad, ¿qué notarás en los parámetros de rendimiento y por qué sucede aerodinámicamente?",
+        "pista": "Recuerda qué provoca que la capa límite pase de laminar a turbulenta, y qué tipo de capa límite genera más fricción contra el avión.",
+        "respuesta_sugerida": "Notarás que el avión necesita más potencia del motor para mantener la misma velocidad — o quemará más combustible. La suciedad actúa como rugosidad que adelanta bruscamente el punto de transición. El aire deja de tener flujo laminar casi inmediatamente y se vuelve una capa límite turbulenta muy extensa, aumentando drásticamente la resistencia por fricción superficial."
+      }
+    },
+    {
+      "type": "debrief",
+      "data": {
+        "puntos_clave": [
+          "La viscosidad del aire crea la capa límite — una zona milimétrica pegada al ala donde ocurre todo el rozamiento aerodinámico. En esa zona diminuta se libran todas las batallas de la fricción.",
+          "El dilema laminar vs. turbulento: el laminar reduce fricción pero es frágil. El turbulento aumenta la resistencia pero evita que el aire se desprenda del ala fácilmente a altos ángulos de ataque.",
+          "El desplome es un desprendimiento de capa límite, no una pérdida de motor. Cuando el gradiente de presiones es adverso, el aire se separa del ala y destruye la sustentación.",
+          "El Número de Reynolds predice el caos: RN pequeño = flujo laminar. RN grande = flujo turbulento. Es la relación entre fuerzas de inercia y fuerzas de viscosidad."
+        ],
+        "pregunta_metacognitiva": "¿Cómo te sentiste con este tema?",
+        "opciones_dificultad": [
+          { "valor": 1, "etiqueta": "Muy fácil" },
+          { "valor": 2, "etiqueta": "Fácil" },
+          { "valor": 3, "etiqueta": "Normal" },
+          { "valor": 4, "etiqueta": "Difícil" },
+          { "valor": 5, "etiqueta": "Muy difícil" }
+        ]
+      }
+    },
+    {
+      "type": "flashcards",
+      "data": {
+        "cards": [
+          { "id": 1, "pregunta": "¿Cómo se define la capa límite en aerodinámica?", "respuesta": "La fina película de aire que existe entre la superficie del ala (donde la velocidad es nula por rozamiento) y la corriente libre donde la viscosidad ya no influye. En esta zona ocurre todo el rozamiento viscoso del vuelo." },
+          { "id": 2, "pregunta": "¿Cuál es la diferencia clave entre flujo laminar y turbulento en el movimiento de sus partículas?", "respuesta": "Laminar: partículas en trayectorias ordenadas, continuas y paralelas — menor fricción. Turbulento: trayectorias desorganizadas con agitación transversal, mezcla de capas y remolinos — mayor fricción." },
+          { "id": 3, "pregunta": "¿Qué es el Número de Reynolds y cómo predice el comportamiento del flujo?", "respuesta": "Parámetro adimensional que relaciona fuerzas de inercia con fuerzas de viscosidad. RN pequeño → capa límite laminar. RN grande → capa límite turbulenta." },
+          { "id": 4, "pregunta": "¿Por qué la capa límite turbulenta genera mayor resistencia aerodinámica que la laminar?", "respuesta": "Porque la agitación continua de las partículas toma energía de la corriente libre y la transmite hacia la superficie, provocando que las partículas contiguas al ala viajen a mayor velocidad e incrementen el rozamiento." },
+          { "id": 5, "pregunta": "¿Qué fenómeno crítico ocurre cuando la capa límite pierde energía, se frena y se separa del ala?", "respuesta": "El desplome (o pérdida) — reduce bruscamente el levantamiento y aumenta la resistencia por formación de estelas turbulentas. No es pérdida de motor, es pérdida de adherencia del aire al ala." }
+        ]
+      }
+    }
+  ]
+}

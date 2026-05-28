@@ -2,14 +2,22 @@ import { useState } from "react";
 import type { PreflightCheckBlockData } from "../types";
 
 export function PreflightCheckBlock({
+  instruccion,
   pregunta,
   opciones,
   respuesta_correcta,
   explicacion,
+  feedback_correcto,
+  feedback_incorrecto,
 }: PreflightCheckBlockData) {
   const [selected, setSelected] = useState<number | null>(null);
   const answered = selected !== null;
   const correct = answered && selected === respuesta_correcta;
+
+  function getFeedbackText() {
+    if (correct) return feedback_correcto ?? explicacion ?? "";
+    return feedback_incorrecto ?? explicacion ?? "";
+  }
 
   function getLetterBg(i: number) {
     if (!answered) return "#F2DCDB";
@@ -69,9 +77,15 @@ export function PreflightCheckBlock({
         ✈️ Chequeo Pre-Vuelo
       </div>
 
-      <p style={{ fontSize: "0.83rem", color: "#999", marginBottom: 14, lineHeight: 1.4 }}>
-        Activa lo que ya sabes. Sin penalización — solo para calentar motores.
-      </p>
+      {instruccion ? (
+        <p style={{ fontSize: "0.88rem", color: "#555", marginBottom: 12, lineHeight: 1.5 }}>
+          {instruccion}
+        </p>
+      ) : (
+        <p style={{ fontSize: "0.83rem", color: "#999", marginBottom: 14, lineHeight: 1.4 }}>
+          Activa lo que ya sabes. Sin penalización — solo para calentar motores.
+        </p>
+      )}
 
       <p
         style={{
@@ -145,12 +159,12 @@ export function PreflightCheckBlock({
             color: correct ? "#1a7a4a" : "#3D5D91",
           }}
         >
-          <strong style={{ display: "block", marginBottom: 6 }}>
+          <strong style={{ display: "block", marginBottom: getFeedbackText() ? 6 : 0 }}>
             {correct
               ? "✅ ¡Ya sabías esto! Refuerza el concepto."
               : "💡 Perfecto, esto es lo que vas a aprender hoy."}
           </strong>
-          {explicacion}
+          {getFeedbackText()}
         </div>
       )}
     </div>

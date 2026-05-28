@@ -24,7 +24,7 @@ function renderLatex(latex: string): string {
     .trim();
 }
 
-export function FormulaBlock({ nombre, formula_latex, variables, nota }: FormulaBlockData) {
+export function FormulaBlock({ nombre, formula, formula_latex, variables, nota }: FormulaBlockData) {
   return (
     <div
       style={{
@@ -66,6 +66,21 @@ export function FormulaBlock({ nombre, formula_latex, variables, nota }: Formula
       >
         {nombre}
       </h3>
+
+      {/* Simple readable formula (optional, shown above LaTeX) */}
+      {formula && (
+        <p
+          style={{
+            fontSize: "0.88rem",
+            fontFamily: "'Courier New', monospace",
+            color: "#5A86CB",
+            marginBottom: 10,
+            fontWeight: 600,
+          }}
+        >
+          {formula}
+        </p>
+      )}
 
       {/* Formula display */}
       <div
@@ -137,9 +152,23 @@ export function FormulaBlock({ nombre, formula_latex, variables, nota }: Formula
                 >
                   {renderLatex(v.simbolo)}
                 </code>
-                <span style={{ fontSize: "0.85rem", color: "#555", lineHeight: 1.4 }}>
-                  {v.descripcion}
-                </span>
+                <div style={{ flex: 1 }}>
+                  {v.nombre && (
+                    <p
+                      style={{
+                        fontSize: "0.78rem",
+                        fontWeight: 700,
+                        color: "#888",
+                        margin: "0 0 2px",
+                      }}
+                    >
+                      {v.nombre}
+                    </p>
+                  )}
+                  <span style={{ fontSize: "0.85rem", color: "#555", lineHeight: 1.4 }}>
+                    {v.descripcion}
+                  </span>
+                </div>
               </div>
             ))}
           </div>

@@ -38,7 +38,7 @@ const CONFIG: Record<
   },
 };
 
-export function HighlightNoteBlock({ tipo, contenido, fuente }: HighlightNoteBlockData) {
+export function HighlightNoteBlock({ tipo, titulo, contenido, fuente }: HighlightNoteBlockData) {
   const cfg = CONFIG[tipo];
 
   return (
@@ -69,7 +69,7 @@ export function HighlightNoteBlock({ tipo, contenido, fuente }: HighlightNoteBlo
             letterSpacing: "0.5px",
           }}
         >
-          {cfg.label}
+          {titulo ?? cfg.label}
         </span>
       </div>
 
