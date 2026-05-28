@@ -1,0 +1,279 @@
+{
+  "id": "aerodinamica-2-2",
+  "materia": "Aerodinámica",
+  "bloque": 2,
+  "bloque_titulo": "Las 4 fuerzas del vuelo",
+  "tema": 2,
+  "title": "Sustentación — fórmula, CL y ángulo de ataque",
+  "subtitle": "Coeficiente de levantamiento, desplome y flaps",
+  "duracion_min": 16,
+  "blocks": [
+    {
+      "type": "preflight_check",
+      "data": {
+        "instruccion": "Antes de arrancar — responde con lo que ya sabes:",
+        "pregunta": "Un avión en vuelo nivelado duplica su velocidad sin cambiar el ángulo de ataque. ¿Cómo se ve afectada la sustentación?",
+        "opciones": [
+          "Aumenta el doble",
+          "Disminuye a la mitad",
+          "Aumenta cuatro veces su valor"
+        ],
+        "respuesta_correcta": 2,
+        "feedback_correcto": "¡Exacto! La velocidad está elevada al cuadrado en la fórmula. Si V se duplica, la sustentación se cuadruplica (2² = 4).",
+        "feedback_incorrecto": "Esto es lo que vas a entender hoy — la velocidad es el factor más poderoso de la fórmula de sustentación, y su impacto es exponencial."
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "La fórmula de sustentación — en profundidad",
+        "texto": "La fuerza de sustentación se calcula con L = ½ · ρ · V² · S · CL. No todas las variables tienen el mismo peso — y no todas las controla el piloto.",
+        "tabla": [
+          {
+            "categoria": "Variables que controla el piloto",
+            "descripcion": "Velocidad (V) — mediante potencia del motor. Coeficiente CL — mediante el ángulo de ataque con el timón de profundidad. Superficie efectiva (S) — mediante el uso de flaps.",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Variables que NO controla el piloto",
+            "descripcion": "Densidad del aire (ρ) — propiedad atmosférica que depende de altitud, temperatura y presión. Superficie alar base (S) — fijada por el fabricante.",
+            "ejemplos": []
+          }
+        ],
+        "destacado": {
+          "tipo": "dato_clave",
+          "contenido": "La velocidad (V²) es el factor de mayor impacto. Si la velocidad se duplica, la sustentación se cuadruplica. Si se triplica, la sustentación aumenta 9 veces."
+        },
+        "fuente": "Aerodinámica Básica — CIAAC / Manual del Piloto FAA"
+      }
+    },
+    {
+      "type": "formula_block",
+      "data": {
+        "nombre": "Fórmula de Sustentación",
+        "formula": "L = ½ · ρ · V² · S · CL",
+        "formula_latex": "L = \\frac{1}{2} \\rho V^2 S C_L",
+        "variables": [
+          {
+            "simbolo": "L",
+            "nombre": "Levantamiento",
+            "descripcion": "Fuerza aerodinámica perpendicular al viento relativo — se opone al peso."
+          },
+          {
+            "simbolo": "ρ",
+            "nombre": "Densidad del aire",
+            "descripcion": "No la controla el piloto. Disminuye con altitud, temperatura alta y humedad."
+          },
+          {
+            "simbolo": "V²",
+            "nombre": "Velocidad al cuadrado",
+            "descripcion": "Factor de mayor impacto. El piloto la controla con la potencia del motor."
+          },
+          {
+            "simbolo": "S",
+            "nombre": "Superficie alar",
+            "descripcion": "Fijada por el fabricante. Se modifica parcialmente con flaps."
+          },
+          {
+            "simbolo": "CL",
+            "nombre": "Coeficiente de levantamiento",
+            "descripcion": "Depende de la forma del perfil y el ángulo de ataque. El piloto lo controla con los mandos de vuelo."
+          }
+        ],
+        "nota": "El piloto tiene control directo sobre V y CL. La densidad (ρ) es la única variable que no puede modificar."
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Coeficiente de levantamiento (CL)",
+        "texto": "Es un valor adimensional que indica la eficiencia aerodinámica del perfil alar para generar levantamiento. Depende únicamente de la forma del perfil alar (curvatura, espesor) y del ángulo de ataque — es totalmente independiente de la velocidad y la densidad.",
+        "destacado": {
+          "tipo": "definicion",
+          "contenido": "Curva CL vs ángulo de ataque: sube de forma lineal conforme aumenta el ángulo de ataque → alcanza el CLmáx (entre 14° y 20°) → cae abruptamente. Ese punto de caída es el ángulo de ataque crítico — el desplome."
+        },
+        "fuente": "Aerodinámica Básica — CIAAC"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Ángulo de ataque",
+        "texto": "Es el ángulo formado entre la cuerda geométrica del perfil (línea del borde de ataque al borde de salida) y la dirección del viento relativo. No confundir con el ángulo de cabeceo.",
+        "tabla": [
+          {
+            "categoria": "Ángulo de ataque",
+            "descripcion": "Ángulo entre la cuerda del ala y el viento relativo. Determina el CL y la sustentación. Es lo que controla la aerodinámica.",
+            "ejemplos": ["Un avión puede tener nariz arriba pero ángulo de ataque bajo si está en descenso rápido"]
+          },
+          {
+            "categoria": "Ángulo de cabeceo (actitud)",
+            "descripcion": "Ángulo entre el eje longitudinal del avión y el horizonte terrestre. Es lo que ve el piloto en el horizonte artificial — no determina directamente el CL.",
+            "ejemplos": ["Un avión puede tener nariz abajo pero alto ángulo de ataque en maniobras"]
+          }
+        ],
+        "destacado": {
+          "tipo": "advertencia",
+          "contenido": "Ángulo de ataque crítico: el ángulo exacto donde el CL es máximo. Si se supera, el flujo se desprende del extradós, el CL cae bruscamente y ocurre el desplome de forma inevitable — sin importar la velocidad."
+        },
+        "fuente": "Aerodinámica Básica — CIAAC"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Desplome (Stall)",
+        "texto": "Es el fenómeno donde las alas pierden su fuerza sustentadora por el desprendimiento brusco del flujo laminar sobre el extradós. Ocurre cuando se supera el ángulo de ataque crítico — no cuando se llega a una velocidad mínima.",
+        "tabla": [
+          {
+            "categoria": "¿De qué depende el desplome?",
+            "descripcion": "Exclusivamente del ángulo de ataque. Un avión siempre entra en desplome en el mismo ángulo crítico sin importar el peso, la velocidad o la altitud.",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Velocidad de desplome y factor de carga",
+            "descripcion": "Aunque el desplome depende del ángulo, la velocidad a la que ocurre varía con el factor de carga. Velocidad desplome aumenta ∝n. A 2G (viraje 60°): velocidad desplome × 1.41.",
+            "ejemplos": ["Vuelo nivelado: Vs. Viraje 60° (2G): Vs × 1.41"]
+          },
+          {
+            "categoria": "Recuperación del desplome",
+            "descripcion": "1. Reducir ángulo de ataque — empujar ligeramente el mando hacia adelante. 2. Aumentar potencia — recuperar velocidad y flujo sobre las alas. 3. Nivelar las alas para eliminar factores de carga extras.",
+            "ejemplos": []
+          }
+        ],
+        "fuente": "Aerodinámica Básica — CIAAC / Manual del Piloto FAA"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Flaps y su efecto en la sustentación",
+        "texto": "Los flaps modifican la combadura del ala incrementando el CLmáx. Al aumentar este coeficiente, el ala puede sustentar el peso del avión a menores velocidades — reduciendo la velocidad de desplome y permitiendo despegues y aterrizajes más cortos.",
+        "tabla": [
+          {
+            "categoria": "Flap común (plain)",
+            "descripcion": "Deflecta hacia abajo. Aumenta CL y resistencia.",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Flap ranurado (slotted)",
+            "descripcion": "Tiene ranura que energiza la capa límite. Mayor CL con menos resistencia que el común.",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Flap Fowler",
+            "descripcion": "El más eficiente. Se desliza hacia atrás aumentando la superficie alar Y la combadura. Máximo incremento de CL con mínimo aumento de resistencia.",
+            "ejemplos": []
+          }
+        ],
+        "destacado": {
+          "tipo": "dato_clave",
+          "contenido": "Flaps = mayor CLmáx = menor velocidad de desplome = aterrizajes más cortos y lentos. Pero a costo de mayor resistencia al avance — requieren más potencia en aproximación."
+        },
+        "fuente": "Aerodinámica Básica — CIAAC"
+      }
+    },
+    {
+      "type": "highlight_note",
+      "data": {
+        "tipo": "yaris",
+        "titulo": "Nemotecnia de Yaris ✨",
+        "contenido": "Imagina tu brazo por la ventana del coche en movimiento. La velocidad del coche es V — a mayor velocidad, el viento empuja tu mano con fuerza explosiva (al cuadrado). Qué tan abierta está tu mano es la superficie S. La inclinación de tu palma es el ángulo de ataque y el CL. Si inclinas ligeramente los dedos hacia arriba, el aire te levanta el brazo — sustentación perfecta. Pero si inclinas la mano demasiado empinada hacia el techo del coche, el flujo choca brutalmente, se vuelve torbellino en el dorso y en lugar de levantarte, te empuja hacia atrás destruyendo toda la fuerza ascendente. ¡Ese es el desplome!",
+        "fuente": null
+      }
+    },
+    {
+      "type": "active_recall",
+      "data": {
+        "tipo": "match",
+        "instruccion": "Relaciona cada concepto con su descripción correcta.",
+        "items": [
+          {
+            "id": 1,
+            "concepto": "Ángulo de ataque crítico",
+            "descripcion": "El ángulo donde CL es máximo — superarlo causa desplome inevitable"
+          },
+          {
+            "id": 2,
+            "concepto": "Flap Fowler",
+            "descripcion": "El más eficiente — desliza hacia atrás aumentando superficie y combadura con mínima resistencia"
+          },
+          {
+            "id": 3,
+            "concepto": "V² en la fórmula de sustentación",
+            "descripcion": "Factor de mayor impacto — duplicar velocidad cuadruplica el levantamiento"
+          },
+          {
+            "id": 4,
+            "concepto": "Factor de carga en viraje 60°",
+            "descripcion": "2G — la velocidad de desplome aumenta 1.41 veces respecto al vuelo nivelado"
+          },
+          {
+            "id": 5,
+            "concepto": "CL",
+            "descripcion": "Coeficiente adimensional que depende solo del perfil alar y el ángulo de ataque — no de la velocidad"
+          }
+        ]
+      }
+    },
+    {
+      "type": "think_like_pilot",
+      "data": {
+        "pregunta": "Haces un viraje cerrado a 60° de banqueo a altitud constante. Tu velocidad indica por encima de la velocidad de desplome normal del manual. De repente suena la alarma de pérdida y el avión vibra. ¿Por qué entras en desplome si llevas 'buena' velocidad?",
+        "pista": "En un viraje de 60° el factor de carga es 2G. Recuerda: la velocidad de desplome aumenta proporcional a la raíz cuadrada del factor de carga. ¿Qué hiciste con el mando para mantener la altitud en el viraje?",
+        "respuesta_sugerida": "En el viraje de 60° el factor de carga es 2G — el ala debe generar el doble de sustentación. La velocidad de desplome aumentó 1.41 veces sobre la normal. Al jalar el mando para no perder altitud, aumentaste el ángulo de ataque hasta superar el crítico. El desplome no depende de la velocidad sino del ángulo. Recuperación: nivelar alas para eliminar las G extras, reducir ángulo de ataque empujando el mando, y meter potencia simultáneamente."
+      }
+    },
+    {
+      "type": "debrief",
+      "data": {
+        "puntos_clave": [
+          "El ángulo de ataque es absoluto: un avión siempre entra en desplome en el mismo ángulo crítico — sin importar peso, velocidad o altitud. El desplome NO depende de la velocidad.",
+          "La velocidad de desplome SÍ es variable: aumenta con el factor de carga. A 2G (viraje 60°), la velocidad de desplome es 1.41 veces mayor que en vuelo nivelado.",
+          "V² es el rey de la fórmula: duplicar la velocidad cuadruplica la sustentación. Es el factor más poderoso que controla el piloto.",
+          "Flaps = hipersustentación para baja velocidad: incrementan CLmáx reduciendo la velocidad de desplome — permiten aterrizajes más lentos y cortos, pero aumentan la resistencia al avance."
+        ],
+        "pregunta_metacognitiva": "¿Cómo te sentiste con este tema?",
+        "opciones_dificultad": [
+          { "valor": 1, "etiqueta": "Muy fácil" },
+          { "valor": 2, "etiqueta": "Fácil" },
+          { "valor": 3, "etiqueta": "Normal" },
+          { "valor": 4, "etiqueta": "Difícil" },
+          { "valor": 5, "etiqueta": "Muy difícil" }
+        ]
+      }
+    },
+    {
+      "type": "flashcards",
+      "data": {
+        "cards": [
+          {
+            "id": 1,
+            "pregunta": "¿Cuál factor de la fórmula de sustentación tiene mayor impacto y por qué?",
+            "respuesta": "La velocidad (V²). Está elevada al cuadrado — si la velocidad se duplica, la sustentación se cuadruplica. Si se triplica, aumenta 9 veces. Es el factor más poderoso que controla el piloto."
+          },
+          {
+            "id": 2,
+            "pregunta": "¿A qué fenómeno se debe directamente el desplome de un avión?",
+            "respuesta": "A un ángulo de ataque excesivo que supera el ángulo crítico. El flujo laminar se desprende del extradós, el CL cae bruscamente y se pierde la sustentación. No depende de la velocidad."
+          },
+          {
+            "id": 3,
+            "pregunta": "Si mantienes velocidad constante pero reduces el ángulo de ataque, ¿qué ocurre con el CL?",
+            "respuesta": "El CL disminuye proporcionalmente. El coeficiente de levantamiento sube linealmente con el ángulo de ataque hasta el ángulo crítico — reducir el ángulo reduce directamente el CL."
+          },
+          {
+            "id": 4,
+            "pregunta": "¿Cómo varía la velocidad de desplome en un viraje coordinado respecto al vuelo nivelado?",
+            "respuesta": "Siempre aumenta. En viraje el factor de carga (G) sube y la velocidad de desplome aumenta proporcional a √n. A 2G (viraje 60°): Vs × 1.41. A 4G: Vs × 2."
+          },
+          {
+            "id": 5,
+            "pregunta": "¿Qué tipo de flap es el más eficiente aerodinámicamente y por qué?",
+            "respuesta": "El flap Fowler. Se desliza hacia atrás aumentando simultáneamente la superficie alar y la combadura del perfil — produce el máximo incremento de CLmáx con el menor aumento de resistencia al avance."
+          }
+        ]
+      }
+    }
+  ]
+}
