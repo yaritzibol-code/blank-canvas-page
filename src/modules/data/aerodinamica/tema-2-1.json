@@ -1,0 +1,258 @@
+{
+  "id": "aerodinamica-2-1",
+  "materia": "Aerodinámica",
+  "bloque": 2,
+  "bloque_titulo": "Las 4 fuerzas del vuelo",
+  "tema": 1,
+  "title": "Las 4 fuerzas del vuelo",
+  "subtitle": "Levantamiento, peso, empuje y resistencia",
+  "duracion_min": 15,
+  "blocks": [
+    {
+      "type": "preflight_check",
+      "data": {
+        "instruccion": "Antes de arrancar — responde con lo que ya sabes:",
+        "pregunta": "Un avión comercial vuela recto y nivelado a altitud y velocidad constantes. ¿Cuál afirmación sobre las 4 fuerzas es correcta?",
+        "opciones": [
+          "El empuje es mayor que la resistencia para mantener la velocidad y el levantamiento supera ligeramente al peso",
+          "Las fuerzas están en perfecto equilibrio — empuje iguala resistencia y levantamiento iguala peso",
+          "Las fuerzas actúan de forma independiente porque la inercia lleva al avión y la gravedad desaparece con la velocidad"
+        ],
+        "respuesta_correcta": 1,
+        "feedback_correcto": "¡Exacto! En vuelo recto nivelado no acelerado: L = W y T = D. Equilibrio perfecto sin importar la velocidad.",
+        "feedback_incorrecto": "Esto es justo lo que vas a entender hoy — el equilibrio de las 4 fuerzas es la base de todo el vuelo."
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Las 4 fuerzas — visión general",
+        "texto": "Cuatro fuerzas aerodinámicas básicas actúan sobre toda aeronave en vuelo: levantamiento, peso, empuje y resistencia al avance. Actúan en parejas opositoras: el levantamiento contrarresta al peso (vertical), y el empuje vence a la resistencia (horizontal). En vuelo recto nivelado no acelerado, la suma de estas fuerzas opuestas es cero.",
+        "tabla": [
+          {
+            "categoria": "Equilibrio (vuelo recto nivelado)",
+            "descripcion": "L = W y T = D. Altitud y velocidad constantes. Sin aceleración.",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Desequilibrio vertical",
+            "descripcion": "L > W → el avión asciende. L < W → el avión pierde altitud.",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Desequilibrio horizontal",
+            "descripcion": "T > D → el avión acelera. T < D → el avión desacelera.",
+            "ejemplos": []
+          }
+        ],
+        "fuente": "Manual del Piloto de Conocimientos Aeronáuticos — FAA / Aerodinámica Básica — CIAAC"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Levantamiento (Sustentación)",
+        "texto": "Es la componente de la fuerza resultante aerodinámica perpendicular a la dirección del viento relativo. Se genera principalmente en las alas. La curvatura del ala estrecha los filetes de aire en el extradós, aumentando la velocidad y creando una zona de baja presión (succión). En el intradós la velocidad es menor y la presión positiva. Esta diferencia de presiones tira del avión hacia arriba.",
+        "destacado": {
+          "tipo": "dato_clave",
+          "contenido": "Factores que afectan el levantamiento: densidad del aire (ρ), superficie alar (S), velocidad al cuadrado (V²) y coeficiente de levantamiento CL (forma del perfil + ángulo de ataque). Fórmula: L = ½ · ρ · V² · S · CL"
+        },
+        "fuente": "Aerodinámica Básica — CIAAC"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Peso (Weight)",
+        "texto": "Es la fuerza que representa la carga combinada del propio avión, la tripulación, el combustible, los pasajeros y el equipaje debido a la atracción terrestre. Siempre actúa verticalmente hacia abajo, concentrada en el Centro de Gravedad (CG) del avión.",
+        "destacado": {
+          "tipo": "advertencia",
+          "contenido": "Mayor peso = mayor levantamiento requerido = mayor ángulo de ataque o velocidad = más resistencia = más empuje necesario = peor rendimiento. Y lo más crítico: aumenta la velocidad mínima de desplome."
+        },
+        "adicional": {
+          "titulo": "Peso vs. Masa",
+          "items": [
+            "Masa: cantidad de materia del cuerpo (kg)",
+            "Peso: fuerza que la gravedad ejerce sobre esa masa — W = m × g",
+            "El peso varía con la gravedad. La masa no."
+          ]
+        },
+        "fuente": "Manual del Piloto de Conocimientos Aeronáuticos — FAA"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Empuje (Thrust)",
+        "texto": "Es la fuerza de avance producida por la planta motopropulsora necesaria para desplazar la aeronave por el aire. Se opone directamente a la resistencia al avance.",
+        "tabla": [
+          {
+            "categoria": "Aviones de hélice",
+            "descripcion": "La hélice desplaza masivamente aire hacia atrás. La reacción (3ª Ley de Newton) empuja al avión hacia adelante.",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Aviones de reacción (reactores)",
+            "descripcion": "Los gases de combustión salen a altísima velocidad hacia atrás. La reacción igual y opuesta empuja al avión hacia adelante.",
+            "ejemplos": []
+          }
+        ],
+        "fuente": "Aerodinámica Básica — CIAAC"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Resistencia aerodinámica (Drag)",
+        "texto": "Es la fuerza de retardo dirigida hacia atrás, causada por la interrupción del flujo de aire por las alas, fuselaje y demás componentes. Actúa paralela al viento relativo y se opone al movimiento del avión. Existen dos tipos fundamentales.",
+        "tabla": [
+          {
+            "categoria": "Resistencia Parásita",
+            "descripcion": "Generada por todas las partes del avión que NO producen sustentación — fuselaje, antenas, tren de aterrizaje. Incluye fricción superficial y resistencia de forma. Aumenta con el cuadrado de la velocidad.",
+            "ejemplos": ["Mayor a altas velocidades"]
+          },
+          {
+            "categoria": "Resistencia Inducida",
+            "descripcion": "Subproducto directo de la creación de sustentación. Se produce en las puntas del ala por torbellinos generados por el escape de alta presión del intradós hacia la baja presión del extradós.",
+            "ejemplos": ["Mayor a bajas velocidades y grandes ángulos de ataque"]
+          }
+        ],
+        "adicional": {
+          "titulo": "Velocidad óptima (L/D máxima)",
+          "items": [
+            "La resistencia total = parásita + inducida",
+            "La velocidad óptima ocurre donde la resistencia total es mínima",
+            "En ese punto la relación Levantamiento/Resistencia (L/D) es máxima — mayor alcance y eficiencia"
+          ]
+        },
+        "fuente": "Manual del Piloto de Conocimientos Aeronáuticos — FAA / Aerodinámica Básica — CIAAC"
+      }
+    },
+    {
+      "type": "concept_explanation",
+      "data": {
+        "titulo": "Centro de Gravedad y Centro de Presiones",
+        "texto": "Cada fuerza tiene un punto de aplicación específico. Su posición relativa determina la estabilidad del avión.",
+        "tabla": [
+          {
+            "categoria": "Centro de Gravedad (CG)",
+            "descripcion": "Punto imaginario donde se concentra la totalidad del peso del avión. Desde aquí actúa la fuerza de peso hacia abajo.",
+            "ejemplos": []
+          },
+          {
+            "categoria": "Centro de Presiones (CP)",
+            "descripcion": "Punto sobre la cuerda del perfil alar donde actúa la fuerza resultante aerodinámica total (levantamiento + resistencia).",
+            "ejemplos": []
+          }
+        ],
+        "destacado": {
+          "tipo": "advertencia",
+          "contenido": "Para estabilidad longitudinal positiva: el CG siempre debe estar por delante del CP. Si una perturbación sube la nariz, esta posición crea un momento de cabeceo que tiende a bajarla y restaurar la actitud — el avión se auto-corrige."
+        },
+        "fuente": "Aerodinámica Básica — CIAAC"
+      }
+    },
+    {
+      "type": "highlight_note",
+      "data": {
+        "tipo": "yaris",
+        "titulo": "Nemotecnia de Yaris ✨",
+        "contenido": "Imagina el vuelo como un coche tirado por caballos en una rampa de hielo invisible. Los caballos (Empuje) tiran hacia adelante. El viento de frente y la forma del coche (Resistencia) tiran hacia atrás. El peso del coche y los pasajeros (Peso) jalan hacia el abismo. Y la rampa de hielo mágica (Levantamiento) creada por las alas sostiene todo desde abajo. Para viajar tranquilo, las fuerzas horizontales deben empatar — y las verticales también deben quedar en tablas.",
+        "fuente": null
+      }
+    },
+    {
+      "type": "active_recall",
+      "data": {
+        "tipo": "match",
+        "instruccion": "Relaciona cada fuerza con su descripción correcta.",
+        "items": [
+          {
+            "id": 1,
+            "concepto": "Levantamiento",
+            "descripcion": "Fuerza perpendicular al viento relativo — se opone al peso"
+          },
+          {
+            "id": 2,
+            "concepto": "Resistencia inducida",
+            "descripcion": "Subproducto de la sustentación — mayor a bajas velocidades y grandes ángulos de ataque"
+          },
+          {
+            "id": 3,
+            "concepto": "Centro de Gravedad",
+            "descripcion": "Punto donde se concentra el peso — debe ir siempre adelante del CP"
+          },
+          {
+            "id": 4,
+            "concepto": "Resistencia parásita",
+            "descripcion": "Generada por partes que no producen sustentación — aumenta con el cuadrado de la velocidad"
+          },
+          {
+            "id": 5,
+            "concepto": "Empuje",
+            "descripcion": "Fuerza de avance de la planta motopropulsora — se opone a la resistencia al avance"
+          }
+        ]
+      }
+    },
+    {
+      "type": "think_like_pilot",
+      "data": {
+        "pregunta": "Despegas de un aeropuerto en la montaña en un día caluroso con el avión al peso máximo. Después de la rotación el avión tiene serias dificultades para ganar altura. ¿Qué factor atmosférico está perjudicando el equilibrio entre las 4 fuerzas?",
+        "pista": "Recuerda qué necesita un motor para quemar combustible y cómo la densidad del aire impacta simultáneamente al levantamiento, al empuje y a la resistencia inducida.",
+        "respuesta_sugerida": "La baja densidad del aire (alta elevación + temperatura alta) reduce simultáneamente: el levantamiento de las alas para ese gran peso, la eficiencia y empuje del motor (menos oxígeno para combustión) y el rendimiento de la hélice. Al usar un gran ángulo de ataque para sustentar el avión pesado se genera altísima resistencia inducida. Sin excedente de empuje para vencer esa resistencia, no hay potencia sobrante para un régimen de ascenso seguro."
+      }
+    },
+    {
+      "type": "debrief",
+      "data": {
+        "puntos_clave": [
+          "El vuelo es un balance constante: en vuelo recto nivelado no acelerado, Empuje = Resistencia y Levantamiento = Peso. Cualquier desequilibrio causa aceleración o cambio de actitud.",
+          "El juego de presiones genera sustentación: aire más veloz en el extradós crea succión (75% del levantamiento). Alta presión en el intradós empuja hacia arriba (25%). Ambos combaten al peso.",
+          "La resistencia tiene dos caras opuestas: parásita castiga a altas velocidades. Inducida golpea fuerte a bajas velocidades. La velocidad óptima (L/D máxima) está donde la resistencia total es mínima.",
+          "La estabilidad depende del CG: para que el avión sea dócil y se autocorrija tras turbulencia, el Centro de Gravedad siempre debe estar por delante del Centro de Presiones."
+        ],
+        "pregunta_metacognitiva": "¿Cómo te sentiste con este tema?",
+        "opciones_dificultad": [
+          { "valor": 1, "etiqueta": "Muy fácil" },
+          { "valor": 2, "etiqueta": "Fácil" },
+          { "valor": 3, "etiqueta": "Normal" },
+          { "valor": 4, "etiqueta": "Difícil" },
+          { "valor": 5, "etiqueta": "Muy difícil" }
+        ]
+      }
+    },
+    {
+      "type": "flashcards",
+      "data": {
+        "cards": [
+          {
+            "id": 1,
+            "pregunta": "¿De qué factores depende la fuerza de levantamiento?",
+            "respuesta": "Densidad del aire (ρ), superficie alar (S), velocidad al cuadrado (V²) y coeficiente de levantamiento CL (forma del perfil + ángulo de ataque). Fórmula: L = ½ · ρ · V² · S · CL."
+          },
+          {
+            "id": 2,
+            "pregunta": "¿Qué causa que un ala genere levantamiento según Bernoulli?",
+            "respuesta": "El aire viaja más rápido sobre el extradós (curvatura superior) causando baja presión (succión). En el intradós viaja más lento creando sobrepresión. La diferencia de presiones genera la fuerza hacia arriba."
+          },
+          {
+            "id": 3,
+            "pregunta": "Para estabilidad longitudinal, ¿dónde debe estar el CG respecto al CP?",
+            "respuesta": "El Centro de Gravedad siempre debe estar por delante del Centro de Presiones (CG forward). Esto garantiza que el avión tienda a bajar la nariz ante perturbaciones — autocorrección natural."
+          },
+          {
+            "id": 4,
+            "pregunta": "¿Qué tipo de resistencia aumenta a bajas velocidades y depende de la sustentación generada?",
+            "respuesta": "La resistencia inducida. Es el subproducto directo de crear sustentación — se genera por los torbellinos en las puntas del ala. Mayor ángulo de ataque = más sustentación = más resistencia inducida."
+          },
+          {
+            "id": 5,
+            "pregunta": "En un vuelo de planeo sin motor, ¿qué fuerzas actúan sobre la aeronave?",
+            "respuesta": "Solo tres: levantamiento, resistencia al avance y peso. El empuje es cero. El avión planea usando la energía potencial de la altitud para vencer la resistencia y mantener sustentación."
+          }
+        ]
+      }
+    }
+  ]
+}
