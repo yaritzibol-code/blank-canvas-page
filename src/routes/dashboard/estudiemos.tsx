@@ -9,7 +9,7 @@ export const Route = createFileRoute("/dashboard/estudiemos")({
 /* ══════════════════════════════════════════════════════════
    TYPES
 ══════════════════════════════════════════════════════════ */
-type TiempoDisponible = "30min" | "1h" | "2h";
+type TiempoDisponible = "30min" | "1h" | "2h" | "custom";
 type ExamPhase = "fase1" | "fase2" | "fase3" | "fase4" | "fase5";
 type RecoType =
   | "materia" | "cuestionario" | "flashcards"
@@ -257,6 +257,7 @@ function buildPlan(rec: Recommendation, tiempo: TiempoDisponible, p: StudentProf
 
   if (tiempo === "30min") return items.filter(i => i.duracion_min <= 20).slice(0, 2);
   if (tiempo === "1h")    return items.slice(0, 3);
+  if (tiempo === "custom") return items;
   return items;
 }
 
@@ -638,6 +639,9 @@ function EstudiemosJuntosPage() {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [tiempo, setTiempo] = useState<TiempoDisponible>("1h");
   const [examDate, setExamDate] = useState<string | null>(null);
+  const [showCustom, setShowCustom] = useState(false);
+  const [customHours, setCustomHours] = useState("0");
+  const [customMins, setCustomMins] = useState("45");
 
   useEffect(() => {
     const done = localStorage.getItem("fp_onboarding_done");
@@ -704,33 +708,133 @@ function EstudiemosJuntosPage() {
       <PathyCard rec={rec} phase={phase} />
 
       {/* Time selector */}
-      <div style={{ display: "flex", gap: 8, marginBottom: 16, alignItems: "center" }}>
-        <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.5px" }}>
-          Tiempo hoy:
-        </span>
-        {(["30min", "1h", "2h"] as TiempoDisponible[]).map(t => (
+      <div style={{ marginBottom: 16 }}>
+        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+          <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+            Tiempo hoy:
+          </span>
+          {(["30min", "1h", "2h"] as TiempoDisponible[]).map(t => (
+            <button
+              key={t}
+              onClick={() => {
+                setTiempo(t);
+                setShowCustom(false);
+                localStorage.setItem("fp_tiempo_disponible", t);
+              }}
+              style={{
+                padding: "6px 14px",
+                border: `1.5px solid ${tiempo === t ? "#3D5D91" : "#F2DCDB"}`,
+                borderRadius: 20,
+                background: tiempo === t ? "rgba(61,93,145,0.08)" : "white",
+                fontSize: "0.8rem",
+                fontWeight: tiempo === t ? 700 : 500,
+                color: tiempo === t ? "#3D5D91" : "#888",
+                cursor: "pointer",
+                fontFamily: "'DM Sans', sans-serif",
+                transition: "all 0.15s",
+              }}
+            >
+              {t === "30min" ? "30 min" : t === "1h" ? "1 hora" : "2+ horas"}
+            </button>
+          ))}
           <button
-            key={t}
-            onClick={() => {
-              setTiempo(t);
-              localStorage.setItem("fp_tiempo_disponible", t);
-            }}
+            onClick={() => setShowCustom(v => !v)}
             style={{
               padding: "6px 14px",
-              border: `1.5px solid ${tiempo === t ? "#3D5D91" : "#F2DCDB"}`,
+              border: `1.5px solid ${tiempo === "custom" ? "#6C0820" : "#F2DCDB"}`,
               borderRadius: 20,
-              background: tiempo === t ? "rgba(61,93,145,0.08)" : "white",
+              background: tiempo === "custom" ? "rgba(108,8,32,0.07)" : "white",
               fontSize: "0.8rem",
-              fontWeight: tiempo === t ? 700 : 500,
-              color: tiempo === t ? "#3D5D91" : "#888",
+              fontWeight: tiempo === "custom" ? 700 : 500,
+              color: tiempo === "custom" ? "#6C0820" : "#888",
               cursor: "pointer",
               fontFamily: "'DM Sans', sans-serif",
               transition: "all 0.15s",
+              display: "flex",
+              alignItems: "center",
+              gap: 4,
             }}
           >
-            {t === "30min" ? "30 min" : t === "1h" ? "1 hora" : "2+ horas"}
+            ✏️ {tiempo === "custom" ? `${customHours}h ${customMins}m` : "Personalizar"}
           </button>
-        ))}
+        </div>
+
+        {/* Custom time picker */}
+        {showCustom && (
+          <div style={{
+            marginTop: 10,
+            background: "white",
+            border: "1.5px solid #F2DCDB",
+            borderRadius: 14,
+            padding: "14px 18px",
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+            flexWrap: "wrap",
+          }}>
+            <span style={{ fontSize: "0.82rem", color: "#555", fontWeight: 600 }}>¿Cuánto tiempo tienes?</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <input
+                type="number"
+                min="0"
+                max="23"
+                value={customHours}
+                onChange={e => setCustomHours(e.target.value)}
+                style={{
+                  width: 52,
+                  padding: "5px 8px",
+                  border: "1.5px solid #F2DCDB",
+                  borderRadius: 8,
+                  fontSize: "0.88rem",
+                  fontFamily: "'DM Sans', sans-serif",
+                  textAlign: "center",
+                  outline: "none",
+                }}
+              />
+              <span style={{ fontSize: "0.82rem", color: "#888" }}>h</span>
+              <input
+                type="number"
+                min="0"
+                max="59"
+                value={customMins}
+                onChange={e => setCustomMins(e.target.value)}
+                style={{
+                  width: 52,
+                  padding: "5px 8px",
+                  border: "1.5px solid #F2DCDB",
+                  borderRadius: 8,
+                  fontSize: "0.88rem",
+                  fontFamily: "'DM Sans', sans-serif",
+                  textAlign: "center",
+                  outline: "none",
+                }}
+              />
+              <span style={{ fontSize: "0.82rem", color: "#888" }}>min</span>
+            </div>
+            <button
+              onClick={() => {
+                setTiempo("custom");
+                localStorage.setItem("fp_tiempo_disponible", "custom");
+                localStorage.setItem("fp_tiempo_custom_h", customHours);
+                localStorage.setItem("fp_tiempo_custom_m", customMins);
+                setShowCustom(false);
+              }}
+              style={{
+                padding: "6px 16px",
+                background: "#3D5D91",
+                color: "white",
+                border: "none",
+                borderRadius: 20,
+                fontSize: "0.8rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                fontFamily: "'DM Sans', sans-serif",
+              }}
+            >
+              Aplicar
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Plan items */}

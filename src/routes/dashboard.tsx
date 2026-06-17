@@ -11,7 +11,7 @@ const NAV_SECTIONS = [
     label: "Principal",
     items: [
       { icon: "🏠", label: "Inicio", path: "/dashboard" },
-      { icon: "📚", label: "Mis materias", path: "/dashboard/materias" },
+      { icon: "📚", label: "Learning paths", path: "/dashboard/materias" },
       { icon: "❓", label: "Cuestionarios", path: "/dashboard/banco" },
       { icon: "📝", label: "Simulador CIAAC", path: "/simulador" },
       { icon: "⏱️", label: "Estudiemos Juntos", path: "/dashboard/estudiemos" },
