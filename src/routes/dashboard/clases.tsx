@@ -407,13 +407,35 @@ function ClasesPage() {
         <p style={{ fontSize: ".9rem", color: "#888" }}>Aprende a tu ritmo con videos explicados por Yaris, organizados por materia y tema.</p>
       </div>
 
-      {/* Continue watching */}
+      {/* Próximamente banner */}
+      <div style={{
+        background: "linear-gradient(135deg, #F2DCDB, #fce4ec)",
+        border: "1.5px solid #F2AEBC",
+        borderRadius: 14,
+        padding: "14px 20px",
+        display: "flex",
+        alignItems: "center",
+        gap: 12,
+        marginBottom: 24,
+      }}>
+        <span style={{ fontSize: "1.4rem" }}>🎬</span>
+        <div>
+          <p style={{ fontSize: "0.88rem", fontWeight: 700, color: "#6C0820", margin: 0 }}>
+            Clases grabadas — Próximamente
+          </p>
+          <p style={{ fontSize: "0.78rem", color: "#888", margin: "2px 0 0" }}>
+            Estamos grabando los videos. ¡Muy pronto disponibles!
+          </p>
+        </div>
+      </div>
+
+      {/* Continue watching — disabled */}
       <div
-        onClick={() => showPlayer(CONTINUE_MATERIA, CONTINUE_VIDEO)}
-        style={{ background: "linear-gradient(135deg,#1a1a2e,#2a2a4e)", borderRadius: 16, padding: "20px 24px", display: "flex", alignItems: "center", gap: 18, marginBottom: 28, cursor: "pointer", transition: "all .2s" }}
-        onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 12px 32px rgba(26,26,46,.3)"; }}
-        onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}
+        style={{ background: "linear-gradient(135deg,#1a1a2e,#2a2a4e)", borderRadius: 16, padding: "20px 24px", display: "flex", alignItems: "center", gap: 18, marginBottom: 28, cursor: "not-allowed", opacity: 0.5, position: "relative", overflow: "hidden" }}
       >
+        <div style={{ position: "absolute", top: 8, right: 12, background: "#F2AEBC", color: "#6C0820", fontSize: "0.68rem", fontWeight: 700, padding: "3px 10px", borderRadius: 20 }}>
+          Próximamente
+        </div>
         <div style={{ width: 80, height: 56, borderRadius: 10, background: "linear-gradient(135deg,#4facfe,#00f2fe)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.8rem", flexShrink: 0, position: "relative" }}>
           🌤️
           <div style={{ position: "absolute", width: 28, height: 28, background: "rgba(255,255,255,.9)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: ".8rem" }}>▶</div>
@@ -431,46 +453,38 @@ function ClasesPage() {
         </div>
       </div>
 
-      {/* Grid */}
+      {/* Grid — disabled until content is ready */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 16 }}>
-        {MATERIAS.map((mat, i) => {
-          const isHover = hoverCard === i;
-          const isCompleted = mat.progressPct === 100;
-          return (
-            <div
-              key={i}
-              onClick={() => showVideos(i)}
-              onMouseEnter={() => setHoverCard(i)}
-              onMouseLeave={() => setHoverCard(null)}
-              style={{
-                background: "white", borderRadius: 16, overflow: "hidden",
-                cursor: "pointer",
-                boxShadow: isHover ? "0 8px 24px rgba(61,93,145,.12)" : "0 2px 10px rgba(61,93,145,.06)",
-                border: `2px solid ${isHover ? "#5A86CB" : "transparent"}`,
-                transform: isHover ? "translateY(-3px)" : "none",
-                transition: "all .25s",
-              }}
-            >
-              <div style={{ height: 110, background: mat.color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "3rem", position: "relative" }}>
-                <span>{mat.icon}</span>
-                <div style={{ position: "absolute", width: 40, height: 40, background: "rgba(255,255,255,.9)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem", boxShadow: "0 4px 12px rgba(0,0,0,.2)", transform: isHover ? "scale(1.1)" : "none", transition: "transform .2s" }}>▶</div>
-              </div>
-              <div style={{ padding: 14 }}>
-                <div style={{ fontSize: ".88rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 4 }}>{mat.name}</div>
-                <div style={{ fontSize: ".74rem", color: "#888", marginBottom: 10 }}>{mat.total}</div>
-                <div style={{ height: 4, background: "#F2DCDB", borderRadius: 10, overflow: "hidden", marginBottom: 5 }}>
-                  <div style={{ height: "100%", borderRadius: 10, background: "linear-gradient(90deg,#3D5D91,#5A86CB)", width: `${mat.progressPct}%` }} />
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".7rem", color: "#aaa" }}>
-                  <span style={{ color: "#3D5D91", fontWeight: 700 }}>
-                    {isCompleted ? "✅ Completada" : mat.watchedCount > 0 ? `${mat.watchedCount} vistas` : "Sin empezar"}
-                  </span>
-                  <span>{mat.watchedCount}/{mat.totalCount} clases</span>
-                </div>
+        {MATERIAS.map((mat, i) => (
+          <div
+            key={i}
+            style={{
+              background: "white", borderRadius: 16, overflow: "hidden",
+              cursor: "not-allowed", opacity: 0.55,
+              boxShadow: "0 2px 10px rgba(61,93,145,.06)",
+              border: "2px solid transparent",
+              position: "relative",
+            }}
+          >
+            <div style={{ height: 110, background: mat.color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "3rem", position: "relative" }}>
+              <span>{mat.icon}</span>
+              <div style={{ position: "absolute", background: "rgba(0,0,0,0.45)", color: "white", fontSize: "0.72rem", fontWeight: 700, padding: "4px 12px", borderRadius: 20, letterSpacing: "0.5px" }}>
+                PRÓXIMAMENTE
               </div>
             </div>
-          );
-        })}
+            <div style={{ padding: 14 }}>
+              <div style={{ fontSize: ".88rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 4 }}>{mat.name}</div>
+              <div style={{ fontSize: ".74rem", color: "#888", marginBottom: 10 }}>{mat.total}</div>
+              <div style={{ height: 4, background: "#F2DCDB", borderRadius: 10, overflow: "hidden", marginBottom: 5 }}>
+                <div style={{ height: "100%", borderRadius: 10, background: "linear-gradient(90deg,#3D5D91,#5A86CB)", width: "0%" }} />
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".7rem", color: "#aaa" }}>
+                <span>Próximamente disponible</span>
+                <span>{mat.totalCount} clases</span>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
