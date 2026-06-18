@@ -256,22 +256,22 @@ function BitacoraPage() {
 
           {/* Pathy question */}
           <div style={{
-            background: "linear-gradient(135deg, #1a1a2e, #2a2a4e)", borderRadius: 18,
+            background: "linear-gradient(135deg, #22375C, #2a2a4e)", borderRadius: 18,
             padding: "24px 28px", display: "flex", alignItems: "center", gap: 18,
             marginBottom: 24, position: "relative", overflow: "hidden",
           }}>
             <div style={{ position: "absolute", top: -40, right: -40, width: 160, height: 160, background: "radial-gradient(circle, rgba(242,174,188,.12) 0%, transparent 70%)", borderRadius: "50%" }} />
-            <div style={{ fontSize: "3rem", flexShrink: 0, animation: "float 3s ease-in-out infinite", zIndex: 1 }}>☁️</div>
+            <div style={{ flexShrink: 0, animation: "float 3s ease-in-out infinite", zIndex: 1, color: "white" }}><Icon n="cloud" size={48} /></div>
             <div style={{ flex: 1, zIndex: 1 }}>
-              <div style={{ fontSize: ".7rem", color: "#F2AEBC", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 4 }}>✍️ Entrada de hoy</div>
-              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "white", marginBottom: 4 }}>¿Cómo estuvo tu sesión de estudio hoy, María? 💙</div>
+              <div style={{ fontSize: ".7rem", color: "#F2AEBC", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 4, display: "flex", alignItems: "center", gap: 6 }}><Icon n="edit" size={13} /> Entrada de hoy</div>
+              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "white", marginBottom: 4 }}>¿Cómo estuvo tu sesión de estudio hoy, María?</div>
               <div style={{ fontSize: ".8rem", color: "rgba(255,255,255,.5)" }}>Cuéntame todo, esto es solo tuyo</div>
             </div>
           </div>
 
           {/* Emoción */}
           <div style={{ background: "white", borderRadius: 16, padding: 22, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 18 }}>
-            <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14 }}>😊 ¿Cómo te sentiste estudiando hoy?</div>
+            <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="checkCircle" size={15} /> ¿Cómo te sentiste estudiando hoy?</div>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" as const }}>
               {EMOTIONS.map((e) => (
                 <button
@@ -285,8 +285,8 @@ function BitacoraPage() {
                     flex: 1, minWidth: 70, transition: "all .2s", fontFamily: "'Manrope', sans-serif",
                   }}
                 >
-                  <span style={{ fontSize: "1.8rem" }}>{e.icon}</span>
-                  <span style={{ fontSize: ".72rem", fontWeight: 600, color: selectedEmotion === e.icon ? "#3D5D91" : "#888", textAlign: "center" }}>{e.label}</span>
+                  <span style={{ display: "flex", color: selectedEmotion === e.icon ? "#3D5D91" : "#647DA0" }}><Icon n={e.icon as any} size={26} /></span>
+                  <span style={{ fontSize: ".72rem", fontWeight: 600, color: selectedEmotion === e.icon ? "#3D5D91" : "#647DA0", textAlign: "center" }}>{e.label}</span>
                 </button>
               ))}
             </div>

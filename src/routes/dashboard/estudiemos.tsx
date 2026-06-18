@@ -677,7 +677,7 @@ function EstudiemosJuntosPage() {
       {/* Page header */}
       <div style={{ marginBottom: 24 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
-          <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", fontWeight: 700, color: "#1a1a2e", margin: 0 }}>
+          <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", fontWeight: 700, color: "#22375C", margin: 0 }}>
             Estudiemos juntos
           </h1>
           <button
@@ -689,15 +689,18 @@ function EstudiemosJuntosPage() {
               background: "white",
               fontSize: "0.78rem",
               fontWeight: 600,
-              color: "#888",
+              color: "#647DA0",
               cursor: "pointer",
               fontFamily: "'Manrope', sans-serif",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 5,
             }}
           >
-            Cambiar ⚙️
+            Cambiar <Icon n="settings" size={14} />
           </button>
         </div>
-        <p style={{ fontSize: "0.88rem", color: "#888", margin: 0 }}>
+        <p style={{ fontSize: "0.88rem", color: "#647DA0", margin: 0 }}>
           Hola, {MOCK_PROFILE.name}. Paty revisó tu progreso y preparó tu plan de hoy.
         </p>
       </div>

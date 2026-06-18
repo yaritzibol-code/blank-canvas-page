@@ -656,12 +656,12 @@ function CuestionarioPage() {
                 marginBottom: 16,
               }}
             >
-              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12 }}>
-                ⚠️ Temas que necesitas reforzar
+              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}>
+                <Icon n="alert" size={15} /> Temas que necesitas reforzar
               </div>
               {[
-                { label: "📋 Lectura de METAR y TAF", score: 52, color: "#e74c3c", bg: "rgba(231,76,60,0.06)" },
-                { label: "🌡️ Sistemas de presión", score: 65, color: "#f39c12", bg: "rgba(243,156,18,0.06)" },
+                { icon: "doc", label: "Lectura de METAR y TAF", score: 52, color: "#e74c3c", bg: "rgba(231,76,60,0.06)" },
+                { icon: "gauge", label: "Sistemas de presión", score: 65, color: "#f39c12", bg: "rgba(243,156,18,0.06)" },
               ].map((item) => (
                 <div
                   key={item.label}
@@ -671,16 +671,16 @@ function CuestionarioPage() {
                     fontSize: "0.84rem", background: item.bg,
                   }}
                 >
-                  <span>{item.label}</span>
+                  <span style={{ display: "flex", alignItems: "center", gap: 7 }}><Icon n={item.icon as FPIconName} size={15} color="#22375C" /> {item.label}</span>
                   <span style={{ color: item.color, fontWeight: 700 }}>{item.score}%</span>
                 </div>
               ))}
-              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12, marginTop: 14 }}>
-                ✅ Lo que dominaste
+              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12, marginTop: 14, display: "flex", alignItems: "center", gap: 6 }}>
+                <Icon n="check" size={15} /> Lo que dominaste
               </div>
               {[
-                { label: "🌊 Fuerza de Coriolis", score: 90, color: "#2ecc71", bg: "rgba(46,204,113,0.06)" },
-                { label: "☁️ Clasificación de nubes", score: 88, color: "#2ecc71", bg: "rgba(46,204,113,0.06)" },
+                { icon: "wind", label: "Fuerza de Coriolis", score: 90, color: "#2ecc71", bg: "rgba(46,204,113,0.06)" },
+                { icon: "cloud", label: "Clasificación de nubes", score: 88, color: "#2ecc71", bg: "rgba(46,204,113,0.06)" },
               ].map((item) => (
                 <div
                   key={item.label}
@@ -690,7 +690,7 @@ function CuestionarioPage() {
                     fontSize: "0.84rem", background: item.bg,
                   }}
                 >
-                  <span>{item.label}</span>
+                  <span style={{ display: "flex", alignItems: "center", gap: 7 }}><Icon n={item.icon as FPIconName} size={15} color="#22375C" /> {item.label}</span>
                   <span style={{ color: item.color, fontWeight: 700 }}>{item.score}%</span>
                 </div>
               ))}
@@ -707,10 +707,10 @@ function CuestionarioPage() {
                 fontSize: "0.85rem", color: "#555", lineHeight: 1.6,
               }}
             >
-              <span style={{ fontSize: "1.5rem" }}>☁️</span>
+              <span style={{ display: "flex", alignItems: "center" }}><Icon n="cloud" size={24} color="#6C0820" /></span>
               <div>
                 <strong style={{ color: "#6C0820" }}>Pathy recomienda:</strong>{" "}
-                ¡Buen trabajo! Tu punto más débil es la lectura de METAR/TAF. Te recomiendo hacer una sesión de 20 preguntas solo de ese tema. ¡En 2 días más lo dominarás! 💪
+                ¡Buen trabajo! Tu punto más débil es la lectura de METAR/TAF. Te recomiendo hacer una sesión de 20 preguntas solo de ese tema. ¡En 2 días más lo dominarás!
               </div>
             </div>
 
@@ -724,9 +724,10 @@ function CuestionarioPage() {
                   border: "2px solid #3D5D91", borderRadius: 11,
                   fontSize: "0.9rem", fontWeight: 700, cursor: "pointer",
                   fontFamily: "'Manrope', sans-serif",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 7,
                 }}
               >
-                🔄 Repetir sesión
+                <Icon n="refresh" size={16} /> Repetir sesión
               </button>
               <Link
                 to="/dashboard"
