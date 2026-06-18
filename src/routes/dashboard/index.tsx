@@ -24,7 +24,7 @@ const WEEK_DAYS = ["L", "M", "M", "J", "V", "S", "D"];
 
 const s: Record<string, React.CSSProperties> = {
   sectionTitle: {
-    fontFamily: "'Playfair Display', serif",
+    fontFamily: "'Bricolage Grotesque', sans-serif",
     fontSize: "1.2rem",
     color: "#1a1a2e",
   },
@@ -98,7 +98,7 @@ function LiveCountdown() {
           >
             <span
               style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "'Bricolage Grotesque', sans-serif",
                 fontSize: "1.4rem",
                 fontWeight: 900,
                 lineHeight: 1,
@@ -211,7 +211,7 @@ function DashboardHome() {
   const todayIdx = now.getDay() === 0 ? 6 : now.getDay() - 1;
 
   return (
-    <div style={{ maxWidth: 1200, margin: "0 auto", fontFamily: "'DM Sans', sans-serif" }}>
+    <div style={{ maxWidth: 1200, margin: "0 auto", fontFamily: "'Manrope', sans-serif" }}>
 
       {/* GREETING + COUNTDOWN */}
       <div
@@ -227,7 +227,7 @@ function DashboardHome() {
         <div>
           <h2
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Bricolage Grotesque', sans-serif",
               fontSize: "1.8rem",
               color: "#1a1a2e",
               marginBottom: 4,
@@ -284,7 +284,7 @@ function DashboardHome() {
           <span style={{ fontSize: "2rem", display: "block" }}>🔥</span>
           <span
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Bricolage Grotesque', sans-serif",
               fontSize: "2rem",
               fontWeight: 900,
               color: "#F2AEBC",
@@ -402,7 +402,7 @@ function StatCard({
       <div>
         <div
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "'Bricolage Grotesque', sans-serif",
             fontSize: "1.5rem", fontWeight: 900,
             color: "#1a1a2e", lineHeight: 1,
           }}

@@ -67,12 +67,12 @@ function RecordatoriosPage() {
 
   const inputStyle: React.CSSProperties = {
     width: "100%", padding: "10px 14px", border: "2px solid #F2DCDB",
-    borderRadius: 9, fontSize: ".88rem", fontFamily: "'DM Sans',sans-serif", outline: "none",
+    borderRadius: 9, fontSize: ".88rem", fontFamily: "'Manrope', sans-serif", outline: "none",
     color: "#1a1a2e", background: "white",
   };
 
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif", maxWidth: 720 }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif", maxWidth: 720 }}>
 
       {/* Modal backdrop */}
       {(showReminderModal || showDateModal) && (
@@ -83,7 +83,7 @@ function RecordatoriosPage() {
           {/* ── Reminder modal ── */}
           {showReminderModal && (
             <div onClick={(e) => e.stopPropagation()} style={{ background: "white", borderRadius: 18, padding: 28, maxWidth: 460, width: "100%" }}>
-              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", marginBottom: 6 }}>🔔 Nuevo recordatorio</h2>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", marginBottom: 6 }}>🔔 Nuevo recordatorio</h2>
               <p style={{ fontSize: ".84rem", color: "#888", marginBottom: 22 }}>Configura cuándo quieres que te avisemos por WhatsApp</p>
 
               <div style={{ background: "#f0fdf4", border: "1px solid #86efac", borderRadius: 10, padding: "10px 14px", marginBottom: 16, display: "flex", alignItems: "center", gap: 8, fontSize: ".8rem", color: "#166534" }}>
@@ -121,7 +121,7 @@ function RecordatoriosPage() {
                         color: selectedDays[i] ? "white" : "#888",
                         fontSize: ".78rem", fontWeight: 700, cursor: "pointer",
                         display: "flex", alignItems: "center", justifyContent: "center",
-                        transition: "all .2s", fontFamily: "'DM Sans',sans-serif",
+                        transition: "all .2s", fontFamily: "'Manrope', sans-serif",
                       }}
                     >{d}</button>
                   ))}
@@ -129,8 +129,8 @@ function RecordatoriosPage() {
               </div>
 
               <div style={{ display: "flex", gap: 10 }}>
-                <button onClick={() => setShowReminderModal(false)} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>Cancelar</button>
-                <button onClick={saveReminder} style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>Guardar recordatorio 🔔</button>
+                <button onClick={() => setShowReminderModal(false)} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                <button onClick={saveReminder} style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Guardar recordatorio 🔔</button>
               </div>
             </div>
           )}
@@ -138,15 +138,15 @@ function RecordatoriosPage() {
           {/* ── Date modal ── */}
           {showDateModal && (
             <div onClick={(e) => e.stopPropagation()} style={{ background: "white", borderRadius: 18, padding: 28, maxWidth: 460, width: "100%" }}>
-              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", marginBottom: 6 }}>✈️ Fecha del examen CIAAC</h2>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", marginBottom: 6 }}>✈️ Fecha del examen CIAAC</h2>
               <p style={{ fontSize: ".84rem", color: "#888", marginBottom: 22 }}>¿Cuándo tienes programado tu examen?</p>
               <div style={{ marginBottom: 16 }}>
                 <label style={{ fontSize: ".78rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 6, display: "block" }}>Fecha del examen</label>
                 <input type="date" value={examDate} onChange={(e) => setExamDate(e.target.value)} style={inputStyle} />
               </div>
               <div style={{ display: "flex", gap: 10 }}>
-                <button onClick={() => setShowDateModal(false)} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>Cancelar</button>
-                <button onClick={() => setShowDateModal(false)} style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>Guardar fecha ✈️</button>
+                <button onClick={() => setShowDateModal(false)} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                <button onClick={() => setShowDateModal(false)} style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Guardar fecha ✈️</button>
               </div>
             </div>
           )}
@@ -163,14 +163,14 @@ function RecordatoriosPage() {
       {/* Page header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24, flexWrap: "wrap", gap: 12 }}>
         <div>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", color: "#1a1a2e", marginBottom: 4 }}>
+          <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.5rem", color: "#1a1a2e", marginBottom: 4 }}>
             Mis <span style={{ color: "#6C0820" }}>Recordatorios</span>
           </h1>
           <p style={{ fontSize: ".85rem", color: "#888" }}>Configura avisos por WhatsApp para no perder tu racha.</p>
         </div>
         <button
           onClick={() => setShowReminderModal(true)}
-          style={{ padding: "9px 18px", background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".84rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif", display: "flex", alignItems: "center", gap: 6 }}
+          style={{ padding: "9px 18px", background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".84rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 6 }}
         >
           + Nuevo recordatorio
         </button>
@@ -182,7 +182,7 @@ function RecordatoriosPage() {
         <div style={{ fontSize: "3rem", flexShrink: 0, zIndex: 1 }}>✈️</div>
         <div style={{ flex: 1, zIndex: 1, minWidth: 200 }}>
           <div style={{ fontSize: ".7rem", color: "#F2AEBC", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 4 }}>⏳ Cuenta regresiva</div>
-          <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", color: "white", marginBottom: 10 }}>
+          <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", color: "white", marginBottom: 10 }}>
             Examen CIAAC — {new Date(examDate + "T12:00:00").toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" })}
           </div>
           <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
@@ -190,7 +190,7 @@ function RecordatoriosPage() {
               <>
                 {i > 0 && <span key={`sep-${i}`} style={{ fontSize: "1.4rem", color: "rgba(255,255,255,.3)", paddingTop: 4 }}>:</span>}
                 <div key={u.lab} style={{ textAlign: "center" }}>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.8rem", fontWeight: 900, color: "white", lineHeight: 1 }}>{u.val}</div>
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.8rem", fontWeight: 900, color: "white", lineHeight: 1 }}>{u.val}</div>
                   <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.5)", textTransform: "uppercase" }}>{u.lab}</div>
                 </div>
               </>
@@ -199,7 +199,7 @@ function RecordatoriosPage() {
         </div>
         <button
           onClick={() => setShowDateModal(true)}
-          style={{ background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.2)", color: "rgba(255,255,255,.8)", padding: "6px 14px", borderRadius: 8, fontSize: ".76rem", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", zIndex: 1, whiteSpace: "nowrap", flexShrink: 0 }}
+          style={{ background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.2)", color: "rgba(255,255,255,.8)", padding: "6px 14px", borderRadius: 8, fontSize: ".76rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif", zIndex: 1, whiteSpace: "nowrap", flexShrink: 0 }}
         >
           ✏️ Cambiar fecha
         </button>
@@ -247,7 +247,7 @@ function RecordatoriosPage() {
             <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
               <button
                 onClick={() => setShowReminderModal(true)}
-                style={{ background: "none", border: "1px solid #F2DCDB", borderRadius: 7, padding: "5px 10px", fontSize: ".75rem", color: "#888", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", transition: "all .2s" }}
+                style={{ background: "none", border: "1px solid #F2DCDB", borderRadius: 7, padding: "5px 10px", fontSize: ".75rem", color: "#888", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all .2s" }}
                 onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; e.currentTarget.style.color = "#3D5D91"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; e.currentTarget.style.color = "#888"; }}
               >✏️</button>

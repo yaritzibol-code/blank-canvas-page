@@ -219,7 +219,7 @@ function ClasesPage() {
             <div style={{ width: "100%", background: "black", aspectRatio: "16/9", maxHeight: "55vh", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg,#1a1a2e,#2a2a4e)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12 }}>
                 <div style={{ fontSize: "4rem" }}>{mat.icon}</div>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1rem", color: "white", textAlign: "center", padding: "0 20px" }}>{vid.title}</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1rem", color: "white", textAlign: "center", padding: "0 20px" }}>{vid.title}</div>
                 <div style={{ fontSize: ".78rem", color: "rgba(255,255,255,.5)" }}>Haz clic en ▶ para reproducir</div>
               </div>
             </div>
@@ -244,7 +244,7 @@ function ClasesPage() {
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <button
                     onClick={cycleSpeed}
-                    style={{ background: "rgba(255,255,255,.1)", border: "none", color: "white", borderRadius: 6, padding: "3px 8px", fontSize: ".75rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}
+                    style={{ background: "rgba(255,255,255,.1)", border: "none", color: "white", borderRadius: 6, padding: "3px 8px", fontSize: ".75rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
                   >
                     {speeds[speedIdx]}
                   </button>
@@ -255,7 +255,7 @@ function ClasesPage() {
 
             {/* Info */}
             <div style={{ flex: 1, overflowY: "auto", padding: "16px 20px" }}>
-              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", color: "white", marginBottom: 6 }}>{vid.title}</div>
+              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "white", marginBottom: 6 }}>{vid.title}</div>
               <div style={{ fontSize: ".78rem", color: "rgba(255,255,255,.4)", marginBottom: 14, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                 <span>🎬 Clase {videoIdx + 1} de {mat.videos.length}</span>
                 <span>·</span>
@@ -329,13 +329,13 @@ function ClasesPage() {
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 24 }}>
           <button
             onClick={showMaterias}
-            style={{ display: "flex", alignItems: "center", gap: 6, background: "white", border: "2px solid #F2DCDB", borderRadius: 8, padding: "7px 14px", fontSize: ".82rem", fontWeight: 700, color: "#888", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", transition: "all .2s" }}
+            style={{ display: "flex", alignItems: "center", gap: 6, background: "white", border: "2px solid #F2DCDB", borderRadius: 8, padding: "7px 14px", fontSize: ".82rem", fontWeight: 700, color: "#888", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all .2s" }}
             onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; e.currentTarget.style.color = "#3D5D91"; }}
             onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; e.currentTarget.style.color = "#888"; }}
           >
             ← Materias
           </button>
-          <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", fontWeight: 700 }}>
+          <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", fontWeight: 700 }}>
             {currentMat.icon} {currentMat.name}
           </span>
         </div>
@@ -401,7 +401,7 @@ function ClasesPage() {
   return (
     <div>
       <div style={{ marginBottom: 28 }}>
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.6rem", color: "#1a1a2e", marginBottom: 6 }}>
+        <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", color: "#1a1a2e", marginBottom: 6 }}>
           Clases <span style={{ color: "#6C0820" }}>Grabadas</span>
         </h1>
         <p style={{ fontSize: ".9rem", color: "#888" }}>Aprende a tu ritmo con videos explicados por Yaris, organizados por materia y tema.</p>

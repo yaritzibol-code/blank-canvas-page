@@ -320,7 +320,7 @@ function OnboardingModal({ onDone }: { onDone: () => void }) {
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <div style={{ fontSize: "2.5rem", marginBottom: 8 }}>✈️</div>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.4rem", color: "#1a1a2e", margin: 0 }}>
+          <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", color: "#1a1a2e", margin: 0 }}>
             {step === 1 ? "¿Cuándo es tu CIAAC?" : "¿Cuánto tiempo tienes hoy?"}
           </h2>
           <p style={{ fontSize: "0.85rem", color: "#888", marginTop: 6 }}>
@@ -347,7 +347,7 @@ function OnboardingModal({ onDone }: { onDone: () => void }) {
                     background: selectedDate === opt.val ? "rgba(61,93,145,0.07)" : "white",
                     cursor: "pointer",
                     textAlign: "left",
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Manrope', sans-serif",
                     transition: "all 0.15s",
                   }}
                 >
@@ -367,7 +367,7 @@ function OnboardingModal({ onDone }: { onDone: () => void }) {
                 border: "2px solid #F2DCDB",
                 borderRadius: 10,
                 fontSize: "0.88rem",
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "'Manrope', sans-serif",
                 marginBottom: 20,
                 boxSizing: "border-box",
               }}
@@ -385,7 +385,7 @@ function OnboardingModal({ onDone }: { onDone: () => void }) {
                 fontSize: "0.95rem",
                 fontWeight: 700,
                 cursor: selectedDate || customDate ? "pointer" : "not-allowed",
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "'Manrope', sans-serif",
               }}
             >
               Continuar →
@@ -408,7 +408,7 @@ function OnboardingModal({ onDone }: { onDone: () => void }) {
                   background: "white",
                   cursor: "pointer",
                   textAlign: "left",
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Manrope', sans-serif",
                   transition: "all 0.15s",
                 }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = "#3D5D91"; e.currentTarget.style.background = "rgba(61,93,145,0.04)"; }}
@@ -585,7 +585,7 @@ function PlanItemCard({ item, index }: { item: PlanItem; index: number }) {
           fontSize: "0.8rem",
           fontWeight: 700,
           textDecoration: "none",
-          fontFamily: "'DM Sans', sans-serif",
+          fontFamily: "'Manrope', sans-serif",
         }}
       >
         Ir →
@@ -676,7 +676,7 @@ function EstudiemosJuntosPage() {
       {/* Page header */}
       <div style={{ marginBottom: 24 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.6rem", fontWeight: 700, color: "#1a1a2e", margin: 0 }}>
+          <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", fontWeight: 700, color: "#1a1a2e", margin: 0 }}>
             Estudiemos juntos
           </h1>
           <button
@@ -690,7 +690,7 @@ function EstudiemosJuntosPage() {
               fontWeight: 600,
               color: "#888",
               cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
             }}
           >
             Cambiar ⚙️
@@ -730,7 +730,7 @@ function EstudiemosJuntosPage() {
                 fontWeight: tiempo === t ? 700 : 500,
                 color: tiempo === t ? "#3D5D91" : "#888",
                 cursor: "pointer",
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "'Manrope', sans-serif",
                 transition: "all 0.15s",
               }}
             >
@@ -748,7 +748,7 @@ function EstudiemosJuntosPage() {
               fontWeight: tiempo === "custom" ? 700 : 500,
               color: tiempo === "custom" ? "#6C0820" : "#888",
               cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
               transition: "all 0.15s",
               display: "flex",
               alignItems: "center",
@@ -786,7 +786,7 @@ function EstudiemosJuntosPage() {
                   border: "1.5px solid #F2DCDB",
                   borderRadius: 8,
                   fontSize: "0.88rem",
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Manrope', sans-serif",
                   textAlign: "center",
                   outline: "none",
                 }}
@@ -804,7 +804,7 @@ function EstudiemosJuntosPage() {
                   border: "1.5px solid #F2DCDB",
                   borderRadius: 8,
                   fontSize: "0.88rem",
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Manrope', sans-serif",
                   textAlign: "center",
                   outline: "none",
                 }}
@@ -828,7 +828,7 @@ function EstudiemosJuntosPage() {
                 fontSize: "0.8rem",
                 fontWeight: 700,
                 cursor: "pointer",
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "'Manrope', sans-serif",
               }}
             >
               Aplicar

@@ -102,7 +102,7 @@ export function FlashcardsBlock({ cards }: FlashcardsBlockData) {
             </span>
             <p
               style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "'Bricolage Grotesque', sans-serif",
                 fontSize: "1.05rem",
                 fontWeight: 700,
                 lineHeight: 1.45,

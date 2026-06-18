@@ -72,7 +72,7 @@ function AnalisisPage() {
   ];
 
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif" }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif" }}>
       <style>{`
         @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
       `}</style>
@@ -89,7 +89,7 @@ function AnalisisPage() {
               borderRadius: 20, fontSize: ".8rem", fontWeight: 600, cursor: "pointer",
               background: period === p.key ? "#3D5D91" : "white",
               color: period === p.key ? "white" : "#888",
-              transition: "all .2s", fontFamily: "'DM Sans', sans-serif",
+              transition: "all .2s", fontFamily: "'Manrope', sans-serif",
             }}
           >
             {p.label}
@@ -101,7 +101,7 @@ function AnalisisPage() {
       <div style={{ background: "linear-gradient(135deg,#1a1a2e,#2a2a4e)", borderRadius: 16, padding: "20px 24px", display: "flex", alignItems: "center", gap: 18, marginBottom: 24, flexWrap: "wrap" }}>
         <div style={{ fontSize: "3.5rem", animation: "float 3s ease-in-out infinite", flexShrink: 0 }}>☁️</div>
         <div>
-          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", color: "white", marginBottom: 4 }}>¡Vas muy bien, María! 🎯</h3>
+          <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "white", marginBottom: 4 }}>¡Vas muy bien, María! 🎯</h3>
           <p style={{ fontSize: ".85rem", color: "rgba(255,255,255,.7)", lineHeight: 1.5 }}>
             Esta semana estudiaste <strong style={{ color: "#F2AEBC" }}>4 días seguidos</strong> y tu promedio en cuestionarios subió un{" "}
             <strong style={{ color: "#F2AEBC" }}>12%</strong> respecto a la semana pasada. Tu punto más débil sigue siendo{" "}
@@ -120,7 +120,7 @@ function AnalisisPage() {
         ].map((s) => (
           <div key={s.label} style={{ background: "white", borderRadius: 14, padding: "18px 20px", boxShadow: "0 2px 10px rgba(61,93,145,.06)", display: "flex", flexDirection: "column", gap: 6 }}>
             <span style={{ fontSize: "1.4rem" }}>{s.icon}</span>
-            <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.8rem", fontWeight: 900, color: "#1a1a2e", lineHeight: 1 }}>{s.val}</span>
+            <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.8rem", fontWeight: 900, color: "#1a1a2e", lineHeight: 1 }}>{s.val}</span>
             <span style={{ fontSize: ".74rem", color: "#888" }}>{s.label}</span>
             <span style={{ fontSize: ".72rem", fontWeight: 700, color: s.up ? "#2ecc71" : "#e74c3c" }}>{s.delta}</span>
           </div>
@@ -133,14 +133,14 @@ function AnalisisPage() {
 
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16, flexWrap: "wrap", gap: 12 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "3rem", fontWeight: 900, color: "#6C0820", lineHeight: 1 }}>14</span>
+            <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "3rem", fontWeight: 900, color: "#6C0820", lineHeight: 1 }}>14</span>
             <div>
               <div style={{ fontSize: ".9rem", fontWeight: 700, color: "#1a1a2e" }}>días seguidos 🔥</div>
               <div style={{ fontSize: ".75rem", color: "#888" }}>Empezaste el 8 de mayo · ¡Sigue así!</div>
             </div>
           </div>
           <div style={{ textAlign: "right" }}>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.4rem", fontWeight: 900, color: "#3D5D91" }}>14</div>
+            <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", fontWeight: 900, color: "#3D5D91" }}>14</div>
             <div style={{ fontSize: ".72rem", color: "#aaa" }}>Récord personal</div>
           </div>
         </div>
@@ -231,14 +231,14 @@ function AnalisisPage() {
           {EXAM_HISTORY.map((e, i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", borderRadius: 10, background: "#f8f9ff" }}>
               <div style={{ width: 60, flexShrink: 0, textAlign: "center" }}>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", fontWeight: 900, color: "#1a1a2e" }}>{e.day}</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", fontWeight: 900, color: "#1a1a2e" }}>{e.day}</div>
                 <div style={{ fontSize: ".72rem", color: "#aaa" }}>{e.month}</div>
               </div>
               <div style={{ flex: 1 }}>
                 <h4 style={{ fontSize: ".84rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 2 }}>{e.title}</h4>
                 <p style={{ fontSize: ".73rem", color: "#888" }}>{e.sub}</p>
               </div>
-              <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", fontWeight: 900, flexShrink: 0, color: scoreColor(e.score) }}>{e.score}%</span>
+              <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", fontWeight: 900, flexShrink: 0, color: scoreColor(e.score) }}>{e.score}%</span>
             </div>
           ))}
         </div>
@@ -259,7 +259,7 @@ function AnalisisPage() {
                 <div style={{ fontSize: ".74rem", color: "#888" }}>{a.sub}</div>
               </div>
               <div style={{ textAlign: "right", flexShrink: 0 }}>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1rem", fontWeight: 900, color: a.scoreColor }}>{a.score}%</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1rem", fontWeight: 900, color: a.scoreColor }}>{a.score}%</div>
                 <div style={{ fontSize: ".7rem", color: "#aaa" }}>{a.time}</div>
               </div>
             </div>

@@ -103,7 +103,7 @@ export function ThinkLikePilotBlock({ pregunta, pista, respuesta_sugerida }: Thi
             fontSize: "0.9rem",
             fontWeight: 700,
             cursor: "pointer",
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "'Manrope', sans-serif",
             transition: "all 0.2s",
           }}
           onMouseEnter={(e) => {

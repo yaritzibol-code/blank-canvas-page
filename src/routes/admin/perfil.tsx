@@ -81,12 +81,12 @@ function AdminPerfilPage() {
 
   const inputStyle: React.CSSProperties = {
     width: "100%", padding: "9px 13px", border: "2px solid #F2DCDB",
-    borderRadius: 8, fontSize: ".86rem", fontFamily: "'DM Sans',sans-serif",
+    borderRadius: 8, fontSize: ".86rem", fontFamily: "'Manrope', sans-serif",
     outline: "none", color: "#1a1a2e", background: "white",
   };
 
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif", display: "flex", minHeight: "100vh", background: "#f5f7fc" }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif", display: "flex", minHeight: "100vh", background: "#f5f7fc" }}>
 
       {/* Flash */}
       {flash && (
@@ -104,7 +104,7 @@ function AdminPerfilPage() {
           <div onClick={(e) => e.stopPropagation()} style={{ background: "white", borderRadius: 16, padding: 26, maxWidth: 440, width: "100%" }}>
 
             {modal === "wa" && (<>
-              <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", marginBottom: 6 }}>💬 Enviar WhatsApp</h2>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6 }}>💬 Enviar WhatsApp</h2>
               <p style={{ fontSize: ".84rem", color: "#888", marginBottom: 18, lineHeight: 1.5 }}>El mensaje llegará al +52 55 1234 5678 de María González.</p>
               <div style={{ marginBottom: 14 }}>
                 <label style={{ fontSize: ".75rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 5, display: "block" }}>Mensaje</label>
@@ -117,7 +117,7 @@ function AdminPerfilPage() {
             </>)}
 
             {modal === "extend" && (<>
-              <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", marginBottom: 6 }}>📅 Extender acceso</h2>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6 }}>📅 Extender acceso</h2>
               <p style={{ fontSize: ".84rem", color: "#888", marginBottom: 18, lineHeight: 1.5 }}>El plan actual vence el <strong>5 de febrero 2027</strong>. ¿Cuántos días adicionales quieres darle?</p>
               <div style={{ marginBottom: 14 }}>
                 <label style={{ fontSize: ".75rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 5, display: "block" }}>Días adicionales</label>
@@ -139,7 +139,7 @@ function AdminPerfilPage() {
             </>)}
 
             {modal === "garantia" && (<>
-              <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", marginBottom: 6 }}>⚠️ Activar garantía de mejora</h2>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6 }}>⚠️ Activar garantía de mejora</h2>
               <p style={{ fontSize: ".84rem", color: "#888", marginBottom: 18, lineHeight: 1.5 }}>Al activar la garantía, María recibirá <strong>30 días adicionales de acceso sin costo</strong>. Se le enviará un WhatsApp notificándole.</p>
               <div style={{ marginBottom: 14 }}>
                 <label style={{ fontSize: ".75rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 5, display: "block" }}>Días de extensión</label>
@@ -152,7 +152,7 @@ function AdminPerfilPage() {
             </>)}
 
             {modal === "change" && (<>
-              <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", marginBottom: 6 }}>🔄 Cambiar plan</h2>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6 }}>🔄 Cambiar plan</h2>
               <p style={{ fontSize: ".84rem", color: "#888", marginBottom: 18 }}>Selecciona el nuevo plan para María González.</p>
               <div style={{ marginBottom: 14 }}>
                 <label style={{ fontSize: ".75rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 5, display: "block" }}>Nuevo plan</label>
@@ -170,7 +170,7 @@ function AdminPerfilPage() {
             </>)}
 
             {modal === "cancel" && (<>
-              <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", marginBottom: 6 }}>⚠️ Cancelar acceso</h2>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6 }}>⚠️ Cancelar acceso</h2>
               <p style={{ fontSize: ".84rem", color: "#888", marginBottom: 18, lineHeight: 1.5 }}>¿Estás segura de que quieres cancelar el acceso de <strong>María González</strong>? Esta acción desactivará su cuenta inmediatamente.</p>
               <div style={{ display: "flex", gap: 10 }}>
                 <button onClick={() => setModal(null)} style={cancelBtnStyle}>No, volver</button>
@@ -179,7 +179,7 @@ function AdminPerfilPage() {
             </>)}
 
             {modal === "reset" && (<>
-              <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", marginBottom: 6 }}>🔑 Resetear contraseña</h2>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6 }}>🔑 Resetear contraseña</h2>
               <p style={{ fontSize: ".84rem", color: "#888", marginBottom: 18, lineHeight: 1.5 }}>Se enviará un link de recuperación al correo <strong>maria.gonzalez@email.com</strong> y un aviso por WhatsApp.</p>
               <div style={{ display: "flex", gap: 10 }}>
                 <button onClick={() => setModal(null)} style={cancelBtnStyle}>Cancelar</button>
@@ -201,7 +201,7 @@ function AdminPerfilPage() {
         {/* Logo */}
         <div style={{ padding: "18px 16px", borderBottom: "1px solid rgba(255,255,255,.08)", display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{ width: 30, height: 30, background: "#3D5D91", borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: ".85rem" }}>F✈</div>
-          <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.1rem", color: "white", fontWeight: 700 }}>Flight<span style={{ color: "#F2AEBC" }}>Path</span></span>
+          <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "white", fontWeight: 700 }}>Flight<span style={{ color: "#F2AEBC" }}>Path</span></span>
           <span style={{ background: "#6C0820", color: "white", fontSize: ".6rem", fontWeight: 700, padding: "2px 7px", borderRadius: 10, textTransform: "uppercase", letterSpacing: ".5px", marginLeft: "auto" }}>Admin</span>
         </div>
 
@@ -253,11 +253,11 @@ function AdminPerfilPage() {
               <span style={{ display: "block", width: 20, height: 2, background: "#1a1a2e", borderRadius: 2 }} />
             </button>
             <Link to="/dashboard" style={{ display: "flex", alignItems: "center", gap: 5, color: "#888", fontSize: ".8rem", textDecoration: "none", padding: "5px 10px", borderRadius: 6, border: "1px solid #F2DCDB", transition: "all .2s" }}>← Estudiantes</Link>
-            <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.05rem", fontWeight: 700 }}>María González</span>
+            <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.05rem", fontWeight: 700 }}>María González</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <button onClick={() => setModal("wa")} style={{ padding: "7px 14px", background: "#25D366", color: "white", border: "none", borderRadius: 8, fontSize: ".8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif", display: "flex", alignItems: "center", gap: 5 }}>💬 Enviar WhatsApp</button>
-            <button onClick={() => setModal("cancel")} style={{ padding: "7px 14px", background: "white", color: "#e74c3c", border: "2px solid #e74c3c", borderRadius: 8, fontSize: ".8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>Cancelar acceso</button>
+            <button onClick={() => setModal("wa")} style={{ padding: "7px 14px", background: "#25D366", color: "white", border: "none", borderRadius: 8, fontSize: ".8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>💬 Enviar WhatsApp</button>
+            <button onClick={() => setModal("cancel")} style={{ padding: "7px 14px", background: "white", color: "#e74c3c", border: "2px solid #e74c3c", borderRadius: 8, fontSize: ".8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar acceso</button>
           </div>
         </div>
 
@@ -267,9 +267,9 @@ function AdminPerfilPage() {
           {/* Student hero */}
           <div style={{ background: "linear-gradient(135deg,#1a1a2e,#2a2a4e)", borderRadius: 18, padding: "24px 28px", display: "flex", alignItems: "center", gap: 20, marginBottom: 22, position: "relative", overflow: "hidden", flexWrap: "wrap" }}>
             <div style={{ position: "absolute", top: -50, right: -50, width: 180, height: 180, background: "radial-gradient(circle,rgba(90,134,203,.2) 0%,transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
-            <div style={{ width: 72, height: 72, borderRadius: "50%", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Playfair Display',serif", fontSize: "1.6rem", fontWeight: 900, color: "white", border: "3px solid rgba(255,255,255,.2)", flexShrink: 0, zIndex: 1 }}>MG</div>
+            <div style={{ width: 72, height: 72, borderRadius: "50%", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", fontWeight: 900, color: "white", border: "3px solid rgba(255,255,255,.2)", flexShrink: 0, zIndex: 1 }}>MG</div>
             <div style={{ flex: 1, zIndex: 1, minWidth: 180 }}>
-              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.4rem", color: "white", fontWeight: 900, marginBottom: 3 }}>María González Ramírez</div>
+              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", color: "white", fontWeight: 900, marginBottom: 3 }}>María González Ramírez</div>
               <div style={{ fontSize: ".8rem", color: "rgba(255,255,255,.5)", marginBottom: 8 }}>maria.gonzalez@email.com · +52 55 1234 5678 💬</div>
               <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
                 <span style={{ padding: "3px 10px", borderRadius: 20, fontSize: ".7rem", fontWeight: 700, background: "#F2AEBC", color: "#6C0820" }}>✈ Plan Anual</span>
@@ -280,7 +280,7 @@ function AdminPerfilPage() {
             <div style={{ display: "flex", gap: 20, zIndex: 1, flexShrink: 0 }}>
               {[{ num: "62%", lab: "Progreso" }, { num: "74%", lab: "Promedio" }, { num: "3", lab: "Simuladores" }].map((s) => (
                 <div key={s.lab} style={{ textAlign: "center" }}>
-                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.4rem", fontWeight: 900, color: "white", lineHeight: 1 }}>{s.num}</div>
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", fontWeight: 900, color: "white", lineHeight: 1 }}>{s.num}</div>
                   <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.4)", marginTop: 2 }}>{s.lab}</div>
                 </div>
               ))}
@@ -295,9 +295,9 @@ function AdminPerfilPage() {
                 <p style={{ fontSize: ".78rem", color: "rgba(255,255,255,.7)" }}>Desde el 5 de febrero 2026 · Vence el 5 de febrero 2027</p>
               </div>
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                <button onClick={() => setModal("extend")} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif", background: "white", color: "#3D5D91", border: "none" }}>📅 Extender acceso</button>
-                <button onClick={() => setModal("change")} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif", background: "rgba(255,255,255,.15)", color: "white", border: "1px solid rgba(255,255,255,.3)" }}>🔄 Cambiar plan</button>
-                <button onClick={() => setModal("cancel")} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif", background: "rgba(231,76,60,.2)", color: "#ffaaaa", border: "1px solid rgba(231,76,60,.3)" }}>✕ Cancelar</button>
+                <button onClick={() => setModal("extend")} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "white", color: "#3D5D91", border: "none" }}>📅 Extender acceso</button>
+                <button onClick={() => setModal("change")} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(255,255,255,.15)", color: "white", border: "1px solid rgba(255,255,255,.3)" }}>🔄 Cambiar plan</button>
+                <button onClick={() => setModal("cancel")} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(231,76,60,.2)", color: "#ffaaaa", border: "1px solid rgba(231,76,60,.3)" }}>✕ Cancelar</button>
               </div>
             </div>
           </div>
@@ -309,7 +309,7 @@ function AdminPerfilPage() {
               <h4 style={{ fontSize: ".88rem", fontWeight: 700, color: "#8a6000", marginBottom: 3 }}>Garantía de mejora disponible</h4>
               <p style={{ fontSize: ".78rem", color: "#a07800", lineHeight: 1.5 }}>María completó su ruta de estudio pero no ha alcanzado el 80% en el simulador. Según la garantía de FlightPath, puedes extenderle el acceso sin costo adicional.</p>
             </div>
-            <button onClick={() => setModal("garantia")} style={{ padding: "8px 16px", background: "#f39c12", color: "white", border: "none", borderRadius: 8, fontSize: ".8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif", flexShrink: 0, whiteSpace: "nowrap" }}>Activar garantía</button>
+            <button onClick={() => setModal("garantia")} style={{ padding: "8px 16px", background: "#f39c12", color: "white", border: "none", borderRadius: 8, fontSize: ".8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", flexShrink: 0, whiteSpace: "nowrap" }}>Activar garantía</button>
           </div>
 
           {/* Quick actions */}
@@ -322,7 +322,7 @@ function AdminPerfilPage() {
               <button
                 key={qa.label}
                 onClick={qa.action}
-                style={{ padding: "14px 10px", borderRadius: 12, border: "2px solid #F2DCDB", background: "white", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", textAlign: "center", transition: "all .2s" }}
+                style={{ padding: "14px 10px", borderRadius: 12, border: "2px solid #F2DCDB", background: "white", cursor: "pointer", fontFamily: "'Manrope', sans-serif", textAlign: "center", transition: "all .2s" }}
                 onMouseEnter={(e) => { e.currentTarget.style.borderColor = qa.hoverColor; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 6px 16px rgba(61,93,145,.1)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}
               >
@@ -369,7 +369,7 @@ function AdminPerfilPage() {
                     <div style={{ fontSize: ".72rem", color: "#888" }}>{a.sub}</div>
                   </div>
                   <div style={{ textAlign: "right", flexShrink: 0 }}>
-                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: ".95rem", fontWeight: 900, color: a.sc }}>{a.score}%</div>
+                    <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: ".95rem", fontWeight: 900, color: a.sc }}>{a.score}%</div>
                     <div style={{ fontSize: ".68rem", color: "#aaa" }}>{a.time}</div>
                   </div>
                 </div>
@@ -400,13 +400,13 @@ function AdminPerfilPage() {
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Agrega notas sobre este estudiante..."
-              style={{ width: "100%", minHeight: 100, border: "2px solid #F2DCDB", borderRadius: 10, padding: "12px 14px", fontSize: ".85rem", fontFamily: "'DM Sans',sans-serif", color: "#1a1a2e", outline: "none", resize: "vertical", lineHeight: 1.6 }}
+              style={{ width: "100%", minHeight: 100, border: "2px solid #F2DCDB", borderRadius: 10, padding: "12px 14px", fontSize: ".85rem", fontFamily: "'Manrope', sans-serif", color: "#1a1a2e", outline: "none", resize: "vertical", lineHeight: 1.6 }}
               onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }}
               onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }}
             />
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 8 }}>
               <span style={{ fontSize: ".72rem", color: "#aaa" }}>Solo tú puedes ver estas notas · Última edición: hoy</span>
-              <button onClick={() => handleModal("note")} style={{ padding: "7px 16px", background: "#3D5D91", color: "white", border: "none", borderRadius: 7, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>💾 Guardar nota</button>
+              <button onClick={() => handleModal("note")} style={{ padding: "7px 16px", background: "#3D5D91", color: "white", border: "none", borderRadius: 7, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>💾 Guardar nota</button>
             </div>
           </div>
 
@@ -419,10 +419,10 @@ function AdminPerfilPage() {
 const cancelBtnStyle: React.CSSProperties = {
   flex: 1, padding: 10, background: "white", color: "#888",
   border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".84rem",
-  fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif",
+  fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif",
 };
 const confirmBtnStyle: React.CSSProperties = {
   flex: 2, padding: 10, background: "#3D5D91", color: "white",
   border: "none", borderRadius: 8, fontSize: ".84rem",
-  fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif",
+  fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif",
 };

@@ -40,7 +40,7 @@ export function HeaderBlock({
 
       <h1
         style={{
-          fontFamily: "'Playfair Display', serif",
+          fontFamily: "'Bricolage Grotesque', sans-serif",
           fontSize: "1.75rem",
           fontWeight: 700,
           marginBottom: 8,

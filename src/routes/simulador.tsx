@@ -305,12 +305,12 @@ function SimuladorPage() {
   /* ─── PHASE: WARNING ─── */
   if (phase === "warning") {
     return (
-      <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.7)", zIndex: 999, display: "flex", alignItems: "flex-start", justifyContent: "center", padding: 20, overflowY: "auto", fontFamily: "'DM Sans', sans-serif" }}>
+      <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.7)", zIndex: 999, display: "flex", alignItems: "flex-start", justifyContent: "center", padding: 20, overflowY: "auto", fontFamily: "'Manrope', sans-serif" }}>
         <div style={{ background: "white", borderRadius: 20, padding: 28, maxWidth: 560, width: "100%", boxShadow: "0 24px 60px rgba(0,0,0,0.3)", margin: "auto" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
             <span style={{ fontSize: "2.5rem" }}>🎯</span>
             <div>
-              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.4rem", color: "#1a1a2e" }}>Simulador CIAAC</h2>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", color: "#1a1a2e" }}>Simulador CIAAC</h2>
               <p style={{ fontSize: "0.8rem", color: "#888" }}>Lee esto antes de comenzar</p>
             </div>
           </div>
@@ -357,13 +357,13 @@ function SimuladorPage() {
           </label>
 
           <div style={{ display: "flex", gap: 10 }}>
-            <Link to="/dashboard/banco" style={{ flex: 1, padding: 12, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Link to="/dashboard/banco" style={{ flex: 1, padding: 12, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center" }}>
               ← Volver
             </Link>
             <button
               disabled={!agreed}
               onClick={() => setPhase("exam")}
-              style={{ flex: 2, padding: 12, background: agreed ? "#6C0820" : "#ccc", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: agreed ? "pointer" : "not-allowed", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}
+              style={{ flex: 2, padding: 12, background: agreed ? "#6C0820" : "#ccc", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: agreed ? "pointer" : "not-allowed", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}
             >
               🎯 Comenzar simulador
             </button>
@@ -376,14 +376,14 @@ function SimuladorPage() {
   /* ─── PHASE: RESULT ─── */
   if (phase === "result") {
     return (
-      <div style={{ position: "fixed", inset: 0, background: "#f5f7fc", zIndex: 700, overflowY: "auto", padding: "28px 20px", fontFamily: "'DM Sans', sans-serif" }}>
+      <div style={{ position: "fixed", inset: 0, background: "#f5f7fc", zIndex: 700, overflowY: "auto", padding: "28px 20px", fontFamily: "'Manrope', sans-serif" }}>
         <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}`}</style>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
 
           {/* Header */}
           <div style={{ textAlign: "center", marginBottom: 28 }}>
             <div style={{ fontSize: "4rem", animation: "float 3s ease-in-out infinite", display: "inline-block" }}>☁️</div>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.8rem", color: "#1a1a2e", margin: "8px 0 4px" }}>
+            <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.8rem", color: "#1a1a2e", margin: "8px 0 4px" }}>
               Examen <span style={{ color: passed ? "#2ecc71" : "#6C0820" }}>{passed ? "¡Aprobado! 🎉" : "entregado"}</span>
             </h1>
             <p style={{ fontSize: "0.9rem", color: "#888" }}>Aquí está tu análisis completo de Pathy ✈️</p>
@@ -391,7 +391,7 @@ function SimuladorPage() {
 
           {/* Score card */}
           <div style={{ background: "white", borderRadius: 18, padding: 24, boxShadow: "0 2px 14px rgba(61,93,145,0.08)", marginBottom: 18, textAlign: "center" }}>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "3.5rem", fontWeight: 900, lineHeight: 1, marginBottom: 4, color: passed ? "#2ecc71" : "#e74c3c" }}>
+            <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "3.5rem", fontWeight: 900, lineHeight: 1, marginBottom: 4, color: passed ? "#2ecc71" : "#e74c3c" }}>
               {scorePct}%
             </div>
             <div style={{ fontSize: "0.85rem", color: "#888", marginBottom: 20 }}>Calificación total del simulador</div>
@@ -403,7 +403,7 @@ function SimuladorPage() {
                 { num: secToHM(timeUsed), label: "Tiempo usado", color: "#3D5D91" },
               ].map((s) => (
                 <div key={s.label} style={{ textAlign: "center" }}>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 900, color: s.color }}>{s.num}</div>
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.5rem", fontWeight: 900, color: s.color }}>{s.num}</div>
                   <div style={{ fontSize: "0.72rem", color: "#aaa" }}>{s.label}</div>
                 </div>
               ))}
@@ -439,7 +439,7 @@ function SimuladorPage() {
                     <div style={{ width: 100, height: 6, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
                       <div style={{ height: "100%", width: `${p}%`, background: color, borderRadius: 10 }} />
                     </div>
-                    <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", fontWeight: 900, color }}>{p}%</span>
+                    <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", fontWeight: 900, color }}>{p}%</span>
                   </div>
                 </div>
               );
@@ -481,16 +481,16 @@ function SimuladorPage() {
           </div>
 
           <div style={{ marginBottom: 18 }}>
-            <button onClick={() => setPhase("review")} style={{ width: "100%", padding: 14, background: "#3D5D91", color: "white", border: "none", borderRadius: 12, fontSize: "0.95rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
+            <button onClick={() => setPhase("review")} style={{ width: "100%", padding: 14, background: "#3D5D91", color: "white", border: "none", borderRadius: 12, fontSize: "0.95rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
               📋 Revisar examen completo
             </button>
           </div>
 
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", paddingBottom: 40 }}>
-            <button onClick={() => { setPhase("warning"); setQuestions(buildQuestions()); setSecondsLeft(5 * 3600); setCurrent(0); setAgreed(false); }} style={{ flex: 1, padding: 13, background: "white", color: "#3D5D91", border: "2px solid #3D5D91", borderRadius: 11, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
+            <button onClick={() => { setPhase("warning"); setQuestions(buildQuestions()); setSecondsLeft(5 * 3600); setCurrent(0); setAgreed(false); }} style={{ flex: 1, padding: 13, background: "white", color: "#3D5D91", border: "2px solid #3D5D91", borderRadius: 11, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
               🔄 Repetir simulador
             </button>
-            <Link to="/dashboard" style={{ flex: 1, padding: 13, background: "#6C0820", color: "white", border: "none", borderRadius: 11, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Link to="/dashboard" style={{ flex: 1, padding: 13, background: "#6C0820", color: "white", border: "none", borderRadius: 11, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center" }}>
               🏠 Ir al inicio
             </Link>
           </div>
@@ -507,14 +507,14 @@ function SimuladorPage() {
     const mi = questions[reviewCurrent]?.materia ?? 0;
 
     return (
-      <div style={{ position: "fixed", inset: 0, zIndex: 800, background: "#f5f7fc", display: "flex", flexDirection: "column", fontFamily: "'DM Sans', sans-serif" }}>
+      <div style={{ position: "fixed", inset: 0, zIndex: 800, background: "#f5f7fc", display: "flex", flexDirection: "column", fontFamily: "'Manrope', sans-serif" }}>
         {/* Review topbar */}
         <div style={{ height: 56, background: "#1a1a2e", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px", flexShrink: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <button onClick={() => setPhase("result")} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "5px 12px", borderRadius: 7, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
+            <button onClick={() => setPhase("result")} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "5px 12px", borderRadius: 7, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
               ← Volver
             </button>
-            <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1rem", color: "white", fontWeight: 700 }}>Revisión del examen</span>
+            <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1rem", color: "white", fontWeight: 700 }}>Revisión del examen</span>
           </div>
           <span style={{ background: "#F2AEBC", color: "#6C0820", padding: "4px 12px", borderRadius: 20, fontSize: "0.75rem", fontWeight: 700 }}>📋 Modo revisión</span>
         </div>
@@ -573,7 +573,7 @@ function SimuladorPage() {
                   <span style={{ fontSize: "0.76rem", color: "#aaa" }}>Pregunta {reviewCurrent + 1} / {TOTAL_QS}</span>
                 </div>
 
-                <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "0.95rem", color: "#1a1a2e", lineHeight: 1.5, marginBottom: 18 }}>{reviewQ.text}</p>
+                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "0.95rem", color: "#1a1a2e", lineHeight: 1.5, marginBottom: 18 }}>{reviewQ.text}</p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 9, marginBottom: 18 }}>
                   {reviewQ.opts.map((o, oi) => {
@@ -597,14 +597,14 @@ function SimuladorPage() {
                   <div style={{ marginTop: 6, fontSize: "0.74rem", color: "#3D5D91", fontWeight: 600 }}>📖 {reviewQ.cite}</div>
                 </div>
 
-                <button onClick={openYaris} style={{ width: "100%", padding: 11, background: "linear-gradient(135deg,#3D5D91,#5A86CB)", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
+                <button onClick={openYaris} style={{ width: "100%", padding: 11, background: "linear-gradient(135deg,#3D5D91,#5A86CB)", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
                   🤖 Explícamelo Yaris
                 </button>
               </div>
 
               <div style={{ display: "flex", gap: 10 }}>
-                <button onClick={() => setReviewCurrent((r) => Math.max(0, r - 1))} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>← Anterior</button>
-                <button onClick={() => setReviewCurrent((r) => Math.min(TOTAL_QS - 1, r + 1))} style={{ flex: 1, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Siguiente →</button>
+                <button onClick={() => setReviewCurrent((r) => Math.max(0, r - 1))} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>← Anterior</button>
+                <button onClick={() => setReviewCurrent((r) => Math.min(TOTAL_QS - 1, r + 1))} style={{ flex: 1, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Siguiente →</button>
               </div>
             </div>
           </div>
@@ -628,27 +628,27 @@ function SimuladorPage() {
 
   /* ─── PHASE: EXAM ─── */
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif", background: "#f5f7fc", color: "#1a1a2e", height: "100vh", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif", background: "#f5f7fc", color: "#1a1a2e", height: "100vh", display: "flex", flexDirection: "column", overflow: "hidden" }}>
 
       {/* Topbar */}
       <div style={{ height: 56, background: "#1a1a2e", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px", flexShrink: 0, zIndex: 50 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <button onClick={() => setLeftPanelOpen((o) => !o)} className="md:hidden" style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "5px 10px", borderRadius: 7, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
+          <button onClick={() => setLeftPanelOpen((o) => !o)} className="md:hidden" style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "5px 10px", borderRadius: 7, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
             ☰ Preguntas
           </button>
           <span style={{ background: "#6C0820", color: "white", padding: "4px 12px", borderRadius: 20, fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px" }}>🎯 Simulador</span>
-          <span className="hidden md:block" style={{ fontFamily: "'Playfair Display', serif", fontSize: "1rem", color: "white", fontWeight: 700 }}>Examen General de Egreso — Piloto Comercial</span>
+          <span className="hidden md:block" style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1rem", color: "white", fontWeight: 700 }}>Examen General de Egreso — Piloto Comercial</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.1)", borderRadius: 10, padding: "6px 14px" }}>
             <div>
               <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.5px" }}>Tiempo restante</div>
-              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", fontWeight: 900, letterSpacing: 1, color: timerDanger ? "#e74c3c" : timerWarning ? "#f39c12" : "white" }}>
+              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", fontWeight: 900, letterSpacing: 1, color: timerDanger ? "#e74c3c" : timerWarning ? "#f39c12" : "white" }}>
                 {fmtTime(secondsLeft)}
               </div>
             </div>
           </div>
-          <button onClick={() => setCalcOpen((o) => !o)} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "6px 12px", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
+          <button onClick={() => setCalcOpen((o) => !o)} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "6px 12px", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
             🧮 Calculadora
           </button>
         </div>
@@ -690,7 +690,7 @@ function SimuladorPage() {
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <button
                     onClick={toggleFlag}
-                    style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 12px", border: `1px solid ${currentQ.flagged ? "#f39c12" : "#F2DCDB"}`, borderRadius: 7, background: currentQ.flagged ? "rgba(243,156,18,0.08)" : "white", fontSize: "0.76rem", fontWeight: 600, color: currentQ.flagged ? "#f39c12" : "#888", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s" }}
+                    style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 12px", border: `1px solid ${currentQ.flagged ? "#f39c12" : "#F2DCDB"}`, borderRadius: 7, background: currentQ.flagged ? "rgba(243,156,18,0.08)" : "white", fontSize: "0.76rem", fontWeight: 600, color: currentQ.flagged ? "#f39c12" : "#888", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s" }}
                   >
                     ⚑ {currentQ.flagged ? "Marcada" : "Marcar para revisar"}
                   </button>
@@ -698,7 +698,7 @@ function SimuladorPage() {
                 </div>
               </div>
 
-              <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", color: "#1a1a2e", lineHeight: 1.5, marginBottom: 24 }}>
+              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", color: "#1a1a2e", lineHeight: 1.5, marginBottom: 24 }}>
                 {sampleQ.text}
               </p>
 
@@ -727,16 +727,16 @@ function SimuladorPage() {
 
             {/* Nav */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 700, width: "100%", marginTop: 16, gap: 10 }}>
-              <button onClick={() => setCurrent((c) => Math.max(0, c - 1))} disabled={current === 0} style={{ padding: "11px 20px", background: "white", color: current === 0 ? "#ccc" : "#888", border: "2px solid #F2DCDB", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: current === 0 ? "not-allowed" : "pointer", fontFamily: "'DM Sans', sans-serif", opacity: current === 0 ? 0.4 : 1 }}>
+              <button onClick={() => setCurrent((c) => Math.max(0, c - 1))} disabled={current === 0} style={{ padding: "11px 20px", background: "white", color: current === 0 ? "#ccc" : "#888", border: "2px solid #F2DCDB", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: current === 0 ? "not-allowed" : "pointer", fontFamily: "'Manrope', sans-serif", opacity: current === 0 ? 0.4 : 1 }}>
                 ← Anterior
               </button>
               <div style={{ fontSize: "0.8rem", color: "#aaa", textAlign: "center" }}>Pregunta {current + 1} de {TOTAL_QS}</div>
               {!isLast ? (
-                <button onClick={() => setCurrent((c) => Math.min(TOTAL_QS - 1, c + 1))} style={{ padding: "11px 20px", background: "#3D5D91", color: "white", border: "none", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
+                <button onClick={() => setCurrent((c) => Math.min(TOTAL_QS - 1, c + 1))} style={{ padding: "11px 20px", background: "#3D5D91", color: "white", border: "none", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
                   Siguiente →
                 </button>
               ) : (
-                <button onClick={() => setConfirmOpen(true)} style={{ padding: "11px 24px", background: "#6C0820", color: "white", border: "none", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
+                <button onClick={() => setConfirmOpen(true)} style={{ padding: "11px 24px", background: "#6C0820", color: "white", border: "none", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
                   Entregar examen ✓
                 </button>
               )}
@@ -751,7 +751,7 @@ function SimuladorPage() {
           <div style={{ background: "#1a1a2e", borderRadius: 16, padding: 16, width: 220, boxShadow: "0 20px 40px rgba(0,0,0,0.4)" }}>
             <div style={{ background: "rgba(255,255,255,0.08)", borderRadius: 10, padding: "10px 14px", marginBottom: 12, textAlign: "right" }}>
               <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", minHeight: 16, marginBottom: 2 }}>{calc.expr}</div>
-              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.8rem", fontWeight: 900, color: "white", wordBreak: "break-all" }}>{calc.display}</div>
+              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.8rem", fontWeight: 900, color: "white", wordBreak: "break-all" }}>{calc.display}</div>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 6 }}>
               {[
@@ -771,13 +771,13 @@ function SimuladorPage() {
                 { label: "3", action: () => dispatch("NUM", "3"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
                 { label: "+", action: () => dispatch("OP", "+"), style: { background: "#5A86CB", color: "white" } },
               ].map((btn, i) => (
-                <button key={i} onClick={btn.action} style={{ padding: "12px 0", border: "none", borderRadius: 8, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", ...btn.style }}>
+                <button key={i} onClick={btn.action} style={{ padding: "12px 0", border: "none", borderRadius: 8, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", ...btn.style }}>
                   {btn.label}
                 </button>
               ))}
-              <button onClick={() => dispatch("NUM", "0")} style={{ padding: "12px 0", border: "none", borderRadius: 8, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", background: "rgba(255,255,255,0.1)", color: "white", gridColumn: "span 2" }}>0</button>
-              <button onClick={() => dispatch("NUM", ".")} style={{ padding: "12px 0", border: "none", borderRadius: 8, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", background: "rgba(255,255,255,0.1)", color: "white" }}>.</button>
-              <button onClick={() => dispatch("EQ")} style={{ padding: "12px 0", border: "none", borderRadius: 8, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", background: "#6C0820", color: "white", gridColumn: "span 1" }}>=</button>
+              <button onClick={() => dispatch("NUM", "0")} style={{ padding: "12px 0", border: "none", borderRadius: 8, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(255,255,255,0.1)", color: "white", gridColumn: "span 2" }}>0</button>
+              <button onClick={() => dispatch("NUM", ".")} style={{ padding: "12px 0", border: "none", borderRadius: 8, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(255,255,255,0.1)", color: "white" }}>.</button>
+              <button onClick={() => dispatch("EQ")} style={{ padding: "12px 0", border: "none", borderRadius: 8, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "#6C0820", color: "white", gridColumn: "span 1" }}>=</button>
             </div>
           </div>
         </div>
@@ -787,7 +787,7 @@ function SimuladorPage() {
       {confirmOpen && (
         <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 600, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
           <div style={{ background: "white", borderRadius: 18, padding: 32, maxWidth: 440, width: "100%" }}>
-            <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", marginBottom: 8 }}>¿Entregar el examen?</h3>
+            <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", marginBottom: 8 }}>¿Entregar el examen?</h3>
             <p style={{ fontSize: "0.88rem", color: "#666", lineHeight: 1.6, marginBottom: 20 }}>Una vez que entregues no podrás modificar tus respuestas. Revisa que hayas respondido todas las preguntas que puedas.</p>
             <div style={{ display: "flex", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
               {[
@@ -796,14 +796,14 @@ function SimuladorPage() {
                 { num: flaggedCount, label: "Marcadas" },
               ].map((s) => (
                 <div key={s.label} style={{ flex: 1, background: "#f8f9ff", borderRadius: 10, padding: 12, textAlign: "center", minWidth: 80 }}>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.4rem", fontWeight: 900, color: "#3D5D91" }}>{s.num}</div>
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", fontWeight: 900, color: "#3D5D91" }}>{s.num}</div>
                   <div style={{ fontSize: "0.7rem", color: "#aaa" }}>{s.label}</div>
                 </div>
               ))}
             </div>
             <div style={{ display: "flex", gap: 10 }}>
-              <button onClick={() => setConfirmOpen(false)} style={{ flex: 1, padding: 12, background: "white", color: "#3D5D91", border: "2px solid #3D5D91", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>← Seguir revisando</button>
-              <button onClick={submitExam} style={{ flex: 2, padding: 12, background: "#6C0820", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Entregar examen ✓</button>
+              <button onClick={() => setConfirmOpen(false)} style={{ flex: 1, padding: 12, background: "white", color: "#3D5D91", border: "2px solid #3D5D91", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>← Seguir revisando</button>
+              <button onClick={submitExam} style={{ flex: 2, padding: 12, background: "#6C0820", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Entregar examen ✓</button>
             </div>
           </div>
         </div>
@@ -911,7 +911,7 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef 
             <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.8)" }}>Tutora de aviación 24/7</div>
           </div>
         </div>
-        <button onClick={onClose} style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "white", borderRadius: 6, padding: "4px 8px", cursor: "pointer", fontSize: "0.76rem", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>✕</button>
+        <button onClick={onClose} style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "white", borderRadius: 6, padding: "4px 8px", cursor: "pointer", fontSize: "0.76rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif" }}>✕</button>
       </div>
       <div style={{ flex: 1, overflowY: "auto", padding: 14, display: "flex", flexDirection: "column", gap: 10 }}>
         {msgs.map((msg, i) => (
@@ -936,7 +936,7 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef 
         <div ref={msgsEndRef} />
       </div>
       <div style={{ padding: "10px 14px", borderTop: "1px solid #F2DCDB", display: "flex", gap: 7, flexShrink: 0 }}>
-        <input value={input} onChange={(e) => onInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") onSend(); }} placeholder="Escribe tu duda..." style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 18, padding: "7px 12px", fontSize: "0.81rem", fontFamily: "'DM Sans', sans-serif", outline: "none" }} onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }} />
+        <input value={input} onChange={(e) => onInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") onSend(); }} placeholder="Escribe tu duda..." style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 18, padding: "7px 12px", fontSize: "0.81rem", fontFamily: "'Manrope', sans-serif", outline: "none" }} onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }} />
         <button onClick={onSend} style={{ width: 32, height: 32, background: "#3D5D91", border: "none", borderRadius: "50%", color: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.82rem", flexShrink: 0 }}>➤</button>
       </div>
     </>

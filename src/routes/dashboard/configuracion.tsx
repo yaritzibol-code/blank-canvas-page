@@ -110,7 +110,7 @@ function ConfiguracionPage() {
   ];
 
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif", maxWidth: 700 }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif", maxWidth: 700 }}>
       <style>{`
         .cfg-row-hover:hover { background: #fafbff; }
         .danger-row-hover:hover { background: rgba(231,76,60,.03); }
@@ -164,7 +164,7 @@ function ConfiguracionPage() {
                 border: `2px solid ${theme === t.id ? "#3D5D91" : "#F2DCDB"}`,
                 cursor: "pointer", textAlign: "center" as const, transition: "all .2s",
                 background: theme === t.id ? "rgba(61,93,145,.06)" : "white",
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "'Manrope', sans-serif",
               }}
             >
               <div style={{ fontSize: "1.4rem", marginBottom: 4 }}>{t.icon}</div>
@@ -185,7 +185,7 @@ function ConfiguracionPage() {
             <select
               value={textSize}
               onChange={(e) => setTextSize(e.target.value)}
-              style={{ border: "2px solid #F2DCDB", borderRadius: 8, padding: "6px 12px", fontSize: ".82rem", fontFamily: "'DM Sans', sans-serif", color: "#1a1a2e", outline: "none", cursor: "pointer", background: "white" }}
+              style={{ border: "2px solid #F2DCDB", borderRadius: 8, padding: "6px 12px", fontSize: ".82rem", fontFamily: "'Manrope', sans-serif", color: "#1a1a2e", outline: "none", cursor: "pointer", background: "white" }}
             >
               <option>Normal</option>
               <option>Grande</option>
@@ -211,7 +211,7 @@ function ConfiguracionPage() {
           </div>
           <button
             onClick={() => showFlash("✅ Todas las sesiones cerradas")}
-            style={{ padding: "5px 12px", background: "white", border: "2px solid #F2DCDB", borderRadius: 7, fontSize: ".75rem", fontWeight: 700, color: "#888", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}
+            style={{ padding: "5px 12px", background: "white", border: "2px solid #F2DCDB", borderRadius: 7, fontSize: ".75rem", fontWeight: 700, color: "#888", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
           >
             Cerrar todo
           </button>
@@ -256,7 +256,7 @@ function ConfiguracionPage() {
             {/* Modal Contraseña */}
             {modal === "password" && (
               <>
-                <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", marginBottom: 6 }}>🔑 Cambiar contraseña</h2>
+                <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6 }}>🔑 Cambiar contraseña</h2>
                 <p style={{ fontSize: ".85rem", color: "#888", marginBottom: 20, lineHeight: 1.5 }}>Ingresa tu contraseña actual y la nueva.</p>
                 <div style={{ display: "flex", flexDirection: "column" as const, gap: 12, marginBottom: 16 }}>
                   {[
@@ -270,13 +270,13 @@ function ConfiguracionPage() {
                       placeholder={f.placeholder}
                       value={f.value}
                       onChange={(e) => f.set(e.target.value)}
-                      style={{ padding: "10px 14px", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".86rem", fontFamily: "'DM Sans', sans-serif", outline: "none", width: "100%" }}
+                      style={{ padding: "10px 14px", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".86rem", fontFamily: "'Manrope', sans-serif", outline: "none", width: "100%" }}
                     />
                   ))}
                 </div>
                 <div style={{ display: "flex", gap: 10 }}>
-                  <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancelar</button>
-                  <button onClick={() => { closeModal(); showFlash("✅ Contraseña actualizada"); }} style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Guardar</button>
+                  <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                  <button onClick={() => { closeModal(); showFlash("✅ Contraseña actualizada"); }} style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Guardar</button>
                 </div>
               </>
             )}
@@ -284,17 +284,17 @@ function ConfiguracionPage() {
             {/* Modal Teléfono */}
             {modal === "phone" && (
               <>
-                <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", marginBottom: 6 }}>💬 Cambiar WhatsApp</h2>
+                <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6 }}>💬 Cambiar WhatsApp</h2>
                 <p style={{ fontSize: ".85rem", color: "#888", marginBottom: 20, lineHeight: 1.5 }}>Ingresa tu nuevo número de WhatsApp. Aquí recibirás tus recordatorios de estudio.</p>
                 <input
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  style={{ width: "100%", padding: "10px 14px", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".86rem", fontFamily: "'DM Sans', sans-serif", outline: "none", marginBottom: 16 }}
+                  style={{ width: "100%", padding: "10px 14px", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".86rem", fontFamily: "'Manrope', sans-serif", outline: "none", marginBottom: 16 }}
                 />
                 <div style={{ display: "flex", gap: 10 }}>
-                  <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancelar</button>
-                  <button onClick={() => { closeModal(); showFlash("✅ Número de WhatsApp actualizado"); }} style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Guardar</button>
+                  <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                  <button onClick={() => { closeModal(); showFlash("✅ Número de WhatsApp actualizado"); }} style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Guardar</button>
                 </div>
               </>
             )}
@@ -302,11 +302,11 @@ function ConfiguracionPage() {
             {/* Modal Logout */}
             {modal === "logout" && (
               <>
-                <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", marginBottom: 6 }}>🚪 ¿Cerrar sesión?</h2>
+                <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6 }}>🚪 ¿Cerrar sesión?</h2>
                 <p style={{ fontSize: ".85rem", color: "#888", marginBottom: 20, lineHeight: 1.5 }}>Tendrás que volver a iniciar sesión la próxima vez que entres a FlightPath.</p>
                 <div style={{ display: "flex", gap: 10 }}>
-                  <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancelar</button>
-                  <button onClick={() => { closeModal(); navigate({ to: "/" }); }} style={{ flex: 2, padding: 11, background: "#e74c3c", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cerrar sesión</button>
+                  <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                  <button onClick={() => { closeModal(); navigate({ to: "/" }); }} style={{ flex: 2, padding: 11, background: "#e74c3c", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cerrar sesión</button>
                 </div>
               </>
             )}
@@ -314,7 +314,7 @@ function ConfiguracionPage() {
             {/* Modal Delete */}
             {modal === "delete" && (
               <>
-                <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", marginBottom: 6 }}>🗑️ Eliminar cuenta</h2>
+                <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6 }}>🗑️ Eliminar cuenta</h2>
                 <p style={{ fontSize: ".85rem", color: "#888", marginBottom: 8, lineHeight: 1.5 }}>Esta acción es <strong>permanente e irreversible</strong>. Se borrarán todos tus datos, progreso, bitácora y acceso a FlightPath.</p>
                 <p style={{ fontSize: ".85rem", color: "#888", marginBottom: 12 }}>Escribe <strong>ELIMINAR</strong> para confirmar.</p>
                 <input
@@ -322,14 +322,14 @@ function ConfiguracionPage() {
                   placeholder="Escribe ELIMINAR"
                   value={deleteConfirm}
                   onChange={(e) => setDeleteConfirm(e.target.value)}
-                  style={{ width: "100%", padding: "10px 14px", border: "2px solid #e74c3c", borderRadius: 8, fontSize: ".86rem", fontFamily: "'DM Sans', sans-serif", outline: "none", marginBottom: 16 }}
+                  style={{ width: "100%", padding: "10px 14px", border: "2px solid #e74c3c", borderRadius: 8, fontSize: ".86rem", fontFamily: "'Manrope', sans-serif", outline: "none", marginBottom: 16 }}
                 />
                 <div style={{ display: "flex", gap: 10 }}>
-                  <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancelar</button>
+                  <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
                   <button
                     onClick={() => { if (deleteConfirm === "ELIMINAR") { closeModal(); navigate({ to: "/" }); } }}
                     disabled={deleteConfirm !== "ELIMINAR"}
-                    style={{ flex: 2, padding: 11, background: deleteConfirm === "ELIMINAR" ? "#e74c3c" : "#ddd", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: deleteConfirm === "ELIMINAR" ? "pointer" : "not-allowed", fontFamily: "'DM Sans', sans-serif", transition: "background .2s" }}
+                    style={{ flex: 2, padding: 11, background: deleteConfirm === "ELIMINAR" ? "#e74c3c" : "#ddd", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: deleteConfirm === "ELIMINAR" ? "pointer" : "not-allowed", fontFamily: "'Manrope', sans-serif", transition: "background .2s" }}
                   >
                     Eliminar cuenta
                   </button>

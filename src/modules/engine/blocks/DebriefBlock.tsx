@@ -63,7 +63,7 @@ export function DebriefBlock({
       {/* Key points */}
       <h3
         style={{
-          fontFamily: "'Playfair Display', serif",
+          fontFamily: "'Bricolage Grotesque', sans-serif",
           fontSize: "1.05rem",
           fontWeight: 700,
           color: "#1a1a2e",
@@ -149,7 +149,7 @@ export function DebriefBlock({
                 borderRadius: 10,
                 background: isSelected ? `${DIFFICULTY_COLORS[i]}15` : "white",
                 cursor: saved ? "default" : "pointer",
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "'Manrope', sans-serif",
                 fontSize: "0.78rem",
                 fontWeight: isSelected ? 700 : 500,
                 color: isSelected ? DIFFICULTY_COLORS[i] : "#888",
@@ -182,7 +182,7 @@ export function DebriefBlock({
             fontSize: "0.95rem",
             fontWeight: 700,
             cursor: selected !== null ? "pointer" : "not-allowed",
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "'Manrope', sans-serif",
             transition: "all 0.2s",
           }}
           onMouseEnter={(e) => {

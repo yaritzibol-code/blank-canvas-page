@@ -4,12 +4,46 @@ import { Eye, EyeOff } from "lucide-react";
 
 type Tab = "register" | "login";
 
-const PERKS = [
-  { icon: "🆓", text: "Comienza gratis — sin tarjeta de crédito" },
-  { icon: "📚", text: "Accede a la biblioteca completa del CIAAC" },
-  { icon: "❓", text: "Practica con el banco de preguntas" },
-  { icon: "🤖", text: "Pregúntale a Yaris, tu tutor IA" },
-  { icon: "☁️", text: "Pathy te guía desde el primer día" },
+const FONT = "'Manrope', sans-serif";
+const DISPLAY = "'Bricolage Grotesque', sans-serif";
+const MONO = "'JetBrains Mono', monospace";
+const INK = "#22375C";
+
+/* ── Clean single-stroke line icons ── */
+type IconName = "gift" | "library" | "help" | "spark" | "cloud" | "check" | "arrow" | "back";
+function Icon({ n, size = 18, sw = 1.6, color = "currentColor" }: { n: IconName; size?: number; sw?: number; color?: string }) {
+  const p = { fill: "none", stroke: color, strokeWidth: sw, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  const g: Record<IconName, React.ReactNode> = {
+    gift: <><rect x="4" y="9" width="16" height="11" rx="1.5" {...p} /><path d="M4 13h16M12 9v11M12 9S10.5 4.5 8.5 5.2 8.8 9 12 9zM12 9s1.5-4.5 3.5-3.8S15.2 9 12 9z" {...p} /></>,
+    library: <path d="M5 4v16M9 4v16M14 6l5 14M5 4h4M14 6l4-1" {...p} />,
+    help: <><circle cx="12" cy="12" r="9" {...p} /><path d="M9.5 9.5a2.5 2.5 0 1 1 3.2 2.4c-.7.3-1.2.9-1.2 1.6v.4" {...p} /><circle cx="12" cy="17" r="0.6" fill={color} stroke="none" /></>,
+    spark: <path d="M12 3l1.6 5.8L19 11l-5.4 1.6L12 19l-1.6-6.4L5 11l5.4-2.2L12 3z" {...p} />,
+    cloud: <path d="M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9.6-1.5A3.5 3.5 0 0 1 18 18H7z" {...p} />,
+    check: <path d="M5 12l4 4 10-10" {...p} />,
+    arrow: <path d="M5 12h14M13 6l6 6-6 6" {...p} />,
+    back: <path d="M19 12H5M11 6l-6 6 6 6" {...p} />,
+  };
+  return <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true" style={{ display: "block" }}>{g[n]}</svg>;
+}
+
+function PlaneMark({ size = 38 }: { size?: number }) {
+  return (
+    <span style={{ width: size, height: size, background: "#3D5D91", borderRadius: 10, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+      <svg viewBox="0 0 24 24" width={size * 0.58} height={size * 0.58} aria-hidden="true">
+        <path d="M7 21V5h10" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M7 12.5h7" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" />
+        <path d="M15.5 4.5l3.5 1-1 3.5" fill="none" stroke="#F2AEBC" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </span>
+  );
+}
+
+const PERKS: { icon: IconName; text: string }[] = [
+  { icon: "gift", text: "Comienza gratis — sin tarjeta de crédito" },
+  { icon: "library", text: "Accede a la biblioteca completa del CIAAC" },
+  { icon: "help", text: "Practica con el banco de preguntas" },
+  { icon: "spark", text: "Pregúntale a Yaris, tu tutor IA" },
+  { icon: "cloud", text: "Pathy te guía desde el primer día" },
 ];
 
 const GOOGLE_SVG = (
@@ -34,125 +68,73 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       {/* Free badge */}
       <div style={{
-        background: "linear-gradient(135deg, #3D5D91, #5A86CB)",
+        background: INK,
         color: "white",
-        borderRadius: 12,
+        borderRadius: 14,
         padding: "16px 20px",
         display: "flex",
         alignItems: "center",
-        gap: 12,
+        gap: 14,
       }}>
-        <span style={{ fontSize: "1.5rem" }}>🎉</span>
+        <span style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(242,174,188,0.18)", color: "#F2AEBC", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <Icon n="gift" size={20} />
+        </span>
         <div>
-          <strong style={{ fontSize: "0.9rem", display: "block", marginBottom: 2 }}>
+          <strong style={{ fontSize: "0.9rem", display: "block", marginBottom: 2, fontFamily: DISPLAY, letterSpacing: "-0.01em" }}>
             Empieza gratis hoy
           </strong>
-          <p style={{ fontSize: "0.82rem", lineHeight: 1.4, opacity: 0.9 }}>
+          <p style={{ fontSize: "0.82rem", lineHeight: 1.4, opacity: 0.78 }}>
             Sin tarjeta de crédito. Accede al contenido gratuito de inmediato.
           </p>
         </div>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-        <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "#1a1a2e" }}>
-          Nombre completo
-        </label>
-        <input
-          type="text"
-          placeholder="Ej. María González"
-          required
-          style={inputStyle}
-          onFocus={(e) => (e.target.style.borderColor = "#3D5D91")}
-          onBlur={(e) => (e.target.style.borderColor = "#F2DCDB")}
-        />
-      </div>
+      <Field label="Nombre completo">
+        <input type="text" placeholder="Ej. María González" required style={inputStyle}
+          onFocus={(e) => (e.target.style.borderColor = "#3D5D91")} onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")} />
+      </Field>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-        <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "#1a1a2e" }}>
-          Correo electrónico
-        </label>
-        <input
-          type="email"
-          placeholder="tu@correo.com"
-          required
-          style={inputStyle}
-          onFocus={(e) => (e.target.style.borderColor = "#3D5D91")}
-          onBlur={(e) => (e.target.style.borderColor = "#F2DCDB")}
-        />
-      </div>
+      <Field label="Correo electrónico">
+        <input type="email" placeholder="tu@correo.com" required style={inputStyle}
+          onFocus={(e) => (e.target.style.borderColor = "#3D5D91")} onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")} />
+      </Field>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-        <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "#1a1a2e" }}>
-          Contraseña
-        </label>
+      <Field label="Contraseña" hint="Usa letras, números y símbolos para mayor seguridad.">
         <div style={{ position: "relative" }}>
-          <input
-            type={showPw ? "text" : "password"}
-            placeholder="Mínimo 8 caracteres"
-            required
-            style={{ ...inputStyle, paddingRight: 44 }}
-            onFocus={(e) => (e.target.style.borderColor = "#3D5D91")}
-            onBlur={(e) => (e.target.style.borderColor = "#F2DCDB")}
-          />
-          <button
-            type="button"
-            onClick={() => setShowPw(!showPw)}
-            style={{
-              position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)",
-              background: "none", border: "none", cursor: "pointer", color: "#aaa", display: "flex",
-            }}
-          >
+          <input type={showPw ? "text" : "password"} placeholder="Mínimo 8 caracteres" required style={{ ...inputStyle, paddingRight: 44 }}
+            onFocus={(e) => (e.target.style.borderColor = "#3D5D91")} onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")} />
+          <button type="button" onClick={() => setShowPw(!showPw)}
+            style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#8DA1BE", display: "flex" }}>
             {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
         </div>
-        <span style={{ fontSize: "0.75rem", color: "#aaa" }}>
-          Usa letras, números y símbolos para mayor seguridad.
-        </span>
-      </div>
+      </Field>
 
       <label style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer" }}>
-        <input
-          type="checkbox"
-          defaultChecked
-          style={{ width: 18, height: 18, marginTop: 2, accentColor: "#3D5D91", flexShrink: 0 }}
-        />
-        <span style={{ fontSize: "0.82rem", color: "#666", lineHeight: 1.4 }}>
-          Quiero recibir promociones, tips de estudio y novedades de FlightPath por correo. ✉️
+        <input type="checkbox" defaultChecked style={{ width: 18, height: 18, marginTop: 2, accentColor: "#6C0820", flexShrink: 0 }} />
+        <span style={{ fontSize: "0.82rem", color: "#647DA0", lineHeight: 1.4 }}>
+          Quiero recibir promociones, tips de estudio y novedades de FlightPath por correo.
         </span>
       </label>
 
       <label style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer" }}>
-        <input
-          type="checkbox"
-          required
-          style={{ width: 18, height: 18, marginTop: 2, accentColor: "#3D5D91", flexShrink: 0 }}
-        />
-        <span style={{ fontSize: "0.82rem", color: "#666", lineHeight: 1.4 }}>
+        <input type="checkbox" required style={{ width: 18, height: 18, marginTop: 2, accentColor: "#6C0820", flexShrink: 0 }} />
+        <span style={{ fontSize: "0.82rem", color: "#647DA0", lineHeight: 1.4 }}>
           Acepto los{" "}
-          <a href="#" style={{ color: "#3D5D91", fontWeight: 600, textDecoration: "none" }}>
-            Términos y condiciones
-          </a>{" "}
+          <a href="#" style={{ color: "#3D5D91", fontWeight: 600, textDecoration: "none" }}>Términos y condiciones</a>{" "}
           y el{" "}
-          <a href="#" style={{ color: "#3D5D91", fontWeight: 600, textDecoration: "none" }}>
-            Aviso de privacidad
-          </a>
-          .
+          <a href="#" style={{ color: "#3D5D91", fontWeight: 600, textDecoration: "none" }}>Aviso de privacidad</a>.
         </span>
       </label>
 
       <Divider />
-
       <GoogleButton onClick={handleRegister} />
+      <SubmitButton loading={loading} onClick={handleRegister}>Crear cuenta gratis</SubmitButton>
 
-      <SubmitButton loading={loading} onClick={handleRegister}>Crear cuenta gratis →</SubmitButton>
-
-      <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#aaa", marginTop: 4 }}>
+      <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#8DA1BE", marginTop: 4 }}>
         ¿Ya tienes cuenta?{" "}
-        <button
-          type="button"
-          onClick={onSwitch}
-          style={{ color: "#3D5D91", fontWeight: 600, background: "none", border: "none", cursor: "pointer", fontSize: "inherit" }}
-        >
+        <button type="button" onClick={onSwitch}
+          style={{ color: "#3D5D91", fontWeight: 600, background: "none", border: "none", cursor: "pointer", fontSize: "inherit" }}>
           Inicia sesión aquí
         </button>
       </p>
@@ -171,43 +153,21 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-        <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "#1a1a2e" }}>
-          Correo electrónico
-        </label>
-        <input
-          type="email"
-          placeholder="tu@correo.com"
-          style={inputStyle}
-          onFocus={(e) => (e.target.style.borderColor = "#3D5D91")}
-          onBlur={(e) => (e.target.style.borderColor = "#F2DCDB")}
-        />
-      </div>
+      <Field label="Correo electrónico">
+        <input type="email" placeholder="tu@correo.com" style={inputStyle}
+          onFocus={(e) => (e.target.style.borderColor = "#3D5D91")} onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")} />
+      </Field>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-        <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "#1a1a2e" }}>
-          Contraseña
-        </label>
+      <Field label="Contraseña">
         <div style={{ position: "relative" }}>
-          <input
-            type={showPw ? "text" : "password"}
-            placeholder="Tu contraseña"
-            style={{ ...inputStyle, paddingRight: 44 }}
-            onFocus={(e) => (e.target.style.borderColor = "#3D5D91")}
-            onBlur={(e) => (e.target.style.borderColor = "#F2DCDB")}
-          />
-          <button
-            type="button"
-            onClick={() => setShowPw(!showPw)}
-            style={{
-              position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)",
-              background: "none", border: "none", cursor: "pointer", color: "#aaa", display: "flex",
-            }}
-          >
+          <input type={showPw ? "text" : "password"} placeholder="Tu contraseña" style={{ ...inputStyle, paddingRight: 44 }}
+            onFocus={(e) => (e.target.style.borderColor = "#3D5D91")} onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")} />
+          <button type="button" onClick={() => setShowPw(!showPw)}
+            style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#8DA1BE", display: "flex" }}>
             {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
         </div>
-      </div>
+      </Field>
 
       <div style={{ textAlign: "right" }}>
         <a href="#" style={{ fontSize: "0.8rem", color: "#3D5D91", fontWeight: 600, textDecoration: "none" }}>
@@ -215,19 +175,14 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
         </a>
       </div>
 
-      <SubmitButton loading={loading} onClick={handleLogin}>Iniciar sesión →</SubmitButton>
-
+      <SubmitButton loading={loading} onClick={handleLogin}>Iniciar sesión</SubmitButton>
       <Divider />
-
       <GoogleButton onClick={handleLogin} />
 
-      <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#aaa", marginTop: 4 }}>
+      <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#8DA1BE", marginTop: 4 }}>
         ¿No tienes cuenta?{" "}
-        <button
-          type="button"
-          onClick={onSwitch}
-          style={{ color: "#3D5D91", fontWeight: 600, background: "none", border: "none", cursor: "pointer", fontSize: "inherit" }}
-        >
+        <button type="button" onClick={onSwitch}
+          style={{ color: "#3D5D91", fontWeight: 600, background: "none", border: "none", cursor: "pointer", fontSize: "inherit" }}>
           Regístrate gratis
         </button>
       </p>
@@ -239,22 +194,35 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
 
 const inputStyle: React.CSSProperties = {
   padding: "12px 16px",
-  border: "2px solid #F2DCDB",
-  borderRadius: 10,
+  border: "1.5px solid #E8EEF6",
+  borderRadius: 12,
   fontSize: "0.9rem",
-  fontFamily: "'DM Sans', sans-serif",
-  color: "#1a1a2e",
+  fontFamily: FONT,
+  color: INK,
   outline: "none",
   transition: "border-color 0.2s",
   width: "100%",
+  background: "#FBFAF7",
 };
+
+function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      <label style={{ fontSize: "0.78rem", fontWeight: 700, color: "#647DA0", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.1em" }}>
+        {label}
+      </label>
+      {children}
+      {hint && <span style={{ fontSize: "0.75rem", color: "#8DA1BE" }}>{hint}</span>}
+    </div>
+  );
+}
 
 function Divider() {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 12, color: "#ccc", fontSize: "0.8rem" }}>
-      <span style={{ flex: 1, height: 1, background: "#F2DCDB", display: "block" }} />
+    <div style={{ display: "flex", alignItems: "center", gap: 12, color: "#B9C8DD", fontSize: "0.78rem", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.1em" }}>
+      <span style={{ flex: 1, height: 1, background: "#E8EEF6", display: "block" }} />
       o
-      <span style={{ flex: 1, height: 1, background: "#F2DCDB", display: "block" }} />
+      <span style={{ flex: 1, height: 1, background: "#E8EEF6", display: "block" }} />
     </div>
   );
 }
@@ -262,23 +230,14 @@ function Divider() {
 function GoogleButton({ onClick }: { onClick?: () => void }) {
   const [hovered, setHovered] = useState(false);
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <button type="button" onClick={onClick} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
-        display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
-        padding: 12,
-        border: `2px solid ${hovered ? "#5A86CB" : "#F2DCDB"}`,
-        borderRadius: 10,
-        background: hovered ? "#f8f9ff" : "white",
-        fontSize: "0.9rem", fontWeight: 600, color: "#1a1a2e",
-        cursor: "pointer", transition: "all 0.2s",
-        fontFamily: "'DM Sans', sans-serif",
-        width: "100%",
-      }}
-    >
+        display: "flex", alignItems: "center", justifyContent: "center", gap: 10, padding: 12,
+        border: `1.5px solid ${hovered ? "#B9C8DD" : "#E8EEF6"}`, borderRadius: 12,
+        background: hovered ? "#F4F7FB" : "white",
+        fontSize: "0.9rem", fontWeight: 600, color: INK,
+        cursor: "pointer", transition: "all 0.2s", fontFamily: FONT, width: "100%",
+      }}>
       {GOOGLE_SVG}
       Continuar con Google
     </button>
@@ -288,25 +247,18 @@ function GoogleButton({ onClick }: { onClick?: () => void }) {
 function SubmitButton({ children, loading, onClick }: { children: React.ReactNode; loading: boolean; onClick?: () => void }) {
   const [hovered, setHovered] = useState(false);
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={loading}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <button type="button" onClick={onClick} disabled={loading} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{
         padding: 14,
-        background: loading ? "#aaa" : hovered ? "#8a0a28" : "#6C0820",
-        color: "white", border: "none", borderRadius: 10,
-        fontSize: "1rem", fontWeight: 700, cursor: loading ? "not-allowed" : "pointer",
-        transition: "all 0.2s",
-        fontFamily: "'DM Sans', sans-serif",
+        background: loading ? "#8DA1BE" : hovered ? "#4A0517" : "#6C0820",
+        color: "white", border: "none", borderRadius: 12,
+        fontSize: "0.95rem", fontWeight: 600, cursor: loading ? "not-allowed" : "pointer",
+        transition: "all 0.2s", fontFamily: FONT,
         display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
         transform: hovered && !loading ? "translateY(-2px)" : "none",
-        boxShadow: hovered && !loading ? "0 8px 24px rgba(108,8,32,0.3)" : "none",
-      }}
-    >
-      {loading ? "✈️ Un momento..." : children}
+        boxShadow: hovered && !loading ? "0 14px 30px -14px rgba(108,8,32,0.45)" : "none",
+      }}>
+      {loading ? "Un momento…" : <>{children}<Icon n="arrow" size={17} /></>}
     </button>
   );
 }
@@ -317,16 +269,17 @@ export function AuthPage({ initialTab }: { initialTab: Tab }) {
 
   return (
     <div style={{
-      fontFamily: "'DM Sans', sans-serif",
-      background: "linear-gradient(135deg, #f8f0f5 0%, #e8f0fa 50%, #f0e8f5 100%)",
+      fontFamily: FONT,
+      background: "linear-gradient(180deg, #FBFAF7 0%, #F4F7FB 55%, #FCFBF8 100%)",
       minHeight: "100vh",
       display: "flex",
       flexDirection: "column",
     }}>
       {/* NAVBAR */}
       <nav style={{
-        background: "rgba(255,255,255,0.95)",
-        backdropFilter: "blur(10px)",
+        background: "rgba(250,248,244,0.72)",
+        backdropFilter: "blur(16px) saturate(140%)",
+        WebkitBackdropFilter: "blur(16px) saturate(140%)",
         borderBottom: "1px solid rgba(61,93,145,0.1)",
         padding: "0 5%",
         height: 70,
@@ -337,77 +290,51 @@ export function AuthPage({ initialTab }: { initialTab: Tab }) {
       }}>
         <Link to="/" style={{
           display: "flex", alignItems: "center", gap: 10,
-          fontFamily: "'Playfair Display', serif",
-          fontSize: "1.5rem", color: "#3D5D91", fontWeight: 700,
-          textDecoration: "none",
+          fontFamily: DISPLAY, fontSize: "1.3rem", color: INK, fontWeight: 600,
+          textDecoration: "none", letterSpacing: "-0.02em",
         }}>
-          <div style={{
-            width: 38, height: 38, background: "#3D5D91", borderRadius: 10,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            color: "white", fontSize: "1rem", fontWeight: 700,
-          }}>
-            F✈
-          </div>
+          <PlaneMark size={36} />
           Flight<span style={{ color: "#6C0820" }}>Path</span>
         </Link>
-        <Link to="/" style={{ fontSize: "0.85rem", color: "#888", textDecoration: "none", display: "flex", alignItems: "center", gap: 6 }}>
-          ← Volver al inicio
+        <Link to="/" style={{ fontSize: "0.82rem", color: "#647DA0", textDecoration: "none", display: "flex", alignItems: "center", gap: 6, fontWeight: 500 }}>
+          <Icon n="back" size={16} /> Volver al inicio
         </Link>
       </nav>
 
       {/* MAIN */}
       <div style={{
-        flex: 1,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "40px 20px",
-        gap: 60,
+        flex: 1, display: "flex", alignItems: "center", justifyContent: "center",
+        padding: "40px 20px", gap: 60,
       }}>
         {/* LEFT — PATHY */}
-        <div style={{ maxWidth: 380, textAlign: "center" }}
-          className="hidden md:block">
-          <span style={{
-            fontSize: "6rem",
-            animation: "fp-float 3s ease-in-out infinite",
-            marginBottom: 16,
-            display: "block",
-          }}>
-            ☁️
-          </span>
-          <style>{`
-            @keyframes fp-float {
-              0%, 100% { transform: translateY(0); }
-              50% { transform: translateY(-10px); }
-            }
-          `}</style>
-          <h2 style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: "1.8rem",
-            color: "#1a1a2e",
-            marginBottom: 12,
-          }}>
+        <div style={{ maxWidth: 380, textAlign: "center" }} className="hidden md:block">
+          <div style={{ width: 150, height: 150, margin: "0 auto 20px", borderRadius: "50%", overflow: "hidden", boxShadow: "0 20px 50px -24px rgba(15,26,51,0.55)", animation: "fp-float 3.5s ease-in-out infinite", position: "relative" }}>
+            <div style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "radial-gradient(closest-side, rgba(242,174,188,0.3), transparent 70%)", transform: "scale(1.3)", filter: "blur(8px)" }} />
+            <img src="/assets/pathy-cloud.png" alt="Pathy, tu copiloto de estudio" style={{ position: "relative", width: "100%", height: "100%", objectFit: "cover", transform: "scale(1.1)" }} />
+          </div>
+          <style>{`@keyframes fp-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }`}</style>
+          <h2 style={{ fontFamily: DISPLAY, fontSize: "1.8rem", color: INK, marginBottom: 12, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
             ¡Bienvenido a<br />
             <span style={{ color: "#6C0820" }}>FlightPath!</span>
           </h2>
-          <p style={{ color: "#666", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: 32 }}>
+          <p style={{ color: "#647DA0", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: 28 }}>
             Tu copiloto Pathy ya está listo para acompañarte en cada paso hacia el CIAAC.
           </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 12, textAlign: "left" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10, textAlign: "left" }}>
             {PERKS.map((perk) => (
               <div key={perk.text} style={{
                 display: "flex", alignItems: "center", gap: 12,
-                background: "white", borderRadius: 12, padding: "12px 16px",
-                boxShadow: "0 2px 12px rgba(61,93,145,0.08)",
+                background: "white", borderRadius: 14, padding: "12px 16px",
+                boxShadow: "0 1px 2px rgba(15,26,51,0.04), 0 8px 24px -12px rgba(15,26,51,0.12)",
+                border: "1px solid #E8EEF6",
               }}>
                 <div style={{
-                  width: 36, height: 36, background: "#F2DCDB", borderRadius: 8,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: "1.1rem", flexShrink: 0,
+                  width: 36, height: 36, background: "#FAEFEE", color: "#6C0820", borderRadius: 9,
+                  display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
                 }}>
-                  {perk.icon}
+                  <Icon n={perk.icon} size={18} />
                 </div>
-                <span style={{ fontSize: "0.85rem", color: "#555", fontWeight: 500 }}>
+                <span style={{ fontSize: "0.85rem", color: "#33527F", fontWeight: 500 }}>
                   {perk.text}
                 </span>
               </div>
@@ -422,37 +349,26 @@ export function AuthPage({ initialTab }: { initialTab: Tab }) {
           padding: 40,
           width: "100%",
           maxWidth: 440,
-          boxShadow: "0 20px 60px rgba(61,93,145,0.12)",
+          boxShadow: "0 2px 4px rgba(15,26,51,0.04), 0 24px 48px -20px rgba(15,26,51,0.22)",
+          border: "1px solid #E8EEF6",
         }}>
           {/* TABS */}
           <div style={{
-            display: "flex",
-            background: "#F2DCDB",
-            borderRadius: 12,
-            padding: 4,
-            marginBottom: 32,
+            display: "flex", background: "#F4F7FB", borderRadius: 12, padding: 4, marginBottom: 32,
+            border: "1px solid #E8EEF6",
           }}>
             {(["register", "login"] as Tab[]).map((t, i) => (
-              <button
-                key={t}
-                type="button"
-                onClick={() => setTab(t)}
+              <button key={t} type="button" onClick={() => setTab(t)}
                 style={{
-                  flex: 1,
-                  padding: 10,
-                  textAlign: "center",
-                  fontSize: "0.9rem",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  borderRadius: 9,
+                  flex: 1, padding: 10, textAlign: "center",
+                  fontSize: "0.85rem", fontWeight: 600, cursor: "pointer", borderRadius: 9,
                   transition: "all 0.2s",
-                  color: tab === t ? "#3D5D91" : "#888",
+                  color: tab === t ? "#22375C" : "#8DA1BE",
                   border: "none",
                   background: tab === t ? "white" : "transparent",
                   boxShadow: tab === t ? "0 2px 8px rgba(61,93,145,0.15)" : "none",
-                  fontFamily: "'DM Sans', sans-serif",
-                }}
-              >
+                  fontFamily: FONT,
+                }}>
                 {i === 0 ? "Crear cuenta" : "Iniciar sesión"}
               </button>
             ))}

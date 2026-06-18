@@ -249,7 +249,7 @@ function CuestionarioPage() {
   return (
     <div
       style={{
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: "'Manrope', sans-serif",
         background: "#f5f7fc",
         color: "#1a1a2e",
         minHeight: "100vh",
@@ -313,7 +313,7 @@ function CuestionarioPage() {
               background: "linear-gradient(135deg,#3D5D91,#5A86CB)",
               color: "white", border: "none", borderRadius: 7,
               fontSize: "0.8rem", fontWeight: 700, cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
               display: "flex", alignItems: "center", gap: 5,
             }}
           >
@@ -397,7 +397,7 @@ function CuestionarioPage() {
 
             <p
               style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "'Bricolage Grotesque', sans-serif",
                 fontSize: "1.25rem",
                 color: "#1a1a2e",
                 lineHeight: 1.5,
@@ -500,7 +500,7 @@ function CuestionarioPage() {
                       background: "linear-gradient(135deg,#3D5D91,#5A86CB)",
                       color: "white", border: "none", borderRadius: 7,
                       fontSize: "0.78rem", fontWeight: 700, cursor: "pointer",
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Manrope', sans-serif",
                     }}
                   >
                     🤖 Explícamelo Yaris
@@ -522,7 +522,7 @@ function CuestionarioPage() {
                 border: "none", borderRadius: 11,
                 fontSize: "0.92rem", fontWeight: 700,
                 cursor: answered ? "pointer" : "not-allowed",
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "'Manrope', sans-serif",
                 transition: "all 0.2s",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
               }}
@@ -589,7 +589,7 @@ function CuestionarioPage() {
             </div>
             <h1
               style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "'Bricolage Grotesque', sans-serif",
                 fontSize: "2rem", color: "#1a1a2e",
                 marginBottom: 6, textAlign: "center",
               }}
@@ -611,7 +611,7 @@ function CuestionarioPage() {
             >
               <div
                 style={{
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "'Bricolage Grotesque', sans-serif",
                   fontSize: "4rem", fontWeight: 900,
                   color: scoreColor, lineHeight: 1, marginBottom: 4,
                 }}
@@ -629,7 +629,7 @@ function CuestionarioPage() {
                   { num: `${elapsedMin} min`, label: "Tiempo" },
                 ].map((s) => (
                   <div key={s.label} style={{ textAlign: "center" }}>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.4rem", fontWeight: 900, color: "#1a1a2e" }}>
+                    <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", fontWeight: 900, color: "#1a1a2e" }}>
                       {s.num}
                     </div>
                     <div style={{ fontSize: "0.72rem", color: "#aaa" }}>{s.label}</div>
@@ -714,7 +714,7 @@ function CuestionarioPage() {
                   background: "white", color: "#3D5D91",
                   border: "2px solid #3D5D91", borderRadius: 11,
                   fontSize: "0.9rem", fontWeight: 700, cursor: "pointer",
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Manrope', sans-serif",
                 }}
               >
                 🔄 Repetir sesión
@@ -726,7 +726,7 @@ function CuestionarioPage() {
                   background: "#6C0820", color: "white",
                   border: "none", borderRadius: 11,
                   fontSize: "0.9rem", fontWeight: 700, cursor: "pointer",
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Manrope', sans-serif",
                   textDecoration: "none",
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}
@@ -785,7 +785,7 @@ function CuestionarioPage() {
               style={{
                 background: "rgba(255,255,255,0.2)", border: "none", color: "white",
                 borderRadius: 6, padding: "4px 8px", cursor: "pointer",
-                fontSize: "0.76rem", fontWeight: 700, fontFamily: "'DM Sans', sans-serif",
+                fontSize: "0.76rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif",
               }}
             >
               ✕
@@ -889,7 +889,7 @@ function CuestionarioPage() {
               style={{
                 flex: 1, border: "2px solid #F2DCDB", borderRadius: 18,
                 padding: "7px 12px", fontSize: "0.81rem",
-                fontFamily: "'DM Sans', sans-serif", outline: "none",
+                fontFamily: "'Manrope', sans-serif", outline: "none",
                 transition: "border-color 0.2s",
               }}
               onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }}

@@ -149,7 +149,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
         overflow: "hidden",
         cursor: "pointer",
         transition: "box-shadow 0.2s",
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: "'Manrope', sans-serif",
       }}
       onClick={() => setOpen(!open)}
       onMouseEnter={(e) =>
@@ -207,7 +207,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <span
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Bricolage Grotesque', sans-serif",
               fontSize: "1.2rem",
               fontWeight: 900,
               color,
@@ -377,7 +377,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                       </div>
                       <span
                         style={{
-                          fontFamily: "'Playfair Display', serif",
+                          fontFamily: "'Bricolage Grotesque', sans-serif",
                           fontSize: "1rem",
                           fontWeight: 900,
                           flexShrink: 0,
@@ -428,7 +428,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                     <span>{s.name}</span>
                     <span
                       style={{
-                        fontFamily: "'Playfair Display', serif",
+                        fontFamily: "'Bricolage Grotesque', sans-serif",
                         fontSize: "1rem",
                         fontWeight: 900,
                         color: "#2ecc71",
@@ -506,7 +506,7 @@ function ModalExamen({ onClose }: { onClose: () => void }) {
         alignItems: "center",
         justifyContent: "center",
         padding: 20,
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: "'Manrope', sans-serif",
       }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
@@ -523,7 +523,7 @@ function ModalExamen({ onClose }: { onClose: () => void }) {
       >
         <h2
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "'Bricolage Grotesque', sans-serif",
             fontSize: "1.5rem",
             color: "#1a1a2e",
             marginBottom: 6,
@@ -616,7 +616,7 @@ function ModalExamen({ onClose }: { onClose: () => void }) {
               fontSize: "0.88rem",
               fontWeight: 700,
               cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
             }}
           >
             Cancelar
@@ -632,7 +632,7 @@ function ModalExamen({ onClose }: { onClose: () => void }) {
               fontSize: "0.88rem",
               fontWeight: 700,
               cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -708,7 +708,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
     fontWeight: 600,
     cursor: "pointer",
     transition: "all 0.2s",
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "'Manrope', sans-serif",
   } as const;
 
   const qtyBase = {
@@ -718,7 +718,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
     fontWeight: 700,
     cursor: "pointer",
     transition: "all 0.2s",
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "'Manrope', sans-serif",
   } as const;
 
   return (
@@ -732,7 +732,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
         alignItems: "center",
         justifyContent: "center",
         padding: 20,
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: "'Manrope', sans-serif",
         overflowY: "auto",
       }}
       onClick={(e) => {
@@ -752,7 +752,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
       >
         <h2
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "'Bricolage Grotesque', sans-serif",
             fontSize: "1.5rem",
             color: "#1a1a2e",
             marginBottom: 6,
@@ -880,7 +880,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
                     }`,
                     borderRadius: 8,
                     fontSize: "0.88rem",
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Manrope', sans-serif",
                     width: 120,
                     outline: "none",
                   }}
@@ -923,7 +923,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
               fontSize: "0.88rem",
               fontWeight: 700,
               cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
             }}
           >
             Cancelar
@@ -939,7 +939,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
               fontSize: "0.88rem",
               fontWeight: 700,
               cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -991,14 +991,14 @@ function BancoPage() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          fontFamily: "'DM Sans', sans-serif",
+          fontFamily: "'Manrope', sans-serif",
         }}
       >
         {/* Page header */}
         <div style={{ textAlign: "center", marginBottom: 48 }}>
           <h1
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Bricolage Grotesque', sans-serif",
               fontSize: "2rem",
               color: "#1a1a2e",
               marginBottom: 8,
@@ -1128,7 +1128,7 @@ function BancoPage() {
 
             <h2
               style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "'Bricolage Grotesque', sans-serif",
                 fontSize: "1.5rem",
                 color: "white",
                 marginBottom: 6,
@@ -1191,7 +1191,7 @@ function BancoPage() {
                 fontSize: "0.92rem",
                 fontWeight: 700,
                 cursor: "pointer",
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "'Manrope', sans-serif",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -1252,7 +1252,7 @@ function BancoPage() {
 
             <h2
               style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "'Bricolage Grotesque', sans-serif",
                 fontSize: "1.5rem",
                 color: "#1a1a2e",
                 marginBottom: 6,
@@ -1313,7 +1313,7 @@ function BancoPage() {
                 fontSize: "0.92rem",
                 fontWeight: 700,
                 cursor: "pointer",
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "'Manrope', sans-serif",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -1333,7 +1333,7 @@ function BancoPage() {
         <div style={{ maxWidth: 820, width: "100%" }}>
           <h3
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Bricolage Grotesque', sans-serif",
               fontSize: "1.1rem",
               marginBottom: 16,
               color: "#1a1a2e",

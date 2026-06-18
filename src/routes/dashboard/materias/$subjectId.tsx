@@ -107,7 +107,7 @@ function Sidebar({
                       borderLeft: isSelected ? "3px solid #3D5D91" : "3px solid transparent",
                       background: isSelected ? "rgba(61,93,145,0.07)" : "transparent",
                       textAlign: "left",
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Manrope', sans-serif",
                     }}
                   >
                     <div
@@ -224,7 +224,7 @@ function EmptyState({
       <div>
         <h2
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "'Bricolage Grotesque', sans-serif",
             fontSize: "1.6rem",
             fontWeight: 700,
             color: "#1a1a2e",
@@ -260,7 +260,7 @@ function EmptyState({
               cursor: "pointer",
               textAlign: "left",
               transition: "all 0.2s",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.borderColor = "#3D5D91";
@@ -337,7 +337,7 @@ function SubjectDetail() {
         display: "flex",
         flexDirection: "column",
         height: "100vh",
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: "'Manrope', sans-serif",
       }}
     >
       {/* ── TOPBAR ── */}
@@ -373,7 +373,7 @@ function SubjectDetail() {
           {selectedEntry && (
             <span
               style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "'Bricolage Grotesque', sans-serif",
                 fontSize: "1rem",
                 color: "#1a1a2e",
                 fontWeight: 700,
@@ -397,7 +397,7 @@ function SubjectDetail() {
             fontSize: "0.8rem",
             color: "#3D5D91",
             cursor: "pointer",
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "'Manrope', sans-serif",
           }}
         >
           📋 Temas

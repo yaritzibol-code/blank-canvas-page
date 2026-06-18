@@ -182,9 +182,9 @@ function FlashcardsPage() {
   /* ── SCREEN: MATERIAS ── */
   if (screen === "materias") {
     return (
-      <div style={{ fontFamily: "'DM Sans', sans-serif" }}>
+      <div style={{ fontFamily: "'Manrope', sans-serif" }}>
         <div style={{ marginBottom: 28 }}>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.6rem", color: "#1a1a2e", marginBottom: 6 }}>
+          <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", color: "#1a1a2e", marginBottom: 6 }}>
             Estudia con <span style={{ color: "#6C0820" }}>Flashcards</span>
           </h1>
           <p style={{ fontSize: "0.9rem", color: "#888" }}>Elige una materia para repasar sus conceptos clave.</p>
@@ -201,17 +201,17 @@ function FlashcardsPage() {
   /* ── SCREEN: TEMAS ── */
   if (screen === "temas") {
     return (
-      <div style={{ fontFamily: "'DM Sans', sans-serif" }}>
+      <div style={{ fontFamily: "'Manrope', sans-serif" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 24 }}>
           <button
             onClick={() => setScreen("materias")}
-            style={{ display: "flex", alignItems: "center", gap: 6, background: "white", border: "2px solid #F2DCDB", borderRadius: 8, padding: "7px 14px", fontSize: "0.82rem", fontWeight: 700, color: "#888", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s" }}
+            style={{ display: "flex", alignItems: "center", gap: 6, background: "white", border: "2px solid #F2DCDB", borderRadius: 8, padding: "7px 14px", fontSize: "0.82rem", fontWeight: 700, color: "#888", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s" }}
             onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; e.currentTarget.style.color = "#3D5D91"; }}
             onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; e.currentTarget.style.color = "#888"; }}
           >
             ← Materias
           </button>
-          <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", fontWeight: 700 }}>
+          <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", fontWeight: 700 }}>
             {materia.icon} {materia.name}
           </span>
         </div>
@@ -233,7 +233,7 @@ function FlashcardsPage() {
       : {};
 
     return (
-      <div style={{ fontFamily: "'DM Sans', sans-serif" }}>
+      <div style={{ fontFamily: "'Manrope', sans-serif" }}>
         <style>{`
           @keyframes swipeRight { to { transform: translateX(120%) rotate(15deg); opacity: 0; } }
           @keyframes swipeLeft  { to { transform: translateX(-120%) rotate(-15deg); opacity: 0; } }
@@ -247,7 +247,7 @@ function FlashcardsPage() {
           <div style={{ width: "100%", maxWidth: 500, display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
             <button
               onClick={() => setScreen("temas")}
-              style={{ display: "flex", alignItems: "center", gap: 5, background: "white", border: "2px solid #F2DCDB", borderRadius: 8, padding: "6px 12px", fontSize: "0.8rem", fontWeight: 700, color: "#888", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}
+              style={{ display: "flex", alignItems: "center", gap: 5, background: "white", border: "2px solid #F2DCDB", borderRadius: 8, padding: "6px 12px", fontSize: "0.8rem", fontWeight: 700, color: "#888", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
             >
               ← Temas
             </button>
@@ -299,7 +299,7 @@ function FlashcardsPage() {
                 }}
               >
                 <span style={{ fontSize: "0.68rem", opacity: 0.5, textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: 12, color: "white" }}>Pregunta</span>
-                <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", color: "white", lineHeight: 1.5 }}>{currentCard.q}</span>
+                <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.15rem", color: "white", lineHeight: 1.5 }}>{currentCard.q}</span>
                 <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", marginTop: 16 }}>Toca para ver la respuesta 👆</span>
               </div>
 
@@ -325,7 +325,7 @@ function FlashcardsPage() {
           <div style={{ display: "flex", gap: 14, width: "100%", maxWidth: 500 }}>
             <button
               onClick={() => answerCard(false)}
-              style={{ flex: 1, padding: 14, background: "white", color: "#e74c3c", border: "2px solid #e74c3c", borderRadius: 14, fontSize: "0.95rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
+              style={{ flex: 1, padding: 14, background: "white", color: "#e74c3c", border: "2px solid #e74c3c", borderRadius: 14, fontSize: "0.95rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
               onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(231,76,60,0.06)"; e.currentTarget.style.transform = "translateX(-3px)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.background = "white"; e.currentTarget.style.transform = "none"; }}
             >
@@ -333,7 +333,7 @@ function FlashcardsPage() {
             </button>
             <button
               onClick={() => answerCard(true)}
-              style={{ flex: 1, padding: 14, background: "#2ecc71", color: "white", border: "2px solid #2ecc71", borderRadius: 14, fontSize: "0.95rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
+              style={{ flex: 1, padding: 14, background: "#2ecc71", color: "white", border: "2px solid #2ecc71", borderRadius: 14, fontSize: "0.95rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
               onMouseEnter={(e) => { e.currentTarget.style.background = "#27ae60"; e.currentTarget.style.borderColor = "#27ae60"; e.currentTarget.style.transform = "translateX(3px)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.background = "#2ecc71"; e.currentTarget.style.borderColor = "#2ecc71"; e.currentTarget.style.transform = "none"; }}
             >
@@ -347,20 +347,20 @@ function FlashcardsPage() {
 
   /* ── SCREEN: RESULT ── */
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "calc(100vh - 200px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "32px 24px" }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif", minHeight: "calc(100vh - 200px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "32px 24px" }}>
       <style>{`@keyframes float3 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }`}</style>
       <div style={{ fontSize: "5rem", animation: "float3 3s ease-in-out infinite", marginBottom: 12 }}>☁️</div>
-      <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.8rem", textAlign: "center", marginBottom: 6 }}>{resultTitle}</h1>
+      <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.8rem", textAlign: "center", marginBottom: 6 }}>{resultTitle}</h1>
       <p style={{ fontSize: "0.9rem", color: "#888", marginBottom: 28, textAlign: "center" }}>Así te fue en esta sesión</p>
 
       <div style={{ background: "white", borderRadius: 20, padding: 24, maxWidth: 440, width: "100%", boxShadow: "0 4px 20px rgba(61,93,145,0.1)", marginBottom: 20 }}>
         <div style={{ display: "flex", marginBottom: 20, borderRadius: 12, overflow: "hidden" }}>
           <div style={{ flex: 1, padding: 16, textAlign: "center", background: "rgba(46,204,113,0.08)" }}>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "2rem", fontWeight: 900, color: "#2ecc71" }}>{knew}</div>
+            <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "2rem", fontWeight: 900, color: "#2ecc71" }}>{knew}</div>
             <div style={{ fontSize: "0.76rem", color: "#888", marginTop: 2 }}>Ya las sé ✅</div>
           </div>
           <div style={{ flex: 1, padding: 16, textAlign: "center", background: "rgba(231,76,60,0.06)" }}>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "2rem", fontWeight: 900, color: "#e74c3c" }}>{toReview}</div>
+            <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "2rem", fontWeight: 900, color: "#e74c3c" }}>{toReview}</div>
             <div style={{ fontSize: "0.76rem", color: "#888", marginTop: 2 }}>A repasar 🔄</div>
           </div>
         </div>
@@ -374,13 +374,13 @@ function FlashcardsPage() {
       <div style={{ display: "flex", gap: 10, maxWidth: 440, width: "100%" }}>
         <button
           onClick={() => startSession(materiaIdx, temaIdx)}
-          style={{ flex: 1, padding: 12, background: "white", color: "#3D5D91", border: "2px solid #3D5D91", borderRadius: 11, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}
+          style={{ flex: 1, padding: 12, background: "white", color: "#3D5D91", border: "2px solid #3D5D91", borderRadius: 11, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
         >
           🔄 Repetir tema
         </button>
         <button
           onClick={() => setScreen("temas")}
-          style={{ flex: 1, padding: 12, background: "#6C0820", color: "white", border: "none", borderRadius: 11, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}
+          style={{ flex: 1, padding: 12, background: "#6C0820", color: "white", border: "none", borderRadius: 11, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
         >
           ← Otros temas
         </button>
@@ -447,7 +447,7 @@ function TemaCard({ tema, num, onStudy }: { tema: TemaEntry; num: number; onStud
         {tema.done && <span style={{ fontSize: "1rem" }}>✅</span>}
         <button
           onClick={(e) => { e.stopPropagation(); onStudy(); }}
-          style={{ padding: "8px 18px", background: "#3D5D91", color: "white", border: "none", borderRadius: 8, fontSize: "0.8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", whiteSpace: "nowrap" }}
+          style={{ padding: "8px 18px", background: "#3D5D91", color: "white", border: "none", borderRadius: 8, fontSize: "0.8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", whiteSpace: "nowrap" }}
           onMouseEnter={(e) => { e.currentTarget.style.background = "#2d4a7a"; }}
           onMouseLeave={(e) => { e.currentTarget.style.background = "#3D5D91"; }}
         >

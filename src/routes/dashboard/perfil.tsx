@@ -68,7 +68,7 @@ function PerfilPage() {
   const fieldStyle: React.CSSProperties = {
     fontSize: ".88rem", color: "#1a1a2e", fontWeight: 500,
     padding: "9px 12px", borderRadius: 8, width: "100%",
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "'Manrope', sans-serif",
   };
   const displayStyle: React.CSSProperties = { ...fieldStyle, background: "#f8f9ff", border: "2px solid #F2DCDB" };
   const inputStyle: React.CSSProperties = { ...fieldStyle, background: "white", border: "2px solid #3D5D91", outline: "none" };
@@ -84,7 +84,7 @@ function PerfilPage() {
   );
 
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif", maxWidth: 860 }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif", maxWidth: 860 }}>
       <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}`}</style>
 
       {/* Save flash */}
@@ -100,7 +100,7 @@ function PerfilPage() {
           onClick={editing ? saveEdit : startEdit}
           style={{
             padding: "8px 18px", borderRadius: 9, fontSize: ".84rem", fontWeight: 700, cursor: "pointer",
-            fontFamily: "'DM Sans',sans-serif", display: "flex", alignItems: "center", gap: 6,
+            fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 6,
             background: editing ? "#3D5D91" : "white",
             color: editing ? "white" : "#3D5D91",
             border: "2px solid #3D5D91",
@@ -117,12 +117,12 @@ function PerfilPage() {
 
         {/* Avatar */}
         <div style={{ position: "relative", flexShrink: 0, zIndex: 1 }}>
-          <div style={{ width: 88, height: 88, borderRadius: "50%", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Playfair Display',serif", fontSize: "2rem", fontWeight: 900, color: "white", border: "3px solid rgba(255,255,255,.2)" }}>MG</div>
+          <div style={{ width: 88, height: 88, borderRadius: "50%", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "2rem", fontWeight: 900, color: "white", border: "3px solid rgba(255,255,255,.2)" }}>MG</div>
           <div style={{ position: "absolute", bottom: 0, right: 0, width: 26, height: 26, borderRadius: "50%", background: "#F2AEBC", border: "2px solid #1a1a2e", display: "flex", alignItems: "center", justifyContent: "center", fontSize: ".65rem", cursor: "pointer" }}>📷</div>
         </div>
 
         <div style={{ flex: 1, zIndex: 1, minWidth: 200 }}>
-          <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.6rem", color: "white", fontWeight: 900, marginBottom: 4 }}>{info.nombre.split(" ").slice(0, 2).join(" ")}</div>
+          <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", color: "white", fontWeight: 900, marginBottom: 4 }}>{info.nombre.split(" ").slice(0, 2).join(" ")}</div>
           <div style={{ fontSize: ".82rem", color: "rgba(255,255,255,.5)", marginBottom: 10 }}>{info.email} · +52 55 ••••••78 💬</div>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             <span style={{ padding: "4px 12px", borderRadius: 20, fontSize: ".72rem", fontWeight: 700, background: "#F2AEBC", color: "#6C0820" }}>✈ Plan Anual</span>
@@ -144,7 +144,7 @@ function PerfilPage() {
         ].map((s) => (
           <div key={s.label} style={{ background: "white", borderRadius: 14, padding: "16px 18px", boxShadow: "0 2px 10px rgba(61,93,145,.06)", textAlign: "center" }}>
             <div style={{ fontSize: "1.4rem", marginBottom: 6 }}>{s.icon}</div>
-            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.6rem", fontWeight: 900, color: "#1a1a2e", lineHeight: 1, marginBottom: 4 }}>{s.val}</div>
+            <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", fontWeight: 900, color: "#1a1a2e", lineHeight: 1, marginBottom: 4 }}>{s.val}</div>
             <div style={{ fontSize: ".72rem", color: "#888" }}>{s.label}</div>
           </div>
         ))}
@@ -157,8 +157,8 @@ function PerfilPage() {
           <p style={{ fontSize: ".8rem", color: "rgba(255,255,255,.75)" }}>Acceso completo hasta el 5 de febrero 2027 · Renovación automática</p>
         </div>
         <div style={{ display: "flex", gap: 10, flexShrink: 0 }}>
-          <button style={{ padding: "9px 18px", background: "white", color: "#3D5D91", border: "none", borderRadius: 8, fontSize: ".82rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>Ver plan</button>
-          <button style={{ padding: "9px 18px", background: "rgba(255,255,255,.15)", color: "white", border: "1px solid rgba(255,255,255,.3)", borderRadius: 8, fontSize: ".82rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>Cerrar sesión</button>
+          <button style={{ padding: "9px 18px", background: "white", color: "#3D5D91", border: "none", borderRadius: 8, fontSize: ".82rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Ver plan</button>
+          <button style={{ padding: "9px 18px", background: "rgba(255,255,255,.15)", color: "white", border: "1px solid rgba(255,255,255,.3)", borderRadius: 8, fontSize: ".82rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cerrar sesión</button>
         </div>
       </div>
 

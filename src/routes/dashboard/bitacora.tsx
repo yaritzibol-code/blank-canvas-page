@@ -215,7 +215,7 @@ function BitacoraPage() {
   };
 
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "#f5f7fc" }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif", minHeight: "100vh", background: "#f5f7fc" }}>
       <style>{`
         @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
         .emo-btn:hover{border-color:#3D5D91!important;transform:translateY(-2px);}
@@ -239,7 +239,7 @@ function BitacoraPage() {
                 borderRadius: 20, fontSize: ".82rem", fontWeight: 600, cursor: "pointer",
                 background: screen === t.id ? "#3D5D91" : "white",
                 color: screen === t.id ? "white" : "#888",
-                transition: "all .2s", fontFamily: "'DM Sans', sans-serif",
+                transition: "all .2s", fontFamily: "'Manrope', sans-serif",
               }}
             >
               {t.label}
@@ -262,7 +262,7 @@ function BitacoraPage() {
             <div style={{ fontSize: "3rem", flexShrink: 0, animation: "float 3s ease-in-out infinite", zIndex: 1 }}>☁️</div>
             <div style={{ flex: 1, zIndex: 1 }}>
               <div style={{ fontSize: ".7rem", color: "#F2AEBC", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 4 }}>✍️ Entrada de hoy</div>
-              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", color: "white", marginBottom: 4 }}>¿Cómo estuvo tu sesión de estudio hoy, María? 💙</div>
+              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "white", marginBottom: 4 }}>¿Cómo estuvo tu sesión de estudio hoy, María? 💙</div>
               <div style={{ fontSize: ".8rem", color: "rgba(255,255,255,.5)" }}>Cuéntame todo, esto es solo tuyo</div>
             </div>
           </div>
@@ -280,7 +280,7 @@ function BitacoraPage() {
                     display: "flex", flexDirection: "column" as const, alignItems: "center", gap: 5,
                     padding: "12px 16px", border: `2px solid ${selectedEmotion === e.icon ? "#3D5D91" : "#F2DCDB"}`,
                     borderRadius: 14, cursor: "pointer", background: selectedEmotion === e.icon ? "rgba(61,93,145,.06)" : "white",
-                    flex: 1, minWidth: 70, transition: "all .2s", fontFamily: "'DM Sans', sans-serif",
+                    flex: 1, minWidth: 70, transition: "all .2s", fontFamily: "'Manrope', sans-serif",
                   }}
                 >
                   <span style={{ fontSize: "1.8rem" }}>{e.icon}</span>
@@ -321,7 +321,7 @@ function BitacoraPage() {
                       border: `2px solid ${isActive ? (m.isNone ? "#2ecc71" : "#3D5D91") : "#F2DCDB"}`,
                       borderRadius: 20, fontSize: ".78rem", fontWeight: 600, cursor: "pointer",
                       color: isActive ? (m.isNone ? "#1a7a4a" : "#3D5D91") : "#1a1a2e",
-                      transition: "all .2s", fontFamily: "'DM Sans', sans-serif",
+                      transition: "all .2s", fontFamily: "'Manrope', sans-serif",
                     }}
                   >
                     {m.icon} {m.label}
@@ -340,7 +340,7 @@ function BitacoraPage() {
               placeholder="¿Qué pasó hoy? ¿Algo que te haya costado mucho? ¿Algo que te haya gustado? ¿Cómo llegaste a estudiar? Escribe lo que quieras..."
               style={{
                 width: "100%", minHeight: 120, border: "2px solid #F2DCDB", borderRadius: 12,
-                padding: "14px 16px", fontSize: ".88rem", fontFamily: "'DM Sans', sans-serif",
+                padding: "14px 16px", fontSize: ".88rem", fontFamily: "'Manrope', sans-serif",
                 color: "#1a1a2e", outline: "none", resize: "vertical" as const, lineHeight: 1.7,
                 background: "#fafbff", transition: "border-color .2s",
               }}
@@ -357,7 +357,7 @@ function BitacoraPage() {
             style={{
               width: "100%", padding: 14, background: "#6C0820", color: "white", border: "none",
               borderRadius: 12, fontSize: ".95rem", fontWeight: 700, cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif", transition: "all .2s",
+              fontFamily: "'Manrope', sans-serif", transition: "all .2s",
               display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 24,
             }}
           >
@@ -375,7 +375,7 @@ function BitacoraPage() {
             <div style={{ fontSize: "5rem", animation: "float 3s ease-in-out infinite", display: "inline-block", marginBottom: 10 }}>
               {result.bad ? "🤗" : "☁️"}
             </div>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", color: "#1a1a2e", marginBottom: 6 }}>
+            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.5rem", color: "#1a1a2e", marginBottom: 6 }}>
               {result.bad ? "Pathy te manda un abrazo 🤗" : "Pathy analizó tu entrada 💙"}
             </h2>
           </div>
@@ -405,7 +405,7 @@ function BitacoraPage() {
                   { label: "Confianza CIAAC", val: result.conf },
                 ].map((s) => (
                   <div key={s.label} style={{ textAlign: "center" as const }}>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", fontWeight: 900, color: "#3D5D91" }}>{s.val > 0 ? `${s.val}/5` : "—"}</div>
+                    <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", fontWeight: 900, color: "#3D5D91" }}>{s.val > 0 ? `${s.val}/5` : "—"}</div>
                     <div style={{ fontSize: ".68rem", color: "#aaa" }}>{s.label}</div>
                   </div>
                 ))}
@@ -437,7 +437,7 @@ function BitacoraPage() {
               </div>
               <button
                 onClick={openYarisChat}
-                style={{ width: "100%", padding: 11, background: "white", color: "#3D5D91", border: "none", borderRadius: 9, fontSize: ".88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}
+                style={{ width: "100%", padding: 11, background: "white", color: "#3D5D91", border: "none", borderRadius: 9, fontSize: ".88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
               >
                 🤖 Hablar con Yaris
               </button>
@@ -448,13 +448,13 @@ function BitacoraPage() {
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" as const, marginBottom: 20 }}>
             <button
               onClick={() => setScreen("historial")}
-              style={{ flex: 1, padding: 12, background: "white", color: "#3D5D91", border: "2px solid #3D5D91", borderRadius: 11, fontSize: ".88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}
+              style={{ flex: 1, padding: 12, background: "white", color: "#3D5D91", border: "2px solid #3D5D91", borderRadius: 11, fontSize: ".88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
             >
               📅 Ver mi historial
             </button>
             <button
               onClick={() => setScreen("hoy")}
-              style={{ flex: 1, padding: 12, background: "#6C0820", color: "white", border: "none", borderRadius: 11, fontSize: ".88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}
+              style={{ flex: 1, padding: 12, background: "#6C0820", color: "white", border: "none", borderRadius: 11, fontSize: ".88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
             >
               ✈️ Ir a estudiar
             </button>
@@ -491,7 +491,7 @@ function BitacoraPage() {
                   onChange={(e) => setYarisInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && sendYaris()}
                   placeholder="Cuéntame cómo te sientes..."
-                  style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 18, padding: "7px 12px", fontSize: ".82rem", fontFamily: "'DM Sans', sans-serif", outline: "none" }}
+                  style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 18, padding: "7px 12px", fontSize: ".82rem", fontFamily: "'Manrope', sans-serif", outline: "none" }}
                 />
                 <button onClick={sendYaris} style={{ width: 32, height: 32, background: "#3D5D91", border: "none", borderRadius: "50%", color: "white", cursor: "pointer", fontSize: ".82rem" }}>➤</button>
               </div>

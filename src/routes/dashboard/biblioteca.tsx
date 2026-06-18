@@ -124,7 +124,7 @@ function BibliotecaPage() {
       <style>{`@keyframes yb2{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}.yds2{width:5px;height:5px;background:#5A86CB;border-radius:50%;animation:yb2 .8s infinite}.yds2:nth-child(2){animation-delay:.15s}.yds2:nth-child(3){animation-delay:.3s}`}</style>
 
       {/* ── LIBRARY CONTENT ── */}
-      <div style={{ fontFamily: "'DM Sans', sans-serif" }}>
+      <div style={{ fontFamily: "'Manrope', sans-serif" }}>
 
         {/* Search + filters */}
         <div style={{ display: "flex", gap: 12, marginBottom: 28, flexWrap: "wrap" }}>
@@ -134,7 +134,7 @@ function BibliotecaPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Buscar libro, autor o materia..."
-              style={{ width: "100%", padding: "11px 16px 11px 42px", border: "2px solid #F2DCDB", borderRadius: 12, fontSize: "0.9rem", fontFamily: "'DM Sans', sans-serif", outline: "none", background: "white", transition: "border-color 0.2s" }}
+              style={{ width: "100%", padding: "11px 16px 11px 42px", border: "2px solid #F2DCDB", borderRadius: 12, fontSize: "0.9rem", fontFamily: "'Manrope', sans-serif", outline: "none", background: "white", transition: "border-color 0.2s" }}
               onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }}
               onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }}
             />
@@ -144,7 +144,7 @@ function BibliotecaPage() {
               <button
                 key={t.key}
                 onClick={() => setFilter(t.key)}
-                style={{ padding: "8px 16px", border: `2px solid ${filter === t.key ? "#3D5D91" : "#F2DCDB"}`, borderRadius: 20, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", background: filter === t.key ? "#3D5D91" : "white", color: filter === t.key ? "white" : "#888", transition: "all 0.2s", fontFamily: "'DM Sans', sans-serif" }}
+                style={{ padding: "8px 16px", border: `2px solid ${filter === t.key ? "#3D5D91" : "#F2DCDB"}`, borderRadius: 20, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", background: filter === t.key ? "#3D5D91" : "white", color: filter === t.key ? "white" : "#888", transition: "all 0.2s", fontFamily: "'Manrope', sans-serif" }}
               >
                 {t.label}
               </button>
@@ -164,14 +164,14 @@ function BibliotecaPage() {
             <div style={{ fontSize: "5rem", flexShrink: 0 }}>📘</div>
             <div style={{ flex: 1, zIndex: 1 }}>
               <div style={{ display: "inline-block", background: "#F2AEBC", color: "#6C0820", padding: "3px 10px", borderRadius: 20, fontSize: "0.7rem", fontWeight: 700, marginBottom: 8 }}>⭐ Más consultado</div>
-              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", marginBottom: 6 }}>Manual del Piloto de Conocimientos Aeronáuticos</h3>
+              <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", marginBottom: 6 }}>Manual del Piloto de Conocimientos Aeronáuticos</h3>
               <p style={{ fontSize: "0.84rem", opacity: 0.75, lineHeight: 1.5, marginBottom: 14 }}>La guía completa de la FAA para pilotos. Cubre todos los principios fundamentales del vuelo, meteorología, navegación y operaciones.</p>
               <div style={{ display: "flex", gap: 16, fontSize: "0.78rem", opacity: 0.65, flexWrap: "wrap" }}>
                 <span>📄 FAA — 2008</span>
                 <span>✈️ Aerodinámica · Meteorología · Navegación</span>
               </div>
             </div>
-            <button style={{ padding: "10px 20px", background: "#F2AEBC", color: "#6C0820", border: "none", borderRadius: 8, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", flexShrink: 0 }}>
+            <button style={{ padding: "10px 20px", background: "#F2AEBC", color: "#6C0820", border: "none", borderRadius: 8, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", flexShrink: 0 }}>
               Leer ahora →
             </button>
           </div>
@@ -179,7 +179,7 @@ function BibliotecaPage() {
 
         {/* Section header */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", color: "#1a1a2e" }}>📋 Manuales Oficiales CIAAC</h2>
+          <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "#1a1a2e" }}>📋 Manuales Oficiales CIAAC</h2>
         </div>
 
         {/* Books grid */}
@@ -197,21 +197,21 @@ function BibliotecaPage() {
 
       {/* ── READER MODAL ── */}
       {readerBook && (
-        <div style={{ position: "fixed", inset: 0, zIndex: 300, background: "#1a1a2e", display: "flex", flexDirection: "column", fontFamily: "'DM Sans', sans-serif" }}>
+        <div style={{ position: "fixed", inset: 0, zIndex: 300, background: "#1a1a2e", display: "flex", flexDirection: "column", fontFamily: "'Manrope', sans-serif" }}>
 
           {/* Reader topbar */}
           <div style={{ height: 56, background: "rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px", flexShrink: 0 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <button onClick={() => setReaderBook(null)} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "white", padding: "6px 12px", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>← Cerrar</button>
+              <button onClick={() => setReaderBook(null)} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "white", padding: "6px 12px", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>← Cerrar</button>
               <span style={{ fontSize: "0.9rem", fontWeight: 700, color: "white" }} className="hidden sm:inline">{readerBook.title}</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               {!yarisOpen && (
-                <button onClick={() => setYarisOpen(true)} style={{ padding: "6px 14px", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
+                <button onClick={() => setYarisOpen(true)} style={{ padding: "6px 14px", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
                   🤖 Mostrar Yaris
                 </button>
               )}
-              <button onClick={() => setYarisOpen(true)} style={{ padding: "6px 14px", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", color: "white", border: "none", borderRadius: 8, fontSize: "0.8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
+              <button onClick={() => setYarisOpen(true)} style={{ padding: "6px 14px", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", color: "white", border: "none", borderRadius: 8, fontSize: "0.8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
                 🤖 Explícamelo Yaris
               </button>
             </div>
@@ -225,14 +225,14 @@ function BibliotecaPage() {
               {/* PDF toolbar */}
               <div style={{ height: 44, background: "rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 16px", flexShrink: 0 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <button onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "rgba(255,255,255,0.8)", padding: "5px 12px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>← Anterior</button>
+                  <button onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "rgba(255,255,255,0.8)", padding: "5px 12px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>← Anterior</button>
                   <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.5)" }}>Página {currentPage} de {readerBook.pages}</span>
-                  <button onClick={() => setCurrentPage((p) => Math.min(readerBook.pages, p + 1))} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "rgba(255,255,255,0.8)", padding: "5px 12px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Siguiente →</button>
+                  <button onClick={() => setCurrentPage((p) => Math.min(readerBook.pages, p + 1))} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "rgba(255,255,255,0.8)", padding: "5px 12px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Siguiente →</button>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <button onClick={() => setZoom((z) => Math.max(0.5, parseFloat((z - 0.1).toFixed(1))))} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "rgba(255,255,255,0.8)", padding: "5px 12px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>−</button>
+                  <button onClick={() => setZoom((z) => Math.max(0.5, parseFloat((z - 0.1).toFixed(1))))} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "rgba(255,255,255,0.8)", padding: "5px 12px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>−</button>
                   <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.5)", minWidth: 36, textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
-                  <button onClick={() => setZoom((z) => Math.min(2, parseFloat((z + 0.1).toFixed(1))))} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "rgba(255,255,255,0.8)", padding: "5px 12px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>+</button>
+                  <button onClick={() => setZoom((z) => Math.min(2, parseFloat((z + 0.1).toFixed(1))))} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "rgba(255,255,255,0.8)", padding: "5px 12px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>+</button>
                 </div>
               </div>
 
@@ -260,7 +260,7 @@ function BibliotecaPage() {
                     <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.8)" }}>Leyendo contigo 24/7</div>
                   </div>
                 </div>
-                <button onClick={() => setYarisOpen(false)} style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "white", borderRadius: 6, padding: "3px 8px", cursor: "pointer", fontSize: "0.75rem", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>✕</button>
+                <button onClick={() => setYarisOpen(false)} style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "white", borderRadius: 6, padding: "3px 8px", cursor: "pointer", fontSize: "0.75rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif" }}>✕</button>
               </div>
 
               <div style={{ flex: 1, overflowY: "auto", padding: 12, display: "flex", flexDirection: "column", gap: 10 }}>
@@ -292,7 +292,7 @@ function BibliotecaPage() {
                   onChange={(e) => setYarisInput(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter") sendYaris(); }}
                   placeholder="Pregúntame sobre lo que lees..."
-                  style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 16, padding: "6px 11px", fontSize: "0.8rem", fontFamily: "'DM Sans', sans-serif", outline: "none", transition: "border-color 0.2s" }}
+                  style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 16, padding: "6px 11px", fontSize: "0.8rem", fontFamily: "'Manrope', sans-serif", outline: "none", transition: "border-color 0.2s" }}
                   onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }}
                   onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }}
                 />
@@ -332,7 +332,7 @@ function BookCard({ book, onOpen }: { book: Book; onOpen: () => void }) {
         </div>
         <button
           onClick={(e) => { e.stopPropagation(); onOpen(); }}
-          style={{ width: "100%", padding: "7px 0", background: "#3D5D91", color: "white", border: "none", borderRadius: 8, fontSize: "0.78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "background 0.2s" }}
+          style={{ width: "100%", padding: "7px 0", background: "#3D5D91", color: "white", border: "none", borderRadius: 8, fontSize: "0.78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "background 0.2s" }}
           onMouseEnter={(e) => { e.currentTarget.style.background = "#2d4a7a"; }}
           onMouseLeave={(e) => { e.currentTarget.style.background = "#3D5D91"; }}
         >
@@ -370,7 +370,7 @@ function ScannedPage({ book, page }: { book: Book; page: number }) {
   const content = chapters[book.id] ?? chapters["default"];
 
   return (
-    <div style={{ background: "#f9f6f0", borderRadius: 4, padding: "32px 28px", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(0,0,0,0.1)", fontFamily: "'Courier New', monospace", color: "#2a2a2a", position: "relative" }}>
+    <div style={{ background: "#f9f6f0", borderRadius: 4, padding: "32px 28px", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(0,0,0,0.1)", fontFamily: "'JetBrains Mono', monospace", color: "#2a2a2a", position: "relative" }}>
       {/* Header */}
       <div style={{ textAlign: "center", marginBottom: 16 }}>
         <div style={{ fontSize: "0.7rem", letterSpacing: 2, color: "#333", fontWeight: 700, marginBottom: 4 }}>SECRETARIA DE COMUNICACIONES Y TRANSPORTES</div>
