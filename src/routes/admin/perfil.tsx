@@ -57,7 +57,7 @@ function AdminPerfilPage() {
     "- Tiene el CIAAC programado para el 17 de agosto 2026.\n- Le cuesta mucho Meteorología — especialmente METAR y TAF.\n- Muy constante, lleva 14 días seguidos de racha.\n- Pendiente: activar garantía si no mejora en el próximo simulador."
   );
   const [waMsg, setWaMsg] = useState(
-    "Hola María! Soy Yaris de FlightPath 👋 Vi que llevas 14 días de racha — ¡eso es increíble! Sigue así, estás muy cerca de dominar el CIAAC. ✈️"
+    "Hola María! Soy Yaris de FlightPath. Vi que llevas 14 días de racha — ¡eso es increíble! Sigue así, estás muy cerca de dominar el CIAAC."
   );
   const [extendDays, setExtendDays] = useState("30");
   const [extendReason, setExtendReason] = useState("Activación de garantía");

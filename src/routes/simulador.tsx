@@ -510,14 +510,14 @@ function SimuladorPage() {
     return (
       <div style={{ position: "fixed", inset: 0, zIndex: 800, background: "#f5f7fc", display: "flex", flexDirection: "column", fontFamily: "'Manrope', sans-serif" }}>
         {/* Review topbar */}
-        <div style={{ height: 56, background: "#1a1a2e", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px", flexShrink: 0 }}>
+        <div style={{ height: 56, background: "#22375C", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px", flexShrink: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <button onClick={() => setPhase("result")} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "5px 12px", borderRadius: 7, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
               ← Volver
             </button>
             <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1rem", color: "white", fontWeight: 700 }}>Revisión del examen</span>
           </div>
-          <span style={{ background: "#F2AEBC", color: "#6C0820", padding: "4px 12px", borderRadius: 20, fontSize: "0.75rem", fontWeight: 700 }}>📋 Modo revisión</span>
+          <span style={{ background: "#F2AEBC", color: "#6C0820", padding: "4px 12px", borderRadius: 20, fontSize: "0.75rem", fontWeight: 700, display: "flex", alignItems: "center", gap: 5 }}><Icon n="doc" size={14} /> Modo revisión</span>
         </div>
 
         {/* Review body */}
@@ -525,10 +525,10 @@ function SimuladorPage() {
           {/* Left list */}
           <div style={{ width: 200, flexShrink: 0, background: "white", borderRight: "1px solid rgba(61,93,145,0.08)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
             <div style={{ padding: "10px 14px", borderBottom: "1px solid #F2DCDB", background: "#f8f9ff" }}>
-              <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 4 }}>Preguntas del examen</div>
+              <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#22375C", marginBottom: 4 }}>Preguntas del examen</div>
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.62rem", color: "#888" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#2ecc71" }} />Correcta</div>
-                <div style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.62rem", color: "#888" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#e74c3c" }} />Incorrecta</div>
+                <div style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.62rem", color: "#647DA0" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#2ecc71" }} />Correcta</div>
+                <div style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.62rem", color: "#647DA0" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#e74c3c" }} />Incorrecta</div>
               </div>
             </div>
             <div style={{ flex: 1, overflowY: "auto" }}>
@@ -536,8 +536,8 @@ function SimuladorPage() {
                 const offset = materiaOffset(mi);
                 return (
                   <div key={mi}>
-                    <div style={{ padding: "6px 12px", background: "#f8f9ff", borderBottom: "1px solid rgba(61,93,145,0.06)", fontSize: "0.68rem", fontWeight: 700, color: "#3D5D91", textTransform: "uppercase", letterSpacing: "0.4px" }}>
-                      {m.name}
+                    <div style={{ padding: "6px 12px", background: "#f8f9ff", borderBottom: "1px solid rgba(61,93,145,0.06)", fontSize: "0.68rem", fontWeight: 700, color: "#3D5D91", textTransform: "uppercase", letterSpacing: "0.4px", display: "flex", alignItems: "center", gap: 5 }}>
+                      <Icon n={m.icon} size={12} /> {m.name}
                     </div>
                     {Array.from({ length: m.total }, (_, i) => {
                       const idx = offset + i;
@@ -549,8 +549,8 @@ function SimuladorPage() {
                           onClick={() => setReviewCurrent(idx)}
                           style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 12px 5px 16px", cursor: "pointer", background: active ? "rgba(61,93,145,0.06)" : "transparent", borderLeft: `3px solid ${correct ? "#2ecc71" : "#e74c3c"}`, transition: "background 0.2s" }}
                         >
-                          <div style={{ width: 17, height: 17, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.55rem", fontWeight: 700, flexShrink: 0, background: correct ? "#2ecc71" : "#e74c3c", color: "white" }}>
-                            {correct ? "✓" : "✗"}
+                          <div style={{ width: 17, height: 17, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: correct ? "#2ecc71" : "#e74c3c", color: "white" }}>
+                            {correct ? <Icon n="check" size={11} sw={2.4} /> : <Icon n="close" size={11} sw={2.4} />}
                           </div>
                           <span style={{ fontSize: "0.73rem", color: "#555" }}>Pregunta {i + 1}</span>
                         </div>
@@ -568,13 +568,13 @@ function SimuladorPage() {
               <div style={{ background: "white", borderRadius: 16, padding: 24, boxShadow: "0 2px 14px rgba(61,93,145,0.07)", marginBottom: 16 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <span style={{ fontSize: "1.2rem" }}>{isCorrect ? "✅" : "❌"}</span>
-                    <span style={{ background: "rgba(61,93,145,0.07)", color: "#3D5D91", padding: "4px 12px", borderRadius: 20, fontSize: "0.72rem", fontWeight: 700 }}>{MATERIAS[mi].name}</span>
+                    <span style={{ display: "flex", alignItems: "center" }}>{isCorrect ? <Icon n="checkCircle" size={20} color="#2ecc71" /> : <Icon n="close" size={20} color="#e74c3c" />}</span>
+                    <span style={{ background: "rgba(61,93,145,0.07)", color: "#3D5D91", padding: "4px 12px", borderRadius: 20, fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n={MATERIAS[mi].icon} size={13} /> {MATERIAS[mi].name}</span>
                   </div>
-                  <span style={{ fontSize: "0.76rem", color: "#aaa" }}>Pregunta {reviewCurrent + 1} / {TOTAL_QS}</span>
+                  <span style={{ fontSize: "0.76rem", color: "#8DA1BE" }}>Pregunta {reviewCurrent + 1} / {TOTAL_QS}</span>
                 </div>
 
-                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "0.95rem", color: "#1a1a2e", lineHeight: 1.5, marginBottom: 18 }}>{reviewQ.text}</p>
+                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "0.95rem", color: "#22375C", lineHeight: 1.5, marginBottom: 18 }}>{reviewQ.text}</p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 9, marginBottom: 18 }}>
                   {reviewQ.opts.map((o, oi) => {
@@ -582,29 +582,29 @@ function SimuladorPage() {
                     const isUser = oi === userAns;
                     return (
                       <div key={oi} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", background: isRight ? "rgba(46,204,113,0.08)" : isUser && !isRight ? "rgba(231,76,60,0.06)" : "#f8f9ff", border: `2px solid ${isRight ? "#2ecc71" : isUser && !isRight ? "#e74c3c" : "#F2DCDB"}`, borderRadius: 11 }}>
-                        <div style={{ width: 28, height: 28, borderRadius: "50%", background: isRight ? "#2ecc71" : isUser && !isRight ? "#e74c3c" : "#F2DCDB", color: isRight || (isUser && !isRight) ? "white" : "#888", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, flexShrink: 0 }}>
+                        <div style={{ width: 28, height: 28, borderRadius: "50%", background: isRight ? "#2ecc71" : isUser && !isRight ? "#e74c3c" : "#F2DCDB", color: isRight || (isUser && !isRight) ? "white" : "#647DA0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, flexShrink: 0 }}>
                           {["A", "B", "C"][oi]}
                         </div>
-                        <span style={{ fontSize: "0.88rem", color: "#1a1a2e", flex: 1 }}>{o}</span>
-                        {isRight && <span style={{ fontSize: "0.72rem", color: "#2ecc71", fontWeight: 700 }}>✓ Correcta</span>}
-                        {isUser && !isRight && <span style={{ fontSize: "0.72rem", color: "#e74c3c", fontWeight: 700 }}>✗ Tu respuesta</span>}
+                        <span style={{ fontSize: "0.88rem", color: "#22375C", flex: 1 }}>{o}</span>
+                        {isRight && <span style={{ fontSize: "0.72rem", color: "#2ecc71", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="check" size={13} /> Correcta</span>}
+                        {isUser && !isRight && <span style={{ fontSize: "0.72rem", color: "#e74c3c", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="close" size={13} /> Tu respuesta</span>}
                       </div>
                     );
                   })}
                 </div>
 
                 <div style={{ padding: "14px 16px", background: "rgba(61,93,145,0.06)", borderLeft: "4px solid #3D5D91", borderRadius: "0 10px 10px 0", fontSize: "0.85rem", color: "#555", lineHeight: 1.6, marginBottom: 14 }}>
-                  💡 {reviewQ.feedback}
-                  <div style={{ marginTop: 6, fontSize: "0.74rem", color: "#3D5D91", fontWeight: 600 }}>📖 {reviewQ.cite}</div>
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="lightbulb" size={15} color="#f39c12" /> {reviewQ.feedback}</span>
+                  <div style={{ marginTop: 6, fontSize: "0.74rem", color: "#3D5D91", fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><Icon n="book" size={13} /> {reviewQ.cite}</div>
                 </div>
 
-                <button onClick={openYaris} style={{ width: "100%", padding: 11, background: "linear-gradient(135deg,#3D5D91,#5A86CB)", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
-                  🤖 Explícamelo Yaris
+                <button onClick={openYaris} style={{ width: "100%", padding: 11, background: "linear-gradient(135deg,#3D5D91,#5A86CB)", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
+                  <Icon n="spark" size={16} /> Explícamelo Yaris
                 </button>
               </div>
 
               <div style={{ display: "flex", gap: 10 }}>
-                <button onClick={() => setReviewCurrent((r) => Math.max(0, r - 1))} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>← Anterior</button>
+                <button onClick={() => setReviewCurrent((r) => Math.max(0, r - 1))} style={{ flex: 1, padding: 11, background: "white", color: "#647DA0", border: "2px solid #F2DCDB", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>← Anterior</button>
                 <button onClick={() => setReviewCurrent((r) => Math.min(TOTAL_QS - 1, r + 1))} style={{ flex: 1, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Siguiente →</button>
               </div>
             </div>
@@ -629,15 +629,15 @@ function SimuladorPage() {
 
   /* ─── PHASE: EXAM ─── */
   return (
-    <div style={{ fontFamily: "'Manrope', sans-serif", background: "#f5f7fc", color: "#1a1a2e", height: "100vh", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif", background: "#f5f7fc", color: "#22375C", height: "100vh", display: "flex", flexDirection: "column", overflow: "hidden" }}>
 
       {/* Topbar */}
-      <div style={{ height: 56, background: "#1a1a2e", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px", flexShrink: 0, zIndex: 50 }}>
+      <div style={{ height: 56, background: "#22375C", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px", flexShrink: 0, zIndex: 50 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <button onClick={() => setLeftPanelOpen((o) => !o)} className="md:hidden" style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "5px 10px", borderRadius: 7, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
-            ☰ Preguntas
+            <Icon n="list" size={15} /> Preguntas
           </button>
-          <span style={{ background: "#6C0820", color: "white", padding: "4px 12px", borderRadius: 20, fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px" }}>🎯 Simulador</span>
+          <span style={{ background: "#6C0820", color: "white", padding: "4px 12px", borderRadius: 20, fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="target" size={13} /> Simulador</span>
           <span className="hidden md:block" style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1rem", color: "white", fontWeight: 700 }}>Examen General de Egreso — Piloto Comercial</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
@@ -650,7 +650,7 @@ function SimuladorPage() {
             </div>
           </div>
           <button onClick={() => setCalcOpen((o) => !o)} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "6px 12px", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
-            🧮 Calculadora
+            <Icon n="gauge" size={15} /> Calculadora
           </button>
         </div>
       </div>
@@ -685,21 +685,21 @@ function SimuladorPage() {
 
             <div style={{ background: "white", borderRadius: 16, padding: 28, maxWidth: 700, width: "100%", boxShadow: "0 2px 14px rgba(61,93,145,0.07)" }} className="sm:p-7 p-5">
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 18 }}>
-                <div style={{ background: "rgba(61,93,145,0.07)", color: "#3D5D91", padding: "4px 12px", borderRadius: 20, fontSize: "0.72rem", fontWeight: 700 }}>
-                  {MATERIAS[currentQ.materia].name}
+                <div style={{ background: "rgba(61,93,145,0.07)", color: "#3D5D91", padding: "4px 12px", borderRadius: 20, fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 5 }}>
+                  <Icon n={MATERIAS[currentQ.materia].icon} size={14} /> {MATERIAS[currentQ.materia].name}
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <button
                     onClick={toggleFlag}
-                    style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 12px", border: `1px solid ${currentQ.flagged ? "#f39c12" : "#F2DCDB"}`, borderRadius: 7, background: currentQ.flagged ? "rgba(243,156,18,0.08)" : "white", fontSize: "0.76rem", fontWeight: 600, color: currentQ.flagged ? "#f39c12" : "#888", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s" }}
+                    style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 12px", border: `1px solid ${currentQ.flagged ? "#f39c12" : "#F2DCDB"}`, borderRadius: 7, background: currentQ.flagged ? "rgba(243,156,18,0.08)" : "white", fontSize: "0.76rem", fontWeight: 600, color: currentQ.flagged ? "#f39c12" : "#647DA0", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s" }}
                   >
-                    ⚑ {currentQ.flagged ? "Marcada" : "Marcar para revisar"}
+                    <Icon n="flag" size={14} /> {currentQ.flagged ? "Marcada" : "Marcar para revisar"}
                   </button>
-                  <span style={{ fontSize: "0.76rem", color: "#aaa" }}>{current + 1} / {TOTAL_QS}</span>
+                  <span style={{ fontSize: "0.76rem", color: "#8DA1BE" }}>{current + 1} / {TOTAL_QS}</span>
                 </div>
               </div>
 
-              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", color: "#1a1a2e", lineHeight: 1.5, marginBottom: 24 }}>
+              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", color: "#22375C", lineHeight: 1.5, marginBottom: 24 }}>
                 {sampleQ.text}
               </p>
 
@@ -712,33 +712,33 @@ function SimuladorPage() {
                     onMouseEnter={(e) => { if (currentQ.selectedOpt !== oi) { e.currentTarget.style.borderColor = "#3D5D91"; e.currentTarget.style.background = "rgba(61,93,145,0.04)"; e.currentTarget.style.transform = "translateX(3px)"; } }}
                     onMouseLeave={(e) => { if (currentQ.selectedOpt !== oi) { e.currentTarget.style.borderColor = "#F2DCDB"; e.currentTarget.style.background = "#f8f9ff"; e.currentTarget.style.transform = "none"; } }}
                   >
-                    <div style={{ width: 30, height: 30, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 700, flexShrink: 0, background: currentQ.selectedOpt === oi ? "#3D5D91" : "#F2DCDB", color: currentQ.selectedOpt === oi ? "white" : "#888", transition: "all 0.2s" }}>
+                    <div style={{ width: 30, height: 30, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 700, flexShrink: 0, background: currentQ.selectedOpt === oi ? "#3D5D91" : "#F2DCDB", color: currentQ.selectedOpt === oi ? "white" : "#647DA0", transition: "all 0.2s" }}>
                       {["A", "B", "C", "D"][oi]}
                     </div>
-                    <div style={{ fontSize: "0.9rem", color: "#1a1a2e", lineHeight: 1.4, flex: 1 }}>{opt}</div>
+                    <div style={{ fontSize: "0.9rem", color: "#22375C", lineHeight: 1.4, flex: 1 }}>{opt}</div>
                   </div>
                 ))}
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 14, fontSize: "0.75rem", color: "#aaa" }}>
-                <span>💡</span>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 14, fontSize: "0.75rem", color: "#8DA1BE" }}>
+                <span style={{ display: "flex", alignItems: "center" }}><Icon n="lightbulb" size={14} /></span>
                 <span>Puedes cambiar tu respuesta en cualquier momento antes de entregar.</span>
               </div>
             </div>
 
             {/* Nav */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 700, width: "100%", marginTop: 16, gap: 10 }}>
-              <button onClick={() => setCurrent((c) => Math.max(0, c - 1))} disabled={current === 0} style={{ padding: "11px 20px", background: "white", color: current === 0 ? "#ccc" : "#888", border: "2px solid #F2DCDB", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: current === 0 ? "not-allowed" : "pointer", fontFamily: "'Manrope', sans-serif", opacity: current === 0 ? 0.4 : 1 }}>
+              <button onClick={() => setCurrent((c) => Math.max(0, c - 1))} disabled={current === 0} style={{ padding: "11px 20px", background: "white", color: current === 0 ? "#ccc" : "#647DA0", border: "2px solid #F2DCDB", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: current === 0 ? "not-allowed" : "pointer", fontFamily: "'Manrope', sans-serif", opacity: current === 0 ? 0.4 : 1 }}>
                 ← Anterior
               </button>
-              <div style={{ fontSize: "0.8rem", color: "#aaa", textAlign: "center" }}>Pregunta {current + 1} de {TOTAL_QS}</div>
+              <div style={{ fontSize: "0.8rem", color: "#8DA1BE", textAlign: "center" }}>Pregunta {current + 1} de {TOTAL_QS}</div>
               {!isLast ? (
                 <button onClick={() => setCurrent((c) => Math.min(TOTAL_QS - 1, c + 1))} style={{ padding: "11px 20px", background: "#3D5D91", color: "white", border: "none", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
                   Siguiente →
                 </button>
               ) : (
-                <button onClick={() => setConfirmOpen(true)} style={{ padding: "11px 24px", background: "#6C0820", color: "white", border: "none", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
-                  Entregar examen ✓
+                <button onClick={() => setConfirmOpen(true)} style={{ padding: "11px 24px", background: "#6C0820", color: "white", border: "none", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 6 }}>
+                  Entregar examen <Icon n="check" size={15} />
                 </button>
               )}
             </div>
@@ -749,7 +749,7 @@ function SimuladorPage() {
       {/* Calculator modal */}
       {calcOpen && (
         <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 500, display: "flex", alignItems: "flex-end", justifyContent: "flex-end", padding: "80px 20px 20px" }} onClick={(e) => { if (e.target === e.currentTarget) setCalcOpen(false); }}>
-          <div style={{ background: "#1a1a2e", borderRadius: 16, padding: 16, width: 220, boxShadow: "0 20px 40px rgba(0,0,0,0.4)" }}>
+          <div style={{ background: "#22375C", borderRadius: 16, padding: 16, width: 220, boxShadow: "0 20px 40px rgba(0,0,0,0.4)" }}>
             <div style={{ background: "rgba(255,255,255,0.08)", borderRadius: 10, padding: "10px 14px", marginBottom: 12, textAlign: "right" }}>
               <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", minHeight: 16, marginBottom: 2 }}>{calc.expr}</div>
               <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.8rem", fontWeight: 900, color: "white", wordBreak: "break-all" }}>{calc.display}</div>
@@ -798,13 +798,13 @@ function SimuladorPage() {
               ].map((s) => (
                 <div key={s.label} style={{ flex: 1, background: "#f8f9ff", borderRadius: 10, padding: 12, textAlign: "center", minWidth: 80 }}>
                   <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", fontWeight: 900, color: "#3D5D91" }}>{s.num}</div>
-                  <div style={{ fontSize: "0.7rem", color: "#aaa" }}>{s.label}</div>
+                  <div style={{ fontSize: "0.7rem", color: "#8DA1BE" }}>{s.label}</div>
                 </div>
               ))}
             </div>
             <div style={{ display: "flex", gap: 10 }}>
               <button onClick={() => setConfirmOpen(false)} style={{ flex: 1, padding: 12, background: "white", color: "#3D5D91", border: "2px solid #3D5D91", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>← Seguir revisando</button>
-              <button onClick={submitExam} style={{ flex: 2, padding: 12, background: "#6C0820", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Entregar examen ✓</button>
+              <button onClick={submitExam} style={{ flex: 2, padding: 12, background: "#6C0820", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>Entregar examen <Icon n="check" size={15} /></button>
             </div>
           </div>
         </div>
@@ -830,8 +830,8 @@ function LeftPanel({ questions, current, expandedMaterias, onToggleMateria, onSe
   return (
     <>
       <div style={{ padding: "12px 16px", borderBottom: "1px solid #F2DCDB", background: "#f8f9ff" }}>
-        <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 2 }}>Preguntas del examen</div>
-        <div style={{ fontSize: "0.7rem", color: "#888" }}>{answeredCount} / {TOTAL_QS} respondidas</div>
+        <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "#22375C", marginBottom: 2 }}>Preguntas del examen</div>
+        <div style={{ fontSize: "0.7rem", color: "#647DA0" }}>{answeredCount} / {TOTAL_QS} respondidas</div>
       </div>
       <div style={{ display: "flex", gap: 8, padding: "8px 16px", borderBottom: "1px solid #F2DCDB", flexWrap: "wrap" }}>
         {[
@@ -840,7 +840,7 @@ function LeftPanel({ questions, current, expandedMaterias, onToggleMateria, onSe
           { dot: "#f39c12", label: "Marcada" },
           { dot: "#5A86CB", label: "Actual" },
         ].map((l) => (
-          <div key={l.label} style={{ display: "flex", alignItems: "center", gap: 4, fontSize: "0.65rem", color: "#888" }}>
+          <div key={l.label} style={{ display: "flex", alignItems: "center", gap: 4, fontSize: "0.65rem", color: "#647DA0" }}>
             <div style={{ width: 8, height: 8, borderRadius: "50%", background: l.dot, flexShrink: 0 }} />
             {l.label}
           </div>
@@ -854,8 +854,8 @@ function LeftPanel({ questions, current, expandedMaterias, onToggleMateria, onSe
           return (
             <div key={mi} style={{ borderBottom: "1px solid rgba(61,93,145,0.06)" }}>
               <div onClick={() => onToggleMateria(mi)} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "9px 16px", cursor: "pointer", background: "#f8f9ff" }}>
-                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#3D5D91" }}>{m.name}</span>
-                <span style={{ fontSize: "0.65rem", color: "#aaa" }}>{answeredInM}/{m.total} <span style={{ fontSize: "0.6rem", color: "#bbb", display: "inline-block", transform: open ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}>▼</span></span>
+                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#3D5D91", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n={m.icon} size={13} /> {m.name}</span>
+                <span style={{ fontSize: "0.65rem", color: "#8DA1BE", display: "inline-flex", alignItems: "center", gap: 3 }}>{answeredInM}/{m.total} <span style={{ color: "#bbb", display: "inline-flex", alignItems: "center", transform: open ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}><Icon n="chevD" size={11} /></span></span>
               </div>
               {open && (
                 <div>
@@ -864,7 +864,7 @@ function LeftPanel({ questions, current, expandedMaterias, onToggleMateria, onSe
                     const q = questions[idx];
                     const isActive = idx === current;
                     const dotBg = isActive ? "#5A86CB" : q.flagged ? "#f39c12" : q.answered ? "#3D5D91" : "#F2DCDB";
-                    const dotColor = isActive || q.answered || q.flagged ? "white" : "#888";
+                    const dotColor = isActive || q.answered || q.flagged ? "white" : "#647DA0";
                     return (
                       <div
                         key={idx}
@@ -876,7 +876,7 @@ function LeftPanel({ questions, current, expandedMaterias, onToggleMateria, onSe
                           {i + 1}
                         </div>
                         <span style={{ color: isActive ? "#3D5D91" : "#666", fontWeight: isActive ? 700 : undefined }}>Pregunta {i + 1}</span>
-                        {q.flagged && <span style={{ fontSize: "0.7rem", marginLeft: "auto" }}>⚑</span>}
+                        {q.flagged && <span style={{ marginLeft: "auto", display: "flex", alignItems: "center", color: "#f39c12" }}><Icon n="flag" size={13} /></span>}
                       </div>
                     );
                   })}
@@ -906,29 +906,29 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef 
       <style>{`@keyframes yb{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}.yds{width:5px;height:5px;background:#5A86CB;border-radius:50%;animation:yb .8s infinite}.yds:nth-child(2){animation-delay:.15s}.yds:nth-child(3){animation-delay:.3s}`}</style>
       <div style={{ padding: "14px 18px", flexShrink: 0, background: "linear-gradient(135deg,#3D5D91,#5A86CB)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
-          <div style={{ width: 32, height: 32, background: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem" }}>🤖</div>
+          <div style={{ width: 32, height: 32, background: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem" }}><Icon n="spark" size={18} color="#3D5D91" /></div>
           <div>
             <div style={{ fontSize: "0.86rem", fontWeight: 700, color: "white" }}>Yaris IA</div>
             <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.8)" }}>Tutora de aviación 24/7</div>
           </div>
         </div>
-        <button onClick={onClose} style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "white", borderRadius: 6, padding: "4px 8px", cursor: "pointer", fontSize: "0.76rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif" }}>✕</button>
+        <button onClick={onClose} style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "white", borderRadius: 6, padding: "4px 8px", cursor: "pointer", fontSize: "0.76rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon n="close" size={15} /></button>
       </div>
       <div style={{ flex: 1, overflowY: "auto", padding: 14, display: "flex", flexDirection: "column", gap: 10 }}>
         {msgs.map((msg, i) => (
           <div key={i} style={{ display: "flex", gap: 7, alignItems: "flex-start", flexDirection: msg.role === "user" ? "row-reverse" : "row" }}>
             <div style={{ width: 26, height: 26, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: msg.role === "bot" ? "0.78rem" : "0.6rem", fontWeight: msg.role === "user" ? 700 : undefined, background: msg.role === "bot" ? "#F2DCDB" : "#3D5D91", color: msg.role === "user" ? "white" : undefined, flexShrink: 0 }}>
-              {msg.role === "bot" ? "🤖" : "MG"}
+              {msg.role === "bot" ? <Icon n="spark" size={15} color="#6C0820" /> : "MG"}
             </div>
-            <div style={{ maxWidth: "84%", padding: "9px 12px", borderRadius: msg.role === "bot" ? "4px 12px 12px 12px" : "12px 4px 12px 12px", fontSize: "0.81rem", lineHeight: 1.55, background: msg.role === "bot" ? "#f0f4ff" : "#3D5D91", color: msg.role === "bot" ? "#1a1a2e" : "white" }}>
+            <div style={{ maxWidth: "84%", padding: "9px 12px", borderRadius: msg.role === "bot" ? "4px 12px 12px 12px" : "12px 4px 12px 12px", fontSize: "0.81rem", lineHeight: 1.55, background: msg.role === "bot" ? "#f0f4ff" : "#3D5D91", color: msg.role === "bot" ? "#22375C" : "white" }}>
               <span dangerouslySetInnerHTML={{ __html: msg.text }} />
-              {msg.cite && <div style={{ marginTop: 6, padding: "4px 8px", background: "rgba(61,93,145,0.08)", borderLeft: "3px solid #3D5D91", borderRadius: 3, fontSize: "0.7rem", color: "#3D5D91", fontWeight: 600 }}>📖 {msg.cite}</div>}
+              {msg.cite && <div style={{ marginTop: 6, padding: "4px 8px", background: "rgba(61,93,145,0.08)", borderLeft: "3px solid #3D5D91", borderRadius: 3, fontSize: "0.7rem", color: "#3D5D91", fontWeight: 600, display: "flex", alignItems: "center", gap: 4 }}><Icon n="book" size={12} /> {msg.cite}</div>}
             </div>
           </div>
         ))}
         {typing && (
           <div style={{ display: "flex", gap: 7, alignItems: "flex-start" }}>
-            <div style={{ width: 26, height: 26, borderRadius: "50%", background: "#F2DCDB", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.78rem", flexShrink: 0 }}>🤖</div>
+            <div style={{ width: 26, height: 26, borderRadius: "50%", background: "#F2DCDB", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.78rem", flexShrink: 0 }}><Icon n="spark" size={15} color="#6C0820" /></div>
             <div style={{ padding: "9px 12px", background: "#f0f4ff", borderRadius: "4px 12px 12px 12px", display: "flex", alignItems: "center", gap: 4 }}>
               <div className="yds" /><div className="yds" /><div className="yds" />
             </div>
@@ -938,7 +938,7 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef 
       </div>
       <div style={{ padding: "10px 14px", borderTop: "1px solid #F2DCDB", display: "flex", gap: 7, flexShrink: 0 }}>
         <input value={input} onChange={(e) => onInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") onSend(); }} placeholder="Escribe tu duda..." style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 18, padding: "7px 12px", fontSize: "0.81rem", fontFamily: "'Manrope', sans-serif", outline: "none" }} onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }} />
-        <button onClick={onSend} style={{ width: 32, height: 32, background: "#3D5D91", border: "none", borderRadius: "50%", color: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.82rem", flexShrink: 0 }}>➤</button>
+        <button onClick={onSend} style={{ width: 32, height: 32, background: "#3D5D91", border: "none", borderRadius: "50%", color: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.82rem", flexShrink: 0 }}><Icon n="send" size={15} /></button>
       </div>
     </>
   );
