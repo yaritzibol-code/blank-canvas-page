@@ -334,3 +334,105 @@ html { scroll-behavior: smooth; }
 }
 
 /* FlightPath Google fonts are loaded via <link> in src/routes/__root.tsx */
+
+/* ── Theme variants (cherry / azul / hueso) ─────────────── */
+[data-fp-sky="cherry"] .fp-cloudscape,
+[data-fp-sky="cherry"].fp-cloudscape {
+  background: linear-gradient(180deg, #FBE7EC 0%, #F6D9E1 55%, #FCEAEF 100%);
+}
+[data-fp-sky="azul"] .fp-cloudscape,
+[data-fp-sky="azul"].fp-cloudscape {
+  background: linear-gradient(180deg, #E7EFFB 0%, #DAE6F6 55%, #EAF1FC 100%);
+}
+
+/* "Letras de acento en rosa cherry blossom" — accent text override per HTML */
+.fp-accent-text { color: var(--fp-cherry) !important; }
+
+/* Atmosphere intensity */
+[data-fp-atmosphere="rich"] .fp-cloud-soft { opacity: 1; }
+[data-fp-atmosphere="rich"] .fp-cloud-base { opacity: 1; }
+[data-fp-atmosphere="calm"] .fp-cloud-soft { opacity: 0.55; }
+[data-fp-atmosphere="calm"] .fp-cloud-base { opacity: 0.45; }
+[data-fp-atmosphere="off"]  .fp-cloud-soft,
+[data-fp-atmosphere="off"]  .fp-cloud-base,
+[data-fp-atmosphere="off"]  .fp-aero-grid { display: none; }
+
+/* Scan sweep (over countdown / cards) */
+@keyframes fp-scanSweep {
+  0%   { transform: translateX(-130%) skewX(-12deg); }
+  100% { transform: translateX(420%)  skewX(-12deg); }
+}
+.fp-scan-sweep {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.fp-scan-sweep::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 30%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+  animation: fp-scanSweep 3.4s ease-in-out infinite;
+}
+
+/* Flip-digit countdown */
+@keyframes fp-flipIn {
+  0%   { transform: translateY(-60%); opacity: 0; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+.fp-tick { animation: fp-flipIn .5s cubic-bezier(.2,.8,.2,1); }
+
+/* Subtle radar dot */
+.fp-radar-dot {
+  position: relative;
+}
+.fp-radar-dot::before,
+.fp-radar-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1px solid currentColor;
+  animation: fp-radar 1.8s ease-out infinite;
+}
+.fp-radar-dot::after { animation-delay: .9s; }
+
+/* Reduce-motion respect */
+@media (prefers-reduced-motion: reduce) {
+  .fp-animate-fly, .fp-animate-fly-back,
+  .fp-animate-cloud, .fp-animate-cloud-rev,
+  .fp-animate-float-y, .fp-animate-float-y-sm,
+  .fp-animate-drift, .fp-animate-twinkle,
+  .fp-animate-pulse-dot, .fp-animate-breathe,
+  .fp-animate-radar, .fp-animate-blink,
+  .fp-scan-sweep::after { animation: none !important; }
+}
+
+/* Range input thumb (used in tweaks panel) */
+input[type="range"].fp-range {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  width: 100%;
+}
+input[type="range"].fp-range::-webkit-slider-runnable-track {
+  height: 4px;
+  background: #E8EEF6;
+  border-radius: 999px;
+}
+input[type="range"].fp-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px; width: 16px;
+  margin-top: -6px;
+  border-radius: 999px;
+  background: #6C0820;
+  border: 2px solid #FAF8F4;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+}
+
+/* Accordion details marker hide */
+details.fp-faq > summary { list-style: none; cursor: pointer; }
+details.fp-faq > summary::-webkit-details-marker { display: none; }
