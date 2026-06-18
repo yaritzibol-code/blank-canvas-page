@@ -488,11 +488,11 @@ function SimuladorPage() {
           </div>
 
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", paddingBottom: 40 }}>
-            <button onClick={() => { setPhase("warning"); setQuestions(buildQuestions()); setSecondsLeft(5 * 3600); setCurrent(0); setAgreed(false); }} style={{ flex: 1, padding: 13, background: "white", color: "#3D5D91", border: "2px solid #3D5D91", borderRadius: 11, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
-              🔄 Repetir simulador
+            <button onClick={() => { setPhase("warning"); setQuestions(buildQuestions()); setSecondsLeft(5 * 3600); setCurrent(0); setAgreed(false); }} style={{ flex: 1, padding: 13, background: "white", color: "#3D5D91", border: "2px solid #3D5D91", borderRadius: 11, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
+              <Icon n="refresh" size={16} /> Repetir simulador
             </button>
-            <Link to="/dashboard" style={{ flex: 1, padding: 13, background: "#6C0820", color: "white", border: "none", borderRadius: 11, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              🏠 Ir al inicio
+            <Link to="/dashboard" style={{ flex: 1, padding: 13, background: "#6C0820", color: "white", border: "none", borderRadius: 11, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
+              <Icon n="home" size={16} /> Ir al inicio
             </Link>
           </div>
         </div>
