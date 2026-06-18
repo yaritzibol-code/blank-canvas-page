@@ -180,157 +180,178 @@
 @keyframes fp-fadeIn { from{opacity:0} to{opacity:1} }
 @keyframes fp-slideUp { from{transform:translateY(14px);opacity:0} to{transform:translateY(0);opacity:1} }
 
-/* ─────────────────────────────────────────────────────────────────
-   FLIGHTPATH DESIGN SYSTEM — globally applied
-   ───────────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════
+   FLIGHTPATH 1:1 DESIGN SYSTEM  — ported from FlightPath Landing.html
+   ═══════════════════════════════════════════════════════════════════ */
 
-html, body {
-  background: var(--fp-bone);
+@theme {
+  --color-ink: #3D5D91;
+  --color-ink-950: #22375C;
+  --color-ink-900: #2A466F;
+  --color-ink-800: #33527F;
+  --color-ink-700: #3D5D91;
+  --color-ink-600: #4E6EA3;
+  --color-ink-50: #F4F1EB;
+
+  --color-haze: #647DA0;
+  --color-haze-50: #F4F7FB;
+  --color-haze-100: #E8EEF6;
+  --color-haze-200: #D7E1EE;
+  --color-haze-300: #B9C8DD;
+  --color-haze-400: #8DA1BE;
+  --color-haze-500: #647DA0;
+  --color-haze-600: #4C648A;
+
+  --color-lapis: #3D5D91;
+  --color-lapis-700: #2E4670;
+  --color-silver: #5A86CB;
+  --color-silver-400: #7CA0D8;
+
+  /* coral scale — the strategic burgundy accent */
+  --color-coral: #6C0820;
+  --color-coral-50: #FAEFEE;
+  --color-coral-100: #F2DCDB;
+  --color-coral-300: #F2AEBC;
+  --color-coral-400: #E0879A;
+  --color-coral-600: #6C0820;
+  --color-coral-700: #4A0517;
+
+  --color-burgundy: #6C0820;
+  --color-burgundy-700: #8A0A28;
+  --color-burgundy-900: #4A0517;
+
+  --color-cherry: #F2AEBC;
+  --color-cherry-200: #FAEDED;
+  --color-cherry-400: #F5C0CC;
+  --color-cherry-600: #E0879A;
+
+  --color-misty: #F2DCDB;
+  --color-misty-100: #FAEFEE;
+
+  --color-alarm: #6C0820;
+  --color-alarm-600: #4A0517;
+
+  --color-paper: #FAF8F4;
+  --color-paper-100: #F4F1EB;
+
+  --shadow-card:  0 1px 2px rgba(15,26,51,0.04), 0 8px 24px -12px rgba(15,26,51,0.12);
+  --shadow-lift:  0 2px 4px rgba(15,26,51,0.04), 0 24px 48px -20px rgba(15,26,51,0.22);
+  --shadow-navy:  0 20px 50px -24px rgba(15,26,51,0.55);
+  --shadow-float: 0 30px 60px -28px rgba(15,26,51,0.30);
+  --shadow-coral: 0 14px 30px -14px rgba(108,8,32,0.45);
+
+  --font-display: "Bricolage Grotesque", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --animate-float-y:    floatY 6s ease-in-out infinite;
+  --animate-float-y-sm: floatYsm 4s ease-in-out infinite;
+  --animate-drift:      drift 18s ease-in-out infinite alternate;
+  --animate-dash:       dash 3s linear infinite;
+  --animate-twinkle:    twinkle 3s ease-in-out infinite;
+  --animate-pulse-dot:  pulseDot 1.6s ease-in-out infinite;
+  --animate-flip:       flip .4s cubic-bezier(.2,.8,.2,1);
+  --animate-breathe:    breathe 4.5s ease-in-out infinite;
+  --animate-tick:       tick .5s cubic-bezier(.2,.8,.2,1);
+  --animate-flow:       flow 1.2s linear infinite;
+  --animate-radar:      radar 1.8s ease-out infinite;
+  --animate-blink:      blink 1.1s ease-in-out infinite;
 }
+
+/* Keyframes */
+@keyframes floatY    { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes floatYsm  { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes drift     { 0% { transform: translateX(0); } 100% { transform: translateX(40px); } }
+@keyframes dash      { to { stroke-dashoffset: -120; } }
+@keyframes twinkle   { 0%,100% { opacity: .25; } 50% { opacity: .7; } }
+@keyframes pulseDot  { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+@keyframes flip      { 0% { transform: translateY(-60%); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+@keyframes breathe   { 0%,100% { opacity: .28; transform: scale(1); } 50% { opacity: .6; transform: scale(1.1); } }
+@keyframes tick      { 0% { transform: translateY(-58%); opacity: 0; } 60% { opacity: 1; } 100% { transform: translateY(0); opacity: 1; } }
+@keyframes flow      { to { background-position-x: 14px; } }
+@keyframes flyAcross     { from { transform: translateX(-22vw); } to { transform: translateX(122vw); } }
+@keyframes flyAcrossBack { from { transform: translateX(122vw) scaleX(-1); } to { transform: translateX(-22vw) scaleX(-1); } }
+@keyframes cloudDrift    { 0%,100% { transform: translateX(0); } 50% { transform: translateX(46px); } }
+@keyframes cloudDriftRev { 0%,100% { transform: translateX(0); } 50% { transform: translateX(-38px); } }
+@keyframes blink         { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+@keyframes radar         { 0% { transform: scale(0.6); opacity: .7; } 80% { opacity: 0; } 100% { transform: scale(2.6); opacity: 0; } }
+@keyframes scanSweep     { 0% { transform: translateX(-130%) skewX(-12deg); } 100% { transform: translateX(420%) skewX(-12deg); } }
+@keyframes softIn        { 0% { opacity: 0; transform: translateY(5px); } 100% { opacity: 1; transform: translateY(0); } }
+
+/* ── Base page ── */
+html, body { background: #FBFAF7; }
 body {
-  font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  color: var(--fp-ink-700);
+  color: #3D5D91;
 }
 html { scroll-behavior: smooth; }
+.font-display { font-family: 'Bricolage Grotesque', sans-serif; letter-spacing: -0.03em; font-weight: 600; }
+.font-mono    { font-family: 'JetBrains Mono', monospace; }
+::selection   { background: #F4A6B0; color: #A81B30; }
 
-.font-display {
-  font-family: 'Bricolage Grotesque', 'Manrope', sans-serif;
-  letter-spacing: -0.03em;
-  font-weight: 600;
-}
-.font-sans-fp { font-family: 'Manrope', system-ui, sans-serif; }
-.font-mono-fp { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+/* ── KEY HTML OVERRIDE: text-coral-* → cherry blossom pink ── */
+.text-coral-600, .text-coral-700, .text-burgundy { color: #F2AEBC !important; }
 
-::selection { background: #F4A6B0; color: #A81B30; }
-
-/* Bone-white base + cloudscape backdrop */
-.fp-sky-base { background: var(--fp-bone); }
-.fp-cloudscape {
-  background: linear-gradient(180deg, #FBFAF7 0%, #F8F7F3 55%, #FCFBF8 100%);
-}
-.fp-cloudscape-cherry {
+/* ── Sky base + cloudscape per theme ── */
+.sky-base   { background: #FBFAF7; }
+.cloudscape { background: linear-gradient(180deg, #FBFAF7 0%, #F8F7F3 55%, #FCFBF8 100%); }
+body.theme-cherry .cloudscape, .cloudscape.cs-cherry {
   background: linear-gradient(180deg, #FBE7EC 0%, #F6D9E1 55%, #FCEAEF 100%);
 }
-.fp-cloudscape-azul {
+body.theme-azul .cloudscape, .cloudscape.cs-azul {
   background: linear-gradient(180deg, #E7EFFB 0%, #DAE6F6 55%, #EAF1FC 100%);
 }
+/* azul accent remap: coral → lapis so the palette stays coherent */
+body.theme-azul .bg-coral-600         { background-color: #3D5D91 !important; }
+body.theme-azul .hover\:bg-coral-700:hover { background-color: #2E4670 !important; }
+body.theme-azul .text-coral-600       { color: #3D5D91 !important; }
+body.theme-azul .text-coral-700       { color: #2E4670 !important; }
+body.theme-azul .text-coral-400       { color: #7CA0D8 !important; }
+body.theme-azul .bg-coral-50          { background-color: #EAF1FB !important; }
+body.theme-azul .bg-coral-100         { background-color: #D9E5F5 !important; }
+body.theme-azul .border-coral-300\/50 { border-color: rgba(124,160,216,.5) !important; }
+body.theme-azul .shadow-coral         { box-shadow: 0 14px 30px -14px rgba(61,93,145,.5) !important; }
 
-/* faint aero grid behind hero sections */
-.fp-aero-grid {
+/* faint aero grid */
+.aero-grid {
   background-image:
-    linear-gradient(to right, rgba(61,93,145,0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(61,93,145,0.06) 1px, transparent 1px);
+    linear-gradient(to right, rgba(61,93,145,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(61,93,145,0.05) 1px, transparent 1px);
   background-size: 70px 70px;
   -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 25%, transparent 80%);
           mask-image: radial-gradient(120% 100% at 50% 0%, #000 25%, transparent 80%);
 }
 
 /* soft fluffy cloud blobs */
-.fp-cloud-soft {
+.cloud-soft {
   background: radial-gradient(closest-side, rgba(255,255,255,0.96), rgba(255,255,255,0.55) 62%, rgba(255,255,255,0));
   filter: blur(6px);
 }
-.fp-cloud-base {
+.cloud-base {
   background: radial-gradient(closest-side, rgba(214,228,247,0.55), rgba(214,228,247,0));
   filter: blur(10px);
 }
+.dash-line { stroke-dasharray: 2 7; stroke-linecap: round; }
+.dash-flow { stroke-dasharray: 8 10; animation: dash 3s linear infinite; }
 
-/* dashed flight paths */
-.fp-dash-line { stroke-dasharray: 2 7; stroke-linecap: round; }
-.fp-dash-flow { stroke-dasharray: 8 10; animation: fp-dash 3s linear infinite; }
-
-/* Glass nav */
-.fp-glass {
+/* glass nav */
+.glass {
   background: rgba(250, 248, 244, 0.72);
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
 }
-.fp-glass-dark {
-  background: rgba(34, 55, 92, 0.65);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
+
+.no-bar::-webkit-scrollbar { display: none; }
+.no-bar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.hover-lift { transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s; }
+.hover-lift:hover { transform: translateY(-4px); }
+
+.px-layer { transition: transform .5s cubic-bezier(.22,.61,.36,1); will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-y, .animate-float-y-sm, .animate-drift, .animate-twinkle,
+  .animate-pulse-dot, .animate-breathe, .animate-radar, .animate-blink,
+  .animate-flip, .animate-tick, .animate-flow { animation: none !important; }
 }
-
-/* hide scrollbar utility */
-.fp-no-bar::-webkit-scrollbar { display: none; }
-.fp-no-bar { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* card hover lift */
-.fp-hover-lift {
-  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;
-}
-.fp-hover-lift:hover { transform: translateY(-4px); }
-
-/* shadows */
-.fp-shadow-card  { box-shadow: 0 1px 2px rgba(15,26,51,0.04), 0 8px 24px -12px rgba(15,26,51,0.12); }
-.fp-shadow-lift  { box-shadow: 0 2px 4px rgba(15,26,51,0.04), 0 24px 48px -20px rgba(15,26,51,0.22); }
-.fp-shadow-navy  { box-shadow: 0 20px 50px -24px rgba(15,26,51,0.55); }
-.fp-shadow-float { box-shadow: 0 30px 60px -28px rgba(15,26,51,0.30); }
-.fp-shadow-coral { box-shadow: 0 14px 30px -14px rgba(108,8,32,0.45); }
-
-/* ─── Keyframes (FlightPath sky) ─────────────────────────────── */
-@keyframes fp-floatY    { 0%,100% { transform: translateY(0); }  50% { transform: translateY(-12px); } }
-@keyframes fp-floatYsm  { 0%,100% { transform: translateY(0); }  50% { transform: translateY(-6px); } }
-@keyframes fp-drift     { 0% { transform: translateX(0); }       100% { transform: translateX(40px); } }
-@keyframes fp-dash      { to { stroke-dashoffset: -120; } }
-@keyframes fp-twinkle   { 0%,100% { opacity: .25; }              50% { opacity: .7; } }
-@keyframes fp-pulseDot  { 0%,100% { opacity: 1; }                50% { opacity: .3; } }
-@keyframes fp-breathe   { 0%,100% { opacity: .28; transform: scale(1); } 50% { opacity: .6; transform: scale(1.1); } }
-@keyframes fp-flyAcross     { from { transform: translateX(-22vw); } to { transform: translateX(122vw); } }
-@keyframes fp-flyAcrossBack { from { transform: translateX(122vw) scaleX(-1); } to { transform: translateX(-22vw) scaleX(-1); } }
-@keyframes fp-cloudDrift    { 0%,100% { transform: translateX(0); } 50% { transform: translateX(46px); } }
-@keyframes fp-cloudDriftRev { 0%,100% { transform: translateX(0); } 50% { transform: translateX(-38px); } }
-@keyframes fp-blink     { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
-@keyframes fp-radar     { 0% { transform: scale(.6); opacity: .7; } 80% { opacity: 0; } 100% { transform: scale(2.6); opacity: 0; } }
-@keyframes fp-softIn    { 0% { opacity: 0; transform: translateY(5px); } 100% { opacity: 1; transform: translateY(0); } }
-
-.fp-animate-float-y     { animation: fp-floatY 6s ease-in-out infinite; }
-.fp-animate-float-y-sm  { animation: fp-floatYsm 4s ease-in-out infinite; }
-.fp-animate-drift       { animation: fp-drift 18s ease-in-out infinite alternate; }
-.fp-animate-twinkle     { animation: fp-twinkle 3s ease-in-out infinite; }
-.fp-animate-pulse-dot   { animation: fp-pulseDot 1.6s ease-in-out infinite; }
-.fp-animate-breathe     { animation: fp-breathe 4.5s ease-in-out infinite; }
-.fp-animate-blink       { animation: fp-blink 1.1s ease-in-out infinite; }
-.fp-animate-radar       { animation: fp-radar 1.8s ease-out infinite; }
-.fp-animate-soft-in     { animation: fp-softIn .5s ease-out both; }
-.fp-animate-fly         { animation: fp-flyAcross 38s linear infinite; }
-.fp-animate-fly-back    { animation: fp-flyAcrossBack 46s linear infinite; }
-.fp-animate-cloud       { animation: fp-cloudDrift 22s ease-in-out infinite; }
-.fp-animate-cloud-rev   { animation: fp-cloudDriftRev 26s ease-in-out infinite; }
-
-/* parallax wrapper */
-.fp-px-layer {
-  transition: transform .5s cubic-bezier(.22,.61,.36,1);
-  will-change: transform;
-}
-
-/* premium dark card */
-.fp-card-navy {
-  background: linear-gradient(155deg, #2A466F 0%, #3D5D91 60%, #33527F 100%);
-  color: #FAF8F4;
-}
-
-/* coral button base */
-.fp-btn-coral {
-  background: var(--fp-burgundy);
-  color: #FAF8F4;
-  transition: background .25s, transform .25s, box-shadow .25s;
-}
-.fp-btn-coral:hover {
-  background: var(--fp-burgundy-900);
-  transform: translateY(-1px);
-  box-shadow: 0 14px 30px -14px rgba(108,8,32,0.55);
-}
-.fp-btn-navy {
-  background: var(--fp-lapis);
-  color: white;
-  transition: background .25s, transform .25s, box-shadow .25s;
-}
-.fp-btn-navy:hover {
-  background: var(--fp-lapis-700);
-  transform: translateY(-1px);
-}
-
-/* FlightPath Google fonts are loaded via <link> in src/routes/__root.tsx */
