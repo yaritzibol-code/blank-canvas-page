@@ -62,17 +62,40 @@
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0.875rem;
 
-  /* FlightPath Brand Colors */
+  /* FlightPath Brand Colors — full palette */
+  --fp-ink-950: #22375C;
+  --fp-ink-900: #2A466F;
+  --fp-ink-800: #33527F;
+  --fp-ink-700: #3D5D91;
+  --fp-ink-600: #4E6EA3;
+  --fp-haze-50: #F4F7FB;
+  --fp-haze-100: #E8EEF6;
+  --fp-haze-200: #D7E1EE;
+  --fp-haze-300: #B9C8DD;
+  --fp-haze-400: #8DA1BE;
+  --fp-haze-500: #647DA0;
+  --fp-haze-600: #4C648A;
   --fp-lapis: #3D5D91;
-  --fp-burgundy: #6C0820;
-  --fp-cherry: #F2AEBC;
-  --fp-misty: #F2DCDB;
+  --fp-lapis-700: #2E4670;
   --fp-silver: #5A86CB;
+  --fp-silver-400: #7CA0D8;
+  --fp-burgundy: #6C0820;
+  --fp-burgundy-700: #8A0A28;
+  --fp-burgundy-900: #4A0517;
+  --fp-cherry: #F2AEBC;
+  --fp-cherry-200: #FAEDED;
+  --fp-cherry-400: #F5C0CC;
+  --fp-cherry-600: #E0879A;
+  --fp-misty: #F2DCDB;
+  --fp-misty-100: #FAEFEE;
+  --fp-paper: #FAF8F4;
+  --fp-paper-100: #F4F1EB;
+  --fp-bone: #FBFAF7;
 
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.19 0.06 253);
+  --background: oklch(0.99 0.005 80);
+  --foreground: oklch(0.40 0.07 258);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.19 0.06 253);
   --popover: oklch(1 0 0);
@@ -156,3 +179,159 @@
 @keyframes fp-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
 @keyframes fp-fadeIn { from{opacity:0} to{opacity:1} }
 @keyframes fp-slideUp { from{transform:translateY(14px);opacity:0} to{transform:translateY(0);opacity:1} }
+
+/* ─────────────────────────────────────────────────────────────────
+   FLIGHTPATH DESIGN SYSTEM — globally applied
+   ───────────────────────────────────────────────────────────────── */
+
+html, body {
+  background: var(--fp-bone);
+}
+body {
+  font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color: var(--fp-ink-700);
+}
+html { scroll-behavior: smooth; }
+
+.font-display {
+  font-family: 'Bricolage Grotesque', 'Manrope', sans-serif;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+}
+.font-sans-fp { font-family: 'Manrope', system-ui, sans-serif; }
+.font-mono-fp { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+::selection { background: #F4A6B0; color: #A81B30; }
+
+/* Bone-white base + cloudscape backdrop */
+.fp-sky-base { background: var(--fp-bone); }
+.fp-cloudscape {
+  background: linear-gradient(180deg, #FBFAF7 0%, #F8F7F3 55%, #FCFBF8 100%);
+}
+.fp-cloudscape-cherry {
+  background: linear-gradient(180deg, #FBE7EC 0%, #F6D9E1 55%, #FCEAEF 100%);
+}
+.fp-cloudscape-azul {
+  background: linear-gradient(180deg, #E7EFFB 0%, #DAE6F6 55%, #EAF1FC 100%);
+}
+
+/* faint aero grid behind hero sections */
+.fp-aero-grid {
+  background-image:
+    linear-gradient(to right, rgba(61,93,145,0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(61,93,145,0.06) 1px, transparent 1px);
+  background-size: 70px 70px;
+  -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 25%, transparent 80%);
+          mask-image: radial-gradient(120% 100% at 50% 0%, #000 25%, transparent 80%);
+}
+
+/* soft fluffy cloud blobs */
+.fp-cloud-soft {
+  background: radial-gradient(closest-side, rgba(255,255,255,0.96), rgba(255,255,255,0.55) 62%, rgba(255,255,255,0));
+  filter: blur(6px);
+}
+.fp-cloud-base {
+  background: radial-gradient(closest-side, rgba(214,228,247,0.55), rgba(214,228,247,0));
+  filter: blur(10px);
+}
+
+/* dashed flight paths */
+.fp-dash-line { stroke-dasharray: 2 7; stroke-linecap: round; }
+.fp-dash-flow { stroke-dasharray: 8 10; animation: fp-dash 3s linear infinite; }
+
+/* Glass nav */
+.fp-glass {
+  background: rgba(250, 248, 244, 0.72);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+.fp-glass-dark {
+  background: rgba(34, 55, 92, 0.65);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+/* hide scrollbar utility */
+.fp-no-bar::-webkit-scrollbar { display: none; }
+.fp-no-bar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* card hover lift */
+.fp-hover-lift {
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;
+}
+.fp-hover-lift:hover { transform: translateY(-4px); }
+
+/* shadows */
+.fp-shadow-card  { box-shadow: 0 1px 2px rgba(15,26,51,0.04), 0 8px 24px -12px rgba(15,26,51,0.12); }
+.fp-shadow-lift  { box-shadow: 0 2px 4px rgba(15,26,51,0.04), 0 24px 48px -20px rgba(15,26,51,0.22); }
+.fp-shadow-navy  { box-shadow: 0 20px 50px -24px rgba(15,26,51,0.55); }
+.fp-shadow-float { box-shadow: 0 30px 60px -28px rgba(15,26,51,0.30); }
+.fp-shadow-coral { box-shadow: 0 14px 30px -14px rgba(108,8,32,0.45); }
+
+/* ─── Keyframes (FlightPath sky) ─────────────────────────────── */
+@keyframes fp-floatY    { 0%,100% { transform: translateY(0); }  50% { transform: translateY(-12px); } }
+@keyframes fp-floatYsm  { 0%,100% { transform: translateY(0); }  50% { transform: translateY(-6px); } }
+@keyframes fp-drift     { 0% { transform: translateX(0); }       100% { transform: translateX(40px); } }
+@keyframes fp-dash      { to { stroke-dashoffset: -120; } }
+@keyframes fp-twinkle   { 0%,100% { opacity: .25; }              50% { opacity: .7; } }
+@keyframes fp-pulseDot  { 0%,100% { opacity: 1; }                50% { opacity: .3; } }
+@keyframes fp-breathe   { 0%,100% { opacity: .28; transform: scale(1); } 50% { opacity: .6; transform: scale(1.1); } }
+@keyframes fp-flyAcross     { from { transform: translateX(-22vw); } to { transform: translateX(122vw); } }
+@keyframes fp-flyAcrossBack { from { transform: translateX(122vw) scaleX(-1); } to { transform: translateX(-22vw) scaleX(-1); } }
+@keyframes fp-cloudDrift    { 0%,100% { transform: translateX(0); } 50% { transform: translateX(46px); } }
+@keyframes fp-cloudDriftRev { 0%,100% { transform: translateX(0); } 50% { transform: translateX(-38px); } }
+@keyframes fp-blink     { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+@keyframes fp-radar     { 0% { transform: scale(.6); opacity: .7; } 80% { opacity: 0; } 100% { transform: scale(2.6); opacity: 0; } }
+@keyframes fp-softIn    { 0% { opacity: 0; transform: translateY(5px); } 100% { opacity: 1; transform: translateY(0); } }
+
+.fp-animate-float-y     { animation: fp-floatY 6s ease-in-out infinite; }
+.fp-animate-float-y-sm  { animation: fp-floatYsm 4s ease-in-out infinite; }
+.fp-animate-drift       { animation: fp-drift 18s ease-in-out infinite alternate; }
+.fp-animate-twinkle     { animation: fp-twinkle 3s ease-in-out infinite; }
+.fp-animate-pulse-dot   { animation: fp-pulseDot 1.6s ease-in-out infinite; }
+.fp-animate-breathe     { animation: fp-breathe 4.5s ease-in-out infinite; }
+.fp-animate-blink       { animation: fp-blink 1.1s ease-in-out infinite; }
+.fp-animate-radar       { animation: fp-radar 1.8s ease-out infinite; }
+.fp-animate-soft-in     { animation: fp-softIn .5s ease-out both; }
+.fp-animate-fly         { animation: fp-flyAcross 38s linear infinite; }
+.fp-animate-fly-back    { animation: fp-flyAcrossBack 46s linear infinite; }
+.fp-animate-cloud       { animation: fp-cloudDrift 22s ease-in-out infinite; }
+.fp-animate-cloud-rev   { animation: fp-cloudDriftRev 26s ease-in-out infinite; }
+
+/* parallax wrapper */
+.fp-px-layer {
+  transition: transform .5s cubic-bezier(.22,.61,.36,1);
+  will-change: transform;
+}
+
+/* premium dark card */
+.fp-card-navy {
+  background: linear-gradient(155deg, #2A466F 0%, #3D5D91 60%, #33527F 100%);
+  color: #FAF8F4;
+}
+
+/* coral button base */
+.fp-btn-coral {
+  background: var(--fp-burgundy);
+  color: #FAF8F4;
+  transition: background .25s, transform .25s, box-shadow .25s;
+}
+.fp-btn-coral:hover {
+  background: var(--fp-burgundy-900);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px -14px rgba(108,8,32,0.55);
+}
+.fp-btn-navy {
+  background: var(--fp-lapis);
+  color: white;
+  transition: background .25s, transform .25s, box-shadow .25s;
+}
+.fp-btn-navy:hover {
+  background: var(--fp-lapis-700);
+  transform: translateY(-1px);
+}
+
+/* import FlightPath Google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
