@@ -1,11 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
+import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 
 export const Route = createFileRoute("/cuestionario")({
   component: CuestionarioPage,
 });
 
 interface Question {
+  icon: FPIconName;
   materia: string;
   text: string;
   options: { text: string; correct: boolean }[];
@@ -20,7 +22,8 @@ interface YarisMsg {
 
 const QUESTIONS: Question[] = [
   {
-    materia: "🌤️ Meteorología",
+    icon: "cloud",
+    materia: "Meteorología",
     text: "¿Cuál de los siguientes grupos en un METAR indica la visibilidad predominante en metros?",
     options: [
       { text: "El grupo de temperatura y punto de rocío", correct: false },
@@ -34,7 +37,8 @@ const QUESTIONS: Question[] = [
     },
   },
   {
-    materia: "🌤️ Meteorología",
+    icon: "cloud",
+    materia: "Meteorología",
     text: "¿Qué fenómeno atmosférico describe la inversión de temperatura?",
     options: [
       { text: "Un aumento de temperatura con la altitud, contrario a la condición normal", correct: true },
@@ -48,7 +52,8 @@ const QUESTIONS: Question[] = [
     },
   },
   {
-    materia: "🌤️ Meteorología",
+    icon: "cloud",
+    materia: "Meteorología",
     text: "¿Cuál de las siguientes nubes pertenece al género de nubes altas?",
     options: [
       { text: "Cumulonimbus", correct: false },
@@ -62,7 +67,8 @@ const QUESTIONS: Question[] = [
     },
   },
   {
-    materia: "✈️ Aerodinámica",
+    icon: "plane",
+    materia: "Aerodinámica",
     text: "¿Qué sucede con la sustentación si duplicamos la velocidad del avión, manteniendo todo lo demás constante?",
     options: [
       { text: "La sustentación se duplica", correct: false },
@@ -77,7 +83,8 @@ const QUESTIONS: Question[] = [
     },
   },
   {
-    materia: "✈️ Aerodinámica",
+    icon: "plane",
+    materia: "Aerodinámica",
     text: "¿Cuál es el efecto de un ángulo de ataque excesivo en un ala?",
     options: [
       { text: "La resistencia disminuye al máximo", correct: false },
@@ -93,11 +100,11 @@ const QUESTIONS: Question[] = [
 ];
 
 const YARIS_REPLIES = [
-  { t: "En un METAR, la visibilidad aparece después del viento y se expresa en metros con 4 dígitos. 9999 significa 10 km o más de visibilidad. 🌤️", c: "Manual Meteorología CIAAC, Cap. 21, p. 180" },
-  { t: "Piénsalo así: el METAR tiene un orden fijo: Tipo · Estación · Hora · Viento · <strong>Visibilidad</strong> · Fenómenos · Nubosidad · Temperatura/Rocío · Presión. ¡Apréndetelo en ese orden! 📋", c: "Meteorología Básica CIAAC, Cap. 21, p. 178" },
-  { t: "¿Recuerdas el clima en el aeropuerto? Exactamente eso describe el METAR — una foto del tiempo en un momento específico. 📸", c: null },
-  { t: "La sustentación es proporcional al cuadrado de la velocidad. Cuando duplicas la velocidad, multiplicas la sustentación por 4. ¡Recuerda V²! ✈️", c: "Aerodinámica CIAAC, Cap. 5, p. 48" },
-  { t: "El ángulo de ataque crítico es el punto de no retorno — una vez que lo superas, el flujo se separa y pierdes sustentación abruptamente. 🚀", c: "Aerodinámica CIAAC, Cap. 8, p. 74" },
+  { t: "En un METAR, la visibilidad aparece después del viento y se expresa en metros con 4 dígitos. 9999 significa 10 km o más de visibilidad.", c: "Manual Meteorología CIAAC, Cap. 21, p. 180" },
+  { t: "Piénsalo así: el METAR tiene un orden fijo: Tipo · Estación · Hora · Viento · <strong>Visibilidad</strong> · Fenómenos · Nubosidad · Temperatura/Rocío · Presión. ¡Apréndetelo en ese orden!", c: "Meteorología Básica CIAAC, Cap. 21, p. 178" },
+  { t: "¿Recuerdas el clima en el aeropuerto? Exactamente eso describe el METAR — una foto del tiempo en un momento específico.", c: null },
+  { t: "La sustentación es proporcional al cuadrado de la velocidad. Cuando duplicas la velocidad, multiplicas la sustentación por 4. ¡Recuerda V²!", c: "Aerodinámica CIAAC, Cap. 5, p. 48" },
+  { t: "El ángulo de ataque crítico es el punto de no retorno — una vez que lo superas, el flujo se separa y pierdes sustentación abruptamente.", c: "Aerodinámica CIAAC, Cap. 8, p. 74" },
 ];
 
 const LETTERS = ["A", "B", "C", "D"];
@@ -178,7 +185,7 @@ function CuestionarioPage() {
       setTimeout(() => {
         setYarisTyping(false);
         setYarisMsgs([
-          { role: "bot", text: "¡Hola! Soy Yaris 🤖 Veo que tienes una duda sobre <strong>Meteorología</strong>. ¡Te explico!", cite: "Manual Meteorología CIAAC, Cap. 21, p. 180" },
+          { role: "bot", text: "¡Hola! Soy Yaris. Veo que tienes una duda sobre <strong>Meteorología</strong>. ¡Te explico!", cite: "Manual Meteorología CIAAC, Cap. 21, p. 180" },
         ]);
         setTimeout(() => {
           setYarisTyping(true);
@@ -186,7 +193,7 @@ function CuestionarioPage() {
             setYarisTyping(false);
             setYarisMsgs((prev) => [
               ...prev,
-              { role: "bot", text: "El METAR tiene un orden fijo: Tipo · Estación · Hora · Viento · <strong>Visibilidad</strong> · Fenómenos · Nubosidad · Temperatura/Rocío · Presión. La visibilidad siempre va después del viento, en metros con 4 dígitos. 📋", cite: "Meteorología Básica CIAAC, Cap. 21, p. 178" },
+              { role: "bot", text: "El METAR tiene un orden fijo: Tipo · Estación · Hora · Viento · <strong>Visibilidad</strong> · Fenómenos · Nubosidad · Temperatura/Rocío · Presión. La visibilidad siempre va después del viento, en metros con 4 dígitos.", cite: "Meteorología Básica CIAAC, Cap. 21, p. 178" },
             ]);
           }, 900);
         }, 200);
@@ -231,14 +238,14 @@ function CuestionarioPage() {
 
   function getLetterStyle(optIdx: number): React.CSSProperties {
     const opt = QUESTIONS[currentIdx].options[optIdx];
-    if (!answered) return { background: "#F2DCDB", color: "#888" };
+    if (!answered) return { background: "#F2DCDB", color: "#647DA0" };
     if (optIdx === selectedIdx) {
       return opt.correct
         ? { background: "#2ecc71", color: "white" }
         : { background: "#e74c3c", color: "white" };
     }
     if (opt.correct) return { background: "#2ecc71", color: "white" };
-    return { background: "#F2DCDB", color: "#888" };
+    return { background: "#F2DCDB", color: "#647DA0" };
   }
 
   const currentQ = QUESTIONS[currentIdx];
@@ -249,9 +256,9 @@ function CuestionarioPage() {
   return (
     <div
       style={{
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: "'Manrope', sans-serif",
         background: "#f5f7fc",
-        color: "#1a1a2e",
+        color: "#22375C",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
@@ -278,20 +285,20 @@ function CuestionarioPage() {
             to="/dashboard/banco"
             style={{
               display: "flex", alignItems: "center", gap: 5,
-              color: "#888", fontSize: "0.8rem", textDecoration: "none",
+              color: "#647DA0", fontSize: "0.8rem", textDecoration: "none",
               padding: "5px 10px", borderRadius: 6, border: "1px solid #F2DCDB",
               transition: "all 0.2s",
             }}
             onMouseEnter={(e) => { e.currentTarget.style.color = "#3D5D91"; e.currentTarget.style.borderColor = "#3D5D91"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = "#888"; e.currentTarget.style.borderColor = "#F2DCDB"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "#647DA0"; e.currentTarget.style.borderColor = "#F2DCDB"; }}
           >
             ← Salir
           </Link>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "#1a1a2e" }}>
-              🌱 Modo Aprendiendo
+            <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "#22375C", display: "flex", alignItems: "center", gap: 6 }}>
+              <Icon n="spark" size={15} color="#3D5D91" /> Modo Aprendiendo
             </span>
-            <span style={{ fontSize: "0.72rem", color: "#888" }} className="hidden sm:block">
+            <span style={{ fontSize: "0.72rem", color: "#647DA0" }} className="hidden sm:block">
               Meteorología · {total} preguntas
             </span>
           </div>
@@ -313,11 +320,11 @@ function CuestionarioPage() {
               background: "linear-gradient(135deg,#3D5D91,#5A86CB)",
               color: "white", border: "none", borderRadius: 7,
               fontSize: "0.8rem", fontWeight: 700, cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
               display: "flex", alignItems: "center", gap: 5,
             }}
           >
-            🤖 <span className="hidden sm:inline">Explícamelo Yaris</span>
+            <Icon n="spark" size={16} /> <span className="hidden sm:inline">Explícamelo Yaris</span>
           </button>
         </div>
       </div>
@@ -334,7 +341,7 @@ function CuestionarioPage() {
         <div
           style={{
             display: "flex", justifyContent: "space-between", alignItems: "center",
-            fontSize: "0.75rem", color: "#888", marginBottom: 6,
+            fontSize: "0.75rem", color: "#647DA0", marginBottom: 6,
           }}
         >
           <span>Progreso de la sesión</span>
@@ -388,18 +395,18 @@ function CuestionarioPage() {
                   textTransform: "uppercase", letterSpacing: "0.4px",
                 }}
               >
-                {currentQ.materia}
+                <Icon n={currentQ.icon} size={14} /> {currentQ.materia}
               </div>
-              <span style={{ fontSize: "0.78rem", color: "#aaa", fontWeight: 600 }}>
+              <span style={{ fontSize: "0.78rem", color: "#8DA1BE", fontWeight: 600 }}>
                 {currentIdx + 1} / {total}
               </span>
             </div>
 
             <p
               style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "'Bricolage Grotesque', sans-serif",
                 fontSize: "1.25rem",
-                color: "#1a1a2e",
+                color: "#22375C",
                 lineHeight: 1.5,
                 marginBottom: 28,
               }}
@@ -446,12 +453,12 @@ function CuestionarioPage() {
                   >
                     {LETTERS[i]}
                   </div>
-                  <div style={{ fontSize: "0.9rem", color: "#1a1a2e", lineHeight: 1.4, flex: 1 }}>
+                  <div style={{ fontSize: "0.9rem", color: "#22375C", lineHeight: 1.4, flex: 1 }}>
                     {opt.text}
                   </div>
                   {answered && (
-                    <span style={{ fontSize: "1.1rem", flexShrink: 0 }}>
-                      {opt.correct ? "✅" : (i === selectedIdx ? "❌" : "")}
+                    <span style={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
+                      {opt.correct ? <Icon n="checkCircle" size={20} color="#2ecc71" /> : (i === selectedIdx ? <Icon n="close" size={20} color="#e74c3c" /> : null)}
                     </span>
                   )}
                 </div>
@@ -470,7 +477,7 @@ function CuestionarioPage() {
               >
                 <style>{`@keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}`}</style>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-                  <span style={{ fontSize: "1.2rem" }}>{answeredCorrectly ? "✅" : "❌"}</span>
+                  <span style={{ display: "flex", alignItems: "center" }}>{answeredCorrectly ? <Icon n="checkCircle" size={22} color="#1a7a4a" /> : <Icon n="close" size={22} color="#c0392b" />}</span>
                   <span
                     style={{
                       fontSize: "0.9rem", fontWeight: 700,
@@ -485,12 +492,13 @@ function CuestionarioPage() {
                 </p>
                 <span
                   style={{
-                    display: "inline-block", marginTop: 8, padding: "4px 10px",
+                    marginTop: 8, padding: "4px 10px",
                     background: "rgba(61,93,145,0.07)", borderLeft: "3px solid #3D5D91",
                     borderRadius: 3, fontSize: "0.74rem", color: "#3D5D91", fontWeight: 600,
+                    display: "inline-flex", alignItems: "center", gap: 5,
                   }}
                 >
-                  📖 {currentQ.feedback.cite}
+                  <Icon n="book" size={13} /> {currentQ.feedback.cite}
                 </span>
                 <div style={{ marginTop: 12 }}>
                   <button
@@ -500,10 +508,11 @@ function CuestionarioPage() {
                       background: "linear-gradient(135deg,#3D5D91,#5A86CB)",
                       color: "white", border: "none", borderRadius: 7,
                       fontSize: "0.78rem", fontWeight: 700, cursor: "pointer",
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Manrope', sans-serif",
+                      display: "inline-flex", alignItems: "center", gap: 6,
                     }}
                   >
-                    🤖 Explícamelo Yaris
+                    <Icon n="spark" size={15} /> Explícamelo Yaris
                   </button>
                 </div>
               </div>
@@ -518,11 +527,11 @@ function CuestionarioPage() {
               style={{
                 width: "100%", padding: 13,
                 background: answered ? "#6C0820" : "#ddd",
-                color: answered ? "white" : "#aaa",
+                color: answered ? "white" : "#8DA1BE",
                 border: "none", borderRadius: 11,
                 fontSize: "0.92rem", fontWeight: 700,
                 cursor: answered ? "pointer" : "not-allowed",
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "'Manrope', sans-serif",
                 transition: "all 0.2s",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
               }}
@@ -584,20 +593,20 @@ function CuestionarioPage() {
             }}
           >
             <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}`}</style>
-            <div style={{ fontSize: "5rem", marginBottom: 8, animation: "float 3s ease-in-out infinite" }}>
-              ☁️
+            <div style={{ marginBottom: 8, animation: "float 3s ease-in-out infinite" }}>
+              <Icon n="cloud" size={72} color="#5A86CB" />
             </div>
             <h1
               style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "2rem", color: "#1a1a2e",
+                fontFamily: "'Bricolage Grotesque', sans-serif",
+                fontSize: "2rem", color: "#22375C",
                 marginBottom: 6, textAlign: "center",
               }}
             >
               ¡Sesión <span style={{ color: "#6C0820" }}>completada!</span>
             </h1>
-            <p style={{ fontSize: "0.9rem", color: "#888", marginBottom: 28, textAlign: "center" }}>
-              Aquí está tu análisis de Pathy ✈️
+            <p style={{ fontSize: "0.9rem", color: "#647DA0", marginBottom: 28, textAlign: "center" }}>
+              Aquí está tu análisis de Pathy
             </p>
 
             {/* Score card */}
@@ -611,14 +620,14 @@ function CuestionarioPage() {
             >
               <div
                 style={{
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "'Bricolage Grotesque', sans-serif",
                   fontSize: "4rem", fontWeight: 900,
                   color: scoreColor, lineHeight: 1, marginBottom: 4,
                 }}
               >
                 {scorePercent}%
               </div>
-              <div style={{ fontSize: "0.85rem", color: "#888", marginBottom: 20 }}>
+              <div style={{ fontSize: "0.85rem", color: "#647DA0", marginBottom: 20 }}>
                 Aciertos en esta sesión
               </div>
               <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
@@ -629,10 +638,10 @@ function CuestionarioPage() {
                   { num: `${elapsedMin} min`, label: "Tiempo" },
                 ].map((s) => (
                   <div key={s.label} style={{ textAlign: "center" }}>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.4rem", fontWeight: 900, color: "#1a1a2e" }}>
+                    <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", fontWeight: 900, color: "#22375C" }}>
                       {s.num}
                     </div>
-                    <div style={{ fontSize: "0.72rem", color: "#aaa" }}>{s.label}</div>
+                    <div style={{ fontSize: "0.72rem", color: "#8DA1BE" }}>{s.label}</div>
                   </div>
                 ))}
               </div>
@@ -647,12 +656,12 @@ function CuestionarioPage() {
                 marginBottom: 16,
               }}
             >
-              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12 }}>
-                ⚠️ Temas que necesitas reforzar
+              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}>
+                <Icon n="alert" size={15} /> Temas que necesitas reforzar
               </div>
               {[
-                { label: "📋 Lectura de METAR y TAF", score: 52, color: "#e74c3c", bg: "rgba(231,76,60,0.06)" },
-                { label: "🌡️ Sistemas de presión", score: 65, color: "#f39c12", bg: "rgba(243,156,18,0.06)" },
+                { icon: "doc", label: "Lectura de METAR y TAF", score: 52, color: "#e74c3c", bg: "rgba(231,76,60,0.06)" },
+                { icon: "gauge", label: "Sistemas de presión", score: 65, color: "#f39c12", bg: "rgba(243,156,18,0.06)" },
               ].map((item) => (
                 <div
                   key={item.label}
@@ -662,16 +671,16 @@ function CuestionarioPage() {
                     fontSize: "0.84rem", background: item.bg,
                   }}
                 >
-                  <span>{item.label}</span>
+                  <span style={{ display: "flex", alignItems: "center", gap: 7 }}><Icon n={item.icon as FPIconName} size={15} color="#22375C" /> {item.label}</span>
                   <span style={{ color: item.color, fontWeight: 700 }}>{item.score}%</span>
                 </div>
               ))}
-              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12, marginTop: 14 }}>
-                ✅ Lo que dominaste
+              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12, marginTop: 14, display: "flex", alignItems: "center", gap: 6 }}>
+                <Icon n="check" size={15} /> Lo que dominaste
               </div>
               {[
-                { label: "🌊 Fuerza de Coriolis", score: 90, color: "#2ecc71", bg: "rgba(46,204,113,0.06)" },
-                { label: "☁️ Clasificación de nubes", score: 88, color: "#2ecc71", bg: "rgba(46,204,113,0.06)" },
+                { icon: "wind", label: "Fuerza de Coriolis", score: 90, color: "#2ecc71", bg: "rgba(46,204,113,0.06)" },
+                { icon: "cloud", label: "Clasificación de nubes", score: 88, color: "#2ecc71", bg: "rgba(46,204,113,0.06)" },
               ].map((item) => (
                 <div
                   key={item.label}
@@ -681,7 +690,7 @@ function CuestionarioPage() {
                     fontSize: "0.84rem", background: item.bg,
                   }}
                 >
-                  <span>{item.label}</span>
+                  <span style={{ display: "flex", alignItems: "center", gap: 7 }}><Icon n={item.icon as FPIconName} size={15} color="#22375C" /> {item.label}</span>
                   <span style={{ color: item.color, fontWeight: 700 }}>{item.score}%</span>
                 </div>
               ))}
@@ -698,10 +707,10 @@ function CuestionarioPage() {
                 fontSize: "0.85rem", color: "#555", lineHeight: 1.6,
               }}
             >
-              <span style={{ fontSize: "1.5rem" }}>☁️</span>
+              <span style={{ display: "flex", alignItems: "center" }}><Icon n="cloud" size={24} color="#6C0820" /></span>
               <div>
                 <strong style={{ color: "#6C0820" }}>Pathy recomienda:</strong>{" "}
-                ¡Buen trabajo! Tu punto más débil es la lectura de METAR/TAF. Te recomiendo hacer una sesión de 20 preguntas solo de ese tema. ¡En 2 días más lo dominarás! 💪
+                ¡Buen trabajo! Tu punto más débil es la lectura de METAR/TAF. Te recomiendo hacer una sesión de 20 preguntas solo de ese tema. ¡En 2 días más lo dominarás!
               </div>
             </div>
 
@@ -714,10 +723,11 @@ function CuestionarioPage() {
                   background: "white", color: "#3D5D91",
                   border: "2px solid #3D5D91", borderRadius: 11,
                   fontSize: "0.9rem", fontWeight: 700, cursor: "pointer",
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Manrope', sans-serif",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 7,
                 }}
               >
-                🔄 Repetir sesión
+                <Icon n="refresh" size={16} /> Repetir sesión
               </button>
               <Link
                 to="/dashboard"
@@ -726,12 +736,12 @@ function CuestionarioPage() {
                   background: "#6C0820", color: "white",
                   border: "none", borderRadius: 11,
                   fontSize: "0.9rem", fontWeight: 700, cursor: "pointer",
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Manrope', sans-serif",
                   textDecoration: "none",
-                  display: "flex", alignItems: "center", justifyContent: "center",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 7,
                 }}
               >
-                🏠 Ir al inicio
+                <Icon n="home" size={16} /> Ir al inicio
               </Link>
             </div>
           </div>
@@ -773,7 +783,7 @@ function CuestionarioPage() {
                   display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem",
                 }}
               >
-                🤖
+                <Icon n="spark" size={18} color="#3D5D91" />
               </div>
               <div>
                 <div style={{ fontSize: "0.86rem", fontWeight: 700, color: "white" }}>Yaris IA</div>
@@ -785,10 +795,11 @@ function CuestionarioPage() {
               style={{
                 background: "rgba(255,255,255,0.2)", border: "none", color: "white",
                 borderRadius: 6, padding: "4px 8px", cursor: "pointer",
-                fontSize: "0.76rem", fontWeight: 700, fontFamily: "'DM Sans', sans-serif",
+                fontSize: "0.76rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif",
+                display: "flex", alignItems: "center", justifyContent: "center",
               }}
             >
-              ✕
+              <Icon n="close" size={15} />
             </button>
           </div>
 
@@ -818,7 +829,7 @@ function CuestionarioPage() {
                     flexShrink: 0,
                   }}
                 >
-                  {msg.role === "bot" ? "🤖" : "MG"}
+                  {msg.role === "bot" ? <Icon n="spark" size={15} color="#6C0820" /> : "MG"}
                 </div>
                 <div
                   style={{
@@ -826,7 +837,7 @@ function CuestionarioPage() {
                     borderRadius: msg.role === "bot" ? "4px 12px 12px 12px" : "12px 4px 12px 12px",
                     fontSize: "0.81rem", lineHeight: 1.55,
                     background: msg.role === "bot" ? "#f0f4ff" : "#3D5D91",
-                    color: msg.role === "bot" ? "#1a1a2e" : "white",
+                    color: msg.role === "bot" ? "#22375C" : "white",
                   }}
                 >
                   <span dangerouslySetInnerHTML={{ __html: msg.text }} />
@@ -839,7 +850,7 @@ function CuestionarioPage() {
                         fontSize: "0.7rem", color: "#3D5D91", fontWeight: 600,
                       }}
                     >
-                      📖 {msg.cite}
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="book" size={12} /> {msg.cite}</span>
                     </span>
                   )}
                 </div>
@@ -854,7 +865,7 @@ function CuestionarioPage() {
                     justifyContent: "center", fontSize: "0.78rem", flexShrink: 0,
                   }}
                 >
-                  🤖
+                  <Icon n="spark" size={15} color="#6C0820" />
                 </div>
                 <div
                   style={{
@@ -889,7 +900,7 @@ function CuestionarioPage() {
               style={{
                 flex: 1, border: "2px solid #F2DCDB", borderRadius: 18,
                 padding: "7px 12px", fontSize: "0.81rem",
-                fontFamily: "'DM Sans', sans-serif", outline: "none",
+                fontFamily: "'Manrope', sans-serif", outline: "none",
                 transition: "border-color 0.2s",
               }}
               onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }}
@@ -904,7 +915,7 @@ function CuestionarioPage() {
                 fontSize: "0.82rem", flexShrink: 0,
               }}
             >
-              ➤
+              <Icon n="send" size={15} />
             </button>
           </div>
         </div>

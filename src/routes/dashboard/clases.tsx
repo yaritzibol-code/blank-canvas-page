@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
+import { Icon } from "@/components/ui/fp-icon";
 
 export const Route = createFileRoute("/dashboard/clases")({
   component: ClasesPage,
@@ -30,7 +31,7 @@ interface Materia {
 
 const MATERIAS: Materia[] = [
   {
-    name: "Aerodinámica", icon: "✈️",
+    name: "Aerodinámica", icon: "plane",
     color: "linear-gradient(135deg,#667eea,#764ba2)",
     total: "8 clases · 2h 14min", watchedCount: 8, totalCount: 8, progressPct: 100,
     videos: [
@@ -45,7 +46,7 @@ const MATERIAS: Materia[] = [
     ],
   },
   {
-    name: "Aeronaves y Motores", icon: "⚙️",
+    name: "Aeronaves y Motores", icon: "settings",
     color: "linear-gradient(135deg,#f093fb,#f5576c)",
     total: "9 clases · 2h 48min", watchedCount: 5, totalCount: 9, progressPct: 55,
     videos: [
@@ -61,7 +62,7 @@ const MATERIAS: Materia[] = [
     ],
   },
   {
-    name: "Meteorología", icon: "🌤️",
+    name: "Meteorología", icon: "cloud",
     color: "linear-gradient(135deg,#4facfe,#00f2fe)",
     total: "6 clases · 1h 58min", watchedCount: 2, totalCount: 6, progressPct: 35,
     videos: [
@@ -74,7 +75,7 @@ const MATERIAS: Materia[] = [
     ],
   },
   {
-    name: "Navegación Aérea", icon: "🗺️",
+    name: "Navegación Aérea", icon: "map",
     color: "linear-gradient(135deg,#43e97b,#38f9d7)",
     total: "7 clases · 2h 22min", watchedCount: 0, totalCount: 7, progressPct: 0,
     videos: [
@@ -88,7 +89,7 @@ const MATERIAS: Materia[] = [
     ],
   },
   {
-    name: "Legislación Aeronáutica", icon: "⚖️",
+    name: "Legislación Aeronáutica", icon: "scale",
     color: "linear-gradient(135deg,#fa709a,#fee140)",
     total: "5 clases · 1h 45min", watchedCount: 0, totalCount: 5, progressPct: 0,
     videos: [
@@ -100,7 +101,7 @@ const MATERIAS: Materia[] = [
     ],
   },
   {
-    name: "Medicina de Aviación", icon: "🏥",
+    name: "Medicina de Aviación", icon: "stethoscope",
     color: "linear-gradient(135deg,#a18cd1,#fbc2eb)",
     total: "6 clases · 1h 52min", watchedCount: 5, totalCount: 6, progressPct: 80,
     videos: [
@@ -214,13 +215,13 @@ function ClasesPage() {
           style={{ margin: "-32px", display: "flex", height: "calc(100vh - 64px)", overflow: "hidden" }}
         >
           {/* Video side */}
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", background: "#1a1a2e", overflow: "hidden", minWidth: 0 }}>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", background: "#22375C", overflow: "hidden", minWidth: 0 }}>
             {/* Placeholder */}
             <div style={{ width: "100%", background: "black", aspectRatio: "16/9", maxHeight: "55vh", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-              <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg,#1a1a2e,#2a2a4e)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12 }}>
-                <div style={{ fontSize: "4rem" }}>{mat.icon}</div>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1rem", color: "white", textAlign: "center", padding: "0 20px" }}>{vid.title}</div>
-                <div style={{ fontSize: ".78rem", color: "rgba(255,255,255,.5)" }}>Haz clic en ▶ para reproducir</div>
+              <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg,#22375C,#2a2a4e)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12 }}>
+                <div style={{ display: "flex", color: "white" }}><Icon n={mat.icon as any} size={64} /></div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1rem", color: "white", textAlign: "center", padding: "0 20px" }}>{vid.title}</div>
+                <div style={{ fontSize: ".78rem", color: "rgba(255,255,255,.5)", display: "flex", alignItems: "center", gap: 4 }}>Haz clic en <Icon n="play" size={14} /> para reproducir</div>
               </div>
             </div>
 
@@ -234,9 +235,9 @@ function ClasesPage() {
               </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <button onClick={prevVideo} style={vcBtnStyle}>⏮</button>
-                  <button onClick={() => setIsPlaying((p) => !p)} style={vcBtnStyle}>{isPlaying ? "⏸" : "▶"}</button>
-                  <button onClick={nextVideo} style={vcBtnStyle}>⏭</button>
+                  <button onClick={prevVideo} style={vcBtnStyle}><Icon n="chevL" size={18} /></button>
+                  <button onClick={() => setIsPlaying((p) => !p)} style={vcBtnStyle}>{isPlaying ? <Icon n="pause" size={18} /> : <Icon n="play" size={18} />}</button>
+                  <button onClick={nextVideo} style={vcBtnStyle}><Icon n="chevR" size={18} /></button>
                   <span style={{ fontSize: ".78rem", color: "rgba(255,255,255,.5)" }}>
                     {fmtProg(playProgress, vid.dur)} / {vid.dur}
                   </span>
@@ -244,24 +245,24 @@ function ClasesPage() {
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <button
                     onClick={cycleSpeed}
-                    style={{ background: "rgba(255,255,255,.1)", border: "none", color: "white", borderRadius: 6, padding: "3px 8px", fontSize: ".75rem", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}
+                    style={{ background: "rgba(255,255,255,.1)", border: "none", color: "white", borderRadius: 6, padding: "3px 8px", fontSize: ".75rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
                   >
                     {speeds[speedIdx]}
                   </button>
-                  <button onClick={showMaterias} style={vcBtnStyle} title="Cerrar">✕</button>
+                  <button onClick={showMaterias} style={vcBtnStyle} title="Cerrar"><Icon n="close" size={18} /></button>
                 </div>
               </div>
             </div>
 
             {/* Info */}
             <div style={{ flex: 1, overflowY: "auto", padding: "16px 20px" }}>
-              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", color: "white", marginBottom: 6 }}>{vid.title}</div>
+              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "white", marginBottom: 6 }}>{vid.title}</div>
               <div style={{ fontSize: ".78rem", color: "rgba(255,255,255,.4)", marginBottom: 14, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                <span>🎬 Clase {videoIdx + 1} de {mat.videos.length}</span>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="play" size={13} /> Clase {videoIdx + 1} de {mat.videos.length}</span>
                 <span>·</span>
-                <span>⏱ {vid.dur}</span>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="clock" size={13} /> {vid.dur}</span>
                 <span>·</span>
-                <span>{mat.icon} {mat.name}</span>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n={mat.icon as any} size={13} /> {mat.name}</span>
               </div>
               <div style={{ fontSize: ".84rem", color: "rgba(255,255,255,.65)", lineHeight: 1.6, marginBottom: 14 }}>{vid.desc}</div>
               <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
@@ -275,8 +276,8 @@ function ClasesPage() {
           {/* Playlist side */}
           <div className="player-playlist" style={{ width: 300, flexShrink: 0, background: "white", borderLeft: "1px solid rgba(61,93,145,.08)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
             <div style={{ padding: "14px 16px", borderBottom: "1px solid #F2DCDB", background: "#f8f9ff" }}>
-              <h3 style={{ fontSize: ".85rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 2 }}>{mat.icon} {mat.name}</h3>
-              <p style={{ fontSize: ".72rem", color: "#888" }}>{mat.total}</p>
+              <h3 style={{ fontSize: ".85rem", fontWeight: 700, color: "#22375C", marginBottom: 2, display: "flex", alignItems: "center", gap: 6 }}><Icon n={mat.icon as any} size={16} /> {mat.name}</h3>
+              <p style={{ fontSize: ".72rem", color: "#647DA0" }}>{mat.total}</p>
             </div>
             <div style={{ flex: 1, overflowY: "auto" }}>
               {mat.videos.map((pv, i) => {
@@ -302,15 +303,15 @@ function ClasesPage() {
                       display: "flex", alignItems: "center", justifyContent: "center",
                       fontSize: ".72rem", fontWeight: 700,
                       background: isActive ? "#3D5D91" : isDone ? "#2ecc71" : isLocked ? "#eee" : "#F2DCDB",
-                      color: isActive || isDone ? "white" : isLocked ? "#ccc" : "#888",
+                      color: isActive || isDone ? "white" : isLocked ? "#ccc" : "#647DA0",
                     }}>
-                      {isDone ? "✓" : i + 1}
+                      {isDone ? <Icon n="check" size={15} /> : i + 1}
                     </div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: ".8rem", fontWeight: isActive ? 700 : 600, color: isActive ? "#3D5D91" : "#1a1a2e", lineHeight: 1.3, marginBottom: 2 }}>{pv.title}</div>
-                      <div style={{ fontSize: ".7rem", color: "#aaa" }}>⏱ {pv.dur}</div>
+                      <div style={{ fontSize: ".8rem", fontWeight: isActive ? 700 : 600, color: isActive ? "#3D5D91" : "#22375C", lineHeight: 1.3, marginBottom: 2 }}>{pv.title}</div>
+                      <div style={{ fontSize: ".7rem", color: "#8DA1BE", display: "flex", alignItems: "center", gap: 4 }}><Icon n="clock" size={12} /> {pv.dur}</div>
                     </div>
-                    <span style={{ fontSize: ".85rem", flexShrink: 0 }}>{isLocked ? "🔒" : isDone ? "✅" : ""}</span>
+                    <span style={{ flexShrink: 0, display: "flex", color: isLocked ? "#8DA1BE" : "#2ecc71" }}>{isLocked ? <Icon n="lock" size={14} /> : isDone ? <Icon n="checkCircle" size={14} /> : null}</span>
                   </div>
                 );
               })}
@@ -329,14 +330,14 @@ function ClasesPage() {
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 24 }}>
           <button
             onClick={showMaterias}
-            style={{ display: "flex", alignItems: "center", gap: 6, background: "white", border: "2px solid #F2DCDB", borderRadius: 8, padding: "7px 14px", fontSize: ".82rem", fontWeight: 700, color: "#888", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", transition: "all .2s" }}
+            style={{ display: "flex", alignItems: "center", gap: 6, background: "white", border: "2px solid #F2DCDB", borderRadius: 8, padding: "7px 14px", fontSize: ".82rem", fontWeight: 700, color: "#647DA0", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all .2s" }}
             onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; e.currentTarget.style.color = "#3D5D91"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; e.currentTarget.style.color = "#888"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; e.currentTarget.style.color = "#647DA0"; }}
           >
             ← Materias
           </button>
-          <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", fontWeight: 700 }}>
-            {currentMat.icon} {currentMat.name}
+          <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <Icon n={currentMat.icon as any} size={22} /> {currentMat.name}
           </span>
         </div>
 
@@ -362,21 +363,21 @@ function ClasesPage() {
                   transition: "all .2s",
                 }}
               >
-                <div style={{ width: 100, height: 64, borderRadius: 10, background: currentMat.color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.6rem", flexShrink: 0, position: "relative" }}>
-                  <span>{currentMat.icon}</span>
+                <div style={{ width: 100, height: 64, borderRadius: 10, background: currentMat.color, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, position: "relative", color: "white" }}>
+                  <span style={{ display: "flex" }}><Icon n={currentMat.icon as any} size={26} /></span>
                   {!isLocked && (
-                    <div style={{ position: "absolute", width: 28, height: 28, background: "rgba(255,255,255,.9)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: ".75rem", boxShadow: "0 2px 8px rgba(0,0,0,.2)" }}>▶</div>
+                    <div style={{ position: "absolute", width: 28, height: 28, background: "rgba(255,255,255,.9)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#3D5D91", boxShadow: "0 2px 8px rgba(0,0,0,.2)" }}><Icon n="play" size={14} /></div>
                   )}
                 </div>
 
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: ".88rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 3 }}>{i + 1}. {v.title}</div>
-                  <div style={{ fontSize: ".74rem", color: "#888", marginBottom: 6, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                    <span>⏱ {v.dur}</span>
-                    {isDone && <span style={{ padding: "2px 8px", borderRadius: 10, fontSize: ".65rem", fontWeight: 700, background: "rgba(46,204,113,.1)", color: "#1a7a4a" }}>✅ Vista</span>}
-                    {inProg && <span style={{ padding: "2px 8px", borderRadius: 10, fontSize: ".65rem", fontWeight: 700, background: "rgba(61,93,145,.08)", color: "#3D5D91" }}>▶ En progreso</span>}
-                    {isLocked && <span style={{ padding: "2px 8px", borderRadius: 10, fontSize: ".65rem", fontWeight: 700, background: "#F2DCDB", color: "#aaa" }}>🔒 Bloqueada</span>}
-                    {!isDone && !inProg && !isLocked && <span style={{ padding: "2px 8px", borderRadius: 10, fontSize: ".65rem", fontWeight: 700, background: "#F2DCDB", color: "#888" }}>Sin ver</span>}
+                  <div style={{ fontSize: ".88rem", fontWeight: 700, color: "#22375C", marginBottom: 3 }}>{i + 1}. {v.title}</div>
+                  <div style={{ fontSize: ".74rem", color: "#647DA0", marginBottom: 6, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="clock" size={12} /> {v.dur}</span>
+                    {isDone && <span style={{ padding: "2px 8px", borderRadius: 10, fontSize: ".65rem", fontWeight: 700, background: "rgba(46,204,113,.1)", color: "#1a7a4a", display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="checkCircle" size={11} /> Vista</span>}
+                    {inProg && <span style={{ padding: "2px 8px", borderRadius: 10, fontSize: ".65rem", fontWeight: 700, background: "rgba(61,93,145,.08)", color: "#3D5D91", display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="play" size={11} /> En progreso</span>}
+                    {isLocked && <span style={{ padding: "2px 8px", borderRadius: 10, fontSize: ".65rem", fontWeight: 700, background: "#F2DCDB", color: "#8DA1BE", display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="lock" size={11} /> Bloqueada</span>}
+                    {!isDone && !inProg && !isLocked && <span style={{ padding: "2px 8px", borderRadius: 10, fontSize: ".65rem", fontWeight: 700, background: "#F2DCDB", color: "#647DA0" }}>Sin ver</span>}
                   </div>
                   {(isDone || inProg) && (
                     <div style={{ height: 3, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
@@ -386,8 +387,8 @@ function ClasesPage() {
                 </div>
 
                 <div style={{ flexShrink: 0, textAlign: "right" }}>
-                  <div style={{ fontSize: ".78rem", color: "#aaa", fontWeight: 600 }}>{v.dur}</div>
-                  <div style={{ fontSize: "1rem", marginTop: 2 }}>{isLocked ? "🔒" : isDone ? "✅" : ""}</div>
+                  <div style={{ fontSize: ".78rem", color: "#8DA1BE", fontWeight: 600 }}>{v.dur}</div>
+                  <div style={{ marginTop: 2, display: "flex", justifyContent: "flex-end", color: isLocked ? "#8DA1BE" : "#2ecc71" }}>{isLocked ? <Icon n="lock" size={16} /> : isDone ? <Icon n="checkCircle" size={16} /> : null}</div>
                 </div>
               </div>
             );
@@ -401,10 +402,10 @@ function ClasesPage() {
   return (
     <div>
       <div style={{ marginBottom: 28 }}>
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.6rem", color: "#1a1a2e", marginBottom: 6 }}>
+        <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", color: "#22375C", marginBottom: 6 }}>
           Clases <span style={{ color: "#6C0820" }}>Grabadas</span>
         </h1>
-        <p style={{ fontSize: ".9rem", color: "#888" }}>Aprende a tu ritmo con videos explicados por Yaris, organizados por materia y tema.</p>
+        <p style={{ fontSize: ".9rem", color: "#647DA0" }}>Aprende a tu ritmo con videos explicados por Yaris, organizados por materia y tema.</p>
       </div>
 
       {/* Próximamente banner */}
@@ -418,12 +419,12 @@ function ClasesPage() {
         gap: 12,
         marginBottom: 24,
       }}>
-        <span style={{ fontSize: "1.4rem" }}>🎬</span>
+        <span style={{ display: "flex", color: "#6C0820" }}><Icon n="play" size={22} /></span>
         <div>
           <p style={{ fontSize: "0.88rem", fontWeight: 700, color: "#6C0820", margin: 0 }}>
             Clases grabadas — Próximamente
           </p>
-          <p style={{ fontSize: "0.78rem", color: "#888", margin: "2px 0 0" }}>
+          <p style={{ fontSize: "0.78rem", color: "#647DA0", margin: "2px 0 0" }}>
             Estamos grabando los videos. ¡Muy pronto disponibles!
           </p>
         </div>
@@ -431,17 +432,17 @@ function ClasesPage() {
 
       {/* Continue watching — disabled */}
       <div
-        style={{ background: "linear-gradient(135deg,#1a1a2e,#2a2a4e)", borderRadius: 16, padding: "20px 24px", display: "flex", alignItems: "center", gap: 18, marginBottom: 28, cursor: "not-allowed", opacity: 0.5, position: "relative", overflow: "hidden" }}
+        style={{ background: "linear-gradient(135deg,#22375C,#2a2a4e)", borderRadius: 16, padding: "20px 24px", display: "flex", alignItems: "center", gap: 18, marginBottom: 28, cursor: "not-allowed", opacity: 0.5, position: "relative", overflow: "hidden" }}
       >
         <div style={{ position: "absolute", top: 8, right: 12, background: "#F2AEBC", color: "#6C0820", fontSize: "0.68rem", fontWeight: 700, padding: "3px 10px", borderRadius: 20 }}>
           Próximamente
         </div>
-        <div style={{ width: 80, height: 56, borderRadius: 10, background: "linear-gradient(135deg,#4facfe,#00f2fe)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.8rem", flexShrink: 0, position: "relative" }}>
-          🌤️
-          <div style={{ position: "absolute", width: 28, height: 28, background: "rgba(255,255,255,.9)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: ".8rem" }}>▶</div>
+        <div style={{ width: 80, height: 56, borderRadius: 10, background: "linear-gradient(135deg,#4facfe,#00f2fe)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, position: "relative", color: "white" }}>
+          <Icon n="cloud" size={28} />
+          <div style={{ position: "absolute", width: 28, height: 28, background: "rgba(255,255,255,.9)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#3D5D91" }}><Icon n="play" size={15} /></div>
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: ".68rem", color: "#F2AEBC", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 4 }}>▶ Continuar viendo</div>
+          <div style={{ fontSize: ".68rem", color: "#F2AEBC", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 4, display: "flex", alignItems: "center", gap: 5 }}><Icon n="play" size={12} /> Continuar viendo</div>
           <div style={{ fontSize: ".95rem", fontWeight: 700, color: "white", marginBottom: 4 }}>Meteorología · Nubes — Clasificación y Formación</div>
           <div style={{ fontSize: ".75rem", color: "rgba(255,255,255,.5)" }}>Clase 3 de 6 · Llevas 8:24 de 22:15</div>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8 }}>
@@ -466,19 +467,19 @@ function ClasesPage() {
               position: "relative",
             }}
           >
-            <div style={{ height: 110, background: mat.color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "3rem", position: "relative" }}>
-              <span>{mat.icon}</span>
+            <div style={{ height: 110, background: mat.color, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", color: "white" }}>
+              <span style={{ display: "flex" }}><Icon n={mat.icon as any} size={44} /></span>
               <div style={{ position: "absolute", background: "rgba(0,0,0,0.45)", color: "white", fontSize: "0.72rem", fontWeight: 700, padding: "4px 12px", borderRadius: 20, letterSpacing: "0.5px" }}>
                 PRÓXIMAMENTE
               </div>
             </div>
             <div style={{ padding: 14 }}>
-              <div style={{ fontSize: ".88rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 4 }}>{mat.name}</div>
-              <div style={{ fontSize: ".74rem", color: "#888", marginBottom: 10 }}>{mat.total}</div>
+              <div style={{ fontSize: ".88rem", fontWeight: 700, color: "#22375C", marginBottom: 4 }}>{mat.name}</div>
+              <div style={{ fontSize: ".74rem", color: "#647DA0", marginBottom: 10 }}>{mat.total}</div>
               <div style={{ height: 4, background: "#F2DCDB", borderRadius: 10, overflow: "hidden", marginBottom: 5 }}>
                 <div style={{ height: "100%", borderRadius: 10, background: "linear-gradient(90deg,#3D5D91,#5A86CB)", width: "0%" }} />
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".7rem", color: "#aaa" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".7rem", color: "#8DA1BE" }}>
                 <span>Próximamente disponible</span>
                 <span>{mat.totalCount} clases</span>
               </div>

@@ -118,7 +118,7 @@ export function PreflightCheckBlock({
               textAlign: "left",
               width: "100%",
               fontSize: "0.88rem",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
               color: "#1a1a2e",
               transition: "all 0.15s",
             }}

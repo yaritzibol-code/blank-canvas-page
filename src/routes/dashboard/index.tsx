@@ -1,32 +1,33 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
+import { Icon } from "@/components/ui/fp-icon";
 
 export const Route = createFileRoute("/dashboard/")({
   component: DashboardHome,
 });
 
 const MATERIAS = [
-  { icon: "✈️", name: "Aerodinámica", pct: 78, slug: "aerodinamica" },
-  { icon: "⚙️", name: "Aeronaves y Motores", pct: 55, slug: "aeronaves-motores" },
-  { icon: "⚖️", name: "Legislación Aeronáutica", pct: 90, slug: "legislacion" },
-  { icon: "🏥", name: "Medicina de Aviación", pct: 40, slug: "medicina" },
-  { icon: "🌤️", name: "Meteorología", pct: 25, slug: "meteorologia" },
-  { icon: "🗺️", name: "Navegación Aérea", pct: 60, slug: "navegacion" },
-  { icon: "🛫", name: "Operaciones Aeronáuticas", pct: 15, slug: "operaciones" },
-  { icon: "📻", name: "Comunicaciones Aeronáuticas", pct: 0, slug: "comunicaciones" },
-  { icon: "📋", name: "Manuales de Información Aeronáutica", pct: 0, slug: "manuales-ais" },
-  { icon: "🗼", name: "Servicios de Tránsito Aéreo", pct: 0, slug: "servicios-transito" },
-  { icon: "🧠", name: "Factores Humanos", pct: 0, slug: "factores-humanos" },
-  { icon: "🛡️", name: "Seguridad Aérea", pct: 0, slug: "seguridad-aerea" },
+  { icon: "plane", name: "Aerodinámica", pct: 78, slug: "aerodinamica" },
+  { icon: "settings", name: "Aeronaves y Motores", pct: 55, slug: "aeronaves-motores" },
+  { icon: "scale", name: "Legislación Aeronáutica", pct: 90, slug: "legislacion" },
+  { icon: "stethoscope", name: "Medicina de Aviación", pct: 40, slug: "medicina" },
+  { icon: "cloud", name: "Meteorología", pct: 25, slug: "meteorologia" },
+  { icon: "map", name: "Navegación Aérea", pct: 60, slug: "navegacion" },
+  { icon: "plane", name: "Operaciones Aeronáuticas", pct: 15, slug: "operaciones" },
+  { icon: "radio", name: "Comunicaciones Aeronáuticas", pct: 0, slug: "comunicaciones" },
+  { icon: "doc", name: "Manuales de Información Aeronáutica", pct: 0, slug: "manuales-ais" },
+  { icon: "tower", name: "Servicios de Tránsito Aéreo", pct: 0, slug: "servicios-transito" },
+  { icon: "brain", name: "Factores Humanos", pct: 0, slug: "factores-humanos" },
+  { icon: "shield", name: "Seguridad Aérea", pct: 0, slug: "seguridad-aerea" },
 ];
 
 const WEEK_DAYS = ["L", "M", "M", "J", "V", "S", "D"];
 
 const s: Record<string, React.CSSProperties> = {
   sectionTitle: {
-    fontFamily: "'Playfair Display', serif",
+    fontFamily: "'Bricolage Grotesque', sans-serif",
     fontSize: "1.2rem",
-    color: "#1a1a2e",
+    color: "#22375C",
   },
   card: {
     background: "white",
@@ -98,7 +99,7 @@ function LiveCountdown() {
           >
             <span
               style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "'Bricolage Grotesque', sans-serif",
                 fontSize: "1.4rem",
                 fontWeight: 900,
                 lineHeight: 1,
@@ -137,7 +138,7 @@ function MateriaCard({ m }: { m: typeof MATERIAS[0] }) {
       }}
     >
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-        <span style={{ fontSize: "1.3rem" }}>{m.icon}</span>
+        <span style={{ display: "flex", color: "#3D5D91" }}><Icon n={m.icon as any} size={20} /></span>
         <span
           style={{
             fontSize: "0.75rem",
@@ -152,7 +153,7 @@ function MateriaCard({ m }: { m: typeof MATERIAS[0] }) {
         </span>
       </div>
       <div
-        style={{ fontSize: "0.88rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 8, lineHeight: 1.3 }}
+        style={{ fontSize: "0.88rem", fontWeight: 700, color: "#22375C", marginBottom: 8, lineHeight: 1.3 }}
       >
         {m.name}
       </div>
@@ -169,9 +170,9 @@ function MateriaCard({ m }: { m: typeof MATERIAS[0] }) {
       </div>
       <div style={{ display: "flex", gap: 6, marginTop: 10 }}>
         {[
-          { label: "📖 Material", path: `/dashboard/materias/${m.slug}` },
-          { label: "❓ Preguntas", path: `/dashboard/banco` },
-          { label: "🃏 Flash", path: `/dashboard/flashcards` },
+          { label: "Material", path: `/dashboard/materias/${m.slug}` },
+          { label: "Preguntas", path: `/dashboard/banco` },
+          { label: "Flash", path: `/dashboard/flashcards` },
         ].map((btn) => (
           <Link
             key={btn.label}
@@ -211,7 +212,7 @@ function DashboardHome() {
   const todayIdx = now.getDay() === 0 ? 6 : now.getDay() - 1;
 
   return (
-    <div style={{ maxWidth: 1200, margin: "0 auto", fontFamily: "'DM Sans', sans-serif" }}>
+    <div style={{ maxWidth: 1200, margin: "0 auto", fontFamily: "'Manrope', sans-serif" }}>
 
       {/* GREETING + COUNTDOWN */}
       <div
@@ -227,15 +228,15 @@ function DashboardHome() {
         <div>
           <h2
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Bricolage Grotesque', sans-serif",
               fontSize: "1.8rem",
-              color: "#1a1a2e",
+              color: "#22375C",
               marginBottom: 4,
             }}
           >
-            ¡{greeting}, <span style={{ color: "#6C0820" }}>María!</span> ✈️
+            ¡{greeting}, <span style={{ color: "#6C0820" }}>María!</span>
           </h2>
-          <p style={{ color: "#888", fontSize: "0.9rem" }}>
+          <p style={{ color: "#647DA0", fontSize: "0.9rem" }}>
             Llevas 14 días estudiando. ¡Pathy está muy orgullosa de ti!
           </p>
         </div>
@@ -245,7 +246,7 @@ function DashboardHome() {
       {/* PATHY WIDGET */}
       <div
         style={{
-          background: "linear-gradient(135deg, #1a1a2e, #2a2a4e)",
+          background: "linear-gradient(135deg, #22375C, #2a2a4e)",
           borderRadius: 16,
           padding: 20,
           color: "white",
@@ -255,10 +256,10 @@ function DashboardHome() {
           marginBottom: 28,
         }}
       >
-        <div style={{ fontSize: "3rem", flexShrink: 0 }}>☁️</div>
+        <div style={{ flexShrink: 0, display: "flex", color: "white" }}><Icon n="cloud" size={48} /></div>
         <div style={{ flex: 1 }}>
           <h4 style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: 4 }}>
-            ¡Modo Piloto activado, María! 🧢
+            ¡Modo Piloto activado, María!
           </h4>
           <p style={{ fontSize: "0.82rem", opacity: 0.7, lineHeight: 1.4, marginBottom: 10 }}>
             Llevas 14 días consecutivos estudiando. ¡Eres imparable! Sigue volando alto.
@@ -281,10 +282,10 @@ function DashboardHome() {
           </div>
         </div>
         <div style={{ textAlign: "center", flexShrink: 0 }}>
-          <span style={{ fontSize: "2rem", display: "block" }}>🔥</span>
+          <span style={{ display: "flex", justifyContent: "center", color: "#F2AEBC" }}><Icon n="flame" size={30} /></span>
           <span
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Bricolage Grotesque', sans-serif",
               fontSize: "2rem",
               fontWeight: 900,
               color: "#F2AEBC",
@@ -309,10 +310,10 @@ function DashboardHome() {
         className="grid-cols-2 md:grid-cols-4"
       >
         {[
-          { icon: "📊", bg: "rgba(61,93,145,0.1)", value: "42%", label: "Progreso general" },
-          { icon: "❓", bg: "#F2DCDB", value: "1,240", label: "Preguntas respondidas" },
-          { icon: "✅", bg: "rgba(52,168,83,0.1)", value: "74%", label: "Aciertos promedio" },
-          { icon: "⏱️", bg: "rgba(255,152,0,0.1)", value: "23h", label: "Tiempo de estudio" },
+          { icon: "chart", bg: "rgba(61,93,145,0.1)", value: "42%", label: "Progreso general" },
+          { icon: "help", bg: "#F2DCDB", value: "1,240", label: "Preguntas respondidas" },
+          { icon: "check", bg: "rgba(52,168,83,0.1)", value: "74%", label: "Aciertos promedio" },
+          { icon: "timer", bg: "rgba(255,152,0,0.1)", value: "23h", label: "Tiempo de estudio" },
         ].map((stat) => (
           <StatCard key={stat.label} {...stat} />
         ))}
@@ -330,19 +331,19 @@ function DashboardHome() {
       >
         <ActionCard
           primary
-          icon="▶️"
+          icon="play"
           title="Continuar estudiando"
           desc="Aerodinámica — Tema 4: Sustentación"
           to="/dashboard/materias/aerodinamica"
         />
         <ActionCard
-          icon="❓"
+          icon="help"
           title="Hacer cuestionario"
           desc="Elige materia y cantidad de preguntas"
           to="/dashboard/banco"
         />
         <ActionCard
-          icon="📝"
+          icon="sim"
           title="Examen simulado"
           desc="310 preguntas · 5 horas · CIAAC real"
           to="/dashboard/simulador"
@@ -394,22 +395,22 @@ function StatCard({
         style={{
           width: 44, height: 44, borderRadius: 12,
           display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: "1.3rem", flexShrink: 0, background: bg,
+          flexShrink: 0, background: bg, color: "#3D5D91",
         }}
       >
-        {icon}
+        <Icon n={icon as any} size={22} />
       </div>
       <div>
         <div
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "'Bricolage Grotesque', sans-serif",
             fontSize: "1.5rem", fontWeight: 900,
-            color: "#1a1a2e", lineHeight: 1,
+            color: "#22375C", lineHeight: 1,
           }}
         >
           {value}
         </div>
-        <div style={{ fontSize: "0.78rem", color: "#888", marginTop: 2 }}>{label}</div>
+        <div style={{ fontSize: "0.78rem", color: "#647DA0", marginTop: 2 }}>{label}</div>
       </div>
     </div>
   );
@@ -429,7 +430,7 @@ function ActionCard({
         onMouseLeave={() => setHov(false)}
         style={{
           background: primary ? (hov ? "#8a0a28" : "#6C0820") : "white",
-          color: primary ? "white" : "#1a1a2e",
+          color: primary ? "white" : "#22375C",
           borderRadius: 16, padding: 20,
           display: "flex", alignItems: "center", gap: 16,
           cursor: "pointer",
@@ -445,14 +446,14 @@ function ActionCard({
             width: 48, height: 48, borderRadius: 12,
             background: primary ? "rgba(255,255,255,0.15)" : "#F2DCDB",
             display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: "1.4rem", flexShrink: 0,
+            flexShrink: 0, color: primary ? "white" : "#6C0820",
           }}
         >
-          {icon}
+          <Icon n={icon as any} size={24} />
         </div>
         <div>
           <h3 style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: 2 }}>{title}</h3>
-          <p style={{ fontSize: "0.78rem", color: primary ? "rgba(255,255,255,0.7)" : "#888" }}>
+          <p style={{ fontSize: "0.78rem", color: primary ? "rgba(255,255,255,0.7)" : "#647DA0" }}>
             {desc}
           </p>
         </div>

@@ -80,7 +80,7 @@ function MatchActivity({ items }: { items: MatchItem[] }) {
                   background: isSelected ? "rgba(61,93,145,0.08)" : connected ? "rgba(90,134,203,0.06)" : "white",
                   cursor: checked ? "default" : "pointer",
                   fontSize: "0.85rem",
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Manrope', sans-serif",
                   color: "#1a1a2e",
                   textAlign: "left",
                   transition: "all 0.15s",
@@ -119,7 +119,7 @@ function MatchActivity({ items }: { items: MatchItem[] }) {
                   background: isUsed ? "rgba(90,134,203,0.06)" : "white",
                   cursor: checked || isUsed || !selectedLeft ? "default" : "pointer",
                   fontSize: "0.85rem",
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Manrope', sans-serif",
                   color: isUsed ? "#5A86CB" : "#1a1a2e",
                   textAlign: "left",
                   transition: "all 0.15s",
@@ -158,7 +158,7 @@ function MatchActivity({ items }: { items: MatchItem[] }) {
               fontSize: "0.88rem",
               fontWeight: 700,
               cursor: allConnected ? "pointer" : "not-allowed",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
               transition: "background 0.2s",
             }}
           >
@@ -177,7 +177,7 @@ function MatchActivity({ items }: { items: MatchItem[] }) {
               fontSize: "0.88rem",
               fontWeight: 700,
               cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
             }}
           >
             🔄 Intentar de nuevo
@@ -292,7 +292,7 @@ function CompletarActivity({ template, banco, respuestas }: ActiveRecallCompleta
                   fontWeight: 600,
                   color: answers[i] ? "#3D5D91" : "#ccc",
                   cursor: answers[i] && !checked ? "pointer" : "default",
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Manrope', sans-serif",
                   transition: "all 0.15s",
                   verticalAlign: "middle",
                 }}
@@ -332,7 +332,7 @@ function CompletarActivity({ template, banco, respuestas }: ActiveRecallCompleta
               fontSize: "0.85rem",
               fontWeight: 600,
               cursor: checked || usedBankIdx[i] ? "default" : "pointer",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
               textDecoration: usedBankIdx[i] ? "line-through" : "none",
               transition: "all 0.15s",
             }}
@@ -382,7 +382,7 @@ function CompletarActivity({ template, banco, respuestas }: ActiveRecallCompleta
               fontSize: "0.88rem",
               fontWeight: 700,
               cursor: allFilled ? "pointer" : "not-allowed",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
             }}
           >
             Verificar respuestas
@@ -400,7 +400,7 @@ function CompletarActivity({ template, banco, respuestas }: ActiveRecallCompleta
               fontSize: "0.88rem",
               fontWeight: 700,
               cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
             }}
           >
             🔄 Intentar de nuevo
@@ -504,7 +504,7 @@ function OrdenarActivity({ items }: { items: OrdenarItem[] }) {
                       cursor: i === 0 ? "not-allowed" : "pointer",
                       color: i === 0 ? "#ddd" : "#3D5D91",
                       fontSize: "0.65rem",
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Manrope', sans-serif",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -524,7 +524,7 @@ function OrdenarActivity({ items }: { items: OrdenarItem[] }) {
                       cursor: i === order.length - 1 ? "not-allowed" : "pointer",
                       color: i === order.length - 1 ? "#ddd" : "#3D5D91",
                       fontSize: "0.65rem",
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "'Manrope', sans-serif",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -582,7 +582,7 @@ function OrdenarActivity({ items }: { items: OrdenarItem[] }) {
               fontSize: "0.88rem",
               fontWeight: 700,
               cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
             }}
           >
             Verificar orden
@@ -600,7 +600,7 @@ function OrdenarActivity({ items }: { items: OrdenarItem[] }) {
               fontSize: "0.88rem",
               fontWeight: 700,
               cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Manrope', sans-serif",
             }}
           >
             🔄 Intentar de nuevo
