@@ -2,24 +2,29 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { SUBJECT_TEMAS, TEMA_REGISTRY, type TemaEntry } from "@/modules/data/registry";
 import { BlockRenderer } from "@/modules/engine/BlockRenderer";
+import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 
 export const Route = createFileRoute("/dashboard/materias/$subjectId")({
   component: SubjectDetail,
 });
 
-const SUBJECT_META: Record<string, { icon: string; name: string }> = {
-  aerodinamica: { icon: "✈️", name: "Aerodinámica" },
-  meteorologia: { icon: "🌤️", name: "Meteorología" },
-  "aeronaves-motores": { icon: "⚙️", name: "Aeronaves y Motores" },
-  legislacion: { icon: "⚖️", name: "Legislación Aeronáutica" },
-  medicina: { icon: "🏥", name: "Medicina de Aviación" },
-  navegacion: { icon: "🗺️", name: "Navegación Aérea" },
-  "servicios-transito": { icon: "🗼", name: "Servicios de Tránsito Aéreo" },
-  comunicaciones: { icon: "📻", name: "Comunicaciones Aeronáuticas" },
-  "manuales-ais": { icon: "📋", name: "Manuales de Información" },
-  "factores-humanos": { icon: "🧠", name: "Factores Humanos" },
-  "seguridad-aerea": { icon: "🛡️", name: "Seguridad Aérea" },
-  operaciones: { icon: "🛫", name: "Operaciones Aeronáuticas" },
+const FONT = "'Manrope', sans-serif";
+const DISPLAY = "'Bricolage Grotesque', sans-serif";
+const MONO = "'JetBrains Mono', monospace";
+
+const SUBJECT_META: Record<string, { icon: FPIconName; name: string }> = {
+  aerodinamica: { icon: "plane", name: "Aerodinámica" },
+  meteorologia: { icon: "cloud", name: "Meteorología" },
+  "aeronaves-motores": { icon: "settings", name: "Aeronaves y Motores" },
+  legislacion: { icon: "scale", name: "Legislación Aeronáutica" },
+  medicina: { icon: "stethoscope", name: "Medicina de Aviación" },
+  navegacion: { icon: "map", name: "Navegación Aérea" },
+  "servicios-transito": { icon: "tower", name: "Servicios de Tránsito Aéreo" },
+  comunicaciones: { icon: "radio", name: "Comunicaciones Aeronáuticas" },
+  "manuales-ais": { icon: "doc", name: "Manuales de Información" },
+  "factores-humanos": { icon: "brain", name: "Factores Humanos" },
+  "seguridad-aerea": { icon: "shield", name: "Seguridad Aérea" },
+  operaciones: { icon: "plane", name: "Operaciones Aeronáuticas" },
 };
 
 function groupByBloque(temas: TemaEntry[]) {
@@ -54,22 +59,22 @@ function Sidebar({
       <div
         style={{
           padding: "16px 20px",
-          borderBottom: "1px solid #F2DCDB",
-          background: "#f8f9ff",
+          borderBottom: "1px solid #E8EEF6",
+          background: "#F4F7FB",
           flexShrink: 0,
         }}
       >
-        <h3 style={{ fontSize: "0.85rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 4 }}>
+        <p style={{ fontSize: "0.62rem", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.16em", color: "#647DA0", fontWeight: 700, marginBottom: 4 }}>
           Temas disponibles
-        </h3>
-        <p style={{ fontSize: "0.75rem", color: "#888" }}>
-          <span style={{ color: "#3D5D91", fontWeight: 700 }}>{temas.length}</span> temas cargados
+        </p>
+        <p style={{ fontSize: "0.75rem", color: "#647DA0" }}>
+          <span style={{ color: "#22375C", fontWeight: 700, fontFamily: DISPLAY }}>{temas.length}</span> temas cargados
         </p>
       </div>
 
       <div style={{ flex: 1, overflowY: "auto", padding: "8px 0" }}>
         {bloqueNums.length === 0 && (
-          <p style={{ padding: "16px 20px", fontSize: "0.82rem", color: "#aaa" }}>
+          <p style={{ padding: "16px 20px", fontSize: "0.82rem", color: "#8DA1BE" }}>
             Contenido próximamente
           </p>
         )}
@@ -79,15 +84,16 @@ function Sidebar({
             <div key={bNum}>
               <div
                 style={{
-                  padding: "8px 20px 4px",
-                  fontSize: "0.68rem",
+                  padding: "10px 20px 6px",
+                  fontSize: "0.62rem",
                   fontWeight: 700,
+                  fontFamily: MONO,
                   textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                  color: "#5A86CB",
+                  letterSpacing: "0.16em",
+                  color: "#647DA0",
                 }}
               >
-                Bloque {bNum}: {bloque.titulo}
+                Bloque {bNum} · {bloque.titulo}
               </div>
               {bloque.temas.map((t) => {
                 const isSelected = t.id === selectedTemaId;
@@ -99,16 +105,19 @@ function Sidebar({
                       display: "flex",
                       alignItems: "flex-start",
                       gap: 10,
-                      padding: "10px 20px",
-                      width: "100%",
+                      margin: "1px 10px",
+                      padding: "10px 12px",
+                      borderRadius: 10,
+                      width: "calc(100% - 20px)",
                       border: "none",
                       cursor: "pointer",
                       transition: "all 0.15s",
-                      borderLeft: isSelected ? "3px solid #3D5D91" : "3px solid transparent",
-                      background: isSelected ? "rgba(61,93,145,0.07)" : "transparent",
+                      background: isSelected ? "#FAEFEE" : "transparent",
                       textAlign: "left",
-                      fontFamily: "'Manrope', sans-serif",
+                      fontFamily: FONT,
                     }}
+                    onMouseEnter={(e) => { if (!isSelected) e.currentTarget.style.background = "#F4F7FB"; }}
+                    onMouseLeave={(e) => { if (!isSelected) e.currentTarget.style.background = "transparent"; }}
                   >
                     <div
                       style={{
@@ -122,8 +131,9 @@ function Sidebar({
                         justifyContent: "center",
                         fontSize: "0.68rem",
                         fontWeight: 700,
-                        background: isSelected ? "#3D5D91" : "#eee",
-                        color: isSelected ? "white" : "#999",
+                        fontFamily: DISPLAY,
+                        background: isSelected ? "#6C0820" : "#E8EEF6",
+                        color: isSelected ? "white" : "#8DA1BE",
                       }}
                     >
                       {t.tema}
@@ -133,14 +143,15 @@ function Sidebar({
                         style={{
                           fontSize: "0.82rem",
                           fontWeight: isSelected ? 700 : 500,
-                          color: isSelected ? "#3D5D91" : "#333",
+                          color: isSelected ? "#6C0820" : "#33527F",
                           lineHeight: 1.3,
                         }}
                       >
                         {t.title}
                       </div>
-                      <div style={{ fontSize: "0.7rem", color: "#aaa", marginTop: 2 }}>
-                        ⏱ {t.duracion_min} min
+                      <div style={{ fontSize: "0.68rem", color: "#8DA1BE", marginTop: 3, display: "flex", alignItems: "center", gap: 4, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                        <Icon n="timer" size={11} />
+                        {t.duracion_min} min
                       </div>
                     </div>
                   </button>
@@ -151,19 +162,20 @@ function Sidebar({
         })}
       </div>
 
-      <div style={{ padding: "12px 20px", borderTop: "1px solid #F2DCDB", flexShrink: 0 }}>
+      <div style={{ padding: "12px 20px", borderTop: "1px solid #E8EEF6", flexShrink: 0 }}>
         <Link
           to="/dashboard/materias"
           style={{
-            display: "flex",
+            display: "inline-flex",
             alignItems: "center",
             gap: 6,
-            color: "#888",
+            color: "#647DA0",
             fontSize: "0.78rem",
             textDecoration: "none",
+            fontWeight: 500,
           }}
         >
-          ← Todas las materias
+          <Icon n="chevL" size={14} /> Todas las materias
         </Link>
       </div>
     </div>
@@ -178,7 +190,7 @@ function EmptyState({
   subjectId,
   onSelect,
 }: {
-  meta: { icon: string; name: string };
+  meta: { icon: FPIconName; name: string };
   temas: TemaEntry[];
   subjectId: string;
   onSelect: (id: string) => void;
@@ -193,14 +205,16 @@ function EmptyState({
           justifyContent: "center",
           height: "100%",
           gap: 16,
-          color: "#aaa",
+          color: "#647DA0",
           textAlign: "center",
           padding: 40,
         }}
       >
-        <span style={{ fontSize: "3rem" }}>{meta.icon}</span>
-        <h2 style={{ fontSize: "1.2rem", fontWeight: 700, color: "#3D5D91" }}>{meta.name}</h2>
-        <p style={{ fontSize: "0.9rem", maxWidth: 340 }}>
+        <span style={{ width: 72, height: 72, borderRadius: 18, background: "#FAEFEE", border: "1px solid #F2AEBC", color: "#6C0820", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+          <Icon n={meta.icon} size={36} />
+        </span>
+        <h2 style={{ fontFamily: DISPLAY, fontSize: "1.4rem", color: "#22375C", letterSpacing: "-0.02em" }}>{meta.name}</h2>
+        <p style={{ fontSize: "0.9rem", maxWidth: 340, color: "#647DA0" }}>
           Los temas de esta materia están en preparación. ¡Pronto estarán disponibles!
         </p>
       </div>
@@ -220,20 +234,23 @@ function EmptyState({
         padding: 40,
       }}
     >
-      <span style={{ fontSize: "4rem" }}>{meta.icon}</span>
+      <span style={{ width: 86, height: 86, borderRadius: 22, background: "#FAEFEE", border: "1px solid #F2AEBC", color: "#6C0820", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+        <Icon n={meta.icon} size={44} />
+      </span>
       <div>
         <h2
           style={{
-            fontFamily: "'Bricolage Grotesque', sans-serif",
-            fontSize: "1.6rem",
-            fontWeight: 700,
-            color: "#1a1a2e",
-            marginBottom: 8,
+            fontFamily: DISPLAY,
+            fontSize: "1.8rem",
+            color: "#22375C",
+            marginBottom: 6,
+            letterSpacing: "-0.02em",
+            lineHeight: 1.05,
           }}
         >
           {meta.name}
         </h2>
-        <p style={{ fontSize: "0.92rem", color: "#888", maxWidth: 360 }}>
+        <p style={{ fontSize: "0.92rem", color: "#647DA0", maxWidth: 380 }}>
           Selecciona un tema del panel izquierdo para comenzar a estudiar.
         </p>
       </div>
@@ -255,41 +272,44 @@ function EmptyState({
             style={{
               padding: "14px 16px",
               background: "white",
-              border: "2px solid #F2DCDB",
-              borderRadius: 12,
+              border: "1px solid #E8EEF6",
+              borderRadius: 14,
               cursor: "pointer",
               textAlign: "left",
               transition: "all 0.2s",
-              fontFamily: "'Manrope', sans-serif",
+              fontFamily: FONT,
+              boxShadow: "0 1px 2px rgba(15,26,51,0.04), 0 8px 24px -12px rgba(15,26,51,0.12)",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "#3D5D91";
+              e.currentTarget.style.borderColor = "#F2AEBC";
               e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow = "0 4px 16px rgba(61,93,145,0.12)";
+              e.currentTarget.style.boxShadow = "0 2px 4px rgba(15,26,51,0.04), 0 14px 30px -14px rgba(108,8,32,0.25)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "#F2DCDB";
+              e.currentTarget.style.borderColor = "#E8EEF6";
               e.currentTarget.style.transform = "none";
-              e.currentTarget.style.boxShadow = "none";
+              e.currentTarget.style.boxShadow = "0 1px 2px rgba(15,26,51,0.04), 0 8px 24px -12px rgba(15,26,51,0.12)";
             }}
           >
             <div
               style={{
-                fontSize: "0.68rem",
+                fontSize: "0.62rem",
                 fontWeight: 700,
-                color: "#5A86CB",
+                fontFamily: MONO,
+                color: "#647DA0",
                 textTransform: "uppercase",
-                letterSpacing: "0.5px",
-                marginBottom: 4,
+                letterSpacing: "0.16em",
+                marginBottom: 6,
               }}
             >
               Bloque {t.bloque} · Tema {t.tema}
             </div>
-            <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "#1a1a2e", lineHeight: 1.3 }}>
+            <div style={{ fontSize: "0.92rem", fontFamily: DISPLAY, color: "#22375C", lineHeight: 1.25, letterSpacing: "-0.01em" }}>
               {t.title}
             </div>
-            <div style={{ fontSize: "0.72rem", color: "#aaa", marginTop: 6 }}>
-              ⏱ {t.duracion_min} min
+            <div style={{ fontSize: "0.68rem", color: "#8DA1BE", marginTop: 8, display: "flex", alignItems: "center", gap: 4, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+              <Icon n="timer" size={12} />
+              {t.duracion_min} min
             </div>
           </button>
         ))}
@@ -302,7 +322,7 @@ function EmptyState({
 
 function SubjectDetail() {
   const { subjectId } = Route.useParams();
-  const meta = SUBJECT_META[subjectId] ?? { icon: "📚", name: subjectId };
+  const meta = SUBJECT_META[subjectId] ?? { icon: "book" as FPIconName, name: subjectId };
   const temas = SUBJECT_TEMAS[subjectId] ?? [];
 
   const [selectedTemaId, setSelectedTemaId] = useState<string | null>(null);
@@ -337,14 +357,14 @@ function SubjectDetail() {
         display: "flex",
         flexDirection: "column",
         height: "100vh",
-        fontFamily: "'Manrope', sans-serif",
+        fontFamily: FONT,
       }}
     >
       {/* ── TOPBAR ── */}
       <div
         style={{
           background: "white",
-          borderBottom: "1px solid rgba(61,93,145,0.08)",
+          borderBottom: "1px solid #E8EEF6",
           padding: "0 24px",
           height: 64,
           display: "flex",
@@ -359,24 +379,30 @@ function SubjectDetail() {
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <span
             style={{
-              background: "#F2DCDB",
+              display: "inline-flex", alignItems: "center", gap: 8,
+              background: "#FAEFEE",
               color: "#6C0820",
-              padding: "4px 12px",
+              padding: "5px 12px 5px 8px",
               borderRadius: 20,
+              border: "1px solid rgba(108,8,32,0.12)",
               fontSize: "0.78rem",
-              fontWeight: 700,
+              fontWeight: 600,
               whiteSpace: "nowrap",
             }}
           >
-            {meta.icon} {meta.name}
+            <span style={{ width: 22, height: 22, borderRadius: "50%", background: "#6C0820", color: "#F2AEBC", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+              <Icon n={meta.icon} size={13} />
+            </span>
+            {meta.name}
           </span>
           {selectedEntry && (
             <span
               style={{
-                fontFamily: "'Bricolage Grotesque', sans-serif",
+                fontFamily: DISPLAY,
                 fontSize: "1rem",
-                color: "#1a1a2e",
-                fontWeight: 700,
+                color: "#22375C",
+                fontWeight: 600,
+                letterSpacing: "-0.01em",
               }}
               className="hidden sm:block"
             >
@@ -390,17 +416,19 @@ function SubjectDetail() {
           className="flex md:hidden"
           onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
           style={{
-            background: "none",
-            border: "1px solid #F2DCDB",
-            borderRadius: 8,
+            display: "inline-flex", alignItems: "center", gap: 6,
+            background: "white",
+            border: "1px solid #E8EEF6",
+            borderRadius: 10,
             padding: "6px 12px",
             fontSize: "0.8rem",
+            fontWeight: 600,
             color: "#3D5D91",
             cursor: "pointer",
-            fontFamily: "'Manrope', sans-serif",
+            fontFamily: FONT,
           }}
         >
-          📋 Temas
+          <Icon n="list" size={14} /> Temas
         </button>
       </div>
 
@@ -422,8 +450,8 @@ function SubjectDetail() {
               overflowY: "auto",
               display: "flex",
               flexDirection: "column",
-              borderBottom: "2px solid #F2DCDB",
-              boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
+              borderBottom: "1px solid #E8EEF6",
+              boxShadow: "0 24px 48px -20px rgba(15,26,51,0.22)",
             }}
           >
             <Sidebar
@@ -441,7 +469,7 @@ function SubjectDetail() {
           style={{
             width: 280,
             background: "white",
-            borderRight: "1px solid rgba(61,93,145,0.08)",
+            borderRight: "1px solid #E8EEF6",
             flexDirection: "column",
             overflow: "hidden",
             flexShrink: 0,
@@ -460,7 +488,7 @@ function SubjectDetail() {
           style={{
             flex: 1,
             overflowY: "auto",
-            background: "#f5f7fc",
+            background: "#FBFAF7",
           }}
         >
           {selectedTema ? (
