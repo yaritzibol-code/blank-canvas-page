@@ -32,7 +32,7 @@ export interface BlockRendererProps {
 
 export function BlockRenderer({ tema, progreso = 0, onComplete }: BlockRendererProps) {
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif" }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif" }}>
       <HeaderBlock
         title={tema.title}
         subtitle={tema.subtitle}
@@ -139,7 +139,7 @@ function renderBlock(
             marginBottom: 20,
             fontSize: "0.85rem",
             color: "#856404",
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "'Manrope', sans-serif",
           }}
         >
           ⚠️ Bloque desconocido:{" "}

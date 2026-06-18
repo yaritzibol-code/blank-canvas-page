@@ -194,7 +194,7 @@ export function TimerProvider({ children }: { children: ReactNode }) {
             borderRadius: 16,
             border: "1px solid rgba(90,134,203,.22)",
             boxShadow: "0 20px 60px rgba(0,0,0,.65), 0 0 0 1px rgba(90,134,203,.07), inset 0 1px 0 rgba(255,255,255,.04)",
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "'Manrope', sans-serif",
             overflow: "hidden",
           }}
         >
@@ -222,7 +222,7 @@ export function TimerProvider({ children }: { children: ReactNode }) {
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "'Bricolage Grotesque', sans-serif",
                   fontSize: 38, fontWeight: 900,
                   color: s.isWork ? "#4ade80" : "#fbbf24",
                   letterSpacing: -1.5, lineHeight: 1,
@@ -281,7 +281,7 @@ export function TimerProvider({ children }: { children: ReactNode }) {
             <div style={{ display: "flex", gap: 8 }} onClick={e => e.stopPropagation()}>
               <button
                 onClick={toggleFloat}
-                style={{ flex: 1, border: "1px solid rgba(90,134,203,.28)", borderRadius: 8, background: "rgba(90,134,203,.1)", color: "rgba(255,255,255,.85)", padding: "9px 12px", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
+                style={{ flex: 1, border: "1px solid rgba(90,134,203,.28)", borderRadius: 8, background: "rgba(90,134,203,.1)", color: "rgba(255,255,255,.85)", padding: "9px 12px", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
               >
                 {s.running
                   ? <><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>Pausar</>
@@ -289,7 +289,7 @@ export function TimerProvider({ children }: { children: ReactNode }) {
               </button>
               <button
                 onClick={closeFloat}
-                style={{ border: "1px solid rgba(220,38,38,.28)", borderRadius: 8, background: "rgba(220,38,38,.1)", color: "#f87171", padding: "9px 12px", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap" }}
+                style={{ border: "1px solid rgba(220,38,38,.28)", borderRadius: 8, background: "rgba(220,38,38,.1)", color: "#f87171", padding: "9px 12px", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap" }}
               >
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 Finalizar

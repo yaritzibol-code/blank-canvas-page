@@ -57,7 +57,7 @@ export function FormulaBlock({ nombre, formula, formula_latex, variables, nota }
 
       <h3
         style={{
-          fontFamily: "'Playfair Display', serif",
+          fontFamily: "'Bricolage Grotesque', sans-serif",
           fontSize: "1.05rem",
           fontWeight: 700,
           color: "#1a1a2e",
@@ -72,7 +72,7 @@ export function FormulaBlock({ nombre, formula, formula_latex, variables, nota }
         <p
           style={{
             fontSize: "0.88rem",
-            fontFamily: "'Courier New', monospace",
+            fontFamily: "'JetBrains Mono', monospace",
             color: "#5A86CB",
             marginBottom: 10,
             fontWeight: 600,
@@ -96,7 +96,7 @@ export function FormulaBlock({ nombre, formula, formula_latex, variables, nota }
           style={{
             color: "#F2AEBC",
             fontSize: "1.3rem",
-            fontFamily: "'Courier New', Courier, monospace",
+            fontFamily: "'JetBrains Mono', monospace",
             fontWeight: 700,
             letterSpacing: "0.03em",
             whiteSpace: "pre-wrap",
@@ -147,7 +147,7 @@ export function FormulaBlock({ nombre, formula, formula_latex, variables, nota }
                     fontWeight: 700,
                     color: "#3D5D91",
                     minWidth: 60,
-                    fontFamily: "'Courier New', monospace",
+                    fontFamily: "'JetBrains Mono', monospace",
                   }}
                 >
                   {renderLatex(v.simbolo)}

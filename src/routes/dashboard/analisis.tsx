@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { Icon } from "@/components/ui/fp-icon";
 
 export const Route = createFileRoute("/dashboard/analisis")({
   component: AnalisisPage,
@@ -15,14 +16,14 @@ const BAR_VALS = [45, 80, 30, 120, 95, 60, 0];
 const BAR_MAX = 120;
 
 const MATERIAS_DATA = [
-  { name: "✈️ Aerodinámica",      pct: 84, color: "#2ecc71" },
-  { name: "⚙️ Aeronaves",         pct: 78, color: "#3D5D91" },
-  { name: "⚖️ Legislación",       pct: 70, color: "#f39c12" },
-  { name: "🏥 Medicina",          pct: 85, color: "#2ecc71" },
-  { name: "🌤️ Meteorología",      pct: 52, color: "#e74c3c" },
-  { name: "🗺️ Navegación",        pct: 65, color: "#f39c12" },
-  { name: "🗼 Tránsito Aéreo",    pct: 72, color: "#3D5D91" },
-  { name: "🧠 Factores Humanos",  pct: 88, color: "#2ecc71" },
+  { icon: "plane",       name: "Aerodinámica",      pct: 84, color: "#2ecc71" },
+  { icon: "settings",    name: "Aeronaves",         pct: 78, color: "#3D5D91" },
+  { icon: "scale",       name: "Legislación",       pct: 70, color: "#f39c12" },
+  { icon: "stethoscope", name: "Medicina",          pct: 85, color: "#2ecc71" },
+  { icon: "cloud",       name: "Meteorología",      pct: 52, color: "#e74c3c" },
+  { icon: "map",         name: "Navegación",        pct: 65, color: "#f39c12" },
+  { icon: "tower",       name: "Tránsito Aéreo",    pct: 72, color: "#3D5D91" },
+  { icon: "brain",       name: "Factores Humanos",  pct: 88, color: "#2ecc71" },
 ];
 
 const EXAM_HISTORY = [
@@ -32,11 +33,11 @@ const EXAM_HISTORY = [
 ];
 
 const ACTIVITY = [
-  { icon: "❓", bg: "rgba(61,93,145,.08)",  title: "Cuestionario — Meteorología",            sub: "50 preguntas · Modo Aprendiendo",  score: 82, scoreColor: "#2ecc71",  time: "Hoy, 10:24" },
-  { icon: "🃏", bg: "rgba(90,134,203,.1)",  title: "Flashcards — Fuerzas en vuelo",          sub: "8 tarjetas · 6 dominadas",         score: 75, scoreColor: "#2ecc71",  time: "Hoy, 09:10" },
-  { icon: "🎬", bg: "rgba(46,204,113,.08)", title: "Clase — Nubes: Clasificación y Formación", sub: "Meteorología · 22:15 min",        score: 35, scoreColor: "#3D5D91",  time: "Ayer, 20:45" },
-  { icon: "📝", bg: "rgba(108,8,32,.08)",   title: "Simulador CIAAC completo",                sub: "310 preguntas · 4h 32min",         score: 68, scoreColor: "#f39c12",  time: "Hace 2 días" },
-  { icon: "❓", bg: "rgba(61,93,145,.08)",  title: "Cuestionario — Todas las materias",       sub: "30 preguntas · Modo Aprendiendo",  score: 90, scoreColor: "#2ecc71",  time: "Hace 3 días" },
+  { icon: "help", bg: "rgba(61,93,145,.08)",  title: "Cuestionario — Meteorología",            sub: "50 preguntas · Modo Aprendiendo",  score: 82, scoreColor: "#2ecc71",  time: "Hoy, 10:24" },
+  { icon: "cards", bg: "rgba(90,134,203,.1)",  title: "Flashcards — Fuerzas en vuelo",          sub: "8 tarjetas · 6 dominadas",         score: 75, scoreColor: "#2ecc71",  time: "Hoy, 09:10" },
+  { icon: "play", bg: "rgba(46,204,113,.08)", title: "Clase — Nubes: Clasificación y Formación", sub: "Meteorología · 22:15 min",        score: 35, scoreColor: "#3D5D91",  time: "Ayer, 20:45" },
+  { icon: "sim", bg: "rgba(108,8,32,.08)",   title: "Simulador CIAAC completo",                sub: "310 preguntas · 4h 32min",         score: 68, scoreColor: "#f39c12",  time: "Hace 2 días" },
+  { icon: "help", bg: "rgba(61,93,145,.08)",  title: "Cuestionario — Todas las materias",       sub: "30 preguntas · Modo Aprendiendo",  score: 90, scoreColor: "#2ecc71",  time: "Hace 3 días" },
 ];
 
 function heatColor(level: number) {
@@ -72,7 +73,7 @@ function AnalisisPage() {
   ];
 
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif" }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif" }}>
       <style>{`
         @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
       `}</style>
@@ -88,8 +89,8 @@ function AnalisisPage() {
               border: `2px solid ${period === p.key ? "#3D5D91" : "#F2DCDB"}`,
               borderRadius: 20, fontSize: ".8rem", fontWeight: 600, cursor: "pointer",
               background: period === p.key ? "#3D5D91" : "white",
-              color: period === p.key ? "white" : "#888",
-              transition: "all .2s", fontFamily: "'DM Sans', sans-serif",
+              color: period === p.key ? "white" : "#647DA0",
+              transition: "all .2s", fontFamily: "'Manrope', sans-serif",
             }}
           >
             {p.label}
@@ -98,14 +99,14 @@ function AnalisisPage() {
       </div>
 
       {/* Pathy card */}
-      <div style={{ background: "linear-gradient(135deg,#1a1a2e,#2a2a4e)", borderRadius: 16, padding: "20px 24px", display: "flex", alignItems: "center", gap: 18, marginBottom: 24, flexWrap: "wrap" }}>
-        <div style={{ fontSize: "3.5rem", animation: "float 3s ease-in-out infinite", flexShrink: 0 }}>☁️</div>
+      <div style={{ background: "linear-gradient(135deg,#22375C,#2a2a4e)", borderRadius: 16, padding: "20px 24px", display: "flex", alignItems: "center", gap: 18, marginBottom: 24, flexWrap: "wrap" }}>
+        <div style={{ animation: "float 3s ease-in-out infinite", flexShrink: 0, display: "flex", color: "white" }}><Icon n="cloud" size={56} /></div>
         <div>
-          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", color: "white", marginBottom: 4 }}>¡Vas muy bien, María! 🎯</h3>
+          <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "white", marginBottom: 4 }}>¡Vas muy bien, María!</h3>
           <p style={{ fontSize: ".85rem", color: "rgba(255,255,255,.7)", lineHeight: 1.5 }}>
             Esta semana estudiaste <strong style={{ color: "#F2AEBC" }}>4 días seguidos</strong> y tu promedio en cuestionarios subió un{" "}
             <strong style={{ color: "#F2AEBC" }}>12%</strong> respecto a la semana pasada. Tu punto más débil sigue siendo{" "}
-            <strong style={{ color: "#F2AEBC" }}>Meteorología</strong> — te recomiendo 2 sesiones esta semana. ¡Tú puedes! ✈️
+            <strong style={{ color: "#F2AEBC" }}>Meteorología</strong> — te recomiendo 2 sesiones esta semana. ¡Tú puedes!
           </p>
         </div>
       </div>
@@ -113,15 +114,15 @@ function AnalisisPage() {
       {/* Hero stats */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(160px,1fr))", gap: 14, marginBottom: 24 }}>
         {[
-          { icon: "🔥", val: "14",    label: "Días de racha",          delta: "↑ Récord personal",          up: true },
-          { icon: "❓", val: "1,240", label: "Preguntas respondidas",  delta: "↑ +180 esta semana",         up: true },
-          { icon: "✅", val: "74%",   label: "Promedio de aciertos",   delta: "↑ +12% vs semana pasada",    up: true },
-          { icon: "⏱️", val: "18h",   label: "Tiempo de estudio",      delta: "↑ +3h vs semana pasada",     up: true },
+          { icon: "flame", val: "14",    label: "Días de racha",          delta: "↑ Récord personal",          up: true },
+          { icon: "help", val: "1,240", label: "Preguntas respondidas",  delta: "↑ +180 esta semana",         up: true },
+          { icon: "check", val: "74%",   label: "Promedio de aciertos",   delta: "↑ +12% vs semana pasada",    up: true },
+          { icon: "timer", val: "18h",   label: "Tiempo de estudio",      delta: "↑ +3h vs semana pasada",     up: true },
         ].map((s) => (
           <div key={s.label} style={{ background: "white", borderRadius: 14, padding: "18px 20px", boxShadow: "0 2px 10px rgba(61,93,145,.06)", display: "flex", flexDirection: "column", gap: 6 }}>
-            <span style={{ fontSize: "1.4rem" }}>{s.icon}</span>
-            <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.8rem", fontWeight: 900, color: "#1a1a2e", lineHeight: 1 }}>{s.val}</span>
-            <span style={{ fontSize: ".74rem", color: "#888" }}>{s.label}</span>
+            <span style={{ display: "flex", color: "#3D5D91" }}><Icon n={s.icon as any} size={24} /></span>
+            <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.8rem", fontWeight: 900, color: "#22375C", lineHeight: 1 }}>{s.val}</span>
+            <span style={{ fontSize: ".74rem", color: "#647DA0" }}>{s.label}</span>
             <span style={{ fontSize: ".72rem", fontWeight: 700, color: s.up ? "#2ecc71" : "#e74c3c" }}>{s.delta}</span>
           </div>
         ))}
@@ -129,23 +130,23 @@ function AnalisisPage() {
 
       {/* Streak + Heatmap */}
       <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 24 }}>
-        <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14 }}>🔥 Racha de estudio</div>
+        <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="flame" size={16} /> Racha de estudio</div>
 
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16, flexWrap: "wrap", gap: 12 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "3rem", fontWeight: 900, color: "#6C0820", lineHeight: 1 }}>14</span>
+            <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "3rem", fontWeight: 900, color: "#6C0820", lineHeight: 1 }}>14</span>
             <div>
-              <div style={{ fontSize: ".9rem", fontWeight: 700, color: "#1a1a2e" }}>días seguidos 🔥</div>
-              <div style={{ fontSize: ".75rem", color: "#888" }}>Empezaste el 8 de mayo · ¡Sigue así!</div>
+              <div style={{ fontSize: ".9rem", fontWeight: 700, color: "#22375C", display: "flex", alignItems: "center", gap: 6 }}>días seguidos <Icon n="flame" size={15} /></div>
+              <div style={{ fontSize: ".75rem", color: "#647DA0" }}>Empezaste el 8 de mayo · ¡Sigue así!</div>
             </div>
           </div>
           <div style={{ textAlign: "right" }}>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.4rem", fontWeight: 900, color: "#3D5D91" }}>14</div>
-            <div style={{ fontSize: ".72rem", color: "#aaa" }}>Récord personal</div>
+            <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", fontWeight: 900, color: "#3D5D91" }}>14</div>
+            <div style={{ fontSize: ".72rem", color: "#8DA1BE" }}>Récord personal</div>
           </div>
         </div>
 
-        <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 10 }}>Últimas 5 semanas</div>
+        <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 10 }}>Últimas 5 semanas</div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 4 }}>
           {HEAT_LEVELS.map((level, i) => (
@@ -169,11 +170,11 @@ function AnalisisPage() {
 
         {/* Legend */}
         <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 8, justifyContent: "flex-end" }}>
-          <span style={{ fontSize: ".65rem", color: "#aaa" }}>Menos</span>
+          <span style={{ fontSize: ".65rem", color: "#8DA1BE" }}>Menos</span>
           {[0, 1, 2, 4].map((l) => (
             <div key={l} style={{ width: 10, height: 10, borderRadius: 2, background: heatColor(l) }} />
           ))}
-          <span style={{ fontSize: ".65rem", color: "#aaa" }}>Más</span>
+          <span style={{ fontSize: ".65rem", color: "#8DA1BE" }}>Más</span>
         </div>
       </div>
 
@@ -182,7 +183,7 @@ function AnalisisPage() {
 
         {/* Bar chart */}
         <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)" }}>
-          <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 12 }}>📅 Preguntas por día esta semana</div>
+          <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}><Icon n="calendar" size={16} /> Preguntas por día esta semana</div>
           <div style={{ display: "flex", alignItems: "flex-end", gap: 8, height: 120 }}>
             {BAR_DAYS.map((day, i) => {
               const pct = BAR_MAX > 0 ? (BAR_VALS[i] / BAR_MAX) * 100 : 0;
@@ -200,7 +201,7 @@ function AnalisisPage() {
                       : "linear-gradient(180deg,#5A86CB,#3D5D91)",
                     transition: "height .4s ease",
                   }} />
-                  <span style={{ fontSize: ".65rem", color: "#aaa" }}>{day}</span>
+                  <span style={{ fontSize: ".65rem", color: "#8DA1BE" }}>{day}</span>
                 </div>
               );
             })}
@@ -209,11 +210,11 @@ function AnalisisPage() {
 
         {/* Materias chart */}
         <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)" }}>
-          <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 12 }}>📚 Promedio por materia</div>
+          <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}><Icon n="book" size={16} /> Promedio por materia</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {MATERIAS_DATA.map((m) => (
               <div key={m.name} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: ".78rem", color: "#1a1a2e", width: 120, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{m.name}</span>
+                <span style={{ fontSize: ".78rem", color: "#22375C", width: 120, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "flex", alignItems: "center", gap: 6 }}><Icon n={m.icon as any} size={15} /> {m.name}</span>
                 <div style={{ flex: 1, height: 8, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
                   <div style={{ height: "100%", borderRadius: 10, background: m.color, width: `${m.pct}%`, transition: "width .6s ease" }} />
                 </div>
@@ -226,19 +227,19 @@ function AnalisisPage() {
 
       {/* Exam history */}
       <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 24 }}>
-        <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 12 }}>📝 Historial de simuladores</div>
+        <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}><Icon n="sim" size={16} /> Historial de simuladores</div>
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           {EXAM_HISTORY.map((e, i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", borderRadius: 10, background: "#f8f9ff" }}>
               <div style={{ width: 60, flexShrink: 0, textAlign: "center" }}>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", fontWeight: 900, color: "#1a1a2e" }}>{e.day}</div>
-                <div style={{ fontSize: ".72rem", color: "#aaa" }}>{e.month}</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", fontWeight: 900, color: "#22375C" }}>{e.day}</div>
+                <div style={{ fontSize: ".72rem", color: "#8DA1BE" }}>{e.month}</div>
               </div>
               <div style={{ flex: 1 }}>
-                <h4 style={{ fontSize: ".84rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 2 }}>{e.title}</h4>
-                <p style={{ fontSize: ".73rem", color: "#888" }}>{e.sub}</p>
+                <h4 style={{ fontSize: ".84rem", fontWeight: 700, color: "#22375C", marginBottom: 2 }}>{e.title}</h4>
+                <p style={{ fontSize: ".73rem", color: "#647DA0" }}>{e.sub}</p>
               </div>
-              <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", fontWeight: 900, flexShrink: 0, color: scoreColor(e.score) }}>{e.score}%</span>
+              <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", fontWeight: 900, flexShrink: 0, color: scoreColor(e.score) }}>{e.score}%</span>
             </div>
           ))}
         </div>
@@ -246,21 +247,21 @@ function AnalisisPage() {
 
       {/* Activity log */}
       <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 24 }}>
-        <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 4 }}>🕐 Actividad reciente</div>
+        <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 4, display: "flex", alignItems: "center", gap: 6 }}><Icon n="clock" size={16} /> Actividad reciente</div>
         <div>
           {ACTIVITY.map((a, i) => (
             <div
               key={i}
               style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 0", borderBottom: i < ACTIVITY.length - 1 ? "1px solid rgba(61,93,145,.05)" : undefined }}
             >
-              <div style={{ width: 36, height: 36, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem", flexShrink: 0, background: a.bg }}>{a.icon}</div>
+              <div style={{ width: 36, height: 36, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: a.bg, color: "#3D5D91" }}><Icon n={a.icon as any} size={18} /></div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: ".85rem", fontWeight: 600, color: "#1a1a2e", marginBottom: 2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{a.title}</div>
-                <div style={{ fontSize: ".74rem", color: "#888" }}>{a.sub}</div>
+                <div style={{ fontSize: ".85rem", fontWeight: 600, color: "#22375C", marginBottom: 2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{a.title}</div>
+                <div style={{ fontSize: ".74rem", color: "#647DA0" }}>{a.sub}</div>
               </div>
               <div style={{ textAlign: "right", flexShrink: 0 }}>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1rem", fontWeight: 900, color: a.scoreColor }}>{a.score}%</div>
-                <div style={{ fontSize: ".7rem", color: "#aaa" }}>{a.time}</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1rem", fontWeight: 900, color: a.scoreColor }}>{a.score}%</div>
+                <div style={{ fontSize: ".7rem", color: "#8DA1BE" }}>{a.time}</div>
               </div>
             </div>
           ))}

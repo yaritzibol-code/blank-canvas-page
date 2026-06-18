@@ -79,7 +79,7 @@ export function ConceptExplanationBlock({
       {titulo && (
         <h3
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "'Bricolage Grotesque', sans-serif",
             fontSize: "1.1rem",
             fontWeight: 700,
             color: "#1a1a2e",
