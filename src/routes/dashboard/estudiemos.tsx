@@ -714,7 +714,7 @@ function EstudiemosJuntosPage() {
       {/* Time selector */}
       <div style={{ marginBottom: 16 }}>
         <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-          <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+          <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: "0.5px" }}>
             Tiempo hoy:
           </span>
           {(["30min", "1h", "2h"] as TiempoDisponible[]).map(t => (
@@ -732,7 +732,7 @@ function EstudiemosJuntosPage() {
                 background: tiempo === t ? "rgba(61,93,145,0.08)" : "white",
                 fontSize: "0.8rem",
                 fontWeight: tiempo === t ? 700 : 500,
-                color: tiempo === t ? "#3D5D91" : "#888",
+                color: tiempo === t ? "#3D5D91" : "#647DA0",
                 cursor: "pointer",
                 fontFamily: "'Manrope', sans-serif",
                 transition: "all 0.15s",
@@ -750,7 +750,7 @@ function EstudiemosJuntosPage() {
               background: tiempo === "custom" ? "rgba(108,8,32,0.07)" : "white",
               fontSize: "0.8rem",
               fontWeight: tiempo === "custom" ? 700 : 500,
-              color: tiempo === "custom" ? "#6C0820" : "#888",
+              color: tiempo === "custom" ? "#6C0820" : "#647DA0",
               cursor: "pointer",
               fontFamily: "'Manrope', sans-serif",
               transition: "all 0.15s",
@@ -759,7 +759,7 @@ function EstudiemosJuntosPage() {
               gap: 4,
             }}
           >
-            ✏️ {tiempo === "custom" ? `${customHours}h ${customMins}m` : "Personalizar"}
+            <Icon n="pencil" size={14} /> {tiempo === "custom" ? `${customHours}h ${customMins}m` : "Personalizar"}
           </button>
         </div>
 
@@ -795,7 +795,7 @@ function EstudiemosJuntosPage() {
                   outline: "none",
                 }}
               />
-              <span style={{ fontSize: "0.82rem", color: "#888" }}>h</span>
+              <span style={{ fontSize: "0.82rem", color: "#647DA0" }}>h</span>
               <input
                 type="number"
                 min="0"
@@ -813,7 +813,7 @@ function EstudiemosJuntosPage() {
                   outline: "none",
                 }}
               />
-              <span style={{ fontSize: "0.82rem", color: "#888" }}>min</span>
+              <span style={{ fontSize: "0.82rem", color: "#647DA0" }}>min</span>
             </div>
             <button
               onClick={() => {
@@ -843,7 +843,7 @@ function EstudiemosJuntosPage() {
 
       {/* Plan items */}
       <div>
-        <p style={{ fontSize: "0.78rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 12 }}>
+        <p style={{ fontSize: "0.78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 12 }}>
           Tu plan para hoy — {plan.reduce((s, i) => s + i.duracion_min, 0)} min
         </p>
         {plan.map((item, i) => (

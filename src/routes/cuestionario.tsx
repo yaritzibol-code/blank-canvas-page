@@ -738,10 +738,10 @@ function CuestionarioPage() {
                   fontSize: "0.9rem", fontWeight: 700, cursor: "pointer",
                   fontFamily: "'Manrope', sans-serif",
                   textDecoration: "none",
-                  display: "flex", alignItems: "center", justifyContent: "center",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 7,
                 }}
               >
-                🏠 Ir al inicio
+                <Icon n="home" size={16} /> Ir al inicio
               </Link>
             </div>
           </div>
@@ -783,7 +783,7 @@ function CuestionarioPage() {
                   display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem",
                 }}
               >
-                🤖
+                <Icon n="spark" size={18} color="#3D5D91" />
               </div>
               <div>
                 <div style={{ fontSize: "0.86rem", fontWeight: 700, color: "white" }}>Yaris IA</div>
@@ -796,9 +796,10 @@ function CuestionarioPage() {
                 background: "rgba(255,255,255,0.2)", border: "none", color: "white",
                 borderRadius: 6, padding: "4px 8px", cursor: "pointer",
                 fontSize: "0.76rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif",
+                display: "flex", alignItems: "center", justifyContent: "center",
               }}
             >
-              ✕
+              <Icon n="close" size={15} />
             </button>
           </div>
 
@@ -828,7 +829,7 @@ function CuestionarioPage() {
                     flexShrink: 0,
                   }}
                 >
-                  {msg.role === "bot" ? "🤖" : "MG"}
+                  {msg.role === "bot" ? <Icon n="spark" size={15} color="#6C0820" /> : "MG"}
                 </div>
                 <div
                   style={{
@@ -836,7 +837,7 @@ function CuestionarioPage() {
                     borderRadius: msg.role === "bot" ? "4px 12px 12px 12px" : "12px 4px 12px 12px",
                     fontSize: "0.81rem", lineHeight: 1.55,
                     background: msg.role === "bot" ? "#f0f4ff" : "#3D5D91",
-                    color: msg.role === "bot" ? "#1a1a2e" : "white",
+                    color: msg.role === "bot" ? "#22375C" : "white",
                   }}
                 >
                   <span dangerouslySetInnerHTML={{ __html: msg.text }} />
@@ -849,7 +850,7 @@ function CuestionarioPage() {
                         fontSize: "0.7rem", color: "#3D5D91", fontWeight: 600,
                       }}
                     >
-                      📖 {msg.cite}
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="book" size={12} /> {msg.cite}</span>
                     </span>
                   )}
                 </div>
@@ -864,7 +865,7 @@ function CuestionarioPage() {
                     justifyContent: "center", fontSize: "0.78rem", flexShrink: 0,
                   }}
                 >
-                  🤖
+                  <Icon n="spark" size={15} color="#6C0820" />
                 </div>
                 <div
                   style={{
@@ -914,7 +915,7 @@ function CuestionarioPage() {
                 fontSize: "0.82rem", flexShrink: 0,
               }}
             >
-              ➤
+              <Icon n="send" size={15} />
             </button>
           </div>
         </div>

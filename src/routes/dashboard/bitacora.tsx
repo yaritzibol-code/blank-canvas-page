@@ -294,14 +294,14 @@ function BitacoraPage() {
 
           {/* Escalas */}
           <div style={{ background: "white", borderRadius: 16, padding: 22, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 18 }}>
-            <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14 }}>📊 Cuéntame un poco más</div>
+            <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="chart" size={15} /> Cuéntame un poco más</div>
             {[
               { label: "¿Qué tan motivada llegaste?", key: "s1" as const },
               { label: "¿Qué tan concentrada estuviste?", key: "s2" as const },
               { label: "¿Cómo te sientes con el CIAAC?", key: "s3" as const },
             ].map((row) => (
               <div key={row.key} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-                <span style={{ fontSize: ".82rem", color: "#1a1a2e", fontWeight: 500, width: 200, flexShrink: 0 }}>{row.label}</span>
+                <span style={{ fontSize: ".82rem", color: "#22375C", fontWeight: 500, width: 200, flexShrink: 0 }}>{row.label}</span>
                 <ScaleDots value={scales[row.key]} onChange={(v) => setScales((s) => ({ ...s, [row.key]: v }))} />
               </div>
             ))}
@@ -309,7 +309,7 @@ function BitacoraPage() {
 
           {/* Tema que costó */}
           <div style={{ background: "white", borderRadius: 16, padding: 22, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 18 }}>
-            <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14 }}>🌤️ ¿Qué tema te costó más hoy?</div>
+            <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="cloud" size={15} /> ¿Qué tema te costó más hoy?</div>
             <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 7 }}>
               {MATERIAS.map((m) => {
                 const isActive = m.isNone ? noneSelected : selectedMaterias.has(m.label);
@@ -322,11 +322,12 @@ function BitacoraPage() {
                       padding: "6px 14px", background: isActive ? (m.isNone ? "rgba(46,204,113,.08)" : "rgba(61,93,145,.08)") : "#f8f9ff",
                       border: `2px solid ${isActive ? (m.isNone ? "#2ecc71" : "#3D5D91") : "#F2DCDB"}`,
                       borderRadius: 20, fontSize: ".78rem", fontWeight: 600, cursor: "pointer",
-                      color: isActive ? (m.isNone ? "#1a7a4a" : "#3D5D91") : "#1a1a2e",
+                      color: isActive ? (m.isNone ? "#1a7a4a" : "#3D5D91") : "#22375C",
                       transition: "all .2s", fontFamily: "'Manrope', sans-serif",
+                      display: "inline-flex", alignItems: "center", gap: 6,
                     }}
                   >
-                    {m.icon} {m.label}
+                    <Icon n={m.icon as any} size={15} /> {m.label}
                   </button>
                 );
               })}
@@ -335,7 +336,7 @@ function BitacoraPage() {
 
           {/* Texto libre */}
           <div style={{ background: "white", borderRadius: 16, padding: 22, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 18 }}>
-            <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14 }}>✍️ Cuéntame más — esto es solo tuyo</div>
+            <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="edit" size={15} /> Cuéntame más — esto es solo tuyo</div>
             <textarea
               value={journalText}
               onChange={(e) => setJournalText(e.target.value.slice(0, 500))}
@@ -343,7 +344,7 @@ function BitacoraPage() {
               style={{
                 width: "100%", minHeight: 120, border: "2px solid #F2DCDB", borderRadius: 12,
                 padding: "14px 16px", fontSize: ".88rem", fontFamily: "'Manrope', sans-serif",
-                color: "#1a1a2e", outline: "none", resize: "vertical" as const, lineHeight: 1.7,
+                color: "#22375C", outline: "none", resize: "vertical" as const, lineHeight: 1.7,
                 background: "#fafbff", transition: "border-color .2s",
               }}
               onFocus={(e) => (e.target.style.borderColor = "#3D5D91")}
@@ -363,7 +364,7 @@ function BitacoraPage() {
               display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 24,
             }}
           >
-            ☁️ Guardar entrada de hoy
+            <Icon n="cloud" size={18} /> Guardar entrada de hoy
           </button>
         </div>
       )}
@@ -374,30 +375,30 @@ function BitacoraPage() {
 
           {/* Pathy análisis */}
           <div style={{ textAlign: "center" as const, marginBottom: 28 }}>
-            <div style={{ fontSize: "5rem", animation: "float 3s ease-in-out infinite", display: "inline-block", marginBottom: 10 }}>
-              {result.bad ? "🤗" : "☁️"}
+            <div style={{ animation: "float 3s ease-in-out infinite", display: "inline-flex", marginBottom: 10, color: "#6C0820" }}>
+              <Icon n={result.bad ? "heart" : "cloud"} size={64} />
             </div>
-            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.5rem", color: "#1a1a2e", marginBottom: 6 }}>
-              {result.bad ? "Pathy te manda un abrazo 🤗" : "Pathy analizó tu entrada 💙"}
+            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.5rem", color: "#22375C", marginBottom: 6 }}>
+              {result.bad ? "Pathy te manda un abrazo" : "Pathy analizó tu entrada"}
             </h2>
           </div>
 
           {/* Mensaje Pathy */}
           <div style={{ background: "linear-gradient(135deg, #F2DCDB, #fce4ec)", borderRadius: 18, padding: "22px 24px", marginBottom: 20, position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", top: -30, right: -30, width: 120, height: 120, background: "radial-gradient(circle, rgba(242,174,188,.3) 0%, transparent 70%)", borderRadius: "50%" }} />
-            <div style={{ fontSize: ".72rem", fontWeight: 700, color: "#6C0820", textTransform: "uppercase" as const, letterSpacing: ".5px", marginBottom: 8, position: "relative", zIndex: 1 }}>☁️ Pathy dice</div>
+            <div style={{ fontSize: ".72rem", fontWeight: 700, color: "#6C0820", textTransform: "uppercase" as const, letterSpacing: ".5px", marginBottom: 8, position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: 6 }}><Icon n="cloud" size={14} /> Pathy dice</div>
             <p style={{ fontSize: ".92rem", color: "#444", lineHeight: 1.7, position: "relative", zIndex: 1 }}>{result.analysis}</p>
           </div>
 
           {/* Resumen */}
           <div style={{ background: "white", borderRadius: 14, padding: "18px 20px", boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 20 }}>
-            <div style={{ fontSize: ".74rem", fontWeight: 700, color: "#888", textTransform: "uppercase" as const, letterSpacing: ".5px", marginBottom: 12 }}>📋 Resumen de tu entrada</div>
+            <div style={{ fontSize: ".74rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase" as const, letterSpacing: ".5px", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}><Icon n="doc" size={14} /> Resumen de tu entrada</div>
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 10 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: "1.4rem" }}>{result.emoji}</span>
+                <span style={{ display: "flex", color: "#3D5D91" }}><Icon n={result.emoji as any} size={22} /></span>
                 <div>
-                  <div style={{ fontSize: ".82rem", fontWeight: 700, color: "#1a1a2e" }}>{result.moodLabel}</div>
-                  <div style={{ fontSize: ".74rem", color: "#888" }}>Cómo te sentiste</div>
+                  <div style={{ fontSize: ".82rem", fontWeight: 700, color: "#22375C" }}>{result.moodLabel}</div>
+                  <div style={{ fontSize: ".74rem", color: "#647DA0" }}>Cómo te sentiste</div>
                 </div>
               </div>
               <div style={{ display: "flex", gap: 20, flexWrap: "wrap" as const }}>
@@ -408,19 +409,19 @@ function BitacoraPage() {
                 ].map((s) => (
                   <div key={s.label} style={{ textAlign: "center" as const }}>
                     <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", fontWeight: 900, color: "#3D5D91" }}>{s.val > 0 ? `${s.val}/5` : "—"}</div>
-                    <div style={{ fontSize: ".68rem", color: "#aaa" }}>{s.label}</div>
+                    <div style={{ fontSize: ".68rem", color: "#8DA1BE" }}>{s.label}</div>
                   </div>
                 ))}
               </div>
               {result.tema && (
                 <div>
-                  <div style={{ fontSize: ".74rem", color: "#888", marginBottom: 4 }}>Materia que te costó:</div>
+                  <div style={{ fontSize: ".74rem", color: "#647DA0", marginBottom: 4 }}>Materia que te costó:</div>
                   <span style={{ padding: "3px 12px", background: "#F2DCDB", color: "#6C0820", borderRadius: 20, fontSize: ".76rem", fontWeight: 700 }}>{result.tema}</span>
                 </div>
               )}
               {result.text && (
                 <div>
-                  <div style={{ fontSize: ".74rem", color: "#888", marginBottom: 4 }}>Lo que escribiste:</div>
+                  <div style={{ fontSize: ".74rem", color: "#647DA0", marginBottom: 4 }}>Lo que escribiste:</div>
                   <div style={{ fontSize: ".83rem", color: "#555", fontStyle: "italic" as const, lineHeight: 1.5, padding: "10px 12px", background: "#f8f9ff", borderRadius: 8 }}>{result.text}</div>
                 </div>
               )}
@@ -431,7 +432,7 @@ function BitacoraPage() {
           {result.bad && (
             <div style={{ background: "linear-gradient(135deg, #3D5D91, #5A86CB)", borderRadius: 14, padding: "18px 20px", marginBottom: 20 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
-                <div style={{ width: 40, height: 40, background: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", flexShrink: 0 }}>🤖</div>
+                <div style={{ width: 40, height: 40, background: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "#3D5D91" }}><Icon n="spark" size={22} /></div>
                 <div>
                   <div style={{ fontSize: ".88rem", fontWeight: 700, color: "white" }}>Yaris está aquí para ti</div>
                   <div style={{ fontSize: ".76rem", color: "rgba(255,255,255,.7)" }}>Puedes contarme más sobre cómo te sientes</div>

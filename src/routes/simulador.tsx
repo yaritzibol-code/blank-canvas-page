@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 
 export const Route = createFileRoute("/simulador")({
   component: SimuladorPage,
@@ -8,18 +9,18 @@ export const Route = createFileRoute("/simulador")({
 /* ─── Data ───────────────────────────────────────────────── */
 
 const MATERIAS = [
-  { name: "✈️ Aerodinámica", total: 30 },
-  { name: "⚙️ Aeronaves y Motores", total: 30 },
-  { name: "⚖️ Legislación Aeronáutica", total: 30 },
-  { name: "🏥 Medicina de Aviación", total: 20 },
-  { name: "🌤️ Meteorología", total: 30 },
-  { name: "🗺️ Navegación Aérea", total: 30 },
-  { name: "🗼 Servicios de Tránsito Aéreo", total: 30 },
-  { name: "📻 Comunicaciones Aeronáuticas", total: 20 },
-  { name: "📋 Manuales de Información Aeronáutica", total: 20 },
-  { name: "🧠 Factores Humanos", total: 20 },
-  { name: "🛡️ Seguridad Aérea", total: 20 },
-  { name: "🛫 Operaciones Aeronáuticas", total: 30 },
+  { icon: "plane" as FPIconName, name: "Aerodinámica", total: 30 },
+  { icon: "settings" as FPIconName, name: "Aeronaves y Motores", total: 30 },
+  { icon: "scale" as FPIconName, name: "Legislación Aeronáutica", total: 30 },
+  { icon: "stethoscope" as FPIconName, name: "Medicina de Aviación", total: 20 },
+  { icon: "cloud" as FPIconName, name: "Meteorología", total: 30 },
+  { icon: "map" as FPIconName, name: "Navegación Aérea", total: 30 },
+  { icon: "tower" as FPIconName, name: "Servicios de Tránsito Aéreo", total: 30 },
+  { icon: "radio" as FPIconName, name: "Comunicaciones Aeronáuticas", total: 20 },
+  { icon: "doc" as FPIconName, name: "Manuales de Información Aeronáutica", total: 20 },
+  { icon: "brain" as FPIconName, name: "Factores Humanos", total: 20 },
+  { icon: "shield" as FPIconName, name: "Seguridad Aérea", total: 20 },
+  { icon: "plane" as FPIconName, name: "Operaciones Aeronáuticas", total: 30 },
 ];
 
 const TOTAL_QS = MATERIAS.reduce((s, m) => s + m.total, 0); // 310
@@ -59,9 +60,9 @@ const SAMPLE_QS: SampleQ[] = [
 const DEMO_PCTS = [80, 80, 70, 85, 70, 73, 70, 90, 80, 60, 75, 56];
 
 const YARIS_REPLIES = [
-  { t: "¡Claro! Te explico este concepto con más detalle. La sustentación se genera porque el aire fluye más rápido por el extradós que por el intradós del ala, creando una diferencia de presión. 🌊", c: "Aerodinámica Básica CIAAC, p. 18" },
-  { t: "Piénsalo como Bernoulli en acción: más velocidad = menos presión. Arriba del ala hay menos presión que abajo, y esa diferencia 'jala' el avión hacia arriba. 🎯", c: "Aerodinámica Básica CIAAC, p. 15" },
-  { t: "¿Recuerdas a Buzz Lightyear 'cayendo con estilo'? Eso es exactamente lo que NO es sustentación. Un avión SÍ la genera gracias a la forma de sus alas. 🚀", c: null },
+  { t: "¡Claro! Te explico este concepto con más detalle. La sustentación se genera porque el aire fluye más rápido por el extradós que por el intradós del ala, creando una diferencia de presión.", c: "Aerodinámica Básica CIAAC, p. 18" },
+  { t: "Piénsalo como Bernoulli en acción: más velocidad = menos presión. Arriba del ala hay menos presión que abajo, y esa diferencia 'jala' el avión hacia arriba.", c: "Aerodinámica Básica CIAAC, p. 15" },
+  { t: "¿Recuerdas a Buzz Lightyear 'cayendo con estilo'? Eso es exactamente lo que NO es sustentación. Un avión SÍ la genera gracias a la forma de sus alas.", c: null },
 ];
 
 /* ─── Question state ─────────────────────────────────────── */
