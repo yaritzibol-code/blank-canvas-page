@@ -440,9 +440,9 @@ function BitacoraPage() {
               </div>
               <button
                 onClick={openYarisChat}
-                style={{ width: "100%", padding: 11, background: "white", color: "#3D5D91", border: "none", borderRadius: 9, fontSize: ".88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                style={{ width: "100%", padding: 11, background: "white", color: "#3D5D91", border: "none", borderRadius: 9, fontSize: ".88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
               >
-                🤖 Hablar con Yaris
+                <Icon n="spark" size={16} /> Hablar con Yaris
               </button>
             </div>
           )}

@@ -260,7 +260,7 @@ function SimuladorPage() {
       setYarisTyping(true);
       setTimeout(() => {
         setYarisTyping(false);
-        setYarisMsgs([{ role: "bot", text: "¡Hola! Soy Yaris 🤖 Veo que tienes una duda sobre esta pregunta. ¡Te explico!", cite: "Aerodinámica Básica CIAAC, p. 12" }]);
+        setYarisMsgs([{ role: "bot", text: "¡Hola! Soy Yaris. Veo que tienes una duda sobre esta pregunta. ¡Te explico!", cite: "Aerodinámica Básica CIAAC, p. 12" }]);
         setTimeout(() => {
           setYarisTyping(true);
           setTimeout(() => {
