@@ -451,15 +451,15 @@ function BitacoraPage() {
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" as const, marginBottom: 20 }}>
             <button
               onClick={() => setScreen("historial")}
-              style={{ flex: 1, padding: 12, background: "white", color: "#3D5D91", border: "2px solid #3D5D91", borderRadius: 11, fontSize: ".88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+              style={{ flex: 1, padding: 12, background: "white", color: "#3D5D91", border: "2px solid #3D5D91", borderRadius: 11, fontSize: ".88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
             >
-              📅 Ver mi historial
+              <Icon n="calendar" size={16} /> Ver mi historial
             </button>
             <button
               onClick={() => setScreen("hoy")}
-              style={{ flex: 1, padding: 12, background: "#6C0820", color: "white", border: "none", borderRadius: 11, fontSize: ".88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+              style={{ flex: 1, padding: 12, background: "#6C0820", color: "white", border: "none", borderRadius: 11, fontSize: ".88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
             >
-              ✈️ Ir a estudiar
+              <Icon n="plane" size={16} /> Ir a estudiar
             </button>
           </div>
 
@@ -468,21 +468,21 @@ function BitacoraPage() {
             <div style={{ background: "white", borderRadius: 16, overflow: "hidden", boxShadow: "0 4px 20px rgba(61,93,145,.1)" }}>
               <div style={{ padding: "14px 18px", background: "linear-gradient(135deg, #3D5D91, #5A86CB)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
-                  <div style={{ width: 30, height: 30, background: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: ".9rem" }}>🤖</div>
+                  <div style={{ width: 30, height: 30, background: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#3D5D91" }}><Icon n="spark" size={17} /></div>
                   <div>
                     <div style={{ fontSize: ".86rem", fontWeight: 700, color: "white" }}>Yaris IA</div>
-                    <div style={{ fontSize: ".68rem", color: "rgba(255,255,255,.8)" }}>Aquí para escucharte 💙</div>
+                    <div style={{ fontSize: ".68rem", color: "rgba(255,255,255,.8)" }}>Aquí para escucharte</div>
                   </div>
                 </div>
-                <button onClick={() => setYarisOpen(false)} style={{ background: "rgba(255,255,255,.2)", border: "none", color: "white", borderRadius: 6, padding: "4px 8px", cursor: "pointer", fontSize: ".76rem", fontWeight: 700 }}>✕</button>
+                <button onClick={() => setYarisOpen(false)} style={{ background: "rgba(255,255,255,.2)", border: "none", color: "white", borderRadius: 6, padding: "4px 8px", cursor: "pointer", fontSize: ".76rem", fontWeight: 700, display: "flex", alignItems: "center" }}><Icon n="close" size={14} /></button>
               </div>
               <div style={{ height: 220, overflowY: "auto", padding: 14, display: "flex", flexDirection: "column" as const, gap: 10 }}>
                 {yarisMessages.map((msg, i) => (
                   <div key={i} style={{ display: "flex", gap: 7, alignItems: "flex-start", flexDirection: msg.isUser ? "row-reverse" : "row" as const }}>
-                    <div style={{ width: 24, height: 24, borderRadius: "50%", background: msg.isUser ? "#3D5D91" : "#F2DCDB", display: "flex", alignItems: "center", justifyContent: "center", fontSize: msg.isUser ? ".6rem" : ".75rem", fontWeight: 700, color: msg.isUser ? "white" : "#1a1a2e", flexShrink: 0 }}>
-                      {msg.isUser ? "MG" : "🤖"}
+                    <div style={{ width: 24, height: 24, borderRadius: "50%", background: msg.isUser ? "#3D5D91" : "#F2DCDB", display: "flex", alignItems: "center", justifyContent: "center", fontSize: ".6rem", fontWeight: 700, color: msg.isUser ? "white" : "#22375C", flexShrink: 0 }}>
+                      {msg.isUser ? "MG" : <Icon n="spark" size={14} />}
                     </div>
-                    <div style={{ maxWidth: "82%", padding: "8px 12px", borderRadius: msg.isUser ? "12px 4px 12px 12px" : "4px 12px 12px 12px", background: msg.isUser ? "#3D5D91" : "#f0f4ff", color: msg.isUser ? "white" : "#1a1a2e", fontSize: ".81rem", lineHeight: 1.55 }}>
+                    <div style={{ maxWidth: "82%", padding: "8px 12px", borderRadius: msg.isUser ? "12px 4px 12px 12px" : "4px 12px 12px 12px", background: msg.isUser ? "#3D5D91" : "#f0f4ff", color: msg.isUser ? "white" : "#22375C", fontSize: ".81rem", lineHeight: 1.55 }}>
                       {msg.text}
                     </div>
                   </div>
@@ -496,7 +496,7 @@ function BitacoraPage() {
                   placeholder="Cuéntame cómo te sientes..."
                   style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 18, padding: "7px 12px", fontSize: ".82rem", fontFamily: "'Manrope', sans-serif", outline: "none" }}
                 />
-                <button onClick={sendYaris} style={{ width: 32, height: 32, background: "#3D5D91", border: "none", borderRadius: "50%", color: "white", cursor: "pointer", fontSize: ".82rem" }}>➤</button>
+                <button onClick={sendYaris} style={{ width: 32, height: 32, background: "#3D5D91", border: "none", borderRadius: "50%", color: "white", cursor: "pointer", fontSize: ".82rem", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon n="send" size={15} /></button>
               </div>
             </div>
           )}
@@ -509,31 +509,31 @@ function BitacoraPage() {
 
           {/* Pathy insight */}
           <div style={{ background: "linear-gradient(135deg, #F2DCDB, #fce4ec)", borderRadius: 14, padding: "16px 18px", marginBottom: 20, display: "flex", alignItems: "flex-start", gap: 12 }}>
-            <div style={{ fontSize: "1.8rem", flexShrink: 0 }}>☁️</div>
+            <div style={{ flexShrink: 0, color: "#6C0820" }}><Icon n="cloud" size={28} /></div>
             <div>
-              <h4 style={{ fontSize: ".88rem", fontWeight: 700, color: "#6C0820", marginBottom: 4 }}>Pathy analizó tu bitácora 💙</h4>
+              <h4 style={{ fontSize: ".88rem", fontWeight: 700, color: "#6C0820", marginBottom: 4 }}>Pathy analizó tu bitácora</h4>
               <p style={{ fontSize: ".83rem", color: "#666", lineHeight: 1.55 }}>
-                Esta semana te sentiste <strong>frustrada con Meteorología 3 veces</strong>. Los lunes llegas con más energía que los viernes. Tu nivel de confianza con el CIAAC subió de 3 a 4 esta semana — ¡vas mejorando! 🎯
+                Esta semana te sentiste <strong>frustrada con Meteorología 3 veces</strong>. Los lunes llegas con más energía que los viernes. Tu nivel de confianza con el CIAAC subió de 3 a 4 esta semana — ¡vas mejorando!
               </p>
             </div>
           </div>
 
           {/* Mood chart */}
           <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 20 }}>
-            <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#888", textTransform: "uppercase" as const, letterSpacing: ".5px", marginBottom: 12 }}>😊 Tu estado de ánimo esta semana</div>
+            <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase" as const, letterSpacing: ".5px", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}><Icon n="checkCircle" size={15} /> Tu estado de ánimo esta semana</div>
             <div style={{ display: "flex", alignItems: "flex-end", gap: 8, height: 80 }}>
               {MOOD_DATA.map((m, i) => (
                 <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column" as const, alignItems: "center", gap: 4, height: "100%", justifyContent: "flex-end" }}>
-                  <span style={{ fontSize: ".9rem" }}>{m.val > 0 ? m.emoji : ""}</span>
+                  <span style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 16, color: "#647DA0" }}>{m.val > 0 ? <Icon n={m.emoji as any} size={16} /> : null}</span>
                   <div style={{ width: "100%", borderRadius: "6px 6px 0 0", minHeight: 4, height: `${m.val}%`, background: m.color, transition: "height .4s" }} />
-                  <span style={{ fontSize: ".62rem", color: "#aaa" }}>{m.day}</span>
+                  <span style={{ fontSize: ".62rem", color: "#8DA1BE" }}>{m.day}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Entry list */}
-          <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#888", textTransform: "uppercase" as const, letterSpacing: ".5px", marginBottom: 14 }}>📅 Entradas recientes</div>
+          <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase" as const, letterSpacing: ".5px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="calendar" size={15} /> Entradas recientes</div>
           <div style={{ display: "flex", flexDirection: "column" as const, gap: 12 }}>
             {SAMPLE_ENTRIES.map((entry, i) => (
               <div
@@ -543,13 +543,13 @@ function BitacoraPage() {
               >
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <span style={{ fontSize: "1.6rem" }}>{entry.emotion}</span>
+                    <span style={{ display: "flex", color: "#3D5D91" }}><Icon n={entry.emotion as any} size={24} /></span>
                     <div>
-                      <h4 style={{ fontSize: ".88rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 2 }}>{entry.mood}</h4>
-                      <p style={{ fontSize: ".74rem", color: "#888" }}>Motivación {entry.motiv}/5 · Concentración {entry.conc}/5 · Confianza CIAAC {entry.conf}/5</p>
+                      <h4 style={{ fontSize: ".88rem", fontWeight: 700, color: "#22375C", marginBottom: 2 }}>{entry.mood}</h4>
+                      <p style={{ fontSize: ".74rem", color: "#647DA0" }}>Motivación {entry.motiv}/5 · Concentración {entry.conc}/5 · Confianza CIAAC {entry.conf}/5</p>
                     </div>
                   </div>
-                  <div style={{ fontSize: ".74rem", color: "#aaa", textAlign: "right" as const }}>
+                  <div style={{ fontSize: ".74rem", color: "#8DA1BE", textAlign: "right" as const }}>
                     {entry.date}<br /><span style={{ fontSize: ".65rem" }}>{entry.sub}</span>
                   </div>
                 </div>
@@ -567,7 +567,7 @@ function BitacoraPage() {
                     { label: "Concentración", val: entry.conc },
                     { label: "Confianza", val: entry.conf },
                   ].map((sc) => (
-                    <div key={sc.label} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: ".74rem", color: "#888" }}>
+                    <div key={sc.label} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: ".74rem", color: "#647DA0" }}>
                       {sc.label}
                       <div style={{ display: "flex", gap: 2 }}>
                         {[1, 2, 3, 4, 5].map((n) => (

@@ -309,20 +309,20 @@ function SimuladorPage() {
       <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.7)", zIndex: 999, display: "flex", alignItems: "flex-start", justifyContent: "center", padding: 20, overflowY: "auto", fontFamily: "'Manrope', sans-serif" }}>
         <div style={{ background: "white", borderRadius: 20, padding: 28, maxWidth: 560, width: "100%", boxShadow: "0 24px 60px rgba(0,0,0,0.3)", margin: "auto" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-            <span style={{ fontSize: "2.5rem" }}>🎯</span>
+            <span style={{ display: "flex", alignItems: "center" }}><Icon n="target" size={40} color="#6C0820" /></span>
             <div>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", color: "#1a1a2e" }}>Simulador CIAAC</h2>
-              <p style={{ fontSize: "0.8rem", color: "#888" }}>Lee esto antes de comenzar</p>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", color: "#22375C" }}>Simulador CIAAC</h2>
+              <p style={{ fontSize: "0.8rem", color: "#647DA0" }}>Lee esto antes de comenzar</p>
             </div>
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 24 }}>
             {[
-              { color: "red", icon: "⚠️", text: "Si <strong>sales de la página</strong> durante el examen perderás todo tu progreso y tendrás que comenzar de nuevo." },
-              { color: "yellow", icon: "🔇", text: "Busca un <strong>lugar tranquilo sin interrupciones</strong>. Apaga notificaciones y ponlo en modo no molestar." },
-              { color: "yellow", icon: "💧", text: "Ten a la mano <strong>agua y algo de comer</strong>. El examen dura hasta 5 horas." },
-              { color: "blue", icon: "✏️", text: "Ten <strong>lápiz y papel</strong> para cálculos. La calculadora básica está disponible dentro del simulador." },
-              { color: "blue", icon: "📵", text: "Para que la simulación sea <strong>lo más realista posible</strong>, no consultes apuntes ni el internet durante el examen." },
+              { color: "red", icon: "alert", text: "Si <strong>sales de la página</strong> durante el examen perderás todo tu progreso y tendrás que comenzar de nuevo." },
+              { color: "yellow", icon: "audio", text: "Busca un <strong>lugar tranquilo sin interrupciones</strong>. Apaga notificaciones y ponlo en modo no molestar." },
+              { color: "yellow", icon: "info", text: "Ten a la mano <strong>agua y algo de comer</strong>. El examen dura hasta 5 horas." },
+              { color: "blue", icon: "pencil", text: "Ten <strong>lápiz y papel</strong> para cálculos. La calculadora básica está disponible dentro del simulador." },
+              { color: "blue", icon: "eyeOff", text: "Para que la simulación sea <strong>lo más realista posible</strong>, no consultes apuntes ni el internet durante el examen." },
             ].map((item, i) => {
               const styles: Record<string, React.CSSProperties> = {
                 red: { background: "rgba(231,76,60,0.06)", border: "1px solid rgba(231,76,60,0.15)", color: "#c0392b" },
@@ -331,7 +331,7 @@ function SimuladorPage() {
               };
               return (
                 <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "12px 14px", borderRadius: 10, fontSize: "0.85rem", lineHeight: 1.5, ...styles[item.color] }}>
-                  <span style={{ fontSize: "1.1rem", flexShrink: 0, marginTop: 1 }}>{item.icon}</span>
+                  <span style={{ flexShrink: 0, marginTop: 1, display: "flex", alignItems: "center" }}><Icon n={item.icon as FPIconName} size={17} /></span>
                   <span dangerouslySetInnerHTML={{ __html: item.text }} />
                 </div>
               );
@@ -358,7 +358,7 @@ function SimuladorPage() {
           </label>
 
           <div style={{ display: "flex", gap: 10 }}>
-            <Link to="/dashboard/banco" style={{ flex: 1, padding: 12, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Link to="/dashboard/banco" style={{ flex: 1, padding: 12, background: "white", color: "#647DA0", border: "2px solid #F2DCDB", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center" }}>
               ← Volver
             </Link>
             <button
@@ -366,7 +366,7 @@ function SimuladorPage() {
               onClick={() => setPhase("exam")}
               style={{ flex: 2, padding: 12, background: agreed ? "#6C0820" : "#ccc", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: agreed ? "pointer" : "not-allowed", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}
             >
-              🎯 Comenzar simulador
+              <Icon n="target" size={16} /> Comenzar simulador
             </button>
           </div>
         </div>
@@ -383,11 +383,11 @@ function SimuladorPage() {
 
           {/* Header */}
           <div style={{ textAlign: "center", marginBottom: 28 }}>
-            <div style={{ fontSize: "4rem", animation: "float 3s ease-in-out infinite", display: "inline-block" }}>☁️</div>
-            <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.8rem", color: "#1a1a2e", margin: "8px 0 4px" }}>
-              Examen <span style={{ color: passed ? "#2ecc71" : "#6C0820" }}>{passed ? "¡Aprobado! 🎉" : "entregado"}</span>
+            <div style={{ animation: "float 3s ease-in-out infinite", display: "inline-block" }}><Icon n="cloud" size={64} color="#5A86CB" /></div>
+            <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.8rem", color: "#22375C", margin: "8px 0 4px" }}>
+              Examen <span style={{ color: passed ? "#2ecc71" : "#6C0820" }}>{passed ? "¡Aprobado!" : "entregado"}</span>
             </h1>
-            <p style={{ fontSize: "0.9rem", color: "#888" }}>Aquí está tu análisis completo de Pathy ✈️</p>
+            <p style={{ fontSize: "0.9rem", color: "#647DA0" }}>Aquí está tu análisis completo de Pathy</p>
           </div>
 
           {/* Score card */}
@@ -395,17 +395,17 @@ function SimuladorPage() {
             <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "3.5rem", fontWeight: 900, lineHeight: 1, marginBottom: 4, color: passed ? "#2ecc71" : "#e74c3c" }}>
               {scorePct}%
             </div>
-            <div style={{ fontSize: "0.85rem", color: "#888", marginBottom: 20 }}>Calificación total del simulador</div>
+            <div style={{ fontSize: "0.85rem", color: "#647DA0", marginBottom: 20 }}>Calificación total del simulador</div>
             <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
               {[
                 { num: totalCorrect, label: "Correctas", color: "#2ecc71" },
                 { num: TOTAL_QS - totalCorrect, label: "Incorrectas", color: "#e74c3c" },
-                { num: TOTAL_QS, label: "Total", color: "#1a1a2e" },
+                { num: TOTAL_QS, label: "Total", color: "#22375C" },
                 { num: secToHM(timeUsed), label: "Tiempo usado", color: "#3D5D91" },
               ].map((s) => (
                 <div key={s.label} style={{ textAlign: "center" }}>
                   <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.5rem", fontWeight: 900, color: s.color }}>{s.num}</div>
-                  <div style={{ fontSize: "0.72rem", color: "#aaa" }}>{s.label}</div>
+                  <div style={{ fontSize: "0.72rem", color: "#8DA1BE" }}>{s.label}</div>
                 </div>
               ))}
             </div>
@@ -413,18 +413,18 @@ function SimuladorPage() {
 
           {/* Pathy */}
           <div style={{ background: "linear-gradient(135deg,#F2DCDB,#fce4ec)", borderRadius: 14, padding: 18, marginBottom: 18, display: "flex", alignItems: "flex-start", gap: 12 }}>
-            <span style={{ fontSize: "1.8rem", flexShrink: 0 }}>☁️</span>
+            <span style={{ flexShrink: 0, display: "flex", alignItems: "center" }}><Icon n="cloud" size={29} color="#6C0820" /></span>
             <div style={{ fontSize: "0.87rem", color: "#555", lineHeight: 1.6 }}>
               {passed
-                ? <><strong style={{ color: "#6C0820" }}>Pathy dice:</strong> ¡FELICIDADES! 🎉 Aprobaste el simulador con <strong>{scorePct}%</strong>. Tu dedicación y constancia están dando frutos. Sigue practicando para llegar al examen real con aún más confianza. ¡Tú puedes, aviador! ✈️</>
-                : <><strong style={{ color: "#6C0820" }}>Pathy dice:</strong> No te desanimes, cada simulador es un paso más hacia tu objetivo. 💪 Tu calificación fue <strong>{scorePct}%</strong> y necesitas <strong>80%</strong> para aprobar. Las materias en rojo son las que más necesitas reforzar. ¡Con más práctica lo lograrás!</>
+                ? <><strong style={{ color: "#6C0820" }}>Pathy dice:</strong> ¡FELICIDADES! Aprobaste el simulador con <strong>{scorePct}%</strong>. Tu dedicación y constancia están dando frutos. Sigue practicando para llegar al examen real con aún más confianza. ¡Tú puedes, aviador!</>
+                : <><strong style={{ color: "#6C0820" }}>Pathy dice:</strong> No te desanimes, cada simulador es un paso más hacia tu objetivo. Tu calificación fue <strong>{scorePct}%</strong> y necesitas <strong>80%</strong> para aprobar. Las materias en rojo son las que más necesitas reforzar. ¡Con más práctica lo lograrás!</>
               }
             </div>
           </div>
 
           {/* Por materia */}
           <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,0.06)", marginBottom: 18 }}>
-            <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 14 }}>📊 Resultado por materia</div>
+            <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="chart" size={15} /> Resultado por materia</div>
             {MATERIAS.map((m, i) => {
               const p = DEMO_PCTS[i];
               const color = p >= 80 ? "#2ecc71" : p >= 70 ? "#f39c12" : "#e74c3c";
@@ -433,8 +433,8 @@ function SimuladorPage() {
               return (
                 <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", background: bg, border: `1px solid ${border}`, borderRadius: 10, marginBottom: 7, gap: 10, flexWrap: "wrap" }}>
                   <div>
-                    <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#1a1a2e" }}>{m.name}</div>
-                    <div style={{ fontSize: "0.72rem", color: "#aaa" }}>{m.total} preguntas</div>
+                    <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#22375C", display: "flex", alignItems: "center", gap: 7 }}><Icon n={m.icon} size={15} color="#647DA0" /> {m.name}</div>
+                    <div style={{ fontSize: "0.72rem", color: "#8DA1BE" }}>{m.total} preguntas</div>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                     <div style={{ width: 100, height: 6, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
@@ -449,32 +449,32 @@ function SimuladorPage() {
 
           {/* Review Q sample */}
           <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,0.06)", marginBottom: 24 }}>
-            <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 14 }}>📝 Preguntas corregidas</div>
+            <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="sim" size={15} /> Preguntas corregidas</div>
             {SAMPLE_QS.map((q, i) => {
               const userAns = i % 2 === 0 ? q.correct : (q.correct === 0 ? 1 : 0);
               const isCorrect = userAns === q.correct;
               return (
                 <div key={i} style={{ background: isCorrect ? "rgba(46,204,113,0.06)" : "rgba(231,76,60,0.05)", border: `1px solid ${isCorrect ? "rgba(46,204,113,0.2)" : "rgba(231,76,60,0.15)"}`, borderRadius: 12, padding: 16, marginBottom: 10 }}>
                   <div style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 10 }}>
-                    <span style={{ fontSize: "1rem", flexShrink: 0 }}>{isCorrect ? "✅" : "❌"}</span>
-                    <span style={{ fontSize: "0.88rem", fontWeight: 600, color: "#1a1a2e", lineHeight: 1.5 }}>{i + 1}. {q.text}</span>
+                    <span style={{ flexShrink: 0, display: "flex", alignItems: "center", marginTop: 1 }}>{isCorrect ? <Icon n="checkCircle" size={17} color="#2ecc71" /> : <Icon n="close" size={17} color="#e74c3c" />}</span>
+                    <span style={{ fontSize: "0.88rem", fontWeight: 600, color: "#22375C", lineHeight: 1.5 }}>{i + 1}. {q.text}</span>
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 10, paddingLeft: 24 }}>
                     {q.opts.map((o, oi) => {
                       const isRight = oi === q.correct;
                       const isUser = oi === userAns;
                       return (
-                        <div key={oi} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 12px", background: isRight ? "rgba(46,204,113,0.1)" : isUser && !isRight ? "rgba(231,76,60,0.08)" : "transparent", border: `1px solid ${isRight ? "#2ecc71" : isUser && !isRight ? "#e74c3c" : "#F2DCDB"}`, borderRadius: 8, fontSize: "0.82rem", color: "#1a1a2e" }}>
+                        <div key={oi} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 12px", background: isRight ? "rgba(46,204,113,0.1)" : isUser && !isRight ? "rgba(231,76,60,0.08)" : "transparent", border: `1px solid ${isRight ? "#2ecc71" : isUser && !isRight ? "#e74c3c" : "#F2DCDB"}`, borderRadius: 8, fontSize: "0.82rem", color: "#22375C" }}>
                           <span>{["A", "B", "C"][oi]}</span>
                           <span style={{ flex: 1 }}>{o}</span>
-                          <span>{isRight ? "✅" : isUser && !isRight ? "❌" : ""}</span>
+                          <span style={{ display: "flex", alignItems: "center" }}>{isRight ? <Icon n="checkCircle" size={15} color="#2ecc71" /> : isUser && !isRight ? <Icon n="close" size={15} color="#e74c3c" /> : null}</span>
                         </div>
                       );
                     })}
                   </div>
                   <div style={{ padding: "10px 12px", background: "rgba(61,93,145,0.06)", borderLeft: "3px solid #3D5D91", borderRadius: "0 7px 7px 0", fontSize: "0.8rem", color: "#555", lineHeight: 1.5 }}>
-                    💡 {q.feedback}
-                    <div style={{ marginTop: 5, fontSize: "0.72rem", color: "#3D5D91", fontWeight: 600 }}>📖 {q.cite}</div>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="lightbulb" size={14} color="#f39c12" /> {q.feedback}</span>
+                    <div style={{ marginTop: 5, fontSize: "0.72rem", color: "#3D5D91", fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><Icon n="book" size={13} /> {q.cite}</div>
                   </div>
                 </div>
               );
@@ -482,8 +482,8 @@ function SimuladorPage() {
           </div>
 
           <div style={{ marginBottom: 18 }}>
-            <button onClick={() => setPhase("review")} style={{ width: "100%", padding: 14, background: "#3D5D91", color: "white", border: "none", borderRadius: 12, fontSize: "0.95rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
-              📋 Revisar examen completo
+            <button onClick={() => setPhase("review")} style={{ width: "100%", padding: 14, background: "#3D5D91", color: "white", border: "none", borderRadius: 12, fontSize: "0.95rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
+              <Icon n="doc" size={17} /> Revisar examen completo
             </button>
           </div>
 
