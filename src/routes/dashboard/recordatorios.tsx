@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
+import { Icon } from "@/components/ui/fp-icon";
 
 export const Route = createFileRoute("/dashboard/recordatorios")({
   component: RecordatoriosPage,
@@ -18,10 +19,10 @@ interface Reminder {
 }
 
 const INITIAL_REMINDERS: Reminder[] = [
-  { id: 1, icon: "📚", iconBg: "rgba(61,93,145,.1)",   title: "Sesión de estudio diaria",  sub: "Todos los días · 7:00 PM · 💬 WhatsApp",               tags: ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"], enabled: true },
-  { id: 2, icon: "📝", iconBg: "rgba(108,8,32,.08)",   title: "Simulador semanal",          sub: "Cada domingo · 10:00 AM · 💬 WhatsApp",                tags: ["Dom"],                                     enabled: true },
-  { id: 3, icon: "⚠️", iconBg: "rgba(243,156,18,.1)", title: "Reforzar Meteorología",      sub: "Lunes, miércoles y viernes · 8:00 PM · 💬 WhatsApp",  tags: ["Lun","Mié","Vie"],                         enabled: true },
-  { id: 4, icon: "🔥", iconBg: "rgba(46,204,113,.1)", title: "Recordatorio de racha",      sub: "Si no has estudiado hoy · 9:00 PM · 💬 WhatsApp",     tags: ["Todos los días"],                          enabled: false },
+  { id: 1, icon: "book", iconBg: "rgba(61,93,145,.1)",   title: "Sesión de estudio diaria",  sub: "Todos los días · 7:00 PM · WhatsApp",               tags: ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"], enabled: true },
+  { id: 2, icon: "sim", iconBg: "rgba(108,8,32,.08)",   title: "Simulador semanal",          sub: "Cada domingo · 10:00 AM · WhatsApp",                tags: ["Dom"],                                     enabled: true },
+  { id: 3, icon: "alert", iconBg: "rgba(243,156,18,.1)", title: "Reforzar Meteorología",      sub: "Lunes, miércoles y viernes · 8:00 PM · WhatsApp",  tags: ["Lun","Mié","Vie"],                         enabled: true },
+  { id: 4, icon: "flame", iconBg: "rgba(46,204,113,.1)", title: "Recordatorio de racha",      sub: "Si no has estudiado hoy · 9:00 PM · WhatsApp",     tags: ["Todos los días"],                          enabled: false },
 ];
 
 function computeCountdown(dateStr: string) {
@@ -40,7 +41,7 @@ function RecordatoriosPage() {
   const [showDateModal, setShowDateModal] = useState(false);
   const [examDate, setExamDate] = useState("2026-08-17");
   const [countdown, setCountdown] = useState(() => computeCountdown("2026-08-17"));
-  const [reminderType, setReminderType] = useState("📚 Sesión de estudio diaria");
+  const [reminderType, setReminderType] = useState("Sesión de estudio diaria");
   const [reminderTime, setReminderTime] = useState("19:00");
   const [selectedDays, setSelectedDays] = useState([true, true, true, true, true, true, true]);
   const [saveFlash, setSaveFlash] = useState(false);
@@ -68,7 +69,7 @@ function RecordatoriosPage() {
   const inputStyle: React.CSSProperties = {
     width: "100%", padding: "10px 14px", border: "2px solid #F2DCDB",
     borderRadius: 9, fontSize: ".88rem", fontFamily: "'Manrope', sans-serif", outline: "none",
-    color: "#1a1a2e", background: "white",
+    color: "#22375C", background: "white",
   };
 
   return (
@@ -83,32 +84,32 @@ function RecordatoriosPage() {
           {/* ── Reminder modal ── */}
           {showReminderModal && (
             <div onClick={(e) => e.stopPropagation()} style={{ background: "white", borderRadius: 18, padding: 28, maxWidth: 460, width: "100%" }}>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", marginBottom: 6 }}>🔔 Nuevo recordatorio</h2>
-              <p style={{ fontSize: ".84rem", color: "#888", marginBottom: 22 }}>Configura cuándo quieres que te avisemos por WhatsApp</p>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}><Icon n="bell" size={22} color="#22375C" /> Nuevo recordatorio</h2>
+              <p style={{ fontSize: ".84rem", color: "#647DA0", marginBottom: 22 }}>Configura cuándo quieres que te avisemos por WhatsApp</p>
 
               <div style={{ background: "#f0fdf4", border: "1px solid #86efac", borderRadius: 10, padding: "10px 14px", marginBottom: 16, display: "flex", alignItems: "center", gap: 8, fontSize: ".8rem", color: "#166534" }}>
-                💬 <span>Este recordatorio llegará a tu WhatsApp al <strong>+52 55 ••••••78</strong></span>
+                <Icon n="chat" size={16} color="#166534" /> <span>Este recordatorio llegará a tu WhatsApp al <strong>+52 55 ••••••78</strong></span>
               </div>
 
               <div style={{ marginBottom: 16 }}>
-                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 6, display: "block" }}>¿Para qué quieres el recordatorio?</label>
+                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "#22375C", marginBottom: 6, display: "block" }}>¿Para qué quieres el recordatorio?</label>
                 <select value={reminderType} onChange={(e) => setReminderType(e.target.value)} style={inputStyle}>
-                  <option>📚 Sesión de estudio diaria</option>
-                  <option>📝 Hacer simulador</option>
-                  <option>🃏 Repasar flashcards</option>
-                  <option>🎬 Ver una clase grabada</option>
-                  <option>⚠️ Reforzar materia específica</option>
-                  <option>🔥 Recordatorio de racha</option>
+                  <option>Sesión de estudio diaria</option>
+                  <option>Hacer simulador</option>
+                  <option>Repasar flashcards</option>
+                  <option>Ver una clase grabada</option>
+                  <option>Reforzar materia específica</option>
+                  <option>Recordatorio de racha</option>
                 </select>
               </div>
 
               <div style={{ marginBottom: 16 }}>
-                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 6, display: "block" }}>Hora</label>
+                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "#22375C", marginBottom: 6, display: "block" }}>Hora</label>
                 <input type="time" value={reminderTime} onChange={(e) => setReminderTime(e.target.value)} style={inputStyle} />
               </div>
 
               <div style={{ marginBottom: 20 }}>
-                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 6, display: "block" }}>¿Qué días?</label>
+                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "#22375C", marginBottom: 6, display: "block" }}>¿Qué días?</label>
                 <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
                   {WEEK_DAYS.map((d, i) => (
                     <button
@@ -118,7 +119,7 @@ function RecordatoriosPage() {
                         width: 38, height: 38, borderRadius: "50%",
                         border: `2px solid ${selectedDays[i] ? "#3D5D91" : "#F2DCDB"}`,
                         background: selectedDays[i] ? "#3D5D91" : "white",
-                        color: selectedDays[i] ? "white" : "#888",
+                        color: selectedDays[i] ? "white" : "#647DA0",
                         fontSize: ".78rem", fontWeight: 700, cursor: "pointer",
                         display: "flex", alignItems: "center", justifyContent: "center",
                         transition: "all .2s", fontFamily: "'Manrope', sans-serif",
@@ -129,8 +130,8 @@ function RecordatoriosPage() {
               </div>
 
               <div style={{ display: "flex", gap: 10 }}>
-                <button onClick={() => setShowReminderModal(false)} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
-                <button onClick={saveReminder} style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Guardar recordatorio 🔔</button>
+                <button onClick={() => setShowReminderModal(false)} style={{ flex: 1, padding: 11, background: "white", color: "#647DA0", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                <button onClick={saveReminder} style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>Guardar recordatorio <Icon n="bell" size={16} /></button>
               </div>
             </div>
           )}
@@ -138,15 +139,15 @@ function RecordatoriosPage() {
           {/* ── Date modal ── */}
           {showDateModal && (
             <div onClick={(e) => e.stopPropagation()} style={{ background: "white", borderRadius: 18, padding: 28, maxWidth: 460, width: "100%" }}>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", marginBottom: 6 }}>✈️ Fecha del examen CIAAC</h2>
-              <p style={{ fontSize: ".84rem", color: "#888", marginBottom: 22 }}>¿Cuándo tienes programado tu examen?</p>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}><Icon n="plane" size={22} color="#22375C" /> Fecha del examen CIAAC</h2>
+              <p style={{ fontSize: ".84rem", color: "#647DA0", marginBottom: 22 }}>¿Cuándo tienes programado tu examen?</p>
               <div style={{ marginBottom: 16 }}>
-                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 6, display: "block" }}>Fecha del examen</label>
+                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "#22375C", marginBottom: 6, display: "block" }}>Fecha del examen</label>
                 <input type="date" value={examDate} onChange={(e) => setExamDate(e.target.value)} style={inputStyle} />
               </div>
               <div style={{ display: "flex", gap: 10 }}>
-                <button onClick={() => setShowDateModal(false)} style={{ flex: 1, padding: 11, background: "white", color: "#888", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
-                <button onClick={() => setShowDateModal(false)} style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Guardar fecha ✈️</button>
+                <button onClick={() => setShowDateModal(false)} style={{ flex: 1, padding: 11, background: "white", color: "#647DA0", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                <button onClick={() => setShowDateModal(false)} style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>Guardar fecha <Icon n="plane" size={16} /></button>
               </div>
             </div>
           )}
@@ -155,18 +156,18 @@ function RecordatoriosPage() {
 
       {/* Save flash */}
       {saveFlash && (
-        <div style={{ position: "fixed", top: 80, right: 24, background: "#2ecc71", color: "white", padding: "10px 18px", borderRadius: 10, fontWeight: 700, fontSize: ".85rem", zIndex: 200, boxShadow: "0 4px 16px rgba(46,204,113,.4)" }}>
-          ✅ ¡Recordatorio guardado!
+        <div style={{ position: "fixed", top: 80, right: 24, background: "#2ecc71", color: "white", padding: "10px 18px", borderRadius: 10, fontWeight: 700, fontSize: ".85rem", zIndex: 200, boxShadow: "0 4px 16px rgba(46,204,113,.4)", display: "flex", alignItems: "center", gap: 6 }}>
+          <Icon n="check" size={16} /> ¡Recordatorio guardado!
         </div>
       )}
 
       {/* Page header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24, flexWrap: "wrap", gap: 12 }}>
         <div>
-          <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.5rem", color: "#1a1a2e", marginBottom: 4 }}>
+          <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.5rem", color: "#22375C", marginBottom: 4 }}>
             Mis <span style={{ color: "#6C0820" }}>Recordatorios</span>
           </h1>
-          <p style={{ fontSize: ".85rem", color: "#888" }}>Configura avisos por WhatsApp para no perder tu racha.</p>
+          <p style={{ fontSize: ".85rem", color: "#647DA0" }}>Configura avisos por WhatsApp para no perder tu racha.</p>
         </div>
         <button
           onClick={() => setShowReminderModal(true)}
@@ -177,11 +178,11 @@ function RecordatoriosPage() {
       </div>
 
       {/* Countdown card */}
-      <div style={{ background: "linear-gradient(135deg,#1a1a2e,#2a2a4e)", borderRadius: 18, padding: "24px 28px", display: "flex", alignItems: "center", gap: 20, marginBottom: 24, position: "relative", overflow: "hidden", flexWrap: "wrap" }}>
+      <div style={{ background: "linear-gradient(135deg,#22375C,#2a2a4e)", borderRadius: 18, padding: "24px 28px", display: "flex", alignItems: "center", gap: 20, marginBottom: 24, position: "relative", overflow: "hidden", flexWrap: "wrap" }}>
         <div style={{ position: "absolute", top: -40, right: -40, width: 160, height: 160, background: "radial-gradient(circle, rgba(242,174,188,.15) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
-        <div style={{ fontSize: "3rem", flexShrink: 0, zIndex: 1 }}>✈️</div>
+        <div style={{ flexShrink: 0, zIndex: 1, color: "white" }}><Icon n="plane" size={42} /></div>
         <div style={{ flex: 1, zIndex: 1, minWidth: 200 }}>
-          <div style={{ fontSize: ".7rem", color: "#F2AEBC", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 4 }}>⏳ Cuenta regresiva</div>
+          <div style={{ fontSize: ".7rem", color: "#F2AEBC", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 4, display: "flex", alignItems: "center", gap: 6 }}><Icon n="clock" size={14} /> Cuenta regresiva</div>
           <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", color: "white", marginBottom: 10 }}>
             Examen CIAAC — {new Date(examDate + "T12:00:00").toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" })}
           </div>
@@ -199,15 +200,15 @@ function RecordatoriosPage() {
         </div>
         <button
           onClick={() => setShowDateModal(true)}
-          style={{ background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.2)", color: "rgba(255,255,255,.8)", padding: "6px 14px", borderRadius: 8, fontSize: ".76rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif", zIndex: 1, whiteSpace: "nowrap", flexShrink: 0 }}
+          style={{ background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.2)", color: "rgba(255,255,255,.8)", padding: "6px 14px", borderRadius: 8, fontSize: ".76rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif", zIndex: 1, whiteSpace: "nowrap", flexShrink: 0, display: "inline-flex", alignItems: "center", gap: 6 }}
         >
-          ✏️ Cambiar fecha
+          <Icon n="edit" size={14} /> Cambiar fecha
         </button>
       </div>
 
       {/* WhatsApp banner */}
       <div style={{ background: "linear-gradient(135deg,#25D366,#128C7E)", borderRadius: 14, padding: "16px 20px", display: "flex", alignItems: "center", gap: 14, marginBottom: 28, flexWrap: "wrap" }}>
-        <div style={{ fontSize: "2rem", flexShrink: 0 }}>💬</div>
+        <div style={{ flexShrink: 0, color: "white" }}><Icon n="chat" size={30} /></div>
         <div style={{ flex: 1, minWidth: 180 }}>
           <div style={{ fontSize: ".88rem", fontWeight: 700, color: "white", marginBottom: 3 }}>Recordatorios por WhatsApp</div>
           <div style={{ fontSize: ".78rem", color: "rgba(255,255,255,.85)", lineHeight: 1.5 }}>Te mandaremos tus recordatorios directo a WhatsApp para que no se te pase ninguna sesión de estudio. ¡Sin descargar apps extra!</div>
@@ -220,7 +221,7 @@ function RecordatoriosPage() {
       </div>
 
       {/* Reminders list */}
-      <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14 }}>🔔 Mis recordatorios</div>
+      <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="bell" size={15} /> Mis recordatorios</div>
       <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
         {reminders.map((r) => (
           <div
@@ -234,10 +235,10 @@ function RecordatoriosPage() {
               transition: "opacity .2s",
             }}
           >
-            <div style={{ width: 40, height: 40, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", flexShrink: 0, background: r.iconBg }}>{r.icon}</div>
+            <div style={{ width: 40, height: 40, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: r.iconBg, color: "#22375C" }}><Icon n={r.icon as any} size={20} /></div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: ".88rem", fontWeight: 700, color: "#1a1a2e", marginBottom: 2 }}>{r.title}</div>
-              <div style={{ fontSize: ".75rem", color: "#888" }}>{r.sub}</div>
+              <div style={{ fontSize: ".88rem", fontWeight: 700, color: "#22375C", marginBottom: 2 }}>{r.title}</div>
+              <div style={{ fontSize: ".75rem", color: "#647DA0" }}>{r.sub}</div>
               <div style={{ display: "flex", gap: 6, marginTop: 5, flexWrap: "wrap" }}>
                 {r.tags.map((tag) => (
                   <span key={tag} style={{ padding: "2px 9px", borderRadius: 10, fontSize: ".68rem", fontWeight: 600, background: "#F2DCDB", color: "#6C0820" }}>{tag}</span>
@@ -247,10 +248,10 @@ function RecordatoriosPage() {
             <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
               <button
                 onClick={() => setShowReminderModal(true)}
-                style={{ background: "none", border: "1px solid #F2DCDB", borderRadius: 7, padding: "5px 10px", fontSize: ".75rem", color: "#888", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all .2s" }}
+                style={{ background: "none", border: "1px solid #F2DCDB", borderRadius: 7, padding: "5px 8px", fontSize: ".75rem", color: "#647DA0", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all .2s", display: "inline-flex", alignItems: "center" }}
                 onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; e.currentTarget.style.color = "#3D5D91"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; e.currentTarget.style.color = "#888"; }}
-              >✏️</button>
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; e.currentTarget.style.color = "#647DA0"; }}
+              ><Icon n="edit" size={15} /></button>
               {/* Toggle */}
               <div
                 onClick={() => toggleReminder(r.id)}
@@ -273,18 +274,18 @@ function RecordatoriosPage() {
         {/* Add card */}
         <div
           onClick={() => setShowReminderModal(true)}
-          style={{ background: "white", borderRadius: 14, padding: "16px 18px", display: "flex", alignItems: "center", gap: 14, boxShadow: "0 2px 8px rgba(61,93,145,.05)", border: "2px dashed #F2DCDB", cursor: "pointer", color: "#aaa", fontSize: ".88rem", fontWeight: 600, transition: "all .2s" }}
+          style={{ background: "white", borderRadius: 14, padding: "16px 18px", display: "flex", alignItems: "center", gap: 14, boxShadow: "0 2px 8px rgba(61,93,145,.05)", border: "2px dashed #F2DCDB", cursor: "pointer", color: "#8DA1BE", fontSize: ".88rem", fontWeight: 600, transition: "all .2s" }}
           onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; (e.currentTarget as HTMLElement).style.color = "#3D5D91"; }}
-          onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; (e.currentTarget as HTMLElement).style.color = "#aaa"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; (e.currentTarget as HTMLElement).style.color = "#8DA1BE"; }}
         >
-          <div style={{ width: 40, height: 40, borderRadius: 12, background: "#F2DCDB", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", flexShrink: 0 }}>＋</div>
+          <div style={{ width: 40, height: 40, borderRadius: 12, background: "#F2DCDB", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "#6C0820" }}><Icon n="plus" size={20} /></div>
           <span>Agregar nuevo recordatorio</span>
         </div>
       </div>
 
       {/* Pathy tips */}
       <div style={{ background: "linear-gradient(135deg,#F2DCDB,#fce4ec)", borderRadius: 14, padding: 18, marginBottom: 24 }}>
-        <h3 style={{ fontSize: ".88rem", fontWeight: 700, color: "#6C0820", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}>☁️ Consejos de Pathy para mantener tu racha</h3>
+        <h3 style={{ fontSize: ".88rem", fontWeight: 700, color: "#6C0820", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}><Icon n="cloud" size={18} /> Consejos de Pathy para mantener tu racha</h3>
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {[
             "Estudia siempre a la misma hora — tu cerebro lo convertirá en hábito automático en 21 días.",

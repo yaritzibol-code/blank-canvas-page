@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { PathySVG } from "../../contexts/StudyTimerContext";
+import { Icon } from "@/components/ui/fp-icon";
 
 export const Route = createFileRoute("/dashboard/estudiemos")({
   component: EstudiemosJuntosPage,
@@ -56,18 +57,18 @@ const ago = (n: number): Date => { const d = new Date(); d.setDate(d.getDate() -
 const MOCK_PROFILE: StudentProfile = {
   name: "María",
   materias: [
-    { slug: "aerodinamica",       name: "Aerodinámica",                icon: "✈️", pct: 78, avg: 81, lastStudied: ago(1)  },
-    { slug: "aeronaves-motores",  name: "Aeronaves y Motores",         icon: "⚙️", pct: 55, avg: 70, lastStudied: ago(3)  },
-    { slug: "legislacion",        name: "Legislación Aeronáutica",     icon: "⚖️", pct: 90, avg: 88, lastStudied: ago(2)  },
-    { slug: "medicina",           name: "Medicina de Aviación",        icon: "🏥", pct: 40, avg: 62, lastStudied: ago(9)  },
-    { slug: "meteorologia",       name: "Meteorología",                icon: "🌤️", pct: 25, avg: 58, lastStudied: ago(8)  },
-    { slug: "navegacion",         name: "Navegación Aérea",            icon: "🗺️", pct: 60, avg: 74, lastStudied: ago(4)  },
-    { slug: "operaciones",        name: "Operaciones Aeronáuticas",    icon: "🛫", pct: 15, avg: 50, lastStudied: ago(14) },
-    { slug: "comunicaciones",     name: "Comunicaciones",              icon: "📻", pct: 0,  avg: 0,  lastStudied: null    },
-    { slug: "manuales-ais",       name: "Manuales AIS",                icon: "📋", pct: 0,  avg: 0,  lastStudied: null    },
-    { slug: "servicios-transito", name: "Servicios de Tránsito",       icon: "🗼", pct: 0,  avg: 0,  lastStudied: null    },
-    { slug: "factores-humanos",   name: "Factores Humanos",            icon: "🧠", pct: 0,  avg: 0,  lastStudied: null    },
-    { slug: "seguridad-aerea",    name: "Seguridad Aérea",             icon: "🛡️", pct: 0,  avg: 0,  lastStudied: null    },
+    { slug: "aerodinamica",       name: "Aerodinámica",                icon: "plane", pct: 78, avg: 81, lastStudied: ago(1)  },
+    { slug: "aeronaves-motores",  name: "Aeronaves y Motores",         icon: "settings", pct: 55, avg: 70, lastStudied: ago(3)  },
+    { slug: "legislacion",        name: "Legislación Aeronáutica",     icon: "scale", pct: 90, avg: 88, lastStudied: ago(2)  },
+    { slug: "medicina",           name: "Medicina de Aviación",        icon: "stethoscope", pct: 40, avg: 62, lastStudied: ago(9)  },
+    { slug: "meteorologia",       name: "Meteorología",                icon: "cloud", pct: 25, avg: 58, lastStudied: ago(8)  },
+    { slug: "navegacion",         name: "Navegación Aérea",            icon: "map", pct: 60, avg: 74, lastStudied: ago(4)  },
+    { slug: "operaciones",        name: "Operaciones Aeronáuticas",    icon: "plane", pct: 15, avg: 50, lastStudied: ago(14) },
+    { slug: "comunicaciones",     name: "Comunicaciones",              icon: "radio", pct: 0,  avg: 0,  lastStudied: null    },
+    { slug: "manuales-ais",       name: "Manuales AIS",                icon: "doc", pct: 0,  avg: 0,  lastStudied: null    },
+    { slug: "servicios-transito", name: "Servicios de Tránsito",       icon: "tower", pct: 0,  avg: 0,  lastStudied: null    },
+    { slug: "factores-humanos",   name: "Factores Humanos",            icon: "brain", pct: 0,  avg: 0,  lastStudied: null    },
+    { slug: "seguridad-aerea",    name: "Seguridad Aérea",             icon: "shield", pct: 0,  avg: 0,  lastStudied: null    },
   ],
   clases: { vistas: 18, total: 48 },
   flashcards: { done: 120, total: 310 },
@@ -212,44 +213,44 @@ function buildPlan(rec: Recommendation, tiempo: TiempoDisponible, p: StudentProf
 
   const allItems: Record<RecoType, PlanItem[]> = {
     materia: [
-      { icon: "📖", titulo: "Ver módulo pendiente", descripcion: `Continúa donde lo dejaste en ${rec.subject?.name ?? "la materia"}`, duracion_min: 20, link: `/dashboard/materias/${slug}`, badge: "Pendiente", prioridad: 1 },
-      { icon: "📺", titulo: "Ver clase relacionada", descripcion: "Refuerza el tema con una clase en video", duracion_min: 15, link: "/dashboard/clases", prioridad: 2 },
-      { icon: "✈️", titulo: "10 preguntas de práctica", descripcion: `Banco de preguntas — ${rec.subject?.name ?? "la materia"}`, duracion_min: 10, link: "/dashboard/banco", prioridad: 3 },
+      { icon: "book", titulo: "Ver módulo pendiente", descripcion: `Continúa donde lo dejaste en ${rec.subject?.name ?? "la materia"}`, duracion_min: 20, link: `/dashboard/materias/${slug}`, badge: "Pendiente", prioridad: 1 },
+      { icon: "play", titulo: "Ver clase relacionada", descripcion: "Refuerza el tema con una clase en video", duracion_min: 15, link: "/dashboard/clases", prioridad: 2 },
+      { icon: "plane", titulo: "10 preguntas de práctica", descripcion: `Banco de preguntas — ${rec.subject?.name ?? "la materia"}`, duracion_min: 10, link: "/dashboard/banco", prioridad: 3 },
     ],
     cuestionario: [
-      { icon: "✈️", titulo: "Cuestionario — 20 preguntas", descripcion: "Banco de preguntas tipo CIAAC", duracion_min: 20, link: "/dashboard/banco", badge: "Recomendado", prioridad: 1 },
-      { icon: "🔍", titulo: "Revisar errores anteriores", descripcion: "Repasa las preguntas que fallaste", duracion_min: 10, link: "/dashboard/banco", prioridad: 2 },
-      { icon: "🃏", titulo: "Flashcards de refuerzo", descripcion: "Consolida los conceptos débiles", duracion_min: 15, link: "/dashboard/flashcards", prioridad: 3 },
+      { icon: "plane", titulo: "Cuestionario — 20 preguntas", descripcion: "Banco de preguntas tipo CIAAC", duracion_min: 20, link: "/dashboard/banco", badge: "Recomendado", prioridad: 1 },
+      { icon: "search", titulo: "Revisar errores anteriores", descripcion: "Repasa las preguntas que fallaste", duracion_min: 10, link: "/dashboard/banco", prioridad: 2 },
+      { icon: "cards", titulo: "Flashcards de refuerzo", descripcion: "Consolida los conceptos débiles", duracion_min: 15, link: "/dashboard/flashcards", prioridad: 3 },
     ],
     flashcards: [
-      { icon: "🃏", titulo: "Flashcards — materia débil", descripcion: `Repaso activo de ${rec.subject?.name ?? "la materia"}`, duracion_min: 20, link: "/dashboard/flashcards", badge: "Débil", prioridad: 1 },
-      { icon: "✈️", titulo: "Cuestionario corto", descripcion: "10 preguntas para verificar retención", duracion_min: 10, link: "/dashboard/banco", prioridad: 2 },
+      { icon: "cards", titulo: "Flashcards — materia débil", descripcion: `Repaso activo de ${rec.subject?.name ?? "la materia"}`, duracion_min: 20, link: "/dashboard/flashcards", badge: "Débil", prioridad: 1 },
+      { icon: "plane", titulo: "Cuestionario corto", descripcion: "10 preguntas para verificar retención", duracion_min: 10, link: "/dashboard/banco", prioridad: 2 },
     ],
     sim_parcial: [
-      { icon: "✈️", titulo: "Repaso rápido previo", descripcion: "20 preguntas de calentamiento", duracion_min: 20, link: "/dashboard/banco", prioridad: 1 },
-      { icon: "🎯", titulo: "Simulador parcial — 1 materia", descripcion: "Condiciones de examen real", duracion_min: 40, link: "/dashboard/simulador", prioridad: 2 },
-      { icon: "🔍", titulo: "Revisar resultados", descripcion: "Analiza los errores del simulacro", duracion_min: 10, link: "/dashboard/banco", prioridad: 3 },
+      { icon: "plane", titulo: "Repaso rápido previo", descripcion: "20 preguntas de calentamiento", duracion_min: 20, link: "/dashboard/banco", prioridad: 1 },
+      { icon: "target", titulo: "Simulador parcial — 1 materia", descripcion: "Condiciones de examen real", duracion_min: 40, link: "/dashboard/simulador", prioridad: 2 },
+      { icon: "search", titulo: "Revisar resultados", descripcion: "Analiza los errores del simulacro", duracion_min: 10, link: "/dashboard/banco", prioridad: 3 },
     ],
     sim_completo: canSim ? [
-      { icon: "🎯", titulo: "Simulador CIAAC completo", descripcion: "310 preguntas · 5 horas · condiciones reales", duracion_min: 300, link: "/dashboard/simulador", badge: "CIAAC", prioridad: 1 },
-      { icon: "🔍", titulo: "Revisión post-simulador", descripcion: "Analiza en profundidad los errores", duracion_min: 30, link: "/dashboard/banco", prioridad: 2 },
+      { icon: "target", titulo: "Simulador CIAAC completo", descripcion: "310 preguntas · 5 horas · condiciones reales", duracion_min: 300, link: "/dashboard/simulador", badge: "CIAAC", prioridad: 1 },
+      { icon: "search", titulo: "Revisión post-simulador", descripcion: "Analiza en profundidad los errores", duracion_min: 30, link: "/dashboard/banco", prioridad: 2 },
     ] : [
-      { icon: "✈️", titulo: "Cuestionario intensivo", descripcion: "Prepárate para el simulador con 30 preguntas", duracion_min: 30, link: "/dashboard/banco", badge: "Antes del sim", prioridad: 1 },
-      { icon: "🃏", titulo: "Flashcards de refuerzo", descripcion: "Consolida los conceptos clave", duracion_min: 20, link: "/dashboard/flashcards", prioridad: 2 },
+      { icon: "plane", titulo: "Cuestionario intensivo", descripcion: "Prepárate para el simulador con 30 preguntas", duracion_min: 30, link: "/dashboard/banco", badge: "Antes del sim", prioridad: 1 },
+      { icon: "cards", titulo: "Flashcards de refuerzo", descripcion: "Consolida los conceptos clave", duracion_min: 20, link: "/dashboard/flashcards", prioridad: 2 },
     ],
     resistencia: [
-      { icon: "✈️", titulo: "30 preguntas mezcladas", descripcion: "Entrenamiento de resistencia mental", duracion_min: 30, link: "/dashboard/banco", prioridad: 1 },
-      { icon: "📺", titulo: "Ver clase nueva", descripcion: "Avanza en el contenido del curso", duracion_min: 20, link: "/dashboard/clases", prioridad: 2 },
+      { icon: "plane", titulo: "30 preguntas mezcladas", descripcion: "Entrenamiento de resistencia mental", duracion_min: 30, link: "/dashboard/banco", prioridad: 1 },
+      { icon: "play", titulo: "Ver clase nueva", descripcion: "Avanza en el contenido del curso", duracion_min: 20, link: "/dashboard/clases", prioridad: 2 },
     ],
     recuperacion: [
-      { icon: "📺", titulo: `Clase de ${rec.subject?.name ?? "materia"}`, descripcion: "Refuerza los conceptos que fallaron", duracion_min: 15, link: "/dashboard/clases", badge: "Débil", prioridad: 1 },
-      { icon: "📖", titulo: "Módulo específico", descripcion: "Repasa el contenido teórico", duracion_min: 20, link: `/dashboard/materias/${slug}`, prioridad: 2 },
-      { icon: "✈️", titulo: "10 preguntas de refuerzo", descripcion: "Practica los conceptos repasados", duracion_min: 10, link: "/dashboard/banco", prioridad: 3 },
+      { icon: "play", titulo: `Clase de ${rec.subject?.name ?? "materia"}`, descripcion: "Refuerza los conceptos que fallaron", duracion_min: 15, link: "/dashboard/clases", badge: "Débil", prioridad: 1 },
+      { icon: "book", titulo: "Módulo específico", descripcion: "Repasa el contenido teórico", duracion_min: 20, link: `/dashboard/materias/${slug}`, prioridad: 2 },
+      { icon: "plane", titulo: "10 preguntas de refuerzo", descripcion: "Practica los conceptos repasados", duracion_min: 10, link: "/dashboard/banco", prioridad: 3 },
     ],
     repaso_final: [
-      { icon: "🔍", titulo: "Errores frecuentes", descripcion: "Solo preguntas que has fallado antes", duracion_min: 20, link: "/dashboard/banco", badge: "CIAAC", prioridad: 1 },
-      { icon: "🃏", titulo: "Flashcards esenciales", descripcion: "Repaso rápido de conceptos clave", duracion_min: 15, link: "/dashboard/flashcards", prioridad: 2 },
-      { icon: "🎯", titulo: "Mini simulador", descripcion: "50 preguntas mixtas — condiciones de examen", duracion_min: 30, link: "/dashboard/simulador", prioridad: 3 },
+      { icon: "search", titulo: "Errores frecuentes", descripcion: "Solo preguntas que has fallado antes", duracion_min: 20, link: "/dashboard/banco", badge: "CIAAC", prioridad: 1 },
+      { icon: "cards", titulo: "Flashcards esenciales", descripcion: "Repaso rápido de conceptos clave", duracion_min: 15, link: "/dashboard/flashcards", prioridad: 2 },
+      { icon: "target", titulo: "Mini simulador", descripcion: "50 preguntas mixtas — condiciones de examen", duracion_min: 30, link: "/dashboard/simulador", prioridad: 3 },
     ],
   };
 
@@ -319,11 +320,11 @@ function OnboardingModal({ onDone }: { onDone: () => void }) {
       >
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 28 }}>
-          <div style={{ fontSize: "2.5rem", marginBottom: 8 }}>✈️</div>
-          <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", color: "#1a1a2e", margin: 0 }}>
+          <div style={{ marginBottom: 8, display: "flex", justifyContent: "center", color: "#22375C" }}><Icon n="plane" size={40} /></div>
+          <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", color: "#22375C", margin: 0 }}>
             {step === 1 ? "¿Cuándo es tu CIAAC?" : "¿Cuánto tiempo tienes hoy?"}
           </h2>
-          <p style={{ fontSize: "0.85rem", color: "#888", marginTop: 6 }}>
+          <p style={{ fontSize: "0.85rem", color: "#647DA0", marginTop: 6 }}>
             {step === 1 ? "Paty personaliza tu plan según tu fecha objetivo." : "Esto define cuántas actividades incluye tu plan diario."}
           </p>
         </div>
@@ -351,12 +352,12 @@ function OnboardingModal({ onDone }: { onDone: () => void }) {
                     transition: "all 0.15s",
                   }}
                 >
-                  <p style={{ margin: 0, fontWeight: 600, color: "#1a1a2e", fontSize: "0.9rem" }}>{opt.label}</p>
-                  <p style={{ margin: "2px 0 0", fontSize: "0.78rem", color: "#888" }}>{opt.desc}</p>
+                  <p style={{ margin: 0, fontWeight: 600, color: "#22375C", fontSize: "0.9rem" }}>{opt.label}</p>
+                  <p style={{ margin: "2px 0 0", fontSize: "0.78rem", color: "#647DA0" }}>{opt.desc}</p>
                 </button>
               ))}
             </div>
-            <p style={{ fontSize: "0.78rem", color: "#aaa", marginBottom: 8 }}>O ingresa la fecha exacta:</p>
+            <p style={{ fontSize: "0.78rem", color: "#8DA1BE", marginBottom: 8 }}>O ingresa la fecha exacta:</p>
             <input
               type="date"
               value={customDate}
@@ -378,7 +379,7 @@ function OnboardingModal({ onDone }: { onDone: () => void }) {
               style={{
                 width: "100%",
                 padding: 14,
-                background: selectedDate || customDate ? "#1a1a2e" : "#ddd",
+                background: selectedDate || customDate ? "#22375C" : "#ddd",
                 color: "white",
                 border: "none",
                 borderRadius: 12,
@@ -414,8 +415,8 @@ function OnboardingModal({ onDone }: { onDone: () => void }) {
                 onMouseEnter={e => { e.currentTarget.style.borderColor = "#3D5D91"; e.currentTarget.style.background = "rgba(61,93,145,0.04)"; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = "#F2DCDB"; e.currentTarget.style.background = "white"; }}
               >
-                <p style={{ margin: 0, fontWeight: 700, color: "#1a1a2e", fontSize: "1rem" }}>{opt.label}</p>
-                <p style={{ margin: "4px 0 0", fontSize: "0.8rem", color: "#888" }}>{opt.desc}</p>
+                <p style={{ margin: 0, fontWeight: 700, color: "#22375C", fontSize: "1rem" }}>{opt.label}</p>
+                <p style={{ margin: "4px 0 0", fontSize: "0.8rem", color: "#647DA0" }}>{opt.desc}</p>
               </button>
             ))}
           </div>
@@ -435,9 +436,9 @@ function SummaryStrip({ daysLeft, phase, progreso }: { daysLeft: number; phase: 
   return (
     <div style={{ display: "flex", gap: 10, marginBottom: 20, flexWrap: "wrap" }}>
       {[
-        { icon: "⏳", label: `${dayLabel} para el CIAAC`, color: dayColor },
-        { icon: "📊", label: `${Math.round(progreso)}% progreso general`, color: "#5A86CB" },
-        { icon: "🎯", label: `Fase ${phase.replace("fase", "")} de 5`, color: "#9B59B6" },
+        { icon: "timer", label: `${dayLabel} para el CIAAC`, color: dayColor },
+        { icon: "chart", label: `${Math.round(progreso)}% progreso general`, color: "#5A86CB" },
+        { icon: "target", label: `Fase ${phase.replace("fase", "")} de 5`, color: "#9B59B6" },
       ].map((chip, i) => (
         <div
           key={i}
@@ -455,7 +456,7 @@ function SummaryStrip({ daysLeft, phase, progreso }: { daysLeft: number; phase: 
             color: chip.color,
           }}
         >
-          {chip.icon} {chip.label}
+          <Icon n={chip.icon as any} size={15} /> {chip.label}
         </div>
       ))}
     </div>
@@ -504,7 +505,7 @@ function PathyCard({ rec, phase }: { rec: Recommendation; phase: ExamPhase }) {
           >
             {cfg.badge}
           </span>
-          <span style={{ fontSize: "0.82rem", fontWeight: 600, color: "#1a1a2e" }}>{rec.title}</span>
+          <span style={{ fontSize: "0.82rem", fontWeight: 600, color: "#22375C" }}>{rec.title}</span>
         </div>
         <p style={{ fontSize: "0.88rem", color: "#555", lineHeight: 1.6, margin: 0 }}>
           {rec.pathyMessage}
@@ -539,7 +540,7 @@ function PlanItemCard({ item, index }: { item: PlanItem; index: number }) {
           height: 32,
           borderRadius: "50%",
           background: isTop ? "linear-gradient(135deg, #3D5D91, #5A86CB)" : "#F2DCDB",
-          color: isTop ? "white" : "#888",
+          color: isTop ? "white" : "#647DA0",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -552,8 +553,8 @@ function PlanItemCard({ item, index }: { item: PlanItem; index: number }) {
       </div>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
-          <span style={{ fontSize: "1rem" }}>{item.icon}</span>
-          <span style={{ fontSize: "0.9rem", fontWeight: 700, color: "#1a1a2e" }}>{item.titulo}</span>
+          <span style={{ display: "inline-flex", color: "#3D5D91" }}><Icon n={item.icon as any} size={17} /></span>
+          <span style={{ fontSize: "0.9rem", fontWeight: 700, color: "#22375C" }}>{item.titulo}</span>
           {item.badge && (
             <span
               style={{
@@ -569,7 +570,7 @@ function PlanItemCard({ item, index }: { item: PlanItem; index: number }) {
             </span>
           )}
         </div>
-        <p style={{ margin: 0, fontSize: "0.8rem", color: "#888" }}>
+        <p style={{ margin: 0, fontSize: "0.8rem", color: "#647DA0" }}>
           {item.descripcion} · {item.duracion_min} min
         </p>
       </div>
@@ -578,7 +579,7 @@ function PlanItemCard({ item, index }: { item: PlanItem; index: number }) {
         style={{
           flexShrink: 0,
           padding: "8px 16px",
-          background: isTop ? "#1a1a2e" : "transparent",
+          background: isTop ? "#22375C" : "transparent",
           color: isTop ? "white" : "#3D5D91",
           border: isTop ? "none" : "1.5px solid #3D5D91",
           borderRadius: 8,
@@ -602,7 +603,7 @@ function WeaknessChips({ materias }: { materias: MateriaData[] }) {
   if (!weak.length) return null;
   return (
     <div style={{ marginTop: 16 }}>
-      <p style={{ fontSize: "0.75rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 8 }}>
+      <p style={{ fontSize: "0.75rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 8 }}>
         Materias por reforzar
       </p>
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -624,7 +625,7 @@ function WeaknessChips({ materias }: { materias: MateriaData[] }) {
               textDecoration: "none",
             }}
           >
-            {m.icon} {m.name} · {Math.round(m.avg)}%
+            <Icon n={m.icon as any} size={15} /> {m.name} · {Math.round(m.avg)}%
           </a>
         ))}
       </div>

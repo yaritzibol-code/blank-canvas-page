@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { Icon } from "@/components/ui/fp-icon";
 
 export const Route = createFileRoute("/dashboard/banco")({
   component: BancoPage,
@@ -36,18 +37,18 @@ interface HistEntry {
 /* ─── Static data ────────────────────────────────────── */
 
 const MATERIAS = [
-  "✈️ Aerodinámica",
-  "⚙️ Aeronaves y Motores",
-  "⚖️ Legislación",
-  "🏥 Medicina",
-  "🌤️ Meteorología",
-  "🗺️ Navegación",
-  "🛫 Operaciones",
-  "📻 Comunicaciones",
-  "📋 Manuales AIP",
-  "🗼 Tránsito Aéreo",
-  "🧠 Factores Humanos",
-  "🛡️ Seguridad Aérea",
+  "Aerodinámica",
+  "Aeronaves y Motores",
+  "Legislación",
+  "Medicina",
+  "Meteorología",
+  "Navegación",
+  "Operaciones",
+  "Comunicaciones",
+  "Manuales AIP",
+  "Tránsito Aéreo",
+  "Factores Humanos",
+  "Seguridad Aérea",
 ];
 
 const HIST_DATA: HistEntry[] = [
@@ -61,32 +62,32 @@ const HIST_DATA: HistEntry[] = [
     result: { correct: 211, total: 310 },
     weaknesses: [
       {
-        icon: "🌤️",
+        icon: "cloud",
         name: "Meteorología",
         detail: "Te costaron más: METAR, TAF y lectura de cartas meteorológicas",
         score: 52,
       },
       {
-        icon: "⚖️",
+        icon: "scale",
         name: "Legislación Aeronáutica",
         detail: "Te costaron más: artículos de la Ley de Aviación Civil y ROAC",
         score: 61,
       },
       {
-        icon: "🗺️",
+        icon: "map",
         name: "Navegación Aérea",
         detail: "Te costaron más: triángulo de velocidades y computador CR-3",
         score: 65,
       },
     ],
     strengths: [
-      { name: "✈️ Aerodinámica", score: 84 },
-      { name: "🧠 Factores Humanos", score: 88 },
-      { name: "🛡️ Seguridad Aérea", score: 90 },
+      { name: "Aerodinámica", score: 84 },
+      { name: "Factores Humanos", score: 88 },
+      { name: "Seguridad Aérea", score: 90 },
     ],
     pathyPrefix: "Pathy recomienda:",
     pathyTip:
-      "Refuerza Meteorología esta semana — especialmente la lectura de METAR y TAF. ¡Con 3 sesiones de estudio estarás lista! 💪",
+      "Refuerza Meteorología esta semana — especialmente la lectura de METAR y TAF. ¡Con 3 sesiones de estudio estarás lista!",
   },
   {
     id: 2,
@@ -98,7 +99,7 @@ const HIST_DATA: HistEntry[] = [
     result: { correct: 41, total: 50 },
     weaknesses: [
       {
-        icon: "📋",
+        icon: "doc",
         name: "Lectura de METAR y TAF",
         detail:
           "6 de 9 preguntas incorrectas — repasa los grupos de visibilidad y nubosidad",
@@ -108,7 +109,7 @@ const HIST_DATA: HistEntry[] = [
     strengths: [],
     pathyPrefix: "Pathy recomienda:",
     pathyTip:
-      "¡Vas muy bien con Meteorología! Solo refuerza la lectura de reportes METAR/TAF y estarás al 100%. 🌤️",
+      "¡Vas muy bien con Meteorología! Solo refuerza la lectura de reportes METAR/TAF y estarás al 100%.",
   },
   {
     id: 3,
@@ -122,7 +123,7 @@ const HIST_DATA: HistEntry[] = [
     strengths: [],
     pathyPrefix: "Pathy dice:",
     pathyTip:
-      "¡Excelente sesión! 🔥 Tu racha de 14 días está dando frutos. Sigue así.",
+      "¡Excelente sesión! Tu racha de 14 días está dando frutos. Sigue así.",
   },
 ];
 
@@ -181,26 +182,27 @@ function HistItem({ entry }: { entry: HistEntry }) {
               justifyContent: "center",
               fontSize: "1rem",
               flexShrink: 0,
+              color: entry.type === "exam" ? "#22375C" : "#3D5D91",
               background:
                 entry.type === "exam"
                   ? "rgba(26,26,46,0.08)"
                   : "rgba(61,93,145,0.08)",
             }}
           >
-            {entry.type === "exam" ? "📝" : "📖"}
+            {entry.type === "exam" ? <Icon n="sim" size={18} /> : <Icon n="book" size={18} />}
           </div>
           <div>
             <h4
               style={{
                 fontSize: "0.85rem",
                 fontWeight: 700,
-                color: "#1a1a2e",
+                color: "#22375C",
                 marginBottom: 2,
               }}
             >
               {entry.title}
             </h4>
-            <p style={{ fontSize: "0.75rem", color: "#888" }}>{entry.meta}</p>
+            <p style={{ fontSize: "0.75rem", color: "#647DA0" }}>{entry.meta}</p>
           </div>
         </div>
 
@@ -225,7 +227,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                 entry.type === "exam"
                   ? "rgba(26,26,46,0.06)"
                   : "rgba(61,93,145,0.08)",
-              color: entry.type === "exam" ? "#1a1a2e" : "#3D5D91",
+              color: entry.type === "exam" ? "#22375C" : "#3D5D91",
             }}
           >
             {entry.tag}
@@ -235,11 +237,11 @@ function HistItem({ entry }: { entry: HistEntry }) {
               fontSize: "0.7rem",
               color: "#bbb",
               transition: "transform 0.3s",
-              display: "inline-block",
+              display: "inline-flex",
               transform: open ? "rotate(180deg)" : "none",
             }}
           >
-            ▼
+            <Icon n="chevD" size={14} />
           </span>
         </div>
       </div>
@@ -259,13 +261,16 @@ function HistItem({ entry }: { entry: HistEntry }) {
               style={{
                 fontSize: "0.78rem",
                 fontWeight: 700,
-                color: "#888",
+                color: "#647DA0",
                 textTransform: "uppercase",
                 letterSpacing: "0.4px",
                 marginBottom: 10,
+                display: "flex",
+                alignItems: "center",
+                gap: 7,
               }}
             >
-              📊 Resultado general
+              <Icon n="chart" size={16} /> Resultado general
             </h5>
             <div
               style={{
@@ -307,13 +312,16 @@ function HistItem({ entry }: { entry: HistEntry }) {
                 style={{
                   fontSize: "0.78rem",
                   fontWeight: 700,
-                  color: "#888",
+                  color: "#647DA0",
                   textTransform: "uppercase",
                   letterSpacing: "0.4px",
                   marginBottom: 10,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 7,
                 }}
               >
-                ⚠️ Áreas de oportunidad — lo que más te falló
+                <Icon n="alert" size={16} /> Áreas de oportunidad — lo que más te falló
               </h5>
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 {entry.weaknesses.map((w, i) => {
@@ -349,16 +357,18 @@ function HistItem({ entry }: { entry: HistEntry }) {
                             fontSize: "1.1rem",
                             flexShrink: 0,
                             marginTop: 2,
+                            display: "flex",
+                            color: isBad ? "#e74c3c" : "#f39c12",
                           }}
                         >
-                          {w.icon}
+                          <Icon n={w.icon as any} size={18} />
                         </span>
                         <div>
                           <div
                             style={{
                               fontSize: "0.83rem",
                               fontWeight: 700,
-                              color: "#1a1a2e",
+                              color: "#22375C",
                               marginBottom: 2,
                             }}
                           >
@@ -367,7 +377,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                           <div
                             style={{
                               fontSize: "0.76rem",
-                              color: "#888",
+                              color: "#647DA0",
                               lineHeight: 1.4,
                             }}
                           >
@@ -400,13 +410,16 @@ function HistItem({ entry }: { entry: HistEntry }) {
                 style={{
                   fontSize: "0.78rem",
                   fontWeight: 700,
-                  color: "#888",
+                  color: "#647DA0",
                   textTransform: "uppercase",
                   letterSpacing: "0.4px",
                   marginBottom: 10,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 7,
                 }}
               >
-                ✅ Lo que dominaste bien
+                <Icon n="check" size={16} /> Lo que dominaste bien
               </h5>
               <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                 {entry.strengths.map((s, i) => (
@@ -422,7 +435,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                       borderRadius: 8,
                       fontSize: "0.83rem",
                       fontWeight: 600,
-                      color: "#1a1a2e",
+                      color: "#22375C",
                     }}
                   >
                     <span>{s.name}</span>
@@ -457,7 +470,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
               lineHeight: 1.5,
             }}
           >
-            <span style={{ fontSize: "1.4rem", flexShrink: 0 }}>☁️</span>
+            <span style={{ fontSize: "1.4rem", flexShrink: 0, display: "flex", color: "#6C0820" }}><Icon n="cloud" size={24} /></span>
             <div>
               <strong style={{ color: "#6C0820" }}>{entry.pathyPrefix}</strong>{" "}
               {entry.pathyTip}
@@ -474,22 +487,22 @@ function HistItem({ entry }: { entry: HistEntry }) {
 function ModalExamen({ onClose }: { onClose: () => void }) {
   const infoRows = [
     {
-      icon: "❓",
+      icon: "help",
       bg: "rgba(61,93,145,0.1)",
       html: "<strong>310 preguntas</strong> — igual que el examen real del CIAAC",
     },
     {
-      icon: "⏱️",
+      icon: "timer",
       bg: "rgba(108,8,32,0.08)",
       html: "<strong>5 horas límite</strong> — el tiempo corre desde que aceptas",
     },
     {
-      icon: "🔀",
+      icon: "refresh",
       bg: "rgba(243,156,18,0.1)",
       html: "<strong>Preguntas aleatorias</strong> — de las 12 materias del CIAAC",
     },
     {
-      icon: "📊",
+      icon: "chart",
       bg: "rgba(46,204,113,0.1)",
       html: "<strong>Análisis al terminar</strong> — calificación y áreas de oportunidad con Pathy",
     },
@@ -525,13 +538,16 @@ function ModalExamen({ onClose }: { onClose: () => void }) {
           style={{
             fontFamily: "'Bricolage Grotesque', sans-serif",
             fontSize: "1.5rem",
-            color: "#1a1a2e",
+            color: "#22375C",
             marginBottom: 6,
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
           }}
         >
-          🎯 Simulador CIAAC
+          <Icon n="target" size={26} /> Simulador CIAAC
         </h2>
-        <p style={{ fontSize: "0.85rem", color: "#888", marginBottom: 24 }}>
+        <p style={{ fontSize: "0.85rem", color: "#647DA0", marginBottom: 24 }}>
           Lee las instrucciones antes de comenzar
         </p>
 
@@ -555,7 +571,7 @@ function ModalExamen({ onClose }: { onClose: () => void }) {
                 alignItems: "center",
                 gap: 10,
                 fontSize: "0.88rem",
-                color: "#1a1a2e",
+                color: "#22375C",
               }}
             >
               <div
@@ -569,9 +585,10 @@ function ModalExamen({ onClose }: { onClose: () => void }) {
                   fontSize: "1rem",
                   flexShrink: 0,
                   background: row.bg,
+                  color: "#22375C",
                 }}
               >
-                {row.icon}
+                <Icon n={row.icon as any} size={18} />
               </div>
               <span dangerouslySetInnerHTML={{ __html: row.html }} />
             </div>
@@ -594,7 +611,7 @@ function ModalExamen({ onClose }: { onClose: () => void }) {
             lineHeight: 1.5,
           }}
         >
-          <span>⚠️</span>
+          <span style={{ display: "flex", flexShrink: 0 }}><Icon n="alert" size={16} /></span>
           <span>
             Si sales de la página durante el examen{" "}
             <strong>perderás tu progreso</strong>. Asegúrate de tener tiempo
@@ -610,7 +627,7 @@ function ModalExamen({ onClose }: { onClose: () => void }) {
               flex: 1,
               padding: 12,
               background: "white",
-              color: "#888",
+              color: "#647DA0",
               border: "2px solid #F2DCDB",
               borderRadius: 10,
               fontSize: "0.88rem",
@@ -646,7 +663,7 @@ function ModalExamen({ onClose }: { onClose: () => void }) {
               (e.currentTarget.style.background = "#6C0820")
             }
           >
-            🎯 Aceptar y comenzar
+            <Icon n="target" size={18} /> Aceptar y comenzar
           </button>
         </div>
       </div>
@@ -754,13 +771,16 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
           style={{
             fontFamily: "'Bricolage Grotesque', sans-serif",
             fontSize: "1.5rem",
-            color: "#1a1a2e",
+            color: "#22375C",
             marginBottom: 6,
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
           }}
         >
-          🌱 Configura tu sesión
+          <Icon n="lightbulb" size={26} /> Configura tu sesión
         </h2>
-        <p style={{ fontSize: "0.85rem", color: "#888", marginBottom: 24 }}>
+        <p style={{ fontSize: "0.85rem", color: "#647DA0", marginBottom: 24 }}>
           Elige las materias y cuántas preguntas quieres practicar
         </p>
 
@@ -770,7 +790,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
             style={{
               fontSize: "0.82rem",
               fontWeight: 700,
-              color: "#1a1a2e",
+              color: "#22375C",
               marginBottom: 10,
             }}
           >
@@ -783,7 +803,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
                 ...chipBase,
                 border: `2px solid ${allSelected ? "#3D5D91" : "#F2DCDB"}`,
                 background: allSelected ? "#3D5D91" : "#f8f9ff",
-                color: allSelected ? "white" : "#1a1a2e",
+                color: allSelected ? "white" : "#22375C",
               }}
             >
               Todas las materias
@@ -798,7 +818,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
                     ...chipBase,
                     border: `2px solid ${sel ? "#3D5D91" : "#F2DCDB"}`,
                     background: sel ? "rgba(61,93,145,0.08)" : "#f8f9ff",
-                    color: sel ? "#3D5D91" : "#1a1a2e",
+                    color: sel ? "#3D5D91" : "#22375C",
                   }}
                 >
                   {m}
@@ -814,7 +834,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
             style={{
               fontSize: "0.82rem",
               fontWeight: 700,
-              color: "#1a1a2e",
+              color: "#22375C",
               marginBottom: 10,
             }}
           >
@@ -830,7 +850,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
                   border: `2px solid ${qty === v ? "#3D5D91" : "#F2DCDB"}`,
                   background:
                     qty === v ? "rgba(61,93,145,0.08)" : "#f8f9ff",
-                  color: qty === v ? "#3D5D91" : "#1a1a2e",
+                  color: qty === v ? "#3D5D91" : "#22375C",
                 }}
               >
                 {v}
@@ -845,10 +865,10 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
                 }`,
                 background:
                   qty === "custom" ? "rgba(61,93,145,0.08)" : "#f8f9ff",
-                color: qty === "custom" ? "#3D5D91" : "#1a1a2e",
+                color: qty === "custom" ? "#3D5D91" : "#22375C",
               }}
             >
-              ✏️ Personalizar
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon n="pencil" size={15} /> Personalizar</span>
             </button>
           </div>
 
@@ -885,7 +905,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
                     outline: "none",
                   }}
                 />
-                <span style={{ fontSize: "0.8rem", color: "#888" }}>
+                <span style={{ fontSize: "0.8rem", color: "#647DA0" }}>
                   preguntas
                 </span>
               </div>
@@ -899,10 +919,14 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
                     borderRadius: 8,
                     fontSize: "0.78rem",
                     color: "#8a6000",
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: 6,
                   }}
                 >
-                  ⚠️ El máximo disponible es <strong>500</strong> preguntas
-                  para las materias seleccionadas.
+                  <Icon n="alert" size={15} style={{ flexShrink: 0, marginTop: 1 }} />
+                  <span>El máximo disponible es <strong>500</strong> preguntas
+                  para las materias seleccionadas.</span>
                 </div>
               )}
             </div>
@@ -917,7 +941,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
               flex: 1,
               padding: 12,
               background: "white",
-              color: "#888",
+              color: "#647DA0",
               border: "2px solid #F2DCDB",
               borderRadius: 10,
               fontSize: "0.88rem",
@@ -953,7 +977,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
               (e.currentTarget.style.background = "#6C0820")
             }
           >
-            🌱 Comenzar sesión
+            <Icon n="lightbulb" size={18} /> Comenzar sesión
           </button>
         </div>
       </div>
@@ -1000,7 +1024,7 @@ function BancoPage() {
             style={{
               fontFamily: "'Bricolage Grotesque', sans-serif",
               fontSize: "2rem",
-              color: "#1a1a2e",
+              color: "#22375C",
               marginBottom: 8,
               lineHeight: 1.2,
             }}
@@ -1011,7 +1035,7 @@ function BancoPage() {
           <p
             style={{
               fontSize: "0.95rem",
-              color: "#888",
+              color: "#647DA0",
               maxWidth: 480,
               margin: "0 auto",
             }}
@@ -1032,9 +1056,9 @@ function BancoPage() {
           }}
         >
           {[
-            { icon: "❓", label: "Preguntas respondidas:", value: "1,240" },
-            { icon: "✅", label: "Aciertos promedio:", value: "74%" },
-            { icon: "📝", label: "Simulacros hechos:", value: "3" },
+            { icon: "help", label: "Preguntas respondidas:", value: "1,240" },
+            { icon: "check", label: "Aciertos promedio:", value: "74%" },
+            { icon: "sim", label: "Simulacros hechos:", value: "3" },
           ].map((s) => (
             <div
               key={s.label}
@@ -1049,7 +1073,7 @@ function BancoPage() {
                 fontSize: "0.85rem",
               }}
             >
-              <span style={{ fontSize: "1.1rem" }}>{s.icon}</span>
+              <span style={{ fontSize: "1.1rem", display: "flex", color: "#3D5D91" }}><Icon n={s.icon as any} size={18} /></span>
               <span>
                 {s.label}{" "}
                 <strong style={{ color: "#3D5D91" }}>{s.value}</strong>
@@ -1077,7 +1101,7 @@ function BancoPage() {
               flexDirection: "column",
               position: "relative",
               overflow: "hidden",
-              background: "linear-gradient(145deg, #1a1a2e, #2a2a4e)",
+              background: "linear-gradient(145deg, #22375C, #2a2a4e)",
               border: "3px solid transparent",
               transform: examHover ? "translateY(-6px)" : "none",
               boxShadow: examHover
@@ -1099,9 +1123,12 @@ function BancoPage() {
                 borderRadius: 20,
                 textTransform: "uppercase",
                 letterSpacing: "0.5px",
+                display: "flex",
+                alignItems: "center",
+                gap: 5,
               }}
             >
-              ⭐ Recomendado
+              <Icon n="star" size={12} /> Recomendado
             </div>
 
             <div
@@ -1121,10 +1148,10 @@ function BancoPage() {
                 color: "#F2AEBC",
               }}
             >
-              📝 Simulador CIAAC
+              <Icon n="sim" size={14} /> Simulador CIAAC
             </div>
 
-            <div style={{ fontSize: "3rem", marginBottom: 16 }}>🎯</div>
+            <div style={{ fontSize: "3rem", marginBottom: 16, display: "flex", color: "#F2AEBC" }}><Icon n="target" size={42} /></div>
 
             <h2
               style={{
@@ -1245,16 +1272,16 @@ function BancoPage() {
                 color: "#3D5D91",
               }}
             >
-              📖 Modo estudio
+              <Icon n="book" size={14} /> Modo estudio
             </div>
 
-            <div style={{ fontSize: "3rem", marginBottom: 16 }}>🌱</div>
+            <div style={{ fontSize: "3rem", marginBottom: 16, display: "flex", color: "#3D5D91" }}><Icon n="lightbulb" size={42} /></div>
 
             <h2
               style={{
                 fontFamily: "'Bricolage Grotesque', sans-serif",
                 fontSize: "1.5rem",
-                color: "#1a1a2e",
+                color: "#22375C",
                 marginBottom: 6,
               }}
             >
@@ -1336,7 +1363,7 @@ function BancoPage() {
               fontFamily: "'Bricolage Grotesque', sans-serif",
               fontSize: "1.1rem",
               marginBottom: 16,
-              color: "#1a1a2e",
+              color: "#22375C",
             }}
           >
             Historial y análisis de sesiones

@@ -1,114 +1,115 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { Icon } from "@/components/ui/fp-icon";
 
 export const Route = createFileRoute("/dashboard/bitacora")({
   component: BitacoraPage,
 });
 
 type Screen = "hoy" | "historial" | "resultado";
-type Emotion = "🤩" | "😊" | "😐" | "😤" | "😴" | "😰" | null;
+type Emotion = "sun" | "checkCircle" | "minus" | "alert" | "moon" | "cloud" | null;
 
 const EMOTIONS: { icon: Emotion & string; label: string }[] = [
-  { icon: "🤩", label: "¡Increíble!" },
-  { icon: "😊", label: "Bien" },
-  { icon: "😐", label: "Más o menos" },
-  { icon: "😤", label: "Frustrada" },
-  { icon: "😴", label: "Cansada" },
-  { icon: "😰", label: "Ansiosa" },
+  { icon: "sun", label: "¡Increíble!" },
+  { icon: "checkCircle", label: "Bien" },
+  { icon: "minus", label: "Más o menos" },
+  { icon: "alert", label: "Frustrada" },
+  { icon: "moon", label: "Cansada" },
+  { icon: "cloud", label: "Ansiosa" },
 ];
 
 const MATERIAS = [
-  { icon: "✅", label: "Todo estuvo bien", isNone: true },
-  { icon: "✈️", label: "Aerodinámica" },
-  { icon: "⚙️", label: "Aeronaves" },
-  { icon: "⚖️", label: "Legislación" },
-  { icon: "🏥", label: "Medicina" },
-  { icon: "🌤️", label: "Meteorología" },
-  { icon: "🗺️", label: "Navegación" },
-  { icon: "🗼", label: "Tránsito Aéreo" },
-  { icon: "📻", label: "Comunicaciones" },
-  { icon: "📋", label: "Manuales AIP" },
-  { icon: "🧠", label: "Factores Humanos" },
-  { icon: "🛡️", label: "Seguridad Aérea" },
-  { icon: "🛫", label: "Operaciones" },
+  { icon: "check", label: "Todo estuvo bien", isNone: true },
+  { icon: "plane", label: "Aerodinámica" },
+  { icon: "settings", label: "Aeronaves" },
+  { icon: "scale", label: "Legislación" },
+  { icon: "stethoscope", label: "Medicina" },
+  { icon: "cloud", label: "Meteorología" },
+  { icon: "map", label: "Navegación" },
+  { icon: "tower", label: "Tránsito Aéreo" },
+  { icon: "radio", label: "Comunicaciones" },
+  { icon: "doc", label: "Manuales AIP" },
+  { icon: "brain", label: "Factores Humanos" },
+  { icon: "shield", label: "Seguridad Aérea" },
+  { icon: "rocket", label: "Operaciones" },
 ];
 
 const PATHY_MESSAGES: Record<string, { msg: string; bad: boolean }> = {
-  "🤩": {
-    msg: "¡Wow, hoy fue un gran día! 🎉 Esa energía y concentración que tuviste es exactamente lo que te va a llevar al CIAAC aprobado. Cada día así te acerca más a tu meta. ¡Sigue así, aviadora! ✈️",
+  "sun": {
+    msg: "¡Wow, hoy fue un gran día! Esa energía y concentración que tuviste es exactamente lo que te va a llevar al CIAAC aprobado. Cada día así te acerca más a tu meta. ¡Sigue así, aviadora!",
     bad: false,
   },
-  "😊": {
-    msg: "¡Muy bien! Un día sólido de estudio es exactamente lo que necesitas. La consistencia es más poderosa que la perfección — y tú lo estás haciendo. 💙",
+  "checkCircle": {
+    msg: "¡Muy bien! Un día sólido de estudio es exactamente lo que necesitas. La consistencia es más poderosa que la perfección — y tú lo estás haciendo.",
     bad: false,
   },
-  "😐": {
-    msg: "Los días \"más o menos\" también cuentan. El hecho de que hayas abierto FlightPath ya es una victoria. Mañana puede ser diferente — y si no, también está bien. 🌤️",
+  "minus": {
+    msg: "Los días \"más o menos\" también cuentan. El hecho de que hayas abierto FlightPath ya es una victoria. Mañana puede ser diferente — y si no, también está bien.",
     bad: false,
   },
-  "😤": {
-    msg: "Entiendo tu frustración, y quiero que sepas que es completamente válida. El CIAAC es difícil — si fuera fácil, todos lo aprobarían. El hecho de que te frustres significa que te importa, y eso es hermoso. ¿Quieres que hablemos de lo que te está costando? Yaris puede ayudarte. 💙",
+  "alert": {
+    msg: "Entiendo tu frustración, y quiero que sepas que es completamente válida. El CIAAC es difícil — si fuera fácil, todos lo aprobarían. El hecho de que te frustres significa que te importa, y eso es hermoso. ¿Quieres que hablemos de lo que te está costando? Yaris puede ayudarte.",
     bad: true,
   },
-  "😴": {
-    msg: "Estudiar cansada ya es un logro en sí mismo. Tu cerebro absorbe más de lo que crees, incluso cuando está cansado. Descansa bien esta noche — mañana tu mente va a estar más fresca y todo va a fluir mejor. 🌙",
+  "moon": {
+    msg: "Estudiar cansada ya es un logro en sí mismo. Tu cerebro absorbe más de lo que crees, incluso cuando está cansado. Descansa bien esta noche — mañana tu mente va a estar más fresca y todo va a fluir mejor.",
     bad: false,
   },
-  "😰": {
-    msg: "La ansiedad antes del CIAAC es más común de lo que crees — casi todos los estudiantes la sienten. Pero quiero que sepas que estás más preparada de lo que piensas. ¿Quieres hablar con Yaris sobre lo que te preocupa? A veces nombrar el miedo lo hace más pequeño. 💙",
+  "cloud": {
+    msg: "La ansiedad antes del CIAAC es más común de lo que crees — casi todos los estudiantes la sienten. Pero quiero que sepas que estás más preparada de lo que piensas. ¿Quieres hablar con Yaris sobre lo que te preocupa? A veces nombrar el miedo lo hace más pequeño.",
     bad: true,
   },
 };
 
 const YARIS_REPLIES = [
   "Entiendo cómo te sientes y está completamente bien sentirlo. El camino al CIAAC tiene sus momentos difíciles — lo importante es que sigues aquí. ¿Qué es lo que más te preocupa ahorita?",
-  "Eso que describes es más común de lo que crees entre estudiantes de aviación. La presión del examen puede ser mucha. Recuerda: no tienes que ser perfecta, solo consistente. 💙",
-  "¿Sabes qué? El hecho de que estés usando tu bitácora y reflexionando sobre tu proceso ya te pone por delante de muchos. La autoconciencia es una habilidad enorme. ✈️",
+  "Eso que describes es más común de lo que crees entre estudiantes de aviación. La presión del examen puede ser mucha. Recuerda: no tienes que ser perfecta, solo consistente.",
+  "¿Sabes qué? El hecho de que estés usando tu bitácora y reflexionando sobre tu proceso ya te pone por delante de muchos. La autoconciencia es una habilidad enorme.",
 ];
 
 const MOOD_DATA = [
-  { day: "L", emoji: "🤩", val: 100, color: "#2ecc71" },
-  { day: "M", emoji: "😴", val: 40, color: "#888" },
-  { day: "M", emoji: "🤩", val: 100, color: "#2ecc71" },
-  { day: "J", emoji: "😤", val: 30, color: "#e74c3c" },
-  { day: "V", emoji: "😊", val: 70, color: "#5A86CB" },
-  { day: "S", emoji: "😐", val: 50, color: "#f39c12" },
-  { day: "D", emoji: "—", val: 0, color: "#F2DCDB" },
+  { day: "L", emoji: "sun", val: 100, color: "#2ecc71" },
+  { day: "M", emoji: "moon", val: 40, color: "#647DA0" },
+  { day: "M", emoji: "sun", val: 100, color: "#2ecc71" },
+  { day: "J", emoji: "alert", val: 30, color: "#e74c3c" },
+  { day: "V", emoji: "checkCircle", val: 70, color: "#5A86CB" },
+  { day: "S", emoji: "minus", val: 50, color: "#f39c12" },
+  { day: "D", emoji: "", val: 0, color: "#F2DCDB" },
 ];
 
 const SAMPLE_ENTRIES = [
   {
-    emotion: "😊", mood: "Me sentí bien hoy", borderColor: "#5A86CB",
+    emotion: "checkCircle", mood: "Me sentí bien hoy", borderColor: "#5A86CB",
     motiv: 5, conc: 4, conf: 4,
-    tags: ["🌤️ Meteorología costó", "✅ Flashcards"],
+    tags: ["Meteorología costó", "Flashcards"],
     text: "Estudié 45 minutos de Meteorología pero los METAR me siguen costando. Lo demás estuvo bien, hice muchas flashcards de Aerodinámica y ya las siento más claras.",
     date: "Hoy", sub: "22 mayo",
   },
   {
-    emotion: "😤", mood: "Me sentí frustrada", borderColor: "#e74c3c",
+    emotion: "alert", mood: "Me sentí frustrada", borderColor: "#e74c3c",
     motiv: 2, conc: 2, conf: 3,
-    tags: ["🌤️ Meteorología costó", "📝 Simulador"],
+    tags: ["Meteorología costó", "Simulador"],
     text: "Hice el simulador y saqué 68%. Me frustré mucho con las preguntas de Meteorología y Legislación. Siento que no avanzo lo suficiente...",
     date: "Ayer", sub: "21 mayo",
   },
   {
-    emotion: "🤩", mood: "¡Me sentí increíble!", borderColor: "#2ecc71",
+    emotion: "sun", mood: "¡Me sentí increíble!", borderColor: "#2ecc71",
     motiv: 5, conc: 5, conf: 4,
-    tags: ["✅ Todo bien", "🃏 Flashcards"],
+    tags: ["Todo bien", "Flashcards"],
     text: "¡Hoy todo fluyó! Hice 90 flashcards de Aerodinámica y las domino todas. Siento que si sigo así voy a estar lista para el CIAAC.",
     date: "20 mayo", sub: "Miércoles",
   },
   {
-    emotion: "😴", mood: "Llegué muy cansada", borderColor: "#888",
+    emotion: "moon", mood: "Llegué muy cansada", borderColor: "#888",
     motiv: 2, conc: 2, conf: 3,
-    tags: ["🗺️ Navegación costó"],
+    tags: ["Navegación costó"],
     text: "Llegué muy cansada de la escuela. Estudié solo 20 minutos pero al menos no rompí la racha. Mañana me recupero.",
     date: "19 mayo", sub: "Martes",
   },
   {
-    emotion: "😐", mood: "Más o menos", borderColor: "#f39c12",
+    emotion: "minus", mood: "Más o menos", borderColor: "#f39c12",
     motiv: 3, conc: 3, conf: 3,
-    tags: ["⚖️ Legislación costó", "📖 Biblioteca"],
+    tags: ["Legislación costó", "Biblioteca"],
     text: "Día normal. Leí el manual de Legislación y entendí más cosas del Convenio de Chicago. Poco a poco.",
     date: "18 mayo", sub: "Lunes",
   },
@@ -125,7 +126,7 @@ function ScaleDots({ value, onChange }: { value: number; onChange: (v: number) =
             width: 28, height: 28, borderRadius: "50%",
             border: `2px solid ${n <= value ? "#3D5D91" : "#F2DCDB"}`,
             background: n <= value ? "#3D5D91" : "white",
-            color: n <= value ? "white" : "#aaa",
+            color: n <= value ? "white" : "#8DA1BE",
             fontSize: ".72rem", fontWeight: 700, cursor: "pointer",
             display: "flex", alignItems: "center", justifyContent: "center",
             transition: "all .15s",
@@ -169,16 +170,16 @@ function BitacoraPage() {
 
   const handleSave = () => {
     if (!selectedEmotion) {
-      alert("☁️ Pathy dice: ¡No olvides decirme cómo te sentiste hoy!");
+      alert("Pathy dice: ¡No olvides decirme cómo te sentiste hoy!");
       return;
     }
-    const pathy = PATHY_MESSAGES[selectedEmotion] || PATHY_MESSAGES["😊"];
+    const pathy = PATHY_MESSAGES[selectedEmotion] || PATHY_MESSAGES["checkCircle"];
     const emotionObj = EMOTIONS.find((e) => e.icon === selectedEmotion)!;
     const tema = selectedMaterias.size > 0 ? [...selectedMaterias][0] : null;
 
     let fullMsg = pathy.msg;
     if (tema && !pathy.bad) {
-      fullMsg += ` Por cierto, veo que ${tema} te costó hoy — es normal, es una de las más densas. Mañana podemos atacarla juntas. 🎯`;
+      fullMsg += ` Por cierto, veo que ${tema} te costó hoy — es normal, es una de las más densas. Mañana podemos atacarla juntas.`;
     }
 
     setResult({
@@ -198,7 +199,7 @@ function BitacoraPage() {
   const openYarisChat = () => {
     setYarisOpen(true);
     if (yarisMessages.length === 0) {
-      setYarisMessages([{ text: "Hola 💙 Leí tu entrada de hoy y quiero que sepas que estoy aquí. ¿Quieres contarme más sobre cómo te sientes?", isUser: false }]);
+      setYarisMessages([{ text: "Hola, leí tu entrada de hoy y quiero que sepas que estoy aquí. ¿Quieres contarme más sobre cómo te sientes?", isUser: false }]);
     }
   };
 
@@ -228,8 +229,8 @@ function BitacoraPage() {
       <div style={{ padding: "16px 32px 0", background: "white", borderBottom: "1px solid rgba(61,93,145,.08)" }}>
         <div style={{ display: "flex", gap: 8, marginBottom: 0 }}>
           {[
-            { id: "hoy" as Screen, label: "✍️ Escribir hoy" },
-            { id: "historial" as Screen, label: "📅 Mi historial" },
+            { id: "hoy" as Screen, label: "Escribir hoy", icon: "edit" },
+            { id: "historial" as Screen, label: "Mi historial", icon: "calendar" },
           ].map((t) => (
             <button
               key={t.id}
@@ -238,11 +239,12 @@ function BitacoraPage() {
                 padding: "8px 20px", border: `2px solid ${screen === t.id ? "#3D5D91" : "#F2DCDB"}`,
                 borderRadius: 20, fontSize: ".82rem", fontWeight: 600, cursor: "pointer",
                 background: screen === t.id ? "#3D5D91" : "white",
-                color: screen === t.id ? "white" : "#888",
+                color: screen === t.id ? "white" : "#647DA0",
                 transition: "all .2s", fontFamily: "'Manrope', sans-serif",
+                display: "flex", alignItems: "center", gap: 6,
               }}
             >
-              {t.label}
+              <Icon n={t.icon as any} size={15} /> {t.label}
             </button>
           ))}
         </div>
