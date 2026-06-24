@@ -314,7 +314,7 @@ function AdminPerfilPage() {
           </div>
 
           {/* Quick actions */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, marginBottom: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 10, marginBottom: 20 }}>
             {[
               { icon: "chat", label: "WhatsApp",   sub: "Enviar mensaje",       action: () => setModal("wa"),     hoverColor: "#25D366" },
               { icon: "calendar", label: "Extender",    sub: "Más días de acceso",   action: () => setModal("extend"), hoverColor: "#3D5D91" },
@@ -340,7 +340,7 @@ function AdminPerfilPage() {
             {/* Info personal */}
             <div style={{ background: "white", borderRadius: 14, padding: "18px 20px", boxShadow: "0 2px 10px rgba(61,93,145,.06)" }}>
               <div style={{ fontSize: ".74rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="user" size={15} /> Información personal</div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12 }}>
                 {[
                   { label: "Nombre",       value: "María González Ramírez" },
                   { label: "Correo",       value: "maria.gonzalez@email.com" },
