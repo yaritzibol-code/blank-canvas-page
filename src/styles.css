@@ -355,3 +355,24 @@ body.theme-azul .shadow-coral         { box-shadow: 0 14px 30px -14px rgba(61,93
   .animate-pulse-dot, .animate-breathe, .animate-radar, .animate-blink,
   .animate-flip, .animate-tick, .animate-flow { animation: none !important; }
 }
+
+/* ─── Responsive safety net for phone + iPad ─── */
+html, body { overflow-x: hidden; max-width: 100vw; }
+img, svg, video, canvas { max-width: 100%; }
+
+/* Tame oversized fixed paddings inside cards on small screens.
+   Targets common pattern of inline padding:28-40 on white/dark cards. */
+@media (max-width: 640px) {
+  /* Reduce large fixed pads from inline styles via attribute selectors */
+  [style*="padding: 40"] { padding: 20px !important; }
+  [style*="padding: 36"] { padding: 18px !important; }
+  [style*="padding: 32"] { padding: 18px !important; }
+  [style*="padding: 28"] { padding: 16px !important; }
+  /* Display headings should shrink */
+  h1, h2 { word-wrap: break-word; overflow-wrap: anywhere; }
+}
+
+/* Allow long words / URLs to wrap inside text containers */
+p, h1, h2, h3, h4 { overflow-wrap: anywhere; }
+
+

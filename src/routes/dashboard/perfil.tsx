@@ -202,7 +202,7 @@ function PerfilPage() {
         {/* Logros */}
         <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)" }}>
           <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n="trophy" size={15} /> Logros desbloqueados</div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))", gap: 10 }}>
             {LOGROS.map((l) => (
               <div
                 key={l.name}

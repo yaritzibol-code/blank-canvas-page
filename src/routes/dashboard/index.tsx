@@ -303,11 +303,10 @@ function DashboardHome() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
+          gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
           gap: 16,
           marginBottom: 28,
         }}
-        className="grid-cols-2 md:grid-cols-4"
       >
         {[
           { icon: "chart", bg: "rgba(61,93,145,0.1)", value: "42%", label: "Progreso general" },
@@ -326,8 +325,7 @@ function DashboardHome() {
         <h3 style={s.sectionTitle}>Accesos rápidos</h3>
       </div>
       <div
-        style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginBottom: 28 }}
-        className="grid-cols-1 md:grid-cols-3"
+        style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16, marginBottom: 28 }}
       >
         <ActionCard
           primary
@@ -363,8 +361,7 @@ function DashboardHome() {
         </Link>
       </div>
       <div
-        style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14 }}
-        className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+        style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 14 }}
       >
         {MATERIAS.map((m) => (
           <MateriaCard key={m.slug} m={m} />
