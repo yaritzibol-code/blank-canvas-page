@@ -372,6 +372,7 @@ img, svg, video, canvas { max-width: 100%; }
   h1, h2 { word-wrap: break-word; overflow-wrap: anywhere; }
 }
 
-/* Allow long words / URLs to wrap inside any container */
-p, h1, h2, h3, h4, span, a, div { overflow-wrap: anywhere; }
+/* Allow long words / URLs to wrap inside text containers */
+p, h1, h2, h3, h4 { overflow-wrap: anywhere; }
+
 
