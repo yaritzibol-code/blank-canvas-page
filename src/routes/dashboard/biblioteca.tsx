@@ -1,6 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import { Icon } from "@/components/ui/fp-icon";
+import {
+  getMateriales,
+  isPaid,
+  logActivity,
+  logYarisUse,
+  materiaBySlug,
+  useSessionUser,
+  useStore,
+  yarisReply,
+} from "@/lib/store";
+import { UpgradeModal } from "@/components/shared/UpgradeModal";
+import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 
 export const Route = createFileRoute("/dashboard/biblioteca")({
   component: BibliotecaPage,
@@ -19,18 +31,11 @@ interface Book {
   tags: string[];
   materiaTag: string;
   pages: number;
+  fileUrl: string;
+  descargable: boolean;
+  imprimible: boolean;
+  muestraGratis: boolean;
 }
-
-const BOOKS: Book[] = [
-  { id: "aero-basica", title: "Aerodinámica Básica", author: "Muñiz, A. — CIAAC", emoji: "plane", gradient: "linear-gradient(135deg,#667eea,#764ba2)", badge: "Oficial", badgeColor: "#3D5D91", tags: ["oficial", "aerodinamica"], materiaTag: "Aerodinámica", pages: 95 },
-  { id: "aero-avanzada", title: "Aerodinámica Avanzada", author: "CIAAC", emoji: "plane", gradient: "linear-gradient(135deg,#f093fb,#f5576c)", badge: "Oficial", badgeColor: "#3D5D91", tags: ["oficial", "aerodinamica"], materiaTag: "Aerodinámica", pages: 191 },
-  { id: "sta", title: "Servicios de Tránsito Aéreo", author: "SCT-DGAC-CIAAC", emoji: "tower", gradient: "linear-gradient(135deg,#4facfe,#00f2fe)", badge: "Oficial", badgeColor: "#3D5D91", tags: ["oficial", "transito"], materiaTag: "Tránsito Aéreo", pages: 120 },
-  { id: "aeronaves", title: "Aeronaves y Motores: Generalidades", author: "SCT-DGAC-CIAAC", emoji: "settings", gradient: "linear-gradient(135deg,#43e97b,#38f9d7)", badge: "Oficial", badgeColor: "#3D5D91", tags: ["oficial", "aeronaves"], materiaTag: "Aeronaves", pages: 145 },
-  { id: "medicina", title: "Medicina Aeronáutica", author: "Amezcua, L. A. — CIAAC", emoji: "stethoscope", gradient: "linear-gradient(135deg,#fa709a,#fee140)", badge: "Oficial", badgeColor: "#3D5D91", tags: ["oficial", "medicina"], materiaTag: "Medicina", pages: 88 },
-  { id: "ifh", title: "Instrument Flying Handbook", author: "Federal Aviation Administration", emoji: "map", gradient: "linear-gradient(135deg,#a18cd1,#fbc2eb)", badge: "FAA", badgeColor: "#5A86CB", tags: ["faa", "navegacion"], materiaTag: "Navegación", pages: 322 },
-  { id: "jeppesen-charts", title: "Introduction to Jeppesen Navigation Charts", author: "Jeppesen Inc. — 2012", emoji: "chart", gradient: "linear-gradient(135deg,#ffecd2,#fcb69f)", badge: "Jeppesen", badgeColor: "#6C0820", tags: ["jeppesen", "navegacion"], materiaTag: "Manuales AIP", pages: 156 },
-  { id: "oaci-fh", title: "Manual de Instrucción de Factores Humanos", author: "OACI — Doc. 9683", emoji: "brain", gradient: "linear-gradient(135deg,#2af598,#009efd)", badge: "OACI", badgeColor: "#3D5D91", tags: ["oaci", "factores"], materiaTag: "Factores Humanos", pages: 210 },
-];
 
 const FILTER_TABS = [
   { key: "todos", label: "Todos" },
@@ -40,18 +45,14 @@ const FILTER_TABS = [
   { key: "oaci", label: "OACI" },
 ];
 
-const YARIS_REPLIES = [
-  { t: "¡Claro! La aerodinámica estudia cómo el aire interactúa con los cuerpos en movimiento. Para ti como piloto, lo más importante es entender cómo el ala genera sustentación.", c: "Aerodinámica Básica CIAAC, Cap. 1, p. 3" },
-  { t: "Piénsalo así: el ala tiene forma de lágrima. El aire de arriba recorre más distancia → va más rápido → menor presión. El de abajo va más lento → mayor presión. ¡Esa diferencia 'jala' el avión hacia arriba!", c: "Aerodinámica Básica CIAAC, Cap. 4, p. 18" },
-  { t: "¿Recuerdas a Buzz Lightyear 'cayendo con estilo'? Eso no es vuelo porque no hay sustentación real. Un avión sí la genera gracias a la forma de sus alas y Bernoulli.", c: null },
-  { t: "La presión estática es como el peso del aire sobre ti en reposo. La presión dinámica es la 'fuerza extra' que sientes cuando metes la mano por la ventanilla del carro a 100 km/h. ¡Juntas forman la presión total!", c: "Aerodinámica Básica CIAAC, Cap. 1, p. 8" },
-];
-
 interface YarisMsg { role: "bot" | "user"; text: string; cite?: string; }
 
 /* ─── Main component ─────────────────────────────────────── */
 
 function BibliotecaPage() {
+  const user = useSessionUser();
+  const paid = isPaid(user);
+
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("todos");
   const [readerBook, setReaderBook] = useState<Book | null>(null);
@@ -61,10 +62,37 @@ function BibliotecaPage() {
   const [yarisMsgs, setYarisMsgs] = useState<YarisMsg[]>([]);
   const [yarisInput, setYarisInput] = useState("");
   const [yarisTyping, setYarisTyping] = useState(false);
-  const [yarisReplyIdx, setYarisReplyIdx] = useState(0);
+  const [yarisTurn, setYarisTurn] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [featHover, setFeatHover] = useState(false);
+  const [upgradeOpen, setUpgradeOpen] = useState(false);
+  const [reportOpen, setReportOpen] = useState(false);
+  const [viewerNotice, setViewerNotice] = useState<string | null>(null);
   const msgsEndRef = useRef<HTMLDivElement>(null);
+  const pdfIframeRef = useRef<HTMLIFrameElement>(null);
+  const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Materiales reales desde el store (solo publicados)
+  const books = useStore<Book[]>(() =>
+    getMateriales()
+      .filter((m) => m.status === "publicada")
+      .map((m) => ({
+        id: m.id,
+        title: m.titulo,
+        author: m.autor,
+        emoji: m.emoji,
+        gradient: m.gradient,
+        badge: m.badge,
+        badgeColor: m.badgeColor,
+        tags: m.tags,
+        materiaTag: materiaBySlug(m.materia)?.name ?? "",
+        pages: m.pages,
+        fileUrl: m.fileUrl,
+        descargable: m.descargable,
+        imprimible: m.imprimible,
+        muestraGratis: m.muestraGratis,
+      })),
+  );
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -77,12 +105,35 @@ function BibliotecaPage() {
     msgsEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [yarisMsgs, yarisTyping]);
 
+  function canOpen(book: Book): boolean {
+    return paid || book.muestraGratis;
+  }
+
+  function openBook(book: Book) {
+    if (!canOpen(book)) {
+      setUpgradeOpen(true);
+      return;
+    }
+    openReader(book);
+  }
+
+  function showNotice(msg: string) {
+    setViewerNotice(msg);
+    if (noticeTimer.current) clearTimeout(noticeTimer.current);
+    noticeTimer.current = setTimeout(() => setViewerNotice(null), 2600);
+  }
+
   function openReader(book: Book) {
+    if (user) {
+      logActivity({ userId: user.id, kind: "biblioteca", label: "Biblioteca — " + book.title, durationMin: 0 });
+      logYarisUse(user.id, "Biblioteca");
+    }
     setReaderBook(book);
     setCurrentPage(1);
     setZoom(1);
     setYarisOpen(true);
     setYarisMsgs([]);
+    setYarisTurn(0);
     setYarisTyping(true);
     setTimeout(() => {
       setYarisTyping(false);
@@ -99,26 +150,58 @@ function BibliotecaPage() {
 
   function sendYaris() {
     const text = yarisInput.trim();
-    if (!text) return;
+    if (!text || !readerBook) return;
     setYarisMsgs((p) => [...p, { role: "user", text }]);
     setYarisInput("");
     setYarisTyping(true);
-    const ri = yarisReplyIdx % YARIS_REPLIES.length;
-    setYarisReplyIdx((r) => r + 1);
+    const turn = yarisTurn;
+    setYarisTurn((t) => t + 1);
+    const bookTitle = readerBook.title;
     setTimeout(() => {
       setYarisTyping(false);
-      const r = YARIS_REPLIES[ri];
+      const r = yarisReply(turn, { resourceTitle: bookTitle }, text);
       setYarisMsgs((p) => [...p, { role: "bot", text: r.t, cite: r.c ?? undefined }]);
     }, 900);
   }
 
+  function handleDownload() {
+    if (!readerBook) return;
+    if (readerBook.fileUrl) window.open(readerBook.fileUrl, "_blank");
+    else showNotice("El archivo estará disponible próximamente");
+  }
+
+  function handlePrint() {
+    if (!readerBook) return;
+    if (!readerBook.fileUrl) {
+      showNotice("El archivo estará disponible próximamente");
+      return;
+    }
+    try {
+      pdfIframeRef.current?.contentWindow?.print();
+    } catch {
+      showNotice("No se pudo imprimir automáticamente. Descarga el PDF para imprimirlo.");
+    }
+  }
+
   /* Filter books */
-  const filteredBooks = BOOKS.filter((b) => {
+  const filteredBooks = books.filter((b) => {
     const matchFilter = filter === "todos" || b.tags.includes(filter);
     const q = search.toLowerCase();
     const matchSearch = !q || b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q) || b.tags.some((t) => t.includes(q));
     return matchFilter && matchSearch;
   });
+
+  const featured = books.find((b) => b.id === "aero-basica") ?? books[0];
+  const canDownload = !!readerBook && readerBook.descargable && (paid || readerBook.muestraGratis);
+  const canPrint = !!readerBook && readerBook.imprimible && (paid || readerBook.muestraGratis);
+  const userInitials =
+    (user?.nombre ?? "")
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((w) => w[0])
+      .slice(0, 2)
+      .join("")
+      .toUpperCase() || "TÚ";
 
   return (
     <>
@@ -154,29 +237,31 @@ function BibliotecaPage() {
         </div>
 
         {/* Featured card */}
-        <div style={{ marginBottom: 32 }}>
-          <div
-            onClick={() => openReader(BOOKS.find((b) => b.id === "faa-pilot") ?? { id: "faa-pilot", title: "Manual del Piloto — FAA", author: "FAA", emoji: "book", gradient: "", badge: "FAA", badgeColor: "#5A86CB", tags: ["faa"], materiaTag: "Aerodinámica · Meteorología", pages: 480 })}
-            onMouseEnter={() => setFeatHover(true)}
-            onMouseLeave={() => setFeatHover(false)}
-            style={{ background: "linear-gradient(135deg,#22375C,#2a2a4e)", borderRadius: 18, padding: 28, display: "flex", alignItems: "center", gap: 24, color: "white", cursor: "pointer", transition: "all 0.2s", position: "relative", overflow: "hidden", transform: featHover ? "translateY(-3px)" : "none", boxShadow: featHover ? "0 12px 40px rgba(26,26,46,0.4)" : "none", flexWrap: "wrap" }}
-          >
-            <div style={{ position: "absolute", top: -60, right: -60, width: 200, height: 200, background: "radial-gradient(circle,rgba(90,134,203,0.3) 0%,transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
-            <div style={{ fontSize: "5rem", flexShrink: 0, display: "flex" }}><Icon n="book" size={72} /></div>
-            <div style={{ flex: 1, zIndex: 1 }}>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 5, background: "#F2AEBC", color: "#6C0820", padding: "3px 10px", borderRadius: 20, fontSize: "0.7rem", fontWeight: 700, marginBottom: 8 }}><Icon n="star" size={14} /> Más consultado</div>
-              <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", marginBottom: 6 }}>Manual del Piloto de Conocimientos Aeronáuticos</h3>
-              <p style={{ fontSize: "0.84rem", opacity: 0.75, lineHeight: 1.5, marginBottom: 14 }}>La guía completa de la FAA para pilotos. Cubre todos los principios fundamentales del vuelo, meteorología, navegación y operaciones.</p>
-              <div style={{ display: "flex", gap: 16, fontSize: "0.78rem", opacity: 0.65, flexWrap: "wrap" }}>
-                <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="doc" size={14} /> FAA — 2008</span>
-                <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="plane" size={14} /> Aerodinámica · Meteorología · Navegación</span>
+        {featured && (
+          <div style={{ marginBottom: 32 }}>
+            <div
+              onClick={() => openBook(featured)}
+              onMouseEnter={() => setFeatHover(true)}
+              onMouseLeave={() => setFeatHover(false)}
+              style={{ background: "linear-gradient(135deg,#22375C,#2a2a4e)", borderRadius: 18, padding: 28, display: "flex", alignItems: "center", gap: 24, color: "white", cursor: "pointer", transition: "all 0.2s", position: "relative", overflow: "hidden", transform: featHover ? "translateY(-3px)" : "none", boxShadow: featHover ? "0 12px 40px rgba(26,26,46,0.4)" : "none", flexWrap: "wrap" }}
+            >
+              <div style={{ position: "absolute", top: -60, right: -60, width: 200, height: 200, background: "radial-gradient(circle,rgba(90,134,203,0.3) 0%,transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
+              <div style={{ fontSize: "5rem", flexShrink: 0, display: "flex" }}><Icon n="book" size={72} /></div>
+              <div style={{ flex: 1, zIndex: 1 }}>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 5, background: "#F2AEBC", color: "#6C0820", padding: "3px 10px", borderRadius: 20, fontSize: "0.7rem", fontWeight: 700, marginBottom: 8 }}><Icon n="star" size={14} /> Más consultado</div>
+                <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", marginBottom: 6 }}>{featured.title}</h3>
+                <p style={{ fontSize: "0.84rem", opacity: 0.75, lineHeight: 1.5, marginBottom: 14 }}>El material más consultado por los estudiantes FlightPath. Ábrelo en el visor y estudia con Yaris a tu lado para resolver tus dudas al instante.</p>
+                <div style={{ display: "flex", gap: 16, fontSize: "0.78rem", opacity: 0.65, flexWrap: "wrap" }}>
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="doc" size={14} /> {featured.author}</span>
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="plane" size={14} /> {featured.materiaTag || "Todas las materias"}</span>
+                </div>
               </div>
+              <button style={{ padding: "10px 20px", background: "#F2AEBC", color: "#6C0820", border: "none", borderRadius: 8, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", flexShrink: 0 }}>
+                Leer ahora →
+              </button>
             </div>
-            <button style={{ padding: "10px 20px", background: "#F2AEBC", color: "#6C0820", border: "none", borderRadius: 8, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", flexShrink: 0 }}>
-              Leer ahora →
-            </button>
           </div>
-        </div>
+        )}
 
         {/* Section header */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
@@ -186,7 +271,7 @@ function BibliotecaPage() {
         {/* Books grid */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(200px,1fr))", gap: 18, marginBottom: 32 }}>
           {filteredBooks.map((book) => (
-            <BookCard key={book.id} book={book} onOpen={() => openReader(book)} />
+            <BookCard key={book.id} book={book} locked={!canOpen(book)} onOpen={() => openBook(book)} />
           ))}
           {filteredBooks.length === 0 && (
             <div style={{ gridColumn: "1/-1", textAlign: "center", padding: 40, color: "#647DA0", fontSize: "0.9rem" }}>
@@ -207,6 +292,13 @@ function BibliotecaPage() {
               <span style={{ fontSize: "0.9rem", fontWeight: 700, color: "white" }} className="hidden sm:inline">{readerBook.title}</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <button
+                onClick={() => setReportOpen(true)}
+                title="Reportar problema"
+                style={{ padding: "6px 12px", background: "rgba(255,255,255,0.08)", border: "none", color: "rgba(255,255,255,0.85)", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5 }}
+              >
+                <Icon n="alert" size={14} /> Reportar
+              </button>
               {!yarisOpen && (
                 <button onClick={() => setYarisOpen(true)} style={{ padding: "6px 14px", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
                   <Icon n="spark" size={16} /> Mostrar Yaris
@@ -234,15 +326,42 @@ function BibliotecaPage() {
                   <button onClick={() => setZoom((z) => Math.max(0.5, parseFloat((z - 0.1).toFixed(1))))} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "rgba(255,255,255,0.8)", padding: "5px 12px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>−</button>
                   <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.5)", minWidth: 36, textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
                   <button onClick={() => setZoom((z) => Math.min(2, parseFloat((z + 0.1).toFixed(1))))} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "rgba(255,255,255,0.8)", padding: "5px 12px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>+</button>
+                  <button
+                    onClick={handleDownload}
+                    disabled={!canDownload}
+                    title="Descargar"
+                    style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "rgba(255,255,255,0.8)", padding: "5px 10px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 600, cursor: canDownload ? "pointer" : "not-allowed", opacity: canDownload ? 1 : 0.4, fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center" }}
+                  >
+                    <Icon n="download" size={14} />
+                  </button>
+                  <button
+                    onClick={handlePrint}
+                    disabled={!canPrint}
+                    title="Imprimir"
+                    style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "rgba(255,255,255,0.8)", padding: "5px 10px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 600, cursor: canPrint ? "pointer" : "not-allowed", opacity: canPrint ? 1 : 0.4, fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center" }}
+                  >
+                    <Icon n="doc" size={14} />
+                  </button>
                 </div>
               </div>
 
               {/* PDF content */}
-              <div style={{ flex: 1, overflowY: "auto", padding: 24, display: "flex", justifyContent: "center" }}>
-                <div style={{ width: "100%", maxWidth: 600, transform: `scale(${zoom})`, transformOrigin: "top center", transition: "transform 0.2s" }}>
-                  <ScannedPage book={readerBook} page={currentPage} />
+              {readerBook.fileUrl ? (
+                <div style={{ flex: 1, overflow: "hidden", display: "flex" }}>
+                  <iframe
+                    ref={pdfIframeRef}
+                    src={readerBook.fileUrl}
+                    title={readerBook.title}
+                    style={{ flex: 1, width: "100%", height: "100%", border: "none", background: "white" }}
+                  />
                 </div>
-              </div>
+              ) : (
+                <div style={{ flex: 1, overflowY: "auto", padding: 24, display: "flex", justifyContent: "center" }}>
+                  <div style={{ width: "100%", maxWidth: 600, transform: `scale(${zoom})`, transformOrigin: "top center", transition: "transform 0.2s" }}>
+                    <ScannedPage book={readerBook} page={currentPage} />
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Yaris panel */}
@@ -268,7 +387,7 @@ function BibliotecaPage() {
                 {yarisMsgs.map((msg, i) => (
                   <div key={i} style={{ display: "flex", gap: 7, alignItems: "flex-start", flexDirection: msg.role === "user" ? "row-reverse" : "row" }}>
                     <div style={{ width: 24, height: 24, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: msg.role === "bot" ? "0.75rem" : "0.58rem", fontWeight: msg.role === "user" ? 700 : undefined, background: msg.role === "bot" ? "#F2DCDB" : "#3D5D91", color: msg.role === "user" ? "white" : "#6C0820", flexShrink: 0 }}>
-                      {msg.role === "bot" ? <Icon n="spark" size={14} /> : "MG"}
+                      {msg.role === "bot" ? <Icon n="spark" size={14} /> : userInitials}
                     </div>
                     <div style={{ maxWidth: "84%", padding: "8px 11px", borderRadius: msg.role === "bot" ? "4px 12px 12px 12px" : "12px 4px 12px 12px", fontSize: "0.8rem", lineHeight: 1.5, background: msg.role === "bot" ? "#f0f4ff" : "#3D5D91", color: msg.role === "bot" ? "#22375C" : "white" }}>
                       <span dangerouslySetInnerHTML={{ __html: msg.text }} />
@@ -301,15 +420,56 @@ function BibliotecaPage() {
               </div>
             </div>
           </div>
+
+          {/* Aviso del visor */}
+          {viewerNotice && (
+            <div
+              style={{
+                position: "absolute",
+                bottom: 24,
+                left: "50%",
+                transform: "translateX(-50%)",
+                zIndex: 60,
+                background: "white",
+                border: "1px solid #E8EEF6",
+                borderRadius: 12,
+                padding: "10px 16px",
+                boxShadow: "0 12px 30px -10px rgba(15,26,51,0.35)",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                fontSize: "0.82rem",
+                fontWeight: 600,
+                color: "#33527F",
+              }}
+            >
+              <Icon n="info" size={14} color="#3D5D91" /> {viewerNotice}
+            </div>
+          )}
         </div>
       )}
+
+      <UpgradeModal
+        open={upgradeOpen}
+        onClose={() => setUpgradeOpen(false)}
+        feature="Biblioteca completa"
+        userId={user?.id}
+      />
+      <ReportProblemModal
+        open={reportOpen}
+        onClose={() => setReportOpen(false)}
+        user={user}
+        seccion="Biblioteca"
+        recurso={readerBook?.id ?? ""}
+        tipoInicial="Problema con PDF o descarga"
+      />
     </>
   );
 }
 
 /* ─── Book Card ──────────────────────────────────────────── */
 
-function BookCard({ book, onOpen }: { book: Book; onOpen: () => void }) {
+function BookCard({ book, locked = false, onOpen }: { book: Book; locked?: boolean; onOpen: () => void }) {
   const [hover, setHover] = useState(false);
 
   return (
@@ -320,16 +480,23 @@ function BookCard({ book, onOpen }: { book: Book; onOpen: () => void }) {
       style={{ background: "white", borderRadius: 14, overflow: "hidden", cursor: "pointer", transition: "all 0.2s", boxShadow: hover ? "0 8px 24px rgba(61,93,145,0.12)" : "0 2px 10px rgba(61,93,145,0.06)", border: hover ? "2px solid #5A86CB" : "2px solid transparent", transform: hover ? "translateY(-3px)" : "none" }}
     >
       <div style={{ height: 130, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "3.5rem", position: "relative", background: book.gradient, color: "white" }}>
-        <span style={{ display: "flex" }}><Icon n={book.emoji as any} size={52} /></span>
+        <span style={{ display: "flex" }}><Icon n={book.emoji as never} size={52} /></span>
         <span style={{ position: "absolute", top: 8, right: 8, padding: "2px 8px", borderRadius: 10, fontSize: "0.62rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.3px", background: book.badgeColor, color: "white" }}>
           {book.badge}
         </span>
+        {locked && (
+          <span style={{ position: "absolute", inset: 0, background: "rgba(34,55,92,0.35)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ width: 34, height: 34, borderRadius: "50%", background: "rgba(255,255,255,0.92)", display: "flex", alignItems: "center", justifyContent: "center", color: "#3D5D91" }}>
+              <Icon n="lock" size={16} />
+            </span>
+          </span>
+        )}
       </div>
       <div style={{ padding: 14 }}>
         <div style={{ fontSize: "0.84rem", fontWeight: 700, color: "#22375C", marginBottom: 4, lineHeight: 1.3 }}>{book.title}</div>
         <div style={{ fontSize: "0.74rem", color: "#647DA0", marginBottom: 8 }}>{book.author}</div>
         <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginBottom: 10 }}>
-          <span style={{ padding: "2px 8px", background: "#F2DCDB", color: "#6C0820", borderRadius: 10, fontSize: "0.65rem", fontWeight: 600 }}>{book.materiaTag}</span>
+          <span style={{ padding: "2px 8px", background: "#F2DCDB", color: "#6C0820", borderRadius: 10, fontSize: "0.65rem", fontWeight: 600 }}>{book.materiaTag || "General"}</span>
         </div>
         <button
           onClick={(e) => { e.stopPropagation(); onOpen(); }}
@@ -337,7 +504,7 @@ function BookCard({ book, onOpen }: { book: Book; onOpen: () => void }) {
           onMouseEnter={(e) => { e.currentTarget.style.background = "#2d4a7a"; }}
           onMouseLeave={(e) => { e.currentTarget.style.background = "#3D5D91"; }}
         >
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon n="book" size={14} /> Leer</span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>{locked ? <Icon n="lock" size={14} /> : <Icon n="book" size={14} />} Leer</span>
         </button>
       </div>
     </div>

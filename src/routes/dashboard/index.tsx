@@ -1,25 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { Icon } from "@/components/ui/fp-icon";
+import { useSessionUser, useStore, studentStats, materiaProgressPct, MATERIAS_DEF } from "@/lib/store";
+import { OnboardingModal } from "@/components/shared/OnboardingModal";
 
 export const Route = createFileRoute("/dashboard/")({
   component: DashboardHome,
 });
 
-const MATERIAS = [
-  { icon: "plane", name: "Aerodinámica", pct: 78, slug: "aerodinamica" },
-  { icon: "settings", name: "Aeronaves y Motores", pct: 55, slug: "aeronaves-motores" },
-  { icon: "scale", name: "Legislación Aeronáutica", pct: 90, slug: "legislacion" },
-  { icon: "stethoscope", name: "Medicina de Aviación", pct: 40, slug: "medicina" },
-  { icon: "cloud", name: "Meteorología", pct: 25, slug: "meteorologia" },
-  { icon: "map", name: "Navegación Aérea", pct: 60, slug: "navegacion" },
-  { icon: "plane", name: "Operaciones Aeronáuticas", pct: 15, slug: "operaciones" },
-  { icon: "radio", name: "Comunicaciones Aeronáuticas", pct: 0, slug: "comunicaciones" },
-  { icon: "doc", name: "Manuales de Información Aeronáutica", pct: 0, slug: "manuales-ais" },
-  { icon: "tower", name: "Servicios de Tránsito Aéreo", pct: 0, slug: "servicios-transito" },
-  { icon: "brain", name: "Factores Humanos", pct: 0, slug: "factores-humanos" },
-  { icon: "shield", name: "Seguridad Aérea", pct: 0, slug: "seguridad-aerea" },
-];
+interface MateriaItem {
+  icon: string;
+  name: string;
+  pct: number;
+  slug: string;
+}
 
 const WEEK_DAYS = ["L", "M", "M", "J", "V", "S", "D"];
 
@@ -37,27 +31,32 @@ const s: Record<string, React.CSSProperties> = {
   },
 };
 
-function LiveCountdown() {
-  const EXAM_DATE = new Date("2026-08-17T08:00:00");
-
-  const calc = () => {
-    const diff = EXAM_DATE.getTime() - Date.now();
-    if (diff <= 0) return { d: 0, h: 0, m: 0, sec: 0 };
-    return {
-      d: Math.floor(diff / 86400000),
-      h: Math.floor((diff % 86400000) / 3600000),
-      m: Math.floor((diff % 3600000) / 60000),
-      sec: Math.floor((diff % 60000) / 1000),
-    };
+function calcCountdown(fecha: string) {
+  const diff = new Date(`${fecha}T08:00:00`).getTime() - Date.now();
+  if (diff <= 0) return { d: 0, h: 0, m: 0, sec: 0 };
+  return {
+    d: Math.floor(diff / 86400000),
+    h: Math.floor((diff % 86400000) / 3600000),
+    m: Math.floor((diff % 3600000) / 60000),
+    sec: Math.floor((diff % 60000) / 1000),
   };
+}
 
-  const [cd, setCd] = useState(calc);
+function LiveCountdown({ fecha }: { fecha: string | null }) {
+  const [cd, setCd] = useState(() => (fecha ? calcCountdown(fecha) : { d: 0, h: 0, m: 0, sec: 0 }));
+
   useEffect(() => {
-    const t = setInterval(() => setCd(calc()), 1000);
+    if (!fecha) return;
+    setCd(calcCountdown(fecha));
+    const t = setInterval(() => setCd(calcCountdown(fecha)), 1000);
     return () => clearInterval(t);
-  }, []);
+  }, [fecha]);
 
   const pad = (n: number) => String(n).padStart(2, "0");
+
+  const dateLabel = fecha
+    ? new Date(`${fecha}T08:00:00`).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" })
+    : null;
 
   return (
     <div
@@ -78,49 +77,55 @@ function LiveCountdown() {
         >
           Próximo CIAAC
         </strong>
-        <span style={{ fontSize: "0.75rem", opacity: 0.7 }}>17 de agosto, 2026</span>
+        {dateLabel && <span style={{ fontSize: "0.75rem", opacity: 0.7 }}>{dateLabel}</span>}
       </div>
-      <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-        {[
-          { n: cd.d, l: "Días" },
-          { n: cd.h, l: "Hrs" },
-          { n: cd.m, l: "Min" },
-          { n: cd.sec, l: "Seg" },
-        ].map(({ n, l }) => (
-          <div
-            key={l}
-            style={{
-              textAlign: "center",
-              background: "rgba(255,255,255,0.15)",
-              borderRadius: 8,
-              padding: "6px 10px",
-              minWidth: 44,
-            }}
-          >
-            <span
+      {fecha ? (
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          {[
+            { n: cd.d, l: "Días" },
+            { n: cd.h, l: "Hrs" },
+            { n: cd.m, l: "Min" },
+            { n: cd.sec, l: "Seg" },
+          ].map(({ n, l }) => (
+            <div
+              key={l}
               style={{
-                fontFamily: "'Bricolage Grotesque', sans-serif",
-                fontSize: "1.4rem",
-                fontWeight: 900,
-                lineHeight: 1,
-                display: "block",
+                textAlign: "center",
+                background: "rgba(255,255,255,0.15)",
+                borderRadius: 8,
+                padding: "6px 10px",
+                minWidth: 44,
               }}
             >
-              {l === "Días" ? cd.d : pad(n)}
-            </span>
-            <span
-              style={{ fontSize: "0.6rem", opacity: 0.7, textTransform: "uppercase", letterSpacing: "0.5px" }}
-            >
-              {l}
-            </span>
-          </div>
-        ))}
-      </div>
+              <span
+                style={{
+                  fontFamily: "'Bricolage Grotesque', sans-serif",
+                  fontSize: "1.4rem",
+                  fontWeight: 900,
+                  lineHeight: 1,
+                  display: "block",
+                }}
+              >
+                {l === "Días" ? cd.d : pad(n)}
+              </span>
+              <span
+                style={{ fontSize: "0.6rem", opacity: 0.7, textTransform: "uppercase", letterSpacing: "0.5px" }}
+              >
+                {l}
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div style={{ fontSize: "0.85rem", fontWeight: 600, opacity: 0.85, padding: "14px 4px" }}>
+          Configura tu fecha CIAAC en tu perfil
+        </div>
+      )}
     </div>
   );
 }
 
-function MateriaCard({ m }: { m: typeof MATERIAS[0] }) {
+function MateriaCard({ m }: { m: MateriaItem }) {
   const [hov, setHov] = useState(false);
   return (
     <div
@@ -138,7 +143,7 @@ function MateriaCard({ m }: { m: typeof MATERIAS[0] }) {
       }}
     >
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-        <span style={{ display: "flex", color: "#3D5D91" }}><Icon n={m.icon as any} size={20} /></span>
+        <span style={{ display: "flex", color: "#3D5D91" }}><Icon n={m.icon as never} size={20} /></span>
         <span
           style={{
             fontSize: "0.75rem",
@@ -205,14 +210,33 @@ function MateriaCard({ m }: { m: typeof MATERIAS[0] }) {
 }
 
 function DashboardHome() {
+  const user = useSessionUser();
+  const stats = useStore(() => (user ? studentStats(user.id) : null));
+  const materias = useStore<MateriaItem[]>(() =>
+    MATERIAS_DEF.map((m) => ({
+      icon: m.icon,
+      name: m.name,
+      pct: user ? materiaProgressPct(user.id, m.slug) : 0,
+      slug: m.slug,
+    })),
+  );
+
   const now = new Date();
   const hour = now.getHours();
   const greeting = hour < 12 ? "Buenos días" : hour < 18 ? "Buenas tardes" : "Buenas noches";
 
   const todayIdx = now.getDay() === 0 ? 6 : now.getDay() - 1;
 
+  if (!user || !stats) return null;
+
+  const firstName = user.nombre.split(" ")[0];
+  const streak = stats.streak;
+  const diasWord = streak === 1 ? "día" : "días";
+
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto", fontFamily: "'Manrope', sans-serif" }}>
+
+      {!user.onboardingDone && <OnboardingModal user={user} onDone={() => {}} />}
 
       {/* GREETING + COUNTDOWN */}
       <div
@@ -234,13 +258,13 @@ function DashboardHome() {
               marginBottom: 4,
             }}
           >
-            ¡{greeting}, <span style={{ color: "#6C0820" }}>María!</span>
+            ¡{greeting}, <span style={{ color: "#6C0820" }}>{firstName}!</span>
           </h2>
           <p style={{ color: "#647DA0", fontSize: "0.9rem" }}>
-            Llevas 14 días estudiando. ¡Pathy está muy orgullosa de ti!
+            Llevas {streak} {diasWord} estudiando. ¡Pathy está muy orgullosa de ti!
           </p>
         </div>
-        <LiveCountdown />
+        <LiveCountdown fecha={user.fechaCiaac} />
       </div>
 
       {/* PATHY WIDGET */}
@@ -259,10 +283,10 @@ function DashboardHome() {
         <div style={{ flexShrink: 0, display: "flex", color: "white" }}><Icon n="cloud" size={48} /></div>
         <div style={{ flex: 1 }}>
           <h4 style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: 4 }}>
-            ¡Modo Piloto activado, María!
+            ¡Modo Piloto activado, {firstName}!
           </h4>
           <p style={{ fontSize: "0.82rem", opacity: 0.7, lineHeight: 1.4, marginBottom: 10 }}>
-            Llevas 14 días consecutivos estudiando. ¡Eres imparable! Sigue volando alto.
+            Llevas {streak} {diasWord} consecutivos estudiando. ¡Eres imparable! Sigue volando alto.
           </p>
           <div style={{ display: "flex", gap: 4 }}>
             {WEEK_DAYS.map((d, i) => (
@@ -293,9 +317,9 @@ function DashboardHome() {
               display: "block",
             }}
           >
-            14
+            {streak}
           </span>
-          <span style={{ fontSize: "0.7rem", opacity: 0.6 }}>días</span>
+          <span style={{ fontSize: "0.7rem", opacity: 0.6 }}>{diasWord}</span>
         </div>
       </div>
 
@@ -309,10 +333,10 @@ function DashboardHome() {
         }}
       >
         {[
-          { icon: "chart", bg: "rgba(61,93,145,0.1)", value: "42%", label: "Progreso general" },
-          { icon: "help", bg: "#F2DCDB", value: "1,240", label: "Preguntas respondidas" },
-          { icon: "check", bg: "rgba(52,168,83,0.1)", value: "74%", label: "Aciertos promedio" },
-          { icon: "timer", bg: "rgba(255,152,0,0.1)", value: "23h", label: "Tiempo de estudio" },
+          { icon: "chart", bg: "rgba(61,93,145,0.1)", value: `${stats.courseProgress}%`, label: "Progreso general" },
+          { icon: "help", bg: "#F2DCDB", value: stats.answered.toLocaleString(), label: "Preguntas respondidas" },
+          { icon: "check", bg: "rgba(52,168,83,0.1)", value: stats.avgScore !== null ? `${stats.avgScore}%` : "—", label: "Aciertos promedio" },
+          { icon: "timer", bg: "rgba(255,152,0,0.1)", value: `${stats.studyHours}h`, label: "Tiempo de estudio" },
         ].map((stat) => (
           <StatCard key={stat.label} {...stat} />
         ))}
@@ -344,7 +368,7 @@ function DashboardHome() {
           icon="sim"
           title="Examen simulado"
           desc="310 preguntas · 5 horas · CIAAC real"
-          to="/dashboard/simulador"
+          to="/simulador"
         />
       </div>
 
@@ -363,7 +387,7 @@ function DashboardHome() {
       <div
         style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 14 }}
       >
-        {MATERIAS.map((m) => (
+        {materias.map((m) => (
           <MateriaCard key={m.slug} m={m} />
         ))}
       </div>
@@ -395,7 +419,7 @@ function StatCard({
           flexShrink: 0, background: bg, color: "#3D5D91",
         }}
       >
-        <Icon n={icon as any} size={22} />
+        <Icon n={icon as never} size={22} />
       </div>
       <div>
         <div
@@ -446,7 +470,7 @@ function ActionCard({
             flexShrink: 0, color: primary ? "white" : "#6C0820",
           }}
         >
-          <Icon n={icon as any} size={24} />
+          <Icon n={icon as never} size={24} />
         </div>
         <div>
           <h3 style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: 2 }}>{title}</h3>

@@ -17,6 +17,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CuestionarioRouteImport } from './routes/cuestionario'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as DashboardRecordatoriosRouteImport } from './routes/dashboard/recordatorios'
 import { Route as DashboardPerfilRouteImport } from './routes/dashboard/perfil'
 import { Route as DashboardFlashcardsRouteImport } from './routes/dashboard/flashcards'
@@ -27,7 +28,13 @@ import { Route as DashboardBitacoraRouteImport } from './routes/dashboard/bitaco
 import { Route as DashboardBibliotecaRouteImport } from './routes/dashboard/biblioteca'
 import { Route as DashboardBancoRouteImport } from './routes/dashboard/banco'
 import { Route as DashboardAnalisisRouteImport } from './routes/dashboard/analisis'
+import { Route as AdminWhatsappRouteImport } from './routes/admin/whatsapp'
+import { Route as AdminSoporteRouteImport } from './routes/admin/soporte'
 import { Route as AdminPerfilRouteImport } from './routes/admin/perfil'
+import { Route as AdminEstudiantesRouteImport } from './routes/admin/estudiantes'
+import { Route as AdminContenidoRouteImport } from './routes/admin/contenido'
+import { Route as AdminConfiguracionRouteImport } from './routes/admin/configuracion'
+import { Route as AdminBancoRouteImport } from './routes/admin/banco'
 import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/materias/index'
 import { Route as DashboardMateriasSubjectIdRouteImport } from './routes/dashboard/materias/$subjectId'
 
@@ -70,6 +77,11 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DashboardRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRecordatoriosRoute = DashboardRecordatoriosRouteImport.update({
   id: '/recordatorios',
@@ -121,9 +133,39 @@ const DashboardAnalisisRoute = DashboardAnalisisRouteImport.update({
   path: '/analisis',
   getParentRoute: () => DashboardRoute,
 } as any)
+const AdminWhatsappRoute = AdminWhatsappRouteImport.update({
+  id: '/admin/whatsapp',
+  path: '/admin/whatsapp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSoporteRoute = AdminSoporteRouteImport.update({
+  id: '/admin/soporte',
+  path: '/admin/soporte',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminPerfilRoute = AdminPerfilRouteImport.update({
   id: '/admin/perfil',
   path: '/admin/perfil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminEstudiantesRoute = AdminEstudiantesRouteImport.update({
+  id: '/admin/estudiantes',
+  path: '/admin/estudiantes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminContenidoRoute = AdminContenidoRouteImport.update({
+  id: '/admin/contenido',
+  path: '/admin/contenido',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminConfiguracionRoute = AdminConfiguracionRouteImport.update({
+  id: '/admin/configuracion',
+  path: '/admin/configuracion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminBancoRoute = AdminBancoRouteImport.update({
+  id: '/admin/banco',
+  path: '/admin/banco',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardMateriasIndexRoute = DashboardMateriasIndexRouteImport.update({
@@ -146,7 +188,13 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
+  '/admin/banco': typeof AdminBancoRoute
+  '/admin/configuracion': typeof AdminConfiguracionRoute
+  '/admin/contenido': typeof AdminContenidoRoute
+  '/admin/estudiantes': typeof AdminEstudiantesRoute
   '/admin/perfil': typeof AdminPerfilRoute
+  '/admin/soporte': typeof AdminSoporteRoute
+  '/admin/whatsapp': typeof AdminWhatsappRoute
   '/dashboard/analisis': typeof DashboardAnalisisRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
@@ -157,6 +205,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
+  '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
@@ -168,7 +217,13 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
+  '/admin/banco': typeof AdminBancoRoute
+  '/admin/configuracion': typeof AdminConfiguracionRoute
+  '/admin/contenido': typeof AdminContenidoRoute
+  '/admin/estudiantes': typeof AdminEstudiantesRoute
   '/admin/perfil': typeof AdminPerfilRoute
+  '/admin/soporte': typeof AdminSoporteRoute
+  '/admin/whatsapp': typeof AdminWhatsappRoute
   '/dashboard/analisis': typeof DashboardAnalisisRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
@@ -179,6 +234,7 @@ export interface FileRoutesByTo {
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
+  '/admin': typeof AdminIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/dashboard/materias': typeof DashboardMateriasIndexRoute
@@ -192,7 +248,13 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
+  '/admin/banco': typeof AdminBancoRoute
+  '/admin/configuracion': typeof AdminConfiguracionRoute
+  '/admin/contenido': typeof AdminContenidoRoute
+  '/admin/estudiantes': typeof AdminEstudiantesRoute
   '/admin/perfil': typeof AdminPerfilRoute
+  '/admin/soporte': typeof AdminSoporteRoute
+  '/admin/whatsapp': typeof AdminWhatsappRoute
   '/dashboard/analisis': typeof DashboardAnalisisRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
@@ -203,6 +265,7 @@ export interface FileRoutesById {
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
+  '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
@@ -217,7 +280,13 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/simulador'
+    | '/admin/banco'
+    | '/admin/configuracion'
+    | '/admin/contenido'
+    | '/admin/estudiantes'
     | '/admin/perfil'
+    | '/admin/soporte'
+    | '/admin/whatsapp'
     | '/dashboard/analisis'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
@@ -228,6 +297,7 @@ export interface FileRouteTypes {
     | '/dashboard/flashcards'
     | '/dashboard/perfil'
     | '/dashboard/recordatorios'
+    | '/admin/'
     | '/dashboard/'
     | '/dashboard/materias/$subjectId'
     | '/dashboard/materias/'
@@ -239,7 +309,13 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/simulador'
+    | '/admin/banco'
+    | '/admin/configuracion'
+    | '/admin/contenido'
+    | '/admin/estudiantes'
     | '/admin/perfil'
+    | '/admin/soporte'
+    | '/admin/whatsapp'
     | '/dashboard/analisis'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
@@ -250,6 +326,7 @@ export interface FileRouteTypes {
     | '/dashboard/flashcards'
     | '/dashboard/perfil'
     | '/dashboard/recordatorios'
+    | '/admin'
     | '/dashboard'
     | '/dashboard/materias/$subjectId'
     | '/dashboard/materias'
@@ -262,7 +339,13 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/simulador'
+    | '/admin/banco'
+    | '/admin/configuracion'
+    | '/admin/contenido'
+    | '/admin/estudiantes'
     | '/admin/perfil'
+    | '/admin/soporte'
+    | '/admin/whatsapp'
     | '/dashboard/analisis'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
@@ -273,6 +356,7 @@ export interface FileRouteTypes {
     | '/dashboard/flashcards'
     | '/dashboard/perfil'
     | '/dashboard/recordatorios'
+    | '/admin/'
     | '/dashboard/'
     | '/dashboard/materias/$subjectId'
     | '/dashboard/materias/'
@@ -286,7 +370,14 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   SimuladorRoute: typeof SimuladorRoute
+  AdminBancoRoute: typeof AdminBancoRoute
+  AdminConfiguracionRoute: typeof AdminConfiguracionRoute
+  AdminContenidoRoute: typeof AdminContenidoRoute
+  AdminEstudiantesRoute: typeof AdminEstudiantesRoute
   AdminPerfilRoute: typeof AdminPerfilRoute
+  AdminSoporteRoute: typeof AdminSoporteRoute
+  AdminWhatsappRoute: typeof AdminWhatsappRoute
+  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -346,6 +437,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/dashboard/recordatorios': {
       id: '/dashboard/recordatorios'
@@ -417,11 +515,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardAnalisisRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/admin/whatsapp': {
+      id: '/admin/whatsapp'
+      path: '/admin/whatsapp'
+      fullPath: '/admin/whatsapp'
+      preLoaderRoute: typeof AdminWhatsappRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/soporte': {
+      id: '/admin/soporte'
+      path: '/admin/soporte'
+      fullPath: '/admin/soporte'
+      preLoaderRoute: typeof AdminSoporteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/perfil': {
       id: '/admin/perfil'
       path: '/admin/perfil'
       fullPath: '/admin/perfil'
       preLoaderRoute: typeof AdminPerfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/estudiantes': {
+      id: '/admin/estudiantes'
+      path: '/admin/estudiantes'
+      fullPath: '/admin/estudiantes'
+      preLoaderRoute: typeof AdminEstudiantesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/contenido': {
+      id: '/admin/contenido'
+      path: '/admin/contenido'
+      fullPath: '/admin/contenido'
+      preLoaderRoute: typeof AdminContenidoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/configuracion': {
+      id: '/admin/configuracion'
+      path: '/admin/configuracion'
+      fullPath: '/admin/configuracion'
+      preLoaderRoute: typeof AdminConfiguracionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/banco': {
+      id: '/admin/banco'
+      path: '/admin/banco'
+      fullPath: '/admin/banco'
+      preLoaderRoute: typeof AdminBancoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard/materias/': {
@@ -485,7 +625,14 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   SimuladorRoute: SimuladorRoute,
+  AdminBancoRoute: AdminBancoRoute,
+  AdminConfiguracionRoute: AdminConfiguracionRoute,
+  AdminContenidoRoute: AdminContenidoRoute,
+  AdminEstudiantesRoute: AdminEstudiantesRoute,
   AdminPerfilRoute: AdminPerfilRoute,
+  AdminSoporteRoute: AdminSoporteRoute,
+  AdminWhatsappRoute: AdminWhatsappRoute,
+  AdminIndexRoute: AdminIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

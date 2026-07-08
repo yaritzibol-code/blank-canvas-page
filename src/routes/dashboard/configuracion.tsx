@@ -1,12 +1,28 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
+import {
+  useSessionUser,
+  updateUser,
+  changePassword,
+  logout,
+  requestAccountDeletion,
+  defaultPrefs,
+} from "@/lib/store";
+import type { UserPrefs } from "@/lib/store";
+import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 
 export const Route = createFileRoute("/dashboard/configuracion")({
   component: ConfiguracionPage,
 });
 
 type ModalType = "password" | "phone" | "logout" | "delete" | null;
+
+const maskPhone = (p: string) => {
+  const t = p.trim();
+  if (!t) return "";
+  return `${t.slice(0, 6)} ••••••${t.slice(-2)}`;
+};
 
 function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
   return (
@@ -30,7 +46,7 @@ function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
 function SectionHeader({ icon, iconBg, title, desc }: { icon: string; iconBg: string; title: string; desc: string }) {
   return (
     <div style={{ padding: "16px 20px", borderBottom: "1px solid rgba(61,93,145,.06)", display: "flex", alignItems: "center", gap: 10 }}>
-      <div style={{ width: 36, height: 36, borderRadius: 10, background: iconBg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "#22375C" }}><Icon n={icon as any} size={20} /></div>
+      <div style={{ width: 36, height: 36, borderRadius: 10, background: iconBg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "#22375C" }}><Icon n={icon as never} size={20} /></div>
       <div>
         <div style={{ fontSize: ".92rem", fontWeight: 700, color: "#22375C", marginBottom: 2 }}>{title}</div>
         <div style={{ fontSize: ".74rem", color: "#647DA0" }}>{desc}</div>
@@ -58,7 +74,7 @@ function ConfigRow({
       onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.background = "transparent"; }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 12, flex: 1 }}>
-        <span style={{ width: 20, display: "flex", justifyContent: "center", flexShrink: 0, color: danger ? "#e74c3c" : "#22375C" }}><Icon n={icon as any} size={18} /></span>
+        <span style={{ width: 20, display: "flex", justifyContent: "center", flexShrink: 0, color: danger ? "#e74c3c" : "#22375C" }}><Icon n={icon as never} size={18} /></span>
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: ".86rem", fontWeight: 600, color: danger ? "#e74c3c" : "#22375C", marginBottom: 2 }}>{label}</div>
           <div style={{ fontSize: ".74rem", color: danger ? "rgba(231,76,60,.7)" : "#647DA0" }}>{sub}</div>
@@ -71,27 +87,43 @@ function ConfigRow({
 
 function ConfiguracionPage() {
   const navigate = useNavigate();
-  const [toggles, setToggles] = useState({
-    whatsapp: true,
-    racha: true,
-    simulador: true,
-    bitacora: true,
-    pathy: true,
-  });
-  const [theme, setTheme] = useState<"claro" | "oscuro" | "sistema">("claro");
-  const [textSize, setTextSize] = useState("Normal");
+  const user = useSessionUser();
+  const [toggles, setToggles] = useState<UserPrefs["toggles"]>(() => user?.prefs.toggles ?? defaultPrefs().toggles);
+  const [theme, setThemeState] = useState<UserPrefs["theme"]>(() => user?.prefs.theme ?? "claro");
+  const [textSize, setTextSizeState] = useState<UserPrefs["textSize"]>(() => user?.prefs.textSize ?? "Normal");
   const [modal, setModal] = useState<ModalType>(null);
   const [flash, setFlash] = useState<string | null>(null);
+  const [reportOpen, setReportOpen] = useState(false);
 
   // Modal states
   const [pwdActual, setPwdActual] = useState("");
   const [pwdNueva, setPwdNueva] = useState("");
   const [pwdConfirm, setPwdConfirm] = useState("");
-  const [phone, setPhone] = useState("+52 55 1234 5678");
+  const [pwdError, setPwdError] = useState<string | null>(null);
+  const [phone, setPhone] = useState(() => user?.whatsapp ?? "");
   const [deleteConfirm, setDeleteConfirm] = useState("");
 
-  const toggle = (key: keyof typeof toggles) =>
-    setToggles((t) => ({ ...t, [key]: !t[key] }));
+  if (!user) return null;
+
+  const persistPrefs = (patch: Partial<UserPrefs>) => {
+    updateUser(user.id, { prefs: { theme, textSize, toggles, ...patch } });
+  };
+
+  const toggle = (key: keyof UserPrefs["toggles"]) => {
+    const next = { ...toggles, [key]: !toggles[key] };
+    setToggles(next);
+    persistPrefs({ toggles: next });
+  };
+
+  const setTheme = (t: UserPrefs["theme"]) => {
+    setThemeState(t);
+    persistPrefs({ theme: t });
+  };
+
+  const setTextSize = (t: UserPrefs["textSize"]) => {
+    setTextSizeState(t);
+    persistPrefs({ textSize: t });
+  };
 
   const showFlash = (msg: string) => {
     setFlash(msg);
@@ -101,8 +133,32 @@ function ConfiguracionPage() {
   const closeModal = () => {
     setModal(null);
     setPwdActual(""); setPwdNueva(""); setPwdConfirm("");
+    setPwdError(null);
     setDeleteConfirm("");
   };
+
+  const savePassword = () => {
+    setPwdError(null);
+    if (!pwdNueva || pwdNueva !== pwdConfirm) {
+      setPwdError("Las contraseñas nuevas no coinciden.");
+      return;
+    }
+    const res = changePassword(user.id, pwdActual, pwdNueva);
+    if (!res.ok) {
+      setPwdError(res.error ?? "No pudimos actualizar la contraseña.");
+      return;
+    }
+    closeModal();
+    showFlash("Contraseña actualizada");
+  };
+
+  const savePhone = () => {
+    updateUser(user.id, { whatsapp: phone.trim(), whatsappEstado: "registrado" });
+    closeModal();
+    showFlash("Número de WhatsApp actualizado");
+  };
+
+  const masked = maskPhone(user.whatsapp);
 
   const THEMES: { id: "claro" | "oscuro" | "sistema"; icon: string; label: string }[] = [
     { id: "claro", icon: "sun", label: "Claro" },
@@ -130,7 +186,7 @@ function ConfiguracionPage() {
       {/* ── NOTIFICACIONES ── */}
       <div style={{ background: "white", borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 20 }}>
         <SectionHeader icon="bell" iconBg="rgba(37,211,102,.1)" title="Notificaciones" desc="Gestiona cómo y cuándo te avisamos" />
-        <ConfigRow icon="chat" label="Recordatorios por WhatsApp" sub="Te mandamos tus recordatorios directo al +52 55 ••••••78" right={<Toggle on={toggles.whatsapp} onToggle={() => toggle("whatsapp")} />} />
+        <ConfigRow icon="chat" label="Recordatorios por WhatsApp" sub={masked ? `Te mandamos tus recordatorios directo al ${masked}` : "Agrega tu número para recibir recordatorios"} right={<Toggle on={toggles.whatsapp} onToggle={() => toggle("whatsapp")} />} />
         <ConfigRow icon="flame" label="Alerta de racha en riesgo" sub="Aviso por WhatsApp si no has estudiado en el día" right={<Toggle on={toggles.racha} onToggle={() => toggle("racha")} />} />
         <ConfigRow icon="sim" label="Recordatorio del simulador semanal" sub="Cada domingo a las 10:00 AM" right={<Toggle on={toggles.simulador} onToggle={() => toggle("simulador")} />} />
         <ConfigRow icon="book" label="Recordatorio de bitácora" sub="Pathy te pregunta cómo estuvo tu día al terminar de estudiar" right={<Toggle on={toggles.bitacora} onToggle={() => toggle("bitacora")} />} />
@@ -168,7 +224,7 @@ function ConfiguracionPage() {
                 fontFamily: "'Manrope', sans-serif",
               }}
             >
-              <div style={{ marginBottom: 4, display: "flex", justifyContent: "center", color: "#22375C" }}><Icon n={t.icon as any} size={22} /></div>
+              <div style={{ marginBottom: 4, display: "flex", justifyContent: "center", color: "#22375C" }}><Icon n={t.icon as never} size={22} /></div>
               <div style={{ fontSize: ".74rem", fontWeight: 700, color: "#22375C" }}>{t.label}</div>
             </button>
           ))}
@@ -185,7 +241,7 @@ function ConfiguracionPage() {
             </div>
             <select
               value={textSize}
-              onChange={(e) => setTextSize(e.target.value)}
+              onChange={(e) => setTextSize(e.target.value as UserPrefs["textSize"])}
               style={{ border: "2px solid #F2DCDB", borderRadius: 8, padding: "6px 12px", fontSize: ".82rem", fontFamily: "'Manrope', sans-serif", color: "#22375C", outline: "none", cursor: "pointer", background: "white" }}
             >
               <option>Normal</option>
@@ -201,7 +257,7 @@ function ConfiguracionPage() {
       <div style={{ background: "white", borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 20 }}>
         <SectionHeader icon="lock" iconBg="rgba(108,8,32,.08)" title="Seguridad" desc="Gestiona el acceso a tu cuenta" />
         <ConfigRow icon="lock" label="Cambiar contraseña" sub="Última actualización: hace 3 meses" onClick={() => setModal("password")} right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>} />
-        <ConfigRow icon="chat" label="Cambiar número de WhatsApp" sub="+52 55 ••••••78" onClick={() => setModal("phone")} right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>} />
+        <ConfigRow icon="chat" label="Cambiar número de WhatsApp" sub={masked || "Sin número registrado"} onClick={() => { setPhone(user.whatsapp); setModal("phone"); }} right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>} />
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 20px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <span style={{ width: 20, display: "flex", justifyContent: "center", color: "#22375C" }}><Icon n="home" size={18} /></span>
@@ -222,9 +278,9 @@ function ConfiguracionPage() {
       {/* ── AYUDA ── */}
       <div style={{ background: "white", borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 20 }}>
         <SectionHeader icon="help" iconBg="rgba(61,93,145,.08)" title="Ayuda y soporte" desc="Estamos aquí para ayudarte" />
-        <ConfigRow icon="book" label="Centro de ayuda" sub="Preguntas frecuentes y tutoriales" onClick={() => {}} right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>} />
-        <ConfigRow icon="star" label="Enviar sugerencia o feedback" sub="Ayúdanos a mejorar FlightPath" onClick={() => {}} right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>} />
-        <ConfigRow icon="doc" label="Términos y privacidad" sub="Política de uso y datos" onClick={() => {}} right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>} />
+        <ConfigRow icon="book" label="Centro de ayuda" sub="Preguntas frecuentes y tutoriales" onClick={() => navigate({ to: "/legal" })} right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>} />
+        <ConfigRow icon="star" label="Enviar sugerencia o feedback" sub="Ayúdanos a mejorar FlightPath" onClick={() => setReportOpen(true)} right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>} />
+        <ConfigRow icon="doc" label="Términos y privacidad" sub="Política de uso y datos" onClick={() => navigate({ to: "/legal" })} right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>} />
       </div>
 
       {/* ── ZONA DE RIESGO ── */}
@@ -245,6 +301,15 @@ function ConfiguracionPage() {
         FlightPath v1.0.0 · Hecho con <Icon n="heart" size={13} color="#6C0820" style={{ display: "inline-block", verticalAlign: "middle" }} /> por Yaritzi Bolaños<br />
         <span style={{ fontSize: ".68rem" }}>© 2026 FlightPath · Todos los derechos reservados</span>
       </div>
+
+      {/* Reporte / sugerencia */}
+      <ReportProblemModal
+        open={reportOpen}
+        onClose={() => setReportOpen(false)}
+        user={user}
+        seccion="Configuración"
+        tipoInicial="Sugerencia de mejora"
+      />
 
       {/* ── MODALS ── */}
       {modal && (
@@ -275,9 +340,12 @@ function ConfiguracionPage() {
                     />
                   ))}
                 </div>
+                {pwdError && (
+                  <p style={{ fontSize: ".78rem", color: "#e74c3c", fontWeight: 600, marginBottom: 12, lineHeight: 1.4 }}>{pwdError}</p>
+                )}
                 <div style={{ display: "flex", gap: 10 }}>
                   <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#647DA0", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
-                  <button onClick={() => { closeModal(); showFlash("Contraseña actualizada"); }} style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Guardar</button>
+                  <button onClick={savePassword} style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Guardar</button>
                 </div>
               </>
             )}
@@ -290,12 +358,13 @@ function ConfiguracionPage() {
                 <input
                   type="tel"
                   value={phone}
+                  placeholder="+52 55 1234 5678"
                   onChange={(e) => setPhone(e.target.value)}
                   style={{ width: "100%", padding: "10px 14px", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".86rem", fontFamily: "'Manrope', sans-serif", outline: "none", marginBottom: 16 }}
                 />
                 <div style={{ display: "flex", gap: 10 }}>
                   <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#647DA0", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
-                  <button onClick={() => { closeModal(); showFlash("Número de WhatsApp actualizado"); }} style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Guardar</button>
+                  <button onClick={savePhone} style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Guardar</button>
                 </div>
               </>
             )}
@@ -307,7 +376,7 @@ function ConfiguracionPage() {
                 <p style={{ fontSize: ".85rem", color: "#647DA0", marginBottom: 20, lineHeight: 1.5 }}>Tendrás que volver a iniciar sesión la próxima vez que entres a FlightPath.</p>
                 <div style={{ display: "flex", gap: 10 }}>
                   <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#647DA0", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
-                  <button onClick={() => { closeModal(); navigate({ to: "/" }); }} style={{ flex: 2, padding: 11, background: "#e74c3c", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cerrar sesión</button>
+                  <button onClick={() => { closeModal(); logout(); navigate({ to: "/" }); }} style={{ flex: 2, padding: 11, background: "#e74c3c", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cerrar sesión</button>
                 </div>
               </>
             )}
@@ -316,7 +385,7 @@ function ConfiguracionPage() {
             {modal === "delete" && (
               <>
                 <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}><Icon n="trash" size={20} color="#e74c3c" /> Eliminar cuenta</h2>
-                <p style={{ fontSize: ".85rem", color: "#647DA0", marginBottom: 8, lineHeight: 1.5 }}>Esta acción es <strong>permanente e irreversible</strong>. Se borrarán todos tus datos, progreso, bitácora y acceso a FlightPath.</p>
+                <p style={{ fontSize: ".85rem", color: "#647DA0", marginBottom: 8, lineHeight: 1.5 }}>Tu cuenta se desactivará y tendrás <strong>30 días</strong> para recuperarla iniciando sesión de nuevo. Pasado ese plazo se borrarán <strong>permanentemente</strong> todos tus datos, progreso, bitácora y acceso a FlightPath.</p>
                 <p style={{ fontSize: ".85rem", color: "#647DA0", marginBottom: 12 }}>Escribe <strong>ELIMINAR</strong> para confirmar.</p>
                 <input
                   type="text"
@@ -328,7 +397,7 @@ function ConfiguracionPage() {
                 <div style={{ display: "flex", gap: 10 }}>
                   <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#647DA0", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
                   <button
-                    onClick={() => { if (deleteConfirm === "ELIMINAR") { closeModal(); navigate({ to: "/" }); } }}
+                    onClick={() => { if (deleteConfirm === "ELIMINAR") { closeModal(); requestAccountDeletion(user.id); navigate({ to: "/" }); } }}
                     disabled={deleteConfirm !== "ELIMINAR"}
                     style={{ flex: 2, padding: 11, background: deleteConfirm === "ELIMINAR" ? "#e74c3c" : "#ddd", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: deleteConfirm === "ELIMINAR" ? "pointer" : "not-allowed", fontFamily: "'Manrope', sans-serif", transition: "background .2s" }}
                   >

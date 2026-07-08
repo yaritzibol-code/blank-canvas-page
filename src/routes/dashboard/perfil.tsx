@@ -1,45 +1,71 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
+import {
+  useSessionUser,
+  useStore,
+  updateUser,
+  logout,
+  studentStats,
+  materiaPerformance,
+  getActivity,
+  getSimAttempts,
+} from "@/lib/store";
+import type { User, StudentStats } from "@/lib/store";
 
 export const Route = createFileRoute("/dashboard/perfil")({
   component: PerfilPage,
 });
 
-const PATHY_STAGES = [
-  { emoji: "spark",  name: "Pathy Misty",      req: "1–3 días de racha",     state: "done" },
-  { emoji: "star",   name: "Pathy Cherry",     req: "4–6 días de racha",     state: "done" },
-  { emoji: "heart",  name: "Pathy Silver Lake",req: "7–13 días de racha",    state: "done" },
-  { emoji: "cloud",  name: "Pathy Lapis",      req: "14–30 días · Llevas 14",state: "current" },
-  { emoji: "trophy", name: "Pathy Burgundy",   req: "30+ días de racha",     state: "locked" },
+const PATHY_STAGES_DEF = [
+  { emoji: "spark",  name: "Pathy Misty",       max: 3,        req: "1–3 días de racha" },
+  { emoji: "star",   name: "Pathy Cherry",      max: 6,        req: "4–6 días de racha" },
+  { emoji: "heart",  name: "Pathy Silver Lake", max: 13,       req: "7–13 días de racha" },
+  { emoji: "cloud",  name: "Pathy Lapis",       max: 30,       req: "14–30 días de racha" },
+  { emoji: "trophy", name: "Pathy Burgundy",    max: Infinity, req: "30+ días de racha" },
 ];
 
-const LOGROS = [
-  { icon: "rocket",      name: "Primer vuelo",    desc: "Primera sesión",       locked: false },
-  { icon: "flame",       name: "Racha de 7",      desc: "7 días seguidos",      locked: false },
-  { icon: "checkCircle", name: "100 preguntas",   desc: "Respondidas",          locked: false },
-  { icon: "target",      name: "Simulador",       desc: "Primer simulacro",     locked: false },
-  { icon: "book",        name: "Lector",          desc: "Abrió la biblioteca",  locked: false },
-  { icon: "cards",       name: "Flashmaster",     desc: "50 flashcards",        locked: false },
-  { icon: "star",        name: "Racha de 30",     desc: "30 días seguidos",     locked: true  },
-  { icon: "medal",       name: "80% en sim",      desc: "Aprobar simulador",    locked: true  },
-  { icon: "plane",       name: "Listo pa' volar", desc: "100% del curso",       locked: true  },
-];
+function pathyStages(streak: number) {
+  const idx = PATHY_STAGES_DEF.findIndex((s) => streak <= s.max);
+  const cur = idx === -1 ? PATHY_STAGES_DEF.length - 1 : idx;
+  return PATHY_STAGES_DEF.map((s, i) => ({
+    emoji: s.emoji,
+    name: s.name,
+    req: i === cur ? `${s.req} · Llevas ${streak}` : s.req,
+    state: i < cur ? "done" : i === cur ? "current" : "locked",
+  }));
+}
 
-const MATERIAS = [
-  { name: "Aerodinámica",       icon: "plane",       pct: 84, color: "#2ecc71" },
-  { name: "Aeronaves y Motores",icon: "settings",    pct: 55, color: "#3D5D91" },
-  { name: "Legislación",        icon: "scale",       pct: 70, color: "#f39c12" },
-  { name: "Medicina",           icon: "stethoscope", pct: 88, color: "#2ecc71" },
-  { name: "Meteorología",       icon: "cloud",       pct: 35, color: "#e74c3c" },
-  { name: "Navegación Aérea",   icon: "map",         pct: 20, color: "#e74c3c" },
-  { name: "Tránsito Aéreo",     icon: "tower",       pct: 60, color: "#f39c12" },
-  { name: "Comunicaciones",     icon: "radio",       pct: 45, color: "#3D5D91" },
-  { name: "Manuales AIP",       icon: "doc",         pct: 50, color: "#3D5D91" },
-  { name: "Factores Humanos",   icon: "brain",       pct: 75, color: "#3D5D91" },
-  { name: "Seguridad Aérea",    icon: "shield",      pct: 65, color: "#f39c12" },
-  { name: "Operaciones",        icon: "plane",       pct: 40, color: "#3D5D91" },
-];
+function buildLogros(stats: StudentStats, hasBiblioteca: boolean, sim80: boolean) {
+  return [
+    { icon: "rocket",      name: "Primer vuelo",    desc: "Primera sesión",       locked: stats.temasDone < 1 },
+    { icon: "flame",       name: "Racha de 7",      desc: "7 días seguidos",      locked: stats.streak < 7 },
+    { icon: "checkCircle", name: "100 preguntas",   desc: "Respondidas",          locked: stats.answered < 100 },
+    { icon: "target",      name: "Simulador",       desc: "Primer simulacro",     locked: stats.simCount < 1 },
+    { icon: "book",        name: "Lector",          desc: "Abrió la biblioteca",  locked: !hasBiblioteca },
+    { icon: "cards",       name: "Flashmaster",     desc: "50 flashcards",        locked: stats.flashDominadas < 10 },
+    { icon: "star",        name: "Racha de 30",     desc: "30 días seguidos",     locked: stats.streak < 30 },
+    { icon: "medal",       name: "80% en sim",      desc: "Aprobar simulador",    locked: !sim80 },
+    { icon: "plane",       name: "Listo pa' volar", desc: "100% del curso",       locked: stats.readiness === null || stats.readiness < 80 },
+  ];
+}
+
+const colorFor = (avg: number | null) =>
+  avg === null ? "#3D5D91" : avg >= 70 ? "#2ecc71" : avg >= 50 ? "#f39c12" : "#e74c3c";
+
+const fmtFechaCiaac = (iso: string | null) =>
+  iso ? new Date(`${iso}T12:00:00`).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" }) : "—";
+
+const maskPhone = (p: string) => {
+  const t = p.trim();
+  if (!t) return "";
+  return `${t.slice(0, 6)} ••••••${t.slice(-2)}`;
+};
+
+const initialsOf = (nombre: string) => {
+  const parts = nombre.trim().split(/\s+/);
+  return ((parts[0]?.[0] ?? "") + (parts[1]?.[0] ?? "")).toUpperCase();
+};
 
 interface Info {
   nombre: string;
@@ -50,21 +76,71 @@ interface Info {
   perfil: string;
 }
 
+const buildInfo = (u: User | null): Info => ({
+  nombre: u?.nombre ?? "",
+  email: u?.email ?? "",
+  whatsapp: u?.whatsapp ?? "",
+  escuela: u?.escuela ?? "",
+  ciaac: u ? fmtFechaCiaac(u.fechaCiaac) : "—",
+  perfil: u?.perfilCiaac || "—",
+});
+
 function PerfilPage() {
+  const navigate = useNavigate();
+  const user = useSessionUser();
+  const stats = useStore(() => (user ? studentStats(user.id) : null));
+  const materiasPerf = useStore(() => (user ? materiaPerformance(user.id) : []));
+  const hasBiblioteca = useStore(() =>
+    user ? getActivity(user.id).some((a) => a.kind === "biblioteca") : false,
+  );
+  const sim80 = useStore(() =>
+    user ? getSimAttempts(user.id).some((a) => a.scorePct >= 80) : false,
+  );
+
   const [editing, setEditing] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [info, setInfo] = useState<Info>({
-    nombre: "María González Ramírez",
-    email: "maria.gonzalez@email.com",
-    whatsapp: "+52 55 1234 5678",
-    escuela: "Escuela de Aviación del Pacífico",
-    ciaac: "17 de agosto, 2026",
-    perfil: "Ala Fija — Piloto Aviador Comercial",
-  });
+  const [info, setInfo] = useState<Info>(() => buildInfo(user));
   const [draft, setDraft] = useState<Info>(info);
 
-  const startEdit = () => { setDraft(info); setEditing(true); };
-  const saveEdit = () => { setInfo(draft); setEditing(false); setSaved(true); setTimeout(() => setSaved(false), 3000); };
+  if (!user || !stats) return null;
+
+  const startEdit = () => {
+    // En edición, la fecha CIAAC se maneja como "YYYY-MM-DD" (input type="date").
+    setDraft({ ...buildInfo(user), ciaac: user.fechaCiaac ?? "" });
+    setEditing(true);
+  };
+  const saveEdit = () => {
+    updateUser(user.id, {
+      nombre: draft.nombre.trim() || user.nombre,
+      whatsapp: draft.whatsapp.trim(),
+      escuela: draft.escuela.trim(),
+      fechaCiaac: draft.ciaac || null,
+    });
+    setInfo({ ...draft, nombre: draft.nombre.trim() || user.nombre, ciaac: fmtFechaCiaac(draft.ciaac || null) });
+    setEditing(false);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
+
+  const stages = pathyStages(stats.streak);
+  const logros = buildLogros(stats, hasBiblioteca, sim80);
+
+  const memberSince = (() => {
+    const d = new Date(user.createdAt).toLocaleDateString("es-MX", { month: "short", year: "numeric" });
+    return d.charAt(0).toUpperCase() + d.slice(1);
+  })();
+
+  const verPlan = () => {
+    navigate({ to: "/" });
+    setTimeout(() => {
+      document.getElementById("precios")?.scrollIntoView({ behavior: "smooth" });
+    }, 350);
+  };
+
+  const cerrarSesion = () => {
+    logout();
+    navigate({ to: "/" });
+  };
 
   const fieldStyle: React.CSSProperties = {
     fontSize: ".88rem", color: "#22375C", fontWeight: 500,
@@ -74,11 +150,11 @@ function PerfilPage() {
   const displayStyle: React.CSSProperties = { ...fieldStyle, background: "#f8f9ff", border: "2px solid #F2DCDB" };
   const inputStyle: React.CSSProperties = { ...fieldStyle, background: "white", border: "2px solid #3D5D91", outline: "none" };
 
-  const InfoField = ({ label, field }: { label: string; field: keyof Info }) => (
+  const infoField = (label: string, field: keyof Info, type: "text" | "date" = "text") => (
     <div style={{ flex: 1 }}>
       <label style={{ fontSize: ".75rem", fontWeight: 700, color: "#647DA0", marginBottom: 5, display: "block" }}>{label}</label>
       {editing
-        ? <input value={draft[field]} onChange={(e) => setDraft((d) => ({ ...d, [field]: e.target.value }))} style={inputStyle} />
+        ? <input type={type} value={draft[field]} onChange={(e) => setDraft((d) => ({ ...d, [field]: e.target.value }))} style={inputStyle} />
         : <div style={displayStyle}>{info[field]}</div>
       }
     </div>
@@ -118,17 +194,17 @@ function PerfilPage() {
 
         {/* Avatar */}
         <div style={{ position: "relative", flexShrink: 0, zIndex: 1 }}>
-          <div style={{ width: 88, height: 88, borderRadius: "50%", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "2rem", fontWeight: 900, color: "white", border: "3px solid rgba(255,255,255,.2)" }}>MG</div>
+          <div style={{ width: 88, height: 88, borderRadius: "50%", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "2rem", fontWeight: 900, color: "white", border: "3px solid rgba(255,255,255,.2)" }}>{initialsOf(info.nombre)}</div>
           <div style={{ position: "absolute", bottom: 0, right: 0, width: 26, height: 26, borderRadius: "50%", background: "#F2AEBC", border: "2px solid #22375C", display: "flex", alignItems: "center", justifyContent: "center", color: "#6C0820", cursor: "pointer" }}><Icon n="edit" size={13} /></div>
         </div>
 
         <div style={{ flex: 1, zIndex: 1, minWidth: 200 }}>
           <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", color: "white", fontWeight: 900, marginBottom: 4 }}>{info.nombre.split(" ").slice(0, 2).join(" ")}</div>
-          <div style={{ fontSize: ".82rem", color: "rgba(255,255,255,.5)", marginBottom: 10 }}>{info.email} · +52 55 ••••••78</div>
+          <div style={{ fontSize: ".82rem", color: "rgba(255,255,255,.5)", marginBottom: 10 }}>{info.email}{user.whatsapp ? ` · ${maskPhone(user.whatsapp)}` : ""}</div>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            <span style={{ padding: "4px 12px", borderRadius: 20, fontSize: ".72rem", fontWeight: 700, background: "#F2AEBC", color: "#6C0820", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="plane" size={13} /> Plan Anual</span>
-            <span style={{ padding: "4px 12px", borderRadius: 20, fontSize: ".72rem", fontWeight: 700, background: "rgba(255,255,255,.1)", color: "rgba(255,255,255,.8)", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="flame" size={13} /> 14 días de racha</span>
-            <span style={{ padding: "4px 12px", borderRadius: 20, fontSize: ".72rem", fontWeight: 700, background: "rgba(255,255,255,.08)", color: "rgba(255,255,255,.6)" }}>Miembro desde Feb 2026</span>
+            <span style={{ padding: "4px 12px", borderRadius: 20, fontSize: ".72rem", fontWeight: 700, background: "#F2AEBC", color: "#6C0820", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="plane" size={13} /> {user.planNombre}</span>
+            <span style={{ padding: "4px 12px", borderRadius: 20, fontSize: ".72rem", fontWeight: 700, background: "rgba(255,255,255,.1)", color: "rgba(255,255,255,.8)", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="flame" size={13} /> {stats.streak} {stats.streak === 1 ? "día" : "días"} de racha</span>
+            <span style={{ padding: "4px 12px", borderRadius: 20, fontSize: ".72rem", fontWeight: 700, background: "rgba(255,255,255,.08)", color: "rgba(255,255,255,.6)" }}>Miembro desde {memberSince}</span>
           </div>
         </div>
 
@@ -138,13 +214,13 @@ function PerfilPage() {
       {/* Stats */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(150px,1fr))", gap: 14, marginBottom: 24 }}>
         {[
-          { icon: "flame", val: "14",   label: "Días de racha" },
-          { icon: "help",  val: "1,240",label: "Preguntas respondidas" },
-          { icon: "doc",   val: "3",    label: "Simuladores hechos" },
-          { icon: "timer", val: "48h",  label: "Tiempo de estudio" },
+          { icon: "flame", val: String(stats.streak), label: "Días de racha" },
+          { icon: "help",  val: stats.answered.toLocaleString(), label: "Preguntas respondidas" },
+          { icon: "doc",   val: String(stats.simCount), label: "Simuladores hechos" },
+          { icon: "timer", val: `${stats.studyHours}h`, label: "Tiempo de estudio" },
         ].map((s) => (
           <div key={s.label} style={{ background: "white", borderRadius: 14, padding: "16px 18px", boxShadow: "0 2px 10px rgba(61,93,145,.06)", textAlign: "center" }}>
-            <div style={{ marginBottom: 6, display: "flex", justifyContent: "center", color: "#3D5D91" }}><Icon n={s.icon as any} size={22} /></div>
+            <div style={{ marginBottom: 6, display: "flex", justifyContent: "center", color: "#3D5D91" }}><Icon n={s.icon as never} size={22} /></div>
             <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", fontWeight: 900, color: "#22375C", lineHeight: 1, marginBottom: 4 }}>{s.val}</div>
             <div style={{ fontSize: ".72rem", color: "#647DA0" }}>{s.label}</div>
           </div>
@@ -154,12 +230,16 @@ function PerfilPage() {
       {/* Plan card */}
       <div style={{ background: "linear-gradient(135deg,#3D5D91,#5A86CB)", borderRadius: 14, padding: "18px 20px", marginBottom: 24, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
         <div>
-          <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "white", marginBottom: 4, display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n="plane" size={18} /> Plan Anual — FlightPath</h3>
-          <p style={{ fontSize: ".8rem", color: "rgba(255,255,255,.75)" }}>Acceso completo hasta el 5 de febrero 2027 · Renovación automática</p>
+          <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "white", marginBottom: 4, display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n="plane" size={18} /> {user.planNombre} — FlightPath</h3>
+          <p style={{ fontSize: ".8rem", color: "rgba(255,255,255,.75)" }}>
+            {user.accessEnd
+              ? `Acceso completo hasta el ${new Date(user.accessEnd).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" })}`
+              : "Acceso básico — actualiza tu plan"}
+          </p>
         </div>
         <div style={{ display: "flex", gap: 10, flexShrink: 0 }}>
-          <button style={{ padding: "9px 18px", background: "white", color: "#3D5D91", border: "none", borderRadius: 8, fontSize: ".82rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Ver plan</button>
-          <button style={{ padding: "9px 18px", background: "rgba(255,255,255,.15)", color: "white", border: "1px solid rgba(255,255,255,.3)", borderRadius: 8, fontSize: ".82rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cerrar sesión</button>
+          <button onClick={verPlan} style={{ padding: "9px 18px", background: "white", color: "#3D5D91", border: "none", borderRadius: 8, fontSize: ".82rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Ver plan</button>
+          <button onClick={cerrarSesion} style={{ padding: "9px 18px", background: "rgba(255,255,255,.15)", color: "white", border: "1px solid rgba(255,255,255,.3)", borderRadius: 8, fontSize: ".82rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cerrar sesión</button>
         </div>
       </div>
 
@@ -170,7 +250,7 @@ function PerfilPage() {
         <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)" }}>
           <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n="cloud" size={15} /> Evolución de Pathy</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {PATHY_STAGES.map((stage) => (
+            {stages.map((stage) => (
               <div
                 key={stage.name}
                 style={{
@@ -181,7 +261,7 @@ function PerfilPage() {
                   transition: "all .2s",
                 }}
               >
-                <div style={{ width: 44, display: "flex", justifyContent: "center", flexShrink: 0, color: "#22375C" }}><Icon n={stage.emoji as any} size={26} /></div>
+                <div style={{ width: 44, display: "flex", justifyContent: "center", flexShrink: 0, color: "#22375C" }}><Icon n={stage.emoji as never} size={26} /></div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: ".85rem", fontWeight: 700, color: "#22375C", marginBottom: 2 }}>{stage.name}</div>
                   <div style={{ fontSize: ".74rem", color: "#647DA0" }}>{stage.req}</div>
@@ -203,7 +283,7 @@ function PerfilPage() {
         <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)" }}>
           <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n="trophy" size={15} /> Logros desbloqueados</div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))", gap: 10 }}>
-            {LOGROS.map((l) => (
+            {logros.map((l) => (
               <div
                 key={l.name}
                 style={{
@@ -212,7 +292,7 @@ function PerfilPage() {
                   filter: l.locked ? "grayscale(1)" : undefined,
                 }}
               >
-                <div style={{ marginBottom: 4, display: "flex", justifyContent: "center", color: "#3D5D91" }}><Icon n={l.icon as any} size={26} /></div>
+                <div style={{ marginBottom: 4, display: "flex", justifyContent: "center", color: "#3D5D91" }}><Icon n={l.icon as never} size={26} /></div>
                 <div style={{ fontSize: ".7rem", fontWeight: 700, color: "#22375C", marginBottom: 2, lineHeight: 1.2 }}>{l.name}</div>
                 <div style={{ fontSize: ".62rem", color: "#8DA1BE" }}>{l.desc}</div>
               </div>
@@ -225,15 +305,18 @@ function PerfilPage() {
       <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 24 }}>
         <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n="book" size={15} /> Progreso por materia</div>
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {MATERIAS.map((m) => (
-            <div key={m.name} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ fontSize: ".78rem", color: "#22375C", width: 170, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n={m.icon as any} size={16} /> {m.name}</span>
-              <div style={{ flex: 1, height: 8, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
-                <div style={{ height: "100%", borderRadius: 10, background: m.color, width: `${m.pct}%`, transition: "width .6s ease" }} />
+          {materiasPerf.map((m) => {
+            const color = colorFor(m.avg);
+            return (
+              <div key={m.slug} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ fontSize: ".78rem", color: "#22375C", width: 170, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n={m.icon as never} size={16} /> {m.name}</span>
+                <div style={{ flex: 1, height: 8, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
+                  <div style={{ height: "100%", borderRadius: 10, background: color, width: `${m.avg ?? 0}%`, transition: "width .6s ease" }} />
+                </div>
+                <span style={{ fontSize: ".74rem", fontWeight: 700, width: 36, textAlign: "right", flexShrink: 0, color }}>{m.avg === null ? "—" : `${m.avg}%`}</span>
               </div>
-              <span style={{ fontSize: ".74rem", fontWeight: 700, width: 36, textAlign: "right", flexShrink: 0, color: m.color }}>{m.pct}%</span>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -242,16 +325,16 @@ function PerfilPage() {
         <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n="user" size={15} /> Información personal</div>
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-            <InfoField label="Nombre completo"       field="nombre"   />
-            <InfoField label="Correo electrónico"    field="email"    />
+            {infoField("Nombre completo", "nombre")}
+            {infoField("Correo electrónico", "email")}
           </div>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-            <InfoField label="WhatsApp"              field="whatsapp" />
-            <InfoField label="Escuela de aviación"   field="escuela"  />
+            {infoField("WhatsApp", "whatsapp")}
+            {infoField("Escuela de aviación", "escuela")}
           </div>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-            <InfoField label="Fecha estimada del CIAAC" field="ciaac"  />
-            <InfoField label="Perfil"                    field="perfil" />
+            {infoField("Fecha estimada del CIAAC", "ciaac", "date")}
+            {infoField("Perfil", "perfil")}
           </div>
         </div>
       </div>

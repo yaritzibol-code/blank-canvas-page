@@ -1,4 +1,5 @@
 import { createContext, useContext, useRef, useState, useEffect, type ReactNode } from "react";
+import { getSessionUser, addStudySeconds, logActivity } from "@/lib/store";
 
 /* ── TECH DATA ── */
 export const TECH_DATA = [
@@ -78,9 +79,21 @@ export function TimerProvider({ children }: { children: ReactNode }) {
   const T = useRef({ ...INIT });
   const ivRef   = useRef<ReturnType<typeof setInterval> | null>(null);
   const tickRef = useRef<() => void>(() => {});
+  /** Segundos de trabajo aún no persistidos en el store. */
+  const secsSinceFlushRef = useRef(0);
 
   function showToast(msg: string) { setToast(msg); setTimeout(() => setToast(null), 2800); }
   function startIv() { clearInterval(ivRef.current!); ivRef.current = setInterval(() => tickRef.current(), 1000); }
+
+  /** Persiste los segundos de estudio acumulados desde el último guardado. */
+  function flushStudySecs() {
+    const secs = secsSinceFlushRef.current;
+    if (secs <= 0) return;
+    const userId = getSessionUser()?.id;
+    if (!userId) return;
+    addStudySeconds(userId, secs);
+    secsSinceFlushRef.current = 0;
+  }
 
   function tick() {
     const t = T.current;
@@ -99,7 +112,11 @@ export function TimerProvider({ children }: { children: ReactNode }) {
       return;
     }
     t.rem--;
-    if (t.isWork) t.todaySecs++;
+    if (t.isWork) {
+      t.todaySecs++;
+      secsSinceFlushRef.current++;
+      if (secsSinceFlushRef.current >= 60) flushStudySecs();
+    }
     setS(p => ({ ...p, rem: t.rem, todaySecs: t.todaySecs }));
   }
   tickRef.current = tick;
@@ -125,7 +142,7 @@ export function TimerProvider({ children }: { children: ReactNode }) {
     T.current.running = !T.current.running;
     const r = T.current.running;
     setS(p => ({ ...p, running: r, timerLabel: r ? "🔴 Sesión activa" : "⏸ En pausa" }));
-    if (r) startIv(); else { clearInterval(ivRef.current!); ivRef.current = null; }
+    if (r) startIv(); else { clearInterval(ivRef.current!); ivRef.current = null; flushStudySecs(); }
   }
 
   function resetTimer() {
@@ -154,17 +171,30 @@ export function TimerProvider({ children }: { children: ReactNode }) {
     T.current.running = !T.current.running;
     const r = T.current.running;
     setS(p => ({ ...p, running: r, timerLabel: r ? "🔴 Sesión activa" : "⏸ En pausa" }));
-    if (r) startIv(); else { clearInterval(ivRef.current!); ivRef.current = null; }
+    if (r) startIv(); else { clearInterval(ivRef.current!); ivRef.current = null; flushStudySecs(); }
   }
 
   function closeFloat() {
     clearInterval(ivRef.current!); ivRef.current = null;
+    const totalSecs = T.current.todaySecs;
+    flushStudySecs();
+    const userId = getSessionUser()?.id;
+    if (userId && totalSecs > 60) {
+      // durationMin: 0 — el tiempo real ya quedó persistido con addStudySeconds;
+      // logActivity vuelve a sumar durationMin como estudio y lo duplicaría.
+      logActivity({
+        userId,
+        kind: "pathy_session",
+        label: `Sesión de estudio — ${T.current.activeSubject}`,
+        durationMin: 0,
+      });
+    }
     T.current.running = false; T.current.visible = false;
     setS(p => ({ ...p, running: false, visible: false, timerLabel: "⏸ Sesión finalizada" }));
     showToast("Sesión finalizada · Buen vuelo piloto ✈️");
   }
 
-  useEffect(() => () => { clearInterval(ivRef.current!); }, []);
+  useEffect(() => () => { clearInterval(ivRef.current!); flushStudySecs(); }, []);
 
   /* ── Flight phase calculation ── */
   const phaseDur = s.isWork ? s.workSecs : s.breakSecs;

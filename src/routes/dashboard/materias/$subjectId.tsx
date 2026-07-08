@@ -1,8 +1,20 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { SUBJECT_TEMAS, TEMA_REGISTRY, type TemaEntry } from "@/modules/data/registry";
 import { BlockRenderer } from "@/modules/engine/BlockRenderer";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
+import {
+  completeTema,
+  isTemaCompleted,
+  materiaProgressPct,
+  temaLockState,
+  useSessionUser,
+  useStore,
+} from "@/lib/store";
+import { UpgradeModal } from "@/components/shared/UpgradeModal";
+import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
+
+type LockState = "open" | "locked_previo" | "locked_plan";
 
 export const Route = createFileRoute("/dashboard/materias/$subjectId")({
   component: SubjectDetail,
@@ -43,11 +55,15 @@ function Sidebar({
   temas,
   selectedTemaId,
   onSelect,
+  locks,
+  completed,
 }: {
   subjectId: string;
   temas: TemaEntry[];
   selectedTemaId: string | null;
   onSelect: (id: string) => void;
+  locks: Record<string, LockState>;
+  completed: Set<string>;
 }) {
   const bloques = groupByBloque(temas);
   const bloqueNums = Object.keys(bloques)
@@ -97,6 +113,8 @@ function Sidebar({
               </div>
               {bloque.temas.map((t) => {
                 const isSelected = t.id === selectedTemaId;
+                const isLockedItem = (locks[t.id] ?? "open") !== "open";
+                const isDone = completed.has(t.id);
                 return (
                   <button
                     key={t.id}
@@ -115,6 +133,7 @@ function Sidebar({
                       background: isSelected ? "#FAEFEE" : "transparent",
                       textAlign: "left",
                       fontFamily: FONT,
+                      opacity: isLockedItem ? 0.55 : 1,
                     }}
                     onMouseEnter={(e) => { if (!isSelected) e.currentTarget.style.background = "#F4F7FB"; }}
                     onMouseLeave={(e) => { if (!isSelected) e.currentTarget.style.background = "transparent"; }}
@@ -154,6 +173,15 @@ function Sidebar({
                         {t.duracion_min} min
                       </div>
                     </div>
+                    {isLockedItem ? (
+                      <span style={{ flexShrink: 0, alignSelf: "center", display: "flex" }}>
+                        <Icon n="lock" size={13} color="#8CA0BF" />
+                      </span>
+                    ) : isDone ? (
+                      <span style={{ flexShrink: 0, alignSelf: "center", display: "flex" }}>
+                        <Icon n="checkCircle" size={14} color="#2ecc71" />
+                      </span>
+                    ) : null}
                   </button>
                 );
               })}
@@ -322,24 +350,66 @@ function EmptyState({
 
 function SubjectDetail() {
   const { subjectId } = Route.useParams();
+  const user = useSessionUser();
   const meta = SUBJECT_META[subjectId] ?? { icon: "book" as FPIconName, name: subjectId };
   const temas = SUBJECT_TEMAS[subjectId] ?? [];
+  const temaIds = temas.map((t) => t.id);
 
   const [selectedTemaId, setSelectedTemaId] = useState<string | null>(null);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [upgradeOpen, setUpgradeOpen] = useState(false);
+  const [reportOpen, setReportOpen] = useState(false);
+  const [lockNotice, setLockNotice] = useState(false);
+  const lockNoticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Read ?tema= from URL on mount
+  // Candados y temas completados (se recalculan con cada cambio del store)
+  const locks = useStore<Record<string, LockState>>(() => {
+    const map: Record<string, LockState> = {};
+    for (const t of temas) map[t.id] = temaLockState(user, temaIds, t.id);
+    return map;
+  });
+  const completed = useStore<Set<string>>(() => {
+    const set = new Set<string>();
+    if (user) for (const t of temas) if (isTemaCompleted(user.id, t.id)) set.add(t.id);
+    return set;
+  });
+  const progresoMateria = useStore(() => (user ? materiaProgressPct(user.id, subjectId) : 0));
+
+  // Read ?tema= from URL on mount (respetando candados)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const temaParam = params.get("tema");
-    if (temaParam && TEMA_REGISTRY[temaParam]) {
+    const firstAccessible =
+      temas.find((t) => temaLockState(user, temaIds, t.id) === "open")?.id ?? temas[0]?.id ?? null;
+    if (
+      temaParam &&
+      TEMA_REGISTRY[temaParam] &&
+      temaIds.includes(temaParam) &&
+      temaLockState(user, temaIds, temaParam) === "open"
+    ) {
       setSelectedTemaId(temaParam);
     } else if (temas.length > 0) {
-      setSelectedTemaId(temas[0].id);
+      setSelectedTemaId(firstAccessible);
     }
-  }, [subjectId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subjectId, user?.id]);
+
+  function showLockNotice() {
+    setLockNotice(true);
+    if (lockNoticeTimer.current) clearTimeout(lockNoticeTimer.current);
+    lockNoticeTimer.current = setTimeout(() => setLockNotice(false), 2600);
+  }
 
   function handleSelectTema(id: string) {
+    const lock = locks[id] ?? "open";
+    if (lock === "locked_plan") {
+      setUpgradeOpen(true);
+      return;
+    }
+    if (lock === "locked_previo") {
+      showLockNotice();
+      return;
+    }
     setSelectedTemaId(id);
     setMobileSidebarOpen(false);
     // Update URL without navigation
@@ -411,25 +481,49 @@ function SubjectDetail() {
           )}
         </div>
 
-        {/* Mobile sidebar toggle */}
-        <button
-          className="flex md:hidden"
-          onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-          style={{
-            display: "inline-flex", alignItems: "center", gap: 6,
-            background: "white",
-            border: "1px solid #E8EEF6",
-            borderRadius: 10,
-            padding: "6px 12px",
-            fontSize: "0.8rem",
-            fontWeight: 600,
-            color: "#3D5D91",
-            cursor: "pointer",
-            fontFamily: FONT,
-          }}
-        >
-          <Icon n="list" size={14} /> Temas
-        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          {/* Reportar problema (discreto) */}
+          <button
+            onClick={() => setReportOpen(true)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              background: "transparent",
+              border: "none",
+              borderRadius: 8,
+              padding: "6px 10px",
+              fontSize: "0.78rem",
+              fontWeight: 600,
+              color: "#647DA0",
+              cursor: "pointer",
+              fontFamily: FONT,
+              transition: "background 0.15s",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "#F4F7FB"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+          >
+            <Icon n="alert" size={14} /> Reportar
+          </button>
+
+          {/* Mobile sidebar toggle */}
+          <button
+            className="flex md:hidden"
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              background: "white",
+              border: "1px solid #E8EEF6",
+              borderRadius: 10,
+              padding: "6px 12px",
+              fontSize: "0.8rem",
+              fontWeight: 600,
+              color: "#3D5D91",
+              cursor: "pointer",
+              fontFamily: FONT,
+            }}
+          >
+            <Icon n="list" size={14} /> Temas
+          </button>
+        </div>
       </div>
 
       {/* ── CONTENT ── */}
@@ -459,6 +553,8 @@ function SubjectDetail() {
               temas={temas}
               selectedTemaId={selectedTemaId}
               onSelect={handleSelectTema}
+              locks={locks}
+              completed={completed}
             />
           </div>
         )}
@@ -480,6 +576,8 @@ function SubjectDetail() {
             temas={temas}
             selectedTemaId={selectedTemaId}
             onSelect={handleSelectTema}
+            locks={locks}
+            completed={completed}
           />
         </div>
 
@@ -495,9 +593,17 @@ function SubjectDetail() {
             <div style={{ maxWidth: 800, margin: "0 auto", padding: "32px 24px" }}>
               <BlockRenderer
                 tema={selectedTema}
-                progreso={0}
+                progreso={progresoMateria}
                 onComplete={(dif) => {
-                  console.log("tema completado, dificultad:", dif);
+                  if (user && selectedEntry) {
+                    completeTema(
+                      user.id,
+                      selectedEntry.id,
+                      dif,
+                      "Learning Path — " + selectedEntry.title,
+                      selectedEntry.duracion_min,
+                    );
+                  }
                 }}
               />
             </div>
@@ -511,6 +617,47 @@ function SubjectDetail() {
           )}
         </div>
       </div>
+
+      {/* Aviso de tema bloqueado por orden */}
+      {lockNotice && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: 24,
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 200,
+            background: "white",
+            border: "1px solid #E8EEF6",
+            borderRadius: 12,
+            padding: "10px 16px",
+            boxShadow: "0 12px 30px -10px rgba(15,26,51,0.25)",
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            fontSize: "0.82rem",
+            fontWeight: 600,
+            color: "#33527F",
+            fontFamily: FONT,
+          }}
+        >
+          <Icon n="lock" size={14} color="#8CA0BF" /> Completa el tema anterior primero
+        </div>
+      )}
+
+      <UpgradeModal
+        open={upgradeOpen}
+        onClose={() => setUpgradeOpen(false)}
+        feature="Learning Paths completos"
+        userId={user?.id}
+      />
+      <ReportProblemModal
+        open={reportOpen}
+        onClose={() => setReportOpen(false)}
+        user={user}
+        seccion="Learning Paths"
+        recurso={selectedTemaId ?? subjectId}
+      />
     </div>
   );
 }
