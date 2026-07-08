@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { subscribe, getVersion } from "./db";
 import { ensureSeeded } from "./seed";
-import { getSessionUser, purgeExpiredAccounts } from "./auth";
+import { getSessionUser, purgeExpiredAccounts, restoreCloudSession } from "./auth";
 import type { User } from "./types";
 
 let initialized = false;
@@ -16,6 +16,9 @@ function initOnce() {
   initialized = true;
   ensureSeeded();
   purgeExpiredAccounts();
+  // Con Lovable Cloud activo, restaura la sesión de Supabase e hidrata en
+  // segundo plano; la UI se actualiza sola conforme llegan los datos.
+  void restoreCloudSession().catch(() => {});
 }
 
 export function useStoreVersion(): number {
