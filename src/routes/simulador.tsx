@@ -1,6 +1,16 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useState, useEffect, useRef } from "react";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
+import {
+  useRequireAuth,
+  canStartSimulator,
+  getPublishedQuestions,
+  saveSimAttempt,
+  yarisReply,
+  logYarisUse,
+} from "@/lib/store";
+import type { BankQuestion, SimAnswer, YarisContext } from "@/lib/store";
+import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
 export const Route = createFileRoute("/simulador")({
   component: SimuladorPage,
@@ -9,61 +19,32 @@ export const Route = createFileRoute("/simulador")({
 /* ─── Data ───────────────────────────────────────────────── */
 
 const MATERIAS = [
-  { icon: "plane" as FPIconName, name: "Aerodinámica", total: 30 },
-  { icon: "settings" as FPIconName, name: "Aeronaves y Motores", total: 30 },
-  { icon: "scale" as FPIconName, name: "Legislación Aeronáutica", total: 30 },
-  { icon: "stethoscope" as FPIconName, name: "Medicina de Aviación", total: 20 },
-  { icon: "cloud" as FPIconName, name: "Meteorología", total: 30 },
-  { icon: "map" as FPIconName, name: "Navegación Aérea", total: 30 },
-  { icon: "tower" as FPIconName, name: "Servicios de Tránsito Aéreo", total: 30 },
-  { icon: "radio" as FPIconName, name: "Comunicaciones Aeronáuticas", total: 20 },
-  { icon: "doc" as FPIconName, name: "Manuales de Información Aeronáutica", total: 20 },
-  { icon: "brain" as FPIconName, name: "Factores Humanos", total: 20 },
-  { icon: "shield" as FPIconName, name: "Seguridad Aérea", total: 20 },
-  { icon: "plane" as FPIconName, name: "Operaciones Aeronáuticas", total: 30 },
+  { icon: "plane" as FPIconName, name: "Aerodinámica", total: 30, slug: "aerodinamica" },
+  { icon: "settings" as FPIconName, name: "Aeronaves y Motores", total: 30, slug: "aeronaves-motores" },
+  { icon: "scale" as FPIconName, name: "Legislación Aeronáutica", total: 30, slug: "legislacion" },
+  { icon: "stethoscope" as FPIconName, name: "Medicina de Aviación", total: 20, slug: "medicina" },
+  { icon: "cloud" as FPIconName, name: "Meteorología", total: 30, slug: "meteorologia" },
+  { icon: "map" as FPIconName, name: "Navegación Aérea", total: 30, slug: "navegacion" },
+  { icon: "tower" as FPIconName, name: "Servicios de Tránsito Aéreo", total: 30, slug: "servicios-transito" },
+  { icon: "radio" as FPIconName, name: "Comunicaciones Aeronáuticas", total: 20, slug: "comunicaciones" },
+  { icon: "doc" as FPIconName, name: "Manuales de Información Aeronáutica", total: 20, slug: "manuales-ais" },
+  { icon: "brain" as FPIconName, name: "Factores Humanos", total: 20, slug: "factores-humanos" },
+  { icon: "shield" as FPIconName, name: "Seguridad Aérea", total: 20, slug: "seguridad-aerea" },
+  { icon: "plane" as FPIconName, name: "Operaciones Aeronáuticas", total: 30, slug: "operaciones" },
 ];
 
 const TOTAL_QS = MATERIAS.reduce((s, m) => s + m.total, 0); // 310
 
-interface SampleQ {
-  text: string;
-  opts: string[];
-  correct: number;
-  feedback: string;
-  cite: string;
+const LETTERS = ["A", "B", "C", "D"];
+
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
-
-const SAMPLE_QS: SampleQ[] = [
-  {
-    text: "¿Cuál es la fuerza aerodinámica que actúa perpendicularmente a la dirección del movimiento y permite el vuelo?",
-    opts: ["Resistencia aerodinámica", "Sustentación", "Empuje"],
-    correct: 1,
-    feedback: "La sustentación es la fuerza perpendicular al movimiento que permite volar, generada principalmente por las alas gracias al principio de Bernoulli.",
-    cite: "Aerodinámica Básica CIAAC, p. 12",
-  },
-  {
-    text: "¿Qué describe el principio de Bernoulli en relación con la sustentación?",
-    opts: ["La velocidad aumenta la presión", "La presión disminuye al aumentar la velocidad", "El flujo laminar genera más resistencia"],
-    correct: 1,
-    feedback: "Bernoulli establece que en un fluido en movimiento, al aumentar la velocidad disminuye la presión. Esto explica la diferencia de presión entre extradós e intradós.",
-    cite: "Aerodinámica Básica CIAAC, p. 18",
-  },
-  {
-    text: "¿Qué es el ángulo de ataque de un perfil alar?",
-    opts: ["El ángulo entre el eje longitudinal y la horizontal", "El ángulo entre la cuerda del ala y el viento relativo", "El ángulo de inclinación de la aeronave"],
-    correct: 1,
-    feedback: "El ángulo de ataque es el ángulo formado entre la cuerda del ala y la dirección del viento relativo. Es fundamental para entender la generación de sustentación.",
-    cite: "Aerodinámica Básica CIAAC, p. 22",
-  },
-];
-
-const DEMO_PCTS = [80, 80, 70, 85, 70, 73, 70, 90, 80, 60, 75, 56];
-
-const YARIS_REPLIES = [
-  { t: "¡Claro! Te explico este concepto con más detalle. La sustentación se genera porque el aire fluye más rápido por el extradós que por el intradós del ala, creando una diferencia de presión.", c: "Aerodinámica Básica CIAAC, p. 18" },
-  { t: "Piénsalo como Bernoulli en acción: más velocidad = menos presión. Arriba del ala hay menos presión que abajo, y esa diferencia 'jala' el avión hacia arriba.", c: "Aerodinámica Básica CIAAC, p. 15" },
-  { t: "¿Recuerdas a Buzz Lightyear 'cayendo con estilo'? Eso es exactamente lo que NO es sustentación. Un avión SÍ la genera gracias a la forma de sus alas.", c: null },
-];
 
 /* ─── Question state ─────────────────────────────────────── */
 
@@ -83,6 +64,33 @@ function buildQuestions(): QState[] {
     }
   });
   return qs;
+}
+
+/**
+ * Banco real del simulador: por cada materia toma sus preguntas publicadas
+ * barajadas y cicla hasta llenar su cuota. Si una materia no tiene preguntas,
+ * recurre al pool global publicado.
+ */
+function buildBank(): BankQuestion[] {
+  const globalPool = shuffle(getPublishedQuestions());
+  if (globalPool.length === 0) return [];
+  const bank: BankQuestion[] = [];
+  MATERIAS.forEach((m) => {
+    const own = shuffle(getPublishedQuestions(m.slug));
+    const pool = own.length > 0 ? own : globalPool;
+    for (let i = 0; i < m.total; i++) {
+      bank.push(pool[i % pool.length]);
+    }
+  });
+  return bank;
+}
+
+interface SimResult {
+  correct: number;
+  scorePct: number;
+  passed: boolean;
+  timeUsed: number;
+  porMateria: Record<string, { correct: number; total: number }>;
 }
 
 /* ─── Calculator state ───────────────────────────────────── */
@@ -149,9 +157,13 @@ function secToHM(sec: number): string {
 type Phase = "warning" | "exam" | "result" | "review";
 
 function SimuladorPage() {
+  const { user, ready } = useRequireAuth();
+  const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>("warning");
   const [agreed, setAgreed] = useState(false);
   const [questions, setQuestions] = useState<QState[]>(buildQuestions);
+  const [bankQs, setBankQs] = useState<BankQuestion[]>([]);
+  const [result, setResult] = useState<SimResult | null>(null);
   const [current, setCurrent] = useState(0);
   const [secondsLeft, setSecondsLeft] = useState(5 * 3600);
   const [expandedMaterias, setExpandedMaterias] = useState<Set<number>>(new Set([0]));
@@ -172,6 +184,8 @@ function SimuladorPage() {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const msgsEndRef = useRef<HTMLDivElement>(null);
   const leftPanelRef = useRef<HTMLDivElement>(null);
+  const savedRef = useRef(false);
+  const finishRef = useRef<() => void>(() => {});
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -190,7 +204,8 @@ function SimuladorPage() {
       setSecondsLeft((s) => {
         if (s <= 1) {
           clearInterval(timerRef.current!);
-          setPhase("result");
+          // Tiempo agotado: califica y entrega automáticamente.
+          setTimeout(() => finishRef.current(), 0);
           return 0;
         }
         return s - 1;
@@ -240,11 +255,87 @@ function SimuladorPage() {
     });
   }
 
-  /* Submit */
-  function submitExam() {
+  /* Entrega y calificación real (una sola vez por intento) */
+  function finishExam() {
     if (timerRef.current) clearInterval(timerRef.current);
     setConfirmOpen(false);
+    if (savedRef.current) return;
+    savedRef.current = true;
+
+    let correct = 0;
+    const porMateria: Record<string, { correct: number; total: number }> = {};
+    const answers: SimAnswer[] = [];
+    questions.forEach((q, i) => {
+      const bq = bankQs[i];
+      if (!bq) return;
+      const slug = MATERIAS[q.materia].slug;
+      const entry = porMateria[slug] ?? { correct: 0, total: 0 };
+      entry.total++;
+      const ok = q.selectedOpt === bq.correctIndex;
+      if (ok) {
+        correct++;
+        entry.correct++;
+      }
+      porMateria[slug] = entry;
+      answers.push({ questionId: bq.id, materia: slug, selectedIndex: q.selectedOpt, correctIndex: bq.correctIndex });
+    });
+
+    const scorePctNum = TOTAL_QS > 0 ? (correct / TOTAL_QS) * 100 : 0;
+    const passedNow = scorePctNum >= 80;
+    const timeUsedNow = Math.max(0, 5 * 3600 - secondsLeft);
+
+    setResult({ correct, scorePct: scorePctNum, passed: passedNow, timeUsed: timeUsedNow, porMateria });
+    if (user) {
+      saveSimAttempt({
+        userId: user.id,
+        total: TOTAL_QS,
+        correct,
+        scorePct: scorePctNum,
+        passed: passedNow,
+        durationSecs: timeUsedNow,
+        porMateria,
+        answers,
+      });
+    }
     setPhase("result");
+  }
+  finishRef.current = finishExam;
+
+  /* Submit */
+  function submitExam() {
+    finishExam();
+  }
+
+  /* Comenzar: construye el banco real y arranca el examen */
+  function startExam() {
+    const gate = canStartSimulator(user);
+    if (!gate.allowed) return;
+    const bank = buildBank();
+    if (bank.length === 0) return;
+    setBankQs(bank);
+    setQuestions(buildQuestions());
+    setSecondsLeft(5 * 3600);
+    setCurrent(0);
+    setResult(null);
+    savedRef.current = false;
+    setPhase("exam");
+  }
+
+  /* Reiniciar todo para repetir el simulador (re-verifica el gating en warning) */
+  function resetSimulator() {
+    setPhase("warning");
+    setQuestions(buildQuestions());
+    setBankQs([]);
+    setSecondsLeft(5 * 3600);
+    setCurrent(0);
+    setAgreed(false);
+    setResult(null);
+    setReviewCurrent(0);
+    setYarisOpen(false);
+    setYarisMsgs([]);
+    setYarisInit(false);
+    setYarisReplyIdx(0);
+    savedRef.current = false;
   }
 
   /* Calc */
@@ -252,20 +343,42 @@ function SimuladorPage() {
     setCalc((s) => calcReducer(s, { type, payload }));
   }
 
-  /* Yaris */
+  /* Yaris — SOLO en fase review, con la pregunta seleccionada como contexto */
+  function reviewCtx(): YarisContext {
+    const bq = bankQs[reviewCurrent];
+    if (!bq) return {};
+    const mi = questions[reviewCurrent]?.materia ?? 0;
+    return {
+      question: {
+        text: bq.text,
+        options: bq.options,
+        correctIndex: bq.correctIndex,
+        explanation: bq.explanation,
+        cite: bq.cite,
+      },
+      materiaName: MATERIAS[mi].name,
+    };
+  }
+
   function openYaris() {
+    if (phase !== "review") return;
+    if (!yarisOpen && user) logYarisUse(user.id, "Simulador (revisión)");
     setYarisOpen(true);
     if (!yarisInit) {
       setYarisInit(true);
       setYarisTyping(true);
+      const ctx = reviewCtx();
+      const materiaName = ctx.materiaName ?? "esta materia";
       setTimeout(() => {
         setYarisTyping(false);
-        setYarisMsgs([{ role: "bot", text: "¡Hola! Soy Yaris. Veo que tienes una duda sobre esta pregunta. ¡Te explico!", cite: "Aerodinámica Básica CIAAC, p. 12" }]);
+        setYarisMsgs([{ role: "bot", text: `¡Hola! Soy Yaris. Veo que tienes una duda sobre <strong>${materiaName}</strong>. ¡Te explico!` }]);
         setTimeout(() => {
           setYarisTyping(true);
           setTimeout(() => {
             setYarisTyping(false);
-            setYarisMsgs((p) => [...p, { role: "bot", text: YARIS_REPLIES[0].t, cite: YARIS_REPLIES[0].c ?? undefined }]);
+            const r = yarisReply(0, ctx);
+            setYarisMsgs((p) => [...p, { role: "bot", text: r.t, cite: r.c ?? undefined }]);
+            setYarisReplyIdx(1);
           }, 900);
         }, 300);
       }, 700);
@@ -278,11 +391,11 @@ function SimuladorPage() {
     setYarisMsgs((p) => [...p, { role: "user", text }]);
     setYarisInput("");
     setYarisTyping(true);
-    const ri = yarisReplyIdx % YARIS_REPLIES.length;
-    setYarisReplyIdx((r) => r + 1);
+    const turn = yarisReplyIdx;
+    setYarisReplyIdx(turn + 1);
+    const r = yarisReply(turn, reviewCtx(), text);
     setTimeout(() => {
       setYarisTyping(false);
-      const r = YARIS_REPLIES[ri];
       setYarisMsgs((p) => [...p, { role: "bot", text: r.t, cite: r.c ?? undefined }]);
     }, 900);
   }
@@ -294,14 +407,22 @@ function SimuladorPage() {
   const timerWarning = secondsLeft <= 1800 && secondsLeft > 300;
   const timerDanger = secondsLeft <= 300;
   const currentQ = questions[current];
-  const sampleQ = SAMPLE_QS[currentQ.num % SAMPLE_QS.length];
+  const examQ = bankQs[current];
   const isLast = current === TOTAL_QS - 1;
 
-  /* Result data */
-  const timeUsed = 5 * 3600 - secondsLeft;
-  const totalCorrect = Math.floor(TOTAL_QS * 0.7355);
-  const scorePct = ((totalCorrect / TOTAL_QS) * 100).toFixed(2);
-  const passed = parseFloat(scorePct) >= 80;
+  /* Result data (calificación real) */
+  const timeUsed = result?.timeUsed ?? Math.max(0, 5 * 3600 - secondsLeft);
+  const totalCorrect = result?.correct ?? 0;
+  const scorePct = (result?.scorePct ?? 0).toFixed(2);
+  const passed = result?.passed ?? false;
+
+  /* Gating y disponibilidad del banco (solo relevante en fase warning) */
+  const gate = canStartSimulator(user);
+  const bankEmpty = phase === "warning" && ready ? getPublishedQuestions().length === 0 : false;
+
+  if (!ready) {
+    return <div style={{ position: "fixed", inset: 0, background: "#f5f7fc" }} />;
+  }
 
   /* ─── PHASE: WARNING ─── */
   if (phase === "warning") {
@@ -352,6 +473,13 @@ function SimuladorPage() {
             ))}
           </div>
 
+          {bankEmpty && (
+            <div style={{ background: "rgba(243,156,18,0.1)", border: "1px solid #f39c12", borderRadius: 10, padding: "12px 16px", fontSize: "0.83rem", color: "#8a6000", marginBottom: 16, display: "flex", alignItems: "flex-start", gap: 8, lineHeight: 1.5 }}>
+              <span style={{ display: "flex", flexShrink: 0 }}><Icon n="alert" size={16} /></span>
+              <span>El banco de preguntas aún no tiene contenido publicado. Vuelve más tarde para hacer tu simulador.</span>
+            </div>
+          )}
+
           <label style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 16, cursor: "pointer", fontSize: "0.84rem", color: "#555", lineHeight: 1.5 }}>
             <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} style={{ marginTop: 3, accentColor: "#3D5D91", width: 16, height: 16, flexShrink: 0 }} />
             Entiendo las condiciones y estoy listo para comenzar el simulador.
@@ -362,14 +490,25 @@ function SimuladorPage() {
               ← Volver
             </Link>
             <button
-              disabled={!agreed}
-              onClick={() => setPhase("exam")}
-              style={{ flex: 2, padding: 12, background: agreed ? "#6C0820" : "#ccc", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: agreed ? "pointer" : "not-allowed", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}
+              disabled={!agreed || !gate.allowed || bankEmpty}
+              onClick={startExam}
+              style={{ flex: 2, padding: 12, background: agreed && gate.allowed && !bankEmpty ? "#6C0820" : "#ccc", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: agreed && gate.allowed && !bankEmpty ? "pointer" : "not-allowed", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}
             >
               <Icon n="target" size={16} /> Comenzar simulador
             </button>
           </div>
         </div>
+
+        {/* Gating: suscripción básica sin simuladores disponibles este mes */}
+        {!gate.allowed && (
+          <UpgradeModal
+            open
+            onClose={() => navigate({ to: "/dashboard/banco" })}
+            feature="Simulador CIAAC"
+            benefit={gate.reason}
+            userId={user?.id}
+          />
+        )}
       </div>
     );
   }
@@ -426,7 +565,8 @@ function SimuladorPage() {
           <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,0.06)", marginBottom: 18 }}>
             <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="chart" size={15} /> Resultado por materia</div>
             {MATERIAS.map((m, i) => {
-              const p = DEMO_PCTS[i];
+              const pm = result?.porMateria[m.slug];
+              const p = pm && pm.total > 0 ? Math.round((pm.correct / pm.total) * 100) : 0;
               const color = p >= 80 ? "#2ecc71" : p >= 70 ? "#f39c12" : "#e74c3c";
               const bg = p >= 80 ? "rgba(46,204,113,0.06)" : p >= 70 ? "rgba(243,156,18,0.06)" : "rgba(231,76,60,0.06)";
               const border = p >= 80 ? "rgba(46,204,113,0.2)" : p >= 70 ? "rgba(243,156,18,0.2)" : "rgba(231,76,60,0.2)";
@@ -450,9 +590,9 @@ function SimuladorPage() {
           {/* Review Q sample */}
           <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,0.06)", marginBottom: 24 }}>
             <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="sim" size={15} /> Preguntas corregidas</div>
-            {SAMPLE_QS.map((q, i) => {
-              const userAns = i % 2 === 0 ? q.correct : (q.correct === 0 ? 1 : 0);
-              const isCorrect = userAns === q.correct;
+            {bankQs.slice(0, 3).map((q, i) => {
+              const userAns = questions[i]?.selectedOpt ?? -1;
+              const isCorrect = userAns === q.correctIndex;
               return (
                 <div key={i} style={{ background: isCorrect ? "rgba(46,204,113,0.06)" : "rgba(231,76,60,0.05)", border: `1px solid ${isCorrect ? "rgba(46,204,113,0.2)" : "rgba(231,76,60,0.15)"}`, borderRadius: 12, padding: 16, marginBottom: 10 }}>
                   <div style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 10 }}>
@@ -460,12 +600,12 @@ function SimuladorPage() {
                     <span style={{ fontSize: "0.88rem", fontWeight: 600, color: "#22375C", lineHeight: 1.5 }}>{i + 1}. {q.text}</span>
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 10, paddingLeft: 24 }}>
-                    {q.opts.map((o, oi) => {
-                      const isRight = oi === q.correct;
+                    {q.options.map((o, oi) => {
+                      const isRight = oi === q.correctIndex;
                       const isUser = oi === userAns;
                       return (
                         <div key={oi} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 12px", background: isRight ? "rgba(46,204,113,0.1)" : isUser && !isRight ? "rgba(231,76,60,0.08)" : "transparent", border: `1px solid ${isRight ? "#2ecc71" : isUser && !isRight ? "#e74c3c" : "#F2DCDB"}`, borderRadius: 8, fontSize: "0.82rem", color: "#22375C" }}>
-                          <span>{["A", "B", "C"][oi]}</span>
+                          <span>{LETTERS[oi]}</span>
                           <span style={{ flex: 1 }}>{o}</span>
                           <span style={{ display: "flex", alignItems: "center" }}>{isRight ? <Icon n="checkCircle" size={15} color="#2ecc71" /> : isUser && !isRight ? <Icon n="close" size={15} color="#e74c3c" /> : null}</span>
                         </div>
@@ -473,7 +613,7 @@ function SimuladorPage() {
                     })}
                   </div>
                   <div style={{ padding: "10px 12px", background: "rgba(61,93,145,0.06)", borderLeft: "3px solid #3D5D91", borderRadius: "0 7px 7px 0", fontSize: "0.8rem", color: "#555", lineHeight: 1.5 }}>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="lightbulb" size={14} color="#f39c12" /> {q.feedback}</span>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="lightbulb" size={14} color="#f39c12" /> {q.explanation}</span>
                     <div style={{ marginTop: 5, fontSize: "0.72rem", color: "#3D5D91", fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><Icon n="book" size={13} /> {q.cite}</div>
                   </div>
                 </div>
@@ -488,7 +628,7 @@ function SimuladorPage() {
           </div>
 
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", paddingBottom: 40 }}>
-            <button onClick={() => { setPhase("warning"); setQuestions(buildQuestions()); setSecondsLeft(5 * 3600); setCurrent(0); setAgreed(false); }} style={{ flex: 1, padding: 13, background: "white", color: "#3D5D91", border: "2px solid #3D5D91", borderRadius: 11, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
+            <button onClick={resetSimulator} style={{ flex: 1, padding: 13, background: "white", color: "#3D5D91", border: "2px solid #3D5D91", borderRadius: 11, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
               <Icon n="refresh" size={16} /> Repetir simulador
             </button>
             <Link to="/dashboard" style={{ flex: 1, padding: 13, background: "#6C0820", color: "white", border: "none", borderRadius: 11, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
@@ -502,9 +642,10 @@ function SimuladorPage() {
 
   /* ─── PHASE: REVIEW ─── */
   if (phase === "review") {
-    const reviewQ = SAMPLE_QS[reviewCurrent % SAMPLE_QS.length];
-    const isCorrect = reviewCurrent % 3 !== 2;
-    const userAns = isCorrect ? reviewQ.correct : (reviewQ.correct === 0 ? 1 : 0);
+    const reviewQ = bankQs[reviewCurrent];
+    if (!reviewQ) return null;
+    const userAns = questions[reviewCurrent]?.selectedOpt ?? -1;
+    const isCorrect = userAns === reviewQ.correctIndex;
     const mi = questions[reviewCurrent]?.materia ?? 0;
 
     return (
@@ -541,7 +682,8 @@ function SimuladorPage() {
                     </div>
                     {Array.from({ length: m.total }, (_, i) => {
                       const idx = offset + i;
-                      const correct = idx % 3 !== 2;
+                      const bqi = bankQs[idx];
+                      const correct = !!bqi && questions[idx]?.selectedOpt === bqi.correctIndex;
                       const active = idx === reviewCurrent;
                       return (
                         <div
@@ -570,6 +712,9 @@ function SimuladorPage() {
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                     <span style={{ display: "flex", alignItems: "center" }}>{isCorrect ? <Icon n="checkCircle" size={20} color="#2ecc71" /> : <Icon n="close" size={20} color="#e74c3c" />}</span>
                     <span style={{ background: "rgba(61,93,145,0.07)", color: "#3D5D91", padding: "4px 12px", borderRadius: 20, fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n={MATERIAS[mi].icon} size={13} /> {MATERIAS[mi].name}</span>
+                    {userAns === -1 && (
+                      <span style={{ background: "rgba(243,156,18,0.1)", color: "#8a6000", padding: "4px 12px", borderRadius: 20, fontSize: "0.72rem", fontWeight: 700 }}>Sin responder</span>
+                    )}
                   </div>
                   <span style={{ fontSize: "0.76rem", color: "#8DA1BE" }}>Pregunta {reviewCurrent + 1} / {TOTAL_QS}</span>
                 </div>
@@ -577,13 +722,13 @@ function SimuladorPage() {
                 <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "0.95rem", color: "#22375C", lineHeight: 1.5, marginBottom: 18 }}>{reviewQ.text}</p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 9, marginBottom: 18 }}>
-                  {reviewQ.opts.map((o, oi) => {
-                    const isRight = oi === reviewQ.correct;
+                  {reviewQ.options.map((o, oi) => {
+                    const isRight = oi === reviewQ.correctIndex;
                     const isUser = oi === userAns;
                     return (
                       <div key={oi} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", background: isRight ? "rgba(46,204,113,0.08)" : isUser && !isRight ? "rgba(231,76,60,0.06)" : "#f8f9ff", border: `2px solid ${isRight ? "#2ecc71" : isUser && !isRight ? "#e74c3c" : "#F2DCDB"}`, borderRadius: 11 }}>
                         <div style={{ width: 28, height: 28, borderRadius: "50%", background: isRight ? "#2ecc71" : isUser && !isRight ? "#e74c3c" : "#F2DCDB", color: isRight || (isUser && !isRight) ? "white" : "#647DA0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, flexShrink: 0 }}>
-                          {["A", "B", "C"][oi]}
+                          {LETTERS[oi]}
                         </div>
                         <span style={{ fontSize: "0.88rem", color: "#22375C", flex: 1 }}>{o}</span>
                         {isRight && <span style={{ fontSize: "0.72rem", color: "#2ecc71", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="check" size={13} /> Correcta</span>}
@@ -594,7 +739,7 @@ function SimuladorPage() {
                 </div>
 
                 <div style={{ padding: "14px 16px", background: "rgba(61,93,145,0.06)", borderLeft: "4px solid #3D5D91", borderRadius: "0 10px 10px 0", fontSize: "0.85rem", color: "#555", lineHeight: 1.6, marginBottom: 14 }}>
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="lightbulb" size={15} color="#f39c12" /> {reviewQ.feedback}</span>
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="lightbulb" size={15} color="#f39c12" /> {reviewQ.explanation}</span>
                   <div style={{ marginTop: 6, fontSize: "0.74rem", color: "#3D5D91", fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><Icon n="book" size={13} /> {reviewQ.cite}</div>
                 </div>
 
@@ -668,13 +813,13 @@ function SimuladorPage() {
           className="hidden md:flex flex-col"
           style={{ width: 260, flexShrink: 0, background: "white", borderRight: "1px solid rgba(61,93,145,0.08)", overflow: "hidden" }}
         >
-          <LeftPanel questions={questions} current={current} expandedMaterias={expandedMaterias} onToggleMateria={(mi) => setExpandedMaterias((s) => { const n = new Set(s); n.has(mi) ? n.delete(mi) : n.add(mi); return n; })} onSelectQ={setCurrent} answeredCount={answeredCount} />
+          <LeftPanel questions={questions} current={current} expandedMaterias={expandedMaterias} onToggleMateria={(mi) => setExpandedMaterias((s) => { const n = new Set(s); if (n.has(mi)) { n.delete(mi); } else { n.add(mi); } return n; })} onSelectQ={setCurrent} answeredCount={answeredCount} />
         </div>
 
         {/* Left panel (mobile overlay) */}
         {leftPanelOpen && (
           <div className="md:hidden" style={{ position: "fixed", top: 60, left: 0, bottom: 0, zIndex: 80, width: 260, background: "white", boxShadow: "4px 0 20px rgba(0,0,0,0.2)", display: "flex", flexDirection: "column" }}>
-            <LeftPanel questions={questions} current={current} expandedMaterias={expandedMaterias} onToggleMateria={(mi) => setExpandedMaterias((s) => { const n = new Set(s); n.has(mi) ? n.delete(mi) : n.add(mi); return n; })} onSelectQ={(i) => { setCurrent(i); setLeftPanelOpen(false); }} answeredCount={answeredCount} />
+            <LeftPanel questions={questions} current={current} expandedMaterias={expandedMaterias} onToggleMateria={(mi) => setExpandedMaterias((s) => { const n = new Set(s); if (n.has(mi)) { n.delete(mi); } else { n.add(mi); } return n; })} onSelectQ={(i) => { setCurrent(i); setLeftPanelOpen(false); }} answeredCount={answeredCount} />
           </div>
         )}
         {leftPanelOpen && <div className="md:hidden" style={{ position: "fixed", inset: 0, zIndex: 79, background: "rgba(0,0,0,0.3)" }} onClick={() => setLeftPanelOpen(false)} />}
@@ -700,11 +845,11 @@ function SimuladorPage() {
               </div>
 
               <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", color: "#22375C", lineHeight: 1.5, marginBottom: 24 }}>
-                {sampleQ.text}
+                {examQ?.text ?? ""}
               </p>
 
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {sampleQ.opts.map((opt, oi) => (
+                {(examQ?.options ?? []).map((opt, oi) => (
                   <div
                     key={oi}
                     onClick={() => selectOpt(current, oi)}
@@ -713,7 +858,7 @@ function SimuladorPage() {
                     onMouseLeave={(e) => { if (currentQ.selectedOpt !== oi) { e.currentTarget.style.borderColor = "#F2DCDB"; e.currentTarget.style.background = "#f8f9ff"; e.currentTarget.style.transform = "none"; } }}
                   >
                     <div style={{ width: 30, height: 30, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 700, flexShrink: 0, background: currentQ.selectedOpt === oi ? "#3D5D91" : "#F2DCDB", color: currentQ.selectedOpt === oi ? "white" : "#647DA0", transition: "all 0.2s" }}>
-                      {["A", "B", "C", "D"][oi]}
+                      {LETTERS[oi]}
                     </div>
                     <div style={{ fontSize: "0.9rem", color: "#22375C", lineHeight: 1.4, flex: 1 }}>{opt}</div>
                   </div>

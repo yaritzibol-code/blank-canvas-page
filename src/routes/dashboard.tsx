@@ -1,6 +1,8 @@
-import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { TimerProvider } from "../contexts/StudyTimerContext";
+import { useRequireAuth, useSessionUser, useStore, getStreak } from "@/lib/store";
+import { YarisChatModal } from "@/components/shared/YarisChatModal";
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardLayout,
@@ -9,6 +11,12 @@ export const Route = createFileRoute("/dashboard")({
 const FONT = "'Manrope', sans-serif";
 const DISPLAY = "'Bricolage Grotesque', sans-serif";
 const MONO = "'JetBrains Mono', monospace";
+
+/** Iniciales = primeras letras de nombre y primer apellido. */
+function initialsOf(nombre: string): string {
+  const parts = nombre.trim().split(/\s+/);
+  return ((parts[0]?.[0] ?? "") + (parts[1]?.[0] ?? "")).toUpperCase();
+}
 
 /* ── Clean single-stroke line icons (shared FlightPath glyph set) ── */
 type IconName =
@@ -85,9 +93,10 @@ const NAV_SECTIONS: { label: string; items: { icon: IconName; label: string; pat
   },
 ];
 
-function Sidebar({ onClose }: { onClose?: () => void }) {
+function Sidebar({ onClose, onYaris }: { onClose?: () => void; onYaris?: () => void }) {
   const location = useLocation();
   const currentPath = location.pathname;
+  const user = useSessionUser();
 
   return (
     <div
@@ -209,18 +218,19 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
               fontFamily: DISPLAY,
             }}
           >
-            MG
+            {user ? initialsOf(user.nombre) : ""}
           </div>
           <div>
             <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "white" }}>
-              María González
+              {user ? user.nombre.split(" ").slice(0, 2).join(" ") : ""}
             </div>
             <div style={{ fontSize: "0.66rem", color: "#F2AEBC", fontWeight: 600, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.12em" }}>
-              Plan Anual
+              {user?.planNombre ?? ""}
             </div>
           </div>
         </div>
         <button
+          onClick={onYaris}
           style={{
             width: "100%", padding: "11px 12px",
             background: "#6C0820",
@@ -241,9 +251,12 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
 }
 
 function DashboardLayout() {
+  const { user, ready } = useRequireAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [yarisOpen, setYarisOpen] = useState(false);
   const [radarN, setRadarN] = useState(47);
   const location = useLocation();
+  const streak = useStore(() => (user ? getStreak(user.id) : 0));
 
   useEffect(() => {
     const iv = setInterval(() => setRadarN(n => Math.max(30, Math.min(80, n + Math.floor(Math.random() * 5) - 2))), 4000);
@@ -265,6 +278,8 @@ function DashboardLayout() {
     ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"][now.getMonth()]
   } ${now.getFullYear()}`;
 
+  if (!ready) return <div style={{ minHeight: "100vh", background: "#F7F9FC" }} />;
+
   return (
     <TimerProvider>
     <div
@@ -285,7 +300,7 @@ function DashboardLayout() {
         }}
         className="hidden md:flex"
       >
-        <Sidebar />
+        <Sidebar onYaris={() => setYarisOpen(true)} />
       </aside>
 
       {/* Mobile overlay */}
@@ -309,7 +324,7 @@ function DashboardLayout() {
         }}
         className="md:hidden flex flex-col"
       >
-        <Sidebar onClose={() => setSidebarOpen(false)} />
+        <Sidebar onClose={() => setSidebarOpen(false)} onYaris={() => { setSidebarOpen(false); setYarisOpen(true); }} />
       </aside>
 
       {/* Main */}
@@ -374,7 +389,7 @@ function DashboardLayout() {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  <span style={{ display: "flex", color: "#6C0820" }}><Icon n="flame" size={15} /></span> 14 días
+                  <span style={{ display: "flex", color: "#6C0820" }}><Icon n="flame" size={15} /></span> {streak} días
                 </div>
                 <div
                   style={{
@@ -385,7 +400,7 @@ function DashboardLayout() {
                     flexShrink: 0, fontFamily: DISPLAY,
                   }}
                 >
-                  MG
+                  {user ? initialsOf(user.nombre) : ""}
                 </div>
               </div>
             </div>
@@ -420,6 +435,8 @@ function DashboardLayout() {
           </>
         )}
       </div>
+
+      <YarisChatModal open={yarisOpen} onClose={() => setYarisOpen(false)} user={user} />
     </div>
     </TimerProvider>
   );

@@ -1188,7 +1188,7 @@ function Testimonials() {
 
 function Pricing() {
   return (
-    <section className="relative py-24 lg:py-32">
+    <section id="precios" className="relative py-24 lg:py-32">
       <PlaneField count={20} />
       <div className="mx-auto max-w-[1100px] px-6 lg:px-8">
         <SectionHead center eyebrow="Precios"

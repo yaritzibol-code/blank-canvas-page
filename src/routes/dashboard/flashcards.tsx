@@ -1,6 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Icon } from "@/components/ui/fp-icon";
+import {
+  MATERIAS_DEF,
+  getFlashcards,
+  getFlashStates,
+  isPaid,
+  saveFlashSession,
+  setFlashState,
+  useSessionUser,
+  useStore,
+  type FlashCardItem,
+} from "@/lib/store";
+import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
 export const Route = createFileRoute("/dashboard/flashcards")({
   component: FlashcardsPage,
@@ -8,88 +20,35 @@ export const Route = createFileRoute("/dashboard/flashcards")({
 
 /* ─── Data ───────────────────────────────────────────────── */
 
-interface TemaEntry { name: string; cards: number; done: boolean; }
+interface TemaEntry { name: string; cards: number; done: boolean; items: FlashCardItem[]; }
 interface MateriaEntry {
+  slug: string;
   name: string; icon: string; iconBg: string;
   total: number; mastered: number; progress: number;
   temas: TemaEntry[];
 }
 
-const MATERIAS: MateriaEntry[] = [
-  { name: "Aerodinámica", icon: "plane", iconBg: "rgba(102,126,234,.12)", total: 64, mastered: 45, progress: 70, temas: [
-    { name: "Definiciones y clasificación", cards: 8, done: true },
-    { name: "Leyes de Newton y Bernoulli", cards: 10, done: true },
-    { name: "Fuerzas en vuelo", cards: 8, done: false },
-    { name: "Perfiles aerodinámicos", cards: 7, done: false },
-    { name: "Mandos de la aeronave", cards: 9, done: false },
-    { name: "Estabilidad y control", cards: 8, done: false },
-    { name: "Maniobras y factor de carga", cards: 7, done: false },
-    { name: "Motor crítico", cards: 7, done: false },
-  ]},
-  { name: "Aeronaves y Motores", icon: "settings", iconBg: "rgba(240,147,251,.12)", total: 72, mastered: 29, progress: 40, temas: [
-    { name: "Clasificación de aeronaves", cards: 8, done: false },
-    { name: "Estructuras", cards: 9, done: false },
-    { name: "Superficies de control", cards: 7, done: false },
-    { name: "Motor alternativo", cards: 10, done: false },
-    { name: "Motor a reacción", cards: 10, done: false },
-    { name: "Sistemas de la aeronave", cards: 9, done: false },
-    { name: "Tren de aterrizaje", cards: 8, done: false },
-    { name: "Protección contra fuego", cards: 6, done: false },
-    { name: "Instrumentos", cards: 5, done: false },
-  ]},
-  { name: "Legislación Aeronáutica", icon: "scale", iconBg: "rgba(79,172,254,.12)", total: 112, mastered: 62, progress: 55, temas: [
-    { name: "Jerarquía de normas", cards: 7, done: false },
-    { name: "Convenios internacionales", cards: 9, done: false },
-    { name: "Organismos aeronáuticos", cards: 8, done: false },
-    { name: "Ley de Aviación Civil", cards: 10, done: false },
-    { name: "Reglamento de Tránsito Aéreo", cards: 9, done: false },
-  ]},
-  { name: "Medicina de Aviación", icon: "stethoscope", iconBg: "rgba(250,112,154,.12)", total: 104, mastered: 83, progress: 80, temas: [
-    { name: "Leyes de los gases", cards: 8, done: true },
-    { name: "Hipoxia", cards: 9, done: true },
-    { name: "Barotraumas", cards: 7, done: true },
-    { name: "Fatiga", cards: 8, done: false },
-    { name: "Desorientación espacial", cards: 9, done: false },
-  ]},
-  { name: "Meteorología", icon: "cloud", iconBg: "rgba(67,233,123,.12)", total: 176, mastered: 53, progress: 30, temas: [
-    { name: "La atmósfera", cards: 8, done: false },
-    { name: "Temperatura y presión", cards: 9, done: false },
-    { name: "Vientos", cards: 8, done: false },
-    { name: "Nubes", cards: 10, done: false },
-    { name: "METAR y TAF", cards: 12, done: false },
-    { name: "Tormentas", cards: 8, done: false },
-  ]},
-  { name: "Navegación Aérea", icon: "map", iconBg: "rgba(161,140,209,.12)", total: 176, mastered: 35, progress: 20, temas: [
-    { name: "Coordenadas geográficas", cards: 8, done: false },
-    { name: "Cartas aeronáuticas", cards: 9, done: false },
-    { name: "Radionavegación", cards: 10, done: false },
-    { name: "CR-3 y cálculos", cards: 8, done: false },
-  ]},
-  { name: "Servicios de Tránsito Aéreo", icon: "tower", iconBg: "rgba(255,236,210,.5)", total: 144, mastered: 86, progress: 60, temas: [
-    { name: "Espacio aéreo OACI", cards: 9, done: false },
-    { name: "Reglaje altimétrico", cards: 7, done: false },
-    { name: "Separación del tránsito", cards: 8, done: false },
-    { name: "Fases de emergencia", cards: 6, done: false },
-  ]},
-  { name: "Comunicaciones Aeronáuticas", icon: "radio", iconBg: "rgba(42,245,152,.12)", total: 160, mastered: 72, progress: 45, temas: [
-    { name: "Procedimientos radiotelefónicos", cards: 10, done: false },
-    { name: "Espectro radioeléctrico", cards: 8, done: false },
-    { name: "Emergencias y fallas", cards: 9, done: false },
-  ]},
+/** Fondos de icono por materia (visual, valores del diseño; cíclicos para el resto). */
+const ICON_BGS = [
+  "rgba(102,126,234,.12)",
+  "rgba(240,147,251,.12)",
+  "rgba(79,172,254,.12)",
+  "rgba(250,112,154,.12)",
+  "rgba(67,233,123,.12)",
+  "rgba(161,140,209,.12)",
+  "rgba(255,236,210,.5)",
+  "rgba(42,245,152,.12)",
 ];
-
-interface Flashcard { q: string; a: string; }
-
-const CARDS: Flashcard[] = [
-  { q: "¿Cuáles son las 4 fuerzas que actúan sobre una aeronave en vuelo?", a: "Sustentación, Peso, Empuje y Resistencia. En vuelo recto y nivelado estas fuerzas están en equilibrio." },
-  { q: "¿Qué establece el Principio de Bernoulli?", a: "En un fluido en movimiento, al aumentar la velocidad disminuye la presión estática. Esto explica cómo el ala genera sustentación." },
-  { q: "¿Qué es el ángulo de ataque?", a: "El ángulo formado entre la cuerda del ala y la dirección del viento relativo. Es fundamental para la generación de sustentación." },
-  { q: "¿Qué es el ángulo crítico de ataque?", a: "El ángulo máximo de ataque antes del desplome (stall). Al superarlo, el flujo se desprende del ala y se pierde la sustentación." },
-  { q: "¿Qué es el factor de carga?", a: "La relación entre la sustentación total y el peso de la aeronave (n = L/W). En vuelo recto y nivelado es igual a 1." },
-  { q: "¿Qué es la resistencia inducida?", a: "Resistencia generada como consecuencia de la producción de sustentación. Aumenta cuando aumenta el ángulo de ataque." },
-  { q: "¿Cuál es la diferencia entre estabilidad estática y dinámica?", a: "La estabilidad estática es la tendencia inicial a regresar al equilibrio. La dinámica describe el comportamiento a lo largo del tiempo después de una perturbación." },
-  { q: "¿Qué es el motor crítico en una aeronave multimotor?", a: "El motor cuya falla produce el mayor efecto adverso sobre el control y rendimiento de la aeronave. En aviones con hélices girando en el mismo sentido es el izquierdo." },
-];
+const ICON_BG_BY_SLUG: Record<string, string> = {
+  aerodinamica: ICON_BGS[0],
+  "aeronaves-motores": ICON_BGS[1],
+  legislacion: ICON_BGS[2],
+  medicina: ICON_BGS[3],
+  meteorologia: ICON_BGS[4],
+  navegacion: ICON_BGS[5],
+  "servicios-transito": ICON_BGS[6],
+  comunicaciones: ICON_BGS[7],
+};
 
 type Screen = "materias" | "temas" | "flashcard" | "result";
 type SwipeDir = "left" | "right" | null;
@@ -97,6 +56,9 @@ type SwipeDir = "left" | "right" | null;
 /* ─── Main component ─────────────────────────────────────── */
 
 function FlashcardsPage() {
+  const user = useSessionUser();
+  const paid = isPaid(user);
+
   const [screen, setScreen] = useState<Screen>("materias");
   const [materiaIdx, setMateriaIdx] = useState(0);
   const [temaIdx, setTemaIdx] = useState(0);
@@ -107,18 +69,63 @@ function FlashcardsPage() {
   const [swipe, setSwipe] = useState<SwipeDir>(null);
   const [resultTitle, setResultTitle] = useState("");
   const [resultMsg, setResultMsg] = useState("");
+  const [sessionCards, setSessionCards] = useState<FlashCardItem[]>([]);
+  const [upgradeOpen, setUpgradeOpen] = useState(false);
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
 
-  const materia = MATERIAS[materiaIdx];
-  const tema = materia.temas[temaIdx];
-  const sessionCards = CARDS.slice(0, tema.cards);
-  const currentCard = sessionCards[cardIdx % sessionCards.length];
+  // Materias y temas reales desde el store (solo cards publicadas)
+  const materias = useStore<MateriaEntry[]>(() => {
+    const published = getFlashcards().filter((c) => c.status === "publicada");
+    const stateOf = new Map(
+      (user ? getFlashStates(user.id) : []).map((s) => [s.cardId, s.state]),
+    );
+    return MATERIAS_DEF.map((def, i) => {
+      const cards = published.filter((c) => c.materia === def.slug);
+      if (cards.length === 0) return null;
+      const temaNames: string[] = [];
+      const byTema = new Map<string, FlashCardItem[]>();
+      for (const c of cards) {
+        if (!byTema.has(c.tema)) {
+          byTema.set(c.tema, []);
+          temaNames.push(c.tema);
+        }
+        byTema.get(c.tema)!.push(c);
+      }
+      const temas: TemaEntry[] = temaNames.map((name) => {
+        const items = byTema.get(name)!;
+        return {
+          name,
+          cards: items.length,
+          done: items.length > 0 && items.every((c) => stateOf.get(c.id) === "dominada"),
+          items,
+        };
+      });
+      const mastered = cards.filter((c) => stateOf.get(c.id) === "dominada").length;
+      return {
+        slug: def.slug,
+        name: def.name,
+        icon: def.icon,
+        iconBg: ICON_BG_BY_SLUG[def.slug] ?? ICON_BGS[i % ICON_BGS.length],
+        total: cards.length,
+        mastered,
+        progress: cards.length > 0 ? Math.round((mastered / cards.length) * 100) : 0,
+        temas,
+      };
+    }).filter((m): m is MateriaEntry => m !== null);
+  });
+
+  const materia = materias[materiaIdx];
+  const tema = materia?.temas[temaIdx];
+  const currentCard = sessionCards.length > 0 ? sessionCards[cardIdx % sessionCards.length] : undefined;
   const progressPct = sessionCards.length > 0 ? (cardIdx / sessionCards.length) * 100 : 0;
 
   function startSession(mi: number, ti: number) {
+    const items = materias[mi]?.temas[ti]?.items ?? [];
+    if (items.length === 0) return;
     setMateriaIdx(mi);
     setTemaIdx(ti);
+    setSessionCards(items);
     setCardIdx(0);
     setKnew(0);
     setToReview(0);
@@ -138,6 +145,10 @@ function FlashcardsPage() {
     if (didKnow) setKnew((k) => k + 1);
     else setToReview((r) => r + 1);
 
+    // Persiste el estado real de la tarjeta
+    const card = sessionCards[cardIdx % sessionCards.length];
+    if (user && card) setFlashState(user.id, card.id, didKnow ? "dominada" : "repasar");
+
     setTimeout(() => {
       setSwipe(null);
       setFlipped(false);
@@ -156,6 +167,17 @@ function FlashcardsPage() {
         } else {
           title = "Sigue practicando";
           msg = `<strong>Pathy dice:</strong> Vas bien, pero aún necesitas repasar la mayoría. No te desanimes — la repetición es la clave del aprendizaje. ¡Inténtalo de nuevo!`;
+        }
+        // Guarda la sesión completa
+        if (user && materia && tema) {
+          saveFlashSession({
+            userId: user.id,
+            materia: materia.slug,
+            tema: tema.name,
+            total,
+            knew: knewFinal,
+            review: total - knewFinal,
+          });
         }
         setResultTitle(title);
         setResultMsg(msg);
@@ -181,7 +203,7 @@ function FlashcardsPage() {
   }
 
   /* ── SCREEN: MATERIAS ── */
-  if (screen === "materias") {
+  if (screen === "materias" || !materia || !tema) {
     return (
       <div style={{ fontFamily: "'Manrope', sans-serif" }}>
         <div style={{ marginBottom: 28 }}>
@@ -191,8 +213,8 @@ function FlashcardsPage() {
           <p style={{ fontSize: "0.9rem", color: "#647DA0" }}>Elige una materia para repasar sus conceptos clave.</p>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 16 }}>
-          {MATERIAS.map((m, i) => (
-            <MateriaCard key={i} materia={m} onClick={() => { setMateriaIdx(i); setScreen("temas"); }} />
+          {materias.map((m, i) => (
+            <MateriaCard key={m.slug} materia={m} onClick={() => { setMateriaIdx(i); setTemaIdx(0); setScreen("temas"); }} />
           ))}
         </div>
       </div>
@@ -213,20 +235,38 @@ function FlashcardsPage() {
             ← Materias
           </button>
           <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 8 }}>
-            <Icon n={materia.icon as any} size={20} /> {materia.name}
+            <Icon n={materia.icon as never} size={20} /> {materia.name}
           </span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {materia.temas.map((t, i) => (
-            <TemaCard key={i} tema={t} num={i + 1} onStudy={() => startSession(materiaIdx, i)} />
-          ))}
+          {materia.temas.map((t, i) => {
+            const locked = !paid && i > 0;
+            return (
+              <TemaCard
+                key={i}
+                tema={t}
+                num={i + 1}
+                locked={locked}
+                onStudy={() => {
+                  if (locked) setUpgradeOpen(true);
+                  else startSession(materiaIdx, i);
+                }}
+              />
+            );
+          })}
         </div>
+        <UpgradeModal
+          open={upgradeOpen}
+          onClose={() => setUpgradeOpen(false)}
+          feature="Flashcards completas"
+          userId={user?.id}
+        />
       </div>
     );
   }
 
   /* ── SCREEN: FLASHCARD ── */
-  if (screen === "flashcard") {
+  if (screen === "flashcard" && currentCard) {
     const swipeStyle: React.CSSProperties = swipe === "right"
       ? { animation: "swipeRight 0.4s ease forwards" }
       : swipe === "left"
@@ -403,7 +443,7 @@ function MateriaCard({ materia, onClick }: { materia: MateriaEntry; onClick: () 
     >
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <div style={{ width: 44, height: 44, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: materia.iconBg, color: "#22375C" }}>
-          <Icon n={materia.icon as any} size={22} />
+          <Icon n={materia.icon as never} size={22} />
         </div>
         <div>
           <h3 style={{ fontSize: "0.92rem", fontWeight: 700, color: "#22375C", marginBottom: 2 }}>{materia.name}</h3>
@@ -425,14 +465,14 @@ function MateriaCard({ materia, onClick }: { materia: MateriaEntry; onClick: () 
 
 /* ─── Tema Card ──────────────────────────────────────────── */
 
-function TemaCard({ tema, num, onStudy }: { tema: TemaEntry; num: number; onStudy: () => void }) {
+function TemaCard({ tema, num, locked = false, onStudy }: { tema: TemaEntry; num: number; locked?: boolean; onStudy: () => void }) {
   const [hover, setHover] = useState(false);
   return (
     <div
       onClick={onStudy}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      style={{ background: "white", borderRadius: 14, padding: "18px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", transition: "all 0.2s", boxShadow: "0 2px 8px rgba(61,93,145,0.05)", border: hover ? "2px solid #5A86CB" : "2px solid transparent", transform: hover ? "translateX(4px)" : "none", gap: 12 }}
+      style={{ background: "white", borderRadius: 14, padding: "18px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", transition: "all 0.2s", boxShadow: "0 2px 8px rgba(61,93,145,0.05)", border: hover ? "2px solid #5A86CB" : "2px solid transparent", transform: hover ? "translateX(4px)" : "none", gap: 12, opacity: locked ? 0.55 : 1 }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 12, flex: 1 }}>
         <div style={{ width: 32, height: 32, borderRadius: "50%", background: "#F2DCDB", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.78rem", fontWeight: 700, color: "#3D5D91", flexShrink: 0 }}>
@@ -445,7 +485,8 @@ function TemaCard({ tema, num, onStudy }: { tema: TemaEntry; num: number; onStud
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
         <span style={{ background: "#F2DCDB", color: "#6C0820", padding: "3px 10px", borderRadius: 20, fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="cards" size={14} /> {tema.cards}</span>
-        {tema.done && <span style={{ display: "inline-flex", color: "#2ecc71" }}><Icon n="check" size={16} /></span>}
+        {locked && <span style={{ display: "inline-flex", color: "#8CA0BF" }}><Icon n="lock" size={16} /></span>}
+        {!locked && tema.done && <span style={{ display: "inline-flex", color: "#2ecc71" }}><Icon n="check" size={16} /></span>}
         <button
           onClick={(e) => { e.stopPropagation(); onStudy(); }}
           style={{ padding: "8px 18px", background: "#3D5D91", color: "white", border: "none", borderRadius: 8, fontSize: "0.8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", whiteSpace: "nowrap" }}

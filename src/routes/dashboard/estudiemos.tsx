@@ -1,7 +1,30 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { PathySVG } from "../../contexts/StudyTimerContext";
+import { PathySVG, useTimer } from "../../contexts/StudyTimerContext";
 import { Icon } from "@/components/ui/fp-icon";
+import { UpgradeModal } from "@/components/shared/UpgradeModal";
+import {
+  MATERIAS_DEF,
+  getActivity,
+  getClaseProgress,
+  getClases,
+  getFlashStates,
+  getFlashcards,
+  getQuizAttempts,
+  getSimAttempts,
+  isPaid,
+  logActivity,
+  logYarisUse,
+  materiaPerformance,
+  materiaProgressPct,
+  pickPracticeQuestion,
+  updateUser,
+  useSessionUser,
+  useStore,
+  yarisReply,
+  type BankQuestion,
+  type User,
+} from "@/lib/store";
 
 export const Route = createFileRoute("/dashboard/estudiemos")({
   component: EstudiemosJuntosPage,
@@ -50,31 +73,57 @@ interface PlanItem {
 }
 
 /* ══════════════════════════════════════════════════════════
-   MOCK PROFILE
+   PERFIL REAL — construido desde el store
 ══════════════════════════════════════════════════════════ */
-const ago = (n: number): Date => { const d = new Date(); d.setDate(d.getDate() - n); return d; };
+function buildProfile(user: User): StudentProfile {
+  const perf = materiaPerformance(user.id, "todo");
+  const quizAttempts = getQuizAttempts(user.id);
+  const activity = getActivity(user.id);
 
-const MOCK_PROFILE: StudentProfile = {
-  name: "María",
-  materias: [
-    { slug: "aerodinamica",       name: "Aerodinámica",                icon: "plane", pct: 78, avg: 81, lastStudied: ago(1)  },
-    { slug: "aeronaves-motores",  name: "Aeronaves y Motores",         icon: "settings", pct: 55, avg: 70, lastStudied: ago(3)  },
-    { slug: "legislacion",        name: "Legislación Aeronáutica",     icon: "scale", pct: 90, avg: 88, lastStudied: ago(2)  },
-    { slug: "medicina",           name: "Medicina de Aviación",        icon: "stethoscope", pct: 40, avg: 62, lastStudied: ago(9)  },
-    { slug: "meteorologia",       name: "Meteorología",                icon: "cloud", pct: 25, avg: 58, lastStudied: ago(8)  },
-    { slug: "navegacion",         name: "Navegación Aérea",            icon: "map", pct: 60, avg: 74, lastStudied: ago(4)  },
-    { slug: "operaciones",        name: "Operaciones Aeronáuticas",    icon: "plane", pct: 15, avg: 50, lastStudied: ago(14) },
-    { slug: "comunicaciones",     name: "Comunicaciones",              icon: "radio", pct: 0,  avg: 0,  lastStudied: null    },
-    { slug: "manuales-ais",       name: "Manuales AIS",                icon: "doc", pct: 0,  avg: 0,  lastStudied: null    },
-    { slug: "servicios-transito", name: "Servicios de Tránsito",       icon: "tower", pct: 0,  avg: 0,  lastStudied: null    },
-    { slug: "factores-humanos",   name: "Factores Humanos",            icon: "brain", pct: 0,  avg: 0,  lastStudied: null    },
-    { slug: "seguridad-aerea",    name: "Seguridad Aérea",             icon: "shield", pct: 0,  avg: 0,  lastStudied: null    },
-  ],
-  clases: { vistas: 18, total: 48 },
-  flashcards: { done: 120, total: 310 },
-  cuestionarios: { done: 8, avgScore: 68 },
-  simuladores: [{ fecha: ago(5), score: 63, completed: true }],
-};
+  const materias: MateriaData[] = MATERIAS_DEF.map((def) => {
+    const p = perf.find((x) => x.slug === def.slug);
+    let last: Date | null = null;
+    const consider = (iso: string) => {
+      const d = new Date(iso);
+      if (!last || d.getTime() > last.getTime()) last = d;
+    };
+    activity.forEach((a) => {
+      if (a.label.toLowerCase().includes(def.name.toLowerCase())) consider(a.date);
+    });
+    quizAttempts.forEach((a) => {
+      if (a.materias.includes(def.slug)) consider(a.date);
+    });
+    return {
+      slug: def.slug,
+      name: def.name,
+      icon: def.icon,
+      pct: materiaProgressPct(user.id, def.slug),
+      avg: p?.avg ?? 0,
+      lastStudied: last,
+    };
+  });
+
+  const clasesTotal = getClases().filter((c) => c.status === "publicada").length;
+  const clasesVistas = getClaseProgress(user.id).filter((p) => p.completada).length;
+  const flashTotal = getFlashcards().filter((c) => c.status === "publicada").length;
+  const flashDone = getFlashStates(user.id).filter((s) => s.state === "dominada").length;
+  const scores = quizAttempts.filter((a) => a.total > 0).map((a) => (a.correct / a.total) * 100);
+  const avgScore = scores.length > 0 ? Math.round(scores.reduce((s, v) => s + v, 0) / scores.length) : 0;
+  const simuladores: SimuladorData[] = getSimAttempts(user.id).map((s) => ({
+    fecha: new Date(s.date),
+    score: s.scorePct,
+    completed: true,
+  }));
+
+  return {
+    name: user.nombre.split(" ")[0],
+    materias,
+    clases: { vistas: clasesVistas, total: clasesTotal },
+    flashcards: { done: flashDone, total: flashTotal },
+    cuestionarios: { done: quizAttempts.length, avgScore },
+    simuladores,
+  };
+}
 
 /* ══════════════════════════════════════════════════════════
    ENGINE — pure functions
@@ -83,10 +132,10 @@ function daysSince(date: Date | null): number {
   if (!date) return 999;
   return Math.floor((Date.now() - date.getTime()) / 86400000);
 }
-function eAvgPct(p: StudentProfile)    { return p.materias.reduce((s, m) => s + m.pct, 0) / p.materias.length; }
+function eAvgPct(p: StudentProfile)    { return p.materias.length ? p.materias.reduce((s, m) => s + m.pct, 0) / p.materias.length : 0; }
 function eAvgScore(p: StudentProfile)  { const a = p.materias.filter(m => m.avg > 0); return a.length ? a.reduce((s, m) => s + m.avg, 0) / a.length : 0; }
-function eClasesPct(p: StudentProfile) { return (p.clases.vistas / p.clases.total) * 100; }
-function eFlashPct(p: StudentProfile)  { return (p.flashcards.done / p.flashcards.total) * 100; }
+function eClasesPct(p: StudentProfile) { return p.clases.total > 0 ? (p.clases.vistas / p.clases.total) * 100 : 0; }
+function eFlashPct(p: StudentProfile)  { return p.flashcards.total > 0 ? (p.flashcards.done / p.flashcards.total) * 100 : 0; }
 function eSimFactor(p: StudentProfile) { return Math.min(100, p.simuladores.filter(s => s.completed).length * 25); }
 
 function computeRuta(p: StudentProfile): number {
@@ -265,7 +314,7 @@ function buildPlan(rec: Recommendation, tiempo: TiempoDisponible, p: StudentProf
 /* ══════════════════════════════════════════════════════════
    ONBOARDING MODAL
 ══════════════════════════════════════════════════════════ */
-function OnboardingModal({ onDone }: { onDone: () => void }) {
+function OnboardingModal({ onDone, userId }: { onDone: () => void; userId?: string }) {
   const [step, setStep] = useState<1 | 2>(1);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [customDate, setCustomDate] = useState("");
@@ -280,16 +329,20 @@ function OnboardingModal({ onDone }: { onDone: () => void }) {
   }
 
   function finish(tiempo: TiempoDisponible) {
-    const dateVal = customDate || selectedDate || "sin_fecha";
+    let dateStr: string;
     if (customDate) {
-      localStorage.setItem("fp_exam_date", customDate);
+      dateStr = customDate;
+    } else if (selectedDate === "sin_fecha") {
+      dateStr = "sin_fecha";
     } else {
       const today = new Date();
       const days = selectedDate === "3m" ? 90 : selectedDate === "1-2m" ? 50 : selectedDate === "1m" ? 25 : 90;
       today.setDate(today.getDate() + days);
-      localStorage.setItem("fp_exam_date", selectedDate === "sin_fecha" ? "sin_fecha" : today.toISOString().split("T")[0]);
-      void dateVal;
+      dateStr = today.toISOString().split("T")[0];
     }
+    localStorage.setItem("fp_exam_date", dateStr);
+    // Sincroniza la fecha con el perfil del usuario cuando hay fecha concreta
+    if (userId && dateStr !== "sin_fecha") updateUser(userId, { fechaCiaac: dateStr });
     localStorage.setItem("fp_tiempo_disponible", tiempo);
     localStorage.setItem("fp_onboarding_done", "true");
     onDone();
@@ -456,7 +509,7 @@ function SummaryStrip({ daysLeft, phase, progreso }: { daysLeft: number; phase: 
             color: chip.color,
           }}
         >
-          <Icon n={chip.icon as any} size={15} /> {chip.label}
+          <Icon n={chip.icon as never} size={15} /> {chip.label}
         </div>
       ))}
     </div>
@@ -518,7 +571,7 @@ function PathyCard({ rec, phase }: { rec: Recommendation; phase: ExamPhase }) {
 /* ══════════════════════════════════════════════════════════
    PLAN ITEM CARD
 ══════════════════════════════════════════════════════════ */
-function PlanItemCard({ item, index }: { item: PlanItem; index: number }) {
+function PlanItemCard({ item, index, onStart }: { item: PlanItem; index: number; onStart: (item: PlanItem) => void }) {
   const isTop = item.prioridad === 1;
   return (
     <div
@@ -553,7 +606,7 @@ function PlanItemCard({ item, index }: { item: PlanItem; index: number }) {
       </div>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
-          <span style={{ display: "inline-flex", color: "#3D5D91" }}><Icon n={item.icon as any} size={17} /></span>
+          <span style={{ display: "inline-flex", color: "#3D5D91" }}><Icon n={item.icon as never} size={17} /></span>
           <span style={{ fontSize: "0.9rem", fontWeight: 700, color: "#22375C" }}>{item.titulo}</span>
           {item.badge && (
             <span
@@ -576,6 +629,7 @@ function PlanItemCard({ item, index }: { item: PlanItem; index: number }) {
       </div>
       <a
         href={item.link}
+        onClick={(e) => { e.preventDefault(); onStart(item); }}
         style={{
           flexShrink: 0,
           padding: "8px 16px",
@@ -589,7 +643,7 @@ function PlanItemCard({ item, index }: { item: PlanItem; index: number }) {
           fontFamily: "'Manrope', sans-serif",
         }}
       >
-        Ir →
+        Iniciar sesión →
       </a>
     </div>
   );
@@ -625,7 +679,7 @@ function WeaknessChips({ materias }: { materias: MateriaData[] }) {
               textDecoration: "none",
             }}
           >
-            <Icon n={m.icon as any} size={15} /> {m.name} · {Math.round(m.avg)}%
+            <Icon n={m.icon as never} size={15} /> {m.name} · {Math.round(m.avg)}%
           </a>
         ))}
       </div>
@@ -634,45 +688,278 @@ function WeaknessChips({ materias }: { materias: MateriaData[] }) {
 }
 
 /* ══════════════════════════════════════════════════════════
+   PONME A PRUEBA (PRD 6.10) — Yaris comprueba lo aprendido
+══════════════════════════════════════════════════════════ */
+type PruebaMode = "preguntas" | "explica" | "nemo";
+
+const PRUEBA_TITLES: Record<PruebaMode, string> = {
+  preguntas: "Hazme preguntas",
+  explica: "Explícamelo fácil",
+  nemo: "Dame una nemotecnia",
+};
+
+function PruebaModal({ mode, onClose }: { mode: PruebaMode; onClose: (interactions: number) => void }) {
+  const [question, setQuestion] = useState<BankQuestion | null>(() => (mode === "preguntas" ? pickPracticeQuestion() : null));
+  const [answered, setAnswered] = useState<number | null>(null);
+  const [input, setInput] = useState("");
+  const [turn, setTurn] = useState(0);
+  const [interactions, setInteractions] = useState(0);
+  const [msgs, setMsgs] = useState<{ html: string; isUser: boolean }[]>(() => [
+    {
+      html: mode === "explica"
+        ? "Dime el tema que quieres que te explique fácil (por ejemplo: METAR, fuerzas en vuelo, espacio aéreo…)."
+        : "Dime el concepto que te cuesta y te ayudo a construir una nemotecnia para recordarlo.",
+      isUser: false,
+    },
+  ]);
+
+  function answer(idx: number) {
+    if (answered !== null) return;
+    setAnswered(idx);
+    setInteractions((i) => i + 1);
+  }
+
+  function nextQuestion() {
+    setQuestion(pickPracticeQuestion());
+    setAnswered(null);
+  }
+
+  function send() {
+    const t = input.trim();
+    if (!t) return;
+    const reply = yarisReply(turn, { materiaName: t }, t);
+    setMsgs((m) => [...m, { html: t, isUser: true }, { html: reply.t, isUser: false }]);
+    setInput("");
+    setTurn((n) => n + 1);
+    setInteractions((i) => i + 1);
+  }
+
+  return (
+    <div
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(interactions); }}
+      style={{ position: "fixed", inset: 0, background: "rgba(26,26,46,0.85)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: 20 }}
+    >
+      <div style={{ background: "white", borderRadius: 20, padding: 28, width: "100%", maxWidth: 480, boxShadow: "0 20px 60px rgba(0,0,0,0.3)", fontFamily: "'Manrope', sans-serif" }}>
+        {/* Header */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
+          <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", color: "#22375C", margin: 0, display: "flex", alignItems: "center", gap: 8 }}>
+            <Icon n="spark" size={20} color="#3D5D91" /> {PRUEBA_TITLES[mode]}
+          </h2>
+          <button
+            onClick={() => onClose(interactions)}
+            style={{ background: "rgba(61,93,145,.08)", border: "none", color: "#3D5D91", borderRadius: 8, padding: "5px 8px", cursor: "pointer", display: "flex", alignItems: "center" }}
+          ><Icon n="close" size={15} /></button>
+        </div>
+        <p style={{ fontSize: "0.8rem", color: "#647DA0", margin: "0 0 16px" }}>Yaris comprueba si realmente entendiste</p>
+
+        {mode === "preguntas" ? (
+          question === null ? (
+            <p style={{ fontSize: "0.86rem", color: "#647DA0", lineHeight: 1.6 }}>
+              Aún no hay preguntas publicadas para practicar. Vuelve más tarde.
+            </p>
+          ) : (
+            <div>
+              <p style={{ fontSize: "0.9rem", fontWeight: 600, color: "#22375C", lineHeight: 1.55, marginBottom: 12 }}>{question.text}</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 14 }}>
+                {question.options.map((opt, idx) => {
+                  const isCorrect = idx === question.correctIndex;
+                  const isChosen = answered === idx;
+                  const showState = answered !== null;
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => answer(idx)}
+                      style={{
+                        padding: "11px 14px",
+                        borderRadius: 10,
+                        textAlign: "left",
+                        cursor: answered === null ? "pointer" : "default",
+                        fontFamily: "'Manrope', sans-serif",
+                        fontSize: "0.84rem",
+                        color: "#22375C",
+                        border: `2px solid ${showState && isCorrect ? "#2ecc71" : showState && isChosen ? "#e74c3c" : "#F2DCDB"}`,
+                        background: showState && isCorrect ? "rgba(46,204,113,.08)" : showState && isChosen ? "rgba(231,76,60,.06)" : "white",
+                        transition: "all .15s",
+                      }}
+                    >
+                      {opt}
+                    </button>
+                  );
+                })}
+              </div>
+              {answered !== null && (
+                <div style={{ background: "#f8f9ff", borderRadius: 12, padding: "12px 14px", marginBottom: 14 }}>
+                  <p style={{ fontSize: "0.82rem", fontWeight: 700, color: answered === question.correctIndex ? "#1a7a4a" : "#6C0820", marginBottom: 4 }}>
+                    {answered === question.correctIndex ? "¡Correcto! ✈️" : `Casi. La respuesta correcta es: "${question.options[question.correctIndex]}"`}
+                  </p>
+                  <p style={{ fontSize: "0.8rem", color: "#555", lineHeight: 1.6, margin: 0 }}>{question.explanation}</p>
+                  {question.cite && <p style={{ fontSize: "0.72rem", color: "#8DA1BE", margin: "6px 0 0" }}>{question.cite}</p>}
+                </div>
+              )}
+              {answered !== null && (
+                <button
+                  onClick={nextQuestion}
+                  style={{ width: "100%", padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 10, fontSize: "0.86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                >
+                  Otra pregunta
+                </button>
+              )}
+            </div>
+          )
+        ) : (
+          <div>
+            <div style={{ maxHeight: 260, overflowY: "auto", display: "flex", flexDirection: "column", gap: 10, marginBottom: 12 }}>
+              {msgs.map((m, i) => (
+                <div key={i} style={{ display: "flex", gap: 7, alignItems: "flex-start", flexDirection: m.isUser ? "row-reverse" : "row" }}>
+                  <div style={{ width: 24, height: 24, borderRadius: "50%", background: m.isUser ? "#3D5D91" : "#F2DCDB", display: "flex", alignItems: "center", justifyContent: "center", color: m.isUser ? "white" : "#22375C", flexShrink: 0 }}>
+                    {m.isUser ? <Icon n="user" size={13} /> : <Icon n="spark" size={13} />}
+                  </div>
+                  <div style={{ maxWidth: "84%", padding: "8px 12px", borderRadius: m.isUser ? "12px 4px 12px 12px" : "4px 12px 12px 12px", background: m.isUser ? "#3D5D91" : "#f0f4ff", color: m.isUser ? "white" : "#22375C", fontSize: "0.82rem", lineHeight: 1.55 }}>
+                    {m.isUser ? m.html : <span dangerouslySetInnerHTML={{ __html: m.html }} />}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", gap: 7 }}>
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && send()}
+                placeholder={mode === "explica" ? "Escribe el tema…" : "Escribe el concepto…"}
+                style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 18, padding: "8px 12px", fontSize: "0.82rem", fontFamily: "'Manrope', sans-serif", outline: "none" }}
+              />
+              <button
+                onClick={send}
+                style={{ width: 34, height: 34, background: "#3D5D91", border: "none", borderRadius: "50%", color: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
+              ><Icon n="send" size={15} /></button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════
+   LOCK OVERLAY (plan básico — PRD 5.3)
+══════════════════════════════════════════════════════════ */
+function LockOverlay({ onUnlock }: { onUnlock: () => void }) {
+  return (
+    <div style={{
+      position: "absolute", inset: 0, zIndex: 60, borderRadius: 16,
+      background: "rgba(245,247,252,.55)", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
+      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+      gap: 10, textAlign: "center", padding: 20,
+    }}>
+      <div style={{ width: 46, height: 46, borderRadius: "50%", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 20px rgba(61,93,145,.3)" }}>
+        <Icon n="lock" size={22} color="#fff" />
+      </div>
+      <button
+        onClick={onUnlock}
+        style={{ padding: "10px 18px", borderRadius: 10, border: "none", background: "#6C0820", color: "white", fontSize: ".84rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+      >
+        Desbloquear Estudiemos Juntos
+      </button>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════
    MAIN PAGE
 ══════════════════════════════════════════════════════════ */
 function EstudiemosJuntosPage() {
+  const user = useSessionUser();
+  const paid = isPaid(user);
+  const timer = useTimer();
+  const navigate = useNavigate();
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [tiempo, setTiempo] = useState<TiempoDisponible>("1h");
   const [examDate, setExamDate] = useState<string | null>(null);
   const [showCustom, setShowCustom] = useState(false);
   const [customHours, setCustomHours] = useState("0");
   const [customMins, setCustomMins] = useState("45");
+  const [upgradeOpen, setUpgradeOpen] = useState(false);
+  const [pruebaMode, setPruebaMode] = useState<PruebaMode | null>(null);
+
+  const profile = useStore(() => (user ? buildProfile(user) : null));
 
   useEffect(() => {
+    if (!user) return;
+    if (!paid) {
+      // Estudiemos Juntos está bloqueado para suscripción básica (PRD 5.3)
+      setShowOnboarding(false);
+      setUpgradeOpen(true);
+      return;
+    }
     const done = localStorage.getItem("fp_onboarding_done");
     if (!done) {
       setShowOnboarding(true);
     } else {
-      setExamDate(localStorage.getItem("fp_exam_date"));
+      // user.fechaCiaac tiene prioridad sobre localStorage
+      setExamDate(user.fechaCiaac ?? localStorage.getItem("fp_exam_date"));
       setTiempo((localStorage.getItem("fp_tiempo_disponible") as TiempoDisponible) || "1h");
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id, paid]);
 
   function handleOnboardingDone() {
-    setExamDate(localStorage.getItem("fp_exam_date"));
+    setExamDate(user?.fechaCiaac ?? localStorage.getItem("fp_exam_date"));
     setTiempo((localStorage.getItem("fp_tiempo_disponible") as TiempoDisponible) || "1h");
     setShowOnboarding(false);
   }
 
   function reopenOnboarding() {
+    if (!paid) {
+      setUpgradeOpen(true);
+      return;
+    }
     localStorage.removeItem("fp_onboarding_done");
     setShowOnboarding(true);
   }
 
+  if (!user || !profile) {
+    return <div style={{ maxWidth: 680, margin: "0 auto", padding: "24px 16px 48px" }} />;
+  }
+
   const { phase, daysLeft } = getExamPhaseFromDate(examDate);
-  const rec = getRecommendation(MOCK_PROFILE, phase);
-  const plan = buildPlan(rec, tiempo, MOCK_PROFILE);
-  const progreso = computeRuta(MOCK_PROFILE);
+  const rec = getRecommendation(profile, phase);
+  const plan = buildPlan(rec, tiempo, profile);
+  const progreso = computeRuta(profile);
+
+  /** Arranca el timer flotante y navega a la actividad del plan. */
+  function startPlanItem(item: PlanItem) {
+    if (!user) return;
+    const materiaName = rec.subject?.name ?? "FlightPath";
+    timer.startSession(item.titulo, materiaName, item.descripcion, "Sesión con Pathy");
+    logActivity({
+      userId: user.id,
+      kind: "pathy_session",
+      label: `Estudia con Pathy — ${item.titulo}`,
+      durationMin: 0,
+    });
+    navigate({ to: item.link as never });
+  }
+
+  function openPrueba(mode: PruebaMode) {
+    if (!user) return;
+    if (!paid) {
+      setUpgradeOpen(true);
+      return;
+    }
+    logYarisUse(user.id, "Ponme a prueba");
+    setPruebaMode(mode);
+  }
+
+  function closePrueba(interactions: number) {
+    if (user && interactions >= 1) {
+      logActivity({ userId: user.id, kind: "pathy_session", label: "Ponme a prueba", durationMin: 5 });
+    }
+    setPruebaMode(null);
+  }
 
   return (
-    <div style={{ maxWidth: 680, margin: "0 auto", padding: "24px 16px 48px" }}>
-      {showOnboarding && <OnboardingModal onDone={handleOnboardingDone} />}
+    <div style={{ maxWidth: 680, margin: "0 auto", padding: "24px 16px 48px", position: "relative" }}>
+      {paid && showOnboarding && <OnboardingModal onDone={handleOnboardingDone} userId={user.id} />}
 
       {/* Page header */}
       <div style={{ marginBottom: 24 }}>
@@ -701,7 +988,7 @@ function EstudiemosJuntosPage() {
           </button>
         </div>
         <p style={{ fontSize: "0.88rem", color: "#647DA0", margin: 0 }}>
-          Hola, {MOCK_PROFILE.name}. Paty revisó tu progreso y preparó tu plan de hoy.
+          Hola, {profile.name}. Paty revisó tu progreso y preparó tu plan de hoy.
         </p>
       </div>
 
@@ -847,12 +1134,67 @@ function EstudiemosJuntosPage() {
           Tu plan para hoy — {plan.reduce((s, i) => s + i.duracion_min, 0)} min
         </p>
         {plan.map((item, i) => (
-          <PlanItemCard key={i} item={item} index={i} />
+          <PlanItemCard key={i} item={item} index={i} onStart={startPlanItem} />
         ))}
       </div>
 
       {/* Weakness chips */}
-      <WeaknessChips materias={MOCK_PROFILE.materias} />
+      <WeaknessChips materias={profile.materias} />
+
+      {/* Ponme a prueba (PRD 6.10) */}
+      <div style={{ background: "white", borderRadius: 16, padding: 24, marginTop: 24, boxShadow: "0 2px 16px rgba(61,93,145,0.08)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+          <span style={{ display: "inline-flex", color: "#3D5D91" }}><Icon n="spark" size={20} /></span>
+          <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.05rem", color: "#22375C", margin: 0 }}>
+            Ponme a prueba
+          </h3>
+        </div>
+        <p style={{ fontSize: "0.82rem", color: "#647DA0", margin: "0 0 14px" }}>Yaris comprueba si realmente entendiste</p>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          {([
+            { mode: "preguntas" as PruebaMode, label: "Hazme preguntas", icon: "help" },
+            { mode: "explica" as PruebaMode, label: "Explícamelo fácil", icon: "lightbulb" },
+            { mode: "nemo" as PruebaMode, label: "Dame una nemotecnia", icon: "brain" },
+          ]).map((b) => (
+            <button
+              key={b.mode}
+              onClick={() => openPrueba(b.mode)}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+                padding: "8px 16px",
+                border: "1.5px solid #F2DCDB",
+                borderRadius: 20,
+                background: "white",
+                fontSize: "0.82rem",
+                fontWeight: 600,
+                color: "#3D5D91",
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+                transition: "all 0.15s",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; e.currentTarget.style.background = "rgba(61,93,145,0.04)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; e.currentTarget.style.background = "white"; }}
+            >
+              <Icon n={b.icon as never} size={15} /> {b.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Candado de plan básico: la página se ve pero está bloqueada */}
+      {!paid && <LockOverlay onUnlock={() => setUpgradeOpen(true)} />}
+
+      <UpgradeModal
+        open={upgradeOpen}
+        onClose={() => setUpgradeOpen(false)}
+        feature="Estudiemos Juntos"
+        benefit="Pathy arma tu plan diario según tu progreso real y te acompaña sesión por sesión."
+        userId={user.id}
+      />
+
+      {pruebaMode && <PruebaModal mode={pruebaMode} onClose={closePrueba} />}
     </div>
   );
 }

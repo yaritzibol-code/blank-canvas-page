@@ -4,6 +4,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
+import { SUBJECT_TEMAS } from "@/modules/data/registry";
+import {
+  MATERIAS_DEF,
+  getPublishedQuestions,
+  getTemaProgress,
+  materiaPerformance,
+  materiaProgressPct,
+  useSessionUser,
+  useStore,
+} from "@/lib/store";
 
 export const Route = createFileRoute("/dashboard/materias/")({
   component: MateriasIndex,
@@ -23,20 +33,21 @@ type Subject = {
   description: string;
 };
 
-const SUBJECTS: Subject[] = [
-  { slug: "aerodinamica", icon: "plane", name: "Aerodinámica", questions: 30, totalTopics: 8, doneTopics: 6, progress: 72, avg: 84, status: "active", color: "#3D5D91", description: "Leyes del vuelo, fuerzas, perfiles y estabilidad" },
-  { slug: "aeronaves-motores", icon: "settings", name: "Aeronaves y Motores", questions: 30, totalTopics: 9, doneTopics: 5, progress: 55, avg: 76, status: "active", color: "#5A86CB", description: "Estructuras, motores, sistemas y tren de aterrizaje" },
-  { slug: "legislacion", icon: "scale", name: "Legislación Aeronáutica", questions: 30, totalTopics: 14, doneTopics: 6, progress: 40, avg: 70, status: "active", color: "#3D5D91", description: "Marco legal nacional e internacional de aviación" },
-  { slug: "medicina", icon: "stethoscope", name: "Medicina de Aviación", questions: 20, totalTopics: 13, doneTopics: 11, progress: 85, avg: 91, status: "done", color: "#6C0820", description: "Fisiología, hipoxia, fatiga y efectos del vuelo" },
-  { slug: "meteorologia", icon: "cloud", name: "Meteorología", questions: 30, totalTopics: 22, doneTopics: 13, progress: 60, avg: 78, status: "active", color: "#5A86CB", description: "Atmósfera, vientos, nubes, frentes y reportes" },
-  { slug: "navegacion", icon: "map", name: "Navegación Aérea", questions: 30, totalTopics: 22, doneTopics: 7, progress: 30, avg: 68, status: "active", color: "#3D5D91", description: "VOR, ILS, cartas, triangulo de velocidades y NavLog" },
-  { slug: "servicios-transito", icon: "tower", name: "Servicios de Tránsito Aéreo", questions: 30, totalTopics: 18, doneTopics: 4, progress: 20, avg: 65, status: "active", color: "#5A86CB", description: "Espacios aéreos, separación y control de tráfico" },
-  { slug: "comunicaciones", icon: "radio", name: "Comunicaciones Aeronáuticas", questions: 20, totalTopics: 20, doneTopics: 2, progress: 10, avg: 0, status: "active", color: "#3D5D91", description: "Radiotelefonía, procedimientos y emergencias" },
-  { slug: "manuales-ais", icon: "doc", name: "Manuales de Información", questions: 20, totalTopics: 19, doneTopics: 0, progress: 0, avg: 0, status: "locked", color: "#5A86CB", description: "PIA, Jeppesen, NOTAM y cartas de aproximación" },
-  { slug: "factores-humanos", icon: "brain", name: "Factores Humanos", questions: 20, totalTopics: 13, doneTopics: 12, progress: 90, avg: 88, status: "done", color: "#6C0820", description: "CRM, SHELL, fatiga, estrés y toma de decisiones" },
-  { slug: "seguridad-aerea", icon: "shield", name: "Seguridad Aérea", questions: 20, totalTopics: 10, doneTopics: 5, progress: 45, avg: 74, status: "active", color: "#3D5D91", description: "SMS, AVSEC, gestión de riesgos e identificación de peligros" },
-  { slug: "operaciones", icon: "plane", name: "Operaciones Aeronáuticas", questions: 30, totalTopics: 20, doneTopics: 3, progress: 15, avg: 62, status: "active", color: "#5A86CB", description: "VFR/IFR, peso y balance, rendimientos y aeródromos" },
-];
+/** Colores y descripciones por materia (visual, se conservan del diseño). */
+const SUBJECT_EXTRA: Record<string, { color: string; description: string }> = {
+  aerodinamica: { color: "#3D5D91", description: "Leyes del vuelo, fuerzas, perfiles y estabilidad" },
+  "aeronaves-motores": { color: "#5A86CB", description: "Estructuras, motores, sistemas y tren de aterrizaje" },
+  legislacion: { color: "#3D5D91", description: "Marco legal nacional e internacional de aviación" },
+  medicina: { color: "#6C0820", description: "Fisiología, hipoxia, fatiga y efectos del vuelo" },
+  meteorologia: { color: "#5A86CB", description: "Atmósfera, vientos, nubes, frentes y reportes" },
+  navegacion: { color: "#3D5D91", description: "VOR, ILS, cartas, triangulo de velocidades y NavLog" },
+  "servicios-transito": { color: "#5A86CB", description: "Espacios aéreos, separación y control de tráfico" },
+  comunicaciones: { color: "#3D5D91", description: "Radiotelefonía, procedimientos y emergencias" },
+  "manuales-ais": { color: "#5A86CB", description: "PIA, Jeppesen, NOTAM y cartas de aproximación" },
+  "factores-humanos": { color: "#6C0820", description: "CRM, SHELL, fatiga, estrés y toma de decisiones" },
+  "seguridad-aerea": { color: "#3D5D91", description: "SMS, AVSEC, gestión de riesgos e identificación de peligros" },
+  operaciones: { color: "#5A86CB", description: "VFR/IFR, peso y balance, rendimientos y aeródromos" },
+};
 
 const FONT = "'Manrope', sans-serif";
 const DISPLAY = "'Bricolage Grotesque', sans-serif";
@@ -49,9 +60,46 @@ const STATUS_CONFIG = {
 };
 
 function MateriasIndex() {
-  const total = SUBJECTS.length;
-  const done = SUBJECTS.filter((s) => s.status === "done").length;
-  const inProgress = SUBJECTS.filter((s) => s.status === "active").length;
+  const user = useSessionUser();
+
+  const subjects = useStore<Subject[]>(() => {
+    const perf = user ? materiaPerformance(user.id) : [];
+    const doneTemaIds = new Set(
+      user
+        ? getTemaProgress(user.id)
+            .filter((t) => t.completado)
+            .map((t) => t.temaId)
+        : [],
+    );
+    return MATERIAS_DEF.map((m) => {
+      const temas = SUBJECT_TEMAS[m.slug] ?? [];
+      const totalTopics = temas.length;
+      const doneTopics = temas.filter((t) => doneTemaIds.has(t.id)).length;
+      const progress = user ? materiaProgressPct(user.id, m.slug) : 0;
+      const avg = perf.find((p) => p.slug === m.slug)?.avg ?? 0;
+      const questions = getPublishedQuestions(m.slug).length;
+      const status: Subject["status"] =
+        totalTopics > 0 && doneTopics === totalTopics ? "done" : "active";
+      const extra = SUBJECT_EXTRA[m.slug] ?? { color: "#3D5D91", description: "" };
+      return {
+        slug: m.slug,
+        icon: m.icon as FPIconName,
+        name: m.name,
+        questions,
+        totalTopics,
+        doneTopics,
+        progress,
+        avg,
+        status,
+        color: extra.color,
+        description: extra.description,
+      };
+    });
+  });
+
+  const total = subjects.length;
+  const done = subjects.filter((s) => s.status === "done").length;
+  const inProgress = subjects.filter((s) => s.status === "active").length;
 
   return (
     <div className="max-w-6xl mx-auto space-y-6" style={{ fontFamily: FONT, color: "#33527F" }}>
@@ -77,7 +125,7 @@ function MateriasIndex() {
 
       {/* Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {SUBJECTS.map((subject) => {
+        {subjects.map((subject) => {
           const { label, className, icon: StatusIcon } = STATUS_CONFIG[subject.status];
           const isLocked = subject.status === "locked";
           return (

@@ -1,6 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
+import {
+  getBitacora,
+  logYarisUse,
+  materiaPerformance,
+  saveBitacoraEntry,
+  useSessionUser,
+  useStore,
+  yarisReply,
+  type BitacoraEntry,
+} from "@/lib/store";
 
 export const Route = createFileRoute("/dashboard/bitacora")({
   component: BitacoraPage,
@@ -61,59 +71,88 @@ const PATHY_MESSAGES: Record<string, { msg: string; bad: boolean }> = {
   },
 };
 
-const YARIS_REPLIES = [
-  "Entiendo cómo te sientes y está completamente bien sentirlo. El camino al CIAAC tiene sus momentos difíciles — lo importante es que sigues aquí. ¿Qué es lo que más te preocupa ahorita?",
-  "Eso que describes es más común de lo que crees entre estudiantes de aviación. La presión del examen puede ser mucha. Recuerda: no tienes que ser perfecta, solo consistente.",
-  "¿Sabes qué? El hecho de que estés usando tu bitácora y reflexionando sobre tu proceso ya te pone por delante de muchos. La autoconciencia es una habilidad enorme.",
-];
+/* ── Mapas locales por emoción (mismo criterio de colores existente) ── */
+const EMOTION_BORDER: Record<string, string> = {
+  sun: "#2ecc71", checkCircle: "#5A86CB", minus: "#f39c12",
+  alert: "#e74c3c", moon: "#888", cloud: "#647DA0",
+};
+const EMOTION_BAR: Record<string, string> = {
+  sun: "#2ecc71", checkCircle: "#5A86CB", minus: "#f39c12",
+  alert: "#e74c3c", moon: "#647DA0", cloud: "#e74c3c",
+};
+const EMOTION_VAL: Record<string, number> = {
+  sun: 5, checkCircle: 4, minus: 3, moon: 2, alert: 1, cloud: 1,
+};
+const DAY_LETTERS = ["D", "L", "M", "M", "J", "V", "S"];
 
-const MOOD_DATA = [
-  { day: "L", emoji: "sun", val: 100, color: "#2ecc71" },
-  { day: "M", emoji: "moon", val: 40, color: "#647DA0" },
-  { day: "M", emoji: "sun", val: 100, color: "#2ecc71" },
-  { day: "J", emoji: "alert", val: 30, color: "#e74c3c" },
-  { day: "V", emoji: "checkCircle", val: 70, color: "#5A86CB" },
-  { day: "S", emoji: "minus", val: 50, color: "#f39c12" },
-  { day: "D", emoji: "", val: 0, color: "#F2DCDB" },
-];
+function localDayKey(d: Date): string {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
 
-const SAMPLE_ENTRIES = [
-  {
-    emotion: "checkCircle", mood: "Me sentí bien hoy", borderColor: "#5A86CB",
-    motiv: 5, conc: 4, conf: 4,
-    tags: ["Meteorología costó", "Flashcards"],
-    text: "Estudié 45 minutos de Meteorología pero los METAR me siguen costando. Lo demás estuvo bien, hice muchas flashcards de Aerodinámica y ya las siento más claras.",
-    date: "Hoy", sub: "22 mayo",
-  },
-  {
-    emotion: "alert", mood: "Me sentí frustrada", borderColor: "#e74c3c",
-    motiv: 2, conc: 2, conf: 3,
-    tags: ["Meteorología costó", "Simulador"],
-    text: "Hice el simulador y saqué 68%. Me frustré mucho con las preguntas de Meteorología y Legislación. Siento que no avanzo lo suficiente...",
-    date: "Ayer", sub: "21 mayo",
-  },
-  {
-    emotion: "sun", mood: "¡Me sentí increíble!", borderColor: "#2ecc71",
-    motiv: 5, conc: 5, conf: 4,
-    tags: ["Todo bien", "Flashcards"],
-    text: "¡Hoy todo fluyó! Hice 90 flashcards de Aerodinámica y las domino todas. Siento que si sigo así voy a estar lista para el CIAAC.",
-    date: "20 mayo", sub: "Miércoles",
-  },
-  {
-    emotion: "moon", mood: "Llegué muy cansada", borderColor: "#888",
-    motiv: 2, conc: 2, conf: 3,
-    tags: ["Navegación costó"],
-    text: "Llegué muy cansada de la escuela. Estudié solo 20 minutos pero al menos no rompí la racha. Mañana me recupero.",
-    date: "19 mayo", sub: "Martes",
-  },
-  {
-    emotion: "minus", mood: "Más o menos", borderColor: "#f39c12",
-    motiv: 3, conc: 3, conf: 3,
-    tags: ["Legislación costó", "Biblioteca"],
-    text: "Día normal. Leí el manual de Legislación y entendí más cosas del Convenio de Chicago. Poco a poco.",
-    date: "18 mayo", sub: "Lunes",
-  },
-];
+function capitalize(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+/** Etiquetas de fecha legibles es-MX para el historial. */
+function entryDateLabels(iso: string): { date: string; sub: string } {
+  const d = new Date(iso);
+  const today = localDayKey(new Date());
+  const yest = new Date();
+  yest.setDate(yest.getDate() - 1);
+  const key = localDayKey(d);
+  const longDate = d.toLocaleDateString("es-MX", { day: "numeric", month: "long" });
+  if (key === today) return { date: "Hoy", sub: longDate };
+  if (key === localDayKey(yest)) return { date: "Ayer", sub: longDate };
+  return { date: longDate, sub: capitalize(d.toLocaleDateString("es-MX", { weekday: "long" })) };
+}
+
+/** Gráfico semanal: entradas reales de los últimos 7 días (val 1-5 por emoción). */
+function buildMoodData(entries: BitacoraEntry[]) {
+  const byDay = new Map<string, BitacoraEntry>();
+  entries.forEach((e) => {
+    const k = localDayKey(new Date(e.date));
+    if (!byDay.has(k)) byDay.set(k, e); // entries viene desc: la más reciente del día gana
+  });
+  const out: { day: string; emoji: string; val: number; color: string }[] = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const e = byDay.get(localDayKey(d));
+    const val = e ? (EMOTION_VAL[e.emotionIcon] ?? 3) : 0;
+    out.push({
+      day: DAY_LETTERS[d.getDay()],
+      emoji: e?.emotionIcon ?? "",
+      val: val * 20,
+      color: e ? (EMOTION_BAR[e.emotionIcon] ?? "#5A86CB") : "#F2DCDB",
+    });
+  }
+  return out;
+}
+
+/** Insight real de Pathy: emociones negativas (2 semanas), materia repetida y tendencia de confianza. */
+function buildInsight(entries: BitacoraEntry[]): string {
+  if (entries.length < 2) {
+    return "Aún tengo pocas entradas para detectar patrones. Escribe tu bitácora unos días más y aquí te contaré qué veo en tu ánimo y en tu confianza rumbo al CIAAC.";
+  }
+  const twoWeeksAgo = Date.now() - 14 * 86400000;
+  const recent = entries.filter((e) => new Date(e.date).getTime() >= twoWeeksAgo);
+  const negCount = recent.filter((e) => e.emotionIcon === "alert" || e.emotionIcon === "cloud").length;
+  const counts: Record<string, number> = {};
+  recent.forEach((e) => e.materias.forEach((m) => { counts[m] = (counts[m] ?? 0) + 1; }));
+  const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+  const first = entries[entries.length - 1];
+  const last = entries[0];
+
+  const s1 = negCount > 0
+    ? `En las últimas 2 semanas registraste ${negCount} ${negCount === 1 ? "día" : "días"} con frustración o ansiedad${top ? `, y ${top[0]} es la materia que más se repite en tus entradas (${top[1]} ${top[1] === 1 ? "vez" : "veces"})` : ""}.`
+    : `En las últimas 2 semanas no registraste días de frustración ni ansiedad${top ? `, aunque ${top[0]} es la materia que más mencionas (${top[1]} ${top[1] === 1 ? "vez" : "veces"})` : ""} — ¡buen ánimo!`;
+  const s2 = last.conf > first.conf
+    ? `Tu confianza con el CIAAC subió de ${first.conf} a ${last.conf} — ¡vas mejorando!`
+    : last.conf < first.conf
+      ? `Tu confianza con el CIAAC bajó de ${first.conf} a ${last.conf} — un repaso de tus materias difíciles puede ayudarte a recuperarla.`
+      : `Tu confianza con el CIAAC se mantiene en ${last.conf}/5 — la constancia la hará subir.`;
+  return `${s1} ${s2}`;
+}
 
 function ScaleDots({ value, onChange }: { value: number; onChange: (v: number) => void }) {
   return (
@@ -140,6 +179,12 @@ function ScaleDots({ value, onChange }: { value: number; onChange: (v: number) =
 }
 
 function BitacoraPage() {
+  const user = useSessionUser();
+  const entries = useStore(() => (user ? getBitacora(user.id) : []));
+  const firstName = user?.nombre.split(" ")[0] ?? "piloto";
+  const initials = user
+    ? user.nombre.split(" ").filter(Boolean).map((p) => p[0]).slice(0, 2).join("").toUpperCase()
+    : "TÚ";
   const [screen, setScreen] = useState<Screen>("hoy");
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
   const [scales, setScales] = useState({ s1: 0, s2: 0, s3: 0 });
@@ -176,10 +221,46 @@ function BitacoraPage() {
     const pathy = PATHY_MESSAGES[selectedEmotion] || PATHY_MESSAGES["checkCircle"];
     const emotionObj = EMOTIONS.find((e) => e.icon === selectedEmotion)!;
     const tema = selectedMaterias.size > 0 ? [...selectedMaterias][0] : null;
+    const materiasSel = noneSelected ? [] : [...selectedMaterias];
 
     let fullMsg = pathy.msg;
     if (tema && !pathy.bad) {
       fullMsg += ` Por cierto, veo que ${tema} te costó hoy — es normal, es una de las más densas. Mañana podemos atacarla juntas.`;
+    }
+
+    // Enriquecer con datos reales: ¿la materia con menor promedio coincide con una seleccionada?
+    if (user && materiasSel.length > 0) {
+      const norm = (s: string) => s.trim().toLowerCase();
+      const matches = (label: string, name: string) => {
+        const a = norm(label);
+        const b = norm(name);
+        return b.includes(a) || a.includes(b) || b.split(" ")[0] === a.split(" ")[0];
+      };
+      const withData = materiaPerformance(user.id, "todo")
+        .filter((m) => m.avg !== null)
+        .sort((a, b) => (a.avg ?? 0) - (b.avg ?? 0));
+      const lowest = withData[0];
+      if (
+        lowest &&
+        (lowest.avg ?? 100) < 60 &&
+        materiasSel.some((lbl) => matches(lbl, lowest.name))
+      ) {
+        fullMsg += ` He notado que ${lowest.name} también es tu materia con menor promedio (${lowest.avg}%). Un cuestionario corto mañana la mejorará.`;
+      }
+    }
+
+    if (user) {
+      saveBitacoraEntry({
+        userId: user.id,
+        emotionIcon: selectedEmotion,
+        moodLabel: emotionObj.label,
+        motiv: scales.s1,
+        conc: scales.s2,
+        conf: scales.s3,
+        materias: materiasSel,
+        text: journalText,
+        pathyMsg: fullMsg,
+      });
     }
 
     setResult({
@@ -198,6 +279,7 @@ function BitacoraPage() {
 
   const openYarisChat = () => {
     setYarisOpen(true);
+    if (user) logYarisUse(user.id, "Mi Bitácora");
     if (yarisMessages.length === 0) {
       setYarisMessages([{ text: "Hola, leí tu entrada de hoy y quiero que sepas que estoy aquí. ¿Quieres contarme más sobre cómo te sientes?", isUser: false }]);
     }
@@ -206,14 +288,35 @@ function BitacoraPage() {
   const sendYaris = () => {
     const t = yarisInput.trim();
     if (!t) return;
-    const reply = YARIS_REPLIES[yarisRi % YARIS_REPLIES.length];
+    const reply = yarisReply(yarisRi, {}, t);
     setYarisMessages((prev) => [...prev, { text: t, isUser: true }]);
     setYarisInput("");
     setYarisRi((r) => r + 1);
     setTimeout(() => {
-      setYarisMessages((prev) => [...prev, { text: reply, isUser: false }]);
+      setYarisMessages((prev) => [...prev, { text: reply.t, isUser: false }]);
     }, 800);
   };
+
+  /* ── Datos reales derivados del historial ── */
+  const moodData = buildMoodData(entries);
+  const insight = buildInsight(entries);
+  const histEntries = entries.map((e) => {
+    const labels = entryDateLabels(e.date);
+    return {
+      id: e.id,
+      emotion: e.emotionIcon,
+      mood: e.moodLabel,
+      borderColor: EMOTION_BORDER[e.emotionIcon] ?? "#5A86CB",
+      motiv: e.motiv,
+      conc: e.conc,
+      conf: e.conf,
+      tags: e.materias,
+      text: e.text,
+      pathyMsg: e.pathyMsg,
+      date: labels.date,
+      sub: labels.sub,
+    };
+  });
 
   return (
     <div style={{ fontFamily: "'Manrope', sans-serif", minHeight: "100vh", background: "#f5f7fc" }}>
@@ -244,7 +347,7 @@ function BitacoraPage() {
                 display: "flex", alignItems: "center", gap: 6,
               }}
             >
-              <Icon n={t.icon as any} size={15} /> {t.label}
+              <Icon n={t.icon as never} size={15} /> {t.label}
             </button>
           ))}
         </div>
@@ -264,7 +367,7 @@ function BitacoraPage() {
             <div style={{ flexShrink: 0, animation: "float 3s ease-in-out infinite", zIndex: 1, color: "white" }}><Icon n="cloud" size={48} /></div>
             <div style={{ flex: 1, zIndex: 1 }}>
               <div style={{ fontSize: ".7rem", color: "#F2AEBC", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 4, display: "flex", alignItems: "center", gap: 6 }}><Icon n="edit" size={13} /> Entrada de hoy</div>
-              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "white", marginBottom: 4 }}>¿Cómo estuvo tu sesión de estudio hoy, María?</div>
+              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "white", marginBottom: 4 }}>¿Cómo estuvo tu sesión de estudio hoy, {firstName}?</div>
               <div style={{ fontSize: ".8rem", color: "rgba(255,255,255,.5)" }}>Cuéntame todo, esto es solo tuyo</div>
             </div>
           </div>
@@ -285,7 +388,7 @@ function BitacoraPage() {
                     flex: 1, minWidth: 70, transition: "all .2s", fontFamily: "'Manrope', sans-serif",
                   }}
                 >
-                  <span style={{ display: "flex", color: selectedEmotion === e.icon ? "#3D5D91" : "#647DA0" }}><Icon n={e.icon as any} size={26} /></span>
+                  <span style={{ display: "flex", color: selectedEmotion === e.icon ? "#3D5D91" : "#647DA0" }}><Icon n={e.icon as never} size={26} /></span>
                   <span style={{ fontSize: ".72rem", fontWeight: 600, color: selectedEmotion === e.icon ? "#3D5D91" : "#647DA0", textAlign: "center" }}>{e.label}</span>
                 </button>
               ))}
@@ -327,7 +430,7 @@ function BitacoraPage() {
                       display: "inline-flex", alignItems: "center", gap: 6,
                     }}
                   >
-                    <Icon n={m.icon as any} size={15} /> {m.label}
+                    <Icon n={m.icon as never} size={15} /> {m.label}
                   </button>
                 );
               })}
@@ -366,6 +469,11 @@ function BitacoraPage() {
           >
             <Icon n="cloud" size={18} /> Guardar entrada de hoy
           </button>
+
+          {/* Disclaimer (PRD): no es herramienta clínica */}
+          <p style={{ fontSize: ".72rem", color: "#8DA1BE", textAlign: "center" as const, marginTop: -10, marginBottom: 24 }}>
+            Mi Bitácora es una herramienta de autoconocimiento académico, no una herramienta clínica ni terapéutica.
+          </p>
         </div>
       )}
 
@@ -395,7 +503,7 @@ function BitacoraPage() {
             <div style={{ fontSize: ".74rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase" as const, letterSpacing: ".5px", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}><Icon n="doc" size={14} /> Resumen de tu entrada</div>
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 10 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ display: "flex", color: "#3D5D91" }}><Icon n={result.emoji as any} size={22} /></span>
+                <span style={{ display: "flex", color: "#3D5D91" }}><Icon n={result.emoji as never} size={22} /></span>
                 <div>
                   <div style={{ fontSize: ".82rem", fontWeight: 700, color: "#22375C" }}>{result.moodLabel}</div>
                   <div style={{ fontSize: ".74rem", color: "#647DA0" }}>Cómo te sentiste</div>
@@ -480,10 +588,10 @@ function BitacoraPage() {
                 {yarisMessages.map((msg, i) => (
                   <div key={i} style={{ display: "flex", gap: 7, alignItems: "flex-start", flexDirection: msg.isUser ? "row-reverse" : "row" as const }}>
                     <div style={{ width: 24, height: 24, borderRadius: "50%", background: msg.isUser ? "#3D5D91" : "#F2DCDB", display: "flex", alignItems: "center", justifyContent: "center", fontSize: ".6rem", fontWeight: 700, color: msg.isUser ? "white" : "#22375C", flexShrink: 0 }}>
-                      {msg.isUser ? "MG" : <Icon n="spark" size={14} />}
+                      {msg.isUser ? initials : <Icon n="spark" size={14} />}
                     </div>
                     <div style={{ maxWidth: "82%", padding: "8px 12px", borderRadius: msg.isUser ? "12px 4px 12px 12px" : "4px 12px 12px 12px", background: msg.isUser ? "#3D5D91" : "#f0f4ff", color: msg.isUser ? "white" : "#22375C", fontSize: ".81rem", lineHeight: 1.55 }}>
-                      {msg.text}
+                      {msg.isUser ? msg.text : <span dangerouslySetInnerHTML={{ __html: msg.text }} />}
                     </div>
                   </div>
                 ))}
@@ -513,7 +621,7 @@ function BitacoraPage() {
             <div>
               <h4 style={{ fontSize: ".88rem", fontWeight: 700, color: "#6C0820", marginBottom: 4 }}>Pathy analizó tu bitácora</h4>
               <p style={{ fontSize: ".83rem", color: "#666", lineHeight: 1.55 }}>
-                Esta semana te sentiste <strong>frustrada con Meteorología 3 veces</strong>. Los lunes llegas con más energía que los viernes. Tu nivel de confianza con el CIAAC subió de 3 a 4 esta semana — ¡vas mejorando!
+                {insight}
               </p>
             </div>
           </div>
@@ -522,9 +630,9 @@ function BitacoraPage() {
           <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 20 }}>
             <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase" as const, letterSpacing: ".5px", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}><Icon n="checkCircle" size={15} /> Tu estado de ánimo esta semana</div>
             <div style={{ display: "flex", alignItems: "flex-end", gap: 8, height: 80 }}>
-              {MOOD_DATA.map((m, i) => (
+              {moodData.map((m, i) => (
                 <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column" as const, alignItems: "center", gap: 4, height: "100%", justifyContent: "flex-end" }}>
-                  <span style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 16, color: "#647DA0" }}>{m.val > 0 ? <Icon n={m.emoji as any} size={16} /> : null}</span>
+                  <span style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 16, color: "#647DA0" }}>{m.val > 0 ? <Icon n={m.emoji as never} size={16} /> : null}</span>
                   <div style={{ width: "100%", borderRadius: "6px 6px 0 0", minHeight: 4, height: `${m.val}%`, background: m.color, transition: "height .4s" }} />
                   <span style={{ fontSize: ".62rem", color: "#8DA1BE" }}>{m.day}</span>
                 </div>
@@ -535,15 +643,21 @@ function BitacoraPage() {
           {/* Entry list */}
           <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase" as const, letterSpacing: ".5px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="calendar" size={15} /> Entradas recientes</div>
           <div style={{ display: "flex", flexDirection: "column" as const, gap: 12 }}>
-            {SAMPLE_ENTRIES.map((entry, i) => (
+            {histEntries.length === 0 && (
+              <div style={{ background: "white", borderRadius: 14, padding: "18px 20px", boxShadow: "0 2px 8px rgba(61,93,145,.05)", fontSize: ".85rem", color: "#647DA0" }}>
+                Aún no tienes entradas. Escribe tu primera hoy.
+              </div>
+            )}
+            {histEntries.map((entry) => (
               <div
-                key={i}
+                key={entry.id}
                 className="ec-card"
+                title={entry.pathyMsg}
                 style={{ background: "white", borderRadius: 14, padding: "18px 20px", boxShadow: "0 2px 8px rgba(61,93,145,.05)", cursor: "pointer", transition: "all .2s", borderLeft: `4px solid ${entry.borderColor}` }}
               >
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <span style={{ display: "flex", color: "#3D5D91" }}><Icon n={entry.emotion as any} size={24} /></span>
+                    <span style={{ display: "flex", color: "#3D5D91" }}><Icon n={entry.emotion as never} size={24} /></span>
                     <div>
                       <h4 style={{ fontSize: ".88rem", fontWeight: 700, color: "#22375C", marginBottom: 2 }}>{entry.mood}</h4>
                       <p style={{ fontSize: ".74rem", color: "#647DA0" }}>Motivación {entry.motiv}/5 · Concentración {entry.conc}/5 · Confianza CIAAC {entry.conf}/5</p>

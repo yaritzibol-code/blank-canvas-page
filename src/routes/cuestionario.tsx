@@ -1,14 +1,38 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
+import {
+  useRequireAuth,
+  isPaid,
+  getPublishedQuestions,
+  getFreeQuestions,
+  saveQuizAttempt,
+  yarisReply,
+  logYarisUse,
+  materiaBySlug,
+  MATERIAS_DEF,
+} from "@/lib/store";
+import type { BankQuestion, YarisContext } from "@/lib/store";
+import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 
 export const Route = createFileRoute("/cuestionario")({
   component: CuestionarioPage,
+  validateSearch: (search: Record<string, unknown>): { materias?: string; qty?: number } => {
+    const out: { materias?: string; qty?: number } = {};
+    if (typeof search.materias === "string" && search.materias) out.materias = search.materias;
+    const q = Number(search.qty);
+    if (Number.isFinite(q) && q > 0) out.qty = Math.floor(q);
+    return out;
+  },
 });
 
 interface Question {
   icon: FPIconName;
   materia: string;
+  slug: string;
+  questionId: string;
+  correctIndex: number;
+  explanation: string;
   text: string;
   options: { text: string; correct: boolean }[];
   feedback: { correct: string; incorrect: string; cite: string };
@@ -20,100 +44,59 @@ interface YarisMsg {
   cite?: string;
 }
 
-const QUESTIONS: Question[] = [
-  {
-    icon: "cloud",
-    materia: "Meteorología",
-    text: "¿Cuál de los siguientes grupos en un METAR indica la visibilidad predominante en metros?",
-    options: [
-      { text: "El grupo de temperatura y punto de rocío", correct: false },
-      { text: "El grupo de 4 dígitos que sigue al viento, expresado en metros", correct: true },
-      { text: "El grupo de presión altimétrica QNH", correct: false },
-    ],
-    feedback: {
-      correct: "¡Correcto! En un METAR, la visibilidad se expresa en metros con 4 dígitos y aparece justo después del grupo de viento. Por ejemplo: 9999 significa visibilidad de 10 km o más.",
-      incorrect: "La visibilidad en un METAR se expresa en metros con 4 dígitos y aparece justo después del grupo de viento. Ejemplo: 9999 = 10 km o más de visibilidad.",
-      cite: "Manual de Meteorología CIAAC, Cap. 21, p. 180",
-    },
-  },
-  {
-    icon: "cloud",
-    materia: "Meteorología",
-    text: "¿Qué fenómeno atmosférico describe la inversión de temperatura?",
-    options: [
-      { text: "Un aumento de temperatura con la altitud, contrario a la condición normal", correct: true },
-      { text: "Una disminución brusca de temperatura en superficie", correct: false },
-      { text: "El enfriamiento adiabático del aire ascendente", correct: false },
-    ],
-    feedback: {
-      correct: "¡Exacto! Normalmente la temperatura disminuye con la altitud. En una inversión ocurre lo contrario: la temperatura aumenta con la altura, lo que puede atrapar contaminantes y afectar la visibilidad.",
-      incorrect: "La inversión de temperatura es cuando la temperatura AUMENTA con la altitud, contrario a lo normal. Esto puede causar niebla y reducir la visibilidad.",
-      cite: "Meteorología Básica CIAAC, Cap. 1, p. 8",
-    },
-  },
-  {
-    icon: "cloud",
-    materia: "Meteorología",
-    text: "¿Cuál de las siguientes nubes pertenece al género de nubes altas?",
-    options: [
-      { text: "Cumulonimbus", correct: false },
-      { text: "Altocumulus", correct: false },
-      { text: "Cirrostratus", correct: true },
-    ],
-    feedback: {
-      correct: "¡Correcto! Las nubes altas incluyen Cirrus, Cirrocumulus y Cirrostratus. Se forman entre 6,000 y 12,000 metros y están compuestas principalmente de cristales de hielo.",
-      incorrect: "Las nubes ALTAS son: Cirrus, Cirrocumulus y Cirrostratus. El Altocumulus es una nube MEDIA, y el Cumulonimbus es de desarrollo vertical.",
-      cite: "Meteorología Básica CIAAC, Cap. 10, p. 95",
-    },
-  },
-  {
-    icon: "plane",
-    materia: "Aerodinámica",
-    text: "¿Qué sucede con la sustentación si duplicamos la velocidad del avión, manteniendo todo lo demás constante?",
-    options: [
-      { text: "La sustentación se duplica", correct: false },
-      { text: "La sustentación se mantiene igual", correct: false },
-      { text: "La sustentación se cuadruplica", correct: true },
-      { text: "La sustentación disminuye a la mitad", correct: false },
-    ],
-    feedback: {
-      correct: "¡Exacto! La fórmula de sustentación L = ½ρV²SCL muestra que la sustentación es proporcional al cuadrado de la velocidad. Si V se duplica, V² se cuadruplica.",
-      incorrect: "La sustentación es proporcional al cuadrado de la velocidad (L = ½ρV²SCL). Si la velocidad se duplica, la sustentación se cuadruplica (2² = 4).",
-      cite: "Aerodinámica CIAAC, Cap. 5, p. 48",
-    },
-  },
-  {
-    icon: "plane",
-    materia: "Aerodinámica",
-    text: "¿Cuál es el efecto de un ángulo de ataque excesivo en un ala?",
-    options: [
-      { text: "La resistencia disminuye al máximo", correct: false },
-      { text: "El flujo de aire se separa del ala y se produce entrada en pérdida (stall)", correct: true },
-      { text: "La sustentación aumenta indefinidamente", correct: false },
-    ],
-    feedback: {
-      correct: "¡Correcto! Al superar el ángulo de ataque crítico, el flujo de aire se separa de la superficie superior del ala, provocando una pérdida repentina de sustentación conocida como 'stall'.",
-      incorrect: "Al superar el ángulo de ataque crítico (aprox. 15-20°), el flujo se separa del extradós del ala y se produce la entrada en pérdida (stall), con pérdida repentina de sustentación.",
-      cite: "Aerodinámica CIAAC, Cap. 8, p. 74",
-    },
-  },
-];
-
-const YARIS_REPLIES = [
-  { t: "En un METAR, la visibilidad aparece después del viento y se expresa en metros con 4 dígitos. 9999 significa 10 km o más de visibilidad.", c: "Manual Meteorología CIAAC, Cap. 21, p. 180" },
-  { t: "Piénsalo así: el METAR tiene un orden fijo: Tipo · Estación · Hora · Viento · <strong>Visibilidad</strong> · Fenómenos · Nubosidad · Temperatura/Rocío · Presión. ¡Apréndetelo en ese orden!", c: "Meteorología Básica CIAAC, Cap. 21, p. 178" },
-  { t: "¿Recuerdas el clima en el aeropuerto? Exactamente eso describe el METAR — una foto del tiempo en un momento específico.", c: null },
-  { t: "La sustentación es proporcional al cuadrado de la velocidad. Cuando duplicas la velocidad, multiplicas la sustentación por 4. ¡Recuerda V²!", c: "Aerodinámica CIAAC, Cap. 5, p. 48" },
-  { t: "El ángulo de ataque crítico es el punto de no retorno — una vez que lo superas, el flujo se separa y pierdes sustentación abruptamente.", c: "Aerodinámica CIAAC, Cap. 8, p. 74" },
-];
-
 const LETTERS = ["A", "B", "C", "D"];
 
+/* ─── Helpers de datos reales ───────────────────────── */
+
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function parseSlugs(materias?: string): string[] {
+  const all = MATERIAS_DEF.map((m) => m.slug);
+  if (!materias) return all;
+  const slugs = materias
+    .split(",")
+    .map((s) => s.trim())
+    .filter((s) => !!materiaBySlug(s));
+  return slugs.length > 0 ? slugs : all;
+}
+
+function toLocalQ(q: BankQuestion): Question {
+  const def = materiaBySlug(q.materia);
+  return {
+    icon: (def?.icon ?? "help") as FPIconName,
+    materia: def?.name ?? "General",
+    slug: q.materia,
+    questionId: q.id,
+    correctIndex: q.correctIndex,
+    explanation: q.explanation,
+    text: q.text,
+    options: q.options.map((text, i) => ({ text, correct: i === q.correctIndex })),
+    feedback: {
+      correct: `¡Correcto! ${q.explanation}`,
+      incorrect: q.explanation,
+      cite: q.cite,
+    },
+  };
+}
+
 function CuestionarioPage() {
+  const { user, ready } = useRequireAuth();
+  const search = Route.useSearch();
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [pool, setPool] = useState<BankQuestion[]>([]);
+  const [sessionSlugs, setSessionSlugs] = useState<string[]>([]);
+  const [loaded, setLoaded] = useState(false);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [answered, setAnswered] = useState(false);
-  const [results, setResults] = useState<(boolean | null)[]>(new Array(QUESTIONS.length).fill(null));
+  const [results, setResults] = useState<(boolean | null)[]>([]);
   const [showResult, setShowResult] = useState(false);
   const [yarisOpen, setYarisOpen] = useState(false);
   const [yarisMsgs, setYarisMsgs] = useState<YarisMsg[]>([]);
@@ -121,10 +104,13 @@ function CuestionarioPage() {
   const [yarisTyping, setYarisTyping] = useState(false);
   const [yarisReplyIdx, setYarisReplyIdx] = useState(0);
   const [yarisInitialized, setYarisInitialized] = useState(false);
+  const [reportOpen, setReportOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [startTime] = useState(() => Date.now());
+  const [startTime, setStartTime] = useState(() => Date.now());
   const [elapsedMin, setElapsedMin] = useState(0);
   const msgsEndRef = useRef<HTMLDivElement>(null);
+  const savedRef = useRef(false);
+  const lastAnsweredRef = useRef<number | null>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -133,10 +119,35 @@ function CuestionarioPage() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  const total = QUESTIONS.length;
+  /** Cuántas preguntas de la sesión según plan y qty solicitado. */
+  function sessionCount(poolLen: number): number {
+    return isPaid(user) ? Math.min(search.qty ?? 10, poolLen) : Math.min(10, poolLen);
+  }
+
+  // Construye el pool real de preguntas al montar (una sola vez).
+  useEffect(() => {
+    if (!ready || loaded || !user) return;
+    const slugs = parseSlugs(search.materias);
+    const paid = isPaid(user);
+    let fullPool: BankQuestion[] = [];
+    slugs.forEach((s) => {
+      fullPool = fullPool.concat(paid ? getPublishedQuestions(s) : getFreeQuestions(s));
+    });
+    if (!paid) fullPool = fullPool.slice(0, 10);
+    const picked = shuffle(fullPool)
+      .slice(0, paid ? Math.min(search.qty ?? 10, fullPool.length) : Math.min(10, fullPool.length))
+      .map(toLocalQ);
+    setPool(fullPool);
+    setSessionSlugs(slugs);
+    setQuestions(picked);
+    setResults(new Array(picked.length).fill(null));
+    setLoaded(true);
+  }, [ready, loaded, user, search.materias, search.qty]);
+
+  const total = questions.length;
   const answeredCount = results.filter((r) => r !== null).length;
   const correctCount = results.filter((r) => r === true).length;
-  const progressPct = Math.round((answeredCount / total) * 100);
+  const progressPct = total > 0 ? Math.round((answeredCount / total) * 100) : 0;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -149,11 +160,41 @@ function CuestionarioPage() {
     msgsEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [yarisMsgs, yarisTyping]);
 
+  /** Desglose por materia de las respuestas de ESTA sesión. */
+  function computePorMateria(): Record<string, { correct: number; total: number }> {
+    const map: Record<string, { correct: number; total: number }> = {};
+    questions.forEach((q, i) => {
+      const r = results[i];
+      if (r === null || r === undefined) return;
+      const e = map[q.slug] ?? { correct: 0, total: 0 };
+      e.total++;
+      if (r) e.correct++;
+      map[q.slug] = e;
+    });
+    return map;
+  }
+
+  // Guarda el intento una sola vez al terminar la sesión.
+  useEffect(() => {
+    if (!showResult || savedRef.current || !user) return;
+    savedRef.current = true;
+    saveQuizAttempt({
+      userId: user.id,
+      materias: sessionSlugs,
+      total: answeredCount,
+      correct: correctCount,
+      durationMin: Math.max(0, Math.round((Date.now() - startTime) / 60000)),
+      porMateria: computePorMateria(),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showResult, user]);
+
   function handleOptionClick(optIdx: number) {
     if (answered) return;
-    const isCorrect = QUESTIONS[currentIdx].options[optIdx].correct;
+    const isCorrect = questions[currentIdx].options[optIdx].correct;
     setSelectedIdx(optIdx);
     setAnswered(true);
+    lastAnsweredRef.current = currentIdx;
     const newResults = [...results];
     newResults[currentIdx] = isCorrect;
     setResults(newResults);
@@ -170,31 +211,56 @@ function CuestionarioPage() {
   }
 
   function handleRestart() {
+    const fresh = shuffle(pool).slice(0, sessionCount(pool.length)).map(toLocalQ);
+    setQuestions(fresh);
+    setResults(new Array(fresh.length).fill(null));
     setCurrentIdx(0);
     setSelectedIdx(null);
     setAnswered(false);
-    setResults(new Array(QUESTIONS.length).fill(null));
     setShowResult(false);
+    setStartTime(Date.now());
+    setElapsedMin(0);
+    savedRef.current = false;
+    lastAnsweredRef.current = null;
+  }
+
+  /** Contexto de Yaris: la pregunta actual (la última respondida). */
+  function yarisCtx(): YarisContext {
+    const idx = lastAnsweredRef.current ?? currentIdx;
+    const q = questions[idx] ?? questions[currentIdx];
+    if (!q) return {};
+    return {
+      question: {
+        text: q.text,
+        options: q.options.map((o) => o.text),
+        correctIndex: q.correctIndex,
+        explanation: q.explanation,
+        cite: q.feedback.cite,
+      },
+      materiaName: q.materia,
+    };
   }
 
   function openYaris() {
+    if (!yarisOpen && user) logYarisUse(user.id, "Cuestionarios");
     setYarisOpen(true);
     if (!yarisInitialized) {
       setYarisInitialized(true);
       setYarisTyping(true);
+      const ctx = yarisCtx();
+      const materiaName = ctx.materiaName ?? "esta materia";
       setTimeout(() => {
         setYarisTyping(false);
         setYarisMsgs([
-          { role: "bot", text: "¡Hola! Soy Yaris. Veo que tienes una duda sobre <strong>Meteorología</strong>. ¡Te explico!", cite: "Manual Meteorología CIAAC, Cap. 21, p. 180" },
+          { role: "bot", text: `¡Hola! Soy Yaris. Veo que tienes una duda sobre <strong>${materiaName}</strong>. ¡Te explico!` },
         ]);
         setTimeout(() => {
           setYarisTyping(true);
           setTimeout(() => {
             setYarisTyping(false);
-            setYarisMsgs((prev) => [
-              ...prev,
-              { role: "bot", text: "El METAR tiene un orden fijo: Tipo · Estación · Hora · Viento · <strong>Visibilidad</strong> · Fenómenos · Nubosidad · Temperatura/Rocío · Presión. La visibilidad siempre va después del viento, en metros con 4 dígitos.", cite: "Meteorología Básica CIAAC, Cap. 21, p. 178" },
-            ]);
+            const r = yarisReply(0, ctx);
+            setYarisMsgs((prev) => [...prev, { role: "bot", text: r.t, cite: r.c ?? undefined }]);
+            setYarisReplyIdx(1);
           }, 900);
         }, 200);
       }, 700);
@@ -207,17 +273,17 @@ function CuestionarioPage() {
     setYarisMsgs((prev) => [...prev, { role: "user", text }]);
     setYarisInput("");
     setYarisTyping(true);
-    const replyIdx = yarisReplyIdx % YARIS_REPLIES.length;
-    setYarisReplyIdx(yarisReplyIdx + 1);
+    const turn = yarisReplyIdx;
+    setYarisReplyIdx(turn + 1);
+    const r = yarisReply(turn, yarisCtx(), text);
     setTimeout(() => {
       setYarisTyping(false);
-      const r = YARIS_REPLIES[replyIdx];
       setYarisMsgs((prev) => [...prev, { role: "bot", text: r.t, cite: r.c ?? undefined }]);
     }, 900);
   }
 
   function getOptionStyle(optIdx: number): React.CSSProperties {
-    const opt = QUESTIONS[currentIdx].options[optIdx];
+    const opt = questions[currentIdx].options[optIdx];
     if (!answered) {
       return {
         border: "2px solid #F2DCDB",
@@ -237,7 +303,7 @@ function CuestionarioPage() {
   }
 
   function getLetterStyle(optIdx: number): React.CSSProperties {
-    const opt = QUESTIONS[currentIdx].options[optIdx];
+    const opt = questions[currentIdx].options[optIdx];
     if (!answered) return { background: "#F2DCDB", color: "#647DA0" };
     if (optIdx === selectedIdx) {
       return opt.correct
@@ -248,10 +314,128 @@ function CuestionarioPage() {
     return { background: "#F2DCDB", color: "#647DA0" };
   }
 
-  const currentQ = QUESTIONS[currentIdx];
+  // Guard de sesión: nada que renderizar hasta estar autenticado y cargado.
+  if (!ready || !loaded) {
+    return <div style={{ minHeight: "100vh", background: "#f5f7fc" }} />;
+  }
+
+  const materiaLabel =
+    sessionSlugs.length === 1
+      ? materiaBySlug(sessionSlugs[0])?.name ?? sessionSlugs[0]
+      : sessionSlugs.length === MATERIAS_DEF.length
+        ? "Todas las materias"
+        : "Varias materias";
+
+  // Estado vacío: materia sin preguntas publicadas (mantiene el topbar).
+  if (questions.length === 0) {
+    return (
+      <div
+        style={{
+          fontFamily: "'Manrope', sans-serif",
+          background: "#f5f7fc",
+          color: "#22375C",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <div
+          style={{
+            background: "white",
+            borderBottom: "1px solid rgba(61,93,145,0.08)",
+            padding: "0 24px",
+            height: 62,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            position: "sticky",
+            top: 0,
+            zIndex: 100,
+            flexShrink: 0,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <Link
+              to="/dashboard/banco"
+              style={{
+                display: "flex", alignItems: "center", gap: 5,
+                color: "#647DA0", fontSize: "0.8rem", textDecoration: "none",
+                padding: "5px 10px", borderRadius: 6, border: "1px solid #F2DCDB",
+                transition: "all 0.2s",
+              }}
+            >
+              ← Salir
+            </Link>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "#22375C", display: "flex", alignItems: "center", gap: 6 }}>
+                <Icon n="spark" size={15} color="#3D5D91" /> Modo Aprendiendo
+              </span>
+              <span style={{ fontSize: "0.72rem", color: "#647DA0" }} className="hidden sm:block">
+                {materiaLabel}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
+          <div
+            style={{
+              background: "white", borderRadius: 18, padding: 32,
+              maxWidth: 480, width: "100%", textAlign: "center",
+              boxShadow: "0 2px 16px rgba(61,93,145,0.07)",
+            }}
+          >
+            <div style={{ marginBottom: 12, display: "flex", justifyContent: "center" }}>
+              <Icon n="help" size={40} color="#8DA1BE" />
+            </div>
+            <p style={{ fontSize: "0.95rem", fontWeight: 700, color: "#22375C", marginBottom: 8 }}>
+              Esta materia aún no tiene preguntas publicadas
+            </p>
+            <p style={{ fontSize: "0.82rem", color: "#647DA0", marginBottom: 20 }}>
+              Elige otra materia para practicar mientras agregamos más contenido.
+            </p>
+            <Link
+              to="/dashboard/banco"
+              style={{
+                display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 7,
+                padding: "12px 20px", background: "#6C0820", color: "white",
+                borderRadius: 11, fontSize: "0.88rem", fontWeight: 700,
+                textDecoration: "none", fontFamily: "'Manrope', sans-serif",
+              }}
+            >
+              ← Volver al banco de preguntas
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const currentQ = questions[currentIdx];
   const answeredCorrectly = answered && selectedIdx !== null && currentQ.options[selectedIdx].correct;
   const scorePercent = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
   const scoreColor = scorePercent >= 70 ? "#2ecc71" : scorePercent >= 50 ? "#f39c12" : "#e74c3c";
+
+  // Materias reales de ESTA sesión (para la pantalla de resultados).
+  const sessionMaterias = Object.entries(computePorMateria()).map(([slug, v]) => {
+    const def = materiaBySlug(slug);
+    return {
+      slug,
+      name: def?.name ?? slug,
+      icon: (def?.icon ?? "help") as FPIconName,
+      pct: v.total > 0 ? Math.round((v.correct / v.total) * 100) : 0,
+    };
+  });
+  const reforzar = sessionMaterias.filter((m) => m.pct < 70).sort((a, b) => a.pct - b.pct).slice(0, 2);
+  const dominado = sessionMaterias.filter((m) => m.pct >= 70).sort((a, b) => b.pct - a.pct).slice(0, 2);
+  const weakestSession = [...sessionMaterias].sort((a, b) => a.pct - b.pct)[0];
+
+  const initials =
+    (user?.nombre ?? "")
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((w) => w[0].toUpperCase())
+      .join("") || "TÚ";
 
   return (
     <div
@@ -299,7 +483,7 @@ function CuestionarioPage() {
               <Icon n="spark" size={15} color="#3D5D91" /> Modo Aprendiendo
             </span>
             <span style={{ fontSize: "0.72rem", color: "#647DA0" }} className="hidden sm:block">
-              Meteorología · {total} preguntas
+              {materiaLabel} · {total} preguntas
             </span>
           </div>
         </div>
@@ -500,7 +684,7 @@ function CuestionarioPage() {
                 >
                   <Icon n="book" size={13} /> {currentQ.feedback.cite}
                 </span>
-                <div style={{ marginTop: 12 }}>
+                <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                   <button
                     onClick={openYaris}
                     style={{
@@ -513,6 +697,19 @@ function CuestionarioPage() {
                     }}
                   >
                     <Icon n="spark" size={15} /> Explícamelo Yaris
+                  </button>
+                  <button
+                    onClick={() => setReportOpen(true)}
+                    style={{
+                      padding: "8px 12px",
+                      background: "transparent",
+                      color: "#647DA0", border: "1px solid #F2DCDB", borderRadius: 7,
+                      fontSize: "0.78rem", fontWeight: 600, cursor: "pointer",
+                      fontFamily: "'Manrope', sans-serif",
+                      display: "inline-flex", alignItems: "center", gap: 5,
+                    }}
+                  >
+                    <Icon n="alert" size={14} /> Reportar
                   </button>
                 </div>
               </div>
@@ -556,7 +753,7 @@ function CuestionarioPage() {
 
           {/* Mini tracker */}
           <div style={{ maxWidth: 680, width: "100%", display: "flex", gap: 4, flexWrap: "wrap" }}>
-            {QUESTIONS.map((_, i) => {
+            {questions.map((_, i) => {
               const res = results[i];
               const isCurrent = i === currentIdx && !showResult;
               let bg = "#F2DCDB";
@@ -659,41 +856,55 @@ function CuestionarioPage() {
               <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}>
                 <Icon n="alert" size={15} /> Temas que necesitas reforzar
               </div>
-              {[
-                { icon: "doc", label: "Lectura de METAR y TAF", score: 52, color: "#e74c3c", bg: "rgba(231,76,60,0.06)" },
-                { icon: "gauge", label: "Sistemas de presión", score: 65, color: "#f39c12", bg: "rgba(243,156,18,0.06)" },
-              ].map((item) => (
+              {reforzar.length === 0 ? (
                 <div
-                  key={item.label}
                   style={{
-                    display: "flex", alignItems: "center", justifyContent: "space-between",
                     padding: "8px 12px", borderRadius: 8, marginBottom: 6,
-                    fontSize: "0.84rem", background: item.bg,
+                    fontSize: "0.84rem", background: "rgba(46,204,113,0.06)",
+                    color: "#1a7a4a", fontWeight: 600,
                   }}
                 >
-                  <span style={{ display: "flex", alignItems: "center", gap: 7 }}><Icon n={item.icon as FPIconName} size={15} color="#22375C" /> {item.label}</span>
-                  <span style={{ color: item.color, fontWeight: 700 }}>{item.score}%</span>
+                  ¡Nada por reforzar hoy!
                 </div>
-              ))}
-              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12, marginTop: 14, display: "flex", alignItems: "center", gap: 6 }}>
-                <Icon n="check" size={15} /> Lo que dominaste
-              </div>
-              {[
-                { icon: "wind", label: "Fuerza de Coriolis", score: 90, color: "#2ecc71", bg: "rgba(46,204,113,0.06)" },
-                { icon: "cloud", label: "Clasificación de nubes", score: 88, color: "#2ecc71", bg: "rgba(46,204,113,0.06)" },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  style={{
-                    display: "flex", alignItems: "center", justifyContent: "space-between",
-                    padding: "8px 12px", borderRadius: 8, marginBottom: 6,
-                    fontSize: "0.84rem", background: item.bg,
-                  }}
-                >
-                  <span style={{ display: "flex", alignItems: "center", gap: 7 }}><Icon n={item.icon as FPIconName} size={15} color="#22375C" /> {item.label}</span>
-                  <span style={{ color: item.color, fontWeight: 700 }}>{item.score}%</span>
-                </div>
-              ))}
+              ) : (
+                reforzar.map((item) => {
+                  const color = item.pct < 60 ? "#e74c3c" : "#f39c12";
+                  const bg = item.pct < 60 ? "rgba(231,76,60,0.06)" : "rgba(243,156,18,0.06)";
+                  return (
+                    <div
+                      key={item.slug}
+                      style={{
+                        display: "flex", alignItems: "center", justifyContent: "space-between",
+                        padding: "8px 12px", borderRadius: 8, marginBottom: 6,
+                        fontSize: "0.84rem", background: bg,
+                      }}
+                    >
+                      <span style={{ display: "flex", alignItems: "center", gap: 7 }}><Icon n={item.icon} size={15} color="#22375C" /> {item.name}</span>
+                      <span style={{ color, fontWeight: 700 }}>{item.pct}%</span>
+                    </div>
+                  );
+                })
+              )}
+              {dominado.length > 0 && (
+                <>
+                  <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12, marginTop: 14, display: "flex", alignItems: "center", gap: 6 }}>
+                    <Icon n="check" size={15} /> Lo que dominaste
+                  </div>
+                  {dominado.map((item) => (
+                    <div
+                      key={item.slug}
+                      style={{
+                        display: "flex", alignItems: "center", justifyContent: "space-between",
+                        padding: "8px 12px", borderRadius: 8, marginBottom: 6,
+                        fontSize: "0.84rem", background: "rgba(46,204,113,0.06)",
+                      }}
+                    >
+                      <span style={{ display: "flex", alignItems: "center", gap: 7 }}><Icon n={item.icon} size={15} color="#22375C" /> {item.name}</span>
+                      <span style={{ color: "#2ecc71", fontWeight: 700 }}>{item.pct}%</span>
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
 
             {/* Pathy tip */}
@@ -710,7 +921,15 @@ function CuestionarioPage() {
               <span style={{ display: "flex", alignItems: "center" }}><Icon n="cloud" size={24} color="#6C0820" /></span>
               <div>
                 <strong style={{ color: "#6C0820" }}>Pathy recomienda:</strong>{" "}
-                ¡Buen trabajo! Tu punto más débil es la lectura de METAR/TAF. Te recomiendo hacer una sesión de 20 preguntas solo de ese tema. ¡En 2 días más lo dominarás!
+                {weakestSession && weakestSession.pct < 70 ? (
+                  <>
+                    ¡Buen trabajo! Tu punto más débil de esta sesión fue{" "}
+                    <strong>{weakestSession.name}</strong> ({weakestSession.pct}% de aciertos).
+                    Te recomiendo hacer una sesión de preguntas solo de esa materia. ¡Pronto la dominarás!
+                  </>
+                ) : (
+                  <>¡Excelente sesión! Dominaste todas las materias que practicaste hoy. Sigue con este ritmo de estudio.</>
+                )}
               </div>
             </div>
 
@@ -829,7 +1048,7 @@ function CuestionarioPage() {
                     flexShrink: 0,
                   }}
                 >
-                  {msg.role === "bot" ? <Icon n="spark" size={15} color="#6C0820" /> : "MG"}
+                  {msg.role === "bot" ? <Icon n="spark" size={15} color="#6C0820" /> : initials}
                 </div>
                 <div
                   style={{
@@ -920,6 +1139,16 @@ function CuestionarioPage() {
           </div>
         </div>
       </div>
+
+      {/* Reportar problema */}
+      <ReportProblemModal
+        open={reportOpen}
+        onClose={() => setReportOpen(false)}
+        user={user}
+        seccion="Cuestionarios"
+        recurso={currentQ.questionId}
+        tipoInicial="Pregunta mal redactada"
+      />
     </div>
   );
 }

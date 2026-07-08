@@ -1,6 +1,17 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
+import {
+  useSessionUser,
+  studentStats,
+  getSimAttempts,
+  getQuizAttempts,
+  canStartSimulator,
+  isPaid,
+  materiaBySlug,
+} from "@/lib/store";
+import type { QuizAttempt, SimAttempt } from "@/lib/store";
+import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
 export const Route = createFileRoute("/dashboard/banco")({
   component: BancoPage,
@@ -21,7 +32,7 @@ interface StrengthItem {
 }
 
 interface HistEntry {
-  id: number;
+  id: string;
   type: "exam" | "learn";
   title: string;
   meta: string;
@@ -36,95 +47,19 @@ interface HistEntry {
 
 /* ─── Static data ────────────────────────────────────── */
 
-const MATERIAS = [
-  "Aerodinámica",
-  "Aeronaves y Motores",
-  "Legislación",
-  "Medicina",
-  "Meteorología",
-  "Navegación",
-  "Operaciones",
-  "Comunicaciones",
-  "Manuales AIP",
-  "Tránsito Aéreo",
-  "Factores Humanos",
-  "Seguridad Aérea",
-];
-
-const HIST_DATA: HistEntry[] = [
-  {
-    id: 1,
-    type: "exam",
-    title: "Simulador CIAAC",
-    meta: "310 preguntas · 4h 32min · hace 2 días",
-    score: 68,
-    tag: "Simulador",
-    result: { correct: 211, total: 310 },
-    weaknesses: [
-      {
-        icon: "cloud",
-        name: "Meteorología",
-        detail: "Te costaron más: METAR, TAF y lectura de cartas meteorológicas",
-        score: 52,
-      },
-      {
-        icon: "scale",
-        name: "Legislación Aeronáutica",
-        detail: "Te costaron más: artículos de la Ley de Aviación Civil y ROAC",
-        score: 61,
-      },
-      {
-        icon: "map",
-        name: "Navegación Aérea",
-        detail: "Te costaron más: triángulo de velocidades y computador CR-3",
-        score: 65,
-      },
-    ],
-    strengths: [
-      { name: "Aerodinámica", score: 84 },
-      { name: "Factores Humanos", score: 88 },
-      { name: "Seguridad Aérea", score: 90 },
-    ],
-    pathyPrefix: "Pathy recomienda:",
-    pathyTip:
-      "Refuerza Meteorología esta semana — especialmente la lectura de METAR y TAF. ¡Con 3 sesiones de estudio estarás lista!",
-  },
-  {
-    id: 2,
-    type: "learn",
-    title: "Aprendiendo — Meteorología",
-    meta: "50 preguntas · 28 min · ayer",
-    score: 82,
-    tag: "Estudio",
-    result: { correct: 41, total: 50 },
-    weaknesses: [
-      {
-        icon: "doc",
-        name: "Lectura de METAR y TAF",
-        detail:
-          "6 de 9 preguntas incorrectas — repasa los grupos de visibilidad y nubosidad",
-        score: 67,
-      },
-    ],
-    strengths: [],
-    pathyPrefix: "Pathy recomienda:",
-    pathyTip:
-      "¡Vas muy bien con Meteorología! Solo refuerza la lectura de reportes METAR/TAF y estarás al 100%.",
-  },
-  {
-    id: 3,
-    type: "learn",
-    title: "Aprendiendo — Todas las materias",
-    meta: "30 preguntas · 18 min · hoy",
-    score: 90,
-    tag: "Estudio",
-    result: { correct: 27, total: 30 },
-    weaknesses: [],
-    strengths: [],
-    pathyPrefix: "Pathy dice:",
-    pathyTip:
-      "¡Excelente sesión! Tu racha de 14 días está dando frutos. Sigue así.",
-  },
+const MATERIAS: { label: string; slug: string }[] = [
+  { label: "Aerodinámica", slug: "aerodinamica" },
+  { label: "Aeronaves y Motores", slug: "aeronaves-motores" },
+  { label: "Legislación", slug: "legislacion" },
+  { label: "Medicina", slug: "medicina" },
+  { label: "Meteorología", slug: "meteorologia" },
+  { label: "Navegación", slug: "navegacion" },
+  { label: "Operaciones", slug: "operaciones" },
+  { label: "Comunicaciones", slug: "comunicaciones" },
+  { label: "Manuales AIP", slug: "manuales-ais" },
+  { label: "Tránsito Aéreo", slug: "servicios-transito" },
+  { label: "Factores Humanos", slug: "factores-humanos" },
+  { label: "Seguridad Aérea", slug: "seguridad-aerea" },
 ];
 
 /* ─── Helpers ────────────────────────────────────────── */
@@ -133,6 +68,113 @@ function scoreColor(score: number): string {
   if (score >= 80) return "#2ecc71";
   if (score >= 60) return "#f39c12";
   return "#e74c3c";
+}
+
+function fmtFecha(iso: string): string {
+  const d = new Date(iso);
+  const startOfDay = (x: Date) =>
+    new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+  const diffDays = Math.round((startOfDay(new Date()) - startOfDay(d)) / 86400000);
+  if (diffDays <= 0) return "hoy";
+  if (diffDays === 1) return "ayer";
+  if (diffDays < 30) return `hace ${diffDays} días`;
+  return d.toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" });
+}
+
+function fmtDurMin(min: number): string {
+  if (min >= 60) return `${Math.floor(min / 60)}h ${String(min % 60).padStart(2, "0")}min`;
+  return `${min} min`;
+}
+
+interface MateriaBreak {
+  slug: string;
+  name: string;
+  icon: string;
+  correct: number;
+  total: number;
+  pct: number;
+}
+
+function materiaBreakdown(
+  porMateria: Record<string, { correct: number; total: number }>,
+): MateriaBreak[] {
+  return Object.entries(porMateria)
+    .filter(([, v]) => v.total > 0)
+    .map(([slug, v]) => {
+      const def = materiaBySlug(slug);
+      return {
+        slug,
+        name: def?.name ?? slug,
+        icon: def?.icon ?? "help",
+        correct: v.correct,
+        total: v.total,
+        pct: Math.round((v.correct / v.total) * 100),
+      };
+    });
+}
+
+function toWeakness(m: MateriaBreak): WeaknessItem {
+  return { icon: m.icon, name: m.name, detail: `${m.correct} de ${m.total} correctas`, score: m.pct };
+}
+
+function simToEntry(a: SimAttempt): HistEntry {
+  const score = Math.round(a.scorePct);
+  const items = materiaBreakdown(a.porMateria);
+  const asc = [...items].sort((x, y) => x.pct - y.pct);
+  const desc = [...items].sort((x, y) => y.pct - x.pct);
+  const weakest = asc[0];
+  const pathyPrefix = score >= 80 ? "Pathy dice:" : "Pathy recomienda:";
+  const pathyTip =
+    score >= 80
+      ? `¡Felicidades! Aprobaste el simulador con ${score}%. Mantén tu ritmo de estudio para llegar al examen real con la misma confianza.`
+      : weakest
+        ? `Refuerza ${weakest.name} esta semana — obtuviste ${weakest.pct}% ahí. Una sesión de estudio enfocada en esa materia te acercará al 80% que necesitas.`
+        : "Sigue practicando: cada simulador es un paso más hacia el 80% que necesitas para aprobar.";
+  return {
+    id: a.id,
+    type: "exam",
+    title: "Simulador CIAAC",
+    meta: `${a.total} preguntas · ${fmtDurMin(Math.round(a.durationSecs / 60))} · ${fmtFecha(a.date)}`,
+    score,
+    tag: "Simulador",
+    result: { correct: a.correct, total: a.total },
+    weaknesses: asc.slice(0, 3).map(toWeakness),
+    strengths: desc.slice(0, 3).map((m) => ({ name: m.name, score: m.pct })),
+    pathyPrefix,
+    pathyTip,
+  };
+}
+
+function quizToEntry(a: QuizAttempt): HistEntry {
+  const score = a.total > 0 ? Math.round((a.correct / a.total) * 100) : 0;
+  const materiaTitle =
+    a.materias.length === 1
+      ? materiaBySlug(a.materias[0])?.name ?? a.materias[0]
+      : "Varias materias";
+  const items = materiaBreakdown(a.porMateria);
+  const asc = [...items].sort((x, y) => x.pct - y.pct);
+  const weak = asc.filter((m) => m.pct < 70).slice(0, 3);
+  const weakest = weak[0];
+  const pathyPrefix = score >= 80 ? "Pathy dice:" : "Pathy recomienda:";
+  const pathyTip =
+    score >= 80
+      ? `¡Excelente sesión! Lograste ${score}% de aciertos. Sigue con este ritmo de estudio.`
+      : weakest
+        ? `Tu punto más débil fue ${weakest.name} (${weakest.pct}% de aciertos). Te recomiendo una sesión de preguntas solo de esa materia. ¡Pronto la dominarás!`
+        : `Vas por buen camino con ${score}% de aciertos. Repite la sesión para afianzar lo aprendido.`;
+  return {
+    id: a.id,
+    type: "learn",
+    title: `Aprendiendo — ${materiaTitle}`,
+    meta: `${a.total} preguntas · ${fmtDurMin(a.durationMin)} · ${fmtFecha(a.date)}`,
+    score,
+    tag: "Estudio",
+    result: { correct: a.correct, total: a.total },
+    weaknesses: weak.map(toWeakness),
+    strengths: [],
+    pathyPrefix,
+    pathyTip,
+  };
 }
 
 /* ─── HistItem ───────────────────────────────────────── */
@@ -361,7 +403,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                             color: isBad ? "#e74c3c" : "#f39c12",
                           }}
                         >
-                          <Icon n={w.icon as any} size={18} />
+                          <Icon n={w.icon as never} size={18} />
                         </span>
                         <div>
                           <div
@@ -484,7 +526,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
 
 /* ─── Modal: Simulador CIAAC ─────────────────────────── */
 
-function ModalExamen({ onClose }: { onClose: () => void }) {
+function ModalExamen({ onClose, onStart }: { onClose: () => void; onStart: () => void }) {
   const infoRows = [
     {
       icon: "help",
@@ -588,7 +630,7 @@ function ModalExamen({ onClose }: { onClose: () => void }) {
                   color: "#22375C",
                 }}
               >
-                <Icon n={row.icon as any} size={18} />
+                <Icon n={row.icon as never} size={18} />
               </div>
               <span dangerouslySetInnerHTML={{ __html: row.html }} />
             </div>
@@ -639,6 +681,7 @@ function ModalExamen({ onClose }: { onClose: () => void }) {
             Cancelar
           </button>
           <button
+            onClick={onStart}
             style={{
               flex: 2,
               padding: 12,
@@ -673,12 +716,22 @@ function ModalExamen({ onClose }: { onClose: () => void }) {
 
 /* ─── Modal: Aprendiendo ─────────────────────────────── */
 
-function ModalAprendiendo({ onClose }: { onClose: () => void }) {
+function ModalAprendiendo({
+  onClose,
+  onStart,
+  paid,
+  onLocked,
+}: {
+  onClose: () => void;
+  onStart: (slugs: string[], qty: number) => void;
+  paid: boolean;
+  onLocked: () => void;
+}) {
   const [allSelected, setAllSelected] = useState(true);
   const [selectedMaterias, setSelectedMaterias] = useState<Set<string>>(
     new Set()
   );
-  const [qty, setQty] = useState("50");
+  const [qty, setQty] = useState(paid ? "50" : "10");
   const [showCustom, setShowCustom] = useState(false);
   const [customValue, setCustomValue] = useState("");
   const [showWarning, setShowWarning] = useState(false);
@@ -701,6 +754,10 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
   }
 
   function handleQtyClick(val: string) {
+    if (!paid && val !== "10") {
+      onLocked();
+      return;
+    }
     setQty(val);
     setShowCustom(false);
     setCustomValue("");
@@ -708,8 +765,29 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
   }
 
   function handleCustomClick() {
+    if (!paid) {
+      onLocked();
+      return;
+    }
     setQty("custom");
     setShowCustom(true);
+  }
+
+  function handleStart() {
+    const slugs =
+      allSelected || selectedMaterias.size === 0
+        ? MATERIAS.map((m) => m.slug)
+        : MATERIAS.filter((m) => selectedMaterias.has(m.label)).map((m) => m.slug);
+    let qtyNum = 10;
+    if (paid) {
+      if (qty === "custom") {
+        const n = parseInt(customValue);
+        qtyNum = !isNaN(n) && n > 0 ? Math.min(n, 500) : 10;
+      } else {
+        qtyNum = parseInt(qty) || 10;
+      }
+    }
+    onStart(slugs, qtyNum);
   }
 
   function handleCustomInput(val: string) {
@@ -809,11 +887,11 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
               Todas las materias
             </button>
             {MATERIAS.map((m) => {
-              const sel = selectedMaterias.has(m);
+              const sel = selectedMaterias.has(m.label);
               return (
                 <button
-                  key={m}
-                  onClick={() => handleMateriaClick(m)}
+                  key={m.slug}
+                  onClick={() => handleMateriaClick(m.label)}
                   style={{
                     ...chipBase,
                     border: `2px solid ${sel ? "#3D5D91" : "#F2DCDB"}`,
@@ -821,7 +899,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
                     color: sel ? "#3D5D91" : "#22375C",
                   }}
                 >
-                  {m}
+                  {m.label}
                 </button>
               );
             })}
@@ -953,6 +1031,7 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
             Cancelar
           </button>
           <button
+            onClick={handleStart}
             style={{
               flex: 2,
               padding: 12,
@@ -988,9 +1067,47 @@ function ModalAprendiendo({ onClose }: { onClose: () => void }) {
 /* ─── Main page ──────────────────────────────────────── */
 
 function BancoPage() {
+  const user = useSessionUser();
+  const navigate = useNavigate();
   const [modal, setModal] = useState<"examen" | "aprendiendo" | null>(null);
+  const [upgrade, setUpgrade] = useState<{ feature: string; benefit?: string } | null>(null);
   const [examHover, setExamHover] = useState(false);
   const [learnHover, setLearnHover] = useState(false);
+
+  const stats = user ? studentStats(user.id) : null;
+
+  const history: HistEntry[] = user
+    ? [
+        ...getSimAttempts(user.id).map((a) => ({ date: a.date, entry: simToEntry(a) })),
+        ...getQuizAttempts(user.id).map((a) => ({ date: a.date, entry: quizToEntry(a) })),
+      ]
+        .sort((x, y) => new Date(y.date).getTime() - new Date(x.date).getTime())
+        .slice(0, 10)
+        .map((x) => x.entry)
+    : [];
+
+  function handleStartSim() {
+    const gate = canStartSimulator(user);
+    setModal(null);
+    if (gate.allowed) {
+      navigate({ to: "/simulador" });
+    } else {
+      setUpgrade({ feature: "Simulador CIAAC", benefit: gate.reason });
+    }
+  }
+
+  function handleStartLearn(slugs: string[], qty: number) {
+    setModal(null);
+    navigate({ to: "/cuestionario", search: { materias: slugs.join(","), qty } });
+  }
+
+  function handleLearnLocked() {
+    setUpgrade({
+      feature: "Banco completo de preguntas",
+      benefit:
+        "Con el acceso completo eliges cuántas preguntas practicar y desbloqueas todo el banco de las 12 materias del CIAAC.",
+    });
+  }
 
   const EXAM_FEATURES = [
     "310 preguntas oficiales",
@@ -1056,9 +1173,17 @@ function BancoPage() {
           }}
         >
           {[
-            { icon: "help", label: "Preguntas respondidas:", value: "1,240" },
-            { icon: "check", label: "Aciertos promedio:", value: "74%" },
-            { icon: "sim", label: "Simulacros hechos:", value: "3" },
+            {
+              icon: "help",
+              label: "Preguntas respondidas:",
+              value: (stats?.answered ?? 0).toLocaleString(),
+            },
+            {
+              icon: "check",
+              label: "Aciertos promedio:",
+              value: stats && stats.avgScore !== null ? `${stats.avgScore}%` : "—",
+            },
+            { icon: "sim", label: "Simulacros hechos:", value: String(stats?.simCount ?? 0) },
           ].map((s) => (
             <div
               key={s.label}
@@ -1073,7 +1198,7 @@ function BancoPage() {
                 fontSize: "0.85rem",
               }}
             >
-              <span style={{ fontSize: "1.1rem", display: "flex", color: "#3D5D91" }}><Icon n={s.icon as any} size={18} /></span>
+              <span style={{ fontSize: "1.1rem", display: "flex", color: "#3D5D91" }}><Icon n={s.icon as never} size={18} /></span>
               <span>
                 {s.label}{" "}
                 <strong style={{ color: "#3D5D91" }}>{s.value}</strong>
@@ -1369,19 +1494,48 @@ function BancoPage() {
             Historial y análisis de sesiones
           </h3>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {HIST_DATA.map((entry) => (
-              <HistItem key={entry.id} entry={entry} />
-            ))}
+            {history.length === 0 ? (
+              <div
+                style={{
+                  background: "white",
+                  borderRadius: 12,
+                  boxShadow: "0 2px 8px rgba(61,93,145,0.05)",
+                  padding: "22px 18px",
+                  textAlign: "center",
+                  fontSize: "0.85rem",
+                  color: "#647DA0",
+                  fontFamily: "'Manrope', sans-serif",
+                }}
+              >
+                Aún no tienes sesiones. ¡Haz tu primer cuestionario!
+              </div>
+            ) : (
+              history.map((entry) => <HistItem key={entry.id} entry={entry} />)
+            )}
           </div>
         </div>
       </div>
 
       {/* Modals */}
       {modal === "examen" && (
-        <ModalExamen onClose={() => setModal(null)} />
+        <ModalExamen onClose={() => setModal(null)} onStart={handleStartSim} />
       )}
       {modal === "aprendiendo" && (
-        <ModalAprendiendo onClose={() => setModal(null)} />
+        <ModalAprendiendo
+          onClose={() => setModal(null)}
+          onStart={handleStartLearn}
+          paid={isPaid(user)}
+          onLocked={handleLearnLocked}
+        />
+      )}
+      {upgrade && (
+        <UpgradeModal
+          open
+          onClose={() => setUpgrade(null)}
+          feature={upgrade.feature}
+          benefit={upgrade.benefit}
+          userId={user?.id}
+        />
       )}
     </>
   );

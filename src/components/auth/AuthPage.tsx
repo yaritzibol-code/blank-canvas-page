@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { Eye, EyeOff } from "lucide-react";
+import { register, login, resetPassword, getSessionUser, ensureSeeded } from "@/lib/store";
 
 type Tab = "register" | "login";
 
@@ -55,11 +56,44 @@ const GOOGLE_SVG = (
   </svg>
 );
 
+const errorTextStyle: React.CSSProperties = {
+  fontSize: "0.78rem",
+  color: "#e74c3c",
+  fontWeight: 600,
+  textAlign: "center",
+  lineHeight: 1.4,
+};
+
+const googleMsgStyle: React.CSSProperties = {
+  fontSize: "0.75rem",
+  color: "#647DA0",
+  textAlign: "center",
+  lineHeight: 1.4,
+};
+
 function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [marketing, setMarketing] = useState(true);
+  const [terms, setTerms] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [googleMsg, setGoogleMsg] = useState(false);
 
   function handleRegister() {
+    if (loading) return;
+    setError(null);
+    if (!terms) {
+      setError("Debes aceptar los Términos y condiciones y el Aviso de privacidad.");
+      return;
+    }
+    const res = register({ nombre, email, password, marketingOptIn: marketing });
+    if (!res.ok) {
+      setError(res.error ?? "No pudimos crear tu cuenta. Inténtalo de nuevo.");
+      return;
+    }
     setLoading(true);
     setTimeout(() => { window.location.href = "/dashboard"; }, 800);
   }
@@ -91,17 +125,20 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
 
       <Field label="Nombre completo">
         <input type="text" placeholder="Ej. María González" required style={inputStyle}
+          value={nombre} onChange={(e) => setNombre(e.target.value)}
           onFocus={(e) => (e.target.style.borderColor = "#3D5D91")} onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")} />
       </Field>
 
       <Field label="Correo electrónico">
         <input type="email" placeholder="tu@correo.com" required style={inputStyle}
+          value={email} onChange={(e) => setEmail(e.target.value)}
           onFocus={(e) => (e.target.style.borderColor = "#3D5D91")} onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")} />
       </Field>
 
       <Field label="Contraseña" hint="Usa letras, números y símbolos para mayor seguridad.">
         <div style={{ position: "relative" }}>
           <input type={showPw ? "text" : "password"} placeholder="Mínimo 8 caracteres" required style={{ ...inputStyle, paddingRight: 44 }}
+            value={password} onChange={(e) => setPassword(e.target.value)}
             onFocus={(e) => (e.target.style.borderColor = "#3D5D91")} onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")} />
           <button type="button" onClick={() => setShowPw(!showPw)}
             style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#8DA1BE", display: "flex" }}>
@@ -111,24 +148,28 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
       </Field>
 
       <label style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer" }}>
-        <input type="checkbox" defaultChecked style={{ width: 18, height: 18, marginTop: 2, accentColor: "#6C0820", flexShrink: 0 }} />
+        <input type="checkbox" checked={marketing} onChange={(e) => setMarketing(e.target.checked)}
+          style={{ width: 18, height: 18, marginTop: 2, accentColor: "#6C0820", flexShrink: 0 }} />
         <span style={{ fontSize: "0.82rem", color: "#647DA0", lineHeight: 1.4 }}>
           Quiero recibir promociones, tips de estudio y novedades de FlightPath por correo.
         </span>
       </label>
 
       <label style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer" }}>
-        <input type="checkbox" required style={{ width: 18, height: 18, marginTop: 2, accentColor: "#6C0820", flexShrink: 0 }} />
+        <input type="checkbox" checked={terms} onChange={(e) => setTerms(e.target.checked)}
+          style={{ width: 18, height: 18, marginTop: 2, accentColor: "#6C0820", flexShrink: 0 }} />
         <span style={{ fontSize: "0.82rem", color: "#647DA0", lineHeight: 1.4 }}>
           Acepto los{" "}
-          <a href="#" style={{ color: "#3D5D91", fontWeight: 600, textDecoration: "none" }}>Términos y condiciones</a>{" "}
+          <Link to="/legal" style={{ color: "#3D5D91", fontWeight: 600, textDecoration: "none" }}>Términos y condiciones</Link>{" "}
           y el{" "}
-          <a href="#" style={{ color: "#3D5D91", fontWeight: 600, textDecoration: "none" }}>Aviso de privacidad</a>.
+          <Link to="/legal" style={{ color: "#3D5D91", fontWeight: 600, textDecoration: "none" }}>Aviso de privacidad</Link>.
         </span>
       </label>
 
       <Divider />
-      <GoogleButton onClick={handleRegister} />
+      <GoogleButton onClick={() => setGoogleMsg(true)} />
+      {googleMsg && <p style={googleMsgStyle}>Disponible próximamente — usa tu correo</p>}
+      {error && <p style={errorTextStyle}>{error}</p>}
       <SubmitButton loading={loading} onClick={handleRegister}>Crear cuenta gratis</SubmitButton>
 
       <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#8DA1BE", marginTop: 4 }}>
@@ -145,22 +186,86 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
 function LoginForm({ onSwitch }: { onSwitch: () => void }) {
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [googleMsg, setGoogleMsg] = useState(false);
+
+  // Flujo MVP de "¿Olvidaste tu contraseña?"
+  const [showReset, setShowReset] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetPw, setResetPw] = useState("");
+  const [resetError, setResetError] = useState<string | null>(null);
+  const [resetOk, setResetOk] = useState(false);
 
   function handleLogin() {
+    if (loading) return;
+    setError(null);
+    const res = login(email, password);
+    if (!res.ok) {
+      setError(res.error ?? "No pudimos iniciar sesión. Inténtalo de nuevo.");
+      return;
+    }
     setLoading(true);
     setTimeout(() => { window.location.href = "/dashboard"; }, 800);
+  }
+
+  function handleReset() {
+    setResetError(null);
+    setResetOk(false);
+    const res = resetPassword(resetEmail, resetPw);
+    if (!res.ok) {
+      setResetError(res.error ?? "No pudimos actualizar la contraseña.");
+      return;
+    }
+    setResetOk(true);
+    setResetPw("");
+  }
+
+  if (showReset) {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <Field label="Correo electrónico">
+          <input type="email" placeholder="tu@correo.com" style={inputStyle}
+            value={resetEmail} onChange={(e) => setResetEmail(e.target.value)}
+            onFocus={(e) => (e.target.style.borderColor = "#3D5D91")} onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")} />
+        </Field>
+
+        <Field label="Nueva contraseña" hint="Mínimo 8 caracteres.">
+          <input type="password" placeholder="Tu nueva contraseña" style={inputStyle}
+            value={resetPw} onChange={(e) => setResetPw(e.target.value)}
+            onFocus={(e) => (e.target.style.borderColor = "#3D5D91")} onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")} />
+        </Field>
+
+        {resetError && <p style={errorTextStyle}>{resetError}</p>}
+        {resetOk && (
+          <p style={{ ...errorTextStyle, color: "#2ecc71" }}>Contraseña actualizada, inicia sesión.</p>
+        )}
+        <SubmitButton loading={false} onClick={handleReset}>Actualizar contraseña</SubmitButton>
+
+        <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#8DA1BE", marginTop: 4 }}>
+          <button type="button" onClick={() => setShowReset(false)}
+            style={{ color: "#3D5D91", fontWeight: 600, background: "none", border: "none", cursor: "pointer", fontSize: "inherit" }}>
+            ← Volver a iniciar sesión
+          </button>
+        </p>
+      </div>
+    );
   }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       <Field label="Correo electrónico">
         <input type="email" placeholder="tu@correo.com" style={inputStyle}
+          value={email} onChange={(e) => setEmail(e.target.value)}
           onFocus={(e) => (e.target.style.borderColor = "#3D5D91")} onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")} />
       </Field>
 
       <Field label="Contraseña">
         <div style={{ position: "relative" }}>
           <input type={showPw ? "text" : "password"} placeholder="Tu contraseña" style={{ ...inputStyle, paddingRight: 44 }}
+            value={password} onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") handleLogin(); }}
             onFocus={(e) => (e.target.style.borderColor = "#3D5D91")} onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")} />
           <button type="button" onClick={() => setShowPw(!showPw)}
             style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#8DA1BE", display: "flex" }}>
@@ -170,14 +275,18 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
       </Field>
 
       <div style={{ textAlign: "right" }}>
-        <a href="#" style={{ fontSize: "0.8rem", color: "#3D5D91", fontWeight: 600, textDecoration: "none" }}>
+        <button type="button"
+          onClick={() => { setShowReset(true); setResetEmail(email); setResetError(null); setResetOk(false); }}
+          style={{ fontSize: "0.8rem", color: "#3D5D91", fontWeight: 600, background: "none", border: "none", cursor: "pointer", padding: 0, fontFamily: FONT }}>
           ¿Olvidaste tu contraseña?
-        </a>
+        </button>
       </div>
 
+      {error && <p style={errorTextStyle}>{error}</p>}
       <SubmitButton loading={loading} onClick={handleLogin}>Iniciar sesión</SubmitButton>
       <Divider />
-      <GoogleButton onClick={handleLogin} />
+      <GoogleButton onClick={() => setGoogleMsg(true)} />
+      {googleMsg && <p style={googleMsgStyle}>Disponible próximamente — usa tu correo</p>}
 
       <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#8DA1BE", marginTop: 4 }}>
         ¿No tienes cuenta?{" "}
@@ -266,6 +375,12 @@ function SubmitButton({ children, loading, onClick }: { children: React.ReactNod
 /* ─── Main AuthPage component ──────────────────────────── */
 export function AuthPage({ initialTab }: { initialTab: Tab }) {
   const [tab, setTab] = useState<Tab>(initialTab);
+
+  // Si ya hay sesión activa, directo al dashboard.
+  useEffect(() => {
+    ensureSeeded();
+    if (getSessionUser()) window.location.href = "/dashboard";
+  }, []);
 
   return (
     <div style={{
