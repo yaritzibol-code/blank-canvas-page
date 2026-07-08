@@ -674,6 +674,7 @@ function CuestionarioPage() {
                 <p style={{ fontSize: "0.85rem", lineHeight: 1.6, color: "#555" }}>
                   {answeredCorrectly ? currentQ.feedback.correct : currentQ.feedback.incorrect}
                 </p>
+                {currentQ.feedback.cite && (
                 <span
                   style={{
                     marginTop: 8, padding: "4px 10px",
@@ -684,6 +685,7 @@ function CuestionarioPage() {
                 >
                   <Icon n="book" size={13} /> {currentQ.feedback.cite}
                 </span>
+                )}
                 <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                   <button
                     onClick={openYaris}

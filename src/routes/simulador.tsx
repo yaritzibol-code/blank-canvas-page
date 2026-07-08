@@ -614,7 +614,7 @@ function SimuladorPage() {
                   </div>
                   <div style={{ padding: "10px 12px", background: "rgba(61,93,145,0.06)", borderLeft: "3px solid #3D5D91", borderRadius: "0 7px 7px 0", fontSize: "0.8rem", color: "#555", lineHeight: 1.5 }}>
                     <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="lightbulb" size={14} color="#f39c12" /> {q.explanation}</span>
-                    <div style={{ marginTop: 5, fontSize: "0.72rem", color: "#3D5D91", fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><Icon n="book" size={13} /> {q.cite}</div>
+                    {q.cite && <div style={{ marginTop: 5, fontSize: "0.72rem", color: "#3D5D91", fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><Icon n="book" size={13} /> {q.cite}</div>}
                   </div>
                 </div>
               );
@@ -740,7 +740,7 @@ function SimuladorPage() {
 
                 <div style={{ padding: "14px 16px", background: "rgba(61,93,145,0.06)", borderLeft: "4px solid #3D5D91", borderRadius: "0 10px 10px 0", fontSize: "0.85rem", color: "#555", lineHeight: 1.6, marginBottom: 14 }}>
                   <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="lightbulb" size={15} color="#f39c12" /> {reviewQ.explanation}</span>
-                  <div style={{ marginTop: 6, fontSize: "0.74rem", color: "#3D5D91", fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><Icon n="book" size={13} /> {reviewQ.cite}</div>
+                  {reviewQ.cite && <div style={{ marginTop: 6, fontSize: "0.74rem", color: "#3D5D91", fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><Icon n="book" size={13} /> {reviewQ.cite}</div>}
                 </div>
 
                 <button onClick={openYaris} style={{ width: "100%", padding: 11, background: "linear-gradient(135deg,#3D5D91,#5A86CB)", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
