@@ -40,10 +40,18 @@ interface Book {
 const FILTER_TABS = [
   { key: "todos", label: "Todos" },
   { key: "oficial", label: "Oficiales CIAAC" },
-  { key: "faa", label: "FAA" },
-  { key: "jeppesen", label: "Jeppesen" },
   { key: "oaci", label: "OACI" },
+  { key: "faa", label: "FAA" },
+  { key: "ley", label: "Leyes MX" },
+  { key: "jeppesen", label: "Jeppesen" },
+  { key: "libro", label: "Libros" },
 ];
+
+/** URL de descarga directa de Drive a partir de la URL del visor (/preview). */
+function driveDownloadUrl(fileUrl: string): string {
+  const m = fileUrl.match(/drive\.google\.com\/file\/d\/([\w-]+)/);
+  return m ? `https://drive.google.com/uc?export=download&id=${m[1]}` : fileUrl;
+}
 
 interface YarisMsg { role: "bot" | "user"; text: string; cite?: string; }
 
@@ -166,7 +174,7 @@ function BibliotecaPage() {
 
   function handleDownload() {
     if (!readerBook) return;
-    if (readerBook.fileUrl) window.open(readerBook.fileUrl, "_blank");
+    if (readerBook.fileUrl) window.open(driveDownloadUrl(readerBook.fileUrl), "_blank");
     else showNotice("El archivo estará disponible próximamente");
   }
 
@@ -174,6 +182,12 @@ function BibliotecaPage() {
     if (!readerBook) return;
     if (!readerBook.fileUrl) {
       showNotice("El archivo estará disponible próximamente");
+      return;
+    }
+    if (/drive\.google\.com|docs\.google\.com/.test(readerBook.fileUrl)) {
+      // El visor de Drive es de otro origen: se descarga el PDF para imprimirlo.
+      window.open(driveDownloadUrl(readerBook.fileUrl), "_blank");
+      showNotice("Se abrió el PDF en otra pestaña — imprímelo desde tu navegador");
       return;
     }
     try {
@@ -317,15 +331,21 @@ function BibliotecaPage() {
             <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", background: "#2a2a2a" }}>
               {/* PDF toolbar */}
               <div style={{ height: 44, background: "rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 16px", flexShrink: 0 }}>
+                {readerBook.fileUrl ? (
+                  <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.5)" }}>Documento oficial — usa los controles del visor para navegar</span>
+                ) : (
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <button onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "rgba(255,255,255,0.8)", padding: "5px 12px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>← Anterior</button>
                   <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.5)" }}>Página {currentPage} de {readerBook.pages}</span>
                   <button onClick={() => setCurrentPage((p) => Math.min(readerBook.pages, p + 1))} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "rgba(255,255,255,0.8)", padding: "5px 12px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Siguiente →</button>
                 </div>
+                )}
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  {!readerBook.fileUrl && (<>
                   <button onClick={() => setZoom((z) => Math.max(0.5, parseFloat((z - 0.1).toFixed(1))))} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "rgba(255,255,255,0.8)", padding: "5px 12px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>−</button>
                   <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.5)", minWidth: 36, textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
                   <button onClick={() => setZoom((z) => Math.min(2, parseFloat((z + 0.1).toFixed(1))))} style={{ background: "rgba(255,255,255,0.1)", border: "none", color: "rgba(255,255,255,0.8)", padding: "5px 12px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>+</button>
+                  </>)}
                   <button
                     onClick={handleDownload}
                     disabled={!canDownload}

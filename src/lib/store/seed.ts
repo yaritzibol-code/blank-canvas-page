@@ -7,6 +7,7 @@ import { read, write, todayKey } from "./db";
 import { hashPassword, defaultPrefs } from "./auth";
 import { MATERIAS_DEF } from "./materias";
 import { SEED_QUESTIONS } from "./seed-questions";
+import { LIBROS_SEED } from "./seed-biblioteca";
 import type {
   ActivityEvent,
   BankQuestion,
@@ -23,7 +24,7 @@ import type {
   User,
 } from "./types";
 
-const SEED_VERSION = 1;
+const SEED_VERSION = 2;
 
 const pad3 = (n: number) => String(n).padStart(3, "0");
 
@@ -271,26 +272,33 @@ function seedClases(): Clase[] {
 }
 
 function seedMateriales(): Material[] {
-  const mk = (
-    id: string, titulo: string, autor: string, emoji: string, gradient: string,
-    badge: string, badgeColor: string, tags: string[], materia: string,
-    pages: number, muestraGratis: boolean, descargable: boolean,
-  ): Material => ({
-    id, titulo, autor, materia, tags, badge, badgeColor, emoji, gradient, pages,
-    fileUrl: "", descargable, imprimible: descargable, muestraGratis,
-    status: "publicada", createdAt: daysAgoISO(110, 12), updatedAt: daysAgoISO(110, 12),
-  });
-  return [
-    mk("aero-basica", "Aerodinámica Básica", "Muñiz, A. — CIAAC", "plane", "linear-gradient(135deg,#667eea,#764ba2)", "Oficial", "#3D5D91", ["oficial", "aerodinamica"], "aerodinamica", 95, true, true),
-    mk("aero-avanzada", "Aerodinámica Avanzada", "CIAAC", "plane", "linear-gradient(135deg,#f093fb,#f5576c)", "Oficial", "#3D5D91", ["oficial", "aerodinamica"], "aerodinamica", 191, false, true),
-    mk("sta", "Servicios de Tránsito Aéreo", "SCT-DGAC-CIAAC", "tower", "linear-gradient(135deg,#4facfe,#00f2fe)", "Oficial", "#3D5D91", ["oficial", "transito"], "servicios-transito", 120, false, true),
-    mk("aeronaves", "Aeronaves y Motores: Generalidades", "SCT-DGAC-CIAAC", "settings", "linear-gradient(135deg,#43e97b,#38f9d7)", "Oficial", "#3D5D91", ["oficial", "aeronaves"], "aeronaves-motores", 145, false, true),
-    mk("medicina", "Medicina Aeronáutica", "Amezcua, L. A. — CIAAC", "stethoscope", "linear-gradient(135deg,#fa709a,#fee140)", "Oficial", "#3D5D91", ["oficial", "medicina"], "medicina", 88, false, false),
-    mk("ifh", "Instrument Flying Handbook", "Federal Aviation Administration", "map", "linear-gradient(135deg,#a18cd1,#fbc2eb)", "FAA", "#5A86CB", ["faa", "navegacion"], "navegacion", 322, true, true),
-    mk("jeppesen-charts", "Introduction to Jeppesen Navigation Charts", "Jeppesen Inc. — 2012", "chart", "linear-gradient(135deg,#ffecd2,#fcb69f)", "Jeppesen", "#6C0820", ["jeppesen", "navegacion"], "manuales-ais", 156, false, false),
-    mk("oaci-fh", "Manual de Instrucción de Factores Humanos", "OACI — Doc. 9683", "brain", "linear-gradient(135deg,#2af598,#009efd)", "OACI", "#3D5D91", ["oaci", "factores"], "factores-humanos", 210, false, true),
-  ];
+  // Los 104 libros reales de la carpeta "libros" de Drive (visor embebible).
+  return LIBROS_SEED.map((l) => ({
+    id: l.id,
+    titulo: l.titulo,
+    autor: l.autor,
+    materia: l.materia,
+    tags: l.tags,
+    badge: l.badge,
+    badgeColor: l.badgeColor,
+    emoji: l.emoji,
+    gradient: l.gradient,
+    pages: 0, // el visor de Drive pagina por sí mismo
+    fileUrl: l.fileUrl,
+    descargable: l.descargable,
+    imprimible: l.imprimible,
+    muestraGratis: l.muestraGratis,
+    status: l.status,
+    createdAt: daysAgoISO(110, 12),
+    updatedAt: daysAgoISO(110, 12),
+  }));
 }
+
+/** Ids de los 8 materiales del seed v1, reemplazados por la biblioteca real en v2. */
+const V1_MATERIAL_IDS = new Set([
+  "aero-basica", "aero-avanzada", "sta", "aeronaves",
+  "medicina", "ifh", "jeppesen-charts", "oaci-fh",
+]);
 
 /** Historial demo de María: 14 días de actividad, 8 cuestionarios, 1 simulador. */
 function seedHistory() {
@@ -467,6 +475,17 @@ function seedReports(): Report[] {
 export function ensureSeeded() {
   const current = read<number>("seed_version", 0);
   if (current >= SEED_VERSION) return;
+
+  if (current === 1) {
+    // v1 → v2: solo reemplaza la biblioteca (8 materiales demo → 104 libros reales),
+    // conservando los materiales creados por la administradora.
+    const custom = read<Material[]>("materiales", []).filter(
+      (m) => !V1_MATERIAL_IDS.has(m.id) && !m.id.startsWith("lib_"),
+    );
+    write("materiales", [...seedMateriales(), ...custom]);
+    write("seed_version", SEED_VERSION);
+    return;
+  }
 
   const users = seedUsers();
   const existing = read<User[]>("users", []);
