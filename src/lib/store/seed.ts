@@ -24,7 +24,7 @@ import type {
   User,
 } from "./types";
 
-const SEED_VERSION = 2;
+const SEED_VERSION = 3;
 
 const pad3 = (n: number) => String(n).padStart(3, "0");
 
@@ -174,7 +174,8 @@ function seedFlashcards(questions: BankQuestion[]): FlashCardItem[] {
   };
 
   MATERIAS_DEF.forEach((m) => {
-    const qs = questions.filter((q) => q.materia === m.slug);
+    // Tope de 40 tarjetas por materia: decks estudiables y localStorage acotado.
+    const qs = questions.filter((q) => q.materia === m.slug).slice(0, 40);
     const [tema1, tema2] = TEMAS_POR_MATERIA[m.slug] ?? ["Repaso general I", "Repaso general II"];
     qs.forEach((q, i) => {
       // Aerodinámica ya tiene el primer deck escrito a mano; sus derivadas van al deck 2.
@@ -476,13 +477,26 @@ export function ensureSeeded() {
   const current = read<number>("seed_version", 0);
   if (current >= SEED_VERSION) return;
 
-  if (current === 1) {
-    // v1 → v2: solo reemplaza la biblioteca (8 materiales demo → 104 libros reales),
-    // conservando los materiales creados por la administradora.
-    const custom = read<Material[]>("materiales", []).filter(
-      (m) => !V1_MATERIAL_IDS.has(m.id) && !m.id.startsWith("lib_"),
-    );
-    write("materiales", [...seedMateriales(), ...custom]);
+  if (current >= 1) {
+    // Migraciones incrementales para navegadores ya sembrados (conservan usuarios,
+    // historial y contenido creado por la administradora).
+    if (current < 2) {
+      // v2: biblioteca real (8 materiales demo → 104 libros de Drive).
+      const custom = read<Material[]>("materiales", []).filter(
+        (m) => !V1_MATERIAL_IDS.has(m.id) && !m.id.startsWith("lib_"),
+      );
+      write("materiales", [...seedMateriales(), ...custom]);
+    }
+    if (current < 3) {
+      // v3: banco oficial completo (72 preguntas semilla → 2,819 del spreadsheet)
+      // y flashcards re-derivadas del banco nuevo.
+      const custom = read<BankQuestion[]>("questions", []).filter(
+        (q) => !q.id.startsWith("q_seed_"),
+      );
+      const fresh = seedQuestions();
+      write("questions", [...fresh, ...custom]);
+      write("flashcards", seedFlashcards(fresh));
+    }
     write("seed_version", SEED_VERSION);
     return;
   }
