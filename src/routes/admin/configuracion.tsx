@@ -12,7 +12,7 @@ import {
   primaryBtnStyle,
   useFlash,
 } from "@/components/admin/AdminShell";
-import { getConfig, saveConfig, type InternalConfig } from "@/lib/store";
+import { cloudEnabled, getConfig, saveConfig, type InternalConfig } from "@/lib/store";
 
 export const Route = createFileRoute("/admin/configuracion")({
   component: AdminConfiguracionPage,
@@ -41,6 +41,19 @@ function AdminConfiguracionPage() {
   return (
     <AdminShell title="Configuración interna" active="configuracion" maxWidth={900}>
       <Flash flash={flash} />
+
+      {/* Estado de la nube (Lovable Cloud / Supabase) */}
+      <div style={{ ...cardStyle, marginBottom: 18 }}>
+        <div style={cardHeadStyle}><Icon n="shield" size={15} /> Base de datos en la nube</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: ".85rem" }}>
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: cloudEnabled() ? "#2ecc71" : "#e0a800", flexShrink: 0 }} />
+          {cloudEnabled() ? (
+            <span>Conectada a <strong>Lovable Cloud (Supabase)</strong>: cuentas, progreso y contenido se guardan en la nube y se sincronizan entre dispositivos.</span>
+          ) : (
+            <span>Modo local: los datos viven en este navegador. En el sitio publicado con Lovable Cloud la sincronización se activa automáticamente.</span>
+          )}
+        </div>
+      </div>
 
       {/* Identidad */}
       <div style={{ ...cardStyle, marginBottom: 18 }}>

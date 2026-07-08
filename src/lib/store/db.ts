@@ -36,6 +36,14 @@ if (isBrowser) {
 
 const memoryFallback = new Map<string, string>();
 
+// Gancho de escritura: el motor de sincronización con la nube (sync.ts) se
+// registra aquí para empujar cambios locales a Supabase sin acoplar db.ts.
+type WriteHook = (key: string) => void;
+let writeHook: WriteHook | null = null;
+export function setWriteHook(fn: WriteHook | null) {
+  writeHook = fn;
+}
+
 export function readRaw(key: string): string | null {
   if (!isBrowser) return memoryFallback.get(key) ?? null;
   try {
@@ -55,6 +63,7 @@ export function writeRaw(key: string, value: string) {
   } else {
     memoryFallback.set(key, value);
   }
+  writeHook?.(key);
   notify();
 }
 

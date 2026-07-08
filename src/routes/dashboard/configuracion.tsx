@@ -137,13 +137,13 @@ function ConfiguracionPage() {
     setDeleteConfirm("");
   };
 
-  const savePassword = () => {
+  const savePassword = async () => {
     setPwdError(null);
     if (!pwdNueva || pwdNueva !== pwdConfirm) {
       setPwdError("Las contraseñas nuevas no coinciden.");
       return;
     }
-    const res = changePassword(user.id, pwdActual, pwdNueva);
+    const res = await changePassword(user.id, pwdActual, pwdNueva);
     if (!res.ok) {
       setPwdError(res.error ?? "No pudimos actualizar la contraseña.");
       return;

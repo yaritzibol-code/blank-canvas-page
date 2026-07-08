@@ -148,12 +148,12 @@ function AdminPerfilPage() {
     showFlash("Acceso cancelado", true);
   };
 
-  const doReset = () => {
+  const doReset = async () => {
     if (!student) return;
-    const res = resetPassword(student.email, "flightpath123");
-    if (res.ok) logAccessChange(student.id, "Reset de contraseña", "Contraseña temporal asignada");
+    const res = await resetPassword(student.email, "flightpath123");
+    if (res.ok) logAccessChange(student.id, "Reset de contraseña", res.info ? "Correo de restablecimiento enviado" : "Contraseña temporal asignada");
     setModal(null);
-    showFlash(res.ok ? "Contraseña temporal: flightpath123" : (res.error ?? "No se pudo restablecer la contraseña"), !res.ok);
+    showFlash(res.ok ? (res.info ?? "Contraseña temporal: flightpath123") : (res.error ?? "No se pudo restablecer la contraseña"), !res.ok);
   };
 
   const doWa = () => {

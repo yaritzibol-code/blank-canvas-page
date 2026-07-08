@@ -82,20 +82,27 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
   const [error, setError] = useState<string | null>(null);
   const [googleMsg, setGoogleMsg] = useState(false);
 
-  function handleRegister() {
+  async function handleRegister() {
     if (loading) return;
     setError(null);
     if (!terms) {
       setError("Debes aceptar los Términos y condiciones y el Aviso de privacidad.");
       return;
     }
-    const res = register({ nombre, email, password, marketingOptIn: marketing });
+    setLoading(true);
+    const res = await register({ nombre, email, password, marketingOptIn: marketing });
     if (!res.ok) {
+      setLoading(false);
       setError(res.error ?? "No pudimos crear tu cuenta. Inténtalo de nuevo.");
       return;
     }
-    setLoading(true);
-    setTimeout(() => { window.location.href = "/dashboard"; }, 800);
+    if (res.info) {
+      // La nube pide confirmar el correo antes de entrar.
+      setLoading(false);
+      setError(res.info);
+      return;
+    }
+    setTimeout(() => { window.location.href = "/dashboard"; }, 400);
   }
 
   return (
@@ -197,27 +204,31 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
   const [resetPw, setResetPw] = useState("");
   const [resetError, setResetError] = useState<string | null>(null);
   const [resetOk, setResetOk] = useState(false);
+  const [resetMsg, setResetMsg] = useState<string | null>(null);
 
-  function handleLogin() {
+  async function handleLogin() {
     if (loading) return;
     setError(null);
-    const res = login(email, password);
+    setLoading(true);
+    const res = await login(email, password);
     if (!res.ok) {
+      setLoading(false);
       setError(res.error ?? "No pudimos iniciar sesión. Inténtalo de nuevo.");
       return;
     }
-    setLoading(true);
-    setTimeout(() => { window.location.href = "/dashboard"; }, 800);
+    setTimeout(() => { window.location.href = "/dashboard"; }, 400);
   }
 
-  function handleReset() {
+  async function handleReset() {
     setResetError(null);
     setResetOk(false);
-    const res = resetPassword(resetEmail, resetPw);
+    setResetMsg(null);
+    const res = await resetPassword(resetEmail, resetPw);
     if (!res.ok) {
       setResetError(res.error ?? "No pudimos actualizar la contraseña.");
       return;
     }
+    if (res.info) setResetMsg(res.info);
     setResetOk(true);
     setResetPw("");
   }
@@ -239,7 +250,7 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
 
         {resetError && <p style={errorTextStyle}>{resetError}</p>}
         {resetOk && (
-          <p style={{ ...errorTextStyle, color: "#2ecc71" }}>Contraseña actualizada, inicia sesión.</p>
+          <p style={{ ...errorTextStyle, color: "#2ecc71" }}>{resetMsg ?? "Contraseña actualizada, inicia sesión."}</p>
         )}
         <SubmitButton loading={false} onClick={handleReset}>Actualizar contraseña</SubmitButton>
 
