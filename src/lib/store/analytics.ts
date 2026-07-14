@@ -11,8 +11,10 @@ import {
   getClases,
   getClaseProgress,
   getFlashcards,
+  getFlashSessions,
   getFlashStates,
   getQuizAttempts,
+  getReports,
   getSimAttempts,
   getStreak,
   getStudyDays,
@@ -283,6 +285,92 @@ export function adminSummary(): AdminSummary {
     quizCount,
     answered,
     weakestMaterias: weakest,
+  };
+}
+
+/* ───────────────────────── Analítica general (PRD 9.11) ───────────────────────── */
+
+export interface GlobalAnalytics extends AdminSummary {
+  /** Promedio global de aciertos (cuestionarios + simuladores). */
+  avgScore: number | null;
+  temasDone: number;
+  clasesVistas: number;
+  flashRepasadas: number;
+  usoHerramientas: { kind: string; label: string; count: number }[];
+  actividad7d: number;
+  actividad30d: number;
+  /** Desempeño global por materia, de menor a mayor. */
+  materias: { name: string; avg: number }[];
+  preguntasReportadas: number;
+}
+
+const KIND_LABEL: Record<string, string> = {
+  quiz: "Cuestionarios",
+  simulador: "Simulador CIAAC",
+  tema: "Learning Paths",
+  clase: "Clases grabadas",
+  flashcards: "Flashcards",
+  biblioteca: "Biblioteca",
+  yaris: "Yaris (tutor IA)",
+  bitacora: "Bitácora (con Pathy)",
+};
+
+export function globalAnalytics(): GlobalAnalytics {
+  const base = adminSummary();
+  const students = getUsers().filter((u) => u.role === "student" && !u.deactivatedAt);
+
+  let correct = 0;
+  let total = 0;
+  let temasDone = 0;
+  let clasesVistas = 0;
+  let flashRepasadas = 0;
+  const matAcc: Record<string, { c: number; t: number }> = {};
+
+  students.forEach((u) => {
+    getQuizAttempts(u.id).forEach((a) => { correct += a.correct; total += a.total; });
+    getSimAttempts(u.id).forEach((a) => { correct += a.correct; total += a.total; });
+    temasDone += getTemaProgress(u.id).filter((x) => x.completado).length;
+    clasesVistas += getClaseProgress(u.id).filter((x) => x.completada).length;
+    flashRepasadas += getFlashSessions(u.id).reduce((s, f) => s + f.total, 0);
+    materiaPerformance(u.id).forEach((m) => {
+      if (m.avg === null) return;
+      if (!matAcc[m.name]) matAcc[m.name] = { c: 0, t: 0 };
+      matAcc[m.name].c += m.avg;
+      matAcc[m.name].t += 1;
+    });
+  });
+
+  const activity = getActivity();
+  const now = Date.now();
+  const counts: Record<string, number> = {};
+  let actividad7d = 0;
+  let actividad30d = 0;
+  activity.forEach((a) => {
+    counts[a.kind] = (counts[a.kind] ?? 0) + 1;
+    const age = now - new Date(a.date).getTime();
+    if (age < 7 * 86400000) actividad7d += 1;
+    if (age < 30 * 86400000) actividad30d += 1;
+  });
+
+  const preguntasReportadas = getReports().filter((r) =>
+    /pregunta|respuesta|explicaci/i.test(r.tipo),
+  ).length;
+
+  return {
+    ...base,
+    avgScore: total > 0 ? Math.round((correct / total) * 100) : null,
+    temasDone,
+    clasesVistas,
+    flashRepasadas,
+    usoHerramientas: Object.entries(KIND_LABEL)
+      .map(([kind, label]) => ({ kind, label, count: counts[kind] ?? 0 }))
+      .sort((a, b) => b.count - a.count),
+    actividad7d,
+    actividad30d,
+    materias: Object.entries(matAcc)
+      .map(([name, v]) => ({ name, avg: Math.round(v.c / v.t) }))
+      .sort((a, b) => a.avg - b.avg),
+    preguntasReportadas,
   };
 }
 

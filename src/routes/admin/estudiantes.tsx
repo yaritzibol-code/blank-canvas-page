@@ -19,6 +19,8 @@ import {
   getStreak,
   getUsers,
   isStudentActive,
+  materiaPerformance,
+  MATERIAS_DEF,
   studentGeneralState,
   useStore,
 } from "@/lib/store";
@@ -53,33 +55,54 @@ function AdminEstudiantesPage() {
   const [query, setQuery] = useState("");
   const [fEstado, setFEstado] = useState("todos");
   const [fPlan, setFPlan] = useState("todos");
+  const [fMateriaDebil, setFMateriaDebil] = useState("todas");
+  const [orden, setOrden] = useState("acceso");
   const [soloInactivos, setSoloInactivos] = useState(false);
+  const [proxCiaac, setProxCiaac] = useState(false);
 
   const rows = useStore(() =>
     getUsers()
       .filter((u) => u.role === "student")
-      .map((u) => ({
-        u,
-        streak: getStreak(u.id),
-        progress: courseProgress(u.id),
-        readiness: estimatedReadiness(u.id),
-        state: studentGeneralState(u),
-        active: isStudentActive(u),
-      })),
+      .map((u) => {
+        const perf = materiaPerformance(u.id).filter((m) => m.avg !== null);
+        const weak = perf.length > 0 ? perf.reduce((a, b) => ((a.avg ?? 100) <= (b.avg ?? 100) ? a : b)) : null;
+        return {
+          u,
+          streak: getStreak(u.id),
+          progress: courseProgress(u.id),
+          readiness: estimatedReadiness(u.id),
+          state: studentGeneralState(u),
+          active: isStudentActive(u),
+          weakSlug: weak?.slug ?? null,
+        };
+      }),
   );
 
   const q = query.trim().toLowerCase();
-  const filtered = rows.filter((r) => {
-    if (q && !(
-      r.u.nombre.toLowerCase().includes(q) ||
-      r.u.email.toLowerCase().includes(q) ||
-      r.u.escuela.toLowerCase().includes(q)
-    )) return false;
-    if (fEstado !== "todos" && r.u.accessStatus !== fEstado) return false;
-    if (fPlan !== "todos" && r.u.plan !== fPlan) return false;
-    if (soloInactivos && r.active) return false;
-    return true;
-  });
+  const filtered = rows
+    .filter((r) => {
+      if (q && !(
+        r.u.nombre.toLowerCase().includes(q) ||
+        r.u.email.toLowerCase().includes(q) ||
+        r.u.escuela.toLowerCase().includes(q)
+      )) return false;
+      if (fEstado !== "todos" && r.u.accessStatus !== fEstado) return false;
+      if (fPlan !== "todos" && r.u.plan !== fPlan) return false;
+      if (fMateriaDebil !== "todas" && r.weakSlug !== fMateriaDebil) return false;
+      if (soloInactivos && r.active) return false;
+      if (proxCiaac) {
+        if (!r.u.fechaCiaac) return false;
+        const days = (new Date(`${r.u.fechaCiaac}T12:00:00`).getTime() - Date.now()) / 86400000;
+        if (days < 0 || days > 30) return false;
+      }
+      return true;
+    })
+    .sort((a, b) => {
+      if (orden === "nombre") return a.u.nombre.localeCompare(b.u.nombre);
+      if (orden === "avance") return a.progress - b.progress;
+      if (orden === "preparacion") return (a.readiness ?? 101) - (b.readiness ?? 101);
+      return b.u.lastAccess.localeCompare(a.u.lastAccess); // último acceso
+    });
 
   return (
     <AdminShell title="Estudiantes" active="estudiantes">
@@ -107,9 +130,25 @@ function AdminEstudiantesPage() {
           <option value="paga">Plan de paga</option>
           <option value="basica">Suscripción básica</option>
         </select>
+        <select value={fMateriaDebil} onChange={(e) => setFMateriaDebil(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 150 }}>
+          <option value="todas">Materia débil: todas</option>
+          {MATERIAS_DEF.map((m) => (
+            <option key={m.slug} value={m.slug}>{m.name}</option>
+          ))}
+        </select>
+        <select value={orden} onChange={(e) => setOrden(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 150 }}>
+          <option value="acceso">Orden: último acceso</option>
+          <option value="nombre">Orden: nombre A–Z</option>
+          <option value="avance">Orden: menor avance</option>
+          <option value="preparacion">Orden: menor preparación</option>
+        </select>
         <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: ".8rem", color: "#22375C", fontWeight: 600, cursor: "pointer" }}>
           <input type="checkbox" checked={soloInactivos} onChange={(e) => setSoloInactivos(e.target.checked)} style={{ accentColor: "#3D5D91", width: 15, height: 15 }} />
           Solo inactivos
+        </label>
+        <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: ".8rem", color: "#22375C", fontWeight: 600, cursor: "pointer" }}>
+          <input type="checkbox" checked={proxCiaac} onChange={(e) => setProxCiaac(e.target.checked)} style={{ accentColor: "#3D5D91", width: 15, height: 15 }} />
+          Próximos al CIAAC (30 días)
         </label>
       </div>
 

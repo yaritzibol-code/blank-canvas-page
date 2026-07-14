@@ -37,6 +37,8 @@ import { Route as AdminEstudiantesRouteImport } from './routes/admin/estudiantes
 import { Route as AdminContenidoRouteImport } from './routes/admin/contenido'
 import { Route as AdminConfiguracionRouteImport } from './routes/admin/configuracion'
 import { Route as AdminBancoRouteImport } from './routes/admin/banco'
+import { Route as AdminAnaliticaRouteImport } from './routes/admin/analitica'
+import { Route as AdminAccesosRouteImport } from './routes/admin/accesos'
 import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/materias/index'
 import { Route as DashboardMateriasSubjectIdRouteImport } from './routes/dashboard/materias/$subjectId'
 
@@ -180,6 +182,16 @@ const AdminBancoRoute = AdminBancoRouteImport.update({
   path: '/admin/banco',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAnaliticaRoute = AdminAnaliticaRouteImport.update({
+  id: '/admin/analitica',
+  path: '/admin/analitica',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAccesosRoute = AdminAccesosRouteImport.update({
+  id: '/admin/accesos',
+  path: '/admin/accesos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardMateriasIndexRoute = DashboardMateriasIndexRouteImport.update({
   id: '/materias/',
   path: '/materias/',
@@ -202,6 +214,8 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
+  '/admin/accesos': typeof AdminAccesosRoute
+  '/admin/analitica': typeof AdminAnaliticaRoute
   '/admin/banco': typeof AdminBancoRoute
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
@@ -233,6 +247,8 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
+  '/admin/accesos': typeof AdminAccesosRoute
+  '/admin/analitica': typeof AdminAnaliticaRoute
   '/admin/banco': typeof AdminBancoRoute
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
@@ -266,6 +282,8 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/simulador': typeof SimuladorRoute
+  '/admin/accesos': typeof AdminAccesosRoute
+  '/admin/analitica': typeof AdminAnaliticaRoute
   '/admin/banco': typeof AdminBancoRoute
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
@@ -300,6 +318,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/simulador'
+    | '/admin/accesos'
+    | '/admin/analitica'
     | '/admin/banco'
     | '/admin/configuracion'
     | '/admin/contenido'
@@ -331,6 +351,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/simulador'
+    | '/admin/accesos'
+    | '/admin/analitica'
     | '/admin/banco'
     | '/admin/configuracion'
     | '/admin/contenido'
@@ -363,6 +385,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/simulador'
+    | '/admin/accesos'
+    | '/admin/analitica'
     | '/admin/banco'
     | '/admin/configuracion'
     | '/admin/contenido'
@@ -396,6 +420,8 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   SimuladorRoute: typeof SimuladorRoute
+  AdminAccesosRoute: typeof AdminAccesosRoute
+  AdminAnaliticaRoute: typeof AdminAnaliticaRoute
   AdminBancoRoute: typeof AdminBancoRoute
   AdminConfiguracionRoute: typeof AdminConfiguracionRoute
   AdminContenidoRoute: typeof AdminContenidoRoute
@@ -604,6 +630,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBancoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/analitica': {
+      id: '/admin/analitica'
+      path: '/admin/analitica'
+      fullPath: '/admin/analitica'
+      preLoaderRoute: typeof AdminAnaliticaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/accesos': {
+      id: '/admin/accesos'
+      path: '/admin/accesos'
+      fullPath: '/admin/accesos'
+      preLoaderRoute: typeof AdminAccesosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard/materias/': {
       id: '/dashboard/materias/'
       path: '/materias'
@@ -667,6 +707,8 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   SimuladorRoute: SimuladorRoute,
+  AdminAccesosRoute: AdminAccesosRoute,
+  AdminAnaliticaRoute: AdminAnaliticaRoute,
   AdminBancoRoute: AdminBancoRoute,
   AdminConfiguracionRoute: AdminConfiguracionRoute,
   AdminContenidoRoute: AdminContenidoRoute,

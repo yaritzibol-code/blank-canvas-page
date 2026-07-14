@@ -11,6 +11,8 @@ import { logout, useRequireAuth } from "@/lib/store";
 export type AdminNavKey =
   | "resumen"
   | "estudiantes"
+  | "accesos"
+  | "analitica"
   | "banco"
   | "contenido"
   | "soporte"
@@ -31,6 +33,8 @@ const ADMIN_NAV: { label: string; items: NavItem[] }[] = [
     items: [
       { icon: "chart", label: "Resumen", key: "resumen", path: "/admin" },
       { icon: "users", label: "Estudiantes", key: "estudiantes", path: "/admin/estudiantes" },
+      { icon: "shield", label: "Accesos y membresías", key: "accesos", path: "/admin/accesos" },
+      { icon: "stats", label: "Analítica general", key: "analitica", path: "/admin/analitica" },
     ],
   },
   {
