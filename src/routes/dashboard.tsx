@@ -200,6 +200,52 @@ function Sidebar({ onClose, onYaris }: { onClose?: () => void; onYaris?: () => v
             })}
           </div>
         ))}
+
+        {/* Acceso al Panel Admin (solo administradora) */}
+        {user?.role === "admin" && (
+          <div>
+            <div
+              style={{
+                padding: "10px 22px 6px",
+                fontSize: "0.62rem",
+                fontWeight: 700,
+                fontFamily: MONO,
+                textTransform: "uppercase",
+                letterSpacing: "0.18em",
+                color: "rgba(255,255,255,0.32)",
+                marginTop: 6,
+              }}
+            >
+              Administración
+            </div>
+            <Link
+              to="/admin"
+              onClick={onClose}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                margin: "1px 12px",
+                padding: "10px 12px",
+                borderRadius: 10,
+                color: "white",
+                textDecoration: "none",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                background: "rgba(242,174,188,0.14)",
+                border: "1px solid rgba(242,174,188,0.35)",
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(242,174,188,0.25)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(242,174,188,0.14)"; }}
+            >
+              <span style={{ width: 20, display: "flex", justifyContent: "center", color: "#F2AEBC" }}>
+                <Icon n="settings" size={18} />
+              </span>
+              Panel Admin
+            </Link>
+          </div>
+        )}
       </nav>
 
       {/* Footer */}

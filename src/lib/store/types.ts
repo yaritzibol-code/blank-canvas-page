@@ -263,8 +263,20 @@ export interface InternalConfig {
   mensajeBienvenida: string;
   mensajeConversion: string;
   precioPlanAnual: string;
+  precioPlanMensual: string;
   proveedorWhatsApp: string;
   simuladorPreguntas: number;
   simuladorHoras: number;
   pctMinimoClase: number; // % mínimo de reproducción real para completar clase
+  // Configuración de IA (PRD 9.12)
+  iaYarisActiva: boolean;
+  iaPathyActiva: boolean;
+  limiteYarisBasico: number; // interacciones diarias con Yaris para el plan básico
+  // Recordatorios
+  recordatorioHorario: string; // horario sugerido por defecto
+  recordatorioDias: string; // días sugeridos por defecto
+  // Accesos
+  diasPrueba: number; // duración del acceso de prueba
+  // Soporte
+  soporteAutoRespuesta: string; // respuesta automática al recibir un reporte
 }

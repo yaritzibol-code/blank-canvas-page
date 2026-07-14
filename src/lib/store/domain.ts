@@ -397,10 +397,19 @@ export const DEFAULT_CONFIG: InternalConfig = {
   mensajeConversion:
     "¿Listo para el siguiente nivel? Desbloquea FlightPath completo y prepárate con todas las herramientas para tu CIAAC.",
   precioPlanAnual: "$10,000 MXN",
+  precioPlanMensual: "$1,500 MXN",
   proveedorWhatsApp: "",
   simuladorPreguntas: 310,
   simuladorHoras: 5,
   pctMinimoClase: 85,
+  iaYarisActiva: true,
+  iaPathyActiva: true,
+  limiteYarisBasico: 10,
+  recordatorioHorario: "19:00",
+  recordatorioDias: "Lunes a viernes",
+  diasPrueba: 14,
+  soporteAutoRespuesta:
+    "¡Gracias por tu reporte! Lo revisamos y te respondemos lo antes posible — el equipo FlightPath.",
 };
 
 export function getConfig(): InternalConfig {
