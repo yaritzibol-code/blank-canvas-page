@@ -102,7 +102,9 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
       setError(res.info);
       return;
     }
-    setTimeout(() => { window.location.href = "/dashboard"; }, 400);
+    // El primer registro en la nube queda como administradora y entra a su panel.
+    const dest = res.user?.role === "admin" ? "/admin" : "/dashboard";
+    setTimeout(() => { window.location.href = dest; }, 400);
   }
 
   return (
@@ -216,7 +218,9 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
       setError(res.error ?? "No pudimos iniciar sesión. Inténtalo de nuevo.");
       return;
     }
-    setTimeout(() => { window.location.href = "/dashboard"; }, 400);
+    // La administradora entra directo a su panel.
+    const dest = res.user?.role === "admin" ? "/admin" : "/dashboard";
+    setTimeout(() => { window.location.href = dest; }, 400);
   }
 
   async function handleReset() {
