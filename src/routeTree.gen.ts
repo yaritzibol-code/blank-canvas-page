@@ -13,8 +13,10 @@ import { Route as SimuladorRouteImport } from './routes/simulador'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LegalRouteImport } from './routes/legal'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CuestionarioRouteImport } from './routes/cuestionario'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
@@ -58,6 +60,11 @@ const LegalRoute = LegalRouteImport.update({
   path: '/legal',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -66,6 +73,11 @@ const DashboardRoute = DashboardRouteImport.update({
 const CuestionarioRoute = CuestionarioRouteImport.update({
   id: '/cuestionario',
   path: '/cuestionario',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -182,8 +194,10 @@ const DashboardMateriasSubjectIdRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/blog': typeof BlogRoute
   '/cuestionario': typeof CuestionarioRoute
   '/dashboard': typeof DashboardRouteWithChildren
+  '/faq': typeof FaqRoute
   '/legal': typeof LegalRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
@@ -212,7 +226,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/blog': typeof BlogRoute
   '/cuestionario': typeof CuestionarioRoute
+  '/faq': typeof FaqRoute
   '/legal': typeof LegalRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
@@ -242,8 +258,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/blog': typeof BlogRoute
   '/cuestionario': typeof CuestionarioRoute
   '/dashboard': typeof DashboardRouteWithChildren
+  '/faq': typeof FaqRoute
   '/legal': typeof LegalRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
@@ -274,8 +292,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/blog'
     | '/cuestionario'
     | '/dashboard'
+    | '/faq'
     | '/legal'
     | '/login'
     | '/register'
@@ -304,7 +324,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/blog'
     | '/cuestionario'
+    | '/faq'
     | '/legal'
     | '/login'
     | '/register'
@@ -333,8 +355,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/blog'
     | '/cuestionario'
     | '/dashboard'
+    | '/faq'
     | '/legal'
     | '/login'
     | '/register'
@@ -364,8 +388,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BlogRoute: typeof BlogRoute
   CuestionarioRoute: typeof CuestionarioRoute
   DashboardRoute: typeof DashboardRouteWithChildren
+  FaqRoute: typeof FaqRoute
   LegalRoute: typeof LegalRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
@@ -410,6 +436,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LegalRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -422,6 +455,13 @@ declare module '@tanstack/react-router' {
       path: '/cuestionario'
       fullPath: '/cuestionario'
       preLoaderRoute: typeof CuestionarioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -619,8 +659,10 @@ const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BlogRoute: BlogRoute,
   CuestionarioRoute: CuestionarioRoute,
   DashboardRoute: DashboardRouteWithChildren,
+  FaqRoute: FaqRoute,
   LegalRoute: LegalRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
