@@ -324,8 +324,13 @@ function Nav() {
       <div className="mx-auto max-w-[1240px] px-6 lg:px-8 h-[68px] flex items-center justify-between">
         <Logo />
         <nav className="hidden lg:flex items-center gap-8 text-[14px] font-medium text-ink/65">
-          {["Plataforma", "Simuladores", "Tutor IA", "Precios", "Historias"].map((x) => (
-            <a key={x} href="#" className="hover:text-ink transition-colors">{x}</a>
+          {[
+            { label: "Funciones", href: "/#funciones" },
+            { label: "Precios", href: "/#precios" },
+            { label: "Historias", href: "/blog" },
+            { label: "Blog", href: "/blog" },
+          ].map((x) => (
+            <a key={x.label} href={x.href} className="hover:text-ink transition-colors">{x.label}</a>
           ))}
         </nav>
         <div className="flex items-center gap-2">
@@ -364,17 +369,6 @@ function Hero() {
               <Btn kind="primary" size="lg" icon="arrow" to="/register">Comenzar gratis</Btn>
               <Btn kind="light" size="lg" iconLeft="play" href="#como-funciona">Ver cómo funciona</Btn>
             </div>
-            <div className="mt-10 flex items-center gap-5">
-              <div className="flex -space-x-2.5">
-                {["#7CA0D8", "#F2AEBC", "#3D5D91", "#0F1A33"].map((c, i) => (
-                  <div key={i} className="w-8 h-8 rounded-full border-2 border-paper" style={{ background: c }} />
-                ))}
-              </div>
-              <div className="text-[13.5px] text-ink/55 leading-tight">
-                <span className="font-bold text-ink">+2,400 pilotos</span> en formación<br />
-                <span className="text-haze-500">94% aprueba al primer intento</span>
-              </div>
-            </div>
           </div>
 
           {/* RIGHT */}
@@ -395,16 +389,7 @@ function Hero() {
                 <div className="text-white/70 text-[12.5px] leading-snug">Vas por<br /><span className="text-white font-semibold">muy buen camino.</span></div>
               </div>
             </div>
-            <div className="absolute -bottom-2 right-2 lg:right-6 w-[250px] bg-white rounded-2xl p-3.5 shadow-float border border-ink/8 animate-float-y" style={{ animationDelay: "-2s" }}>
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="w-6 h-6 rounded-full bg-ink grid place-items-center"><Icon n="spark" className="w-3 h-3 text-coral-400" /></span>
-                <span className="text-[12px] font-bold text-ink">Pathy</span>
-                <span className="ml-auto"><Pill tone="coral"><span className="w-1.5 h-1.5 rounded-full bg-coral-600 animate-pulse-dot" />en vivo</Pill></span>
-              </div>
-              <p className="text-[12.5px] text-ink/65 leading-snug">
-                Hoy toca <span className="text-coral-700 font-semibold">Meteorología</span>. Te preparé una sesión de 15 min — ¿despegamos?
-              </p>
-            </div>
+            <HeroPathyCard />
           </div>
         </div>
       </div>
@@ -422,15 +407,45 @@ function Hero() {
   );
 }
 
+/** Tarjeta de Pathy en el héroe: rota mensajes motivacionales, de progreso y recordatorios. */
+function HeroPathyCard() {
+  const msgs: ReactNode[] = [
+    <>Hoy toca <span className="text-coral-700 font-semibold">Meteorología</span>. Te preparé una sesión de 15 min — ¿despegamos?</>,
+    <>Llevas <span className="text-coral-700 font-semibold">racha de 14 días</span>. La constancia es lo que te sube al avión. ✦</>,
+    <>Subiste <span className="text-coral-700 font-semibold">8% en Aerodinámica</span> esta semana. ¡Vas increíble!</>,
+    <>Recuerda tu <span className="text-coral-700 font-semibold">simulador del jueves</span> — yo te aviso a tiempo.</>,
+    <>Cada sesión te acerca al <span className="text-coral-700 font-semibold">CIAAC</span>. Un paso a la vez, sin estrés.</>,
+  ];
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setI((v) => (v + 1) % msgs.length), 5200);
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return (
+    <div className="absolute -bottom-2 right-2 lg:right-6 w-[250px] bg-white rounded-2xl p-3.5 shadow-float border border-ink/8 animate-float-y" style={{ animationDelay: "-2s" }}>
+      <div className="flex items-center gap-2 mb-1.5">
+        <span className="w-6 h-6 rounded-full bg-ink grid place-items-center"><Icon n="spark" className="w-3 h-3 text-coral-400" /></span>
+        <span className="text-[12px] font-bold text-ink">Pathy</span>
+        <span className="ml-auto"><Pill tone="coral"><span className="w-1.5 h-1.5 rounded-full bg-coral-600 animate-pulse-dot" />en vivo</Pill></span>
+      </div>
+      <p key={i} className="text-[12.5px] text-ink/65 leading-snug animate-flip min-h-[48px]">
+        {msgs[i]}
+      </p>
+    </div>
+  );
+}
+
 /* ═══════════════════════════════════════════════════════════════════
    COUNTDOWN  — rolling-digit odometer + flight trajectory
    ═══════════════════════════════════════════════════════════════════ */
 
 function Countdown({ show = true }: { show?: boolean }) {
-  const target = useRef(Date.now() + (23 * 24 * 3600 + 14 * 3600 + 37 * 60 + 52) * 1000);
+  // CIAAC: 17 de agosto de 2026 (hora Ciudad de México, UTC-6).
+  const target = useRef(new Date("2026-08-17T08:00:00-06:00").getTime());
   const WINDOW = 90 * 24 * 3600 * 1000;
   const start = useRef(target.current - WINDOW);
-  const [t, setT] = useState({ d: 23, h: 14, m: 37, s: 52 });
+  const [t, setT] = useState({ d: 0, h: 0, m: 0, s: 0 });
   const [prog, setProg] = useState(74);
   useEffect(() => {
     const tick = () => {
@@ -506,7 +521,7 @@ function Countdown({ show = true }: { show?: boolean }) {
                 <div className="absolute left-0 top-0 text-[10px] uppercase tracking-[0.16em] font-bold text-haze-400">Hoy</div>
                 <div className="absolute right-0 top-0 text-right">
                   <div className="text-[10px] uppercase tracking-[0.16em] font-bold text-burgundy">CIAAC</div>
-                  <div className="text-[10px] font-mono text-haze-400 mt-0.5">20 jun</div>
+                  <div className="text-[10px] font-mono text-haze-400 mt-0.5">17 ago</div>
                 </div>
                 <div className="absolute top-1/2 left-0 -translate-y-1/2 h-[2px] bg-burgundy rounded-full" style={{ width: `calc(${prog}% - 14px)` }} />
                 <div className="absolute top-1/2 -translate-y-1/2 h-[2px] animate-flow" style={{ left: `calc(${prog}% + 14px)`, right: 0, backgroundImage: "repeating-linear-gradient(to right, rgba(61,93,145,0.45) 0 5px, transparent 5px 14px)" }} />
@@ -573,8 +588,8 @@ function Showcase() {
       <PlaneField count={20} />
       <div className="mx-auto max-w-[1240px] px-6 lg:px-8">
         <SectionHead center eyebrow="Tu cabina de estudio"
-          title={<>Todo tu vuelo, <span className="text-coral-600">en un panel.</span></>}
-          sub="Una sola vista calma y clara: qué estudiar hoy, cuánto avanzas y qué te falta para el CIAAC. Sin ruido, sin pestañas abiertas en cinco apps." />
+          title={<>Todo lo que necesitas <span className="text-coral-600">para aprobar el CIAAC.</span></>}
+          sub="Un solo lugar para estudiar, practicar, resolver dudas y seguir tu progreso. Sin perder tiempo cambiando entre aplicaciones." />
         <div className="mt-7 flex justify-center">
           <div className="inline-flex items-center gap-2.5 rounded-full border border-burgundy/15 bg-white/70 backdrop-blur px-4 py-2 shadow-card">
             <span className="relative flex w-2 h-2"><span className="absolute inset-0 rounded-full bg-burgundy animate-ping" /><span className="relative w-2 h-2 rounded-full bg-burgundy" /></span>
@@ -705,21 +720,21 @@ function Showcase() {
 
 function Features() {
   const feats: { icon: IconName; t: string; d: string }[] = [
-    { icon: "book", t: "12 materias completas", d: "Todo el temario CIAAC, actualizado a la edición vigente." },
-    { icon: "cards", t: "5,000+ preguntas", d: "Banco con explicación detallada en cada respuesta." },
-    { icon: "sim", t: "Simulador oficial", d: "Mismo formato, duración y ponderación que el examen real." },
-    { icon: "spark", t: "Tutor IA Yaris", d: "Resuelve dudas al instante, con tu progreso como contexto." },
-    { icon: "chart", t: "Análisis inteligente", d: "Detecta tus puntos débiles y reordena tu ruta." },
-    { icon: "audio", t: "Audio apuntes", d: "Repasa con tus oídos cuando no puedes con los ojos." },
+    { icon: "target", t: "Learning Paths", d: "Aprende cada materia con una ruta clara, paso a paso." },
+    { icon: "cards", t: "Cuestionarios", d: "Practica después de cada tema y recibe retroalimentación inmediata." },
+    { icon: "sim", t: "Simuladores", d: "Entrena con el mismo formato del examen oficial." },
+    { icon: "book", t: "Biblioteca", d: "Todo el material de consulta organizado en un solo lugar." },
+    { icon: "brain", t: "Flashcards", d: "Memoriza conceptos con repasos inteligentes." },
+    { icon: "play", t: "Clases grabadas", d: "Explicaciones claras para estudiar a tu ritmo." },
   ];
   return (
-    <section className="relative py-24 lg:py-32">
+    <section className="relative py-24 lg:py-32" id="funciones">
       <PlaneField count={20} />
       <div className="mx-auto max-w-[1240px] px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14">
           <SectionHead eyebrow="Plataforma completa" title={<>Todo lo que necesitas,<br /><span className="text-coral-600">en un solo lugar.</span></>} />
           <p className="text-[15px] text-ink/50 max-w-sm leading-relaxed lg:pb-2">
-            Diez herramientas integradas en un flujo calmo. Sin fricción entre estudiar, practicar y simular el examen.
+            Explora todo lo que incluye FlightPath para acompañarte antes, durante y después de cada sesión de estudio.
           </p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -879,7 +894,7 @@ function PathyEvolution() {
       <PlaneField count={20} />
       <div className="mx-auto max-w-[1240px] px-6 lg:px-8">
         <SectionHead center eyebrow="Conoce a Pathy"
-          title={<>Tu copiloto. <span className="text-burgundy">Tu motivación.</span></>}
+          title={<>Tu copiloto. <span className="text-burgundy">En cada etapa del vuelo.</span></>}
           sub="Pathy evoluciona contigo: cuanto más constante seas, más alto vuela — y más te anima en cada etapa." />
         <div className="mt-14 grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-16 items-center">
           <div className="relative flex justify-center">
@@ -963,15 +978,15 @@ function YarisChat() {
   ];
 
   return (
-    <section className="relative py-24 lg:py-32">
+    <section className="relative py-24 lg:py-32" id="yaris">
       <PlaneField count={20} />
       <div className="mx-auto max-w-[1240px] px-6 lg:px-8">
         <SectionHead center eyebrow="Conoce a Yaris"
           title={<>Tu tutor IA, <span className="text-burgundy">en acción.</span></>}
           sub="Mira cómo Yaris responde, explica y te acompaña. No es un chatbot — es un copiloto que sabe cómo aprendes." />
 
-        <div className="mt-14 grid lg:grid-cols-[1.25fr_1fr] gap-10 lg:gap-14 items-center">
-          <div className="relative">
+        <div className="mt-14 grid lg:grid-cols-[1fr_1fr] gap-10 lg:gap-14 items-center">
+          <div className="relative max-w-[560px] w-full mx-auto lg:mx-0">
             <div className="absolute -inset-5 rounded-[34px] bg-cherry/30 blur-3xl animate-breathe pointer-events-none" />
             <div className="relative rounded-3xl overflow-hidden bg-white border border-burgundy/10 shadow-lift">
               <div className="flex items-center justify-between px-5 py-3 bg-burgundy text-white">
@@ -984,7 +999,7 @@ function YarisChat() {
                 </div>
                 <div className="text-[11px] text-cherry/90 font-medium">Escena {idx + 1}/{scenes.length}</div>
               </div>
-              <div className="relative px-5 md:px-7 py-6 md:py-7 min-h-[440px]">
+              <div className="relative px-5 md:px-6 py-5 md:py-6 min-h-[400px]">
                 <div className="text-[11px] uppercase tracking-[0.18em] text-burgundy font-bold flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-burgundy animate-pulse-dot" />{sc.header}
                 </div>
@@ -1082,14 +1097,14 @@ function YarisChat() {
 
 function Simulator() {
   return (
-    <section className="relative py-24 lg:py-32">
+    <section className="relative py-24 lg:py-32" id="simulador">
       <PlaneField count={20} />
       <div className="mx-auto max-w-[1240px] px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>
-            <SectionHead eyebrow="Simulador oficial"
-              title={<>El examen real,<br /><span className="text-coral-600">antes del examen.</span></>}
-              sub="Mismo formato, misma estructura, misma ponderación que el CIAAC. Si lo dominas aquí, lo dominas allá." />
+            <SectionHead eyebrow="Simulador CIAAC"
+              title={<>Conoce el examen<br /><span className="text-coral-600">antes de presentarlo.</span></>}
+              sub="Familiarízate con el formato, administra tu tiempo y detecta qué materias necesitas reforzar antes del día real." />
             <div className="mt-10 grid grid-cols-3 gap-5 max-w-md">
               {[["310", "Preguntas"], ["5h", "Duración"], ["12", "Materias"]].map(([v, l], i) => (
                 <div key={i} className="border-t-2 border-coral-100 pt-3">
@@ -1098,7 +1113,7 @@ function Simulator() {
                 </div>
               ))}
             </div>
-            <div className="mt-9"><Btn kind="navy" size="lg" icon="arrow" to="/simulador">Probar el simulador</Btn></div>
+            <div className="mt-9"><Btn kind="navy" size="lg" icon="arrow" to="/register">Probar el simulador</Btn></div>
           </div>
 
           <div className="relative">
@@ -1145,44 +1160,6 @@ function Simulator() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   TESTIMONIALS
-   ═══════════════════════════════════════════════════════════════════ */
-
-function Testimonials() {
-  const data = [
-    { q: "Pasé en mi primer intento con 94. Sabía exactamente en qué fallaba — y por qué.", n: "María Fernanda L.", r: "Piloto comercial · Aeroméxico", c: "#F2AEBC" },
-    { q: "Yaris me explicó en 5 minutos lo que mi instructor en dos clases. Y se acuerda de mí.", n: "Diego R.", r: "Cadete · Volaris", c: "#7CA0D8" },
-    { q: "El simulador era idéntico al CIAAC. Cuando entré al examen real, ya lo había visto.", n: "Andrés P.", r: "Piloto privado", c: "#3D5D91" },
-  ];
-  return (
-    <section className="relative py-24 lg:py-32">
-      <PlaneField count={20} />
-      <div className="mx-auto max-w-[1240px] px-6 lg:px-8">
-        <SectionHead center eyebrow="Historias reales"
-          title={<>Pilotos que ya <span className="text-coral-600">despegaron.</span></>} />
-        <div className="mt-14 grid md:grid-cols-3 gap-4">
-          {data.map((t, i) => (
-            <div key={i} className="rounded-2xl bg-white border border-ink/8 p-7 shadow-card hover-lift flex flex-col">
-              <div className="flex gap-1 text-burgundy mb-5">
-                {[...Array(5)].map((_, k) => <Icon key={k} n="spark" className="w-4 h-4" sw={1.4} />)}
-              </div>
-              <p className="font-display text-[20px] leading-[1.3] tracking-tight text-ink flex-1">"{t.q}"</p>
-              <div className="flex items-center gap-3 mt-6 pt-5 border-t border-ink/8">
-                <div className="w-10 h-10 rounded-full" style={{ background: t.c }} />
-                <div>
-                  <div className="text-[13.5px] font-bold text-ink">{t.n}</div>
-                  <div className="text-[12px] text-ink/50">{t.r}</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════
    PRICING
    ═══════════════════════════════════════════════════════════════════ */
 
@@ -1192,20 +1169,20 @@ function Pricing() {
       <PlaneField count={20} />
       <div className="mx-auto max-w-[1100px] px-6 lg:px-8">
         <SectionHead center eyebrow="Precios"
-          title={<>Un plan, <span className="text-coral-600">todo incluido.</span></>}
-          sub="Sin niveles ni sorpresas. Acceso completo durante el tiempo que necesites para aprobar. Cancela cuando quieras." />
+          title={<>Empieza gratis. <span className="text-coral-600">Vuela Pro.</span></>}
+          sub="FlightPath Basic es gratuito con funciones esenciales. FlightPath Pro desbloquea toda la plataforma — con pago mensual o anual." />
 
         <div className="mt-14 grid md:grid-cols-2 gap-5">
           <div className="rounded-3xl bg-white border border-ink/8 p-8 lg:p-10 shadow-card">
-            <div className="text-[11px] uppercase tracking-[0.18em] font-bold text-haze-500">Prueba gratis</div>
+            <div className="text-[11px] uppercase tracking-[0.18em] font-bold text-haze-500">FlightPath Basic</div>
             <div className="mt-5 flex items-baseline gap-2">
               <span className="font-display text-6xl tracking-tight text-ink">$0</span>
-              <span className="text-ink/45 text-sm">/ 7 días</span>
+              <span className="text-ink/45 text-sm">MXN</span>
             </div>
-            <p className="text-[14px] text-ink/55 mt-3">Conoce la plataforma sin tarjeta. Acceso completo una semana.</p>
-            <Btn kind="light" size="lg" icon="arrow" className="w-full mt-7" to="/register">Empezar prueba</Btn>
+            <p className="text-[14px] text-ink/55 mt-3">Crea tu cuenta y conoce la plataforma con funciones limitadas y básicas.</p>
+            <Btn kind="light" size="lg" icon="arrow" className="w-full mt-7" to="/register">Crear cuenta gratis</Btn>
             <div className="mt-8 space-y-3">
-              {["Acceso a las 12 materias", "100 preguntas del banco", "1 simulación completa"].map((b, i) => (
+              {["Primer tema de cada materia", "10 preguntas por materia", "1 simulador al mes", "Muestra de la biblioteca"].map((b, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <Icon n="check" className="w-4 h-4 text-haze-400 mt-0.5 shrink-0" sw={2.2} />
                   <span className="text-[14px] text-ink/65">{b}</span>
@@ -1219,16 +1196,23 @@ function Pricing() {
             <div className="relative">
               <div className="flex items-center justify-between">
                 <div className="text-[11px] uppercase tracking-[0.18em] font-bold text-coral-400">FlightPath Pro</div>
-                <Pill tone="light">Más popular</Pill>
+                <Pill tone="light">Acceso completo</Pill>
               </div>
               <div className="mt-5 flex items-baseline gap-2">
-                <span className="font-display text-6xl tracking-tight text-white">$890</span>
+                <span className="font-display text-6xl tracking-tight text-white">$1,500</span>
                 <span className="text-white/50 text-sm">MXN / mes</span>
               </div>
-              <p className="text-[14px] text-white/60 mt-3">Plataforma completa, simulador ilimitado y tutor IA 24/7.</p>
-              <Btn kind="primary" size="lg" icon="arrow" className="w-full mt-7" to="/register">Comenzar ahora</Btn>
+              <div className="mt-4 rounded-xl border border-coral-400/30 bg-coral-600/10 px-4 py-3">
+                <div className="text-[13px] text-white/85">
+                  Plan anual: <span className="line-through text-white/45">$12,000</span>{" "}
+                  <span className="font-bold text-coral-400">$10,000 MXN</span>
+                </div>
+                <div className="text-[11.5px] text-white/55 mt-0.5">Precio de lanzamiento · solo por 15 días</div>
+              </div>
+              <p className="text-[14px] text-white/60 mt-4">Plataforma completa, simulador ilimitado y tutor IA 24/7 — igual en mensual o anual.</p>
+              <Btn kind="primary" size="lg" icon="arrow" className="w-full mt-7" to="/register">Hazte Pro</Btn>
               <div className="mt-8 space-y-3">
-                {["12 materias + actualizaciones", "5,000+ preguntas con explicación", "Simulador CIAAC ilimitado", "Tutor IA Yaris 24/7 + Pathy", "Garantía: apruebas o te devolvemos"].map((b, i) => (
+                {["Las 12 materias con Learning Paths completos", "Banco de 2,800+ preguntas con explicación", "Simulador CIAAC ilimitado", "Biblioteca completa: 100+ manuales oficiales", "Tutor IA Yaris 24/7 + Pathy", "Clases grabadas y flashcards"].map((b, i) => (
                   <div key={i} className="flex items-start gap-3">
                     <Icon n="check" className="w-4 h-4 text-coral-400 mt-0.5 shrink-0" sw={2.2} />
                     <span className="text-[14px] text-white/85">{b}</span>
@@ -1256,14 +1240,10 @@ function FinalCta() {
           No es suerte.<br /><span className="text-coral-600">Es preparación.</span>
         </h2>
         <p className="mt-6 text-lg text-ink/55 max-w-xl mx-auto leading-relaxed">
-          Únete a 2,400+ pilotos que se prepararon con FlightPath y aprobaron al primer intento.
+          Si completas tu ruta de estudio y no notas una mejora real en tu preparación y seguridad para el CIAAC, extendemos tu acceso y ajustamos contigo tu plan de estudio.
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-          <Btn kind="primary" size="lg" icon="arrow" to="/register">Comenzar gratis · 7 días</Btn>
-          <Btn kind="light" size="lg">Hablar con un asesor</Btn>
-        </div>
-        <div className="mt-7 text-[12.5px] text-ink/45">
-          Sin tarjeta · Cancela cuando quieras · Garantía de aprobación
+          <Btn kind="primary" size="lg" icon="arrow" to="/register">Únete a FlightPath</Btn>
         </div>
       </div>
     </section>
@@ -1285,14 +1265,31 @@ function Footer() {
             </div>
           </div>
           {[
-            { h: "Plataforma", l: ["Materias", "Simulador", "Tutor IA", "Precios"] },
-            { h: "Recursos", l: ["Blog", "Guía CIAAC", "Preguntas frecuentes", "Cambios"] },
-            { h: "FlightPath", l: ["Sobre nosotros", "Contacto", "Términos", "Privacidad"] },
+            { h: "Plataforma", l: [
+              { t: "Funciones", href: "/#funciones" },
+              { t: "Simulador", href: "/#simulador" },
+              { t: "Tutor IA", href: "/#yaris" },
+              { t: "Precios", href: "/#precios" },
+            ] },
+            { h: "Recursos", l: [
+              { t: "Blog", href: "/blog" },
+              { t: "Preguntas frecuentes", href: "/faq" },
+              { t: "Convocatoria CIAAC 2026", href: "https://www.gob.mx/afac", ext: true },
+            ] },
+            { h: "FlightPath", l: [
+              { t: "Términos y condiciones", href: "/legal" },
+              { t: "Contacto", href: "mailto:contacto@flowstateai.com.mx" },
+            ] },
           ].map((c, i) => (
             <div key={i}>
               <div className="text-[11px] uppercase tracking-[0.18em] font-bold text-white/40">{c.h}</div>
               <ul className="mt-5 space-y-3">
-                {c.l.map((x) => <li key={x}><a href="#" className="text-[13.5px] text-white/70 hover:text-coral-400 transition-colors">{x}</a></li>)}
+                {c.l.map((x) => (
+                  <li key={x.t}>
+                    <a href={x.href} target={"ext" in x && x.ext ? "_blank" : undefined} rel={"ext" in x && x.ext ? "noreferrer" : undefined}
+                       className="text-[13.5px] text-white/70 hover:text-coral-400 transition-colors">{x.t}</a>
+                  </li>
+                ))}
               </ul>
             </div>
           ))}
@@ -1370,11 +1367,10 @@ function LandingPage() {
         <Countdown show={showCountdown} />
         <Showcase />
         <Features />
-        <Companion />
         <PathyEvolution />
+        <Companion />
         <YarisChat />
         <Simulator />
-        <Testimonials />
         <Pricing />
         <FinalCta />
       </main>
