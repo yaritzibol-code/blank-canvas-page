@@ -1,7 +1,8 @@
 import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { TimerProvider } from "../contexts/StudyTimerContext";
-import { useRequireAuth, useSessionUser, useStore, getStreak } from "@/lib/store";
+import { useRequireAuth, useSessionUser, useStore, getStreak, logout } from "@/lib/store";
+import { useNavigate } from "@tanstack/react-router";
 import { YarisChatModal } from "@/components/shared/YarisChatModal";
 
 export const Route = createFileRoute("/dashboard")({
