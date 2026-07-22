@@ -439,8 +439,27 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_ai_daily: {
+        Args: { days_back?: number }
+        Returns: {
+          avg_latency_ms: number
+          calls: number
+          day: string
+          errors: number
+          tokens_in: number
+          tokens_out: number
+        }[]
+      }
       admin_ai_stats: { Args: { hours_back?: number }; Returns: Json }
       admin_mrr: { Args: { check_env?: string }; Returns: number }
+      admin_mrr_daily: {
+        Args: { check_env?: string; days_back?: number }
+        Returns: {
+          active_count: number
+          day: string
+          mrr: number
+        }[]
+      }
       admin_plan_drift: {
         Args: { check_env?: string }
         Returns: {
@@ -480,6 +499,7 @@ export type Database = {
         Args: { p_collection: string; p_items: Json }
         Returns: number
       }
+      user_data_sync_status: { Args: { check_env?: string }; Returns: Json }
     }
     Enums: {
       [_ in never]: never
