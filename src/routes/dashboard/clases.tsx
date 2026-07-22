@@ -16,9 +16,10 @@ import {
 } from "@/lib/store";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
+import { adminOnly } from "@/components/shared/UnderConstruction";
 
 export const Route = createFileRoute("/dashboard/clases")({
-  component: ClasesPage,
+  component: adminOnly(ClasesPage, "Clases grabadas"),
 });
 
 type Screen = "materias" | "videos" | "player";

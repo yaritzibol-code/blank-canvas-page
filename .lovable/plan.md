@@ -1,58 +1,120 @@
-## Objetivo
+## Alcance
 
-Adaptar la app para que se vea correctamente en teléfono (~390px) y iPad (~768–1024px) sin tocar contenido, copy, colores ni lógica. Solo ajustes de layout/typography.
+Nueve entregables. Ejecuto en el orden listado al final para no bloquearme.
 
-## Diagnóstico
+### 1. Admins
+- Admins autorizados: `rdaniel.guzman@glassway.mx` y `yaritzi.bol@glassway.mx`.
+- `admin@flightpath.mx` deja de ser admin.
+- Migración:
+  - `update profiles set role='student' where email='admin@flightpath.mx';`
+  - `update profiles set role='admin' where email in ('rdaniel.guzman@glassway.mx','yaritzi.bol@glassway.mx');`
+  - Reescribir `handle_new_user()`: el rol admin sólo se asigna si el correo está en esa lista (o si aún no existe ningún perfil, para bootstrap).
 
-El proyecto mezcla dos estilos:
-1. **Landing (`src/routes/index.tsx`)** ya usa Tailwind con breakpoints `lg:`, pero varias secciones tienen rejillas fijas, paddings grandes y tipografía gigante que no caben en 390px.
-2. **Dashboard y rutas internas** (`src/routes/dashboard.tsx`, `dashboard/index.tsx`, `simulador.tsx`, `cuestionario.tsx`, `dashboard/flashcards.tsx`, `dashboard/banco.tsx`, `dashboard/materias/*`, etc.) usan **inline styles** con `gridTemplateColumns: "repeat(3, 1fr)"` o `"repeat(4, 1fr)"` y `padding: 28/40` fijos. Las clases `className="grid-cols-2 md:grid-cols-4"` que ya existen **no aplican** porque el `style` inline gana.
+### 2. Módulos "En construcción" para no-admin
+Aplica a Learning Paths, Estudiemos Juntos, Flashcards, Clases Grabadas. Admin entra normal.
+- Componente `<UnderConstruction />` compartido.
+- Gate en `dashboard/materias/$subjectId`, `dashboard/estudiemos`, `dashboard/flashcards`, `dashboard/clases`.
+- Pro NO desbloquea estos 4 módulos aún — sólo admin. Documentado.
 
-## Cambios (solo presentación)
+### 3. Stripe con dos tiers
+- Uso **Seamless Stripe payments** (`enable_stripe_payments`). Básica $0 MXN/mes, Pro $500 MXN/mes.
+- Nuevo plan default `basica`.
+- Gating:
+  - Básica: cuestionario y simulador con las mismas 10 preguntas por materia (determinista por seed), máximo 2 intentos totales de por vida; sin Yaris/IA.
+  - Pro: cuestionario/simulador ilimitados y Yaris con IA.
+- Refactor `gating.ts`: `canStartSimulator`, `canStartQuiz`, `canUseAI`.
+- UI `/dashboard/planes` con tarjetas Básica/Pro y CTA Stripe. Botón "Upgrade" en topbar cuando plan=basica.
+- Sustituyo las edge functions Stripe existentes por server functions TanStack (`checkout`, `portal`, `refreshSubscription`).
 
-### 1. Landing `src/routes/index.tsx`
-- Hero: bajar `text-[52px]` a `text-[34px] sm:text-[44px] lg:text-[52px]`; reducir paddings verticales en mobile.
-- Convertir grids fijos (features, pricing, testimonials, footer) a `grid-cols-1 sm:grid-cols-2 lg:grid-cols-N`.
-- Nav: asegurar menú hamburguesa abre/cierra correctamente y CTAs no se desbordan (`flex-wrap`, `min-w-0`, `truncate`).
-- `PathyBubble` y `PlaneField` con `max-w-full` y altura reducida en mobile.
+### 4. Yaris con RAG real
+- Migración: `create extension vector`; tabla `rag_chunks(id, source_type, source_id, materia, content, embedding vector(3072), metadata jsonb)` + índice HNSW halfvec + RPC `match_rag_chunks(query_embedding, materia_filter, match_count)`.
+- Server function `rag-reindex` (admin only): itera `content` (banco de preguntas + explanations) y biblioteca; chunk 800 chars con overlap 100; embed con `google/gemini-embedding-001`; upsert.
+- Server function `yaris-chat` (Pro/admin only):
+  1. Recibe `{ messages, context: { questionId?, materia? } }`.
+  2. Embed última pregunta del usuario + inyecta explanation de la pregunta actual si aplica.
+  3. `match_rag_chunks` top 6 (filtrando por materia si viene).
+  4. Llama `google/gemini-3-flash-preview` con prompt de instructor CIAAC y cita fuentes por título.
+  5. Devuelve `{ reply, sources: [{title, snippet}] }`.
+- `YarisChatModal` conectado al endpoint. Si `!canUseAI` → upsell.
+- Botón admin "Reindexar RAG".
 
-### 2. Dashboard shell `src/routes/dashboard.tsx`
-- Topbar: aplicar patrón `grid-cols-[minmax(0,1fr)_auto]` para que título + chips no se rompan; ocultar fecha larga en <sm.
-- Reducir `height: 64` topbar y paddings en mobile (ya parcial, completar).
-- Radar bar: stacking vertical en <sm.
+### 5. Recordatorios reales + webhook WhatsApp (n8n)
+- Migración: tabla `reminder_events(id, user_id, reminder_id, scheduled_for, sent_at, status, payload)` + índices + RLS.
+- WhatsApp E.164 MX derivado del perfil (`5215510203040`).
+- Server function `send-whatsapp-reminder` invocada por pg_cron cada minuto vía `/api/public/cron/reminders`:
+  - Busca recordatorios `enabled=true` cuya hora/día toque hoy y no se hayan enviado hoy;
+  - POST a `WHATSAPP_WEBHOOK_URL` (n8n) con `{ to: "5215510203040", message: "...", reminderId, userId }`;
+  - Registra en `reminder_events`.
+- Secret `WHATSAPP_WEBHOOK_URL` (n8n) — lo pido en un turno aparte.
+- `pg_cron` + `pg_net` con `apikey` del anon key.
+- UI Recordatorios: crear/editar/borrar filas en `reminders`, validar WhatsApp del perfil, botón "Enviar prueba ahora".
 
-### 3. Dashboard home `src/routes/dashboard/index.tsx`
-- Reemplazar `gridTemplateColumns: "repeat(4, 1fr)"` y `"repeat(3, 1fr)"` por estilos responsivos: usar `style` con media queries via clase utility, o migrar esos contenedores a `className` Tailwind (`grid grid-cols-2 md:grid-cols-4 gap-4` / `grid-cols-1 md:grid-cols-3`) eliminando el `gridTemplateColumns` inline que lo pisa.
-- Greeting + countdown: `flex-col sm:flex-row`, countdown chips más pequeños en mobile.
-- Pathy widget: stacking vertical <sm, streak chip debajo.
-- `MateriaCard`: en mobile los 3 botones (`Material/Preguntas/Flash`) se aprietan — pasar a `flex-wrap` con min-width.
+### 6. Configuración funcional
+- Persistir prefs (tema, tamaño texto, toggles) → `profiles.data.prefs`.
+- Cambiar contraseña.
+- Cambiar WhatsApp con validación E.164 MX.
+- Desactivar cuenta (`deactivatedAt` ya modelado).
 
-### 4. Rutas internas con inline grids
-Aplicar el mismo patrón (quitar `gridTemplateColumns` inline, usar clases Tailwind responsivas) en:
-- `src/routes/simulador.tsx`
-- `src/routes/cuestionario.tsx`
-- `src/routes/dashboard/banco.tsx`
-- `src/routes/dashboard/flashcards.tsx`
-- `src/routes/dashboard/materias/index.tsx`
-- `src/routes/dashboard/materias/$subjectId.tsx`
-- `src/routes/dashboard/analisis.tsx`, `bitacora.tsx`, `biblioteca.tsx`, `clases.tsx`, `recordatorios.tsx`, `perfil.tsx`, `configuracion.tsx`, `estudiemos.tsx`
-- `src/routes/admin/perfil.tsx`
-- `src/routes/login.tsx`, `register.tsx`
+### 7. Ayuda/Soporte con back-link correcto
+- `/faq`, `/legal`, `/blog`: si `getSessionUser()` existe → link "Volver al dashboard"; si no → "Volver al login". Nunca fuerza al home.
 
-Para cada uno:
-- Grids fijas → `grid-cols-1 sm:grid-cols-2 lg:grid-cols-N`.
-- Paddings 28–40 → `p-4 sm:p-6 lg:p-8`.
-- Headings inline `fontSize: "1.8rem"` → `clamp(1.3rem, 4vw, 1.8rem)`.
-- Filas título+widget → patrón `grid grid-cols-[minmax(0,1fr)_auto]` con `min-w-0` y `truncate`.
-- Botones/CTAs grandes → `w-full sm:w-auto` cuando aplica.
+### 8. Métricas reales por perfil
+Reemplazar hardcodes en `dashboard/index.tsx` y `dashboard/analisis.tsx`:
+- Racha diaria desde `study_days` (días consecutivos con >0s).
+- Materia más activa: agregación por `activity` filtrada por `userId`.
+- Promedio de sesión: media de `activity.durationMin` últimos 30 días.
+- Progreso por materia: `tema_progress` completados / total temas por materia.
+- Simuladores: totales/aprobados/promedio desde `sim_attempts`.
+- Cuestionarios: agregaciones desde `quiz_attempts`.
+- Uso las funciones que ya viven en `analytics.ts`; completo lo que falte.
 
-### 5. Engine blocks `src/modules/engine/blocks/*`
-- HeaderBlock y demás: padding 28 → `clamp(16px, 4vw, 28px)`; títulos con `clamp()`; meta chips `flex-wrap`.
+### 9. Ordenamiento
+- Consolidar edge functions Stripe → server functions.
+- Eliminar código muerto de billing local.
 
-### 6. Verificación
-- Levantar Playwright en headless a 390×844 (iPhone) y 820×1180 (iPad) y capturar screenshots de: `/`, `/login`, `/dashboard`, `/dashboard/materias`, `/dashboard/materias/aerodinamica`, `/dashboard/banco`, `/dashboard/flashcards`, `/simulador`, `/cuestionario`.
-- Confirmar visualmente: sin scroll horizontal, sin texto cortado, sidebar móvil funciona, botones tappables (≥40px).
+## Detalles técnicos
+
+**Migraciones**
+```sql
+-- 1. Admins
+update profiles set role='student' where email='admin@flightpath.mx';
+update profiles set role='admin'
+  where email in ('rdaniel.guzman@glassway.mx','yaritzi.bol@glassway.mx');
+-- + handle_new_user() reescrita con lista de admins autorizados
+
+-- 2. pgvector + RAG (extensión, tabla, índice HNSW halfvec, RPC, RLS, GRANTs)
+-- 3. reminder_events (tabla, RLS, GRANTs)
+-- 4. pg_cron.schedule('reminders-tick', '* * * * *', ...)
+-- 5. subscribers (email pk, subscribed, tier, current_period_end, stripe_customer_id, RLS, GRANTs)
+```
+
+**Server functions nuevas** (todas en `src/lib/*.functions.ts`):
+- `checkout.functions.ts` — `startCheckout({tier})`, `openPortal()`, `refreshSubscription()`
+- `yaris.functions.ts` — `chat({messages, context})`
+- `rag.functions.ts` — `reindex()` admin-only
+- `reminders.functions.ts` — `sendTest({reminderId})`
+
+**Rutas públicas**:
+- `src/routes/api/public/cron/reminders.ts` — POST protegido por anon key.
+- `src/routes/api/public/webhooks/stripe.ts` — opcional, para downgrade automático.
+
+**Secretos**:
+- Stripe → `enable_stripe_payments`.
+- `WHATSAPP_WEBHOOK_URL` → `add_secret` en turno aparte.
+
+## Orden de ejecución
+
+1. Migración admins + fix `handle_new_user`.
+2. Enable Stripe payments.
+3. Server functions checkout/plan + gating básica/pro (10 preguntas, 2 intentos, sin IA).
+4. Under-construction gates de los 4 módulos.
+5. Migración pgvector + RAG; server function `rag-reindex`; Yaris chat + UI.
+6. Secret `WHATSAPP_WEBHOOK_URL` + `reminder_events` + endpoint cron + pg_cron + UI recordatorios.
+7. Configuración funcional + back-links FAQ/legal/blog.
+8. Métricas reales dashboard/análisis.
 
 ## Fuera de alcance
-- Sin cambios de copy, colores, fuentes, animaciones, lógica, rutas o datos.
-- Sin refactor estructural; solo ajustes de layout/typography responsivos.
+
+- Los 4 módulos quedan bloqueados aun para Pro (sólo admin) hasta nueva instrucción.
+- Sin webhook Stripe entrante para downgrade inmediato — bajas se detectan al siguiente `refreshSubscription`. Puedo añadirlo si lo pides.
+- El proveedor WhatsApp queda como `WHATSAPP_WEBHOOK_URL` genérico para n8n; añado headers custom si n8n los requiere.

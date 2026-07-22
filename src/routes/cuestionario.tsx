@@ -4,6 +4,7 @@ import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import {
   useRequireAuth,
   isPaid,
+  canStartQuiz,
   getPublishedQuestions,
   getFreeQuestions,
   saveQuizAttempt,
@@ -14,6 +15,7 @@ import {
 } from "@/lib/store";
 import type { BankQuestion, YarisContext } from "@/lib/store";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
+import { UnderConstruction } from "@/components/shared/UnderConstruction";
 
 export const Route = createFileRoute("/cuestionario")({
   component: CuestionarioPage,
@@ -436,6 +438,17 @@ function CuestionarioPage() {
       .slice(0, 2)
       .map((w) => w[0].toUpperCase())
       .join("") || "TÚ";
+
+  const quizGate = canStartQuiz(user);
+  if (ready && user && !quizGate.allowed) {
+    return (
+      <UnderConstruction
+        moduleName="Límite del plan Básica alcanzado"
+        description={quizGate.reason}
+      />
+    );
+  }
+  
 
   return (
     <div

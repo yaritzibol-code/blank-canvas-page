@@ -1,8 +1,24 @@
 /**
- * Reglas de acceso por suscripción (PRD §5.3) y desbloqueo progresivo (§7).
+ * Reglas de acceso por suscripción y desbloqueo progresivo.
+ *
+ * Reglas vigentes (2026-07):
+ *  - Plan **básica**: acceso a Cuestionario y Simulador con 10 preguntas por
+ *    materia (fijas por semilla) y máximo 2 intentos totales (de por vida)
+ *    entre cuestionarios y simuladores. Sin IA (Yaris).
+ *  - Plan **paga (Pro)**: acceso completo a cuestionario/simulador ilimitados
+ *    y Yaris con IA.
+ *  - Los módulos Learning Paths / Estudiemos Juntos / Flashcards / Clases
+ *    Grabadas están gateados aparte (sólo admin) mediante `<UnderConstruction />`.
  */
 import type { User } from "./types";
-import { getClases, getClaseProgress, getTemaProgress, simAttemptsThisMonth, logActivity } from "./domain";
+import {
+  getClases,
+  getClaseProgress,
+  getTemaProgress,
+  getSimAttempts,
+  getQuizAttempts,
+  logActivity,
+} from "./domain";
 
 export type GatedFeature =
   | "learning_path_tema"
@@ -14,7 +30,13 @@ export type GatedFeature =
   | "clase"
   | "recordatorios"
   | "analisis_completo"
-  | "yaris_biblioteca";
+  | "yaris_biblioteca"
+  | "yaris_ia";
+
+/** Máximo de intentos totales (quiz + simulador combinados) para plan básica. */
+export const BASICA_MAX_ATTEMPTS = 2;
+/** Preguntas por materia visibles en modo básica. */
+export const BASICA_QUESTIONS_PER_MATERIA = 10;
 
 export function isPaid(user: User | null): boolean {
   if (!user) return false;
@@ -23,28 +45,48 @@ export function isPaid(user: User | null): boolean {
   return user.plan === "paga" && activo;
 }
 
+/** Yaris con IA sólo para plan Pro (o admin). */
+export function canUseAI(user: User | null): boolean {
+  return isPaid(user);
+}
+
 export interface GateResult {
   allowed: boolean;
   reason?: string;
+  used?: number;
+  limit?: number;
 }
 
-/** Límite mensual del simulador para suscripción básica: 1 por mes. */
+/** Cuenta intentos totales de por vida (quizzes + simuladores) del usuario. */
+export function totalAttempts(userId: string): number {
+  return getQuizAttempts(userId).length + getSimAttempts(userId).length;
+}
+
+const LIMIT_MSG =
+  `Tu plan Básica incluye ${BASICA_MAX_ATTEMPTS} intentos totales entre cuestionarios y simuladores. ` +
+  "Actualiza a FlightPath Pro para practicar sin límites.";
+
 export function canStartSimulator(user: User | null): GateResult {
   if (!user) return { allowed: false, reason: "Inicia sesión para usar el simulador." };
   if (isPaid(user)) return { allowed: true };
-  const used = simAttemptsThisMonth(user.id);
-  if (used >= 1)
-    return {
-      allowed: false,
-      reason:
-        "Tu suscripción básica incluye 1 simulador por mes y ya lo usaste. Desbloquea FlightPath completo para practicar sin límites.",
-    };
-  return { allowed: true };
+  const used = totalAttempts(user.id);
+  if (used >= BASICA_MAX_ATTEMPTS)
+    return { allowed: false, reason: LIMIT_MSG, used, limit: BASICA_MAX_ATTEMPTS };
+  return { allowed: true, used, limit: BASICA_MAX_ATTEMPTS };
+}
+
+export function canStartQuiz(user: User | null): GateResult {
+  if (!user) return { allowed: false, reason: "Inicia sesión para practicar." };
+  if (isPaid(user)) return { allowed: true };
+  const used = totalAttempts(user.id);
+  if (used >= BASICA_MAX_ATTEMPTS)
+    return { allowed: false, reason: LIMIT_MSG, used, limit: BASICA_MAX_ATTEMPTS };
+  return { allowed: true, used, limit: BASICA_MAX_ATTEMPTS };
 }
 
 /**
  * Desbloqueo de Learning Paths:
- *  - básica: solo el primer tema de cada materia (el resto, candado de plan);
+ *  - básica: solo el primer tema (el resto, candado de plan);
  *  - todos: secuencial — no puedes abrir un tema sin completar el anterior.
  */
 export function temaLockState(
@@ -64,11 +106,6 @@ export function temaLockState(
   return done.has(temaIds[idx - 1]) ? "open" : "locked_previo";
 }
 
-/**
- * Desbloqueo de clases grabadas (por materia, en orden):
- *  - básica: solo la primera clase publicada de cada materia;
- *  - todos: secuencial — completar la anterior desbloquea la siguiente.
- */
 export function claseLockState(
   user: User | null,
   materiaSlug: string,
@@ -89,7 +126,6 @@ export function claseLockState(
   return done.has(clases[idx - 1].id) ? "open" : "locked_previo";
 }
 
-/** Registra el intento de abrir una función bloqueada (métricas de conversión). */
 export function logUpgradePrompt(userId: string, feature: GatedFeature | string) {
   logActivity({ userId, kind: "upgrade_prompt", label: feature, durationMin: 0 });
 }

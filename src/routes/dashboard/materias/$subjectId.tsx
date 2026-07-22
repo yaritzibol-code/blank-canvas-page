@@ -16,8 +16,10 @@ import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 
 type LockState = "open" | "locked_previo" | "locked_plan";
 
+import { adminOnly } from "@/components/shared/UnderConstruction";
+
 export const Route = createFileRoute("/dashboard/materias/$subjectId")({
-  component: SubjectDetail,
+  component: adminOnly(SubjectDetail, "Learning Path"),
 });
 
 const FONT = "'Manrope', sans-serif";
