@@ -1,1 +1,12 @@
 project_id = "tgkbrfivawpgozwqbpsm"
+
+# Funciones de pagos (Stripe): validan al usuario manualmente con el token del
+# header Authorization, por eso verify_jwt va apagado (convención Lovable).
+[functions.create-checkout]
+verify_jwt = false
+
+[functions.check-subscription]
+verify_jwt = false
+
+[functions.customer-portal]
+verify_jwt = false

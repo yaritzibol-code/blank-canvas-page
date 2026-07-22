@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { subscribe, getVersion } from "./db";
 import { ensureSeeded } from "./seed";
-import { getSessionUser, purgeExpiredAccounts, restoreCloudSession } from "./auth";
+import { getSessionUser, purgeExpiredAccounts, restoreCloudSession, isAuthSettled } from "./auth";
 import type { User } from "./types";
 
 let initialized = false;
@@ -19,6 +19,17 @@ function initOnce() {
   // Con Lovable Cloud activo, restaura la sesión de Supabase e hidrata en
   // segundo plano; la UI se actualiza sola conforme llegan los datos.
   void restoreCloudSession().catch(() => {});
+}
+
+/**
+ * Arranque explícito de la capa de datos (lo llama el layout raíz).
+ * Garantiza que el cliente de Supabase se cree en CUALQUIER página — necesario
+ * para procesar los tokens que el OAuth de Google / la confirmación de correo /
+ * el enlace de recuperación devuelven en el hash de la URL, aunque el usuario
+ * aterrice en una página que no usa el store (p. ej. la landing).
+ */
+export function initAppStore() {
+  initOnce();
 }
 
 export function useStoreVersion(): number {
@@ -45,24 +56,33 @@ export function useSessionUser(): User | null {
  * Guard de rutas privadas: redirige a /login si no hay sesión
  * (o a /dashboard si se requiere rol admin y no lo es).
  * Devuelve { user, ready } — renderiza el contenido solo cuando ready.
+ *
+ * Espera a que la restauración de la sesión de nube termine (isAuthSettled)
+ * antes de decidir: si el usuario llega desde el retorno de Google OAuth o de
+ * un enlace de correo, la sesión tarda un instante en espejarse y redirigir a
+ * /login en ese lapso lo dejaba fuera aunque sí había iniciado sesión.
+ *
+ * Las rutas públicas (/, /login, /register, /blog, /faq, /legal y
+ * /reset-password) simplemente no usan este guard.
  */
 export function useRequireAuth(requiredRole?: "admin"): { user: User | null; ready: boolean } {
   const user = useSessionUser();
+  const settled = useStore(() => isAuthSettled());
   const navigate = useNavigate();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted || !settled) return;
     if (!user) {
       navigate({ to: "/login" });
     } else if (requiredRole === "admin" && user.role !== "admin") {
       navigate({ to: "/dashboard" });
     }
-  }, [mounted, user, requiredRole, navigate]);
+  }, [mounted, settled, user, requiredRole, navigate]);
 
-  const ready = mounted && !!user && (requiredRole !== "admin" || user.role === "admin");
+  const ready = mounted && settled && !!user && (requiredRole !== "admin" || user.role === "admin");
   return { user, ready };
 }
 

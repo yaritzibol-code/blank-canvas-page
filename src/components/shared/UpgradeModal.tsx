@@ -5,7 +5,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Icon } from "@/components/ui/fp-icon";
-import { getConfig, logUpgradeClick, logUpgradePrompt } from "@/lib/store";
+import { getConfig, logUpgradeClick, logUpgradePrompt, startCheckout } from "@/lib/store";
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
@@ -31,6 +31,7 @@ export interface UpgradeModalProps {
 export function UpgradeModal({ open, onClose, feature, benefit, userId }: UpgradeModalProps) {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
+  const [paying, setPaying] = useState(false);
 
   useEffect(() => {
     if (open) {
@@ -38,6 +39,7 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
       if (userId) logUpgradePrompt(userId, feature);
     } else {
       setVisible(false);
+      setPaying(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
@@ -51,6 +53,23 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
     setTimeout(() => {
       document.getElementById("precios")?.scrollIntoView({ behavior: "smooth" });
     }, 350);
+  };
+
+  // Intenta Stripe Checkout; si los pagos aún no están configurados, cae a la
+  // sección de precios de la landing (comportamiento previo).
+  const goCheckout = async (cta: string) => {
+    if (paying) return;
+    if (userId) logUpgradeClick(userId, cta);
+    setPaying(true);
+    const res = await startCheckout();
+    setPaying(false);
+    if (res.ok && res.url) {
+      // Nueva pestaña: Stripe no permite embederse en el iframe del preview.
+      const win = window.open(res.url, "_blank");
+      if (!win) window.location.href = res.url;
+      return;
+    }
+    goPlanes(cta);
   };
 
   return (
@@ -140,20 +159,21 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
 
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           <button
-            onClick={() => goPlanes("Desbloquear acceso completo")}
+            onClick={() => void goCheckout("Desbloquear acceso completo")}
+            disabled={paying}
             style={{
               padding: "13px 20px",
               borderRadius: 12,
               border: "none",
-              background: "#6C0820",
+              background: paying ? "#8DA1BE" : "#6C0820",
               color: "#fff",
               fontWeight: 800,
               fontSize: 15,
-              cursor: "pointer",
+              cursor: paying ? "default" : "pointer",
               fontFamily: FONT,
             }}
           >
-            Desbloquear acceso completo
+            {paying ? "Un momento…" : "Desbloquear acceso completo"}
           </button>
           <button
             onClick={() => goPlanes("Ver planes")}

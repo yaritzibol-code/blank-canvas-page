@@ -1,6 +1,7 @@
-import { read, write, uid, nowISO } from "./db";
+import { read, write, uid, nowISO, touch } from "./db";
 import { supa, cloudEnabled } from "./cloud";
 import type { User, PlanTier, UserPrefs } from "./types";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 const USERS_KEY = "users";
 const SESSION_KEY = "session";
@@ -129,7 +130,20 @@ async function fetchOwnProfile(userId: string): Promise<{ id: string; email: str
   return null;
 }
 
+let openInFlight: { userId: string; promise: Promise<AuthResult> } | null = null;
+
 async function openCloudSession(userId: string): Promise<AuthResult> {
+  // El flujo OAuth puede disparar la apertura dos veces (restore + evento
+  // SIGNED_IN); reutiliza la que ya está en curso para el mismo usuario.
+  if (openInFlight?.userId === userId) return openInFlight.promise;
+  const promise = doOpenCloudSession(userId).finally(() => {
+    if (openInFlight?.userId === userId) openInFlight = null;
+  });
+  openInFlight = { userId, promise };
+  return promise;
+}
+
+async function doOpenCloudSession(userId: string): Promise<AuthResult> {
   const prof = await fetchOwnProfile(userId);
   if (!prof) return { ok: false, error: "No pudimos cargar tu perfil. Inténtalo de nuevo." };
   const base = newLocalUser(String((prof.data as { nombre?: string }).nombre ?? ""), prof.email, false, "");
@@ -150,25 +164,113 @@ async function openCloudSession(userId: string): Promise<AuthResult> {
   return { ok: true, user };
 }
 
+/* ─────────────── Restauración y eventos globales de sesión ─────────────── */
+
+let authSettled = false;
+
+function markAuthSettled() {
+  if (authSettled) return;
+  authSettled = true;
+  touch(); // re-evalúa guards/hooks que esperaban la restauración
+}
+
+/**
+ * true cuando ya se sabe si hay sesión de nube o no (o cuando no hay nube).
+ * Los guards de rutas privadas esperan esto antes de redirigir a /login para
+ * no rebotar al usuario mientras la sesión OAuth/recovery se procesa.
+ */
+export function isAuthSettled(): boolean {
+  return !cloudEnabled() || authSettled;
+}
+
+let listenerAttached = false;
+
+/**
+ * Listener global de auth: completa el login de Google (popup o redirect),
+ * encamina los enlaces de recuperación a /reset-password y limpia la sesión
+ * local si la de Supabase se cierra (p. ej. desde otra pestaña).
+ */
+function attachAuthListener(s: SupabaseClient) {
+  if (listenerAttached || typeof window === "undefined") return;
+  listenerAttached = true;
+  let recoveryFlow = false;
+  s.auth.onAuthStateChange((event, session) => {
+    if (event === "PASSWORD_RECOVERY") recoveryFlow = true;
+    // Diferido: no llamar a Supabase dentro del callback (lock interno del SDK).
+    setTimeout(() => {
+      if (event === "PASSWORD_RECOVERY") {
+        if (window.location.pathname !== "/reset-password") {
+          window.location.replace("/reset-password");
+        }
+        return;
+      }
+      if (event === "SIGNED_IN" && session?.user) {
+        if (recoveryFlow) return; // lo maneja /reset-password
+        const userId = session.user.id;
+        const finish = () => {
+          markAuthSettled();
+          // Tras OAuth el broker regresa al origen (o a /login); con la sesión
+          // ya espejada, lleva al usuario a su dashboard.
+          const path = window.location.pathname;
+          if (path === "/" || path === "/login" || path === "/register") {
+            window.location.href = "/dashboard";
+          }
+        };
+        if (getSessionUserId() !== userId) {
+          void openCloudSession(userId).then((res) => {
+            if (res.ok) finish();
+            else markAuthSettled();
+          });
+        } else {
+          finish();
+        }
+        return;
+      }
+      if (event === "SIGNED_OUT" && getSessionUserId()) {
+        void import("./sync").then(({ stopCloudSession }) => stopCloudSession());
+        write(SESSION_KEY, null);
+      }
+    }, 0);
+  });
+}
+
 /** Restaura la sesión de nube al abrir la app (la llama initOnce en hooks.ts). */
 export async function restoreCloudSession(): Promise<void> {
-  if (!cloudEnabled()) return;
+  if (!cloudEnabled()) {
+    markAuthSettled();
+    return;
+  }
   const s = supa();
-  if (!s) return;
-  const { data } = await s.auth.getSession();
-  const cloudUser = data.session?.user;
-  if (cloudUser) {
-    const local = getSessionUserId();
-    const { startCloudSession } = await import("./sync");
-    if (local !== cloudUser.id) {
-      await openCloudSession(cloudUser.id);
-    } else {
-      const me = getUserById(cloudUser.id);
-      await startCloudSession(cloudUser.id, me?.role === "admin");
+  if (!s) {
+    markAuthSettled();
+    return;
+  }
+  attachAuthListener(s);
+  try {
+    // getSession espera a que el SDK procese los tokens del hash de la URL
+    // (retorno de OAuth, confirmación de correo, enlace de recuperación).
+    const { data } = await s.auth.getSession();
+    const cloudUser = data.session?.user;
+    if (cloudUser) {
+      const local = getSessionUserId();
+      if (local !== cloudUser.id) {
+        // Sesión nueva (OAuth, confirmación, recovery): espeja antes de
+        // liberar los guards para que no reboten a /login.
+        await openCloudSession(cloudUser.id);
+      } else {
+        // Ya hay espejo local: los guards pueden decidir de inmediato y la
+        // hidratación de datos corre en segundo plano.
+        markAuthSettled();
+        const { startCloudSession } = await import("./sync");
+        const me = getUserById(cloudUser.id);
+        await startCloudSession(cloudUser.id, me?.role === "admin");
+      }
+    } else if (getSessionUserId()) {
+      // En modo nube la sesión de Supabase manda: sin ella no hay sesión local.
+      write(SESSION_KEY, null);
     }
-  } else if (getSessionUserId()) {
-    // En modo nube la sesión de Supabase manda: sin ella no hay sesión local.
-    write(SESSION_KEY, null);
+  } finally {
+    markAuthSettled();
   }
 }
 
