@@ -855,21 +855,70 @@ function SimuladorPage() {
   /* ─── PHASE: EXAM ─── */
   return (
     <div style={{ fontFamily: "'Manrope', sans-serif", background: "#f5f7fc", color: "#22375C", height: "100vh", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+      <style>{`
+        @keyframes sim-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+        @keyframes sim-pop { 0% { transform: scale(0.85); } 60% { transform: scale(1.08); } 100% { transform: scale(1); } }
+        @keyframes sim-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+        @keyframes sim-shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(300%); } }
+        @keyframes sim-key-press { 0% { transform: scale(1); } 40% { transform: scale(0.92); } 100% { transform: scale(1); } }
+        .sim-q-card { animation: sim-fade-in 0.32s ease-out both; }
+        .sim-opt { position: relative; overflow: hidden; text-align: left; }
+        .sim-opt:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(61,93,145,0.35); }
+        .sim-opt-letter { transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), background 0.2s, color 0.2s; }
+        .sim-opt[data-selected="true"] .sim-opt-letter { animation: sim-pop 0.35s ease-out; }
+        .sim-opt[data-selected="true"] { box-shadow: 0 6px 18px rgba(61,93,145,0.15); }
+        .sim-opt:not([data-selected="true"]):hover { transform: translateX(3px); }
+        .sim-progress-shimmer { position: relative; overflow: hidden; }
+        .sim-progress-shimmer > .sim-shimmer-bar { position:absolute; inset:0; width:40%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); animation: sim-shimmer 2.4s linear infinite; pointer-events:none; }
+        .sim-danger-dot { width: 8px; height: 8px; border-radius: 50%; background: #e74c3c; animation: sim-pulse 1s ease-in-out infinite; display:inline-block; }
+        .sim-timer-ring { transition: stroke-dashoffset 0.9s linear, stroke 0.3s ease; }
+        .sim-calc-btn { transition: transform 0.12s ease, filter 0.12s ease; }
+        .sim-calc-btn:hover { filter: brightness(1.12); }
+        .sim-calc-btn:active { animation: sim-key-press 0.18s ease-out; }
+        @media (prefers-reduced-motion: reduce) {
+          .sim-q-card, .sim-opt, .sim-opt-letter, .sim-danger-dot, .sim-shimmer-bar, .sim-timer-ring, .sim-calc-btn { animation: none !important; transition: none !important; }
+        }
+      `}</style>
 
       {/* Topbar */}
-      <div style={{ height: 56, background: "#22375C", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px", flexShrink: 0, zIndex: 50 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <button onClick={() => setLeftPanelOpen((o) => !o)} className="md:hidden" style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "5px 10px", borderRadius: 7, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
+      <div style={{ height: 56, background: "#22375C", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 16px", flexShrink: 0, zIndex: 50, gap: 8 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
+          <button onClick={() => setLeftPanelOpen((o) => !o)} aria-label="Ver lista de preguntas" className="md:hidden" style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "6px 10px", borderRadius: 7, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", minHeight: 40 }}>
             <Icon n="list" size={15} /> Preguntas
           </button>
-          <span style={{ background: "#6C0820", color: "white", padding: "4px 12px", borderRadius: 20, fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="target" size={13} /> Simulador</span>
-          <span className="hidden md:block" style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1rem", color: "white", fontWeight: 700 }}>Examen General de Egreso — Piloto Comercial</span>
+          <span style={{ background: "#6C0820", color: "white", padding: "4px 12px", borderRadius: 20, fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", display: "inline-flex", alignItems: "center", gap: 5, flexShrink: 0 }}><Icon n="target" size={13} /> Simulador</span>
+          <span className="hidden md:block" style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1rem", color: "white", fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Examen General de Egreso — Piloto Comercial</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.1)", borderRadius: 10, padding: "6px 14px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
+          {/* Timer con anillo */}
+          <div
+            role="timer"
+            aria-label={`Tiempo restante ${fmtTime(secondsLeft)}`}
+            style={{
+              display: "flex", alignItems: "center", gap: 10,
+              background: timerDanger ? "rgba(231,76,60,0.18)" : timerWarning ? "rgba(243,156,18,0.15)" : "rgba(255,255,255,0.1)",
+              border: `1px solid ${timerDanger ? "rgba(231,76,60,0.5)" : timerWarning ? "rgba(243,156,18,0.4)" : "rgba(255,255,255,0.15)"}`,
+              borderRadius: 12, padding: "5px 12px 5px 8px", transition: "background 0.3s, border 0.3s",
+            }}
+          >
+            <svg width={30} height={30} viewBox="0 0 36 36" aria-hidden="true" style={{ flexShrink: 0 }}>
+              <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="3" />
+              <circle
+                className="sim-timer-ring"
+                cx="18" cy="18" r="15" fill="none"
+                stroke={timerDanger ? "#e74c3c" : timerWarning ? "#f39c12" : "#F2AEBC"}
+                strokeWidth="3" strokeLinecap="round"
+                strokeDasharray={2 * Math.PI * 15}
+                strokeDashoffset={2 * Math.PI * 15 * (1 - secondsLeft / (5 * 3600))}
+                transform="rotate(-90 18 18)"
+              />
+            </svg>
             <div>
-              <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.5px" }}>Tiempo restante</div>
-              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", fontWeight: 900, letterSpacing: 1, color: timerDanger ? "#e74c3c" : timerWarning ? "#f39c12" : "white" }}>
+              <div style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.7)", textTransform: "uppercase", letterSpacing: "0.5px", display: "flex", alignItems: "center", gap: 5, lineHeight: 1 }}>
+                {timerDanger && <span aria-hidden="true" className="sim-danger-dot" />}
+                Tiempo
+              </div>
+              <div style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "1.05rem", fontWeight: 800, letterSpacing: 1, color: timerDanger ? "#ffb0a4" : timerWarning ? "#ffd58a" : "white", lineHeight: 1.15 }}>
                 {fmtTime(secondsLeft)}
               </div>
             </div>
@@ -878,13 +927,15 @@ function SimuladorPage() {
             onClick={() => setCalcOpen((o) => !o)}
             aria-label="Abrir calculadora"
             aria-expanded={calcOpen}
-            style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "8px 12px", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5, minHeight: 40 }}
+            title="Calculadora (C)"
+            style={{ background: calcOpen ? "#F2AEBC" : "rgba(255,255,255,0.1)", border: `1px solid ${calcOpen ? "#F2AEBC" : "rgba(255,255,255,0.2)"}`, color: calcOpen ? "#22375C" : "white", padding: "8px 12px", borderRadius: 8, fontSize: "0.8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5, minHeight: 40, transition: "all 0.2s" }}
           >
             <Icon n="gauge" size={15} /> <span className="hidden sm:inline">Calculadora</span>
           </button>
           <button
             onClick={() => setConfirmOpen(true)}
             aria-label="Finalizar examen"
+            title="Finalizar examen"
             style={{
               background: "#6C0820", border: "1px solid rgba(255,255,255,0.15)",
               color: "white", padding: "8px 14px", borderRadius: 8,
@@ -892,7 +943,10 @@ function SimuladorPage() {
               fontFamily: "'Manrope', sans-serif",
               display: "flex", alignItems: "center", gap: 6, minHeight: 40,
               boxShadow: "0 2px 8px rgba(108,8,32,0.35)",
+              transition: "transform 0.15s",
             }}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-1px)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; }}
           >
             <Icon n="check" size={15} /> <span className="hidden sm:inline">Finalizar</span>
           </button>
@@ -900,9 +954,11 @@ function SimuladorPage() {
       </div>
 
       {/* Progress bar */}
-      <div style={{ background: "rgba(255,255,255,0.08)", height: 4, flexShrink: 0 }}>
-        <div style={{ height: "100%", background: "#F2AEBC", width: `${progressPct}%`, transition: "width 0.3s ease" }} />
+      <div className="sim-progress-shimmer" style={{ background: "rgba(34,55,92,0.08)", height: 5, flexShrink: 0, position: "relative" }} role="progressbar" aria-valuenow={Math.round(progressPct)} aria-valuemin={0} aria-valuemax={100} aria-label="Progreso del examen">
+        <div style={{ height: "100%", background: "linear-gradient(90deg, #F2AEBC, #F2DCDB)", width: `${progressPct}%`, transition: "width 0.5s ease" }} />
+        <div className="sim-shimmer-bar" />
       </div>
+
 
       {/* Body */}
       <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
