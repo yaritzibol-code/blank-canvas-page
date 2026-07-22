@@ -1,8 +1,8 @@
-import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
-import { TimerProvider } from "../contexts/StudyTimerContext";
-import { useRequireAuth, useSessionUser, useStore, getStreak } from "@/lib/store";
+import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { useRequireAuth, useSessionUser, useStore, getStreak, logout } from "@/lib/store";
 import { YarisChatModal } from "@/components/shared/YarisChatModal";
+import { TimerProvider } from "@/contexts/StudyTimerContext";
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardLayout,
@@ -256,6 +256,7 @@ function DashboardLayout() {
   const [yarisOpen, setYarisOpen] = useState(false);
   const [radarN, setRadarN] = useState(47);
   const location = useLocation();
+  const navigate = useNavigate();
   const streak = useStore(() => (user ? getStreak(user.id) : 0));
 
   useEffect(() => {
@@ -402,6 +403,19 @@ function DashboardLayout() {
                 >
                   {user ? initialsOf(user.nombre) : ""}
                 </div>
+                <button
+                  onClick={() => { logout(); navigate({ to: "/login" }); }}
+                  title="Cerrar sesión"
+                  aria-label="Cerrar sesión"
+                  style={{
+                    width: 36, height: 36, borderRadius: "50%",
+                    background: "white", border: "1px solid rgba(61,93,145,0.15)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    cursor: "pointer", color: "#22375C", flexShrink: 0,
+                  }}
+                >
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M15 17l5-5-5-5M20 12H9M12 20H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6"/></svg>
+                </button>
               </div>
             </div>
 
