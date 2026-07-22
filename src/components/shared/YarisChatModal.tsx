@@ -1,11 +1,13 @@
 /**
  * Panel lateral de chat con Yaris (tutora académica) — se abre desde el
- * sidebar del dashboard. Usa el motor determinista `yarisReply` del store
- * y registra cada apertura con `logYarisUse` (métricas PRD §13.5).
+ * sidebar del dashboard. Usa Lovable AI Gateway (Gemini) mediante el
+ * server function `yarisAiChat`, con un fallback determinista si algo falla.
  */
 import { useEffect, useRef, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { Icon } from "@/components/ui/fp-icon";
 import { yarisReply, logYarisUse } from "@/lib/store";
+import { yarisAiChat } from "@/lib/yaris-ai.functions";
 import type { User } from "@/lib/store";
 
 const FONT = "'Manrope', system-ui, sans-serif";
@@ -14,7 +16,7 @@ const INK = "#22375C";
 
 interface Msg {
   from: "yaris" | "user";
-  text: string; // en mensajes de Yaris viene HTML ya escapado del store
+  text: string;
   cite?: string | null;
 }
 
@@ -34,6 +36,7 @@ export function YarisChatModal({
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
+  const askYaris = useServerFn(yarisAiChat);
 
   useEffect(() => {
     if (open) {
@@ -54,18 +57,31 @@ export function YarisChatModal({
 
   if (!open) return null;
 
-  const send = () => {
+  const send = async () => {
     const text = input.trim();
     if (!text || typing) return;
-    const turn = messages.filter((m) => m.from === "yaris").length;
-    setMessages((m) => [...m, { from: "user", text }]);
+    const nextUserMsgs: Msg[] = [...messages, { from: "user", text }];
+    setMessages(nextUserMsgs);
     setInput("");
     setTyping(true);
-    setTimeout(() => {
+    try {
+      const history = nextUserMsgs
+        .filter((m) => (m.from === "yaris" ? messages.indexOf(m) > 0 : true)) // skip greeting
+        .map((m) => ({
+          role: (m.from === "yaris" ? "assistant" : "user") as "assistant" | "user",
+          content: m.text.replace(/<[^>]+>/g, ""),
+        }))
+        .slice(-16);
+      const res = await askYaris({ data: { history, context: { materia: seccion } } });
+      setMessages((m) => [...m, { from: "yaris", text: res.text, cite: res.cite ?? null }]);
+    } catch (err) {
+      console.error("Yaris AI failed", err);
+      const turn = messages.filter((m) => m.from === "yaris").length;
       const r = yarisReply(turn, {}, text);
       setMessages((m) => [...m, { from: "yaris", text: r.t, cite: r.c }]);
+    } finally {
       setTyping(false);
-    }, 700);
+    }
   };
 
   return (
@@ -155,7 +171,7 @@ export function YarisChatModal({
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter") send(); }}
+            onKeyDown={(e) => { if (e.key === "Enter") void send(); }}
             placeholder="Escribe tu duda académica..."
             style={{
               flex: 1, padding: "10px 14px",
@@ -167,7 +183,7 @@ export function YarisChatModal({
             onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")}
           />
           <button
-            onClick={send}
+            onClick={() => void send()}
             disabled={!input.trim() || typing}
             style={{
               padding: "0 16px",

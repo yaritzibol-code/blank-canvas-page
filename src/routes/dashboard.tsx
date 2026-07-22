@@ -21,7 +21,7 @@ function initialsOf(nombre: string): string {
 /* ── Clean single-stroke line icons (shared FlightPath glyph set) ── */
 type IconName =
   | "home" | "book" | "help" | "sim" | "clock" | "library" | "cards" | "play"
-  | "doc" | "chart" | "bell" | "user" | "settings" | "flame" | "spark";
+  | "doc" | "chart" | "bell" | "user" | "settings" | "flame" | "spark" | "building";
 
 function Icon({ n, size = 18, sw = 1.6 }: { n: IconName; size?: number; sw?: number }) {
   const p = { fill: "none", stroke: "currentColor", strokeWidth: sw, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
@@ -41,6 +41,7 @@ function Icon({ n, size = 18, sw = 1.6 }: { n: IconName; size?: number; sw?: num
     settings: <><circle cx="12" cy="12" r="3" {...p} /><path d="M19.4 13a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.9 1.2V19a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-2.9-1.2l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 4.6 13H4.5a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.7 1.7 0 0 0 11 4.6V4.5a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.9 1.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.1a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.6 1z" {...p} /></>,
     flame: <path d="M12 3s4.5 4 4.5 8.5A4.5 4.5 0 1 1 7.5 11.5c0-2 1-3 2-4-1 4 2.5 4 2.5 7.5 0-3.5 4-3.5 4-7.5 0-3.5-4-4-4-4z" {...p} />,
     spark: <path d="M12 3l1.6 5.8L19 11l-5.4 1.6L12 19l-1.6-6.4L5 11l5.4-2.2L12 3z" {...p} />,
+    building: <><path d="M4 21V6l7-3v18M11 21h9V10l-9-3" {...p} /><path d="M14 11h2M14 14h2M14 17h2M7 8v.01M7 12v.01M7 16v.01" {...p} /></>,
   };
   return <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true" style={{ display: "block" }}>{g[n]}</svg>;
 }
@@ -57,23 +58,23 @@ function PlaneMark({ size = 36, light = false }: { size?: number; light?: boolea
   );
 }
 
-const NAV_SECTIONS: { label: string; items: { icon: IconName; label: string; path: string }[] }[] = [
+const NAV_SECTIONS: { label: string; items: { icon: IconName; label: string; path: string; locked?: boolean }[] }[] = [
   {
     label: "Principal",
     items: [
       { icon: "home", label: "Inicio", path: "/dashboard" },
-      { icon: "book", label: "Learning paths", path: "/dashboard/materias" },
+      { icon: "book", label: "Learning paths", path: "/dashboard/materias", locked: true },
       { icon: "help", label: "Cuestionarios", path: "/dashboard/banco" },
       { icon: "sim", label: "Simulador CIAAC", path: "/simulador" },
-      { icon: "clock", label: "Estudiemos Juntos", path: "/dashboard/estudiemos" },
+      { icon: "clock", label: "Estudiemos Juntos", path: "/dashboard/estudiemos", locked: true },
     ],
   },
   {
     label: "Recursos",
     items: [
       { icon: "library", label: "Biblioteca", path: "/dashboard/biblioteca" },
-      { icon: "cards", label: "Flashcards", path: "/dashboard/flashcards" },
-      { icon: "play", label: "Clases grabadas", path: "/dashboard/clases" },
+      { icon: "cards", label: "Flashcards", path: "/dashboard/flashcards", locked: true },
+      { icon: "play", label: "Clases grabadas", path: "/dashboard/clases", locked: true },
       { icon: "doc", label: "Mi Bitácora", path: "/dashboard/bitacora" },
     ],
   },
@@ -169,6 +170,7 @@ function Sidebar({ onClose, onYaris }: { onClose?: () => void; onYaris?: () => v
                 item.path === "/dashboard"
                   ? currentPath === "/dashboard" || currentPath === "/dashboard/"
                   : currentPath.startsWith(item.path);
+              const showLock = item.locked && user?.role !== "admin";
               return (
                 <Link
                   key={item.path}
@@ -194,7 +196,19 @@ function Sidebar({ onClose, onYaris }: { onClose?: () => void; onYaris?: () => v
                   <span style={{ width: 20, display: "flex", justifyContent: "center", color: isActive ? "#F2AEBC" : "rgba(255,255,255,0.55)" }}>
                     <Icon n={item.icon} size={18} />
                   </span>
-                  {item.label}
+                  <span style={{ flex: 1 }}>{item.label}</span>
+                  {showLock && (
+                    <span
+                      title="En construcción"
+                      aria-label="En construcción"
+                      style={{
+                        display: "inline-flex", alignItems: "center", justifyContent: "center",
+                        color: "#F2AEBC", opacity: 0.75,
+                      }}
+                    >
+                      <Icon n="building" size={14} sw={1.7} />
+                    </span>
+                  )}
                 </Link>
               );
             })}

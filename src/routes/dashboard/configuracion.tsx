@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import {
   useSessionUser,
@@ -39,6 +39,48 @@ function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
         borderRadius: "50%", top: 3, left: on ? 23 : 3,
         transition: "left .2s", boxShadow: "0 1px 4px rgba(0,0,0,.2)",
       }} />
+    </div>
+  );
+}
+
+function detectDevice(): { device: string; browser: string } | null {
+  if (typeof navigator === "undefined") return null;
+  const ua = navigator.userAgent || "";
+  if (!ua) return null;
+  let device = "Escritorio";
+  if (/iPad/i.test(ua)) device = "iPad";
+  else if (/iPhone/i.test(ua)) device = "iPhone";
+  else if (/Android/i.test(ua)) device = /Mobile/i.test(ua) ? "Android" : "Tablet Android";
+  else if (/Macintosh/i.test(ua)) device = "Mac";
+  else if (/Windows/i.test(ua)) device = "Windows";
+  else if (/Linux/i.test(ua)) device = "Linux";
+  let browser = "Navegador";
+  if (/Edg\//i.test(ua)) browser = "Edge";
+  else if (/Chrome\//i.test(ua) && !/Edg\//i.test(ua)) browser = "Chrome";
+  else if (/Firefox\//i.test(ua)) browser = "Firefox";
+  else if (/Safari\//i.test(ua) && !/Chrome\//i.test(ua)) browser = "Safari";
+  return { device, browser };
+}
+
+function ActiveSessionRow({ onLogoutAll }: { onLogoutAll: () => void }) {
+  const [info, setInfo] = useState<{ device: string; browser: string } | null>(null);
+  useEffect(() => { setInfo(detectDevice()); }, []);
+  if (!info) return null;
+  return (
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 20px" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <span style={{ width: 20, display: "flex", justifyContent: "center", color: "#22375C" }}><Icon n="home" size={18} /></span>
+        <div>
+          <div style={{ fontSize: ".86rem", fontWeight: 600, color: "#22375C", marginBottom: 2 }}>Sesiones activas</div>
+          <div style={{ fontSize: ".74rem", color: "#647DA0" }}>{info.device} · {info.browser} · Activo ahora</div>
+        </div>
+      </div>
+      <button
+        onClick={onLogoutAll}
+        style={{ padding: "5px 12px", background: "white", border: "2px solid #F2DCDB", borderRadius: 7, fontSize: ".75rem", fontWeight: 700, color: "#647DA0", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+      >
+        Cerrar sesión
+      </button>
     </div>
   );
 }
@@ -287,21 +329,10 @@ function ConfiguracionPage() {
         <SectionHeader icon="lock" iconBg="rgba(108,8,32,.08)" title="Seguridad" desc="Gestiona el acceso a tu cuenta" />
         <ConfigRow icon="lock" label="Cambiar contraseña" sub="Última actualización: hace 3 meses" onClick={() => setModal("password")} right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>} />
         <ConfigRow icon="chat" label="Cambiar número de WhatsApp" sub={masked || "Sin número registrado"} onClick={() => { setPhone(user.whatsapp); setModal("phone"); }} right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>} />
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 20px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <span style={{ width: 20, display: "flex", justifyContent: "center", color: "#22375C" }}><Icon n="home" size={18} /></span>
-            <div>
-              <div style={{ fontSize: ".86rem", fontWeight: 600, color: "#22375C", marginBottom: 2 }}>Sesiones activas</div>
-              <div style={{ fontSize: ".74rem", color: "#647DA0" }}>iPhone 14 · México City · Activo ahora</div>
-            </div>
-          </div>
-          <button
-            onClick={() => showFlash("Todas las sesiones cerradas")}
-            style={{ padding: "5px 12px", background: "white", border: "2px solid #F2DCDB", borderRadius: 7, fontSize: ".75rem", fontWeight: 700, color: "#647DA0", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
-          >
-            Cerrar todo
-          </button>
-        </div>
+        <ActiveSessionRow onLogoutAll={async () => {
+          await logout();
+          showFlash("Sesión cerrada");
+        }} />
       </div>
 
       {/* ── AYUDA ── */}
