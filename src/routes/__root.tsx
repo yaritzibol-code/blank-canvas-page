@@ -7,6 +7,8 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { initAppStore } from "@/lib/store";
 
 import appCss from "../styles.css?url";
 
@@ -117,6 +119,12 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  // Arranca la capa de datos en todas las páginas: procesa los tokens que el
+  // OAuth de Google / los enlaces de correo devuelven en el hash de la URL.
+  useEffect(() => {
+    initAppStore();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

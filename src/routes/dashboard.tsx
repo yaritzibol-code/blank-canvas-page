@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { useRequireAuth, useSessionUser, useStore, getStreak, logout } from "@/lib/store";
+import { useRequireAuth, useSessionUser, useStore, getStreak, logout, refreshSubscription } from "@/lib/store";
 import { YarisChatModal } from "@/components/shared/YarisChatModal";
 import { TimerProvider } from "@/contexts/StudyTimerContext";
 
@@ -263,6 +263,13 @@ function DashboardLayout() {
     const iv = setInterval(() => setRadarN(n => Math.max(30, Math.min(80, n + Math.floor(Math.random() * 5) - 2))), 4000);
     return () => clearInterval(iv);
   }, []);
+
+  // Sincroniza el plan con Stripe al entrar (cubre el regreso del checkout
+  // con ?checkout=success). Sin Stripe configurado degrada sin ruido.
+  useEffect(() => {
+    if (!ready) return;
+    void refreshSubscription();
+  }, [ready]);
 
   const isSubjectDetail = /^\/dashboard\/materias\/.+/.test(location.pathname);
 

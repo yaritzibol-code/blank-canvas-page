@@ -27,6 +27,14 @@ function notify() {
   listeners.forEach((fn) => fn());
 }
 
+/**
+ * Notifica a los suscriptores sin escribir datos (p. ej. cuando termina la
+ * restauración de la sesión de nube y los guards deben re-evaluarse).
+ */
+export function touch() {
+  notify();
+}
+
 // Sincroniza cambios hechos desde otras pestañas
 if (isBrowser) {
   window.addEventListener("storage", (e) => {

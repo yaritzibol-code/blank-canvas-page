@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { Eye, EyeOff } from "lucide-react";
-import { register, login, resetPassword, getSessionUser, ensureSeeded } from "@/lib/store";
+import { register, login, resetPassword, ensureSeeded, useSessionUser } from "@/lib/store";
 import { lovable } from "@/integrations/lovable";
 
 async function signInWithGoogle(setError: (m: string) => void) {
@@ -393,12 +393,17 @@ function SubmitButton({ children, loading, onClick }: { children: React.ReactNod
 /* ─── Main AuthPage component ──────────────────────────── */
 export function AuthPage({ initialTab }: { initialTab: Tab }) {
   const [tab, setTab] = useState<Tab>(initialTab);
+  // Suscrito al store: cubre tanto la sesión ya activa al entrar como la que
+  // aparece segundos después (retorno de Google OAuth, confirmación de correo).
+  const sessionUser = useSessionUser();
 
-  // Si ya hay sesión activa, directo al dashboard.
   useEffect(() => {
     ensureSeeded();
-    if (getSessionUser()) window.location.href = "/dashboard";
   }, []);
+
+  useEffect(() => {
+    if (sessionUser) window.location.href = "/dashboard";
+  }, [sessionUser]);
 
   return (
     <div style={{
