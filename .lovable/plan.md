@@ -1,120 +1,124 @@
-## Alcance
+## Contexto
 
-Nueve entregables. Ejecuto en el orden listado al final para no bloquearme.
+Ya existe `/admin` con sidebar (Resumen, Estudiantes, Banco, Contenido, Soporte, WhatsApp, Configuración) y el guard `useRequireAuth("admin")` en `AdminShell.tsx`. Ambos admins (`rdaniel.guzman@glassway.mx`, `yaritzi.bol@glassway.mx`) ya llegan al panel.
 
-### 1. Admins
-- Admins autorizados: `rdaniel.guzman@glassway.mx` y `yaritzi.bol@glassway.mx`.
-- `admin@flightpath.mx` deja de ser admin.
-- Migración:
-  - `update profiles set role='student' where email='admin@flightpath.mx';`
-  - `update profiles set role='admin' where email in ('rdaniel.guzman@glassway.mx','yaritzi.bol@glassway.mx');`
-  - Reescribir `handle_new_user()`: el rol admin sólo se asigna si el correo está en esa lista (o si aún no existe ningún perfil, para bootstrap).
+Lo que **no existe todavía** y esta propuesta agrega: auditoría de eventos Stripe, una sección de "Operaciones" en el sidebar con el nuevo panel de observabilidad, y controles para revocar suscripciones, límites de IA, y edición de RAG / prompt de Yaris.
 
-### 2. Módulos "En construcción" para no-admin
-Aplica a Learning Paths, Estudiemos Juntos, Flashcards, Clases Grabadas. Admin entra normal.
-- Componente `<UnderConstruction />` compartido.
-- Gate en `dashboard/materias/$subjectId`, `dashboard/estudiemos`, `dashboard/flashcards`, `dashboard/clases`.
-- Pro NO desbloquea estos 4 módulos aún — sólo admin. Documentado.
+---
 
-### 3. Stripe con dos tiers
-- Uso **Seamless Stripe payments** (`enable_stripe_payments`). Básica $0 MXN/mes, Pro $500 MXN/mes.
-- Nuevo plan default `basica`.
-- Gating:
-  - Básica: cuestionario y simulador con las mismas 10 preguntas por materia (determinista por seed), máximo 2 intentos totales de por vida; sin Yaris/IA.
-  - Pro: cuestionario/simulador ilimitados y Yaris con IA.
-- Refactor `gating.ts`: `canStartSimulator`, `canStartQuiz`, `canUseAI`.
-- UI `/dashboard/planes` con tarjetas Básica/Pro y CTA Stripe. Botón "Upgrade" en topbar cuando plan=basica.
-- Sustituyo las edge functions Stripe existentes por server functions TanStack (`checkout`, `portal`, `refreshSubscription`).
+## Por qué es crítico un panel de observabilidad
 
-### 4. Yaris con RAG real
-- Migración: `create extension vector`; tabla `rag_chunks(id, source_type, source_id, materia, content, embedding vector(3072), metadata jsonb)` + índice HNSW halfvec + RPC `match_rag_chunks(query_embedding, materia_filter, match_count)`.
-- Server function `rag-reindex` (admin only): itera `content` (banco de preguntas + explanations) y biblioteca; chunk 800 chars con overlap 100; embed con `google/gemini-embedding-001`; upsert.
-- Server function `yaris-chat` (Pro/admin only):
-  1. Recibe `{ messages, context: { questionId?, materia? } }`.
-  2. Embed última pregunta del usuario + inyecta explanation de la pregunta actual si aplica.
-  3. `match_rag_chunks` top 6 (filtrando por materia si viene).
-  4. Llama `google/gemini-3-flash-preview` con prompt de instructor CIAAC y cita fuentes por título.
-  5. Devuelve `{ reply, sources: [{title, snippet}] }`.
-- `YarisChatModal` conectado al endpoint. Si `!canUseAI` → upsell.
-- Botón admin "Reindexar RAG".
+Sin él, cualquier incidente ("pagué y no se activó Pro", "Yaris me da respuestas raras", "no llega el WhatsApp") se debuggea a ciegas. Con SaaS de pago + IA + webhooks externos necesitas ver:
 
-### 5. Recordatorios reales + webhook WhatsApp (n8n)
-- Migración: tabla `reminder_events(id, user_id, reminder_id, scheduled_for, sent_at, status, payload)` + índices + RLS.
-- WhatsApp E.164 MX derivado del perfil (`5215510203040`).
-- Server function `send-whatsapp-reminder` invocada por pg_cron cada minuto vía `/api/public/cron/reminders`:
-  - Busca recordatorios `enabled=true` cuya hora/día toque hoy y no se hayan enviado hoy;
-  - POST a `WHATSAPP_WEBHOOK_URL` (n8n) con `{ to: "5215510203040", message: "...", reminderId, userId }`;
-  - Registra en `reminder_events`.
-- Secret `WHATSAPP_WEBHOOK_URL` (n8n) — lo pido en un turno aparte.
-- `pg_cron` + `pg_net` con `apikey` del anon key.
-- UI Recordatorios: crear/editar/borrar filas en `reminders`, validar WhatsApp del perfil, botón "Enviar prueba ahora".
+- **Ingreso y retención**: MRR, cuentas Pro activas, cancelaciones del mes, tasa de churn, próximas renovaciones. Sin esto no sabes si el negocio va bien.
+- **Salud del pago**: eventos de Stripe procesados/fallidos por hora, discrepancias perfil ⇄ suscripción, últimas facturas, disputas.
+- **Salud de Yaris/IA**: llamadas por día, tokens/costo por usuario, latencia p50/p95, tasa de error del gateway, hits vs miss de RAG.
+- **Salud de WhatsApp**: recordatorios encolados, entregados, fallidos y respuesta del webhook n8n.
+- **Uso de la plataforma**: DAU/WAU, tiempo de estudio total, cuestionarios/simuladores completados hoy, top materias.
+- **Errores del cliente**: last N errores capturados por `error-capture.ts` con stack + userId + ruta.
+- **Estado del sistema**: última corrida de pg_cron, edad de la última fila de `subscriptions`/`reminder_events`, cuentas huérfanas (subscription activa sin profile.plan="paga" o viceversa).
 
-### 6. Configuración funcional
-- Persistir prefs (tema, tamaño texto, toggles) → `profiles.data.prefs`.
-- Cambiar contraseña.
-- Cambiar WhatsApp con validación E.164 MX.
-- Desactivar cuenta (`deactivatedAt` ya modelado).
+---
 
-### 7. Ayuda/Soporte con back-link correcto
-- `/faq`, `/legal`, `/blog`: si `getSessionUser()` existe → link "Volver al dashboard"; si no → "Volver al login". Nunca fuerza al home.
+## Cambios
 
-### 8. Métricas reales por perfil
-Reemplazar hardcodes en `dashboard/index.tsx` y `dashboard/analisis.tsx`:
-- Racha diaria desde `study_days` (días consecutivos con >0s).
-- Materia más activa: agregación por `activity` filtrada por `userId`.
-- Promedio de sesión: media de `activity.durationMin` últimos 30 días.
-- Progreso por materia: `tema_progress` completados / total temas por materia.
-- Simuladores: totales/aprobados/promedio desde `sim_attempts`.
-- Cuestionarios: agregaciones desde `quiz_attempts`.
-- Uso las funciones que ya viven en `analytics.ts`; completo lo que falte.
+### 1. Auditoría de eventos Stripe
 
-### 9. Ordenamiento
-- Consolidar edge functions Stripe → server functions.
-- Eliminar código muerto de billing local.
+**Tabla nueva** `stripe_events` (migración):
+- `stripe_event_id` (unique), `type`, `env` (sandbox/live), `status` (`processed`/`ignored`/`failed`), `error_message`, `user_id`, `subscription_id`, `payload` (jsonb con lo mínimo: id, customer, status, current_period_end, price lookup), `received_at`.
+- RLS: solo admins leen; `service_role` escribe.
+
+**Webhook** `src/routes/api/public/payments/webhook.ts`:
+- Antes de procesar, `insert` con `status='received'`.
+- Al terminar el `switch`, `update` con `status='processed'` (o `'ignored'` para eventos no manejados).
+- En el `catch`, `update` con `status='failed'` + `error_message`.
+- Idempotencia: si el `stripe_event_id` ya existe con `status='processed'`, saltar reprocesado.
+
+**Función SQL** `detect_plan_drift()` (SECURITY DEFINER, solo admin) que devuelve usuarios donde `subscriptions.status='active'` pero `profiles.data->>'plan' != 'paga'` o al revés — para el widget "Discrepancias".
+
+### 2. Nueva página `/admin/operaciones` (observabilidad)
+
+Añadir en `AdminShell` un grupo **"Operaciones"** con dos items nuevos:
+- `Panel de control` → `/admin/operaciones`
+- `Eventos de Stripe` → `/admin/operaciones/stripe`
+
+Layout del panel de control (tarjetas responsivas):
+
+```text
+┌─────────────────────────────────────────────────────────┐
+│  MRR $X · Pro activos N · Churn 30d M% · Trial N        │
+├──────────────────────┬──────────────────────────────────┤
+│ Eventos Stripe (24h) │ Discrepancias perfil↔suscripción │
+│ ✓ 42 · ✗ 1 · ⏭ 8    │ 2 usuarios afectados → [Ver]      │
+├──────────────────────┼──────────────────────────────────┤
+│ Yaris IA (24h)       │ WhatsApp (24h)                   │
+│ 128 calls · 0.4% err │ 34 enviados · 2 fallidos          │
+│ p95 2.1s · $1.23     │ último cron: hace 12 min          │
+├──────────────────────┼──────────────────────────────────┤
+│ Uso plataforma       │ Errores cliente (últimos 20)     │
+│ DAU 47 · WAU 189     │ stack + userId + ruta + hora     │
+│ 92 quizzes hoy       │                                  │
+└──────────────────────┴──────────────────────────────────┘
+```
+
+### 3. Nueva página `/admin/operaciones/stripe` (audit log)
+
+Tabla paginada de `stripe_events` con filtros por tipo, status, env, usuario y rango de fechas. Cada fila expande el payload JSON. Botones:
+- **Reprocesar** (llama server fn que re-ejecuta el handler con el payload guardado).
+- **Sincronizar plan** (llama `syncMyPlan` para ese `user_id`).
+- **Ver usuario** → `/admin/estudiantes?u=<id>`.
+
+### 4. Controles operativos (nuevas server functions `admin.functions.ts`)
+
+Todas con `requireSupabaseAuth` + verificación `is_admin()` server-side antes de cargar `supabaseAdmin`:
+
+- `adminRevokeSubscription({ userId })` → llama `stripe.subscriptions.cancel(id, { prorate: false })` + `syncProfileFromSubscription`. Deja registro en `stripe_events` con `type='admin.revoked'`.
+- `adminGrantPro({ userId, days })` → escribe `profiles.data` con `plan='paga'`, `accessStatus='extendido'`, `accessEnd=now()+days` sin crear suscripción real (para becas / acceso manual).
+- `adminSetAILimit({ userId?, globalDailyTokens?, perUserDailyTokens? })` → guarda en tabla nueva `ai_limits` (global + per-user override).
+- `adminUpdateYarisPrompt({ prompt })` → guarda en tabla `ai_config` (fila única) el system prompt actual + versión + editor.
+- `adminReindexRAG({ materia? })` → dispara re-embedding del contenido en `rag_chunks` para una materia o todo.
+- `adminQuery({ sql })` → **NO se implementa** — demasiado peligroso, en su lugar exponer vistas prefabricadas.
+
+### 5. Página `/admin/operaciones/yaris`
+
+- Editor de textarea para el system prompt de Yaris (con preview + historial de versiones).
+- Tabla `rag_chunks` con contadores por materia y botón "Reindexar materia".
+- Uploader para agregar nuevos documentos base (usa `supabase.storage` — hay que crear el bucket `rag-sources`).
+- Slider de límites de IA (tokens/día global y por usuario del plan Pro).
+
+### 6. Métricas: cómo se calculan
+
+- Todo desde SQL con vistas materializadas o funciones RPC `admin_*` (SECURITY DEFINER, gate por `is_admin()`):
+  - `admin_mrr()`, `admin_active_pro_count()`, `admin_churn_30d()`.
+  - `admin_stripe_event_stats(hours int)`.
+  - `admin_ai_usage_stats(hours int)` (requiere que Yaris registre cada call — hay que agregar tabla `ai_usage`).
+  - `admin_platform_usage(hours int)` (ya se puede derivar de `activity` en `content` collection).
+  - `admin_plan_drift()`.
+- El front hace un solo fetch paralelo al montar `/admin/operaciones`.
+
+### 7. Captura de errores del cliente
+
+- `src/lib/error-capture.ts` ya existe. Extenderlo para hacer `POST /api/public/client-errors` (server route público con rate-limit por IP) que inserta en tabla `client_errors` (RLS: solo admin lee).
+
+---
 
 ## Detalles técnicos
 
-**Migraciones**
-```sql
--- 1. Admins
-update profiles set role='student' where email='admin@flightpath.mx';
-update profiles set role='admin'
-  where email in ('rdaniel.guzman@glassway.mx','yaritzi.bol@glassway.mx');
--- + handle_new_user() reescrita con lista de admins autorizados
+**Tablas nuevas** (una migración):
+- `stripe_events` (audit log; unique `stripe_event_id`).
+- `ai_usage` (`user_id`, `tokens_in`, `tokens_out`, `latency_ms`, `success`, `error`, `created_at`).
+- `ai_limits` (fila única global + override por `user_id`).
+- `ai_config` (fila única con prompt Yaris + versión).
+- `client_errors` (`user_id?`, `route`, `message`, `stack`, `user_agent`, `created_at`).
 
--- 2. pgvector + RAG (extensión, tabla, índice HNSW halfvec, RPC, RLS, GRANTs)
--- 3. reminder_events (tabla, RLS, GRANTs)
--- 4. pg_cron.schedule('reminders-tick', '* * * * *', ...)
--- 5. subscribers (email pk, subscribed, tier, current_period_end, stripe_customer_id, RLS, GRANTs)
-```
+Todas con GRANT `authenticated` acotado (solo lectura del propio `ai_usage` para diagnóstico), `service_role` full, RLS admin-only donde aplica vía `public.is_admin()`.
 
-**Server functions nuevas** (todas en `src/lib/*.functions.ts`):
-- `checkout.functions.ts` — `startCheckout({tier})`, `openPortal()`, `refreshSubscription()`
-- `yaris.functions.ts` — `chat({messages, context})`
-- `rag.functions.ts` — `reindex()` admin-only
-- `reminders.functions.ts` — `sendTest({reminderId})`
+**Sidebar admin** — en `AdminShell.tsx` añadir grupo "Operaciones" con los dos items nuevos. Todo permanece detrás de `useRequireAuth("admin")` — los dos admins configurados en `handle_new_user()` heredan acceso.
 
-**Rutas públicas**:
-- `src/routes/api/public/cron/reminders.ts` — POST protegido por anon key.
-- `src/routes/api/public/webhooks/stripe.ts` — opcional, para downgrade automático.
+**Yaris integración** — la server function que llama al AI Gateway debe leer el prompt desde `ai_config`, chequear cuota contra `ai_limits`, y registrar la llamada en `ai_usage`. Sin eso el panel de IA queda ciego.
 
-**Secretos**:
-- Stripe → `enable_stripe_payments`.
-- `WHATSAPP_WEBHOOK_URL` → `add_secret` en turno aparte.
+**Reprocesar evento Stripe** — el handler actual se refactoriza para exportar `processStripeEvent(event, env)` puro; el webhook lo llama, y `adminReprocessStripeEvent(eventId)` también.
 
-## Orden de ejecución
+**Seguridad** — ningún endpoint admin confía en `data.userId` del cliente sin validar rol server-side; todos usan `context.userId` + `has_role('admin')` RPC antes de tocar `supabaseAdmin`. Cumple el patrón de `authenticated-owner-rls`.
 
-1. Migración admins + fix `handle_new_user`.
-2. Enable Stripe payments.
-3. Server functions checkout/plan + gating básica/pro (10 preguntas, 2 intentos, sin IA).
-4. Under-construction gates de los 4 módulos.
-5. Migración pgvector + RAG; server function `rag-reindex`; Yaris chat + UI.
-6. Secret `WHATSAPP_WEBHOOK_URL` + `reminder_events` + endpoint cron + pg_cron + UI recordatorios.
-7. Configuración funcional + back-links FAQ/legal/blog.
-8. Métricas reales dashboard/análisis.
-
-## Fuera de alcance
-
-- Los 4 módulos quedan bloqueados aun para Pro (sólo admin) hasta nueva instrucción.
-- Sin webhook Stripe entrante para downgrade inmediato — bajas se detectan al siguiente `refreshSubscription`. Puedo añadirlo si lo pides.
-- El proveedor WhatsApp queda como `WHATSAPP_WEBHOOK_URL` genérico para n8n; añado headers custom si n8n los requiere.
+**Fuera de alcance en este plan** — cambiar la lógica del webhook de Stripe más allá de la audit log; construir alertas por email/Slack (queda como TODO); implementar el reindexado RAG real (se deja el botón + server fn stub que loguea).
