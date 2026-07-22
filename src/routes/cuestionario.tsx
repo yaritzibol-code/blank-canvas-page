@@ -440,6 +440,17 @@ function CuestionarioPage() {
       .map((w) => w[0].toUpperCase())
       .join("") || "TÚ";
 
+  const quizGate = canStartQuiz(user);
+  if (ready && user && !quizGate.allowed) {
+    return (
+      <UnderConstruction
+        moduleName="Límite del plan Básica alcanzado"
+        description={quizGate.reason}
+      />
+    );
+  }
+  const aiEnabled = canUseAI(user);
+
   return (
     <div
       style={{
