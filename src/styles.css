@@ -377,23 +377,67 @@ p, h1, h2, h3, h4 { overflow-wrap: anywhere; }
 
 /* ─── Modo oscuro basado en preferencia del usuario ─── */
 html[data-theme="oscuro"] { color-scheme: dark; }
-html[data-theme="oscuro"], html[data-theme="oscuro"] body { background: #0F1626 !important; color: #E6ECF6 !important; }
-html[data-theme="oscuro"] .sky-base, html[data-theme="oscuro"] .cloudscape {
+html[data-theme="oscuro"], html[data-theme="oscuro"] body {
+  background: #0F1626 !important;
+  color: #E6ECF6 !important;
+}
+html[data-theme="oscuro"] .sky-base,
+html[data-theme="oscuro"] .cloudscape,
+html[data-theme="oscuro"] .aero-grid {
   background: linear-gradient(180deg, #0F1626 0%, #131C31 55%, #0F1626 100%) !important;
 }
+
+/* Fondos blancos / claros → superficies oscuras */
 html[data-theme="oscuro"] [style*="background: white"],
 html[data-theme="oscuro"] [style*="background:#fff"],
 html[data-theme="oscuro"] [style*="background: #fff"],
 html[data-theme="oscuro"] [style*="background:#FFFFFF"],
-html[data-theme="oscuro"] [style*="background: #FFFFFF"] {
+html[data-theme="oscuro"] [style*="background: #FFFFFF"],
+html[data-theme="oscuro"] [style*="background:#FBFAF7"],
+html[data-theme="oscuro"] [style*="background: #FBFAF7"],
+html[data-theme="oscuro"] [style*="background:#FAF8F4"],
+html[data-theme="oscuro"] [style*="background: #FAF8F4"] {
   background: #1A2340 !important;
   color: #E6ECF6 !important;
 }
 html[data-theme="oscuro"] [style*="background: #f8f9ff"],
 html[data-theme="oscuro"] [style*="background:#f8f9ff"],
-html[data-theme="oscuro"] [style*="background: #fafbff"] {
+html[data-theme="oscuro"] [style*="background: #fafbff"],
+html[data-theme="oscuro"] [style*="background:#fafbff"],
+html[data-theme="oscuro"] [style*="background: #F4F7FB"],
+html[data-theme="oscuro"] [style*="background: #E8EEF6"] {
   background: #1F2A48 !important;
+  color: #E6ECF6 !important;
 }
+
+/* Textos: sube contraste de los grises/navys sobre fondo oscuro */
+html[data-theme="oscuro"] [style*="color: #22375C"],
+html[data-theme="oscuro"] [style*="color:#22375C"],
+html[data-theme="oscuro"] [style*="color: #1E2A4A"],
+html[data-theme="oscuro"] [style*="color: #3D5D91"],
+html[data-theme="oscuro"] [style*="color:#3D5D91"] {
+  color: #E6ECF6 !important;
+}
+html[data-theme="oscuro"] [style*="color: #647DA0"],
+html[data-theme="oscuro"] [style*="color:#647DA0"],
+html[data-theme="oscuro"] [style*="color: #8DA1BE"],
+html[data-theme="oscuro"] [style*="color:#8DA1BE"] {
+  color: #A9B7CE !important;
+}
+html[data-theme="oscuro"] [style*="color: #ccc"],
+html[data-theme="oscuro"] [style*="color:#ccc"],
+html[data-theme="oscuro"] [style*="color: #bbb"] {
+  color: #6C7A94 !important;
+}
+
+/* Bordes rosa claro → azul oscuro tenue */
+html[data-theme="oscuro"] [style*="border: 2px solid #F2DCDB"],
+html[data-theme="oscuro"] [style*="border:2px solid #F2DCDB"],
+html[data-theme="oscuro"] [style*="border: 1px solid #F2DCDB"] {
+  border-color: #33477A !important;
+}
+
+/* Inputs */
 html[data-theme="oscuro"] input,
 html[data-theme="oscuro"] select,
 html[data-theme="oscuro"] textarea {
@@ -401,6 +445,11 @@ html[data-theme="oscuro"] textarea {
   color: #E6ECF6 !important;
   border-color: #33477A !important;
 }
+html[data-theme="oscuro"] input::placeholder,
+html[data-theme="oscuro"] textarea::placeholder {
+  color: #7B8AA6 !important;
+}
+
 
 /* Desactivar animaciones/aviones decorativos si el usuario los apagó */
 html[data-motion="reduced"] canvas[aria-hidden="true"] { display: none !important; }
