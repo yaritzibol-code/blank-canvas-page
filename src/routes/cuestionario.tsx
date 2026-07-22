@@ -4,6 +4,8 @@ import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import {
   useRequireAuth,
   isPaid,
+  canStartQuiz,
+  canUseAI,
   getPublishedQuestions,
   getFreeQuestions,
   saveQuizAttempt,
@@ -14,6 +16,7 @@ import {
 } from "@/lib/store";
 import type { BankQuestion, YarisContext } from "@/lib/store";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
+import { UnderConstruction } from "@/components/shared/UnderConstruction";
 
 export const Route = createFileRoute("/cuestionario")({
   component: CuestionarioPage,
