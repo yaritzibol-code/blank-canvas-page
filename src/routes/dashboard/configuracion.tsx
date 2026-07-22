@@ -16,7 +16,7 @@ export const Route = createFileRoute("/dashboard/configuracion")({
   component: ConfiguracionPage,
 });
 
-type ModalType = "password" | "phone" | "logout" | "delete" | null;
+type ModalType = "password" | "phone" | "logout" | "delete" | "nombre" | "escuela" | "ciaac" | null;
 
 const maskPhone = (p: string) => {
   const t = p.trim();
@@ -101,6 +101,9 @@ function ConfiguracionPage() {
   const [pwdConfirm, setPwdConfirm] = useState("");
   const [pwdError, setPwdError] = useState<string | null>(null);
   const [phone, setPhone] = useState(() => user?.whatsapp ?? "");
+  const [nombreDraft, setNombreDraft] = useState(() => user?.nombre ?? "");
+  const [escuelaDraft, setEscuelaDraft] = useState(() => user?.escuela ?? "");
+  const [ciaacDraft, setCiaacDraft] = useState(() => user?.fechaCiaac ?? "");
   const [deleteConfirm, setDeleteConfirm] = useState("");
 
   if (!user) return null;
@@ -182,6 +185,32 @@ function ConfiguracionPage() {
           {flash}
         </div>
       )}
+
+      {/* ── PERFIL ── */}
+      <div style={{ background: "white", borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 20 }}>
+        <SectionHeader icon="user" iconBg="rgba(61,93,145,.1)" title="Perfil" desc="Actualiza tus datos personales" />
+        <ConfigRow
+          icon="user" label="Nombre" sub={user.nombre || "Sin nombre"}
+          onClick={() => { setNombreDraft(user.nombre); setModal("nombre"); }}
+          right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>}
+        />
+        <ConfigRow
+          icon="chat" label="WhatsApp" sub={masked || "Sin número"}
+          onClick={() => { setPhone(user.whatsapp); setModal("phone"); }}
+          right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>}
+        />
+        <ConfigRow
+          icon="plane" label="Escuela de aviación" sub={user.escuela || "Sin escuela"}
+          onClick={() => { setEscuelaDraft(user.escuela); setModal("escuela"); }}
+          right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>}
+        />
+        <ConfigRow
+          icon="target" label="Fecha estimada del CIAAC"
+          sub={user.fechaCiaac ? new Date(`${user.fechaCiaac}T12:00:00`).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" }) : "Sin fecha"}
+          onClick={() => { setCiaacDraft(user.fechaCiaac ?? ""); setModal("ciaac"); }}
+          right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>}
+        />
+      </div>
 
       {/* ── NOTIFICACIONES ── */}
       <div style={{ background: "white", borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 20 }}>
@@ -406,6 +435,92 @@ function ConfiguracionPage() {
                 </div>
               </>
             )}
+
+            {/* Modal Nombre */}
+            {modal === "nombre" && (
+              <>
+                <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}><Icon n="user" size={20} color="#22375C" /> Cambiar nombre</h2>
+                <p style={{ fontSize: ".85rem", color: "#647DA0", marginBottom: 20, lineHeight: 1.5 }}>Así aparecerás en toda la plataforma.</p>
+                <input
+                  type="text"
+                  value={nombreDraft}
+                  placeholder="Nombre completo"
+                  onChange={(e) => setNombreDraft(e.target.value)}
+                  style={{ width: "100%", padding: "10px 14px", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".86rem", fontFamily: "'Manrope', sans-serif", outline: "none", marginBottom: 16 }}
+                />
+                <div style={{ display: "flex", gap: 10 }}>
+                  <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#647DA0", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                  <button
+                    onClick={() => {
+                      const t = nombreDraft.trim();
+                      if (!t) return;
+                      updateUser(user.id, { nombre: t });
+                      closeModal();
+                      showFlash("Nombre actualizado");
+                    }}
+                    style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                  >
+                    Guardar
+                  </button>
+                </div>
+              </>
+            )}
+
+            {/* Modal Escuela */}
+            {modal === "escuela" && (
+              <>
+                <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}><Icon n="plane" size={20} color="#22375C" /> Escuela de aviación</h2>
+                <p style={{ fontSize: ".85rem", color: "#647DA0", marginBottom: 20, lineHeight: 1.5 }}>Institución donde estudias o presentas el CIAAC.</p>
+                <input
+                  type="text"
+                  value={escuelaDraft}
+                  placeholder="Nombre de la escuela"
+                  onChange={(e) => setEscuelaDraft(e.target.value)}
+                  style={{ width: "100%", padding: "10px 14px", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".86rem", fontFamily: "'Manrope', sans-serif", outline: "none", marginBottom: 16 }}
+                />
+                <div style={{ display: "flex", gap: 10 }}>
+                  <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#647DA0", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                  <button
+                    onClick={() => {
+                      updateUser(user.id, { escuela: escuelaDraft.trim() });
+                      closeModal();
+                      showFlash("Escuela actualizada");
+                    }}
+                    style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                  >
+                    Guardar
+                  </button>
+                </div>
+              </>
+            )}
+
+            {/* Modal Fecha CIAAC */}
+            {modal === "ciaac" && (
+              <>
+                <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}><Icon n="target" size={20} color="#22375C" /> Fecha del CIAAC</h2>
+                <p style={{ fontSize: ".85rem", color: "#647DA0", marginBottom: 20, lineHeight: 1.5 }}>La usaremos para el contador de despegue en tu tablero.</p>
+                <input
+                  type="date"
+                  value={ciaacDraft}
+                  onChange={(e) => setCiaacDraft(e.target.value)}
+                  style={{ width: "100%", padding: "10px 14px", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".86rem", fontFamily: "'Manrope', sans-serif", outline: "none", marginBottom: 16 }}
+                />
+                <div style={{ display: "flex", gap: 10 }}>
+                  <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#647DA0", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                  <button
+                    onClick={() => {
+                      updateUser(user.id, { fechaCiaac: ciaacDraft || null });
+                      closeModal();
+                      showFlash("Fecha actualizada");
+                    }}
+                    style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                  >
+                    Guardar
+                  </button>
+                </div>
+              </>
+            )}
+
 
           </div>
         </div>

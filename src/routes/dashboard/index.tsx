@@ -113,23 +113,47 @@ function CountdownCard({ fecha }: { fecha: string | null }) {
       </div>
 
       {fecha ? (
-        <div style={{ display: "flex", alignItems: "baseline", gap: 4, color: NAVY, flexWrap: "wrap" }}>
-          <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "3.6rem", lineHeight: 1 }}>{cd.d}</span>
-          <span style={{ fontFamily: SANS, fontSize: "0.9rem", opacity: 0.4, marginRight: 6 }}>d</span>
-          <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "3.6rem", lineHeight: 1 }}>{pad(cd.h)}</span>
-          <span style={{ fontFamily: SANS, fontSize: "0.9rem", opacity: 0.4, marginRight: 6 }}>h</span>
-          <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "3.6rem", lineHeight: 1 }}>{pad(cd.m)}</span>
-          <span style={{ fontFamily: SANS, fontSize: "0.9rem", opacity: 0.4 }}>m</span>
-        </div>
+        <>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 4, color: NAVY, flexWrap: "wrap" }}>
+            <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "3.2rem", lineHeight: 1 }}>{cd.d}</span>
+            <span style={{ fontFamily: SANS, fontSize: "0.85rem", opacity: 0.4, marginRight: 6 }}>d</span>
+            <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "3.2rem", lineHeight: 1 }}>{pad(cd.h)}</span>
+            <span style={{ fontFamily: SANS, fontSize: "0.85rem", opacity: 0.4, marginRight: 6 }}>h</span>
+            <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "3.2rem", lineHeight: 1 }}>{pad(cd.m)}</span>
+            <span style={{ fontFamily: SANS, fontSize: "0.85rem", opacity: 0.4, marginRight: 6 }}>m</span>
+            <span
+              key={cd.sec}
+              style={{
+                fontFamily: SERIF, fontStyle: "italic", fontSize: "3.2rem", lineHeight: 1,
+                color: CORAL, animation: "fp-fadeIn .35s ease",
+              }}
+            >
+              {pad(cd.sec)}
+            </span>
+            <span style={{ fontFamily: SANS, fontSize: "0.85rem", opacity: 0.4 }}>s</span>
+          </div>
+          {dateLabel && (
+            <div style={{ fontFamily: MONO, fontSize: "0.66rem", color: HAZE, textTransform: "uppercase", letterSpacing: "0.12em", marginTop: 10 }}>
+              Examen · {dateLabel}
+            </div>
+          )}
+        </>
       ) : (
-        <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "1.5rem", color: NAVY, lineHeight: 1.2 }}>
-          Configura tu fecha CIAAC en tu perfil
-        </div>
-      )}
-
-      {dateLabel && (
-        <div style={{ fontFamily: MONO, fontSize: "0.66rem", color: HAZE, textTransform: "uppercase", letterSpacing: "0.12em", marginTop: 10 }}>
-          Examen · {dateLabel}
+        <div>
+          <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "1.4rem", color: NAVY, lineHeight: 1.2, marginBottom: 10 }}>
+            Configura tu fecha CIAAC
+          </div>
+          <Link
+            to="/dashboard/perfil"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              fontFamily: MONO, fontSize: "0.7rem", letterSpacing: "0.14em",
+              textTransform: "uppercase", fontWeight: 700, color: CORAL,
+              textDecoration: "underline", textUnderlineOffset: 4,
+            }}
+          >
+            Ir a mi perfil →
+          </Link>
         </div>
       )}
 

@@ -375,4 +375,42 @@ img, svg, video, canvas { max-width: 100%; }
 /* Allow long words / URLs to wrap inside text containers */
 p, h1, h2, h3, h4 { overflow-wrap: anywhere; }
 
+/* ─── Modo oscuro basado en preferencia del usuario ─── */
+html[data-theme="oscuro"] { color-scheme: dark; }
+html[data-theme="oscuro"], html[data-theme="oscuro"] body { background: #0F1626 !important; color: #E6ECF6 !important; }
+html[data-theme="oscuro"] .sky-base, html[data-theme="oscuro"] .cloudscape {
+  background: linear-gradient(180deg, #0F1626 0%, #131C31 55%, #0F1626 100%) !important;
+}
+html[data-theme="oscuro"] [style*="background: white"],
+html[data-theme="oscuro"] [style*="background:#fff"],
+html[data-theme="oscuro"] [style*="background: #fff"],
+html[data-theme="oscuro"] [style*="background:#FFFFFF"],
+html[data-theme="oscuro"] [style*="background: #FFFFFF"] {
+  background: #1A2340 !important;
+  color: #E6ECF6 !important;
+}
+html[data-theme="oscuro"] [style*="background: #f8f9ff"],
+html[data-theme="oscuro"] [style*="background:#f8f9ff"],
+html[data-theme="oscuro"] [style*="background: #fafbff"] {
+  background: #1F2A48 !important;
+}
+html[data-theme="oscuro"] input,
+html[data-theme="oscuro"] select,
+html[data-theme="oscuro"] textarea {
+  background: #1F2A48 !important;
+  color: #E6ECF6 !important;
+  border-color: #33477A !important;
+}
+
+/* Desactivar animaciones/aviones decorativos si el usuario los apagó */
+html[data-motion="reduced"] canvas[aria-hidden="true"] { display: none !important; }
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+
 
