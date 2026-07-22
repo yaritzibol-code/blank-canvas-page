@@ -290,12 +290,14 @@ export async function restoreCloudSession(): Promise<void> {
         // liberar los guards para que no reboten a /login.
         await openCloudSession(cloudUser.id);
       } else {
-        // Ya hay espejo local: los guards pueden decidir de inmediato y la
-        // hidratación de datos corre en segundo plano.
+        // Ya hay espejo local: re-lee el perfil de la nube por si el rol,
+        // plan o estado cambió (p. ej. la admin promovió al usuario) antes
+        // de liberar los guards. Sin esto, un mirror antiguo con role
+        // "student" oculta el panel admin hasta el próximo login.
+        const fresh = await refreshCloudProfile();
         markAuthSettled();
         const { startCloudSession } = await import("./sync");
-        const me = getUserById(cloudUser.id);
-        await startCloudSession(cloudUser.id, me?.role === "admin");
+        await startCloudSession(cloudUser.id, fresh?.role === "admin");
       }
     } else if (getSessionUserId()) {
       // En modo nube la sesión de Supabase manda: sin ella no hay sesión local.
