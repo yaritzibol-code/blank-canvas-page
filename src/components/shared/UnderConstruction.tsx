@@ -62,7 +62,7 @@ export function UnderConstruction({ moduleName, description }: Props) {
             fontSize: 14,
           }}
         >
-          <Icon n="ArrowLeft" size={16} />
+          <Icon n="chevL" size={16} />
           Volver al dashboard
         </Link>
       </div>
