@@ -328,3 +328,105 @@ export const adminListClientErrors = createServerFn({ method: "POST" })
     if (error) return { error: error.message };
     return (rows ?? []) as any;
   });
+
+/** Drill-down por día: suscripciones activas ese día, eventos de estudio, errores de sincronización. */
+export interface DayDrilldown {
+  day: string;
+  active_subscriptions: Array<{ user_id: string; email: string | null; status: string; current_period_end: string | null; created_at: string }>;
+  study_events: Array<{ user_id: string; email: string | null; collection: string; count: number }>;
+  stripe_failures: Array<{ id: string; stripe_event_id: string; type: string; error_message: string | null; received_at: string }>;
+  drift_users: Array<{ user_id: string; email: string; profile_plan: string | null; sub_status: string | null; kind: string }>;
+  totals: { subs: number; events: number; failures: number; drift: number };
+}
+
+export const adminDayDrilldown = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { day: string; environment: StripeEnv }) => data)
+  .handler(async ({ data, context }): Promise<Res<DayDrilldown>> => {
+    const guard = await assertAdmin(context.supabase, context.userId);
+    if (guard) return { error: guard };
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const dayStart = new Date(`${data.day}T00:00:00.000Z`).toISOString();
+    const dayEnd = new Date(`${data.day}T23:59:59.999Z`).toISOString();
+
+    // Suscripciones activas ese día
+    const { data: subs } = await supabaseAdmin
+      .from("subscriptions")
+      .select("user_id,status,current_period_end,created_at")
+      .eq("environment", data.environment)
+      .lte("created_at", dayEnd)
+      .in("status", ["active", "trialing", "past_due", "canceled"]);
+    const activeThatDay = (subs ?? []).filter((s: any) =>
+      ["active", "trialing"].includes(s.status) &&
+      (!s.current_period_end || new Date(s.current_period_end) >= new Date(dayStart)),
+    );
+    const subUserIds = Array.from(new Set(activeThatDay.map((s: any) => s.user_id))).filter(Boolean);
+
+    // Eventos de estudio del día (user_state actualizado ese día en colecciones de eventos/progreso)
+    const { data: states } = await supabaseAdmin
+      .from("user_state")
+      .select("user_id,collection,updated_at")
+      .in("collection", ["quiz_attempts", "sim_attempts", "activity", "tema_progress", "clase_progress"])
+      .gte("updated_at", dayStart)
+      .lte("updated_at", dayEnd);
+    const eventMap = new Map<string, { user_id: string; collection: string; count: number }>();
+    for (const row of states ?? []) {
+      const key = `${(row as any).user_id}:${(row as any).collection}`;
+      const cur = eventMap.get(key);
+      if (cur) cur.count++;
+      else eventMap.set(key, { user_id: (row as any).user_id, collection: (row as any).collection, count: 1 });
+    }
+    const eventUserIds = Array.from(new Set(Array.from(eventMap.values()).map((e) => e.user_id)));
+
+    // Fallos de webhook en ese día
+    const { data: failures } = await supabaseAdmin
+      .from("stripe_events")
+      .select("id,stripe_event_id,type,error_message,received_at,status")
+      .eq("environment", data.environment)
+      .eq("status", "failed")
+      .gte("received_at", dayStart)
+      .lte("received_at", dayEnd)
+      .order("received_at", { ascending: false });
+
+    // Drift actual (snapshot; el desfase es un estado, no un evento diario)
+    const { data: drift } = await context.supabase.rpc("admin_plan_drift", { check_env: data.environment });
+
+    // Emails
+    const allIds = Array.from(new Set([...subUserIds, ...eventUserIds]));
+    const emailMap = new Map<string, string | null>();
+    if (allIds.length > 0) {
+      const { data: profs } = await supabaseAdmin.from("profiles").select("id,email").in("id", allIds);
+      for (const p of profs ?? []) emailMap.set((p as any).id, (p as any).email ?? null);
+    }
+
+    return {
+      day: data.day,
+      active_subscriptions: activeThatDay.map((s: any) => ({
+        user_id: s.user_id,
+        email: emailMap.get(s.user_id) ?? null,
+        status: s.status,
+        current_period_end: s.current_period_end,
+        created_at: s.created_at,
+      })),
+      study_events: Array.from(eventMap.values()).map((e) => ({
+        user_id: e.user_id,
+        email: emailMap.get(e.user_id) ?? null,
+        collection: e.collection,
+        count: e.count,
+      })),
+      stripe_failures: (failures ?? []).map((f: any) => ({
+        id: f.id,
+        stripe_event_id: f.stripe_event_id,
+        type: f.type,
+        error_message: f.error_message,
+        received_at: f.received_at,
+      })),
+      drift_users: (drift ?? []) as DayDrilldown["drift_users"],
+      totals: {
+        subs: activeThatDay.length,
+        events: (states ?? []).length,
+        failures: (failures ?? []).length,
+        drift: (drift ?? []).length,
+      },
+    };
+  });
