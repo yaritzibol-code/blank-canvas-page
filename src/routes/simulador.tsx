@@ -232,6 +232,49 @@ function SimuladorPage() {
     el?.scrollIntoView({ block: "nearest" });
   }, [current]);
 
+  // Atajos de teclado durante el examen y la calculadora
+  useEffect(() => {
+    if (phase !== "exam") return;
+    const onKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) return;
+      // Calculadora abierta: teclado numérico
+      if (calcOpen) {
+        if (/^[0-9]$/.test(e.key)) { setCalc((s) => calcReducer(s, { type: "NUM", payload: e.key })); e.preventDefault(); return; }
+        if (e.key === ".") { setCalc((s) => calcReducer(s, { type: "NUM", payload: "." })); e.preventDefault(); return; }
+        if (["+","-","*","/"].includes(e.key)) {
+          const map: Record<string,string> = { "+":"+","-":"-","*":"×","/":"÷" };
+          setCalc((s) => calcReducer(s, { type: "OP", payload: map[e.key] })); e.preventDefault(); return;
+        }
+        if (e.key === "Enter" || e.key === "=") { setCalc((s) => calcReducer(s, { type: "EQ" })); e.preventDefault(); return; }
+        if (e.key === "Escape") { setCalcOpen(false); e.preventDefault(); return; }
+        if (e.key === "Backspace" || e.key.toLowerCase() === "c") { setCalc((s) => calcReducer(s, { type: "CLEAR" })); e.preventDefault(); return; }
+      }
+      // Atajos globales de examen
+      if (e.key === "ArrowRight") { setCurrent((c) => Math.min(TOTAL_QS - 1, c + 1)); e.preventDefault(); return; }
+      if (e.key === "ArrowLeft") { setCurrent((c) => Math.max(0, c - 1)); e.preventDefault(); return; }
+      if (["1","2","3","4"].includes(e.key)) {
+        const oi = parseInt(e.key, 10) - 1;
+        selectOpt(current, oi);
+        e.preventDefault();
+        return;
+      }
+      const letter = e.key.toLowerCase();
+      if (["a","b","c","d"].includes(letter) && !calcOpen) {
+        // 'c' abre la calculadora
+        if (letter === "c") { setCalcOpen(true); e.preventDefault(); return; }
+        const oi = { a: 0, b: 1, d: 3 }[letter as "a" | "b" | "d"] ?? 2;
+        selectOpt(current, oi);
+        e.preventDefault();
+      }
+      if (letter === "f") { toggleFlag(); e.preventDefault(); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, calcOpen, current]);
+
+
   /* Materia offset helpers */
   function materiaOffset(mi: number): number {
     return MATERIAS.slice(0, mi).reduce((s, m) => s + m.total, 0);
