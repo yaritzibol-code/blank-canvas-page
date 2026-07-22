@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
+import { PlaneField } from "@/components/shared/PlaneField";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import {
   getQuizAttempts,
