@@ -305,6 +305,17 @@ function DashboardLayout() {
     return () => clearInterval(iv);
   }, []);
 
+  // Cierra el sidebar móvil con Escape (a11y)
+  useEffect(() => {
+    if (!sidebarOpen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setSidebarOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [sidebarOpen]);
+
+  // Cierra el sidebar móvil al cambiar de ruta
+  useEffect(() => { setSidebarOpen(false); }, [location.pathname]);
+
   // Sincroniza el plan con Stripe al entrar (cubre el regreso del checkout
   // con ?checkout=success). Sin Stripe configurado degrada sin ruido.
   useEffect(() => {
@@ -355,6 +366,7 @@ function DashboardLayout() {
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
+          aria-hidden="true"
           style={{
             position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 99,
           }}
@@ -364,6 +376,11 @@ function DashboardLayout() {
 
       {/* Mobile sidebar */}
       <aside
+        id="mobile-sidebar"
+        role="dialog"
+        aria-modal={sidebarOpen ? true : undefined}
+        aria-label="Menú de navegación"
+        aria-hidden={!sidebarOpen}
         style={{
           width: 260, background: "#22375C",
           position: "fixed", top: 0, left: 0, bottom: 0,
@@ -402,15 +419,19 @@ function DashboardLayout() {
               <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                 <button
                   onClick={() => setSidebarOpen(true)}
+                  aria-label="Abrir menú"
+                  aria-expanded={sidebarOpen}
+                  aria-controls="mobile-sidebar"
                   style={{
-                    display: "flex", flexDirection: "column", gap: 5,
-                    cursor: "pointer", background: "none", border: "none", padding: 4,
+                    display: "flex", flexDirection: "column", gap: 5, alignItems: "center", justifyContent: "center",
+                    cursor: "pointer", background: "none", border: "none",
+                    minWidth: 44, minHeight: 44, borderRadius: 8,
                   }}
                   className="md:hidden"
                 >
-                  <span style={{ display: "block", width: 22, height: 2, background: "#22375C", borderRadius: 2 }} />
-                  <span style={{ display: "block", width: 22, height: 2, background: "#22375C", borderRadius: 2 }} />
-                  <span style={{ display: "block", width: 22, height: 2, background: "#22375C", borderRadius: 2 }} />
+                  <span aria-hidden="true" style={{ display: "block", width: 22, height: 2, background: "#22375C", borderRadius: 2 }} />
+                  <span aria-hidden="true" style={{ display: "block", width: 22, height: 2, background: "#22375C", borderRadius: 2 }} />
+                  <span aria-hidden="true" style={{ display: "block", width: 22, height: 2, background: "#22375C", borderRadius: 2 }} />
                 </button>
                 <div>
                   <h1

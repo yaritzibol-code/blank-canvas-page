@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useState, useEffect, useRef } from "react";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import {
@@ -6,10 +7,10 @@ import {
   canStartSimulator,
   getPublishedQuestions,
   saveSimAttempt,
-  yarisReply,
   logYarisUse,
 } from "@/lib/store";
 import type { BankQuestion, SimAnswer, YarisContext } from "@/lib/store";
+import { yarisAiChat } from "@/lib/yaris-ai.functions";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
 export const Route = createFileRoute("/simulador")({
@@ -152,6 +153,10 @@ function secToHM(sec: number): string {
   return `${h}h ${String(m).padStart(2, "0")}min`;
 }
 
+function stripHtml(s: string): string {
+  return s.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").trim();
+}
+
 /* ─── Component ──────────────────────────────────────────── */
 
 type Phase = "warning" | "exam" | "result" | "review";
@@ -177,7 +182,7 @@ function SimuladorPage() {
   const [yarisMsgs, setYarisMsgs] = useState<{ role: "bot" | "user"; text: string; cite?: string }[]>([]);
   const [yarisInput, setYarisInput] = useState("");
   const [yarisTyping, setYarisTyping] = useState(false);
-  const [yarisReplyIdx, setYarisReplyIdx] = useState(0);
+  const [_yarisReplyIdx, setYarisReplyIdx] = useState(0);
   const [yarisInit, setYarisInit] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -343,7 +348,9 @@ function SimuladorPage() {
     setCalc((s) => calcReducer(s, { type, payload }));
   }
 
-  /* Yaris — SOLO en fase review, con la pregunta seleccionada como contexto */
+  /* Yaris IA — SOLO en fase review, con la pregunta seleccionada como contexto */
+  const callYarisAi = useServerFn(yarisAiChat);
+
   function reviewCtx(): YarisContext {
     const bq = bankQs[reviewCurrent];
     if (!bq) return {};
@@ -360,44 +367,74 @@ function SimuladorPage() {
     };
   }
 
-  function openYaris() {
+  function aiContextPayload() {
+    const bq = bankQs[reviewCurrent];
+    if (!bq) return undefined;
+    const mi = questions[reviewCurrent]?.materia ?? 0;
+    return {
+      materia: MATERIAS[mi].name,
+      questionText: bq.text,
+      options: bq.options,
+      correctIndex: bq.correctIndex,
+      userSelectedIndex: questions[reviewCurrent]?.selectedOpt ?? -1,
+      explanation: bq.explanation,
+      cite: bq.cite,
+    };
+  }
+
+  function historyForAi(nextUserMsg?: string) {
+    const hist: { role: "user" | "assistant"; content: string }[] = [];
+    for (const m of yarisMsgs) {
+      hist.push({ role: m.role === "bot" ? "assistant" : "user", content: stripHtml(m.text) });
+    }
+    if (nextUserMsg) hist.push({ role: "user", content: nextUserMsg });
+    return hist;
+  }
+
+  async function openYaris() {
     if (phase !== "review") return;
     if (!yarisOpen && user) logYarisUse(user.id, "Simulador (revisión)");
     setYarisOpen(true);
     if (!yarisInit) {
       setYarisInit(true);
+      const materiaName = reviewCtx().materiaName ?? "esta materia";
+      setYarisMsgs([
+        { role: "bot", text: `¡Hola! Soy <b>Yaris</b>. Veo que tienes una duda sobre <b>${materiaName}</b>. Te explico con base en la pregunta y en lo que sé de aeronáutica.` },
+      ]);
       setYarisTyping(true);
-      const ctx = reviewCtx();
-      const materiaName = ctx.materiaName ?? "esta materia";
-      setTimeout(() => {
+      try {
+        const r = await callYarisAi({
+          data: {
+            history: [{ role: "user", content: "Explícame esta pregunta con tus propias palabras, por qué la correcta es la correcta y por qué las demás no. Al final dame un tip para recordarlo." }],
+            context: aiContextPayload(),
+          },
+        });
+        setYarisMsgs((p) => [...p, { role: "bot", text: r.text, cite: r.cite ?? undefined }]);
+      } catch (err) {
+        console.error("Yaris IA error", err);
+        setYarisMsgs((p) => [...p, { role: "bot", text: "No pude conectarme con la IA. Vuelve a intentarlo en un momento." }]);
+      } finally {
         setYarisTyping(false);
-        setYarisMsgs([{ role: "bot", text: `¡Hola! Soy Yaris. Veo que tienes una duda sobre <strong>${materiaName}</strong>. ¡Te explico!` }]);
-        setTimeout(() => {
-          setYarisTyping(true);
-          setTimeout(() => {
-            setYarisTyping(false);
-            const r = yarisReply(0, ctx);
-            setYarisMsgs((p) => [...p, { role: "bot", text: r.t, cite: r.c ?? undefined }]);
-            setYarisReplyIdx(1);
-          }, 900);
-        }, 300);
-      }, 700);
+      }
     }
   }
 
-  function sendYaris() {
+  async function sendYaris() {
     const text = yarisInput.trim();
-    if (!text) return;
+    if (!text || yarisTyping) return;
     setYarisMsgs((p) => [...p, { role: "user", text }]);
+    const history = historyForAi(text);
     setYarisInput("");
     setYarisTyping(true);
-    const turn = yarisReplyIdx;
-    setYarisReplyIdx(turn + 1);
-    const r = yarisReply(turn, reviewCtx(), text);
-    setTimeout(() => {
+    try {
+      const r = await callYarisAi({ data: { history, context: aiContextPayload() } });
+      setYarisMsgs((p) => [...p, { role: "bot", text: r.text, cite: r.cite ?? undefined }]);
+    } catch (err) {
+      console.error("Yaris IA error", err);
+      setYarisMsgs((p) => [...p, { role: "bot", text: "No pude conectarme con la IA. Vuelve a intentarlo." }]);
+    } finally {
       setYarisTyping(false);
-      setYarisMsgs((p) => [...p, { role: "bot", text: r.t, cite: r.c ?? undefined }]);
-    }, 900);
+    }
   }
 
   /* Derived */
@@ -794,8 +831,27 @@ function SimuladorPage() {
               </div>
             </div>
           </div>
-          <button onClick={() => setCalcOpen((o) => !o)} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "6px 12px", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
-            <Icon n="gauge" size={15} /> Calculadora
+          <button
+            onClick={() => setCalcOpen((o) => !o)}
+            aria-label="Abrir calculadora"
+            aria-expanded={calcOpen}
+            style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "8px 12px", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5, minHeight: 40 }}
+          >
+            <Icon n="gauge" size={15} /> <span className="hidden sm:inline">Calculadora</span>
+          </button>
+          <button
+            onClick={() => setConfirmOpen(true)}
+            aria-label="Finalizar examen"
+            style={{
+              background: "#6C0820", border: "1px solid rgba(255,255,255,0.15)",
+              color: "white", padding: "8px 14px", borderRadius: 8,
+              fontSize: "0.8rem", fontWeight: 700, cursor: "pointer",
+              fontFamily: "'Manrope', sans-serif",
+              display: "flex", alignItems: "center", gap: 6, minHeight: 40,
+              boxShadow: "0 2px 8px rgba(108,8,32,0.35)",
+            }}
+          >
+            <Icon n="check" size={15} /> <span className="hidden sm:inline">Finalizar</span>
           </button>
         </div>
       </div>
