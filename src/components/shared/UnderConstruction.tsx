@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Icon } from "@/components/ui/fp-icon";
 import { useSessionUser } from "@/lib/store";
-import type { ComponentType } from "react";
+import type { FC } from "react";
 
 interface Props {
   moduleName: string;
