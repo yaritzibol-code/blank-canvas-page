@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useState, useEffect, useRef } from "react";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import {
@@ -6,10 +7,10 @@ import {
   canStartSimulator,
   getPublishedQuestions,
   saveSimAttempt,
-  yarisReply,
   logYarisUse,
 } from "@/lib/store";
 import type { BankQuestion, SimAnswer, YarisContext } from "@/lib/store";
+import { yarisAiChat } from "@/lib/yaris-ai.functions";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
 export const Route = createFileRoute("/simulador")({
