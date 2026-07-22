@@ -14,8 +14,10 @@ import {
 } from "@/lib/store";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
+import { adminOnly } from "@/components/shared/UnderConstruction";
+
 export const Route = createFileRoute("/dashboard/flashcards")({
-  component: FlashcardsPage,
+  component: adminOnly(FlashcardsPage, "Flashcards"),
 });
 
 /* ─── Data ───────────────────────────────────────────────── */
