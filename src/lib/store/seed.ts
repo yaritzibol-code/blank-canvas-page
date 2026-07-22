@@ -24,7 +24,7 @@ import type {
   User,
 } from "./types";
 
-const SEED_VERSION = 3;
+const SEED_VERSION = 4;
 
 const pad3 = (n: number) => String(n).padStart(3, "0");
 
@@ -487,9 +487,11 @@ export function ensureSeeded() {
       );
       write("materiales", [...seedMateriales(), ...custom]);
     }
-    if (current < 3) {
-      // v3: banco oficial completo (72 preguntas semilla → 2,819 del spreadsheet)
-      // y flashcards re-derivadas del banco nuevo.
+    if (current < 4) {
+      // v3: banco oficial completo (72 preguntas semilla → 2,819 del spreadsheet).
+      // v4: banco auditado contra el Excel oficial (2,819 → 2,951): se recuperan
+      // las preguntas omitidas, cada hoja queda completa en su materia y se
+      // reparan 8 filas dañadas. Flashcards re-derivadas del banco corregido.
       const custom = read<BankQuestion[]>("questions", []).filter(
         (q) => !q.id.startsWith("q_seed_"),
       );
