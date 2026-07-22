@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { useSessionUser, useStore, studentStats, materiaProgressPct, MATERIAS_DEF, getStudyDays } from "@/lib/store";
 import { OnboardingModal } from "@/components/shared/OnboardingModal";
+import { DataSyncBanner } from "@/components/shared/DataSyncBanner";
 
 export const Route = createFileRoute("/dashboard/")({
   component: DashboardHome,
