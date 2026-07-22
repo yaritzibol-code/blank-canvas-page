@@ -247,23 +247,20 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
   if (showReset) {
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <p style={{ fontSize: ".85rem", color: "#647DA0", lineHeight: 1.5 }}>
+          Escribe tu correo y te enviaremos un enlace para crear una contraseña nueva.
+        </p>
         <Field label="Correo electrónico">
           <input type="email" placeholder="tu@correo.com" style={inputStyle}
             value={resetEmail} onChange={(e) => setResetEmail(e.target.value)}
             onFocus={(e) => (e.target.style.borderColor = "#3D5D91")} onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")} />
         </Field>
 
-        <Field label="Nueva contraseña" hint="Mínimo 8 caracteres.">
-          <input type="password" placeholder="Tu nueva contraseña" style={inputStyle}
-            value={resetPw} onChange={(e) => setResetPw(e.target.value)}
-            onFocus={(e) => (e.target.style.borderColor = "#3D5D91")} onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")} />
-        </Field>
-
         {resetError && <p style={errorTextStyle}>{resetError}</p>}
         {resetOk && (
-          <p style={{ ...errorTextStyle, color: "#2ecc71" }}>{resetMsg ?? "Contraseña actualizada, inicia sesión."}</p>
+          <p style={{ ...errorTextStyle, color: "#2ecc71" }}>{resetMsg ?? "Revisa tu correo para continuar."}</p>
         )}
-        <SubmitButton loading={false} onClick={handleReset}>Actualizar contraseña</SubmitButton>
+        <SubmitButton loading={false} onClick={handleReset}>Enviar enlace</SubmitButton>
 
         <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#8DA1BE", marginTop: 4 }}>
           <button type="button" onClick={() => setShowReset(false)}
