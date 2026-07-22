@@ -436,6 +436,92 @@ function ConfiguracionPage() {
               </>
             )}
 
+            {/* Modal Nombre */}
+            {modal === "nombre" && (
+              <>
+                <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}><Icon n="user" size={20} color="#22375C" /> Cambiar nombre</h2>
+                <p style={{ fontSize: ".85rem", color: "#647DA0", marginBottom: 20, lineHeight: 1.5 }}>Así aparecerás en toda la plataforma.</p>
+                <input
+                  type="text"
+                  value={nombreDraft}
+                  placeholder="Nombre completo"
+                  onChange={(e) => setNombreDraft(e.target.value)}
+                  style={{ width: "100%", padding: "10px 14px", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".86rem", fontFamily: "'Manrope', sans-serif", outline: "none", marginBottom: 16 }}
+                />
+                <div style={{ display: "flex", gap: 10 }}>
+                  <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#647DA0", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                  <button
+                    onClick={() => {
+                      const t = nombreDraft.trim();
+                      if (!t) return;
+                      updateUser(user.id, { nombre: t });
+                      closeModal();
+                      showFlash("Nombre actualizado");
+                    }}
+                    style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                  >
+                    Guardar
+                  </button>
+                </div>
+              </>
+            )}
+
+            {/* Modal Escuela */}
+            {modal === "escuela" && (
+              <>
+                <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}><Icon n="plane" size={20} color="#22375C" /> Escuela de aviación</h2>
+                <p style={{ fontSize: ".85rem", color: "#647DA0", marginBottom: 20, lineHeight: 1.5 }}>Institución donde estudias o presentas el CIAAC.</p>
+                <input
+                  type="text"
+                  value={escuelaDraft}
+                  placeholder="Nombre de la escuela"
+                  onChange={(e) => setEscuelaDraft(e.target.value)}
+                  style={{ width: "100%", padding: "10px 14px", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".86rem", fontFamily: "'Manrope', sans-serif", outline: "none", marginBottom: 16 }}
+                />
+                <div style={{ display: "flex", gap: 10 }}>
+                  <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#647DA0", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                  <button
+                    onClick={() => {
+                      updateUser(user.id, { escuela: escuelaDraft.trim() });
+                      closeModal();
+                      showFlash("Escuela actualizada");
+                    }}
+                    style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                  >
+                    Guardar
+                  </button>
+                </div>
+              </>
+            )}
+
+            {/* Modal Fecha CIAAC */}
+            {modal === "ciaac" && (
+              <>
+                <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}><Icon n="target" size={20} color="#22375C" /> Fecha del CIAAC</h2>
+                <p style={{ fontSize: ".85rem", color: "#647DA0", marginBottom: 20, lineHeight: 1.5 }}>La usaremos para el contador de despegue en tu tablero.</p>
+                <input
+                  type="date"
+                  value={ciaacDraft}
+                  onChange={(e) => setCiaacDraft(e.target.value)}
+                  style={{ width: "100%", padding: "10px 14px", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".86rem", fontFamily: "'Manrope', sans-serif", outline: "none", marginBottom: 16 }}
+                />
+                <div style={{ display: "flex", gap: 10 }}>
+                  <button onClick={closeModal} style={{ flex: 1, padding: 11, background: "white", color: "#647DA0", border: "2px solid #F2DCDB", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                  <button
+                    onClick={() => {
+                      updateUser(user.id, { fechaCiaac: ciaacDraft || null });
+                      closeModal();
+                      showFlash("Fecha actualizada");
+                    }}
+                    style={{ flex: 2, padding: 11, background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                  >
+                    Guardar
+                  </button>
+                </div>
+              </>
+            )}
+
+
           </div>
         </div>
       )}
