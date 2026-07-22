@@ -1,5 +1,5 @@
 /** Panel de Operaciones — observabilidad general del SaaS. */
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AdminShell, cardStyle, cardHeadStyle } from "@/components/admin/AdminShell";
 import { SparkChart, type SparkPoint } from "@/components/admin/SparkChart";

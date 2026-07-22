@@ -47,6 +47,7 @@ import { Route as ApiPublicClientErrorsRouteImport } from './routes/api/public/c
 import { Route as AdminOperacionesYarisRouteImport } from './routes/admin/operaciones/yaris'
 import { Route as AdminOperacionesStripeRouteImport } from './routes/admin/operaciones/stripe'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
+import { Route as AdminOperacionesDiaDayRouteImport } from './routes/admin/operaciones/dia.$day'
 
 const SimuladorRoute = SimuladorRouteImport.update({
   id: '/simulador',
@@ -240,6 +241,11 @@ const ApiPublicPaymentsWebhookRoute =
     path: '/api/public/payments/webhook',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AdminOperacionesDiaDayRoute = AdminOperacionesDiaDayRouteImport.update({
+  id: '/admin/operaciones/dia/$day',
+  path: '/admin/operaciones/dia/$day',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -279,6 +285,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones/': typeof AdminOperacionesIndexRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
+  '/admin/operaciones/dia/$day': typeof AdminOperacionesDiaDayRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -318,6 +325,7 @@ export interface FileRoutesByTo {
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones': typeof AdminOperacionesIndexRoute
   '/dashboard/materias': typeof DashboardMateriasIndexRoute
+  '/admin/operaciones/dia/$day': typeof AdminOperacionesDiaDayRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
@@ -359,6 +367,7 @@ export interface FileRoutesById {
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones/': typeof AdminOperacionesIndexRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
+  '/admin/operaciones/dia/$day': typeof AdminOperacionesDiaDayRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
@@ -401,6 +410,7 @@ export interface FileRouteTypes {
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones/'
     | '/dashboard/materias/'
+    | '/admin/operaciones/dia/$day'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -440,6 +450,7 @@ export interface FileRouteTypes {
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones'
     | '/dashboard/materias'
+    | '/admin/operaciones/dia/$day'
     | '/api/public/payments/webhook'
   id:
     | '__root__'
@@ -480,6 +491,7 @@ export interface FileRouteTypes {
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones/'
     | '/dashboard/materias/'
+    | '/admin/operaciones/dia/$day'
     | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
@@ -507,6 +519,7 @@ export interface RootRouteChildren {
   AdminOperacionesYarisRoute: typeof AdminOperacionesYarisRoute
   ApiPublicClientErrorsRoute: typeof ApiPublicClientErrorsRoute
   AdminOperacionesIndexRoute: typeof AdminOperacionesIndexRoute
+  AdminOperacionesDiaDayRoute: typeof AdminOperacionesDiaDayRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
@@ -778,6 +791,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/operaciones/dia/$day': {
+      id: '/admin/operaciones/dia/$day'
+      path: '/admin/operaciones/dia/$day'
+      fullPath: '/admin/operaciones/dia/$day'
+      preLoaderRoute: typeof AdminOperacionesDiaDayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -843,6 +863,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminOperacionesYarisRoute: AdminOperacionesYarisRoute,
   ApiPublicClientErrorsRoute: ApiPublicClientErrorsRoute,
   AdminOperacionesIndexRoute: AdminOperacionesIndexRoute,
+  AdminOperacionesDiaDayRoute: AdminOperacionesDiaDayRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
