@@ -92,7 +92,6 @@ const NAV_SECTIONS: { label: string; items: { icon: IconName; label: string; pat
     ],
   },
 ];
-];
 
 function Sidebar({ onClose, onYaris }: { onClose?: () => void; onYaris?: () => void }) {
   const location = useLocation();
