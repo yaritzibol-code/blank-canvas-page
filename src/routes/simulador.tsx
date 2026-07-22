@@ -9,7 +9,7 @@ import {
   saveSimAttempt,
   logYarisUse,
 } from "@/lib/store";
-import type { BankQuestion, SimAnswer, YarisContext } from "@/lib/store";
+import type { BankQuestion, SimAnswer } from "@/lib/store";
 import { yarisAiChat } from "@/lib/yaris-ai.functions";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
@@ -182,8 +182,7 @@ function SimuladorPage() {
   const [yarisMsgs, setYarisMsgs] = useState<{ role: "bot" | "user"; text: string; cite?: string }[]>([]);
   const [yarisInput, setYarisInput] = useState("");
   const [yarisTyping, setYarisTyping] = useState(false);
-  const [_yarisReplyIdx, setYarisReplyIdx] = useState(0);
-  const [yarisInit, setYarisInit] = useState(false);
+  const [yarisBatch, setYarisBatch] = useState<{ done: number; total: number } | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -191,6 +190,13 @@ function SimuladorPage() {
   const leftPanelRef = useRef<HTMLDivElement>(null);
   const savedRef = useRef(false);
   const finishRef = useRef<() => void>(() => {});
+  const phaseRef = useRef<Phase>("warning");
+  // Preguntas ya explicadas por Yaris en esta revisión (evita repetir la misma)
+  const explainedRef = useRef<Set<number>>(new Set());
+  // Serializa las llamadas a la IA (una a la vez)
+  const aiBusyRef = useRef(false);
+  const batchRunningRef = useRef(false);
+  const batchStopRef = useRef(false);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -201,7 +207,7 @@ function SimuladorPage() {
 
   useEffect(() => {
     msgsEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [yarisMsgs, yarisTyping]);
+  }, [yarisMsgs, yarisTyping, yarisOpen]);
 
   useEffect(() => {
     if (phase !== "exam") return;
@@ -348,6 +354,7 @@ function SimuladorPage() {
     setPhase("result");
   }
   finishRef.current = finishExam;
+  phaseRef.current = phase;
 
   /* Submit */
   function submitExam() {
@@ -381,8 +388,10 @@ function SimuladorPage() {
     setReviewCurrent(0);
     setYarisOpen(false);
     setYarisMsgs([]);
-    setYarisInit(false);
-    setYarisReplyIdx(0);
+    setYarisBatch(null);
+    batchStopRef.current = true;
+    batchRunningRef.current = false;
+    explainedRef.current = new Set();
     savedRef.current = false;
   }
 
@@ -394,32 +403,19 @@ function SimuladorPage() {
   /* Yaris IA — SOLO en fase review, con la pregunta seleccionada como contexto */
   const callYarisAi = useServerFn(yarisAiChat);
 
-  function reviewCtx(): YarisContext {
-    const bq = bankQs[reviewCurrent];
-    if (!bq) return {};
-    const mi = questions[reviewCurrent]?.materia ?? 0;
-    return {
-      question: {
-        text: bq.text,
-        options: bq.options,
-        correctIndex: bq.correctIndex,
-        explanation: bq.explanation,
-        cite: bq.cite,
-      },
-      materiaName: MATERIAS[mi].name,
-    };
-  }
+  const YARIS_EXPLAIN_PROMPT =
+    "Explícame esta pregunta con tus propias palabras, por qué la correcta es la correcta y por qué las demás no. Al final dame un tip para recordarlo.";
 
-  function aiContextPayload() {
-    const bq = bankQs[reviewCurrent];
+  function aiContextPayload(idx: number) {
+    const bq = bankQs[idx];
     if (!bq) return undefined;
-    const mi = questions[reviewCurrent]?.materia ?? 0;
+    const mi = questions[idx]?.materia ?? 0;
     return {
       materia: MATERIAS[mi].name,
       questionText: bq.text,
       options: bq.options,
       correctIndex: bq.correctIndex,
-      userSelectedIndex: questions[reviewCurrent]?.selectedOpt ?? -1,
+      userSelectedIndex: questions[idx]?.selectedOpt ?? -1,
       explanation: bq.explanation,
       cite: bq.cite,
     };
@@ -428,54 +424,150 @@ function SimuladorPage() {
   function historyForAi(nextUserMsg?: string) {
     const hist: { role: "user" | "assistant"; content: string }[] = [];
     for (const m of yarisMsgs) {
-      hist.push({ role: m.role === "bot" ? "assistant" : "user", content: stripHtml(m.text) });
+      const content = stripHtml(m.text);
+      if (content) hist.push({ role: m.role === "bot" ? "assistant" : "user", content });
     }
     if (nextUserMsg) hist.push({ role: "user", content: nextUserMsg });
-    return hist;
+    // El backend acepta máximo 20 mensajes de 4000 caracteres.
+    return hist.slice(-12).map((m) => ({ ...m, content: m.content.slice(0, 3900) }));
+  }
+
+  function ensureGreeting() {
+    setYarisMsgs((p) =>
+      p.length > 0
+        ? p
+        : [{
+            role: "bot" as const,
+            text: "¡Hola! Soy <b>Yaris</b>. Te explico las preguntas de tu simulador con base en su explicación oficial y en lo que sé de aeronáutica. Pídeme la que quieras, o todas de una vez.",
+          }],
+    );
+  }
+
+  /** Pide a la IA la explicación de una pregunta. Cada pregunta se explica una sola vez. */
+  async function explainQuestion(idx: number): Promise<"ok" | "skipped" | "failed"> {
+    if (phaseRef.current !== "review") return "skipped";
+    if (explainedRef.current.has(idx) || aiBusyRef.current) return "skipped";
+    const bq = bankQs[idx];
+    if (!bq) return "skipped";
+    aiBusyRef.current = true;
+    explainedRef.current.add(idx);
+    const mi = questions[idx]?.materia ?? 0;
+    setYarisMsgs((p) => [...p, { role: "bot", text: `Vamos con la <b>pregunta ${idx + 1}</b> de <b>${MATERIAS[mi].name}</b>:` }]);
+    setYarisTyping(true);
+    try {
+      const r = await callYarisAi({
+        data: {
+          history: [{ role: "user", content: YARIS_EXPLAIN_PROMPT }],
+          context: aiContextPayload(idx),
+        },
+      });
+      if (phaseRef.current !== "review") return "skipped";
+      setYarisMsgs((p) => [...p, { role: "bot", text: r.text, cite: r.cite ?? undefined }]);
+      return "ok";
+    } catch (err) {
+      console.error("Yaris IA error", err);
+      explainedRef.current.delete(idx); // permite reintentar
+      if (phaseRef.current === "review") {
+        setYarisMsgs((p) => [...p, { role: "bot", text: "No pude conectarme con la IA. Vuelve a intentarlo en un momento." }]);
+      }
+      return "failed";
+    } finally {
+      aiBusyRef.current = false;
+      setYarisTyping(false);
+    }
   }
 
   async function openYaris() {
     if (phase !== "review") return;
     if (!yarisOpen && user) logYarisUse(user.id, "Simulador (revisión)");
     setYarisOpen(true);
-    if (!yarisInit) {
-      setYarisInit(true);
-      const materiaName = reviewCtx().materiaName ?? "esta materia";
-      setYarisMsgs([
-        { role: "bot", text: `¡Hola! Soy <b>Yaris</b>. Veo que tienes una duda sobre <b>${materiaName}</b>. Te explico con base en la pregunta y en lo que sé de aeronáutica.` },
-      ]);
-      setYarisTyping(true);
-      try {
-        const r = await callYarisAi({
-          data: {
-            history: [{ role: "user", content: "Explícame esta pregunta con tus propias palabras, por qué la correcta es la correcta y por qué las demás no. Al final dame un tip para recordarlo." }],
-            context: aiContextPayload(),
-          },
-        });
-        setYarisMsgs((p) => [...p, { role: "bot", text: r.text, cite: r.cite ?? undefined }]);
-      } catch (err) {
-        console.error("Yaris IA error", err);
-        setYarisMsgs((p) => [...p, { role: "bot", text: "No pude conectarme con la IA. Vuelve a intentarlo en un momento." }]);
-      } finally {
-        setYarisTyping(false);
-      }
+    ensureGreeting();
+    await explainQuestion(reviewCurrent);
+  }
+
+  /** Explica en cadena todas las preguntas pendientes (o solo incorrectas/sin responder). */
+  async function explainAll(onlyWrong: boolean) {
+    if (phase !== "review" || batchRunningRef.current) return;
+    const targets = questions
+      .map((_, i) => i)
+      .filter((i) => {
+        const bq = bankQs[i];
+        if (!bq || explainedRef.current.has(i)) return false;
+        return !onlyWrong || questions[i].selectedOpt !== bq.correctIndex;
+      });
+    if (user) logYarisUse(user.id, "Simulador (explicar todas)");
+    setYarisOpen(true);
+    ensureGreeting();
+    if (targets.length === 0) {
+      setYarisMsgs((p) => [...p, {
+        role: "bot",
+        text: onlyWrong
+          ? "No te quedan preguntas incorrectas por explicar. ¡Bien hecho! Pregúntame cualquier otra duda."
+          : "Ya te expliqué todas las preguntas. Si algo no quedó claro, pregúntame con confianza.",
+      }]);
+      return;
     }
+    batchRunningRef.current = true;
+    batchStopRef.current = false;
+    setYarisBatch({ done: 0, total: targets.length });
+    setYarisMsgs((p) => [...p, {
+      role: "bot",
+      text: `¡Va! Te explico <b>${targets.length}</b> ${onlyWrong ? "preguntas incorrectas o sin responder" : "preguntas"} una por una. Puedes detenerme cuando quieras.`,
+    }]);
+    // Si hay una consulta en curso, espera a que termine (máx. ~10 s).
+    for (let w = 0; w < 50 && aiBusyRef.current; w++) await new Promise((r) => setTimeout(r, 200));
+    let failures = 0;
+    let done = 0;
+    for (const idx of targets) {
+      if (batchStopRef.current || phaseRef.current !== "review") break;
+      setReviewCurrent(idx);
+      const res = await explainQuestion(idx);
+      if (res === "failed") {
+        failures++;
+        if (failures >= 2) break;
+      } else if (res === "ok") {
+        failures = 0;
+      }
+      done++;
+      setYarisBatch({ done, total: targets.length });
+      // Pausa breve entre preguntas para no saturar la IA
+      if (!batchStopRef.current) await new Promise((r) => setTimeout(r, 350));
+    }
+    const stopped = batchStopRef.current;
+    const aborted = failures >= 2;
+    batchRunningRef.current = false;
+    setYarisBatch(null);
+    if (phaseRef.current !== "review") return;
+    setYarisMsgs((p) => [...p, {
+      role: "bot",
+      text: aborted
+        ? "La IA no me está respondiendo en este momento. Me detengo aquí; intenta de nuevo en unos minutos."
+        : stopped
+          ? `Listo, me detengo aquí (${done} de ${targets.length}). Cuando quieras seguimos con las demás.`
+          : "¡Terminé! Te expliqué todas las preguntas. Si algo no quedó claro, pregúntame con confianza.",
+    }]);
+  }
+
+  function stopBatch() {
+    batchStopRef.current = true;
   }
 
   async function sendYaris() {
     const text = yarisInput.trim();
-    if (!text || yarisTyping) return;
+    if (!text || yarisTyping || aiBusyRef.current || batchRunningRef.current) return;
+    aiBusyRef.current = true;
     setYarisMsgs((p) => [...p, { role: "user", text }]);
     const history = historyForAi(text);
     setYarisInput("");
     setYarisTyping(true);
     try {
-      const r = await callYarisAi({ data: { history, context: aiContextPayload() } });
+      const r = await callYarisAi({ data: { history, context: aiContextPayload(reviewCurrent) } });
       setYarisMsgs((p) => [...p, { role: "bot", text: r.text, cite: r.cite ?? undefined }]);
     } catch (err) {
       console.error("Yaris IA error", err);
       setYarisMsgs((p) => [...p, { role: "bot", text: "No pude conectarme con la IA. Vuelve a intentarlo." }]);
     } finally {
+      aiBusyRef.current = false;
       setYarisTyping(false);
     }
   }
@@ -687,6 +779,7 @@ function SimuladorPage() {
                         <div key={oi} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 12px", background: isRight ? "rgba(46,204,113,0.1)" : isUser && !isRight ? "rgba(231,76,60,0.08)" : "transparent", border: `1px solid ${isRight ? "#2ecc71" : isUser && !isRight ? "#e74c3c" : "#F2DCDB"}`, borderRadius: 8, fontSize: "0.82rem", color: "#22375C" }}>
                           <span>{LETTERS[oi]}</span>
                           <span style={{ flex: 1 }}>{o}</span>
+                          {isUser && <span style={{ fontSize: "0.66rem", fontWeight: 700, color: isRight ? "#2ecc71" : "#e74c3c", whiteSpace: "nowrap" }}>Tu respuesta</span>}
                           <span style={{ display: "flex", alignItems: "center" }}>{isRight ? <Icon n="checkCircle" size={15} color="#2ecc71" /> : isUser && !isRight ? <Icon n="close" size={15} color="#e74c3c" /> : null}</span>
                         </div>
                       );
@@ -727,13 +820,14 @@ function SimuladorPage() {
     const userAns = questions[reviewCurrent]?.selectedOpt ?? -1;
     const isCorrect = userAns === reviewQ.correctIndex;
     const mi = questions[reviewCurrent]?.materia ?? 0;
+    const wrongCount = questions.reduce((s, q, i) => s + (bankQs[i] && q.selectedOpt !== bankQs[i].correctIndex ? 1 : 0), 0);
 
     return (
       <div style={{ position: "fixed", inset: 0, zIndex: 800, background: "#f5f7fc", display: "flex", flexDirection: "column", fontFamily: "'Manrope', sans-serif" }}>
         {/* Review topbar */}
         <div style={{ height: 56, background: "#22375C", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px", flexShrink: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <button onClick={() => setPhase("result")} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "5px 12px", borderRadius: 7, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
+            <button onClick={() => { stopBatch(); setPhase("result"); }} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "5px 12px", borderRadius: 7, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
               ← Volver
             </button>
             <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1rem", color: "white", fontWeight: 700 }}>Revisión del examen</span>
@@ -799,6 +893,24 @@ function SimuladorPage() {
                   <span style={{ fontSize: "0.76rem", color: "#8DA1BE" }}>Pregunta {reviewCurrent + 1} / {TOTAL_QS}</span>
                 </div>
 
+                {/* Veredicto de la pregunta */}
+                {userAns === -1 ? (
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: 9, padding: "11px 14px", background: "rgba(243,156,18,0.08)", border: "1px solid rgba(243,156,18,0.35)", borderRadius: 10, marginBottom: 16, fontSize: "0.84rem", color: "#555", lineHeight: 1.5 }}>
+                    <span style={{ display: "flex", flexShrink: 0, marginTop: 1 }}><Icon n="alert" size={17} color="#f39c12" /></span>
+                    <span><b style={{ color: "#8a6000" }}>Sin responder.</b> No marcaste ninguna opción; la respuesta correcta está resaltada en <b style={{ color: "#2ecc71" }}>verde</b>.</span>
+                  </div>
+                ) : isCorrect ? (
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: 9, padding: "11px 14px", background: "rgba(46,204,113,0.1)", border: "1px solid rgba(46,204,113,0.4)", borderRadius: 10, marginBottom: 16, fontSize: "0.84rem", color: "#555", lineHeight: 1.5 }}>
+                    <span style={{ display: "flex", flexShrink: 0, marginTop: 1 }}><Icon n="checkCircle" size={17} color="#2ecc71" /></span>
+                    <span><b style={{ color: "#2ecc71" }}>¡Correcto!</b> Seleccionaste la respuesta correcta. ¡Sigue así, aviador!</span>
+                  </div>
+                ) : (
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: 9, padding: "11px 14px", background: "rgba(231,76,60,0.07)", border: "1px solid rgba(231,76,60,0.35)", borderRadius: 10, marginBottom: 16, fontSize: "0.84rem", color: "#555", lineHeight: 1.5 }}>
+                    <span style={{ display: "flex", flexShrink: 0, marginTop: 1 }}><Icon n="close" size={17} color="#e74c3c" /></span>
+                    <span><b style={{ color: "#e74c3c" }}>Incorrecto.</b> Tu respuesta está marcada en <b style={{ color: "#e74c3c" }}>rojo</b> y la correcta en <b style={{ color: "#2ecc71" }}>verde</b>.</span>
+                  </div>
+                )}
+
                 <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "0.95rem", color: "#22375C", lineHeight: 1.5, marginBottom: 18 }}>{reviewQ.text}</p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 9, marginBottom: 18 }}>
@@ -806,13 +918,14 @@ function SimuladorPage() {
                     const isRight = oi === reviewQ.correctIndex;
                     const isUser = oi === userAns;
                     return (
-                      <div key={oi} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", background: isRight ? "rgba(46,204,113,0.08)" : isUser && !isRight ? "rgba(231,76,60,0.06)" : "#f8f9ff", border: `2px solid ${isRight ? "#2ecc71" : isUser && !isRight ? "#e74c3c" : "#F2DCDB"}`, borderRadius: 11 }}>
-                        <div style={{ width: 28, height: 28, borderRadius: "50%", background: isRight ? "#2ecc71" : isUser && !isRight ? "#e74c3c" : "#F2DCDB", color: isRight || (isUser && !isRight) ? "white" : "#647DA0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, flexShrink: 0 }}>
+                      <div key={oi} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", background: isRight ? "rgba(46,204,113,0.08)" : isUser ? "rgba(231,76,60,0.06)" : "#f8f9ff", border: `2px solid ${isRight ? "#2ecc71" : isUser ? "#e74c3c" : "#F2DCDB"}`, borderRadius: 11, boxShadow: isUser && isRight ? "0 4px 14px rgba(46,204,113,0.22)" : "none", flexWrap: "wrap" }}>
+                        <div style={{ width: 28, height: 28, borderRadius: "50%", background: isRight ? "#2ecc71" : isUser ? "#e74c3c" : "#F2DCDB", color: isRight || isUser ? "white" : "#647DA0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, flexShrink: 0, boxShadow: isUser ? `0 0 0 2px white, 0 0 0 4px ${isRight ? "#2ecc71" : "#e74c3c"}` : "none" }}>
                           {LETTERS[oi]}
                         </div>
-                        <span style={{ fontSize: "0.88rem", color: "#22375C", flex: 1 }}>{o}</span>
-                        {isRight && <span style={{ fontSize: "0.72rem", color: "#2ecc71", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="check" size={13} /> Correcta</span>}
-                        {isUser && !isRight && <span style={{ fontSize: "0.72rem", color: "#e74c3c", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="close" size={13} /> Tu respuesta</span>}
+                        <span style={{ fontSize: "0.88rem", color: "#22375C", flex: 1, minWidth: 160 }}>{o}</span>
+                        {isUser && isRight && <span style={{ fontSize: "0.72rem", color: "white", background: "#2ecc71", padding: "3px 10px", borderRadius: 20, fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="checkCircle" size={13} /> Tu respuesta · ¡Correcta!</span>}
+                        {isRight && !isUser && <span style={{ fontSize: "0.72rem", color: "#2ecc71", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="check" size={13} /> Respuesta correcta</span>}
+                        {isUser && !isRight && <span style={{ fontSize: "0.72rem", color: "white", background: "#e74c3c", padding: "3px 10px", borderRadius: 20, fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="close" size={13} /> Tu respuesta</span>}
                       </div>
                     );
                   })}
@@ -823,9 +936,17 @@ function SimuladorPage() {
                   {reviewQ.cite && <div style={{ marginTop: 6, fontSize: "0.74rem", color: "#3D5D91", fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><Icon n="book" size={13} /> {reviewQ.cite}</div>}
                 </div>
 
-                <button onClick={openYaris} style={{ width: "100%", padding: 11, background: "linear-gradient(135deg,#3D5D91,#5A86CB)", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
+                <button onClick={openYaris} disabled={!!yarisBatch} style={{ width: "100%", padding: 11, background: "linear-gradient(135deg,#3D5D91,#5A86CB)", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: yarisBatch ? "not-allowed" : "pointer", opacity: yarisBatch ? 0.6 : 1, fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
                   <Icon n="spark" size={16} /> Explícamelo Yaris
                 </button>
+                <div style={{ display: "flex", gap: 8, marginTop: 8, flexWrap: "wrap" }}>
+                  <button onClick={() => explainAll(true)} disabled={!!yarisBatch || wrongCount === 0} style={{ flex: 1, minWidth: 150, padding: 9, background: "white", color: "#e74c3c", border: "2px solid rgba(231,76,60,0.4)", borderRadius: 10, fontSize: "0.78rem", fontWeight: 700, cursor: yarisBatch || wrongCount === 0 ? "not-allowed" : "pointer", opacity: yarisBatch || wrongCount === 0 ? 0.5 : 1, fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+                    <Icon n="close" size={13} /> Explicar solo incorrectas ({wrongCount})
+                  </button>
+                  <button onClick={() => explainAll(false)} disabled={!!yarisBatch} style={{ flex: 1, minWidth: 150, padding: 9, background: "white", color: "#3D5D91", border: "2px solid rgba(61,93,145,0.4)", borderRadius: 10, fontSize: "0.78rem", fontWeight: 700, cursor: yarisBatch ? "not-allowed" : "pointer", opacity: yarisBatch ? 0.5 : 1, fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+                    <Icon n="list" size={13} /> Explicar todas ({TOTAL_QS})
+                  </button>
+                </div>
               </div>
 
               <div style={{ display: "flex", gap: 10 }}>
@@ -845,6 +966,8 @@ function SimuladorPage() {
               onSend={sendYaris}
               onClose={() => setYarisOpen(false)}
               msgsEndRef={msgsEndRef}
+              batch={yarisBatch}
+              onStopBatch={stopBatch}
             />
           </div>
         </div>
@@ -1242,7 +1365,7 @@ function LeftPanel({ questions, current, expandedMaterias, onToggleMateria, onSe
 
 /* ─── Yaris Panel ─────────────────────────────────────────── */
 
-function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef }: {
+function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef, batch, onStopBatch }: {
   msgs: { role: "bot" | "user"; text: string; cite?: string }[];
   typing: boolean;
   input: string;
@@ -1250,6 +1373,8 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef 
   onSend: () => void;
   onClose: () => void;
   msgsEndRef: React.RefObject<HTMLDivElement | null>;
+  batch: { done: number; total: number } | null;
+  onStopBatch: () => void;
 }) {
   return (
     <>
@@ -1286,9 +1411,20 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef 
         )}
         <div ref={msgsEndRef} />
       </div>
+      {batch && (
+        <div style={{ padding: "10px 14px", borderTop: "1px solid #F2DCDB", background: "#f8f9ff", flexShrink: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 6 }}>
+            <span style={{ fontSize: "0.72rem", fontWeight: 700, color: "#3D5D91", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="spark" size={13} /> Explicando preguntas… {batch.done} / {batch.total}</span>
+            <button onClick={onStopBatch} style={{ background: "rgba(231,76,60,0.1)", border: "1px solid #e74c3c", color: "#e74c3c", borderRadius: 7, padding: "3px 10px", fontSize: "0.72rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="close" size={12} /> Detener</button>
+          </div>
+          <div style={{ height: 5, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
+            <div style={{ height: "100%", width: `${(batch.done / Math.max(1, batch.total)) * 100}%`, background: "linear-gradient(90deg,#3D5D91,#5A86CB)", borderRadius: 10, transition: "width 0.4s ease" }} />
+          </div>
+        </div>
+      )}
       <div style={{ padding: "10px 14px", borderTop: "1px solid #F2DCDB", display: "flex", gap: 7, flexShrink: 0 }}>
-        <input value={input} onChange={(e) => onInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") onSend(); }} placeholder="Escribe tu duda..." style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 18, padding: "7px 12px", fontSize: "0.81rem", fontFamily: "'Manrope', sans-serif", outline: "none" }} onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }} />
-        <button onClick={onSend} style={{ width: 32, height: 32, background: "#3D5D91", border: "none", borderRadius: "50%", color: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.82rem", flexShrink: 0 }}><Icon n="send" size={15} /></button>
+        <input value={input} onChange={(e) => onInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") onSend(); }} disabled={!!batch} placeholder={batch ? "Yaris está explicando…" : "Escribe tu duda..."} style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 18, padding: "7px 12px", fontSize: "0.81rem", fontFamily: "'Manrope', sans-serif", outline: "none", background: batch ? "#f2f4fa" : "white", cursor: batch ? "not-allowed" : "text" }} onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }} />
+        <button onClick={onSend} disabled={!!batch} style={{ width: 32, height: 32, background: "#3D5D91", border: "none", borderRadius: "50%", color: "white", cursor: batch ? "not-allowed" : "pointer", opacity: batch ? 0.5 : 1, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.82rem", flexShrink: 0 }}><Icon n="send" size={15} /></button>
       </div>
     </>
   );
