@@ -157,13 +157,48 @@ function CountdownCard({ fecha }: { fecha: string | null }) {
         </div>
       )}
 
-      {/* Timeline motif */}
-      <div style={{ marginTop: 22, position: "relative", height: 12 }}>
-        <div style={{ position: "absolute", inset: "50% 0 0 0", height: 1, background: `${NAVY}1A` }} />
-        <div style={{ position: "absolute", left: 0, top: "50%", width: 8, height: 8, transform: "translate(-1px,-50%)", borderRadius: "50%", background: NAVY }} />
-        <div style={{ position: "absolute", right: 0, top: "50%", width: 8, height: 8, transform: "translate(1px,-50%)", borderRadius: "50%", background: ROSE }} />
-        <div style={{ position: "absolute", left: `${pct}%`, top: "50%", transform: "translate(-50%,-50%) rotate(-45deg)", color: CORAL }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" /></svg>
+      {/* Dynamic progress bar — misma estética que la homepage */}
+      <div style={{ marginTop: 24, position: "relative", height: 34, padding: "0 4px" }}>
+        <div style={{ position: "absolute", top: 4, left: 4, fontFamily: MONO, fontSize: "0.58rem", letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 700, color: HAZE }}>Hoy</div>
+        <div style={{ position: "absolute", top: 4, right: 4, textAlign: "right" }}>
+          <div style={{ fontFamily: MONO, fontSize: "0.58rem", letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 800, color: CORAL }}>CIAAC</div>
+        </div>
+        {/* recorrido cumplido */}
+        <div style={{ position: "absolute", top: "50%", left: 0, transform: "translateY(-50%)", height: 2, background: CORAL, borderRadius: 999, width: `calc(${pct}% - 14px)` }} />
+        {/* recorrido pendiente (líneas cortadas) */}
+        <div style={{ position: "absolute", top: "50%", transform: "translateY(-50%)", height: 2, left: `calc(${pct}% + 14px)`, right: 0, backgroundImage: `repeating-linear-gradient(to right, ${NAVY}66 0 5px, transparent 5px 12px)` }} />
+        {/* dot origen */}
+        <div style={{ position: "absolute", top: "50%", left: 0, transform: "translateY(-50%)", width: 10, height: 10, borderRadius: "50%", background: "white", border: `2px solid ${CORAL}` }} />
+        {/* dot destino */}
+        <div style={{ position: "absolute", top: "50%", right: 0, transform: "translateY(-50%)", width: 12, height: 12, borderRadius: "50%", background: CORAL, boxShadow: `0 0 0 4px ${ROSE}55` }} />
+        {/* milestones */}
+        {[20, 40, 60, 80].map((pos) => (
+          <div
+            key={pos}
+            style={{
+              position: "absolute", top: "50%", left: `${pos}%`,
+              transform: "translate(-50%,-50%)",
+              width: 6, height: 6, borderRadius: "50%",
+              background: pos <= pct ? CORAL : "transparent",
+              border: pos <= pct ? "none" : `1.5px solid ${NAVY}55`,
+            }}
+          />
+        ))}
+        {/* aircraft marker */}
+        <div
+          style={{
+            position: "absolute", top: "50%", left: `${pct}%`,
+            transform: "translate(-50%,-50%)",
+            transition: "left 1s linear",
+            width: 28, height: 28, borderRadius: "50%",
+            background: "white",
+            boxShadow: `0 2px 10px ${CORAL}44, 0 0 0 1px ${CORAL}33`,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            color: CORAL,
+          }}
+          aria-label="Tu posición en la ruta hacia el CIAAC"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style={{ transform: "rotate(45deg)" }} aria-hidden="true"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" /></svg>
         </div>
       </div>
     </div>
