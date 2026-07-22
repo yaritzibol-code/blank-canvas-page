@@ -287,21 +287,10 @@ function ConfiguracionPage() {
         <SectionHeader icon="lock" iconBg="rgba(108,8,32,.08)" title="Seguridad" desc="Gestiona el acceso a tu cuenta" />
         <ConfigRow icon="lock" label="Cambiar contraseña" sub="Última actualización: hace 3 meses" onClick={() => setModal("password")} right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>} />
         <ConfigRow icon="chat" label="Cambiar número de WhatsApp" sub={masked || "Sin número registrado"} onClick={() => { setPhone(user.whatsapp); setModal("phone"); }} right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>} />
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 20px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <span style={{ width: 20, display: "flex", justifyContent: "center", color: "#22375C" }}><Icon n="home" size={18} /></span>
-            <div>
-              <div style={{ fontSize: ".86rem", fontWeight: 600, color: "#22375C", marginBottom: 2 }}>Sesiones activas</div>
-              <div style={{ fontSize: ".74rem", color: "#647DA0" }}>iPhone 14 · México City · Activo ahora</div>
-            </div>
-          </div>
-          <button
-            onClick={() => showFlash("Todas las sesiones cerradas")}
-            style={{ padding: "5px 12px", background: "white", border: "2px solid #F2DCDB", borderRadius: 7, fontSize: ".75rem", fontWeight: 700, color: "#647DA0", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
-          >
-            Cerrar todo
-          </button>
-        </div>
+        <ActiveSessionRow onLogoutAll={async () => {
+          await logout();
+          showFlash("Sesión cerrada");
+        }} />
       </div>
 
       {/* ── AYUDA ── */}
