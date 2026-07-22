@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { initAppStore } from "@/lib/store";
+import { useApplyPrefs } from "@/hooks/use-apply-prefs";
 
 import appCss from "../styles.css?url";
 
