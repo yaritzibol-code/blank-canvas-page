@@ -153,6 +153,10 @@ function secToHM(sec: number): string {
   return `${h}h ${String(m).padStart(2, "0")}min`;
 }
 
+function stripHtml(s: string): string {
+  return s.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").trim();
+}
+
 /* ─── Component ──────────────────────────────────────────── */
 
 type Phase = "warning" | "exam" | "result" | "review";
