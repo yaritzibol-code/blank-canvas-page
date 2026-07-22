@@ -36,7 +36,9 @@ function OperacionesPage() {
   const [aiSeries, setAiSeries] = useState<AiDailyPoint[]>([]);
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const env = isPaymentsConfigured() ? getStripeEnvironment() : "sandbox";
+  const goDay = (day: string) => navigate({ to: "/admin/operaciones/dia/$day", params: { day } });
 
   useEffect(() => {
     let cancel = false;
