@@ -233,6 +233,20 @@ function DashboardHome() {
   const streak = stats.streak;
   const diasWord = streak === 1 ? "día" : "días";
 
+  // Materia sugerida para "continuar": la de menor progreso con al menos 1 tema disponible,
+  // o la primera si ninguna se ha tocado.
+  const continueMateria =
+    materias.slice().sort((a, b) => a.pct - b.pct).find((m) => m.pct < 100) ?? materias[0];
+  const continueDesc = continueMateria
+    ? continueMateria.pct === 0
+      ? `${continueMateria.name} — empieza aquí`
+      : `${continueMateria.name} — ${continueMateria.pct}% completado`
+    : "Elige una materia para comenzar";
+  const continuePath = continueMateria
+    ? `/dashboard/materias/${continueMateria.slug}`
+    : "/dashboard/materias";
+
+
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto", fontFamily: "'Manrope', sans-serif" }}>
 
