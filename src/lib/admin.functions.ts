@@ -72,6 +72,47 @@ export const adminOverview = createServerFn({ method: "POST" })
     };
   });
 
+export interface MrrDailyPoint { day: string; mrr: number; active_count: number }
+export interface AiDailyPoint { day: string; calls: number; errors: number; tokens_in: number; tokens_out: number; avg_latency_ms: number }
+
+export const adminMrrDaily = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { environment: StripeEnv; days?: number }) => data)
+  .handler(async ({ data, context }): Promise<Res<MrrDailyPoint[]>> => {
+    const guard = await assertAdmin(context.supabase, context.userId);
+    if (guard) return { error: guard };
+    const { data: rows, error } = await context.supabase.rpc("admin_mrr_daily", {
+      check_env: data.environment,
+      days_back: Math.min(Math.max(data.days ?? 30, 7), 90),
+    });
+    if (error) return { error: error.message };
+    return (rows ?? []).map((r: any) => ({
+      day: String(r.day),
+      mrr: Number(r.mrr ?? 0),
+      active_count: Number(r.active_count ?? 0),
+    }));
+  });
+
+export const adminAiDaily = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { days?: number }) => data)
+  .handler(async ({ data, context }): Promise<Res<AiDailyPoint[]>> => {
+    const guard = await assertAdmin(context.supabase, context.userId);
+    if (guard) return { error: guard };
+    const { data: rows, error } = await context.supabase.rpc("admin_ai_daily", {
+      days_back: Math.min(Math.max(data.days ?? 30, 7), 90),
+    });
+    if (error) return { error: error.message };
+    return (rows ?? []).map((r: any) => ({
+      day: String(r.day),
+      calls: Number(r.calls ?? 0),
+      errors: Number(r.errors ?? 0),
+      tokens_in: Number(r.tokens_in ?? 0),
+      tokens_out: Number(r.tokens_out ?? 0),
+      avg_latency_ms: Number(r.avg_latency_ms ?? 0),
+    }));
+  });
+
 export interface StripeEventRow {
   id: string;
   stripe_event_id: string;
