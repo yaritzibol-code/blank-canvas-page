@@ -75,11 +75,11 @@ export function UnderConstruction({ moduleName, description }: Props) {
  * Se usa para envolver la ruta de módulos temporalmente bloqueados.
  */
 export function adminOnly<P extends object>(
-  Component: ComponentType<P>,
+  Component: FC<P>,
   moduleName: string,
   description?: string,
-): ComponentType<P> {
-  const Wrapped = (props: P) => {
+): FC<P> {
+  const Wrapped: FC<P> = (props) => {
     const user = useSessionUser();
     if (user?.role !== "admin") {
       return <UnderConstruction moduleName={moduleName} description={description} />;
