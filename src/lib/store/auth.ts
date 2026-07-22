@@ -297,7 +297,8 @@ export async function changePassword(userId: string, actual: string, nueva: stri
 export async function resetPassword(email: string, nueva: string): Promise<AuthResult> {
   if (cloudEnabled()) {
     const s = supa()!;
-    const { error } = await s.auth.resetPasswordForEmail(email.trim().toLowerCase());
+    const redirectTo = typeof window !== "undefined" ? `${window.location.origin}/reset-password` : undefined;
+    const { error } = await s.auth.resetPasswordForEmail(email.trim().toLowerCase(), { redirectTo });
     if (error) return { ok: false, error: error.message };
     return { ok: true, info: "Te enviamos un correo con el enlace para restablecer tu contraseña." };
   }
@@ -307,6 +308,18 @@ export async function resetPassword(email: string, nueva: string): Promise<AuthR
     return { ok: false, error: "La nueva contraseña debe tener mínimo 8 caracteres." };
   updateUser(user.id, { passwordHash: hashPassword(nueva) });
   return { ok: true };
+}
+
+/** Actualiza la contraseña del usuario autenticado (usado desde /reset-password). */
+export async function updateCurrentPassword(nueva: string): Promise<AuthResult> {
+  if (nueva.length < 8) return { ok: false, error: "La nueva contraseña debe tener mínimo 8 caracteres." };
+  if (cloudEnabled()) {
+    const s = supa()!;
+    const { error } = await s.auth.updateUser({ password: nueva });
+    if (error) return { ok: false, error: error.message };
+    return { ok: true };
+  }
+  return { ok: false, error: "Restablecimiento por enlace requiere Lovable Cloud." };
 }
 
 /** Solicitud de eliminación: desactiva la cuenta con 30 días para recuperar. */
