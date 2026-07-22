@@ -14,6 +14,129 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_config: {
+        Row: {
+          id: string
+          key: string
+          updated_at: string
+          updated_by: string | null
+          value: Json
+          version: number
+        }
+        Insert: {
+          id?: string
+          key: string
+          updated_at?: string
+          updated_by?: string | null
+          value?: Json
+          version?: number
+        }
+        Update: {
+          id?: string
+          key?: string
+          updated_at?: string
+          updated_by?: string | null
+          value?: Json
+          version?: number
+        }
+        Relationships: []
+      }
+      ai_config_history: {
+        Row: {
+          created_at: string
+          id: string
+          key: string
+          updated_by: string | null
+          value: Json
+          version: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key: string
+          updated_by?: string | null
+          value: Json
+          version: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key?: string
+          updated_by?: string | null
+          value?: Json
+          version?: number
+        }
+        Relationships: []
+      }
+      ai_limits: {
+        Row: {
+          daily_call_limit: number
+          daily_token_limit: number
+          id: string
+          scope: string
+          updated_at: string
+          updated_by: string | null
+          user_id: string | null
+        }
+        Insert: {
+          daily_call_limit?: number
+          daily_token_limit?: number
+          id?: string
+          scope?: string
+          updated_at?: string
+          updated_by?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          daily_call_limit?: number
+          daily_token_limit?: number
+          id?: string
+          scope?: string
+          updated_at?: string
+          updated_by?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      ai_usage: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          id: string
+          latency_ms: number
+          materia: string | null
+          model: string
+          success: boolean
+          tokens_in: number
+          tokens_out: number
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          latency_ms?: number
+          materia?: string | null
+          model: string
+          success?: boolean
+          tokens_in?: number
+          tokens_out?: number
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          latency_ms?: number
+          materia?: string | null
+          model?: string
+          success?: boolean
+          tokens_in?: number
+          tokens_out?: number
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       app_state: {
         Row: {
           data: Json
@@ -29,6 +152,39 @@ export type Database = {
           data?: Json
           key?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      client_errors: {
+        Row: {
+          created_at: string
+          id: string
+          ip_hash: string | null
+          message: string
+          route: string | null
+          stack: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ip_hash?: string | null
+          message: string
+          route?: string | null
+          stack?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ip_hash?: string | null
+          message?: string
+          route?: string | null
+          stack?: string | null
+          user_agent?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -164,6 +320,51 @@ export type Database = {
         }
         Relationships: []
       }
+      stripe_events: {
+        Row: {
+          environment: string
+          error_message: string | null
+          id: string
+          payload: Json
+          processed_at: string | null
+          received_at: string
+          status: string
+          stripe_customer_id: string | null
+          stripe_event_id: string
+          stripe_subscription_id: string | null
+          type: string
+          user_id: string | null
+        }
+        Insert: {
+          environment: string
+          error_message?: string | null
+          id?: string
+          payload?: Json
+          processed_at?: string | null
+          received_at?: string
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_event_id: string
+          stripe_subscription_id?: string | null
+          type: string
+          user_id?: string | null
+        }
+        Update: {
+          environment?: string
+          error_message?: string | null
+          id?: string
+          payload?: Json
+          processed_at?: string | null
+          received_at?: string
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_event_id?: string
+          stripe_subscription_id?: string | null
+          type?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       subscriptions: {
         Row: {
           cancel_at_period_end: boolean | null
@@ -238,6 +439,22 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_ai_stats: { Args: { hours_back?: number }; Returns: Json }
+      admin_mrr: { Args: { check_env?: string }; Returns: number }
+      admin_plan_drift: {
+        Args: { check_env?: string }
+        Returns: {
+          current_period_end: string
+          email: string
+          kind: string
+          profile_plan: string
+          sub_status: string
+          user_id: string
+        }[]
+      }
+      admin_platform_stats: { Args: never; Returns: Json }
+      admin_pro_stats: { Args: { check_env?: string }; Returns: Json }
+      admin_stripe_event_stats: { Args: { hours_back?: number }; Returns: Json }
       has_active_subscription: {
         Args: { check_env?: string; user_uuid: string }
         Returns: boolean
