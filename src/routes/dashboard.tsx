@@ -256,6 +256,7 @@ function DashboardLayout() {
   const [yarisOpen, setYarisOpen] = useState(false);
   const [radarN, setRadarN] = useState(47);
   const location = useLocation();
+  const navigate = useNavigate();
   const streak = useStore(() => (user ? getStreak(user.id) : 0));
 
   useEffect(() => {
