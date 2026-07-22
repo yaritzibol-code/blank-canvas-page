@@ -1,7 +1,6 @@
 /**
- * Server functions de pagos — checkout embebido y portal de facturación.
- * El webhook (src/routes/api/public/payments/webhook.ts) escribe la tabla
- * `subscriptions`; la UI la lee para decidir el gating Pro.
+ * Server functions de pagos — checkout embebido, portal de facturación
+ * y sincronización del plan Pro al perfil del usuario tras el webhook.
  */
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
@@ -9,6 +8,15 @@ import { type StripeEnv, createStripeClient, getStripeErrorMessage } from "@/lib
 
 type CheckoutResult = { clientSecret: string } | { error: string };
 type PortalResult = { url: string } | { error: string };
+
+export type PlanSyncResult = {
+  plan: "basica" | "paga";
+  planNombre: string;
+  accessStatus: "activo" | "expirado" | "inactivo";
+  accessEnd: string | null;
+  subscribed: boolean;
+  status: string | null;
+};
 
 async function resolveOrCreateCustomer(
   stripe: ReturnType<typeof createStripeClient>,
@@ -110,4 +118,66 @@ export const createPortalSession = createServerFn({ method: "POST" })
     } catch (error) {
       return { error: getStripeErrorMessage(error) };
     }
+  });
+
+/**
+ * Consulta la suscripción activa del usuario en la tabla `subscriptions` y
+ * refleja el plan Pro en `profiles.data` (plan, accessStatus, accessEnd).
+ * Se llama tras el checkout desde el cliente para reflejar el cambio de
+ * inmediato aunque el webhook aún esté por llegar.
+ */
+export const syncMyPlan = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { environment: StripeEnv }) => data)
+  .handler(async ({ data, context }): Promise<PlanSyncResult> => {
+    const { supabase, userId } = context;
+    const { data: sub } = await supabase
+      .from("subscriptions")
+      .select("status,current_period_end,cancel_at_period_end,price_id")
+      .eq("user_id", userId)
+      .eq("environment", data.environment)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const now = Date.now();
+    const periodEnd = sub?.current_period_end ? new Date(sub.current_period_end as string).getTime() : null;
+    const inWindow = periodEnd === null || periodEnd > now;
+    const subscribed = !!sub && inWindow && ["active", "trialing", "past_due"].includes(sub.status as string)
+      || !!sub && sub.status === "canceled" && !!periodEnd && periodEnd > now;
+
+    const result: PlanSyncResult = subscribed
+      ? {
+          plan: "paga",
+          planNombre: "FlightPath Pro",
+          accessStatus: "activo",
+          accessEnd: (sub?.current_period_end as string | null) ?? null,
+          subscribed: true,
+          status: (sub?.status as string) ?? null,
+        }
+      : {
+          plan: "basica",
+          planNombre: "Suscripción básica",
+          accessStatus: sub && !inWindow ? "expirado" : "activo",
+          accessEnd: (sub?.current_period_end as string | null) ?? null,
+          subscribed: false,
+          status: (sub?.status as string) ?? null,
+        };
+
+    // Merge en profiles.data (JSON) sin pisar el resto del perfil.
+    const { data: prof } = await supabase.from("profiles").select("data").eq("id", userId).maybeSingle();
+    const prevData = (prof?.data ?? {}) as Record<string, unknown>;
+    const nextData: Record<string, unknown> = {
+      ...prevData,
+      plan: result.plan,
+      planNombre: result.planNombre,
+      accessStatus: result.accessStatus,
+      accessEnd: result.accessEnd,
+    };
+    if (result.plan === "paga" && prevData.plan !== "paga") {
+      nextData.accessStart = new Date().toISOString();
+    }
+    await supabase.from("profiles").update({ data: nextData as never }).eq("id", userId);
+
+    return result;
   });

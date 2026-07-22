@@ -168,6 +168,34 @@ async function doOpenCloudSession(userId: string): Promise<AuthResult> {
   return { ok: true, user };
 }
 
+/**
+ * Re-lee el perfil del usuario en sesión y actualiza el espejo local.
+ * Útil tras eventos externos (webhook de Stripe, cambios administrativos)
+ * para reflejar el nuevo plan/access sin necesidad de recargar.
+ */
+export async function refreshCloudProfile(): Promise<User | null> {
+  const id = getSessionUserId();
+  if (!id) return null;
+  const prof = await fetchOwnProfile(id);
+  if (!prof) return null;
+  const current = getUserById(id);
+  const base = current ?? newLocalUser(String((prof.data as { nombre?: string }).nombre ?? ""), prof.email, false, "");
+  const cloudData = (prof.data ?? {}) as Partial<User>;
+  const user: User = {
+    ...base,
+    ...cloudData,
+    id: prof.id,
+    email: prof.email,
+    passwordHash: "",
+    role: prof.role === "admin" ? "admin" : "student",
+    lastAccess: nowISO(),
+    prefs: { ...base.prefs, ...(cloudData.prefs ?? {}), toggles: { ...base.prefs.toggles, ...(cloudData.prefs?.toggles ?? {}) } },
+  };
+  mirrorCloudUser(user);
+  touch();
+  return user;
+}
+
 /* ─────────────── Restauración y eventos globales de sesión ─────────────── */
 
 let authSettled = false;
