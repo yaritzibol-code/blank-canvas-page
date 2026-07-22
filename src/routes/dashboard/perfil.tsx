@@ -164,7 +164,7 @@ function PerfilPage() {
   return (
     <div style={{ fontFamily: "'Manrope', sans-serif", maxWidth: 900, position: "relative", isolation: "isolate" }}>
       <div aria-hidden="true" style={{ position: "absolute", inset: "-24px -24px auto -24px", height: 320, zIndex: 0, pointerEvents: "none", opacity: 0.55 }}>
-        <PlaneField density={10} />
+        <PlaneField count={8} />
       </div>
       <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}`}</style>
 
