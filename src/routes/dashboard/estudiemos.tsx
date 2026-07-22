@@ -25,9 +25,10 @@ import {
   type BankQuestion,
   type User,
 } from "@/lib/store";
+import { adminOnly } from "@/components/shared/UnderConstruction";
 
 export const Route = createFileRoute("/dashboard/estudiemos")({
-  component: EstudiemosJuntosPage,
+  component: adminOnly(EstudiemosJuntosPage, "Estudiemos juntos"),
 });
 
 /* ══════════════════════════════════════════════════════════
