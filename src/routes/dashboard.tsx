@@ -58,23 +58,23 @@ function PlaneMark({ size = 36, light = false }: { size?: number; light?: boolea
   );
 }
 
-const NAV_SECTIONS: { label: string; items: { icon: IconName; label: string; path: string }[] }[] = [
+const NAV_SECTIONS: { label: string; items: { icon: IconName; label: string; path: string; locked?: boolean }[] }[] = [
   {
     label: "Principal",
     items: [
       { icon: "home", label: "Inicio", path: "/dashboard" },
-      { icon: "book", label: "Learning paths", path: "/dashboard/materias" },
+      { icon: "book", label: "Learning paths", path: "/dashboard/materias", locked: true },
       { icon: "help", label: "Cuestionarios", path: "/dashboard/banco" },
       { icon: "sim", label: "Simulador CIAAC", path: "/simulador" },
-      { icon: "clock", label: "Estudiemos Juntos", path: "/dashboard/estudiemos" },
+      { icon: "clock", label: "Estudiemos Juntos", path: "/dashboard/estudiemos", locked: true },
     ],
   },
   {
     label: "Recursos",
     items: [
       { icon: "library", label: "Biblioteca", path: "/dashboard/biblioteca" },
-      { icon: "cards", label: "Flashcards", path: "/dashboard/flashcards" },
-      { icon: "play", label: "Clases grabadas", path: "/dashboard/clases" },
+      { icon: "cards", label: "Flashcards", path: "/dashboard/flashcards", locked: true },
+      { icon: "play", label: "Clases grabadas", path: "/dashboard/clases", locked: true },
       { icon: "doc", label: "Mi Bitácora", path: "/dashboard/bitacora" },
     ],
   },
