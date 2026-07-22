@@ -186,8 +186,7 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
       </label>
 
       <Divider />
-      <GoogleButton onClick={() => setGoogleMsg(true)} />
-      {googleMsg && <p style={googleMsgStyle}>Disponible próximamente — usa tu correo</p>}
+      <GoogleButton onClick={() => signInWithGoogle((m) => setError(m))} />
       {error && <p style={errorTextStyle}>{error}</p>}
       <SubmitButton loading={loading} onClick={handleRegister}>Crear cuenta gratis</SubmitButton>
 
