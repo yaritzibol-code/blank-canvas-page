@@ -2,6 +2,18 @@ import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { Eye, EyeOff } from "lucide-react";
 import { register, login, resetPassword, getSessionUser, ensureSeeded } from "@/lib/store";
+import { lovable } from "@/integrations/lovable";
+
+async function signInWithGoogle(setError: (m: string) => void) {
+  try {
+    const res = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
+    if (res.error) { setError(res.error.message || "No pudimos iniciar sesión con Google."); return; }
+    if (res.redirected) return;
+    window.location.href = "/dashboard";
+  } catch (e) {
+    setError(e instanceof Error ? e.message : "Error al iniciar sesión con Google.");
+  }
+}
 
 type Tab = "register" | "login";
 
@@ -80,7 +92,7 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
   const [marketing, setMarketing] = useState(true);
   const [terms, setTerms] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [googleMsg, setGoogleMsg] = useState(false);
+  // google handled via lovable.auth
 
   async function handleRegister() {
     if (loading) return;
@@ -174,8 +186,7 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
       </label>
 
       <Divider />
-      <GoogleButton onClick={() => setGoogleMsg(true)} />
-      {googleMsg && <p style={googleMsgStyle}>Disponible próximamente — usa tu correo</p>}
+      <GoogleButton onClick={() => signInWithGoogle((m) => setError(m))} />
       {error && <p style={errorTextStyle}>{error}</p>}
       <SubmitButton loading={loading} onClick={handleRegister}>Crear cuenta gratis</SubmitButton>
 
@@ -196,7 +207,7 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [googleMsg, setGoogleMsg] = useState(false);
+  // google handled via lovable.auth
 
   // Flujo MVP de "¿Olvidaste tu contraseña?"
   const [showReset, setShowReset] = useState(false);
@@ -296,8 +307,7 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
       {error && <p style={errorTextStyle}>{error}</p>}
       <SubmitButton loading={loading} onClick={handleLogin}>Iniciar sesión</SubmitButton>
       <Divider />
-      <GoogleButton onClick={() => setGoogleMsg(true)} />
-      {googleMsg && <p style={googleMsgStyle}>Disponible próximamente — usa tu correo</p>}
+      <GoogleButton onClick={() => signInWithGoogle((m) => setError(m))} />
 
       <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#8DA1BE", marginTop: 4 }}>
         ¿No tienes cuenta?{" "}
