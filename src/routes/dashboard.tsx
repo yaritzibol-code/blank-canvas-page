@@ -93,6 +93,10 @@ const NAV_SECTIONS: { label: string; items: { icon: IconName; label: string; pat
   },
 ];
 
+const ADMIN_NAV_ITEM = { icon: "settings" as IconName, label: "Panel Admin", path: "/admin" };
+const _NAV_SECTIONS_END: never[] = [
+];
+
 function Sidebar({ onClose, onYaris }: { onClose?: () => void; onYaris?: () => void }) {
   const location = useLocation();
   const currentPath = location.pathname;
