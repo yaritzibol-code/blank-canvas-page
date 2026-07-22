@@ -147,15 +147,19 @@ async function doOpenCloudSession(userId: string): Promise<AuthResult> {
   const prof = await fetchOwnProfile(userId);
   if (!prof) return { ok: false, error: "No pudimos cargar tu perfil. Inténtalo de nuevo." };
   const base = newLocalUser(String((prof.data as { nombre?: string }).nombre ?? ""), prof.email, false, "");
+  const cloudData = (prof.data ?? {}) as Partial<User>;
   const user: User = {
     ...base,
-    ...(prof.data as Partial<User>),
+    ...cloudData,
     id: prof.id,
     email: prof.email,
     passwordHash: "",
     role: prof.role === "admin" ? "admin" : "student",
     lastAccess: nowISO(),
     deactivatedAt: null, // iniciar sesión dentro de los 30 días reactiva la cuenta
+    // Garantiza que las estructuras anidadas siempre existan aunque la nube
+    // devuelva un perfil parcial (evita crashes tipo `user.prefs.toggles` undefined).
+    prefs: { ...base.prefs, ...(cloudData.prefs ?? {}), toggles: { ...base.prefs.toggles, ...(cloudData.prefs?.toggles ?? {}) } },
   };
   mirrorCloudUser(user);
   const { startCloudSession } = await import("./sync");

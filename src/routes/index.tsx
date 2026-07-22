@@ -1349,8 +1349,7 @@ function ThemeSwitcher({ sky, setSky, show, setShow }: { sky: Sky; setSky: (s: S
    ═══════════════════════════════════════════════════════════════════ */
 
 function LandingPage() {
-  const [sky, setSky] = useState<Sky>("hueso");
-  const [showCountdown, setShowCountdown] = useState(true);
+  const sky: Sky = "hueso";
 
   useEffect(() => {
     document.body.classList.remove("theme-hueso", "theme-cherry", "theme-azul");
@@ -1364,7 +1363,7 @@ function LandingPage() {
       <Nav />
       <main>
         <Hero />
-        <Countdown show={showCountdown} />
+        <Countdown show={true} />
         <Showcase />
         <Features />
         <PathyEvolution />
@@ -1375,7 +1374,7 @@ function LandingPage() {
         <FinalCta />
       </main>
       <Footer />
-      <ThemeSwitcher sky={sky} setSky={setSky} show={showCountdown} setShow={setShowCountdown} />
     </>
   );
 }
+
