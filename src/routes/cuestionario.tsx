@@ -449,7 +449,7 @@ function CuestionarioPage() {
       />
     );
   }
-  const aiEnabled = canUseAI(user);
+  
 
   return (
     <div
