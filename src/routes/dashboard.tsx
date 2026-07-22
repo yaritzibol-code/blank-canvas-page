@@ -170,6 +170,7 @@ function Sidebar({ onClose, onYaris }: { onClose?: () => void; onYaris?: () => v
                 item.path === "/dashboard"
                   ? currentPath === "/dashboard" || currentPath === "/dashboard/"
                   : currentPath.startsWith(item.path);
+              const showLock = item.locked && user?.role !== "admin";
               return (
                 <Link
                   key={item.path}
@@ -195,7 +196,19 @@ function Sidebar({ onClose, onYaris }: { onClose?: () => void; onYaris?: () => v
                   <span style={{ width: 20, display: "flex", justifyContent: "center", color: isActive ? "#F2AEBC" : "rgba(255,255,255,0.55)" }}>
                     <Icon n={item.icon} size={18} />
                   </span>
-                  {item.label}
+                  <span style={{ flex: 1 }}>{item.label}</span>
+                  {showLock && (
+                    <span
+                      title="En construcción"
+                      aria-label="En construcción"
+                      style={{
+                        display: "inline-flex", alignItems: "center", justifyContent: "center",
+                        color: "#F2AEBC", opacity: 0.75,
+                      }}
+                    >
+                      <Icon n="building" size={14} sw={1.7} />
+                    </span>
+                  )}
                 </Link>
               );
             })}
