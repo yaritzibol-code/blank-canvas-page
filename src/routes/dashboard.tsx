@@ -305,6 +305,17 @@ function DashboardLayout() {
     return () => clearInterval(iv);
   }, []);
 
+  // Cierra el sidebar móvil con Escape (a11y)
+  useEffect(() => {
+    if (!sidebarOpen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setSidebarOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [sidebarOpen]);
+
+  // Cierra el sidebar móvil al cambiar de ruta
+  useEffect(() => { setSidebarOpen(false); }, [location.pathname]);
+
   // Sincroniza el plan con Stripe al entrar (cubre el regreso del checkout
   // con ?checkout=success). Sin Stripe configurado degrada sin ruido.
   useEffect(() => {
