@@ -227,13 +227,38 @@ function AnalisisPage() {
   const streakStart = new Date(Date.now() - Math.max(stats.streak - 1, 0) * 86400000);
 
   return (
-    <div style={{ fontFamily: "'Manrope', sans-serif" }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif", position: "relative", isolation: "isolate" }}>
+      <div aria-hidden="true" style={{ position: "absolute", inset: "-24px -24px auto -24px", height: 340, zIndex: 0, pointerEvents: "none", opacity: 0.5 }}>
+        <PlaneField count={9} />
+      </div>
       <style>{`
         @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
       `}</style>
 
+      {/* Editorial header */}
+      <header style={{ position: "relative", zIndex: 1, marginBottom: 24, paddingTop: 8 }}>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", letterSpacing: "0.22em", color: "#647DA0", textTransform: "uppercase", marginBottom: 10 }}>
+          Cabina · Análisis de vuelo
+        </div>
+        <h1 style={{
+          fontFamily: "'Instrument Serif', serif",
+          fontStyle: "italic",
+          fontWeight: 400,
+          fontSize: "clamp(2rem, 5vw, 3rem)",
+          lineHeight: 1.05,
+          color: "#22375C",
+          margin: 0,
+        }}>
+          Lecturas de tu <em style={{ color: "#6C0820" }}>trayectoria</em>.
+        </h1>
+        <div style={{ marginTop: 10, maxWidth: 560, fontSize: "0.92rem", color: "#647DA0", lineHeight: 1.55 }}>
+          Panel editorial con tu rendimiento por materia, calor de estudio y sugerencias de Pathy — todo con datos reales de tu bitácora.
+        </div>
+        <div aria-hidden="true" style={{ marginTop: 14, height: 1, background: "linear-gradient(90deg, #22375C 0%, transparent 70%)" }} />
+      </header>
+
       {/* Period tabs */}
-      <div style={{ display: "flex", gap: 6, marginBottom: 24, flexWrap: "wrap" }}>
+      <div style={{ position: "relative", zIndex: 1, display: "flex", gap: 6, marginBottom: 24, flexWrap: "wrap" }}>
         {periods.map((p) => (
           <button
             key={p.key}
