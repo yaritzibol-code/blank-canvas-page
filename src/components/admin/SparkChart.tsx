@@ -13,6 +13,7 @@ export function SparkChart({
   fill = "rgba(61,93,145,0.14)",
   formatValue = (n: number) => n.toLocaleString("es-MX"),
   formatLabel = (l: string) => l,
+  onPointClick,
 }: {
   points: SparkPoint[];
   height?: number;
@@ -20,6 +21,7 @@ export function SparkChart({
   fill?: string;
   formatValue?: (n: number) => string;
   formatLabel?: (l: string) => string;
+  onPointClick?: (point: SparkPoint, index: number) => void;
 }) {
   const [hover, setHover] = useState<number | null>(null);
   const { path, area, max, min, coords } = useMemo(() => {
