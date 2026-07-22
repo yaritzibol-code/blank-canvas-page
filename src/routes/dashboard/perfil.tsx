@@ -139,7 +139,7 @@ function PerfilPage() {
 
   const cerrarSesion = () => {
     logout();
-    navigate({ to: "/" });
+    navigate({ to: "/login" });
   };
 
   const fieldStyle: React.CSSProperties = {
