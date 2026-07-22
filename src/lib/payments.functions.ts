@@ -177,7 +177,7 @@ export const syncMyPlan = createServerFn({ method: "POST" })
     if (result.plan === "paga" && prevData.plan !== "paga") {
       nextData.accessStart = new Date().toISOString();
     }
-    await supabase.from("profiles").update({ data: nextData }).eq("id", userId);
+    await supabase.from("profiles").update({ data: nextData as never }).eq("id", userId);
 
     return result;
   });
