@@ -369,19 +369,27 @@ function DashboardHome() {
           primary
           icon="play"
           title="Continuar estudiando"
-          desc="Aerodinámica — Tema 4: Sustentación"
-          to="/dashboard/materias/aerodinamica"
+          desc={continueDesc}
+          to={continuePath}
         />
         <ActionCard
           icon="help"
           title="Hacer cuestionario"
-          desc="Elige materia y cantidad de preguntas"
+          desc={
+            stats.quizCount > 0
+              ? `${stats.quizCount} cuestionarios completados`
+              : "Elige materia y cantidad de preguntas"
+          }
           to="/dashboard/banco"
         />
         <ActionCard
           icon="sim"
           title="Examen simulado"
-          desc="310 preguntas · 5 horas · CIAAC real"
+          desc={
+            stats.simCount > 0
+              ? `${stats.simCount} simulacros completados`
+              : "Simula el CIAAC completo"
+          }
           to="/simulador"
         />
       </div>
