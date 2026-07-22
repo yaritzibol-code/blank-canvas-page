@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { BackLink } from "@/components/shared/BackLink";
 
 export const Route = createFileRoute("/faq")({ component: FaqPage });
 
@@ -90,9 +91,8 @@ function FaqPage() {
         <Link to="/" style={{ fontFamily: DISPLAY, fontWeight: 800, color: INK, textDecoration: "none", fontSize: 18 }}>
           FlightPath ✈
         </Link>
-        <Link to="/" style={{ color: "#3D5D91", fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
-          ← Volver al inicio
-        </Link>
+        <BackLink />
+
       </header>
 
       <main style={{ maxWidth: 780, margin: "0 auto", padding: "clamp(28px, 6vw, 56px) 20px 80px" }}>

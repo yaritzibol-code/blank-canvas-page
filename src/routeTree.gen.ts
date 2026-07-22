@@ -22,6 +22,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as DashboardRecordatoriosRouteImport } from './routes/dashboard/recordatorios'
+import { Route as DashboardPlanesRouteImport } from './routes/dashboard/planes'
 import { Route as DashboardPerfilRouteImport } from './routes/dashboard/perfil'
 import { Route as DashboardFlashcardsRouteImport } from './routes/dashboard/flashcards'
 import { Route as DashboardEstudiemosRouteImport } from './routes/dashboard/estudiemos'
@@ -31,6 +32,7 @@ import { Route as DashboardBitacoraRouteImport } from './routes/dashboard/bitaco
 import { Route as DashboardBibliotecaRouteImport } from './routes/dashboard/biblioteca'
 import { Route as DashboardBancoRouteImport } from './routes/dashboard/banco'
 import { Route as DashboardAnalisisRouteImport } from './routes/dashboard/analisis'
+import { Route as CheckoutReturnRouteImport } from './routes/checkout.return'
 import { Route as AdminWhatsappRouteImport } from './routes/admin/whatsapp'
 import { Route as AdminSoporteRouteImport } from './routes/admin/soporte'
 import { Route as AdminPerfilRouteImport } from './routes/admin/perfil'
@@ -40,6 +42,7 @@ import { Route as AdminConfiguracionRouteImport } from './routes/admin/configura
 import { Route as AdminBancoRouteImport } from './routes/admin/banco'
 import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/materias/index'
 import { Route as DashboardMateriasSubjectIdRouteImport } from './routes/dashboard/materias/$subjectId'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const SimuladorRoute = SimuladorRouteImport.update({
   id: '/simulador',
@@ -106,6 +109,11 @@ const DashboardRecordatoriosRoute = DashboardRecordatoriosRouteImport.update({
   path: '/recordatorios',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardPlanesRoute = DashboardPlanesRouteImport.update({
+  id: '/planes',
+  path: '/planes',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardPerfilRoute = DashboardPerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
@@ -150,6 +158,11 @@ const DashboardAnalisisRoute = DashboardAnalisisRouteImport.update({
   id: '/analisis',
   path: '/analisis',
   getParentRoute: () => DashboardRoute,
+} as any)
+const CheckoutReturnRoute = CheckoutReturnRouteImport.update({
+  id: '/checkout/return',
+  path: '/checkout/return',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminWhatsappRoute = AdminWhatsappRouteImport.update({
   id: '/admin/whatsapp',
@@ -197,6 +210,12 @@ const DashboardMateriasSubjectIdRoute =
     path: '/materias/$subjectId',
     getParentRoute: () => DashboardRoute,
   } as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments/webhook',
+    path: '/api/public/payments/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -216,6 +235,7 @@ export interface FileRoutesByFullPath {
   '/admin/perfil': typeof AdminPerfilRoute
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/whatsapp': typeof AdminWhatsappRoute
+  '/checkout/return': typeof CheckoutReturnRoute
   '/dashboard/analisis': typeof DashboardAnalisisRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
@@ -225,11 +245,13 @@ export interface FileRoutesByFullPath {
   '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
+  '/dashboard/planes': typeof DashboardPlanesRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -248,6 +270,7 @@ export interface FileRoutesByTo {
   '/admin/perfil': typeof AdminPerfilRoute
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/whatsapp': typeof AdminWhatsappRoute
+  '/checkout/return': typeof CheckoutReturnRoute
   '/dashboard/analisis': typeof DashboardAnalisisRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
@@ -257,11 +280,13 @@ export interface FileRoutesByTo {
   '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
+  '/dashboard/planes': typeof DashboardPlanesRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/admin': typeof AdminIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/dashboard/materias': typeof DashboardMateriasIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -282,6 +307,7 @@ export interface FileRoutesById {
   '/admin/perfil': typeof AdminPerfilRoute
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/whatsapp': typeof AdminWhatsappRoute
+  '/checkout/return': typeof CheckoutReturnRoute
   '/dashboard/analisis': typeof DashboardAnalisisRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
@@ -291,11 +317,13 @@ export interface FileRoutesById {
   '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
+  '/dashboard/planes': typeof DashboardPlanesRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -317,6 +345,7 @@ export interface FileRouteTypes {
     | '/admin/perfil'
     | '/admin/soporte'
     | '/admin/whatsapp'
+    | '/checkout/return'
     | '/dashboard/analisis'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
@@ -326,11 +355,13 @@ export interface FileRouteTypes {
     | '/dashboard/estudiemos'
     | '/dashboard/flashcards'
     | '/dashboard/perfil'
+    | '/dashboard/planes'
     | '/dashboard/recordatorios'
     | '/admin/'
     | '/dashboard/'
     | '/dashboard/materias/$subjectId'
     | '/dashboard/materias/'
+    | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -349,6 +380,7 @@ export interface FileRouteTypes {
     | '/admin/perfil'
     | '/admin/soporte'
     | '/admin/whatsapp'
+    | '/checkout/return'
     | '/dashboard/analisis'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
@@ -358,11 +390,13 @@ export interface FileRouteTypes {
     | '/dashboard/estudiemos'
     | '/dashboard/flashcards'
     | '/dashboard/perfil'
+    | '/dashboard/planes'
     | '/dashboard/recordatorios'
     | '/admin'
     | '/dashboard'
     | '/dashboard/materias/$subjectId'
     | '/dashboard/materias'
+    | '/api/public/payments/webhook'
   id:
     | '__root__'
     | '/'
@@ -382,6 +416,7 @@ export interface FileRouteTypes {
     | '/admin/perfil'
     | '/admin/soporte'
     | '/admin/whatsapp'
+    | '/checkout/return'
     | '/dashboard/analisis'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
@@ -391,11 +426,13 @@ export interface FileRouteTypes {
     | '/dashboard/estudiemos'
     | '/dashboard/flashcards'
     | '/dashboard/perfil'
+    | '/dashboard/planes'
     | '/dashboard/recordatorios'
     | '/admin/'
     | '/dashboard/'
     | '/dashboard/materias/$subjectId'
     | '/dashboard/materias/'
+    | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -416,7 +453,9 @@ export interface RootRouteChildren {
   AdminPerfilRoute: typeof AdminPerfilRoute
   AdminSoporteRoute: typeof AdminSoporteRoute
   AdminWhatsappRoute: typeof AdminWhatsappRoute
+  CheckoutReturnRoute: typeof CheckoutReturnRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -512,6 +551,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRecordatoriosRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/planes': {
+      id: '/dashboard/planes'
+      path: '/planes'
+      fullPath: '/dashboard/planes'
+      preLoaderRoute: typeof DashboardPlanesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/perfil': {
       id: '/dashboard/perfil'
       path: '/perfil'
@@ -574,6 +620,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/analisis'
       preLoaderRoute: typeof DashboardAnalisisRouteImport
       parentRoute: typeof DashboardRoute
+    }
+    '/checkout/return': {
+      id: '/checkout/return'
+      path: '/checkout/return'
+      fullPath: '/checkout/return'
+      preLoaderRoute: typeof CheckoutReturnRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/admin/whatsapp': {
       id: '/admin/whatsapp'
@@ -638,6 +691,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardMateriasSubjectIdRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/api/public/payments/webhook': {
+      id: '/api/public/payments/webhook'
+      path: '/api/public/payments/webhook'
+      fullPath: '/api/public/payments/webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -651,6 +711,7 @@ interface DashboardRouteChildren {
   DashboardEstudiemosRoute: typeof DashboardEstudiemosRoute
   DashboardFlashcardsRoute: typeof DashboardFlashcardsRoute
   DashboardPerfilRoute: typeof DashboardPerfilRoute
+  DashboardPlanesRoute: typeof DashboardPlanesRoute
   DashboardRecordatoriosRoute: typeof DashboardRecordatoriosRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardMateriasSubjectIdRoute: typeof DashboardMateriasSubjectIdRoute
@@ -667,6 +728,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardEstudiemosRoute: DashboardEstudiemosRoute,
   DashboardFlashcardsRoute: DashboardFlashcardsRoute,
   DashboardPerfilRoute: DashboardPerfilRoute,
+  DashboardPlanesRoute: DashboardPlanesRoute,
   DashboardRecordatoriosRoute: DashboardRecordatoriosRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardMateriasSubjectIdRoute: DashboardMateriasSubjectIdRoute,
@@ -695,18 +757,10 @@ const rootRouteChildren: RootRouteChildren = {
   AdminPerfilRoute: AdminPerfilRoute,
   AdminSoporteRoute: AdminSoporteRoute,
   AdminWhatsappRoute: AdminWhatsappRoute,
+  CheckoutReturnRoute: CheckoutReturnRoute,
   AdminIndexRoute: AdminIndexRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
