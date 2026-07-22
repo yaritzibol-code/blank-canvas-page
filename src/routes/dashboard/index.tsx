@@ -252,6 +252,7 @@ function DashboardHome() {
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto", fontFamily: "'Manrope', sans-serif" }}>
 
+      <DataSyncBanner />
       {!user.onboardingDone && <OnboardingModal user={user} onDone={() => {}} />}
 
       {/* GREETING + COUNTDOWN */}
