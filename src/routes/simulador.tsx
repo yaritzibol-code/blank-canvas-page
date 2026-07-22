@@ -182,7 +182,7 @@ function SimuladorPage() {
   const [yarisMsgs, setYarisMsgs] = useState<{ role: "bot" | "user"; text: string; cite?: string }[]>([]);
   const [yarisInput, setYarisInput] = useState("");
   const [yarisTyping, setYarisTyping] = useState(false);
-  const [yarisReplyIdx, setYarisReplyIdx] = useState(0);
+  const [_yarisReplyIdx, setYarisReplyIdx] = useState(0);
   const [yarisInit, setYarisInit] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
