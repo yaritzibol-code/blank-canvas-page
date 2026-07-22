@@ -14,9 +14,10 @@ import {
   useSessionUser,
   useStore,
 } from "@/lib/store";
+import { adminOnly } from "@/components/shared/UnderConstruction";
 
 export const Route = createFileRoute("/dashboard/materias/")({
-  component: MateriasIndex,
+  component: adminOnly(MateriasIndex, "Learning Paths"),
 });
 
 type Subject = {

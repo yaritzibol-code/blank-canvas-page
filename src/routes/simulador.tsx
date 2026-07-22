@@ -232,6 +232,49 @@ function SimuladorPage() {
     el?.scrollIntoView({ block: "nearest" });
   }, [current]);
 
+  // Atajos de teclado durante el examen y la calculadora
+  useEffect(() => {
+    if (phase !== "exam") return;
+    const onKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) return;
+      // Calculadora abierta: teclado numérico
+      if (calcOpen) {
+        if (/^[0-9]$/.test(e.key)) { setCalc((s) => calcReducer(s, { type: "NUM", payload: e.key })); e.preventDefault(); return; }
+        if (e.key === ".") { setCalc((s) => calcReducer(s, { type: "NUM", payload: "." })); e.preventDefault(); return; }
+        if (["+","-","*","/"].includes(e.key)) {
+          const map: Record<string,string> = { "+":"+","-":"-","*":"×","/":"÷" };
+          setCalc((s) => calcReducer(s, { type: "OP", payload: map[e.key] })); e.preventDefault(); return;
+        }
+        if (e.key === "Enter" || e.key === "=") { setCalc((s) => calcReducer(s, { type: "EQ" })); e.preventDefault(); return; }
+        if (e.key === "Escape") { setCalcOpen(false); e.preventDefault(); return; }
+        if (e.key === "Backspace" || e.key.toLowerCase() === "c") { setCalc((s) => calcReducer(s, { type: "CLEAR" })); e.preventDefault(); return; }
+      }
+      // Atajos globales de examen
+      if (e.key === "ArrowRight") { setCurrent((c) => Math.min(TOTAL_QS - 1, c + 1)); e.preventDefault(); return; }
+      if (e.key === "ArrowLeft") { setCurrent((c) => Math.max(0, c - 1)); e.preventDefault(); return; }
+      if (["1","2","3","4"].includes(e.key)) {
+        const oi = parseInt(e.key, 10) - 1;
+        selectOpt(current, oi);
+        e.preventDefault();
+        return;
+      }
+      const letter = e.key.toLowerCase();
+      if (["a","b","c","d"].includes(letter) && !calcOpen) {
+        // 'c' abre la calculadora
+        if (letter === "c") { setCalcOpen(true); e.preventDefault(); return; }
+        const oi = { a: 0, b: 1, d: 3 }[letter as "a" | "b" | "d"] ?? 2;
+        selectOpt(current, oi);
+        e.preventDefault();
+      }
+      if (letter === "f") { toggleFlag(); e.preventDefault(); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, calcOpen, current]);
+
+
   /* Materia offset helpers */
   function materiaOffset(mi: number): number {
     return MATERIAS.slice(0, mi).reduce((s, m) => s + m.total, 0);
@@ -812,21 +855,70 @@ function SimuladorPage() {
   /* ─── PHASE: EXAM ─── */
   return (
     <div style={{ fontFamily: "'Manrope', sans-serif", background: "#f5f7fc", color: "#22375C", height: "100vh", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+      <style>{`
+        @keyframes sim-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+        @keyframes sim-pop { 0% { transform: scale(0.85); } 60% { transform: scale(1.08); } 100% { transform: scale(1); } }
+        @keyframes sim-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+        @keyframes sim-shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(300%); } }
+        @keyframes sim-key-press { 0% { transform: scale(1); } 40% { transform: scale(0.92); } 100% { transform: scale(1); } }
+        .sim-q-card { animation: sim-fade-in 0.32s ease-out both; }
+        .sim-opt { position: relative; overflow: hidden; text-align: left; }
+        .sim-opt:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(61,93,145,0.35); }
+        .sim-opt-letter { transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), background 0.2s, color 0.2s; }
+        .sim-opt[data-selected="true"] .sim-opt-letter { animation: sim-pop 0.35s ease-out; }
+        .sim-opt[data-selected="true"] { box-shadow: 0 6px 18px rgba(61,93,145,0.15); }
+        .sim-opt:not([data-selected="true"]):hover { transform: translateX(3px); }
+        .sim-progress-shimmer { position: relative; overflow: hidden; }
+        .sim-progress-shimmer > .sim-shimmer-bar { position:absolute; inset:0; width:40%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); animation: sim-shimmer 2.4s linear infinite; pointer-events:none; }
+        .sim-danger-dot { width: 8px; height: 8px; border-radius: 50%; background: #e74c3c; animation: sim-pulse 1s ease-in-out infinite; display:inline-block; }
+        .sim-timer-ring { transition: stroke-dashoffset 0.9s linear, stroke 0.3s ease; }
+        .sim-calc-btn { transition: transform 0.12s ease, filter 0.12s ease; }
+        .sim-calc-btn:hover { filter: brightness(1.12); }
+        .sim-calc-btn:active { animation: sim-key-press 0.18s ease-out; }
+        @media (prefers-reduced-motion: reduce) {
+          .sim-q-card, .sim-opt, .sim-opt-letter, .sim-danger-dot, .sim-shimmer-bar, .sim-timer-ring, .sim-calc-btn { animation: none !important; transition: none !important; }
+        }
+      `}</style>
 
       {/* Topbar */}
-      <div style={{ height: 56, background: "#22375C", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px", flexShrink: 0, zIndex: 50 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <button onClick={() => setLeftPanelOpen((o) => !o)} className="md:hidden" style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "5px 10px", borderRadius: 7, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
+      <div style={{ height: 56, background: "#22375C", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 16px", flexShrink: 0, zIndex: 50, gap: 8 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
+          <button onClick={() => setLeftPanelOpen((o) => !o)} aria-label="Ver lista de preguntas" className="md:hidden" style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "6px 10px", borderRadius: 7, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", minHeight: 40 }}>
             <Icon n="list" size={15} /> Preguntas
           </button>
-          <span style={{ background: "#6C0820", color: "white", padding: "4px 12px", borderRadius: 20, fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="target" size={13} /> Simulador</span>
-          <span className="hidden md:block" style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1rem", color: "white", fontWeight: 700 }}>Examen General de Egreso — Piloto Comercial</span>
+          <span style={{ background: "#6C0820", color: "white", padding: "4px 12px", borderRadius: 20, fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", display: "inline-flex", alignItems: "center", gap: 5, flexShrink: 0 }}><Icon n="target" size={13} /> Simulador</span>
+          <span className="hidden md:block" style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1rem", color: "white", fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Examen General de Egreso — Piloto Comercial</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.1)", borderRadius: 10, padding: "6px 14px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
+          {/* Timer con anillo */}
+          <div
+            role="timer"
+            aria-label={`Tiempo restante ${fmtTime(secondsLeft)}`}
+            style={{
+              display: "flex", alignItems: "center", gap: 10,
+              background: timerDanger ? "rgba(231,76,60,0.18)" : timerWarning ? "rgba(243,156,18,0.15)" : "rgba(255,255,255,0.1)",
+              border: `1px solid ${timerDanger ? "rgba(231,76,60,0.5)" : timerWarning ? "rgba(243,156,18,0.4)" : "rgba(255,255,255,0.15)"}`,
+              borderRadius: 12, padding: "5px 12px 5px 8px", transition: "background 0.3s, border 0.3s",
+            }}
+          >
+            <svg width={30} height={30} viewBox="0 0 36 36" aria-hidden="true" style={{ flexShrink: 0 }}>
+              <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="3" />
+              <circle
+                className="sim-timer-ring"
+                cx="18" cy="18" r="15" fill="none"
+                stroke={timerDanger ? "#e74c3c" : timerWarning ? "#f39c12" : "#F2AEBC"}
+                strokeWidth="3" strokeLinecap="round"
+                strokeDasharray={2 * Math.PI * 15}
+                strokeDashoffset={2 * Math.PI * 15 * (1 - secondsLeft / (5 * 3600))}
+                transform="rotate(-90 18 18)"
+              />
+            </svg>
             <div>
-              <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.5px" }}>Tiempo restante</div>
-              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", fontWeight: 900, letterSpacing: 1, color: timerDanger ? "#e74c3c" : timerWarning ? "#f39c12" : "white" }}>
+              <div style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.7)", textTransform: "uppercase", letterSpacing: "0.5px", display: "flex", alignItems: "center", gap: 5, lineHeight: 1 }}>
+                {timerDanger && <span aria-hidden="true" className="sim-danger-dot" />}
+                Tiempo
+              </div>
+              <div style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "1.05rem", fontWeight: 800, letterSpacing: 1, color: timerDanger ? "#ffb0a4" : timerWarning ? "#ffd58a" : "white", lineHeight: 1.15 }}>
                 {fmtTime(secondsLeft)}
               </div>
             </div>
@@ -835,13 +927,15 @@ function SimuladorPage() {
             onClick={() => setCalcOpen((o) => !o)}
             aria-label="Abrir calculadora"
             aria-expanded={calcOpen}
-            style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "8px 12px", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5, minHeight: 40 }}
+            title="Calculadora (C)"
+            style={{ background: calcOpen ? "#F2AEBC" : "rgba(255,255,255,0.1)", border: `1px solid ${calcOpen ? "#F2AEBC" : "rgba(255,255,255,0.2)"}`, color: calcOpen ? "#22375C" : "white", padding: "8px 12px", borderRadius: 8, fontSize: "0.8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5, minHeight: 40, transition: "all 0.2s" }}
           >
             <Icon n="gauge" size={15} /> <span className="hidden sm:inline">Calculadora</span>
           </button>
           <button
             onClick={() => setConfirmOpen(true)}
             aria-label="Finalizar examen"
+            title="Finalizar examen"
             style={{
               background: "#6C0820", border: "1px solid rgba(255,255,255,0.15)",
               color: "white", padding: "8px 14px", borderRadius: 8,
@@ -849,7 +943,10 @@ function SimuladorPage() {
               fontFamily: "'Manrope', sans-serif",
               display: "flex", alignItems: "center", gap: 6, minHeight: 40,
               boxShadow: "0 2px 8px rgba(108,8,32,0.35)",
+              transition: "transform 0.15s",
             }}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-1px)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; }}
           >
             <Icon n="check" size={15} /> <span className="hidden sm:inline">Finalizar</span>
           </button>
@@ -857,9 +954,11 @@ function SimuladorPage() {
       </div>
 
       {/* Progress bar */}
-      <div style={{ background: "rgba(255,255,255,0.08)", height: 4, flexShrink: 0 }}>
-        <div style={{ height: "100%", background: "#F2AEBC", width: `${progressPct}%`, transition: "width 0.3s ease" }} />
+      <div className="sim-progress-shimmer" style={{ background: "rgba(34,55,92,0.08)", height: 5, flexShrink: 0, position: "relative" }} role="progressbar" aria-valuenow={Math.round(progressPct)} aria-valuemin={0} aria-valuemax={100} aria-label="Progreso del examen">
+        <div style={{ height: "100%", background: "linear-gradient(90deg, #F2AEBC, #F2DCDB)", width: `${progressPct}%`, transition: "width 0.5s ease" }} />
+        <div className="sim-shimmer-bar" />
       </div>
+
 
       {/* Body */}
       <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
@@ -884,19 +983,21 @@ function SimuladorPage() {
         <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
           <div style={{ flex: 1, overflowY: "auto", padding: 28, display: "flex", flexDirection: "column", alignItems: "center" }} className="sm:p-7 p-4">
 
-            <div style={{ background: "white", borderRadius: 16, padding: 28, maxWidth: 700, width: "100%", boxShadow: "0 2px 14px rgba(61,93,145,0.07)" }} className="sm:p-7 p-5">
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 18 }}>
+            <div key={current} className="sim-q-card" style={{ background: "white", borderRadius: 16, padding: 28, maxWidth: 700, width: "100%", boxShadow: "0 2px 14px rgba(61,93,145,0.07)" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 18, gap: 10, flexWrap: "wrap" }}>
                 <div style={{ background: "rgba(61,93,145,0.07)", color: "#3D5D91", padding: "4px 12px", borderRadius: 20, fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 5 }}>
                   <Icon n={MATERIAS[currentQ.materia].icon} size={14} /> {MATERIAS[currentQ.materia].name}
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <button
                     onClick={toggleFlag}
-                    style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 12px", border: `1px solid ${currentQ.flagged ? "#f39c12" : "#F2DCDB"}`, borderRadius: 7, background: currentQ.flagged ? "rgba(243,156,18,0.08)" : "white", fontSize: "0.76rem", fontWeight: 600, color: currentQ.flagged ? "#f39c12" : "#647DA0", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s" }}
+                    aria-pressed={currentQ.flagged}
+                    title="Marcar (F)"
+                    style={{ display: "flex", alignItems: "center", gap: 5, padding: "6px 12px", border: `1px solid ${currentQ.flagged ? "#f39c12" : "#F2DCDB"}`, borderRadius: 7, background: currentQ.flagged ? "rgba(243,156,18,0.08)" : "white", fontSize: "0.76rem", fontWeight: 600, color: currentQ.flagged ? "#f39c12" : "#647DA0", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s", minHeight: 36 }}
                   >
                     <Icon n="flag" size={14} /> {currentQ.flagged ? "Marcada" : "Marcar para revisar"}
                   </button>
-                  <span style={{ fontSize: "0.76rem", color: "#8DA1BE" }}>{current + 1} / {TOTAL_QS}</span>
+                  <span style={{ fontSize: "0.76rem", color: "#8DA1BE", fontFamily: "'JetBrains Mono', ui-monospace, monospace" }}>{current + 1} / {TOTAL_QS}</span>
                 </div>
               </div>
 
@@ -904,28 +1005,52 @@ function SimuladorPage() {
                 {examQ?.text ?? ""}
               </p>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {(examQ?.options ?? []).map((opt, oi) => (
-                  <div
-                    key={oi}
-                    onClick={() => selectOpt(current, oi)}
-                    style={{ display: "flex", alignItems: "center", gap: 14, padding: "14px 18px", background: currentQ.selectedOpt === oi ? "rgba(61,93,145,0.07)" : "#f8f9ff", border: `2px solid ${currentQ.selectedOpt === oi ? "#3D5D91" : "#F2DCDB"}`, borderRadius: 12, cursor: "pointer", transition: "all 0.2s", userSelect: "none" }}
-                    onMouseEnter={(e) => { if (currentQ.selectedOpt !== oi) { e.currentTarget.style.borderColor = "#3D5D91"; e.currentTarget.style.background = "rgba(61,93,145,0.04)"; e.currentTarget.style.transform = "translateX(3px)"; } }}
-                    onMouseLeave={(e) => { if (currentQ.selectedOpt !== oi) { e.currentTarget.style.borderColor = "#F2DCDB"; e.currentTarget.style.background = "#f8f9ff"; e.currentTarget.style.transform = "none"; } }}
-                  >
-                    <div style={{ width: 30, height: 30, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 700, flexShrink: 0, background: currentQ.selectedOpt === oi ? "#3D5D91" : "#F2DCDB", color: currentQ.selectedOpt === oi ? "white" : "#647DA0", transition: "all 0.2s" }}>
-                      {LETTERS[oi]}
-                    </div>
-                    <div style={{ fontSize: "0.9rem", color: "#22375C", lineHeight: 1.4, flex: 1 }}>{opt}</div>
-                  </div>
-                ))}
+              <div role="radiogroup" aria-label="Opciones de respuesta" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {(examQ?.options ?? []).map((opt, oi) => {
+                  const selected = currentQ.selectedOpt === oi;
+                  return (
+                    <button
+                      key={oi}
+                      type="button"
+                      role="radio"
+                      aria-checked={selected}
+                      data-selected={selected}
+                      onClick={() => selectOpt(current, oi)}
+                      className="sim-opt"
+                      style={{
+                        display: "flex", alignItems: "center", gap: 14, padding: "14px 18px",
+                        background: selected ? "rgba(61,93,145,0.09)" : "#f8f9ff",
+                        border: `2px solid ${selected ? "#3D5D91" : "#F2DCDB"}`,
+                        borderRadius: 12, cursor: "pointer",
+                        transition: "background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s",
+                        userSelect: "none", fontFamily: "'Manrope', sans-serif", minHeight: 56, width: "100%",
+                      }}
+                    >
+                      <div
+                        className="sim-opt-letter"
+                        aria-hidden="true"
+                        style={{
+                          width: 30, height: 30, borderRadius: "50%",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          fontSize: "0.8rem", fontWeight: 700, flexShrink: 0,
+                          background: selected ? "#3D5D91" : "#F2DCDB",
+                          color: selected ? "white" : "#647DA0",
+                        }}
+                      >
+                        {selected ? <Icon n="check" size={16} /> : LETTERS[oi]}
+                      </div>
+                      <div style={{ fontSize: "0.9rem", color: "#22375C", lineHeight: 1.4, flex: 1, textAlign: "left" }}>{opt}</div>
+                    </button>
+                  );
+                })}
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 14, fontSize: "0.75rem", color: "#8DA1BE" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 14, fontSize: "0.72rem", color: "#8DA1BE", flexWrap: "wrap" }}>
                 <span style={{ display: "flex", alignItems: "center" }}><Icon n="lightbulb" size={14} /></span>
-                <span>Puedes cambiar tu respuesta en cualquier momento antes de entregar.</span>
+                <span>Atajos: <kbd style={{ background: "#f2f4fa", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>1-4</kbd> respuesta · <kbd style={{ background: "#f2f4fa", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>←/→</kbd> navegar · <kbd style={{ background: "#f2f4fa", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>F</kbd> marcar</span>
               </div>
             </div>
+
 
             {/* Nav */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 700, width: "100%", marginTop: 16, gap: 10 }}>
@@ -949,41 +1074,65 @@ function SimuladorPage() {
 
       {/* Calculator modal */}
       {calcOpen && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 500, display: "flex", alignItems: "flex-end", justifyContent: "flex-end", padding: "80px 20px 20px" }} onClick={(e) => { if (e.target === e.currentTarget) setCalcOpen(false); }}>
-          <div style={{ background: "#22375C", borderRadius: 16, padding: 16, width: 220, boxShadow: "0 20px 40px rgba(0,0,0,0.4)" }}>
-            <div style={{ background: "rgba(255,255,255,0.08)", borderRadius: 10, padding: "10px 14px", marginBottom: 12, textAlign: "right" }}>
-              <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", minHeight: 16, marginBottom: 2 }}>{calc.expr}</div>
-              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.8rem", fontWeight: 900, color: "white", wordBreak: "break-all" }}>{calc.display}</div>
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Calculadora"
+          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 500, display: "flex", alignItems: "flex-end", justifyContent: "flex-end", padding: "80px 20px 20px", animation: "sim-fade-in 0.2s ease-out" }}
+          onClick={(e) => { if (e.target === e.currentTarget) setCalcOpen(false); }}
+        >
+          <div style={{ background: "linear-gradient(160deg, #22375C, #1a2b48)", borderRadius: 16, padding: 14, width: 240, boxShadow: "0 20px 40px rgba(0,0,0,0.4)", animation: "sim-pop 0.25s ease-out" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+              <div style={{ fontSize: "0.65rem", fontWeight: 700, color: "rgba(255,255,255,0.55)", textTransform: "uppercase", letterSpacing: "1px", display: "inline-flex", alignItems: "center", gap: 5 }}>
+                <Icon n="gauge" size={12} /> Calculadora
+              </div>
+              <button onClick={() => setCalcOpen(false)} aria-label="Cerrar calculadora" style={{ background: "rgba(255,255,255,0.08)", border: "none", color: "rgba(255,255,255,0.7)", width: 26, height: 26, borderRadius: 6, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Icon n="close" size={13} />
+              </button>
+            </div>
+            <div style={{ background: "rgba(0,0,0,0.25)", borderRadius: 10, padding: "10px 14px", marginBottom: 12, textAlign: "right" }}>
+              <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", minHeight: 16, marginBottom: 2, fontFamily: "'JetBrains Mono', ui-monospace, monospace" }}>{calc.expr || "\u00A0"}</div>
+              <div style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "1.75rem", fontWeight: 800, color: "white", wordBreak: "break-all", lineHeight: 1.1 }}>{calc.display}</div>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 6 }}>
               {[
-                { label: "C", action: () => dispatch("CLEAR"), style: { background: "rgba(231,76,60,0.6)", color: "white" } },
-                { label: "%", action: () => dispatch("OP", "%"), style: { background: "#5A86CB", color: "white" } },
-                { label: "÷", action: () => dispatch("OP", "÷"), style: { background: "#5A86CB", color: "white" } },
+                { label: "C", action: () => dispatch("CLEAR"), style: { background: "rgba(231,76,60,0.65)", color: "white" } },
+                { label: "%", action: () => dispatch("OP", "%"), style: { background: "#3D5D91", color: "white" } },
+                { label: "÷", action: () => dispatch("OP", "÷"), style: { background: "#3D5D91", color: "white" } },
+                { label: "×", action: () => dispatch("OP", "×"), style: { background: "#3D5D91", color: "white" } },
                 { label: "7", action: () => dispatch("NUM", "7"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
                 { label: "8", action: () => dispatch("NUM", "8"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
                 { label: "9", action: () => dispatch("NUM", "9"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
-                { label: "×", action: () => dispatch("OP", "×"), style: { background: "#5A86CB", color: "white" } },
+                { label: "−", action: () => dispatch("OP", "-"), style: { background: "#3D5D91", color: "white" } },
                 { label: "4", action: () => dispatch("NUM", "4"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
                 { label: "5", action: () => dispatch("NUM", "5"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
                 { label: "6", action: () => dispatch("NUM", "6"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
-                { label: "−", action: () => dispatch("OP", "-"), style: { background: "#5A86CB", color: "white" } },
+                { label: "+", action: () => dispatch("OP", "+"), style: { background: "#3D5D91", color: "white" } },
                 { label: "1", action: () => dispatch("NUM", "1"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
                 { label: "2", action: () => dispatch("NUM", "2"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
                 { label: "3", action: () => dispatch("NUM", "3"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
-                { label: "+", action: () => dispatch("OP", "+"), style: { background: "#5A86CB", color: "white" } },
+                { label: "=", action: () => dispatch("EQ"), style: { background: "#6C0820", color: "white", gridRow: "span 2" } },
+                { label: "0", action: () => dispatch("NUM", "0"), style: { background: "rgba(255,255,255,0.1)", color: "white", gridColumn: "span 2" } },
+                { label: ".", action: () => dispatch("NUM", "."), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
               ].map((btn, i) => (
-                <button key={i} onClick={btn.action} style={{ padding: "12px 0", border: "none", borderRadius: 8, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", ...btn.style }}>
+                <button
+                  key={i}
+                  onClick={btn.action}
+                  aria-label={btn.label === "C" ? "Limpiar" : btn.label}
+                  className="sim-calc-btn"
+                  style={{ padding: "14px 0", border: "none", borderRadius: 9, fontSize: "1rem", fontWeight: 700, cursor: "pointer", fontFamily: "'JetBrains Mono', ui-monospace, monospace", minHeight: 44, ...btn.style }}
+                >
                   {btn.label}
                 </button>
               ))}
-              <button onClick={() => dispatch("NUM", "0")} style={{ padding: "12px 0", border: "none", borderRadius: 8, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(255,255,255,0.1)", color: "white", gridColumn: "span 2" }}>0</button>
-              <button onClick={() => dispatch("NUM", ".")} style={{ padding: "12px 0", border: "none", borderRadius: 8, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(255,255,255,0.1)", color: "white" }}>.</button>
-              <button onClick={() => dispatch("EQ")} style={{ padding: "12px 0", border: "none", borderRadius: 8, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "#6C0820", color: "white", gridColumn: "span 1" }}>=</button>
+            </div>
+            <div style={{ marginTop: 10, fontSize: "0.62rem", color: "rgba(255,255,255,0.4)", textAlign: "center", lineHeight: 1.4 }}>
+              Usa el teclado · <kbd style={{ background: "rgba(255,255,255,0.08)", padding: "0 4px", borderRadius: 3 }}>Esc</kbd> cerrar
             </div>
           </div>
         </div>
       )}
+
 
       {/* Confirm finish modal */}
       {confirmOpen && (
