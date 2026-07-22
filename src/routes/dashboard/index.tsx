@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { useSessionUser, useStore, studentStats, materiaProgressPct, MATERIAS_DEF, getStudyDays } from "@/lib/store";
 import { OnboardingModal } from "@/components/shared/OnboardingModal";
+import { DataSyncBanner } from "@/components/shared/DataSyncBanner";
 
 export const Route = createFileRoute("/dashboard/")({
   component: DashboardHome,
@@ -251,6 +252,7 @@ function DashboardHome() {
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto", fontFamily: "'Manrope', sans-serif" }}>
 
+      <DataSyncBanner />
       {!user.onboardingDone && <OnboardingModal user={user} onDone={() => {}} />}
 
       {/* GREETING + COUNTDOWN */}
