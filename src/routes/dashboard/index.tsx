@@ -438,7 +438,7 @@ function DashboardHome() {
 
   if (!user || !stats) return null;
 
-  const firstName = user.nombre.split(" ")[0];
+  const firstName = (user.nombre?.trim().split(/\s+/)[0]) || "piloto";
   const streak = stats.streak;
   const diasWord = streak === 1 ? "día" : "días";
 
