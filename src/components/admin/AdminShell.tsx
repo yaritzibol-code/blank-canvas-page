@@ -84,7 +84,7 @@ export function AdminShell({
 
   const handleLogout = () => {
     logout();
-    navigate({ to: "/" });
+    navigate({ to: "/login" });
   };
 
   const itemBase = (isActive: boolean): CSSProperties => ({
