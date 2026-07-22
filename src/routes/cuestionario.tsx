@@ -5,7 +5,6 @@ import {
   useRequireAuth,
   isPaid,
   canStartQuiz,
-  canUseAI,
   getPublishedQuestions,
   getFreeQuestions,
   saveQuizAttempt,
