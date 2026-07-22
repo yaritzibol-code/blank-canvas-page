@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { Icon } from "@/components/ui/fp-icon";
-import { useSessionUser, useStore, studentStats, materiaProgressPct, MATERIAS_DEF } from "@/lib/store";
+import { useSessionUser, useStore, studentStats, materiaProgressPct, MATERIAS_DEF, getStudyDays } from "@/lib/store";
 import { OnboardingModal } from "@/components/shared/OnboardingModal";
 
 export const Route = createFileRoute("/dashboard/")({
