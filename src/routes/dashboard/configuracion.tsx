@@ -16,7 +16,7 @@ export const Route = createFileRoute("/dashboard/configuracion")({
   component: ConfiguracionPage,
 });
 
-type ModalType = "password" | "phone" | "logout" | "delete" | null;
+type ModalType = "password" | "phone" | "logout" | "delete" | "nombre" | "escuela" | "ciaac" | null;
 
 const maskPhone = (p: string) => {
   const t = p.trim();
