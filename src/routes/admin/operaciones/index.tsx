@@ -1,5 +1,5 @@
 /** Panel de Operaciones — observabilidad general del SaaS. */
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AdminShell, cardStyle, cardHeadStyle } from "@/components/admin/AdminShell";
 import { SparkChart, type SparkPoint } from "@/components/admin/SparkChart";
@@ -36,7 +36,9 @@ function OperacionesPage() {
   const [aiSeries, setAiSeries] = useState<AiDailyPoint[]>([]);
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const env = isPaymentsConfigured() ? getStripeEnvironment() : "sandbox";
+  const goDay = (day: string) => navigate({ to: "/admin/operaciones/dia/$day", params: { day } });
 
   useEffect(() => {
     let cancel = false;
@@ -95,7 +97,10 @@ function OperacionesPage() {
             </div>
           </section>
 
-          {/* Gráficos de 30 días */}
+          {/* Gráficos de 30 días — click en un punto abre el drill-down del día */}
+          <div style={{ fontSize: ".8rem", color: "#647DA0", marginBottom: 8 }}>
+            💡 Haz clic en un punto de cualquier gráfico para ver el detalle de ese día.
+          </div>
           <section style={{ display: "grid", gap: 14, gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", marginBottom: 20 }}>
             <div style={cardStyle}>
               <div style={cardHeadStyle}>MRR diario · últimos 30 días</div>
@@ -106,6 +111,7 @@ function OperacionesPage() {
                   fill="rgba(34,55,92,0.14)"
                   formatValue={(n) => `$${n.toLocaleString("es-MX")}`}
                   formatLabel={shortDay}
+                  onPointClick={(p) => goDay(p.label)}
                 />
               </div>
             </div>
@@ -117,6 +123,7 @@ function OperacionesPage() {
                   color="#2ecc71"
                   fill="rgba(46,204,113,0.14)"
                   formatLabel={shortDay}
+                  onPointClick={(p) => goDay(p.label)}
                 />
               </div>
             </div>
@@ -126,7 +133,7 @@ function OperacionesPage() {
             <div style={cardStyle}>
               <div style={cardHeadStyle}>Yaris IA · llamadas por día (30d)</div>
               <div style={{ padding: 16 }}>
-                <SparkChart points={aiCallsPoints} color="#6C0820" fill="rgba(108,8,32,0.12)" formatLabel={shortDay} />
+                <SparkChart points={aiCallsPoints} color="#6C0820" fill="rgba(108,8,32,0.12)" formatLabel={shortDay} onPointClick={(p) => goDay(p.label)} />
                 <div style={{ marginTop: 12, display: "grid", gap: 6 }}>
                   <Row k="Llamadas (30d)" v={aiTotals.calls.toLocaleString("es-MX")} />
                   <Row
@@ -145,6 +152,7 @@ function OperacionesPage() {
                   color="#F2AEBC"
                   fill="rgba(242,174,188,0.22)"
                   formatLabel={shortDay}
+                  onPointClick={(p) => goDay(p.label)}
                 />
                 <div style={{ marginTop: 12, display: "grid", gap: 6 }}>
                   <Row k="Tokens totales" v={aiTotals.tokens.toLocaleString("es-MX")} />
