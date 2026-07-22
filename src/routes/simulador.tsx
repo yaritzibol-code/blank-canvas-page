@@ -344,7 +344,9 @@ function SimuladorPage() {
     setCalc((s) => calcReducer(s, { type, payload }));
   }
 
-  /* Yaris — SOLO en fase review, con la pregunta seleccionada como contexto */
+  /* Yaris IA — SOLO en fase review, con la pregunta seleccionada como contexto */
+  const callYarisAi = useServerFn(yarisAiChat);
+
   function reviewCtx(): YarisContext {
     const bq = bankQs[reviewCurrent];
     if (!bq) return {};
@@ -361,44 +363,74 @@ function SimuladorPage() {
     };
   }
 
-  function openYaris() {
+  function aiContextPayload() {
+    const bq = bankQs[reviewCurrent];
+    if (!bq) return undefined;
+    const mi = questions[reviewCurrent]?.materia ?? 0;
+    return {
+      materia: MATERIAS[mi].name,
+      questionText: bq.text,
+      options: bq.options,
+      correctIndex: bq.correctIndex,
+      userSelectedIndex: questions[reviewCurrent]?.selectedOpt ?? -1,
+      explanation: bq.explanation,
+      cite: bq.cite,
+    };
+  }
+
+  function historyForAi(nextUserMsg?: string) {
+    const hist: { role: "user" | "assistant"; content: string }[] = [];
+    for (const m of yarisMsgs) {
+      hist.push({ role: m.role === "bot" ? "assistant" : "user", content: stripHtml(m.text) });
+    }
+    if (nextUserMsg) hist.push({ role: "user", content: nextUserMsg });
+    return hist;
+  }
+
+  async function openYaris() {
     if (phase !== "review") return;
     if (!yarisOpen && user) logYarisUse(user.id, "Simulador (revisión)");
     setYarisOpen(true);
     if (!yarisInit) {
       setYarisInit(true);
+      const materiaName = reviewCtx().materiaName ?? "esta materia";
+      setYarisMsgs([
+        { role: "bot", text: `¡Hola! Soy <b>Yaris</b>. Veo que tienes una duda sobre <b>${materiaName}</b>. Te explico con base en la pregunta y en lo que sé de aeronáutica.` },
+      ]);
       setYarisTyping(true);
-      const ctx = reviewCtx();
-      const materiaName = ctx.materiaName ?? "esta materia";
-      setTimeout(() => {
+      try {
+        const r = await callYarisAi({
+          data: {
+            history: [{ role: "user", content: "Explícame esta pregunta con tus propias palabras, por qué la correcta es la correcta y por qué las demás no. Al final dame un tip para recordarlo." }],
+            context: aiContextPayload(),
+          },
+        });
+        setYarisMsgs((p) => [...p, { role: "bot", text: r.text, cite: r.cite ?? undefined }]);
+      } catch (err) {
+        console.error("Yaris IA error", err);
+        setYarisMsgs((p) => [...p, { role: "bot", text: "No pude conectarme con la IA. Vuelve a intentarlo en un momento." }]);
+      } finally {
         setYarisTyping(false);
-        setYarisMsgs([{ role: "bot", text: `¡Hola! Soy Yaris. Veo que tienes una duda sobre <strong>${materiaName}</strong>. ¡Te explico!` }]);
-        setTimeout(() => {
-          setYarisTyping(true);
-          setTimeout(() => {
-            setYarisTyping(false);
-            const r = yarisReply(0, ctx);
-            setYarisMsgs((p) => [...p, { role: "bot", text: r.t, cite: r.c ?? undefined }]);
-            setYarisReplyIdx(1);
-          }, 900);
-        }, 300);
-      }, 700);
+      }
     }
   }
 
-  function sendYaris() {
+  async function sendYaris() {
     const text = yarisInput.trim();
-    if (!text) return;
+    if (!text || yarisTyping) return;
     setYarisMsgs((p) => [...p, { role: "user", text }]);
+    const history = historyForAi(text);
     setYarisInput("");
     setYarisTyping(true);
-    const turn = yarisReplyIdx;
-    setYarisReplyIdx(turn + 1);
-    const r = yarisReply(turn, reviewCtx(), text);
-    setTimeout(() => {
+    try {
+      const r = await callYarisAi({ data: { history, context: aiContextPayload() } });
+      setYarisMsgs((p) => [...p, { role: "bot", text: r.text, cite: r.cite ?? undefined }]);
+    } catch (err) {
+      console.error("Yaris IA error", err);
+      setYarisMsgs((p) => [...p, { role: "bot", text: "No pude conectarme con la IA. Vuelve a intentarlo." }]);
+    } finally {
       setYarisTyping(false);
-      setYarisMsgs((p) => [...p, { role: "bot", text: r.t, cite: r.c ?? undefined }]);
-    }, 900);
+    }
   }
 
   /* Derived */
