@@ -4,6 +4,7 @@ import { Icon } from "@/components/ui/fp-icon";
 import { useSessionUser, useStore, studentStats, materiaProgressPct, MATERIAS_DEF, getStudyDays } from "@/lib/store";
 import { OnboardingModal } from "@/components/shared/OnboardingModal";
 import { DataSyncBanner } from "@/components/shared/DataSyncBanner";
+import { PlaneField } from "@/components/shared/PlaneField";
 
 export const Route = createFileRoute("/dashboard/")({
   component: DashboardHome,
@@ -77,7 +78,7 @@ function CountdownCard({ fecha }: { fecha: string | null }) {
         padding: "22px 24px",
         position: "relative",
         overflow: "hidden",
-        minWidth: 300,
+        width: "100%",
         boxShadow: "0 1px 0 rgba(34,55,92,0.03)",
       }}
     >
@@ -459,11 +460,14 @@ function DashboardHome() {
   const rest = materias.filter((m) => m.slug !== featured?.slug && m.slug !== secondary?.slug);
 
   return (
-    <div style={{ position: "relative", maxWidth: 1240, margin: "0 auto", fontFamily: SANS }}>
+    <div style={{ position: "relative", maxWidth: 1240, margin: "0 auto", fontFamily: SANS, isolation: "isolate" }}>
+      {/* Ambient planes — same engine as la homepage */}
+      <PlaneField count={14} color="34,55,92" />
+
       {/* Decorative flight trajectories */}
       <svg
         aria-hidden="true"
-        style={{ position: "absolute", top: -40, right: -80, width: 620, height: 620, opacity: 0.08, color: NAVY, pointerEvents: "none" }}
+        style={{ position: "absolute", top: -40, right: -80, width: 620, height: 620, opacity: 0.08, color: NAVY, pointerEvents: "none", zIndex: 0 }}
         viewBox="0 0 400 400"
       >
         <path d="M0,200 Q150,50 400,200" fill="none" stroke="currentColor" strokeWidth="0.6" />
@@ -471,7 +475,7 @@ function DashboardHome() {
         <path d="M0,300 Q220,160 400,300" fill="none" stroke="currentColor" strokeWidth="0.6" strokeDasharray="6 6" />
       </svg>
 
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative", zIndex: 1 }}>
         <DataSyncBanner />
         {!user.onboardingDone && <OnboardingModal user={user} onDone={() => {}} />}
 
@@ -696,6 +700,9 @@ function DashboardHome() {
       <style>{`
         @media (max-width: 900px) {
           .fp-hero-grid, .fp-split-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 520px) {
+          .fp-hero-grid h1 { font-size: 2.4rem !important; }
         }
       `}</style>
     </div>
