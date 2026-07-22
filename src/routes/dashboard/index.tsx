@@ -220,6 +220,7 @@ function DashboardHome() {
       slug: m.slug,
     })),
   );
+  const studyDays = useStore(() => (user ? getStudyDays(user.id) : {}));
 
   const now = new Date();
   const hour = now.getHours();
