@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { Icon } from "@/components/ui/fp-icon";
-import { useSessionUser, useStore, studentStats, materiaProgressPct, MATERIAS_DEF } from "@/lib/store";
+import { useSessionUser, useStore, studentStats, materiaProgressPct, MATERIAS_DEF, getStudyDays } from "@/lib/store";
 import { OnboardingModal } from "@/components/shared/OnboardingModal";
 
 export const Route = createFileRoute("/dashboard/")({
@@ -220,6 +220,7 @@ function DashboardHome() {
       slug: m.slug,
     })),
   );
+  const studyDays = useStore(() => (user ? getStudyDays(user.id) : {}));
 
   const now = new Date();
   const hour = now.getHours();
@@ -232,6 +233,20 @@ function DashboardHome() {
   const firstName = user.nombre.split(" ")[0];
   const streak = stats.streak;
   const diasWord = streak === 1 ? "día" : "días";
+
+  // Materia sugerida para "continuar": la de menor progreso con al menos 1 tema disponible,
+  // o la primera si ninguna se ha tocado.
+  const continueMateria =
+    materias.slice().sort((a, b) => a.pct - b.pct).find((m) => m.pct < 100) ?? materias[0];
+  const continueDesc = continueMateria
+    ? continueMateria.pct === 0
+      ? `${continueMateria.name} — empieza aquí`
+      : `${continueMateria.name} — ${continueMateria.pct}% completado`
+    : "Elige una materia para comenzar";
+  const continuePath = continueMateria
+    ? `/dashboard/materias/${continueMateria.slug}`
+    : "/dashboard/materias";
+
 
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto", fontFamily: "'Manrope', sans-serif" }}>
@@ -283,26 +298,38 @@ function DashboardHome() {
         <div style={{ flexShrink: 0, display: "flex", color: "white" }}><Icon n="cloud" size={48} /></div>
         <div style={{ flex: 1 }}>
           <h4 style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: 4 }}>
-            ¡Modo Piloto activado, {firstName}!
+            {streak > 0 ? `¡Modo Piloto activado, ${firstName}!` : `Hola, ${firstName}`}
           </h4>
           <p style={{ fontSize: "0.82rem", opacity: 0.7, lineHeight: 1.4, marginBottom: 10 }}>
-            Llevas {streak} {diasWord} consecutivos estudiando. ¡Eres imparable! Sigue volando alto.
+            {streak > 0
+              ? `Llevas ${streak} ${diasWord} consecutivos estudiando. ¡Sigue así!`
+              : "Empieza hoy una sesión para arrancar tu racha."}
           </p>
           <div style={{ display: "flex", gap: 4 }}>
-            {WEEK_DAYS.map((d, i) => (
-              <div
-                key={i}
-                style={{
-                  width: 24, height: 24, borderRadius: "50%",
-                  background: i === todayIdx ? "#F2AEBC" : "rgba(61,93,145,0.8)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: "0.6rem", fontWeight: 700,
-                  color: i === todayIdx ? "#6C0820" : "white",
-                }}
-              >
-                {d}
-              </div>
-            ))}
+            {WEEK_DAYS.map((d, i) => {
+              // Marca los días de la última semana donde hubo estudio real
+              const dayDate = new Date();
+              const diff = i - todayIdx;
+              dayDate.setDate(dayDate.getDate() + diff);
+              const key = dayDate.toISOString().slice(0, 10);
+              const studied = (studyDays[key] ?? 0) > 0;
+              const isToday = i === todayIdx;
+              return (
+                <div
+                  key={i}
+                  title={studied ? `${Math.round((studyDays[key] ?? 0) / 60)} min` : "Sin actividad"}
+                  style={{
+                    width: 24, height: 24, borderRadius: "50%",
+                    background: isToday ? "#F2AEBC" : studied ? "rgba(242,174,188,0.5)" : "rgba(61,93,145,0.6)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: "0.6rem", fontWeight: 700,
+                    color: isToday ? "#6C0820" : "white",
+                  }}
+                >
+                  {d}
+                </div>
+              );
+            })}
           </div>
         </div>
         <div style={{ textAlign: "center", flexShrink: 0 }}>
@@ -355,19 +382,27 @@ function DashboardHome() {
           primary
           icon="play"
           title="Continuar estudiando"
-          desc="Aerodinámica — Tema 4: Sustentación"
-          to="/dashboard/materias/aerodinamica"
+          desc={continueDesc}
+          to={continuePath}
         />
         <ActionCard
           icon="help"
           title="Hacer cuestionario"
-          desc="Elige materia y cantidad de preguntas"
+          desc={
+            stats.quizCount > 0
+              ? `${stats.quizCount} cuestionarios completados`
+              : "Elige materia y cantidad de preguntas"
+          }
           to="/dashboard/banco"
         />
         <ActionCard
           icon="sim"
           title="Examen simulado"
-          desc="310 preguntas · 5 horas · CIAAC real"
+          desc={
+            stats.simCount > 0
+              ? `${stats.simCount} simulacros completados`
+              : "Simula el CIAAC completo"
+          }
           to="/simulador"
         />
       </div>
