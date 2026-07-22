@@ -182,7 +182,6 @@ function SimuladorPage() {
   const [yarisMsgs, setYarisMsgs] = useState<{ role: "bot" | "user"; text: string; cite?: string }[]>([]);
   const [yarisInput, setYarisInput] = useState("");
   const [yarisTyping, setYarisTyping] = useState(false);
-  const [yarisBatch, setYarisBatch] = useState<{ done: number; total: number } | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -191,12 +190,10 @@ function SimuladorPage() {
   const savedRef = useRef(false);
   const finishRef = useRef<() => void>(() => {});
   const phaseRef = useRef<Phase>("warning");
-  // Preguntas ya explicadas por Yaris en esta revisión (evita repetir la misma)
+  // Preguntas ya explicadas por Yaris en esta revisión (para pedirle otro enfoque al repetir)
   const explainedRef = useRef<Set<number>>(new Set());
   // Serializa las llamadas a la IA (una a la vez)
   const aiBusyRef = useRef(false);
-  const batchRunningRef = useRef(false);
-  const batchStopRef = useRef(false);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -388,9 +385,6 @@ function SimuladorPage() {
     setReviewCurrent(0);
     setYarisOpen(false);
     setYarisMsgs([]);
-    setYarisBatch(null);
-    batchStopRef.current = true;
-    batchRunningRef.current = false;
     explainedRef.current = new Set();
     savedRef.current = false;
   }
@@ -405,6 +399,8 @@ function SimuladorPage() {
 
   const YARIS_EXPLAIN_PROMPT =
     "Explícame esta pregunta con tus propias palabras, por qué la correcta es la correcta y por qué las demás no. Al final dame un tip para recordarlo.";
+  const YARIS_REEXPLAIN_PROMPT =
+    "Explícame esta misma pregunta otra vez, pero de una forma distinta y más sencilla. Usa otro ejemplo o analogía para que me quede claro.";
 
   function aiContextPayload(idx: number) {
     const bq = bankQs[idx];
@@ -438,39 +434,46 @@ function SimuladorPage() {
         ? p
         : [{
             role: "bot" as const,
-            text: "¡Hola! Soy <b>Yaris</b>. Te explico las preguntas de tu simulador con base en su explicación oficial y en lo que sé de aeronáutica. Pídeme la que quieras, o todas de una vez.",
+            text: "¡Hola! Soy <b>Yaris</b>. Te explico las preguntas de tu simulador con base en su explicación oficial y en lo que sé de aeronáutica. Pulsa <b>Explícamelo Yaris</b> en cualquier pregunta, las veces que necesites.",
           }],
     );
   }
 
-  /** Pide a la IA la explicación de una pregunta. Cada pregunta se explica una sola vez. */
-  async function explainQuestion(idx: number): Promise<"ok" | "skipped" | "failed"> {
-    if (phaseRef.current !== "review") return "skipped";
-    if (explainedRef.current.has(idx) || aiBusyRef.current) return "skipped";
+  /**
+   * Pide a la IA la explicación de la pregunta. Funciona cada vez que se pulsa
+   * el botón: la primera vez explica completo y, si se repite sobre la misma
+   * pregunta, pide otro enfoque más sencillo.
+   */
+  async function explainQuestion(idx: number) {
+    if (phaseRef.current !== "review" || aiBusyRef.current) return;
     const bq = bankQs[idx];
-    if (!bq) return "skipped";
+    if (!bq) return;
+    const again = explainedRef.current.has(idx);
     aiBusyRef.current = true;
     explainedRef.current.add(idx);
     const mi = questions[idx]?.materia ?? 0;
-    setYarisMsgs((p) => [...p, { role: "bot", text: `Vamos con la <b>pregunta ${idx + 1}</b> de <b>${MATERIAS[mi].name}</b>:` }]);
+    setYarisMsgs((p) => [...p, {
+      role: "bot",
+      text: again
+        ? `Va otra vez la <b>pregunta ${idx + 1}</b> de <b>${MATERIAS[mi].name}</b>, ahora con otro enfoque:`
+        : `Vamos con la <b>pregunta ${idx + 1}</b> de <b>${MATERIAS[mi].name}</b>:`,
+    }]);
     setYarisTyping(true);
     try {
       const r = await callYarisAi({
         data: {
-          history: [{ role: "user", content: YARIS_EXPLAIN_PROMPT }],
+          history: [{ role: "user", content: again ? YARIS_REEXPLAIN_PROMPT : YARIS_EXPLAIN_PROMPT }],
           context: aiContextPayload(idx),
         },
       });
-      if (phaseRef.current !== "review") return "skipped";
+      if (phaseRef.current !== "review") return;
       setYarisMsgs((p) => [...p, { role: "bot", text: r.text, cite: r.cite ?? undefined }]);
-      return "ok";
     } catch (err) {
       console.error("Yaris IA error", err);
-      explainedRef.current.delete(idx); // permite reintentar
+      if (!again) explainedRef.current.delete(idx); // el siguiente intento repite la explicación completa
       if (phaseRef.current === "review") {
         setYarisMsgs((p) => [...p, { role: "bot", text: "No pude conectarme con la IA. Vuelve a intentarlo en un momento." }]);
       }
-      return "failed";
     } finally {
       aiBusyRef.current = false;
       setYarisTyping(false);
@@ -485,76 +488,9 @@ function SimuladorPage() {
     await explainQuestion(reviewCurrent);
   }
 
-  /** Explica en cadena todas las preguntas pendientes (o solo incorrectas/sin responder). */
-  async function explainAll(onlyWrong: boolean) {
-    if (phase !== "review" || batchRunningRef.current) return;
-    const targets = questions
-      .map((_, i) => i)
-      .filter((i) => {
-        const bq = bankQs[i];
-        if (!bq || explainedRef.current.has(i)) return false;
-        return !onlyWrong || questions[i].selectedOpt !== bq.correctIndex;
-      });
-    if (user) logYarisUse(user.id, "Simulador (explicar todas)");
-    setYarisOpen(true);
-    ensureGreeting();
-    if (targets.length === 0) {
-      setYarisMsgs((p) => [...p, {
-        role: "bot",
-        text: onlyWrong
-          ? "No te quedan preguntas incorrectas por explicar. ¡Bien hecho! Pregúntame cualquier otra duda."
-          : "Ya te expliqué todas las preguntas. Si algo no quedó claro, pregúntame con confianza.",
-      }]);
-      return;
-    }
-    batchRunningRef.current = true;
-    batchStopRef.current = false;
-    setYarisBatch({ done: 0, total: targets.length });
-    setYarisMsgs((p) => [...p, {
-      role: "bot",
-      text: `¡Va! Te explico <b>${targets.length}</b> ${onlyWrong ? "preguntas incorrectas o sin responder" : "preguntas"} una por una. Puedes detenerme cuando quieras.`,
-    }]);
-    // Si hay una consulta en curso, espera a que termine (máx. ~10 s).
-    for (let w = 0; w < 50 && aiBusyRef.current; w++) await new Promise((r) => setTimeout(r, 200));
-    let failures = 0;
-    let done = 0;
-    for (const idx of targets) {
-      if (batchStopRef.current || phaseRef.current !== "review") break;
-      setReviewCurrent(idx);
-      const res = await explainQuestion(idx);
-      if (res === "failed") {
-        failures++;
-        if (failures >= 2) break;
-      } else if (res === "ok") {
-        failures = 0;
-      }
-      done++;
-      setYarisBatch({ done, total: targets.length });
-      // Pausa breve entre preguntas para no saturar la IA
-      if (!batchStopRef.current) await new Promise((r) => setTimeout(r, 350));
-    }
-    const stopped = batchStopRef.current;
-    const aborted = failures >= 2;
-    batchRunningRef.current = false;
-    setYarisBatch(null);
-    if (phaseRef.current !== "review") return;
-    setYarisMsgs((p) => [...p, {
-      role: "bot",
-      text: aborted
-        ? "La IA no me está respondiendo en este momento. Me detengo aquí; intenta de nuevo en unos minutos."
-        : stopped
-          ? `Listo, me detengo aquí (${done} de ${targets.length}). Cuando quieras seguimos con las demás.`
-          : "¡Terminé! Te expliqué todas las preguntas. Si algo no quedó claro, pregúntame con confianza.",
-    }]);
-  }
-
-  function stopBatch() {
-    batchStopRef.current = true;
-  }
-
   async function sendYaris() {
     const text = yarisInput.trim();
-    if (!text || yarisTyping || aiBusyRef.current || batchRunningRef.current) return;
+    if (!text || yarisTyping || aiBusyRef.current) return;
     aiBusyRef.current = true;
     setYarisMsgs((p) => [...p, { role: "user", text }]);
     const history = historyForAi(text);
@@ -820,14 +756,13 @@ function SimuladorPage() {
     const userAns = questions[reviewCurrent]?.selectedOpt ?? -1;
     const isCorrect = userAns === reviewQ.correctIndex;
     const mi = questions[reviewCurrent]?.materia ?? 0;
-    const wrongCount = questions.reduce((s, q, i) => s + (bankQs[i] && q.selectedOpt !== bankQs[i].correctIndex ? 1 : 0), 0);
 
     return (
       <div style={{ position: "fixed", inset: 0, zIndex: 800, background: "#f5f7fc", display: "flex", flexDirection: "column", fontFamily: "'Manrope', sans-serif" }}>
         {/* Review topbar */}
         <div style={{ height: 56, background: "#22375C", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px", flexShrink: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <button onClick={() => { stopBatch(); setPhase("result"); }} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "5px 12px", borderRadius: 7, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
+            <button onClick={() => setPhase("result")} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "5px 12px", borderRadius: 7, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
               ← Volver
             </button>
             <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1rem", color: "white", fontWeight: 700 }}>Revisión del examen</span>
@@ -936,17 +871,9 @@ function SimuladorPage() {
                   {reviewQ.cite && <div style={{ marginTop: 6, fontSize: "0.74rem", color: "#3D5D91", fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><Icon n="book" size={13} /> {reviewQ.cite}</div>}
                 </div>
 
-                <button onClick={openYaris} disabled={!!yarisBatch} style={{ width: "100%", padding: 11, background: "linear-gradient(135deg,#3D5D91,#5A86CB)", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: yarisBatch ? "not-allowed" : "pointer", opacity: yarisBatch ? 0.6 : 1, fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
+                <button onClick={openYaris} style={{ width: "100%", padding: 11, background: "linear-gradient(135deg,#3D5D91,#5A86CB)", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
                   <Icon n="spark" size={16} /> Explícamelo Yaris
                 </button>
-                <div style={{ display: "flex", gap: 8, marginTop: 8, flexWrap: "wrap" }}>
-                  <button onClick={() => explainAll(true)} disabled={!!yarisBatch || wrongCount === 0} style={{ flex: 1, minWidth: 150, padding: 9, background: "white", color: "#e74c3c", border: "2px solid rgba(231,76,60,0.4)", borderRadius: 10, fontSize: "0.78rem", fontWeight: 700, cursor: yarisBatch || wrongCount === 0 ? "not-allowed" : "pointer", opacity: yarisBatch || wrongCount === 0 ? 0.5 : 1, fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
-                    <Icon n="close" size={13} /> Explicar solo incorrectas ({wrongCount})
-                  </button>
-                  <button onClick={() => explainAll(false)} disabled={!!yarisBatch} style={{ flex: 1, minWidth: 150, padding: 9, background: "white", color: "#3D5D91", border: "2px solid rgba(61,93,145,0.4)", borderRadius: 10, fontSize: "0.78rem", fontWeight: 700, cursor: yarisBatch ? "not-allowed" : "pointer", opacity: yarisBatch ? 0.5 : 1, fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
-                    <Icon n="list" size={13} /> Explicar todas ({TOTAL_QS})
-                  </button>
-                </div>
               </div>
 
               <div style={{ display: "flex", gap: 10 }}>
@@ -966,8 +893,6 @@ function SimuladorPage() {
               onSend={sendYaris}
               onClose={() => setYarisOpen(false)}
               msgsEndRef={msgsEndRef}
-              batch={yarisBatch}
-              onStopBatch={stopBatch}
             />
           </div>
         </div>
@@ -1365,7 +1290,7 @@ function LeftPanel({ questions, current, expandedMaterias, onToggleMateria, onSe
 
 /* ─── Yaris Panel ─────────────────────────────────────────── */
 
-function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef, batch, onStopBatch }: {
+function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef }: {
   msgs: { role: "bot" | "user"; text: string; cite?: string }[];
   typing: boolean;
   input: string;
@@ -1373,8 +1298,6 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef,
   onSend: () => void;
   onClose: () => void;
   msgsEndRef: React.RefObject<HTMLDivElement | null>;
-  batch: { done: number; total: number } | null;
-  onStopBatch: () => void;
 }) {
   return (
     <>
@@ -1411,20 +1334,9 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef,
         )}
         <div ref={msgsEndRef} />
       </div>
-      {batch && (
-        <div style={{ padding: "10px 14px", borderTop: "1px solid #F2DCDB", background: "#f8f9ff", flexShrink: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 6 }}>
-            <span style={{ fontSize: "0.72rem", fontWeight: 700, color: "#3D5D91", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="spark" size={13} /> Explicando preguntas… {batch.done} / {batch.total}</span>
-            <button onClick={onStopBatch} style={{ background: "rgba(231,76,60,0.1)", border: "1px solid #e74c3c", color: "#e74c3c", borderRadius: 7, padding: "3px 10px", fontSize: "0.72rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="close" size={12} /> Detener</button>
-          </div>
-          <div style={{ height: 5, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
-            <div style={{ height: "100%", width: `${(batch.done / Math.max(1, batch.total)) * 100}%`, background: "linear-gradient(90deg,#3D5D91,#5A86CB)", borderRadius: 10, transition: "width 0.4s ease" }} />
-          </div>
-        </div>
-      )}
       <div style={{ padding: "10px 14px", borderTop: "1px solid #F2DCDB", display: "flex", gap: 7, flexShrink: 0 }}>
-        <input value={input} onChange={(e) => onInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") onSend(); }} disabled={!!batch} placeholder={batch ? "Yaris está explicando…" : "Escribe tu duda..."} style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 18, padding: "7px 12px", fontSize: "0.81rem", fontFamily: "'Manrope', sans-serif", outline: "none", background: batch ? "#f2f4fa" : "white", cursor: batch ? "not-allowed" : "text" }} onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }} />
-        <button onClick={onSend} disabled={!!batch} style={{ width: 32, height: 32, background: "#3D5D91", border: "none", borderRadius: "50%", color: "white", cursor: batch ? "not-allowed" : "pointer", opacity: batch ? 0.5 : 1, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.82rem", flexShrink: 0 }}><Icon n="send" size={15} /></button>
+        <input value={input} onChange={(e) => onInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") onSend(); }} placeholder="Escribe tu duda..." style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 18, padding: "7px 12px", fontSize: "0.81rem", fontFamily: "'Manrope', sans-serif", outline: "none" }} onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }} />
+        <button onClick={onSend} style={{ width: 32, height: 32, background: "#3D5D91", border: "none", borderRadius: "50%", color: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.82rem", flexShrink: 0 }}><Icon n="send" size={15} /></button>
       </div>
     </>
   );
