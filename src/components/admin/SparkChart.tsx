@@ -55,12 +55,13 @@ export function SparkChart({
             key={i}
             cx={c.x}
             cy={c.y}
-            r={hover === i ? 1.6 : 0.9}
+            r={hover === i ? 1.8 : 1.0}
             fill={color}
             vectorEffect="non-scaling-stroke"
             onMouseEnter={() => setHover(i)}
             onMouseLeave={() => setHover(null)}
-            style={{ cursor: "pointer" }}
+            onClick={() => onPointClick?.(points[i], i)}
+            style={{ cursor: onPointClick ? "pointer" : "default" }}
           />
         ))}
       </svg>
