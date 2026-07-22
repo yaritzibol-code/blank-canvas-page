@@ -101,6 +101,9 @@ function ConfiguracionPage() {
   const [pwdConfirm, setPwdConfirm] = useState("");
   const [pwdError, setPwdError] = useState<string | null>(null);
   const [phone, setPhone] = useState(() => user?.whatsapp ?? "");
+  const [nombreDraft, setNombreDraft] = useState(() => user?.nombre ?? "");
+  const [escuelaDraft, setEscuelaDraft] = useState(() => user?.escuela ?? "");
+  const [ciaacDraft, setCiaacDraft] = useState(() => user?.fechaCiaac ?? "");
   const [deleteConfirm, setDeleteConfirm] = useState("");
 
   if (!user) return null;
