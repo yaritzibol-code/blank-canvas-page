@@ -188,10 +188,11 @@ export async function register(input: {
 
   if (cloudEnabled()) {
     const s = supa()!;
+    const emailRedirectTo = typeof window !== "undefined" ? `${window.location.origin}/dashboard` : undefined;
     const { data, error } = await s.auth.signUp({
       email,
       password: input.password,
-      options: { data: { nombre, marketingOptIn: !!input.marketingOptIn } },
+      options: { data: { nombre, marketingOptIn: !!input.marketingOptIn }, emailRedirectTo },
     });
     if (error) {
       const msg = /already registered/i.test(error.message)
