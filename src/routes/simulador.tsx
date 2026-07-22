@@ -983,19 +983,21 @@ function SimuladorPage() {
         <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
           <div style={{ flex: 1, overflowY: "auto", padding: 28, display: "flex", flexDirection: "column", alignItems: "center" }} className="sm:p-7 p-4">
 
-            <div style={{ background: "white", borderRadius: 16, padding: 28, maxWidth: 700, width: "100%", boxShadow: "0 2px 14px rgba(61,93,145,0.07)" }} className="sm:p-7 p-5">
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 18 }}>
+            <div key={current} className="sim-q-card" style={{ background: "white", borderRadius: 16, padding: 28, maxWidth: 700, width: "100%", boxShadow: "0 2px 14px rgba(61,93,145,0.07)" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 18, gap: 10, flexWrap: "wrap" }}>
                 <div style={{ background: "rgba(61,93,145,0.07)", color: "#3D5D91", padding: "4px 12px", borderRadius: 20, fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 5 }}>
                   <Icon n={MATERIAS[currentQ.materia].icon} size={14} /> {MATERIAS[currentQ.materia].name}
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <button
                     onClick={toggleFlag}
-                    style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 12px", border: `1px solid ${currentQ.flagged ? "#f39c12" : "#F2DCDB"}`, borderRadius: 7, background: currentQ.flagged ? "rgba(243,156,18,0.08)" : "white", fontSize: "0.76rem", fontWeight: 600, color: currentQ.flagged ? "#f39c12" : "#647DA0", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s" }}
+                    aria-pressed={currentQ.flagged}
+                    title="Marcar (F)"
+                    style={{ display: "flex", alignItems: "center", gap: 5, padding: "6px 12px", border: `1px solid ${currentQ.flagged ? "#f39c12" : "#F2DCDB"}`, borderRadius: 7, background: currentQ.flagged ? "rgba(243,156,18,0.08)" : "white", fontSize: "0.76rem", fontWeight: 600, color: currentQ.flagged ? "#f39c12" : "#647DA0", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s", minHeight: 36 }}
                   >
                     <Icon n="flag" size={14} /> {currentQ.flagged ? "Marcada" : "Marcar para revisar"}
                   </button>
-                  <span style={{ fontSize: "0.76rem", color: "#8DA1BE" }}>{current + 1} / {TOTAL_QS}</span>
+                  <span style={{ fontSize: "0.76rem", color: "#8DA1BE", fontFamily: "'JetBrains Mono', ui-monospace, monospace" }}>{current + 1} / {TOTAL_QS}</span>
                 </div>
               </div>
 
@@ -1003,28 +1005,52 @@ function SimuladorPage() {
                 {examQ?.text ?? ""}
               </p>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {(examQ?.options ?? []).map((opt, oi) => (
-                  <div
-                    key={oi}
-                    onClick={() => selectOpt(current, oi)}
-                    style={{ display: "flex", alignItems: "center", gap: 14, padding: "14px 18px", background: currentQ.selectedOpt === oi ? "rgba(61,93,145,0.07)" : "#f8f9ff", border: `2px solid ${currentQ.selectedOpt === oi ? "#3D5D91" : "#F2DCDB"}`, borderRadius: 12, cursor: "pointer", transition: "all 0.2s", userSelect: "none" }}
-                    onMouseEnter={(e) => { if (currentQ.selectedOpt !== oi) { e.currentTarget.style.borderColor = "#3D5D91"; e.currentTarget.style.background = "rgba(61,93,145,0.04)"; e.currentTarget.style.transform = "translateX(3px)"; } }}
-                    onMouseLeave={(e) => { if (currentQ.selectedOpt !== oi) { e.currentTarget.style.borderColor = "#F2DCDB"; e.currentTarget.style.background = "#f8f9ff"; e.currentTarget.style.transform = "none"; } }}
-                  >
-                    <div style={{ width: 30, height: 30, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 700, flexShrink: 0, background: currentQ.selectedOpt === oi ? "#3D5D91" : "#F2DCDB", color: currentQ.selectedOpt === oi ? "white" : "#647DA0", transition: "all 0.2s" }}>
-                      {LETTERS[oi]}
-                    </div>
-                    <div style={{ fontSize: "0.9rem", color: "#22375C", lineHeight: 1.4, flex: 1 }}>{opt}</div>
-                  </div>
-                ))}
+              <div role="radiogroup" aria-label="Opciones de respuesta" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {(examQ?.options ?? []).map((opt, oi) => {
+                  const selected = currentQ.selectedOpt === oi;
+                  return (
+                    <button
+                      key={oi}
+                      type="button"
+                      role="radio"
+                      aria-checked={selected}
+                      data-selected={selected}
+                      onClick={() => selectOpt(current, oi)}
+                      className="sim-opt"
+                      style={{
+                        display: "flex", alignItems: "center", gap: 14, padding: "14px 18px",
+                        background: selected ? "rgba(61,93,145,0.09)" : "#f8f9ff",
+                        border: `2px solid ${selected ? "#3D5D91" : "#F2DCDB"}`,
+                        borderRadius: 12, cursor: "pointer",
+                        transition: "background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s",
+                        userSelect: "none", fontFamily: "'Manrope', sans-serif", minHeight: 56, width: "100%",
+                      }}
+                    >
+                      <div
+                        className="sim-opt-letter"
+                        aria-hidden="true"
+                        style={{
+                          width: 30, height: 30, borderRadius: "50%",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          fontSize: "0.8rem", fontWeight: 700, flexShrink: 0,
+                          background: selected ? "#3D5D91" : "#F2DCDB",
+                          color: selected ? "white" : "#647DA0",
+                        }}
+                      >
+                        {selected ? <Icon n="check" size={16} /> : LETTERS[oi]}
+                      </div>
+                      <div style={{ fontSize: "0.9rem", color: "#22375C", lineHeight: 1.4, flex: 1, textAlign: "left" }}>{opt}</div>
+                    </button>
+                  );
+                })}
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 14, fontSize: "0.75rem", color: "#8DA1BE" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 14, fontSize: "0.72rem", color: "#8DA1BE", flexWrap: "wrap" }}>
                 <span style={{ display: "flex", alignItems: "center" }}><Icon n="lightbulb" size={14} /></span>
-                <span>Puedes cambiar tu respuesta en cualquier momento antes de entregar.</span>
+                <span>Atajos: <kbd style={{ background: "#f2f4fa", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>1-4</kbd> respuesta · <kbd style={{ background: "#f2f4fa", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>←/→</kbd> navegar · <kbd style={{ background: "#f2f4fa", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>F</kbd> marcar</span>
               </div>
             </div>
+
 
             {/* Nav */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 700, width: "100%", marginTop: 16, gap: 10 }}>
