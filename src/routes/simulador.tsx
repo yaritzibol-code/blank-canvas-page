@@ -831,8 +831,27 @@ function SimuladorPage() {
               </div>
             </div>
           </div>
-          <button onClick={() => setCalcOpen((o) => !o)} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "6px 12px", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
-            <Icon n="gauge" size={15} /> Calculadora
+          <button
+            onClick={() => setCalcOpen((o) => !o)}
+            aria-label="Abrir calculadora"
+            aria-expanded={calcOpen}
+            style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "8px 12px", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5, minHeight: 40 }}
+          >
+            <Icon n="gauge" size={15} /> <span className="hidden sm:inline">Calculadora</span>
+          </button>
+          <button
+            onClick={() => setConfirmOpen(true)}
+            aria-label="Finalizar examen"
+            style={{
+              background: "#6C0820", border: "1px solid rgba(255,255,255,0.15)",
+              color: "white", padding: "8px 14px", borderRadius: 8,
+              fontSize: "0.8rem", fontWeight: 700, cursor: "pointer",
+              fontFamily: "'Manrope', sans-serif",
+              display: "flex", alignItems: "center", gap: 6, minHeight: 40,
+              boxShadow: "0 2px 8px rgba(108,8,32,0.35)",
+            }}
+          >
+            <Icon n="check" size={15} /> <span className="hidden sm:inline">Finalizar</span>
           </button>
         </div>
       </div>
