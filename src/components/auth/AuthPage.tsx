@@ -2,6 +2,18 @@ import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { Eye, EyeOff } from "lucide-react";
 import { register, login, resetPassword, getSessionUser, ensureSeeded } from "@/lib/store";
+import { lovable } from "@/integrations/lovable";
+
+async function signInWithGoogle(setError: (m: string) => void) {
+  try {
+    const res = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
+    if (res.error) { setError(res.error.message || "No pudimos iniciar sesión con Google."); return; }
+    if (res.redirected) return;
+    window.location.href = "/dashboard";
+  } catch (e) {
+    setError(e instanceof Error ? e.message : "Error al iniciar sesión con Google.");
+  }
+}
 
 type Tab = "register" | "login";
 
