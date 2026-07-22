@@ -92,7 +92,7 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
   const [marketing, setMarketing] = useState(true);
   const [terms, setTerms] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [googleMsg, setGoogleMsg] = useState(false);
+  // google handled via lovable.auth
 
   async function handleRegister() {
     if (loading) return;
@@ -207,7 +207,7 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [googleMsg, setGoogleMsg] = useState(false);
+  // google handled via lovable.auth
 
   // Flujo MVP de "¿Olvidaste tu contraseña?"
   const [showReset, setShowReset] = useState(false);
