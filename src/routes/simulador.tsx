@@ -1074,41 +1074,65 @@ function SimuladorPage() {
 
       {/* Calculator modal */}
       {calcOpen && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 500, display: "flex", alignItems: "flex-end", justifyContent: "flex-end", padding: "80px 20px 20px" }} onClick={(e) => { if (e.target === e.currentTarget) setCalcOpen(false); }}>
-          <div style={{ background: "#22375C", borderRadius: 16, padding: 16, width: 220, boxShadow: "0 20px 40px rgba(0,0,0,0.4)" }}>
-            <div style={{ background: "rgba(255,255,255,0.08)", borderRadius: 10, padding: "10px 14px", marginBottom: 12, textAlign: "right" }}>
-              <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", minHeight: 16, marginBottom: 2 }}>{calc.expr}</div>
-              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.8rem", fontWeight: 900, color: "white", wordBreak: "break-all" }}>{calc.display}</div>
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Calculadora"
+          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 500, display: "flex", alignItems: "flex-end", justifyContent: "flex-end", padding: "80px 20px 20px", animation: "sim-fade-in 0.2s ease-out" }}
+          onClick={(e) => { if (e.target === e.currentTarget) setCalcOpen(false); }}
+        >
+          <div style={{ background: "linear-gradient(160deg, #22375C, #1a2b48)", borderRadius: 16, padding: 14, width: 240, boxShadow: "0 20px 40px rgba(0,0,0,0.4)", animation: "sim-pop 0.25s ease-out" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+              <div style={{ fontSize: "0.65rem", fontWeight: 700, color: "rgba(255,255,255,0.55)", textTransform: "uppercase", letterSpacing: "1px", display: "inline-flex", alignItems: "center", gap: 5 }}>
+                <Icon n="gauge" size={12} /> Calculadora
+              </div>
+              <button onClick={() => setCalcOpen(false)} aria-label="Cerrar calculadora" style={{ background: "rgba(255,255,255,0.08)", border: "none", color: "rgba(255,255,255,0.7)", width: 26, height: 26, borderRadius: 6, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Icon n="close" size={13} />
+              </button>
+            </div>
+            <div style={{ background: "rgba(0,0,0,0.25)", borderRadius: 10, padding: "10px 14px", marginBottom: 12, textAlign: "right" }}>
+              <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", minHeight: 16, marginBottom: 2, fontFamily: "'JetBrains Mono', ui-monospace, monospace" }}>{calc.expr || "\u00A0"}</div>
+              <div style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "1.75rem", fontWeight: 800, color: "white", wordBreak: "break-all", lineHeight: 1.1 }}>{calc.display}</div>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 6 }}>
               {[
-                { label: "C", action: () => dispatch("CLEAR"), style: { background: "rgba(231,76,60,0.6)", color: "white" } },
-                { label: "%", action: () => dispatch("OP", "%"), style: { background: "#5A86CB", color: "white" } },
-                { label: "÷", action: () => dispatch("OP", "÷"), style: { background: "#5A86CB", color: "white" } },
+                { label: "C", action: () => dispatch("CLEAR"), style: { background: "rgba(231,76,60,0.65)", color: "white" } },
+                { label: "%", action: () => dispatch("OP", "%"), style: { background: "#3D5D91", color: "white" } },
+                { label: "÷", action: () => dispatch("OP", "÷"), style: { background: "#3D5D91", color: "white" } },
+                { label: "×", action: () => dispatch("OP", "×"), style: { background: "#3D5D91", color: "white" } },
                 { label: "7", action: () => dispatch("NUM", "7"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
                 { label: "8", action: () => dispatch("NUM", "8"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
                 { label: "9", action: () => dispatch("NUM", "9"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
-                { label: "×", action: () => dispatch("OP", "×"), style: { background: "#5A86CB", color: "white" } },
+                { label: "−", action: () => dispatch("OP", "-"), style: { background: "#3D5D91", color: "white" } },
                 { label: "4", action: () => dispatch("NUM", "4"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
                 { label: "5", action: () => dispatch("NUM", "5"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
                 { label: "6", action: () => dispatch("NUM", "6"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
-                { label: "−", action: () => dispatch("OP", "-"), style: { background: "#5A86CB", color: "white" } },
+                { label: "+", action: () => dispatch("OP", "+"), style: { background: "#3D5D91", color: "white" } },
                 { label: "1", action: () => dispatch("NUM", "1"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
                 { label: "2", action: () => dispatch("NUM", "2"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
                 { label: "3", action: () => dispatch("NUM", "3"), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
-                { label: "+", action: () => dispatch("OP", "+"), style: { background: "#5A86CB", color: "white" } },
+                { label: "=", action: () => dispatch("EQ"), style: { background: "#6C0820", color: "white", gridRow: "span 2" } },
+                { label: "0", action: () => dispatch("NUM", "0"), style: { background: "rgba(255,255,255,0.1)", color: "white", gridColumn: "span 2" } },
+                { label: ".", action: () => dispatch("NUM", "."), style: { background: "rgba(255,255,255,0.1)", color: "white" } },
               ].map((btn, i) => (
-                <button key={i} onClick={btn.action} style={{ padding: "12px 0", border: "none", borderRadius: 8, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", ...btn.style }}>
+                <button
+                  key={i}
+                  onClick={btn.action}
+                  aria-label={btn.label === "C" ? "Limpiar" : btn.label}
+                  className="sim-calc-btn"
+                  style={{ padding: "14px 0", border: "none", borderRadius: 9, fontSize: "1rem", fontWeight: 700, cursor: "pointer", fontFamily: "'JetBrains Mono', ui-monospace, monospace", minHeight: 44, ...btn.style }}
+                >
                   {btn.label}
                 </button>
               ))}
-              <button onClick={() => dispatch("NUM", "0")} style={{ padding: "12px 0", border: "none", borderRadius: 8, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(255,255,255,0.1)", color: "white", gridColumn: "span 2" }}>0</button>
-              <button onClick={() => dispatch("NUM", ".")} style={{ padding: "12px 0", border: "none", borderRadius: 8, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(255,255,255,0.1)", color: "white" }}>.</button>
-              <button onClick={() => dispatch("EQ")} style={{ padding: "12px 0", border: "none", borderRadius: 8, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "#6C0820", color: "white", gridColumn: "span 1" }}>=</button>
+            </div>
+            <div style={{ marginTop: 10, fontSize: "0.62rem", color: "rgba(255,255,255,0.4)", textAlign: "center", lineHeight: 1.4 }}>
+              Usa el teclado · <kbd style={{ background: "rgba(255,255,255,0.08)", padding: "0 4px", borderRadius: 3 }}>Esc</kbd> cerrar
             </div>
           </div>
         </div>
       )}
+
 
       {/* Confirm finish modal */}
       {confirmOpen && (
