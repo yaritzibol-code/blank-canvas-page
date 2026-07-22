@@ -162,8 +162,34 @@ function PerfilPage() {
   );
 
   return (
-    <div style={{ fontFamily: "'Manrope', sans-serif", maxWidth: 860 }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif", maxWidth: 900, position: "relative", isolation: "isolate" }}>
+      <div aria-hidden="true" style={{ position: "absolute", inset: "-24px -24px auto -24px", height: 320, zIndex: 0, pointerEvents: "none", opacity: 0.55 }}>
+        <PlaneField density={10} />
+      </div>
       <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}`}</style>
+
+      {/* Editorial header */}
+      <header style={{ position: "relative", zIndex: 1, marginBottom: 28, paddingTop: 8 }}>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", letterSpacing: "0.22em", color: "#647DA0", textTransform: "uppercase", marginBottom: 10 }}>
+          Bitácora · Perfil de piloto
+        </div>
+        <h1 style={{
+          fontFamily: "'Instrument Serif', serif",
+          fontStyle: "italic",
+          fontWeight: 400,
+          fontSize: "clamp(2rem, 5vw, 3rem)",
+          lineHeight: 1.05,
+          color: "#22375C",
+          margin: 0,
+        }}>
+          Tu bitácora, <em style={{ color: "#6C0820" }}>{info.nombre.split(" ")[0] || "piloto"}</em>.
+        </h1>
+        <div style={{ marginTop: 10, maxWidth: 520, fontSize: "0.92rem", color: "#647DA0", lineHeight: 1.55 }}>
+          Registro editorial de tu preparación CIAAC — datos, rachas y la evolución de Pathy en un solo tablero.
+        </div>
+        <div aria-hidden="true" style={{ marginTop: 14, height: 1, background: "linear-gradient(90deg, #22375C 0%, transparent 70%)" }} />
+      </header>
+
 
       {/* Save flash */}
       {saved && (
