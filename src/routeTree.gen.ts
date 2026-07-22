@@ -41,7 +41,11 @@ import { Route as AdminContenidoRouteImport } from './routes/admin/contenido'
 import { Route as AdminConfiguracionRouteImport } from './routes/admin/configuracion'
 import { Route as AdminBancoRouteImport } from './routes/admin/banco'
 import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/materias/index'
+import { Route as AdminOperacionesIndexRouteImport } from './routes/admin/operaciones/index'
 import { Route as DashboardMateriasSubjectIdRouteImport } from './routes/dashboard/materias/$subjectId'
+import { Route as ApiPublicClientErrorsRouteImport } from './routes/api/public/client-errors'
+import { Route as AdminOperacionesYarisRouteImport } from './routes/admin/operaciones/yaris'
+import { Route as AdminOperacionesStripeRouteImport } from './routes/admin/operaciones/stripe'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const SimuladorRoute = SimuladorRouteImport.update({
@@ -204,12 +208,32 @@ const DashboardMateriasIndexRoute = DashboardMateriasIndexRouteImport.update({
   path: '/materias/',
   getParentRoute: () => DashboardRoute,
 } as any)
+const AdminOperacionesIndexRoute = AdminOperacionesIndexRouteImport.update({
+  id: '/admin/operaciones/',
+  path: '/admin/operaciones/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardMateriasSubjectIdRoute =
   DashboardMateriasSubjectIdRouteImport.update({
     id: '/materias/$subjectId',
     path: '/materias/$subjectId',
     getParentRoute: () => DashboardRoute,
   } as any)
+const ApiPublicClientErrorsRoute = ApiPublicClientErrorsRouteImport.update({
+  id: '/api/public/client-errors',
+  path: '/api/public/client-errors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminOperacionesYarisRoute = AdminOperacionesYarisRouteImport.update({
+  id: '/admin/operaciones/yaris',
+  path: '/admin/operaciones/yaris',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminOperacionesStripeRoute = AdminOperacionesStripeRouteImport.update({
+  id: '/admin/operaciones/stripe',
+  path: '/admin/operaciones/stripe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicPaymentsWebhookRoute =
   ApiPublicPaymentsWebhookRouteImport.update({
     id: '/api/public/payments/webhook',
@@ -249,7 +273,11 @@ export interface FileRoutesByFullPath {
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
+  '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
+  '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
+  '/admin/operaciones/': typeof AdminOperacionesIndexRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -284,7 +312,11 @@ export interface FileRoutesByTo {
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/admin': typeof AdminIndexRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
+  '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
+  '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
+  '/admin/operaciones': typeof AdminOperacionesIndexRoute
   '/dashboard/materias': typeof DashboardMateriasIndexRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -321,7 +353,11 @@ export interface FileRoutesById {
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
+  '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
+  '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
+  '/admin/operaciones/': typeof AdminOperacionesIndexRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -359,7 +395,11 @@ export interface FileRouteTypes {
     | '/dashboard/recordatorios'
     | '/admin/'
     | '/dashboard/'
+    | '/admin/operaciones/stripe'
+    | '/admin/operaciones/yaris'
+    | '/api/public/client-errors'
     | '/dashboard/materias/$subjectId'
+    | '/admin/operaciones/'
     | '/dashboard/materias/'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -394,7 +434,11 @@ export interface FileRouteTypes {
     | '/dashboard/recordatorios'
     | '/admin'
     | '/dashboard'
+    | '/admin/operaciones/stripe'
+    | '/admin/operaciones/yaris'
+    | '/api/public/client-errors'
     | '/dashboard/materias/$subjectId'
+    | '/admin/operaciones'
     | '/dashboard/materias'
     | '/api/public/payments/webhook'
   id:
@@ -430,7 +474,11 @@ export interface FileRouteTypes {
     | '/dashboard/recordatorios'
     | '/admin/'
     | '/dashboard/'
+    | '/admin/operaciones/stripe'
+    | '/admin/operaciones/yaris'
+    | '/api/public/client-errors'
     | '/dashboard/materias/$subjectId'
+    | '/admin/operaciones/'
     | '/dashboard/materias/'
     | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
@@ -455,6 +503,10 @@ export interface RootRouteChildren {
   AdminWhatsappRoute: typeof AdminWhatsappRoute
   CheckoutReturnRoute: typeof CheckoutReturnRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminOperacionesStripeRoute: typeof AdminOperacionesStripeRoute
+  AdminOperacionesYarisRoute: typeof AdminOperacionesYarisRoute
+  ApiPublicClientErrorsRoute: typeof ApiPublicClientErrorsRoute
+  AdminOperacionesIndexRoute: typeof AdminOperacionesIndexRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
@@ -684,12 +736,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardMateriasIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/admin/operaciones/': {
+      id: '/admin/operaciones/'
+      path: '/admin/operaciones'
+      fullPath: '/admin/operaciones/'
+      preLoaderRoute: typeof AdminOperacionesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard/materias/$subjectId': {
       id: '/dashboard/materias/$subjectId'
       path: '/materias/$subjectId'
       fullPath: '/dashboard/materias/$subjectId'
       preLoaderRoute: typeof DashboardMateriasSubjectIdRouteImport
       parentRoute: typeof DashboardRoute
+    }
+    '/api/public/client-errors': {
+      id: '/api/public/client-errors'
+      path: '/api/public/client-errors'
+      fullPath: '/api/public/client-errors'
+      preLoaderRoute: typeof ApiPublicClientErrorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/operaciones/yaris': {
+      id: '/admin/operaciones/yaris'
+      path: '/admin/operaciones/yaris'
+      fullPath: '/admin/operaciones/yaris'
+      preLoaderRoute: typeof AdminOperacionesYarisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/operaciones/stripe': {
+      id: '/admin/operaciones/stripe'
+      path: '/admin/operaciones/stripe'
+      fullPath: '/admin/operaciones/stripe'
+      preLoaderRoute: typeof AdminOperacionesStripeRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/public/payments/webhook': {
       id: '/api/public/payments/webhook'
@@ -759,6 +839,10 @@ const rootRouteChildren: RootRouteChildren = {
   AdminWhatsappRoute: AdminWhatsappRoute,
   CheckoutReturnRoute: CheckoutReturnRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AdminOperacionesStripeRoute: AdminOperacionesStripeRoute,
+  AdminOperacionesYarisRoute: AdminOperacionesYarisRoute,
+  ApiPublicClientErrorsRoute: ApiPublicClientErrorsRoute,
+  AdminOperacionesIndexRoute: AdminOperacionesIndexRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
