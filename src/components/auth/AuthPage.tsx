@@ -307,8 +307,7 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
       {error && <p style={errorTextStyle}>{error}</p>}
       <SubmitButton loading={loading} onClick={handleLogin}>Iniciar sesión</SubmitButton>
       <Divider />
-      <GoogleButton onClick={() => setGoogleMsg(true)} />
-      {googleMsg && <p style={googleMsgStyle}>Disponible próximamente — usa tu correo</p>}
+      <GoogleButton onClick={() => signInWithGoogle((m) => setError(m))} />
 
       <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#8DA1BE", marginTop: 4 }}>
         ¿No tienes cuenta?{" "}
