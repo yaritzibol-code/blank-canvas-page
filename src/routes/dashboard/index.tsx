@@ -297,26 +297,38 @@ function DashboardHome() {
         <div style={{ flexShrink: 0, display: "flex", color: "white" }}><Icon n="cloud" size={48} /></div>
         <div style={{ flex: 1 }}>
           <h4 style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: 4 }}>
-            ¡Modo Piloto activado, {firstName}!
+            {streak > 0 ? `¡Modo Piloto activado, ${firstName}!` : `Hola, ${firstName}`}
           </h4>
           <p style={{ fontSize: "0.82rem", opacity: 0.7, lineHeight: 1.4, marginBottom: 10 }}>
-            Llevas {streak} {diasWord} consecutivos estudiando. ¡Eres imparable! Sigue volando alto.
+            {streak > 0
+              ? `Llevas ${streak} ${diasWord} consecutivos estudiando. ¡Sigue así!`
+              : "Empieza hoy una sesión para arrancar tu racha."}
           </p>
           <div style={{ display: "flex", gap: 4 }}>
-            {WEEK_DAYS.map((d, i) => (
-              <div
-                key={i}
-                style={{
-                  width: 24, height: 24, borderRadius: "50%",
-                  background: i === todayIdx ? "#F2AEBC" : "rgba(61,93,145,0.8)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: "0.6rem", fontWeight: 700,
-                  color: i === todayIdx ? "#6C0820" : "white",
-                }}
-              >
-                {d}
-              </div>
-            ))}
+            {WEEK_DAYS.map((d, i) => {
+              // Marca los días de la última semana donde hubo estudio real
+              const dayDate = new Date();
+              const diff = i - todayIdx;
+              dayDate.setDate(dayDate.getDate() + diff);
+              const key = dayDate.toISOString().slice(0, 10);
+              const studied = (studyDays[key] ?? 0) > 0;
+              const isToday = i === todayIdx;
+              return (
+                <div
+                  key={i}
+                  title={studied ? `${Math.round((studyDays[key] ?? 0) / 60)} min` : "Sin actividad"}
+                  style={{
+                    width: 24, height: 24, borderRadius: "50%",
+                    background: isToday ? "#F2AEBC" : studied ? "rgba(242,174,188,0.5)" : "rgba(61,93,145,0.6)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: "0.6rem", fontWeight: 700,
+                    color: isToday ? "#6C0820" : "white",
+                  }}
+                >
+                  {d}
+                </div>
+              );
+            })}
           </div>
         </div>
         <div style={{ textAlign: "center", flexShrink: 0 }}>
