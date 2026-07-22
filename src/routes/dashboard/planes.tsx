@@ -52,6 +52,14 @@ function PlanesPage() {
         .limit(1)
         .maybeSingle();
       if (!cancelled) setSub((data as SubRow | null) ?? null);
+      if (configured) {
+        try {
+          await syncMyPlan({ data: { environment: env } });
+          await refreshCloudProfile();
+        } catch {
+          /* noop */
+        }
+      }
     })();
     return () => {
       cancelled = true;
