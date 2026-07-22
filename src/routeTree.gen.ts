@@ -42,6 +42,7 @@ import { Route as AdminConfiguracionRouteImport } from './routes/admin/configura
 import { Route as AdminBancoRouteImport } from './routes/admin/banco'
 import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/materias/index'
 import { Route as DashboardMateriasSubjectIdRouteImport } from './routes/dashboard/materias/$subjectId'
+import { Route as ApiPublicClientErrorsRouteImport } from './routes/api/public/client-errors'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const SimuladorRoute = SimuladorRouteImport.update({
@@ -210,6 +211,11 @@ const DashboardMateriasSubjectIdRoute =
     path: '/materias/$subjectId',
     getParentRoute: () => DashboardRoute,
   } as any)
+const ApiPublicClientErrorsRoute = ApiPublicClientErrorsRouteImport.update({
+  id: '/api/public/client-errors',
+  path: '/api/public/client-errors',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicPaymentsWebhookRoute =
   ApiPublicPaymentsWebhookRouteImport.update({
     id: '/api/public/payments/webhook',
@@ -249,6 +255,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -284,6 +291,7 @@ export interface FileRoutesByTo {
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/admin': typeof AdminIndexRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/dashboard/materias': typeof DashboardMateriasIndexRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -321,6 +329,7 @@ export interface FileRoutesById {
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -359,6 +368,7 @@ export interface FileRouteTypes {
     | '/dashboard/recordatorios'
     | '/admin/'
     | '/dashboard/'
+    | '/api/public/client-errors'
     | '/dashboard/materias/$subjectId'
     | '/dashboard/materias/'
     | '/api/public/payments/webhook'
@@ -394,6 +404,7 @@ export interface FileRouteTypes {
     | '/dashboard/recordatorios'
     | '/admin'
     | '/dashboard'
+    | '/api/public/client-errors'
     | '/dashboard/materias/$subjectId'
     | '/dashboard/materias'
     | '/api/public/payments/webhook'
@@ -430,6 +441,7 @@ export interface FileRouteTypes {
     | '/dashboard/recordatorios'
     | '/admin/'
     | '/dashboard/'
+    | '/api/public/client-errors'
     | '/dashboard/materias/$subjectId'
     | '/dashboard/materias/'
     | '/api/public/payments/webhook'
@@ -455,6 +467,7 @@ export interface RootRouteChildren {
   AdminWhatsappRoute: typeof AdminWhatsappRoute
   CheckoutReturnRoute: typeof CheckoutReturnRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  ApiPublicClientErrorsRoute: typeof ApiPublicClientErrorsRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
@@ -691,6 +704,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardMateriasSubjectIdRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/api/public/client-errors': {
+      id: '/api/public/client-errors'
+      path: '/api/public/client-errors'
+      fullPath: '/api/public/client-errors'
+      preLoaderRoute: typeof ApiPublicClientErrorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/payments/webhook': {
       id: '/api/public/payments/webhook'
       path: '/api/public/payments/webhook'
@@ -759,6 +779,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminWhatsappRoute: AdminWhatsappRoute,
   CheckoutReturnRoute: CheckoutReturnRoute,
   AdminIndexRoute: AdminIndexRoute,
+  ApiPublicClientErrorsRoute: ApiPublicClientErrorsRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
