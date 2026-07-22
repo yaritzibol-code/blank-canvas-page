@@ -186,6 +186,32 @@ function ConfiguracionPage() {
         </div>
       )}
 
+      {/* ── PERFIL ── */}
+      <div style={{ background: "white", borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 20 }}>
+        <SectionHeader icon="user" iconBg="rgba(61,93,145,.1)" title="Perfil" desc="Actualiza tus datos personales" />
+        <ConfigRow
+          icon="user" label="Nombre" sub={user.nombre || "Sin nombre"}
+          onClick={() => { setNombreDraft(user.nombre); setModal("nombre"); }}
+          right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>}
+        />
+        <ConfigRow
+          icon="chat" label="WhatsApp" sub={masked || "Sin número"}
+          onClick={() => { setPhone(user.whatsapp); setModal("phone"); }}
+          right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>}
+        />
+        <ConfigRow
+          icon="plane" label="Escuela de aviación" sub={user.escuela || "Sin escuela"}
+          onClick={() => { setEscuelaDraft(user.escuela); setModal("escuela"); }}
+          right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>}
+        />
+        <ConfigRow
+          icon="target" label="Fecha estimada del CIAAC"
+          sub={user.fechaCiaac ? new Date(`${user.fechaCiaac}T12:00:00`).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" }) : "Sin fecha"}
+          onClick={() => { setCiaacDraft(user.fechaCiaac ?? ""); setModal("ciaac"); }}
+          right={<span style={{ fontSize: ".75rem", color: "#ccc" }}>›</span>}
+        />
+      </div>
+
       {/* ── NOTIFICACIONES ── */}
       <div style={{ background: "white", borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 20 }}>
         <SectionHeader icon="bell" iconBg="rgba(37,211,102,.1)" title="Notificaciones" desc="Gestiona cómo y cuándo te avisamos" />
