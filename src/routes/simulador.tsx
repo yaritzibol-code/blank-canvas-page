@@ -15,6 +15,17 @@ import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
 export const Route = createFileRoute("/simulador")({
   component: SimuladorPage,
+  head: () => ({
+    meta: [
+      { title: "Simulador CIAAC — FlightPath" },
+      { name: "description", content: "Simulador del examen CIAAC con 310 preguntas, ponderación oficial y revisión guiada por Yaris IA." },
+      { property: "og:title", content: "Simulador CIAAC — FlightPath" },
+      { property: "og:description", content: "Practica el examen CIAAC en condiciones reales con FlightPath." },
+      { property: "og:url", content: "https://flightpath.mx/simulador" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: "https://flightpath.mx/simulador" }],
+  }),
 });
 
 /* ─── Data ───────────────────────────────────────────────── */
