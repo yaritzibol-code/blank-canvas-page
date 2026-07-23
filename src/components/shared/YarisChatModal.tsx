@@ -5,10 +5,19 @@
  */
 import { useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
+import DOMPurify from "isomorphic-dompurify";
 import { Icon } from "@/components/ui/fp-icon";
 import { yarisReply, logYarisUse } from "@/lib/store";
 import { yarisAiChat } from "@/lib/yaris-ai.functions";
 import type { User } from "@/lib/store";
+
+/** Sanitiza HTML de Yaris permitiendo sólo etiquetas de formato inocuas. */
+function sanitizeYaris(html: string): string {
+  return DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: ["b", "strong", "i", "em", "u", "br", "ul", "ol", "li", "p", "span"],
+    ALLOWED_ATTR: [],
+  });
+}
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
