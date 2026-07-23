@@ -392,7 +392,7 @@ export const adminDayDrilldown = createServerFn({ method: "POST" })
       .order("received_at", { ascending: false });
 
     // Drift actual (snapshot; el desfase es un estado, no un evento diario)
-    const { data: drift } = await context.supabase.rpc("admin_plan_drift", { check_env: data.environment });
+    const { data: drift } = await supabaseAdmin.rpc("admin_plan_drift", { check_env: data.environment });
 
     // Emails
     const allIds = Array.from(new Set([...subUserIds, ...eventUserIds]));
