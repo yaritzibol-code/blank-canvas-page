@@ -7,9 +7,15 @@ export const Route = createFileRoute("/reset-password")({
   component: ResetPasswordPage,
   head: () => ({
     meta: [
-      { title: "Restablecer contraseña · FlightPath" },
-      { name: "description", content: "Define una nueva contraseña para tu cuenta." },
+      { title: "Restablecer contraseña — FlightPath" },
+      { name: "description", content: "Define una nueva contraseña para tu cuenta FlightPath." },
+      { property: "og:title", content: "Restablecer contraseña — FlightPath" },
+      { property: "og:description", content: "Recupera el acceso a tu cuenta FlightPath." },
+      { property: "og:url", content: "https://flightpath.mx/reset-password" },
+      { property: "og:type", content: "website" },
+      { name: "robots", content: "noindex" },
     ],
+    links: [{ rel: "canonical", href: "https://flightpath.mx/reset-password" }],
   }),
 });
 

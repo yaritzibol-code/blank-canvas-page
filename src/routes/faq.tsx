@@ -2,7 +2,32 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { BackLink } from "@/components/shared/BackLink";
 
-export const Route = createFileRoute("/faq")({ component: FaqPage });
+export const Route = createFileRoute("/faq")({
+  component: FaqPage,
+  head: () => ({
+    meta: [
+      { title: "Preguntas frecuentes — FlightPath CIAAC" },
+      { name: "description", content: "Respuestas sobre planes, simuladores, Yaris y Pathy, cancelación y funcionamiento de FlightPath para el examen CIAAC." },
+      { property: "og:title", content: "Preguntas frecuentes — FlightPath" },
+      { property: "og:description", content: "Planes, simulador CIAAC, tutores IA y todo lo que necesitas saber antes de empezar." },
+      { property: "og:url", content: "https://flightpath.mx/faq" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: "https://flightpath.mx/faq" }],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: FAQS.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      }),
+    }],
+  }),
+});
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";

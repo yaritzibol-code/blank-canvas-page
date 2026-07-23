@@ -4,6 +4,17 @@ import type { CSSProperties, ReactNode } from "react";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
+  head: () => ({
+    meta: [
+      { title: "FlightPath — Aprueba el examen CIAAC a la primera" },
+      { name: "description", content: "Plataforma de estudio para el examen CIAAC: 12 materias, simuladores, banco de más de 2,800 preguntas, biblioteca oficial y tutores IA Yaris y Pathy." },
+      { property: "og:title", content: "FlightPath — Aprueba el examen CIAAC a la primera" },
+      { property: "og:description", content: "Simuladores CIAAC, banco de preguntas, biblioteca y tutores IA. Prepárate con FlightPath." },
+      { property: "og:url", content: "https://flightpath.mx/" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: "https://flightpath.mx/" }],
+  }),
 });
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -784,7 +795,7 @@ function PathyPhone() {
           <div className="relative z-10 bg-lapis text-white px-3.5 pt-7 pb-3 flex items-center gap-2.5 shadow-md">
             <Icon n="chevD" className="w-4 h-4 rotate-90 text-white/70" />
             <span className="w-9 h-9 rounded-full overflow-hidden ring-2 ring-white/40 shrink-0 bg-ink">
-              <img src="/assets/pathy-small.png" alt="Pathy" className="w-full h-full object-cover scale-110" />
+              <img src="/assets/pathy-small.png" alt="Avatar de Pathy, copiloto de estudio" className="w-full h-full object-cover scale-110" />
             </span>
             <div className="leading-tight">
               <div className="text-[13.5px] font-bold flex items-center gap-1.5">Pathy</div>
@@ -1052,7 +1063,7 @@ function YarisChat() {
               </div>
               <div className="px-5 py-3 border-t border-ink/8 bg-misty/30">
                 <div className="flex items-center gap-3">
-                  <button onClick={() => setPlaying(!playing)} className="w-9 h-9 rounded-full bg-burgundy hover:bg-burgundy-700 text-white grid place-items-center transition-colors">
+                  <button onClick={() => setPlaying(!playing)} aria-label={playing ? "Pausar demostración de Yaris" : "Reproducir demostración de Yaris"} className="w-9 h-9 rounded-full bg-burgundy hover:bg-burgundy-700 text-white grid place-items-center transition-colors">
                     {playing ? <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg> : <Icon n="play" className="w-4 h-4" />}
                   </button>
                   <div className="flex-1 flex items-center gap-1.5">
@@ -1060,7 +1071,7 @@ function YarisChat() {
                       const on = i === idx, done = i < idx;
                       const pct = on ? (phaseDur.slice(0, phase + 1).reduce((a, b) => a + b, 0) / phaseDur.reduce((a, b) => a + b, 0)) * 100 : done ? 100 : 0;
                       return (
-                        <button key={i} onClick={() => { setIdx(i); setPhase(0); }} className="flex-1 h-1.5 rounded-full bg-ink/10 overflow-hidden relative">
+                        <button key={i} onClick={() => { setIdx(i); setPhase(0); }} aria-label={`Ir a la escena ${i + 1} de ${scenes.length}`} aria-current={on ? "true" : undefined} className="flex-1 h-1.5 rounded-full bg-ink/10 overflow-hidden relative">
                           <div className="absolute inset-y-0 left-0 bg-burgundy transition-all duration-200" style={{ width: `${pct}%` }} />
                         </button>
                       );

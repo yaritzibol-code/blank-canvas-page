@@ -1,7 +1,20 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BackLink } from "@/components/shared/BackLink";
 
-export const Route = createFileRoute("/legal")({ component: LegalPage });
+export const Route = createFileRoute("/legal")({
+  component: LegalPage,
+  head: () => ({
+    meta: [
+      { title: "Aviso legal y privacidad — FlightPath" },
+      { name: "description", content: "Términos de uso, política de privacidad y aviso legal de la plataforma FlightPath para preparación del examen CIAAC." },
+      { property: "og:title", content: "Aviso legal y privacidad — FlightPath" },
+      { property: "og:description", content: "Términos, privacidad y aviso legal de FlightPath." },
+      { property: "og:url", content: "https://flightpath.mx/legal" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: "https://flightpath.mx/legal" }],
+  }),
+});
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
