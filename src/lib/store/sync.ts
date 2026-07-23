@@ -17,6 +17,7 @@
 import { read, write, setWriteHook } from "./db";
 import { supa, cloudEnabled } from "./cloud";
 import { defaultPrefs } from "./auth";
+import { SEED_VERSION, seedQuestions, seedFlashcards } from "./seed";
 import type { BankQuestion, Material, Clase, FlashCardItem, Report, User } from "./types";
 
 /** Colecciones de contenido global (fuente: Panel Admin). */
@@ -60,7 +61,12 @@ function silently(fn: () => void) {
 
 /* ───────────────────────── Mapeo perfil ↔ User ───────────────────────── */
 
-function profileToUser(row: { id: string; email: string; role: string; data: Record<string, unknown> }): User {
+function profileToUser(row: {
+  id: string;
+  email: string;
+  role: string;
+  data: Record<string, unknown>;
+}): User {
   const d = (row.data ?? {}) as Partial<User>;
   const now = new Date().toISOString();
   return {
@@ -96,15 +102,39 @@ function userToProfileData(u: User): Record<string, unknown> {
 
 /* ───────────────────────── Hidratación desde la nube ───────────────────────── */
 
+/**
+ * Lee una tabla completa paginando con .range(). PostgREST corta CADA respuesta
+ * en ~1000 filas (db-max-rows) aunque se pida .limit(10000); sin paginar, el
+ * banco de preguntas (2,951 filas) llegaba truncado y materias enteras
+ * "desaparecían" de la app.
+ */
+async function fetchAll<T>(
+  page: (from: number, to: number) => PromiseLike<{ data: T[] | null; error: unknown }>,
+): Promise<{ data: T[]; error: unknown }> {
+  const PAGE = 1000;
+  const all: T[] = [];
+  for (let from = 0; ; from += PAGE) {
+    const { data, error } = await page(from, from + PAGE - 1);
+    if (error) return { data: all, error };
+    if (!data || data.length === 0) break;
+    all.push(...data);
+    if (data.length < PAGE) break;
+  }
+  return { data: all, error: null };
+}
+
 async function hydrate(): Promise<void> {
   const s = supa();
   if (!s || !sessionUserId) return;
 
   // 1) Contenido global (banco, biblioteca, clases, flashcards)
-  const { data: contentRows, error: contentErr } = await s
-    .from("content")
-    .select("collection,id,data")
-    .limit(10000);
+  const { data: contentRows, error: contentErr } = await fetchAll<{
+    collection: string;
+    id: string;
+    data: unknown;
+  }>((from, to) =>
+    s.from("content").select("collection,id,data").order("collection").order("id").range(from, to),
+  );
   if (!contentErr && contentRows) {
     if (contentRows.length === 0) {
       await seedCloudContent();
@@ -115,6 +145,10 @@ async function hydrate(): Promise<void> {
         list.push(r.data as Row);
         byCol.set(r.collection, list);
       });
+      // La nube puede traer el banco de una versión vieja del seed (p. ej. las
+      // 2,819 preguntas de v3 con el reparto de materias incorrecto, sembradas
+      // una sola vez y nunca actualizadas). La admin lo republica al entrar.
+      if (sessionIsAdmin) await republishSeedContent(byCol);
       silently(() => {
         CONTENT_KEYS.forEach((key) => {
           const rows = byCol.get(key);
@@ -139,10 +173,18 @@ async function hydrate(): Promise<void> {
   }
 
   // 3) Estado por usuario (RLS: propio; admin ve todo)
-  const { data: stateRows } = await s
-    .from("user_state")
-    .select("user_id,collection,data")
-    .limit(10000);
+  const { data: stateRows } = await fetchAll<{
+    user_id: string;
+    collection: string;
+    data: unknown;
+  }>((from, to) =>
+    s
+      .from("user_state")
+      .select("user_id,collection,data")
+      .order("user_id")
+      .order("collection")
+      .range(from, to),
+  );
   if (stateRows) {
     silently(() => {
       USER_ARRAY_KEYS.forEach((key) => {
@@ -164,9 +206,16 @@ async function hydrate(): Promise<void> {
   }
 
   // 4) Reportes de problemas
-  const { data: reportRows } = await s.from("reports").select("id,data").limit(5000);
+  const { data: reportRows } = await fetchAll<{ id: string; data: unknown }>((from, to) =>
+    s.from("reports").select("id,data").order("id").range(from, to),
+  );
   if (reportRows && reportRows.length > 0) {
-    silently(() => write("reports", reportRows.map((r) => r.data as Report)));
+    silently(() =>
+      write(
+        "reports",
+        reportRows.map((r) => r.data as Report),
+      ),
+    );
   }
 
   // 5) Estado administrativo (config es legible por todos para el gating/conversión)
@@ -178,6 +227,49 @@ async function hydrate(): Promise<void> {
       });
     });
   }
+}
+
+/**
+ * Republica el banco de preguntas y las flashcards del seed cuando la nube
+ * quedó con una versión anterior (marcador "content_seed_version" en
+ * app_state). Los ids de seed (q_seed_NNN, fc_...) son estables y el banco
+ * viejo es subconjunto del nuevo, así que el upsert cubre todas las filas;
+ * el contenido creado a mano por la admin (otros ids) se conserva. Actualiza
+ * byCol para que la hidratación de esta sesión ya use el banco republicado.
+ */
+async function republishSeedContent(byCol: Map<string, Row[]>): Promise<void> {
+  const s = supa();
+  if (!s) return;
+  const { data: verRow } = await s
+    .from("app_state")
+    .select("data")
+    .eq("key", "content_seed_version")
+    .maybeSingle();
+  const cloudVersion = Number((verRow?.data as { version?: number } | null)?.version ?? 0);
+  if (cloudVersion >= SEED_VERSION) return;
+
+  const questions = seedQuestions();
+  const fresh: Record<"questions" | "flashcards", Row[]> = {
+    questions: questions as unknown as Row[],
+    flashcards: seedFlashcards(questions) as unknown as Row[],
+  };
+  for (const key of ["questions", "flashcards"] as const) {
+    const rows = fresh[key];
+    for (let i = 0; i < rows.length; i += 500) {
+      const chunk = rows.slice(i, i + 500);
+      const { error } = await s
+        .from("content")
+        .upsert(chunk.map((r) => ({ collection: key, id: String(r.id), data: r })));
+      // Sin marcar la versión: se reintenta completo en el próximo inicio de sesión.
+      if (error) return;
+    }
+    const seedIds = new Set(rows.map((r) => String(r.id)));
+    const custom = (byCol.get(key) ?? []).filter((r) => !seedIds.has(String(r.id)));
+    byCol.set(key, [...rows, ...custom]);
+  }
+  await s
+    .from("app_state")
+    .upsert({ key: "content_seed_version", data: { version: SEED_VERSION } });
 }
 
 /** Puebla el contenido de la nube desde el seed local (solo si está vacío). */
@@ -219,9 +311,9 @@ async function pushKey(key: string): Promise<void> {
     const prev = contentIds.get(key) ?? new Set<string>();
     const nextIds = new Set(rows.map((r) => String(r.id)));
     const removed = [...prev].filter((id) => !nextIds.has(id));
-    await s.from("content").upsert(
-      rows.map((r) => ({ collection: key, id: String(r.id), data: r })),
-    );
+    await s
+      .from("content")
+      .upsert(rows.map((r) => ({ collection: key, id: String(r.id), data: r })));
     if (removed.length > 0)
       await s.from("content").delete().eq("collection", key).in("id", removed);
     contentIds.set(key, nextIds);
@@ -264,15 +356,19 @@ async function pushKey(key: string): Promise<void> {
     const rows = read<Row[]>("reports", []);
     const own = rows.filter((r) => r.userId === sessionUserId);
     if (own.length > 0) {
-      await s.from("reports").upsert(
-        own.map((r) => ({ id: String(r.id), user_id: sessionUserId, data: r })),
-      );
+      await s
+        .from("reports")
+        .upsert(own.map((r) => ({ id: String(r.id), user_id: sessionUserId, data: r })));
     }
     if (sessionIsAdmin) {
       const others = rows.filter((r) => r.userId !== sessionUserId);
       if (others.length > 0) {
         await s.from("reports").upsert(
-          others.map((r) => ({ id: String(r.id), user_id: (r.userId as string) ?? null, data: r })),
+          others.map((r) => ({
+            id: String(r.id),
+            user_id: (r.userId as string) ?? null,
+            data: r,
+          })),
         );
       }
     }
