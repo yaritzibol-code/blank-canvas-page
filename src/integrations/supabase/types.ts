@@ -299,6 +299,27 @@ export type Database = {
         }
         Relationships: []
       }
+      report_admin_notes: {
+        Row: {
+          notes: string
+          report_id: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          notes?: string
+          report_id: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          notes?: string
+          report_id?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       reports: {
         Row: {
           data: Json
