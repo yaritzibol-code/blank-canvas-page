@@ -56,7 +56,7 @@ const MATERIAS: { label: string; slug: string }[] = [
   { label: "Navegación", slug: "navegacion" },
   { label: "Operaciones", slug: "operaciones" },
   { label: "Comunicaciones", slug: "comunicaciones" },
-  { label: "Manuales AIP", slug: "manuales-ais" },
+  { label: "Manuales de Información Aeronáutica", slug: "manuales-ais" },
   { label: "Tránsito Aéreo", slug: "servicios-transito" },
   { label: "Factores Humanos", slug: "factores-humanos" },
   { label: "Seguridad Aérea", slug: "seguridad-aerea" },

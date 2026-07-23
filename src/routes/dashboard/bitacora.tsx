@@ -38,7 +38,7 @@ const MATERIAS = [
   { icon: "map", label: "Navegación" },
   { icon: "tower", label: "Tránsito Aéreo" },
   { icon: "radio", label: "Comunicaciones" },
-  { icon: "doc", label: "Manuales AIP" },
+  { icon: "doc", label: "Manuales de Información Aeronáutica" },
   { icon: "brain", label: "Factores Humanos" },
   { icon: "shield", label: "Seguridad Aérea" },
   { icon: "rocket", label: "Operaciones" },
