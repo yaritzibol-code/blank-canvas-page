@@ -17,6 +17,7 @@
 import { read, write, setWriteHook } from "./db";
 import { supa, cloudEnabled } from "./cloud";
 import { defaultPrefs } from "./auth";
+import { SEED_VERSION, seedQuestions, seedFlashcards } from "./seed";
 import type { BankQuestion, Material, Clase, FlashCardItem, Report, User } from "./types";
 
 /** Colecciones de contenido global (fuente: Panel Admin). */
@@ -144,6 +145,10 @@ async function hydrate(): Promise<void> {
         list.push(r.data as Row);
         byCol.set(r.collection, list);
       });
+      // La nube puede traer el banco de una versión vieja del seed (p. ej. las
+      // 2,819 preguntas de v3 con el reparto de materias incorrecto, sembradas
+      // una sola vez y nunca actualizadas). La admin lo republica al entrar.
+      if (sessionIsAdmin) await republishSeedContent(byCol);
       silently(() => {
         CONTENT_KEYS.forEach((key) => {
           const rows = byCol.get(key);
@@ -222,6 +227,49 @@ async function hydrate(): Promise<void> {
       });
     });
   }
+}
+
+/**
+ * Republica el banco de preguntas y las flashcards del seed cuando la nube
+ * quedó con una versión anterior (marcador "content_seed_version" en
+ * app_state). Los ids de seed (q_seed_NNN, fc_...) son estables y el banco
+ * viejo es subconjunto del nuevo, así que el upsert cubre todas las filas;
+ * el contenido creado a mano por la admin (otros ids) se conserva. Actualiza
+ * byCol para que la hidratación de esta sesión ya use el banco republicado.
+ */
+async function republishSeedContent(byCol: Map<string, Row[]>): Promise<void> {
+  const s = supa();
+  if (!s) return;
+  const { data: verRow } = await s
+    .from("app_state")
+    .select("data")
+    .eq("key", "content_seed_version")
+    .maybeSingle();
+  const cloudVersion = Number((verRow?.data as { version?: number } | null)?.version ?? 0);
+  if (cloudVersion >= SEED_VERSION) return;
+
+  const questions = seedQuestions();
+  const fresh: Record<"questions" | "flashcards", Row[]> = {
+    questions: questions as unknown as Row[],
+    flashcards: seedFlashcards(questions) as unknown as Row[],
+  };
+  for (const key of ["questions", "flashcards"] as const) {
+    const rows = fresh[key];
+    for (let i = 0; i < rows.length; i += 500) {
+      const chunk = rows.slice(i, i + 500);
+      const { error } = await s
+        .from("content")
+        .upsert(chunk.map((r) => ({ collection: key, id: String(r.id), data: r })));
+      // Sin marcar la versión: se reintenta completo en el próximo inicio de sesión.
+      if (error) return;
+    }
+    const seedIds = new Set(rows.map((r) => String(r.id)));
+    const custom = (byCol.get(key) ?? []).filter((r) => !seedIds.has(String(r.id)));
+    byCol.set(key, [...rows, ...custom]);
+  }
+  await s
+    .from("app_state")
+    .upsert({ key: "content_seed_version", data: { version: SEED_VERSION } });
 }
 
 /** Puebla el contenido de la nube desde el seed local (solo si está vacío). */
