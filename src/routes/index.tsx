@@ -784,7 +784,7 @@ function PathyPhone() {
           <div className="relative z-10 bg-lapis text-white px-3.5 pt-7 pb-3 flex items-center gap-2.5 shadow-md">
             <Icon n="chevD" className="w-4 h-4 rotate-90 text-white/70" />
             <span className="w-9 h-9 rounded-full overflow-hidden ring-2 ring-white/40 shrink-0 bg-ink">
-              <img src="/assets/pathy-small.png" alt="Pathy" className="w-full h-full object-cover scale-110" />
+              <img src="/assets/pathy-small.png" alt="Avatar de Pathy, copiloto de estudio" className="w-full h-full object-cover scale-110" />
             </span>
             <div className="leading-tight">
               <div className="text-[13.5px] font-bold flex items-center gap-1.5">Pathy</div>
