@@ -1,7 +1,20 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BackLink } from "@/components/shared/BackLink";
 
-export const Route = createFileRoute("/blog")({ component: BlogPage });
+export const Route = createFileRoute("/blog")({
+  component: BlogPage,
+  head: () => ({
+    meta: [
+      { title: "Blog e historias — FlightPath" },
+      { name: "description", content: "Guías de estudio para el CIAAC, historias de pilotos y novedades de la plataforma FlightPath." },
+      { property: "og:title", content: "Blog e historias — FlightPath" },
+      { property: "og:description", content: "Guías de estudio, historias de pilotos y novedades de FlightPath." },
+      { property: "og:url", content: "https://flightpath.mx/blog" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: "https://flightpath.mx/blog" }],
+  }),
+});
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
