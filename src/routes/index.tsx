@@ -4,6 +4,17 @@ import type { CSSProperties, ReactNode } from "react";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
+  head: () => ({
+    meta: [
+      { title: "FlightPath — Aprueba el examen CIAAC a la primera" },
+      { name: "description", content: "Plataforma de estudio para el examen CIAAC: 12 materias, simuladores, banco de más de 2,800 preguntas, biblioteca oficial y tutores IA Yaris y Pathy." },
+      { property: "og:title", content: "FlightPath — Aprueba el examen CIAAC a la primera" },
+      { property: "og:description", content: "Simuladores CIAAC, banco de preguntas, biblioteca y tutores IA. Prepárate con FlightPath." },
+      { property: "og:url", content: "https://flightpath.mx/" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: "https://flightpath.mx/" }],
+  }),
 });
 
 /* ═══════════════════════════════════════════════════════════════════
