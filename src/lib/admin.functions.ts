@@ -54,13 +54,14 @@ export const adminOverview = createServerFn({ method: "POST" })
     const { supabase, userId } = context;
     const guard = await assertAdmin(supabase, userId);
     if (guard) return { error: guard };
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const [mrr, pro, stripe, ai, platform, drift] = await Promise.all([
-      supabase.rpc("admin_mrr", { check_env: data.environment }),
-      supabase.rpc("admin_pro_stats", { check_env: data.environment }),
-      supabase.rpc("admin_stripe_event_stats", { hours_back: 24 }),
-      supabase.rpc("admin_ai_stats", { hours_back: 24 }),
-      supabase.rpc("admin_platform_stats"),
-      supabase.rpc("admin_plan_drift", { check_env: data.environment }),
+      supabaseAdmin.rpc("admin_mrr", { check_env: data.environment }),
+      supabaseAdmin.rpc("admin_pro_stats", { check_env: data.environment }),
+      supabaseAdmin.rpc("admin_stripe_event_stats", { hours_back: 24 }),
+      supabaseAdmin.rpc("admin_ai_stats", { hours_back: 24 }),
+      supabaseAdmin.rpc("admin_platform_stats"),
+      supabaseAdmin.rpc("admin_plan_drift", { check_env: data.environment }),
     ]);
     return {
       mrr: Number(mrr.data ?? 0),
@@ -81,7 +82,8 @@ export const adminMrrDaily = createServerFn({ method: "POST" })
   .handler(async ({ data, context }): Promise<Res<MrrDailyPoint[]>> => {
     const guard = await assertAdmin(context.supabase, context.userId);
     if (guard) return { error: guard };
-    const { data: rows, error } = await context.supabase.rpc("admin_mrr_daily", {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: rows, error } = await supabaseAdmin.rpc("admin_mrr_daily", {
       check_env: data.environment,
       days_back: Math.min(Math.max(data.days ?? 30, 7), 90),
     });
@@ -99,7 +101,8 @@ export const adminAiDaily = createServerFn({ method: "POST" })
   .handler(async ({ data, context }): Promise<Res<AiDailyPoint[]>> => {
     const guard = await assertAdmin(context.supabase, context.userId);
     if (guard) return { error: guard };
-    const { data: rows, error } = await context.supabase.rpc("admin_ai_daily", {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: rows, error } = await supabaseAdmin.rpc("admin_ai_daily", {
       days_back: Math.min(Math.max(data.days ?? 30, 7), 90),
     });
     if (error) return { error: error.message };
@@ -389,7 +392,7 @@ export const adminDayDrilldown = createServerFn({ method: "POST" })
       .order("received_at", { ascending: false });
 
     // Drift actual (snapshot; el desfase es un estado, no un evento diario)
-    const { data: drift } = await context.supabase.rpc("admin_plan_drift", { check_env: data.environment });
+    const { data: drift } = await supabaseAdmin.rpc("admin_plan_drift", { check_env: data.environment });
 
     // Emails
     const allIds = Array.from(new Set([...subUserIds, ...eventUserIds]));

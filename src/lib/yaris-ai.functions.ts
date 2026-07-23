@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 const messageSchema = z.object({
   role: z.enum(["user", "assistant"]),
@@ -26,13 +27,37 @@ const schema = z.object({
 const LETTERS = ["A", "B", "C", "D", "E"];
 
 /**
- * Yaris tutora IA — usa Lovable AI Gateway (Gemini) para explicar preguntas
- * combinando conocimiento aeronáutico general con la explicación oficial de
- * cada pregunta en revisión. Devuelve HTML seguro con la respuesta.
+ * Yaris tutora IA — usa Lovable AI Gateway (Gemini) para explicar preguntas.
+ * Requiere autenticación y plan Pro / admin (evita abuso del gateway pagado).
  */
 export const yarisAiChat = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((d: unknown) => schema.parse(d))
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
+    const { supabase, userId } = context;
+
+    // Autorización: sólo Pro / admin pueden usar Yaris IA.
+    const [{ data: isAdmin }, { data: profileRow }, { data: hasSub }] = await Promise.all([
+      supabase.rpc("is_admin"),
+      supabase.from("profiles").select("role,data").eq("id", userId).maybeSingle(),
+      supabase.rpc("has_active_subscription", { user_uuid: userId, check_env: "live" }),
+    ]);
+
+    const plan = (profileRow?.data as { plan?: string } | null)?.plan ?? "basica";
+    const accessStatus = (profileRow?.data as { accessStatus?: string } | null)?.accessStatus ?? "activo";
+    const isPro =
+      Boolean(isAdmin) ||
+      Boolean(hasSub) ||
+      (plan === "paga" && ["activo", "extendido", "prueba"].includes(accessStatus));
+
+    if (!isPro) {
+      return {
+        text:
+          "Yaris IA está disponible sólo para FlightPath Pro. Actualiza tu plan para chatear conmigo sin límites.",
+        cite: null as string | null,
+      };
+    }
+
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) {
       return {
