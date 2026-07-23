@@ -149,7 +149,7 @@ export function YarisChatModal({
                   boxShadow: "0 2px 8px rgba(61,93,145,.05)",
                 }}
               >
-                <div dangerouslySetInnerHTML={{ __html: m.text }} />
+                <div dangerouslySetInnerHTML={{ __html: sanitizeYaris(m.text) }} />
                 {m.cite && (
                   <div style={{ marginTop: 6, fontSize: ".72rem", color: "#8DA1BE" }}>Fuente: {m.cite}</div>
                 )}
