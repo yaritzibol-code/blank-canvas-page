@@ -551,7 +551,7 @@ function SimuladorPage() {
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
             <span style={{ display: "flex", alignItems: "center" }}><Icon n="target" size={40} color="#6C0820" /></span>
             <div>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", color: "#22375C" }}>Simulador CIAAC</h2>
+              <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", color: "#22375C", margin: 0 }}>Simulador del examen CIAAC</h1>
               <p style={{ fontSize: "0.8rem", color: "#647DA0" }}>Lee esto antes de comenzar</p>
             </div>
           </div>
