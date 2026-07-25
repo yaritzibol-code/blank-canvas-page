@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { BackLink } from "@/components/shared/BackLink";
+import { PRO_MONTHLY_FALLBACK, formatPriceWithInterval } from "@/lib/pricing";
 
 export const Route = createFileRoute("/faq")({
   component: FaqPage,
@@ -40,7 +41,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "¿Cuánto cuesta?",
-    a: "FlightPath Basic es gratuito e incluye funciones limitadas y básicas para conocer la plataforma. FlightPath Pro desbloquea todo: $1,500 MXN al mes o $12,000 MXN al año. Durante los primeros 15 días del lanzamiento, el plan anual tiene precio especial de $10,000 MXN.",
+    a: `FlightPath Basic es gratuito e incluye funciones limitadas y básicas para conocer la plataforma. FlightPath Pro desbloquea todo por ${formatPriceWithInterval(PRO_MONTHLY_FALLBACK)}, sin permanencia: cancelas cuando quieras desde tu panel.`,
   },
   {
     q: "¿Qué incluye FlightPath Basic (gratis)?",
@@ -48,7 +49,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "¿Qué diferencia hay entre Basic y Pro?",
-    a: "Pro desbloquea las 12 materias completas con sus Learning Paths, todo el banco de preguntas con explicación, simuladores CIAAC ilimitados, la biblioteca completa con más de 100 manuales oficiales, flashcards, clases grabadas, Estudiemos Juntos y los recordatorios de Pathy por WhatsApp. El pago mensual y el anual incluyen exactamente lo mismo.",
+    a: "Pro desbloquea las 12 materias completas con sus Learning Paths, todo el banco de preguntas con explicación, simuladores CIAAC ilimitados, la biblioteca completa con más de 100 manuales oficiales, flashcards, clases grabadas, Estudiemos Juntos y los recordatorios de Pathy por WhatsApp.",
   },
   {
     q: "¿Hay prueba gratis?",

@@ -9,8 +9,8 @@ import {
   materiaBySlug,
   useSessionUser,
   useStore,
-  yarisReply,
 } from "@/lib/store";
+import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 
@@ -70,8 +70,8 @@ function BibliotecaPage() {
   const [yarisMsgs, setYarisMsgs] = useState<YarisMsg[]>([]);
   const [yarisInput, setYarisInput] = useState("");
   const [yarisTyping, setYarisTyping] = useState(false);
-  const [yarisTurn, setYarisTurn] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const askYaris = useYarisAsk();
   const [featHover, setFeatHover] = useState(false);
   const [upgradeOpen, setUpgradeOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
@@ -140,36 +140,31 @@ function BibliotecaPage() {
     setCurrentPage(1);
     setZoom(1);
     setYarisOpen(true);
-    setYarisMsgs([]);
-    setYarisTurn(0);
-    setYarisTyping(true);
-    setTimeout(() => {
-      setYarisTyping(false);
-      setYarisMsgs([{ role: "bot", text: `¡Hola! Estoy aquí para ayudarte mientras lees <strong>${book.title}</strong>. Pregúntame sobre cualquier concepto que no te quede claro y te lo explico con ejemplos y nemotecnias.` }]);
-      setTimeout(() => {
-        setYarisTyping(true);
-        setTimeout(() => {
-          setYarisTyping(false);
-          setYarisMsgs((p) => [...p, { role: "bot", text: 'Por ejemplo: "¿Qué es la capa límite?" o "Explícame Bernoulli con un ejemplo de la vida real".' }]);
-        }, 900);
-      }, 300);
-    }, 800);
+    // Saludo local (no simula pensar); las respuestas vienen del modelo real.
+    setYarisMsgs([
+      {
+        role: "bot",
+        text: `¡Hola! Estoy aquí para ayudarte mientras lees <strong>${book.title}</strong>. Pregúntame sobre cualquier concepto que no te quede claro. Por ejemplo: "¿Qué es la capa límite?" o "Explícame Bernoulli con un ejemplo de la vida real".`,
+      },
+    ]);
   }
 
-  function sendYaris() {
+  async function sendYaris() {
     const text = yarisInput.trim();
-    if (!text || !readerBook) return;
-    setYarisMsgs((p) => [...p, { role: "user", text }]);
+    if (!text || !readerBook || yarisTyping) return;
+    const next = [...yarisMsgs, { role: "user" as const, text }];
+    setYarisMsgs(next);
     setYarisInput("");
     setYarisTyping(true);
-    const turn = yarisTurn;
-    setYarisTurn((t) => t + 1);
-    const bookTitle = readerBook.title;
-    setTimeout(() => {
-      setYarisTyping(false);
-      const r = yarisReply(turn, { resourceTitle: bookTitle }, text);
-      setYarisMsgs((p) => [...p, { role: "bot", text: r.t, cite: r.c ?? undefined }]);
-    }, 900);
+    const answer = await askYaris({
+      history: toHistory(next.map((m) => ({ text: m.text, fromUser: m.role === "user" }))),
+      ctx: {
+        resourceTitle: readerBook.title,
+        ...(readerBook.materiaTag && { materiaName: readerBook.materiaTag }),
+      },
+    });
+    setYarisTyping(false);
+    setYarisMsgs((p) => [...p, { role: "bot", text: answer.text, cite: answer.cite ?? undefined }]);
   }
 
   function handleDownload() {
@@ -264,7 +259,7 @@ function BibliotecaPage() {
               <div style={{ flex: 1, zIndex: 1 }}>
                 <div style={{ display: "inline-flex", alignItems: "center", gap: 5, background: "#F2AEBC", color: "#6C0820", padding: "3px 10px", borderRadius: 20, fontSize: "0.7rem", fontWeight: 700, marginBottom: 8 }}><Icon n="star" size={14} /> Más consultado</div>
                 <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", marginBottom: 6 }}>{featured.title}</h3>
-                <p style={{ fontSize: "0.84rem", opacity: 0.75, lineHeight: 1.5, marginBottom: 14 }}>El material más consultado por los estudiantes FlightPath. Ábrelo en el visor y estudia con Yaris a tu lado para resolver tus dudas al instante.</p>
+                <p style={{ fontSize: "0.84rem", opacity: 0.75, lineHeight: 1.5, marginBottom: 14 }}>Un buen punto de partida de la biblioteca. Ábrelo en el visor y estudia con Yaris a tu lado para resolver tus dudas al instante.</p>
                 <div style={{ display: "flex", gap: 16, fontSize: "0.78rem", opacity: 0.65, flexWrap: "wrap" }}>
                   <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="doc" size={14} /> {featured.author}</span>
                   <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="plane" size={14} /> {featured.materiaTag || "Todas las materias"}</span>
@@ -376,9 +371,18 @@ function BibliotecaPage() {
                   />
                 </div>
               ) : (
-                <div style={{ flex: 1, overflowY: "auto", padding: 24, display: "flex", justifyContent: "center" }}>
-                  <div style={{ width: "100%", maxWidth: 600, transform: `scale(${zoom})`, transformOrigin: "top center", transition: "transform 0.2s" }}>
-                    <ScannedPage book={readerBook} page={currentPage} />
+                <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: 32, background: "#F7F9FC" }}>
+                  <div style={{ maxWidth: 380, textAlign: "center" }}>
+                    <div style={{ display: "flex", justifyContent: "center", marginBottom: 12, color: "#8DA1BE" }}>
+                      <Icon n="book" size={40} />
+                    </div>
+                    <div style={{ fontSize: "0.92rem", fontWeight: 700, color: "#22375C", marginBottom: 6 }}>
+                      Este material aún no tiene archivo
+                    </div>
+                    <div style={{ fontSize: "0.82rem", color: "#647DA0", lineHeight: 1.55 }}>
+                      En cuanto se cargue el PDF podrás leerlo aquí. Mientras tanto puedes
+                      preguntarle a Yaris sobre el tema.
+                    </div>
                   </div>
                 </div>
               )}
@@ -531,83 +535,3 @@ function BookCard({ book, locked = false, onOpen }: { book: Book; locked?: boole
   );
 }
 
-/* ─── Scanned page component ─────────────────────────────── */
-
-function ScannedPage({ book, page }: { book: Book; page: number }) {
-  const chapters: Record<string, { chapter: string; title: string; sections: { heading: string; body: string }[] }> = {
-    "aero-basica": {
-      chapter: "CAPÍTULO 1: INTRODUCCIÓN A LA AERODINÁMICA",
-      title: "L.2 AERODINÁMICA BÁSICA",
-      sections: [
-        { heading: "1.1 DEFINICIÓN DE FLUIDO", body: "Un fluido es cualquier sustancia que puede fluir y tomar la forma del recipiente que lo contiene. Tanto los líquidos como los gases son fluidos. El aire, siendo un gas, es el fluido con el que trabaja la aerodinámica aplicada a la aviación." },
-        { heading: "1.2 CAPA LÍMITE", body: "La capa límite es la delgada capa de aire que rodea la superficie de un ala y donde los efectos de viscosidad son importantes. Es en esta zona donde se desarrollan los fenómenos más críticos del flujo aerodinámico." },
-        { heading: "1.3 PRESIÓN ESTÁTICA Y DINÁMICA", body: "La presión estática es la presión que ejerce el aire en reposo sobre las superficies. La presión dinámica es la presión adicional que resulta del movimiento del aire y está relacionada con la velocidad del flujo." },
-      ],
-    },
-    "default": {
-      chapter: "CAPÍTULO 1: INTRODUCCIÓN",
-      title: book.title.toUpperCase(),
-      sections: [
-        { heading: "1.1 CONCEPTOS FUNDAMENTALES", body: "Este manual cubre los conceptos esenciales para el examen de egreso del Piloto Aviador Comercial. El estudiante debe estudiar cada capítulo con atención y relacionar los conceptos con la práctica real de vuelo." },
-        { heading: "1.2 OBJETIVOS DE APRENDIZAJE", body: "Al finalizar este capítulo, el estudiante será capaz de identificar los principios básicos, aplicar los conceptos en situaciones reales de vuelo, y responder correctamente las preguntas del examen CIAAC relacionadas con esta materia." },
-        { heading: "1.3 REFERENCIAS NORMATIVAS", body: "Este material ha sido elaborado conforme a los estándares de la DGAC-México y los requisitos establecidos por la OACI en el Anexo 1 para la licencia de Piloto Comercial de Avión." },
-      ],
-    },
-  };
-
-  const content = chapters[book.id] ?? chapters["default"];
-
-  return (
-    <div style={{ background: "#f9f6f0", borderRadius: 4, padding: "32px 28px", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(0,0,0,0.1)", fontFamily: "'JetBrains Mono', monospace", color: "#2a2a2a", position: "relative" }}>
-      {/* Header */}
-      <div style={{ textAlign: "center", marginBottom: 16 }}>
-        <div style={{ fontSize: "0.7rem", letterSpacing: 2, color: "#333", fontWeight: 700, marginBottom: 4 }}>SECRETARIA DE COMUNICACIONES Y TRANSPORTES</div>
-        <div style={{ fontSize: "0.65rem", color: "#555", marginBottom: 2 }}>DIRECCIÓN GENERAL DE AERONÁUTICA CIVIL</div>
-        <div style={{ fontSize: "0.65rem", color: "#555", marginBottom: 12 }}>CENTRO INTERNACIONAL DE ADIESTRAMIENTO DE AVIACIÓN CIVIL</div>
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
-          <div style={{ width: 60, height: 60, borderRadius: "50%", border: "3px solid #333", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.8rem", color: "#333" }}><Icon n="globe" size={30} /></div>
-        </div>
-        <div style={{ fontSize: "0.85rem", fontWeight: 700, letterSpacing: 1, color: "#333" }}>{content.title}</div>
-        <div style={{ fontSize: "0.75rem", color: "#555", marginTop: 2 }}>PILOTO AVIADOR COMERCIAL</div>
-      </div>
-
-      <div style={{ height: 2, background: "#333", margin: "14px 0" }} />
-
-      <div>
-        <h3 style={{ fontSize: "0.82rem", fontWeight: 700, letterSpacing: "0.5px", margin: "14px 0 8px", textTransform: "uppercase" }}>
-          {content.chapter}
-        </h3>
-        <p style={{ fontSize: "0.78rem", lineHeight: 1.7, marginBottom: 8, textAlign: "justify" }}>
-          La aerodinámica es la rama de la mecánica de fluidos que estudia el movimiento del aire y las fuerzas que actúan sobre los cuerpos que se desplazan a través de él.
-        </p>
-        <p style={{ fontSize: "0.78rem", lineHeight: 1.7, marginBottom: 8, textAlign: "justify" }}>
-          Para el piloto aviador comercial, comprender estos principios es fundamental para entender cómo y por qué vuela un avión, y cómo las condiciones atmosféricas afectan el comportamiento de la aeronave.
-        </p>
-        {content.sections.map((s, i) => (
-          <div key={i}>
-            <h4 style={{ fontSize: "0.78rem", fontWeight: 700, margin: "12px 0 6px", textDecoration: "underline" }}>{s.heading}</h4>
-            <p style={{ fontSize: "0.78rem", lineHeight: 1.7, marginBottom: 8, textAlign: "justify" }}>{s.body}</p>
-          </div>
-        ))}
-        {book.id === "aero-basica" && (
-          <>
-            <div style={{ margin: "12px 0" }}>
-              <div style={{ width: "100%", height: 120, background: "#f0f0f0", border: "1px solid #ccc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", color: "#647DA0" }}>[ FIGURA No. 1 — Diagrama de capa límite ]</div>
-              <div style={{ textAlign: "center", fontSize: "0.72rem", color: "#555", marginTop: 4 }}>FIGURA No. 1</div>
-            </div>
-            <div style={{ background: "#f5f5f5", border: "1px solid #ddd", padding: 10, margin: "10px 0", textAlign: "center", fontSize: "0.85rem" }}>
-              P_total = P_estática + ½ρV²
-            </div>
-            <p style={{ fontSize: "0.78rem", lineHeight: 1.7, marginBottom: 8, textAlign: "justify" }}>Donde ρ es la densidad del aire y V es la velocidad del flujo.</p>
-          </>
-        )}
-      </div>
-
-      <div style={{ marginTop: 20 }}>
-        <div style={{ textAlign: "center", fontSize: "0.65rem", color: "#647DA0", borderTop: "1px solid #ddd", paddingTop: 6, marginTop: 12 }}>
-          {content.title} &nbsp;&nbsp;&nbsp; {page}
-        </div>
-      </div>
-    </div>
-  );
-}

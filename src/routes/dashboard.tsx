@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { useRequireAuth, useSessionUser, useStore, getStreak, logout, refreshSubscription } from "@/lib/store";
+import { useRequireAuth, useSessionUser, useStore, getStreak, logout, refreshSubscription, studySnapshot } from "@/lib/store";
 import { YarisChatModal } from "@/components/shared/YarisChatModal";
 import { TimerProvider } from "@/contexts/StudyTimerContext";
 
@@ -309,15 +309,14 @@ function DashboardLayout() {
   const { user, ready } = useRequireAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [yarisOpen, setYarisOpen] = useState(false);
-  const [radarN, setRadarN] = useState(47);
   const location = useLocation();
   const navigate = useNavigate();
   const streak = useStore(() => (user ? getStreak(user.id) : 0));
-
-  useEffect(() => {
-    const iv = setInterval(() => setRadarN(n => Math.max(30, Math.min(80, n + Math.floor(Math.random() * 5) - 2))), 4000);
-    return () => clearInterval(iv);
-  }, []);
+  // Franja superior: datos propios reales. Antes vivían aquí un contador
+  // aleatorio de "pilotos estudiando" y dos textos fijos.
+  const snapshot = useStore(() =>
+    user ? studySnapshot(user.id) : { topMateria: null, avgSessionMin: null, sessions: 0 },
+  );
 
   // Cierra el sidebar móvil con Escape (a11y)
   useEffect(() => {
@@ -514,15 +513,23 @@ function DashboardLayout() {
               className="px-4 md:px-8 py-2"
             >
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4ade80", flexShrink: 0, animation: "fp-pulse 1.5s ease infinite" }} />
-                <span style={{ fontFamily: DISPLAY, fontSize: 15, fontWeight: 700, color: "#F2AEBC" }}>{radarN}</span>
-                <span>pilotos estudiando ahora mismo</span>
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4ade80", flexShrink: 0 }} />
+                <span style={{ fontFamily: DISPLAY, fontSize: 15, fontWeight: 700, color: "#F2AEBC" }}>{streak}</span>
+                <span>{streak === 1 ? "día de racha" : "días de racha"}</span>
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, opacity: .85 }} className="hidden sm:flex">
-                <span>Materia más activa: <strong>Meteorología</strong></span>
-                <span style={{ opacity: .6 }}>|</span>
-                <span>Promedio de sesión: <strong>47 min</strong></span>
-              </div>
+              {(snapshot.topMateria || snapshot.avgSessionMin !== null) && (
+                <div style={{ display: "flex", alignItems: "center", gap: 8, opacity: .85 }} className="hidden sm:flex">
+                  {snapshot.topMateria && (
+                    <span>Tu materia más practicada: <strong>{snapshot.topMateria}</strong></span>
+                  )}
+                  {snapshot.topMateria && snapshot.avgSessionMin !== null && (
+                    <span style={{ opacity: .6 }}>|</span>
+                  )}
+                  {snapshot.avgSessionMin !== null && (
+                    <span>Tu promedio de sesión: <strong>{snapshot.avgSessionMin} min</strong></span>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Content */}

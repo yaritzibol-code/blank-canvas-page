@@ -37,17 +37,28 @@ function pathyStages(streak: number) {
   }));
 }
 
+/**
+ * Umbrales de los logros. La etiqueta se deriva del umbral para que no
+ * puedan divergir: antes "Flashmaster / 50 flashcards" se desbloqueaba con 10
+ * y "Listo pa' volar / 100% del curso" con una preparación del 80%.
+ */
+const LOGRO_RACHA_1 = 7;
+const LOGRO_RACHA_2 = 30;
+const LOGRO_PREGUNTAS = 100;
+const LOGRO_FLASHCARDS = 50;
+const LOGRO_READINESS = 80;
+
 function buildLogros(stats: StudentStats, hasBiblioteca: boolean, sim80: boolean) {
   return [
-    { icon: "rocket",      name: "Primer vuelo",    desc: "Primera sesión",       locked: stats.temasDone < 1 },
-    { icon: "flame",       name: "Racha de 7",      desc: "7 días seguidos",      locked: stats.streak < 7 },
-    { icon: "checkCircle", name: "100 preguntas",   desc: "Respondidas",          locked: stats.answered < 100 },
-    { icon: "target",      name: "Simulador",       desc: "Primer simulacro",     locked: stats.simCount < 1 },
-    { icon: "book",        name: "Lector",          desc: "Abrió la biblioteca",  locked: !hasBiblioteca },
-    { icon: "cards",       name: "Flashmaster",     desc: "50 flashcards",        locked: stats.flashDominadas < 10 },
-    { icon: "star",        name: "Racha de 30",     desc: "30 días seguidos",     locked: stats.streak < 30 },
-    { icon: "medal",       name: "80% en sim",      desc: "Aprobar simulador",    locked: !sim80 },
-    { icon: "plane",       name: "Listo pa' volar", desc: "100% del curso",       locked: stats.readiness === null || stats.readiness < 80 },
+    { icon: "rocket",      name: "Primer vuelo",    desc: "Primera sesión",                              locked: stats.temasDone < 1 },
+    { icon: "flame",       name: `Racha de ${LOGRO_RACHA_1}`,  desc: `${LOGRO_RACHA_1} días seguidos`,   locked: stats.streak < LOGRO_RACHA_1 },
+    { icon: "checkCircle", name: `${LOGRO_PREGUNTAS} preguntas`, desc: "Respondidas",                    locked: stats.answered < LOGRO_PREGUNTAS },
+    { icon: "target",      name: "Simulador",       desc: "Primer simulacro",                            locked: stats.simCount < 1 },
+    { icon: "book",        name: "Lector",          desc: "Abrió la biblioteca",                         locked: !hasBiblioteca },
+    { icon: "cards",       name: "Flashmaster",     desc: `${LOGRO_FLASHCARDS} flashcards dominadas`,    locked: stats.flashDominadas < LOGRO_FLASHCARDS },
+    { icon: "star",        name: `Racha de ${LOGRO_RACHA_2}`,  desc: `${LOGRO_RACHA_2} días seguidos`,   locked: stats.streak < LOGRO_RACHA_2 },
+    { icon: "medal",       name: "80% en sim",      desc: "Aprobar simulador",                           locked: !sim80 },
+    { icon: "plane",       name: "Listo pa' volar", desc: `${LOGRO_READINESS}% de preparación estimada`, locked: stats.readiness === null || stats.readiness < LOGRO_READINESS },
   ];
 }
 

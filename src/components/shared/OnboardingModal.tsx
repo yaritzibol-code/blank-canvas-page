@@ -33,14 +33,9 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
             },
           }),
     });
-    if (!skip && fecha) {
-      try {
-        localStorage.setItem("fp_exam_date", fecha);
-        localStorage.setItem("fp_onboarding_done", "true");
-      } catch {
-        /* noop */
-      }
-    }
+    // La fecha ya quedó en `fechaCiaac` del perfil (arriba). Antes también se
+    // copiaba a `fp_exam_date` / `fp_onboarding_done`, claves globales del
+    // navegador que se compartían entre cuentas y no llegaban a la nube.
     onDone();
   };
 

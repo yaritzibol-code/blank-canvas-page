@@ -5,12 +5,13 @@ import {
   getBitacora,
   logYarisUse,
   materiaPerformance,
+  MATERIAS_DEF,
   saveBitacoraEntry,
   useSessionUser,
   useStore,
-  yarisReply,
   type BitacoraEntry,
 } from "@/lib/store";
+import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 
 export const Route = createFileRoute("/dashboard/bitacora")({
   component: BitacoraPage,
@@ -28,20 +29,15 @@ const EMOTIONS: { icon: Emotion & string; label: string }[] = [
   { icon: "cloud", label: "Ansiosa" },
 ];
 
-const MATERIAS = [
+/**
+ * Derivado de MATERIAS_DEF. Antes era una lista escrita a mano con etiquetas
+ * distintas a las canónicas ("Aeronaves" vs "Aeronaves y Motores", "Tránsito
+ * Aéreo" vs "Servicios de Tránsito Aéreo"); como la bitácora guarda etiquetas,
+ * el cruce posterior con el rendimiento por materia fallaba en silencio.
+ */
+const MATERIAS: { icon: string; label: string; isNone?: boolean }[] = [
   { icon: "check", label: "Todo estuvo bien", isNone: true },
-  { icon: "plane", label: "Aerodinámica" },
-  { icon: "settings", label: "Aeronaves" },
-  { icon: "scale", label: "Legislación" },
-  { icon: "stethoscope", label: "Medicina" },
-  { icon: "cloud", label: "Meteorología" },
-  { icon: "map", label: "Navegación" },
-  { icon: "tower", label: "Tránsito Aéreo" },
-  { icon: "radio", label: "Comunicaciones" },
-  { icon: "doc", label: "Manuales de Información Aeronáutica" },
-  { icon: "brain", label: "Factores Humanos" },
-  { icon: "shield", label: "Seguridad Aérea" },
-  { icon: "rocket", label: "Operaciones" },
+  ...MATERIAS_DEF.map((m) => ({ icon: m.icon, label: m.name })),
 ];
 
 const PATHY_MESSAGES: Record<string, { msg: string; bad: boolean }> = {
@@ -198,7 +194,8 @@ function BitacoraPage() {
   const [yarisOpen, setYarisOpen] = useState(false);
   const [yarisMessages, setYarisMessages] = useState<{ text: string; isUser: boolean }[]>([]);
   const [yarisInput, setYarisInput] = useState("");
-  const [yarisRi, setYarisRi] = useState(0);
+  const [yarisTyping, setYarisTyping] = useState(false);
+  const askYaris = useYarisAsk();
 
   const toggleMateria = (label: string, isNone: boolean) => {
     if (isNone) {
@@ -285,16 +282,16 @@ function BitacoraPage() {
     }
   };
 
-  const sendYaris = () => {
+  const sendYaris = async () => {
     const t = yarisInput.trim();
-    if (!t) return;
-    const reply = yarisReply(yarisRi, {}, t);
-    setYarisMessages((prev) => [...prev, { text: t, isUser: true }]);
+    if (!t || yarisTyping) return;
+    const next = [...yarisMessages, { text: t, isUser: true }];
+    setYarisMessages(next);
     setYarisInput("");
-    setYarisRi((r) => r + 1);
-    setTimeout(() => {
-      setYarisMessages((prev) => [...prev, { text: reply.t, isUser: false }]);
-    }, 800);
+    setYarisTyping(true);
+    const answer = await askYaris({ history: toHistory(next.map((m) => ({ text: m.text, fromUser: m.isUser }))), ctx: {} });
+    setYarisTyping(false);
+    setYarisMessages((prev) => [...prev, { text: answer.text, isUser: false }]);
   };
 
   /* ── Datos reales derivados del historial ── */

@@ -1,6 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
+import { PRO_MONTHLY_FALLBACK } from "@/lib/pricing";
+
+/**
+ * Próxima convocatoria del examen CIAAC (hora Ciudad de México, UTC-6).
+ * Actualízala cuando la AFAC publique la siguiente fecha: la cuenta regresiva
+ * de la portada se oculta sola cuando esta fecha ya pasó.
+ */
+const PROXIMO_CIAAC = "2026-08-17T08:00:00-06:00";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
@@ -455,8 +463,10 @@ function HeroPathyCard() {
    ═══════════════════════════════════════════════════════════════════ */
 
 function Countdown({ show = true }: { show?: boolean }) {
-  // CIAAC: 17 de agosto de 2026 (hora Ciudad de México, UTC-6).
-  const target = useRef(new Date("2026-08-17T08:00:00-06:00").getTime());
+  // Próxima convocatoria CIAAC (hora Ciudad de México, UTC-6). Al pasar la
+  // fecha el componente se oculta solo, en vez de quedarse clavado en 00:00:00.
+  const target = useRef(new Date(PROXIMO_CIAAC).getTime());
+  const [expired, setExpired] = useState(() => Date.now() >= target.current);
   const WINDOW = 90 * 24 * 3600 * 1000;
   const start = useRef(target.current - WINDOW);
   const [t, setT] = useState({ d: 0, h: 0, m: 0, s: 0 });
@@ -464,6 +474,10 @@ function Countdown({ show = true }: { show?: boolean }) {
   useEffect(() => {
     const tick = () => {
       const now = Date.now();
+      if (now >= target.current) {
+        setExpired(true);
+        return;
+      }
       let diff = Math.max(0, target.current - now);
       const d = Math.floor(diff / 86400000); diff -= d * 86400000;
       const h = Math.floor(diff / 3600000); diff -= h * 3600000;
@@ -477,7 +491,7 @@ function Countdown({ show = true }: { show?: boolean }) {
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, []);
-  if (!show) return null;
+  if (!show || expired) return null;
 
   const Digit = ({ d }: { d: number }) => (
     <div className="relative overflow-hidden" style={{ height: "1em", width: "0.62em" }}>
@@ -1184,7 +1198,7 @@ function Pricing() {
       <div className="mx-auto max-w-[1100px] px-6 lg:px-8">
         <SectionHead center eyebrow="Precios"
           title={<>Empieza gratis. <span className="text-coral-600">Vuela Pro.</span></>}
-          sub="FlightPath Basic es gratuito con funciones esenciales. FlightPath Pro desbloquea toda la plataforma — con pago mensual o anual." />
+          sub="FlightPath Basic es gratuito con funciones esenciales. FlightPath Pro desbloquea toda la plataforma." />
 
         <div className="mt-14 grid md:grid-cols-2 gap-5">
           <div className="rounded-3xl bg-white border border-ink/8 p-8 lg:p-10 shadow-card">
@@ -1213,17 +1227,12 @@ function Pricing() {
                 <Pill tone="light">Acceso completo</Pill>
               </div>
               <div className="mt-5 flex items-baseline gap-2">
-                <span className="font-display text-6xl tracking-tight text-white">$1,500</span>
-                <span className="text-white/50 text-sm">MXN / mes</span>
+                <span className="font-display text-6xl tracking-tight text-white">
+                  ${PRO_MONTHLY_FALLBACK.amount.toLocaleString("es-MX")}
+                </span>
+                <span className="text-white/50 text-sm">{PRO_MONTHLY_FALLBACK.currency} / mes</span>
               </div>
-              <div className="mt-4 rounded-xl border border-coral-400/30 bg-coral-600/10 px-4 py-3">
-                <div className="text-[13px] text-white/85">
-                  Plan anual: <span className="line-through text-white/45">$12,000</span>{" "}
-                  <span className="font-bold text-coral-400">$10,000 MXN</span>
-                </div>
-                <div className="text-[11.5px] text-white/55 mt-0.5">Precio de lanzamiento · solo por 15 días</div>
-              </div>
-              <p className="text-[14px] text-white/60 mt-4">Plataforma completa, simulador ilimitado y tutor IA 24/7 — igual en mensual o anual.</p>
+              <p className="text-[14px] text-white/60 mt-4">Plataforma completa, simulador ilimitado y tutor IA 24/7. Cancela cuando quieras.</p>
               <Btn kind="primary" size="lg" icon="arrow" className="w-full mt-7" to="/register">Hazte Pro</Btn>
               <div className="mt-8 space-y-3">
                 {["Las 12 materias con Learning Paths completos", "Banco de 2,800+ preguntas con explicación", "Simulador CIAAC ilimitado", "Biblioteca completa: 100+ manuales oficiales", "Tutor IA Yaris 24/7 + Pathy", "Clases grabadas y flashcards"].map((b, i) => (

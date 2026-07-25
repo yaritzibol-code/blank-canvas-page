@@ -68,15 +68,6 @@ const GRADIENT_BY_SLUG: Record<string, string> = {
   medicina: GRADIENTS[5],
 };
 
-/** Mock visual del grid deshabilitado (solo cuando no hay ninguna clase publicada). */
-const FALLBACK_MATERIAS = [
-  { name: "Aerodinámica", icon: "plane", color: "linear-gradient(135deg,#667eea,#764ba2)", total: "8 clases · 2h 14min", totalCount: 8 },
-  { name: "Aeronaves y Motores", icon: "settings", color: "linear-gradient(135deg,#f093fb,#f5576c)", total: "9 clases · 2h 48min", totalCount: 9 },
-  { name: "Meteorología", icon: "cloud", color: "linear-gradient(135deg,#4facfe,#00f2fe)", total: "6 clases · 1h 58min", totalCount: 6 },
-  { name: "Navegación Aérea", icon: "map", color: "linear-gradient(135deg,#43e97b,#38f9d7)", total: "7 clases · 2h 22min", totalCount: 7 },
-  { name: "Legislación Aeronáutica", icon: "scale", color: "linear-gradient(135deg,#fa709a,#fee140)", total: "5 clases · 1h 45min", totalCount: 5 },
-  { name: "Medicina de Aviación", icon: "stethoscope", color: "linear-gradient(135deg,#a18cd1,#fbc2eb)", total: "6 clases · 1h 52min", totalCount: 6 },
-];
 
 function fmtDur(min: number): string {
   return `${min}:00`;
@@ -174,6 +165,23 @@ function ClasesPage() {
 
   const anyPublished = materias.some((m) => m.totalCount > 0);
 
+  // Vista previa del catálogo cuando aún no hay clases publicadas: se arma con
+  // las clases reales en borrador, no con conteos inventados.
+  const enPreparacion = useStore(() => {
+    const draft = getClases().filter((c) => c.status === "borrador");
+    return MATERIAS_DEF.map((def, i) => {
+      const clases = draft.filter((c) => c.materia === def.slug);
+      return {
+        slug: def.slug,
+        name: def.name,
+        icon: def.icon,
+        color: GRADIENT_BY_SLUG[def.slug] ?? GRADIENTS[i % GRADIENTS.length],
+        total: fmtTotalLabel(clases),
+        totalCount: clases.length,
+      };
+    }).filter((m) => m.totalCount > 0);
+  });
+
   // "Continuar viendo": progreso real más reciente en una clase publicada accesible
   let continueTarget: { mi: number; vi: number; video: Video; materia: Materia; pct: number } | null = null;
   if (user) {
@@ -252,27 +260,18 @@ function ClasesPage() {
     if (watchIntervalRef.current) clearInterval(watchIntervalRef.current);
     if (!isPlaying || screen !== "player") return;
 
-    // Timer simulado (solo placeholder, visual como hoy)
-    if (playerMode === "placeholder") {
-      playIntervalRef.current = setInterval(() => {
-        setPlayProgress((p) => {
-          if (p >= 100) {
-            clearInterval(playIntervalRef.current!);
-            setIsPlaying(false);
-            return 100;
-          }
-          return Math.min(100, parseFloat((p + 0.1).toFixed(1)));
-        });
-      }, 100);
-    }
-    // Conteo real de segundos (placeholder e iframe; <video> usa timeupdate)
-    if (playerMode !== "video") {
+    // Sin video no se registra nada: antes un temporizador simulado avanzaba
+    // la barra y escribía progreso real, de modo que una clase sin contenido
+    // podía marcarse como completada sola y contaminaba el avance del curso,
+    // la actividad y las métricas del panel admin.
+    if (playerMode === "placeholder") return;
+
+    // Conteo real de segundos reproducidos (iframe; <video> usa timeupdate).
+    if (playerMode === "iframe") {
       watchIntervalRef.current = setInterval(() => {
         addWatched(1);
-        if (playerMode === "iframe") {
-          const a = activeClaseRef.current;
-          if (a) setPlayProgress(Math.min(100, Math.round((watchedSecsRef.current / a.durSecs) * 100)));
-        }
+        const a = activeClaseRef.current;
+        if (a) setPlayProgress(Math.min(100, Math.round((watchedSecsRef.current / a.durSecs) * 100)));
       }, 1000);
     }
     return () => {
@@ -326,6 +325,8 @@ function ClasesPage() {
   };
 
   const togglePlay = () => {
+    // Sin video no hay nada que reproducir ni progreso que registrar.
+    if (playerMode === "placeholder") return;
     if (playerMode === "video" && videoElRef.current) {
       if (videoElRef.current.paused) void videoElRef.current.play();
       else videoElRef.current.pause();
@@ -399,7 +400,10 @@ function ClasesPage() {
                 <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg,#22375C,#2a2a4e)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12 }}>
                   <div style={{ display: "flex", color: "white" }}><Icon n={mat.icon as never} size={64} /></div>
                   <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1rem", color: "white", textAlign: "center", padding: "0 20px" }}>{vid.title}</div>
-                  <div style={{ fontSize: ".78rem", color: "rgba(255,255,255,.5)", display: "flex", alignItems: "center", gap: 4 }}>Haz clic en <Icon n="play" size={14} /> para reproducir</div>
+                  <div style={{ fontSize: ".78rem", color: "rgba(255,255,255,.5)", textAlign: "center", padding: "0 24px", lineHeight: 1.5 }}>
+                    Esta clase todavía no tiene video publicado. Cuando se suba aparecerá aquí y tu
+                    avance empezará a contar.
+                  </div>
                 </div>
               )}
             </div>
@@ -738,11 +742,20 @@ function ClasesPage() {
             );
           })}
         </div>
+      ) : enPreparacion.length === 0 ? (
+        <div style={{ background: "white", borderRadius: 16, padding: "40px 24px", textAlign: "center", boxShadow: "0 2px 10px rgba(61,93,145,.06)" }}>
+          <div style={{ fontSize: ".95rem", fontWeight: 700, color: "#22375C", marginBottom: 6 }}>
+            Todavía no hay clases en el catálogo
+          </div>
+          <div style={{ fontSize: ".82rem", color: "#647DA0" }}>
+            En cuanto se publiquen aparecerán aquí, organizadas por materia.
+          </div>
+        </div>
       ) : (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 16 }}>
-          {FALLBACK_MATERIAS.map((fm, i) => (
+          {enPreparacion.map((fm) => (
             <div
-              key={i}
+              key={fm.slug}
               style={{
                 background: "white", borderRadius: 16, overflow: "hidden",
                 cursor: "not-allowed", opacity: 0.55,

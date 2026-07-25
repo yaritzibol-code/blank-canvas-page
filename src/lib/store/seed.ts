@@ -4,6 +4,7 @@
  * Corre una sola vez por navegador (versionado).
  */
 import { read, write, todayKey } from "./db";
+import { cloudEnabled } from "./cloud";
 import { hashPassword, defaultPrefs } from "./auth";
 import { MATERIAS_DEF } from "./materias";
 import { SEED_QUESTIONS } from "./seed-questions";
@@ -589,7 +590,7 @@ function seedReminders(): Reminder[] {
       icon: "book",
       iconBg: "#EAF0FA",
       tags: ["Diario", "7:00 PM"],
-      ultimoEnvio: daysAgoISO(1, 19),
+      ultimoEnvio: null,
       createdAt: daysAgoISO(60, 10),
     },
     {
@@ -604,7 +605,7 @@ function seedReminders(): Reminder[] {
       icon: "clipboard",
       iconBg: "#F2DCDB",
       tags: ["Semanal", "Sábado"],
-      ultimoEnvio: daysAgoISO(3, 9),
+      ultimoEnvio: null,
       createdAt: daysAgoISO(60, 10),
     },
     {
@@ -619,7 +620,7 @@ function seedReminders(): Reminder[] {
       icon: "cloud",
       iconBg: "#EAF6EE",
       tags: ["Materia débil", "L-V"],
-      ultimoEnvio: daysAgoISO(1, 18),
+      ultimoEnvio: null,
       createdAt: daysAgoISO(30, 10),
     },
     {
@@ -708,15 +709,8 @@ export function ensureSeeded() {
     return;
   }
 
-  const users = seedUsers();
-  const existing = read<User[]>("users", []);
-  // Conserva cuentas creadas antes del seed (no debería ocurrir, pero por seguridad).
-  const merged = [
-    ...users,
-    ...existing.filter((u) => !users.some((s) => s.id === u.id || s.email === u.email)),
-  ];
-  write("users", merged);
-
+  // El contenido real (banco, flashcards, clases, biblioteca) se siembra
+  // siempre: es material del curso, no datos de mentira.
   const questions = seedQuestions();
   write("questions", [
     ...questions,
@@ -726,15 +720,31 @@ export function ensureSeeded() {
   write("clases", seedClases());
   write("materiales", seedMateriales());
 
-  const { activity, studyDays, quizzes, sims, temaProgress } = seedHistory();
-  write("activity", activity);
-  write("study_days", { [DEMO_STUDENT_ID]: studyDays });
-  write("quiz_attempts", quizzes);
-  write("sim_attempts", sims);
-  write("tema_progress", temaProgress);
-  write("bitacora", seedBitacora());
-  write("reminders", seedReminders());
-  write("reports", seedReports());
+  // Las cuentas demo y su historial inventado (María, Carlos, la admin, sus
+  // intentos, bitácora y reportes) sólo tienen sentido para probar la app sin
+  // backend. Con Lovable Cloud activo no se siembran: contaminaban el panel
+  // admin y `adminSummary` con estudiantes que no existen hasta que la
+  // hidratación desde Supabase los reemplazaba.
+  if (!cloudEnabled()) {
+    const users = seedUsers();
+    const existing = read<User[]>("users", []);
+    // Conserva cuentas creadas antes del seed (no debería ocurrir, pero por seguridad).
+    const merged = [
+      ...users,
+      ...existing.filter((u) => !users.some((s) => s.id === u.id || s.email === u.email)),
+    ];
+    write("users", merged);
+
+    const { activity, studyDays, quizzes, sims, temaProgress } = seedHistory();
+    write("activity", activity);
+    write("study_days", { [DEMO_STUDENT_ID]: studyDays });
+    write("quiz_attempts", quizzes);
+    write("sim_attempts", sims);
+    write("tema_progress", temaProgress);
+    write("bitacora", seedBitacora());
+    write("reminders", seedReminders());
+    write("reports", seedReports());
+  }
 
   write("seed_version", SEED_VERSION);
 }
