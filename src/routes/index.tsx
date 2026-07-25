@@ -154,7 +154,7 @@ function PathyBubble({ size = 220, float = true, glow = true, className = "" }: 
     <div className={`relative ${className}`} style={{ width: size, height: size }}>
       {glow && <div className="absolute inset-0 rounded-full" style={{ background: "radial-gradient(closest-side, rgba(242,174,188,0.28), transparent 70%)", transform: "scale(1.25)", filter: "blur(8px)" }} />}
       <div className={`relative w-full h-full rounded-full overflow-hidden ring-1 ring-ink/10 shadow-navy ${float ? "animate-float-y" : ""}`}>
-        <img src="/assets/pathy-cloud.png" alt="Pathy, tu copiloto de estudio" className="w-full h-full object-cover scale-110" />
+        <img src="/assets/pathy-cloud.png" alt="Pathy, tu copiloto de estudio" width={size} height={size} fetchPriority="high" decoding="async" className="w-full h-full object-cover scale-110" />
         <div className="absolute inset-0 rounded-full" style={{ boxShadow: "inset 0 0 40px rgba(10,18,38,0.45)" }} />
       </div>
     </div>
