@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SimuladorRouteImport } from './routes/simulador'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RegisterRouteImport } from './routes/register'
@@ -49,6 +50,11 @@ import { Route as AdminOperacionesStripeRouteImport } from './routes/admin/opera
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as AdminOperacionesDiaDayRouteImport } from './routes/admin/operaciones/dia.$day'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SimuladorRoute = SimuladorRouteImport.update({
   id: '/simulador',
   path: '/simulador',
@@ -258,6 +264,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/simulador': typeof SimuladorRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/banco': typeof AdminBancoRoute
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
@@ -298,6 +305,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/simulador': typeof SimuladorRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/banco': typeof AdminBancoRoute
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
@@ -340,6 +348,7 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/simulador': typeof SimuladorRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/banco': typeof AdminBancoRoute
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
@@ -383,6 +392,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/simulador'
+    | '/sitemap.xml'
     | '/admin/banco'
     | '/admin/configuracion'
     | '/admin/contenido'
@@ -423,6 +433,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/simulador'
+    | '/sitemap.xml'
     | '/admin/banco'
     | '/admin/configuracion'
     | '/admin/contenido'
@@ -464,6 +475,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/simulador'
+    | '/sitemap.xml'
     | '/admin/banco'
     | '/admin/configuracion'
     | '/admin/contenido'
@@ -506,6 +518,7 @@ export interface RootRouteChildren {
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SimuladorRoute: typeof SimuladorRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   AdminBancoRoute: typeof AdminBancoRoute
   AdminConfiguracionRoute: typeof AdminConfiguracionRoute
   AdminContenidoRoute: typeof AdminContenidoRoute
@@ -525,6 +538,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/simulador': {
       id: '/simulador'
       path: '/simulador'
@@ -850,6 +870,7 @@ const rootRouteChildren: RootRouteChildren = {
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SimuladorRoute: SimuladorRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   AdminBancoRoute: AdminBancoRoute,
   AdminConfiguracionRoute: AdminConfiguracionRoute,
   AdminContenidoRoute: AdminContenidoRoute,
