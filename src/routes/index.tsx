@@ -13,7 +13,10 @@ export const Route = createFileRoute("/")({
       { property: "og:url", content: "https://flightpath.mx/" },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "https://flightpath.mx/" }],
+    links: [
+      { rel: "canonical", href: "https://flightpath.mx/" },
+      { rel: "preload", as: "image", href: "/assets/pathy-cloud.png", fetchpriority: "high" },
+    ],
   }),
 });
 
