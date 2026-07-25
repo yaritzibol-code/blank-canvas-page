@@ -133,9 +133,14 @@ function CuestionarioPage() {
     const paid = isPaid(user);
     let fullPool: BankQuestion[] = [];
     slugs.forEach((s) => {
+      // Plan básica: 10 preguntas POR MATERIA, que es lo que se anuncia.
       fullPool = fullPool.concat(paid ? getPublishedQuestions(s) : getFreeQuestions(s));
     });
-    if (!paid) fullPool = fullPool.slice(0, 10);
+    // Nota: aquí había un `fullPool.slice(0, 10)` para el plan básica. Como el
+    // pool se concatena materia por materia, esas 10 salían todas de la
+    // primera (aerodinámica) y el usuario gratuito nunca veía las otras 11.
+    // El tamaño de la sesión ya lo limita `sessionCount()` más abajo, así que
+    // recortar el pool sólo destruía la variedad.
     const picked = shuffle(fullPool)
       .slice(0, paid ? Math.min(search.qty ?? 10, fullPool.length) : Math.min(10, fullPool.length))
       .map(toLocalQ);
