@@ -392,11 +392,12 @@ export const DEFAULT_CONFIG: InternalConfig = {
   nombrePlataforma: "FlightPath",
   slogan: "Aprende, Domina y Vuela",
   contactoEmail: "contacto@flowstateai.com.mx",
-  whatsappSoporte: "+52 55 1234 5678",
+  // Vacío a propósito: el número de soporte lo captura la admin en
+  // Configuración. Antes traía el mismo teléfono ficticio de la cuenta demo.
+  whatsappSoporte: "",
   mensajeBienvenida: "¡Bienvenido a FlightPath! Aprende a tu ritmo, aprueba con confianza.",
   mensajeConversion:
     "¿Listo para el siguiente nivel? Desbloquea FlightPath completo y prepárate con todas las herramientas para tu CIAAC.",
-  precioPlanAnual: "$10,000 MXN",
   proveedorWhatsApp: "",
   simuladorPreguntas: 310,
   simuladorHoras: 5,

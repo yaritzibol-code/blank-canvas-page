@@ -20,6 +20,21 @@ export interface UserPrefs {
     bitacora: boolean;
     pathy: boolean;
   };
+  /**
+   * Plan de estudio de "Estudiemos juntos". Vive en las preferencias —y por
+   * tanto viaja al perfil y a la nube— en vez de en claves sueltas de
+   * localStorage (`fp_tiempo_disponible`, `fp_onboarding_done`…), que eran
+   * globales del navegador: dos cuentas en el mismo equipo compartían plan y
+   * al cambiar de dispositivo se perdía.
+   */
+  planEstudio?: {
+    /** "30m" | "1h" | "2h" | "custom" */
+    tiempo: string;
+    customHoras?: string;
+    customMinutos?: string;
+    /** true cuando el estudiante ya completó el onboarding del módulo. */
+    configurado?: boolean;
+  };
 }
 
 export interface User {
@@ -262,7 +277,12 @@ export interface InternalConfig {
   whatsappSoporte: string;
   mensajeBienvenida: string;
   mensajeConversion: string;
-  precioPlanAnual: string;
+  /**
+   * El precio de Pro NO se configura aquí: vive en Stripe y se lee con
+   * `getPublicPricing()` (respaldo en `@/lib/pricing`). Se eliminó
+   * `precioPlanAnual` porque ninguna vista lo consumía y divergía del
+   * importe realmente cobrado.
+   */
   proveedorWhatsApp: string;
   simuladorPreguntas: number;
   simuladorHoras: number;

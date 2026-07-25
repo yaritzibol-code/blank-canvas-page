@@ -1,12 +1,19 @@
 /**
  * Página de planes con checkout embebido de Stripe.
- * Básica $0 MXN — ya activa por defecto. Pro $500 MXN/mes — desbloquea todo.
+ * Básica $0 MXN — ya activa por defecto. El precio de Pro se lee de Stripe
+ * (fuente de verdad del cobro); `@/lib/pricing` sólo aporta el respaldo.
  */
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
 import { getStripe, getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
-import { createCheckoutSession, createPortalSession, syncMyPlan } from "@/lib/payments.functions";
+import {
+  createCheckoutSession,
+  createPortalSession,
+  syncMyPlan,
+  getPublicPricing,
+} from "@/lib/payments.functions";
+import { PRO_MONTHLY_LOOKUP_KEY, PRO_MONTHLY_FALLBACK, type PlanPrice } from "@/lib/pricing";
 import { refreshCloudProfile } from "@/lib/store/auth";
 import { useRequireAuth } from "@/lib/store/hooks";
 import { supa } from "@/lib/store/cloud";
@@ -18,7 +25,6 @@ const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
 const INK = "#22375C";
 const BRAND = "#6C0820";
-const PRO_PRICE_ID = "flightpath_pro_monthly";
 
 interface SubRow {
   status: string;
@@ -34,7 +40,26 @@ function PlanesPage() {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [proPrice, setProPrice] = useState<PlanPrice>(PRO_MONTHLY_FALLBACK);
   const configured = isPaymentsConfigured();
+
+  // El precio mostrado sale de Stripe, no de una constante en la vista: es el
+  // mismo `lookup_key` que resuelve el checkout, así que no pueden divergir.
+  useEffect(() => {
+    if (!configured) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const live = await getPublicPricing({ data: { environment: getStripeEnvironment() } });
+        if (!cancelled && live) setProPrice(live);
+      } catch {
+        /* se queda el respaldo de @/lib/pricing */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [configured]);
 
   useEffect(() => {
     if (!user) return;
@@ -82,7 +107,7 @@ function PlanesPage() {
       const env = getStripeEnvironment();
       const result = await createCheckoutSession({
         data: {
-          priceId: PRO_PRICE_ID,
+          priceId: PRO_MONTHLY_LOOKUP_KEY,
           returnUrl: `${window.location.origin}/checkout/return?session_id={CHECKOUT_SESSION_ID}`,
           environment: env,
         },
@@ -180,12 +205,12 @@ function PlanesPage() {
           <div style={{ background: "#fff", border: `2px solid ${BRAND}`, borderRadius: 20, padding: 28, position: "relative" }}>
             <div style={{ position: "absolute", top: -12, right: 20, background: BRAND, color: "#fff", fontSize: 11, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", padding: "4px 10px", borderRadius: 999 }}>Recomendado</div>
             <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.14em", color: BRAND, textTransform: "uppercase" }}>Pro</div>
-            <div style={{ fontFamily: DISPLAY, fontSize: "2.4rem", fontWeight: 800, color: INK, margin: "8px 0 4px" }}>$500 <span style={{ fontSize: 15, color: "#647DA0", fontWeight: 500 }}>MXN/mes</span></div>
+            <div style={{ fontFamily: DISPLAY, fontSize: "2.4rem", fontWeight: 800, color: INK, margin: "8px 0 4px" }}>${proPrice.amount.toLocaleString("es-MX")} <span style={{ fontSize: 15, color: "#647DA0", fontWeight: 500 }}>{proPrice.currency}{proPrice.interval === "month" ? "/mes" : proPrice.interval === "year" ? "/año" : ""}</span></div>
             <div style={{ color: "#647DA0", fontSize: 13, marginBottom: 20 }}>Cancela cuando quieras</div>
             <ul style={{ padding: 0, listStyle: "none", color: "#4A5F80", fontSize: 14, lineHeight: 1.8, marginBottom: 20 }}>
               <li>✅ Cuestionario y simulador ilimitados</li>
               <li>✅ Todo el banco de preguntas</li>
-              <li>✅ Yaris con IA (RAG del curso)</li>
+              <li>✅ Yaris con IA, con el contexto del curso</li>
               <li>✅ Recordatorios por WhatsApp</li>
               <li>✅ Análisis completo por materia</li>
             </ul>

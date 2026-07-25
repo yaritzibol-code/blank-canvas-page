@@ -4,6 +4,7 @@ import { Icon } from "@/components/ui/fp-icon";
 import { PlaneField } from "@/components/shared/PlaneField";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import {
+  contenidoDisponible,
   getQuizAttempts,
   getSimAttempts,
   getStudyDays,
@@ -204,6 +205,7 @@ function AnalisisPage() {
 
   const { stats, barVals, barDays } = data;
   const paid = isPaid(user);
+  const cobertura = contenidoDisponible();
   const firstName = user.nombre.split(" ")[0];
   const cmpLabel = period === "semana" ? "vs semana pasada" : "vs mes pasado";
 
@@ -293,8 +295,13 @@ function AnalisisPage() {
         <div style={{ background: "white", borderRadius: 14, padding: "18px 20px", boxShadow: "0 2px 10px rgba(61,93,145,.06)", display: "flex", flexDirection: "column", gap: 6 }}>
           <span style={{ display: "flex", color: "#3D5D91" }}><Icon n="chart" size={24} /></span>
           <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.8rem", fontWeight: 900, color: "#22375C", lineHeight: 1 }}>{stats.courseProgress}%</span>
-          <span style={{ fontSize: ".74rem", color: "#647DA0" }}>Avance del curso</span>
-          <span style={{ fontSize: ".72rem", color: "#8DA1BE" }}>Tu recorrido por temas, clases y flashcards.</span>
+          <span style={{ fontSize: ".74rem", color: "#647DA0" }}>Avance del contenido disponible</span>
+          <span style={{ fontSize: ".72rem", color: "#8DA1BE" }}>
+            Tu recorrido por temas, clases y flashcards ya publicados
+            {cobertura.materiasConTemas < cobertura.materiasTotales
+              ? ` (Learning Paths en ${cobertura.materiasConTemas} de ${cobertura.materiasTotales} materias).`
+              : "."}
+          </span>
         </div>
         <div style={{ background: "white", borderRadius: 14, padding: "18px 20px", boxShadow: "0 2px 10px rgba(61,93,145,.06)", display: "flex", flexDirection: "column", gap: 6 }}>
           <span style={{ display: "flex", color: "#6C0820" }}><Icon n="target" size={24} /></span>

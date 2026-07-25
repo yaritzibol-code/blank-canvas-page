@@ -192,10 +192,8 @@ function RecordatoriosPage() {
   };
 
   const saveExamDate = () => {
+    // Fuente única: el perfil (se sincroniza con la nube).
     if (user) updateUser(user.id, { fechaCiaac: examDate });
-    try {
-      localStorage.setItem("fp_exam_date", examDate);
-    } catch { /* noop */ }
     setShowDateModal(false);
   };
 

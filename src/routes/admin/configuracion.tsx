@@ -13,6 +13,14 @@ import {
   useFlash,
 } from "@/components/admin/AdminShell";
 import { cloudEnabled, getConfig, saveConfig, type InternalConfig } from "@/lib/store";
+import { getPublicPricing } from "@/lib/payments.functions";
+import { getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
+import {
+  PRO_MONTHLY_LOOKUP_KEY,
+  PRO_MONTHLY_FALLBACK,
+  formatPriceWithInterval,
+  type PlanPrice,
+} from "@/lib/pricing";
 
 export const Route = createFileRoute("/admin/configuracion")({
   component: AdminConfiguracionPage,
@@ -22,10 +30,33 @@ function AdminConfiguracionPage() {
   const { flash, showFlash } = useFlash();
   const [cfg, setCfg] = useState<InternalConfig>(() => getConfig());
 
+  const [proPrice, setProPrice] = useState<PlanPrice | null>(null);
+
   // Recarga la configuración persistida al montar en cliente (post-seed).
   useEffect(() => {
     setCfg(getConfig());
   }, []);
+
+  // El precio no se edita aquí: se muestra el que Stripe cobra de verdad.
+  useEffect(() => {
+    if (!isPaymentsConfigured()) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const live = await getPublicPricing({ data: { environment: getStripeEnvironment() } });
+        if (!cancelled && live) setProPrice(live);
+      } catch {
+        /* sin conexión con Stripe: se muestra el respaldo */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const proPriceLabel = proPrice
+    ? formatPriceWithInterval(proPrice)
+    : `${formatPriceWithInterval(PRO_MONTHLY_FALLBACK)} (respaldo — sin respuesta de Stripe)`;
 
   const set = <K extends keyof InternalConfig>(k: K, v: InternalConfig[K]) =>
     setCfg((c) => ({ ...c, [k]: v }));
@@ -96,8 +127,12 @@ function AdminConfiguracionPage() {
         <div style={cardHeadStyle}><Icon n="settings" size={15} /> Parámetros de operación</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 14 }}>
           <div>
-            <label style={labelStyle}>Precio del plan anual</label>
-            <input value={cfg.precioPlanAnual} onChange={(e) => set("precioPlanAnual", e.target.value)} style={inputStyle} />
+            <label style={labelStyle}>Precio de FlightPath Pro</label>
+            <input value={proPriceLabel} readOnly disabled style={{ ...inputStyle, background: "#F4F7FB", color: "#647DA0" }} />
+            <div style={{ fontSize: ".72rem", color: "#8DA1BE", marginTop: 5, lineHeight: 1.5 }}>
+              Se lee de Stripe (<code>{PRO_MONTHLY_LOOKUP_KEY}</code>), que es lo que realmente se
+              cobra. Para cambiarlo, edita el precio en Stripe: la app lo toma de ahí.
+            </div>
           </div>
           <div>
             <label style={labelStyle}>Proveedor de WhatsApp</label>

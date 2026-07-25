@@ -74,7 +74,26 @@ export function materiaPerformance(userId: string, period: Period = "todo"): Mat
   });
 }
 
-/** Avance del curso: recorrido por la plataforma (temas, clases, flashcards). */
+/**
+ * Cobertura real del temario publicado.
+ *
+ * `courseProgress()` mide el avance sobre el contenido que EXISTE hoy, no
+ * sobre las 12 materias del CIAAC: los Learning Paths sólo tienen temas
+ * cargados para algunas materias. Exponerlo evita que la UI presente como
+ * "avance del curso" un 100% que en realidad cubre una parte del temario.
+ */
+export function contenidoDisponible(): { materiasConTemas: number; materiasTotales: number } {
+  return {
+    materiasConTemas: Object.values(SUBJECT_TEMAS).filter((t) => t.length > 0).length,
+    materiasTotales: MATERIAS_DEF.length,
+  };
+}
+
+/**
+ * Avance sobre el contenido disponible (temas, clases y flashcards
+ * publicados). Ver `contenidoDisponible()`: no es el avance sobre el temario
+ * completo del CIAAC mientras falten materias por cargar.
+ */
 export function courseProgress(userId: string): number {
   // Temas de Learning Paths disponibles
   const allTemas = Object.values(SUBJECT_TEMAS).flat();
@@ -317,4 +336,38 @@ export function recentActivity(userId?: string, limit = 8) {
 /** Últimas entradas de bitácora con nivel de ánimo, para gráficos. */
 export function moodHistory(userId: string, limit = 7) {
   return getBitacora(userId).slice(0, limit);
+}
+
+export interface StudySnapshot {
+  /** Materia en la que más preguntas ha respondido (null si aún ninguna). */
+  topMateria: string | null;
+  /** Duración media real de sus sesiones, en minutos (null si no hay). */
+  avgSessionMin: number | null;
+  /** Sesiones registradas con duración > 0. */
+  sessions: number;
+}
+
+/**
+ * Resumen honesto de la actividad propia del estudiante, para la franja
+ * superior del dashboard.
+ *
+ * Sustituye a las métricas globales que antes se mostraban ahí ("pilotos
+ * estudiando ahora mismo", "materia más activa", "promedio de sesión"): eran
+ * valores inventados —un contador aleatorio y dos strings fijos— y no podían
+ * calcularse de verdad en el cliente, porque las políticas RLS sólo devuelven
+ * al estudiante su propio perfil. Esto sí sale de sus datos reales.
+ */
+export function studySnapshot(userId: string): StudySnapshot {
+  const perf = materiaPerformance(userId, "todo").filter((m) => m.answered > 0);
+  const top = perf.length > 0 ? perf.reduce((a, b) => (a.answered >= b.answered ? a : b)) : null;
+
+  const durations = getActivity(userId)
+    .map((a) => a.durationMin)
+    .filter((d) => d > 0);
+  const avgSessionMin =
+    durations.length > 0
+      ? Math.round(durations.reduce((s, d) => s + d, 0) / durations.length)
+      : null;
+
+  return { topMateria: top?.name ?? null, avgSessionMin, sessions: durations.length };
 }

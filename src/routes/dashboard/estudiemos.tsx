@@ -18,13 +18,14 @@ import {
   materiaPerformance,
   materiaProgressPct,
   pickPracticeQuestion,
+  getUserById,
   updateUser,
   useSessionUser,
   useStore,
-  yarisReply,
   type BankQuestion,
   type User,
 } from "@/lib/store";
+import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import { adminOnly } from "@/components/shared/UnderConstruction";
 
 export const Route = createFileRoute("/dashboard/estudiemos")({
@@ -330,22 +331,27 @@ function OnboardingModal({ onDone, userId }: { onDone: () => void; userId?: stri
   }
 
   function finish(tiempo: TiempoDisponible) {
-    let dateStr: string;
+    let fecha: string | null;
     if (customDate) {
-      dateStr = customDate;
+      fecha = customDate;
     } else if (selectedDate === "sin_fecha") {
-      dateStr = "sin_fecha";
+      fecha = null;
     } else {
       const today = new Date();
       const days = selectedDate === "3m" ? 90 : selectedDate === "1-2m" ? 50 : selectedDate === "1m" ? 25 : 90;
       today.setDate(today.getDate() + days);
-      dateStr = today.toISOString().split("T")[0];
+      fecha = today.toISOString().split("T")[0];
     }
-    localStorage.setItem("fp_exam_date", dateStr);
-    // Sincroniza la fecha con el perfil del usuario cuando hay fecha concreta
-    if (userId && dateStr !== "sin_fecha") updateUser(userId, { fechaCiaac: dateStr });
-    localStorage.setItem("fp_tiempo_disponible", tiempo);
-    localStorage.setItem("fp_onboarding_done", "true");
+    // Todo al perfil: fecha y plan comparten la misma fuente de verdad y
+    // sincronizan con la nube. "Sin fecha" se guarda como null, no como el
+    // texto centinela "sin_fecha".
+    const u = userId ? getUserById(userId) : null;
+    if (userId && u) {
+      updateUser(userId, {
+        fechaCiaac: fecha,
+        prefs: { ...u.prefs, planEstudio: { tiempo, configurado: true } },
+      });
+    }
     onDone();
   }
 
@@ -703,7 +709,8 @@ function PruebaModal({ mode, onClose }: { mode: PruebaMode; onClose: (interactio
   const [question, setQuestion] = useState<BankQuestion | null>(() => (mode === "preguntas" ? pickPracticeQuestion() : null));
   const [answered, setAnswered] = useState<number | null>(null);
   const [input, setInput] = useState("");
-  const [turn, setTurn] = useState(0);
+  const [typing, setTyping] = useState(false);
+  const askYaris = useYarisAsk();
   const [interactions, setInteractions] = useState(0);
   const [msgs, setMsgs] = useState<{ html: string; isUser: boolean }[]>(() => [
     {
@@ -725,14 +732,22 @@ function PruebaModal({ mode, onClose }: { mode: PruebaMode; onClose: (interactio
     setAnswered(null);
   }
 
-  function send() {
+  async function send() {
     const t = input.trim();
-    if (!t) return;
-    const reply = yarisReply(turn, { materiaName: t }, t);
-    setMsgs((m) => [...m, { html: t, isUser: true }, { html: reply.t, isUser: false }]);
+    if (!t || typing) return;
+    const next = [...msgs, { html: t, isUser: true }];
+    setMsgs(next);
     setInput("");
-    setTurn((n) => n + 1);
+    setTyping(true);
     setInteractions((i) => i + 1);
+    // El contexto ya no toma el texto del usuario como nombre de materia: eso
+    // hacía que Yaris respondiera "repaso de <lo que escribiste>".
+    const answer = await askYaris({
+      history: toHistory(next.map((m) => ({ text: m.html, fromUser: m.isUser }))),
+      ctx: {},
+    });
+    setTyping(false);
+    setMsgs((m) => [...m, { html: answer.text, isUser: false }]);
   }
 
   return (
@@ -892,20 +907,20 @@ function EstudiemosJuntosPage() {
       setUpgradeOpen(true);
       return;
     }
-    const done = localStorage.getItem("fp_onboarding_done");
-    if (!done) {
+    // El perfil es la única fuente: nada de claves globales del navegador.
+    if (!user.prefs.planEstudio?.configurado) {
       setShowOnboarding(true);
     } else {
-      // user.fechaCiaac tiene prioridad sobre localStorage
-      setExamDate(user.fechaCiaac ?? localStorage.getItem("fp_exam_date"));
-      setTiempo((localStorage.getItem("fp_tiempo_disponible") as TiempoDisponible) || "1h");
+      setExamDate(user.fechaCiaac);
+      setTiempo((user.prefs.planEstudio.tiempo as TiempoDisponible) || "1h");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id, paid]);
 
   function handleOnboardingDone() {
-    setExamDate(user?.fechaCiaac ?? localStorage.getItem("fp_exam_date"));
-    setTiempo((localStorage.getItem("fp_tiempo_disponible") as TiempoDisponible) || "1h");
+    const fresh = user ? getUserById(user.id) : null;
+    setExamDate(fresh?.fechaCiaac ?? null);
+    setTiempo((fresh?.prefs.planEstudio?.tiempo as TiempoDisponible) || "1h");
     setShowOnboarding(false);
   }
 
@@ -914,8 +929,18 @@ function EstudiemosJuntosPage() {
       setUpgradeOpen(true);
       return;
     }
-    localStorage.removeItem("fp_onboarding_done");
     setShowOnboarding(true);
+  }
+
+  /** Guarda el plan de estudio en las preferencias del perfil. */
+  function savePlanEstudio(patch: NonNullable<User["prefs"]["planEstudio"]>) {
+    if (!user) return;
+    updateUser(user.id, {
+      prefs: {
+        ...user.prefs,
+        planEstudio: { ...user.prefs.planEstudio, ...patch, configurado: true },
+      },
+    });
   }
 
   if (!user || !profile) {
@@ -1011,7 +1036,7 @@ function EstudiemosJuntosPage() {
               onClick={() => {
                 setTiempo(t);
                 setShowCustom(false);
-                localStorage.setItem("fp_tiempo_disponible", t);
+                savePlanEstudio({ tiempo: t });
               }}
               style={{
                 padding: "6px 14px",
@@ -1106,9 +1131,7 @@ function EstudiemosJuntosPage() {
             <button
               onClick={() => {
                 setTiempo("custom");
-                localStorage.setItem("fp_tiempo_disponible", "custom");
-                localStorage.setItem("fp_tiempo_custom_h", customHours);
-                localStorage.setItem("fp_tiempo_custom_m", customMins);
+                savePlanEstudio({ tiempo: "custom", customHoras: customHours, customMinutos: customMins });
                 setShowCustom(false);
               }}
               style={{

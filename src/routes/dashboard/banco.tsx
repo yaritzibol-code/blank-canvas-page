@@ -9,6 +9,7 @@ import {
   canStartSimulator,
   isPaid,
   materiaBySlug,
+  MATERIAS_DEF,
 } from "@/lib/store";
 import type { QuizAttempt, SimAttempt } from "@/lib/store";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
@@ -47,20 +48,11 @@ interface HistEntry {
 
 /* ─── Static data ────────────────────────────────────── */
 
-const MATERIAS: { label: string; slug: string }[] = [
-  { label: "Aerodinámica", slug: "aerodinamica" },
-  { label: "Aeronaves y Motores", slug: "aeronaves-motores" },
-  { label: "Legislación", slug: "legislacion" },
-  { label: "Medicina", slug: "medicina" },
-  { label: "Meteorología", slug: "meteorologia" },
-  { label: "Navegación", slug: "navegacion" },
-  { label: "Operaciones", slug: "operaciones" },
-  { label: "Comunicaciones", slug: "comunicaciones" },
-  { label: "Manuales de Información Aeronáutica", slug: "manuales-ais" },
-  { label: "Tránsito Aéreo", slug: "servicios-transito" },
-  { label: "Factores Humanos", slug: "factores-humanos" },
-  { label: "Seguridad Aérea", slug: "seguridad-aerea" },
-];
+/** Derivado de MATERIAS_DEF: el registro canónico es la única fuente. */
+const MATERIAS: { label: string; slug: string }[] = MATERIAS_DEF.map((m) => ({
+  label: m.name,
+  slug: m.slug,
+}));
 
 /* ─── Helpers ────────────────────────────────────────── */
 

@@ -5,9 +5,36 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { type StripeEnv, createStripeClient, getStripeErrorMessage } from "@/lib/stripe.server";
+import { PRO_MONTHLY_LOOKUP_KEY, type PlanPrice } from "@/lib/pricing";
 
 type CheckoutResult = { clientSecret: string } | { error: string };
 type PortalResult = { url: string } | { error: string };
+
+/**
+ * Precio público de Pro leído directamente de Stripe (la fuente de verdad del
+ * cobro). Sin autenticación: sólo expone el importe de lista, ningún dato del
+ * usuario. Devuelve `null` si Stripe no está configurado o el `lookup_key` no
+ * existe, para que la UI caiga al respaldo de `@/lib/pricing`.
+ */
+export const getPublicPricing = createServerFn({ method: "POST" })
+  .inputValidator((data: { environment: StripeEnv }) => data)
+  .handler(async ({ data }): Promise<PlanPrice | null> => {
+    try {
+      const stripe = createStripeClient(data.environment);
+      const prices = await stripe.prices.list({ lookup_keys: [PRO_MONTHLY_LOOKUP_KEY] });
+      const price = prices.data[0];
+      if (!price || price.unit_amount == null) return null;
+      const interval = price.recurring?.interval;
+      return {
+        // Stripe entrega centavos; la UI muestra pesos.
+        amount: price.unit_amount / 100,
+        currency: price.currency.toUpperCase(),
+        interval: interval === "month" || interval === "year" ? interval : null,
+      };
+    } catch {
+      return null;
+    }
+  });
 
 export type PlanSyncResult = {
   plan: "basica" | "paga";

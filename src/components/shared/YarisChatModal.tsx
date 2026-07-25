@@ -4,11 +4,10 @@
  * server function `yarisAiChat`, con un fallback determinista si algo falla.
  */
 import { useEffect, useRef, useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
 import DOMPurify from "isomorphic-dompurify";
 import { Icon } from "@/components/ui/fp-icon";
-import { yarisReply, logYarisUse } from "@/lib/store";
-import { yarisAiChat } from "@/lib/yaris-ai.functions";
+import { logYarisUse } from "@/lib/store";
+import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import type { User } from "@/lib/store";
 
 /** Sanitiza HTML de Yaris permitiendo sólo etiquetas de formato inocuas. */
@@ -45,14 +44,22 @@ export function YarisChatModal({
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
-  const askYaris = useServerFn(yarisAiChat);
+  const askYaris = useYarisAsk();
 
   useEffect(() => {
     if (open) {
       setVisible(true);
       if (user) logYarisUse(user.id, seccion);
       setMessages((prev) =>
-        prev.length === 0 ? [{ from: "yaris", text: yarisReply(0, {}).t, cite: null }] : prev,
+        prev.length === 0
+          ? [
+              {
+                from: "yaris",
+                text: "Estoy aquí para tus dudas académicas. Cuéntame qué tema o pregunta te está costando y lo desarmamos juntas, paso a paso.",
+                cite: null,
+              },
+            ]
+          : prev,
       );
     } else {
       setVisible(false);
@@ -74,20 +81,12 @@ export function YarisChatModal({
     setInput("");
     setTyping(true);
     try {
-      const history = nextUserMsgs
-        .filter((m) => (m.from === "yaris" ? messages.indexOf(m) > 0 : true)) // skip greeting
-        .map((m) => ({
-          role: (m.from === "yaris" ? "assistant" : "user") as "assistant" | "user",
-          content: m.text.replace(/<[^>]+>/g, ""),
-        }))
-        .slice(-16);
-      const res = await askYaris({ data: { history, context: { materia: seccion } } });
-      setMessages((m) => [...m, { from: "yaris", text: res.text, cite: res.cite ?? null }]);
-    } catch (err) {
-      console.error("Yaris AI failed", err);
-      const turn = messages.filter((m) => m.from === "yaris").length;
-      const r = yarisReply(turn, {}, text);
-      setMessages((m) => [...m, { from: "yaris", text: r.t, cite: r.c }]);
+      // Se omite el saludo local: no es un turno del modelo.
+      const history = toHistory(
+        nextUserMsgs.slice(1).map((m) => ({ text: m.text, fromUser: m.from === "user" })),
+      );
+      const answer = await askYaris({ history, ctx: { materiaName: seccion } });
+      setMessages((m) => [...m, { from: "yaris", text: answer.text, cite: answer.cite }]);
     } finally {
       setTyping(false);
     }

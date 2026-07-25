@@ -8,14 +8,14 @@ import {
   getPublishedQuestions,
   getFreeQuestions,
   saveQuizAttempt,
-  yarisReply,
   logYarisUse,
   materiaBySlug,
   MATERIAS_DEF,
 } from "@/lib/store";
 import type { BankQuestion, YarisContext } from "@/lib/store";
+import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
-import { UnderConstruction } from "@/components/shared/UnderConstruction";
+import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
 
 export const Route = createFileRoute("/cuestionario")({
   component: CuestionarioPage,
@@ -104,8 +104,8 @@ function CuestionarioPage() {
   const [yarisMsgs, setYarisMsgs] = useState<YarisMsg[]>([]);
   const [yarisInput, setYarisInput] = useState("");
   const [yarisTyping, setYarisTyping] = useState(false);
-  const [yarisReplyIdx, setYarisReplyIdx] = useState(0);
   const [yarisInitialized, setYarisInitialized] = useState(false);
+  const askYaris = useYarisAsk();
   const [reportOpen, setReportOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [startTime, setStartTime] = useState(() => Date.now());
@@ -243,45 +243,40 @@ function CuestionarioPage() {
     };
   }
 
-  function openYaris() {
+  async function openYaris() {
     if (!yarisOpen && user) logYarisUse(user.id, "Cuestionarios");
     setYarisOpen(true);
-    if (!yarisInitialized) {
-      setYarisInitialized(true);
-      setYarisTyping(true);
-      const ctx = yarisCtx();
-      const materiaName = ctx.materiaName ?? "esta materia";
-      setTimeout(() => {
-        setYarisTyping(false);
-        setYarisMsgs([
-          { role: "bot", text: `¡Hola! Soy Yaris. Veo que tienes una duda sobre <strong>${materiaName}</strong>. ¡Te explico!` },
-        ]);
-        setTimeout(() => {
-          setYarisTyping(true);
-          setTimeout(() => {
-            setYarisTyping(false);
-            const r = yarisReply(0, ctx);
-            setYarisMsgs((prev) => [...prev, { role: "bot", text: r.t, cite: r.c ?? undefined }]);
-            setYarisReplyIdx(1);
-          }, 900);
-        }, 200);
-      }, 700);
-    }
+    if (yarisInitialized) return;
+    setYarisInitialized(true);
+
+    const ctx = yarisCtx();
+    const materiaName = ctx.materiaName ?? "esta materia";
+    setYarisMsgs([
+      { role: "bot", text: `¡Hola! Soy Yaris. Veo que tienes una duda sobre <strong>${materiaName}</strong>. Déjame revisarla.` },
+    ]);
+    // La espera que ve el usuario es la de la petición real, no un setTimeout.
+    setYarisTyping(true);
+    const answer = await askYaris({
+      history: [{ role: "user", content: "Explícame esta pregunta." }],
+      ctx,
+    });
+    setYarisTyping(false);
+    setYarisMsgs((prev) => [...prev, { role: "bot", text: answer.text, cite: answer.cite ?? undefined }]);
   }
 
-  function sendYarisMsg() {
+  async function sendYarisMsg() {
     const text = yarisInput.trim();
-    if (!text) return;
-    setYarisMsgs((prev) => [...prev, { role: "user", text }]);
+    if (!text || yarisTyping) return;
+    const next: YarisMsg[] = [...yarisMsgs, { role: "user", text }];
+    setYarisMsgs(next);
     setYarisInput("");
     setYarisTyping(true);
-    const turn = yarisReplyIdx;
-    setYarisReplyIdx(turn + 1);
-    const r = yarisReply(turn, yarisCtx(), text);
-    setTimeout(() => {
-      setYarisTyping(false);
-      setYarisMsgs((prev) => [...prev, { role: "bot", text: r.t, cite: r.c ?? undefined }]);
-    }, 900);
+    const answer = await askYaris({
+      history: toHistory(next.map((m) => ({ text: m.text, fromUser: m.role === "user" }))),
+      ctx: yarisCtx(),
+    });
+    setYarisTyping(false);
+    setYarisMsgs((prev) => [...prev, { role: "bot", text: answer.text, cite: answer.cite ?? undefined }]);
   }
 
   function getOptionStyle(optIdx: number): React.CSSProperties {
@@ -442,8 +437,8 @@ function CuestionarioPage() {
   const quizGate = canStartQuiz(user);
   if (ready && user && !quizGate.allowed) {
     return (
-      <UnderConstruction
-        moduleName="Límite del plan Básica alcanzado"
+      <PlanLimitNotice
+        title="Límite del plan Básica alcanzado"
         description={quizGate.reason}
       />
     );

@@ -16,6 +16,8 @@ const contextSchema = z
     userSelectedIndex: z.number().optional(),
     explanation: z.string().optional(),
     cite: z.string().optional(),
+    /** Libro o tema abierto cuando la duda nace de la biblioteca. */
+    resourceTitle: z.string().max(300).optional(),
   })
   .optional();
 
@@ -76,6 +78,10 @@ export const yarisAiChat = createServerFn({ method: "POST" })
       "Si la duda no es de aviación, responde brevemente y redirígela al estudio.",
       "No inventes citas ni normativas específicas; si no estás segura de un número/artículo exacto, dilo con humildad.",
     ].join(" ");
+
+    if (ctx.resourceTitle) {
+      system += `\n\nEl estudiante está leyendo "${ctx.resourceTitle}" en la biblioteca del curso. Si la duda se refiere a ese material, respóndela con tu conocimiento de aeronáutica y aclara que no puedes citar páginas concretas del PDF.`;
+    }
 
     if (ctx.questionText) {
       const correcta =
