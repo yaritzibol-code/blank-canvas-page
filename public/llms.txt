@@ -1,0 +1,16 @@
+# FlightPath
+
+> Plataforma de estudio interactiva para aprobar el examen CIAAC a la primera: 12 materias, simuladores, banco de más de 2,800 preguntas, biblioteca oficial y tutores IA (Yaris y Pathy).
+
+FlightPath es una plataforma SaaS mexicana enfocada en la preparación del examen CIAAC (piloto privado y comercial). Combina contenido estructurado por materia, simuladores cronometrados, flashcards, un banco de reactivos y asistentes de IA especializados en aeronáutica.
+
+## Pages
+
+- [Inicio](/): Resumen del producto, materias cubiertas, tutores IA y planes.
+- [Preguntas frecuentes](/faq): Respuestas sobre el examen CIAAC, la plataforma y los planes.
+- [Blog](/blog): Artículos y guías sobre el proceso CIAAC y preparación de vuelo.
+- [Aviso legal](/legal): Términos de servicio y política de privacidad.
+
+## Optional
+
+- [Simulador CIAAC](/simulador): Demostración del simulador de examen cronometrado.
