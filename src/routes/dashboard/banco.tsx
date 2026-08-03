@@ -526,8 +526,40 @@ function HistItem({ entry }: { entry: HistEntry }) {
 
 /* ─── Modal: Simulador CIAAC ─────────────────────────── */
 
-function ModalExamen({ onClose, onStart }: { onClose: () => void; onStart: () => void }) {
-  const infoRows = [
+function ModalExamen({
+  onClose,
+  onStart,
+  la = false,
+}: {
+  onClose: () => void;
+  onStart: (modo: "oficial" | "potenciado") => void;
+  la?: boolean;
+}) {
+  const [modo, setModo] = useState<"oficial" | "potenciado">("oficial");
+  const infoRows = la
+    ? [
+        {
+          icon: "help",
+          bg: "rgba(61,93,145,0.1)",
+          html: "<strong>Preguntas oficiales</strong> — reactivos del proceso de Línea Aérea",
+        },
+        {
+          icon: "timer",
+          bg: "rgba(108,8,32,0.08)",
+          html: "<strong>Tiempo límite</strong> — el reloj corre desde que aceptas",
+        },
+        {
+          icon: "refresh",
+          bg: "rgba(243,156,18,0.1)",
+          html: "<strong>Potenciado</strong> — intercala las demás preguntas del banco",
+        },
+        {
+          icon: "chart",
+          bg: "rgba(46,204,113,0.1)",
+          html: "<strong>Análisis al terminar</strong> — calificación y áreas de oportunidad con Pathy",
+        },
+      ]
+    : [
     {
       icon: "help",
       bg: "rgba(61,93,145,0.1)",
