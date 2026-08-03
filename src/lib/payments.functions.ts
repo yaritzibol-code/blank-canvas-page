@@ -206,22 +206,27 @@ export const syncMyPlan = createServerFn({ method: "POST" })
           plan: "paga",
           planNombre: "FlightPath Pro",
           accessStatus: "activo",
-          accessEnd: (sub?.current_period_end as string | null) ?? null,
+          accessEnd: currentPeriodEnd,
           subscribed: true,
-          status: (sub?.status as string) ?? null,
+          status,
         }
       : {
           plan: "basica",
           planNombre: "Suscripción básica",
-          accessStatus: sub && !inWindow ? "expirado" : "activo",
-          accessEnd: (sub?.current_period_end as string | null) ?? null,
+          accessStatus: status && !inWindow ? "expirado" : "activo",
+          accessEnd: currentPeriodEnd,
           subscribed: false,
-          status: (sub?.status as string) ?? null,
+          status,
         };
 
     // Merge en profiles.data (JSON) sin pisar el resto del perfil.
     const { data: prof } = await supabase.from("profiles").select("data").eq("id", userId).maybeSingle();
     const prevData = (prof?.data ?? {}) as Record<string, unknown>;
+
+    // Sin rastro de suscripción en Stripe ni en la base no degradamos el
+    // perfil: el acceso pudo otorgarse a mano desde el panel admin.
+    if (!status) return { ...result, plan: (prevData.plan as PlanSyncResult["plan"]) ?? result.plan };
+
     const nextData: Record<string, unknown> = {
       ...prevData,
       plan: result.plan,
@@ -233,6 +238,7 @@ export const syncMyPlan = createServerFn({ method: "POST" })
       nextData.accessStart = new Date().toISOString();
     }
     await supabase.from("profiles").update({ data: nextData as never }).eq("id", userId);
+
 
     return result;
   });
