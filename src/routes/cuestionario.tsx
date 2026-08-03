@@ -22,11 +22,14 @@ export const Route = createFileRoute("/cuestionario")({
   component: CuestionarioPage,
   validateSearch: (
     search: Record<string, unknown>,
-  ): { materias?: string; qty?: number; fuente?: string } => {
-    const out: { materias?: string; qty?: number; fuente?: string } = {};
+  ): { materias?: string; qty?: number; fuente?: string; banco?: "la"; fuentes?: string } => {
+    const out: { materias?: string; qty?: number; fuente?: string; banco?: "la"; fuentes?: string } = {};
     if (typeof search.materias === "string" && search.materias) out.materias = search.materias;
     // `fuente` acota el pool a un manual del curso de Línea Aérea (ATP, PHAK…).
     if (typeof search.fuente === "string" && search.fuente) out.fuente = search.fuente.toUpperCase();
+    // `banco=la` usa el banco de Línea Aérea; `fuentes` lo acota a varios manuales.
+    if (search.banco === "la") out.banco = "la";
+    if (typeof search.fuentes === "string" && search.fuentes) out.fuentes = search.fuentes.toUpperCase();
     const q = Number(search.qty);
     if (Number.isFinite(q) && q > 0) out.qty = Math.floor(q);
     return out;
