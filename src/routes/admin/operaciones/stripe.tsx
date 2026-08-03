@@ -2,7 +2,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AdminShell, cardStyle, cardHeadStyle } from "@/components/admin/AdminShell";
-import { adminListStripeEvents, adminReprocessStripeEvent, type StripeEventRow } from "@/lib/admin.functions";
+import {
+  adminListStripeEvents,
+  adminReprocessStripeEvent,
+  adminListBillingAudit,
+  type StripeEventRow,
+  type BillingAuditRow,
+} from "@/lib/admin.functions";
 import { getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
 
 export const Route = createFileRoute("/admin/operaciones/stripe")({ component: StripeEventsPage });
@@ -148,7 +154,120 @@ function StripeEventsPage() {
           </table>
         </div>
       </div>
+
+      <BillingAuditCard env={env} />
     </AdminShell>
+  );
+}
+
+const AUDIT_COLOR: Record<string, string> = {
+  checkout_session_created: "#3D5D91",
+  checkout_session_failed: "#e74c3c",
+  portal_session_created: "#8e6fb5",
+  portal_session_failed: "#e74c3c",
+  plan_sync: "#647DA0",
+  plan_changed: "#2ecc71",
+  webhook_received: "#f39c12",
+  webhook_processed: "#2ecc71",
+  webhook_failed: "#e74c3c",
+};
+
+/** Bitácora de la app: checkout, portal, sincronización de plan y webhooks. */
+function BillingAuditCard({ env }: { env: "sandbox" | "live" }) {
+  const [rows, setRows] = useState<BillingAuditRow[]>([]);
+  const [event, setEvent] = useState("all");
+  const [err, setErr] = useState<string | null>(null);
+  const [open, setOpen] = useState<string | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      const res = await adminListBillingAudit({ data: { environment: env, event, limit: 200 } });
+      if (!alive) return;
+      if ("error" in res) setErr(res.error);
+      else {
+        setErr(null);
+        setRows(res);
+      }
+    })();
+    return () => {
+      alive = false;
+    };
+  }, [env, event]);
+
+  return (
+    <div style={{ ...cardStyle, padding: 0, overflow: "hidden", marginTop: 20 }}>
+      <div style={{ ...cardHeadStyle, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+        <span>Bitácora de facturación (app)</span>
+        <select
+          value={event}
+          onChange={(e) => setEvent(e.target.value)}
+          style={{ marginLeft: "auto", padding: "4px 8px", borderRadius: 8, border: "1px solid #E3EAF5", fontSize: ".8rem" }}
+        >
+          <option value="all">Todos los eventos</option>
+          <option value="checkout_session_created">Checkout creado</option>
+          <option value="checkout_session_failed">Checkout fallido</option>
+          <option value="plan_changed">Cambio de plan</option>
+          <option value="plan_sync">Sincronización de plan</option>
+          <option value="portal_session_created">Portal abierto</option>
+          <option value="webhook_received">Webhook recibido</option>
+          <option value="webhook_processed">Webhook procesado</option>
+          <option value="webhook_failed">Webhook fallido</option>
+        </select>
+      </div>
+      {err && <div style={{ padding: 12, color: "#991B1B" }}>{err}</div>}
+      <div style={{ overflowX: "auto" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: ".85rem" }}>
+          <thead>
+            <tr style={{ background: "#F7F9FC", color: "#647DA0", textAlign: "left" }}>
+              <th style={th}>Fecha</th>
+              <th style={th}>Evento</th>
+              <th style={th}>Origen</th>
+              <th style={th}>Usuario</th>
+              <th style={th}>Detalle</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <>
+                <tr key={r.id} style={{ borderTop: "1px solid #F2DCDB" }}>
+                  <td style={td}>{new Date(r.created_at).toLocaleString("es-MX")}</td>
+                  <td style={td}>
+                    <span style={{ background: AUDIT_COLOR[r.event] ?? "#647DA0", color: "#fff", padding: "2px 8px", borderRadius: 999, fontSize: ".72rem", fontWeight: 700 }}>
+                      {r.event}
+                    </span>
+                    {!r.ok && <div style={{ color: "#e74c3c", fontSize: ".72rem" }}>{r.message}</div>}
+                  </td>
+                  <td style={td}>{r.source}</td>
+                  <td style={{ ...td, fontFamily: "monospace", fontSize: ".72rem", color: "#647DA0" }}>{r.user_id?.slice(0, 8) ?? "—"}</td>
+                  <td style={td}>
+                    <button onClick={() => setOpen(open === r.id ? null : r.id)} style={linkBtn}>
+                      {open === r.id ? "Ocultar" : "Ver"}
+                    </button>
+                  </td>
+                </tr>
+                {open === r.id && (
+                  <tr>
+                    <td colSpan={5} style={{ background: "#F7F9FC", padding: 14 }}>
+                      <pre style={{ margin: 0, fontSize: ".72rem", color: "#22375C", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+                        {JSON.stringify(r.detail, null, 2)}
+                      </pre>
+                    </td>
+                  </tr>
+                )}
+              </>
+            ))}
+            {rows.length === 0 && (
+              <tr>
+                <td colSpan={5} style={{ padding: 24, textAlign: "center", color: "#647DA0" }}>
+                  Sin registros todavía.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
 
