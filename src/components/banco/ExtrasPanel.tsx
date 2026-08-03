@@ -16,7 +16,7 @@ import { getPublishedQuestions, materiaBySlug, useSessionUser, canUseAI, logYari
 import type { BankQuestion } from "@/lib/store";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import { LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
-import { renderYaris } from "@/lib/yaris-format";
+
 
 type ExtraKind = "flashcards" | "audio" | "slides" | "ia";
 
@@ -72,6 +72,10 @@ function groupsFor(la: boolean, bank: BankQuestion[]): Grupo[] {
       };
     })
     .sort((a, b) => a.label.localeCompare(b.label));
+}
+
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 /* ─── Recuperación ligera (RAG sobre el material curado) ── */
@@ -413,7 +417,7 @@ function IaMateriales({ bank, la, onClose }: { bank: BankQuestion[]; la: boolean
   async function send(q?: string) {
     const text = (q ?? input).trim();
     if (!text || typing) return;
-    const next = [...msgs, { html: text, user: true }];
+    const next = [...msgs, { html: escapeHtml(text), user: true }];
     setMsgs(next);
     setInput("");
     setTyping(true);
@@ -454,7 +458,7 @@ function IaMateriales({ bank, la, onClose }: { bank: BankQuestion[]; la: boolean
                 color: m.user ? "white" : INK,
                 fontSize: "0.88rem", lineHeight: 1.6,
               }}
-              dangerouslySetInnerHTML={{ __html: renderYaris(m.html) }}
+              dangerouslySetInnerHTML={{ __html: m.html }}
             />
             {m.fuentes && m.fuentes.length > 0 && (
               <p style={{ fontSize: "0.72rem", color: BLUE, margin: "6px 2px 0" }}>Material consultado: {m.fuentes.join(" · ")}</p>
