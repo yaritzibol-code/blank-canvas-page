@@ -1699,6 +1699,9 @@ export function BancoScreen({
           </div>
         </div>
 
+        {/* Extras: flashcards, audio/podcast, presentaciones y Yaris con el material */}
+        <ExtrasPanel la={la} />
+
         {/* Historial */}
         <div style={{ maxWidth: 820, width: "100%" }}>
           <h3
