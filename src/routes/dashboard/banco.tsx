@@ -796,11 +796,13 @@ function ModalAprendiendo({
   onStart,
   paid,
   onLocked,
+  la = false,
 }: {
   onClose: () => void;
-  onStart: (slugs: string[], qty: number) => void;
+  onStart: (keys: string[], qty: number) => void;
   paid: boolean;
   onLocked: () => void;
+  la?: boolean;
 }) {
   const [allSelected, setAllSelected] = useState(true);
   const [selectedMaterias, setSelectedMaterias] = useState<Set<string>>(
