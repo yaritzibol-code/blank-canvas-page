@@ -12,6 +12,10 @@ import {
   materiaBySlug,
   MATERIAS_DEF,
   BASICA_SESSION_PER_MATERIA,
+  sessionKey,
+  saveActiveSession,
+  loadActiveSession,
+  clearActiveSession,
 } from "@/lib/store";
 import type { BankQuestion, YarisContext } from "@/lib/store";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
@@ -99,9 +103,30 @@ function toLocalQ(q: BankQuestion): Question {
   };
 }
 
+/** Snapshot persistido del modo Aprendiendo (se borra al finalizar). */
+interface AprendiendoSnapshot {
+  qIds: string[];
+  results: (boolean | null)[];
+  currentIdx: number;
+  selectedIdx: number | null;
+  answered: boolean;
+  startTime: number;
+  sessionSlugs: string[];
+}
+
 function CuestionarioPage() {
   const { user, ready } = useRequireAuth();
   const search = Route.useSearch();
+  /** Clave de la sesión activa: distinta por usuario y por configuración. */
+  const sessionVariant = [
+    search.materias ?? "all",
+    search.fuente ?? "",
+    search.banco ?? "",
+    search.fuentes ?? "",
+    search.modo ?? "",
+    search.qty ?? "",
+  ].join("|");
+  const storeKey = user ? sessionKey("aprendiendo", user.id, sessionVariant) : "";
   const [questions, setQuestions] = useState<Question[]>([]);
   const [pool, setPool] = useState<BankQuestion[]>([]);
   const [sessionSlugs, setSessionSlugs] = useState<string[]>([]);
