@@ -105,11 +105,19 @@ function isLineaAerea(q: BankQuestion) {
   return !!q.fuente;
 }
 
-/** Código de `fuente` reservado para el examen oficial de Línea Aérea. */
-export const LA_OFICIAL_FUENTE = "LAOF";
+export { LA_OFICIAL_FUENTE } from "@/lib/store/seed-linea-aerea-oficial";
+import { LA_OFICIAL_FUENTE as LAOF } from "@/lib/store/seed-linea-aerea-oficial";
 
 function isLineaAereaOficial(q: BankQuestion) {
-  return q.fuente === LA_OFICIAL_FUENTE;
+  return q.fuente === LAOF;
+}
+
+/**
+ * Universo del banco: `la` NUNCA incluye preguntas CIAAC, solo el examen
+ * oficial de Línea Aérea y los cuestionarios de los manuales del curso.
+ */
+function universe(banco: SimBank, all: BankQuestion[]) {
+  return banco === "la" ? all.filter(isLineaAerea) : all;
 }
 
 /**
@@ -139,7 +147,7 @@ function interleave(a: BankQuestion[], b: BankQuestion[]): BankQuestion[] {
  * - `potenciado`: intercala las preguntas restantes con las del banco base.
  */
 function buildBank(mode: SimMode = "oficial", banco: SimBank = "ciaac"): BankQuestion[] {
-  const all = getPublishedQuestions();
+  const all = universe(banco, getPublishedQuestions());
   const pred = basePredicate(banco, all);
   const globalBase = shuffle(all.filter(pred));
   const globalExtra = shuffle(all.filter((q) => !pred(q)));
@@ -147,7 +155,7 @@ function buildBank(mode: SimMode = "oficial", banco: SimBank = "ciaac"): BankQue
   if (globalPool.length === 0) return [];
   const bank: BankQuestion[] = [];
   MATERIAS.forEach((m) => {
-    const own = getPublishedQuestions(m.slug);
+    const own = universe(banco, getPublishedQuestions(m.slug));
     const base = shuffle(own.filter(pred));
     const extra = shuffle(own.filter((q) => !pred(q)));
     const ownPool = mode === "oficial" ? base : interleave(base, extra);
@@ -161,7 +169,7 @@ function buildBank(mode: SimMode = "oficial", banco: SimBank = "ciaac"): BankQue
 
 /** Conteo disponible por modo, para mostrarlo en la pantalla de inicio. */
 function bankCounts(banco: SimBank = "ciaac") {
-  const all = getPublishedQuestions();
+  const all = universe(banco, getPublishedQuestions());
   const pred = basePredicate(banco, all);
   const oficial = all.filter(pred).length;
   return { oficial, extra: all.length - oficial, total: all.length };

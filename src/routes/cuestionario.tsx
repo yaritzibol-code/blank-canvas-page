@@ -17,19 +17,22 @@ import type { BankQuestion, YarisContext } from "@/lib/store";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
+import { LA_OFICIAL_FUENTE } from "@/lib/store/seed-linea-aerea-oficial";
 
 export const Route = createFileRoute("/cuestionario")({
   component: CuestionarioPage,
   validateSearch: (
     search: Record<string, unknown>,
-  ): { materias?: string; qty?: number; fuente?: string; banco?: "la"; fuentes?: string } => {
-    const out: { materias?: string; qty?: number; fuente?: string; banco?: "la"; fuentes?: string } = {};
+  ): { materias?: string; qty?: number; fuente?: string; banco?: "la"; fuentes?: string; modo?: "oficial" | "potenciado" } => {
+    const out: { materias?: string; qty?: number; fuente?: string; banco?: "la"; fuentes?: string; modo?: "oficial" | "potenciado" } = {};
     if (typeof search.materias === "string" && search.materias) out.materias = search.materias;
     // `fuente` acota el pool a un manual del curso de Línea Aérea (ATP, PHAK…).
     if (typeof search.fuente === "string" && search.fuente) out.fuente = search.fuente.toUpperCase();
     // `banco=la` usa el banco de Línea Aérea; `fuentes` lo acota a varios manuales.
     if (search.banco === "la") out.banco = "la";
     if (typeof search.fuentes === "string" && search.fuentes) out.fuentes = search.fuentes.toUpperCase();
+    // `modo=oficial` limita el banco de Línea Aérea al cuestionario oficial (LAOF).
+    if (search.modo === "oficial" || search.modo === "potenciado") out.modo = search.modo;
     const q = Number(search.qty);
     if (Number.isFinite(q) && q > 0) out.qty = Math.floor(q);
     return out;
@@ -170,9 +173,11 @@ function CuestionarioPage() {
     } else if (search.banco === "la") {
       // Banco completo de Línea Aérea (opcionalmente acotado a manuales).
       const codes = search.fuentes ? search.fuentes.split(",").map((c: string) => c.trim()).filter(Boolean) : [];
-      const all = getPublishedQuestions().filter(
-        (q) => !!q.fuente && (codes.length === 0 || codes.includes(q.fuente)),
-      );
+      const all = getPublishedQuestions().filter((q) => {
+        if (!q.fuente) return false; // nunca preguntas CIAAC en el banco de Línea Aérea
+        if (search.modo === "oficial") return q.fuente === LA_OFICIAL_FUENTE;
+        return q.fuente === LA_OFICIAL_FUENTE || codes.length === 0 || codes.includes(q.fuente);
+      });
       fullPool = paid ? all : all.slice(0, 10);
     } else {
       slugs.forEach((s) => {
@@ -186,7 +191,7 @@ function CuestionarioPage() {
     setResults(new Array(picked.length).fill(null));
     setLoaded(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, loaded, user, search.materias, search.qty, search.fuente, search.banco, search.fuentes]);
+  }, [ready, loaded, user, search.materias, search.qty, search.fuente, search.banco, search.fuentes, search.modo]);
 
   const total = questions.length;
   const answeredCount = results.filter((r) => r !== null).length;
