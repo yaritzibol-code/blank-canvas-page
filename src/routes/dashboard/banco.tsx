@@ -1581,7 +1581,7 @@ function BancoPage() {
 
       {/* Modals */}
       {modal === "examen" && (
-        <ModalExamen onClose={() => setModal(null)} onStart={handleStartSim} />
+        <ModalExamen onClose={() => setModal(null)} onStart={handleStartSim} la={la} />
       )}
       {modal === "aprendiendo" && (
         <ModalAprendiendo
@@ -1589,6 +1589,7 @@ function BancoPage() {
           onStart={handleStartLearn}
           paid={isPaid(user)}
           onLocked={handleLearnLocked}
+          la={la}
         />
       )}
       {upgrade && (
