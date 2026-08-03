@@ -851,8 +851,11 @@ function ModalAprendiendo({
   }
 
   function handleStart() {
-    const slugs =
-      allSelected || selectedMaterias.size === 0
+    const keys = la
+      ? allSelected || selectedMaterias.size === 0
+        ? LINEA_AEREA_QUIZZES.map((q) => q.code)
+        : LINEA_AEREA_QUIZZES.filter((q) => selectedMaterias.has(q.code)).map((q) => q.code)
+      : allSelected || selectedMaterias.size === 0
         ? MATERIAS.map((m) => m.slug)
         : MATERIAS.filter((m) => selectedMaterias.has(m.label)).map((m) => m.slug);
     let qtyNum = 10;
