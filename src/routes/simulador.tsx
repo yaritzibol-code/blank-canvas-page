@@ -613,6 +613,54 @@ function SimuladorPage() {
             })}
           </div>
 
+          {/* Selector de tipo de simulador */}
+          <div style={{ marginBottom: 20 }}>
+            <div style={{ fontSize: "0.78rem", fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "#647DA0", marginBottom: 10 }}>Tipo de simulador</div>
+            <div style={{ display: "grid", gap: 10 }}>
+              {([
+                {
+                  id: "oficial" as SimMode,
+                  title: "Simulador oficial",
+                  desc: "Solo preguntas de la guía de estudio del examen de ingreso.",
+                  count: counts.oficial,
+                  icon: "target" as FPIconName,
+                },
+                {
+                  id: "potenciado" as SimMode,
+                  title: "Simulador potenciado",
+                  desc: "Guía oficial + preguntas de Línea Aérea y manuales, intercaladas.",
+                  count: counts.total,
+                  icon: "flame" as FPIconName,
+                },
+              ]).map((opt) => {
+                const active = mode === opt.id;
+                return (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => setMode(opt.id)}
+                    aria-pressed={active}
+                    style={{
+                      textAlign: "left", display: "flex", gap: 12, alignItems: "flex-start",
+                      padding: "13px 15px", borderRadius: 12, cursor: "pointer",
+                      background: active ? "rgba(108,8,32,0.05)" : "white",
+                      border: active ? "2px solid #6C0820" : "2px solid #e6e9f5",
+                      fontFamily: "'Manrope', sans-serif",
+                    }}
+                  >
+                    <span style={{ flexShrink: 0, marginTop: 2, display: "flex" }}><Icon n={opt.icon} size={18} color={active ? "#6C0820" : "#647DA0"} /></span>
+                    <span style={{ display: "block" }}>
+                      <span style={{ display: "block", fontWeight: 800, fontSize: "0.92rem", color: "#22375C" }}>{opt.title}</span>
+                      <span style={{ display: "block", fontSize: "0.8rem", color: "#647DA0", lineHeight: 1.45, marginTop: 2 }}>{opt.desc}</span>
+                      <span style={{ display: "block", fontSize: "0.74rem", color: "#8a94ab", marginTop: 4 }}>{opt.count.toLocaleString("es-MX")} preguntas disponibles</span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+
           <div style={{ background: "#f8f9ff", borderRadius: 12, padding: 16, marginBottom: 24, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
             {[
               { label: "310 preguntas totales" },
