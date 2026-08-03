@@ -17,7 +17,7 @@
 import { read, write, setWriteHook } from "./db";
 import { supa, cloudEnabled } from "./cloud";
 import { defaultPrefs } from "./auth";
-import { SEED_VERSION, seedQuestions, seedFlashcards } from "./seed";
+import { SEED_VERSION, seedQuestions, seedFlashcards, seedMateriales } from "./seed";
 import type { BankQuestion, Material, Clase, FlashCardItem, Report, User } from "./types";
 
 /** Colecciones de contenido global (fuente: Panel Admin). */
@@ -249,11 +249,12 @@ async function republishSeedContent(byCol: Map<string, Row[]>): Promise<void> {
   if (cloudVersion >= SEED_VERSION) return;
 
   const questions = seedQuestions();
-  const fresh: Record<"questions" | "flashcards", Row[]> = {
+  const fresh: Record<"questions" | "flashcards" | "materiales", Row[]> = {
     questions: questions as unknown as Row[],
     flashcards: seedFlashcards(questions) as unknown as Row[],
+    materiales: seedMateriales() as unknown as Row[],
   };
-  for (const key of ["questions", "flashcards"] as const) {
+  for (const key of ["questions", "flashcards", "materiales"] as const) {
     const rows = fresh[key];
     for (let i = 0; i < rows.length; i += 500) {
       const chunk = rows.slice(i, i + 500);

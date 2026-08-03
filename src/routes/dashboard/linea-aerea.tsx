@@ -11,6 +11,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import { useRequireAuth } from "@/lib/store";
+import { LINEA_AEREA_QUIZZES } from "@/lib/store/seed-linea-aerea";
 
 export const Route = createFileRoute("/dashboard/linea-aerea")({
   component: LineaAereaPage,
@@ -194,6 +195,57 @@ function LineaAereaPage() {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Cuestionarios del curso (250 preguntas, 5 manuales) */}
+      <div style={{ ...cardStyle, marginBottom: 16 }}>
+        <h3 style={h3Style}><Icon n="help" size={18} color="#3D5D91" /> Cuestionarios oficiales del curso</h3>
+        <p style={{ fontSize: "0.82rem", color: "#647DA0", marginBottom: 16, lineHeight: 1.55 }}>
+          Un cuestionario por manual del temario, con las preguntas completas y su explicación.
+          También puedes abrir el PDF fuente en la biblioteca.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 12 }}>
+          {LINEA_AEREA_QUIZZES.map((q) => (
+            <div key={q.code} style={{ border: "1px solid #E8EEF6", borderRadius: 12, padding: "14px 16px" }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                <div style={{ width: 36, height: 36, borderRadius: 9, background: "#FAEFEE", color: "#6C0820", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <Icon n={q.icon as FPIconName} size={18} />
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: "0.86rem", fontWeight: 700, lineHeight: 1.35 }}>{q.titulo}</div>
+                  <div style={{ fontSize: "0.76rem", color: "#647DA0", margin: "2px 0 10px" }}>
+                    {q.total} preguntas · {q.code}
+                  </div>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                    <Link
+                      to="/cuestionario"
+                      search={{ fuente: q.code }}
+                      style={{
+                        fontSize: "0.74rem", fontWeight: 700, color: "white",
+                        background: "#6C0820", padding: "6px 12px", borderRadius: 14,
+                        textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 5,
+                      }}
+                    >
+                      <Icon n="help" size={12} /> Resolver cuestionario
+                    </Link>
+                    <a
+                      href={q.fileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        fontSize: "0.74rem", fontWeight: 700, color: "#3D5D91",
+                        background: "rgba(61,93,145,0.08)", padding: "6px 12px", borderRadius: 14,
+                        textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 5,
+                      }}
+                    >
+                      <Icon n="book" size={12} /> Ver PDF
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 

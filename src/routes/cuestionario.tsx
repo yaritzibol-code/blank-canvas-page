@@ -20,9 +20,13 @@ import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
 
 export const Route = createFileRoute("/cuestionario")({
   component: CuestionarioPage,
-  validateSearch: (search: Record<string, unknown>): { materias?: string; qty?: number } => {
-    const out: { materias?: string; qty?: number } = {};
+  validateSearch: (
+    search: Record<string, unknown>,
+  ): { materias?: string; qty?: number; fuente?: string } => {
+    const out: { materias?: string; qty?: number; fuente?: string } = {};
     if (typeof search.materias === "string" && search.materias) out.materias = search.materias;
+    // `fuente` acota el pool a un manual del curso de Línea Aérea (ATP, PHAK…).
+    if (typeof search.fuente === "string" && search.fuente) out.fuente = search.fuente.toUpperCase();
     const q = Number(search.qty);
     if (Number.isFinite(q) && q > 0) out.qty = Math.floor(q);
     return out;
@@ -129,6 +133,10 @@ function CuestionarioPage() {
    *    pool fijo de 10 (la sesión mezcla materias en lugar de agotar una sola).
    */
   function pickSession(fromPool: BankQuestion[], paid: boolean): BankQuestion[] {
+    // Con `fuente` la sesión es el manual completo (50 preguntas) salvo que se
+    // pida otra cantidad explícita.
+    if (search.fuente)
+      return shuffle(fromPool).slice(0, Math.min(search.qty ?? fromPool.length, fromPool.length));
     if (paid) return shuffle(fromPool).slice(0, Math.min(search.qty ?? 10, fromPool.length));
     const byMateria = new Map<string, BankQuestion[]>();
     fromPool.forEach((q) => {
@@ -149,9 +157,16 @@ function CuestionarioPage() {
     const slugs = parseSlugs(search.materias);
     const paid = isPaid(user);
     let fullPool: BankQuestion[] = [];
-    slugs.forEach((s) => {
-      fullPool = fullPool.concat(paid ? getPublishedQuestions(s) : getFreeQuestions(s));
-    });
+    if (search.fuente) {
+      // Cuestionario de un manual completo (curso de Línea Aérea): se toma el
+      // banco publicado sin recortar por materia para no perder preguntas.
+      const all = getPublishedQuestions().filter((q) => q.fuente === search.fuente);
+      fullPool = paid ? all : all.slice(0, 10);
+    } else {
+      slugs.forEach((s) => {
+        fullPool = fullPool.concat(paid ? getPublishedQuestions(s) : getFreeQuestions(s));
+      });
+    }
     const picked = pickSession(fullPool, paid).map(toLocalQ);
     setPool(fullPool);
     setSessionSlugs(slugs);
@@ -159,7 +174,7 @@ function CuestionarioPage() {
     setResults(new Array(picked.length).fill(null));
     setLoaded(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, loaded, user, search.materias, search.qty]);
+  }, [ready, loaded, user, search.materias, search.qty, search.fuente]);
 
   const total = questions.length;
   const answeredCount = results.filter((r) => r !== null).length;
