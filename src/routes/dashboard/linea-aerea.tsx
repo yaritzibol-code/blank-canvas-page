@@ -11,7 +11,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import { useRequireAuth } from "@/lib/store";
-import { LINEA_AEREA_QUIZZES } from "@/lib/store/seed-linea-aerea";
+import { LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
 
 export const Route = createFileRoute("/dashboard/linea-aerea")({
   component: LineaAereaPage,
