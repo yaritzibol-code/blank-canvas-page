@@ -11,6 +11,7 @@ import {
 } from "@/lib/store";
 import type { BankQuestion, SimAnswer } from "@/lib/store";
 import { yarisAiChat } from "@/lib/yaris-ai.functions";
+import { yarisToHtml } from "@/lib/yaris-format";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
 export const Route = createFileRoute("/simulador")({
@@ -516,7 +517,7 @@ function SimuladorPage() {
         },
       });
       if (phaseRef.current !== "review") return;
-      setYarisMsgs((p) => [...p, { role: "bot", text: r.text, cite: r.cite ?? undefined }]);
+      setYarisMsgs((p) => [...p, { role: "bot", text: yarisToHtml(r.text), cite: r.cite ?? undefined }]);
     } catch (err) {
       console.error("Yaris IA error", err);
       if (!again) explainedRef.current.delete(idx); // el siguiente intento repite la explicación completa
@@ -547,7 +548,7 @@ function SimuladorPage() {
     setYarisTyping(true);
     try {
       const r = await callYarisAi({ data: { history, context: aiContextPayload(reviewCurrent) } });
-      setYarisMsgs((p) => [...p, { role: "bot", text: r.text, cite: r.cite ?? undefined }]);
+      setYarisMsgs((p) => [...p, { role: "bot", text: yarisToHtml(r.text), cite: r.cite ?? undefined }]);
     } catch (err) {
       console.error("Yaris IA error", err);
       setYarisMsgs((p) => [...p, { role: "bot", text: "No pude conectarme con la IA. Vuelve a intentarlo." }]);
