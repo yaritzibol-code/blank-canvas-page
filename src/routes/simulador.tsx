@@ -16,8 +16,12 @@ import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
 export const Route = createFileRoute("/simulador")({
   component: SimuladorPage,
-  validateSearch: (s: Record<string, unknown>): { modo?: SimMode } =>
-    s["modo"] === "potenciado" || s["modo"] === "oficial" ? { modo: s["modo"] } : {},
+  validateSearch: (s: Record<string, unknown>): { modo?: SimMode; banco?: SimBank } => {
+    const out: { modo?: SimMode; banco?: SimBank } = {};
+    if (s["modo"] === "potenciado" || s["modo"] === "oficial") out.modo = s["modo"];
+    if (s["banco"] === "la") out.banco = "la";
+    return out;
+  },
   head: () => ({
     meta: [
       { title: "Simulador CIAAC — FlightPath" },
