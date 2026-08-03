@@ -463,3 +463,50 @@ html[data-motion="reduced"] *::after {
 
 
 
+
+/* ══════════ Pathy mascota libre (salto + meneo en loop) ══════════ */
+.fp-mascot { position: relative; cursor: pointer; -webkit-tap-highlight-color: transparent; user-select: none; }
+.fp-shadow {
+  position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: 66%; height: 8%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(35,43,77,.28), rgba(35,43,77,0) 72%);
+  animation: fpShadowIdle 4s ease-in-out infinite;
+}
+.fp-jump { position: absolute; inset: 0 0 6% 0; }
+.fp-squash { width: 100%; height: 100%; transform-origin: 50% 100%; }
+.fp-img {
+  width: 100%; height: 100%; object-fit: contain; display: block;
+  animation: fpFloat 4s ease-in-out infinite;
+  filter: drop-shadow(0 12px 20px rgba(35,43,77,.18));
+}
+@keyframes fpFloat { 0%,100% { transform: translateY(0) rotate(-1.2deg) } 50% { transform: translateY(-9px) rotate(1.2deg) } }
+@keyframes fpShadowIdle { 0%,100% { transform: translateX(-50%) scale(1); opacity: 1 } 50% { transform: translateX(-50%) scale(.92); opacity: .8 } }
+.fp-mascot.is-jumping .fp-jump { animation: fpJump .95s cubic-bezier(.36,.07,.19,.97) both }
+.fp-mascot.is-jumping .fp-squash { animation: fpJumpSquash .95s ease-in-out both }
+.fp-mascot.is-jumping .fp-shadow { animation: fpShadowJump .95s ease-in-out both }
+@keyframes fpJump {
+  0%,14% { transform: translateY(0) }
+  42% { transform: translateY(calc(var(--fp-size,300px) * -.28)) }
+  58% { transform: translateY(calc(var(--fp-size,300px) * -.24)) }
+  78%,100% { transform: translateY(0) }
+}
+@keyframes fpJumpSquash {
+  0% { transform: scale(1,1) } 12% { transform: scale(1.14,.8) } 26% { transform: scale(.88,1.16) }
+  55% { transform: scale(.96,1.05) } 78% { transform: scale(1.16,.78) } 88% { transform: scale(.94,1.08) } 100% { transform: scale(1,1) }
+}
+@keyframes fpShadowJump {
+  0%,14% { transform: translateX(-50%) scale(1); opacity: 1 }
+  45% { transform: translateX(-50%) scale(.55); opacity: .45 }
+  78% { transform: translateX(-50%) scale(1.12); opacity: 1 }
+  100% { transform: translateX(-50%) scale(1) }
+}
+.fp-mascot.is-wiggling .fp-squash { animation: fpWiggle 1.2s ease-in-out both }
+@keyframes fpWiggle {
+  0%,100% { transform: translateX(0) rotate(0) }
+  18% { transform: translateX(-5%) rotate(-6deg) }
+  45% { transform: translateX(5%) rotate(6deg) }
+  70% { transform: translateX(-3%) rotate(-3.5deg) }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fp-img, .fp-shadow, .fp-jump, .fp-squash { animation: none !important }
+}
