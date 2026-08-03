@@ -52,6 +52,22 @@ const FAQS: { q: string; a: string }[] = [
     a: "Organiza el temario oficial en materias con un banco de más de 2,800 preguntas con explicación, simulacros cronometrados, flashcards y un tutor IA disponible 24/7. Practicas cada fuente del temario (ATP, PHAK, Jeppesen, CPAM y OACI Anexo 10) hasta dominar los temas donde más fallas.",
   },
   {
+    q: "¿Qué es la evaluación AON Aviation Suite y cómo se prepara?",
+    a: "AON Aviation Suite es la batería psicométrica y de aptitudes que aplica Aeroméxico Connect: atención dividida, memoria de trabajo, razonamiento y una prueba de inglés. Se prepara con práctica cronometrada y descanso: en FlightPath entrenas la parte teórica y el manejo del tiempo con simulacros con reloj.",
+  },
+  {
+    q: "¿Cuántas preguntas oficiales tiene el examen teórico de Primer Oficial Embraer 190?",
+    a: "El cuestionario oficial del proceso que replicamos en FlightPath tiene 377 preguntas repartidas en las cinco fuentes del temario (ATP, PHAK, Jeppesen General Airway Manual, CPAM y OACI Anexo 10). Puedes practicarlas en modo oficial o mezcladas con el banco potenciado de FlightPath.",
+  },
+  {
+    q: "¿Cuánto cuesta prepararte con FlightPath para la convocatoria?",
+    a: `El acceso completo tiene un pago único de $${PRO_SETUP_FALLBACK.toLocaleString("es-MX")} MXN y una mensualidad de $${PRO_MONTHLY_FALLBACK.toLocaleString("es-MX")} MXN. Incluye el banco completo, simulacros cronometrados, flashcards, audios de repaso, presentaciones y Yaris, la tutora IA entrenada en los materiales del curso.`,
+  },
+  {
+    q: "¿Qué extras de estudio incluye el cuestionario?",
+    a: "Además de las preguntas con explicación, cada bloque tiene flashcards, audio-repaso tipo podcast narrado, presentaciones con los puntos clave y un chat con Yaris que consulta el material curado y cita la fuente del curso.",
+  },
+  {
     q: "¿El cuestionario reemplaza al material oficial de la convocatoria?",
     a: "No. El material de referencia es el temario y la guía oficiales proporcionados por la empresa; FlightPath únicamente organiza ese material y te da práctica estructurada sobre él. FlightPath no está afiliada a ASPA de México ni a Aeroméxico.",
   },
@@ -137,6 +153,15 @@ export const Route = createFileRoute("/convocatoria-aeromexico")({
       },
       { property: "og:url", content: CANONICAL },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "FlightPath" },
+      { property: "og:locale", content: "es_MX" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Convocatoria Aeroméxico · ASPA — Primer Oficial Embraer 190" },
+      {
+        name: "twitter:description",
+        content:
+          "Practica el temario oficial (ATP, PHAK, Jeppesen, CPAM y OACI Anexo 10) con 377 preguntas oficiales, simulacros, flashcards, audios y tutor IA.",
+      },
     ],
     links: [{ rel: "canonical", href: CANONICAL }],
     scripts: [
@@ -152,6 +177,27 @@ export const Route = createFileRoute("/convocatoria-aeromexico")({
                 name: f.q,
                 acceptedAnswer: { "@type": "Answer", text: f.a },
               })),
+            },
+            {
+              "@type": "Course",
+              name: "Preparación para la convocatoria ASPA · Aeroméxico Connect — Primer Oficial Embraer 190",
+              description:
+                "Cuestionario de práctica del temario oficial: ATP, PHAK, Jeppesen General Airway Manual, CPAM y OACI Anexo 10, con simulacros cronometrados, flashcards, audios de repaso, presentaciones y tutor IA.",
+              inLanguage: "es-MX",
+              url: CANONICAL,
+              provider: { "@type": "Organization", name: "FlightPath", url: "https://flightpath.mx/" },
+              offers: {
+                "@type": "Offer",
+                price: String(PRO_SETUP_FALLBACK),
+                priceCurrency: "MXN",
+                category: "Paid",
+                url: CANONICAL,
+              },
+              hasCourseInstance: {
+                "@type": "CourseInstance",
+                courseMode: "online",
+                courseWorkload: "PT20H",
+              },
             },
             {
               "@type": "BreadcrumbList",
