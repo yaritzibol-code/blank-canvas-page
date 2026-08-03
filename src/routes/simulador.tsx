@@ -16,8 +16,12 @@ import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
 export const Route = createFileRoute("/simulador")({
   component: SimuladorPage,
-  validateSearch: (s: Record<string, unknown>): { modo?: SimMode } =>
-    s["modo"] === "potenciado" || s["modo"] === "oficial" ? { modo: s["modo"] } : {},
+  validateSearch: (s: Record<string, unknown>): { modo?: SimMode; banco?: SimBank } => {
+    const out: { modo?: SimMode; banco?: SimBank } = {};
+    if (s["modo"] === "potenciado" || s["modo"] === "oficial") out.modo = s["modo"];
+    if (s["banco"] === "la") out.banco = "la";
+    return out;
+  },
   head: () => ({
     meta: [
       { title: "Simulador CIAAC — FlightPath" },
@@ -81,12 +85,28 @@ function buildQuestions(): QState[] {
   return qs;
 }
 
-/** Modo del simulador: oficial (solo guía de estudio) o potenciado (todo el banco). */
+/** Modo del simulador: oficial (solo banco base) o potenciado (banco base + el resto). */
 export type SimMode = "oficial" | "potenciado";
+
+/**
+ * Banco base del simulador:
+ * - `ciaac` (default): guía de estudio del examen de ingreso.
+ * - `la`: cuestionarios oficiales del curso de Línea Aérea (ATP, PHAK, JEPP, ANX10, CPAM).
+ */
+export type SimBank = "ciaac" | "la";
 
 /** Preguntas de la guía oficial de examen de ingreso: sin `fuente` externa. */
 function isOficial(q: BankQuestion) {
   return !q.fuente;
+}
+
+/** Preguntas provenientes de los cuestionarios del curso de Línea Aérea. */
+function isLineaAerea(q: BankQuestion) {
+  return !!q.fuente;
+}
+
+function basePredicate(banco: SimBank) {
+  return banco === "la" ? isLineaAerea : isOficial;
 }
 
 /** Intercala dos listas: oficial, extra, oficial, extra… */
@@ -103,21 +123,22 @@ function interleave(a: BankQuestion[], b: BankQuestion[]): BankQuestion[] {
 /**
  * Banco real del simulador: por cada materia toma sus preguntas publicadas
  * barajadas y cicla hasta llenar su cuota.
- * - `oficial`: únicamente preguntas de la guía de estudio del examen de ingreso.
- * - `potenciado`: intercala las demás preguntas (Línea Aérea y manuales) con las oficiales.
+ * - `oficial`: únicamente preguntas del banco base elegido.
+ * - `potenciado`: intercala las preguntas restantes con las del banco base.
  */
-function buildBank(mode: SimMode = "oficial"): BankQuestion[] {
+function buildBank(mode: SimMode = "oficial", banco: SimBank = "ciaac"): BankQuestion[] {
+  const pred = basePredicate(banco);
   const all = getPublishedQuestions();
-  const globalOficial = shuffle(all.filter(isOficial));
-  const globalExtra = shuffle(all.filter((q) => !isOficial(q)));
-  const globalPool = mode === "oficial" ? globalOficial : interleave(globalOficial, globalExtra);
+  const globalBase = shuffle(all.filter(pred));
+  const globalExtra = shuffle(all.filter((q) => !pred(q)));
+  const globalPool = mode === "oficial" ? globalBase : interleave(globalBase, globalExtra);
   if (globalPool.length === 0) return [];
   const bank: BankQuestion[] = [];
   MATERIAS.forEach((m) => {
     const own = getPublishedQuestions(m.slug);
-    const oficial = shuffle(own.filter(isOficial));
-    const extra = shuffle(own.filter((q) => !isOficial(q)));
-    const ownPool = mode === "oficial" ? oficial : interleave(oficial, extra);
+    const base = shuffle(own.filter(pred));
+    const extra = shuffle(own.filter((q) => !pred(q)));
+    const ownPool = mode === "oficial" ? base : interleave(base, extra);
     const pool = ownPool.length > 0 ? ownPool : globalPool;
     for (let i = 0; i < m.total; i++) {
       bank.push(pool[i % pool.length]);
@@ -127,9 +148,10 @@ function buildBank(mode: SimMode = "oficial"): BankQuestion[] {
 }
 
 /** Conteo disponible por modo, para mostrarlo en la pantalla de inicio. */
-function bankCounts() {
+function bankCounts(banco: SimBank = "ciaac") {
+  const pred = basePredicate(banco);
   const all = getPublishedQuestions();
-  const oficial = all.filter(isOficial).length;
+  const oficial = all.filter(pred).length;
   return { oficial, extra: all.length - oficial, total: all.length };
 }
 
@@ -215,6 +237,7 @@ function SimuladorPage() {
   const [phase, setPhase] = useState<Phase>("warning");
   const search = Route.useSearch();
   const [mode, setMode] = useState<SimMode>(search.modo ?? "oficial");
+  const banco: SimBank = search.banco ?? "ciaac";
   const [agreed, setAgreed] = useState(false);
   const [questions, setQuestions] = useState<QState[]>(buildQuestions);
   const [bankQs, setBankQs] = useState<BankQuestion[]>([]);
@@ -412,7 +435,7 @@ function SimuladorPage() {
   function startExam() {
     const gate = canStartSimulator(user);
     if (!gate.allowed) return;
-    const bank = buildBank(mode);
+    const bank = buildBank(mode, banco);
     if (bank.length === 0) return;
     setBankQs(bank);
     setQuestions(buildQuestions());
@@ -577,7 +600,7 @@ function SimuladorPage() {
   /* Gating y disponibilidad del banco (solo relevante en fase warning) */
   const gate = canStartSimulator(user);
   const bankEmpty = phase === "warning" && ready ? getPublishedQuestions().length === 0 : false;
-  const counts = phase === "warning" && ready ? bankCounts() : { oficial: 0, extra: 0, total: 0 };
+  const counts = phase === "warning" && ready ? bankCounts(banco) : { oficial: 0, extra: 0, total: 0 };
 
 
   if (!ready) {
@@ -627,14 +650,18 @@ function SimuladorPage() {
                 {
                   id: "oficial" as SimMode,
                   title: "Simulador oficial",
-                  desc: "Solo preguntas de la guía de estudio del examen de ingreso.",
+                  desc: banco === "la"
+                    ? "Solo preguntas de los cuestionarios oficiales del curso de Línea Aérea."
+                    : "Solo preguntas de la guía de estudio del examen de ingreso.",
                   count: counts.oficial,
                   icon: "target" as FPIconName,
                 },
                 {
                   id: "potenciado" as SimMode,
                   title: "Simulador potenciado",
-                  desc: "Guía oficial + preguntas de Línea Aérea y manuales, intercaladas.",
+                  desc: banco === "la"
+                    ? "Cuestionarios de Línea Aérea + preguntas CIAAC, intercaladas."
+                    : "Guía oficial + preguntas de Línea Aérea y manuales, intercaladas.",
                   count: counts.total,
                   icon: "flame" as FPIconName,
                 },

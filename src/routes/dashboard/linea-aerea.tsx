@@ -44,7 +44,7 @@ const SIMULADORES: {
   {
     modo: "oficial",
     title: "Simulador oficial",
-    desc: "Solo preguntas de la guía de estudio del examen de ingreso.",
+    desc: "Solo preguntas de los cuestionarios oficiales del curso de Línea Aérea.",
     icon: "target",
     accent: "#3D5D91",
     bg: "rgba(61,93,145,0.07)",
@@ -52,7 +52,7 @@ const SIMULADORES: {
   {
     modo: "potenciado",
     title: "Simulador potenciado",
-    desc: "Guía oficial + preguntas de Línea Aérea y manuales, intercaladas.",
+    desc: "Cuestionarios de Línea Aérea + preguntas CIAAC, intercaladas.",
     icon: "flame",
     accent: "#6C0820",
     bg: "rgba(108,8,32,0.06)",
@@ -133,7 +133,7 @@ function LineaAereaPage() {
             <Link
               key={s.modo}
               to="/simulador"
-              search={{ modo: s.modo }}
+              search={{ modo: s.modo, banco: "la" as const }}
               style={{
                 display: "block", textDecoration: "none",
                 border: `2px solid ${s.accent}`, background: s.bg,
