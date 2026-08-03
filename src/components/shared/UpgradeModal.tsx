@@ -58,6 +58,9 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
     if (paying) return;
     setPaying(true);
     goPlanes(cta);
+  };
+
+
 
 
   return (
