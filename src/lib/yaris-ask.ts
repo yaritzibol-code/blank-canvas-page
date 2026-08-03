@@ -18,6 +18,7 @@
 import { useServerFn } from "@tanstack/react-start";
 import { yarisAiChat } from "@/lib/yaris-ai.functions";
 import { canUseAI, useSessionUser, type YarisContext } from "@/lib/store";
+import { yarisToHtml } from "@/lib/yaris-format";
 
 export interface YarisAnswer {
   /** HTML simple listo para sanitizar y renderizar. */
@@ -89,7 +90,7 @@ export function useYarisAsk() {
           },
         },
       });
-      return { text: res.text, cite: res.cite ?? null, source: "ia" };
+      return { text: yarisToHtml(res.text), cite: res.cite ?? null, source: "ia" };
     } catch {
       // Sin conexión con el modelo: se entrega contenido real del curso.
       return officialExplanation(ctx, "No pude conectarme con la IA en este momento.");

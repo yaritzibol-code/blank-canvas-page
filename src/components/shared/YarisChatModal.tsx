@@ -4,19 +4,13 @@
  * server function `yarisAiChat`, con un fallback determinista si algo falla.
  */
 import { useEffect, useRef, useState } from "react";
-import DOMPurify from "isomorphic-dompurify";
 import { Icon } from "@/components/ui/fp-icon";
 import { logYarisUse } from "@/lib/store";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
+import { yarisToHtml } from "@/lib/yaris-format";
 import type { User } from "@/lib/store";
 
-/** Sanitiza HTML de Yaris permitiendo sólo etiquetas de formato inocuas. */
-function sanitizeYaris(html: string): string {
-  return DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: ["b", "strong", "i", "em", "u", "br", "ul", "ol", "li", "p", "span"],
-    ALLOWED_ATTR: [],
-  });
-}
+
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
@@ -148,7 +142,7 @@ export function YarisChatModal({
                   boxShadow: "0 2px 8px rgba(61,93,145,.05)",
                 }}
               >
-                <div dangerouslySetInnerHTML={{ __html: sanitizeYaris(m.text) }} />
+                <div dangerouslySetInnerHTML={{ __html: yarisToHtml(m.text) }} />
                 {m.cite && (
                   <div style={{ marginTop: 6, fontSize: ".72rem", color: "#8DA1BE" }}>Fuente: {m.cite}</div>
                 )}
