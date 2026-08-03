@@ -167,17 +167,63 @@ function PlaneGlyph({ className = "w-5 h-5", style, fill = "currentColor" }: { c
   );
 }
 
-export function PathyBubble({ size = 220, float = true, glow = true, className = "" }: { size?: number; float?: boolean; glow?: boolean; className?: string }) {
+export function PathyBubble({ size = 220, glow = true, className = "" }: { size?: number; float?: boolean; glow?: boolean; className?: string }) {
+  const [anim, setAnim] = useState<"" | "is-jumping" | "is-wiggling">("");
+  const nextRef = useRef<"is-jumping" | "is-wiggling">("is-jumping");
+
+  const play = useCallback((kind?: "is-jumping" | "is-wiggling") => {
+    setAnim((cur) => {
+      if (cur) return cur;
+      const k = kind ?? nextRef.current;
+      nextRef.current = k === "is-jumping" ? "is-wiggling" : "is-jumping";
+      return k;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!anim) return;
+    const t = setTimeout(() => setAnim(""), anim === "is-jumping" ? 950 : 1200);
+    return () => clearTimeout(t);
+  }, [anim]);
+
+  useEffect(() => {
+    const id = setInterval(() => play(), 5000);
+    return () => clearInterval(id);
+  }, [play]);
+
   return (
-    <div className={`relative ${className}`} style={{ width: size, height: size }}>
-      {glow && <div className="absolute inset-0 rounded-full" style={{ background: "radial-gradient(closest-side, rgba(242,174,188,0.28), transparent 70%)", transform: "scale(1.25)", filter: "blur(8px)" }} />}
-      <div className={`relative w-full h-full rounded-full overflow-hidden ring-1 ring-ink/10 shadow-navy ${float ? "animate-float-y" : ""}`}>
-        <img src="/assets/pathy-cloud.png" alt="Pathy, tu copiloto de estudio" width={size} height={size} fetchPriority="high" decoding="async" className="w-full h-full object-cover scale-110" />
-        <div className="absolute inset-0 rounded-full" style={{ boxShadow: "inset 0 0 40px rgba(10,18,38,0.45)" }} />
+    <div
+      className={`fp-mascot ${anim} ${className}`}
+      style={{ width: size, height: size * 1.02, ["--fp-size" as string]: `${size}px` }}
+      onClick={() => play()}
+      role="img"
+      aria-label="Pathy, tu copiloto de estudio"
+    >
+      {glow && (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: "radial-gradient(closest-side, rgba(242,174,188,0.30), transparent 70%)", transform: "scale(1.2)", filter: "blur(10px)" }}
+        />
+      )}
+      <div className="fp-shadow" />
+      <div className="fp-jump">
+        <div className="fp-squash">
+          <img
+            className="fp-img"
+            src="/assets/pathy-cloud.png"
+            alt=""
+            draggable={false}
+            width={size}
+            height={size}
+            fetchPriority="high"
+            decoding="async"
+          />
+        </div>
       </div>
     </div>
   );
 }
+
 
 export function SectionHead({
   eyebrow, title, sub, light = false, center = false, max = "max-w-2xl",
