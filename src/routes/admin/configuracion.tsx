@@ -153,6 +153,52 @@ function AdminConfiguracionPage() {
         </div>
       </div>
 
+      {/* Configuración de IA (PRD 9.12) */}
+      <div style={{ ...cardStyle, marginBottom: 18 }}>
+        <div style={cardHeadStyle}><Icon n="spark" size={15} /> Configuración de IA</div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 14, alignItems: "end" }}>
+          <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: ".84rem", color: "#22375C", fontWeight: 600, cursor: "pointer" }}>
+            <input type="checkbox" checked={cfg.iaYarisActiva} onChange={(e) => set("iaYarisActiva", e.target.checked)} style={{ accentColor: "#3D5D91", width: 16, height: 16 }} />
+            Yaris (tutor IA) activa
+          </label>
+          <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: ".84rem", color: "#22375C", fontWeight: 600, cursor: "pointer" }}>
+            <input type="checkbox" checked={cfg.iaPathyActiva} onChange={(e) => set("iaPathyActiva", e.target.checked)} style={{ accentColor: "#3D5D91", width: 16, height: 16 }} />
+            Pathy (motivación) activa
+          </label>
+          <div>
+            <label style={labelStyle}>Límite diario de Yaris (plan básico)</label>
+            <input type="number" min="0" value={cfg.limiteYarisBasico} onChange={(e) => set("limiteYarisBasico", Math.max(0, parseInt(e.target.value, 10) || 0))} style={inputStyle} />
+          </div>
+        </div>
+        <p style={{ fontSize: ".72rem", color: "#8DA1BE", marginTop: 10 }}>Yaris explica con el contenido oficial y nunca modifica el banco de preguntas.</p>
+      </div>
+
+      {/* Recordatorios y accesos (PRD 9.12) */}
+      <div style={{ ...cardStyle, marginBottom: 18 }}>
+        <div style={cardHeadStyle}><Icon n="bell" size={15} /> Recordatorios y accesos</div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 14 }}>
+          <div>
+            <label style={labelStyle}>Horario sugerido de recordatorios</label>
+            <input value={cfg.recordatorioHorario} onChange={(e) => set("recordatorioHorario", e.target.value)} style={inputStyle} placeholder="19:00" />
+          </div>
+          <div>
+            <label style={labelStyle}>Días sugeridos</label>
+            <input value={cfg.recordatorioDias} onChange={(e) => set("recordatorioDias", e.target.value)} style={inputStyle} placeholder="Lunes a viernes" />
+          </div>
+          <div>
+            <label style={labelStyle}>Días del acceso de prueba</label>
+            <input type="number" min="1" value={cfg.diasPrueba} onChange={(e) => set("diasPrueba", Math.max(1, parseInt(e.target.value, 10) || 1))} style={inputStyle} />
+          </div>
+        </div>
+      </div>
+
+      {/* Soporte (PRD 9.12) */}
+      <div style={{ ...cardStyle, marginBottom: 18 }}>
+        <div style={cardHeadStyle}><Icon n="headset" size={15} /> Configuración de soporte</div>
+        <label style={labelStyle}>Respuesta automática al recibir un reporte</label>
+        <textarea value={cfg.soporteAutoRespuesta} onChange={(e) => set("soporteAutoRespuesta", e.target.value)} rows={2} style={{ ...inputStyle, resize: "vertical" }} />
+      </div>
+
       <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 22 }}>
         <button onClick={save} style={{ ...primaryBtnStyle, padding: "10px 22px" }}>
           <Icon n="check" size={16} /> Guardar configuración
