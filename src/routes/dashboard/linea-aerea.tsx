@@ -1,12 +1,9 @@
 /**
- * Módulo "Línea Aérea": preparación profesional para convocatorias de
- * aerolínea. Primera convocatoria cubierta: ASPA de México — Primer Oficial
- * de la flota Embraer 190 de Aeroméxico Connect.
+ * Módulo "Línea Aérea": dashboard de estudio profesional para la convocatoria
+ * de Primer Oficial (Embraer 190 — Aeroméxico Connect / ASPA de México).
  *
- * La sección organiza el material de referencia OFICIAL de la convocatoria
- * (temario y guía proporcionados por la empresa) y lo conecta con la práctica
- * en FlightPath. La propia convocatoria desaconseja cursos de terceros sin
- * respaldo: aquí no se vende un curso, se organiza el material oficial.
+ * Al llegar el piloto elige simulador, revisa los requisitos y evaluaciones
+ * del proceso, y resuelve los cuestionarios oficiales del curso.
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
@@ -20,8 +17,6 @@ export const Route = createFileRoute("/dashboard/linea-aerea")({
 const FONT = "'Manrope', sans-serif";
 const DISPLAY = "'Bricolage Grotesque', sans-serif";
 const INK = "#22375C";
-
-const DRIVE_URL = "https://drive.google.com/drive/folders/1REwNEDY3N_Gcq0SJcO2o0B-kxGQQub0u";
 
 const REQUISITOS: { icon: FPIconName; text: string }[] = [
   { icon: "calendar", text: "Edad: de 18 años hasta 50 años con 11 meses" },
@@ -38,65 +33,30 @@ const EVALUACIONES: { icon: FPIconName; title: string; sub: string }[] = [
   { icon: "users", title: "Panel", sub: "Entrevista con panel evaluador" },
 ];
 
-interface Fuente {
-  icon: FPIconName;
+const SIMULADORES: {
+  modo: "oficial" | "potenciado";
   title: string;
-  detail: string;
-  materias: { label: string; slugs: string }[];
-}
-
-const TEMARIO: Fuente[] = [
+  desc: string;
+  icon: FPIconName;
+  accent: string;
+  bg: string;
+}[] = [
   {
-    icon: "book",
-    title: "ATP — Airline Transport Pilot",
-    detail: "Completo, excepto los capítulos de Performance y Weight & Balance.",
-    materias: [
-      { label: "Aerodinámica", slugs: "aerodinamica" },
-      { label: "Aeronaves y Motores", slugs: "aeronaves-motores" },
-      { label: "Meteorología", slugs: "meteorologia" },
-      { label: "Navegación", slugs: "navegacion" },
-      { label: "Operaciones", slugs: "operaciones" },
-    ],
+    modo: "oficial",
+    title: "Simulador oficial",
+    desc: "Solo preguntas de la guía de estudio del examen de ingreso.",
+    icon: "target",
+    accent: "#3D5D91",
+    bg: "rgba(61,93,145,0.07)",
   },
   {
-    icon: "graduation",
-    title: "Pilot's Handbook of Aeronautical Knowledge (PHAK)",
-    detail: "Completo, excepto el capítulo 1.",
-    materias: [
-      { label: "Aerodinámica", slugs: "aerodinamica" },
-      { label: "Meteorología", slugs: "meteorologia" },
-      { label: "Medicina de Aviación", slugs: "medicina" },
-      { label: "Factores Humanos", slugs: "factores-humanos" },
-    ],
+    modo: "potenciado",
+    title: "Simulador potenciado",
+    desc: "Guía oficial + preguntas de Línea Aérea y manuales, intercaladas.",
+    icon: "flame",
+    accent: "#6C0820",
+    bg: "rgba(108,8,32,0.06)",
   },
-  {
-    icon: "map",
-    title: "Jeppesen General Airway Manual",
-    detail: "Sección Introduction.",
-    materias: [
-      { label: "Manuales AIS", slugs: "manuales-ais" },
-      { label: "Navegación", slugs: "navegacion" },
-    ],
-  },
-  {
-    icon: "scale",
-    title: "CPAM — Legislación nacional",
-    detail: "Compendio de legislación nacional relacionada a tripulaciones de vuelo.",
-    materias: [{ label: "Legislación Aeronáutica", slugs: "legislacion" }],
-  },
-  {
-    icon: "radio",
-    title: "OACI Anexo 10, Volumen II",
-    detail: "Telecomunicaciones aeronáuticas — procedimientos de comunicación.",
-    materias: [{ label: "Comunicaciones", slugs: "comunicaciones" }],
-  },
-];
-
-const PLAN_SEMANAS: { sem: string; foco: string; fuentes: string }[] = [
-  { sem: "Semana 1", foco: "Base teórica: aerodinámica, performance conceptual y sistemas", fuentes: "PHAK (caps. 2-7) + ATP" },
-  { sem: "Semana 2", foco: "Meteorología, navegación y cartas", fuentes: "PHAK + ATP + Jeppesen GAM (Introduction)" },
-  { sem: "Semana 3", foco: "Legislación nacional y comunicaciones", fuentes: "CPAM + OACI Anexo 10 Vol. II" },
-  { sem: "Semana 4", foco: "Repaso integral, cuestionarios por materia débil y simulacros", fuentes: "Todo el temario + banco FlightPath" },
 ];
 
 const cardStyle: React.CSSProperties = {
@@ -120,17 +80,17 @@ function LineaAereaPage() {
   const { ready } = useRequireAuth();
   if (!ready) return <div style={{ minHeight: "60vh" }} />;
 
+  const totalPreguntas = LINEA_AEREA_QUIZZES.reduce((s, q) => s + q.total, 0);
+
   return (
-    <div style={{ fontFamily: FONT, color: INK, maxWidth: 900, margin: "0 auto" }}>
+    <div style={{ fontFamily: FONT, color: INK, maxWidth: 960, margin: "0 auto" }}>
       {/* Hero */}
       <div
         style={{
           background: "linear-gradient(145deg, #22375C, #2a2a4e)",
           borderRadius: 20,
-          padding: "32px 28px",
-          marginBottom: 20,
-          position: "relative",
-          overflow: "hidden",
+          padding: "30px 28px",
+          marginBottom: 18,
         }}
       >
         <div
@@ -139,32 +99,62 @@ function LineaAereaPage() {
             background: "rgba(242,174,188,0.2)", color: "#F2AEBC",
             padding: "5px 12px", borderRadius: 20,
             fontSize: "0.72rem", fontWeight: 700,
-            textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 16,
+            textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 14,
           }}
         >
-          <Icon n="plane" size={14} /> Preparación profesional · Convocatoria activa
+          <Icon n="plane" size={14} /> Convocatoria activa
         </div>
         <h1 style={{ fontFamily: DISPLAY, fontSize: "1.7rem", color: "white", marginBottom: 8, lineHeight: 1.2 }}>
           Primer Oficial — Embraer 190
         </h1>
-        <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.6, maxWidth: 560 }}>
-          ASPA de México invita a unirse a su grupo de pilotos como Primer Oficial de la flota
-          Embraer 190 de <strong style={{ color: "white" }}>Aeroméxico Connect</strong>. Aquí tienes la
-          convocatoria organizada: requisitos, evaluaciones, temario oficial y cómo practicarlo en FlightPath.
+        <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.6, maxWidth: 620 }}>
+          Tu tablero de estudio para la convocatoria de ASPA de México con Aeroméxico Connect.
+          Elige tu simulador, revisa el proceso y resuelve los cuestionarios oficiales del curso.
         </p>
-        <a
-          href={DRIVE_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: "inline-flex", alignItems: "center", gap: 8,
-            marginTop: 18, padding: "12px 20px",
-            background: "#F2AEBC", color: "#6C0820",
-            borderRadius: 11, fontSize: "0.88rem", fontWeight: 700, textDecoration: "none",
-          }}
-        >
-          <Icon n="download" size={16} /> Abrir material de estudio oficial (Drive)
-        </a>
+        <div style={{ display: "flex", gap: 22, marginTop: 18, flexWrap: "wrap" }}>
+          {[
+            { k: "Cuestionarios", v: String(LINEA_AEREA_QUIZZES.length) },
+            { k: "Preguntas del curso", v: totalPreguntas.toLocaleString("es-MX") },
+            { k: "Evaluaciones", v: String(EVALUACIONES.length) },
+          ].map((s) => (
+            <div key={s.k}>
+              <div style={{ fontFamily: DISPLAY, fontSize: "1.35rem", color: "white", lineHeight: 1 }}>{s.v}</div>
+              <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", marginTop: 4, textTransform: "uppercase", letterSpacing: "0.06em" }}>{s.k}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Elegir simulador */}
+      <div style={{ ...cardStyle, marginBottom: 16 }}>
+        <h3 style={h3Style}><Icon n="sim" size={18} color="#3D5D91" /> Elige tu simulador</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 12 }}>
+          {SIMULADORES.map((s) => (
+            <Link
+              key={s.modo}
+              to="/simulador"
+              search={{ modo: s.modo }}
+              style={{
+                display: "block", textDecoration: "none",
+                border: `2px solid ${s.accent}`, background: s.bg,
+                borderRadius: 14, padding: "18px 18px",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                <div style={{ width: 40, height: 40, borderRadius: 11, background: "white", color: s.accent, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <Icon n={s.icon} size={20} />
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontFamily: DISPLAY, fontSize: "1rem", color: INK }}>{s.title}</div>
+                  <div style={{ fontSize: "0.8rem", color: "#647DA0", lineHeight: 1.45, margin: "3px 0 10px" }}>{s.desc}</div>
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: "0.78rem", fontWeight: 800, color: s.accent }}>
+                    Comenzar <Icon n="arrow" size={13} />
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
 
       {/* Requisitos + Evaluaciones */}
@@ -198,8 +188,8 @@ function LineaAereaPage() {
         </div>
       </div>
 
-      {/* Cuestionarios del curso (250 preguntas, 5 manuales) */}
-      <div style={{ ...cardStyle, marginBottom: 16 }}>
+      {/* Cuestionarios oficiales del curso */}
+      <div style={{ ...cardStyle, marginBottom: 32 }}>
         <h3 style={h3Style}><Icon n="help" size={18} color="#3D5D91" /> Cuestionarios oficiales del curso</h3>
         <p style={{ fontSize: "0.82rem", color: "#647DA0", marginBottom: 16, lineHeight: 1.55 }}>
           Un cuestionario por manual del temario, con las preguntas completas y su explicación.
@@ -247,112 +237,6 @@ function LineaAereaPage() {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Temario oficial */}
-      <div style={{ ...cardStyle, marginBottom: 16 }}>
-        <h3 style={h3Style}><Icon n="book" size={18} color="#3D5D91" /> Temario de evaluación (material de referencia oficial)</h3>
-        <p style={{ fontSize: "0.82rem", color: "#647DA0", marginBottom: 16, lineHeight: 1.55 }}>
-          Estas son las fuentes que la empresa define para el examen teórico. Junto a cada una tienes
-          las materias del banco de FlightPath con las que puedes practicarla.
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          {TEMARIO.map((f) => (
-            <div key={f.title} style={{ border: "1px solid #E8EEF6", borderRadius: 12, padding: "14px 16px" }}>
-              <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-                <div style={{ width: 36, height: 36, borderRadius: 9, background: "#FAEFEE", color: "#6C0820", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                  <Icon n={f.icon} size={18} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: "0.88rem", fontWeight: 700 }}>{f.title}</div>
-                  <div style={{ fontSize: "0.78rem", color: "#647DA0", marginBottom: 8 }}>{f.detail}</div>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                    {f.materias.map((m) => (
-                      <Link
-                        key={m.slugs}
-                        to="/cuestionario"
-                        search={{ materias: m.slugs }}
-                        style={{
-                          fontSize: "0.72rem", fontWeight: 700, color: "#3D5D91",
-                          background: "rgba(61,93,145,0.08)", padding: "4px 10px",
-                          borderRadius: 14, textDecoration: "none",
-                          display: "inline-flex", alignItems: "center", gap: 4,
-                        }}
-                      >
-                        <Icon n="help" size={12} /> Practicar {m.label}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Plan sugerido */}
-      <div style={{ ...cardStyle, marginBottom: 16 }}>
-        <h3 style={h3Style}><Icon n="calendar" size={18} color="#3D5D91" /> Plan de estudio sugerido (4 semanas)</h3>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          {PLAN_SEMANAS.map((s) => (
-            <div key={s.sem} style={{ display: "flex", alignItems: "flex-start", gap: 12, background: "#f8f9ff", borderRadius: 10, padding: "10px 14px" }}>
-              <div style={{ fontSize: "0.76rem", fontWeight: 800, color: "#6C0820", minWidth: 76, marginTop: 2 }}>{s.sem}</div>
-              <div>
-                <div style={{ fontSize: "0.84rem", fontWeight: 600 }}>{s.foco}</div>
-                <div style={{ fontSize: "0.76rem", color: "#647DA0" }}>{s.fuentes}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div style={{ display: "flex", gap: 10, marginTop: 16, flexWrap: "wrap" }}>
-          <Link
-            to="/dashboard/banco"
-            style={{
-              display: "inline-flex", alignItems: "center", gap: 7,
-              padding: "11px 18px", background: "#6C0820", color: "white",
-              borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, textDecoration: "none",
-            }}
-          >
-            <Icon n="help" size={15} /> Practicar con el banco
-          </Link>
-          <Link
-            to="/simulador"
-            style={{
-              display: "inline-flex", alignItems: "center", gap: 7,
-              padding: "11px 18px", background: "white", color: "#3D5D91",
-              border: "2px solid #3D5D91", borderRadius: 10,
-              fontSize: "0.85rem", fontWeight: 700, textDecoration: "none",
-            }}
-          >
-            <Icon n="sim" size={15} /> Hacer un simulacro
-          </Link>
-        </div>
-      </div>
-
-      {/* Aviso importante */}
-      <div
-        style={{
-          background: "rgba(243,156,18,0.08)",
-          border: "1px solid rgba(243,156,18,0.4)",
-          borderRadius: 12,
-          padding: "14px 18px",
-          fontSize: "0.8rem",
-          color: "#8a6000",
-          lineHeight: 1.6,
-          marginBottom: 32,
-          display: "flex",
-          alignItems: "flex-start",
-          gap: 10,
-        }}
-      >
-        <span style={{ flexShrink: 0, display: "flex", marginTop: 2 }}><Icon n="alert" size={16} /></span>
-        <span>
-          La Secretaría de Trabajo y Conflictos de ASPA <strong>no recomienda contratar cursos de
-          preparación de terceros</strong> para esta convocatoria: el material de referencia es el temario
-          y la guía oficiales proporcionados por la empresa. Esta sección de FlightPath únicamente
-          organiza ese material oficial y lo conecta con tu práctica; FlightPath no está afiliada a
-          ASPA de México ni a Aeroméxico.
-        </span>
       </div>
     </div>
   );

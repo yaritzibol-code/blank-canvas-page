@@ -15,6 +15,8 @@ import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
 export const Route = createFileRoute("/simulador")({
   component: SimuladorPage,
+  validateSearch: (s: Record<string, unknown>): { modo?: SimMode } =>
+    s["modo"] === "potenciado" || s["modo"] === "oficial" ? { modo: s["modo"] } : {},
   head: () => ({
     meta: [
       { title: "Simulador CIAAC — FlightPath" },
@@ -210,7 +212,8 @@ function SimuladorPage() {
   const { user, ready } = useRequireAuth();
   const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>("warning");
-  const [mode, setMode] = useState<SimMode>("oficial");
+  const search = Route.useSearch();
+  const [mode, setMode] = useState<SimMode>(search.modo ?? "oficial");
   const [agreed, setAgreed] = useState(false);
   const [questions, setQuestions] = useState<QState[]>(buildQuestions);
   const [bankQs, setBankQs] = useState<BankQuestion[]>([]);
