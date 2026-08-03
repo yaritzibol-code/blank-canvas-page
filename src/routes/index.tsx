@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
-import { PRO_MONTHLY_FALLBACK } from "@/lib/pricing";
+import { PRO_MONTHLY_FALLBACK, PRO_SETUP_FALLBACK } from "@/lib/pricing";
 
 /**
  * Próxima convocatoria del examen CIAAC (hora Ciudad de México, UTC-6).
@@ -1251,6 +1251,9 @@ function Pricing() {
                   ${PRO_MONTHLY_FALLBACK.amount.toLocaleString("es-MX")}
                 </span>
                 <span className="text-white/50 text-sm">{PRO_MONTHLY_FALLBACK.currency} / mes</span>
+              </div>
+              <div className="mt-2 text-[13px] text-white/55">
+                + ${PRO_SETUP_FALLBACK.amount.toLocaleString("es-MX")} {PRO_SETUP_FALLBACK.currency} de inscripción (pago único)
               </div>
               <p className="text-[14px] text-white/60 mt-4">Plataforma completa, simulador ilimitado y tutor IA 24/7. Cancela cuando quieras.</p>
               <Btn kind="primary" size="lg" icon="arrow" className="w-full mt-7" to="/register">Hazte Pro</Btn>

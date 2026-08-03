@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { PRO_MONTHLY_FALLBACK } from "@/lib/pricing";
+import { PRO_MONTHLY_FALLBACK, PRO_SETUP_FALLBACK } from "@/lib/pricing";
 import {
   AeroBackdrop,
   Btn,
@@ -355,6 +355,9 @@ function Comprar() {
                   ${PRO_MONTHLY_FALLBACK.amount.toLocaleString("es-MX")}
                 </span>
                 <span className="text-white/50 text-sm">{PRO_MONTHLY_FALLBACK.currency} / mes</span>
+              </div>
+              <div className="mt-2 text-[13px] text-white/55">
+                + ${PRO_SETUP_FALLBACK.amount.toLocaleString("es-MX")} {PRO_SETUP_FALLBACK.currency} de inscripción (pago único)
               </div>
               <p className="text-[14px] text-white/60 mt-4">
                 Acceso Pro a toda la plataforma: cuestionario de la convocatoria, banco completo,
