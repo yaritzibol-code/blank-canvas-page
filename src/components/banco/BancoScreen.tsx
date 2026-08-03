@@ -794,11 +794,12 @@ function ModalAprendiendo({
   la = false,
 }: {
   onClose: () => void;
-  onStart: (keys: string[], qty: number) => void;
+  onStart: (keys: string[], qty: number, modo: "oficial" | "potenciado") => void;
   paid: boolean;
   onLocked: () => void;
   la?: boolean;
 }) {
+  const [modo, setModo] = useState<"oficial" | "potenciado">("oficial");
   const [allSelected, setAllSelected] = useState(true);
   const [selectedMaterias, setSelectedMaterias] = useState<Set<string>>(
     new Set()
@@ -862,7 +863,7 @@ function ModalAprendiendo({
         qtyNum = parseInt(qty) || 10;
       }
     }
-    onStart(keys, qtyNum);
+    onStart(keys, qtyNum, modo);
   }
 
   function handleCustomInput(val: string) {
@@ -939,7 +940,51 @@ function ModalAprendiendo({
             : "Elige las materias y cuántas preguntas quieres practicar"}
         </p>
 
+        {/* Tipo de banco (Línea Aérea) */}
+        {la && (
+          <div style={{ marginBottom: 20 }}>
+            <h4 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#22375C", marginBottom: 10 }}>
+              ¿Qué preguntas?
+            </h4>
+            <div style={{ display: "grid", gap: 8 }}>
+              {([
+                {
+                  id: "oficial" as const,
+                  title: "Preguntas oficiales",
+                  desc: "Solo el cuestionario oficial del proceso de Línea Aérea.",
+                },
+                {
+                  id: "potenciado" as const,
+                  title: "Oficiales + potenciadas",
+                  desc: "El oficial más las preguntas de los manuales del curso en FlightPath.",
+                },
+              ]).map((o) => {
+                const active = modo === o.id;
+                return (
+                  <button
+                    key={o.id}
+                    onClick={() => setModo(o.id)}
+                    style={{
+                      textAlign: "left",
+                      padding: "12px 14px",
+                      borderRadius: 12,
+                      cursor: "pointer",
+                      fontFamily: "'Manrope', sans-serif",
+                      border: `2px solid ${active ? "#3D5D91" : "#F2DCDB"}`,
+                      background: active ? "rgba(61,93,145,0.08)" : "#f8f9ff",
+                    }}
+                  >
+                    <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#22375C" }}>{o.title}</div>
+                    <div style={{ fontSize: "0.78rem", color: "#647DA0" }}>{o.desc}</div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* Materias / Manuales */}
+        {!(la && modo === "oficial") && (
         <div style={{ marginBottom: 20 }}>
           <h4
             style={{
@@ -1001,6 +1046,7 @@ function ModalAprendiendo({
                 })}
           </div>
         </div>
+        )}
 
         {/* Quantity */}
         <div style={{ marginBottom: 24 }}>
@@ -1236,12 +1282,15 @@ export function BancoScreen({
     }
   }
 
-  function handleStartLearn(keys: string[], qty: number) {
+  function handleStartLearn(keys: string[], qty: number, modo: "oficial" | "potenciado" = "oficial") {
     setModal(null);
     if (la) {
       navigate({
         to: "/cuestionario",
-        search: { banco: "la" as const, fuentes: keys.join(","), qty },
+        search:
+          modo === "oficial"
+            ? { banco: "la" as const, modo, qty }
+            : { banco: "la" as const, modo, fuentes: keys.join(","), qty },
       });
       return;
     }
