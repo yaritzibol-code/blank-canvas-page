@@ -4,8 +4,8 @@
  * Reglas vigentes (2026-08):
  *  - Plan **básica**: pool fijo de 10 preguntas por materia (por semilla);
  *    cada sesión de Cuestionario toma 2 preguntas de cada materia elegida de
- *    ese pool. Máximo 2 intentos totales (de por vida) entre cuestionarios y
- *    simuladores. Sin IA (Yaris).
+ *    ese pool (cuestionarios sin tope de intentos). Simulador: 1 por mes
+ *    calendario. Sin IA (Yaris).
  *  - Plan **paga (Pro)**: acceso completo a cuestionario/simulador ilimitados
  *    y Yaris con IA.
  *  - Los módulos Learning Paths / Estudiemos Juntos / Flashcards / Clases
@@ -17,7 +17,6 @@ import {
   getClaseProgress,
   getTemaProgress,
   getSimAttempts,
-  getQuizAttempts,
   logActivity,
 } from "./domain";
 
@@ -34,8 +33,8 @@ export type GatedFeature =
   | "yaris_biblioteca"
   | "yaris_ia";
 
-/** Máximo de intentos totales (quiz + simulador combinados) para plan básica. */
-export const BASICA_MAX_ATTEMPTS = 2;
+/** Simuladores por mes calendario incluidos en el plan básica. */
+export const BASICA_SIMS_PER_MONTH = 1;
 /** Tamaño del pool fijo de preguntas por materia en modo básica. */
 export const BASICA_QUESTIONS_PER_MATERIA = 10;
 /** Preguntas por materia que entran a cada sesión de cuestionario en básica. */
@@ -60,31 +59,40 @@ export interface GateResult {
   limit?: number;
 }
 
-/** Cuenta intentos totales de por vida (quizzes + simuladores) del usuario. */
-export function totalAttempts(userId: string): number {
-  return getQuizAttempts(userId).length + getSimAttempts(userId).length;
+/** Simuladores del usuario dentro del mes calendario actual. */
+export function simsThisMonth(userId: string): number {
+  const now = new Date();
+  return getSimAttempts(userId).filter((a) => {
+    const d = new Date(a.date);
+    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+  }).length;
 }
-
-const LIMIT_MSG =
-  `Tu plan Básica incluye ${BASICA_MAX_ATTEMPTS} intentos totales entre cuestionarios y simuladores. ` +
-  "Actualiza a FlightPath Pro para practicar sin límites.";
 
 export function canStartSimulator(user: User | null): GateResult {
   if (!user) return { allowed: false, reason: "Inicia sesión para usar el simulador." };
   if (isPaid(user)) return { allowed: true };
-  const used = totalAttempts(user.id);
-  if (used >= BASICA_MAX_ATTEMPTS)
-    return { allowed: false, reason: LIMIT_MSG, used, limit: BASICA_MAX_ATTEMPTS };
-  return { allowed: true, used, limit: BASICA_MAX_ATTEMPTS };
+  const used = simsThisMonth(user.id);
+  if (used >= BASICA_SIMS_PER_MONTH) {
+    const next = new Date();
+    next.setMonth(next.getMonth() + 1, 1);
+    const fecha = next.toLocaleDateString("es-MX", { day: "numeric", month: "long" });
+    return {
+      allowed: false,
+      reason:
+        `Tu plan Básica incluye ${BASICA_SIMS_PER_MONTH} simulador al mes y ya usaste el de este mes. ` +
+        `El siguiente estará disponible el ${fecha}. Actualiza a FlightPath Pro para simuladores ilimitados.`,
+      used,
+      limit: BASICA_SIMS_PER_MONTH,
+    };
+  }
+  return { allowed: true, used, limit: BASICA_SIMS_PER_MONTH };
 }
 
+/** Los cuestionarios no tienen tope de intentos: el plan básica ya está
+ *  acotado por su pool fijo de 10 preguntas por materia (2 por sesión). */
 export function canStartQuiz(user: User | null): GateResult {
   if (!user) return { allowed: false, reason: "Inicia sesión para practicar." };
-  if (isPaid(user)) return { allowed: true };
-  const used = totalAttempts(user.id);
-  if (used >= BASICA_MAX_ATTEMPTS)
-    return { allowed: false, reason: LIMIT_MSG, used, limit: BASICA_MAX_ATTEMPTS };
-  return { allowed: true, used, limit: BASICA_MAX_ATTEMPTS };
+  return { allowed: true };
 }
 
 /**

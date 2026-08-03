@@ -21,7 +21,7 @@ function initialsOf(nombre: string): string {
 /* ── Clean single-stroke line icons (shared FlightPath glyph set) ── */
 type IconName =
   | "home" | "book" | "help" | "sim" | "clock" | "library" | "cards" | "play"
-  | "doc" | "chart" | "bell" | "user" | "settings" | "flame" | "spark" | "building";
+  | "doc" | "chart" | "bell" | "user" | "settings" | "flame" | "spark" | "building" | "plane";
 
 function Icon({ n, size = 18, sw = 1.6 }: { n: IconName; size?: number; sw?: number }) {
   const p = { fill: "none", stroke: "currentColor", strokeWidth: sw, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
@@ -42,6 +42,7 @@ function Icon({ n, size = 18, sw = 1.6 }: { n: IconName; size?: number; sw?: num
     flame: <path d="M12 3s4.5 4 4.5 8.5A4.5 4.5 0 1 1 7.5 11.5c0-2 1-3 2-4-1 4 2.5 4 2.5 7.5 0-3.5 4-3.5 4-7.5 0-3.5-4-4-4-4z" {...p} />,
     spark: <path d="M12 3l1.6 5.8L19 11l-5.4 1.6L12 19l-1.6-6.4L5 11l5.4-2.2L12 3z" {...p} />,
     building: <><path d="M4 21V6l7-3v18M11 21h9V10l-9-3" {...p} /><path d="M14 11h2M14 14h2M14 17h2M7 8v.01M7 12v.01M7 16v.01" {...p} /></>,
+    plane: <path d="M3.5 13l17-7.5L14 21l-2.5-7L3.5 13z" {...p} />,
   };
   return <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true" style={{ display: "block" }}>{g[n]}</svg>;
 }
@@ -58,7 +59,7 @@ function PlaneMark({ size = 36, light = false }: { size?: number; light?: boolea
   );
 }
 
-const NAV_SECTIONS: { label: string; items: { icon: IconName; label: string; path: string; locked?: boolean }[] }[] = [
+const NAV_SECTIONS: { label: string; items: { icon: IconName; label: string; path: string; locked?: boolean; nuevo?: boolean }[] }[] = [
   {
     label: "Principal",
     items: [
@@ -66,6 +67,7 @@ const NAV_SECTIONS: { label: string; items: { icon: IconName; label: string; pat
       { icon: "book", label: "Learning paths", path: "/dashboard/materias", locked: true },
       { icon: "help", label: "Cuestionarios", path: "/dashboard/banco" },
       { icon: "sim", label: "Simulador CIAAC", path: "/simulador" },
+      { icon: "plane", label: "Línea Aérea", path: "/dashboard/linea-aerea", nuevo: true },
       { icon: "clock", label: "Estudiemos Juntos", path: "/dashboard/estudiemos", locked: true },
     ],
   },
@@ -210,6 +212,19 @@ function Sidebar({ onClose, onYaris }: { onClose?: () => void; onYaris?: () => v
                       }}
                     >
                       <Icon n="building" size={11} sw={1.7} /> Pronto
+                    </span>
+                  )}
+                  {item.nuevo && !showLock && (
+                    <span
+                      style={{
+                        display: "inline-flex", alignItems: "center",
+                        padding: "2px 8px", borderRadius: 20,
+                        background: "rgba(46,204,113,0.18)",
+                        color: "#7FE0AC", fontSize: "0.6rem", fontWeight: 700,
+                        textTransform: "uppercase", letterSpacing: "0.08em",
+                      }}
+                    >
+                      Nuevo
                     </span>
                   )}
                 </Link>

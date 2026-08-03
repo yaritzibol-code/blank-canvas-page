@@ -1134,7 +1134,7 @@ function BancoPage() {
     "5 horas límite de tiempo",
     "Calificación al terminar",
     "Análisis de áreas de oportunidad",
-    "Ilimitado — repítelo las veces que quieras",
+    "Pro: ilimitado · Básica: 1 al mes",
   ];
 
   const LEARN_FEATURES = [
