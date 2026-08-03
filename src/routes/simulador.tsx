@@ -435,7 +435,7 @@ function SimuladorPage() {
   function startExam() {
     const gate = canStartSimulator(user);
     if (!gate.allowed) return;
-    const bank = buildBank(mode);
+    const bank = buildBank(mode, banco);
     if (bank.length === 0) return;
     setBankQs(bank);
     setQuestions(buildQuestions());
