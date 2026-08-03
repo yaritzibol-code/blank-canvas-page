@@ -80,7 +80,7 @@ export function Icon({ n, className = "w-5 h-5", sw = 1.6 }: { n: IconName; clas
   return <svg viewBox="0 0 24 24" className={className} aria-hidden="true">{g[n]}</svg>;
 }
 
-function FMark({ size = 30, light = false }: { size?: number; light?: boolean }) {
+export function FMark({ size = 30, light = false }: { size?: number; light?: boolean }) {
   return (
     <span className="inline-flex items-center justify-center rounded-xl shrink-0" style={{ width: size, height: size, background: light ? "rgba(255,255,255,0.1)" : "#3D5D91" }}>
       <svg viewBox="0 0 24 24" width={size * 0.62} height={size * 0.62} aria-hidden="true">
@@ -94,12 +94,19 @@ function FMark({ size = 30, light = false }: { size?: number; light?: boolean })
 
 export function Logo({ light = false, size = 30 }: { light?: boolean; size?: number }) {
   return (
-    <div className="flex items-center gap-2.5">
-      <FMark size={size} light={light} />
+    <Link to="/" aria-label="FlightPath — ir al inicio" className="flex items-center gap-2.5 transition-opacity hover:opacity-80">
+      <img
+        src="/assets/flightpath-logo.png"
+        alt="Logo de FlightPath"
+        width={size}
+        height={size}
+        style={{ width: size, height: size }}
+        className="rounded-[8px] object-cover shrink-0"
+      />
       <span className={`font-display text-[19px] tracking-tight ${light ? "text-white" : "text-ink"}`}>
         Flight<span className="text-coral-600">Path</span>
       </span>
-    </div>
+    </Link>
   );
 }
 
