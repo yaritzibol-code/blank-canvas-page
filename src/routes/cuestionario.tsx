@@ -211,6 +211,26 @@ function CuestionarioPage() {
         fullPool = fullPool.concat(paid ? getPublishedQuestions(s) : getFreeQuestions(s));
       });
     }
+    // Sesión en curso: se retoma tal cual hasta que el usuario finalice.
+    const snap = storeKey ? loadActiveSession<AprendiendoSnapshot>(storeKey) : null;
+    if (snap && snap.qIds.length > 0) {
+      const byId = new Map(getPublishedQuestions().map((q) => [q.id, q]));
+      const restored = snap.qIds.map((id) => byId.get(id)).filter((q): q is BankQuestion => !!q);
+      if (restored.length === snap.qIds.length) {
+        setPool(fullPool);
+        setSessionSlugs(snap.sessionSlugs.length > 0 ? snap.sessionSlugs : slugs);
+        setQuestions(restored.map(toLocalQ));
+        setResults(snap.results);
+        setCurrentIdx(Math.min(snap.currentIdx, restored.length - 1));
+        setSelectedIdx(snap.selectedIdx);
+        setAnswered(snap.answered);
+        setStartTime(snap.startTime);
+        setLoaded(true);
+        return;
+      }
+      clearActiveSession(storeKey);
+    }
+
     const picked = pickSession(fullPool, paid).map(toLocalQ);
     setPool(fullPool);
     setSessionSlugs(slugs);
@@ -224,6 +244,24 @@ function CuestionarioPage() {
   const answeredCount = results.filter((r) => r !== null).length;
   const correctCount = results.filter((r) => r === true).length;
   const progressPct = total > 0 ? Math.round((answeredCount / total) * 100) : 0;
+
+  /** Persiste el avance en cada cambio; al finalizar se borra el snapshot. */
+  useEffect(() => {
+    if (!loaded || !storeKey || questions.length === 0) return;
+    if (showResult) {
+      clearActiveSession(storeKey);
+      return;
+    }
+    saveActiveSession<AprendiendoSnapshot>(storeKey, {
+      qIds: questions.map((q) => q.questionId),
+      results,
+      currentIdx,
+      selectedIdx,
+      answered,
+      startTime,
+      sessionSlugs,
+    });
+  }, [loaded, storeKey, questions, results, currentIdx, selectedIdx, answered, startTime, sessionSlugs, showResult]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -287,6 +325,7 @@ function CuestionarioPage() {
   }
 
   function handleRestart() {
+    if (storeKey) clearActiveSession(storeKey);
     const fresh = pickSession(pool, isPaid(user)).map(toLocalQ);
     setQuestions(fresh);
     setResults(new Array(fresh.length).fill(null));
