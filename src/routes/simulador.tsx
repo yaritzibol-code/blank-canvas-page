@@ -105,8 +105,20 @@ function isLineaAerea(q: BankQuestion) {
   return !!q.fuente;
 }
 
-function basePredicate(banco: SimBank) {
-  return banco === "la" ? isLineaAerea : isOficial;
+/** Código de `fuente` reservado para el examen oficial de Línea Aérea. */
+export const LA_OFICIAL_FUENTE = "LAOF";
+
+function isLineaAereaOficial(q: BankQuestion) {
+  return q.fuente === LA_OFICIAL_FUENTE;
+}
+
+/**
+ * Predicado del banco base. Para Línea Aérea se prefieren las preguntas
+ * oficiales (`LAOF`); mientras no existan, se usan los cuestionarios del curso.
+ */
+function basePredicate(banco: SimBank, all: BankQuestion[]) {
+  if (banco !== "la") return isOficial;
+  return all.some(isLineaAereaOficial) ? isLineaAereaOficial : isLineaAerea;
 }
 
 /** Intercala dos listas: oficial, extra, oficial, extra… */
