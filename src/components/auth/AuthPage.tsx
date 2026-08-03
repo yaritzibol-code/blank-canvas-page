@@ -83,7 +83,7 @@ const googleMsgStyle: React.CSSProperties = {
   lineHeight: 1.4,
 };
 
-function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
+function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?: string }) {
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
   const [nombre, setNombre] = useState("");
@@ -115,7 +115,7 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
       return;
     }
     // El primer registro en la nube queda como administradora y entra a su panel.
-    const dest = res.user?.role === "admin" ? "/admin" : "/dashboard";
+    const dest = res.user?.role === "admin" ? "/admin" : (redirectTo ?? "/dashboard");
     setTimeout(() => { window.location.href = dest; }, 400);
   }
 
@@ -203,7 +203,7 @@ function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
   );
 }
 
-function LoginForm({ onSwitch }: { onSwitch: () => void }) {
+function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?: string }) {
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -230,7 +230,7 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
       return;
     }
     // La administradora entra directo a su panel.
-    const dest = res.user?.role === "admin" ? "/admin" : "/dashboard";
+    const dest = res.user?.role === "admin" ? "/admin" : (redirectTo ?? "/dashboard");
     setTimeout(() => { window.location.href = dest; }, 400);
   }
 
@@ -395,7 +395,7 @@ function SubmitButton({ children, loading, onClick }: { children: React.ReactNod
 }
 
 /* ─── Main AuthPage component ──────────────────────────── */
-export function AuthPage({ initialTab }: { initialTab: Tab }) {
+export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirectTo?: string }) {
   const [tab, setTab] = useState<Tab>(initialTab);
   // Suscrito al store: cubre tanto la sesión ya activa al entrar como la que
   // aparece segundos después (retorno de Google OAuth, confirmación de correo).
@@ -406,8 +406,8 @@ export function AuthPage({ initialTab }: { initialTab: Tab }) {
   }, []);
 
   useEffect(() => {
-    if (sessionUser) window.location.href = "/dashboard";
-  }, [sessionUser]);
+    if (sessionUser) window.location.href = redirectTo ?? "/dashboard";
+  }, [sessionUser, redirectTo]);
 
   return (
     <div style={{
@@ -518,9 +518,9 @@ export function AuthPage({ initialTab }: { initialTab: Tab }) {
 
           {/* FORM */}
           {tab === "register" ? (
-            <RegisterForm onSwitch={() => setTab("login")} />
+            <RegisterForm onSwitch={() => setTab("login")} redirectTo={redirectTo} />
           ) : (
-            <LoginForm onSwitch={() => setTab("register")} />
+            <LoginForm onSwitch={() => setTab("register")} redirectTo={redirectTo} />
           )}
         </div>
       </div>

@@ -7,6 +7,7 @@ FlightPath es una plataforma SaaS mexicana enfocada en la preparación del exame
 ## Pages
 
 - [Inicio](/): Resumen del producto, materias cubiertas, tutores IA y planes.
+- [Convocatoria Aeroméxico — Primer Oficial Embraer 190](/convocatoria-aeromexico): Requisitos y temario oficial de la convocatoria ASPA (ATP, PHAK, Jeppesen, CPAM, OACI Anexo 10) y compra del cuestionario de práctica.
 - [Preguntas frecuentes](/faq): Respuestas sobre el examen CIAAC, la plataforma y los planes.
 - [Blog](/blog): Artículos y guías sobre el proceso CIAAC y preparación de vuelo.
 - [Aviso legal](/legal): Términos de servicio y política de privacidad.

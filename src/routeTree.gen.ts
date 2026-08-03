@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogRouteImport } from './routes/blog'
+import { Route as ConvocatoriaAeromexicoRouteImport } from './routes/convocatoria-aeromexico'
 import { Route as CuestionarioRouteImport } from './routes/cuestionario'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -18,6 +19,7 @@ import { Route as LegalRouteImport } from './routes/legal'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SimuladorRouteImport } from './routes/simulador'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
@@ -63,6 +65,11 @@ const BlogRoute = BlogRouteImport.update({
   path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConvocatoriaAeromexicoRoute = ConvocatoriaAeromexicoRouteImport.update({
+  id: '/convocatoria-aeromexico',
+  path: '/convocatoria-aeromexico',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CuestionarioRoute = CuestionarioRouteImport.update({
   id: '/cuestionario',
   path: '/cuestionario',
@@ -96,6 +103,11 @@ const RegisterRoute = RegisterRouteImport.update({
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SimuladorRoute = SimuladorRouteImport.update({
@@ -274,6 +286,7 @@ const ApiPublicPaymentsWebhookRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/blog': typeof BlogRoute
+  '/convocatoria-aeromexico': typeof ConvocatoriaAeromexicoRoute
   '/cuestionario': typeof CuestionarioRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/faq': typeof FaqRoute
@@ -281,6 +294,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/simulador': typeof SimuladorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/accesos': typeof AdminAccesosRoute
@@ -319,12 +333,14 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/blog': typeof BlogRoute
+  '/convocatoria-aeromexico': typeof ConvocatoriaAeromexicoRoute
   '/cuestionario': typeof CuestionarioRoute
   '/faq': typeof FaqRoute
   '/legal': typeof LegalRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/simulador': typeof SimuladorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/accesos': typeof AdminAccesosRoute
@@ -364,6 +380,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/blog': typeof BlogRoute
+  '/convocatoria-aeromexico': typeof ConvocatoriaAeromexicoRoute
   '/cuestionario': typeof CuestionarioRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/faq': typeof FaqRoute
@@ -371,6 +388,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/simulador': typeof SimuladorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/accesos': typeof AdminAccesosRoute
@@ -411,6 +429,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/blog'
+    | '/convocatoria-aeromexico'
     | '/cuestionario'
     | '/dashboard'
     | '/faq'
@@ -418,6 +437,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/robots.txt'
     | '/simulador'
     | '/sitemap.xml'
     | '/admin/accesos'
@@ -456,12 +476,14 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/blog'
+    | '/convocatoria-aeromexico'
     | '/cuestionario'
     | '/faq'
     | '/legal'
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/robots.txt'
     | '/simulador'
     | '/sitemap.xml'
     | '/admin/accesos'
@@ -500,6 +522,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/blog'
+    | '/convocatoria-aeromexico'
     | '/cuestionario'
     | '/dashboard'
     | '/faq'
@@ -507,6 +530,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/robots.txt'
     | '/simulador'
     | '/sitemap.xml'
     | '/admin/accesos'
@@ -546,6 +570,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BlogRoute: typeof BlogRoute
+  ConvocatoriaAeromexicoRoute: typeof ConvocatoriaAeromexicoRoute
   CuestionarioRoute: typeof CuestionarioRoute
   DashboardRoute: typeof DashboardRouteWithChildren
   FaqRoute: typeof FaqRoute
@@ -553,6 +578,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
   SimuladorRoute: typeof SimuladorRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   AdminAccesosRoute: typeof AdminAccesosRoute
@@ -588,6 +614,13 @@ declare module '@tanstack/react-router' {
       path: '/blog'
       fullPath: '/blog'
       preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/convocatoria-aeromexico': {
+      id: '/convocatoria-aeromexico'
+      path: '/convocatoria-aeromexico'
+      fullPath: '/convocatoria-aeromexico'
+      preLoaderRoute: typeof ConvocatoriaAeromexicoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cuestionario': {
@@ -637,6 +670,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/simulador': {
@@ -923,6 +963,7 @@ const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BlogRoute: BlogRoute,
+  ConvocatoriaAeromexicoRoute: ConvocatoriaAeromexicoRoute,
   CuestionarioRoute: CuestionarioRoute,
   DashboardRoute: DashboardRouteWithChildren,
   FaqRoute: FaqRoute,
@@ -930,6 +971,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
   SimuladorRoute: SimuladorRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   AdminAccesosRoute: AdminAccesosRoute,
