@@ -5,7 +5,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { type StripeEnv, createStripeClient, getStripeErrorMessage } from "@/lib/stripe.server";
-import { PRO_MONTHLY_LOOKUP_KEY, type PlanPrice } from "@/lib/pricing";
+import { PRO_MONTHLY_LOOKUP_KEY, PRO_SETUP_LOOKUP_KEY, type PlanPrice } from "@/lib/pricing";
 import { logBillingEvent } from "@/lib/billing-audit.server";
 
 type CheckoutResult = { clientSecret: string } | { error: string };
@@ -32,6 +32,24 @@ export const getPublicPricing = createServerFn({ method: "POST" })
         currency: price.currency.toUpperCase(),
         interval: interval === "month" || interval === "year" ? interval : null,
       };
+    } catch {
+      return null;
+    }
+  });
+
+/**
+ * Importe del pago único de inscripción, leído de Stripe con el mismo
+ * `lookup_key` que usa el checkout. `null` si no está configurado.
+ */
+export const getPublicSetupPricing = createServerFn({ method: "POST" })
+  .inputValidator((data: { environment: StripeEnv }) => data)
+  .handler(async ({ data }): Promise<PlanPrice | null> => {
+    try {
+      const stripe = createStripeClient(data.environment);
+      const prices = await stripe.prices.list({ lookup_keys: [PRO_SETUP_LOOKUP_KEY] });
+      const price = prices.data[0];
+      if (!price || price.unit_amount == null) return null;
+      return { amount: price.unit_amount / 100, currency: price.currency.toUpperCase(), interval: null };
     } catch {
       return null;
     }
@@ -92,6 +110,15 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       const stripePrice = prices.data[0];
       const isRecurring = stripePrice.type === "recurring";
 
+      // Pro se cobra como inscripción única + mensualidad: en la suscripción
+      // mensual se añade el pago único como segunda línea del mismo checkout.
+      // Si el usuario ya pagó la inscripción antes, no se vuelve a cobrar.
+      let setupPriceId: string | null = null;
+      if (isRecurring && data.priceId === PRO_MONTHLY_LOOKUP_KEY) {
+        const setup = await stripe.prices.list({ lookup_keys: [PRO_SETUP_LOOKUP_KEY] });
+        setupPriceId = setup.data[0]?.id ?? null;
+      }
+
       const { data: { user } } = await context.supabase.auth.getUser();
       const email = user?.email ?? undefined;
 
@@ -100,8 +127,27 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         userId: context.userId,
       });
 
+      // ¿Ya pagó la inscripción en un checkout anterior?
+      if (setupPriceId) {
+        const previous = await stripe.checkout.sessions.list({
+          customer: customerId,
+          limit: 20,
+        });
+        for (const prev of previous.data) {
+          if (prev.payment_status !== "paid") continue;
+          const items = await stripe.checkout.sessions.listLineItems(prev.id, { limit: 10 });
+          if (items.data.some((li) => li.price?.id === setupPriceId)) {
+            setupPriceId = null;
+            break;
+          }
+        }
+      }
+
       const session = await stripe.checkout.sessions.create({
-        line_items: [{ price: stripePrice.id, quantity: 1 }],
+        line_items: [
+          { price: stripePrice.id, quantity: 1 },
+          ...(setupPriceId ? [{ price: setupPriceId, quantity: 1 }] : []),
+        ],
         mode: isRecurring ? "subscription" : "payment",
         ui_mode: "embedded_page",
         return_url: data.returnUrl,
@@ -121,6 +167,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
           session_id: session.id,
           price_lookup_key: data.priceId,
           stripe_price_id: stripePrice.id,
+          setup_price_id: setupPriceId,
           customer: customerId,
           mode: session.mode,
         },
