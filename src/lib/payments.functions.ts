@@ -167,33 +167,66 @@ export const syncMyPlan = createServerFn({ method: "POST" })
       .limit(1)
       .maybeSingle();
 
+    let status: string | null = (sub?.status as string) ?? null;
+    let currentPeriodEnd: string | null = (sub?.current_period_end as string | null) ?? null;
+
+    // Respaldo: si el webhook aún no llegó (o falló) preguntamos directamente a
+    // Stripe por las suscripciones del usuario. Así el regreso del checkout
+    // refleja el acceso Pro sin depender del tiempo de entrega del webhook.
+    if (!status) {
+      try {
+        const stripe = createStripeClient(data.environment);
+        const found = await stripe.subscriptions.search({
+          query: `metadata['userId']:'${userId}'`,
+          limit: 5,
+        });
+        const live = found.data
+          .filter((s) => ["active", "trialing", "past_due"].includes(s.status))
+          .sort((a, b) => b.created - a.created)[0];
+        if (live) {
+          status = live.status;
+          const end = live.items.data[0]?.current_period_end;
+          currentPeriodEnd = end ? new Date(end * 1000).toISOString() : null;
+        }
+      } catch {
+        /* sin Stripe disponible nos quedamos con lo que hay en la base */
+      }
+    }
+
     const now = Date.now();
-    const periodEnd = sub?.current_period_end ? new Date(sub.current_period_end as string).getTime() : null;
+    const periodEnd = currentPeriodEnd ? new Date(currentPeriodEnd).getTime() : null;
     const inWindow = periodEnd === null || periodEnd > now;
-    const subscribed = !!sub && inWindow && ["active", "trialing", "past_due"].includes(sub.status as string)
-      || !!sub && sub.status === "canceled" && !!periodEnd && periodEnd > now;
+    const subscribed =
+      (!!status && inWindow && ["active", "trialing", "past_due"].includes(status)) ||
+      (status === "canceled" && !!periodEnd && periodEnd > now);
+
 
     const result: PlanSyncResult = subscribed
       ? {
           plan: "paga",
           planNombre: "FlightPath Pro",
           accessStatus: "activo",
-          accessEnd: (sub?.current_period_end as string | null) ?? null,
+          accessEnd: currentPeriodEnd,
           subscribed: true,
-          status: (sub?.status as string) ?? null,
+          status,
         }
       : {
           plan: "basica",
           planNombre: "Suscripción básica",
-          accessStatus: sub && !inWindow ? "expirado" : "activo",
-          accessEnd: (sub?.current_period_end as string | null) ?? null,
+          accessStatus: status && !inWindow ? "expirado" : "activo",
+          accessEnd: currentPeriodEnd,
           subscribed: false,
-          status: (sub?.status as string) ?? null,
+          status,
         };
 
     // Merge en profiles.data (JSON) sin pisar el resto del perfil.
     const { data: prof } = await supabase.from("profiles").select("data").eq("id", userId).maybeSingle();
     const prevData = (prof?.data ?? {}) as Record<string, unknown>;
+
+    // Sin rastro de suscripción en Stripe ni en la base no degradamos el
+    // perfil: el acceso pudo otorgarse a mano desde el panel admin.
+    if (!status) return { ...result, plan: (prevData.plan as PlanSyncResult["plan"]) ?? result.plan };
+
     const nextData: Record<string, unknown> = {
       ...prevData,
       plan: result.plan,
@@ -205,6 +238,7 @@ export const syncMyPlan = createServerFn({ method: "POST" })
       nextData.accessStart = new Date().toISOString();
     }
     await supabase.from("profiles").update({ data: nextData as never }).eq("id", userId);
+
 
     return result;
   });
