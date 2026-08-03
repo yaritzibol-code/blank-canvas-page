@@ -1207,7 +1207,9 @@ function BancoPage() {
             }}
           >
             ¿Cómo quieres{" "}
-            <span style={{ color: "#6C0820" }}>estudiar hoy?</span>
+            <span style={{ color: "#6C0820" }}>
+              {la ? "estudiar Línea Aérea?" : "estudiar hoy?"}
+            </span>
           </h1>
           <p
             style={{
