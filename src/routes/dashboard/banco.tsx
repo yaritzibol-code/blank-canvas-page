@@ -693,6 +693,49 @@ function ModalExamen({
           </span>
         </div>
 
+        {/* Selector de tipo de simulador (Línea Aérea) */}
+        {la && (
+          <div style={{ marginBottom: 24 }}>
+            <h4 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#22375C", marginBottom: 10 }}>
+              ¿Qué tipo de simulador?
+            </h4>
+            <div style={{ display: "grid", gap: 8 }}>
+              {([
+                {
+                  id: "oficial" as const,
+                  title: "Preguntas oficiales",
+                  desc: "Solo el examen oficial del proceso de Línea Aérea.",
+                },
+                {
+                  id: "potenciado" as const,
+                  title: "Simulador potenciado",
+                  desc: "Oficiales + las demás preguntas del banco, intercaladas.",
+                },
+              ]).map((o) => {
+                const active = modo === o.id;
+                return (
+                  <button
+                    key={o.id}
+                    onClick={() => setModo(o.id)}
+                    style={{
+                      textAlign: "left",
+                      padding: "12px 14px",
+                      borderRadius: 12,
+                      cursor: "pointer",
+                      fontFamily: "'Manrope', sans-serif",
+                      border: `2px solid ${active ? "#3D5D91" : "#F2DCDB"}`,
+                      background: active ? "rgba(61,93,145,0.08)" : "#f8f9ff",
+                    }}
+                  >
+                    <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#22375C" }}>{o.title}</div>
+                    <div style={{ fontSize: "0.78rem", color: "#647DA0" }}>{o.desc}</div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* Buttons */}
         <div style={{ display: "flex", gap: 10 }}>
           <button
@@ -713,7 +756,7 @@ function ModalExamen({
             Cancelar
           </button>
           <button
-            onClick={onStart}
+            onClick={() => onStart(modo)}
             style={{
               flex: 2,
               padding: 12,
