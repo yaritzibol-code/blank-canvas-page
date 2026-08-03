@@ -868,7 +868,7 @@ function ModalAprendiendo({
         qtyNum = parseInt(qty) || 10;
       }
     }
-    onStart(slugs, qtyNum);
+    onStart(keys, qtyNum);
   }
 
   function handleCustomInput(val: string) {
