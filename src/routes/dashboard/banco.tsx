@@ -1097,7 +1097,9 @@ function ModalAprendiendo({
 function BancoPage() {
   const user = useSessionUser();
   const navigate = useNavigate();
-  const [modal, setModal] = useState<"examen" | "aprendiendo" | null>(null);
+  const search = Route.useSearch();
+  const la = search.banco === "la";
+  const [modal, setModal] = useState<"examen" | "aprendiendo" | null>(search.open ?? null);
   const [upgrade, setUpgrade] = useState<{ feature: string; benefit?: string } | null>(null);
   const [examHover, setExamHover] = useState(false);
   const [learnHover, setLearnHover] = useState(false);
@@ -1114,44 +1116,74 @@ function BancoPage() {
         .map((x) => x.entry)
     : [];
 
-  function handleStartSim() {
+  function handleStartSim(modo: "oficial" | "potenciado" = "oficial") {
     const gate = canStartSimulator(user);
     setModal(null);
     if (gate.allowed) {
-      navigate({ to: "/simulador" });
+      navigate({
+        to: "/simulador",
+        search: la ? { modo, banco: "la" as const } : { modo },
+      });
     } else {
-      setUpgrade({ feature: "Simulador CIAAC", benefit: gate.reason });
+      setUpgrade({
+        feature: la ? "Simulador Línea Aérea" : "Simulador CIAAC",
+        benefit: gate.reason,
+      });
     }
   }
 
-  function handleStartLearn(slugs: string[], qty: number) {
+  function handleStartLearn(keys: string[], qty: number) {
     setModal(null);
-    navigate({ to: "/cuestionario", search: { materias: slugs.join(","), qty } });
+    if (la) {
+      navigate({
+        to: "/cuestionario",
+        search: { banco: "la" as const, fuentes: keys.join(","), qty },
+      });
+      return;
+    }
+    navigate({ to: "/cuestionario", search: { materias: keys.join(","), qty } });
   }
 
   function handleLearnLocked() {
     setUpgrade({
-      feature: "Banco completo de preguntas",
-      benefit:
-        "Con el acceso completo eliges cuántas preguntas practicar y desbloqueas todo el banco de las 12 materias del CIAAC.",
+      feature: la ? "Banco completo de Línea Aérea" : "Banco completo de preguntas",
+      benefit: la
+        ? "Con el acceso completo practicas las preguntas de los cinco manuales del curso de Línea Aérea sin límite."
+        : "Con el acceso completo eliges cuántas preguntas practicar y desbloqueas todo el banco de las 12 materias del CIAAC.",
     });
   }
 
-  const EXAM_FEATURES = [
-    "310 preguntas oficiales",
-    "5 horas límite de tiempo",
-    "Calificación al terminar",
-    "Análisis de áreas de oportunidad",
-    "Pro: ilimitado · Básica: 1 al mes",
-  ];
+  const EXAM_FEATURES = la
+    ? [
+        "Elige preguntas oficiales o simulador potenciado",
+        "Condiciones de examen con tiempo límite",
+        "Calificación al terminar",
+        "Análisis de áreas de oportunidad",
+        "Pro: ilimitado · Básica: 1 al mes",
+      ]
+    : [
+        "310 preguntas oficiales",
+        "5 horas límite de tiempo",
+        "Calificación al terminar",
+        "Análisis de áreas de oportunidad",
+        "Pro: ilimitado · Básica: 1 al mes",
+      ];
 
-  const LEARN_FEATURES = [
-    "Elige materia o mezcla todas",
-    "Tú decides cuántas preguntas",
-    "Feedback inmediato por respuesta",
-    'Botón "Explícamelo Yaris" siempre visible',
-    "Sin límite de tiempo",
-  ];
+  const LEARN_FEATURES = la
+    ? [
+        "Elige uno o varios manuales del curso",
+        "Tú decides cuántas preguntas",
+        "Feedback inmediato por respuesta",
+        'Botón "Explícamelo Yaris" siempre visible',
+        "Sin límite de tiempo",
+      ]
+    : [
+        "Elige materia o mezcla todas",
+        "Tú decides cuántas preguntas",
+        "Feedback inmediato por respuesta",
+        'Botón "Explícamelo Yaris" siempre visible',
+        "Sin límite de tiempo",
+      ];
 
   return (
     <>
