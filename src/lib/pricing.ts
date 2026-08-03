@@ -35,12 +35,12 @@ export const PRO_MONTHLY_FALLBACK: PlanPrice = {
   interval: "month",
 };
 
-/** Formatea un precio para mostrarlo: `$500 MXN`. */
+/** Formatea un precio para mostrarlo: `$3,000 MXN`. */
 export function formatPrice(price: PlanPrice): string {
   return `$${price.amount.toLocaleString("es-MX")} ${price.currency.toUpperCase()}`;
 }
 
-/** Formatea con periodicidad: `$500 MXN/mes`. */
+/** Formatea con periodicidad: `$3,000 MXN/mes`. */
 export function formatPriceWithInterval(price: PlanPrice): string {
   const suffix = price.interval === "month" ? "/mes" : price.interval === "year" ? "/año" : "";
   return `${formatPrice(price)}${suffix}`;
