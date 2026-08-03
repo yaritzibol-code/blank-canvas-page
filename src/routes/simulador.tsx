@@ -78,24 +78,58 @@ function buildQuestions(): QState[] {
   return qs;
 }
 
+/** Modo del simulador: oficial (solo guía de estudio) o potenciado (todo el banco). */
+export type SimMode = "oficial" | "potenciado";
+
+/** Preguntas de la guía oficial de examen de ingreso: sin `fuente` externa. */
+function isOficial(q: BankQuestion) {
+  return !q.fuente;
+}
+
+/** Intercala dos listas: oficial, extra, oficial, extra… */
+function interleave(a: BankQuestion[], b: BankQuestion[]): BankQuestion[] {
+  const out: BankQuestion[] = [];
+  const n = Math.max(a.length, b.length);
+  for (let i = 0; i < n; i++) {
+    if (i < a.length) out.push(a[i]);
+    if (i < b.length) out.push(b[i]);
+  }
+  return out;
+}
+
 /**
  * Banco real del simulador: por cada materia toma sus preguntas publicadas
- * barajadas y cicla hasta llenar su cuota. Si una materia no tiene preguntas,
- * recurre al pool global publicado.
+ * barajadas y cicla hasta llenar su cuota.
+ * - `oficial`: únicamente preguntas de la guía de estudio del examen de ingreso.
+ * - `potenciado`: intercala las demás preguntas (Línea Aérea y manuales) con las oficiales.
  */
-function buildBank(): BankQuestion[] {
-  const globalPool = shuffle(getPublishedQuestions());
+function buildBank(mode: SimMode = "oficial"): BankQuestion[] {
+  const all = getPublishedQuestions();
+  const globalOficial = shuffle(all.filter(isOficial));
+  const globalExtra = shuffle(all.filter((q) => !isOficial(q)));
+  const globalPool = mode === "oficial" ? globalOficial : interleave(globalOficial, globalExtra);
   if (globalPool.length === 0) return [];
   const bank: BankQuestion[] = [];
   MATERIAS.forEach((m) => {
-    const own = shuffle(getPublishedQuestions(m.slug));
-    const pool = own.length > 0 ? own : globalPool;
+    const own = getPublishedQuestions(m.slug);
+    const oficial = shuffle(own.filter(isOficial));
+    const extra = shuffle(own.filter((q) => !isOficial(q)));
+    const ownPool = mode === "oficial" ? oficial : interleave(oficial, extra);
+    const pool = ownPool.length > 0 ? ownPool : globalPool;
     for (let i = 0; i < m.total; i++) {
       bank.push(pool[i % pool.length]);
     }
   });
   return bank;
 }
+
+/** Conteo disponible por modo, para mostrarlo en la pantalla de inicio. */
+function bankCounts() {
+  const all = getPublishedQuestions();
+  const oficial = all.filter(isOficial).length;
+  return { oficial, extra: all.length - oficial, total: all.length };
+}
+
 
 interface SimResult {
   correct: number;
@@ -176,6 +210,7 @@ function SimuladorPage() {
   const { user, ready } = useRequireAuth();
   const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>("warning");
+  const [mode, setMode] = useState<SimMode>("oficial");
   const [agreed, setAgreed] = useState(false);
   const [questions, setQuestions] = useState<QState[]>(buildQuestions);
   const [bankQs, setBankQs] = useState<BankQuestion[]>([]);
@@ -373,7 +408,7 @@ function SimuladorPage() {
   function startExam() {
     const gate = canStartSimulator(user);
     if (!gate.allowed) return;
-    const bank = buildBank();
+    const bank = buildBank(mode);
     if (bank.length === 0) return;
     setBankQs(bank);
     setQuestions(buildQuestions());
@@ -538,6 +573,8 @@ function SimuladorPage() {
   /* Gating y disponibilidad del banco (solo relevante en fase warning) */
   const gate = canStartSimulator(user);
   const bankEmpty = phase === "warning" && ready ? getPublishedQuestions().length === 0 : false;
+  const counts = phase === "warning" && ready ? bankCounts() : { oficial: 0, extra: 0, total: 0 };
+
 
   if (!ready) {
     return <div style={{ position: "fixed", inset: 0, background: "#f5f7fc" }} />;
@@ -577,6 +614,54 @@ function SimuladorPage() {
               );
             })}
           </div>
+
+          {/* Selector de tipo de simulador */}
+          <div style={{ marginBottom: 20 }}>
+            <div style={{ fontSize: "0.78rem", fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "#647DA0", marginBottom: 10 }}>Tipo de simulador</div>
+            <div style={{ display: "grid", gap: 10 }}>
+              {([
+                {
+                  id: "oficial" as SimMode,
+                  title: "Simulador oficial",
+                  desc: "Solo preguntas de la guía de estudio del examen de ingreso.",
+                  count: counts.oficial,
+                  icon: "target" as FPIconName,
+                },
+                {
+                  id: "potenciado" as SimMode,
+                  title: "Simulador potenciado",
+                  desc: "Guía oficial + preguntas de Línea Aérea y manuales, intercaladas.",
+                  count: counts.total,
+                  icon: "flame" as FPIconName,
+                },
+              ]).map((opt) => {
+                const active = mode === opt.id;
+                return (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => setMode(opt.id)}
+                    aria-pressed={active}
+                    style={{
+                      textAlign: "left", display: "flex", gap: 12, alignItems: "flex-start",
+                      padding: "13px 15px", borderRadius: 12, cursor: "pointer",
+                      background: active ? "rgba(108,8,32,0.05)" : "white",
+                      border: active ? "2px solid #6C0820" : "2px solid #e6e9f5",
+                      fontFamily: "'Manrope', sans-serif",
+                    }}
+                  >
+                    <span style={{ flexShrink: 0, marginTop: 2, display: "flex" }}><Icon n={opt.icon} size={18} color={active ? "#6C0820" : "#647DA0"} /></span>
+                    <span style={{ display: "block" }}>
+                      <span style={{ display: "block", fontWeight: 800, fontSize: "0.92rem", color: "#22375C" }}>{opt.title}</span>
+                      <span style={{ display: "block", fontSize: "0.8rem", color: "#647DA0", lineHeight: 1.45, marginTop: 2 }}>{opt.desc}</span>
+                      <span style={{ display: "block", fontSize: "0.74rem", color: "#8a94ab", marginTop: 4 }}>{opt.count.toLocaleString("es-MX")} preguntas disponibles</span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
 
           <div style={{ background: "#f8f9ff", borderRadius: 12, padding: 16, marginBottom: 24, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
             {[
