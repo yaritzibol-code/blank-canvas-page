@@ -210,6 +210,7 @@ function SimuladorPage() {
   const { user, ready } = useRequireAuth();
   const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>("warning");
+  const [mode, setMode] = useState<SimMode>("oficial");
   const [agreed, setAgreed] = useState(false);
   const [questions, setQuestions] = useState<QState[]>(buildQuestions);
   const [bankQs, setBankQs] = useState<BankQuestion[]>([]);
@@ -407,7 +408,7 @@ function SimuladorPage() {
   function startExam() {
     const gate = canStartSimulator(user);
     if (!gate.allowed) return;
-    const bank = buildBank();
+    const bank = buildBank(mode);
     if (bank.length === 0) return;
     setBankQs(bank);
     setQuestions(buildQuestions());
