@@ -13,9 +13,18 @@ import {
 } from "@/lib/store";
 import type { QuizAttempt, SimAttempt } from "@/lib/store";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
+import { LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
 
 export const Route = createFileRoute("/dashboard/banco")({
   component: BancoPage,
+  validateSearch: (
+    s: Record<string, unknown>,
+  ): { banco?: "la"; open?: "examen" | "aprendiendo" } => {
+    const out: { banco?: "la"; open?: "examen" | "aprendiendo" } = {};
+    if (s["banco"] === "la") out.banco = "la";
+    if (s["open"] === "examen" || s["open"] === "aprendiendo") out.open = s["open"];
+    return out;
+  },
 });
 
 /* ─── Types ─────────────────────────────────────────── */
@@ -518,8 +527,40 @@ function HistItem({ entry }: { entry: HistEntry }) {
 
 /* ─── Modal: Simulador CIAAC ─────────────────────────── */
 
-function ModalExamen({ onClose, onStart }: { onClose: () => void; onStart: () => void }) {
-  const infoRows = [
+function ModalExamen({
+  onClose,
+  onStart,
+  la = false,
+}: {
+  onClose: () => void;
+  onStart: (modo: "oficial" | "potenciado") => void;
+  la?: boolean;
+}) {
+  const [modo, setModo] = useState<"oficial" | "potenciado">("oficial");
+  const infoRows = la
+    ? [
+        {
+          icon: "help",
+          bg: "rgba(61,93,145,0.1)",
+          html: "<strong>Preguntas oficiales</strong> — reactivos del proceso de Línea Aérea",
+        },
+        {
+          icon: "timer",
+          bg: "rgba(108,8,32,0.08)",
+          html: "<strong>Tiempo límite</strong> — el reloj corre desde que aceptas",
+        },
+        {
+          icon: "refresh",
+          bg: "rgba(243,156,18,0.1)",
+          html: "<strong>Potenciado</strong> — intercala las demás preguntas del banco",
+        },
+        {
+          icon: "chart",
+          bg: "rgba(46,204,113,0.1)",
+          html: "<strong>Análisis al terminar</strong> — calificación y áreas de oportunidad con Pathy",
+        },
+      ]
+    : [
     {
       icon: "help",
       bg: "rgba(61,93,145,0.1)",
@@ -579,7 +620,7 @@ function ModalExamen({ onClose, onStart }: { onClose: () => void; onStart: () =>
             gap: 10,
           }}
         >
-          <Icon n="target" size={26} /> Simulador CIAAC
+          <Icon n="target" size={26} /> {la ? "Simulador Línea Aérea" : "Simulador CIAAC"}
         </h2>
         <p style={{ fontSize: "0.85rem", color: "#647DA0", marginBottom: 24 }}>
           Lee las instrucciones antes de comenzar
@@ -653,6 +694,49 @@ function ModalExamen({ onClose, onStart }: { onClose: () => void; onStart: () =>
           </span>
         </div>
 
+        {/* Selector de tipo de simulador (Línea Aérea) */}
+        {la && (
+          <div style={{ marginBottom: 24 }}>
+            <h4 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#22375C", marginBottom: 10 }}>
+              ¿Qué tipo de simulador?
+            </h4>
+            <div style={{ display: "grid", gap: 8 }}>
+              {([
+                {
+                  id: "oficial" as const,
+                  title: "Preguntas oficiales",
+                  desc: "Solo el examen oficial del proceso de Línea Aérea.",
+                },
+                {
+                  id: "potenciado" as const,
+                  title: "Simulador potenciado",
+                  desc: "Oficiales + las demás preguntas del banco, intercaladas.",
+                },
+              ]).map((o) => {
+                const active = modo === o.id;
+                return (
+                  <button
+                    key={o.id}
+                    onClick={() => setModo(o.id)}
+                    style={{
+                      textAlign: "left",
+                      padding: "12px 14px",
+                      borderRadius: 12,
+                      cursor: "pointer",
+                      fontFamily: "'Manrope', sans-serif",
+                      border: `2px solid ${active ? "#3D5D91" : "#F2DCDB"}`,
+                      background: active ? "rgba(61,93,145,0.08)" : "#f8f9ff",
+                    }}
+                  >
+                    <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#22375C" }}>{o.title}</div>
+                    <div style={{ fontSize: "0.78rem", color: "#647DA0" }}>{o.desc}</div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* Buttons */}
         <div style={{ display: "flex", gap: 10 }}>
           <button
@@ -673,7 +757,7 @@ function ModalExamen({ onClose, onStart }: { onClose: () => void; onStart: () =>
             Cancelar
           </button>
           <button
-            onClick={onStart}
+            onClick={() => onStart(modo)}
             style={{
               flex: 2,
               padding: 12,
@@ -713,11 +797,13 @@ function ModalAprendiendo({
   onStart,
   paid,
   onLocked,
+  la = false,
 }: {
   onClose: () => void;
-  onStart: (slugs: string[], qty: number) => void;
+  onStart: (keys: string[], qty: number) => void;
   paid: boolean;
   onLocked: () => void;
+  la?: boolean;
 }) {
   const [allSelected, setAllSelected] = useState(true);
   const [selectedMaterias, setSelectedMaterias] = useState<Set<string>>(
@@ -766,8 +852,11 @@ function ModalAprendiendo({
   }
 
   function handleStart() {
-    const slugs =
-      allSelected || selectedMaterias.size === 0
+    const keys = la
+      ? allSelected || selectedMaterias.size === 0
+        ? LINEA_AEREA_QUIZZES.map((q) => q.code)
+        : LINEA_AEREA_QUIZZES.filter((q) => selectedMaterias.has(q.code)).map((q) => q.code)
+      : allSelected || selectedMaterias.size === 0
         ? MATERIAS.map((m) => m.slug)
         : MATERIAS.filter((m) => selectedMaterias.has(m.label)).map((m) => m.slug);
     let qtyNum = 10;
@@ -779,7 +868,7 @@ function ModalAprendiendo({
         qtyNum = parseInt(qty) || 10;
       }
     }
-    onStart(slugs, qtyNum);
+    onStart(keys, qtyNum);
   }
 
   function handleCustomInput(val: string) {
@@ -851,10 +940,12 @@ function ModalAprendiendo({
           <Icon n="lightbulb" size={26} /> Configura tu sesión
         </h2>
         <p style={{ fontSize: "0.85rem", color: "#647DA0", marginBottom: 24 }}>
-          Elige las materias y cuántas preguntas quieres practicar
+          {la
+            ? "Elige los manuales del curso y cuántas preguntas quieres practicar"
+            : "Elige las materias y cuántas preguntas quieres practicar"}
         </p>
 
-        {/* Materias */}
+        {/* Materias / Manuales */}
         <div style={{ marginBottom: 20 }}>
           <h4
             style={{
@@ -864,7 +955,7 @@ function ModalAprendiendo({
               marginBottom: 10,
             }}
           >
-            ¿Qué materias?
+            {la ? "¿Qué manuales?" : "¿Qué materias?"}
           </h4>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
             <button
@@ -876,25 +967,44 @@ function ModalAprendiendo({
                 color: allSelected ? "white" : "#22375C",
               }}
             >
-              Todas las materias
+              {la ? "Todos los manuales" : "Todas las materias"}
             </button>
-            {MATERIAS.map((m) => {
-              const sel = selectedMaterias.has(m.label);
-              return (
-                <button
-                  key={m.slug}
-                  onClick={() => handleMateriaClick(m.label)}
-                  style={{
-                    ...chipBase,
-                    border: `2px solid ${sel ? "#3D5D91" : "#F2DCDB"}`,
-                    background: sel ? "rgba(61,93,145,0.08)" : "#f8f9ff",
-                    color: sel ? "#3D5D91" : "#22375C",
-                  }}
-                >
-                  {m.label}
-                </button>
-              );
-            })}
+            {la
+              ? LINEA_AEREA_QUIZZES.map((q) => {
+                  const sel = selectedMaterias.has(q.code);
+                  return (
+                    <button
+                      key={q.code}
+                      onClick={() => handleMateriaClick(q.code)}
+                      title={q.titulo}
+                      style={{
+                        ...chipBase,
+                        border: `2px solid ${sel ? "#3D5D91" : "#F2DCDB"}`,
+                        background: sel ? "rgba(61,93,145,0.08)" : "#f8f9ff",
+                        color: sel ? "#3D5D91" : "#22375C",
+                      }}
+                    >
+                      {q.code}
+                    </button>
+                  );
+                })
+              : MATERIAS.map((m) => {
+                  const sel = selectedMaterias.has(m.label);
+                  return (
+                    <button
+                      key={m.slug}
+                      onClick={() => handleMateriaClick(m.label)}
+                      style={{
+                        ...chipBase,
+                        border: `2px solid ${sel ? "#3D5D91" : "#F2DCDB"}`,
+                        background: sel ? "rgba(61,93,145,0.08)" : "#f8f9ff",
+                        color: sel ? "#3D5D91" : "#22375C",
+                      }}
+                    >
+                      {m.label}
+                    </button>
+                  );
+                })}
           </div>
         </div>
 
@@ -1089,7 +1199,9 @@ function ModalAprendiendo({
 function BancoPage() {
   const user = useSessionUser();
   const navigate = useNavigate();
-  const [modal, setModal] = useState<"examen" | "aprendiendo" | null>(null);
+  const search = Route.useSearch();
+  const la = search.banco === "la";
+  const [modal, setModal] = useState<"examen" | "aprendiendo" | null>(search.open ?? null);
   const [upgrade, setUpgrade] = useState<{ feature: string; benefit?: string } | null>(null);
   const [examHover, setExamHover] = useState(false);
   const [learnHover, setLearnHover] = useState(false);
@@ -1106,44 +1218,74 @@ function BancoPage() {
         .map((x) => x.entry)
     : [];
 
-  function handleStartSim() {
+  function handleStartSim(modo: "oficial" | "potenciado" = "oficial") {
     const gate = canStartSimulator(user);
     setModal(null);
     if (gate.allowed) {
-      navigate({ to: "/simulador" });
+      navigate({
+        to: "/simulador",
+        search: la ? { modo, banco: "la" as const } : { modo },
+      });
     } else {
-      setUpgrade({ feature: "Simulador CIAAC", benefit: gate.reason });
+      setUpgrade({
+        feature: la ? "Simulador Línea Aérea" : "Simulador CIAAC",
+        benefit: gate.reason,
+      });
     }
   }
 
-  function handleStartLearn(slugs: string[], qty: number) {
+  function handleStartLearn(keys: string[], qty: number) {
     setModal(null);
-    navigate({ to: "/cuestionario", search: { materias: slugs.join(","), qty } });
+    if (la) {
+      navigate({
+        to: "/cuestionario",
+        search: { banco: "la" as const, fuentes: keys.join(","), qty },
+      });
+      return;
+    }
+    navigate({ to: "/cuestionario", search: { materias: keys.join(","), qty } });
   }
 
   function handleLearnLocked() {
     setUpgrade({
-      feature: "Banco completo de preguntas",
-      benefit:
-        "Con el acceso completo eliges cuántas preguntas practicar y desbloqueas todo el banco de las 12 materias del CIAAC.",
+      feature: la ? "Banco completo de Línea Aérea" : "Banco completo de preguntas",
+      benefit: la
+        ? "Con el acceso completo practicas las preguntas de los cinco manuales del curso de Línea Aérea sin límite."
+        : "Con el acceso completo eliges cuántas preguntas practicar y desbloqueas todo el banco de las 12 materias del CIAAC.",
     });
   }
 
-  const EXAM_FEATURES = [
-    "310 preguntas oficiales",
-    "5 horas límite de tiempo",
-    "Calificación al terminar",
-    "Análisis de áreas de oportunidad",
-    "Pro: ilimitado · Básica: 1 al mes",
-  ];
+  const EXAM_FEATURES = la
+    ? [
+        "Elige preguntas oficiales o simulador potenciado",
+        "Condiciones de examen con tiempo límite",
+        "Calificación al terminar",
+        "Análisis de áreas de oportunidad",
+        "Pro: ilimitado · Básica: 1 al mes",
+      ]
+    : [
+        "310 preguntas oficiales",
+        "5 horas límite de tiempo",
+        "Calificación al terminar",
+        "Análisis de áreas de oportunidad",
+        "Pro: ilimitado · Básica: 1 al mes",
+      ];
 
-  const LEARN_FEATURES = [
-    "Elige materia o mezcla todas",
-    "Tú decides cuántas preguntas",
-    "Feedback inmediato por respuesta",
-    'Botón "Explícamelo Yaris" siempre visible',
-    "Sin límite de tiempo",
-  ];
+  const LEARN_FEATURES = la
+    ? [
+        "Elige uno o varios manuales del curso",
+        "Tú decides cuántas preguntas",
+        "Feedback inmediato por respuesta",
+        'Botón "Explícamelo Yaris" siempre visible',
+        "Sin límite de tiempo",
+      ]
+    : [
+        "Elige materia o mezcla todas",
+        "Tú decides cuántas preguntas",
+        "Feedback inmediato por respuesta",
+        'Botón "Explícamelo Yaris" siempre visible',
+        "Sin límite de tiempo",
+      ];
 
   return (
     <>
@@ -1167,7 +1309,9 @@ function BancoPage() {
             }}
           >
             ¿Cómo quieres{" "}
-            <span style={{ color: "#6C0820" }}>estudiar hoy?</span>
+            <span style={{ color: "#6C0820" }}>
+              {la ? "estudiar Línea Aérea?" : "estudiar hoy?"}
+            </span>
           </h1>
           <p
             style={{
@@ -1293,7 +1437,7 @@ function BancoPage() {
                 color: "#F2AEBC",
               }}
             >
-              <Icon n="sim" size={14} /> Simulador CIAAC
+              <Icon n="sim" size={14} /> {la ? "Simulador Línea Aérea" : "Simulador CIAAC"}
             </div>
 
             <div style={{ fontSize: "3rem", marginBottom: 16, display: "flex", color: "#F2AEBC" }}><Icon n="target" size={42} /></div>
@@ -1306,7 +1450,7 @@ function BancoPage() {
                 marginBottom: 6,
               }}
             >
-              Simulador CIAAC
+              {la ? "Simulador Línea Aérea" : "Simulador CIAAC"}
             </h2>
             <p
               style={{
@@ -1317,8 +1461,9 @@ function BancoPage() {
                 color: "white",
               }}
             >
-              Pon a prueba todo lo que has aprendido en un examen completo con
-              las condiciones reales del CIAAC.
+              {la
+                ? "Examen completo del proceso de Línea Aérea: elige preguntas oficiales o el simulador potenciado."
+                : "Pon a prueba todo lo que has aprendido en un examen completo con las condiciones reales del CIAAC."}
             </p>
 
             <div
@@ -1538,7 +1683,7 @@ function BancoPage() {
 
       {/* Modals */}
       {modal === "examen" && (
-        <ModalExamen onClose={() => setModal(null)} onStart={handleStartSim} />
+        <ModalExamen onClose={() => setModal(null)} onStart={handleStartSim} la={la} />
       )}
       {modal === "aprendiendo" && (
         <ModalAprendiendo
@@ -1546,6 +1691,7 @@ function BancoPage() {
           onStart={handleStartLearn}
           paid={isPaid(user)}
           onLocked={handleLearnLocked}
+          la={la}
         />
       )}
       {upgrade && (

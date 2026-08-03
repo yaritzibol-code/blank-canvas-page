@@ -105,8 +105,20 @@ function isLineaAerea(q: BankQuestion) {
   return !!q.fuente;
 }
 
-function basePredicate(banco: SimBank) {
-  return banco === "la" ? isLineaAerea : isOficial;
+/** Código de `fuente` reservado para el examen oficial de Línea Aérea. */
+export const LA_OFICIAL_FUENTE = "LAOF";
+
+function isLineaAereaOficial(q: BankQuestion) {
+  return q.fuente === LA_OFICIAL_FUENTE;
+}
+
+/**
+ * Predicado del banco base. Para Línea Aérea se prefieren las preguntas
+ * oficiales (`LAOF`); mientras no existan, se usan los cuestionarios del curso.
+ */
+function basePredicate(banco: SimBank, all: BankQuestion[]) {
+  if (banco !== "la") return isOficial;
+  return all.some(isLineaAereaOficial) ? isLineaAereaOficial : isLineaAerea;
 }
 
 /** Intercala dos listas: oficial, extra, oficial, extra… */
@@ -127,8 +139,8 @@ function interleave(a: BankQuestion[], b: BankQuestion[]): BankQuestion[] {
  * - `potenciado`: intercala las preguntas restantes con las del banco base.
  */
 function buildBank(mode: SimMode = "oficial", banco: SimBank = "ciaac"): BankQuestion[] {
-  const pred = basePredicate(banco);
   const all = getPublishedQuestions();
+  const pred = basePredicate(banco, all);
   const globalBase = shuffle(all.filter(pred));
   const globalExtra = shuffle(all.filter((q) => !pred(q)));
   const globalPool = mode === "oficial" ? globalBase : interleave(globalBase, globalExtra);
@@ -149,8 +161,8 @@ function buildBank(mode: SimMode = "oficial", banco: SimBank = "ciaac"): BankQue
 
 /** Conteo disponible por modo, para mostrarlo en la pantalla de inicio. */
 function bankCounts(banco: SimBank = "ciaac") {
-  const pred = basePredicate(banco);
   const all = getPublishedQuestions();
+  const pred = basePredicate(banco, all);
   const oficial = all.filter(pred).length;
   return { oficial, extra: all.length - oficial, total: all.length };
 }
