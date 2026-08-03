@@ -619,7 +619,7 @@ function ModalExamen({
             gap: 10,
           }}
         >
-          <Icon n="target" size={26} /> Simulador CIAAC
+          <Icon n="target" size={26} /> {la ? "Simulador Línea Aérea" : "Simulador CIAAC"}
         </h2>
         <p style={{ fontSize: "0.85rem", color: "#647DA0", marginBottom: 24 }}>
           Lee las instrucciones antes de comenzar
