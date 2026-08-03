@@ -61,7 +61,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "¿Cuánto cuesta prepararte con FlightPath para la convocatoria?",
-    a: `El acceso completo tiene un pago único de $${PRO_SETUP_FALLBACK.toLocaleString("es-MX")} MXN y una mensualidad de $${PRO_MONTHLY_FALLBACK.toLocaleString("es-MX")} MXN. Incluye el banco completo, simulacros cronometrados, flashcards, audios de repaso, presentaciones y Yaris, la tutora IA entrenada en los materiales del curso.`,
+    a: `El acceso completo tiene un pago único de $${PRO_SETUP_FALLBACK.toLocaleString()} MXN y una mensualidad de $${PRO_MONTHLY_FALLBACK.toLocaleString()} MXN. Incluye el banco completo, simulacros cronometrados, flashcards, audios de repaso, presentaciones y Yaris, la tutora IA entrenada en los materiales del curso.`,
   },
   {
     q: "¿Qué extras de estudio incluye el cuestionario?",
@@ -398,12 +398,12 @@ function Comprar() {
               </div>
               <div className="mt-5 flex items-baseline gap-2">
                 <span className="font-display text-6xl tracking-tight text-white">
-                  ${PRO_MONTHLY_FALLBACK.amount.toLocaleString("es-MX")}
+                  ${PRO_MONTHLY_FALLBACK.amount.toLocaleString()}
                 </span>
                 <span className="text-white/50 text-sm">{PRO_MONTHLY_FALLBACK.currency} / mes</span>
               </div>
               <div className="mt-2 text-[13px] text-white/55">
-                + ${PRO_SETUP_FALLBACK.amount.toLocaleString("es-MX")} {PRO_SETUP_FALLBACK.currency} de inscripción (pago único)
+                + ${PRO_SETUP_FALLBACK.amount.toLocaleString()} {PRO_SETUP_FALLBACK.currency} de inscripción (pago único)
               </div>
               <p className="text-[14px] text-white/60 mt-4">
                 Acceso Pro a toda la plataforma: cuestionario de la convocatoria, banco completo,
