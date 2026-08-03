@@ -71,7 +71,7 @@ export const yarisAiChat = createServerFn({ method: "POST" })
       };
     }
 
-    // Rate limiting por usuario: 10/min · 60/hora · 150/día.
+    // Rate limiting por usuario: 10/min · 100/hora · 300/día.
     const verdict = await checkUserRateLimit(userId);
     if (!verdict.allowed) {
       return { text: verdict.message!, cite: ctx.cite ?? null };

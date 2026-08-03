@@ -8,6 +8,10 @@ import {
   getPublishedQuestions,
   saveSimAttempt,
   logYarisUse,
+  sessionKey,
+  saveActiveSession,
+  loadActiveSession,
+  clearActiveSession,
 } from "@/lib/store";
 import type { BankQuestion, SimAnswer } from "@/lib/store";
 import { yarisAiChat } from "@/lib/yaris-ai.functions";
@@ -251,6 +255,16 @@ function stripHtml(s: string): string {
 
 type Phase = "warning" | "exam" | "result" | "review";
 
+/** Snapshot del examen en curso: se borra sólo al entregar/finalizar. */
+interface SimSnapshot {
+  mode: SimMode;
+  bankIds: string[];
+  questions: QState[];
+  current: number;
+  secondsLeft: number;
+  savedAt: number;
+}
+
 function SimuladorPage() {
   const { user, ready } = useRequireAuth();
   const navigate = useNavigate();
@@ -287,6 +301,55 @@ function SimuladorPage() {
   const explainedRef = useRef<Set<number>>(new Set());
   // Serializa las llamadas a la IA (una a la vez)
   const aiBusyRef = useRef(false);
+  const restoredRef = useRef(false);
+  const storeKey = user ? sessionKey("simulador", user.id, banco) : "";
+
+  /**
+   * Retoma un examen en curso (recarga o navegación a otro módulo). El
+   * cronómetro descuenta el tiempo transcurrido fuera de la pantalla.
+   */
+  useEffect(() => {
+    if (!ready || !user || !storeKey || restoredRef.current) return;
+    restoredRef.current = true;
+    const snap = loadActiveSession<SimSnapshot>(storeKey);
+    if (!snap || snap.bankIds.length === 0) return;
+    const byId = new Map(getPublishedQuestions().map((q) => [q.id, q]));
+    const bank = snap.bankIds.map((id) => byId.get(id)).filter((q): q is BankQuestion => !!q);
+    if (bank.length !== snap.bankIds.length) {
+      clearActiveSession(storeKey);
+      return;
+    }
+    const elapsed = Math.floor((Date.now() - snap.savedAt) / 1000);
+    const left = Math.max(0, snap.secondsLeft - Math.max(0, elapsed));
+    if (left <= 0) {
+      clearActiveSession(storeKey);
+      return;
+    }
+    setMode(snap.mode);
+    setBankQs(bank);
+    setQuestions(snap.questions);
+    setCurrent(Math.min(snap.current, snap.questions.length - 1));
+    setSecondsLeft(left);
+    setAgreed(true);
+    savedRef.current = false;
+    setPhase("exam");
+  }, [ready, user, storeKey]);
+
+  /** Guarda el avance del examen mientras esté en curso (cada ~10 s o al responder). */
+  const saveTick = Math.floor(secondsLeft / 10);
+  useEffect(() => {
+    if (!storeKey) return;
+    if (phase !== "exam" || bankQs.length === 0) return;
+    saveActiveSession<SimSnapshot>(storeKey, {
+      mode,
+      bankIds: bankQs.map((q) => q.id),
+      questions,
+      current,
+      secondsLeft,
+      savedAt: Date.now(),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storeKey, phase, bankQs, questions, current, saveTick, mode]);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -402,6 +465,7 @@ function SimuladorPage() {
   /* Entrega y calificación real (una sola vez por intento) */
   function finishExam() {
     if (timerRef.current) clearInterval(timerRef.current);
+    if (storeKey) clearActiveSession(storeKey);
     setConfirmOpen(false);
     if (savedRef.current) return;
     savedRef.current = true;
@@ -468,6 +532,7 @@ function SimuladorPage() {
 
   /* Reiniciar todo para repetir el simulador (re-verifica el gating en warning) */
   function resetSimulator() {
+    if (storeKey) clearActiveSession(storeKey);
     setPhase("warning");
     setQuestions(buildQuestions());
     setBankQs([]);

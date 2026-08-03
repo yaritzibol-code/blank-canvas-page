@@ -12,6 +12,10 @@ import {
   materiaBySlug,
   MATERIAS_DEF,
   BASICA_SESSION_PER_MATERIA,
+  sessionKey,
+  saveActiveSession,
+  loadActiveSession,
+  clearActiveSession,
 } from "@/lib/store";
 import type { BankQuestion, YarisContext } from "@/lib/store";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
@@ -99,9 +103,30 @@ function toLocalQ(q: BankQuestion): Question {
   };
 }
 
+/** Snapshot persistido del modo Aprendiendo (se borra al finalizar). */
+interface AprendiendoSnapshot {
+  qIds: string[];
+  results: (boolean | null)[];
+  currentIdx: number;
+  selectedIdx: number | null;
+  answered: boolean;
+  startTime: number;
+  sessionSlugs: string[];
+}
+
 function CuestionarioPage() {
   const { user, ready } = useRequireAuth();
   const search = Route.useSearch();
+  /** Clave de la sesión activa: distinta por usuario y por configuración. */
+  const sessionVariant = [
+    search.materias ?? "all",
+    search.fuente ?? "",
+    search.banco ?? "",
+    search.fuentes ?? "",
+    search.modo ?? "",
+    search.qty ?? "",
+  ].join("|");
+  const storeKey = user ? sessionKey("aprendiendo", user.id, sessionVariant) : "";
   const [questions, setQuestions] = useState<Question[]>([]);
   const [pool, setPool] = useState<BankQuestion[]>([]);
   const [sessionSlugs, setSessionSlugs] = useState<string[]>([]);
@@ -115,8 +140,10 @@ function CuestionarioPage() {
   const [yarisMsgs, setYarisMsgs] = useState<YarisMsg[]>([]);
   const [yarisInput, setYarisInput] = useState("");
   const [yarisTyping, setYarisTyping] = useState(false);
-  const [yarisInitialized, setYarisInitialized] = useState(false);
   const askYaris = useYarisAsk();
+  /** Preguntas ya explicadas por Yaris (para pedir otro enfoque al repetir). */
+  const yarisExplainedRef = useRef<Set<string>>(new Set());
+  const yarisBusyRef = useRef(false);
   const [reportOpen, setReportOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [startTime, setStartTime] = useState(() => Date.now());
@@ -184,6 +211,26 @@ function CuestionarioPage() {
         fullPool = fullPool.concat(paid ? getPublishedQuestions(s) : getFreeQuestions(s));
       });
     }
+    // Sesión en curso: se retoma tal cual hasta que el usuario finalice.
+    const snap = storeKey ? loadActiveSession<AprendiendoSnapshot>(storeKey) : null;
+    if (snap && snap.qIds.length > 0) {
+      const byId = new Map(getPublishedQuestions().map((q) => [q.id, q]));
+      const restored = snap.qIds.map((id) => byId.get(id)).filter((q): q is BankQuestion => !!q);
+      if (restored.length === snap.qIds.length) {
+        setPool(fullPool);
+        setSessionSlugs(snap.sessionSlugs.length > 0 ? snap.sessionSlugs : slugs);
+        setQuestions(restored.map(toLocalQ));
+        setResults(snap.results);
+        setCurrentIdx(Math.min(snap.currentIdx, restored.length - 1));
+        setSelectedIdx(snap.selectedIdx);
+        setAnswered(snap.answered);
+        setStartTime(snap.startTime);
+        setLoaded(true);
+        return;
+      }
+      clearActiveSession(storeKey);
+    }
+
     const picked = pickSession(fullPool, paid).map(toLocalQ);
     setPool(fullPool);
     setSessionSlugs(slugs);
@@ -197,6 +244,24 @@ function CuestionarioPage() {
   const answeredCount = results.filter((r) => r !== null).length;
   const correctCount = results.filter((r) => r === true).length;
   const progressPct = total > 0 ? Math.round((answeredCount / total) * 100) : 0;
+
+  /** Persiste el avance en cada cambio; al finalizar se borra el snapshot. */
+  useEffect(() => {
+    if (!loaded || !storeKey || questions.length === 0) return;
+    if (showResult) {
+      clearActiveSession(storeKey);
+      return;
+    }
+    saveActiveSession<AprendiendoSnapshot>(storeKey, {
+      qIds: questions.map((q) => q.questionId),
+      results,
+      currentIdx,
+      selectedIdx,
+      answered,
+      startTime,
+      sessionSlugs,
+    });
+  }, [loaded, storeKey, questions, results, currentIdx, selectedIdx, answered, startTime, sessionSlugs, showResult]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -260,6 +325,7 @@ function CuestionarioPage() {
   }
 
   function handleRestart() {
+    if (storeKey) clearActiveSession(storeKey);
     const fresh = pickSession(pool, isPaid(user)).map(toLocalQ);
     setQuestions(fresh);
     setResults(new Array(fresh.length).fill(null));
@@ -290,30 +356,59 @@ function CuestionarioPage() {
     };
   }
 
+  /**
+   * Cada pulsación de "Explícamelo Yaris" pide una explicación de la pregunta
+   * que está en pantalla. Antes sólo funcionaba la primera vez (un flag de
+   * inicialización cortaba la llamada), así que al avanzar de pregunta el panel
+   * seguía mostrando la explicación vieja.
+   */
   async function openYaris() {
     if (!yarisOpen && user) logYarisUse(user.id, "Cuestionarios");
     setYarisOpen(true);
-    if (yarisInitialized) return;
-    setYarisInitialized(true);
+    if (yarisBusyRef.current) return;
 
+    const idx = lastAnsweredRef.current ?? currentIdx;
+    const q = questions[idx] ?? questions[currentIdx];
+    if (!q) return;
     const ctx = yarisCtx();
     const materiaName = ctx.materiaName ?? "esta materia";
-    setYarisMsgs([
-      { role: "bot", text: `¡Hola! Soy Yaris. Veo que tienes una duda sobre <strong>${materiaName}</strong>. Déjame revisarla.` },
+    const key = q.questionId || `idx-${idx}`;
+    const again = yarisExplainedRef.current.has(key);
+    yarisExplainedRef.current.add(key);
+    yarisBusyRef.current = true;
+
+    setYarisMsgs((prev) => [
+      ...(prev.length === 0
+        ? [{ role: "bot" as const, text: "¡Hola! Soy <b>Yaris</b>. Púlsame en cualquier pregunta las veces que necesites y te la explico." }]
+        : []),
+      ...prev,
+      {
+        role: "bot" as const,
+        text: again
+          ? `Va otra vez la <b>pregunta ${idx + 1}</b> de <b>${materiaName}</b>, ahora con otro enfoque:`
+          : `Vamos con la <b>pregunta ${idx + 1}</b> de <b>${materiaName}</b>:`,
+      },
     ]);
-    // La espera que ve el usuario es la de la petición real, no un setTimeout.
     setYarisTyping(true);
     const answer = await askYaris({
-      history: [{ role: "user", content: "Explícame esta pregunta." }],
+      history: [
+        {
+          role: "user",
+          content: again
+            ? "Explícame esta misma pregunta otra vez, pero de otra forma más sencilla, con otro ejemplo o analogía."
+            : "Explícame esta pregunta: por qué la correcta es correcta, por qué las demás no, y un tip para recordarlo.",
+        },
+      ],
       ctx,
     });
     setYarisTyping(false);
+    yarisBusyRef.current = false;
     setYarisMsgs((prev) => [...prev, { role: "bot", text: answer.text, cite: answer.cite ?? undefined }]);
   }
 
   async function sendYarisMsg() {
     const text = yarisInput.trim();
-    if (!text || yarisTyping) return;
+    if (!text || yarisTyping || yarisBusyRef.current) return;
     const next: YarisMsg[] = [...yarisMsgs, { role: "user", text }];
     setYarisMsgs(next);
     setYarisInput("");
@@ -565,8 +660,26 @@ function CuestionarioPage() {
           >
             <Icon n="spark" size={16} /> <span className="hidden sm:inline">Explícamelo Yaris</span>
           </button>
+          <button
+            onClick={() => {
+              if (answeredCount === 0 || window.confirm("¿Finalizar la sesión? Se guardará tu resultado y no podrás retomarla.")) {
+                setShowResult(true);
+              }
+            }}
+            aria-label="Finalizar sesión de estudio"
+            style={{
+              padding: "7px 14px",
+              background: "#6C0820",
+              color: "white", border: "none", borderRadius: 7,
+              fontSize: "0.8rem", fontWeight: 700, cursor: "pointer",
+              fontFamily: "'Manrope', sans-serif",
+            }}
+          >
+            Finalizar
+          </button>
         </div>
       </div>
+
 
       {/* ── PROGRESS BAR ── */}
       <div
