@@ -133,7 +133,7 @@ function LineaAereaPage() {
             <Link
               key={s.modo}
               to="/simulador"
-              search={{ modo: s.modo }}
+              search={{ modo: s.modo, banco: "la" as const }}
               style={{
                 display: "block", textDecoration: "none",
                 border: `2px solid ${s.accent}`, background: s.bg,
