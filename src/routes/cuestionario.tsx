@@ -115,8 +115,10 @@ function CuestionarioPage() {
   const [yarisMsgs, setYarisMsgs] = useState<YarisMsg[]>([]);
   const [yarisInput, setYarisInput] = useState("");
   const [yarisTyping, setYarisTyping] = useState(false);
-  const [yarisInitialized, setYarisInitialized] = useState(false);
   const askYaris = useYarisAsk();
+  /** Preguntas ya explicadas por Yaris (para pedir otro enfoque al repetir). */
+  const yarisExplainedRef = useRef<Set<string>>(new Set());
+  const yarisBusyRef = useRef(false);
   const [reportOpen, setReportOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [startTime, setStartTime] = useState(() => Date.now());
@@ -290,30 +292,59 @@ function CuestionarioPage() {
     };
   }
 
+  /**
+   * Cada pulsación de "Explícamelo Yaris" pide una explicación de la pregunta
+   * que está en pantalla. Antes sólo funcionaba la primera vez (un flag de
+   * inicialización cortaba la llamada), así que al avanzar de pregunta el panel
+   * seguía mostrando la explicación vieja.
+   */
   async function openYaris() {
     if (!yarisOpen && user) logYarisUse(user.id, "Cuestionarios");
     setYarisOpen(true);
-    if (yarisInitialized) return;
-    setYarisInitialized(true);
+    if (yarisBusyRef.current) return;
 
+    const idx = lastAnsweredRef.current ?? currentIdx;
+    const q = questions[idx] ?? questions[currentIdx];
+    if (!q) return;
     const ctx = yarisCtx();
     const materiaName = ctx.materiaName ?? "esta materia";
-    setYarisMsgs([
-      { role: "bot", text: `¡Hola! Soy Yaris. Veo que tienes una duda sobre <strong>${materiaName}</strong>. Déjame revisarla.` },
+    const key = q.questionId || `idx-${idx}`;
+    const again = yarisExplainedRef.current.has(key);
+    yarisExplainedRef.current.add(key);
+    yarisBusyRef.current = true;
+
+    setYarisMsgs((prev) => [
+      ...(prev.length === 0
+        ? [{ role: "bot" as const, text: "¡Hola! Soy <b>Yaris</b>. Púlsame en cualquier pregunta las veces que necesites y te la explico." }]
+        : []),
+      ...prev,
+      {
+        role: "bot" as const,
+        text: again
+          ? `Va otra vez la <b>pregunta ${idx + 1}</b> de <b>${materiaName}</b>, ahora con otro enfoque:`
+          : `Vamos con la <b>pregunta ${idx + 1}</b> de <b>${materiaName}</b>:`,
+      },
     ]);
-    // La espera que ve el usuario es la de la petición real, no un setTimeout.
     setYarisTyping(true);
     const answer = await askYaris({
-      history: [{ role: "user", content: "Explícame esta pregunta." }],
+      history: [
+        {
+          role: "user",
+          content: again
+            ? "Explícame esta misma pregunta otra vez, pero de otra forma más sencilla, con otro ejemplo o analogía."
+            : "Explícame esta pregunta: por qué la correcta es correcta, por qué las demás no, y un tip para recordarlo.",
+        },
+      ],
       ctx,
     });
     setYarisTyping(false);
+    yarisBusyRef.current = false;
     setYarisMsgs((prev) => [...prev, { role: "bot", text: answer.text, cite: answer.cite ?? undefined }]);
   }
 
   async function sendYarisMsg() {
     const text = yarisInput.trim();
-    if (!text || yarisTyping) return;
+    if (!text || yarisTyping || yarisBusyRef.current) return;
     const next: YarisMsg[] = [...yarisMsgs, { role: "user", text }];
     setYarisMsgs(next);
     setYarisInput("");
