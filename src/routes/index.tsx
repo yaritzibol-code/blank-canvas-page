@@ -350,7 +350,7 @@ export function Nav() {
             { label: "Funciones", href: "/#funciones" },
             { label: "Precios", href: "/#precios" },
             { label: "Convocatoria E190", href: "/convocatoria-aeromexico" },
-            { label: "Historias", href: "/blog" },
+            { label: "Historias", href: "/#historias" },
             { label: "Blog", href: "/blog" },
           ].map((x) => (
             <a key={x.label} href={x.href} className="hover:text-ink transition-colors">{x.label}</a>
@@ -1285,6 +1285,65 @@ function Pricing() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
+   HISTORIAS  (anclada desde el nav como /#historias, igual que Precios)
+   ═══════════════════════════════════════════════════════════════════ */
+
+function Historias() {
+  // Sin testimonios inventados: la plataforma abre con la generación 2026,
+  // así que la sección cuenta el viaje real del estudiante y invita a
+  // escribir las primeras historias.
+  const etapas: { icon: IconName; fase: string; title: string; sub: string }[] = [
+    { icon: "compass", fase: "Despegue", title: "Tu ruta se traza sola", sub: "Cuentas tu meta y tu fecha; FlightPath arma tu plan por materias y detecta desde el día uno dónde estás fuerte y dónde no." },
+    { icon: "flame", fase: "Crucero", title: "La constancia se vuelve racha", sub: "Sesiones cortas, cuestionarios que se adaptan y a Pathy recordándote volar un poco cada día. Los temas débiles se repiten hasta caer." },
+    { icon: "target", fase: "Aterrizaje", title: "El examen deja de ser incógnita", sub: "Simulacros cronometrados como el CIAAC real, una preparación medida materia por materia y la seguridad de llegar sabiendo cuánto sabes." },
+  ];
+  return (
+    <section id="historias" className="relative py-24 lg:py-32">
+      <PlaneField count={16} />
+      <div className="mx-auto max-w-[1100px] px-6 lg:px-8">
+        <SectionHead center eyebrow="Historias"
+          title={<>Las primeras historias <span className="text-coral-600">se están escribiendo.</span></>}
+          sub="FlightPath despega con la generación CIAAC 2026. Este es el viaje que cada estudiante recorre — y el lugar donde pronto estarán sus historias, con nombre y apellido." />
+
+        <div className="mt-14 grid md:grid-cols-3 gap-5">
+          {etapas.map((e, i) => (
+            <div key={e.fase} className="relative rounded-3xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card p-7 lg:p-8">
+              <div className="flex items-center justify-between">
+                <span className="w-11 h-11 rounded-2xl bg-ink text-coral-400 grid place-items-center">
+                  <Icon n={e.icon} className="w-[22px] h-[22px]" />
+                </span>
+                <Coord>{`FASE ${String(i + 1).padStart(2, "0")} · ${e.fase.toUpperCase()}`}</Coord>
+              </div>
+              <h3 className="font-display mt-5 text-[19px] lg:text-[21px] tracking-tight text-ink">{e.title}</h3>
+              <p className="mt-2.5 text-[14px] leading-relaxed text-ink/55">{e.sub}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 relative rounded-[28px] border border-burgundy/10 bg-white shadow-lift overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(130% 150% at 0% 0%, rgba(242,220,219,0.55), rgba(255,255,255,0) 55%)" }} />
+          <div className="relative px-7 lg:px-10 py-8 flex flex-col md:flex-row items-start md:items-center gap-6">
+            <div className="flex-1">
+              <h3 className="font-display text-[22px] lg:text-[26px] tracking-tight text-ink leading-snug">
+                Tu historia puede ser <span className="text-coral-600">la primera.</span>
+              </h3>
+              <p className="mt-2 text-[14px] text-ink/55 leading-relaxed max-w-xl">
+                Cuando apruebes tu CIAAC con FlightPath, este espacio contará cómo lo hiciste.
+                Mientras tanto, las guías de estudio viven en el blog.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-3 shrink-0">
+              <Btn kind="primary" size="md" icon="arrow" to="/register">Empezar mi historia</Btn>
+              <Btn kind="light" size="md" to="/blog">Ir al blog</Btn>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    FINAL CTA + FOOTER
    ═══════════════════════════════════════════════════════════════════ */
 
@@ -1429,6 +1488,7 @@ function LandingPage() {
         <YarisChat />
         <Simulator />
         <Pricing />
+        <Historias />
         <FinalCta />
       </main>
       <Footer />

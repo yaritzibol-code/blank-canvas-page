@@ -1,5 +1,24 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { BackLink } from "@/components/shared/BackLink";
+import { createFileRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
+import {
+  AeroBackdrop,
+  Btn,
+  Coord,
+  Eyebrow,
+  Footer,
+  Icon,
+  Nav,
+  PathyBubble,
+  Pill,
+  PlaneField,
+  type IconName,
+} from "./index";
+
+/**
+ * Blog e historias — mismo sistema de diseño que la portada (Nav, Footer,
+ * cielo animado y tarjetas). Los artículos están en preparación: se muestran
+ * como "próximamente", sin inventar contenido que aún no existe.
+ */
 
 export const Route = createFileRoute("/blog")({
   component: BlogPage,
@@ -16,73 +35,115 @@ export const Route = createFileRoute("/blog")({
   }),
 });
 
-const FONT = "'Manrope', system-ui, sans-serif";
-const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
-const INK = "#22375C";
-
-const PROXIMOS = [
-  { tag: "Guía de estudio", t: "Cómo organizar tus últimas 4 semanas antes del CIAAC" },
-  { tag: "Historias", t: "Historias de pilotos: de la primera sesión al examen aprobado" },
-  { tag: "Materias", t: "Meteorología sin miedo: los 10 conceptos que más se preguntan" },
-  { tag: "Bienestar", t: "Estudiar sin quemarte: rachas, descanso y constancia real" },
+const PROXIMOS: { tag: string; icon: IconName; t: string; sub: string }[] = [
+  {
+    tag: "Guía de estudio",
+    icon: "compass",
+    t: "Cómo organizar tus últimas 4 semanas antes del CIAAC",
+    sub: "Un plan semana a semana para llegar al examen con el temario dominado y sin desvelos de pánico.",
+  },
+  {
+    tag: "Historias",
+    icon: "heart",
+    t: "Historias de pilotos: de la primera sesión al examen aprobado",
+    sub: "Las rutas reales de estudiantes de la primera generación FlightPath, contadas por ellos.",
+  },
+  {
+    tag: "Materias",
+    icon: "book",
+    t: "Meteorología sin miedo: los 10 conceptos que más se preguntan",
+    sub: "Nubes, frentes y vientos — lo que el examen pregunta una y otra vez, explicado claro.",
+  },
+  {
+    tag: "Bienestar",
+    icon: "flame",
+    t: "Estudiar sin quemarte: rachas, descanso y constancia real",
+    sub: "Cómo sostener el ritmo semanas enteras sin sacrificar sueño ni motivación.",
+  },
 ];
 
-/** Blog (enlazado desde la navegación y el pie de la página principal). */
 function BlogPage() {
+  useEffect(() => {
+    document.body.classList.add("theme-hueso");
+    return () => { document.body.classList.remove("theme-hueso"); };
+  }, []);
+
   return (
-    <div style={{ minHeight: "100vh", background: "#F7F9FC", fontFamily: FONT }}>
-      <header
-        style={{
-          background: "#fff", borderBottom: "1px solid #E3EAF5",
-          padding: "16px clamp(16px, 5vw, 48px)",
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-        }}
-      >
-        <Link to="/" style={{ fontFamily: DISPLAY, fontWeight: 800, color: INK, textDecoration: "none", fontSize: 18 }}>
-          FlightPath ✈
-        </Link>
-        <BackLink />
-
-      </header>
-
-      <main style={{ maxWidth: 780, margin: "0 auto", padding: "clamp(28px, 6vw, 56px) 20px 80px" }}>
-        <h1 style={{ fontFamily: DISPLAY, fontSize: "clamp(1.6rem, 5vw, 2.2rem)", color: INK, fontWeight: 800, margin: "0 0 8px" }}>
-          Blog e historias FlightPath
-        </h1>
-        <p style={{ color: "#647DA0", fontSize: 14, marginBottom: 40 }}>
-          Guías de estudio, historias de pilotos y novedades de la plataforma. Estamos preparando los
-          primeros artículos — esto es lo que viene:
-        </p>
-
-        <div style={{ display: "grid", gap: 12 }}>
-          {PROXIMOS.map((p, i) => (
-            <div key={i} style={{ background: "#fff", border: "1px solid #E3EAF5", borderRadius: 14, padding: "20px 22px", display: "flex", alignItems: "center", gap: 16 }}>
-              <div style={{ flex: 1 }}>
-                <span style={{ display: "inline-block", fontSize: 10.5, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: "#6C0820", background: "#F2DCDB", borderRadius: 999, padding: "3px 10px", marginBottom: 8 }}>
-                  {p.tag}
-                </span>
-                <div style={{ fontFamily: DISPLAY, fontSize: 17, fontWeight: 700, color: INK, lineHeight: 1.35 }}>{p.t}</div>
+    <>
+      <AeroBackdrop theme="hueso" />
+      <Nav />
+      <main>
+        {/* Hero */}
+        <section className="relative">
+          <PlaneField count={18} />
+          <div className="mx-auto max-w-[1100px] px-6 lg:px-8 pt-16 lg:pt-24 pb-14 lg:pb-16">
+            <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-10 items-center">
+              <div className="relative z-10">
+                <Eyebrow>Blog de FlightPath</Eyebrow>
+                <h1 className="font-display mt-5 text-[38px] sm:text-[50px] lg:text-[56px] leading-[1.0] tracking-tight text-ink">
+                  Guías, historias<br /><span className="text-coral-600">y bitácoras de vuelo.</span>
+                </h1>
+                <p className="mt-6 text-lg text-ink/55 max-w-xl leading-relaxed">
+                  Todo lo que aprendemos preparando pilotos para el CIAAC — técnicas de estudio,
+                  materias difíciles y las historias de quienes ya van en ruta.
+                </p>
               </div>
-              <span style={{ fontSize: 11, fontWeight: 700, color: "#8DA1BE", whiteSpace: "nowrap" }}>Próximamente</span>
+              <div className="relative hidden lg:flex items-center justify-center">
+                <PathyBubble size={210} />
+              </div>
             </div>
-          ))}
-        </div>
-
-        <div style={{ marginTop: 44, textAlign: "center", color: "#647DA0", fontSize: 13.5 }}>
-          Mientras tanto, tu preparación no espera:
-          <div style={{ marginTop: 14 }}>
-            <Link
-              to="/register"
-              style={{
-                display: "inline-block", background: "#6C0820", color: "#fff", textDecoration: "none",
-                fontWeight: 700, fontSize: 15, padding: "13px 28px", borderRadius: 12, fontFamily: FONT,
-              }}
-            >
-              Únete a FlightPath →
-            </Link>
           </div>
-        </div>
+        </section>
+
+        {/* Artículos en preparación */}
+        <section className="relative pb-20 lg:pb-24">
+          <div className="mx-auto max-w-[1100px] px-6 lg:px-8">
+            <div className="flex items-center gap-3 mb-7">
+              <Coord>PRIMERA EDICIÓN · EN PREPARACIÓN</Coord>
+              <span className="flex-1 h-px bg-ink/8" />
+            </div>
+            <div className="grid md:grid-cols-2 gap-5">
+              {PROXIMOS.map((p) => (
+                <article key={p.t} className="group relative rounded-3xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card p-7 lg:p-8 overflow-hidden transition-all duration-300 hover:shadow-lift hover:-translate-y-1">
+                  <div className="absolute -top-10 -right-10 w-36 h-36 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(closest-side, rgba(242,174,188,0.25), transparent)" }} />
+                  <div className="relative">
+                    <div className="flex items-center justify-between">
+                      <Pill tone="coral"><Icon n={p.icon} className="w-3 h-3" />{p.tag}</Pill>
+                      <span className="text-[10.5px] uppercase tracking-[0.16em] font-bold text-haze-400">Próximamente</span>
+                    </div>
+                    <h2 className="font-display mt-4 text-[20px] lg:text-[22px] leading-snug tracking-tight text-ink">
+                      {p.t}
+                    </h2>
+                    <p className="mt-2.5 text-[14px] leading-relaxed text-ink/55">{p.sub}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="relative py-16 lg:py-20">
+          <div className="mx-auto max-w-[820px] px-6 lg:px-8">
+            <div className="relative rounded-[28px] bg-ink shadow-navy overflow-hidden p-9 lg:p-12 text-center">
+              <div className="absolute -top-14 -right-10 w-56 h-56 rounded-full" style={{ background: "radial-gradient(closest-side, rgba(242,174,188,0.22), transparent)" }} />
+              <div className="relative">
+                <h2 className="font-display text-3xl lg:text-[40px] leading-tight tracking-tight text-white">
+                  Mientras escribimos,<br />tu preparación <span className="text-coral-400">no espera.</span>
+                </h2>
+                <p className="mt-4 text-[15px] text-white/60 max-w-md mx-auto leading-relaxed">
+                  Los primeros artículos vienen en camino. Tu ruta al CIAAC puede empezar hoy.
+                </p>
+                <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+                  <Btn kind="primary" size="lg" icon="arrow" to="/register">Únete a FlightPath</Btn>
+                  <Btn kind="outlineLight" size="lg" href="/#historias">Ver las historias</Btn>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
-    </div>
+      <Footer />
+    </>
   );
 }
