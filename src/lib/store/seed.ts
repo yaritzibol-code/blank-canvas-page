@@ -9,6 +9,7 @@ import { hashPassword, defaultPrefs } from "./auth";
 import { MATERIAS_DEF } from "./materias";
 import { SEED_QUESTIONS } from "./seed-questions";
 import { LINEA_AEREA_QUESTIONS } from "./seed-linea-aerea";
+import { LINEA_AEREA_OFICIAL } from "./seed-linea-aerea-oficial";
 import { LIBROS_SEED } from "./seed-biblioteca";
 import type {
   ActivityEvent,
@@ -152,7 +153,22 @@ export function seedQuestions(): BankQuestion[] {
     createdAt: daysAgoISO(30, 12),
     updatedAt: daysAgoISO(30, 12),
   }));
-  return [...base, ...lineaAerea];
+  // Banco oficial del proceso de Línea Aérea (fuente LAOF).
+  const lineaAereaOficial: BankQuestion[] = LINEA_AEREA_OFICIAL.map((q) => ({
+    id: q.id,
+    materia: q.materia,
+    fuente: q.fuente,
+    text: q.text,
+    options: q.options,
+    correctIndex: q.correctIndex,
+    explanation: q.explanation,
+    cite: q.cite,
+    status: "publicada" as const,
+    source: "seed" as const,
+    createdAt: daysAgoISO(20, 12),
+    updatedAt: daysAgoISO(20, 12),
+  }));
+  return [...base, ...lineaAerea, ...lineaAereaOficial];
 }
 
 /** Flashcards: tarjetas escritas para Aerodinámica + derivadas del banco por materia. */
