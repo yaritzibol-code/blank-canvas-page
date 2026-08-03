@@ -139,8 +139,8 @@ function interleave(a: BankQuestion[], b: BankQuestion[]): BankQuestion[] {
  * - `potenciado`: intercala las preguntas restantes con las del banco base.
  */
 function buildBank(mode: SimMode = "oficial", banco: SimBank = "ciaac"): BankQuestion[] {
-  const pred = basePredicate(banco);
   const all = getPublishedQuestions();
+  const pred = basePredicate(banco, all);
   const globalBase = shuffle(all.filter(pred));
   const globalExtra = shuffle(all.filter((q) => !pred(q)));
   const globalPool = mode === "oficial" ? globalBase : interleave(globalBase, globalExtra);
@@ -161,8 +161,8 @@ function buildBank(mode: SimMode = "oficial", banco: SimBank = "ciaac"): BankQue
 
 /** Conteo disponible por modo, para mostrarlo en la pantalla de inicio. */
 function bankCounts(banco: SimBank = "ciaac") {
-  const pred = basePredicate(banco);
   const all = getPublishedQuestions();
+  const pred = basePredicate(banco, all);
   const oficial = all.filter(pred).length;
   return { oficial, extra: all.length - oficial, total: all.length };
 }
