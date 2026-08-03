@@ -47,30 +47,18 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
   if (!open) return null;
   const config = getConfig();
 
+  /** Lleva a la página de planes, donde vive el checkout embebido de Stripe. */
   const goPlanes = (cta: string) => {
     if (userId) logUpgradeClick(userId, cta);
-    navigate({ to: "/" });
-    setTimeout(() => {
-      document.getElementById("precios")?.scrollIntoView({ behavior: "smooth" });
-    }, 350);
+    onClose();
+    navigate({ to: "/dashboard/planes" });
   };
 
-  // Intenta Stripe Checkout; si los pagos aún no están configurados, cae a la
-  // sección de precios de la landing (comportamiento previo).
-  const goCheckout = async (cta: string) => {
+  const goCheckout = (cta: string) => {
     if (paying) return;
-    if (userId) logUpgradeClick(userId, cta);
     setPaying(true);
-    const res = await startCheckout();
-    setPaying(false);
-    if (res.ok && res.url) {
-      // Nueva pestaña: Stripe no permite embederse en el iframe del preview.
-      const win = window.open(res.url, "_blank");
-      if (!win) window.location.href = res.url;
-      return;
-    }
     goPlanes(cta);
-  };
+
 
   return (
     <div
