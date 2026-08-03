@@ -148,7 +148,7 @@ function LineaAereaPage() {
                   <div style={{ fontFamily: DISPLAY, fontSize: "1rem", color: INK }}>{s.title}</div>
                   <div style={{ fontSize: "0.8rem", color: "#647DA0", lineHeight: 1.45, margin: "3px 0 10px" }}>{s.desc}</div>
                   <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: "0.78rem", fontWeight: 800, color: s.accent }}>
-                    Comenzar <Icon n="arrowRight" size={13} />
+                    Comenzar <Icon n="arrow" size={13} />
                   </span>
                 </div>
               </div>
