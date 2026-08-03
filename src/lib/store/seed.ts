@@ -334,7 +334,7 @@ function seedClases(): Clase[] {
   return clases;
 }
 
-function seedMateriales(): Material[] {
+export function seedMateriales(): Material[] {
   // Los 104 libros reales de la carpeta "libros" de Drive (visor embebible).
   return LIBROS_SEED.map((l) => ({
     id: l.id,
