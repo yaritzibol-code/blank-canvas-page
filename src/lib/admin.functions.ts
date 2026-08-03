@@ -433,3 +433,40 @@ export const adminDayDrilldown = createServerFn({ method: "POST" })
       },
     };
   });
+
+/** Fila de la bitácora de facturación (`billing_audit`). */
+export interface BillingAuditRow {
+  id: string;
+  user_id: string | null;
+  event: string;
+  environment: string;
+  source: string;
+  ok: boolean;
+  message: string | null;
+  detail: any;
+  created_at: string;
+}
+
+/**
+ * Bitácora de facturación: checkout creado, portal, sincronización de plan y
+ * webhooks recibidos. Sirve para explicar cualquier diferencia entre lo que
+ * ve el usuario en la UI y lo que Stripe reporta.
+ */
+export const adminListBillingAudit = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { environment?: StripeEnv; event?: string; userId?: string; limit?: number }) => data)
+  .handler(async ({ data, context }): Promise<Res<BillingAuditRow[]>> => {
+    const guard = await assertAdmin(context.supabase, context.userId);
+    if (guard) return { error: guard };
+    let q = context.supabase
+      .from("billing_audit")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(Math.min(data.limit ?? 150, 500));
+    if (data.environment) q = q.eq("environment", data.environment);
+    if (data.event && data.event !== "all") q = q.eq("event", data.event);
+    if (data.userId) q = q.eq("user_id", data.userId);
+    const { data: rows, error } = await q;
+    if (error) return { error: error.message };
+    return (rows ?? []) as BillingAuditRow[];
+  });
