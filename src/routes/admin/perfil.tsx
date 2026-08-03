@@ -45,7 +45,7 @@ export const Route = createFileRoute("/admin/perfil")({
   }),
 });
 
-type ModalType = "wa" | "extend" | "garantia" | "change" | "cancel" | "reset" | null;
+type ModalType = "wa" | "extend" | "garantia" | "change" | "cancel" | "reset" | "fechas" | null;
 
 const PLAN_BASICA = "Suscripción básica";
 const PLAN_ANUAL = "Plan Anual — $10,000 MXN";
@@ -74,6 +74,8 @@ function AdminPerfilPage() {
   const [extendReason, setExtendReason] = useState("Activación de garantía");
   const [garantiaDays, setGarantiaDays] = useState("30");
   const [newPlan, setNewPlan] = useState(PLAN_ANUAL);
+  const [editStart, setEditStart] = useState("");
+  const [editEnd, setEditEnd] = useState("");
 
   const firstName = student?.nombre.split(" ")[0] ?? "";
 
@@ -81,6 +83,8 @@ function AdminPerfilPage() {
   useEffect(() => {
     if (!student) return;
     setNotes(student.notasInternas ?? "");
+    setEditStart(student.accessStart ? student.accessStart.slice(0, 10) : "");
+    setEditEnd(student.accessEnd ? student.accessEnd.slice(0, 10) : "");
     setWaMsg(
       `Hola ${firstName}! Soy Yaris de FlightPath. ${streak > 0 ? `Vi que llevas ${streak} ${streak === 1 ? "día" : "días"} de racha — ¡sigue así!` : "Te extrañamos por la plataforma."} Estás cada vez más cerca de dominar el CIAAC.`,
     );
@@ -138,6 +142,24 @@ function AdminPerfilPage() {
     updateUser(student.id, { accessStatus: paused ? "activo" : "pausado" });
     logAccessChange(student.id, paused ? "Reactivar acceso" : "Pausar acceso", paused ? "Acceso reactivado por la administradora" : "Acceso pausado por la administradora");
     showFlash(paused ? "Acceso reactivado" : "Acceso pausado");
+  };
+
+  const doActivate = () => {
+    if (!student) return;
+    updateUser(student.id, { accessStatus: "activo" });
+    logAccessChange(student.id, "Activar acceso", "Acceso reactivado por la administradora");
+    showFlash("Acceso activado");
+  };
+
+  const doEditDates = () => {
+    if (!student) return;
+    updateUser(student.id, {
+      accessStart: editStart ? new Date(`${editStart}T10:00:00`).toISOString() : student.accessStart,
+      accessEnd: editEnd ? new Date(`${editEnd}T10:00:00`).toISOString() : null,
+    });
+    logAccessChange(student.id, "Editar fechas", `Inicio: ${editStart || "sin cambio"} · Vencimiento: ${editEnd || "sin vencimiento"}`);
+    setModal(null);
+    showFlash("Fechas de acceso actualizadas");
   };
 
   const doCancel = () => {
@@ -317,6 +339,23 @@ function AdminPerfilPage() {
         </div>
       </Modal>
 
+      <Modal open={modal === "fechas"} onClose={() => setModal(null)}>
+        <h2 style={modalTitleStyle}><Icon n="calendar" size={20} color="#6C0820" /> Editar fechas de acceso</h2>
+        <p style={modalSubStyle}>Ajusta manualmente el periodo de acceso de {firstName}. Deja el vencimiento vacío para acceso sin fecha límite.</p>
+        <div style={{ marginBottom: 14 }}>
+          <label style={labelStyle}>Fecha de inicio</label>
+          <input type="date" value={editStart} onChange={(e) => setEditStart(e.target.value)} style={inputStyle} />
+        </div>
+        <div style={{ marginBottom: 14 }}>
+          <label style={labelStyle}>Fecha de vencimiento</label>
+          <input type="date" value={editEnd} onChange={(e) => setEditEnd(e.target.value)} style={inputStyle} />
+        </div>
+        <div style={{ display: "flex", gap: 10 }}>
+          <button onClick={() => setModal(null)} style={cancelBtnStyle}>Cancelar</button>
+          <button onClick={doEditDates} style={{ ...confirmBtnStyle, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}><Icon n="check" size={16} /> Guardar fechas</button>
+        </div>
+      </Modal>
+
       <Modal open={modal === "reset"} onClose={() => setModal(null)}>
         <h2 style={modalTitleStyle}><Icon n="lock" size={20} color="#6C0820" /> Resetear contraseña</h2>
         <p style={modalSubStyle}>Se asignará la contraseña temporal <strong>flightpath123</strong> a la cuenta <strong>{student.email}</strong>. Pídele que la cambie al entrar.</p>
@@ -361,9 +400,16 @@ function AdminPerfilPage() {
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             <button onClick={() => setModal("extend")} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "white", color: "#3D5D91", border: "none", display: "flex", alignItems: "center", gap: 6 }}><Icon n="calendar" size={15} /> Extender acceso</button>
             <button onClick={() => setModal("change")} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(255,255,255,.15)", color: "white", border: "1px solid rgba(255,255,255,.3)", display: "flex", alignItems: "center", gap: 6 }}><Icon n="refresh" size={15} /> Cambiar plan</button>
-            <button onClick={doPauseToggle} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(255,255,255,.15)", color: "white", border: "1px solid rgba(255,255,255,.3)", display: "flex", alignItems: "center", gap: 6 }}>
-              <Icon n={isPaused ? "play" : "pause"} size={15} /> {isPaused ? "Reactivar" : "Pausar"}
-            </button>
+            <button onClick={() => setModal("fechas")} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(255,255,255,.15)", color: "white", border: "1px solid rgba(255,255,255,.3)", display: "flex", alignItems: "center", gap: 6 }}><Icon n="pencil" size={15} /> Editar fechas</button>
+            {student.accessStatus === "cancelado" || student.accessStatus === "vencido" ? (
+              <button onClick={doActivate} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(46,204,113,.25)", color: "#d5ffe6", border: "1px solid rgba(46,204,113,.4)", display: "flex", alignItems: "center", gap: 6 }}>
+                <Icon n="play" size={15} /> Activar acceso
+              </button>
+            ) : (
+              <button onClick={doPauseToggle} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(255,255,255,.15)", color: "white", border: "1px solid rgba(255,255,255,.3)", display: "flex", alignItems: "center", gap: 6 }}>
+                <Icon n={isPaused ? "play" : "pause"} size={15} /> {isPaused ? "Reactivar" : "Pausar"}
+              </button>
+            )}
             <button onClick={() => setModal("cancel")} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(231,76,60,.2)", color: "#ffaaaa", border: "1px solid rgba(231,76,60,.3)", display: "flex", alignItems: "center", gap: 6 }}><Icon n="close" size={15} /> Cancelar</button>
           </div>
         </div>
@@ -398,6 +444,49 @@ function AdminPerfilPage() {
             <div style={{ fontSize: ".66rem", color: "#8DA1BE", marginTop: 2 }}>{qa.sub}</div>
           </button>
         ))}
+      </div>
+
+      {/* ───────── Estadísticas académicas (PRD 9.4) ───────── */}
+      <div style={{ ...cardStyle, marginBottom: 20 }}>
+        <div style={cardHeadStyle}><Icon n="stats" size={15} /> Estadísticas académicas</div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: 12 }}>
+          {([
+            { lab: "Avance del curso", val: `${stats?.courseProgress ?? 0}%` },
+            { lab: "Preparación estimada", val: stats?.readiness !== null && stats?.readiness !== undefined ? `${stats.readiness}%` : "—" },
+            { lab: "Racha", val: `${streak} ${streak === 1 ? "día" : "días"}` },
+            { lab: "Tiempo de estudio", val: `${stats?.studyHours ?? 0} h` },
+            { lab: "Preguntas respondidas", val: String(stats?.answered ?? 0) },
+            { lab: "Promedio de aciertos", val: stats?.avgScore !== null && stats?.avgScore !== undefined ? `${stats.avgScore}%` : "—" },
+            { lab: "Cuestionarios", val: String(stats?.quizCount ?? 0) },
+            { lab: "Simuladores", val: String(stats?.simCount ?? 0) },
+            { lab: "Learning Paths completados", val: String(stats?.temasDone ?? 0) },
+            { lab: "Clases vistas", val: String(stats?.clasesVistas ?? 0) },
+            { lab: "Flashcards dominadas", val: String(stats?.flashDominadas ?? 0) },
+          ]).map((s) => (
+            <div key={s.lab} style={{ background: "rgba(61,93,145,.04)", borderRadius: 10, padding: "10px 12px" }}>
+              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", fontWeight: 900, color: "#22375C" }}>{s.val}</div>
+              <div style={{ fontSize: ".66rem", color: "#647DA0", marginTop: 2 }}>{s.lab}</div>
+            </div>
+          ))}
+        </div>
+        {(() => {
+          const conDatos = perf.filter((m) => m.avg !== null);
+          if (conDatos.length === 0) return null;
+          const fuerte = conDatos.reduce((a, b) => ((a.avg ?? 0) >= (b.avg ?? 0) ? a : b));
+          const debil = conDatos.reduce((a, b) => ((a.avg ?? 100) <= (b.avg ?? 100) ? a : b));
+          return (
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 14 }}>
+              <span style={{ padding: "5px 12px", borderRadius: 20, fontSize: ".74rem", fontWeight: 700, background: "rgba(46,204,113,.12)", color: "#1a7a4a", display: "inline-flex", alignItems: "center", gap: 5 }}>
+                <Icon n="arrowUp" size={13} /> Materia más fuerte: {fuerte.name} ({fuerte.avg}%)
+              </span>
+              {debil.slug !== fuerte.slug && (
+                <span style={{ padding: "5px 12px", borderRadius: 20, fontSize: ".74rem", fontWeight: 700, background: "rgba(231,76,60,.1)", color: "#c0392b", display: "inline-flex", alignItems: "center", gap: 5 }}>
+                  <Icon n="arrowDown" size={13} /> Materia más débil: {debil.name} ({debil.avg}%)
+                </span>
+              )}
+            </div>
+          );
+        })()}
       </div>
 
       {/* ───────── Two col: Info + Activity ───────── */}

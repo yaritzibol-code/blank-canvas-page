@@ -21,6 +21,8 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SimuladorRouteImport } from './routes/simulador'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminAccesosRouteImport } from './routes/admin/accesos'
+import { Route as AdminAnaliticaRouteImport } from './routes/admin/analitica'
 import { Route as AdminBancoRouteImport } from './routes/admin/banco'
 import { Route as AdminConfiguracionRouteImport } from './routes/admin/configuracion'
 import { Route as AdminContenidoRouteImport } from './routes/admin/contenido'
@@ -109,6 +111,16 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAccesosRoute = AdminAccesosRouteImport.update({
+  id: '/admin/accesos',
+  path: '/admin/accesos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAnaliticaRoute = AdminAnaliticaRouteImport.update({
+  id: '/admin/analitica',
+  path: '/admin/analitica',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminBancoRoute = AdminBancoRouteImport.update({
@@ -271,6 +283,8 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/simulador': typeof SimuladorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/accesos': typeof AdminAccesosRoute
+  '/admin/analitica': typeof AdminAnaliticaRoute
   '/admin/banco': typeof AdminBancoRoute
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
@@ -313,6 +327,8 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/simulador': typeof SimuladorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/accesos': typeof AdminAccesosRoute
+  '/admin/analitica': typeof AdminAnaliticaRoute
   '/admin/banco': typeof AdminBancoRoute
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
@@ -357,6 +373,8 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/simulador': typeof SimuladorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/accesos': typeof AdminAccesosRoute
+  '/admin/analitica': typeof AdminAnaliticaRoute
   '/admin/banco': typeof AdminBancoRoute
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
@@ -402,6 +420,8 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/simulador'
     | '/sitemap.xml'
+    | '/admin/accesos'
+    | '/admin/analitica'
     | '/admin/banco'
     | '/admin/configuracion'
     | '/admin/contenido'
@@ -444,6 +464,8 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/simulador'
     | '/sitemap.xml'
+    | '/admin/accesos'
+    | '/admin/analitica'
     | '/admin/banco'
     | '/admin/configuracion'
     | '/admin/contenido'
@@ -487,6 +509,8 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/simulador'
     | '/sitemap.xml'
+    | '/admin/accesos'
+    | '/admin/analitica'
     | '/admin/banco'
     | '/admin/configuracion'
     | '/admin/contenido'
@@ -531,6 +555,8 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   SimuladorRoute: typeof SimuladorRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  AdminAccesosRoute: typeof AdminAccesosRoute
+  AdminAnaliticaRoute: typeof AdminAnaliticaRoute
   AdminBancoRoute: typeof AdminBancoRoute
   AdminConfiguracionRoute: typeof AdminConfiguracionRoute
   AdminContenidoRoute: typeof AdminContenidoRoute
@@ -632,6 +658,20 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/accesos': {
+      id: '/admin/accesos'
+      path: '/admin/accesos'
+      fullPath: '/admin/accesos'
+      preLoaderRoute: typeof AdminAccesosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/analitica': {
+      id: '/admin/analitica'
+      path: '/admin/analitica'
+      fullPath: '/admin/analitica'
+      preLoaderRoute: typeof AdminAnaliticaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/banco': {
@@ -892,6 +932,8 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   SimuladorRoute: SimuladorRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  AdminAccesosRoute: AdminAccesosRoute,
+  AdminAnaliticaRoute: AdminAnaliticaRoute,
   AdminBancoRoute: AdminBancoRoute,
   AdminConfiguracionRoute: AdminConfiguracionRoute,
   AdminContenidoRoute: AdminContenidoRoute,
