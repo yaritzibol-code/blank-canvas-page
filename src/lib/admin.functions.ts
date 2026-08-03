@@ -8,6 +8,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { type StripeEnv, createStripeClient, getStripeErrorMessage } from "@/lib/stripe.server";
+import { logBillingEvent } from "@/lib/billing-audit.server";
 
 type Res<T> = T | { error: string };
 
@@ -194,6 +195,13 @@ export const adminRevokeSubscription = createServerFn({ method: "POST" })
     try {
       const stripe = createStripeClient(data.environment);
       await stripe.subscriptions.cancel(sub.stripe_subscription_id as string, { prorate: false });
+      await logBillingEvent({
+        event: "plan_changed",
+        environment: data.environment,
+        source: "admin",
+        userId: data.targetUserId,
+        detail: { to: "basica", reason: "admin_revoke", subscription: sub.stripe_subscription_id, by: context.userId },
+      });
       return { ok: true };
     } catch (e) {
       return { error: getStripeErrorMessage(e) };
@@ -222,6 +230,13 @@ export const adminGrantPro = createServerFn({ method: "POST" })
     };
     const { error } = await supabaseAdmin.from("profiles").update({ data: next as never }).eq("id", data.targetUserId);
     if (error) return { error: error.message };
+    await logBillingEvent({
+      event: "plan_changed",
+      environment: "live",
+      source: "admin",
+      userId: data.targetUserId,
+      detail: { from: prev.plan ?? null, to: "paga", reason: "admin_grant", days: data.days, by: context.userId },
+    });
     return { ok: true };
   });
 
