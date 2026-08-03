@@ -2,7 +2,7 @@
  * Yaris IA sobre la API propia de OpenAI del proyecto (`OPENAI_API_KEY`).
  *
  * Incluye el rate limiting por usuario pedido por el equipo:
- *   10 solicitudes / minuto · 60 / hora · 150 / día
+ *   10 solicitudes / minuto · 100 / hora · 300 / día
  *   ≤ 12,000 tokens de entrada por solicitud · ≤ 1,200 tokens de salida
  *   reasoning effort: low
  *
@@ -16,8 +16,8 @@ export const MAX_OUTPUT_TOKENS = 1200;
 
 export const RATE_LIMITS = [
   { windowMs: 60_000, max: 10, label: "por minuto" },
-  { windowMs: 3_600_000, max: 60, label: "por hora" },
-  { windowMs: 86_400_000, max: 150, label: "por día" },
+  { windowMs: 3_600_000, max: 100, label: "por hora" },
+  { windowMs: 86_400_000, max: 300, label: "por día" },
 ] as const;
 
 /** Estimación conservadora de tokens (~4 caracteres por token). */
