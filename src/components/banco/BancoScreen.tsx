@@ -19,6 +19,7 @@ import {
 import type { QuizAttempt, SimAttempt } from "@/lib/store";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
+import { ExtrasPanel } from "@/components/banco/ExtrasPanel";
 
 /* ─── Types ─────────────────────────────────────────── */
 
