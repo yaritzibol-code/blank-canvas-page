@@ -1335,7 +1335,7 @@ function BancoPage() {
                 color: "#F2AEBC",
               }}
             >
-              <Icon n="sim" size={14} /> Simulador CIAAC
+              <Icon n="sim" size={14} /> {la ? "Simulador Línea Aérea" : "Simulador CIAAC"}
             </div>
 
             <div style={{ fontSize: "3rem", marginBottom: 16, display: "flex", color: "#F2AEBC" }}><Icon n="target" size={42} /></div>
@@ -1348,7 +1348,7 @@ function BancoPage() {
                 marginBottom: 6,
               }}
             >
-              Simulador CIAAC
+              {la ? "Simulador Línea Aérea" : "Simulador CIAAC"}
             </h2>
             <p
               style={{
@@ -1359,8 +1359,9 @@ function BancoPage() {
                 color: "white",
               }}
             >
-              Pon a prueba todo lo que has aprendido en un examen completo con
-              las condiciones reales del CIAAC.
+              {la
+                ? "Examen completo del proceso de Línea Aérea: elige preguntas oficiales o el simulador potenciado."
+                : "Pon a prueba todo lo que has aprendido en un examen completo con las condiciones reales del CIAAC."}
             </p>
 
             <div
