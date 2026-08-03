@@ -8,6 +8,7 @@ import { cloudEnabled } from "./cloud";
 import { hashPassword, defaultPrefs } from "./auth";
 import { MATERIAS_DEF } from "./materias";
 import { SEED_QUESTIONS } from "./seed-questions";
+import { LINEA_AEREA_QUESTIONS } from "./seed-linea-aerea";
 import { LIBROS_SEED } from "./seed-biblioteca";
 import type {
   ActivityEvent,
@@ -25,7 +26,7 @@ import type {
   User,
 } from "./types";
 
-export const SEED_VERSION = 5;
+export const SEED_VERSION = 6;
 
 const pad3 = (n: number) => String(n).padStart(3, "0");
 
@@ -121,7 +122,7 @@ function seedUsers(): User[] {
 }
 
 export function seedQuestions(): BankQuestion[] {
-  return SEED_QUESTIONS.map((q, i) => ({
+  const base = SEED_QUESTIONS.map((q, i) => ({
     id: `q_seed_${pad3(i + 1)}`,
     materia: q.materia,
     text: q.text,
@@ -134,6 +135,24 @@ export function seedQuestions(): BankQuestion[] {
     createdAt: daysAgoISO(120, 12),
     updatedAt: daysAgoISO(120, 12),
   }));
+  // Cuestionarios del curso de Línea Aérea (5 manuales × 50 preguntas). Entran
+  // al mismo banco con su materia CIAAC y conservan `fuente` para practicarlos
+  // por manual desde el módulo de Línea Aérea.
+  const lineaAerea: BankQuestion[] = LINEA_AEREA_QUESTIONS.map((q) => ({
+    id: q.id,
+    materia: q.materia,
+    fuente: q.fuente,
+    text: q.text,
+    options: q.options,
+    correctIndex: q.correctIndex,
+    explanation: q.explanation,
+    cite: q.cite,
+    status: "publicada" as const,
+    source: "seed" as const,
+    createdAt: daysAgoISO(30, 12),
+    updatedAt: daysAgoISO(30, 12),
+  }));
+  return [...base, ...lineaAerea];
 }
 
 /** Flashcards: tarjetas escritas para Aerodinámica + derivadas del banco por materia. */
@@ -690,7 +709,7 @@ export function ensureSeeded() {
       );
       write("materiales", [...seedMateriales(), ...custom]);
     }
-    if (current < 5) {
+    if (current < 6) {
       // v3: banco oficial completo (72 preguntas semilla → 2,819 del spreadsheet).
       // v4: banco auditado contra el Excel oficial (2,819 → 2,951): se recuperan
       // las preguntas omitidas, cada hoja queda completa en su materia y se
@@ -698,12 +717,19 @@ export function ensureSeeded() {
       // v5: se reconstruyen las filas de Meteorología corruptas en el Excel
       // original (relleno "OMM/la/a" insertado entre palabras) con doble
       // verificación técnica; explicaciones descolocadas reescritas.
+      // v6: se suman los 5 cuestionarios del curso de Línea Aérea (250
+      // preguntas) y los manuales nuevos de la biblioteca.
       const custom = read<BankQuestion[]>("questions", []).filter(
-        (q) => !q.id.startsWith("q_seed_"),
+        (q) => !q.id.startsWith("q_seed_") && !q.id.startsWith("q_la_"),
       );
       const fresh = seedQuestions();
       write("questions", [...fresh, ...custom]);
       write("flashcards", seedFlashcards(fresh));
+    }
+    if (current < 6) {
+      const seeded = new Set(seedMateriales().map((m) => m.id));
+      const customMat = read<Material[]>("materiales", []).filter((m) => !seeded.has(m.id));
+      write("materiales", [...seedMateriales(), ...customMat]);
     }
     write("seed_version", SEED_VERSION);
     return;
@@ -714,7 +740,9 @@ export function ensureSeeded() {
   const questions = seedQuestions();
   write("questions", [
     ...questions,
-    ...read<BankQuestion[]>("questions", []).filter((q) => !q.id.startsWith("q_seed_")),
+    ...read<BankQuestion[]>("questions", []).filter(
+      (q) => !q.id.startsWith("q_seed_") && !q.id.startsWith("q_la_"),
+    ),
   ]);
   write("flashcards", seedFlashcards(questions));
   write("clases", seedClases());
