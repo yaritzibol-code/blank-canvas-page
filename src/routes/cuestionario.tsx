@@ -169,7 +169,7 @@ function CuestionarioPage() {
       fullPool = paid ? all : all.slice(0, 10);
     } else if (search.banco === "la") {
       // Banco completo de Línea Aérea (opcionalmente acotado a manuales).
-      const codes = search.fuentes ? search.fuentes.split(",").map((c) => c.trim()).filter(Boolean) : [];
+      const codes = search.fuentes ? search.fuentes.split(",").map((c: string) => c.trim()).filter(Boolean) : [];
       const all = getPublishedQuestions().filter(
         (q) => !!q.fuente && (codes.length === 0 || codes.includes(q.fuente)),
       );
