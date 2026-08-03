@@ -14,10 +14,10 @@ export const Route = createFileRoute("/")({
   component: LandingPage,
   head: () => ({
     meta: [
-      { title: "FlightPath — Aprueba el examen CIAAC a la primera" },
-      { name: "description", content: "Plataforma de estudio para el examen CIAAC: 12 materias, simuladores, banco de más de 2,800 preguntas, biblioteca oficial y tutores IA Yaris y Pathy." },
-      { property: "og:title", content: "FlightPath — Aprueba el examen CIAAC a la primera" },
-      { property: "og:description", content: "Simuladores CIAAC, banco de preguntas, biblioteca y tutores IA. Prepárate con FlightPath." },
+      { title: "FlightPath — Preparate para una línea aeréa y vuela." },
+      { name: "description", content: "Simulador Aeroméxico Connect 2026 con preguntas FAA ATP, PHAK, Jeppesen, CPAM, OACI, inglés aeronáutico, COMPASS y examen piloto para primer oficial." },
+      { property: "og:title", content: "FlightPath — Preparate para una línea aeréa y vuela." },
+      { property: "og:description", content: "Simulador Aeroméxico Connect 2026 con preguntas FAA ATP, PHAK, Jeppesen, CPAM, OACI, inglés aeronáutico, COMPASS y examen piloto para primer oficial." },
       { property: "og:url", content: "https://flightpath.mx/" },
       { property: "og:type", content: "website" },
     ],
