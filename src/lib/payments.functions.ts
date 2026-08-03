@@ -262,7 +262,15 @@ export const syncMyPlan = createServerFn({ method: "POST" })
 
     // Sin rastro de suscripción en Stripe ni en la base no degradamos el
     // perfil: el acceso pudo otorgarse a mano desde el panel admin.
-    if (!status) return { ...result, plan: (prevData.plan as PlanSyncResult["plan"]) ?? result.plan };
+    if (!status) {
+      await logBillingEvent({
+        event: "plan_sync",
+        environment: data.environment,
+        userId,
+        detail: { outcome: "sin_suscripcion", profile_plan: prevData.plan ?? null },
+      });
+      return { ...result, plan: (prevData.plan as PlanSyncResult["plan"]) ?? result.plan };
+    }
 
     const nextData: Record<string, unknown> = {
       ...prevData,
@@ -274,8 +282,27 @@ export const syncMyPlan = createServerFn({ method: "POST" })
     if (result.plan === "paga" && prevData.plan !== "paga") {
       nextData.accessStart = new Date().toISOString();
     }
-    await supabase.from("profiles").update({ data: nextData as never }).eq("id", userId);
+    const { error: updateError } = await supabase
+      .from("profiles")
+      .update({ data: nextData as never })
+      .eq("id", userId);
 
+    const planChanged = prevData.plan !== result.plan;
+    await logBillingEvent({
+      event: planChanged ? "plan_changed" : "plan_sync",
+      environment: data.environment,
+      userId,
+      ok: !updateError,
+      message: updateError?.message ?? null,
+      detail: {
+        from: prevData.plan ?? null,
+        to: result.plan,
+        sub_status: status,
+        access_end: result.accessEnd,
+        source_of_truth: "stripe+db",
+      },
+    });
 
     return result;
   });
+
