@@ -94,12 +94,19 @@ function FMark({ size = 30, light = false }: { size?: number; light?: boolean })
 
 export function Logo({ light = false, size = 30 }: { light?: boolean; size?: number }) {
   return (
-    <div className="flex items-center gap-2.5">
-      <FMark size={size} light={light} />
+    <Link to="/" aria-label="FlightPath — ir al inicio" className="flex items-center gap-2.5 transition-opacity hover:opacity-80">
+      <img
+        src="/assets/flightpath-logo.png"
+        alt="Logo de FlightPath"
+        width={size}
+        height={size}
+        style={{ width: size, height: size }}
+        className="rounded-[8px] object-cover shrink-0"
+      />
       <span className={`font-display text-[19px] tracking-tight ${light ? "text-white" : "text-ink"}`}>
         Flight<span className="text-coral-600">Path</span>
       </span>
-    </div>
+    </Link>
   );
 }
 
