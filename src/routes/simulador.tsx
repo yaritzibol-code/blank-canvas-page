@@ -212,7 +212,8 @@ function SimuladorPage() {
   const { user, ready } = useRequireAuth();
   const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>("warning");
-  const [mode, setMode] = useState<SimMode>("oficial");
+  const search = Route.useSearch();
+  const [mode, setMode] = useState<SimMode>(search.modo ?? "oficial");
   const [agreed, setAgreed] = useState(false);
   const [questions, setQuestions] = useState<QState[]>(buildQuestions);
   const [bankQs, setBankQs] = useState<BankQuestion[]>([]);
