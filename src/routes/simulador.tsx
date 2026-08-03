@@ -335,7 +335,8 @@ function SimuladorPage() {
     setPhase("exam");
   }, [ready, user, storeKey]);
 
-  /** Guarda el avance del examen mientras esté en curso. */
+  /** Guarda el avance del examen mientras esté en curso (cada ~10 s o al responder). */
+  const saveTick = Math.floor(secondsLeft / 10);
   useEffect(() => {
     if (!storeKey) return;
     if (phase !== "exam" || bankQs.length === 0) return;
@@ -347,7 +348,8 @@ function SimuladorPage() {
       secondsLeft,
       savedAt: Date.now(),
     });
-  }, [storeKey, phase, bankQs, questions, current, secondsLeft, mode]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storeKey, phase, bankQs, questions, current, saveTick, mode]);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
