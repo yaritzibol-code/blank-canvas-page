@@ -6,6 +6,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { type StripeEnv, createStripeClient, getStripeErrorMessage } from "@/lib/stripe.server";
 import { PRO_MONTHLY_LOOKUP_KEY, type PlanPrice } from "@/lib/pricing";
+import { logBillingEvent } from "@/lib/billing-audit.server";
 
 type CheckoutResult = { clientSecret: string } | { error: string };
 type PortalResult = { url: string } | { error: string };
@@ -112,9 +113,31 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         }),
       });
 
+      await logBillingEvent({
+        event: "checkout_session_created",
+        environment: data.environment,
+        userId: context.userId,
+        detail: {
+          session_id: session.id,
+          price_lookup_key: data.priceId,
+          stripe_price_id: stripePrice.id,
+          customer: customerId,
+          mode: session.mode,
+        },
+      });
+
       return { clientSecret: session.client_secret ?? "" };
     } catch (error) {
-      return { error: getStripeErrorMessage(error) };
+      const message = getStripeErrorMessage(error);
+      await logBillingEvent({
+        event: "checkout_session_failed",
+        environment: data.environment,
+        userId: context.userId,
+        ok: false,
+        message,
+        detail: { price_lookup_key: data.priceId },
+      });
+      return { error: message };
     }
   });
 
@@ -141,9 +164,23 @@ export const createPortalSession = createServerFn({ method: "POST" })
         customer: sub.stripe_customer_id as string,
         ...(data.returnUrl && { return_url: data.returnUrl }),
       });
+      await logBillingEvent({
+        event: "portal_session_created",
+        environment: data.environment,
+        userId: context.userId,
+        detail: { customer: sub.stripe_customer_id },
+      });
       return { url: portal.url };
     } catch (error) {
-      return { error: getStripeErrorMessage(error) };
+      const message = getStripeErrorMessage(error);
+      await logBillingEvent({
+        event: "portal_session_failed",
+        environment: data.environment,
+        userId: context.userId,
+        ok: false,
+        message,
+      });
+      return { error: message };
     }
   });
 
@@ -225,7 +262,15 @@ export const syncMyPlan = createServerFn({ method: "POST" })
 
     // Sin rastro de suscripción en Stripe ni en la base no degradamos el
     // perfil: el acceso pudo otorgarse a mano desde el panel admin.
-    if (!status) return { ...result, plan: (prevData.plan as PlanSyncResult["plan"]) ?? result.plan };
+    if (!status) {
+      await logBillingEvent({
+        event: "plan_sync",
+        environment: data.environment,
+        userId,
+        detail: { outcome: "sin_suscripcion", profile_plan: prevData.plan ?? null },
+      });
+      return { ...result, plan: (prevData.plan as PlanSyncResult["plan"]) ?? result.plan };
+    }
 
     const nextData: Record<string, unknown> = {
       ...prevData,
@@ -237,8 +282,27 @@ export const syncMyPlan = createServerFn({ method: "POST" })
     if (result.plan === "paga" && prevData.plan !== "paga") {
       nextData.accessStart = new Date().toISOString();
     }
-    await supabase.from("profiles").update({ data: nextData as never }).eq("id", userId);
+    const { error: updateError } = await supabase
+      .from("profiles")
+      .update({ data: nextData as never })
+      .eq("id", userId);
 
+    const planChanged = prevData.plan !== result.plan;
+    await logBillingEvent({
+      event: planChanged ? "plan_changed" : "plan_sync",
+      environment: data.environment,
+      userId,
+      ok: !updateError,
+      message: updateError?.message ?? null,
+      detail: {
+        from: prevData.plan ?? null,
+        to: result.plan,
+        sub_status: status,
+        access_end: result.accessEnd,
+        source_of_truth: "stripe+db",
+      },
+    });
 
     return result;
   });
+

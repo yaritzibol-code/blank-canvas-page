@@ -155,6 +155,42 @@ export type Database = {
         }
         Relationships: []
       }
+      billing_audit: {
+        Row: {
+          created_at: string
+          detail: Json
+          environment: string
+          event: string
+          id: string
+          message: string | null
+          ok: boolean
+          source: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          detail?: Json
+          environment: string
+          event: string
+          id?: string
+          message?: string | null
+          ok?: boolean
+          source?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          detail?: Json
+          environment?: string
+          event?: string
+          id?: string
+          message?: string | null
+          ok?: boolean
+          source?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       client_errors: {
         Row: {
           created_at: string
