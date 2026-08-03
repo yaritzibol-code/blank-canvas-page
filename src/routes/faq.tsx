@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { BackLink } from "@/components/shared/BackLink";
-import { PRO_MONTHLY_FALLBACK, formatPriceWithInterval } from "@/lib/pricing";
+import { PRO_MONTHLY_FALLBACK, PRO_SETUP_FALLBACK, formatProTotal } from "@/lib/pricing";
 
 export const Route = createFileRoute("/faq")({
   component: FaqPage,
@@ -41,7 +41,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "¿Cuánto cuesta?",
-    a: `FlightPath Basic es gratuito e incluye funciones limitadas y básicas para conocer la plataforma. FlightPath Pro desbloquea todo por ${formatPriceWithInterval(PRO_MONTHLY_FALLBACK)}, sin permanencia: cancelas cuando quieras desde tu panel.`,
+    a: `FlightPath Basic es gratuito e incluye funciones limitadas y básicas para conocer la plataforma. FlightPath Pro desbloquea todo por ${formatProTotal(PRO_SETUP_FALLBACK, PRO_MONTHLY_FALLBACK)}, sin permanencia: cancelas cuando quieras desde tu panel.`,
   },
   {
     q: "¿Qué incluye FlightPath Basic (gratis)?",

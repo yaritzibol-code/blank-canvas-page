@@ -13,12 +13,13 @@ import {
   useFlash,
 } from "@/components/admin/AdminShell";
 import { cloudEnabled, getConfig, saveConfig, type InternalConfig } from "@/lib/store";
-import { getPublicPricing } from "@/lib/payments.functions";
+import { getPublicPricing, getPublicSetupPricing } from "@/lib/payments.functions";
 import { getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
 import {
   PRO_MONTHLY_LOOKUP_KEY,
   PRO_MONTHLY_FALLBACK,
-  formatPriceWithInterval,
+  PRO_SETUP_FALLBACK,
+  formatProTotal,
   type PlanPrice,
 } from "@/lib/pricing";
 
@@ -31,6 +32,7 @@ function AdminConfiguracionPage() {
   const [cfg, setCfg] = useState<InternalConfig>(() => getConfig());
 
   const [proPrice, setProPrice] = useState<PlanPrice | null>(null);
+  const [setupPrice, setSetupPrice] = useState<PlanPrice | null>(null);
 
   // Recarga la configuración persistida al montar en cliente (post-seed).
   useEffect(() => {
@@ -43,8 +45,14 @@ function AdminConfiguracionPage() {
     let cancelled = false;
     (async () => {
       try {
-        const live = await getPublicPricing({ data: { environment: getStripeEnvironment() } });
-        if (!cancelled && live) setProPrice(live);
+        const env = getStripeEnvironment();
+        const [live, setup] = await Promise.all([
+          getPublicPricing({ data: { environment: env } }),
+          getPublicSetupPricing({ data: { environment: env } }),
+        ]);
+        if (cancelled) return;
+        if (live) setProPrice(live);
+        if (setup) setSetupPrice(setup);
       } catch {
         /* sin conexión con Stripe: se muestra el respaldo */
       }
@@ -54,9 +62,10 @@ function AdminConfiguracionPage() {
     };
   }, []);
 
-  const proPriceLabel = proPrice
-    ? formatPriceWithInterval(proPrice)
-    : `${formatPriceWithInterval(PRO_MONTHLY_FALLBACK)} (respaldo — sin respuesta de Stripe)`;
+  const proPriceLabel =
+    proPrice && setupPrice
+      ? formatProTotal(setupPrice, proPrice)
+      : `${formatProTotal(PRO_SETUP_FALLBACK, PRO_MONTHLY_FALLBACK)} (respaldo — sin respuesta de Stripe)`;
 
   const set = <K extends keyof InternalConfig>(k: K, v: InternalConfig[K]) =>
     setCfg((c) => ({ ...c, [k]: v }));

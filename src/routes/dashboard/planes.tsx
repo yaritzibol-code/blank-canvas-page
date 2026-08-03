@@ -12,8 +12,14 @@ import {
   createPortalSession,
   syncMyPlan,
   getPublicPricing,
+  getPublicSetupPricing,
 } from "@/lib/payments.functions";
-import { PRO_MONTHLY_LOOKUP_KEY, PRO_MONTHLY_FALLBACK, type PlanPrice } from "@/lib/pricing";
+import {
+  PRO_MONTHLY_LOOKUP_KEY,
+  PRO_MONTHLY_FALLBACK,
+  PRO_SETUP_FALLBACK,
+  type PlanPrice,
+} from "@/lib/pricing";
 import { refreshCloudProfile } from "@/lib/store/auth";
 import { useRequireAuth } from "@/lib/store/hooks";
 import { supa } from "@/lib/store/cloud";
@@ -50,6 +56,7 @@ function PlanesPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [proPrice, setProPrice] = useState<PlanPrice>(PRO_MONTHLY_FALLBACK);
+  const [setupPrice, setSetupPrice] = useState<PlanPrice>(PRO_SETUP_FALLBACK);
   const configured = isPaymentsConfigured();
 
   // El precio mostrado sale de Stripe, no de una constante en la vista: es el
@@ -59,8 +66,14 @@ function PlanesPage() {
     let cancelled = false;
     (async () => {
       try {
-        const live = await getPublicPricing({ data: { environment: getStripeEnvironment() } });
-        if (!cancelled && live) setProPrice(live);
+        const env = getStripeEnvironment();
+        const [live, setup] = await Promise.all([
+          getPublicPricing({ data: { environment: env } }),
+          getPublicSetupPricing({ data: { environment: env } }),
+        ]);
+        if (cancelled) return;
+        if (live) setProPrice(live);
+        if (setup) setSetupPrice(setup);
       } catch {
         /* se queda el respaldo de @/lib/pricing */
       }
@@ -198,7 +211,9 @@ function PlanesPage() {
           Elige tu plan
         </h1>
         <p style={{ color: "#647DA0", fontSize: 15, marginBottom: 32, maxWidth: 620 }}>
-          Empieza gratis con FlightPath Básica y sube a Pro cuando quieras acceso ilimitado, IA y todos los módulos.
+          Empieza gratis con FlightPath Básica y sube a Pro cuando quieras acceso ilimitado, IA y
+          todos los módulos. Pro se activa con un pago único de inscripción y después la
+          mensualidad.
         </p>
 
         {error && (
@@ -228,6 +243,9 @@ function PlanesPage() {
             <div style={{ position: "absolute", top: -12, right: 20, background: BRAND, color: "#fff", fontSize: 11, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", padding: "4px 10px", borderRadius: 999 }}>Recomendado</div>
             <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.14em", color: BRAND, textTransform: "uppercase" }}>Pro</div>
             <div style={{ fontFamily: DISPLAY, fontSize: "2.4rem", fontWeight: 800, color: INK, margin: "8px 0 4px" }}>${proPrice.amount.toLocaleString("es-MX")} <span style={{ fontSize: 15, color: "#647DA0", fontWeight: 500 }}>{proPrice.currency}{proPrice.interval === "month" ? "/mes" : proPrice.interval === "year" ? "/año" : ""}</span></div>
+            <div style={{ color: "#647DA0", fontSize: 13, marginBottom: 4 }}>
+              + ${setupPrice.amount.toLocaleString("es-MX")} {setupPrice.currency} de inscripción (pago único, sólo la primera vez)
+            </div>
             <div style={{ color: "#647DA0", fontSize: 13, marginBottom: 20 }}>Cancela cuando quieras</div>
             <ul style={{ padding: 0, listStyle: "none", color: "#4A5F80", fontSize: 14, lineHeight: 1.8, marginBottom: 20 }}>
               <li>✅ Cuestionario y simulador ilimitados</li>
