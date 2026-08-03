@@ -78,24 +78,58 @@ function buildQuestions(): QState[] {
   return qs;
 }
 
+/** Modo del simulador: oficial (solo guía de estudio) o potenciado (todo el banco). */
+export type SimMode = "oficial" | "potenciado";
+
+/** Preguntas de la guía oficial de examen de ingreso: sin `fuente` externa. */
+function isOficial(q: BankQuestion) {
+  return !q.fuente;
+}
+
+/** Intercala dos listas: oficial, extra, oficial, extra… */
+function interleave(a: BankQuestion[], b: BankQuestion[]): BankQuestion[] {
+  const out: BankQuestion[] = [];
+  const n = Math.max(a.length, b.length);
+  for (let i = 0; i < n; i++) {
+    if (i < a.length) out.push(a[i]);
+    if (i < b.length) out.push(b[i]);
+  }
+  return out;
+}
+
 /**
  * Banco real del simulador: por cada materia toma sus preguntas publicadas
- * barajadas y cicla hasta llenar su cuota. Si una materia no tiene preguntas,
- * recurre al pool global publicado.
+ * barajadas y cicla hasta llenar su cuota.
+ * - `oficial`: únicamente preguntas de la guía de estudio del examen de ingreso.
+ * - `potenciado`: intercala las demás preguntas (Línea Aérea y manuales) con las oficiales.
  */
-function buildBank(): BankQuestion[] {
-  const globalPool = shuffle(getPublishedQuestions());
+function buildBank(mode: SimMode = "oficial"): BankQuestion[] {
+  const all = getPublishedQuestions();
+  const globalOficial = shuffle(all.filter(isOficial));
+  const globalExtra = shuffle(all.filter((q) => !isOficial(q)));
+  const globalPool = mode === "oficial" ? globalOficial : interleave(globalOficial, globalExtra);
   if (globalPool.length === 0) return [];
   const bank: BankQuestion[] = [];
   MATERIAS.forEach((m) => {
-    const own = shuffle(getPublishedQuestions(m.slug));
-    const pool = own.length > 0 ? own : globalPool;
+    const own = getPublishedQuestions(m.slug);
+    const oficial = shuffle(own.filter(isOficial));
+    const extra = shuffle(own.filter((q) => !isOficial(q)));
+    const ownPool = mode === "oficial" ? oficial : interleave(oficial, extra);
+    const pool = ownPool.length > 0 ? ownPool : globalPool;
     for (let i = 0; i < m.total; i++) {
       bank.push(pool[i % pool.length]);
     }
   });
   return bank;
 }
+
+/** Conteo disponible por modo, para mostrarlo en la pantalla de inicio. */
+function bankCounts() {
+  const all = getPublishedQuestions();
+  const oficial = all.filter(isOficial).length;
+  return { oficial, extra: all.length - oficial, total: all.length };
+}
+
 
 interface SimResult {
   correct: number;
