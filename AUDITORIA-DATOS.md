@@ -213,3 +213,30 @@ de IMC "cuando el piloto lo solicite" (L2032), que parece mal planteada de orige
    no el concepto.
 6. **Onboarding pide WhatsApp para recordatorios** que no existen: no hay
    integración de envío, así que el opt-in no dispara nada (ver pendiente #4).
+
+---
+
+## Ronda 3 (2026-08-03) — Copy de beta y sesión gratis por materia
+
+Decisión de negocio confirmada: los módulos Pro (Learning Paths, Flashcards,
+Clases grabadas, Estudiemos Juntos) **siguen en construcción a propósito**
+durante la beta. Lo que se corrigió fue el copy que los vendía como disponibles,
+y la composición de la sesión gratis (hallazgos #1 y #2 de la Ronda 2):
+
+- **Copy de beta.** Sidebar: el icono suelto pasó a etiqueta "Pronto" con
+  tooltip. Landing: chips "Próximamente" en las tarjetas de Learning Paths,
+  Flashcards y Clases grabadas y en los bullets de las tarjetas de precios
+  (Basic y Pro). FAQ: las tres respuestas que prometían esos módulos ahora
+  dicen que están en construcción durante la beta. `planes.tsx` (checkout) no
+  los prometía; no se tocó.
+- **Sesión gratis 2×materia.** El recorte a 10 del pool era por diseño, pero
+  colapsaba en Aerodinámica. Ahora el plan básica conserva su pool fijo de
+  10 preguntas por materia (`getFreeQuestions`) y cada sesión toma **2 al azar
+  de cada materia seleccionada** (`BASICA_SESSION_PER_MATERIA`), mezcladas.
+  "Todas las materias" gratis = 24 preguntas variadas en vez de 10 de una sola.
+  En el modal de sesión, el plan gratis ya no ve los chips de cantidad (mentían
+  con "10"): ve una nota con la regla y el CTA a Pro.
+
+Queda flagged sin cambiar (número de negocio): la landing y el FAQ dicen
+"1 simulador al mes" para Basic, pero `gating.ts` implementa 2 intentos totales
+de por vida entre cuestionarios y simuladores. Alinear en un sentido u otro.

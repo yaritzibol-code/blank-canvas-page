@@ -11,6 +11,7 @@ import {
   logYarisUse,
   materiaBySlug,
   MATERIAS_DEF,
+  BASICA_SESSION_PER_MATERIA,
 } from "@/lib/store";
 import type { BankQuestion, YarisContext } from "@/lib/store";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
@@ -121,9 +122,25 @@ function CuestionarioPage() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  /** Cuántas preguntas de la sesión según plan y qty solicitado. */
-  function sessionCount(poolLen: number): number {
-    return isPaid(user) ? Math.min(search.qty ?? 10, poolLen) : Math.min(10, poolLen);
+  /**
+   * Arma la sesión desde el pool según el plan:
+   *  - Pro: `qty` preguntas barajadas de todo el pool.
+   *  - Básica: 2 preguntas de cada materia elegida, tomadas al azar de su
+   *    pool fijo de 10 (la sesión mezcla materias en lugar de agotar una sola).
+   */
+  function pickSession(fromPool: BankQuestion[], paid: boolean): BankQuestion[] {
+    if (paid) return shuffle(fromPool).slice(0, Math.min(search.qty ?? 10, fromPool.length));
+    const byMateria = new Map<string, BankQuestion[]>();
+    fromPool.forEach((q) => {
+      const list = byMateria.get(q.materia) ?? [];
+      list.push(q);
+      byMateria.set(q.materia, list);
+    });
+    const picked: BankQuestion[] = [];
+    byMateria.forEach((qs) => {
+      picked.push(...shuffle(qs).slice(0, BASICA_SESSION_PER_MATERIA));
+    });
+    return shuffle(picked);
   }
 
   // Construye el pool real de preguntas al montar (una sola vez).
@@ -135,15 +152,13 @@ function CuestionarioPage() {
     slugs.forEach((s) => {
       fullPool = fullPool.concat(paid ? getPublishedQuestions(s) : getFreeQuestions(s));
     });
-    if (!paid) fullPool = fullPool.slice(0, 10);
-    const picked = shuffle(fullPool)
-      .slice(0, paid ? Math.min(search.qty ?? 10, fullPool.length) : Math.min(10, fullPool.length))
-      .map(toLocalQ);
+    const picked = pickSession(fullPool, paid).map(toLocalQ);
     setPool(fullPool);
     setSessionSlugs(slugs);
     setQuestions(picked);
     setResults(new Array(picked.length).fill(null));
     setLoaded(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, loaded, user, search.materias, search.qty]);
 
   const total = questions.length;
@@ -213,7 +228,7 @@ function CuestionarioPage() {
   }
 
   function handleRestart() {
-    const fresh = shuffle(pool).slice(0, sessionCount(pool.length)).map(toLocalQ);
+    const fresh = pickSession(pool, isPaid(user)).map(toLocalQ);
     setQuestions(fresh);
     setResults(new Array(fresh.length).fill(null));
     setCurrentIdx(0);
