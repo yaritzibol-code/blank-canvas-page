@@ -19,7 +19,13 @@ import { useRequireAuth } from "@/lib/store/hooks";
 import { supa } from "@/lib/store/cloud";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 
-export const Route = createFileRoute("/dashboard/planes")({ component: PlanesPage });
+export const Route = createFileRoute("/dashboard/planes")({
+  component: PlanesPage,
+  // `?checkout=1` abre el checkout de Stripe en cuanto la página está lista
+  // (lo usa la landing de la convocatoria para llevar directo al pago).
+  validateSearch: (search: Record<string, unknown>): { checkout?: 1 } =>
+    search.checkout === "1" || search.checkout === 1 || search.checkout === true ? { checkout: 1 } : {},
+});
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
@@ -36,7 +42,10 @@ interface SubRow {
 function PlanesPage() {
   const { user, ready } = useRequireAuth();
   const navigate = useNavigate();
+  const { checkout } = Route.useSearch();
   const [sub, setSub] = useState<SubRow | null>(null);
+  const [subChecked, setSubChecked] = useState(false);
+  const [autoLaunched, setAutoLaunched] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -76,7 +85,10 @@ function PlanesPage() {
         .order("created_at", { ascending: false })
         .limit(1)
         .maybeSingle();
-      if (!cancelled) setSub((data as SubRow | null) ?? null);
+      if (!cancelled) {
+        setSub((data as SubRow | null) ?? null);
+        setSubChecked(true);
+      }
       if (configured) {
         try {
           await syncMyPlan({ data: { environment: env } });
@@ -95,6 +107,16 @@ function PlanesPage() {
     !!sub &&
     (["active", "trialing"].includes(sub.status) ||
       (sub.status === "canceled" && sub.current_period_end && new Date(sub.current_period_end) > new Date()));
+
+  // Con ?checkout=1, abre el pago de Stripe una sola vez en cuanto sabemos
+  // que el usuario todavía no es Pro.
+  useEffect(() => {
+    if (checkout !== 1 || autoLaunched || !ready || !configured || !subChecked) return;
+    if (isProActive || clientSecret || loading) return;
+    setAutoLaunched(true);
+    void handleUpgrade();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checkout, autoLaunched, ready, configured, subChecked, isProActive]);
 
   async function handleUpgrade() {
     if (!configured) {

@@ -14,9 +14,9 @@ export const Route = createFileRoute("/")({
   component: LandingPage,
   head: () => ({
     meta: [
-      { title: "FlightPath — Preparate para una línea aeréa y vuela." },
+      { title: "FlightPath — Prepárate para una línea aérea y vuela." },
       { name: "description", content: "Simulador Aeroméxico Connect 2026 con preguntas FAA ATP, PHAK, Jeppesen, CPAM, OACI, inglés aeronáutico, COMPASS y examen piloto para primer oficial." },
-      { property: "og:title", content: "FlightPath — Preparate para una línea aeréa y vuela." },
+      { property: "og:title", content: "FlightPath — Prepárate para una línea aérea y vuela." },
       { property: "og:description", content: "Simulador Aeroméxico Connect 2026 con preguntas FAA ATP, PHAK, Jeppesen, CPAM, OACI, inglés aeronáutico, COMPASS y examen piloto para primer oficial." },
       { property: "og:url", content: "https://flightpath.mx/" },
       { property: "og:type", content: "website" },
@@ -32,14 +32,14 @@ export const Route = createFileRoute("/")({
    SHARED PRIMITIVES  (ported from landing/shared.jsx)
    ═══════════════════════════════════════════════════════════════════ */
 
-type IconName =
+export type IconName =
   | "arrow" | "arrowUp" | "play" | "check" | "spark" | "compass" | "target"
   | "book" | "cards" | "sim" | "chat" | "audio" | "bolt" | "clock" | "flame"
   | "chart" | "shield" | "plane" | "radio" | "grid" | "cal" | "doc" | "user"
   | "bell" | "chevD" | "chevR" | "menu" | "close" | "moon" | "waypoint"
   | "alarm" | "brain" | "heart" | "library";
 
-function Icon({ n, className = "w-5 h-5", sw = 1.6 }: { n: IconName; className?: string; sw?: number }) {
+export function Icon({ n, className = "w-5 h-5", sw = 1.6 }: { n: IconName; className?: string; sw?: number }) {
   const p = { fill: "none", stroke: "currentColor", strokeWidth: sw, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
   const g: Record<IconName, ReactNode> = {
     arrow: <path d="M5 12h14M13 6l6 6-6 6" {...p} />,
@@ -92,7 +92,7 @@ function FMark({ size = 30, light = false }: { size?: number; light?: boolean })
   );
 }
 
-function Logo({ light = false, size = 30 }: { light?: boolean; size?: number }) {
+export function Logo({ light = false, size = 30 }: { light?: boolean; size?: number }) {
   return (
     <div className="flex items-center gap-2.5">
       <FMark size={size} light={light} />
@@ -104,7 +104,7 @@ function Logo({ light = false, size = 30 }: { light?: boolean; size?: number }) 
 }
 
 type BtnKind = "primary" | "navy" | "light" | "ghost" | "ghostLight" | "soft" | "outlineLight";
-function Btn({
+export function Btn({
   children, kind = "primary", size = "md", icon, iconLeft, className = "", href, to, onClick,
 }: {
   children: ReactNode; kind?: BtnKind; size?: "sm" | "md" | "lg";
@@ -129,7 +129,7 @@ function Btn({
   return <button onClick={onClick} className={cls}>{inner}</button>;
 }
 
-function Eyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {
+export function Eyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {
   return (
     <span className={`inline-flex items-center gap-2.5 text-[11px] uppercase tracking-[0.22em] font-bold ${light ? "text-white/55" : "text-haze-500"}`}>
       <span className="w-5 h-px bg-coral-600" />
@@ -138,7 +138,7 @@ function Eyebrow({ children, light = false }: { children: ReactNode; light?: boo
   );
 }
 
-function Pill({ children, tone = "ink" }: { children: ReactNode; tone?: "ink" | "coral" | "light" | "live" }) {
+export function Pill({ children, tone = "ink" }: { children: ReactNode; tone?: "ink" | "coral" | "light" | "live" }) {
   const tones = {
     ink: "border-ink/10 text-ink/65 bg-white/70",
     coral: "border-coral-300/50 text-coral-700 bg-coral-50",
@@ -148,7 +148,7 @@ function Pill({ children, tone = "ink" }: { children: ReactNode; tone?: "ink" | 
   return <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-semibold ${tones[tone]}`}>{children}</span>;
 }
 
-function Coord({ children, light = false }: { children: ReactNode; light?: boolean }) {
+export function Coord({ children, light = false }: { children: ReactNode; light?: boolean }) {
   return <span className={`font-mono text-[10px] tracking-wide ${light ? "text-white/40" : "text-haze-400"}`}>{children}</span>;
 }
 
@@ -160,7 +160,7 @@ function PlaneGlyph({ className = "w-5 h-5", style, fill = "currentColor" }: { c
   );
 }
 
-function PathyBubble({ size = 220, float = true, glow = true, className = "" }: { size?: number; float?: boolean; glow?: boolean; className?: string }) {
+export function PathyBubble({ size = 220, float = true, glow = true, className = "" }: { size?: number; float?: boolean; glow?: boolean; className?: string }) {
   return (
     <div className={`relative ${className}`} style={{ width: size, height: size }}>
       {glow && <div className="absolute inset-0 rounded-full" style={{ background: "radial-gradient(closest-side, rgba(242,174,188,0.28), transparent 70%)", transform: "scale(1.25)", filter: "blur(8px)" }} />}
@@ -172,7 +172,7 @@ function PathyBubble({ size = 220, float = true, glow = true, className = "" }: 
   );
 }
 
-function SectionHead({
+export function SectionHead({
   eyebrow, title, sub, light = false, center = false, max = "max-w-2xl",
 }: { eyebrow: ReactNode; title: ReactNode; sub?: ReactNode; light?: boolean; center?: boolean; max?: string }) {
   return (
@@ -184,7 +184,7 @@ function SectionHead({
   );
 }
 
-function AeroBackdrop({ theme = "hueso" }: { theme?: "hueso" | "cherry" | "azul" }) {
+export function AeroBackdrop({ theme = "hueso" }: { theme?: "hueso" | "cherry" | "azul" }) {
   return <div className={`cloudscape cs-${theme} fixed inset-0 -z-10 overflow-hidden pointer-events-none`} aria-hidden="true" />;
 }
 
@@ -317,7 +317,7 @@ function runPlanes(canvas: HTMLCanvasElement, host: HTMLElement, count: number, 
 }
 
 // PlaneField — sits behind section content via z-index:-1 + isolation:isolate
-function PlaneField({ count = 20, color = "26,35,64" }: { count?: number; color?: string }) {
+export function PlaneField({ count = 20, color = "26,35,64" }: { count?: number; color?: string }) {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const canvas = ref.current;
@@ -334,7 +334,7 @@ function PlaneField({ count = 20, color = "26,35,64" }: { count?: number; color?
    NAV  (landing/sections-top.jsx)
    ═══════════════════════════════════════════════════════════════════ */
 
-function Nav() {
+export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const f = () => setScrolled(window.scrollY > 12);
@@ -349,7 +349,8 @@ function Nav() {
           {[
             { label: "Funciones", href: "/#funciones" },
             { label: "Precios", href: "/#precios" },
-            { label: "Historias", href: "/blog" },
+            { label: "Convocatoria E190", href: "/convocatoria-aeromexico" },
+            { label: "Historias", href: "/#historias" },
             { label: "Blog", href: "/blog" },
           ].map((x) => (
             <a key={x.label} href={x.href} className="hover:text-ink transition-colors">{x.label}</a>
@@ -1284,6 +1285,65 @@ function Pricing() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
+   HISTORIAS  (anclada desde el nav como /#historias, igual que Precios)
+   ═══════════════════════════════════════════════════════════════════ */
+
+function Historias() {
+  // Sin testimonios inventados: la plataforma abre con la generación 2026,
+  // así que la sección cuenta el viaje real del estudiante y invita a
+  // escribir las primeras historias.
+  const etapas: { icon: IconName; fase: string; title: string; sub: string }[] = [
+    { icon: "compass", fase: "Despegue", title: "Tu ruta se traza sola", sub: "Cuentas tu meta y tu fecha; FlightPath arma tu plan por materias y detecta desde el día uno dónde estás fuerte y dónde no." },
+    { icon: "flame", fase: "Crucero", title: "La constancia se vuelve racha", sub: "Sesiones cortas, cuestionarios que se adaptan y a Pathy recordándote volar un poco cada día. Los temas débiles se repiten hasta caer." },
+    { icon: "target", fase: "Aterrizaje", title: "El examen deja de ser incógnita", sub: "Simulacros cronometrados como el CIAAC real, una preparación medida materia por materia y la seguridad de llegar sabiendo cuánto sabes." },
+  ];
+  return (
+    <section id="historias" className="relative py-24 lg:py-32">
+      <PlaneField count={16} />
+      <div className="mx-auto max-w-[1100px] px-6 lg:px-8">
+        <SectionHead center eyebrow="Historias"
+          title={<>Las primeras historias <span className="text-coral-600">se están escribiendo.</span></>}
+          sub="FlightPath despega con la generación CIAAC 2026. Este es el viaje que cada estudiante recorre — y el lugar donde pronto estarán sus historias, con nombre y apellido." />
+
+        <div className="mt-14 grid md:grid-cols-3 gap-5">
+          {etapas.map((e, i) => (
+            <div key={e.fase} className="relative rounded-3xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card p-7 lg:p-8">
+              <div className="flex items-center justify-between">
+                <span className="w-11 h-11 rounded-2xl bg-ink text-coral-400 grid place-items-center">
+                  <Icon n={e.icon} className="w-[22px] h-[22px]" />
+                </span>
+                <Coord>{`FASE ${String(i + 1).padStart(2, "0")} · ${e.fase.toUpperCase()}`}</Coord>
+              </div>
+              <h3 className="font-display mt-5 text-[19px] lg:text-[21px] tracking-tight text-ink">{e.title}</h3>
+              <p className="mt-2.5 text-[14px] leading-relaxed text-ink/55">{e.sub}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 relative rounded-[28px] border border-burgundy/10 bg-white shadow-lift overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(130% 150% at 0% 0%, rgba(242,220,219,0.55), rgba(255,255,255,0) 55%)" }} />
+          <div className="relative px-7 lg:px-10 py-8 flex flex-col md:flex-row items-start md:items-center gap-6">
+            <div className="flex-1">
+              <h3 className="font-display text-[22px] lg:text-[26px] tracking-tight text-ink leading-snug">
+                Tu historia puede ser <span className="text-coral-600">la primera.</span>
+              </h3>
+              <p className="mt-2 text-[14px] text-ink/55 leading-relaxed max-w-xl">
+                Cuando apruebes tu CIAAC con FlightPath, este espacio contará cómo lo hiciste.
+                Mientras tanto, las guías de estudio viven en el blog.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-3 shrink-0">
+              <Btn kind="primary" size="md" icon="arrow" to="/register">Empezar mi historia</Btn>
+              <Btn kind="light" size="md" to="/blog">Ir al blog</Btn>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    FINAL CTA + FOOTER
    ═══════════════════════════════════════════════════════════════════ */
 
@@ -1306,7 +1366,7 @@ function FinalCta() {
   );
 }
 
-function Footer() {
+export function Footer() {
   return (
     <footer className="relative bg-ink text-white">
       <div className="mx-auto max-w-[1240px] px-6 lg:px-8 pt-16 pb-9">
@@ -1330,6 +1390,7 @@ function Footer() {
             { h: "Recursos", l: [
               { t: "Blog", href: "/blog" },
               { t: "Preguntas frecuentes", href: "/faq" },
+              { t: "Convocatoria Aeroméxico · Embraer 190", href: "/convocatoria-aeromexico" },
               { t: "Convocatoria CIAAC 2026", href: "https://www.gob.mx/afac", ext: true },
             ] },
             { h: "FlightPath", l: [
@@ -1427,6 +1488,7 @@ function LandingPage() {
         <YarisChat />
         <Simulator />
         <Pricing />
+        <Historias />
         <FinalCta />
       </main>
       <Footer />
