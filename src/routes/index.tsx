@@ -747,13 +747,13 @@ function Showcase() {
    ═══════════════════════════════════════════════════════════════════ */
 
 function Features() {
-  const feats: { icon: IconName; t: string; d: string }[] = [
-    { icon: "target", t: "Learning Paths", d: "Aprende cada materia con una ruta clara, paso a paso." },
+  const feats: { icon: IconName; t: string; d: string; soon?: boolean }[] = [
+    { icon: "target", t: "Learning Paths", d: "Aprende cada materia con una ruta clara, paso a paso.", soon: true },
     { icon: "cards", t: "Cuestionarios", d: "Practica después de cada tema y recibe retroalimentación inmediata." },
     { icon: "sim", t: "Simuladores", d: "Entrena con el mismo formato del examen oficial." },
     { icon: "book", t: "Biblioteca", d: "Todo el material de consulta organizado en un solo lugar." },
-    { icon: "brain", t: "Flashcards", d: "Memoriza conceptos con repasos inteligentes." },
-    { icon: "play", t: "Clases grabadas", d: "Explicaciones claras para estudiar a tu ritmo." },
+    { icon: "brain", t: "Flashcards", d: "Memoriza conceptos con repasos inteligentes.", soon: true },
+    { icon: "play", t: "Clases grabadas", d: "Explicaciones claras para estudiar a tu ritmo.", soon: true },
   ];
   return (
     <section className="relative py-24 lg:py-32" id="funciones">
@@ -768,8 +768,15 @@ function Features() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {feats.map((f, i) => (
             <div key={i} className="group rounded-2xl bg-white border border-ink/8 p-7 shadow-card hover-lift hover:shadow-lift">
-              <div className="w-12 h-12 rounded-xl bg-coral-50 grid place-items-center text-coral-600 mb-12 group-hover:bg-coral-600 group-hover:text-white transition-colors">
-                <Icon n={f.icon} className="w-6 h-6" />
+              <div className="flex items-start justify-between mb-12">
+                <div className="w-12 h-12 rounded-xl bg-coral-50 grid place-items-center text-coral-600 group-hover:bg-coral-600 group-hover:text-white transition-colors">
+                  <Icon n={f.icon} className="w-6 h-6" />
+                </div>
+                {f.soon && (
+                  <span className="text-[10px] uppercase tracking-[0.12em] font-bold text-haze-500 bg-haze-500/10 rounded-full px-2.5 py-1">
+                    Próximamente
+                  </span>
+                )}
               </div>
               <h3 className="font-display text-xl tracking-tight text-ink">{f.t}</h3>
               <p className="text-[14.5px] text-ink/55 mt-2 leading-relaxed">{f.d}</p>
@@ -1210,10 +1217,22 @@ function Pricing() {
             <p className="text-[14px] text-ink/55 mt-3">Crea tu cuenta y conoce la plataforma con funciones limitadas y básicas.</p>
             <Btn kind="light" size="lg" icon="arrow" className="w-full mt-7" to="/register">Crear cuenta gratis</Btn>
             <div className="mt-8 space-y-3">
-              {["Primer tema de cada materia", "10 preguntas por materia", "1 simulador al mes", "Muestra de la biblioteca"].map((b, i) => (
+              {[
+                { b: "10 preguntas de práctica por materia" },
+                { b: "1 simulador al mes" },
+                { b: "Muestra de la biblioteca" },
+                { b: "Primer tema de cada materia", soon: true },
+              ].map((f, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <Icon n="check" className="w-4 h-4 text-haze-400 mt-0.5 shrink-0" sw={2.2} />
-                  <span className="text-[14px] text-ink/65">{b}</span>
+                  <span className="text-[14px] text-ink/65">
+                    {f.b}
+                    {f.soon && (
+                      <span className="ml-2 align-middle text-[10px] uppercase tracking-[0.1em] font-bold text-haze-500 bg-haze-500/10 rounded-full px-2 py-0.5">
+                        Próximamente
+                      </span>
+                    )}
+                  </span>
                 </div>
               ))}
             </div>
@@ -1235,10 +1254,24 @@ function Pricing() {
               <p className="text-[14px] text-white/60 mt-4">Plataforma completa, simulador ilimitado y tutor IA 24/7. Cancela cuando quieras.</p>
               <Btn kind="primary" size="lg" icon="arrow" className="w-full mt-7" to="/register">Hazte Pro</Btn>
               <div className="mt-8 space-y-3">
-                {["Las 12 materias con Learning Paths completos", "Banco de 2,800+ preguntas con explicación", "Simulador CIAAC ilimitado", "Biblioteca completa: 100+ manuales oficiales", "Tutor IA Yaris 24/7 + Pathy", "Clases grabadas y flashcards"].map((b, i) => (
+                {[
+                  { b: "Banco de 2,800+ preguntas con explicación" },
+                  { b: "Simulador CIAAC ilimitado" },
+                  { b: "Biblioteca completa: 100+ manuales oficiales" },
+                  { b: "Tutor IA Yaris 24/7 + Pathy" },
+                  { b: "Las 12 materias con Learning Paths completos", soon: true },
+                  { b: "Clases grabadas y flashcards", soon: true },
+                ].map((f, i) => (
                   <div key={i} className="flex items-start gap-3">
                     <Icon n="check" className="w-4 h-4 text-coral-400 mt-0.5 shrink-0" sw={2.2} />
-                    <span className="text-[14px] text-white/85">{b}</span>
+                    <span className="text-[14px] text-white/85">
+                      {f.b}
+                      {f.soon && (
+                        <span className="ml-2 align-middle text-[10px] uppercase tracking-[0.1em] font-bold text-coral-400/90 bg-coral-400/10 rounded-full px-2 py-0.5">
+                          Próximamente
+                        </span>
+                      )}
+                    </span>
                   </div>
                 ))}
               </div>

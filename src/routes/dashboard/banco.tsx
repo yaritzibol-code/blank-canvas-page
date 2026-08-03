@@ -910,6 +910,33 @@ function ModalAprendiendo({
           >
             ¿Cuántas preguntas?
           </h4>
+          {!paid && (
+            <div
+              style={{
+                background: "#f8f9ff",
+                border: "1px solid #E8EEF6",
+                borderRadius: 10,
+                padding: "10px 14px",
+                fontSize: "0.8rem",
+                color: "#647DA0",
+                lineHeight: 1.5,
+                marginBottom: 10,
+              }}
+            >
+              Tu plan gratis incluye <strong style={{ color: "#22375C" }}>2 preguntas de cada materia</strong>{" "}
+              que elijas, de su pool de 10.{" "}
+              <button
+                onClick={onLocked}
+                style={{
+                  color: "#3D5D91", fontWeight: 700, background: "none", border: "none",
+                  cursor: "pointer", padding: 0, fontSize: "inherit", fontFamily: "'Manrope', sans-serif",
+                }}
+              >
+                Hazte Pro para elegir cuántas
+              </button>
+            </div>
+          )}
+          {paid && (
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             {(["10", "50", "100"] as const).map((v) => (
               <button
@@ -941,6 +968,7 @@ function ModalAprendiendo({
               <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon n="pencil" size={15} /> Personalizar</span>
             </button>
           </div>
+          )}
 
           {showCustom && (
             <div style={{ marginTop: 12 }}>

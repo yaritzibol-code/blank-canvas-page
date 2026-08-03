@@ -37,7 +37,7 @@ const INK = "#22375C";
 const FAQS: { q: string; a: string }[] = [
   {
     q: "¿Qué es FlightPath?",
-    a: "FlightPath es la plataforma de preparación para el examen CIAAC: las 12 materias con Learning Paths paso a paso, un banco de más de 2,800 preguntas con explicación, simuladores con el formato del examen oficial, biblioteca de manuales, flashcards, clases grabadas y dos copilotos inteligentes — Yaris (tu tutor IA) y Pathy (tu acompañante de motivación y recordatorios).",
+    a: "FlightPath es la plataforma de preparación para el examen CIAAC: un banco de más de 2,800 preguntas con explicación, simuladores con el formato del examen oficial, biblioteca de manuales y dos copilotos inteligentes — Yaris (tu tutor IA) y Pathy (tu acompañante de motivación y recordatorios). Estamos en beta: los Learning Paths de las 12 materias, las flashcards y las clases grabadas están en construcción y se irán liberando próximamente.",
   },
   {
     q: "¿Cuánto cuesta?",
@@ -45,11 +45,11 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "¿Qué incluye FlightPath Basic (gratis)?",
-    a: "El primer tema de cada materia, 10 preguntas de práctica por materia, un simulador al mes y una muestra de la biblioteca. Es suficiente para conocer cómo se estudia en FlightPath antes de decidir.",
+    a: "Un pool de 10 preguntas de práctica por materia (cada sesión toma 2 de cada materia que elijas), un simulador al mes y una muestra de la biblioteca. Cuando se liberen los Learning Paths incluirá también el primer tema de cada materia. Es suficiente para conocer cómo se estudia en FlightPath antes de decidir.",
   },
   {
     q: "¿Qué diferencia hay entre Basic y Pro?",
-    a: "Pro desbloquea las 12 materias completas con sus Learning Paths, todo el banco de preguntas con explicación, simuladores CIAAC ilimitados, la biblioteca completa con más de 100 manuales oficiales, flashcards, clases grabadas, Estudiemos Juntos y los recordatorios de Pathy por WhatsApp.",
+    a: "Pro desbloquea todo el banco de preguntas con explicación, simuladores CIAAC ilimitados, la biblioteca completa con más de 100 manuales oficiales y a Yaris con IA. Los Learning Paths de las 12 materias, las flashcards, las clases grabadas y Estudiemos Juntos están en construcción durante la beta y se sumarán a Pro próximamente, junto con los recordatorios de Pathy por WhatsApp.",
   },
   {
     q: "¿Hay prueba gratis?",

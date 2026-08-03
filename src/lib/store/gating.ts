@@ -1,10 +1,11 @@
 /**
  * Reglas de acceso por suscripción y desbloqueo progresivo.
  *
- * Reglas vigentes (2026-07):
- *  - Plan **básica**: acceso a Cuestionario y Simulador con 10 preguntas por
- *    materia (fijas por semilla) y máximo 2 intentos totales (de por vida)
- *    entre cuestionarios y simuladores. Sin IA (Yaris).
+ * Reglas vigentes (2026-08):
+ *  - Plan **básica**: pool fijo de 10 preguntas por materia (por semilla);
+ *    cada sesión de Cuestionario toma 2 preguntas de cada materia elegida de
+ *    ese pool. Máximo 2 intentos totales (de por vida) entre cuestionarios y
+ *    simuladores. Sin IA (Yaris).
  *  - Plan **paga (Pro)**: acceso completo a cuestionario/simulador ilimitados
  *    y Yaris con IA.
  *  - Los módulos Learning Paths / Estudiemos Juntos / Flashcards / Clases
@@ -35,8 +36,10 @@ export type GatedFeature =
 
 /** Máximo de intentos totales (quiz + simulador combinados) para plan básica. */
 export const BASICA_MAX_ATTEMPTS = 2;
-/** Preguntas por materia visibles en modo básica. */
+/** Tamaño del pool fijo de preguntas por materia en modo básica. */
 export const BASICA_QUESTIONS_PER_MATERIA = 10;
+/** Preguntas por materia que entran a cada sesión de cuestionario en básica. */
+export const BASICA_SESSION_PER_MATERIA = 2;
 
 export function isPaid(user: User | null): boolean {
   if (!user) return false;

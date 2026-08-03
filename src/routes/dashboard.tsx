@@ -199,14 +199,17 @@ function Sidebar({ onClose, onYaris }: { onClose?: () => void; onYaris?: () => v
                   <span style={{ flex: 1 }}>{item.label}</span>
                   {showLock && (
                     <span
-                      title="En construcción"
-                      aria-label="En construcción"
+                      title="En construcción — disponible próximamente"
+                      aria-label="En construcción — disponible próximamente"
                       style={{
-                        display: "inline-flex", alignItems: "center", justifyContent: "center",
-                        color: "#F2AEBC", opacity: 0.75,
+                        display: "inline-flex", alignItems: "center", gap: 4,
+                        padding: "2px 8px", borderRadius: 20,
+                        background: "rgba(242,174,188,0.14)",
+                        color: "#F2AEBC", fontSize: "0.6rem", fontWeight: 700,
+                        textTransform: "uppercase", letterSpacing: "0.08em",
                       }}
                     >
-                      <Icon n="building" size={14} sw={1.7} />
+                      <Icon n="building" size={11} sw={1.7} /> Pronto
                     </span>
                   )}
                 </Link>
