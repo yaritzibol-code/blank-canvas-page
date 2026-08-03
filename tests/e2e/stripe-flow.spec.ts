@@ -44,7 +44,7 @@ async function restoreSession(page: Page) {
 test.describe("Registro de cuenta", () => {
   test("la página de acceso muestra el formulario y valida el correo", async ({ page }) => {
     await page.goto(`${BASE}/login`);
-    const email = page.getByLabel(/correo|email/i).first();
+    const email = page.locator('input[type="email"]').first();
     await expect(email).toBeVisible();
     await expect(page.getByRole("button", { name: /entrar|iniciar|crear/i }).first()).toBeVisible();
 
