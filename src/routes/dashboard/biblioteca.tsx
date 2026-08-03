@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useDeferredValue } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import {
   getMateriales,
@@ -192,13 +192,29 @@ function BibliotecaPage() {
     }
   }
 
-  /* Filter books */
-  const filteredBooks = books.filter((b) => {
-    const matchFilter = filter === "todos" || b.tags.includes(filter);
-    const q = search.toLowerCase();
-    const matchSearch = !q || b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q) || b.tags.some((t) => t.includes(q));
-    return matchFilter && matchSearch;
-  });
+  /* Filter books — el texto se difiere y el índice se memoiza para que el
+     buscador no re-filtre toda la biblioteca (100+ manuales) en cada tecla. */
+  const deferredSearch = useDeferredValue(search);
+  const searchIndex = useMemo(
+    () => books.map((b) => `${b.title} ${b.author} ${b.tags.join(" ")}`.toLowerCase()),
+    [books],
+  );
+  const filteredBooks = useMemo(() => {
+    const q = deferredSearch.trim().toLowerCase();
+    return books.filter((b, i) => {
+      const matchFilter = filter === "todos" || b.tags.includes(filter);
+      return matchFilter && (!q || searchIndex[i].includes(q));
+    });
+  }, [books, searchIndex, filter, deferredSearch]);
+
+  // Paginación incremental: se pintan de 24 en 24 para que la primera carga no
+  // monte todas las tarjetas de golpe.
+  const PAGE_SIZE = 24;
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [filter, deferredSearch]);
+  const visibleBooks = filteredBooks.slice(0, visibleCount);
 
   const featured = books.find((b) => b.id === "aero-basica") ?? books[0];
   const canDownload = !!readerBook && readerBook.descargable && (paid || readerBook.muestraGratis);
@@ -279,9 +295,19 @@ function BibliotecaPage() {
 
         {/* Books grid */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(200px,1fr))", gap: 18, marginBottom: 32 }}>
-          {filteredBooks.map((book) => (
+          {visibleBooks.map((book) => (
             <BookCard key={book.id} book={book} locked={!canOpen(book)} onOpen={() => openBook(book)} />
           ))}
+          {visibleCount < filteredBooks.length && (
+            <div style={{ gridColumn: "1/-1", display: "flex", justifyContent: "center", padding: "8px 0" }}>
+              <button
+                onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
+                style={{ padding: "10px 22px", border: "2px solid #F2DCDB", background: "white", color: "#3D5D91", borderRadius: 22, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+              >
+                Ver más manuales ({filteredBooks.length - visibleCount} restantes)
+              </button>
+            </div>
+          )}
           {filteredBooks.length === 0 && (
             <div style={{ gridColumn: "1/-1", textAlign: "center", padding: 40, color: "#647DA0", fontSize: "0.9rem" }}>
               No se encontraron libros con esa búsqueda.
