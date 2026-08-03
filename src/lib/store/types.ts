@@ -68,6 +68,8 @@ export type QuestionStatus = "borrador" | "publicada" | "oculta";
 export interface BankQuestion {
   id: string;
   materia: string; // slug de materia o "" (sin clasificar)
+  /** Código del manual de origen (cursos de línea aérea): ATP, PHAK, JEPP, ANX10, CPAM. */
+  fuente?: string;
   text: string;
   options: string[];
   correctIndex: number;

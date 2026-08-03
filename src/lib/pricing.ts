@@ -30,7 +30,7 @@ export interface PlanPrice {
  * credenciales, fallo de red). `getPublicPricing()` siempre gana sobre esto.
  */
 export const PRO_MONTHLY_FALLBACK: PlanPrice = {
-  amount: 500,
+  amount: 3000,
   currency: "MXN",
   interval: "month",
 };
