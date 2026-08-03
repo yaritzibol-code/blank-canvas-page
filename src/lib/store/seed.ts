@@ -27,7 +27,7 @@ import type {
   User,
 } from "./types";
 
-export const SEED_VERSION = 6;
+export const SEED_VERSION = 7;
 
 const pad3 = (n: number) => String(n).padStart(3, "0");
 
