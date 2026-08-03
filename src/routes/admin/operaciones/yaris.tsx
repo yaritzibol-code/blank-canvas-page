@@ -123,7 +123,7 @@ function YarisAdminPage() {
           </div>
         </div>
         <div style={{ padding: "0 16px 16px", fontSize: ".8rem", color: "#647DA0" }}>
-          Yaris corre sobre la API de OpenAI del proyecto (modelo <code>gpt-5-mini</code>, reasoning effort <code>low</code>) y bitacoriza cada llamada en <code>ai_usage</code>.
+          Yaris corre sobre la API de OpenAI del proyecto (modelo <code>gpt-5.6-luna</code>, reasoning effort <code>low</code>) y bitacoriza cada llamada en <code>ai_usage</code>.
           Además del tope global, cada usuario tiene un límite fijo de 10 consultas por minuto, 60 por hora y 150 por día, con máximo 12,000 tokens de entrada y 1,200 de salida por solicitud.
         </div>
       </section>

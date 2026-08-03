@@ -10,7 +10,7 @@
  */
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
-export const YARIS_MODEL = "gpt-5-mini";
+export const YARIS_MODEL = "gpt-5.6-luna";
 export const MAX_INPUT_TOKENS = 12000;
 export const MAX_OUTPUT_TOKENS = 1200;
 
