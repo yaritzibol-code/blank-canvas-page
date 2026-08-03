@@ -940,10 +940,12 @@ function ModalAprendiendo({
           <Icon n="lightbulb" size={26} /> Configura tu sesión
         </h2>
         <p style={{ fontSize: "0.85rem", color: "#647DA0", marginBottom: 24 }}>
-          Elige las materias y cuántas preguntas quieres practicar
+          {la
+            ? "Elige los manuales del curso y cuántas preguntas quieres practicar"
+            : "Elige las materias y cuántas preguntas quieres practicar"}
         </p>
 
-        {/* Materias */}
+        {/* Materias / Manuales */}
         <div style={{ marginBottom: 20 }}>
           <h4
             style={{
@@ -953,7 +955,7 @@ function ModalAprendiendo({
               marginBottom: 10,
             }}
           >
-            ¿Qué materias?
+            {la ? "¿Qué manuales?" : "¿Qué materias?"}
           </h4>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
             <button
@@ -965,25 +967,44 @@ function ModalAprendiendo({
                 color: allSelected ? "white" : "#22375C",
               }}
             >
-              Todas las materias
+              {la ? "Todos los manuales" : "Todas las materias"}
             </button>
-            {MATERIAS.map((m) => {
-              const sel = selectedMaterias.has(m.label);
-              return (
-                <button
-                  key={m.slug}
-                  onClick={() => handleMateriaClick(m.label)}
-                  style={{
-                    ...chipBase,
-                    border: `2px solid ${sel ? "#3D5D91" : "#F2DCDB"}`,
-                    background: sel ? "rgba(61,93,145,0.08)" : "#f8f9ff",
-                    color: sel ? "#3D5D91" : "#22375C",
-                  }}
-                >
-                  {m.label}
-                </button>
-              );
-            })}
+            {la
+              ? LINEA_AEREA_QUIZZES.map((q) => {
+                  const sel = selectedMaterias.has(q.code);
+                  return (
+                    <button
+                      key={q.code}
+                      onClick={() => handleMateriaClick(q.code)}
+                      title={q.titulo}
+                      style={{
+                        ...chipBase,
+                        border: `2px solid ${sel ? "#3D5D91" : "#F2DCDB"}`,
+                        background: sel ? "rgba(61,93,145,0.08)" : "#f8f9ff",
+                        color: sel ? "#3D5D91" : "#22375C",
+                      }}
+                    >
+                      {q.code}
+                    </button>
+                  );
+                })
+              : MATERIAS.map((m) => {
+                  const sel = selectedMaterias.has(m.label);
+                  return (
+                    <button
+                      key={m.slug}
+                      onClick={() => handleMateriaClick(m.label)}
+                      style={{
+                        ...chipBase,
+                        border: `2px solid ${sel ? "#3D5D91" : "#F2DCDB"}`,
+                        background: sel ? "rgba(61,93,145,0.08)" : "#f8f9ff",
+                        color: sel ? "#3D5D91" : "#22375C",
+                      }}
+                    >
+                      {m.label}
+                    </button>
+                  );
+                })}
           </div>
         </div>
 
