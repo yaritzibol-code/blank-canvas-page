@@ -1,6 +1,9 @@
 import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { useRequireAuth, useSessionUser, useStore, getStreak, logout, refreshSubscription, studySnapshot } from "@/lib/store";
+import { useRequireAuth, useSessionUser, useStore, getStreak, logout, studySnapshot } from "@/lib/store";
+import { syncMyPlan } from "@/lib/payments.functions";
+import { getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
+import { refreshCloudProfile } from "@/lib/store/auth";
 import { YarisChatModal } from "@/components/shared/YarisChatModal";
 import { TimerProvider } from "@/contexts/StudyTimerContext";
 
@@ -347,11 +350,18 @@ function DashboardLayout() {
   // Cierra el sidebar móvil al cambiar de ruta
   useEffect(() => { setSidebarOpen(false); }, [location.pathname]);
 
-  // Sincroniza el plan con Stripe al entrar (cubre el regreso del checkout
-  // con ?checkout=success). Sin Stripe configurado degrada sin ruido.
+  // Sincroniza el plan con Stripe al entrar (cubre el regreso del checkout).
+  // Sin pagos configurados degrada sin ruido.
   useEffect(() => {
-    if (!ready) return;
-    void refreshSubscription();
+    if (!ready || !isPaymentsConfigured()) return;
+    void (async () => {
+      try {
+        await syncMyPlan({ data: { environment: getStripeEnvironment() } });
+        await refreshCloudProfile();
+      } catch {
+        /* noop */
+      }
+    })();
   }, [ready]);
 
   const isSubjectDetail = /^\/dashboard\/materias\/.+/.test(location.pathname);
