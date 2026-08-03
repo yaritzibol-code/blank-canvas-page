@@ -660,8 +660,26 @@ function CuestionarioPage() {
           >
             <Icon n="spark" size={16} /> <span className="hidden sm:inline">Explícamelo Yaris</span>
           </button>
+          <button
+            onClick={() => {
+              if (answeredCount === 0 || window.confirm("¿Finalizar la sesión? Se guardará tu resultado y no podrás retomarla.")) {
+                setShowResult(true);
+              }
+            }}
+            aria-label="Finalizar sesión de estudio"
+            style={{
+              padding: "7px 14px",
+              background: "#6C0820",
+              color: "white", border: "none", borderRadius: 7,
+              fontSize: "0.8rem", fontWeight: 700, cursor: "pointer",
+              fontFamily: "'Manrope', sans-serif",
+            }}
+          >
+            Finalizar
+          </button>
         </div>
       </div>
+
 
       {/* ── PROGRESS BAR ── */}
       <div
