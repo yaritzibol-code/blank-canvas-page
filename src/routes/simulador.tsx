@@ -650,14 +650,18 @@ function SimuladorPage() {
                 {
                   id: "oficial" as SimMode,
                   title: "Simulador oficial",
-                  desc: "Solo preguntas de la guía de estudio del examen de ingreso.",
+                  desc: banco === "la"
+                    ? "Solo preguntas de los cuestionarios oficiales del curso de Línea Aérea."
+                    : "Solo preguntas de la guía de estudio del examen de ingreso.",
                   count: counts.oficial,
                   icon: "target" as FPIconName,
                 },
                 {
                   id: "potenciado" as SimMode,
                   title: "Simulador potenciado",
-                  desc: "Guía oficial + preguntas de Línea Aérea y manuales, intercaladas.",
+                  desc: banco === "la"
+                    ? "Cuestionarios de Línea Aérea + preguntas CIAAC, intercaladas."
+                    : "Guía oficial + preguntas de Línea Aérea y manuales, intercaladas.",
                   count: counts.total,
                   icon: "flame" as FPIconName,
                 },
