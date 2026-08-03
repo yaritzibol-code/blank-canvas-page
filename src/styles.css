@@ -510,3 +510,34 @@ html[data-motion="reduced"] *::after {
 @media (prefers-reduced-motion: reduce) {
   .fp-img, .fp-shadow, .fp-jump, .fp-squash { animation: none !important }
 }
+
+/* Formato de las respuestas de Yaris (Markdown → HTML) */
+.yaris-md > *:first-child { margin-top: 0; }
+.yaris-md > *:last-child { margin-bottom: 0; }
+.yaris-md p { margin: 0 0 0.6em; }
+.yaris-md b, .yaris-md strong { font-weight: 800; }
+.yaris-md ul, .yaris-md ol { margin: 0 0 0.6em; padding-left: 1.25em; }
+.yaris-md ul { list-style: disc; }
+.yaris-md ol { list-style: decimal; }
+.yaris-md li { margin: 0.15em 0; }
+.yaris-md code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.88em;
+  background: rgba(61, 93, 145, 0.1);
+  padding: 0.1em 0.35em;
+  border-radius: 5px;
+}
+.yaris-md pre {
+  background: rgba(61, 93, 145, 0.1);
+  padding: 10px 12px;
+  border-radius: 9px;
+  overflow-x: auto;
+  margin: 0 0 0.6em;
+}
+.yaris-md pre code { background: none; padding: 0; }
+.yaris-md blockquote {
+  margin: 0 0 0.6em;
+  padding-left: 0.75em;
+  border-left: 3px solid rgba(61, 93, 145, 0.35);
+  opacity: 0.9;
+}

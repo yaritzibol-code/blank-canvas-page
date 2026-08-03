@@ -9,6 +9,7 @@
 import DOMPurify from "isomorphic-dompurify";
 
 const ALLOWED_TAGS = [
+  "div",
   "b", "strong", "i", "em", "u", "br", "ul", "ol", "li", "p", "span", "code", "pre", "blockquote",
 ];
 
@@ -99,8 +100,9 @@ function escapeHtml(s: string): string {
 /** Markdown de Yaris → HTML sanitizado listo para renderizar. */
 export function yarisToHtml(text: string): string {
   if (!text) return "";
-  return DOMPurify.sanitize(markdownToHtml(text), {
+  const html = DOMPurify.sanitize(markdownToHtml(text), {
     ALLOWED_TAGS,
     ALLOWED_ATTR: [],
   });
+  return `<div class="yaris-md">${html}</div>`;
 }
