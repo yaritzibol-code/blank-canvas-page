@@ -6,6 +6,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { type StripeEnv, verifyWebhook } from "@/lib/stripe.server";
+import { logBillingEvent } from "@/lib/billing-audit.server";
 
 let _supabase: SupabaseClient | null = null;
 function getSupabase(): SupabaseClient {
@@ -156,12 +157,34 @@ export const Route = createFileRoute("/api/public/payments/webhook")({
         let event: any = null;
         try {
           event = await verifyWebhook(request, env);
+          await logBillingEvent({
+            event: "webhook_received",
+            environment: env,
+            source: "webhook",
+            userId: event?.data?.object?.metadata?.userId ?? null,
+            detail: { stripe_event_id: event?.id, type: event?.type },
+          });
           const outcome = await processStripeEvent(event, env);
           await logEvent(event, env, outcome, null);
+          await logBillingEvent({
+            event: "webhook_processed",
+            environment: env,
+            source: "webhook",
+            userId: event?.data?.object?.metadata?.userId ?? null,
+            detail: { stripe_event_id: event?.id, type: event?.type, outcome },
+          });
           return Response.json({ received: true });
         } catch (e) {
           const msg = e instanceof Error ? e.message : String(e);
           console.error("webhook error", msg);
+          await logBillingEvent({
+            event: "webhook_failed",
+            environment: env,
+            source: "webhook",
+            ok: false,
+            message: msg,
+            detail: { stripe_event_id: event?.id ?? null, type: event?.type ?? null },
+          });
           if (event) {
             try {
               await logEvent(event, env, "failed", msg);
