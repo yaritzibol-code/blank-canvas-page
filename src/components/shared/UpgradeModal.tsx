@@ -5,7 +5,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Icon } from "@/components/ui/fp-icon";
-import { getConfig, logUpgradeClick, logUpgradePrompt, startCheckout } from "@/lib/store";
+import { getConfig, logUpgradeClick, logUpgradePrompt } from "@/lib/store";
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
