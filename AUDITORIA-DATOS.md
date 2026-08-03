@@ -149,3 +149,67 @@ El lint del repositorio ya fallaba antes de estos cambios (6,215 problemas en `m
 2. **Learning Paths**: cargar los temas de las 10 materias restantes; la landing y el FAQ los prometen completos (se dejó ese copy tal cual, por indicación).
 3. **Módulos bloqueados**: Clases, Flashcards, Learning Paths y Estudiemos siguen con el cartel 🚧 para no-admins, mientras el marketing los vende como incluidos en Pro.
 4. **Envío de recordatorios por WhatsApp**: no existe integración; `proveedorWhatsApp` sigue vacío.
+
+---
+
+## Ronda 2 (2026-08-03) — Preguntas corruptas del banco recreadas
+
+La v5 del seed decía haber reconstruido las filas de Meteorología dañadas, pero
+el relleno seguía en `seed-questions.ts` y, además, la corrupción del Excel había
+**descolocado las explicaciones** de casi toda la hoja de Meteorología (una
+pregunta de litometeoros explicaba frentes cálidos, etc.). Se auditaron las 2,951
+preguntas y se corrigieron **381 filas** (sólo datos; `correctIndex` se conservó
+salvo donde se indica). Verificado contra fuentes OACI/OMM/FAA; las cifras clave
+se corroboraron con búsqueda (ISA 1013.25 hPa/15 °C, SPECI 60°/10 kt, AIRMET
+< FL150, turbonada 16→22 kt, tormenta tropical 34 kt, base de nube = espread/2.5,
+evitar CB por 20 NM, decodificación de vientos en altura, etc.).
+
+| Tipo de daño | Filas | Corrección |
+|---|---|---|
+| Relleno "OMM/la/a" insertado entre palabras (texto, opciones y/o explicación ilegibles) | 79 | Pregunta reconstruida completa (Meteorología: 77 + 2 detectadas después) |
+| Explicación descolocada (pertenecía a otra pregunta, prosa limpia pero de otro tema) | 260 | Explicación reescrita para justificar la respuesta correcta ya marcada |
+| Explicación-plantilla contradictoria ("Esta afirmación es falsa" en pregunta que no es V/F) | 25 | Explicación reescrita al concepto correcto |
+| Opciones duplicadas (un distractor colapsado sobre otro) | 10 | Se restauró el distractor faltante |
+| Mojibake (`1984.Â`) | 1 | Carácter corregido |
+| Errores tipográficos evidentes (`de de`, `eléctrica eléctrica`, `delimita delimita`, …) | 6 | Corregidos |
+
+**Verificación:** las 2,951 filas parsean como objetos válidos; 0 relleno OMM
+residual, 0 explicaciones contradictorias, 0 `correctIndex` fuera de rango, 0
+opciones duplicadas. (El `vite build` no corre en este entorno: `node_modules`
+está vacío — falta `@lovable.dev/vite-tanstack-config` —; el cambio es sólo de
+datos y es sintácticamente válido.)
+
+**Claves de respuesta a revisar contra la fuente oficial CIAAC** (se reescribió la
+explicación al concepto correcto sin cambiar la clave, porque puede diferir del
+banco oficial): efectos de CG adelantado vs. atrasado en `operaciones` (consumo,
+resistencia y velocidad de crucero — L2843/L2846/L2852 apuntan a "aft" donde la
+teoría estándar diría "forward"); "velocidad para abortar el despegue" marcada
+como VR cuando el estándar es V1 (L2758); descriptor de Vx (L2790); y la pregunta
+de IMC "cuando el piloto lo solicite" (L2032), que parece mal planteada de origen.
+
+### Hallazgos del flujo de nuevo usuario (UX/UI/fricción)
+
+1. **Módulos anunciados que muestran 🚧 a todos los estudiantes.** Learning Paths,
+   Flashcards, Clases grabadas y Estudiemos Juntos están envueltos en `adminOnly`:
+   cualquier estudiante —incluido un Pro de pago— ve "en construcción". La landing
+   y el bloque de precios los venden como incluidos en Pro, y el sidebar los marca
+   `locked` (que sugiere "mejora a Pro para desbloquear"), pero Pro **no** los
+   desbloquea. Es la fricción #1 y una promesa incumplida.
+2. **Bug: preguntas gratis sólo de una materia.** En `cuestionario.tsx` el pool
+   gratis concatena 10 preguntas por materia y luego hace `slice(0, 10)` del total,
+   así que un usuario gratis con "Todas las materias" (la opción por defecto) sólo
+   ve ~10 preguntas de Aerodinámica, siempre. La selección multi-materia no
+   funciona en plan gratis. Contradice el comentario `BASICA_QUESTIONS_PER_MATERIA = 10`.
+3. **"Empieza gratis" = 2 intentos de por vida.** Un usuario nuevo es `plan: basica`
+   con máximo 2 intentos totales (cuestionario + simulador combinados) antes del
+   paywall. Muy restrictivo para la promesa "sin tarjeta, empieza gratis" (decisión
+   de negocio, pero fricción fuerte).
+4. **Perk de registro exagerado.** El registro promete "Accede a la biblioteca
+   completa del CIAAC" gratis, pero un usuario gratis sólo puede abrir **8 de 104**
+   libros (`muestraGratis`). El resto pide upgrade.
+5. **Opciones no barajadas por render.** `toLocalQ` mantiene el orden de opciones;
+   sólo se baraja el pool de preguntas. Con 10 preguntas fijas para el plan gratis,
+   la respuesta correcta queda siempre en la misma posición: se memoriza el lugar,
+   no el concepto.
+6. **Onboarding pide WhatsApp para recordatorios** que no existen: no hay
+   integración de envío, así que el opt-in no dispara nada (ver pendiente #4).
