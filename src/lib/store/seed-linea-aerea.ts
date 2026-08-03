@@ -7,15 +7,6 @@
  */
 import type { SeedQuestion } from "./seed-questions";
 
-export interface LineaAereaQuiz {
-  code: string;
-  titulo: string;
-  materia: string;
-  icon: string;
-  total: number;
-  /** PDF fuente en Drive (visor embebible). */
-  fileUrl: string;
-}
 
 export interface LineaAereaQuestion extends SeedQuestion {
   /** Código del manual del que proviene (ATP, PHAK, JEPP, ANX10, CPAM). */
@@ -24,48 +15,8 @@ export interface LineaAereaQuestion extends SeedQuestion {
   id: string;
 }
 
-export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
-  {
-    "code": "ATP",
-    "titulo": "ATP — Airline Transport Pilot (excepto Performance y Weight & Balance)",
-    "materia": "operaciones",
-    "icon": "doc",
-    "total": 50,
-    "fileUrl": "https://drive.google.com/file/d/1twt092Ek_CE1yTPk1FaKM-PkeqPBDA9S/preview"
-  },
-  {
-    "code": "ANX10",
-    "titulo": "OACI Anexo 10 Vol. II — Procedimientos de Comunicaciones",
-    "materia": "comunicaciones",
-    "icon": "radio",
-    "total": 50,
-    "fileUrl": "https://drive.google.com/file/d/1-m3KPCzA6lX7u4zO6_6TCAsJf_-VHyIB/preview"
-  },
-  {
-    "code": "CPAM",
-    "titulo": "CPAM — Legislación Nacional para Tripulaciones de Vuelo",
-    "materia": "legislacion",
-    "icon": "scale",
-    "total": 50,
-    "fileUrl": "https://drive.google.com/file/d/1Eq5EDfzqnKDrGDjBQtZDK26QFKp6Gfj0/preview"
-  },
-  {
-    "code": "JEPP",
-    "titulo": "Jeppesen General Airway Manual — Introduction",
-    "materia": "navegacion",
-    "icon": "map",
-    "total": 50,
-    "fileUrl": "https://drive.google.com/file/d/1NdiWKEH7vqMqW5Zst_UDyAHnu5IxJMGx/preview"
-  },
-  {
-    "code": "PHAK",
-    "titulo": "Pilot's Handbook of Aeronautical Knowledge (FAA-H-8083-25C)",
-    "materia": "aerodinamica",
-    "icon": "plane",
-    "total": 50,
-    "fileUrl": "https://drive.google.com/file/d/1It2xSBSn-vX4xYDFQHH2DMJd02J_k_zO/preview"
-  }
-];
+export type { LineaAereaQuiz } from "./linea-aerea-meta";
+export { LINEA_AEREA_QUIZZES } from "./linea-aerea-meta";
 
 export const LINEA_AEREA_QUESTIONS: LineaAereaQuestion[] = [
   { id: "q_la_ATP_001", fuente: "ATP", materia: "operaciones", text: "¿Cómo se define el número de Mach crítico (critical Mach number) de una aeronave?", options: ["La velocidad a la que la aeronave completa alcanza Mach 1.0 en vuelo nivelado","El Mach máximo certificado de operación (MMO) publicado en el AFM","La velocidad a la que el flujo local sobre alguna parte del avión alcanza Mach 1.0 por primera vez","La velocidad a la que aparece el buffet de baja velocidad en crucero de alta altitud"], correctIndex: 2, explanation: "El Mach crítico es el número de Mach de vuelo al cual el flujo acelerado sobre alguna superficie (típicamente el extradós del ala) alcanza localmente Mach 1.0, aunque el avión vuele subsónico. A partir de ese punto comienzan a formarse ondas de choque y el drag rise transónico. La opción A confunde el Mach crítico con el vuelo sónico del avión completo, que ocurre mucho después. La opción B describe MMO, un límite operacional certificado que normalmente se fija por debajo de los fenómenos adversos, no el Mach crítico aerodinámico. La opción D describe el buffet de pérdida, un fenómeno de baja velocidad no relacionado con la compresibilidad.", cite: "ATP — Airline Transport Pilot (excepto Performance y Weight & Balance) — Mach crítico" },
