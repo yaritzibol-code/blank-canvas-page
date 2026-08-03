@@ -30,18 +30,36 @@ export interface PlanPrice {
  * credenciales, fallo de red). `getPublicPricing()` siempre gana sobre esto.
  */
 export const PRO_MONTHLY_FALLBACK: PlanPrice = {
-  amount: 3000,
+  amount: 500,
   currency: "MXN",
   interval: "month",
 };
 
-/** Formatea un precio para mostrarlo: `$3,000 MXN`. */
+/** Formatea un precio para mostrarlo: `$500 MXN`. */
 export function formatPrice(price: PlanPrice): string {
   return `$${price.amount.toLocaleString("es-MX")} ${price.currency.toUpperCase()}`;
 }
 
-/** Formatea con periodicidad: `$3,000 MXN/mes`. */
+/** Formatea con periodicidad: `$500 MXN/mes`. */
 export function formatPriceWithInterval(price: PlanPrice): string {
   const suffix = price.interval === "month" ? "/mes" : price.interval === "year" ? "/año" : "";
   return `${formatPrice(price)}${suffix}`;
+}
+
+/** Lookup key del pago único de inscripción en Stripe. */
+export const PRO_SETUP_LOOKUP_KEY = "flightpath_pro_setup";
+
+/**
+ * Respaldo de la inscripción: pago único que se cobra junto con el primer mes
+ * de Pro. Debe coincidir con el `lookup_key` de arriba en Stripe.
+ */
+export const PRO_SETUP_FALLBACK: PlanPrice = {
+  amount: 3000,
+  currency: "MXN",
+  interval: null,
+};
+
+/** Texto completo del cobro de Pro: inscripción + mensualidad. */
+export function formatProTotal(setup: PlanPrice, monthly: PlanPrice): string {
+  return `${formatPrice(setup)} de inscripción + ${formatPriceWithInterval(monthly)}`;
 }
