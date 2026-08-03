@@ -80,7 +80,7 @@ export function Icon({ n, className = "w-5 h-5", sw = 1.6 }: { n: IconName; clas
   return <svg viewBox="0 0 24 24" className={className} aria-hidden="true">{g[n]}</svg>;
 }
 
-function FMark({ size = 30, light = false }: { size?: number; light?: boolean }) {
+export function FMark({ size = 30, light = false }: { size?: number; light?: boolean }) {
   return (
     <span className="inline-flex items-center justify-center rounded-xl shrink-0" style={{ width: size, height: size, background: light ? "rgba(255,255,255,0.1)" : "#3D5D91" }}>
       <svg viewBox="0 0 24 24" width={size * 0.62} height={size * 0.62} aria-hidden="true">
