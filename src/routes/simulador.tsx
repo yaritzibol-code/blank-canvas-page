@@ -237,6 +237,7 @@ function SimuladorPage() {
   const [phase, setPhase] = useState<Phase>("warning");
   const search = Route.useSearch();
   const [mode, setMode] = useState<SimMode>(search.modo ?? "oficial");
+  const banco: SimBank = search.banco ?? "ciaac";
   const [agreed, setAgreed] = useState(false);
   const [questions, setQuestions] = useState<QState[]>(buildQuestions);
   const [bankQs, setBankQs] = useState<BankQuestion[]>([]);
