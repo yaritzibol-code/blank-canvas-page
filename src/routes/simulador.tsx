@@ -600,7 +600,7 @@ function SimuladorPage() {
   /* Gating y disponibilidad del banco (solo relevante en fase warning) */
   const gate = canStartSimulator(user);
   const bankEmpty = phase === "warning" && ready ? getPublishedQuestions().length === 0 : false;
-  const counts = phase === "warning" && ready ? bankCounts() : { oficial: 0, extra: 0, total: 0 };
+  const counts = phase === "warning" && ready ? bankCounts(banco) : { oficial: 0, extra: 0, total: 0 };
 
 
   if (!ready) {
