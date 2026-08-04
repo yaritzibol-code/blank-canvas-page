@@ -68,8 +68,9 @@ const NAV_SECTIONS: { label: string; items: { icon: IconName; label: string; pat
     items: [
       { icon: "home", label: "Inicio", path: "/dashboard" },
       { icon: "book", label: "Learning paths", path: "/dashboard/materias", locked: true },
-      { icon: "help", label: "Cuestionarios", path: "/dashboard/banco" },
-      { icon: "sim", label: "Simulador CIAAC", path: "/simulador" },
+      // El simulador CIAAC no es un módulo aparte: se inicia desde esta misma
+      // sección (tarjeta "Simulador CIAAC" dentro de CIAAC).
+      { icon: "help", label: "CIAAC", path: "/dashboard/banco" },
       { icon: "plane", label: "Línea Aérea", path: "/dashboard/linea-aerea", nuevo: true },
       { icon: "clock", label: "Estudiemos Juntos", path: "/dashboard/estudiemos", locked: true },
     ],

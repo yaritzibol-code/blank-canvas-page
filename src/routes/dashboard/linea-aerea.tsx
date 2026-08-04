@@ -58,6 +58,7 @@ function LineaAereaPage() {
   return (
     <BancoScreen
       la
+      modes={false}
       header={
         <>
           <LineaAereaHero />
@@ -101,7 +102,7 @@ function QuizCardsManuales() {
       <LaSectionHead
         icon="book"
         title="Cuestionarios por manual"
-        sub="50 reactivos por manual: ATP, Handbook (PHAK), Legislación (CPAM), Jeppesen y OACI Anexo 10. Cada tarjeta abre su quiz con “Explícamelo Yaris” en cada pregunta; también puedes consultar el PDF fuente."
+        sub="Cada manual es un mini simulador en modo aprendiendo: 50 reactivos de ATP, Handbook (PHAK), Legislación (CPAM), Jeppesen u OACI Anexo 10, con feedback inmediato, “Explícamelo Yaris” en cada pregunta y el PDF fuente a la mano."
       />
 
       {/* Examen oficial completo destacado */}
@@ -217,7 +218,8 @@ function LineaAereaHero() {
       </h1>
       <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.6, maxWidth: 620 }}>
         Tu tablero de estudio para la convocatoria de ASPA de México con Aeroméxico Connect.
-        Elige cómo practicar: solo las preguntas oficiales del proceso o el banco potenciado de FlightPath.
+        Cada manual del curso es su propio cuestionario: un mini simulador en modo aprendiendo,
+        con feedback inmediato y Yaris explicándote cada pregunta.
       </p>
       <div style={{ display: "flex", gap: 22, marginTop: 18, flexWrap: "wrap" }}>
         {[

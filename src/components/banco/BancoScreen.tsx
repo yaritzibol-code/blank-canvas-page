@@ -1240,11 +1240,18 @@ function ModalAprendiendo({
 export function BancoScreen({
   la = false,
   initialModal = null,
+  modes = true,
   header,
   footer,
 }: {
   la?: boolean;
   initialModal?: "examen" | "aprendiendo" | null;
+  /**
+   * Muestra las tarjetas de modo (Simulador / Aprendiendo) y su encabezado.
+   * Línea Aérea las apaga: ahí cada manual del curso es su propio cuestionario
+   * en modo aprendiendo, así que las tarjetas genéricas sobran.
+   */
+  modes?: boolean;
   header?: ReactNode;
   footer?: ReactNode;
 }) {
@@ -1352,6 +1359,7 @@ export function BancoScreen({
         {header}
 
         {/* Page header */}
+        {modes && (
         <div style={{ textAlign: "center", marginBottom: 48 }}>
           <h1
             style={{
@@ -1379,6 +1387,7 @@ export function BancoScreen({
             cuando quieras.
           </p>
         </div>
+        )}
 
         {/* Stats row */}
         <div
@@ -1426,6 +1435,7 @@ export function BancoScreen({
         </div>
 
         {/* Mode cards */}
+        {modes && (
         <div
           className="grid grid-cols-1 sm:grid-cols-2"
           style={{ gap: 24, maxWidth: 820, width: "100%", marginBottom: 48 }}
@@ -1699,6 +1709,7 @@ export function BancoScreen({
             </button>
           </div>
         </div>
+        )}
 
         {/* Extras: flashcards, audio/podcast, presentaciones y Yaris con el material */}
         <ExtrasPanel la={la} />
