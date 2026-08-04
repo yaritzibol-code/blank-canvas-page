@@ -5,10 +5,14 @@
  * Al llegar el piloto elige simulador, revisa los requisitos y evaluaciones
  * del proceso, y resuelve los cuestionarios oficiales del curso.
  */
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
-import { useRequireAuth } from "@/lib/store";
-import { LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
+import { MATERIAS_DEF, useRequireAuth } from "@/lib/store";
+import {
+  LINEA_AEREA_OFICIAL_POR_MATERIA,
+  LINEA_AEREA_OFICIAL_TOTAL,
+  LINEA_AEREA_QUIZZES,
+} from "@/lib/store/linea-aerea-meta";
 import { BancoScreen } from "@/components/banco/BancoScreen";
 
 export const Route = createFileRoute("/dashboard/linea-aerea")({
@@ -56,7 +60,180 @@ function LineaAereaPage() {
   if (!ready) return <div style={{ minHeight: "60vh" }} />;
 
   return (
-    <BancoScreen la header={<LineaAereaHero />} footer={<LineaAereaInfo />} />
+    <BancoScreen
+      la
+      header={
+        <>
+          <LineaAereaHero />
+          <QuizCardsOficial />
+          <QuizCardsManuales />
+        </>
+      }
+      footer={<LineaAereaInfo />}
+    />
+  );
+}
+
+/* ─── Tarjetas de cuestionarios ──────────────────────── */
+
+const materiaDe = (slug: string) => MATERIAS_DEF.find((m) => m.slug === slug);
+
+const quizCardsCss = `
+  .fp-la-card { transition: transform .22s cubic-bezier(.3,1,.4,1), box-shadow .22s ease, border-color .22s ease; }
+  @media (hover: hover) {
+    .fp-la-card:hover { transform: translateY(-3px); box-shadow: 0 18px 36px -18px rgba(34,55,92,.35); border-color: rgba(61,93,145,.35) !important; }
+    .fp-la-card:hover .fp-la-go { color: #6C0820; }
+  }
+  .fp-la-card:active { transform: scale(.985); }
+`;
+
+function LaSectionHead({ icon, title, sub }: { icon: FPIconName; title: string; sub: string }) {
+  return (
+    <div style={{ marginBottom: 14 }}>
+      <h2 style={{ fontFamily: DISPLAY, fontSize: "1.15rem", color: INK, display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+        <Icon n={icon} size={18} color="#6C0820" /> {title}
+      </h2>
+      <p style={{ fontSize: "0.8rem", color: "#647DA0", lineHeight: 1.5 }}>{sub}</p>
+    </div>
+  );
+}
+
+/** El cuestionario OFICIAL de la convocatoria, separado por materia. */
+function QuizCardsOficial() {
+  return (
+    <div style={{ maxWidth: 820, width: "100%", fontFamily: FONT, color: INK, marginBottom: 28 }}>
+      <style>{quizCardsCss}</style>
+      <LaSectionHead
+        icon="target"
+        title="Cuestionario oficial, por materia"
+        sub={`Los ${LINEA_AEREA_OFICIAL_TOTAL} reactivos oficiales del proceso, separados por materia para que domines una a la vez. Dentro del quiz tienes “Explícamelo Yaris” en cada pregunta.`}
+      />
+
+      {/* Examen completo destacado */}
+      <Link
+        to="/cuestionario"
+        search={{ banco: "la", modo: "oficial", qty: LINEA_AEREA_OFICIAL_TOTAL }}
+        className="fp-la-card"
+        style={{
+          display: "flex", alignItems: "center", gap: 16, textDecoration: "none",
+          background: "linear-gradient(135deg, #6C0820, #8f1f3c)",
+          border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16,
+          padding: "18px 20px", marginBottom: 12, color: "white",
+        }}
+      >
+        <span style={{ width: 46, height: 46, borderRadius: 12, background: "rgba(255,255,255,0.14)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <Icon n="trophy" size={23} color="#F2AEBC" />
+        </span>
+        <span style={{ flex: 1, minWidth: 0 }}>
+          <span style={{ display: "block", fontFamily: DISPLAY, fontSize: "1.02rem", fontWeight: 800 }}>
+            Examen oficial completo
+          </span>
+          <span style={{ display: "block", fontSize: "0.78rem", opacity: 0.85, marginTop: 2 }}>
+            Las {LINEA_AEREA_OFICIAL_TOTAL} preguntas oficiales, todas las materias mezcladas
+          </span>
+        </span>
+        <span className="fp-la-go" style={{ fontSize: "0.82rem", fontWeight: 800, color: "#F2AEBC", whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: 6 }}>
+          Iniciar <Icon n="arrow" size={15} />
+        </span>
+      </Link>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: 12 }}>
+        {LINEA_AEREA_OFICIAL_POR_MATERIA.map((m) => {
+          const def = materiaDe(m.slug);
+          if (!def) return null;
+          return (
+            <Link
+              key={m.slug}
+              to="/cuestionario"
+              search={{ banco: "la", modo: "oficial", materias: m.slug, qty: m.total }}
+              className="fp-la-card"
+              style={{
+                display: "flex", flexDirection: "column", gap: 12, textDecoration: "none",
+                background: "white", border: "1px solid #E8EEF6", borderRadius: 16, padding: "16px 18px",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <span style={{ width: 40, height: 40, borderRadius: 11, background: "linear-gradient(135deg, #22375C, #3D5D91)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <Icon n={def.icon as FPIconName} size={19} color="#F2AEBC" />
+                </span>
+                <span style={{ fontSize: "0.68rem", fontWeight: 800, color: "#6C0820", background: "#FAEFEE", borderRadius: 12, padding: "4px 10px", letterSpacing: "0.04em" }}>
+                  {m.total} PREGUNTAS
+                </span>
+              </div>
+              <div>
+                <div style={{ fontFamily: DISPLAY, fontSize: "0.94rem", fontWeight: 800, color: INK, lineHeight: 1.25 }}>{def.name}</div>
+                <div style={{ fontSize: "0.74rem", color: "#8DA1BE", marginTop: 3 }}>Reactivos oficiales del proceso</div>
+              </div>
+              <span className="fp-la-go" style={{ fontSize: "0.78rem", fontWeight: 800, color: "#3D5D91", display: "inline-flex", alignItems: "center", gap: 5, marginTop: "auto" }}>
+                Iniciar cuestionario <Icon n="arrow" size={14} />
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/** Los 5 manuales del curso (ATP, PHAK, CPAM, Jeppesen, Anexo 10), cada uno con su quiz. */
+function QuizCardsManuales() {
+  return (
+    <div style={{ maxWidth: 820, width: "100%", fontFamily: FONT, color: INK, marginBottom: 8 }}>
+      <LaSectionHead
+        icon="book"
+        title="Cuestionarios por manual del curso"
+        sub="50 reactivos por manual: ATP, Handbook (PHAK), Legislación (CPAM), Jeppesen y OACI Anexo 10. Cada tarjeta abre su quiz; también puedes consultar el PDF fuente."
+      />
+      <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 12 }}>
+        {LINEA_AEREA_QUIZZES.map((q) => {
+          const def = materiaDe(q.materia);
+          return (
+            <div
+              key={q.code}
+              className="fp-la-card"
+              style={{ background: "white", border: "1px solid #E8EEF6", borderRadius: 16, padding: "16px 18px", display: "flex", flexDirection: "column", gap: 12 }}
+            >
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                <span style={{ width: 40, height: 40, borderRadius: 11, background: "#FAEFEE", color: "#6C0820", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <Icon n={q.icon as FPIconName} size={19} />
+                </span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontFamily: DISPLAY, fontSize: "0.92rem", fontWeight: 800, color: INK, lineHeight: 1.3 }}>{q.titulo}</div>
+                  <div style={{ fontSize: "0.73rem", color: "#8DA1BE", marginTop: 3 }}>
+                    {q.total} preguntas · {q.code}{def ? ` · ${def.name}` : ""}
+                  </div>
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                <Link
+                  to="/cuestionario"
+                  search={{ fuente: q.code }}
+                  style={{
+                    fontSize: "0.78rem", fontWeight: 800, color: "white", background: "#6C0820",
+                    padding: "9px 16px", borderRadius: 11, textDecoration: "none",
+                    display: "inline-flex", alignItems: "center", gap: 6,
+                  }}
+                >
+                  <Icon n="help" size={14} /> Iniciar cuestionario
+                </Link>
+                <a
+                  href={q.fileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontSize: "0.78rem", fontWeight: 700, color: "#3D5D91", background: "rgba(61,93,145,0.08)",
+                    padding: "9px 14px", borderRadius: 11, textDecoration: "none",
+                    display: "inline-flex", alignItems: "center", gap: 6,
+                  }}
+                >
+                  <Icon n="book" size={14} /> Ver PDF
+                </a>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
@@ -96,8 +273,9 @@ function LineaAereaHero() {
       </p>
       <div style={{ display: "flex", gap: 22, marginTop: 18, flexWrap: "wrap" }}>
         {[
+          { k: "Preguntas oficiales", v: LINEA_AEREA_OFICIAL_TOTAL.toLocaleString("es-MX") },
           { k: "Manuales del curso", v: String(LINEA_AEREA_QUIZZES.length) },
-          { k: "Preguntas del curso", v: totalPreguntas.toLocaleString("es-MX") },
+          { k: "Preguntas de manuales", v: totalPreguntas.toLocaleString("es-MX") },
           { k: "Evaluaciones", v: String(EVALUACIONES.length) },
         ].map((s) => (
           <div key={s.k}>
@@ -145,42 +323,6 @@ function LineaAereaInfo() {
         </div>
       </div>
 
-      <div style={{ ...cardStyle, marginBottom: 32 }}>
-        <h3 style={h3Style}><Icon n="book" size={18} color="#3D5D91" /> Manuales del curso</h3>
-        <p style={{ fontSize: "0.82rem", color: "#647DA0", marginBottom: 16, lineHeight: 1.55 }}>
-          Las preguntas de estos manuales son las que se intercalan en el modo potenciado.
-          También puedes abrir el PDF fuente.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 12 }}>
-          {LINEA_AEREA_QUIZZES.map((q) => (
-            <div key={q.code} style={{ border: "1px solid #E8EEF6", borderRadius: 12, padding: "14px 16px" }}>
-              <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-                <div style={{ width: 36, height: 36, borderRadius: 9, background: "#FAEFEE", color: "#6C0820", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                  <Icon n={q.icon as FPIconName} size={18} />
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: "0.86rem", fontWeight: 700, lineHeight: 1.35 }}>{q.titulo}</div>
-                  <div style={{ fontSize: "0.76rem", color: "#647DA0", margin: "2px 0 10px" }}>
-                    {q.total} preguntas · {q.code}
-                  </div>
-                  <a
-                    href={q.fileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      fontSize: "0.74rem", fontWeight: 700, color: "#3D5D91",
-                      background: "rgba(61,93,145,0.08)", padding: "6px 12px", borderRadius: 14,
-                      textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 5,
-                    }}
-                  >
-                    <Icon n="book" size={12} /> Ver PDF
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }

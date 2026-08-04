@@ -198,10 +198,15 @@ function CuestionarioPage() {
       const all = getPublishedQuestions().filter((q) => q.fuente === search.fuente);
       fullPool = paid ? all : all.slice(0, 10);
     } else if (search.banco === "la") {
-      // Banco completo de Línea Aérea (opcionalmente acotado a manuales).
+      // Banco completo de Línea Aérea (opcionalmente acotado a manuales y/o
+      // a materias: las tarjetas del módulo abren el oficial por materia).
       const codes = search.fuentes ? search.fuentes.split(",").map((c: string) => c.trim()).filter(Boolean) : [];
+      const materiasLa = search.materias
+        ? search.materias.split(",").map((m: string) => m.trim()).filter(Boolean)
+        : null;
       const all = getPublishedQuestions().filter((q) => {
         if (!q.fuente) return false; // nunca preguntas CIAAC en el banco de Línea Aérea
+        if (materiasLa && !materiasLa.includes(q.materia)) return false;
         if (search.modo === "oficial") return q.fuente === LA_OFICIAL_FUENTE;
         return q.fuente === LA_OFICIAL_FUENTE || codes.length === 0 || codes.includes(q.fuente);
       });
