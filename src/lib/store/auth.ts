@@ -339,7 +339,15 @@ export async function register(input: {
     if (!data.session) {
       return { ok: true, info: "Te enviamos un correo para confirmar tu cuenta. Confírmala e inicia sesión." };
     }
-    return openCloudSession(data.user!.id);
+    const res = await openCloudSession(data.user!.id);
+    if (res.ok) {
+      // Ledger de evidencias: la cuenta y la versión exacta de términos aceptada.
+      const { captureEvidence } = await import("@/lib/evidence-client");
+      const { TERMS_VERSION, TERMS_URL } = await import("@/lib/terms-version");
+      captureEvidence("account_created", { nombre, marketingOptIn: !!input.marketingOptIn });
+      captureEvidence("terms_accepted", { version: TERMS_VERSION, url: TERMS_URL });
+    }
+    return res;
   }
 
   return registerLocal({ nombre, email, password: input.password, marketingOptIn: input.marketingOptIn });
@@ -379,7 +387,12 @@ export async function login(email: string, password: string): Promise<AuthResult
           : error.message;
       return { ok: false, error: msg };
     }
-    return openCloudSession(data.user.id);
+    const res = await openCloudSession(data.user.id);
+    if (res.ok) {
+      const { captureEvidence } = await import("@/lib/evidence-client");
+      captureEvidence("login", {});
+    }
+    return res;
   }
 
   const user = getUserByEmail(email);

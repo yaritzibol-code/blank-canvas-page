@@ -20,7 +20,8 @@ export type AdminNavKey =
   | "configuracion"
   | "operaciones"
   | "operaciones_stripe"
-  | "operaciones_yaris";
+  | "operaciones_yaris"
+  | "operaciones_disputas";
 
 interface NavItem {
   icon: FPIconName;
@@ -45,6 +46,7 @@ const ADMIN_NAV: { label: string; items: NavItem[] }[] = [
     items: [
       { icon: "chart", label: "Panel de control", key: "operaciones", path: "/admin/operaciones" },
       { icon: "help", label: "Eventos de Stripe", key: "operaciones_stripe", path: "/admin/operaciones/stripe" },
+      { icon: "shield", label: "Disputas y evidencias", key: "operaciones_disputas", path: "/admin/operaciones/disputas" },
       { icon: "chat", label: "Yaris & IA", key: "operaciones_yaris", path: "/admin/operaciones/yaris" },
     ],
   },
