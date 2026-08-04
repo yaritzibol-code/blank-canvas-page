@@ -191,6 +191,96 @@ export type Database = {
         }
         Relationships: []
       }
+      disputes: {
+        Row: {
+          amount: number | null
+          charge_id: string | null
+          created_at: string
+          currency: string | null
+          environment: string
+          evidence_due_by: string | null
+          id: string
+          payment_intent_id: string | null
+          reason: string | null
+          status: string | null
+          stripe_dispute_id: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          amount?: number | null
+          charge_id?: string | null
+          created_at?: string
+          currency?: string | null
+          environment: string
+          evidence_due_by?: string | null
+          id?: string
+          payment_intent_id?: string | null
+          reason?: string | null
+          status?: string | null
+          stripe_dispute_id: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number | null
+          charge_id?: string | null
+          created_at?: string
+          currency?: string | null
+          environment?: string
+          evidence_due_by?: string | null
+          id?: string
+          payment_intent_id?: string | null
+          reason?: string | null
+          status?: string | null
+          stripe_dispute_id?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      evidence_events: {
+        Row: {
+          created_at: string
+          environment: string
+          event: string
+          id: string
+          ip: string | null
+          locale: string | null
+          metadata: Json
+          referer: string | null
+          timezone: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          environment?: string
+          event: string
+          id?: string
+          ip?: string | null
+          locale?: string | null
+          metadata?: Json
+          referer?: string | null
+          timezone?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          environment?: string
+          event?: string
+          id?: string
+          ip?: string | null
+          locale?: string | null
+          metadata?: Json
+          referer?: string | null
+          timezone?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       client_errors: {
         Row: {
           created_at: string

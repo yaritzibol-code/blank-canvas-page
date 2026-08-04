@@ -165,6 +165,9 @@ export function saveQuizAttempt(a: Omit<QuizAttempt, "id" | "date">): QuizAttemp
     score: a.total ? Math.round((a.correct / a.total) * 100) : null,
     durationMin: a.durationMin,
   });
+  void import("@/lib/evidence-client").then(({ captureEvidence }) =>
+    captureEvidence("quiz_completed", { materias: a.materias, correct: a.correct, total: a.total, durationMin: a.durationMin }),
+  );
   return full;
 }
 
@@ -182,6 +185,9 @@ export function saveSimAttempt(a: Omit<SimAttempt, "id" | "date">): SimAttempt {
     score: Math.round(a.scorePct),
     durationMin: Math.round(a.durationSecs / 60),
   });
+  void import("@/lib/evidence-client").then(({ captureEvidence }) =>
+    captureEvidence("sim_completed", { scorePct: Math.round(a.scorePct), durationSecs: a.durationSecs }),
+  );
   return full;
 }
 

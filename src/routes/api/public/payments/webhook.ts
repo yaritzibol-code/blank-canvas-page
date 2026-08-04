@@ -116,6 +116,18 @@ export async function processStripeEvent(event: { type: string; data: { object: 
     case "customer.subscription.deleted":
       await handleSubscriptionDeleted(event.data.object, env);
       return "processed" as const;
+    // Evidence Engine: cada disputa queda registrada con su expediente listo
+    // para armarse desde el panel admin (Operaciones → Disputas y evidencias).
+    case "charge.dispute.created":
+    case "charge.dispute.updated":
+    case "charge.dispute.closed": {
+      const { upsertDisputeFromStripe } = await import("@/lib/evidence.server");
+      await upsertDisputeFromStripe(
+        { ...event.data.object, __eventType: event.type.split(".").at(-1) },
+        env,
+      );
+      return "processed" as const;
+    }
     default:
       return "ignored" as const;
   }
