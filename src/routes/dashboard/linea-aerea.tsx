@@ -8,11 +8,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import { MATERIAS_DEF, useRequireAuth } from "@/lib/store";
-import {
-  LINEA_AEREA_OFICIAL_POR_MATERIA,
-  LINEA_AEREA_OFICIAL_TOTAL,
-  LINEA_AEREA_QUIZZES,
-} from "@/lib/store/linea-aerea-meta";
+import { LINEA_AEREA_OFICIAL_TOTAL, LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
 import { BancoScreen } from "@/components/banco/BancoScreen";
 
 export const Route = createFileRoute("/dashboard/linea-aerea")({
@@ -65,7 +61,6 @@ function LineaAereaPage() {
       header={
         <>
           <LineaAereaHero />
-          <QuizCardsOficial />
           <QuizCardsManuales />
         </>
       }
@@ -98,18 +93,18 @@ function LaSectionHead({ icon, title, sub }: { icon: FPIconName; title: string; 
   );
 }
 
-/** El cuestionario OFICIAL de la convocatoria, separado por materia. */
-function QuizCardsOficial() {
+/** Los cuestionarios del curso, uno por manual (ATP, PHAK, CPAM, Jeppesen, Anexo 10). */
+function QuizCardsManuales() {
   return (
-    <div style={{ maxWidth: 820, width: "100%", fontFamily: FONT, color: INK, marginBottom: 28 }}>
+    <div style={{ maxWidth: 820, width: "100%", fontFamily: FONT, color: INK, marginBottom: 8 }}>
       <style>{quizCardsCss}</style>
       <LaSectionHead
-        icon="target"
-        title="Cuestionario oficial, por materia"
-        sub={`Los ${LINEA_AEREA_OFICIAL_TOTAL} reactivos oficiales del proceso, separados por materia para que domines una a la vez. Dentro del quiz tienes “Explícamelo Yaris” en cada pregunta.`}
+        icon="book"
+        title="Cuestionarios por manual"
+        sub="50 reactivos por manual: ATP, Handbook (PHAK), Legislación (CPAM), Jeppesen y OACI Anexo 10. Cada tarjeta abre su quiz con “Explícamelo Yaris” en cada pregunta; también puedes consultar el PDF fuente."
       />
 
-      {/* Examen completo destacado */}
+      {/* Examen oficial completo destacado */}
       <Link
         to="/cuestionario"
         search={{ banco: "la", modo: "oficial", qty: LINEA_AEREA_OFICIAL_TOTAL }}
@@ -129,7 +124,7 @@ function QuizCardsOficial() {
             Examen oficial completo
           </span>
           <span style={{ display: "block", fontSize: "0.78rem", opacity: 0.85, marginTop: 2 }}>
-            Las {LINEA_AEREA_OFICIAL_TOTAL} preguntas oficiales, todas las materias mezcladas
+            Las {LINEA_AEREA_OFICIAL_TOTAL} preguntas oficiales del proceso
           </span>
         </span>
         <span className="fp-la-go" style={{ fontSize: "0.82rem", fontWeight: 800, color: "#F2AEBC", whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: 6 }}>
@@ -137,53 +132,6 @@ function QuizCardsOficial() {
         </span>
       </Link>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: 12 }}>
-        {LINEA_AEREA_OFICIAL_POR_MATERIA.map((m) => {
-          const def = materiaDe(m.slug);
-          if (!def) return null;
-          return (
-            <Link
-              key={m.slug}
-              to="/cuestionario"
-              search={{ banco: "la", modo: "oficial", materias: m.slug, qty: m.total }}
-              className="fp-la-card"
-              style={{
-                display: "flex", flexDirection: "column", gap: 12, textDecoration: "none",
-                background: "white", border: "1px solid #E8EEF6", borderRadius: 16, padding: "16px 18px",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <span style={{ width: 40, height: 40, borderRadius: 11, background: "linear-gradient(135deg, #22375C, #3D5D91)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <Icon n={def.icon as FPIconName} size={19} color="#F2AEBC" />
-                </span>
-                <span style={{ fontSize: "0.68rem", fontWeight: 800, color: "#6C0820", background: "#FAEFEE", borderRadius: 12, padding: "4px 10px", letterSpacing: "0.04em" }}>
-                  {m.total} PREGUNTAS
-                </span>
-              </div>
-              <div>
-                <div style={{ fontFamily: DISPLAY, fontSize: "0.94rem", fontWeight: 800, color: INK, lineHeight: 1.25 }}>{def.name}</div>
-                <div style={{ fontSize: "0.74rem", color: "#8DA1BE", marginTop: 3 }}>Reactivos oficiales del proceso</div>
-              </div>
-              <span className="fp-la-go" style={{ fontSize: "0.78rem", fontWeight: 800, color: "#3D5D91", display: "inline-flex", alignItems: "center", gap: 5, marginTop: "auto" }}>
-                Iniciar cuestionario <Icon n="arrow" size={14} />
-              </span>
-            </Link>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-/** Los 5 manuales del curso (ATP, PHAK, CPAM, Jeppesen, Anexo 10), cada uno con su quiz. */
-function QuizCardsManuales() {
-  return (
-    <div style={{ maxWidth: 820, width: "100%", fontFamily: FONT, color: INK, marginBottom: 8 }}>
-      <LaSectionHead
-        icon="book"
-        title="Cuestionarios por manual del curso"
-        sub="50 reactivos por manual: ATP, Handbook (PHAK), Legislación (CPAM), Jeppesen y OACI Anexo 10. Cada tarjeta abre su quiz; también puedes consultar el PDF fuente."
-      />
       <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 12 }}>
         {LINEA_AEREA_QUIZZES.map((q) => {
           const def = materiaDe(q.materia);

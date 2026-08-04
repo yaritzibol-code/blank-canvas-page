@@ -13,28 +13,8 @@ export interface LineaAereaQuiz {
   fileUrl: string;
 }
 
-/**
- * Desglose por materia del cuestionario OFICIAL de la convocatoria (fuente
- * LAOF, 377 reactivos). Igual que LINEA_AEREA_QUIZZES: metadata estática para
- * pintar las tarjetas sin cargar el banco completo. Debe coincidir con
- * `seed-linea-aerea-oficial.ts` y con la nube.
- */
-export interface LineaAereaOficialMateria {
-  slug: string;
-  total: number;
-}
-
+/** Total del cuestionario OFICIAL de la convocatoria (fuente LAOF). */
 export const LINEA_AEREA_OFICIAL_TOTAL = 377;
-
-export const LINEA_AEREA_OFICIAL_POR_MATERIA: LineaAereaOficialMateria[] = [
-  { slug: "navegacion", total: 117 },
-  { slug: "comunicaciones", total: 67 },
-  { slug: "aerodinamica", total: 65 },
-  { slug: "operaciones", total: 41 },
-  { slug: "meteorologia", total: 37 },
-  { slug: "legislacion", total: 27 },
-  { slug: "aeronaves-motores", total: 23 },
-];
 
 export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
   {
