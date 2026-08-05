@@ -145,9 +145,13 @@ export function AdminShell({
       >
         {/* Logo */}
         <div style={{ padding: "18px 16px", borderBottom: "1px solid rgba(255,255,255,.08)", display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{ width: 30, height: 30, background: "#3D5D91", borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: ".85rem" }}>
-            <Icon n="plane" size={16} color="white" />
-          </div>
+          <img
+            src="/assets/flightpath-logo.png"
+            alt="Logo de FlightPath"
+            width={30}
+            height={30}
+            style={{ width: 30, height: 30, borderRadius: 7, objectFit: "cover", flexShrink: 0, display: "block" }}
+          />
           <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "white", fontWeight: 700 }}>
             Flight<span style={{ color: "#F2AEBC" }}>Path</span>
           </span>

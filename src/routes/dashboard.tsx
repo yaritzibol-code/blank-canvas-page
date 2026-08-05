@@ -55,15 +55,16 @@ function Icon({ n, size = 18, sw = 1.6 }: { n: IconName; size?: number; sw?: num
   return <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true" style={{ display: "block" }}>{g[n]}</svg>;
 }
 
-function PlaneMark({ size = 36, light = false }: { size?: number; light?: boolean }) {
+/** Marca real de FlightPath (la misma imagen que usa la landing). */
+function PlaneMark({ size = 36 }: { size?: number; light?: boolean }) {
   return (
-    <span style={{ width: size, height: size, background: light ? "rgba(255,255,255,0.1)" : "#3D5D91", borderRadius: 10, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-      <svg viewBox="0 0 24 24" width={size * 0.6} height={size * 0.6} aria-hidden="true">
-        <path d="M7 21V5h10" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M7 12.5h7" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" />
-        <path d="M15.5 4.5l3.5 1-1 3.5" fill="none" stroke="#F2AEBC" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </span>
+    <img
+      src="/assets/flightpath-logo.png"
+      alt="Logo de FlightPath"
+      width={size}
+      height={size}
+      style={{ width: size, height: size, borderRadius: 10, objectFit: "cover", flexShrink: 0, display: "block" }}
+    />
   );
 }
 
