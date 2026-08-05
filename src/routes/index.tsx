@@ -125,11 +125,11 @@ export function Logo({ light = false, size = 30 }: { light?: boolean; size?: num
 
 type BtnKind = "primary" | "navy" | "light" | "ghost" | "ghostLight" | "soft" | "outlineLight";
 export function Btn({
-  children, kind = "primary", size = "md", icon, iconLeft, className = "", href, to, onClick,
+  children, kind = "primary", size = "md", icon, iconLeft, className = "", href, to, search, onClick,
 }: {
   children: ReactNode; kind?: BtnKind; size?: "sm" | "md" | "lg";
   icon?: IconName; iconLeft?: IconName; className?: string;
-  href?: string; to?: string; onClick?: () => void;
+  href?: string; to?: string; search?: Record<string, unknown>; onClick?: () => void;
 }) {
   const base = "inline-flex items-center justify-center gap-2 font-semibold rounded-full transition-all duration-200 whitespace-nowrap";
   const sizes = { sm: "h-9 px-4 text-[13px]", md: "h-11 px-5 text-[14px]", lg: "h-[52px] px-7 text-[15px]" };
@@ -144,8 +144,11 @@ export function Btn({
   };
   const cls = `${base} ${sizes[size]} ${kinds[kind]} ${className}`;
   const inner = <>{iconLeft && <Icon n={iconLeft} className="w-[18px] h-[18px]" />}{children}{icon && <Icon n={icon} className="w-[18px] h-[18px]" />}</>;
-  if (to) return <Link to={to} className={cls} onClick={onClick}>{inner}</Link>;
+  // Navegación interna con el router (sin recarga completa): así el salto de
+  // /precios al checkout de Stripe es continuo.
+  if (to) return <Link to={to} search={search as never} className={cls} onClick={onClick}>{inner}</Link>;
   if (href) return <a href={href} className={cls} onClick={onClick}>{inner}</a>;
+
   return <button onClick={onClick} className={cls}>{inner}</button>;
 }
 
