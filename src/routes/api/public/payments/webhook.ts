@@ -122,6 +122,29 @@ async function handleSubscriptionDeleted(sub: any, env: StripeEnv) {
   }
 }
 
+/**
+ * Cobros de factura: alta cobrada, renovación mensual/anual y fallo de cobro.
+ *
+ * La factura sólo trae el id de la suscripción, así que releemos la
+ * suscripción de Stripe para reutilizar exactamente la misma lógica de
+ * sincronización que usan los eventos `customer.subscription.*`. Así una
+ * renovación queda reflejada en `subscriptions` y en el perfil aunque el
+ * evento de suscripción llegue después o se pierda.
+ */
+async function handleInvoiceEvent(invoice: any, env: StripeEnv) {
+  const subId: string | undefined =
+    (typeof invoice?.subscription === "string" ? invoice.subscription : undefined) ??
+    invoice?.parent?.subscription_details?.subscription ??
+    invoice?.lines?.data?.[0]?.parent?.subscription_item_details?.subscription;
+  if (!subId) return "ignored" as const;
+
+  const { createStripeClient } = await import("@/lib/stripe.server");
+  const stripe = createStripeClient(env);
+  const sub = await stripe.subscriptions.retrieve(subId);
+  await handleSubscriptionUpsert(sub as unknown as Record<string, unknown>, env);
+  return "processed" as const;
+}
+
 /** Procesa un evento Stripe (reutilizable por reprocesado manual desde admin). */
 export async function processStripeEvent(event: { type: string; data: { object: any } }, env: StripeEnv) {
   switch (event.type) {
@@ -132,6 +155,25 @@ export async function processStripeEvent(event: { type: string; data: { object: 
     case "customer.subscription.deleted":
       await handleSubscriptionDeleted(event.data.object, env);
       return "processed" as const;
+    // Alta cobrada y renovaciones (mensual o anual). `invoice.payment_failed`
+    // también se sincroniza: Stripe deja la suscripción en `past_due` y la app
+    // debe mostrar ese estado en Facturación en vez de un "activo" falso.
+    case "invoice.paid":
+    case "invoice.payment_succeeded":
+    case "invoice.payment_failed":
+      return await handleInvoiceEvent(event.data.object, env);
+    case "checkout.session.completed": {
+      // Con métodos de pago diferidos el cobro aún puede no haberse liquidado.
+      const session = event.data.object;
+      if (session?.payment_status === "unpaid") return "ignored" as const;
+      if (typeof session?.subscription === "string") {
+        const { createStripeClient } = await import("@/lib/stripe.server");
+        const sub = await createStripeClient(env).subscriptions.retrieve(session.subscription);
+        await handleSubscriptionUpsert(sub as unknown as Record<string, unknown>, env);
+        return "processed" as const;
+      }
+      return "ignored" as const;
+    }
     // Evidence Engine: cada disputa queda registrada con su expediente listo
     // para armarse desde el panel admin (Operaciones → Disputas y evidencias).
     case "charge.dispute.created":
