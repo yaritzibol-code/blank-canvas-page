@@ -442,6 +442,9 @@ function CuestionarioPage() {
     const idx = lastAnsweredRef.current ?? currentIdx;
     const q = questions[idx] ?? questions[currentIdx];
     if (!q) return {};
+    // Si todavía no elige respuesta, Yaris entra en modo "te ayudo a pensar":
+    // guía el razonamiento sin revelar la correcta.
+    const preAnswer = idx === currentIdx && !answered;
     return {
       question: {
         text: q.text,
@@ -450,6 +453,8 @@ function CuestionarioPage() {
         explanation: q.explanation,
         cite: q.feedback.cite,
       },
+      userSelectedIndex: preAnswer ? -1 : (selectedIdx ?? -1),
+      ...(preAnswer && { preAnswer: true }),
       materiaName: q.materia,
     };
   }
@@ -471,9 +476,10 @@ function CuestionarioPage() {
     const ctx = yarisCtx();
     const key = q.questionId || `idx-${idx}`;
     const again = yarisExplainedRef.current.has(key);
-    yarisExplainedRef.current.add(key);
+    if (!ctx.preAnswer) yarisExplainedRef.current.add(key);
     yarisBusyRef.current = true;
 
+    const pensar = !!ctx.preAnswer;
     setYarisMsgs((prev) => [
       ...(prev.length === 0
         ? [{ role: "bot" as const, text: "¡Hola! Soy <b>Yaris</b>. Púlsame en cualquier pregunta las veces que necesites y te la explico." }]
@@ -482,18 +488,22 @@ function CuestionarioPage() {
       {
         role: "bot" as const,
         // Sin nombrar la materia: el chat tampoco debe adelantar el tema.
-        text: again
-          ? `Va otra vez la <b>pregunta ${idx + 1}</b>, ahora con otro enfoque:`
-          : `Vamos con la <b>pregunta ${idx + 1}</b>:`,
+        text: pensar
+          ? `Aún no respondes la <b>pregunta ${idx + 1}</b>, así que te ayudo a pensarla <i>sin darte la respuesta</i>:`
+          : again
+            ? `Va otra vez la <b>pregunta ${idx + 1}</b>, ahora con otro enfoque:`
+            : `Vamos con la <b>pregunta ${idx + 1}</b>:`,
       },
     ]);
     setYarisTyping(true);
     const answer = await streamInto([
       {
         role: "user" as const,
-        content: again
-          ? "Explícame esta misma pregunta otra vez, pero de otra forma más sencilla, con otro ejemplo o analogía."
-          : "Explícame esta pregunta: por qué la correcta es correcta, por qué las demás no, y un tip para recordarlo.",
+        content: pensar
+          ? "Todavía no respondo esta pregunta. NO me digas cuál es la correcta: explícame el concepto que se está evaluando, qué significan los términos clave y hazme preguntas guía para que yo razone y elija."
+          : again
+            ? "Explícame esta misma pregunta otra vez, pero de otra forma más sencilla, con otro ejemplo o analogía."
+            : "Explícame esta pregunta: por qué la correcta es correcta, por qué las demás no, y un tip para recordarlo.",
       },
     ], ctx);
     yarisBusyRef.current = false;
