@@ -76,27 +76,12 @@ interface YarisMsg {
 const LETTERS = ["A", "B", "C", "D"];
 
 /**
- * Red de seguridad del modo "te ayudo a pensar".
- *
- * Aunque el prompt del servidor prohíbe revelar la respuesta antes de que la
- * estudiante elija, aquí se tapa cualquier fuga: el texto literal de la opción
- * correcta y las frases del tipo "la respuesta correcta es …" se sustituyen
- * antes de pintarse en el chat.
+ * El filtro del modo "te ayudo a pensar" vive en `@/lib/yaris-format` para que
+ * el simulador y el resto de los cuestionarios usen exactamente el mismo.
  */
-function escapeRe(s: string): string {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
+import { maskAnswer } from "@/lib/yaris-format";
+export { maskAnswer };
 
-export function maskAnswer(text: string, correct: string): string {
-  let out = text;
-  const c = correct.trim();
-  if (c.length >= 4) out = out.replace(new RegExp(escapeRe(c), "gi"), "▮▮▮");
-  out = out.replace(
-    /\b(la\s+)?(respuesta|opci[oó]n|alternativa)\s+correcta\s+(es|ser[ií]a)[^.\n]*/gi,
-    "la respuesta correcta te toca deducirla a ti",
-  );
-  return out;
-}
 
 /* ─── Helpers de datos reales ───────────────────────── */
 

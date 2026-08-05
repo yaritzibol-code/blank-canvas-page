@@ -120,3 +120,27 @@ export function sanitizeHtml(html: string): string {
   if (!html) return "";
   return DOMPurify.sanitize(html, { ALLOWED_TAGS, ALLOWED_ATTR: ["class"] });
 }
+
+/**
+ * Red de seguridad del modo "te ayudo a pensar".
+ *
+ * Aunque el prompt del servidor prohíbe revelar la respuesta antes de que la
+ * estudiante elija, aquí se tapa cualquier fuga: el texto literal de la opción
+ * correcta y las frases del tipo "la respuesta correcta es …" se sustituyen
+ * antes de pintarse en el chat. Vive en este módulo porque lo usan todos los
+ * cuestionarios (CIAAC, Línea Aérea) y el simulador.
+ */
+function escapeRe(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+export function maskAnswer(text: string, correct: string): string {
+  let out = text;
+  const c = correct.trim();
+  if (c.length >= 4) out = out.replace(new RegExp(escapeRe(c), "gi"), "▮▮▮");
+  out = out.replace(
+    /\b(la\s+)?(respuesta|opci[oó]n|alternativa)\s+correcta\s+(es|ser[ií]a)[^.\n]*/gi,
+    "la respuesta correcta te toca deducirla a ti",
+  );
+  return out;
+}
