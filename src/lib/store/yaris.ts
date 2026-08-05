@@ -19,6 +19,13 @@ export interface YarisContext {
     explanation: string;
     cite?: string;
   };
+  /** Opción elegida por el estudiante (-1 si aún no responde). */
+  userSelectedIndex?: number;
+  /**
+   * El estudiante pide ayuda ANTES de responder: Yaris guía el razonamiento
+   * sin revelar la respuesta correcta.
+   */
+  preAnswer?: boolean;
   /** Recurso de biblioteca o tema activo. */
   resourceTitle?: string;
   materiaName?: string;
