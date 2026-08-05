@@ -52,9 +52,13 @@ function CheckoutReturn() {
 
   useEffect(() => {
     if (status !== "active") return;
-    const t = setTimeout(() => navigate({ to: "/dashboard" }), 1800);
+    const t = setTimeout(
+      () => navigate({ to: "/gracias", search: session_id ? { session_id } : {} }),
+      900,
+    );
     return () => clearTimeout(t);
-  }, [status, navigate]);
+  }, [status, navigate, session_id]);
+
 
   const title =
     status === "active"
@@ -66,9 +70,10 @@ function CheckoutReturn() {
           : "Sin información de pago";
   const body =
     status === "active"
-      ? "Tu acceso Pro está activo. Te llevamos a tu dashboard…"
+      ? "Tu acceso Pro está activo. Te damos la bienvenida…"
       : status === "pending"
         ? "Estamos validando tu suscripción con Stripe. Esto tarda unos segundos."
+
         : session_id
           ? "Tu pago está en proceso. Si tu acceso Pro no aparece en un minuto, refresca el dashboard."
           : "No encontramos la sesión de pago. Si crees que es un error, escríbenos.";

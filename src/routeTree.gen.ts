@@ -16,6 +16,7 @@ import { Route as ConvocatoriaAeromexicoRouteImport } from './routes/convocatori
 import { Route as CuestionarioRouteImport } from './routes/cuestionario'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as GraciasRouteImport } from './routes/gracias'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PreciosRouteImport } from './routes/precios'
@@ -93,6 +94,11 @@ const DashboardRoute = DashboardRouteImport.update({
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GraciasRoute = GraciasRouteImport.update({
+  id: '/gracias',
+  path: '/gracias',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LegalRoute = LegalRouteImport.update({
@@ -322,6 +328,7 @@ export interface FileRoutesByFullPath {
   '/cuestionario': typeof CuestionarioRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/faq': typeof FaqRoute
+  '/gracias': typeof GraciasRoute
   '/legal': typeof LegalRoute
   '/login': typeof LoginRoute
   '/precios': typeof PreciosRoute
@@ -373,6 +380,7 @@ export interface FileRoutesByTo {
   '/convocatoria-aeromexico': typeof ConvocatoriaAeromexicoRoute
   '/cuestionario': typeof CuestionarioRoute
   '/faq': typeof FaqRoute
+  '/gracias': typeof GraciasRoute
   '/legal': typeof LegalRoute
   '/login': typeof LoginRoute
   '/precios': typeof PreciosRoute
@@ -426,6 +434,7 @@ export interface FileRoutesById {
   '/cuestionario': typeof CuestionarioRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/faq': typeof FaqRoute
+  '/gracias': typeof GraciasRoute
   '/legal': typeof LegalRoute
   '/login': typeof LoginRoute
   '/precios': typeof PreciosRoute
@@ -480,6 +489,7 @@ export interface FileRouteTypes {
     | '/cuestionario'
     | '/dashboard'
     | '/faq'
+    | '/gracias'
     | '/legal'
     | '/login'
     | '/precios'
@@ -531,6 +541,7 @@ export interface FileRouteTypes {
     | '/convocatoria-aeromexico'
     | '/cuestionario'
     | '/faq'
+    | '/gracias'
     | '/legal'
     | '/login'
     | '/precios'
@@ -583,6 +594,7 @@ export interface FileRouteTypes {
     | '/cuestionario'
     | '/dashboard'
     | '/faq'
+    | '/gracias'
     | '/legal'
     | '/login'
     | '/precios'
@@ -636,6 +648,7 @@ export interface RootRouteChildren {
   CuestionarioRoute: typeof CuestionarioRoute
   DashboardRoute: typeof DashboardRouteWithChildren
   FaqRoute: typeof FaqRoute
+  GraciasRoute: typeof GraciasRoute
   LegalRoute: typeof LegalRoute
   LoginRoute: typeof LoginRoute
   PreciosRoute: typeof PreciosRoute
@@ -714,6 +727,13 @@ declare module '@tanstack/react-router' {
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gracias': {
+      id: '/gracias'
+      path: '/gracias'
+      fullPath: '/gracias'
+      preLoaderRoute: typeof GraciasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/legal': {
@@ -1070,6 +1090,7 @@ const rootRouteChildren: RootRouteChildren = {
   CuestionarioRoute: CuestionarioRoute,
   DashboardRoute: DashboardRouteWithChildren,
   FaqRoute: FaqRoute,
+  GraciasRoute: GraciasRoute,
   LegalRoute: LegalRoute,
   LoginRoute: LoginRoute,
   PreciosRoute: PreciosRoute,
@@ -1101,13 +1122,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

@@ -11,6 +11,8 @@ import { useEffect } from "react";
 import { initAppStore } from "@/lib/store";
 import { installClientErrorReporter, reportClientError } from "@/lib/client-error-reporter";
 import { useApplyPrefs } from "@/hooks/use-apply-prefs";
+import { GOOGLE_ADS_ID, isAdsConfigured } from "@/lib/ads";
+
 
 import appCss from "../styles.css?url";
 
@@ -123,7 +125,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           ],
         }),
       },
+      // Etiqueta global de Google Ads: sólo se inyecta cuando hay ID configurado.
+      ...(isAdsConfigured()
+        ? [
+            { src: `https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`, async: true },
+            {
+              children: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GOOGLE_ADS_ID}');`,
+            },
+          ]
+        : []),
     ],
+
   }),
   shellComponent: RootShell,
   component: RootComponent,
