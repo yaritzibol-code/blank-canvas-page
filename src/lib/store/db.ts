@@ -141,6 +141,7 @@ export function remove(key: string) {
     }
   }
   memoryFallback.delete(key);
+  memoryOnly.delete(key);
   notify();
 }
 
