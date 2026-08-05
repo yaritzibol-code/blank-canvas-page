@@ -387,6 +387,49 @@ function ConfiguracionPage() {
               })}
             </div>
           </div>
+
+          {/* Longitud de respuesta de Yaris */}
+          <div style={{ padding: "14px 20px 18px", borderTop: "1px solid rgba(61,93,145,.04)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
+              <span style={{ width: 20, display: "flex", justifyContent: "center", color: "#22375C" }}><Icon n="chat" size={18} /></span>
+              <div>
+                <div style={{ fontSize: ".86rem", fontWeight: 600, color: "#22375C", marginBottom: 2 }}>Longitud de respuesta</div>
+                <div style={{ fontSize: ".74rem", color: "#647DA0" }}>Qué tanto se extiende Yaris al explicarte</div>
+              </div>
+            </div>
+            <div style={{ display: "grid", gap: 8 }}>
+              {YARIS_LARGOS_UI.map((l) => {
+                const activo = yarisLargo === l.key;
+                return (
+                  <button
+                    key={l.key}
+                    onClick={() => {
+                      setYarisLargoState(l.key);
+                      updateUser(user.id, { yarisLargo: l.key });
+                      setFlash(`Yaris responderá de forma ${l.label.toLowerCase()}.`);
+                    }}
+                    style={{
+                      display: "flex", alignItems: "center", gap: 10, textAlign: "left", width: "100%",
+                      padding: "12px 14px", borderRadius: 10, cursor: "pointer",
+                      border: `2px solid ${activo ? "#3D5D91" : "#F2DCDB"}`,
+                      background: activo ? "rgba(61,93,145,.06)" : "white",
+                      fontFamily: "'Manrope', sans-serif", minHeight: 44,
+                    }}
+                    aria-pressed={activo}
+                  >
+                    <span style={{ width: 16, height: 16, borderRadius: "50%", flexShrink: 0, border: `2px solid ${activo ? "#3D5D91" : "#C9D6E8"}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      {activo && <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#3D5D91" }} />}
+                    </span>
+                    <span>
+                      <span style={{ display: "block", fontSize: ".84rem", fontWeight: 700, color: "#22375C" }}>{l.label}</span>
+                      <span style={{ display: "block", fontSize: ".74rem", color: "#647DA0", marginTop: 2 }}>{l.desc}</span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
         </div>
       </div>
 
