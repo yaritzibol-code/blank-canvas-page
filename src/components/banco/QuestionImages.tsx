@@ -8,13 +8,18 @@
 import { useEffect, useState } from "react";
 import { supa } from "@/lib/store/cloud";
 
-const BUCKET = "jeppesen-images";
 const TTL = 60 * 60; // 1 hora
+
+/** Bucket por manual: Jeppesen y ATP (figuras del AKTS) viven separados. */
+function bucketFor(fuente?: string): string {
+  return fuente === "ATP" ? "atp-images" : "jeppesen-images";
+}
 
 /** Cache de la sesión: evita volver a firmar la misma lámina al navegar. */
 const signed = new Map<string, string>();
 
-export function QuestionImages({ files }: { files?: string[] }) {
+export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: string }) {
+  const BUCKET = bucketFor(fuente);
   const key = (files ?? []).join(",");
   const [urls, setUrls] = useState<string[]>([]);
   const [failed, setFailed] = useState(false);
