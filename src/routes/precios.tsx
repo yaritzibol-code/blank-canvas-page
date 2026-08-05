@@ -272,7 +272,7 @@ function PreciosPage() {
                   </p>
                 </div>
 
-                <Btn kind="primary" size="lg" icon="arrow" className="mt-6 w-full" href={buyHref}>
+                <Btn kind="primary" size="lg" icon="arrow" className="mt-6 w-full" to={buyTo} search={buySearch}>
                   {user ? "Suscribirme a Pro" : "Empezar con Pro"}
                 </Btn>
                 <p className="mt-3 text-center text-[12px] text-white/45">
@@ -383,7 +383,7 @@ function PreciosPage() {
                 Desbloquea el banco completo, los simuladores ilimitados y a Yaris con IA hoy mismo.
               </p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-                <Btn kind="primary" size="lg" icon="arrow" href={buyHref}>
+                <Btn kind="primary" size="lg" icon="arrow" to={buyTo} search={buySearch}>
                   {user ? "Suscribirme a Pro" : "Empezar con Pro"}
                 </Btn>
                 <Btn kind="outlineLight" size="lg" to={user ? "/dashboard" : "/register"}>
