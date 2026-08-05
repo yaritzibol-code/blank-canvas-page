@@ -1489,39 +1489,44 @@ function CuestionarioPage() {
           {/* Input */}
           <div
             style={{
-              padding: "10px 14px",
+              padding: "10px 14px calc(10px + env(safe-area-inset-bottom))",
               borderTop: "1px solid #F2DCDB",
-              display: "flex", gap: 7, flexShrink: 0,
+              display: "flex", gap: 8, alignItems: "center", flexShrink: 0,
             }}
           >
             <input
               value={yarisInput}
               onChange={(e) => setYarisInput(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") sendYarisMsg(); }}
+              aria-label="Escribe tu mensaje para Yaris"
               placeholder={thinkMode ? "Pregúntame conceptos, no la respuesta..." : "Escribe tu duda..."}
               style={{
-                flex: 1, border: "2px solid #F2DCDB", borderRadius: 18,
-                padding: "7px 12px", fontSize: "0.81rem",
+                flex: 1, border: "2px solid #C9D4E5", borderRadius: 22,
+                // 16px evita el zoom automático de iOS al enfocar el campo.
+                padding: "11px 14px", fontSize: "16px", minHeight: 44,
+                color: "#22375C",
                 fontFamily: "'Manrope', sans-serif", outline: "none",
                 transition: "border-color 0.2s",
               }}
               onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }}
-              onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }}
+              onBlur={(e) => { e.currentTarget.style.borderColor = "#C9D4E5"; }}
             />
             <button
               onClick={sendYarisMsg}
+              aria-label="Enviar mensaje a Yaris"
               style={{
-                width: 32, height: 32, background: "#3D5D91", border: "none",
+                width: 44, height: 44, background: "#3D5D91", border: "none",
                 borderRadius: "50%", color: "white", cursor: "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 fontSize: "0.82rem", flexShrink: 0,
               }}
             >
-              <Icon n="send" size={15} />
+              <Icon n="send" size={17} />
             </button>
           </div>
         </div>
       </div>
+
 
       {/* Reportar problema */}
       <ReportProblemModal
