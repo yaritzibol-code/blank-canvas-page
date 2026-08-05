@@ -1580,12 +1580,23 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef,
           <div style={{ width: 32, height: 32, background: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem" }}><Icon n="spark" size={18} color="#3D5D91" /></div>
           <div>
             <div style={{ fontSize: "0.86rem", fontWeight: 700, color: "white" }}>Yaris IA</div>
-            <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.8)" }}>Tutora de aviación 24/7</div>
+            <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.8)" }}>{think ? "Modo guía · no revela la respuesta" : "Tutora de aviación 24/7"}</div>
           </div>
         </div>
-        <button onClick={onClose} style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "white", borderRadius: 6, padding: "4px 8px", cursor: "pointer", fontSize: "0.76rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon n="close" size={15} /></button>
+        <button onClick={onClose} style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "white", borderRadius: 6, padding: "4px 8px", cursor: "pointer", fontSize: "0.76rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center" }} aria-label="Cerrar Yaris"><Icon n="close" size={15} /></button>
       </div>
+      {think && (
+        <div
+          role="status"
+          aria-live="polite"
+          style={{ display: "flex", alignItems: "flex-start", gap: 8, padding: "10px 14px", background: "#FFF4DE", borderBottom: "1px solid #F0D9A8", fontSize: "0.78rem", lineHeight: 1.5, color: "#5A4300", flexShrink: 0 }}
+        >
+          <span style={{ display: "flex", flexShrink: 0, marginTop: 1 }}><Icon n="lightbulb" size={15} color="#8a6000" /></span>
+          <span><b>Modo “te ayudo a pensar”.</b> El examen sigue en curso, así que Yaris te guía con conceptos y preguntas, sin darte la respuesta.</span>
+        </div>
+      )}
       <div style={{ flex: 1, overflowY: "auto", padding: 14, display: "flex", flexDirection: "column", gap: 10 }}>
+
         {msgs.map((msg, i) => (
           <div key={i} style={{ display: "flex", gap: 7, alignItems: "flex-start", flexDirection: msg.role === "user" ? "row-reverse" : "row" }}>
             <div style={{ width: 26, height: 26, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: msg.role === "bot" ? "0.78rem" : "0.6rem", fontWeight: msg.role === "user" ? 700 : undefined, background: msg.role === "bot" ? "#F2DCDB" : "#3D5D91", color: msg.role === "user" ? "white" : undefined, flexShrink: 0 }}>
