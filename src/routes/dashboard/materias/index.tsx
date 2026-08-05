@@ -82,7 +82,7 @@ function MateriasIndex() {
       const doneTopics = temas.filter((t) => doneTemaIds.has(t.id)).length;
       const progress = user ? materiaProgressPct(user.id, m.slug) : 0;
       const avg = perf.find((p) => p.slug === m.slug)?.avg ?? 0;
-      const questions = getPublishedQuestions(m.slug).length;
+      const questions = porMateria.get(m.slug) ?? 0;
       const status: Subject["status"] =
         totalTopics > 0 && doneTopics === totalTopics ? "done" : "active";
       const extra = SUBJECT_EXTRA[m.slug] ?? { color: "#3D5D91", description: "" };
