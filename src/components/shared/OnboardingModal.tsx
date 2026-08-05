@@ -95,6 +95,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
         : {
             nombre: nombre.trim() || user.nombre,
             genero,
+            yarisTono,
             focoRuta,
             focoMateria: focoRuta === "ciaac" ? (focoMateria || null) : null,
             whatsapp: whatsapp.trim(),
