@@ -1,4 +1,5 @@
 import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
+import { YarisAvatar } from "@/components/shared/YarisAvatar";
 import { useEffect, useState } from "react";
 import { useRequireAuth, useSessionUser, useStore, getStreak, logout, studySnapshot } from "@/lib/store";
 import { syncMyPlan } from "@/lib/payments.functions";
@@ -329,7 +330,7 @@ function Sidebar({ onClose, onYaris, onLogout }: { onClose?: () => void; onYaris
           onMouseEnter={(e) => { e.currentTarget.style.background = "#4A0517"; e.currentTarget.style.transform = "translateY(-1px)"; }}
           onMouseLeave={(e) => { e.currentTarget.style.background = "#6C0820"; e.currentTarget.style.transform = "none"; }}
         >
-          <Icon n="spark" size={16} /> Pregúntale a Yaris
+          <YarisAvatar size={20} /> Pregúntale a Yaris
         </button>
         <button
           onClick={onLogout}
