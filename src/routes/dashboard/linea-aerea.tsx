@@ -320,7 +320,7 @@ function ChapterPicker({
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="Elegir capítulos de ATP"
+      aria-label={`Elegir capítulos de ${nombre}`}
       onClick={onClose}
       style={{
         position: "fixed", inset: 0, zIndex: 60, background: "rgba(26,26,46,0.55)",
@@ -336,10 +336,10 @@ function ChapterPicker({
         }}
       >
         <h3 style={{ fontFamily: DISPLAY, fontSize: "1.3rem", marginBottom: 6 }}>
-          ATP — elige capítulos
+          {nombre} — elige capítulos
         </h3>
         <p style={{ fontSize: "0.85rem", color: "#647DA0", marginBottom: 18, lineHeight: 1.5 }}>
-          Sin selección, el cuestionario mezcla todo el banco ATP. Marca uno o varios
+          Sin selección, el cuestionario mezcla todo el banco {nombre}. Marca uno o varios
           capítulos para enfocarte.
         </p>
 
@@ -353,11 +353,11 @@ function ChapterPicker({
             background: all ? "rgba(61,93,145,0.08)" : "white", color: INK,
           }}
         >
-          Todo el banco ATP · {ATP_TOTAL} preguntas
+          Todo el banco {nombre} · {totalBanco} preguntas
         </button>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          {ATP_CHAPTERS.map((c) => {
+          {chapters.map((c) => {
             const on = sel.has(c.num);
             return (
               <button
