@@ -875,7 +875,7 @@ function CuestionarioPage() {
         className="px-3 sm:px-6"
         style={{
           background: "white",
-          padding: "0 0 12px",
+          paddingBottom: 12,
           borderBottom: "1px solid rgba(61,93,145,0.06)",
           flexShrink: 0,
         }}
