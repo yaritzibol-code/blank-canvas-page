@@ -8,13 +8,18 @@
 import { useEffect, useState } from "react";
 import { supa } from "@/lib/store/cloud";
 
-const BUCKET = "jeppesen-images";
 const TTL = 60 * 60; // 1 hora
+
+/** Bucket por manual: Jeppesen y ATP (figuras del AKTS) viven separados. */
+function bucketFor(fuente?: string): string {
+  return fuente === "ATP" ? "atp-images" : "jeppesen-images";
+}
 
 /** Cache de la sesión: evita volver a firmar la misma lámina al navegar. */
 const signed = new Map<string, string>();
 
-export function QuestionImages({ files }: { files?: string[] }) {
+export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: string }) {
+  const BUCKET = bucketFor(fuente);
   const key = (files ?? []).join(",");
   const [urls, setUrls] = useState<string[]>([]);
   const [failed, setFailed] = useState(false);
@@ -28,7 +33,7 @@ export function QuestionImages({ files }: { files?: string[] }) {
     let alive = true;
     setFailed(false);
 
-    const cached = names.map((n) => signed.get(n));
+    const cached = names.map((n) => signed.get(`${BUCKET}/${n}`));
     if (cached.every((u): u is string => !!u)) {
       setUrls(cached);
       return;
@@ -49,7 +54,7 @@ export function QuestionImages({ files }: { files?: string[] }) {
       const out: string[] = [];
       data.forEach((row, i) => {
         if (row.signedUrl) {
-          signed.set(names[i], row.signedUrl);
+          signed.set(`${BUCKET}/${names[i]}`, row.signedUrl);
           out.push(row.signedUrl);
         }
       });
@@ -60,7 +65,7 @@ export function QuestionImages({ files }: { files?: string[] }) {
     return () => {
       alive = false;
     };
-  }, [key]);
+  }, [key, BUCKET]);
 
   if (!files || files.length === 0) return null;
 
@@ -75,7 +80,7 @@ export function QuestionImages({ files }: { files?: string[] }) {
         <a key={u} href={u} target="_blank" rel="noreferrer" style={{ display: "block" }}>
           <img
             src={u}
-            alt={`Lámina del manual Jeppesen ${i + 1} de ${urls.length}`}
+            alt={`${fuente === "ATP" ? "Figura del suplemento FAA (AKTS)" : "Lámina del manual Jeppesen"} ${i + 1} de ${urls.length}`}
             loading="lazy"
             style={{
               width: "100%",

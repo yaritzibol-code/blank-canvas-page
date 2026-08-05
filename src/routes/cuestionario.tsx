@@ -66,6 +66,8 @@ interface Question {
   feedback: { correct: string; incorrect: string; cite: string };
   /** Láminas del manual (bucket `jeppesen-images`), si el reactivo las trae. */
   imagenes?: string[];
+  /** Manual de origen: define el bucket de figuras (ATP / Jeppesen). */
+  fuente?: string;
 }
 
 interface YarisMsg {
@@ -133,6 +135,7 @@ function toLocalQ(q: BankQuestion): Question {
     explanation: q.explanation,
     text: q.text,
     imagenes: q.imagenes,
+    fuente: q.fuente,
     options: q.options.map((text, i) => ({ text, correct: i === q.correctIndex })),
     feedback: {
       correct: `¡Correcto! ${q.explanation}`,
@@ -970,7 +973,7 @@ function CuestionarioPage() {
               {currentQ.text}
             </p>
 
-            <QuestionImages files={currentQ.imagenes} />
+            <QuestionImages files={currentQ.imagenes} fuente={currentQ.fuente} />
 
 
 
