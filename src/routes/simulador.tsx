@@ -1162,6 +1162,7 @@ function SimuladorPage() {
               onSend={sendYaris}
               onClose={() => setYarisOpen(false)}
               msgsEndRef={msgsEndRef}
+              think={thinkMode}
             />
           </div>
         </div>
