@@ -198,7 +198,7 @@ function AnalisisPage() {
       dAvg = cur.avg !== null && prev.avg !== null ? cur.avg - prev.avg : null;
     }
 
-    return { stats, pathy, heat, barDays, barVals, materias, sims, activity, dAnswered, dAvg };
+    return { stats, pathy, debriefs, heat, barDays, barVals, materias, sims, activity, dAnswered, dAvg };
   });
 
   const periods: { key: Period; label: string }[] = [
