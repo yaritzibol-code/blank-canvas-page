@@ -20,6 +20,7 @@ import {
 import type { BankQuestion, YarisContext } from "@/lib/store";
 import { useYarisAsk, useYarisStream, toHistory } from "@/lib/yaris-ask";
 import { yarisToHtml } from "@/lib/yaris-format";
+import { PathyMark } from "@/components/shared/PathyMark";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
 import { LA_OFICIAL_FUENTE } from "@/lib/store/seed-linea-aerea-oficial";
@@ -1019,8 +1020,8 @@ function CuestionarioPage() {
             }}
           >
             <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}`}</style>
-            <div style={{ marginBottom: 8, animation: "float 3s ease-in-out infinite" }}>
-              <Icon n="cloud" size={72} color="#5A86CB" />
+            <div style={{ marginBottom: 8 }}>
+              <PathyMark size={92} float />
             </div>
             <h1
               style={{
@@ -1147,7 +1148,7 @@ function CuestionarioPage() {
                 fontSize: "0.85rem", color: "#555", lineHeight: 1.6,
               }}
             >
-              <span style={{ display: "flex", alignItems: "center" }}><Icon n="cloud" size={24} color="#6C0820" /></span>
+              <PathyMark size={28} />
               <div>
                 <strong style={{ color: "#6C0820" }}>Pathy recomienda:</strong>{" "}
                 {weakestSession && weakestSession.pct < 70 ? (

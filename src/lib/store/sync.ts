@@ -70,6 +70,16 @@ function profileToUser(row: {
   const d = (row.data ?? {}) as Partial<User>;
   const now = new Date().toISOString();
   return {
+    /**
+     * Se parte de lo guardado y luego se normalizan los campos obligatorios.
+     *
+     * Antes se reconstruía el usuario con una lista fija de campos, así que
+     * todo lo opcional que no estuviera en esa lista —género, ruta de enfoque
+     * y materia prioritaria— se perdía en CADA hidratación desde la nube. Con
+     * el refresco periódico eso significaba que elegir "Línea Aérea" en el
+     * perfil se revertía solo a CIAAC a los pocos segundos.
+     */
+    ...d,
     id: row.id,
     nombre: d.nombre ?? "",
     email: row.email,
@@ -264,6 +274,11 @@ export async function refreshCloudData(): Promise<boolean> {
   if (!cloudSessionActive() || refreshing) return false;
   refreshing = true;
   try {
+    // Primero se suben los cambios locales pendientes (las escrituras salen
+    // con 1.2 s de retardo). Sin esto, un refresco que cayera en esa ventana
+    // traía la copia vieja del servidor y deshacía lo que se acababa de
+    // guardar —el caso típico: elegir la ruta de enfoque y verla revertirse.
+    await flushPendingAsync();
     await hydrateLive();
     return true;
   } catch {
@@ -459,6 +474,17 @@ function flushPending() {
     pushTimers.delete(key);
     void pushKey(key).catch(() => {});
   });
+}
+
+/** Como `flushPending`, pero espera a que las subidas terminen. */
+async function flushPendingAsync(): Promise<void> {
+  const pending: Array<Promise<unknown>> = [];
+  pushTimers.forEach((timer, key) => {
+    clearTimeout(timer);
+    pushTimers.delete(key);
+    pending.push(pushKey(key).catch(() => {}));
+  });
+  if (pending.length > 0) await Promise.all(pending);
 }
 
 /* ───────────────────────── Ciclo de vida ───────────────────────── */

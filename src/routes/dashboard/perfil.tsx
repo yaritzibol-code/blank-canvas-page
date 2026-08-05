@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { PlaneField } from "@/components/shared/PlaneField";
+import { PathyMark } from "@/components/shared/PathyMark";
 import {
   useSessionUser,
   useStore,
@@ -113,7 +114,7 @@ function PerfilPage() {
       nombre: draft.nombre.trim() || user.nombre,
       whatsapp: draft.whatsapp.trim(),
       escuela: draft.escuela.trim(),
-      ...(enfocadoLineaAerea ? {} : { fechaCiaac: draft.ciaac || null }),
+      fechaCiaac: draft.ciaac || null,
     });
     setInfo({ ...draft, nombre: draft.nombre.trim() || user.nombre, ciaac: fmtFechaCiaac(draft.ciaac || null) });
     setEditing(false);
@@ -223,7 +224,7 @@ function PerfilPage() {
           </div>
         </div>
 
-        <div style={{ zIndex: 1, flexShrink: 0, animation: "float 3s ease-in-out infinite", color: "rgba(255,255,255,.9)" }}><Icon n="cloud" size={56} /></div>
+        <div style={{ zIndex: 1, flexShrink: 0 }}><PathyMark size={72} float /></div>
       </div>
 
       {/* Información personal — arriba del todo: es lo que se viene a editar */}
@@ -267,14 +268,17 @@ function PerfilPage() {
             {infoField("WhatsApp", "whatsapp")}
             {infoField("Escuela de aviación", "escuela")}
           </div>
-          {/* La fecha del CIAAC y el perfil CIAAC no aplican a quien se prepara
-              para una línea aérea: no se muestran ni se guardan. */}
-          {!enfocadoLineaAerea && (
-            <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-              {infoField("Fecha estimada del CIAAC", "ciaac", "date")}
-              <div style={{ flex: 1 }} />
-            </div>
-          )}
+          {/* La fecha alimenta la cuenta regresiva del inicio, así que debe
+              poder editarse en las dos rutas: sólo cambia cómo se llama. Si se
+              ocultaba en Línea Aérea, el inicio mandaba a un campo inexistente. */}
+          <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+            {infoField(
+              enfocadoLineaAerea ? "Fecha estimada de tu examen" : "Fecha estimada del CIAAC",
+              "ciaac",
+              "date",
+            )}
+            <div style={{ flex: 1 }} />
+          </div>
         </div>
       </div>
 

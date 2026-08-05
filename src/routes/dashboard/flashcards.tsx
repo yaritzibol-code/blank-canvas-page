@@ -15,6 +15,7 @@ import {
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
 import { adminOnly } from "@/components/shared/UnderConstruction";
+import { PathyMark } from "@/components/shared/PathyMark";
 import { ModuleHeader } from "@/components/shared/ModuleHeader";
 
 export const Route = createFileRoute("/dashboard/flashcards")({
@@ -395,7 +396,7 @@ function FlashcardsPage() {
   return (
     <div style={{ fontFamily: "'Manrope', sans-serif", minHeight: "calc(100vh - 200px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "32px 24px" }}>
       <style>{`@keyframes float3 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }`}</style>
-      <div style={{ animation: "float3 3s ease-in-out infinite", marginBottom: 12, color: "#22375C" }}><Icon n="cloud" size={72} /></div>
+      <div style={{ marginBottom: 12 }}><PathyMark size={92} float /></div>
       <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.8rem", textAlign: "center", marginBottom: 6 }}>{resultTitle}</h1>
       <p style={{ fontSize: "0.9rem", color: "#647DA0", marginBottom: 28, textAlign: "center" }}>Así te fue en esta sesión</p>
 
@@ -413,7 +414,7 @@ function FlashcardsPage() {
       </div>
 
       <div style={{ background: "linear-gradient(135deg,#F2DCDB,#fce4ec)", borderRadius: 12, padding: "14px 16px", display: "flex", alignItems: "flex-start", gap: 10, fontSize: "0.85rem", color: "#555", lineHeight: 1.5, marginBottom: 16, maxWidth: 440, width: "100%" }}>
-        <span style={{ flexShrink: 0, color: "#6C0820", display: "inline-flex" }}><Icon n="cloud" size={20} /></span>
+        <PathyMark size={26} />
         <div dangerouslySetInnerHTML={{ __html: resultMsg }} />
       </div>
 

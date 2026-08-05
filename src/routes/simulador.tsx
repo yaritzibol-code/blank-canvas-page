@@ -17,6 +17,7 @@ import type { BankQuestion, SimAnswer } from "@/lib/store";
 import { yarisAiChat } from "@/lib/yaris-ai.functions";
 import { yarisToHtml } from "@/lib/yaris-format";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
+import { PathyMark } from "@/components/shared/PathyMark";
 
 export const Route = createFileRoute("/simulador")({
   component: SimuladorPage,
@@ -849,7 +850,7 @@ function SimuladorPage() {
 
           {/* Header */}
           <div style={{ textAlign: "center", marginBottom: 28 }}>
-            <div style={{ animation: "float 3s ease-in-out infinite", display: "inline-block" }}><Icon n="cloud" size={64} color="#5A86CB" /></div>
+            <div style={{ display: "inline-block" }}><PathyMark size={84} float /></div>
             <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.8rem", color: "#22375C", margin: "8px 0 4px" }}>
               Examen <span style={{ color: passed ? "#2ecc71" : "#6C0820" }}>{passed ? "¡Aprobado!" : "entregado"}</span>
             </h1>
@@ -879,7 +880,7 @@ function SimuladorPage() {
 
           {/* Pathy */}
           <div style={{ background: "linear-gradient(135deg,#F2DCDB,#fce4ec)", borderRadius: 14, padding: 18, marginBottom: 18, display: "flex", alignItems: "flex-start", gap: 12 }}>
-            <span style={{ flexShrink: 0, display: "flex", alignItems: "center" }}><Icon n="cloud" size={29} color="#6C0820" /></span>
+            <PathyMark size={32} />
             <div style={{ fontSize: "0.87rem", color: "#555", lineHeight: 1.6 }}>
               {passed
                 ? <><strong style={{ color: "#6C0820" }}>Pathy dice:</strong> ¡FELICIDADES! Aprobaste el simulador con <strong>{scorePct}%</strong>. Tu dedicación y constancia están dando frutos. Sigue practicando para llegar al examen real con aún más confianza. ¡Tú puedes, aviador!</>

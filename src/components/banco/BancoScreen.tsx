@@ -6,6 +6,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import { Icon } from "@/components/ui/fp-icon";
+import { PathyMark } from "@/components/shared/PathyMark";
 import {
   useSessionUser,
   studentStats,
@@ -690,7 +691,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
               lineHeight: 1.5,
             }}
           >
-            <span style={{ fontSize: "1.4rem", flexShrink: 0, display: "flex", color: "#6C0820" }}><Icon n="cloud" size={24} /></span>
+            <PathyMark size={28} />
             <div>
               <strong style={{ color: "#6C0820" }}>{entry.pathyPrefix}</strong>{" "}
               {entry.pathyTip}
