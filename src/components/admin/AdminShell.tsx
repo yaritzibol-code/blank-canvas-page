@@ -4,9 +4,11 @@
  * páginas del panel. Incluye el guard de rol admin.
  */
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
-import { cloudSessionActive, logout, refreshCloudData, useRequireAuth } from "@/lib/store";
+import { logout, useRequireAuth } from "@/lib/store";
+import { useLiveData } from "@/hooks/use-live-data";
+import { LiveIndicator } from "@/components/shared/LiveIndicator";
 
 export type AdminNavKey =
   | "resumen"
@@ -92,7 +94,7 @@ export function AdminShell({
   const { user, ready } = useRequireAuth("admin");
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const live = useLiveAdminData(ready);
+  const live = useLiveData(ready);
 
   if (!ready) return <div style={{ minHeight: "100vh", background: "#f5f7fc" }} />;
 
@@ -206,7 +208,7 @@ export function AdminShell({
             <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.05rem", fontWeight: 700, color: "#22375C", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{title}</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
-            <LiveIndicator {...live} />
+            <LiveIndicator state={live} />
             {actions}
           </div>
         </div>
@@ -215,92 +217,6 @@ export function AdminShell({
         <div style={{ padding: "24px 28px", maxWidth, width: "100%" }}>{children}</div>
       </div>
     </div>
-  );
-}
-
-/* ───────────────────────── Datos en vivo ───────────────────────── */
-
-const REFRESH_MS = 20000;
-
-interface LiveState {
-  enabled: boolean;
-  busy: boolean;
-  agoSecs: number;
-  refresh: () => void;
-}
-
-/**
- * Mantiene el panel al día.
- *
- * La hidratación desde la nube sólo corría al iniciar sesión, así que el panel
- * mostraba la foto de ese momento: altas, intentos y reportes posteriores no
- * aparecían hasta recargar. Aquí se vuelve a leer cada 20 s, al volver a la
- * pestaña y a botón. Sin nube (modo local) el store ya notifica en vivo y el
- * indicador no se muestra.
- */
-function useLiveAdminData(ready: boolean): LiveState {
-  const enabled = ready && cloudSessionActive();
-  const [lastAt, setLastAt] = useState(() => Date.now());
-  const [busy, setBusy] = useState(false);
-  const [now, setNow] = useState(() => Date.now());
-  const busyRef = useRef(false);
-
-  const refresh = useCallback(() => {
-    if (!enabled || busyRef.current) return;
-    busyRef.current = true;
-    setBusy(true);
-    void refreshCloudData().then((ok) => {
-      busyRef.current = false;
-      setBusy(false);
-      if (ok) setLastAt(Date.now());
-    });
-  }, [enabled]);
-
-  useEffect(() => {
-    if (!enabled) return;
-    const poll = setInterval(refresh, REFRESH_MS);
-    const tick = setInterval(() => setNow(Date.now()), 1000);
-    const onVisible = () => {
-      if (document.visibilityState === "visible") refresh();
-    };
-    document.addEventListener("visibilitychange", onVisible);
-    window.addEventListener("focus", refresh);
-    return () => {
-      clearInterval(poll);
-      clearInterval(tick);
-      document.removeEventListener("visibilitychange", onVisible);
-      window.removeEventListener("focus", refresh);
-    };
-  }, [enabled, refresh]);
-
-  return { enabled, busy, agoSecs: Math.max(0, Math.round((now - lastAt) / 1000)), refresh };
-}
-
-function LiveIndicator({ enabled, busy, agoSecs, refresh }: LiveState) {
-  if (!enabled) return null;
-  const label = busy ? "Actualizando…" : agoSecs < 5 ? "Al día" : `hace ${agoSecs < 60 ? `${agoSecs}s` : `${Math.round(agoSecs / 60)} min`}`;
-  return (
-    <button
-      onClick={refresh}
-      title="Actualizar datos del panel"
-      style={{
-        display: "inline-flex", alignItems: "center", gap: 6,
-        padding: "6px 11px", borderRadius: 20, cursor: "pointer",
-        border: "1px solid #E8EEF6", background: "white",
-        fontSize: ".72rem", fontWeight: 700, color: "#647DA0",
-        fontFamily: "'Manrope', sans-serif", whiteSpace: "nowrap",
-      }}
-    >
-      <span
-        aria-hidden="true"
-        style={{
-          width: 7, height: 7, borderRadius: "50%", flexShrink: 0,
-          background: busy ? "#f39c12" : "#2ecc71",
-        }}
-      />
-      {label}
-      <Icon n="refresh" size={12} />
-    </button>
   );
 }
 

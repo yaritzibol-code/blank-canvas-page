@@ -12,7 +12,7 @@
  */
 import { useMemo, useRef, useState, useEffect } from "react";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
-import { getPublishedQuestions, materiaBySlug, useSessionUser, canUseAI, logYarisUse } from "@/lib/store";
+import { getPublishedQuestions, materiaBySlug, useSessionUser, useStore, canUseAI, logYarisUse } from "@/lib/store";
 import type { BankQuestion } from "@/lib/store";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import { LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
@@ -490,7 +490,10 @@ export function ExtrasPanel({ la = false }: { la?: boolean }) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const bank = useMemo(() => (mounted ? bankFor(la) : []), [la, mounted]);
+  // Se lee con `useStore` para que el conteo se recalcule cuando el banco
+  // termina de sembrarse o de hidratarse desde la nube: con `useMemo` a secas
+  // quedaba congelado en el estado del primer render y mostraba 0 preguntas.
+  const bank = useStore(() => (mounted ? bankFor(la) : []));
   const grupos = useMemo(() => groupsFor(la, bank), [la, bank]);
 
   const items: { kind: ExtraKind; icon: FPIconName; title: string; desc: string }[] = [

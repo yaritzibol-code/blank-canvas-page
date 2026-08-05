@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
+import { ModuleHeader } from "@/components/shared/ModuleHeader";
 import {
   deleteReminder,
   getReminders,
@@ -322,20 +323,22 @@ function RecordatoriosPage() {
       )}
 
       {/* Page header */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24, flexWrap: "wrap", gap: 12 }}>
-        <div>
-          <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.5rem", color: "#22375C", marginBottom: 4 }}>
-            Mis <span style={{ color: "#6C0820" }}>Recordatorios</span>
-          </h1>
-          <p style={{ fontSize: ".85rem", color: "#647DA0" }}>Configura avisos por WhatsApp para no perder tu racha.</p>
-        </div>
+      <ModuleHeader
+        eyebrow="Mi progreso · Recordatorios"
+        title="Que no se te"
+        accent="pase"
+        tail="."
+        subtitle="Configura avisos por WhatsApp para no perder tu racha."
+        planes={6}
+        aside={
         <button
           onClick={openNewReminder}
           style={{ padding: "9px 18px", background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".84rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 6 }}
         >
           + Nuevo recordatorio
         </button>
-      </div>
+        }
+      />
 
       {/* Contenido gateable (PRD: visible pero bloqueado para básica) */}
       <div style={{ position: "relative" }}>
@@ -398,7 +401,11 @@ function RecordatoriosPage() {
                 transition: "opacity .2s",
               }}
             >
-              <div style={{ width: 40, height: 40, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: r.iconBg, color: "#22375C" }}><Icon n={r.icon as never} size={20} /></div>
+              {/* El tinte se toma de TYPE_META (translúcido) y no del `iconBg`
+                  guardado: los recordatorios antiguos traen tintes opacos
+                  mezclados contra blanco que en tema oscuro quedaban como
+                  manchas claras sobre la tarjeta. */}
+              <div style={{ width: 40, height: 40, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: (TYPE_META[r.tipo] ?? DEFAULT_META).bg, color: "#22375C" }}><Icon n={r.icon as never} size={20} /></div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: ".88rem", fontWeight: 700, color: "#22375C", marginBottom: 2 }}>{r.titulo}</div>
                 <div style={{ fontSize: ".75rem", color: "#647DA0" }}>{r.sub}</div>

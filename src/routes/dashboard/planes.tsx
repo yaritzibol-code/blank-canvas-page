@@ -4,6 +4,7 @@
  * (fuente de verdad del cobro); `@/lib/pricing` sólo aporta el respaldo.
  */
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { ModuleHeader } from "@/components/shared/ModuleHeader";
 import { useEffect, useState } from "react";
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
 import { getStripe, getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
@@ -218,14 +219,20 @@ function PlanesPage() {
           ← Volver al dashboard
         </button>
 
-        <h1 style={{ fontFamily: DISPLAY, color: INK, fontSize: "clamp(1.6rem,4vw,2.2rem)", fontWeight: 800, margin: "0 0 8px" }}>
-          Elige tu plan
-        </h1>
-        <p style={{ color: "#647DA0", fontSize: 15, marginBottom: 20, maxWidth: 640 }}>
-          Empieza gratis con FlightPath Básica y sube a Pro cuando quieras acceso ilimitado, IA y
-          todos los módulos. Pro se activa con un <strong>pago único de inscripción</strong> y, de
-          ahí, eliges cómo continuar: mensual o anual.
-        </p>
+        <ModuleHeader
+          eyebrow="Cuenta · Planes"
+          title="Elige tu"
+          accent="plan"
+          tail="."
+          subtitle={
+            <>
+              Empieza gratis con FlightPath Básica y sube a Pro cuando quieras acceso ilimitado, IA y
+              todos los módulos. Pro se activa con un <strong>pago único de inscripción</strong> y, de
+              ahí, eliges cómo continuar: mensual o anual.
+            </>
+          }
+          planes={6}
+        />
 
         {/* Cómo funciona el cobro de Pro */}
         <div

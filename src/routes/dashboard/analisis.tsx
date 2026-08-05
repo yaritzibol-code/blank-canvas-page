@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { PlaneField } from "@/components/shared/PlaneField";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
+import { PathyAnalysis } from "@/components/shared/PathyAnalysis";
+import { useLiveData } from "@/hooks/use-live-data";
 import {
   contenidoDisponible,
   getQuizAttempts,
@@ -10,7 +12,7 @@ import {
   getStudyDays,
   isPaid,
   materiaPerformance,
-  pathyAnalysisMessage,
+  pathyReport,
   recentActivity,
   studentStats,
   todayKey,
@@ -124,11 +126,12 @@ function AnalisisPage() {
   const [period, setPeriod] = useState<Period>("semana");
   const [hoverHeat, setHoverHeat] = useState<number | null>(null);
   const [upgradeOpen, setUpgradeOpen] = useState(false);
+  const live = useLiveData(!!user);
 
   const data = useStore(() => {
     if (!user) return null;
     const stats = studentStats(user.id, period);
-    const pathyMsg = pathyAnalysisMessage(user, period);
+    const pathy = pathyReport(user);
     const days = getStudyDays(user.id);
 
     // Heatmap: últimos 35 días, nivel 0-4 según minutos estudiados
@@ -192,7 +195,7 @@ function AnalisisPage() {
       dAvg = cur.avg !== null && prev.avg !== null ? cur.avg - prev.avg : null;
     }
 
-    return { stats, pathyMsg, heat, barDays, barVals, materias, sims, activity, dAnswered, dAvg };
+    return { stats, pathy, heat, barDays, barVals, materias, sims, activity, dAnswered, dAvg };
   });
 
   const periods: { key: Period; label: string }[] = [
@@ -206,7 +209,6 @@ function AnalisisPage() {
   const { stats, barVals, barDays } = data;
   const paid = isPaid(user);
   const cobertura = contenidoDisponible();
-  const firstName = user.nombre.split(" ")[0];
   const cmpLabel = period === "semana" ? "vs semana pasada" : "vs mes pasado";
 
   const deltaOf = (d: number | null, unit: string) => {
@@ -279,18 +281,10 @@ function AnalisisPage() {
         ))}
       </div>
 
-      {/* Pathy card */}
-      <div style={{ background: "linear-gradient(135deg,#22375C,#2a2a4e)", borderRadius: 16, padding: "20px 24px", display: "flex", alignItems: "center", gap: 18, marginBottom: 24, flexWrap: "wrap" }}>
-        <div style={{ animation: "float 3s ease-in-out infinite", flexShrink: 0, display: "flex", color: "white" }}><Icon n="cloud" size={56} /></div>
-        <div style={{ flex: 1, minWidth: 240 }}>
-          <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "white", marginBottom: 4 }}>¡Hola, {firstName}!</h3>
-          <p style={{ fontSize: ".85rem", color: "rgba(255,255,255,.7)", lineHeight: 1.5 }}>
-            {data.pathyMsg}
-          </p>
-        </div>
-      </div>
+      {/* Análisis completo de Pathy */}
+      <PathyAnalysis report={data.pathy} live={live} />
 
-      {/* Tarjetas principales PRD: Avance del curso vs Preparación estimada */}
+      {/* Avance del curso — la preparación estimada ya la reporta el análisis de Pathy */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(240px,1fr))", gap: 14, marginBottom: 14 }}>
         <div style={{ background: "white", borderRadius: 14, padding: "18px 20px", boxShadow: "0 2px 10px rgba(61,93,145,.06)", display: "flex", flexDirection: "column", gap: 6 }}>
           <span style={{ display: "flex", color: "#3D5D91" }}><Icon n="chart" size={24} /></span>
@@ -302,12 +296,6 @@ function AnalisisPage() {
               ? ` (Learning Paths en ${cobertura.materiasConTemas} de ${cobertura.materiasTotales} materias).`
               : "."}
           </span>
-        </div>
-        <div style={{ background: "white", borderRadius: 14, padding: "18px 20px", boxShadow: "0 2px 10px rgba(61,93,145,.06)", display: "flex", flexDirection: "column", gap: 6 }}>
-          <span style={{ display: "flex", color: "#6C0820" }}><Icon n="target" size={24} /></span>
-          <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.8rem", fontWeight: 900, color: "#22375C", lineHeight: 1 }}>{stats.readiness !== null ? `${stats.readiness}%` : "—"}</span>
-          <span style={{ fontSize: ".74rem", color: "#647DA0" }}>Preparación estimada</span>
-          <span style={{ fontSize: ".72rem", color: "#8DA1BE" }}>Basada solo en cuestionarios y simulador. No garantiza aprobación.</span>
         </div>
       </div>
 
