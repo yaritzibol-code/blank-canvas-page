@@ -34,6 +34,39 @@ import {
   type QuestionStatus,
   useQuestionBank,
 } from "@/lib/store";
+import {
+  ATP_CHAPTERS,
+  JEPP_CHAPTERS,
+  PHAK_CHAPTERS,
+  LINEA_AEREA_QUIZZES,
+  type AtpChapter,
+} from "@/lib/store/linea-aerea-meta";
+
+/** Manuales de Línea Aérea con capítulos, para catalogar el banco en el panel. */
+const CHAPTERS_BY_FUENTE: Record<string, AtpChapter[]> = {
+  ATP: ATP_CHAPTERS,
+  JEPP: JEPP_CHAPTERS,
+  PHAK: PHAK_CHAPTERS,
+};
+
+/** Nombre legible del manual ("ATP", "Jeppesen", "Handbook"...). */
+function fuenteLabel(code?: string): string {
+  if (!code) return "";
+  return LINEA_AEREA_QUIZZES.find((q) => q.code === code)?.titulo ?? code;
+}
+
+/** Etiqueta de catálogo: "Jeppesen · Cap. 2 Leyenda de cartas" o la materia CIAAC. */
+function catalogoLabel(x: BankQuestion): string {
+  if (x.fuente) {
+    const cap =
+      x.capitulo !== undefined && x.capitulo !== null
+        ? ` · Cap. ${x.capitulo}${x.capituloTitulo ? ` ${x.capituloTitulo}` : ""}`
+        : "";
+    return `${fuenteLabel(x.fuente)}${cap}`;
+  }
+  if (x.materia) return materiaBySlug(x.materia)?.name ?? x.materia;
+  return "Sin clasificar";
+}
 
 export const Route = createFileRoute("/admin/banco")({
   component: AdminBancoPage,
@@ -65,6 +98,8 @@ function AdminBancoPage() {
   const [query, setQuery] = useState(searchQ ?? "");
   const [fMateria, setFMateria] = useState("todas");
   const [fEstado, setFEstado] = useState("todos");
+  const [fFuente, setFFuente] = useState("todos");
+  const [fCap, setFCap] = useState("todos");
   const [limit, setLimit] = useState(60);
   const [importResult, setImportResult] = useState<CsvImportResult | null>(null);
 
@@ -92,6 +127,9 @@ function AdminBancoPage() {
       if (fMateria === "sin" && x.materia !== "") return false;
       if (fMateria !== "todas" && fMateria !== "sin" && x.materia !== fMateria) return false;
       if (fEstado !== "todos" && x.status !== fEstado) return false;
+      if (fFuente === "CIAAC" && x.fuente) return false;
+      if (fFuente !== "todos" && fFuente !== "CIAAC" && x.fuente !== fFuente) return false;
+      if (fCap !== "todos" && String(x.capitulo ?? "") !== fCap) return false;
       if (t && !(x.text.toLowerCase().includes(t) || x.id.toLowerCase().includes(t))) return false;
       return true;
     })
@@ -251,6 +289,25 @@ function AdminBancoPage() {
           <option value="borrador">Borrador</option>
           <option value="oculta">Oculta</option>
         </select>
+        <select
+          value={fFuente}
+          onChange={(e) => { setFFuente(e.target.value); setFCap("todos"); }}
+          style={{ ...inputStyle, width: "auto", minWidth: 170 }}
+        >
+          <option value="todos">Banco: todos</option>
+          <option value="CIAAC">CIAAC (sin manual)</option>
+          {LINEA_AEREA_QUIZZES.map((q) => (
+            <option key={q.code} value={q.code}>{q.titulo} ({q.code})</option>
+          ))}
+        </select>
+        {CHAPTERS_BY_FUENTE[fFuente] && (
+          <select value={fCap} onChange={(e) => setFCap(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 200 }}>
+            <option value="todos">Capítulo: todos</option>
+            {CHAPTERS_BY_FUENTE[fFuente]!.map((c) => (
+              <option key={c.num} value={String(c.num)}>Cap. {c.num} · {c.titulo}</option>
+            ))}
+          </select>
+        )}
       </div>
 
       <div style={{ fontSize: ".76rem", color: "#647DA0", marginBottom: 10 }}>{filtered.length} de {total} preguntas</div>
@@ -264,9 +321,10 @@ function AdminBancoPage() {
           <div key={x.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "11px 16px", borderBottom: i < Math.min(filtered.length, limit) - 1 ? "1px solid rgba(61,93,145,.06)" : undefined, flexWrap: "wrap" }}>
             <div style={{ flex: "1 1 260px", minWidth: 0 }}>
               <div style={{ fontSize: ".82rem", fontWeight: 600, color: "#22375C", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{x.text}</div>
-              <div style={{ fontSize: ".68rem", color: "#8DA1BE", marginTop: 1 }}>{x.options.length} opciones · {x.source === "import" ? "Importada" : x.source === "seed" ? "Semilla" : "Manual"}</div>
+              <div style={{ fontSize: ".68rem", color: "#8DA1BE", marginTop: 1 }}>{x.options.length} opciones · {x.source === "import" ? "Importada" : x.source === "seed" ? "Semilla" : "Manual"}
+                {x.fuente ? ` · ${x.fuente}` : ""}{x.seccion ? ` · ${x.seccion}` : ""}</div>
             </div>
-            <Badge text={x.materia ? (materiaBySlug(x.materia)?.name ?? x.materia) : "Sin clasificar"} color={x.materia ? "#3D5D91" : "#6C0820"} />
+            <Badge text={catalogoLabel(x)} color={x.fuente ? "#6C0820" : x.materia ? "#3D5D91" : "#8DA1BE"} />
             <Badge text={CONTENT_STATUS_LABEL[x.status] ?? x.status} color={CONTENT_STATUS_COLOR[x.status] ?? "#3D5D91"} />
             <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
               <button onClick={() => openEdit(x)} title="Editar" style={{ padding: "6px 10px", background: "white", color: "#3D5D91", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}>
