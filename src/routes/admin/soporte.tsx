@@ -114,7 +114,10 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
   // admite al equipo admin.
   const [notas, setNotas] = useState("");
   const [notasListas, setNotasListas] = useState(false);
-  const isQuestion = r.recurso.startsWith("q_");
+  const [verPregunta, setVerPregunta] = useState(false);
+  const questionId = r.pregunta?.id || r.recurso;
+  const isQuestion = Boolean(r.pregunta) || r.recurso.startsWith("q_");
+
 
   useEffect(() => {
     let vivo = true;
