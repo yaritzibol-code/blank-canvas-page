@@ -1275,6 +1275,9 @@ function SimuladorPage() {
                 {examQ?.text ?? ""}
               </p>
 
+              <QuestionImages files={examQ?.imagenes} />
+
+
               <div role="radiogroup" aria-label="Opciones de respuesta" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {(examQ?.options ?? []).map((opt, oi) => {
                   const selected = currentQ.selectedOpt === oi;

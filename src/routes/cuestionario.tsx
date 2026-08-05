@@ -23,6 +23,7 @@ import { useYarisAsk, useYarisStream, toHistory } from "@/lib/yaris-ask";
 import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
 import { PathyMark } from "@/components/shared/PathyMark";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
+import { QuestionImages } from "@/components/banco/QuestionImages";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
 import { LA_OFICIAL_FUENTE } from "@/lib/store/seed-linea-aerea-oficial";
 import { LINEA_AEREA_OFICIAL, LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
@@ -839,6 +840,10 @@ function CuestionarioPage() {
             >
               {currentQ.text}
             </p>
+
+            <QuestionImages files={currentQ.imagenes} />
+
+
 
             {/* Options */}
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
