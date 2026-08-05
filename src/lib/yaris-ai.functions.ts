@@ -90,8 +90,14 @@ export const yarisAiChat = createServerFn({ method: "POST" })
     const adminPrompt = await loadAdminPrompt();
     // El prompt lo arma `buildYarisSystemPrompt` para que esta respuesta y la
     // versión en streaming compartan carácter y contexto.
-    const tono = (profileRow?.data as { yarisTono?: "formal" | "normal" | "amiga" } | null)?.yarisTono ?? "normal";
-    const system = buildYarisSystemPrompt(adminPrompt, { ...ctx, tono });
+    const prof = (profileRow?.data ?? null) as {
+      yarisTono?: "formal" | "normal" | "amiga";
+      yarisLargo?: "corta" | "normal" | "detallada";
+    } | null;
+    const tono = prof?.yarisTono ?? "normal";
+    const largo = prof?.yarisLargo ?? "normal";
+    const system = buildYarisSystemPrompt(adminPrompt, { ...ctx, tono, largo });
+
 
     const messages = fitInputBudget(system, data.history);
     const started = Date.now();

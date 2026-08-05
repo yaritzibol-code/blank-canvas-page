@@ -68,6 +68,9 @@ export interface User {
    * (cercana y profesional) o amiga (chat relajado, mismo rigor técnico).
    */
   yarisTono?: "formal" | "normal" | "amiga";
+  /** Longitud de las respuestas de Yaris (Configuración → Apariencia). */
+  yarisLargo?: "corta" | "normal" | "detallada";
+
   /**
    * Ruta en la que se enfoca: una materia del CIAAC (slug) o "linea-aerea".
    * Personaliza el inicio del dashboard y los atajos.

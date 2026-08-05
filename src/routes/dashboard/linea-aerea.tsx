@@ -300,10 +300,21 @@ function ChapterPicker({
 }) {
   const navigate = useNavigate();
   const [sel, setSel] = useState<Set<number>>(new Set());
+  const [qty, setQty] = useState<string>("50");
+  const [customQty, setCustomQty] = useState("");
   const all = sel.size === 0;
-  const total = all
+  const disponibles = all
     ? totalBanco
     : chapters.filter((c) => sel.has(c.num)).reduce((s, c) => s + c.total, 0);
+
+  const qtyNum = (() => {
+    if (qty === "todas") return disponibles;
+    if (qty === "custom") {
+      const n = parseInt(customQty, 10);
+      return Number.isFinite(n) && n > 0 ? Math.min(n, disponibles) : 0;
+    }
+    return Math.min(parseInt(qty, 10), disponibles);
+  })();
 
   function toggle(num: number) {
     setSel((prev) => {
@@ -316,11 +327,12 @@ function ChapterPicker({
 
   function start() {
     const caps = [...sel].sort((a, b) => a - b).join(",");
-    void navigate({
-      to: "/cuestionario",
-      search: (caps ? { fuente: code, caps } : { fuente: code }) as never,
-    });
+    const search: Record<string, string | number> = { fuente: code };
+    if (caps) search.caps = caps;
+    if (qtyNum > 0 && qtyNum < disponibles) search.qty = qtyNum;
+    void navigate({ to: "/cuestionario", search: search as never });
   }
+
 
 
   return (
@@ -394,6 +406,63 @@ function ChapterPicker({
           })}
         </div>
 
+        {/* ¿Cuántas preguntas? — mismo criterio que el CIAAC */}
+        <div style={{ marginTop: 20 }}>
+          <div style={{ fontSize: "0.85rem", fontWeight: 700, marginBottom: 4 }}>¿Cuántas preguntas?</div>
+          <div style={{ fontSize: "0.78rem", color: "#647DA0", marginBottom: 10 }}>
+            Hay {disponibles} disponibles con tu selección.
+          </div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {["10", "25", "50", "100", "todas", "custom"].map((v) => {
+              const on = qty === v;
+              const label = v === "todas" ? "Todas" : v === "custom" ? "Personalizar" : v;
+              return (
+                <button
+                  key={v}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => setQty(v)}
+                  style={{
+                    padding: "10px 16px", borderRadius: 10, cursor: "pointer", minHeight: 44,
+                    fontFamily: FONT, fontWeight: 700, fontSize: "0.84rem",
+                    border: `2px solid ${on ? "#3D5D91" : "#F2DCDB"}`,
+                    background: on ? "rgba(61,93,145,0.08)" : "#f8f9ff",
+                    color: on ? "#3D5D91" : INK,
+                  }}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+          {qty === "custom" && (
+            <input
+              type="number"
+              min={1}
+              max={disponibles}
+              value={customQty}
+              onChange={(e) => setCustomQty(e.target.value)}
+              placeholder={`Entre 1 y ${disponibles}`}
+              aria-label="Número de preguntas"
+              style={{
+                marginTop: 10, width: "100%", padding: "12px 14px", borderRadius: 10,
+                border: "2px solid #F2DCDB", fontFamily: FONT, fontSize: "0.9rem", color: INK, outline: "none",
+              }}
+            />
+          )}
+        </div>
+
+        {/* Leyenda de Pathy */}
+        <div
+          style={{
+            marginTop: 16, padding: "12px 14px", borderRadius: 12,
+            background: "rgba(108,8,32,0.05)", border: "1px solid rgba(108,8,32,0.12)",
+            fontSize: "0.8rem", color: "#6C0820", lineHeight: 1.5, fontWeight: 600,
+          }}
+        >
+          Al terminar, Pathy analizará tu rendimiento personalmente: mira lo que tiene que decir.
+        </div>
+
         <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
           <button
             type="button"
@@ -409,14 +478,16 @@ function ChapterPicker({
           <button
             type="button"
             onClick={start}
+            disabled={qtyNum < 1}
             style={{
-              flex: 1, padding: "12px 18px", borderRadius: 12, cursor: "pointer", border: "none",
-              background: "#3D5D91", color: "white", fontFamily: FONT, fontWeight: 700, fontSize: "0.9rem",
+              flex: 1, padding: "12px 18px", borderRadius: 12, cursor: qtyNum < 1 ? "not-allowed" : "pointer", border: "none",
+              background: qtyNum < 1 ? "#C9D6E8" : "#3D5D91", color: "white", fontFamily: FONT, fontWeight: 700, fontSize: "0.9rem",
             }}
           >
-            Iniciar con {total} preguntas →
+            Iniciar con {qtyNum} preguntas →
           </button>
         </div>
+
       </div>
     </div>
   );

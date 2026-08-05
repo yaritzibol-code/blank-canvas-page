@@ -185,10 +185,16 @@ const LETTERS = ["A", "B", "C", "D", "E"];
 
 export type YarisTono = "formal" | "normal" | "amiga";
 
+/** Cuánto se extiende Yaris al responder (Configuración → Apariencia). */
+export type YarisLargo = "corta" | "normal" | "detallada";
+
 export interface YarisPromptContext {
   /** Personalidad elegida por la estudiante (onboarding / configuración). */
   tono?: YarisTono;
+  /** Longitud de respuesta elegida en Configuración. */
+  largo?: YarisLargo;
   materia?: string;
+
   questionText?: string;
   options?: string[];
   correctIndex?: number;
@@ -235,6 +241,19 @@ export const YARIS_PERSONAS: Record<YarisTono, string> = {
   ].join(" "),
 };
 
+/** Longitud de respuesta: cambia la extensión, nunca el rigor ni el veredicto. */
+export const YARIS_LARGOS: Record<YarisLargo, string> = {
+  corta: [
+    "LONGITUD (modo corta): responde en 2 a 3 oraciones o 3 viñetas máximo.",
+    "Ve directo al veredicto y al dato clave; omite ejemplos y rodeos. Si hace falta más, ofrece ampliar.",
+  ].join(" "),
+  normal: "LONGITUD (modo normal): entre 3 y 8 oraciones. Veredicto, fundamento y un tip para recordarlo.",
+  detallada: [
+    "LONGITUD (modo detallada): explica a fondo, con estructura en secciones o listas y hasta ~350 palabras.",
+    "Incluye el principio de fondo, un ejemplo o cálculo cuando aplique, errores comunes y cómo repasarlo. Sin relleno: cada línea aporta.",
+  ].join(" "),
+};
+
 
 /**
  * Arma el system prompt con el contexto de la pantalla.
@@ -248,6 +267,11 @@ export function buildYarisSystemPrompt(adminPrompt: string | null, ctx: YarisPro
 
   const persona = YARIS_PERSONAS[ctx.tono ?? "normal"];
   if (persona) system += `\n\n${persona}`;
+
+  const largo = YARIS_LARGOS[ctx.largo ?? "normal"];
+  if (largo) system += `\n\n${largo}`;
+
+
 
 
 

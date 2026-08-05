@@ -96,7 +96,9 @@ export const Route = createFileRoute("/api/yaris/stream")({
           plan?: string;
           accessStatus?: string;
           yarisTono?: "formal" | "normal" | "amiga";
+          yarisLargo?: "corta" | "normal" | "detallada";
         };
+
         const isPro =
           Boolean(isAdmin) ||
           Boolean(hasSub) ||
@@ -113,7 +115,9 @@ export const Route = createFileRoute("/api/yaris/stream")({
         const system = buildYarisSystemPrompt(await loadAdminPrompt(), {
           ...ctx,
           tono: profile.yarisTono ?? "normal",
+          largo: profile.yarisLargo ?? "normal",
         });
+
         const messages = fitInputBudget(system, parsed.history);
         const started = Date.now();
 
