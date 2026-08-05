@@ -125,9 +125,14 @@ function PreciosPage() {
   const periodo = anual ? "/ año" : "/ mes";
   const equivalente = anual ? Math.round(annual.amount / 12) : monthly.amount;
 
-  /** A dónde manda el botón de compra según haya sesión o no. */
-  const checkoutTo = "/dashboard/planes?checkout=1";
-  const buyHref = user ? checkoutTo : `/register?next=${encodeURIComponent(checkoutTo)}`;
+  /** A dónde manda el botón de compra según haya sesión o no, conservando el
+   *  ciclo elegido para que el checkout abra exactamente el plan mostrado. */
+  const plan = anual ? "anual" : "mensual";
+  const buyTo = user ? "/dashboard/planes" : "/register";
+  const buySearch: Record<string, unknown> = user
+    ? { checkout: 1, plan }
+    : { next: `/dashboard/planes?checkout=1&plan=${plan}` };
+
 
   const faqLd = {
     "@context": "https://schema.org",
