@@ -220,7 +220,7 @@ function CuestionarioPage() {
       // Cuestionario de un manual completo (curso de Línea Aérea): se toma el
       // banco publicado sin recortar por materia para no perder preguntas.
       const caps = search.caps
-        ? search.caps.split(",").map((c) => Number(c.trim())).filter((n) => Number.isFinite(n))
+        ? search.caps.split(",").map((c: string) => Number(c.trim())).filter((n: number) => Number.isFinite(n))
         : [];
       const all = getPublishedQuestions().filter(
         (q) => q.fuente === search.fuente && (caps.length === 0 || caps.includes(Number(q.capitulo))),
