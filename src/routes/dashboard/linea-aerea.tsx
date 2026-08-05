@@ -18,6 +18,8 @@ import {
   ATP_TOTAL,
   JEPP_CHAPTERS,
   JEPP_TOTAL,
+  PHAK_CHAPTERS,
+  PHAK_TOTAL,
   type AtpChapter,
 } from "@/lib/store/linea-aerea-meta";
 import { BancoScreen } from "@/components/banco/BancoScreen";
