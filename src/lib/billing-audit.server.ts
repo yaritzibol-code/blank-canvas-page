@@ -19,7 +19,10 @@ export type BillingAuditEvent =
   | "plan_changed"
   | "webhook_received"
   | "webhook_processed"
-  | "webhook_failed";
+  | "webhook_failed"
+  | "subscription_cancel_requested"
+  | "subscription_cancel_failed"
+  | "subscription_resumed";
 
 export interface BillingAuditInput {
   event: BillingAuditEvent;

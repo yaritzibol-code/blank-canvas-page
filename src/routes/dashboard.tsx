@@ -26,7 +26,8 @@ function initialsOf(nombre: string): string {
 /* ── Clean single-stroke line icons (shared FlightPath glyph set) ── */
 type IconName =
   | "home" | "book" | "help" | "sim" | "clock" | "library" | "cards" | "play"
-  | "doc" | "chart" | "bell" | "user" | "settings" | "flame" | "spark" | "building" | "plane";
+  | "doc" | "chart" | "bell" | "user" | "settings" | "flame" | "spark" | "building" | "plane"
+  | "card" | "exit";
 
 function Icon({ n, size = 18, sw = 1.6 }: { n: IconName; size?: number; sw?: number }) {
   const p = { fill: "none", stroke: "currentColor", strokeWidth: sw, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
@@ -48,6 +49,8 @@ function Icon({ n, size = 18, sw = 1.6 }: { n: IconName; size?: number; sw?: num
     spark: <path d="M12 3l1.6 5.8L19 11l-5.4 1.6L12 19l-1.6-6.4L5 11l5.4-2.2L12 3z" {...p} />,
     building: <><path d="M4 21V6l7-3v18M11 21h9V10l-9-3" {...p} /><path d="M14 11h2M14 14h2M14 17h2M7 8v.01M7 12v.01M7 16v.01" {...p} /></>,
     plane: <path d="M3.5 13l17-7.5L14 21l-2.5-7L3.5 13z" {...p} />,
+    card: <><rect x="3" y="5" width="18" height="14" rx="2.5" {...p} /><path d="M3 10h18M6.5 15h3" {...p} /></>,
+    exit: <path d="M15 17l5-5-5-5M20 12H9M12 20H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6" {...p} />,
   };
   return <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true" style={{ display: "block" }}>{g[n]}</svg>;
 }
@@ -97,12 +100,13 @@ const NAV_SECTIONS: { label: string; items: { icon: IconName; label: string; pat
     label: "Cuenta",
     items: [
       { icon: "user", label: "Mi perfil", path: "/dashboard/perfil" },
+      { icon: "card", label: "Facturación", path: "/dashboard/facturacion" },
       { icon: "settings", label: "Configuración", path: "/dashboard/configuracion" },
     ],
   },
 ];
 
-function Sidebar({ onClose, onYaris }: { onClose?: () => void; onYaris?: () => void }) {
+function Sidebar({ onClose, onYaris, onLogout }: { onClose?: () => void; onYaris?: () => void; onLogout?: () => void }) {
   const location = useLocation();
   const currentPath = location.pathname;
   const user = useSessionUser();
@@ -127,7 +131,9 @@ function Sidebar({ onClose, onYaris }: { onClose?: () => void; onYaris?: () => v
           gap: 10,
         }}
       >
-        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+        {/* Dentro de la app el logo lleva a Inicio; salir a la landing pública
+            desde aquí sacaba a la estudiante de su sesión de estudio. */}
+        <Link to="/dashboard" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
           <PlaneMark size={34} />
           <span
             style={{
@@ -324,6 +330,22 @@ function Sidebar({ onClose, onYaris }: { onClose?: () => void; onYaris?: () => v
         >
           <Icon n="spark" size={16} /> Pregúntale a Yaris
         </button>
+        <button
+          onClick={onLogout}
+          style={{
+            width: "100%", padding: "9px 12px", marginTop: 8,
+            background: "transparent",
+            color: "rgba(255,255,255,0.75)",
+            border: "1px solid rgba(255,255,255,0.16)", borderRadius: 10,
+            fontSize: "0.82rem", fontWeight: 600, cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+            transition: "all 0.2s", fontFamily: FONT,
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.color = "white"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "rgba(255,255,255,0.75)"; }}
+        >
+          <Icon n="exit" size={15} /> Cerrar sesión
+        </button>
       </div>
     </div>
   );
@@ -345,6 +367,10 @@ function DashboardLayout() {
   // hecho en otro dispositivo (o los cambios de la administradora) no
   // aparecían hasta recargar la página.
   const live = useLiveData(ready);
+  const cerrarSesion = () => {
+    logout();
+    navigate({ to: "/login" });
+  };
 
   // Cierra el sidebar móvil con Escape (a11y)
   useEffect(() => {
@@ -408,7 +434,7 @@ function DashboardLayout() {
         }}
         className="hidden md:flex"
       >
-        <Sidebar onYaris={() => setYarisOpen(true)} />
+        <Sidebar onYaris={() => setYarisOpen(true)} onLogout={cerrarSesion} />
       </aside>
 
       {/* Mobile overlay */}
@@ -438,7 +464,7 @@ function DashboardLayout() {
         }}
         className="md:hidden flex flex-col"
       >
-        <Sidebar onClose={() => setSidebarOpen(false)} onYaris={() => { setSidebarOpen(false); setYarisOpen(true); }} />
+        <Sidebar onClose={() => setSidebarOpen(false)} onYaris={() => { setSidebarOpen(false); setYarisOpen(true); }} onLogout={cerrarSesion} />
       </aside>
 
       {/* Main */}

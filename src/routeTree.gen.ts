@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogRouteImport } from './routes/blog'
+import { Route as CiaacRouteImport } from './routes/ciaac'
 import { Route as ConvocatoriaAeromexicoRouteImport } from './routes/convocatoria-aeromexico'
 import { Route as CuestionarioRouteImport } from './routes/cuestionario'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -41,6 +42,7 @@ import { Route as DashboardBitacoraRouteImport } from './routes/dashboard/bitaco
 import { Route as DashboardClasesRouteImport } from './routes/dashboard/clases'
 import { Route as DashboardConfiguracionRouteImport } from './routes/dashboard/configuracion'
 import { Route as DashboardEstudiemosRouteImport } from './routes/dashboard/estudiemos'
+import { Route as DashboardFacturacionRouteImport } from './routes/dashboard/facturacion'
 import { Route as DashboardFlashcardsRouteImport } from './routes/dashboard/flashcards'
 import { Route as DashboardLineaAereaRouteImport } from './routes/dashboard/linea-aerea'
 import { Route as DashboardPerfilRouteImport } from './routes/dashboard/perfil'
@@ -51,6 +53,7 @@ import { Route as AdminOperacionesDisputasRouteImport } from './routes/admin/ope
 import { Route as AdminOperacionesStripeRouteImport } from './routes/admin/operaciones/stripe'
 import { Route as AdminOperacionesYarisRouteImport } from './routes/admin/operaciones/yaris'
 import { Route as ApiPublicClientErrorsRouteImport } from './routes/api/public/client-errors'
+import { Route as ApiYarisStreamRouteImport } from './routes/api/yaris/stream'
 import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/materias/index'
 import { Route as DashboardMateriasSubjectIdRouteImport } from './routes/dashboard/materias/$subjectId'
 import { Route as AdminOperacionesDiaDayRouteImport } from './routes/admin/operaciones/dia.$day'
@@ -64,6 +67,11 @@ const IndexRoute = IndexRouteImport.update({
 const BlogRoute = BlogRouteImport.update({
   id: '/blog',
   path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CiaacRoute = CiaacRouteImport.update({
+  id: '/ciaac',
+  path: '/ciaac',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConvocatoriaAeromexicoRoute = ConvocatoriaAeromexicoRouteImport.update({
@@ -216,6 +224,11 @@ const DashboardEstudiemosRoute = DashboardEstudiemosRouteImport.update({
   path: '/estudiemos',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardFacturacionRoute = DashboardFacturacionRouteImport.update({
+  id: '/facturacion',
+  path: '/facturacion',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardFlashcardsRoute = DashboardFlashcardsRouteImport.update({
   id: '/flashcards',
   path: '/flashcards',
@@ -267,6 +280,11 @@ const ApiPublicClientErrorsRoute = ApiPublicClientErrorsRouteImport.update({
   path: '/api/public/client-errors',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiYarisStreamRoute = ApiYarisStreamRouteImport.update({
+  id: '/api/yaris/stream',
+  path: '/api/yaris/stream',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardMateriasIndexRoute = DashboardMateriasIndexRouteImport.update({
   id: '/materias/',
   path: '/materias/',
@@ -293,6 +311,7 @@ const ApiPublicPaymentsWebhookRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/blog': typeof BlogRoute
+  '/ciaac': typeof CiaacRoute
   '/convocatoria-aeromexico': typeof ConvocatoriaAeromexicoRoute
   '/cuestionario': typeof CuestionarioRoute
   '/dashboard': typeof DashboardRouteWithChildren
@@ -321,6 +340,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/configuracion': typeof DashboardConfiguracionRoute
   '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
+  '/dashboard/facturacion': typeof DashboardFacturacionRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/linea-aerea': typeof DashboardLineaAereaRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
@@ -332,6 +352,7 @@ export interface FileRoutesByFullPath {
   '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
   '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
+  '/api/yaris/stream': typeof ApiYarisStreamRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones/': typeof AdminOperacionesIndexRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
@@ -341,6 +362,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/blog': typeof BlogRoute
+  '/ciaac': typeof CiaacRoute
   '/convocatoria-aeromexico': typeof ConvocatoriaAeromexicoRoute
   '/cuestionario': typeof CuestionarioRoute
   '/faq': typeof FaqRoute
@@ -368,6 +390,7 @@ export interface FileRoutesByTo {
   '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/configuracion': typeof DashboardConfiguracionRoute
   '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
+  '/dashboard/facturacion': typeof DashboardFacturacionRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/linea-aerea': typeof DashboardLineaAereaRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
@@ -379,6 +402,7 @@ export interface FileRoutesByTo {
   '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
   '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
+  '/api/yaris/stream': typeof ApiYarisStreamRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones': typeof AdminOperacionesIndexRoute
   '/dashboard/materias': typeof DashboardMateriasIndexRoute
@@ -389,6 +413,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/blog': typeof BlogRoute
+  '/ciaac': typeof CiaacRoute
   '/convocatoria-aeromexico': typeof ConvocatoriaAeromexicoRoute
   '/cuestionario': typeof CuestionarioRoute
   '/dashboard': typeof DashboardRouteWithChildren
@@ -417,6 +442,7 @@ export interface FileRoutesById {
   '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/configuracion': typeof DashboardConfiguracionRoute
   '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
+  '/dashboard/facturacion': typeof DashboardFacturacionRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/linea-aerea': typeof DashboardLineaAereaRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
@@ -428,6 +454,7 @@ export interface FileRoutesById {
   '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
   '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
+  '/api/yaris/stream': typeof ApiYarisStreamRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones/': typeof AdminOperacionesIndexRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
@@ -439,6 +466,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/blog'
+    | '/ciaac'
     | '/convocatoria-aeromexico'
     | '/cuestionario'
     | '/dashboard'
@@ -467,6 +495,7 @@ export interface FileRouteTypes {
     | '/dashboard/clases'
     | '/dashboard/configuracion'
     | '/dashboard/estudiemos'
+    | '/dashboard/facturacion'
     | '/dashboard/flashcards'
     | '/dashboard/linea-aerea'
     | '/dashboard/perfil'
@@ -478,6 +507,7 @@ export interface FileRouteTypes {
     | '/admin/operaciones/stripe'
     | '/admin/operaciones/yaris'
     | '/api/public/client-errors'
+    | '/api/yaris/stream'
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones/'
     | '/dashboard/materias/'
@@ -487,6 +517,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/blog'
+    | '/ciaac'
     | '/convocatoria-aeromexico'
     | '/cuestionario'
     | '/faq'
@@ -514,6 +545,7 @@ export interface FileRouteTypes {
     | '/dashboard/clases'
     | '/dashboard/configuracion'
     | '/dashboard/estudiemos'
+    | '/dashboard/facturacion'
     | '/dashboard/flashcards'
     | '/dashboard/linea-aerea'
     | '/dashboard/perfil'
@@ -525,6 +557,7 @@ export interface FileRouteTypes {
     | '/admin/operaciones/stripe'
     | '/admin/operaciones/yaris'
     | '/api/public/client-errors'
+    | '/api/yaris/stream'
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones'
     | '/dashboard/materias'
@@ -534,6 +567,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/blog'
+    | '/ciaac'
     | '/convocatoria-aeromexico'
     | '/cuestionario'
     | '/dashboard'
@@ -562,6 +596,7 @@ export interface FileRouteTypes {
     | '/dashboard/clases'
     | '/dashboard/configuracion'
     | '/dashboard/estudiemos'
+    | '/dashboard/facturacion'
     | '/dashboard/flashcards'
     | '/dashboard/linea-aerea'
     | '/dashboard/perfil'
@@ -573,6 +608,7 @@ export interface FileRouteTypes {
     | '/admin/operaciones/stripe'
     | '/admin/operaciones/yaris'
     | '/api/public/client-errors'
+    | '/api/yaris/stream'
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones/'
     | '/dashboard/materias/'
@@ -583,6 +619,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BlogRoute: typeof BlogRoute
+  CiaacRoute: typeof CiaacRoute
   ConvocatoriaAeromexicoRoute: typeof ConvocatoriaAeromexicoRoute
   CuestionarioRoute: typeof CuestionarioRoute
   DashboardRoute: typeof DashboardRouteWithChildren
@@ -609,6 +646,7 @@ export interface RootRouteChildren {
   AdminOperacionesStripeRoute: typeof AdminOperacionesStripeRoute
   AdminOperacionesYarisRoute: typeof AdminOperacionesYarisRoute
   ApiPublicClientErrorsRoute: typeof ApiPublicClientErrorsRoute
+  ApiYarisStreamRoute: typeof ApiYarisStreamRoute
   AdminOperacionesIndexRoute: typeof AdminOperacionesIndexRoute
   AdminOperacionesDiaDayRoute: typeof AdminOperacionesDiaDayRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
@@ -628,6 +666,13 @@ declare module '@tanstack/react-router' {
       path: '/blog'
       fullPath: '/blog'
       preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ciaac': {
+      id: '/ciaac'
+      path: '/ciaac'
+      fullPath: '/ciaac'
+      preLoaderRoute: typeof CiaacRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/convocatoria-aeromexico': {
@@ -840,6 +885,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardEstudiemosRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/facturacion': {
+      id: '/dashboard/facturacion'
+      path: '/facturacion'
+      fullPath: '/dashboard/facturacion'
+      preLoaderRoute: typeof DashboardFacturacionRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/flashcards': {
       id: '/dashboard/flashcards'
       path: '/flashcards'
@@ -910,6 +962,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicClientErrorsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/yaris/stream': {
+      id: '/api/yaris/stream'
+      path: '/api/yaris/stream'
+      fullPath: '/api/yaris/stream'
+      preLoaderRoute: typeof ApiYarisStreamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard/materias/': {
       id: '/dashboard/materias/'
       path: '/materias'
@@ -949,6 +1008,7 @@ interface DashboardRouteChildren {
   DashboardClasesRoute: typeof DashboardClasesRoute
   DashboardConfiguracionRoute: typeof DashboardConfiguracionRoute
   DashboardEstudiemosRoute: typeof DashboardEstudiemosRoute
+  DashboardFacturacionRoute: typeof DashboardFacturacionRoute
   DashboardFlashcardsRoute: typeof DashboardFlashcardsRoute
   DashboardLineaAereaRoute: typeof DashboardLineaAereaRoute
   DashboardPerfilRoute: typeof DashboardPerfilRoute
@@ -967,6 +1027,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardClasesRoute: DashboardClasesRoute,
   DashboardConfiguracionRoute: DashboardConfiguracionRoute,
   DashboardEstudiemosRoute: DashboardEstudiemosRoute,
+  DashboardFacturacionRoute: DashboardFacturacionRoute,
   DashboardFlashcardsRoute: DashboardFlashcardsRoute,
   DashboardLineaAereaRoute: DashboardLineaAereaRoute,
   DashboardPerfilRoute: DashboardPerfilRoute,
@@ -984,6 +1045,7 @@ const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BlogRoute: BlogRoute,
+  CiaacRoute: CiaacRoute,
   ConvocatoriaAeromexicoRoute: ConvocatoriaAeromexicoRoute,
   CuestionarioRoute: CuestionarioRoute,
   DashboardRoute: DashboardRouteWithChildren,
@@ -1010,6 +1072,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminOperacionesStripeRoute: AdminOperacionesStripeRoute,
   AdminOperacionesYarisRoute: AdminOperacionesYarisRoute,
   ApiPublicClientErrorsRoute: ApiPublicClientErrorsRoute,
+  ApiYarisStreamRoute: ApiYarisStreamRoute,
   AdminOperacionesIndexRoute: AdminOperacionesIndexRoute,
   AdminOperacionesDiaDayRoute: AdminOperacionesDiaDayRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,

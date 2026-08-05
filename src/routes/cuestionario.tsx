@@ -18,7 +18,8 @@ import {
   clearActiveSession,
 } from "@/lib/store";
 import type { BankQuestion, YarisContext } from "@/lib/store";
-import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
+import { useYarisAsk, useYarisStream, toHistory } from "@/lib/yaris-ask";
+import { yarisToHtml } from "@/lib/yaris-format";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
 import { LA_OFICIAL_FUENTE } from "@/lib/store/seed-linea-aerea-oficial";
@@ -60,6 +61,8 @@ interface YarisMsg {
   role: "bot" | "user";
   text: string;
   cite?: string;
+  /** true mientras el modelo sigue escribiendo este mensaje. */
+  streaming?: boolean;
 }
 
 const LETTERS = ["A", "B", "C", "D"];
@@ -128,6 +131,13 @@ function CuestionarioPage() {
     search.qty ?? "",
   ].join("|");
   const storeKey = user ? sessionKey("aprendiendo", user.id, sessionVariant) : "";
+  /**
+   * A dónde vuelve "Salir": al módulo del que salió la sesión. Antes siempre
+   * caía en CIAAC, así que quien entraba desde Línea Aérea acababa en otro
+   * módulo al cerrar.
+   */
+  const exitTo: "/dashboard/banco" | "/dashboard/linea-aerea" =
+    search.banco === "la" || search.fuente ? "/dashboard/linea-aerea" : "/dashboard/banco";
   /** Nombre para el historial cuando la sesión es de Línea Aérea. */
   const quizTitulo = search.fuente
     ? LINEA_AEREA_QUIZZES.find((q) => q.code === search.fuente)?.titulo
@@ -148,6 +158,7 @@ function CuestionarioPage() {
   const [yarisInput, setYarisInput] = useState("");
   const [yarisTyping, setYarisTyping] = useState(false);
   const askYaris = useYarisAsk();
+  const streamYaris = useYarisStream();
   /** Preguntas ya explicadas por Yaris (para pedir otro enfoque al repetir). */
   const yarisExplainedRef = useRef<Set<string>>(new Set());
   const yarisBusyRef = useRef(false);
@@ -410,20 +421,56 @@ function CuestionarioPage() {
       },
     ]);
     setYarisTyping(true);
-    const answer = await askYaris({
-      history: [
-        {
-          role: "user",
-          content: again
-            ? "Explícame esta misma pregunta otra vez, pero de otra forma más sencilla, con otro ejemplo o analogía."
-            : "Explícame esta pregunta: por qué la correcta es correcta, por qué las demás no, y un tip para recordarlo.",
-        },
-      ],
+    const answer = await streamInto([
+      {
+        role: "user" as const,
+        content: again
+          ? "Explícame esta misma pregunta otra vez, pero de otra forma más sencilla, con otro ejemplo o analogía."
+          : "Explícame esta pregunta: por qué la correcta es correcta, por qué las demás no, y un tip para recordarlo.",
+      },
+    ], ctx);
+    yarisBusyRef.current = false;
+    void answer;
+  }
+
+  /**
+   * Pide la respuesta y la escribe en el chat conforme llega del modelo.
+   *
+   * Se reserva un mensaje vacío y cada fragmento lo va rellenando, así que la
+   * estudiante ve generarse el texto en vez de esperar en blanco. Si el
+   * streaming no está disponible, `streamYaris` cae a la petición normal y el
+   * mensaje se completa de una sola vez.
+   */
+  async function streamInto(
+    history: Array<{ role: "user" | "assistant"; content: string }>,
+    ctx: ReturnType<typeof yarisCtx>,
+  ) {
+    let slot = -1;
+    setYarisMsgs((prev) => {
+      slot = prev.length;
+      return [...prev, { role: "bot" as const, text: "", streaming: true }];
+    });
+    let plain = "";
+    const answer = await streamYaris({
+      history,
       ctx,
+      onDelta: (chunk) => {
+        plain += chunk;
+        const html = yarisToHtml(plain);
+        setYarisMsgs((prev) => {
+          const copy = [...prev];
+          if (copy[slot]) copy[slot] = { ...copy[slot], text: html, streaming: true };
+          return copy;
+        });
+      },
     });
     setYarisTyping(false);
-    yarisBusyRef.current = false;
-    setYarisMsgs((prev) => [...prev, { role: "bot", text: answer.text, cite: answer.cite ?? undefined }]);
+    setYarisMsgs((prev) => {
+      const copy = [...prev];
+      if (copy[slot]) copy[slot] = { role: "bot", text: answer.text, cite: answer.cite ?? undefined };
+      return copy;
+    });
+    return answer;
   }
 
   async function sendYarisMsg() {
@@ -433,12 +480,10 @@ function CuestionarioPage() {
     setYarisMsgs(next);
     setYarisInput("");
     setYarisTyping(true);
-    const answer = await askYaris({
-      history: toHistory(next.map((m) => ({ text: m.text, fromUser: m.role === "user" }))),
-      ctx: yarisCtx(),
-    });
-    setYarisTyping(false);
-    setYarisMsgs((prev) => [...prev, { role: "bot", text: answer.text, cite: answer.cite ?? undefined }]);
+    await streamInto(
+      toHistory(next.map((m) => ({ text: m.text, fromUser: m.role === "user" }))),
+      yarisCtx(),
+    );
   }
 
   function getOptionStyle(optIdx: number): React.CSSProperties {
@@ -519,7 +564,7 @@ function CuestionarioPage() {
         >
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
             <Link
-              to="/dashboard/banco"
+              to={exitTo}
               style={{
                 display: "flex", alignItems: "center", gap: 5,
                 color: "#647DA0", fontSize: "0.8rem", textDecoration: "none",
@@ -557,7 +602,7 @@ function CuestionarioPage() {
               Elige otra materia para practicar mientras agregamos más contenido.
             </p>
             <Link
-              to="/dashboard/banco"
+              to={exitTo}
               style={{
                 display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 7,
                 padding: "12px 20px", background: "#6C0820", color: "white",
@@ -640,7 +685,7 @@ function CuestionarioPage() {
       >
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <Link
-            to="/dashboard/banco"
+            to={exitTo}
             style={{
               display: "flex", alignItems: "center", gap: 5,
               color: "#647DA0", fontSize: "0.8rem", textDecoration: "none",
@@ -1155,9 +1200,16 @@ function CuestionarioPage() {
           style={
             isMobile && yarisOpen
               ? {
-                  position: "fixed", inset: 0, zIndex: 200,
+                  // Hoja inferior con altura acotada: a pantalla completa el
+                  // chat tapaba la pregunta y había que cerrarlo para releerla.
+                  position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 200,
+                  height: "min(62dvh, 460px)",
                   width: "100%", display: "flex", flexDirection: "column",
                   background: "white",
+                  borderTop: "1px solid rgba(61,93,145,0.12)",
+                  borderRadius: "18px 18px 0 0",
+                  boxShadow: "0 -18px 40px -16px rgba(15,26,51,0.35)",
+                  overflow: "hidden",
                 }
               : {
                   width: yarisOpen ? 340 : 0,
@@ -1244,7 +1296,8 @@ function CuestionarioPage() {
                     color: msg.role === "bot" ? "#22375C" : "white",
                   }}
                 >
-                  <span dangerouslySetInnerHTML={{ __html: msg.text }} />
+                  <span className="yaris-md" dangerouslySetInnerHTML={{ __html: msg.text }} />
+                  {msg.streaming && <span className="yaris-caret" aria-hidden="true" />}
                   {msg.cite && (
                     <span
                       style={{

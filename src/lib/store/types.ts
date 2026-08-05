@@ -122,7 +122,14 @@ export interface SimAttempt {
   id: string;
   userId: string;
   date: string;
+  /** Tamaño del examen: la calificación se saca sobre esto, en blanco cuenta mal. */
   total: number;
+  /**
+   * Preguntas que la estudiante realmente contestó. Se separa de `total`
+   * porque "preguntas respondidas" no debe inflarse con las que dejó vacías.
+   * Opcional: los intentos anteriores a este campo caen a `total`.
+   */
+  answered?: number;
   correct: number;
   scorePct: number;
   passed: boolean;

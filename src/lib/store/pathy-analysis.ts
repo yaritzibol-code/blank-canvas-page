@@ -114,7 +114,9 @@ function aciertosEntre(userId: string, desde: number, hasta: number) {
     .filter((a) => dentro(a.date))
     .forEach((a) => {
       correct += a.correct;
-      total += a.total;
+      // Sólo lo que realmente contestó: las que dejó en blanco no son
+      // "preguntas respondidas" aunque cuenten mal en la calificación.
+      total += a.answered ?? a.total;
     });
   return { correct, total };
 }

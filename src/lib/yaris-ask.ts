@@ -17,7 +17,8 @@
  */
 import { useServerFn } from "@tanstack/react-start";
 import { yarisAiChat } from "@/lib/yaris-ai.functions";
-import { canUseAI, useSessionUser, type YarisContext } from "@/lib/store";
+import { canUseAI, cloudEnabled, useSessionUser, type YarisContext } from "@/lib/store";
+import { supabase } from "@/integrations/supabase/client";
 import { yarisToHtml } from "@/lib/yaris-format";
 
 export interface YarisAnswer {
@@ -94,6 +95,105 @@ export function useYarisAsk() {
     } catch {
       // Sin conexión con el modelo: se entrega contenido real del curso.
       return officialExplanation(ctx, "No pude conectarme con la IA en este momento.");
+    }
+  };
+}
+
+/** Contexto de la pregunta tal como lo espera el servidor. */
+function serverContext(ctx: YarisContext): Record<string, unknown> {
+  const q = ctx.question;
+  return {
+    ...(ctx.materiaName && { materia: ctx.materiaName }),
+    ...(ctx.resourceTitle && { resourceTitle: ctx.resourceTitle }),
+    ...(q && {
+      questionText: q.text,
+      options: q.options,
+      correctIndex: q.correctIndex,
+      explanation: q.explanation,
+      ...(q.cite && { cite: q.cite }),
+    }),
+  };
+}
+
+export interface YarisStreamTurn extends YarisTurn {
+  /** Se llama con cada fragmento de texto plano según llega del modelo. */
+  onDelta: (chunk: string) => void;
+  signal?: AbortSignal;
+}
+
+/**
+ * Igual que `useYarisAsk()`, pero entrega la respuesta mientras se genera.
+ *
+ * Si el streaming no está disponible (sin nube, sin sesión, error de red o
+ * respuesta no-SSE) cae a la petición normal sin que la UI note el cambio: el
+ * texto simplemente aparece de golpe en vez de escribirse.
+ */
+export function useYarisStream() {
+  const ask = useYarisAsk();
+
+  return async function stream({ history, ctx, onDelta, signal }: YarisStreamTurn): Promise<YarisAnswer> {
+    if (!cloudEnabled()) return ask({ history, ctx });
+
+    let token: string | undefined;
+    try {
+      const { data } = await supabase.auth.getSession();
+      token = data.session?.access_token;
+    } catch {
+      token = undefined;
+    }
+    if (!token) return ask({ history, ctx });
+
+    try {
+      const res = await fetch("/api/yaris/stream", {
+        method: "POST",
+        signal,
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ history: history.slice(-16), context: serverContext(ctx) }),
+      });
+      if (!res.ok || !res.body) return ask({ history, ctx });
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let plain = "";
+      let cite: string | null = ctx.question?.cite ?? null;
+      let failed = false;
+
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        // Los eventos SSE llegan separados por una línea en blanco.
+        let sep = buffer.indexOf("\n\n");
+        while (sep !== -1) {
+          const raw = buffer.slice(0, sep);
+          buffer = buffer.slice(sep + 2);
+          sep = buffer.indexOf("\n\n");
+          const evt = /^event:\s*(.+)$/m.exec(raw)?.[1]?.trim();
+          const dataLine = /^data:\s*(.*)$/m.exec(raw)?.[1];
+          if (!dataLine) continue;
+          let payload: { t?: string; cite?: string | null; status?: number };
+          try {
+            payload = JSON.parse(dataLine);
+          } catch {
+            continue;
+          }
+          if (evt === "delta" && payload.t) {
+            plain += payload.t;
+            onDelta(payload.t);
+          } else if (evt === "done") {
+            cite = payload.cite ?? cite;
+          } else if (evt === "error") {
+            failed = true;
+          }
+        }
+      }
+
+      if (failed || plain.trim().length === 0) return ask({ history, ctx });
+      return { text: yarisToHtml(plain.trim()), cite, source: "ia" };
+    } catch (err) {
+      if ((err as Error)?.name === "AbortError") throw err;
+      return ask({ history, ctx });
     }
   };
 }

@@ -779,6 +779,19 @@ html[data-theme="oscuro"] [style*="linear-gradient(90deg, rgb(34, 55, 92) 0%, tr
 /* Los iconos heredan el color del texto para no quedarse en azul marino. */
 html[data-theme="oscuro"] svg { color: inherit; }
 
+/* Cursor de escritura mientras Yaris genera la respuesta. */
+.yaris-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: currentColor;
+  animation: yarisCaret 1s steps(2, start) infinite;
+}
+@keyframes yarisCaret { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+@media (prefers-reduced-motion: reduce) { .yaris-caret { animation: none } }
+
 /* Formato de las respuestas de Yaris (Markdown → HTML) */
 .yaris-md > *:first-child { margin-top: 0; }
 .yaris-md > *:last-child { margin-bottom: 0; }

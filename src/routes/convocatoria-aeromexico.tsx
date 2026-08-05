@@ -188,8 +188,8 @@ export const Route = createFileRoute("/convocatoria-aeromexico")({
               provider: { "@type": "Organization", name: "FlightPath", url: "https://flightpath.mx/" },
               offers: {
                 "@type": "Offer",
-                price: String(PRO_SETUP_FALLBACK),
-                priceCurrency: "MXN",
+                price: String(PRO_SETUP_FALLBACK.amount),
+                priceCurrency: PRO_SETUP_FALLBACK.currency,
                 category: "Paid",
                 url: CANONICAL,
               },

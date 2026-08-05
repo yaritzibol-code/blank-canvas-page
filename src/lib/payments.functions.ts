@@ -122,9 +122,11 @@ async function resolveOrCreateCustomer(
 export const createCheckoutSession = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(
-    (data: { priceId: string; returnUrl: string; environment: StripeEnv }) => {
+    (data: { priceId: string; returnUrl: string; environment: StripeEnv; promoCode?: string }) => {
       if (!/^[a-zA-Z0-9_-]+$/.test(data.priceId)) throw new Error("Invalid priceId");
-      return data;
+      const promoCode = data.promoCode?.trim().toUpperCase();
+      if (promoCode && !/^[A-Z0-9_-]{2,40}$/.test(promoCode)) throw new Error("Invalid promoCode");
+      return { ...data, ...(promoCode ? { promoCode } : {}) };
     },
   )
   .handler(async ({ data, context }): Promise<CheckoutResult> => {
@@ -168,6 +170,21 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         }
       }
 
+      // Cupones: si llega un código lo resolvemos y lo aplicamos directo;
+      // si no, el checkout deja escribir uno. Stripe no admite las dos cosas a
+      // la vez (`discounts` y `allow_promotion_codes` son excluyentes).
+      let discounts: Array<{ promotion_code: string }> | null = null;
+      if (data.promoCode) {
+        const found = await stripe.promotionCodes.list({
+          code: data.promoCode,
+          active: true,
+          limit: 1,
+        });
+        const promo = found.data[0];
+        if (!promo) return { error: `El cupón "${data.promoCode}" no existe o ya no está activo.` };
+        discounts = [{ promotion_code: promo.id }];
+      }
+
       const session = await stripe.checkout.sessions.create({
         line_items: [
           { price: stripePrice.id, quantity: 1 },
@@ -184,6 +201,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         customer_update: { address: "auto", name: "auto" },
         automatic_tax: { enabled: true },
         metadata: { userId: context.userId },
+        ...(discounts ? { discounts } : { allow_promotion_codes: true }),
         ...(isRecurring && {
           subscription_data: { metadata: { userId: context.userId } },
         }),
@@ -198,6 +216,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
           price_lookup_key: data.priceId,
           stripe_price_id: stripePrice.id,
           setup_price_id: setupPriceId,
+          promo_code: data.promoCode ?? null,
           customer: customerId,
           mode: session.mode,
         },
@@ -383,3 +402,130 @@ export const syncMyPlan = createServerFn({ method: "POST" })
     return result;
   });
 
+export interface BillingState {
+  /** Estado de la suscripción en Stripe (`active`, `canceled`…), null si no hay. */
+  status: string | null;
+  /** Fin del periodo pagado; con `cancelAtPeriodEnd` es la fecha de baja. */
+  currentPeriodEnd: string | null;
+  /** true cuando ya pidió la baja y sólo espera a que termine el periodo. */
+  cancelAtPeriodEnd: boolean;
+  /** `lookup_key` del precio contratado, para nombrar el plan. */
+  priceId: string | null;
+  /** true mientras el acceso Pro siga vigente. */
+  active: boolean;
+}
+
+/** Estado de facturación del usuario para la vista de suscripción. */
+export const getMyBilling = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { environment: StripeEnv }) => data)
+  .handler(async ({ data, context }): Promise<BillingState> => {
+    const { data: sub } = await context.supabase
+      .from("subscriptions")
+      .select("status,current_period_end,cancel_at_period_end,price_id")
+      .eq("user_id", context.userId)
+      .eq("environment", data.environment)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const status = (sub?.status as string | null) ?? null;
+    const end = (sub?.current_period_end as string | null) ?? null;
+    const vigente = end === null || new Date(end).getTime() > Date.now();
+    return {
+      status,
+      currentPeriodEnd: end,
+      cancelAtPeriodEnd: Boolean(sub?.cancel_at_period_end),
+      priceId: (sub?.price_id as string | null) ?? null,
+      active: Boolean(status) && vigente && ["active", "trialing", "past_due"].includes(status!),
+    };
+  });
+
+/**
+ * Baja de la suscripción desde la propia app.
+ *
+ * Programa la cancelación al final del periodo ya pagado (no corta el acceso
+ * a media mensualidad) y devuelve la fecha en la que terminará. Para cambios
+ * de tarjeta o facturas queda el portal de Stripe.
+ */
+export const cancelMySubscription = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { environment: StripeEnv }) => data)
+  .handler(async ({ data, context }): Promise<{ endsAt?: string | null; error?: string }> => {
+    const { data: sub } = await context.supabase
+      .from("subscriptions")
+      .select("stripe_subscription_id,status")
+      .eq("user_id", context.userId)
+      .eq("environment", data.environment)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const subId = sub?.stripe_subscription_id as string | undefined;
+    if (!subId) return { error: "No encontramos una suscripción activa a tu nombre." };
+
+    try {
+      const stripe = createStripeClient(data.environment);
+      const updated = await stripe.subscriptions.update(subId, { cancel_at_period_end: true });
+      const end = updated.items.data[0]?.current_period_end ?? null;
+      const endsAt = end ? new Date(end * 1000).toISOString() : null;
+      await context.supabase
+        .from("subscriptions")
+        .update({ cancel_at_period_end: true, updated_at: new Date().toISOString() })
+        .eq("stripe_subscription_id", subId);
+      await logBillingEvent({
+        event: "subscription_cancel_requested",
+        environment: data.environment,
+        userId: context.userId,
+        detail: { subscription: subId, ends_at: endsAt },
+      });
+      return { endsAt };
+    } catch (error) {
+      const message = getStripeErrorMessage(error);
+      await logBillingEvent({
+        event: "subscription_cancel_failed",
+        environment: data.environment,
+        userId: context.userId,
+        ok: false,
+        message,
+      });
+      return { error: message };
+    }
+  });
+
+/**
+ * Reactiva una suscripción que estaba programada para darse de baja.
+ */
+export const resumeMySubscription = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { environment: StripeEnv }) => data)
+  .handler(async ({ data, context }): Promise<{ ok?: true; error?: string }> => {
+    const { data: sub } = await context.supabase
+      .from("subscriptions")
+      .select("stripe_subscription_id")
+      .eq("user_id", context.userId)
+      .eq("environment", data.environment)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const subId = sub?.stripe_subscription_id as string | undefined;
+    if (!subId) return { error: "No encontramos una suscripción a tu nombre." };
+    try {
+      const stripe = createStripeClient(data.environment);
+      await stripe.subscriptions.update(subId, { cancel_at_period_end: false });
+      await context.supabase
+        .from("subscriptions")
+        .update({ cancel_at_period_end: false, updated_at: new Date().toISOString() })
+        .eq("stripe_subscription_id", subId);
+      await logBillingEvent({
+        event: "subscription_resumed",
+        environment: data.environment,
+        userId: context.userId,
+        detail: { subscription: subId },
+      });
+      return { ok: true };
+    } catch (error) {
+      return { error: getStripeErrorMessage(error) };
+    }
+  });
