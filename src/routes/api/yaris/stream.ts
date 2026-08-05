@@ -115,7 +115,9 @@ export const Route = createFileRoute("/api/yaris/stream")({
         const system = buildYarisSystemPrompt(await loadAdminPrompt(), {
           ...ctx,
           tono: profile.yarisTono ?? "normal",
+          largo: profile.yarisLargo ?? "normal",
         });
+
         const messages = fitInputBudget(system, parsed.history);
         const started = Date.now();
 
