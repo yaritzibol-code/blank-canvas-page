@@ -17,7 +17,7 @@ import {
 } from "@/lib/store";
 import type { BankQuestion, SimAnswer } from "@/lib/store";
 import { yarisAiChat } from "@/lib/yaris-ai.functions";
-import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
+import { yarisToHtml, sanitizeHtml, maskAnswer } from "@/lib/yaris-format";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { PathyMark } from "@/components/shared/PathyMark";
 import { QuestionImages } from "@/components/banco/QuestionImages";
