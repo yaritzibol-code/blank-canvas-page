@@ -223,6 +223,11 @@ export const YARIS_DEFAULT_PROMPT = [
 export function buildYarisSystemPrompt(adminPrompt: string | null, ctx: YarisPromptContext): string {
   let system = adminPrompt ?? YARIS_DEFAULT_PROMPT;
 
+  const persona = YARIS_PERSONAS[ctx.tono ?? "normal"];
+  if (persona) system += `\n\n${persona}`;
+
+
+
   if (ctx.resourceTitle) {
     system += `\n\nEl estudiante está leyendo "${ctx.resourceTitle}" en la biblioteca del curso. Si la duda se refiere a ese material, respóndela con tu conocimiento de aeronáutica y aclara que no puedes citar páginas concretas del PDF.`;
   }
