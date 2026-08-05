@@ -253,9 +253,9 @@ function FacturacionPage() {
           <span style={{ fontFamily: DISPLAY, fontSize: "1.7rem", fontWeight: 900, color: INK, lineHeight: 1 }}>
             {esAdmin ? "Administradora" : pro ? planLabel(billing, user.planNombre) : "Básica (gratis)"}
           </span>
-          {billing?.cancelAtPeriodEnd && (
-            <span style={{ padding: "3px 10px", borderRadius: 20, background: "#FDF3D6", color: "#856404", border: "1px solid #F0DFAE", fontSize: ".68rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
-              Baja programada
+          {!esAdmin && (
+            <span style={{ padding: "3px 10px", borderRadius: 20, background: estado.fondo, color: estado.color, border: `1px solid ${estado.borde}`, fontSize: ".68rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
+              {estado.texto}
             </span>
           )}
         </div>
@@ -272,7 +272,118 @@ function FacturacionPage() {
                   ? `Acceso Pro vigente${user.accessEnd ? ` hasta el ${fmtFecha(user.accessEnd)}` : ""}.`
                   : "No tienes una suscripción activa. Con la Básica puedes practicar con una parte del banco."}
         </div>
+        {!esAdmin && billing?.status && (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 12, marginTop: 16, paddingTop: 16, borderTop: "1px solid #EEF3F9" }}>
+            <div>
+              <div style={{ fontFamily: MONO, fontSize: ".6rem", letterSpacing: ".16em", textTransform: "uppercase", color: MIST }}>
+                {billing.cancelAtPeriodEnd ? "Acceso hasta" : "Próximo cobro"}
+              </div>
+              <div style={{ fontSize: ".95rem", fontWeight: 800, color: INK, marginTop: 4 }}>
+                {fmtFecha(billing.currentPeriodEnd)}
+              </div>
+            </div>
+            <div>
+              <div style={{ fontFamily: MONO, fontSize: ".6rem", letterSpacing: ".16em", textTransform: "uppercase", color: MIST }}>
+                Periodicidad
+              </div>
+              <div style={{ fontSize: ".95rem", fontWeight: 800, color: INK, marginTop: 4 }}>
+                {ciclo === "year" ? "Anual" : ciclo === "month" ? "Mensual" : "—"}
+              </div>
+            </div>
+            <div>
+              <div style={{ fontFamily: MONO, fontSize: ".6rem", letterSpacing: ".16em", textTransform: "uppercase", color: MIST }}>
+                Importe
+              </div>
+              <div style={{ fontSize: ".95rem", fontWeight: 800, color: INK, marginTop: 4 }}>
+                {formatPriceWithInterval(ciclo === "year" ? PRO_ANNUAL_FALLBACK : PRO_MONTHLY_FALLBACK)}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
+
+      {/* Cambio de periodicidad con prorrateo */}
+      {puedeCambiar && (
+        <div style={{ ...card, marginBottom: 16 }}>
+          <div style={{ fontFamily: MONO, fontSize: ".62rem", letterSpacing: ".18em", textTransform: "uppercase", color: MIST, marginBottom: 10 }}>
+            Cambiar periodicidad
+          </div>
+          <p style={{ fontSize: ".86rem", color: HAZE, lineHeight: 1.6, margin: "0 0 14px" }}>
+            {ciclo === "month"
+              ? `Pasa al plan anual (${formatPriceWithInterval(PRO_ANNUAL_FALLBACK)}) y paga menos por mes. Stripe descuenta lo que ya pagaste de este mes.`
+              : `Vuelve al plan mensual (${formatPriceWithInterval(PRO_MONTHLY_FALLBACK)}). Stripe te acredita el tiempo del año que no usaste.`}
+          </p>
+          <button
+            onClick={() => setSwitchTo(ciclo === "month" ? "year" : "month")}
+            disabled={busy}
+            style={{
+              padding: "11px 18px", borderRadius: 10, cursor: busy ? "wait" : "pointer",
+              background: INK, color: "white", border: "none",
+              fontSize: ".86rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif",
+            }}
+          >
+            {ciclo === "month" ? "Cambiar a plan anual" : "Cambiar a plan mensual"}
+          </button>
+        </div>
+      )}
+
+      {/* Historial de pagos */}
+      {!esAdmin && (
+        <div style={{ ...card, marginBottom: 16 }}>
+          <div style={{ fontFamily: MONO, fontSize: ".62rem", letterSpacing: ".18em", textTransform: "uppercase", color: MIST, marginBottom: 12 }}>
+            Historial de pagos
+          </div>
+          {loading ? (
+            <div style={{ fontSize: ".86rem", color: HAZE }}>Consultando tus cobros…</div>
+          ) : invoices.length === 0 ? (
+            <div style={{ fontSize: ".86rem", color: HAZE }}>
+              Todavía no hay cobros a tu nombre. Cuando pagues, aquí aparecerá cada recibo con su PDF.
+            </div>
+          ) : (
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: ".84rem" }}>
+                <thead>
+                  <tr style={{ textAlign: "left", color: MIST }}>
+                    <th style={{ padding: "6px 8px", fontWeight: 700 }}>Fecha</th>
+                    <th style={{ padding: "6px 8px", fontWeight: 700 }}>Concepto</th>
+                    <th style={{ padding: "6px 8px", fontWeight: 700 }}>Importe</th>
+                    <th style={{ padding: "6px 8px", fontWeight: 700 }}>Estado</th>
+                    <th style={{ padding: "6px 8px", fontWeight: 700 }}>Recibo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {invoices.map((inv) => (
+                    <tr key={inv.id} style={{ borderTop: "1px solid #EEF3F9", color: INK }}>
+                      <td style={{ padding: "8px" }}>{fmtFecha(inv.date)}</td>
+                      <td style={{ padding: "8px", color: HAZE }}>{inv.concepto}</td>
+                      <td style={{ padding: "8px", fontWeight: 700 }}>
+                        ${inv.amount.toLocaleString("es-MX")} {inv.currency}
+                      </td>
+                      <td style={{ padding: "8px", color: inv.status === "paid" ? "#1A7A4A" : "#856404", fontWeight: 700 }}>
+                        {inv.status === "paid" ? "Pagado" : inv.status === "open" ? "Pendiente" : (inv.status ?? "—")}
+                      </td>
+                      <td style={{ padding: "8px" }}>
+                        {inv.pdfUrl || inv.hostedUrl ? (
+                          <a
+                            href={(inv.pdfUrl ?? inv.hostedUrl) as string}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: WINE, fontWeight: 700, textDecoration: "none" }}
+                          >
+                            Ver PDF
+                          </a>
+                        ) : (
+                          "—"
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Planes */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 16, marginBottom: 16 }}>
