@@ -170,6 +170,11 @@ const AUDIT_COLOR: Record<string, string> = {
   webhook_received: "#f39c12",
   webhook_processed: "#2ecc71",
   webhook_failed: "#e74c3c",
+  plan_switched: "#2ecc71",
+  plan_switch_failed: "#e74c3c",
+  subscription_cancel_requested: "#f39c12",
+  subscription_cancel_failed: "#e74c3c",
+  subscription_resumed: "#2ecc71",
 };
 
 /** Bitácora de la app: checkout, portal, sincronización de plan y webhooks. */
