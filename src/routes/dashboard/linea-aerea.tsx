@@ -6,13 +6,16 @@
  * proceso y un manual del curso por tarjeta. Debajo, el historial permite
  * reanudar lo que quedó a medias.
  */
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import { useRequireAuth } from "@/lib/store";
 import {
   LINEA_AEREA_OFICIAL,
   LINEA_AEREA_OFICIAL_TOTAL,
   LINEA_AEREA_QUIZZES,
+  ATP_CHAPTERS,
+  ATP_TOTAL,
 } from "@/lib/store/linea-aerea-meta";
 import { BancoScreen } from "@/components/banco/BancoScreen";
 
