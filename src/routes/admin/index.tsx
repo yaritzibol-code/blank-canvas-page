@@ -11,6 +11,8 @@ import {
   timeAgo,
   activityVisual,
 } from "@/components/admin/AdminShell";
+import { BackendAudit } from "@/components/admin/BackendAudit";
+
 import {
   adminSummary,
   getReports,
