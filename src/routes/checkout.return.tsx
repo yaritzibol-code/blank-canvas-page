@@ -70,9 +70,10 @@ function CheckoutReturn() {
           : "Sin información de pago";
   const body =
     status === "active"
-      ? "Tu acceso Pro está activo. Te llevamos a tu dashboard…"
+      ? "Tu acceso Pro está activo. Te damos la bienvenida…"
       : status === "pending"
         ? "Estamos validando tu suscripción con Stripe. Esto tarda unos segundos."
+
         : session_id
           ? "Tu pago está en proceso. Si tu acceso Pro no aparece en un minuto, refresca el dashboard."
           : "No encontramos la sesión de pago. Si crees que es un error, escríbenos.";
