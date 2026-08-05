@@ -20,7 +20,8 @@ import {
   loadActiveSession,
   clearActiveSession,
 } from "@/lib/store";
-import type { BankQuestion, BankScope, YarisContext } from "@/lib/store";
+import type { AttemptAnswer, BankQuestion, BankScope, YarisContext } from "@/lib/store";
+import { PathyDebrief } from "@/components/shared/PathyDebrief";
 import { useYarisAsk, useYarisStream, toHistory } from "@/lib/yaris-ask";
 import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
 import { PathyMark } from "@/components/shared/PathyMark";
