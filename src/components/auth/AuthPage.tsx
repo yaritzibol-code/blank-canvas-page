@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Eye, EyeOff } from "lucide-react";
 import { register, login, resetPassword, ensureSeeded, useSessionUser } from "@/lib/store";
 import { lovable } from "@/integrations/lovable";
 
-async function signInWithGoogle(setError: (m: string) => void) {
+async function signInWithGoogle(setError: (m: string) => void, redirectTo?: string) {
   try {
     const res = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
     if (res.error) { setError(res.error.message || "No pudimos iniciar sesión con Google."); return; }
     if (res.redirected) return;
-    window.location.href = "/dashboard";
+    window.location.assign(redirectTo ?? "/dashboard");
   } catch (e) {
     setError(e instanceof Error ? e.message : "Error al iniciar sesión con Google.");
   }
@@ -85,6 +85,7 @@ const googleMsgStyle: React.CSSProperties = {
 };
 
 function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?: string }) {
+  const navigate = useNavigate();
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
   const [nombre, setNombre] = useState("");
@@ -118,7 +119,7 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
     // Toda cuenta entra primero a su inicio personal; el panel admin queda
     // disponible desde la navegación interna cuando corresponde.
     const dest = redirectTo ?? "/dashboard";
-    setTimeout(() => { window.location.href = dest; }, 400);
+    await navigate({ to: dest });
   }
 
   return (
@@ -190,7 +191,7 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
       </label>
 
       <Divider />
-      <GoogleButton onClick={() => signInWithGoogle((m) => setError(m))} />
+      <GoogleButton onClick={() => signInWithGoogle((m) => setError(m), redirectTo)} />
       {error && <p style={errorTextStyle}>{error}</p>}
       <SubmitButton loading={loading} onClick={handleRegister}>Crear cuenta gratis</SubmitButton>
 
@@ -206,6 +207,7 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
 }
 
 function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?: string }) {
+  const navigate = useNavigate();
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -232,7 +234,7 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
       return;
     }
     const dest = redirectTo ?? "/dashboard";
-    setTimeout(() => { window.location.href = dest; }, 400);
+    await navigate({ to: dest });
   }
 
   async function handleReset() {
@@ -309,7 +311,7 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
       {error && <p style={errorTextStyle}>{error}</p>}
       <SubmitButton loading={loading} onClick={handleLogin}>Iniciar sesión</SubmitButton>
       <Divider />
-      <GoogleButton onClick={() => signInWithGoogle((m) => setError(m))} />
+      <GoogleButton onClick={() => signInWithGoogle((m) => setError(m), redirectTo)} />
 
       <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#8DA1BE", marginTop: 4 }}>
         ¿No tienes cuenta?{" "}
@@ -397,6 +399,7 @@ function SubmitButton({ children, loading, onClick }: { children: React.ReactNod
 
 /* ─── Main AuthPage component ──────────────────────────── */
 export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirectTo?: string }) {
+  const navigate = useNavigate();
   const [tab, setTab] = useState<Tab>(initialTab);
   // Suscrito al store: cubre tanto la sesión ya activa al entrar como la que
   // aparece segundos después (retorno de Google OAuth, confirmación de correo).
@@ -407,8 +410,8 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
   }, []);
 
   useEffect(() => {
-    if (sessionUser) window.location.href = redirectTo ?? "/dashboard";
-  }, [sessionUser, redirectTo]);
+    if (sessionUser) void navigate({ to: redirectTo ?? "/dashboard", replace: true });
+  }, [sessionUser, redirectTo, navigate]);
 
   return (
     <div style={{

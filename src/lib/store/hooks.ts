@@ -4,7 +4,7 @@
  * (incluidas otras pestañas). En SSR devuelve el resultado sobre datos vacíos.
  */
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import { subscribe, getVersion } from "./db";
 import { ensureSeeded } from "./seed";
 import { getSessionUser, purgeExpiredAccounts, restoreCloudSession, isAuthSettled } from "./auth";
@@ -69,6 +69,7 @@ export function useRequireAuth(requiredRole?: "admin"): { user: User | null; rea
   const user = useSessionUser();
   const settled = useStore(() => isAuthSettled());
   const navigate = useNavigate();
+  const location = useLocation();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -76,11 +77,12 @@ export function useRequireAuth(requiredRole?: "admin"): { user: User | null; rea
   useEffect(() => {
     if (!mounted || !settled) return;
     if (!user) {
-      navigate({ to: "/login" });
+      const next = `${location.pathname}${location.searchStr}${location.hash}`;
+      navigate({ to: "/login", search: { next }, replace: true });
     } else if (requiredRole === "admin" && user.role !== "admin") {
       navigate({ to: "/dashboard" });
     }
-  }, [mounted, settled, user, requiredRole, navigate]);
+  }, [mounted, settled, user, requiredRole, navigate, location.pathname, location.searchStr, location.hash]);
 
   const ready = mounted && settled && !!user && (requiredRole !== "admin" || user.role === "admin");
   return { user, ready };
