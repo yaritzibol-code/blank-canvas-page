@@ -75,6 +75,29 @@ interface YarisMsg {
 
 const LETTERS = ["A", "B", "C", "D"];
 
+/**
+ * Red de seguridad del modo "te ayudo a pensar".
+ *
+ * Aunque el prompt del servidor prohíbe revelar la respuesta antes de que la
+ * estudiante elija, aquí se tapa cualquier fuga: el texto literal de la opción
+ * correcta y las frases del tipo "la respuesta correcta es …" se sustituyen
+ * antes de pintarse en el chat.
+ */
+function escapeRe(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+export function maskAnswer(text: string, correct: string): string {
+  let out = text;
+  const c = correct.trim();
+  if (c.length >= 4) out = out.replace(new RegExp(escapeRe(c), "gi"), "▮▮▮");
+  out = out.replace(
+    /\b(la\s+)?(respuesta|opci[oó]n|alternativa)\s+correcta\s+(es|ser[ií]a)[^.\n]*/gi,
+    "la respuesta correcta te toca deducirla a ti",
+  );
+  return out;
+}
+
 /* ─── Helpers de datos reales ───────────────────────── */
 
 function shuffle<T>(arr: T[]): T[] {
@@ -522,6 +545,10 @@ function CuestionarioPage() {
     history: Array<{ role: "user" | "assistant"; content: string }>,
     ctx: ReturnType<typeof yarisCtx>,
   ) {
+    // En modo "te ayudo a pensar" todo lo que escribe el modelo pasa por el
+    // filtro: si intenta soltar la correcta, se tapa antes de verse.
+    const guard = ctx.preAnswer ? (ctx.question?.options[ctx.question.correctIndex] ?? "") : "";
+    const clean = (s: string) => (guard ? maskAnswer(s, guard) : s);
     let slot = -1;
     setYarisMsgs((prev) => {
       slot = prev.length;
@@ -533,7 +560,7 @@ function CuestionarioPage() {
       ctx,
       onDelta: (chunk) => {
         plain += chunk;
-        const html = yarisToHtml(plain);
+        const html = yarisToHtml(clean(plain));
         setYarisMsgs((prev) => {
           const copy = [...prev];
           if (copy[slot]) copy[slot] = { ...copy[slot], text: html, streaming: true };
@@ -544,7 +571,7 @@ function CuestionarioPage() {
     setYarisTyping(false);
     setYarisMsgs((prev) => {
       const copy = [...prev];
-      if (copy[slot]) copy[slot] = { role: "bot", text: answer.text, cite: answer.cite ?? undefined };
+      if (copy[slot]) copy[slot] = { role: "bot", text: clean(answer.text), cite: answer.cite ?? undefined };
       return copy;
     });
     return answer;
@@ -697,6 +724,8 @@ function CuestionarioPage() {
 
   const currentQ = questions[currentIdx];
   const answeredCorrectly = answered && selectedIdx !== null && currentQ.options[selectedIdx].correct;
+  /** Yaris guía sin revelar mientras no haya respuesta elegida. */
+  const thinkMode = !answered;
   const scorePercent = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
   const scoreColor = scorePercent >= 70 ? "#2ecc71" : scorePercent >= 50 ? "#f39c12" : "#e74c3c";
 
@@ -808,7 +837,8 @@ function CuestionarioPage() {
               display: "flex", alignItems: "center", gap: 5,
             }}
           >
-            <Icon n="spark" size={16} /> <span className="hidden sm:inline">Explícamelo Yaris</span>
+            <Icon n={thinkMode ? "lightbulb" : "spark"} size={16} />{" "}
+            <span className="hidden sm:inline">{thinkMode ? "Ayúdame a pensar" : "Explícamelo Yaris"}</span>
           </button>
           <button
             onClick={() => {
@@ -1330,7 +1360,9 @@ function CuestionarioPage() {
               </div>
               <div>
                 <div style={{ fontSize: "0.86rem", fontWeight: 700, color: "white" }}>Yaris IA</div>
-                <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.8)" }}>Tutora de aviación 24/7</div>
+                <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.8)" }}>
+                  {thinkMode ? "Modo guía · no revela la respuesta" : "Tutora de aviación 24/7"}
+                </div>
               </div>
             </div>
             <button
@@ -1345,6 +1377,28 @@ function CuestionarioPage() {
               <Icon n="close" size={15} />
             </button>
           </div>
+
+          {/* Indicador de modo "te ayudo a pensar" */}
+          {thinkMode && (
+            <div
+              role="status"
+              style={{
+                flexShrink: 0,
+                display: "flex", alignItems: "flex-start", gap: 8,
+                padding: "10px 14px",
+                background: "rgba(243,156,18,0.10)",
+                borderBottom: "1px solid rgba(243,156,18,0.28)",
+                color: "#8a5a00",
+                fontSize: "0.74rem", lineHeight: 1.45,
+              }}
+            >
+              <span style={{ flexShrink: 0, marginTop: 1 }}><Icon n="lightbulb" size={14} color="#f39c12" /></span>
+              <span>
+                <b>Modo “te ayudo a pensar”.</b> Aún no eliges opción, así que Yaris te guía con
+                conceptos y preguntas: no te dará la respuesta hasta que marques una.
+              </span>
+            </div>
+          )}
 
           {/* Messages */}
           <div
@@ -1441,7 +1495,7 @@ function CuestionarioPage() {
               value={yarisInput}
               onChange={(e) => setYarisInput(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") sendYarisMsg(); }}
-              placeholder="Escribe tu duda..."
+              placeholder={thinkMode ? "Pregúntame conceptos, no la respuesta..." : "Escribe tu duda..."}
               style={{
                 flex: 1, border: "2px solid #F2DCDB", borderRadius: 18,
                 padding: "7px 12px", fontSize: "0.81rem",

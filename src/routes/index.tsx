@@ -284,23 +284,28 @@ export function Nav() {
   }, []);
   return (
     <header className={`sticky top-0 z-40 transition-all duration-300 ${scrolled ? "glass border-b border-ink/8" : "bg-transparent"}`}>
-      <div className="mx-auto max-w-[1240px] px-6 lg:px-8 h-[68px] flex items-center justify-between">
-        <Logo />
-        <nav className="hidden lg:flex items-center gap-8 text-[14px] font-medium text-ink/65">
-          {[
-            { label: "Home", href: "/" },
-            { label: "CIAAC", href: "/ciaac" },
-            // La convocatoria E190 vive dentro de la ruta de línea aérea.
-            { label: "Línea Aérea", href: "/convocatoria-aeromexico" },
-            { label: "Precios", href: "/#precios" },
-            { label: "Blog", href: "/blog" },
-          ].map((x) => (
-            <a key={x.label} href={x.href} className="hover:text-ink transition-colors">{x.label}</a>
-          ))}
-        </nav>
-        <div className="flex items-center gap-2">
+      <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8 h-[64px] sm:h-[68px] grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
+        <div className="min-w-0 flex items-center gap-8">
+          <Logo />
+          <nav className="hidden lg:flex items-center gap-8 text-[14px] font-medium text-ink/65">
+            {[
+              { label: "Home", href: "/" },
+              { label: "CIAAC", href: "/ciaac" },
+              // La convocatoria E190 vive dentro de la ruta de línea aérea.
+              { label: "Línea Aérea", href: "/convocatoria-aeromexico" },
+              { label: "Precios", href: "/#precios" },
+              { label: "Blog", href: "/blog" },
+            ].map((x) => (
+              <a key={x.label} href={x.href} className="hover:text-ink transition-colors">{x.label}</a>
+            ))}
+          </nav>
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
           <Btn kind="ghost" size="sm" className="hidden md:inline-flex" to="/login">Iniciar sesión</Btn>
-          <Btn kind="primary" size="sm" icon="arrow" to="/register">Comenzar gratis</Btn>
+          <Btn kind="primary" size="sm" icon="arrow" to="/register">
+            <span className="hidden sm:inline">Comenzar gratis</span>
+            <span className="sm:hidden">Empezar</span>
+          </Btn>
         </div>
       </div>
     </header>
@@ -315,7 +320,7 @@ function Hero() {
   return (
     <section className="relative">
       <PlaneField count={30} />
-      <div className="mx-auto max-w-[1240px] px-6 lg:px-8 pt-16 lg:pt-24 pb-20 lg:pb-28">
+      <div className="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8 pt-12 sm:pt-16 lg:pt-24 pb-16 sm:pb-20 lg:pb-28">
         <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-10 items-center">
           {/* LEFT */}
           <div className="relative z-10">
@@ -337,7 +342,7 @@ function Hero() {
           </div>
 
           {/* RIGHT */}
-          <div className="relative lg:h-[480px] flex items-center justify-center">
+          <div className="relative lg:h-[480px] flex flex-col items-center justify-center gap-6 lg:block">
             <PathyBubble size={300} className="lg:absolute lg:right-2 lg:top-2" />
             <div className="hidden lg:block absolute left-0 top-6 w-[230px] bg-ink rounded-2xl p-4 shadow-navy animate-float-y-sm">
               <div className="flex items-center gap-2 text-white/55 text-[11px] uppercase tracking-[0.16em] font-semibold mb-3">
@@ -361,7 +366,7 @@ function Hero() {
 
       {/* trust strip */}
       <div className="border-y border-ink/8 bg-white/50 backdrop-blur-sm">
-        <div className="mx-auto max-w-[1240px] px-6 lg:px-8 py-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
+        <div className="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8 py-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
           <span className="text-[11px] uppercase tracking-[0.2em] font-bold text-haze-400">Confiado por</span>
           {["Aeroméxico Formación", "Volaris Cadetes", "Mayo Aviation", "Cessna Academy", "Pilot.mx"].map((t) => (
             <span key={t} className="font-display text-[15px] text-ink/35 tracking-tight">{t}</span>
@@ -388,7 +393,7 @@ function HeroPathyCard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="absolute -bottom-2 right-2 lg:right-6 w-[250px] bg-white rounded-2xl p-3.5 shadow-float border border-ink/8 animate-float-y" style={{ animationDelay: "-2s" }}>
+    <div className="relative w-full max-w-[280px] lg:absolute lg:-bottom-2 lg:right-6 lg:w-[250px] bg-white rounded-2xl p-3.5 shadow-float border border-ink/8 animate-float-y" style={{ animationDelay: "-2s" }}>
       <div className="flex items-center gap-2 mb-1.5">
         <span className="w-6 h-6 rounded-full bg-ink grid place-items-center"><Icon n="spark" className="w-3 h-3 text-coral-400" /></span>
         <span className="text-[12px] font-bold text-ink">Pathy</span>
@@ -465,12 +470,12 @@ function Countdown({ show = true }: { show?: boolean }) {
 
   return (
     <section className="relative">
-      <div className="mx-auto max-w-[1240px] px-6 lg:px-8 -mt-8 lg:-mt-12 relative z-20">
+      <div className="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8 mt-10 lg:-mt-12 relative z-20">
         <div className="relative rounded-[28px] border border-burgundy/10 bg-white shadow-lift overflow-hidden">
           <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(130% 150% at 100% 0%, rgba(242,220,219,0.6), rgba(255,255,255,0) 55%)" }} />
           <div className="absolute -top-12 right-[14%] w-72 h-44 rounded-full bg-cherry/50 blur-3xl animate-breathe pointer-events-none" />
 
-          <div className="relative px-6 lg:px-10 py-8 lg:py-9 grid lg:grid-cols-[280px_1fr] gap-9 lg:gap-12 items-center">
+          <div className="relative px-5 sm:px-6 lg:px-10 py-7 sm:py-8 lg:py-9 grid lg:grid-cols-[280px_1fr] gap-8 lg:gap-12 items-center">
             <div className="lg:border-r border-burgundy/10 lg:pr-10">
               <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-bold text-lapis">
                 <span className="w-1.5 h-1.5 rounded-full bg-burgundy animate-pulse-dot" />CIAAC · Edición 2026
@@ -488,7 +493,7 @@ function Countdown({ show = true }: { show?: boolean }) {
             </div>
 
             <div>
-              <div className="relative h-20 px-1">
+              <div className="relative h-24 sm:h-20 px-1">
                 <div className="absolute left-0 top-0 text-[10px] uppercase tracking-[0.16em] font-bold text-haze-400">Hoy</div>
                 <div className="absolute right-0 top-0 text-right">
                   <div className="text-[10px] uppercase tracking-[0.16em] font-bold text-burgundy">CIAAC</div>
@@ -502,7 +507,7 @@ function Countdown({ show = true }: { show?: boolean }) {
                   <div key={pos} className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
                        style={{ left: `${pos}%`, background: pos <= prog ? "#6C0820" : "transparent", border: pos <= prog ? "none" : "1.5px solid rgba(61,93,145,0.4)" }} />
                 ))}
-                <div className="absolute top-1/2" style={{ left: `${prog}%`, transform: "translate(-50%,-50%)", transition: "left 1s linear" }}>
+                <div className="absolute top-1/2" style={{ left: `min(${prog}%, calc(100% - 26px))`, transform: "translate(-50%,-50%)", transition: "left 1s linear" }}>
                   <div className="absolute left-1/2 top-1/2 w-9 h-9 -translate-x-1/2 -translate-y-1/2 rounded-full border border-burgundy/55 animate-radar" />
                   <div className="absolute left-1/2 top-1/2 w-9 h-9 -translate-x-1/2 -translate-y-1/2 rounded-full border border-burgundy/45 animate-radar" style={{ animationDelay: "0.6s" }} />
                   <div className="absolute left-1/2 top-1/2 w-9 h-9 -translate-x-1/2 -translate-y-1/2 rounded-full border border-burgundy/35 animate-radar" style={{ animationDelay: "1.2s" }} />
@@ -555,14 +560,14 @@ function Showcase() {
   );
 
   return (
-    <section className="relative py-24 lg:py-32" id="como-funciona">
+    <section className="relative py-16 sm:py-24 lg:py-32" id="como-funciona">
       <PlaneField count={20} />
-      <div className="mx-auto max-w-[1240px] px-6 lg:px-8">
+      <div className="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
         <SectionHead center eyebrow="Tu cabina de estudio"
           title={<>Todo lo que necesitas <span className="text-coral-600">para aprobar el CIAAC.</span></>}
           sub="Un solo lugar para estudiar, practicar, resolver dudas y seguir tu progreso. Sin perder tiempo cambiando entre aplicaciones." />
         <div className="mt-7 flex justify-center">
-          <div className="inline-flex items-center gap-2.5 rounded-full border border-burgundy/15 bg-white/70 backdrop-blur px-4 py-2 shadow-card">
+          <div className="inline-flex max-w-full flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-full border border-burgundy/15 bg-white/70 backdrop-blur px-4 py-2 text-center shadow-card">
             <span className="relative flex w-2 h-2"><span className="absolute inset-0 rounded-full bg-burgundy animate-ping" /><span className="relative w-2 h-2 rounded-full bg-burgundy" /></span>
             <span className="text-[12.5px] font-semibold text-ink/70">Análisis personalizado para cada alumno —</span>
             <Fade k={s.name} className="text-[12.5px] font-bold text-burgundy">{s.name}</Fade>
@@ -577,13 +582,13 @@ function Showcase() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between px-2 lg:px-3 py-2 mb-4">
+          <div className="flex items-center justify-between gap-3 px-2 lg:px-3 py-2 mb-4">
             <div className="flex items-center gap-2.5">
               <Logo size={26} />
               <span className="hidden sm:inline text-[12px] text-ink/40 font-mono">/ <Fade k={s.name}>{s.name.toLowerCase()}</Fade></span>
             </div>
             <div className="flex items-center gap-4">
-              <Coord>HDG 047° · GS 142kt</Coord>
+              <span className="hidden sm:inline"><Coord>HDG 047° · GS 142kt</Coord></span>
               <div className="flex items-center gap-2">
                 <span className="w-8 h-8 rounded-full bg-haze-100 grid place-items-center text-ink/50"><Icon n="bell" className="w-4 h-4" /></span>
                 <span className="w-8 h-8 rounded-full bg-ink grid place-items-center text-white text-[12px] font-bold font-display"><Fade k={s.init}>{s.init}</Fade></span>
