@@ -7,7 +7,7 @@
  */
 
 /** ID de la cuenta de Google Ads, formato `AW-XXXXXXXXX`. */
-export const GOOGLE_ADS_ID = "";
+export const GOOGLE_ADS_ID = "AW-18369633402";
 
 /** Etiqueta `send_to` de la conversión de compra: `AW-XXXXXXXXX/etiqueta`. */
 export const GOOGLE_ADS_PURCHASE_LABEL = "";
