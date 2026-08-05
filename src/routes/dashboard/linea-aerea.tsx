@@ -16,6 +16,9 @@ import {
   LINEA_AEREA_QUIZZES,
   ATP_CHAPTERS,
   ATP_TOTAL,
+  JEPP_CHAPTERS,
+  JEPP_TOTAL,
+  type AtpChapter,
 } from "@/lib/store/linea-aerea-meta";
 import { BancoScreen } from "@/components/banco/BancoScreen";
 
@@ -276,15 +279,27 @@ function QuizCard({
   );
 }
 
-/* ─── Selector de capítulos del banco ATP ────────────── */
+/* ─── Selector de capítulos (bancos ATP y Jeppesen) ────────────── */
 
-function AtpChapterPicker({ onClose }: { onClose: () => void }) {
+function ChapterPicker({
+  code,
+  nombre,
+  chapters,
+  totalBanco,
+  onClose,
+}: {
+  code: string;
+  nombre: string;
+  chapters: AtpChapter[];
+  totalBanco: number;
+  onClose: () => void;
+}) {
   const navigate = useNavigate();
   const [sel, setSel] = useState<Set<number>>(new Set());
   const all = sel.size === 0;
   const total = all
-    ? ATP_TOTAL
-    : ATP_CHAPTERS.filter((c) => sel.has(c.num)).reduce((s, c) => s + c.total, 0);
+    ? totalBanco
+    : chapters.filter((c) => sel.has(c.num)).reduce((s, c) => s + c.total, 0);
 
   function toggle(num: number) {
     setSel((prev) => {
@@ -299,15 +314,16 @@ function AtpChapterPicker({ onClose }: { onClose: () => void }) {
     const caps = [...sel].sort((a, b) => a - b).join(",");
     void navigate({
       to: "/cuestionario",
-      search: (caps ? { fuente: "ATP", caps } : { fuente: "ATP" }) as never,
+      search: (caps ? { fuente: code, caps } : { fuente: code }) as never,
     });
   }
+
 
   return (
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="Elegir capítulos de ATP"
+      aria-label={`Elegir capítulos de ${nombre}`}
       onClick={onClose}
       style={{
         position: "fixed", inset: 0, zIndex: 60, background: "rgba(26,26,46,0.55)",
@@ -323,10 +339,10 @@ function AtpChapterPicker({ onClose }: { onClose: () => void }) {
         }}
       >
         <h3 style={{ fontFamily: DISPLAY, fontSize: "1.3rem", marginBottom: 6 }}>
-          ATP — elige capítulos
+          {nombre} — elige capítulos
         </h3>
         <p style={{ fontSize: "0.85rem", color: "#647DA0", marginBottom: 18, lineHeight: 1.5 }}>
-          Sin selección, el cuestionario mezcla todo el banco ATP. Marca uno o varios
+          Sin selección, el cuestionario mezcla todo el banco {nombre}. Marca uno o varios
           capítulos para enfocarte.
         </p>
 
@@ -340,11 +356,11 @@ function AtpChapterPicker({ onClose }: { onClose: () => void }) {
             background: all ? "rgba(61,93,145,0.08)" : "white", color: INK,
           }}
         >
-          Todo el banco ATP · {ATP_TOTAL} preguntas
+          Todo el banco {nombre} · {totalBanco} preguntas
         </button>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          {ATP_CHAPTERS.map((c) => {
+          {chapters.map((c) => {
             const on = sel.has(c.num);
             return (
               <button
@@ -402,8 +418,16 @@ function AtpChapterPicker({ onClose }: { onClose: () => void }) {
   );
 }
 
+/** Bancos que se estudian por capítulos (mismo flujo para ATP y Jeppesen). */
+const CHAPTER_BANKS: Record<string, { chapters: AtpChapter[]; total: number }> = {
+  ATP: { chapters: ATP_CHAPTERS, total: ATP_TOTAL },
+  JEPP: { chapters: JEPP_CHAPTERS, total: JEPP_TOTAL },
+};
+
 function QuizCards() {
-  const [atpOpen, setAtpOpen] = useState(false);
+  const [picker, setPicker] = useState<string | null>(null);
+  const pickerQuiz = picker ? LINEA_AEREA_QUIZZES.find((q) => q.code === picker) : null;
+  const pickerBank = picker ? CHAPTER_BANKS[picker] : null;
   return (
     <div style={{ maxWidth: 820, width: "100%", fontFamily: FONT, color: INK, marginBottom: 8 }}>
       <style>{quizCardsCss}</style>
@@ -411,7 +435,15 @@ function QuizCards() {
         <Icon n="book" size={18} color="#6C0820" /> Cuestionarios
       </h2>
 
-      {atpOpen && <AtpChapterPicker onClose={() => setAtpOpen(false)} />}
+      {picker && pickerBank && (
+        <ChapterPicker
+          code={picker}
+          nombre={pickerQuiz?.titulo ?? picker}
+          chapters={pickerBank.chapters}
+          totalBanco={pickerBank.total}
+          onClose={() => setPicker(null)}
+        />
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 20 }}>
         {/* Guía oficial del proceso */}
@@ -432,8 +464,9 @@ function QuizCards() {
         />
 
         {/* Un cuestionario por manual del curso */}
-        {LINEA_AEREA_QUIZZES.map((q) =>
-          q.code === "ATP" ? (
+        {LINEA_AEREA_QUIZZES.map((q) => {
+          const bank = CHAPTER_BANKS[q.code];
+          return bank ? (
             <QuizCard
               key={q.code}
               badge="Banco por capítulos"
@@ -441,12 +474,12 @@ function QuizCards() {
               titulo={q.titulo}
               descripcion={q.descripcion}
               features={[
-                `${ATP_TOTAL} preguntas en ${ATP_CHAPTERS.length} capítulos`,
+                `${bank.total} preguntas en ${bank.chapters.length} capítulos`,
                 "Elige uno, varios o todos los capítulos",
                 "Feedback inmediato por respuesta",
                 'Botón "Explícamelo Yaris" siempre visible',
               ]}
-              onStart={() => setAtpOpen(true)}
+              onStart={() => setPicker(q.code)}
               ctaLabel="Elegir capítulos →"
               pdfUrl={q.fileUrl}
             />
@@ -467,9 +500,10 @@ function QuizCards() {
               search={{ fuente: q.code }}
               pdfUrl={q.fileUrl}
             />
-          ),
-        )}
+          );
+        })}
       </div>
+
 
     </div>
   );

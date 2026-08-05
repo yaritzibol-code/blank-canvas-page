@@ -41,10 +41,10 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
   {
     code: "JEPP",
     titulo: "Jeppesen",
-    descripcion: "General Airway Manual, sección Introduction: cartas y simbología.",
+    descripcion: "General Airway Manual — banco completo por capítulos del manual.",
     materia: "navegacion",
     icon: "map",
-    total: 50,
+    total: 644,
     fileUrl: "https://drive.google.com/file/d/1NdiWKEH7vqMqW5Zst_UDyAHnu5IxJMGx/preview",
   },
   {
@@ -94,3 +94,16 @@ export const ATP_CHAPTERS: AtpChapter[] = [
 ];
 
 export const ATP_TOTAL = ATP_CHAPTERS.reduce((s, c) => s + c.total, 0) + 50;
+
+/** Capítulos del Jeppesen General Airway Manual (misma lógica que ATP). */
+export const JEPP_CHAPTERS: AtpChapter[] = [
+  { num: 0, titulo: "Introducción", tituloEn: "Introduction", total: 50 },
+  { num: 1, titulo: "Definiciones y abreviaturas", tituloEn: "Definitions and Abbreviations", total: 150 },
+  { num: 2, titulo: "Leyenda de cartas", tituloEn: "Chart Legend", total: 150 },
+  { num: 3, titulo: "Formato de carta", tituloEn: "Chart Format Description Information", total: 30 },
+  { num: 4, titulo: "Letreros y marcas", tituloEn: "Signs and Markings", total: 100 },
+  { num: 5, titulo: "Guía visual de atraque (VDGS)", tituloEn: "Visual Docking Guidance Systems", total: 150 },
+  { num: 6, titulo: "NOTAM estatales", tituloEn: "Application of State NOTAMs", total: 14 },
+];
+
+export const JEPP_TOTAL = JEPP_CHAPTERS.reduce((s, c) => s + c.total, 0);

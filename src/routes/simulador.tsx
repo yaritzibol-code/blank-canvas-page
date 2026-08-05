@@ -19,6 +19,7 @@ import { yarisAiChat } from "@/lib/yaris-ai.functions";
 import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { PathyMark } from "@/components/shared/PathyMark";
+import { QuestionImages } from "@/components/banco/QuestionImages";
 
 export const Route = createFileRoute("/simulador")({
   component: SimuladorPage,
@@ -1274,6 +1275,9 @@ function SimuladorPage() {
               <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", color: "#22375C", lineHeight: 1.5, marginBottom: 24 }}>
                 {examQ?.text ?? ""}
               </p>
+
+              <QuestionImages files={examQ?.imagenes} />
+
 
               <div role="radiogroup" aria-label="Opciones de respuesta" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {(examQ?.options ?? []).map((opt, oi) => {

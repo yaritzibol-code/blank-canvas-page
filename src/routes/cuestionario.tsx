@@ -23,6 +23,7 @@ import { useYarisAsk, useYarisStream, toHistory } from "@/lib/yaris-ask";
 import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
 import { PathyMark } from "@/components/shared/PathyMark";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
+import { QuestionImages } from "@/components/banco/QuestionImages";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
 import { LA_OFICIAL_FUENTE } from "@/lib/store/seed-linea-aerea-oficial";
 import { LINEA_AEREA_OFICIAL, LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
@@ -59,6 +60,8 @@ interface Question {
   text: string;
   options: { text: string; correct: boolean }[];
   feedback: { correct: string; incorrect: string; cite: string };
+  /** Láminas del manual (bucket `jeppesen-images`), si el reactivo las trae. */
+  imagenes?: string[];
 }
 
 interface YarisMsg {
@@ -102,6 +105,7 @@ function toLocalQ(q: BankQuestion): Question {
     correctIndex: q.correctIndex,
     explanation: q.explanation,
     text: q.text,
+    imagenes: q.imagenes,
     options: q.options.map((text, i) => ({ text, correct: i === q.correctIndex })),
     feedback: {
       correct: `¡Correcto! ${q.explanation}`,
@@ -839,6 +843,10 @@ function CuestionarioPage() {
             >
               {currentQ.text}
             </p>
+
+            <QuestionImages files={currentQ.imagenes} />
+
+
 
             {/* Options */}
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
