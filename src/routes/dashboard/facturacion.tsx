@@ -191,6 +191,28 @@ function FacturacionPage() {
     }
   };
 
+  /** Cambio mensual ⇄ anual: Stripe prorratea y cobra sólo la diferencia. */
+  const doSwitch = async (interval: "month" | "year") => {
+    setBusy(true);
+    setError(null);
+    setMsg(null);
+    try {
+      const res = await switchMyPlan({ data: { environment: getStripeEnvironment(), interval } });
+      if (res.error) setError(res.error);
+      else {
+        setMsg(
+          `Listo, ahora estás en el plan ${interval === "year" ? "anual" : "mensual"}. Stripe ajustó el cobro por lo que ya habías pagado${res.renewsAt ? ` y tu próxima renovación es el ${fmtFecha(res.renewsAt)}` : ""}.`,
+        );
+        await refresh();
+      }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "No pudimos cambiar tu plan.");
+    } finally {
+      setBusy(false);
+      setSwitchTo(null);
+    }
+  };
+
   return (
     <div style={{ fontFamily: "'Manrope', sans-serif", maxWidth: 860 }}>
       <PaymentTestModeBanner />
