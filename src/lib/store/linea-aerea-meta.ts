@@ -32,10 +32,10 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
   {
     code: "PHAK",
     titulo: "Handbook",
-    descripcion: "Pilot's Handbook of Aeronautical Knowledge (FAA-H-8083-25C).",
+    descripcion: "Pilot's Handbook of Aeronautical Knowledge (FAA-H-8083-25C) — banco por capítulos.",
     materia: "aerodinamica",
     icon: "plane",
-    total: 50,
+    total: 1475,
     fileUrl: "https://drive.google.com/file/d/1It2xSBSn-vX4xYDFQHH2DMJd02J_k_zO/preview",
   },
   {
