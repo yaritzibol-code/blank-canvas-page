@@ -315,6 +315,48 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                 );
               })}
             </div>
+
+            {/* Personalidad de Yaris IA */}
+            <div style={{ marginTop: 22, paddingTop: 18, borderTop: "1px solid #E3EAF5" }}>
+              <div style={{ fontSize: 14.5, fontWeight: 800, color: INK, marginBottom: 2 }}>
+                ¿Cómo quieres que te hable Yaris?
+              </div>
+              <div style={{ fontSize: 12.5, color: "#647DA0", marginBottom: 12 }}>
+                Tu tutora IA. Cambia su forma de hablar, nunca su rigor técnico. Puedes cambiarlo en Configuración.
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {YARIS_TONOS.map((t) => {
+                  const activo = yarisTono === t.key;
+                  return (
+                    <button
+                      key={t.key}
+                      onClick={() => setYarisTono(t.key)}
+                      style={{
+                        display: "flex", alignItems: "center", gap: 12, textAlign: "left",
+                        padding: "14px 16px", borderRadius: 14, cursor: "pointer", width: "100%",
+                        background: activo ? "rgba(108,8,32,0.05)" : "#fff",
+                        border: `1.5px solid ${activo ? BRAND : "#E3EAF5"}`,
+                        fontFamily: FONT,
+                      }}
+                    >
+                      <span
+                        style={{
+                          width: 20, height: 20, borderRadius: "50%", flexShrink: 0,
+                          border: `2px solid ${activo ? BRAND : "#C9D6E8"}`,
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                        }}
+                      >
+                        {activo && <span style={{ width: 10, height: 10, borderRadius: "50%", background: BRAND }} />}
+                      </span>
+                      <span>
+                        <span style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: INK }}>{t.label}</span>
+                        <span style={{ display: "block", fontSize: 12.5, color: "#647DA0", marginTop: 2 }}>{t.ejemplo}</span>
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
             <NavBtns onBack={() => go(1)} onNext={advance} />
           </div>
         )}
