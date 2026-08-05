@@ -118,7 +118,7 @@ function QuizCard({
   ctaLabel = "Iniciar cuestionario →",
 }: {
   dark?: boolean;
-  badge: string;
+  badge?: string;
   icon: FPIconName;
   titulo: string;
   descripcion: string;
@@ -147,19 +147,21 @@ function QuizCard({
         boxShadow: dark ? "none" : "0 2px 16px rgba(61,93,145,0.07)",
       }}
     >
-      {/* Distintivo */}
-      <div
-        style={{
-          display: "inline-flex", alignItems: "center", gap: 6, alignSelf: "flex-start",
-          background: dark ? "rgba(242,174,188,0.16)" : "rgba(61,93,145,0.08)",
-          color: dark ? "#F2AEBC" : "#3D5D91",
-          padding: "5px 12px", borderRadius: 20, marginBottom: 18,
-          fontSize: "0.68rem", fontWeight: 700,
-          textTransform: "uppercase", letterSpacing: "0.06em",
-        }}
-      >
-        <Icon n={icon} size={13} /> {badge}
-      </div>
+      {/* Distintivo (opcional) */}
+      {badge ? (
+        <div
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 6, alignSelf: "flex-start",
+            background: dark ? "rgba(242,174,188,0.16)" : "rgba(61,93,145,0.08)",
+            color: dark ? "#F2AEBC" : "#3D5D91",
+            padding: "5px 12px", borderRadius: 20, marginBottom: 18,
+            fontSize: "0.68rem", fontWeight: 700,
+            textTransform: "uppercase", letterSpacing: "0.06em",
+          }}
+        >
+          <Icon n={icon} size={13} /> {badge}
+        </div>
+      ) : null}
 
       <div style={{ color: dark ? "#F2AEBC" : "#6C0820", marginBottom: 12, display: "flex" }}>
         <Icon n={icon} size={26} />
@@ -472,7 +474,7 @@ function QuizCards() {
           return bank ? (
             <QuizCard
               key={q.code}
-              badge="Banco por capítulos"
+              
               icon={q.icon as FPIconName}
               titulo={q.titulo}
               descripcion={q.descripcion}

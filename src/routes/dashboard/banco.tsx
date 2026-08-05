@@ -15,5 +15,6 @@ export const Route = createFileRoute("/dashboard/banco")({
 
 function BancoPage() {
   const search = Route.useSearch();
-  return <BancoScreen la={search.banco === "la"} initialModal={search.open ?? null} />;
+  // CIAAC no muestra el panel de Extras del cuestionario.
+  return <BancoScreen la={search.banco === "la"} extras={false} initialModal={search.open ?? null} />;
 }
