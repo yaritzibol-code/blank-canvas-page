@@ -32,10 +32,10 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
   {
     code: "PHAK",
     titulo: "Handbook",
-    descripcion: "Pilot's Handbook of Aeronautical Knowledge (FAA-H-8083-25C).",
+    descripcion: "Pilot's Handbook of Aeronautical Knowledge (FAA-H-8083-25C) — banco por capítulos.",
     materia: "aerodinamica",
     icon: "plane",
-    total: 50,
+    total: 1475,
     fileUrl: "https://drive.google.com/file/d/1It2xSBSn-vX4xYDFQHH2DMJd02J_k_zO/preview",
   },
   {
@@ -107,3 +107,20 @@ export const JEPP_CHAPTERS: AtpChapter[] = [
 ];
 
 export const JEPP_TOTAL = JEPP_CHAPTERS.reduce((s, c) => s + c.total, 0);
+
+/** Capítulos del Pilot's Handbook of Aeronautical Knowledge (FAA-H-8083-25C). */
+export const PHAK_CHAPTERS: AtpChapter[] = [
+  { num: 0, titulo: "Repaso general", tituloEn: "General Review", total: 50 },
+  { num: 2, titulo: "Toma de Decisiones Aeronáuticas", tituloEn: "Aeronautical Decision-Making", total: 185 },
+  { num: 3, titulo: "Construcción de la Aeronave", tituloEn: "Aircraft Construction", total: 85 },
+  { num: 4, titulo: "Principios de Vuelo", tituloEn: "Principles of Flight", total: 85 },
+  { num: 5, titulo: "Aerodinámica del Vuelo", tituloEn: "Aerodynamics of Flight", total: 240 },
+  { num: 6, titulo: "Controles de Vuelo", tituloEn: "Flight Controls", total: 85 },
+  { num: 7, titulo: "Sistemas de la Aeronave", tituloEn: "Aircraft Systems", total: 230 },
+  { num: 8, titulo: "Instrumentos de Vuelo", tituloEn: "Flight Instruments", total: 165 },
+  { num: 9, titulo: "Manuales de Vuelo y Otros Documentos", tituloEn: "Flight Manuals and Other Documents", total: 85 },
+  { num: 10, titulo: "Peso y Balance", tituloEn: "Weight and Balance", total: 100 },
+  { num: 11, titulo: "Desempeño de la Aeronave", tituloEn: "Aircraft Performance", total: 165 },
+];
+
+export const PHAK_TOTAL = PHAK_CHAPTERS.reduce((s, c) => s + c.total, 0);
