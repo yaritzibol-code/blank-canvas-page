@@ -4,6 +4,16 @@ import { Eye, EyeOff } from "lucide-react";
 import { register, login, resetPassword, ensureSeeded, useSessionUser } from "@/lib/store";
 import { lovable } from "@/integrations/lovable";
 
+/**
+ * El destino post-login puede traer query (p. ej. `/dashboard/planes?checkout=1&plan=anual`).
+ * El router necesita ruta y search por separado, si no la navegación se rompe.
+ */
+function destino(dest: string): { to: string; search?: Record<string, string> } {
+  const [path, qs] = dest.split("?");
+  if (!qs) return { to: path };
+  return { to: path, search: Object.fromEntries(new URLSearchParams(qs).entries()) };
+}
+
 async function signInWithGoogle(setError: (m: string) => void, redirectTo?: string) {
   try {
     const res = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
