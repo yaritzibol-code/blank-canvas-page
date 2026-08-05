@@ -23,10 +23,10 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
   {
     code: "ATP",
     titulo: "ATP",
-    descripcion: "Airline Transport Pilot, excepto Performance y Weight & Balance.",
+    descripcion: "Airline Transport Pilot Test Prep (ASA) — banco completo por capítulos.",
     materia: "operaciones",
     icon: "doc",
-    total: 50,
+    total: 1241,
     fileUrl: "https://drive.google.com/file/d/1x_BE-nE3wNp3DJ2iEqGMjcxcPxLOzuaa/preview",
   },
   {
@@ -72,3 +72,25 @@ export const LINEA_AEREA_OFICIAL = {
   titulo: "Guía de Estudio Examen de Ingreso Embraer 190 Aeroméxico Connect",
   descripcion: "Las preguntas oficiales del proceso, tal como vienen en la guía de la convocatoria.",
 } as const;
+
+/**
+ * Capítulos del banco ATP (ASA Airline Transport Pilot Test Prep). El banco
+ * principal es "ATP" y cada capítulo es un subconjunto seleccionable.
+ */
+export interface AtpChapter {
+  num: number;
+  titulo: string;
+  tituloEn: string;
+  total: number;
+}
+
+export const ATP_CHAPTERS: AtpChapter[] = [
+  { num: 1, titulo: "Regulaciones", tituloEn: "Regulations", total: 355 },
+  { num: 2, titulo: "Equipo, Navegación e Instalaciones", tituloEn: "Equipment, Navigation and Facilities", total: 205 },
+  { num: 3, titulo: "Aerodinámica", tituloEn: "Aerodynamics", total: 106 },
+  { num: 6, titulo: "Operaciones de Vuelo", tituloEn: "Flight Operations", total: 213 },
+  { num: 7, titulo: "Emergencias, Peligros y Fisiología", tituloEn: "Emergencies, Hazards and Flight Physiology", total: 80 },
+  { num: 8, titulo: "Meteorología y Servicios Meteorológicos", tituloEn: "Meteorology and Weather Services", total: 232 },
+];
+
+export const ATP_TOTAL = ATP_CHAPTERS.reduce((s, c) => s + c.total, 0) + 50;
