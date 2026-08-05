@@ -33,7 +33,7 @@ export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: s
     let alive = true;
     setFailed(false);
 
-    const cached = names.map((n) => signed.get(n));
+    const cached = names.map((n) => signed.get(`${BUCKET}/${n}`));
     if (cached.every((u): u is string => !!u)) {
       setUrls(cached);
       return;
@@ -54,7 +54,7 @@ export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: s
       const out: string[] = [];
       data.forEach((row, i) => {
         if (row.signedUrl) {
-          signed.set(names[i], row.signedUrl);
+          signed.set(`${BUCKET}/${names[i]}`, row.signedUrl);
           out.push(row.signedUrl);
         }
       });
@@ -65,7 +65,7 @@ export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: s
     return () => {
       alive = false;
     };
-  }, [key]);
+  }, [key, BUCKET]);
 
   if (!files || files.length === 0) return null;
 
