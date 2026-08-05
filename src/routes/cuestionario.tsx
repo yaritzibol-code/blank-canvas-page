@@ -1333,31 +1333,16 @@ function CuestionarioPage() {
               )}
             </div>
 
-            {/* Pathy tip */}
-            <div
-              style={{
-                background: "linear-gradient(135deg,#F2DCDB,#fce4ec)",
-                borderRadius: 14, padding: "16px 18px",
-                width: "100%", maxWidth: 580,
-                marginBottom: 20,
-                display: "flex", alignItems: "flex-start", gap: 10,
-                fontSize: "0.85rem", color: "#555", lineHeight: 1.6,
-              }}
-            >
-              <PathyMark size={28} />
-              <div>
-                <strong style={{ color: "#6C0820" }}>Pathy recomienda:</strong>{" "}
-                {weakestSession && weakestSession.pct < 70 ? (
-                  <>
-                    ¡Buen trabajo! Tu punto más débil de esta sesión fue{" "}
-                    <strong>{weakestSession.name}</strong> ({weakestSession.pct}% de aciertos).
-                    Te recomiendo hacer una sesión de preguntas solo de esa materia. ¡Pronto la dominarás!
-                  </>
-                ) : (
-                  <>¡Excelente sesión! Dominaste todas las materias que practicaste hoy. Sigue con este ritmo de estudio.</>
-                )}
-              </div>
-            </div>
+            {/* Informe real de Pathy */}
+            {user && (
+              <PathyDebrief
+                userId={user.id}
+                origen="cuestionario"
+                titulo={quizTitulo ?? (sessionMaterias.length === 1 ? sessionMaterias[0].name : "Cuestionario")}
+                scorePct={scorePercent}
+                answers={sessionAnswers()}
+              />
+            )}
 
             {/* Buttons */}
             <div style={{ display: "flex", gap: 10, width: "100%", maxWidth: 580, flexWrap: "wrap" }}>
