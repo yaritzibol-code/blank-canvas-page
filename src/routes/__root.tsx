@@ -135,7 +135,7 @@ const PREFS_BOOT_SCRIPT = `(function(){try{var p=JSON.parse(localStorage.getItem
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: PREFS_BOOT_SCRIPT }} />
         <HeadContent />
