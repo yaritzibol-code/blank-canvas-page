@@ -204,10 +204,42 @@ function PlanesPage() {
 
   if (!ready) return null;
 
+  // Transición continua desde /precios: mientras se pide la sesión de Stripe
+  // se muestra el mismo lienzo del checkout, no la tabla de planes.
+  const preparando = checkout === 1 && !clientSecret && !error && !isProActive;
+
+  if (preparando) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh", background: "#F7F9FC", fontFamily: FONT,
+          display: "grid", placeItems: "center", padding: 24, textAlign: "center",
+        }}
+        aria-live="polite"
+      >
+        <div>
+          <div
+            style={{
+              width: 40, height: 40, margin: "0 auto 18px", borderRadius: "50%",
+              border: `3px solid ${BRAND}22`, borderTopColor: BRAND,
+              animation: "fp-spin .8s linear infinite",
+            }}
+          />
+          <div style={{ fontFamily: DISPLAY, fontSize: 22, color: INK, marginBottom: 6 }}>
+            Preparando tu pago seguro
+          </div>
+          <div style={{ fontSize: 14, color: "#5B6B86" }}>
+            Plan Pro {ciclo === "anual" ? "anual" : "mensual"} · conectando con Stripe…
+          </div>
+        </div>
+        <style>{"@keyframes fp-spin{to{transform:rotate(360deg)}}"}</style>
+      </div>
+    );
+  }
+
   if (clientSecret) {
     return (
       <div style={{ minHeight: "100vh", background: "#F7F9FC", fontFamily: FONT }}>
-        <PaymentTestModeBanner />
         <div style={{ padding: "16px clamp(16px,4vw,32px)" }}>
           <button
             onClick={() => setClientSecret(null)}
@@ -227,7 +259,7 @@ function PlanesPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#F7F9FC", fontFamily: FONT }}>
-      <PaymentTestModeBanner />
+
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "clamp(24px,5vw,48px) 20px 80px" }}>
         <button
           onClick={() => navigate({ to: "/dashboard" })}
