@@ -83,6 +83,12 @@ export interface BankQuestion {
   materia: string; // slug de materia o "" (sin clasificar)
   /** Código del manual de origen (cursos de línea aérea): ATP, PHAK, JEPP, ANX10, CPAM. */
   fuente?: string;
+  /** Capítulo del manual (ATP se organiza por capítulos). */
+  capitulo?: number;
+  /** Título del capítulo, para mostrarlo en la UI. */
+  capituloTitulo?: string;
+  /** Sección del capítulo (subtema del libro). */
+  seccion?: string;
   text: string;
   options: string[];
   correctIndex: number;
