@@ -105,6 +105,7 @@ function toLocalQ(q: BankQuestion): Question {
     correctIndex: q.correctIndex,
     explanation: q.explanation,
     text: q.text,
+    imagenes: q.imagenes,
     options: q.options.map((text, i) => ({ text, correct: i === q.correctIndex })),
     feedback: {
       correct: `¡Correcto! ${q.explanation}`,
