@@ -463,9 +463,18 @@ function CuestionarioPage() {
     lastAnsweredRef.current = null;
   }
 
-  /** Contexto de Yaris: la pregunta actual (la última respondida). */
+  /**
+   * Índice de la pregunta sobre la que trabaja Yaris: siempre la que está en
+   * pantalla. Sólo se usa la última respondida cuando ya se contestó, para
+   * conservar el contexto tras el feedback.
+   */
+  function yarisIdx(): number {
+    return answered ? (lastAnsweredRef.current ?? currentIdx) : currentIdx;
+  }
+
+  /** Contexto de Yaris: la pregunta en pantalla. */
   function yarisCtx(): YarisContext {
-    const idx = lastAnsweredRef.current ?? currentIdx;
+    const idx = yarisIdx();
     const q = questions[idx] ?? questions[currentIdx];
     if (!q) return {};
     // Si todavía no elige respuesta, Yaris entra en modo "te ayudo a pensar":
