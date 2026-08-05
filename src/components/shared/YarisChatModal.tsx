@@ -4,6 +4,7 @@
  * server function `yarisAiChat`, con un fallback determinista si algo falla.
  */
 import { useEffect, useRef, useState } from "react";
+import { YarisAvatar } from "@/components/shared/YarisAvatar";
 import { Icon } from "@/components/ui/fp-icon";
 import { logYarisUse } from "@/lib/store";
 import { useYarisStream, toHistory } from "@/lib/yaris-ask";
@@ -139,7 +140,7 @@ export function YarisChatModal({
         {/* Header */}
         <div style={{ background: INK, color: "white", padding: "16px 18px", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
           <span style={{ width: 38, height: 38, borderRadius: 10, background: "rgba(242,174,188,.18)", color: "#F2AEBC", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-            <Icon n="spark" size={19} />
+            <YarisAvatar size={34} />
           </span>
           <div style={{ flex: 1 }}>
             <div style={{ fontFamily: DISPLAY, fontSize: ".98rem", fontWeight: 700, letterSpacing: "-0.01em" }}>Yaris IA</div>

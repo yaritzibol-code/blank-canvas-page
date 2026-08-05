@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { YarisAvatar } from "@/components/shared/YarisAvatar";
 import { useState, useEffect, useRef, useMemo, useDeferredValue } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import {
@@ -427,11 +428,11 @@ function BibliotecaPage() {
               </button>
               {!yarisOpen && (
                 <button onClick={() => setYarisOpen(true)} style={{ padding: "6px 14px", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", borderRadius: 8, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
-                  <Icon n="spark" size={16} /> Mostrar Yaris
+                  <YarisAvatar size={20} /> Mostrar Yaris
                 </button>
               )}
               <button onClick={() => setYarisOpen(true)} style={{ padding: "6px 14px", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", color: "white", border: "none", borderRadius: 8, fontSize: "0.8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
-                <Icon n="spark" size={16} /> Explícamelo Yaris
+                <YarisAvatar size={20} /> Explícamelo Yaris
               </button>
             </div>
           </div>
@@ -515,7 +516,7 @@ function BibliotecaPage() {
             >
               <div style={{ padding: "14px 16px", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <div style={{ width: 30, height: 30, background: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.9rem" }}><Icon n="spark" size={18} color="#3D5D91" /></div>
+                  <div style={{ width: 30, height: 30, background: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.9rem" }}><YarisAvatar size={28} /></div>
                   <div>
                     <div style={{ fontSize: "0.84rem", fontWeight: 700, color: "white" }}>Yaris IA</div>
                     <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.8)" }}>Leyendo contigo 24/7</div>
@@ -528,7 +529,7 @@ function BibliotecaPage() {
                 {yarisMsgs.map((msg, i) => (
                   <div key={i} style={{ display: "flex", gap: 7, alignItems: "flex-start", flexDirection: msg.role === "user" ? "row-reverse" : "row" }}>
                     <div style={{ width: 24, height: 24, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: msg.role === "bot" ? "0.75rem" : "0.58rem", fontWeight: msg.role === "user" ? 700 : undefined, background: msg.role === "bot" ? "#F2DCDB" : "#3D5D91", color: msg.role === "user" ? "white" : "#6C0820", flexShrink: 0 }}>
-                      {msg.role === "bot" ? <Icon n="spark" size={14} /> : userInitials}
+                      {msg.role === "bot" ? <YarisAvatar size={22} /> : userInitials}
                     </div>
                     <div style={{ maxWidth: "84%", padding: "8px 11px", borderRadius: msg.role === "bot" ? "4px 12px 12px 12px" : "12px 4px 12px 12px", fontSize: "0.8rem", lineHeight: 1.5, background: msg.role === "bot" ? "#f0f4ff" : "#3D5D91", color: msg.role === "bot" ? "#22375C" : "white" }}>
                       <span dangerouslySetInnerHTML={{ __html: sanitizeHtml(msg.text) }} />
@@ -538,7 +539,7 @@ function BibliotecaPage() {
                 ))}
                 {yarisTyping && (
                   <div style={{ display: "flex", gap: 7, alignItems: "flex-start" }}>
-                    <div style={{ width: 24, height: 24, borderRadius: "50%", background: "#F2DCDB", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", flexShrink: 0, color: "#6C0820" }}><Icon n="spark" size={14} /></div>
+                    <div style={{ width: 24, height: 24, borderRadius: "50%", background: "#F2DCDB", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", flexShrink: 0, color: "#6C0820" }}><YarisAvatar size={22} /></div>
                     <div style={{ padding: "8px 11px", background: "#f0f4ff", borderRadius: "4px 12px 12px 12px", display: "flex", alignItems: "center", gap: 3 }}>
                       <div className="yds2" /><div className="yds2" /><div className="yds2" />
                     </div>

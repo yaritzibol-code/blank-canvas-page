@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { YarisAvatar } from "@/components/shared/YarisAvatar";
 import { useState, useRef, useEffect } from "react";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import {
@@ -1068,7 +1069,7 @@ function CuestionarioPage() {
                       display: "inline-flex", alignItems: "center", gap: 6,
                     }}
                   >
-                    <Icon n="spark" size={15} /> Explícamelo Yaris
+                    <YarisAvatar size={20} /> Explícamelo Yaris
                   </button>
                   <button
                     onClick={() => setReportOpen(true)}
@@ -1386,7 +1387,7 @@ function CuestionarioPage() {
                   display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem",
                 }}
               >
-                <Icon n="spark" size={18} color="#3D5D91" />
+                <YarisAvatar size={30} />
               </div>
               <div>
                 <div style={{ fontSize: "0.9rem", fontWeight: 700, color: "white" }}>Yaris IA</div>
@@ -1462,7 +1463,7 @@ function CuestionarioPage() {
                     flexShrink: 0,
                   }}
                 >
-                  {msg.role === "bot" ? <Icon n="spark" size={15} color="#6C0820" /> : initials}
+                  {msg.role === "bot" ? <YarisAvatar size={24} /> : initials}
                 </div>
                 <div
                   style={{
@@ -1499,7 +1500,7 @@ function CuestionarioPage() {
                     justifyContent: "center", fontSize: "0.78rem", flexShrink: 0,
                   }}
                 >
-                  <Icon n="spark" size={15} color="#6C0820" />
+                  <YarisAvatar size={24} />
                 </div>
                 <div
                   style={{

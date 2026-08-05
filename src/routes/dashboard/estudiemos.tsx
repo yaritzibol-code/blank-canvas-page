@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { YarisAvatar } from "@/components/shared/YarisAvatar";
 import { useState, useEffect } from "react";
 import { PathySVG, useTimer } from "../../contexts/StudyTimerContext";
 import { Icon } from "@/components/ui/fp-icon";
@@ -829,7 +830,7 @@ function PruebaModal({ mode, onClose }: { mode: PruebaMode; onClose: (interactio
               {msgs.map((m, i) => (
                 <div key={i} style={{ display: "flex", gap: 7, alignItems: "flex-start", flexDirection: m.isUser ? "row-reverse" : "row" }}>
                   <div style={{ width: 24, height: 24, borderRadius: "50%", background: m.isUser ? "#3D5D91" : "#F2DCDB", display: "flex", alignItems: "center", justifyContent: "center", color: m.isUser ? "white" : "#22375C", flexShrink: 0 }}>
-                    {m.isUser ? <Icon n="user" size={13} /> : <Icon n="spark" size={13} />}
+                    {m.isUser ? <Icon n="user" size={13} /> : <YarisAvatar size={20} />}
                   </div>
                   <div style={{ maxWidth: "84%", padding: "8px 12px", borderRadius: m.isUser ? "12px 4px 12px 12px" : "4px 12px 12px 12px", background: m.isUser ? "#3D5D91" : "#f0f4ff", color: m.isUser ? "white" : "#22375C", fontSize: "0.82rem", lineHeight: 1.55 }}>
                     {m.isUser ? m.html : <span dangerouslySetInnerHTML={{ __html: sanitizeHtml(m.html) }} />}

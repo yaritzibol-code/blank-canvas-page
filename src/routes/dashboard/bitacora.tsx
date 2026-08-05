@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { YarisAvatar } from "@/components/shared/YarisAvatar";
 import { useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import {
@@ -535,7 +536,7 @@ function BitacoraPage() {
           {result.bad && (
             <div style={{ background: "linear-gradient(135deg, #3D5D91, #5A86CB)", borderRadius: 14, padding: "18px 20px", marginBottom: 20 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
-                <div style={{ width: 40, height: 40, background: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "#3D5D91" }}><Icon n="spark" size={22} /></div>
+                <div style={{ width: 40, height: 40, background: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "#3D5D91" }}><YarisAvatar size={38} /></div>
                 <div>
                   <div style={{ fontSize: ".88rem", fontWeight: 700, color: "white" }}>Yaris está aquí para ti</div>
                   <div style={{ fontSize: ".76rem", color: "rgba(255,255,255,.7)" }}>Puedes contarme más sobre cómo te sientes</div>
@@ -545,7 +546,7 @@ function BitacoraPage() {
                 onClick={openYarisChat}
                 style={{ width: "100%", padding: 11, background: "white", color: "#3D5D91", border: "none", borderRadius: 9, fontSize: ".88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
               >
-                <Icon n="spark" size={16} /> Hablar con Yaris
+                <YarisAvatar size={20} /> Hablar con Yaris
               </button>
             </div>
           )}
@@ -571,7 +572,7 @@ function BitacoraPage() {
             <div style={{ background: "white", borderRadius: 16, overflow: "hidden", boxShadow: "0 4px 20px rgba(61,93,145,.1)" }}>
               <div style={{ padding: "14px 18px", background: "linear-gradient(135deg, #3D5D91, #5A86CB)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
-                  <div style={{ width: 30, height: 30, background: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#3D5D91" }}><Icon n="spark" size={17} /></div>
+                  <div style={{ width: 30, height: 30, background: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#3D5D91" }}><YarisAvatar size={28} /></div>
                   <div>
                     <div style={{ fontSize: ".86rem", fontWeight: 700, color: "white" }}>Yaris IA</div>
                     <div style={{ fontSize: ".68rem", color: "rgba(255,255,255,.8)" }}>Aquí para escucharte</div>
@@ -583,7 +584,7 @@ function BitacoraPage() {
                 {yarisMessages.map((msg, i) => (
                   <div key={i} style={{ display: "flex", gap: 7, alignItems: "flex-start", flexDirection: msg.isUser ? "row-reverse" : "row" as const }}>
                     <div style={{ width: 24, height: 24, borderRadius: "50%", background: msg.isUser ? "#3D5D91" : "#F2DCDB", display: "flex", alignItems: "center", justifyContent: "center", fontSize: ".6rem", fontWeight: 700, color: msg.isUser ? "white" : "#22375C", flexShrink: 0 }}>
-                      {msg.isUser ? initials : <Icon n="spark" size={14} />}
+                      {msg.isUser ? initials : <YarisAvatar size={22} />}
                     </div>
                     <div style={{ maxWidth: "82%", padding: "8px 12px", borderRadius: msg.isUser ? "12px 4px 12px 12px" : "4px 12px 12px 12px", background: msg.isUser ? "#3D5D91" : "#f0f4ff", color: msg.isUser ? "white" : "#22375C", fontSize: ".81rem", lineHeight: 1.55 }}>
                       {msg.isUser ? msg.text : <span dangerouslySetInnerHTML={{ __html: sanitizeHtml(msg.text) }} />}
