@@ -68,6 +68,9 @@ interface Question {
   imagenes?: string[];
   /** Manual de origen: define el bucket de figuras (ATP / Jeppesen). */
   fuente?: string;
+  capitulo?: number;
+  capituloTitulo?: string;
+  seccion?: string;
 }
 
 interface YarisMsg {
@@ -136,6 +139,9 @@ function toLocalQ(q: BankQuestion): Question {
     text: q.text,
     imagenes: q.imagenes,
     fuente: q.fuente,
+    capitulo: q.capitulo,
+    capituloTitulo: q.capituloTitulo,
+    seccion: q.seccion,
     options: q.options.map((text, i) => ({ text, correct: i === q.correctIndex })),
     feedback: {
       correct: `¡Correcto! ${q.explanation}`,
@@ -233,6 +239,8 @@ function CuestionarioPage() {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [answered, setAnswered] = useState(false);
   const [results, setResults] = useState<(boolean | null)[]>([]);
+  /** Opción elegida por pregunta (para el informe real de Pathy). */
+  const [picks, setPicks] = useState<(number | null)[]>([]);
   const [showResult, setShowResult] = useState(false);
   const [yarisOpen, setYarisOpen] = useState(false);
   const [yarisMsgs, setYarisMsgs] = useState<YarisMsg[]>([]);
@@ -404,6 +412,27 @@ function CuestionarioPage() {
     if (box) box.scrollTop = box.scrollHeight;
   }, [yarisMsgs, yarisTyping]);
 
+  /** Detalle por pregunta de ESTA sesión (base del informe de Pathy). */
+  function sessionAnswers(): AttemptAnswer[] {
+    const out: AttemptAnswer[] = [];
+    questions.forEach((q, i) => {
+      const r = results[i];
+      if (r === null || r === undefined) return;
+      const picked = picks[i];
+      out.push({
+        questionId: q.questionId,
+        materia: q.slug,
+        ...(q.fuente ? { fuente: q.fuente } : {}),
+        ...(q.capitulo !== undefined ? { capitulo: q.capitulo } : {}),
+        ...(q.capituloTitulo ? { capituloTitulo: q.capituloTitulo } : {}),
+        ...(q.seccion ? { seccion: q.seccion } : {}),
+        selectedIndex: typeof picked === "number" ? picked : -1,
+        correctIndex: q.correctIndex,
+      });
+    });
+    return out;
+  }
+
   /** Desglose por materia de las respuestas de ESTA sesión. */
   function computePorMateria(): Record<string, { correct: number; total: number }> {
     const map: Record<string, { correct: number; total: number }> = {};
@@ -429,6 +458,7 @@ function CuestionarioPage() {
       correct: correctCount,
       durationMin: Math.max(0, Math.round((Date.now() - startTime) / 60000)),
       porMateria: computePorMateria(),
+      answers: sessionAnswers(),
       // Los cuestionarios de Línea Aérea se identifican por manual o guía,
       // no por materia: el historial los muestra con su nombre real.
       ...(quizTitulo ? { titulo: quizTitulo } : {}),
@@ -445,6 +475,11 @@ function CuestionarioPage() {
     const newResults = [...results];
     newResults[currentIdx] = isCorrect;
     setResults(newResults);
+    setPicks((prev) => {
+      const next = [...prev];
+      next[currentIdx] = optIdx;
+      return next;
+    });
   }
 
   function handleNext() {
