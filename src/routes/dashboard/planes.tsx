@@ -4,7 +4,6 @@
  * (fuente de verdad del cobro); `@/lib/pricing` sólo aporta el respaldo.
  */
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { ModuleHeader } from "@/components/shared/ModuleHeader";
 import { useEffect, useState } from "react";
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
 import { getStripe, getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
@@ -30,6 +29,9 @@ import { refreshCloudProfile } from "@/lib/store/auth";
 import { useRequireAuth } from "@/lib/store/hooks";
 import { supa } from "@/lib/store/cloud";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
+import { PlaneField } from "@/components/shared/PlaneField";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, Check, CreditCard, ExternalLink, ShieldCheck, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard/planes")({
   component: PlanesPage,
@@ -38,11 +40,6 @@ export const Route = createFileRoute("/dashboard/planes")({
   validateSearch: (search: Record<string, unknown>): { checkout?: 1 } =>
     search.checkout === "1" || search.checkout === 1 || search.checkout === true ? { checkout: 1 } : {},
 });
-
-const FONT = "'Manrope', system-ui, sans-serif";
-const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
-const INK = "#22375C";
-const BRAND = "#6C0820";
 
 interface SubRow {
   status: string;
