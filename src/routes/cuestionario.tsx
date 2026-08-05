@@ -248,11 +248,14 @@ function CuestionarioPage() {
   const lastAnsweredRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
+    // <1024px (móvil + iPad vertical) usa hoja inferior: con el panel lateral
+    // de 340px la pregunta quedaba amontonada en tablets.
+    const check = () => setIsMobile(window.innerWidth < 1024);
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
+
 
   /**
    * Arma la sesión desde el pool según el plan:
