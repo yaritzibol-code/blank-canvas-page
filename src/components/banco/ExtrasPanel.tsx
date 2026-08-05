@@ -269,6 +269,7 @@ function AudioRepaso({ grupos, la, onClose }: { grupos: Grupo[]; la: boolean; on
   const [loading, setLoading] = useState(false);
   const askYaris = useYarisAsk();
   const user = useSessionUser();
+  useQuestionBank();
   const paid = canUseAI(user);
   const speech = useSpeech();
 

@@ -63,6 +63,7 @@ const STATUS_CONFIG = {
 
 function MateriasIndex() {
   const user = useSessionUser();
+  useQuestionBank();
 
   const subjects = useStore<Subject[]>(() => {
     const perf = user ? materiaPerformance(user.id) : [];

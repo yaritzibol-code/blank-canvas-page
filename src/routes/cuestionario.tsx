@@ -124,6 +124,7 @@ interface AprendiendoSnapshot {
 
 function CuestionarioPage() {
   const { user, ready } = useRequireAuth();
+  const bankReady = useQuestionBank();
   const search = Route.useSearch();
   /** Clave de la sesión activa: distinta por usuario y por configuración. */
   const sessionVariant = [
