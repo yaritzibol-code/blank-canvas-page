@@ -228,6 +228,8 @@ export function remove(key: string) {
     }
   }
   memoryFallback.delete(key);
+  if (memoryOnly.has(key)) idbDelete(key);
+
   memoryOnly.delete(key);
   notify();
 }
