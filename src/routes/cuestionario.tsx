@@ -505,7 +505,7 @@ function CuestionarioPage() {
     setYarisOpen(true);
     if (yarisBusyRef.current) return;
 
-    const idx = lastAnsweredRef.current ?? currentIdx;
+    const idx = yarisIdx();
     const q = questions[idx] ?? questions[currentIdx];
     if (!q) return;
     const ctx = yarisCtx();
