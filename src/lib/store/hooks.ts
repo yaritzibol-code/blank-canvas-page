@@ -5,7 +5,7 @@
  */
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { useLocation, useNavigate } from "@tanstack/react-router";
-import { subscribe, getVersion } from "./db";
+import { subscribe, getVersion, loadOverflow } from "./db";
 import { ensureSeeded } from "./seed";
 import { getSessionUser, purgeExpiredAccounts, restoreCloudSession, isAuthSettled } from "./auth";
 import type { User } from "./types";
@@ -14,12 +14,20 @@ let initialized = false;
 function initOnce() {
   if (initialized || typeof window === "undefined") return;
   initialized = true;
-  ensureSeeded();
-  purgeExpiredAccounts();
-  // Con Lovable Cloud activo, restaura la sesión de Supabase e hidrata en
-  // segundo plano; la UI se actualiza sola conforme llegan los datos.
-  void restoreCloudSession().catch(() => {});
+  // Primero se recuperan las colecciones que no caben en localStorage (banco
+  // completo de preguntas) desde IndexedDB; si no, la semilla las pisaría.
+  void loadOverflow()
+    .catch(() => {})
+    .then(() => {
+      ensureSeeded();
+      purgeExpiredAccounts();
+      // Con Lovable Cloud activo, restaura la sesión de Supabase e hidrata en
+      // segundo plano; la UI se actualiza sola conforme llegan los datos.
+      return restoreCloudSession().catch(() => {});
+    })
+    .catch(() => {});
 }
+
 
 /**
  * Arranque explícito de la capa de datos (lo llama el layout raíz).
