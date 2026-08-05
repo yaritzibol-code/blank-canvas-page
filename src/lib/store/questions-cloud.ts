@@ -223,8 +223,8 @@ export async function fetchBankCounts(): Promise<BankCount[]> {
 
 /** Limpia el banco en memoria (cierre de sesión). */
 export function clearQuestionMemory(): void {
-  loadedKey = null;
-  loading = null;
-  loadingKey = null;
+  loadedKeys.clear();
+  inFlight.clear();
+
   write("questions", []);
 }
