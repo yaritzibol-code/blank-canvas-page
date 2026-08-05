@@ -34,10 +34,13 @@ import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 export const Route = createFileRoute("/dashboard/planes")({
   component: PlanesPage,
   // `?checkout=1` abre el checkout de Stripe en cuanto la página está lista
-  // (lo usa la landing de la convocatoria para llevar directo al pago).
-  validateSearch: (search: Record<string, unknown>): { checkout?: 1 } =>
-    search.checkout === "1" || search.checkout === 1 || search.checkout === true ? { checkout: 1 } : {},
+  // y `?plan=anual|mensual` respeta el ciclo elegido en la landing de precios.
+  validateSearch: (search: Record<string, unknown>): { checkout?: 1; plan?: "mensual" | "anual" } => ({
+    ...(search.checkout === "1" || search.checkout === 1 || search.checkout === true ? { checkout: 1 as const } : {}),
+    ...(search.plan === "anual" || search.plan === "mensual" ? { plan: search.plan } : {}),
+  }),
 });
+
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
