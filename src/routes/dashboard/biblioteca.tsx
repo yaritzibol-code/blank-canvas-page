@@ -125,8 +125,9 @@ function BibliotecaPage() {
   }, []);
 
   useEffect(() => {
-    msgsEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [yarisMsgs, yarisTyping]);
+    if (yarisMsgs[yarisMsgs.length - 1]?.role !== "user") return;
+    msgsEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, [yarisMsgs]);
 
   function canOpen(book: Book): boolean {
     return paid || book.muestraGratis;

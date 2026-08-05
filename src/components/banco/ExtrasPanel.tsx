@@ -413,7 +413,12 @@ function IaMateriales({ bank, la, onClose }: { bank: BankQuestion[]; la: boolean
   const [typing, setTyping] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => { endRef.current?.scrollIntoView({ behavior: "smooth" }); }, [msgs, typing]);
+  // Solo baja con el mensaje del propio usuario; la respuesta de Yaris no
+  // arrastra la vista mientras se escribe.
+  useEffect(() => {
+    if (!msgs[msgs.length - 1]?.user) return;
+    endRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, [msgs]);
 
   async function send(q?: string) {
     const text = (q ?? input).trim();

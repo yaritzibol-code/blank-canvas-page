@@ -376,9 +376,12 @@ function SimuladorPage() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // Solo baja cuando el estudiante manda su mensaje: la respuesta en streaming
+  // no arrastra la vista.
   useEffect(() => {
-    msgsEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [yarisMsgs, yarisTyping, yarisOpen]);
+    if (yarisMsgs[yarisMsgs.length - 1]?.role !== "user") return;
+    msgsEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, [yarisMsgs]);
 
   useEffect(() => {
     if (phase !== "exam") return;
