@@ -60,6 +60,8 @@ interface Question {
   text: string;
   options: { text: string; correct: boolean }[];
   feedback: { correct: string; incorrect: string; cite: string };
+  /** Láminas del manual (bucket `jeppesen-images`), si el reactivo las trae. */
+  imagenes?: string[];
 }
 
 interface YarisMsg {
