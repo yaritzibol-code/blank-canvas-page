@@ -7,8 +7,7 @@ import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import { SUBJECT_TEMAS } from "@/modules/data/registry";
 import {
   MATERIAS_DEF,
-  getPublishedQuestions,
-  useQuestionBank,
+  useBankCounts,
   getTemaProgress,
   materiaPerformance,
   materiaProgressPct,
