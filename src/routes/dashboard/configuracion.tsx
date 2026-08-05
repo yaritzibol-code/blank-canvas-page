@@ -85,12 +85,19 @@ function ActiveSessionRow({ onLogoutAll }: { onLogoutAll: () => void }) {
   );
 }
 
-function SectionHeader({ icon, iconBg, title, desc }: { icon: string; iconBg: string; title: string; desc: string }) {
+function SectionHeader({ icon, iconBg, title, desc, badge }: { icon: string; iconBg: string; title: string; desc: string; badge?: string }) {
   return (
     <div style={{ padding: "16px 20px", borderBottom: "1px solid rgba(61,93,145,.06)", display: "flex", alignItems: "center", gap: 10 }}>
       <div style={{ width: 36, height: 36, borderRadius: 10, background: iconBg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "#22375C" }}><Icon n={icon as never} size={20} /></div>
       <div>
-        <div style={{ fontSize: ".92rem", fontWeight: 700, color: "#22375C", marginBottom: 2 }}>{title}</div>
+        <div style={{ fontSize: ".92rem", fontWeight: 700, color: "#22375C", marginBottom: 2, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+          {title}
+          {badge && (
+            <span style={{ padding: "2px 9px", borderRadius: 20, fontSize: ".64rem", fontWeight: 800, letterSpacing: ".04em", textTransform: "uppercase", background: "#FDF3D6", color: "#856404", border: "1px solid #F0DFAE" }}>
+              {badge}
+            </span>
+          )}
+        </div>
         <div style={{ fontSize: ".74rem", color: "#647DA0" }}>{desc}</div>
       </div>
     </div>
@@ -256,7 +263,11 @@ function ConfiguracionPage() {
 
       {/* ── NOTIFICACIONES ── */}
       <div style={{ background: "white", borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 20 }}>
-        <SectionHeader icon="bell" iconBg="rgba(37,211,102,.1)" title="Notificaciones" desc="Gestiona cómo y cuándo te avisamos" />
+        <SectionHeader icon="bell" iconBg="rgba(37,211,102,.1)" title="Notificaciones" desc="Gestiona cómo y cuándo te avisamos" badge="Construyendo" />
+        <div style={{ padding: "12px 20px", background: "#FDFAF0", borderBottom: "1px solid rgba(61,93,145,.06)", fontSize: ".78rem", color: "#856404", lineHeight: 1.55 }}>
+          Estamos construyendo el envío de avisos. Puedes dejar aquí tus preferencias —se guardan en tu cuenta— pero
+          todavía no salen recordatorios automáticos.
+        </div>
         <ConfigRow icon="chat" label="Recordatorios por WhatsApp" sub={masked ? `Te mandamos tus recordatorios directo al ${masked}` : "Agrega tu número para recibir recordatorios"} right={<Toggle on={toggles.whatsapp} onToggle={() => toggle("whatsapp")} />} />
         <ConfigRow icon="flame" label="Alerta de racha en riesgo" sub="Aviso por WhatsApp si no has estudiado en el día" right={<Toggle on={toggles.racha} onToggle={() => toggle("racha")} />} />
         <ConfigRow icon="sim" label="Recordatorio del simulador semanal" sub="Cada domingo a las 10:00 AM" right={<Toggle on={toggles.simulador} onToggle={() => toggle("simulador")} />} />

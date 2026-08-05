@@ -2,15 +2,19 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import {
+  adjetivo,
+  generoDe,
   getBitacora,
   logYarisUse,
   materiaPerformance,
-  MATERIAS_DEF,
+  porGenero,
   saveBitacoraEntry,
   useSessionUser,
   useStore,
   type BitacoraEntry,
+  type Genero,
 } from "@/lib/store";
+import { PathyBubble } from "@/routes/index";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 
 export const Route = createFileRoute("/dashboard/bitacora")({
@@ -18,54 +22,52 @@ export const Route = createFileRoute("/dashboard/bitacora")({
 });
 
 type Screen = "hoy" | "historial" | "resultado";
-type Emotion = "sun" | "checkCircle" | "minus" | "alert" | "moon" | "cloud" | null;
-
-const EMOTIONS: { icon: Emotion & string; label: string }[] = [
-  { icon: "sun", label: "¡Increíble!" },
-  { icon: "checkCircle", label: "Bien" },
-  { icon: "minus", label: "Más o menos" },
-  { icon: "alert", label: "Frustrada" },
-  { icon: "moon", label: "Cansada" },
-  { icon: "cloud", label: "Ansiosa" },
-];
+type Emotion = "sun" | "checkCircle" | "minus" | "alert" | "moon" | "cloud";
 
 /**
- * Derivado de MATERIAS_DEF. Antes era una lista escrita a mano con etiquetas
- * distintas a las canónicas ("Aeronaves" vs "Aeronaves y Motores", "Tránsito
- * Aéreo" vs "Servicios de Tránsito Aéreo"); como la bitácora guarda etiquetas,
- * el cruce posterior con el rendimiento por materia fallaba en silencio.
+ * Las etiquetas con género concuerdan con lo que la estudiante eligió en el
+ * onboarding ("Ansiosa" / "Ansioso" / "Ansiosa/o"); nunca se deduce del nombre.
  */
-const MATERIAS: { icon: string; label: string; isNone?: boolean }[] = [
-  { icon: "check", label: "Todo estuvo bien", isNone: true },
-  ...MATERIAS_DEF.map((m) => ({ icon: m.icon, label: m.name })),
-];
+function emotionsFor(g: Genero): { icon: Emotion; label: string }[] {
+  return [
+    { icon: "sun", label: "¡Increíble!" },
+    { icon: "checkCircle", label: "Bien" },
+    { icon: "minus", label: "Más o menos" },
+    { icon: "alert", label: adjetivo(g, "Frustrad") },
+    { icon: "moon", label: adjetivo(g, "Cansad") },
+    { icon: "cloud", label: adjetivo(g, "Ansios") },
+  ];
+}
 
-const PATHY_MESSAGES: Record<string, { msg: string; bad: boolean }> = {
-  "sun": {
-    msg: "¡Wow, hoy fue un gran día! Esa energía y concentración que tuviste es exactamente lo que te va a llevar al CIAAC aprobado. Cada día así te acerca más a tu meta. ¡Sigue así, aviadora!",
-    bad: false,
-  },
-  "checkCircle": {
-    msg: "¡Muy bien! Un día sólido de estudio es exactamente lo que necesitas. La consistencia es más poderosa que la perfección — y tú lo estás haciendo.",
-    bad: false,
-  },
-  "minus": {
-    msg: "Los días \"más o menos\" también cuentan. El hecho de que hayas abierto FlightPath ya es una victoria. Mañana puede ser diferente — y si no, también está bien.",
-    bad: false,
-  },
-  "alert": {
-    msg: "Entiendo tu frustración, y quiero que sepas que es completamente válida. El CIAAC es difícil — si fuera fácil, todos lo aprobarían. El hecho de que te frustres significa que te importa, y eso es hermoso. ¿Quieres que hablemos de lo que te está costando? Yaris puede ayudarte.",
-    bad: true,
-  },
-  "moon": {
-    msg: "Estudiar cansada ya es un logro en sí mismo. Tu cerebro absorbe más de lo que crees, incluso cuando está cansado. Descansa bien esta noche — mañana tu mente va a estar más fresca y todo va a fluir mejor.",
-    bad: false,
-  },
-  "cloud": {
-    msg: "La ansiedad antes del CIAAC es más común de lo que crees — casi todos los estudiantes la sienten. Pero quiero que sepas que estás más preparada de lo que piensas. ¿Quieres hablar con Yaris sobre lo que te preocupa? A veces nombrar el miedo lo hace más pequeño.",
-    bad: true,
-  },
-};
+function pathyMessages(g: Genero): Record<string, { msg: string; bad: boolean }> {
+  const aviador = porGenero(g, "aviadora", "aviador", "piloto");
+  return {
+    "sun": {
+      msg: `¡Wow, hoy fue un gran día! Esa energía y concentración que tuviste es exactamente lo que te va a llevar al CIAAC aprobado. Cada día así te acerca más a tu meta. ¡Sigue así, ${aviador}!`,
+      bad: false,
+    },
+    "checkCircle": {
+      msg: "¡Muy bien! Un día sólido de estudio es exactamente lo que necesitas. La consistencia es más poderosa que la perfección — y tú lo estás haciendo.",
+      bad: false,
+    },
+    "minus": {
+      msg: "Los días \"más o menos\" también cuentan. El hecho de que hayas abierto FlightPath ya es una victoria. Mañana puede ser diferente — y si no, también está bien.",
+      bad: false,
+    },
+    "alert": {
+      msg: "Entiendo tu frustración, y quiero que sepas que es completamente válida. El CIAAC es difícil — si fuera fácil, todos lo aprobarían. El hecho de que te frustres significa que te importa, y eso es hermoso. ¿Quieres que hablemos de lo que te está costando? Yaris puede ayudarte.",
+      bad: true,
+    },
+    "moon": {
+      msg: `Estudiar ${adjetivo(g, "cansad")} ya es un logro en sí mismo. Tu cerebro absorbe más de lo que crees, incluso cuando está cansado. Descansa bien esta noche — mañana tu mente va a estar más fresca y todo va a fluir mejor.`,
+      bad: false,
+    },
+    "cloud": {
+      msg: `La ansiedad antes del CIAAC es más común de lo que crees — casi todos los estudiantes la sienten. Pero quiero que sepas que estás más ${adjetivo(g, "preparad")} de lo que piensas. ¿Quieres hablar con Yaris sobre lo que te preocupa? A veces nombrar el miedo lo hace más pequeño.`,
+      bad: true,
+    },
+  };
+}
 
 /* ── Mapas locales por emoción (mismo criterio de colores existente) ── */
 const EMOTION_BORDER: Record<string, string> = {
@@ -125,10 +127,14 @@ function buildMoodData(entries: BitacoraEntry[]) {
   return out;
 }
 
-/** Insight real de Pathy: emociones negativas (2 semanas), materia repetida y tendencia de confianza. */
+/**
+ * Insight real de Pathy: emociones negativas (2 semanas), tema repetido y
+ * tendencia de concentración. La confianza rumbo al CIAAC ya no se pregunta,
+ * así que las entradas nuevas la traen en 0 y no se usa aquí.
+ */
 function buildInsight(entries: BitacoraEntry[]): string {
   if (entries.length < 2) {
-    return "Aún tengo pocas entradas para detectar patrones. Escribe tu bitácora unos días más y aquí te contaré qué veo en tu ánimo y en tu confianza rumbo al CIAAC.";
+    return "Aún tengo pocas entradas para detectar patrones. Escribe tu bitácora unos días más y aquí te contaré qué veo en tu ánimo y en tu constancia.";
   }
   const twoWeeksAgo = Date.now() - 14 * 86400000;
   const recent = entries.filter((e) => new Date(e.date).getTime() >= twoWeeksAgo);
@@ -140,13 +146,13 @@ function buildInsight(entries: BitacoraEntry[]): string {
   const last = entries[0];
 
   const s1 = negCount > 0
-    ? `En las últimas 2 semanas registraste ${negCount} ${negCount === 1 ? "día" : "días"} con frustración o ansiedad${top ? `, y ${top[0]} es la materia que más se repite en tus entradas (${top[1]} ${top[1] === 1 ? "vez" : "veces"})` : ""}.`
-    : `En las últimas 2 semanas no registraste días de frustración ni ansiedad${top ? `, aunque ${top[0]} es la materia que más mencionas (${top[1]} ${top[1] === 1 ? "vez" : "veces"})` : ""} — ¡buen ánimo!`;
-  const s2 = last.conf > first.conf
-    ? `Tu confianza con el CIAAC subió de ${first.conf} a ${last.conf} — ¡vas mejorando!`
-    : last.conf < first.conf
-      ? `Tu confianza con el CIAAC bajó de ${first.conf} a ${last.conf} — un repaso de tus materias difíciles puede ayudarte a recuperarla.`
-      : `Tu confianza con el CIAAC se mantiene en ${last.conf}/5 — la constancia la hará subir.`;
+    ? `En las últimas 2 semanas registraste ${negCount} ${negCount === 1 ? "día" : "días"} con frustración o ansiedad${top ? `, y "${top[0]}" es el tema que más se repite en tus entradas (${top[1]} ${top[1] === 1 ? "vez" : "veces"})` : ""}.`
+    : `En las últimas 2 semanas no registraste días de frustración ni ansiedad${top ? `, aunque "${top[0]}" es el tema que más mencionas (${top[1]} ${top[1] === 1 ? "vez" : "veces"})` : ""} — ¡buen ánimo!`;
+  const s2 = last.conc > first.conc
+    ? `Tu concentración subió de ${first.conc} a ${last.conc} — ¡vas mejorando!`
+    : last.conc < first.conc
+      ? `Tu concentración bajó de ${first.conc} a ${last.conc} — prueba sesiones más cortas y sin distracciones.`
+      : `Tu concentración se mantiene en ${last.conc}/5 — la constancia la hará subir.`;
   return `${s1} ${s2}`;
 }
 
@@ -177,18 +183,19 @@ function ScaleDots({ value, onChange }: { value: number; onChange: (v: number) =
 function BitacoraPage() {
   const user = useSessionUser();
   const entries = useStore(() => (user ? getBitacora(user.id) : []));
+  const genero = generoDe(user);
+  const EMOTIONS = emotionsFor(genero);
   const firstName = user?.nombre.split(" ")[0] ?? "piloto";
   const initials = user
     ? user.nombre.split(" ").filter(Boolean).map((p) => p[0]).slice(0, 2).join("").toUpperCase()
     : "TÚ";
   const [screen, setScreen] = useState<Screen>("hoy");
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
-  const [scales, setScales] = useState({ s1: 0, s2: 0, s3: 0 });
-  const [selectedMaterias, setSelectedMaterias] = useState<Set<string>>(new Set());
-  const [noneSelected, setNoneSelected] = useState(false);
+  const [scales, setScales] = useState({ s1: 0, s2: 0 });
+  const [temaDificil, setTemaDificil] = useState("");
   const [journalText, setJournalText] = useState("");
   const [result, setResult] = useState<{
-    emoji: string; moodLabel: string; motiv: number; conc: number; conf: number;
+    emoji: string; moodLabel: string; motiv: number; conc: number;
     tema: string | null; text: string; analysis: string; bad: boolean;
   } | null>(null);
   const [yarisOpen, setYarisOpen] = useState(false);
@@ -197,35 +204,23 @@ function BitacoraPage() {
   const [yarisTyping, setYarisTyping] = useState(false);
   const askYaris = useYarisAsk();
 
-  const toggleMateria = (label: string, isNone: boolean) => {
-    if (isNone) {
-      setSelectedMaterias(new Set());
-      setNoneSelected(true);
-    } else {
-      setNoneSelected(false);
-      const next = new Set(selectedMaterias);
-      if (next.has(label)) next.delete(label);
-      else next.add(label);
-      setSelectedMaterias(next);
-    }
-  };
-
   const handleSave = () => {
     if (!selectedEmotion) {
       alert("Pathy dice: ¡No olvides decirme cómo te sentiste hoy!");
       return;
     }
-    const pathy = PATHY_MESSAGES[selectedEmotion] || PATHY_MESSAGES["checkCircle"];
+    const MSGS = pathyMessages(genero);
+    const pathy = MSGS[selectedEmotion] || MSGS["checkCircle"];
     const emotionObj = EMOTIONS.find((e) => e.icon === selectedEmotion)!;
-    const tema = selectedMaterias.size > 0 ? [...selectedMaterias][0] : null;
-    const materiasSel = noneSelected ? [] : [...selectedMaterias];
+    const tema = temaDificil.trim() || null;
+    const materiasSel = tema ? [tema] : [];
 
     let fullMsg = pathy.msg;
     if (tema && !pathy.bad) {
-      fullMsg += ` Por cierto, veo que ${tema} te costó hoy — es normal, es una de las más densas. Mañana podemos atacarla juntas.`;
+      fullMsg += ` Por cierto, veo que ${tema} te costó hoy — es normal. Mañana lo atacamos ${porGenero(genero, "juntas", "juntos", "juntas/os")}.`;
     }
 
-    // Enriquecer con datos reales: ¿la materia con menor promedio coincide con una seleccionada?
+    // Enriquecer con datos reales: ¿la materia con menor promedio coincide con el tema que anotó?
     if (user && materiasSel.length > 0) {
       const norm = (s: string) => s.trim().toLowerCase();
       const matches = (label: string, name: string) => {
@@ -253,7 +248,9 @@ function BitacoraPage() {
         moodLabel: emotionObj.label,
         motiv: scales.s1,
         conc: scales.s2,
-        conf: scales.s3,
+        // La pregunta de confianza con el CIAAC se retiró; el campo se conserva
+        // en el modelo por las entradas históricas.
+        conf: 0,
         materias: materiasSel,
         text: journalText,
         pathyMsg: fullMsg,
@@ -265,7 +262,6 @@ function BitacoraPage() {
       moodLabel: emotionObj.label,
       motiv: scales.s1,
       conc: scales.s2,
-      conf: scales.s3,
       tema,
       text: journalText,
       analysis: fullMsg,
@@ -306,7 +302,6 @@ function BitacoraPage() {
       borderColor: EMOTION_BORDER[e.emotionIcon] ?? "#5A86CB",
       motiv: e.motiv,
       conc: e.conc,
-      conf: e.conf,
       tags: e.materias,
       text: e.text,
       pathyMsg: e.pathyMsg,
@@ -322,7 +317,6 @@ function BitacoraPage() {
         .emo-btn:hover{border-color:#3D5D91!important;transform:translateY(-2px);}
         .save-btn:hover{background:#8a0a28!important;transform:translateY(-2px);box-shadow:0 8px 20px rgba(108,8,32,.3)!important;}
         .ec-card:hover{transform:translateX(3px);box-shadow:0 4px 16px rgba(61,93,145,.1)!important;}
-        .mchip-btn:hover{border-color:#3D5D91!important;}
       `}</style>
 
       {/* TAB BAR */}
@@ -361,7 +355,7 @@ function BitacoraPage() {
             marginBottom: 24, position: "relative", overflow: "hidden",
           }}>
             <div style={{ position: "absolute", top: -40, right: -40, width: 160, height: 160, background: "radial-gradient(circle, rgba(242,174,188,.12) 0%, transparent 70%)", borderRadius: "50%" }} />
-            <div style={{ flexShrink: 0, animation: "float 3s ease-in-out infinite", zIndex: 1, color: "white" }}><Icon n="cloud" size={48} /></div>
+            <div style={{ flexShrink: 0, zIndex: 1 }}><PathyBubble size={82} /></div>
             <div style={{ flex: 1, zIndex: 1 }}>
               <div style={{ fontSize: ".7rem", color: "#F2AEBC", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 4, display: "flex", alignItems: "center", gap: 6 }}><Icon n="edit" size={13} /> Entrada de hoy</div>
               <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "white", marginBottom: 4 }}>¿Cómo estuvo tu sesión de estudio hoy, {firstName}?</div>
@@ -396,9 +390,8 @@ function BitacoraPage() {
           <div style={{ background: "white", borderRadius: 16, padding: 22, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 18 }}>
             <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="chart" size={15} /> Cuéntame un poco más</div>
             {[
-              { label: "¿Qué tan motivada llegaste?", key: "s1" as const },
-              { label: "¿Qué tan concentrada estuviste?", key: "s2" as const },
-              { label: "¿Cómo te sientes con el CIAAC?", key: "s3" as const },
+              { label: `¿Qué tan ${adjetivo(genero, "motivad")} llegaste?`, key: "s1" as const },
+              { label: `¿Qué tan ${adjetivo(genero, "concentrad")} estuviste?`, key: "s2" as const },
             ].map((row) => (
               <div key={row.key} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
                 <span style={{ fontSize: ".82rem", color: "#22375C", fontWeight: 500, width: 200, flexShrink: 0 }}>{row.label}</span>
@@ -409,28 +402,21 @@ function BitacoraPage() {
 
           {/* Tema que costó */}
           <div style={{ background: "white", borderRadius: 16, padding: 22, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 18 }}>
-            <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="cloud" size={15} /> ¿Qué tema te costó más hoy?</div>
-            <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 7 }}>
-              {MATERIAS.map((m) => {
-                const isActive = m.isNone ? noneSelected : selectedMaterias.has(m.label);
-                return (
-                  <button
-                    key={m.label}
-                    className="mchip-btn"
-                    onClick={() => toggleMateria(m.label, !!m.isNone)}
-                    style={{
-                      padding: "6px 14px", background: isActive ? (m.isNone ? "rgba(46,204,113,.08)" : "rgba(61,93,145,.08)") : "#f8f9ff",
-                      border: `2px solid ${isActive ? (m.isNone ? "#2ecc71" : "#3D5D91") : "#F2DCDB"}`,
-                      borderRadius: 20, fontSize: ".78rem", fontWeight: 600, cursor: "pointer",
-                      color: isActive ? (m.isNone ? "#1a7a4a" : "#3D5D91") : "#22375C",
-                      transition: "all .2s", fontFamily: "'Manrope', sans-serif",
-                      display: "inline-flex", alignItems: "center", gap: 6,
-                    }}
-                  >
-                    <Icon n={m.icon as never} size={15} /> {m.label}
-                  </button>
-                );
-              })}
+            <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="target" size={15} /> ¿Qué tema te costó más hoy?</div>
+            <input
+              value={temaDificil}
+              onChange={(e) => setTemaDificil(e.target.value.slice(0, 120))}
+              placeholder="Escríbelo con tus palabras: virajes coordinados, cartas Jeppesen, NOTAM…"
+              style={{
+                width: "100%", border: "2px solid #F2DCDB", borderRadius: 12,
+                padding: "12px 14px", fontSize: ".88rem", fontFamily: "'Manrope', sans-serif",
+                color: "#22375C", outline: "none", background: "#fafbff", transition: "border-color .2s",
+              }}
+              onFocus={(e) => (e.currentTarget.style.borderColor = "#3D5D91")}
+              onBlur={(e) => (e.currentTarget.style.borderColor = "#F2DCDB")}
+            />
+            <div style={{ fontSize: ".72rem", color: "#8DA1BE", marginTop: 6 }}>
+              Déjalo vacío si hoy todo estuvo bien.
             </div>
           </div>
 
@@ -464,7 +450,7 @@ function BitacoraPage() {
               display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 24,
             }}
           >
-            <Icon n="cloud" size={18} /> Guardar entrada de hoy
+            <Icon n="check" size={18} /> Guardar entrada de hoy
           </button>
 
           {/* Disclaimer (PRD): no es herramienta clínica */}
@@ -480,8 +466,8 @@ function BitacoraPage() {
 
           {/* Pathy análisis */}
           <div style={{ textAlign: "center" as const, marginBottom: 28 }}>
-            <div style={{ animation: "float 3s ease-in-out infinite", display: "inline-flex", marginBottom: 10, color: "#6C0820" }}>
-              <Icon n={result.bad ? "heart" : "cloud"} size={64} />
+            <div style={{ display: "inline-flex", marginBottom: 10 }}>
+              <PathyBubble size={110} />
             </div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.5rem", color: "#22375C", marginBottom: 6 }}>
               {result.bad ? "Pathy te manda un abrazo" : "Pathy analizó tu entrada"}
@@ -491,7 +477,7 @@ function BitacoraPage() {
           {/* Mensaje Pathy */}
           <div style={{ background: "linear-gradient(135deg, #F2DCDB, #fce4ec)", borderRadius: 18, padding: "22px 24px", marginBottom: 20, position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", top: -30, right: -30, width: 120, height: 120, background: "radial-gradient(circle, rgba(242,174,188,.3) 0%, transparent 70%)", borderRadius: "50%" }} />
-            <div style={{ fontSize: ".72rem", fontWeight: 700, color: "#6C0820", textTransform: "uppercase" as const, letterSpacing: ".5px", marginBottom: 8, position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: 6 }}><Icon n="cloud" size={14} /> Pathy dice</div>
+            <div style={{ fontSize: ".72rem", fontWeight: 700, color: "#6C0820", textTransform: "uppercase" as const, letterSpacing: ".5px", marginBottom: 8, position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: 6 }}><img src="/assets/pathy-small.png" alt="" width={18} height={18} style={{ display: "block" }} /> Pathy dice</div>
             <p style={{ fontSize: ".92rem", color: "#444", lineHeight: 1.7, position: "relative", zIndex: 1 }}>{result.analysis}</p>
           </div>
 
@@ -510,7 +496,6 @@ function BitacoraPage() {
                 {[
                   { label: "Motivación", val: result.motiv },
                   { label: "Concentración", val: result.conc },
-                  { label: "Confianza CIAAC", val: result.conf },
                 ].map((s) => (
                   <div key={s.label} style={{ textAlign: "center" as const }}>
                     <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.2rem", fontWeight: 900, color: "#3D5D91" }}>{s.val > 0 ? `${s.val}/5` : "—"}</div>
@@ -520,7 +505,7 @@ function BitacoraPage() {
               </div>
               {result.tema && (
                 <div>
-                  <div style={{ fontSize: ".74rem", color: "#647DA0", marginBottom: 4 }}>Materia que te costó:</div>
+                  <div style={{ fontSize: ".74rem", color: "#647DA0", marginBottom: 4 }}>Lo que te costó hoy:</div>
                   <span style={{ padding: "3px 12px", background: "#F2DCDB", color: "#6C0820", borderRadius: 20, fontSize: ".76rem", fontWeight: 700 }}>{result.tema}</span>
                 </div>
               )}
@@ -614,7 +599,7 @@ function BitacoraPage() {
 
           {/* Pathy insight */}
           <div style={{ background: "linear-gradient(135deg, #F2DCDB, #fce4ec)", borderRadius: 14, padding: "16px 18px", marginBottom: 20, display: "flex", alignItems: "flex-start", gap: 12 }}>
-            <div style={{ flexShrink: 0, color: "#6C0820" }}><Icon n="cloud" size={28} /></div>
+            <div style={{ flexShrink: 0 }}><PathyBubble size={56} glow={false} /></div>
             <div>
               <h4 style={{ fontSize: ".88rem", fontWeight: 700, color: "#6C0820", marginBottom: 4 }}>Pathy analizó tu bitácora</h4>
               <p style={{ fontSize: ".83rem", color: "#666", lineHeight: 1.55 }}>
@@ -657,7 +642,7 @@ function BitacoraPage() {
                     <span style={{ display: "flex", color: "#3D5D91" }}><Icon n={entry.emotion as never} size={24} /></span>
                     <div>
                       <h4 style={{ fontSize: ".88rem", fontWeight: 700, color: "#22375C", marginBottom: 2 }}>{entry.mood}</h4>
-                      <p style={{ fontSize: ".74rem", color: "#647DA0" }}>Motivación {entry.motiv}/5 · Concentración {entry.conc}/5 · Confianza CIAAC {entry.conf}/5</p>
+                      <p style={{ fontSize: ".74rem", color: "#647DA0" }}>Motivación {entry.motiv}/5 · Concentración {entry.conc}/5</p>
                     </div>
                   </div>
                   <div style={{ fontSize: ".74rem", color: "#8DA1BE", textAlign: "right" as const }}>
@@ -676,7 +661,6 @@ function BitacoraPage() {
                   {[
                     { label: "Motivación", val: entry.motiv },
                     { label: "Concentración", val: entry.conc },
-                    { label: "Confianza", val: entry.conf },
                   ].map((sc) => (
                     <div key={sc.label} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: ".74rem", color: "#647DA0" }}>
                       {sc.label}

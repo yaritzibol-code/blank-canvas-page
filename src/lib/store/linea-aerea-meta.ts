@@ -27,7 +27,7 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
     materia: "operaciones",
     icon: "doc",
     total: 50,
-    fileUrl: "https://drive.google.com/file/d/1twt092Ek_CE1yTPk1FaKM-PkeqPBDA9S/preview",
+    fileUrl: "https://drive.google.com/file/d/1x_BE-nE3wNp3DJ2iEqGMjcxcPxLOzuaa/preview",
   },
   {
     code: "PHAK",

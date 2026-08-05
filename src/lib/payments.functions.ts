@@ -326,7 +326,7 @@ export const syncMyPlan = createServerFn({ method: "POST" })
         }
       : {
           plan: "basica",
-          planNombre: "Suscripción básica",
+          planNombre: "Básica (gratis)",
           accessStatus: status && !inWindow ? "expirado" : "activo",
           accessEnd: currentPeriodEnd,
           subscribed: false,

@@ -49,7 +49,8 @@ export interface User {
   perfilCiaac: string;
   role: UserRole;
   plan: PlanTier;
-  planNombre: string; // "Suscripción básica" | "Plan Anual" | ...
+  /** Nombre del plan; catálogo canónico en `@/lib/pricing` (`PLANES`). */
+  planNombre: string;
   accessStatus: AccessStatus;
   accessStart: string; // ISO
   accessEnd: string | null; // ISO

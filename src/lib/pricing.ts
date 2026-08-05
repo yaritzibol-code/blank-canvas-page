@@ -86,3 +86,73 @@ export function mesesAhorrados(monthly: PlanPrice, annual: PlanPrice): number {
 export function formatProTotal(setup: PlanPrice, monthly: PlanPrice): string {
   return `${formatPrice(setup)} de inscripción + ${formatPriceWithInterval(monthly)}`;
 }
+
+/* ───────────────────────── Catálogo de planes ───────────────────────── */
+
+export type PlanId = "basica" | "pro_mensual" | "pro_anual" | "prueba";
+
+export interface PlanDef {
+  id: PlanId;
+  /** Nombre canónico: se guarda en `user.planNombre` y se muestra en la app. */
+  nombre: string;
+  /** Nivel de acceso: "basica" es gratuita, "paga" desbloquea todo. */
+  tier: "basica" | "paga";
+  /** Días de acceso desde hoy al asignarlo; null = sin vencimiento. */
+  dias: number | null;
+  descripcion: string;
+}
+
+/**
+ * Los planes que la administradora puede asignar a mano desde el panel.
+ *
+ * Es la fuente única: el selector del panel, el resumen del estudiante y el
+ * historial de accesos leen de aquí para que un cambio de nombre no deje
+ * cuentas con etiquetas huérfanas.
+ */
+export const PLANES: PlanDef[] = [
+  {
+    id: "basica",
+    nombre: "Básica (gratis)",
+    tier: "basica",
+    dias: null,
+    descripcion: "Gratuita y sin vencimiento. Acceso limitado a cuestionarios y biblioteca.",
+  },
+  {
+    id: "pro_mensual",
+    nombre: "Pro Mensual",
+    tier: "paga",
+    dias: 30,
+    descripcion: "Acceso completo por 30 días desde hoy.",
+  },
+  {
+    id: "pro_anual",
+    nombre: "Pro Anual",
+    tier: "paga",
+    dias: 365,
+    descripcion: "Acceso completo por 365 días desde hoy.",
+  },
+  {
+    id: "prueba",
+    nombre: "Acceso de prueba",
+    tier: "paga",
+    dias: 14,
+    descripcion: "Acceso completo por 14 días para evaluar la plataforma.",
+  },
+];
+
+export const planById = (id: PlanId): PlanDef => PLANES.find((p) => p.id === id) ?? PLANES[0];
+
+/**
+ * Deduce el plan actual de una cuenta a partir de lo guardado.
+ *
+ * Tolera los nombres antiguos ("Plan Anual — $10,000 MXN", "Suscripción
+ * básica") de cuentas creadas antes de este catálogo.
+ */
+export function planIdDe(u: { plan: string; planNombre: string; accessEnd: string | null }): PlanId {
+  const exact = PLANES.find((p) => p.nombre === u.planNombre);
+  if (exact) return exact.id;
+  if (u.plan === "basica") return "basica";
+  if (/prueba/i.test(u.planNombre)) return "prueba";
+  if (/mensual/i.test(u.planNombre)) return "pro_mensual";
+  return "pro_anual";
+}

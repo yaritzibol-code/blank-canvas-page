@@ -97,7 +97,7 @@ function newLocalUser(nombre: string, email: string, marketingOptIn: boolean, pa
     perfilCiaac: "",
     role: "student",
     plan: "basica",
-    planNombre: "Suscripción básica",
+    planNombre: "Básica (gratis)",
     accessStatus: "activo",
     accessStart: now,
     accessEnd: null,
