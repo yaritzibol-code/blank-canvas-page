@@ -5,7 +5,7 @@
 import { useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { submitReport } from "@/lib/store";
-import type { User } from "@/lib/store";
+import type { ReportQuestionSnapshot, User } from "@/lib/store";
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
@@ -37,6 +37,8 @@ export interface ReportProblemModalProps {
   recurso?: string;
   /** Tipo preseleccionado. */
   tipoInicial?: string;
+  /** Copia del reactivo reportado: viaja con el ticket al panel admin. */
+  pregunta?: ReportQuestionSnapshot;
 }
 
 export function ReportProblemModal({
@@ -46,6 +48,7 @@ export function ReportProblemModal({
   seccion,
   recurso = "",
   tipoInicial,
+  pregunta,
 }: ReportProblemModalProps) {
   const [tipo, setTipo] = useState(tipoInicial ?? REPORT_TYPES[0]);
   const [mensaje, setMensaje] = useState("");
@@ -61,7 +64,8 @@ export function ReportProblemModal({
       userEmail: user?.email ?? "",
       tipo,
       seccion,
-      recurso,
+      recurso: recurso || pregunta?.id || "",
+      pregunta,
       mensaje: mensaje.trim(),
     });
     setSent(true);
@@ -71,6 +75,7 @@ export function ReportProblemModal({
       onClose();
     }, 1800);
   };
+
 
   const inputStyle = {
     width: "100%",
@@ -149,6 +154,27 @@ export function ReportProblemModal({
                 </>
               ) : null}
             </p>
+
+            {pregunta ? (
+              <div
+                style={{
+                  border: "1px solid #E3EAF4",
+                  background: "#F7FAFF",
+                  borderRadius: 14,
+                  padding: "12px 14px",
+                  margin: "0 0 16px",
+                }}
+              >
+                <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: ".06em", color: "#647DA0" }}>
+                  PREGUNTA REPORTADA
+                </div>
+                <p style={{ margin: "6px 0 0", color: INK, fontSize: 13.5, lineHeight: 1.5 }}>
+                  {pregunta.text.length > 240 ? `${pregunta.text.slice(0, 240)}…` : pregunta.text}
+                </p>
+              </div>
+            ) : null}
+
+
 
             <label style={{ display: "block", fontSize: 12.5, fontWeight: 700, color: INK, marginBottom: 6 }}>
               Tipo de reporte

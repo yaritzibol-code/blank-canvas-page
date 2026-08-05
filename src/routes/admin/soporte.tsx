@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { supabase } from "@/integrations/supabase/client";
 import { REPORT_TYPES } from "@/components/shared/ReportProblemModal";
+import { QuestionEditModal } from "@/components/admin/QuestionEditModal";
+
 import {
   AdminShell,
   Badge,
@@ -114,7 +116,10 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
   // admite al equipo admin.
   const [notas, setNotas] = useState("");
   const [notasListas, setNotasListas] = useState(false);
-  const isQuestion = r.recurso.startsWith("q_");
+  const [verPregunta, setVerPregunta] = useState(false);
+  const questionId = r.pregunta?.id || r.recurso;
+  const isQuestion = Boolean(r.pregunta) || r.recurso.startsWith("q_");
+
 
   useEffect(() => {
     let vivo = true;
@@ -176,14 +181,39 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
         {r.mensaje}
       </div>
 
-      {isQuestion && (
-        <button
-          onClick={() => navigate({ to: "/admin/banco", search: { q: r.recurso } })}
-          style={{ padding: "7px 14px", background: "white", color: "#3D5D91", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".76rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 12 }}
-        >
-          <Icon n="help" size={14} /> Abrir en Banco de preguntas
-        </button>
+      {r.pregunta && (
+        <div style={{ border: "1px solid #E3EAF4", background: "#F7FAFF", borderRadius: 10, padding: "10px 13px", marginBottom: 12 }}>
+          <div style={{ fontSize: ".66rem", fontWeight: 800, letterSpacing: ".06em", color: "#647DA0" }}>PREGUNTA REPORTADA</div>
+          <p style={{ margin: "5px 0 0", fontSize: ".8rem", color: "#22375C", lineHeight: 1.5 }}>{r.pregunta.text}</p>
+        </div>
       )}
+
+      {isQuestion && (
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
+          <button
+            onClick={() => setVerPregunta(true)}
+            style={{ padding: "7px 14px", background: "#3D5D91", color: "white", border: "none", borderRadius: 8, fontSize: ".76rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
+          >
+            <Icon n="edit" size={14} /> Ver y editar pregunta
+          </button>
+          <button
+            onClick={() => navigate({ to: "/admin/banco", search: { q: questionId } })}
+            style={{ padding: "7px 14px", background: "white", color: "#3D5D91", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".76rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
+          >
+            <Icon n="help" size={14} /> Abrir en Banco de preguntas
+          </button>
+        </div>
+      )}
+
+      {verPregunta && (
+        <QuestionEditModal
+          questionId={questionId}
+          snapshot={r.pregunta}
+          onClose={() => setVerPregunta(false)}
+          onFlash={onFlash}
+        />
+      )}
+
 
       {/* Notas internas */}
       <div>

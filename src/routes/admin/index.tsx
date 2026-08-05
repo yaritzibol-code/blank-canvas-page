@@ -11,6 +11,8 @@ import {
   timeAgo,
   activityVisual,
 } from "@/components/admin/AdminShell";
+import { BackendAudit } from "@/components/admin/BackendAudit";
+
 import {
   adminSummary,
   getReports,
@@ -54,9 +56,12 @@ function AdminResumenPage() {
     { icon: "help", num: String(summary.quizCount), lab: "Cuestionarios", color: "#3D5D91" },
   ];
 
+  const totalUsers = useStore(() => getUsers().length);
+
   return (
     <AdminShell title="Resumen general" active="resumen">
       {/* Stats */}
+
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 12, marginBottom: 20 }}>
         {stats.map((s) => (
           <div key={s.lab} style={{ ...cardStyle, padding: "16px 18px", display: "flex", flexDirection: "column", gap: 8 }}>
@@ -70,6 +75,8 @@ function AdminResumenPage() {
           </div>
         ))}
       </div>
+      <BackendAudit localUsers={totalUsers} localReports={pending.length} />
+
 
       {/* Alertas */}
       {alerts.length > 0 && (
