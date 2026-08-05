@@ -349,9 +349,8 @@ function SimuladorPage() {
     setAgreed(true);
     savedRef.current = false;
     setPhase("exam");
+    })();
   }, [ready, user, storeKey]);
-
-  /** Guarda el avance del examen mientras esté en curso (cada ~10 s o al responder). */
   const saveTick = Math.floor(secondsLeft / 10);
   useEffect(() => {
     if (!storeKey) return;
