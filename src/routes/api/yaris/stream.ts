@@ -96,7 +96,9 @@ export const Route = createFileRoute("/api/yaris/stream")({
           plan?: string;
           accessStatus?: string;
           yarisTono?: "formal" | "normal" | "amiga";
+          yarisLargo?: "corta" | "normal" | "detallada";
         };
+
         const isPro =
           Boolean(isAdmin) ||
           Boolean(hasSub) ||
