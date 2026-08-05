@@ -23,6 +23,7 @@ export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: s
   const key = (files ?? []).join(",");
   const [urls, setUrls] = useState<string[]>([]);
   const [failed, setFailed] = useState(false);
+  const [retry, setRetry] = useState(0);
 
   useEffect(() => {
     const names = key ? key.split(",") : [];
@@ -40,41 +41,60 @@ export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: s
     }
 
     void (async () => {
-      const s = supa();
-      if (!s) {
-        if (alive) setFailed(true);
-        return;
-      }
-      const { data, error } = await s.storage.from(BUCKET).createSignedUrls(names, TTL);
-      if (!alive) return;
-      if (error || !data) {
-        setFailed(true);
-        return;
-      }
-      const out: string[] = [];
-      data.forEach((row, i) => {
-        if (row.signedUrl) {
-          signed.set(`${BUCKET}/${names[i]}`, row.signedUrl);
-          out.push(row.signedUrl);
+      // Las láminas son parte de la pregunta: si la firma falla (sesión que
+      // acaba de refrescar, red intermitente) reintentamos antes de rendirnos.
+      for (let intento = 0; intento < 3 && alive; intento++) {
+        const s = supa();
+        if (s) {
+          const { data, error } = await s.storage.from(BUCKET).createSignedUrls(names, TTL);
+          if (!alive) return;
+          if (!error && data) {
+            const out: string[] = [];
+            data.forEach((row, i) => {
+              const name = names[i];
+              if (row.signedUrl && name) {
+                signed.set(`${BUCKET}/${name}`, row.signedUrl);
+                out.push(row.signedUrl);
+              }
+            });
+            if (out.length > 0) {
+              setUrls(out);
+              setFailed(false);
+              return;
+            }
+          }
         }
-      });
-      if (out.length === 0) setFailed(true);
-      setUrls(out);
+        await new Promise((r) => setTimeout(r, 400 * (intento + 1)));
+      }
+      if (alive) setFailed(true);
     })();
 
     return () => {
       alive = false;
     };
-  }, [key, BUCKET]);
+  }, [key, BUCKET, retry]);
 
   if (!files || files.length === 0) return null;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 22 }}>
       {failed && (
-        <p style={{ fontSize: "0.8rem", color: "#8DA1BE", fontFamily: "'Manrope', sans-serif" }}>
-          No se pudo cargar la lámina de esta pregunta.
-        </p>
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
+          <p style={{ fontSize: "0.8rem", color: "#8DA1BE", fontFamily: "'Manrope', sans-serif", margin: 0 }}>
+            No se pudo cargar la lámina de esta pregunta.
+          </p>
+          <button
+            type="button"
+            onClick={() => { setFailed(false); setRetry((n) => n + 1); }}
+            style={{
+              minHeight: 44, padding: "8px 14px", borderRadius: 10, cursor: "pointer",
+              border: "1px solid #3D5D91", background: "white", color: "#22375C",
+              fontWeight: 700, fontSize: "0.8rem", fontFamily: "'Manrope', sans-serif",
+            }}
+          >
+            Reintentar
+          </button>
+        </div>
       )}
       {urls.map((u, i) => (
         <a key={u} href={u} target="_blank" rel="noreferrer" style={{ display: "block" }}>
