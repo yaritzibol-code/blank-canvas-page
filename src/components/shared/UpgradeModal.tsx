@@ -185,7 +185,8 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
               fontFamily: FONT,
             }}
           >
-            Ver planes
+            {paying ? "Un momento…" : "Suscribirme ahora"}
+
           </button>
           <button
             onClick={onClose}
