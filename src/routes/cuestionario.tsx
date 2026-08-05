@@ -129,8 +129,49 @@ interface AprendiendoSnapshot {
 
 function CuestionarioPage() {
   const { user, ready } = useRequireAuth();
-  const bankReady = useQuestionBank();
   const search = Route.useSearch();
+  /**
+   * Lote del banco que necesita esta sesión. El banco completo nunca se baja
+   * al navegador: se piden solo las preguntas del ámbito abierto.
+   */
+  const bankScope: BankScope = (() => {
+    const paidUser = user ? isPaid(user) : false;
+    const capsList = search.caps
+      ? search.caps.split(",").map((c: string) => Number(c.trim())).filter((n: number) => Number.isFinite(n))
+      : [];
+    if (search.fuente) {
+      return {
+        scope: "la" as const,
+        fuentes: [search.fuente],
+        ...(capsList.length > 0 && { caps: capsList }),
+        limit: paidUser ? 600 : 10,
+        ordered: !paidUser,
+      };
+    }
+    if (search.banco === "la") {
+      const codes = search.fuentes ? search.fuentes.split(",").map((c: string) => c.trim()).filter(Boolean) : [];
+      const materiasLa = search.materias
+        ? search.materias.split(",").map((m: string) => m.trim()).filter(Boolean)
+        : [];
+      return {
+        scope: "la" as const,
+        ...(search.modo === "oficial"
+          ? { fuentes: [LA_OFICIAL_FUENTE] }
+          : codes.length > 0 && { fuentes: [LA_OFICIAL_FUENTE, ...codes] }),
+        ...(materiasLa.length > 0 && { materias: materiasLa }),
+        limit: paidUser ? Math.min(Math.max((search.qty ?? 50) * 4, 200), 600) : 10,
+        ordered: !paidUser,
+      };
+    }
+    const slugs = parseSlugs(search.materias);
+    return {
+      scope: "ciaac" as const,
+      ...(slugs.length > 0 && { materias: slugs }),
+      limit: paidUser ? 200 : 10,
+      ordered: !paidUser,
+    };
+  })();
+  const bankReady = useQuestionBank(bankScope);
   /** Clave de la sesión activa: distinta por usuario y por configuración. */
   const sessionVariant = [
     search.materias ?? "all",
