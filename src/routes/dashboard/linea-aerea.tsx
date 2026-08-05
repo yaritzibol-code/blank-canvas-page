@@ -300,10 +300,21 @@ function ChapterPicker({
 }) {
   const navigate = useNavigate();
   const [sel, setSel] = useState<Set<number>>(new Set());
+  const [qty, setQty] = useState<string>("50");
+  const [customQty, setCustomQty] = useState("");
   const all = sel.size === 0;
-  const total = all
+  const disponibles = all
     ? totalBanco
     : chapters.filter((c) => sel.has(c.num)).reduce((s, c) => s + c.total, 0);
+
+  const qtyNum = (() => {
+    if (qty === "todas") return disponibles;
+    if (qty === "custom") {
+      const n = parseInt(customQty, 10);
+      return Number.isFinite(n) && n > 0 ? Math.min(n, disponibles) : 0;
+    }
+    return Math.min(parseInt(qty, 10), disponibles);
+  })();
 
   function toggle(num: number) {
     setSel((prev) => {
@@ -316,11 +327,12 @@ function ChapterPicker({
 
   function start() {
     const caps = [...sel].sort((a, b) => a - b).join(",");
-    void navigate({
-      to: "/cuestionario",
-      search: (caps ? { fuente: code, caps } : { fuente: code }) as never,
-    });
+    const search: Record<string, string | number> = { fuente: code };
+    if (caps) search.caps = caps;
+    if (qtyNum > 0 && qtyNum < disponibles) search.qty = qtyNum;
+    void navigate({ to: "/cuestionario", search: search as never });
   }
+
 
 
   return (
