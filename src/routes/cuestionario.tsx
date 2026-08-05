@@ -248,11 +248,14 @@ function CuestionarioPage() {
   const lastAnsweredRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
+    // <1024px (móvil + iPad vertical) usa hoja inferior: con el panel lateral
+    // de 340px la pregunta quedaba amontonada en tablets.
+    const check = () => setIsMobile(window.innerWidth < 1024);
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
+
 
   /**
    * Arma la sesión desde el pool según el plan:
@@ -779,66 +782,71 @@ function CuestionarioPage() {
     >
       {/* ── TOPBAR ── */}
       <div
+        className="px-3 sm:px-6"
         style={{
           background: "white",
           borderBottom: "1px solid rgba(61,93,145,0.08)",
-          padding: "0 24px",
-          height: 62,
+          minHeight: 62,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          gap: 8,
           position: "sticky",
           top: 0,
           zIndex: 100,
           flexShrink: 0,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
           <Link
             to={exitTo}
+            aria-label="Salir del cuestionario"
             style={{
-              display: "flex", alignItems: "center", gap: 5,
-              color: "#647DA0", fontSize: "0.8rem", textDecoration: "none",
-              padding: "5px 10px", borderRadius: 6, border: "1px solid #F2DCDB",
+              display: "flex", alignItems: "center", justifyContent: "center", gap: 5,
+              color: "#3D5D91", fontSize: "0.82rem", fontWeight: 600, textDecoration: "none",
+              minHeight: 44, minWidth: 44, padding: "0 12px", borderRadius: 8,
+              border: "1px solid #C9D4E5", flexShrink: 0,
               transition: "all 0.2s",
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = "#3D5D91"; e.currentTarget.style.borderColor = "#3D5D91"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = "#647DA0"; e.currentTarget.style.borderColor = "#F2DCDB"; }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = "#22375C"; e.currentTarget.style.borderColor = "#3D5D91"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "#3D5D91"; e.currentTarget.style.borderColor = "#C9D4E5"; }}
           >
-            ← Salir
+            <span aria-hidden="true">←</span> Salir
           </Link>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
             <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "#22375C", display: "flex", alignItems: "center", gap: 6 }}>
-              <Icon n="spark" size={15} color="#3D5D91" /> Modo Aprendiendo
+              <Icon n="spark" size={15} color="#3D5D91" /> <span className="truncate">Modo Aprendiendo</span>
             </span>
-            <span style={{ fontSize: "0.72rem", color: "#647DA0" }} className="hidden sm:block">
+            <span style={{ fontSize: "0.74rem", color: "#5A6F92" }} className="hidden md:block truncate">
               {materiaLabel} · {total} preguntas
             </span>
           </div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
           <div
+            className="hidden sm:block"
             style={{
               background: "#F2DCDB", color: "#6C0820",
-              padding: "5px 14px", borderRadius: 20,
-              fontSize: "0.82rem", fontWeight: 700,
+              padding: "6px 14px", borderRadius: 20,
+              fontSize: "0.82rem", fontWeight: 700, whiteSpace: "nowrap",
             }}
           >
             Pregunta {currentIdx + 1} de {total}
           </div>
           <button
             onClick={openYaris}
+            aria-label={thinkMode ? "Abrir Yaris en modo te ayudo a pensar" : "Abrir Yaris para que explique la pregunta"}
             style={{
-              padding: "7px 14px",
+              minHeight: 44, minWidth: 44, padding: "0 12px",
               background: "linear-gradient(135deg,#3D5D91,#5A86CB)",
-              color: "white", border: "none", borderRadius: 7,
-              fontSize: "0.8rem", fontWeight: 700, cursor: "pointer",
+              color: "white", border: "none", borderRadius: 9,
+              fontSize: "0.82rem", fontWeight: 700, cursor: "pointer",
               fontFamily: "'Manrope', sans-serif",
-              display: "flex", alignItems: "center", gap: 5,
+              display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
             }}
           >
-            <Icon n={thinkMode ? "lightbulb" : "spark"} size={16} />{" "}
-            <span className="hidden sm:inline">{thinkMode ? "Ayúdame a pensar" : "Explícamelo Yaris"}</span>
+            <Icon n={thinkMode ? "lightbulb" : "spark"} size={17} />
+            <span className="hidden lg:inline">{thinkMode ? "Ayúdame a pensar" : "Explícamelo Yaris"}</span>
           </button>
           <button
             onClick={() => {
@@ -848,10 +856,10 @@ function CuestionarioPage() {
             }}
             aria-label="Finalizar sesión de estudio"
             style={{
-              padding: "7px 14px",
+              minHeight: 44, minWidth: 44, padding: "0 14px",
               background: "#6C0820",
-              color: "white", border: "none", borderRadius: 7,
-              fontSize: "0.8rem", fontWeight: 700, cursor: "pointer",
+              color: "white", border: "none", borderRadius: 9,
+              fontSize: "0.82rem", fontWeight: 700, cursor: "pointer",
               fontFamily: "'Manrope', sans-serif",
             }}
           >
@@ -861,11 +869,13 @@ function CuestionarioPage() {
       </div>
 
 
+
       {/* ── PROGRESS BAR ── */}
       <div
+        className="px-3 sm:px-6"
         style={{
           background: "white",
-          padding: "0 24px 12px",
+          paddingBottom: 12,
           borderBottom: "1px solid rgba(61,93,145,0.06)",
           flexShrink: 0,
         }}
@@ -873,12 +883,14 @@ function CuestionarioPage() {
         <div
           style={{
             display: "flex", justifyContent: "space-between", alignItems: "center",
-            fontSize: "0.75rem", color: "#647DA0", marginBottom: 6,
+            gap: 8,
+            fontSize: "0.76rem", color: "#5A6F92", marginBottom: 6,
           }}
         >
           <span>Progreso de la sesión</span>
-          <strong style={{ color: "#3D5D91" }}>{answeredCount}/{total} respondidas</strong>
+          <strong style={{ color: "#22375C", whiteSpace: "nowrap" }}>{answeredCount}/{total} respondidas</strong>
         </div>
+
         <div style={{ height: 6, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
           <div
             style={{
@@ -940,15 +952,20 @@ function CuestionarioPage() {
 
 
 
-            {/* Options */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
+            {/* Options — botones reales: foco por teclado y toque ≥48px */}
+            <div role="group" aria-label="Opciones de respuesta" style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
               {currentQ.options.map((opt, i) => (
-                <div
+                <button
                   key={i}
+                  type="button"
                   onClick={() => handleOptionClick(i)}
+                  disabled={answered}
+                  aria-pressed={selectedIdx === i}
                   style={{
                     display: "flex", alignItems: "center", gap: 14,
                     padding: "14px 18px", borderRadius: 12,
+                    minHeight: 56, width: "100%", textAlign: "left",
+                    font: "inherit", cursor: answered ? "default" : "pointer",
                     transition: "all 0.2s",
                     userSelect: "none",
                     ...getOptionStyle(i),
@@ -968,28 +985,30 @@ function CuestionarioPage() {
                     }
                   }}
                 >
-                  <div
+                  <span
+                    aria-hidden="true"
                     style={{
-                      width: 32, height: 32, borderRadius: "50%",
+                      width: 34, height: 34, borderRadius: "50%",
                       display: "flex", alignItems: "center", justifyContent: "center",
-                      fontSize: "0.8rem", fontWeight: 700, flexShrink: 0,
+                      fontSize: "0.82rem", fontWeight: 700, flexShrink: 0,
                       transition: "all 0.2s",
                       ...getLetterStyle(i),
                     }}
                   >
                     {LETTERS[i]}
-                  </div>
-                  <div style={{ fontSize: "0.9rem", color: "#22375C", lineHeight: 1.4, flex: 1 }}>
+                  </span>
+                  <span style={{ fontSize: "0.95rem", color: "#22375C", lineHeight: 1.45, flex: 1 }}>
                     {opt.text}
-                  </div>
+                  </span>
                   {answered && (
                     <span style={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
-                      {opt.correct ? <Icon n="checkCircle" size={20} color="#2ecc71" /> : (i === selectedIdx ? <Icon n="close" size={20} color="#e74c3c" /> : null)}
+                      {opt.correct ? <Icon n="checkCircle" size={20} color="#1a7a4a" /> : (i === selectedIdx ? <Icon n="close" size={20} color="#c0392b" /> : null)}
                     </span>
                   )}
-                </div>
+                </button>
               ))}
             </div>
+
 
             {/* Feedback card */}
             {answered && (
@@ -1032,10 +1051,10 @@ function CuestionarioPage() {
                   <button
                     onClick={openYaris}
                     style={{
-                      padding: "8px 14px",
+                      minHeight: 44, padding: "0 16px",
                       background: "linear-gradient(135deg,#3D5D91,#5A86CB)",
-                      color: "white", border: "none", borderRadius: 7,
-                      fontSize: "0.78rem", fontWeight: 700, cursor: "pointer",
+                      color: "white", border: "none", borderRadius: 9,
+                      fontSize: "0.82rem", fontWeight: 700, cursor: "pointer",
                       fontFamily: "'Manrope', sans-serif",
                       display: "inline-flex", alignItems: "center", gap: 6,
                     }}
@@ -1045,10 +1064,10 @@ function CuestionarioPage() {
                   <button
                     onClick={() => setReportOpen(true)}
                     style={{
-                      padding: "8px 12px",
+                      minHeight: 44, padding: "0 14px",
                       background: "transparent",
-                      color: "#647DA0", border: "1px solid #F2DCDB", borderRadius: 7,
-                      fontSize: "0.78rem", fontWeight: 600, cursor: "pointer",
+                      color: "#3D5D91", border: "1px solid #C9D4E5", borderRadius: 9,
+                      fontSize: "0.82rem", fontWeight: 600, cursor: "pointer",
                       fontFamily: "'Manrope', sans-serif",
                       display: "inline-flex", alignItems: "center", gap: 5,
                     }}
@@ -1056,6 +1075,7 @@ function CuestionarioPage() {
                     <Icon n="alert" size={14} /> Reportar
                   </button>
                 </div>
+
               </div>
             )}
           </div>
@@ -1095,20 +1115,20 @@ function CuestionarioPage() {
             </button>
           </div>
 
-          {/* Mini tracker */}
-          <div style={{ maxWidth: 680, width: "100%", display: "flex", gap: 4, flexWrap: "wrap" }}>
+          {/* Mini tracker — decorativo: el conteo real ya se anuncia arriba */}
+          <div aria-hidden="true" style={{ maxWidth: 680, width: "100%", display: "flex", gap: 4, flexWrap: "wrap" }}>
             {questions.map((_, i) => {
               const res = results[i];
               const isCurrent = i === currentIdx && !showResult;
-              let bg = "#F2DCDB";
+              let bg = "#E2C9C8";
               let boxShadow = "none";
               if (isCurrent) {
-                bg = "#5A86CB";
-                boxShadow = "0 0 0 2px white, 0 0 0 4px #5A86CB";
+                bg = "#3D5D91";
+                boxShadow = "0 0 0 2px white, 0 0 0 4px #3D5D91";
               } else if (res === true) {
-                bg = "#2ecc71";
+                bg = "#1a7a4a";
               } else if (res === false) {
-                bg = "#e74c3c";
+                bg = "#c0392b";
               } else if (res === null && i < currentIdx) {
                 bg = "#3D5D91";
               }
@@ -1123,6 +1143,7 @@ function CuestionarioPage() {
               );
             })}
           </div>
+
         </div>
 
         {/* ── RESULT SCREEN ── */}
@@ -1359,22 +1380,23 @@ function CuestionarioPage() {
                 <Icon n="spark" size={18} color="#3D5D91" />
               </div>
               <div>
-                <div style={{ fontSize: "0.86rem", fontWeight: 700, color: "white" }}>Yaris IA</div>
-                <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.8)" }}>
+                <div style={{ fontSize: "0.9rem", fontWeight: 700, color: "white" }}>Yaris IA</div>
+                <div style={{ fontSize: "0.74rem", color: "rgba(255,255,255,0.95)", fontWeight: 600 }}>
                   {thinkMode ? "Modo guía · no revela la respuesta" : "Tutora de aviación 24/7"}
                 </div>
               </div>
             </div>
             <button
               onClick={() => setYarisOpen(false)}
+              aria-label="Cerrar el chat de Yaris"
               style={{
-                background: "rgba(255,255,255,0.2)", border: "none", color: "white",
-                borderRadius: 6, padding: "4px 8px", cursor: "pointer",
+                background: "rgba(255,255,255,0.22)", border: "none", color: "white",
+                borderRadius: 10, minWidth: 44, minHeight: 44, cursor: "pointer",
                 fontSize: "0.76rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif",
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}
             >
-              <Icon n="close" size={15} />
+              <Icon n="close" size={18} />
             </button>
           </div>
 
@@ -1382,23 +1404,27 @@ function CuestionarioPage() {
           {thinkMode && (
             <div
               role="status"
+              aria-live="polite"
               style={{
                 flexShrink: 0,
                 display: "flex", alignItems: "flex-start", gap: 8,
                 padding: "10px 14px",
-                background: "rgba(243,156,18,0.10)",
-                borderBottom: "1px solid rgba(243,156,18,0.28)",
-                color: "#8a5a00",
-                fontSize: "0.74rem", lineHeight: 1.45,
+                // Fondo sólido y tinta oscura: sobre el degradado translúcido
+                // anterior el texto no alcanzaba contraste AA.
+                background: "#FFF4DE",
+                borderBottom: "1px solid #E0A93C",
+                color: "#6B4200",
+                fontSize: "0.78rem", lineHeight: 1.5, fontWeight: 500,
               }}
             >
-              <span style={{ flexShrink: 0, marginTop: 1 }}><Icon n="lightbulb" size={14} color="#f39c12" /></span>
+              <span style={{ flexShrink: 0, marginTop: 1 }} aria-hidden="true"><Icon n="lightbulb" size={15} color="#8a5a00" /></span>
               <span>
                 <b>Modo “te ayudo a pensar”.</b> Aún no eliges opción, así que Yaris te guía con
                 conceptos y preguntas: no te dará la respuesta hasta que marques una.
               </span>
             </div>
           )}
+
 
           {/* Messages */}
           <div
@@ -1486,39 +1512,44 @@ function CuestionarioPage() {
           {/* Input */}
           <div
             style={{
-              padding: "10px 14px",
+              padding: "10px 14px calc(10px + env(safe-area-inset-bottom))",
               borderTop: "1px solid #F2DCDB",
-              display: "flex", gap: 7, flexShrink: 0,
+              display: "flex", gap: 8, alignItems: "center", flexShrink: 0,
             }}
           >
             <input
               value={yarisInput}
               onChange={(e) => setYarisInput(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") sendYarisMsg(); }}
+              aria-label="Escribe tu mensaje para Yaris"
               placeholder={thinkMode ? "Pregúntame conceptos, no la respuesta..." : "Escribe tu duda..."}
               style={{
-                flex: 1, border: "2px solid #F2DCDB", borderRadius: 18,
-                padding: "7px 12px", fontSize: "0.81rem",
+                flex: 1, border: "2px solid #C9D4E5", borderRadius: 22,
+                // 16px evita el zoom automático de iOS al enfocar el campo.
+                padding: "11px 14px", fontSize: "16px", minHeight: 44,
+                color: "#22375C",
                 fontFamily: "'Manrope', sans-serif", outline: "none",
                 transition: "border-color 0.2s",
               }}
               onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }}
-              onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }}
+              onBlur={(e) => { e.currentTarget.style.borderColor = "#C9D4E5"; }}
             />
             <button
               onClick={sendYarisMsg}
+              aria-label="Enviar mensaje a Yaris"
               style={{
-                width: 32, height: 32, background: "#3D5D91", border: "none",
+                width: 44, height: 44, background: "#3D5D91", border: "none",
                 borderRadius: "50%", color: "white", cursor: "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 fontSize: "0.82rem", flexShrink: 0,
               }}
             >
-              <Icon n="send" size={15} />
+              <Icon n="send" size={17} />
             </button>
           </div>
         </div>
       </div>
+
 
       {/* Reportar problema */}
       <ReportProblemModal
