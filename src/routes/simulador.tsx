@@ -906,7 +906,7 @@ function SimuladorPage() {
             <PathyDebrief
               userId={user.id}
               origen="simulador"
-              titulo={modo === "oficial" ? "Simulador oficial" : "Simulador potenciado"}
+              titulo={mode === "oficial" ? "Simulador oficial" : "Simulador potenciado"}
               scorePct={scorePct}
               answers={result.answers}
             />
