@@ -571,27 +571,51 @@ function SimuladorPage() {
     setCalc((s) => calcReducer(s, { type, payload }));
   }
 
-  /* Yaris IA — SOLO en fase review, con la pregunta seleccionada como contexto */
+  /*
+   * Yaris IA — misma UX que los cuestionarios (CIAAC y Línea Aérea):
+   *  · durante el examen entra en modo "te ayudo a pensar": guía el
+   *    razonamiento y jamás revela la correcta (prompt socrático + filtro).
+   *  · en la revisión explica a fondo, porque las respuestas ya son visibles.
+   */
   const callYarisAi = useServerFn(yarisAiChat);
 
   const YARIS_EXPLAIN_PROMPT =
     "Explícame esta pregunta con tus propias palabras, por qué la correcta es la correcta y por qué las demás no. Al final dame un tip para recordarlo.";
   const YARIS_REEXPLAIN_PROMPT =
     "Explícame esta misma pregunta otra vez, pero de una forma distinta y más sencilla. Usa otro ejemplo o analogía para que me quede claro.";
+  const YARIS_THINK_PROMPT =
+    "Estoy en un examen y todavía no puedo ver la respuesta. NO me digas cuál es la correcta: explícame el concepto que se evalúa, qué significan los términos clave y hazme preguntas guía para que yo razone y elija.";
+  const YARIS_THINK_AGAIN_PROMPT =
+    "Sigo sin poder ver la respuesta. Guíame otra vez con otro enfoque o analogía, sin revelarme cuál opción es la correcta.";
+
+  /** En examen Yaris nunca revela; en revisión sí explica la correcta. */
+  const thinkMode = phase !== "review";
+  /** Índice de la pregunta que Yaris tiene como contexto según la fase. */
+  const yarisIdx = phase === "review" ? reviewCurrent : current;
 
   function aiContextPayload(idx: number) {
     const bq = bankQs[idx];
     if (!bq) return undefined;
     const mi = questions[idx]?.materia ?? 0;
+    const think = phaseRef.current !== "review";
     return {
       materia: MATERIAS[mi].name,
       questionText: bq.text,
       options: bq.options,
       correctIndex: bq.correctIndex,
-      userSelectedIndex: questions[idx]?.selectedOpt ?? -1,
+      userSelectedIndex: think ? -1 : (questions[idx]?.selectedOpt ?? -1),
       explanation: bq.explanation,
       cite: bq.cite,
+      ...(think && { preAnswer: true }),
     };
+  }
+
+  /** Tapa cualquier fuga de la respuesta mientras el examen sigue en curso. */
+  function guarded(text: string, idx: number): string {
+    if (phaseRef.current === "review") return text;
+    const bq = bankQs[idx];
+    const correct = bq?.options[bq.correctIndex] ?? "";
+    return correct ? maskAnswer(text, correct) : text;
   }
 
   function historyForAi(nextUserMsg?: string) {
@@ -606,12 +630,15 @@ function SimuladorPage() {
   }
 
   function ensureGreeting() {
+    const think = phaseRef.current !== "review";
     setYarisMsgs((p) =>
       p.length > 0
         ? p
         : [{
             role: "bot" as const,
-            text: "¡Hola! Soy <b>Yaris</b>. Te explico las preguntas de tu simulador con base en su explicación oficial y en lo que sé de aeronáutica. Pulsa <b>Explícamelo Yaris</b> en cualquier pregunta, las veces que necesites.",
+            text: think
+              ? "¡Hola! Soy <b>Yaris</b>. Mientras el examen está en curso te ayudo a <b>pensar</b> la pregunta: te explico el concepto y te hago preguntas guía, pero <i>no te doy la respuesta</i>."
+              : "¡Hola! Soy <b>Yaris</b>. Te explico las preguntas de tu simulador con base en su explicación oficial y en lo que sé de aeronáutica. Pulsa <b>Explícamelo Yaris</b> en cualquier pregunta, las veces que necesites.",
           }],
     );
   }
@@ -619,36 +646,45 @@ function SimuladorPage() {
   /**
    * Pide a la IA la explicación de la pregunta. Funciona cada vez que se pulsa
    * el botón: la primera vez explica completo y, si se repite sobre la misma
-   * pregunta, pide otro enfoque más sencillo.
+   * pregunta, pide otro enfoque más sencillo. En examen siempre es guía.
    */
   async function explainQuestion(idx: number) {
-    if (phaseRef.current !== "review" || aiBusyRef.current) return;
+    if (aiBusyRef.current) return;
+    const startPhase = phaseRef.current;
+    if (startPhase !== "review" && startPhase !== "exam") return;
     const bq = bankQs[idx];
     if (!bq) return;
+    const think = startPhase !== "review";
     const again = explainedRef.current.has(idx);
     aiBusyRef.current = true;
-    explainedRef.current.add(idx);
+    if (!think) explainedRef.current.add(idx);
     const mi = questions[idx]?.materia ?? 0;
     setYarisMsgs((p) => [...p, {
       role: "bot",
-      text: again
-        ? `Va otra vez la <b>pregunta ${idx + 1}</b> de <b>${MATERIAS[mi].name}</b>, ahora con otro enfoque:`
-        : `Vamos con la <b>pregunta ${idx + 1}</b> de <b>${MATERIAS[mi].name}</b>:`,
+      text: think
+        ? `Aún no puedes ver la respuesta de la <b>pregunta ${idx + 1}</b> de <b>${MATERIAS[mi].name}</b>, así que te ayudo a pensarla <i>sin dártela</i>:`
+        : again
+          ? `Va otra vez la <b>pregunta ${idx + 1}</b> de <b>${MATERIAS[mi].name}</b>, ahora con otro enfoque:`
+          : `Vamos con la <b>pregunta ${idx + 1}</b> de <b>${MATERIAS[mi].name}</b>:`,
     }]);
     setYarisTyping(true);
     try {
+      const prompt = think
+        ? (again ? YARIS_THINK_AGAIN_PROMPT : YARIS_THINK_PROMPT)
+        : (again ? YARIS_REEXPLAIN_PROMPT : YARIS_EXPLAIN_PROMPT);
+      if (think) explainedRef.current.add(idx);
       const r = await callYarisAi({
         data: {
-          history: [{ role: "user", content: again ? YARIS_REEXPLAIN_PROMPT : YARIS_EXPLAIN_PROMPT }],
+          history: [{ role: "user", content: prompt }],
           context: aiContextPayload(idx),
         },
       });
-      if (phaseRef.current !== "review") return;
-      setYarisMsgs((p) => [...p, { role: "bot", text: yarisToHtml(r.text), cite: r.cite ?? undefined }]);
+      if (phaseRef.current !== startPhase) return;
+      setYarisMsgs((p) => [...p, { role: "bot", text: yarisToHtml(guarded(r.text, idx)), cite: r.cite ?? undefined }]);
     } catch (err) {
       console.error("Yaris IA error", err);
       if (!again) explainedRef.current.delete(idx); // el siguiente intento repite la explicación completa
-      if (phaseRef.current === "review") {
+      if (phaseRef.current === startPhase) {
         setYarisMsgs((p) => [...p, { role: "bot", text: "No pude conectarme con la IA. Vuelve a intentarlo en un momento." }]);
       }
     } finally {
@@ -658,24 +694,25 @@ function SimuladorPage() {
   }
 
   async function openYaris() {
-    if (phase !== "review") return;
-    if (!yarisOpen && user) logYarisUse(user.id, "Simulador (revisión)");
+    if (phase !== "review" && phase !== "exam") return;
+    if (!yarisOpen && user) logYarisUse(user.id, phase === "review" ? "Simulador (revisión)" : "Simulador (guía)");
     setYarisOpen(true);
     ensureGreeting();
-    await explainQuestion(reviewCurrent);
+    await explainQuestion(yarisIdx);
   }
 
   async function sendYaris() {
     const text = yarisInput.trim();
     if (!text || yarisTyping || aiBusyRef.current) return;
+    const idx = yarisIdx;
     aiBusyRef.current = true;
     setYarisMsgs((p) => [...p, { role: "user", text }]);
     const history = historyForAi(text);
     setYarisInput("");
     setYarisTyping(true);
     try {
-      const r = await callYarisAi({ data: { history, context: aiContextPayload(reviewCurrent) } });
-      setYarisMsgs((p) => [...p, { role: "bot", text: yarisToHtml(r.text), cite: r.cite ?? undefined }]);
+      const r = await callYarisAi({ data: { history, context: aiContextPayload(idx) } });
+      setYarisMsgs((p) => [...p, { role: "bot", text: yarisToHtml(guarded(r.text, idx)), cite: r.cite ?? undefined }]);
     } catch (err) {
       console.error("Yaris IA error", err);
       setYarisMsgs((p) => [...p, { role: "bot", text: "No pude conectarme con la IA. Vuelve a intentarlo." }]);
@@ -684,6 +721,7 @@ function SimuladorPage() {
       setYarisTyping(false);
     }
   }
+
 
   /* Derived */
   const answeredCount = questions.filter((q) => q.answered).length;
