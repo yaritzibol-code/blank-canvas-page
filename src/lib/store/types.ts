@@ -89,6 +89,11 @@ export interface BankQuestion {
   capituloTitulo?: string;
   /** Sección del capítulo (subtema del libro). */
   seccion?: string;
+  /**
+   * Láminas del manual que acompañan al reactivo (bucket `jeppesen-images`).
+   * Se guarda solo el nombre del archivo: `jeppesen_gam_page_0174.png`.
+   */
+  imagenes?: string[];
   text: string;
   options: string[];
   correctIndex: number;
