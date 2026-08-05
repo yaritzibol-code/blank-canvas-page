@@ -37,15 +37,25 @@ interface Book {
   muestraGratis: boolean;
 }
 
+/** Fuente del material (etiqueta de origen). */
 const FILTER_TABS = [
   { key: "todos", label: "Todos" },
   { key: "oficial", label: "Oficiales CIAAC" },
+  { key: "linea-aerea", label: "Línea Aérea" },
   { key: "oaci", label: "OACI" },
   { key: "faa", label: "FAA" },
   { key: "ley", label: "Leyes MX" },
   { key: "jeppesen", label: "Jeppesen" },
   { key: "libro", label: "Libros" },
 ];
+
+/** Orden de lectura del catálogo. */
+const SORTS = [
+  { key: "az", label: "A–Z" },
+  { key: "za", label: "Z–A" },
+  { key: "materia", label: "Por materia" },
+] as const;
+type SortKey = (typeof SORTS)[number]["key"];
 
 /** URL de descarga directa de Drive a partir de la URL del visor (/preview). */
 function driveDownloadUrl(fileUrl: string): string {
@@ -63,6 +73,8 @@ function BibliotecaPage() {
 
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("todos");
+  const [materiaFilter, setMateriaFilter] = useState("todas");
+  const [sort, setSort] = useState<SortKey>("az");
   const [readerBook, setReaderBook] = useState<Book | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [zoom, setZoom] = useState(1);
@@ -196,16 +208,36 @@ function BibliotecaPage() {
      buscador no re-filtre toda la biblioteca (100+ manuales) en cada tecla. */
   const deferredSearch = useDeferredValue(search);
   const searchIndex = useMemo(
-    () => books.map((b) => `${b.title} ${b.author} ${b.tags.join(" ")}`.toLowerCase()),
+    () => books.map((b) => `${b.title} ${b.author} ${b.tags.join(" ")} ${b.materiaTag}`.toLowerCase()),
     [books],
   );
+
+  /** Materias presentes en el catálogo, con cuántos manuales tiene cada una. */
+  const materiaOptions = useMemo(() => {
+    const counts = new Map<string, number>();
+    books.forEach((b) => {
+      const name = b.materiaTag || "General";
+      counts.set(name, (counts.get(name) ?? 0) + 1);
+    });
+    return [...counts.entries()].sort((a, b) => a[0].localeCompare(b[0], "es"));
+  }, [books]);
+
   const filteredBooks = useMemo(() => {
     const q = deferredSearch.trim().toLowerCase();
-    return books.filter((b, i) => {
-      const matchFilter = filter === "todos" || b.tags.includes(filter);
-      return matchFilter && (!q || searchIndex[i].includes(q));
+    const out = books.filter((b, i) => {
+      if (filter !== "todos" && !b.tags.includes(filter)) return false;
+      if (materiaFilter !== "todas" && (b.materiaTag || "General") !== materiaFilter) return false;
+      return !q || searchIndex[i].includes(q);
     });
-  }, [books, searchIndex, filter, deferredSearch]);
+    const byTitle = (a: Book, b: Book) => a.title.localeCompare(b.title, "es");
+    if (sort === "za") return out.sort((a, b) => byTitle(b, a));
+    if (sort === "materia")
+      return out.sort(
+        (a, b) =>
+          (a.materiaTag || "General").localeCompare(b.materiaTag || "General", "es") || byTitle(a, b),
+      );
+    return out.sort(byTitle);
+  }, [books, searchIndex, filter, materiaFilter, sort, deferredSearch]);
 
   // Paginación incremental: se pintan de 24 en 24 para que la primera carga no
   // monte todas las tarjetas de golpe.
@@ -213,7 +245,7 @@ function BibliotecaPage() {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   useEffect(() => {
     setVisibleCount(PAGE_SIZE);
-  }, [filter, deferredSearch]);
+  }, [filter, materiaFilter, sort, deferredSearch]);
   const visibleBooks = filteredBooks.slice(0, visibleCount);
 
   const featured = books.find((b) => b.id === "aero-basica") ?? books[0];
@@ -261,6 +293,49 @@ function BibliotecaPage() {
           </div>
         </div>
 
+        {/* Segunda fila de filtros: materia, orden y resultado */}
+        <div style={{ display: "flex", gap: 12, marginBottom: 24, flexWrap: "wrap", alignItems: "center" }}>
+          <label style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: "0.78rem", fontWeight: 700, color: "#647DA0" }}>
+            <Icon n="book" size={15} /> Materia
+            <select
+              value={materiaFilter}
+              onChange={(e) => setMateriaFilter(e.target.value)}
+              style={{ border: "2px solid #F2DCDB", borderRadius: 10, padding: "7px 10px", fontSize: "0.8rem", fontFamily: "'Manrope', sans-serif", color: "#22375C", background: "white", outline: "none", cursor: "pointer", fontWeight: 600 }}
+            >
+              <option value="todas">Todas ({books.length})</option>
+              {materiaOptions.map(([name, n]) => (
+                <option key={name} value={name}>{name} ({n})</option>
+              ))}
+            </select>
+          </label>
+
+          <label style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: "0.78rem", fontWeight: 700, color: "#647DA0" }}>
+            <Icon n="chart" size={15} /> Orden
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value as SortKey)}
+              style={{ border: "2px solid #F2DCDB", borderRadius: 10, padding: "7px 10px", fontSize: "0.8rem", fontFamily: "'Manrope', sans-serif", color: "#22375C", background: "white", outline: "none", cursor: "pointer", fontWeight: 600 }}
+            >
+              {SORTS.map((s) => (
+                <option key={s.key} value={s.key}>{s.label}</option>
+              ))}
+            </select>
+          </label>
+
+          <span style={{ fontSize: "0.78rem", color: "#8DA1BE", fontWeight: 600 }}>
+            {filteredBooks.length} {filteredBooks.length === 1 ? "material" : "materiales"}
+          </span>
+
+          {(filter !== "todos" || materiaFilter !== "todas" || search.trim() !== "") && (
+            <button
+              onClick={() => { setFilter("todos"); setMateriaFilter("todas"); setSearch(""); }}
+              style={{ marginLeft: "auto", padding: "7px 14px", border: "2px solid #F2DCDB", background: "white", color: "#6C0820", borderRadius: 20, fontSize: "0.78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
+            >
+              <Icon n="close" size={13} /> Limpiar filtros
+            </button>
+          )}
+        </div>
+
         {/* Featured card */}
         {featured && (
           <div style={{ marginBottom: 32 }}>
@@ -290,7 +365,14 @@ function BibliotecaPage() {
 
         {/* Section header */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
-          <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "#22375C", display: "flex", alignItems: "center", gap: 8 }}><Icon n="doc" size={20} /> Manuales Oficiales CIAAC</h2>
+          <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "#22375C", display: "flex", alignItems: "center", gap: 8 }}>
+            <Icon n="doc" size={20} />{" "}
+            {materiaFilter !== "todas"
+              ? materiaFilter
+              : filter === "todos"
+                ? "Todo el catálogo"
+                : (FILTER_TABS.find((t) => t.key === filter)?.label ?? "Todo el catálogo")}
+          </h2>
         </div>
 
         {/* Books grid */}

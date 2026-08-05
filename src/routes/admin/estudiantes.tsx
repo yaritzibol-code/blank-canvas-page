@@ -22,8 +22,12 @@ import {
   materiaPerformance,
   MATERIAS_DEF,
   studentGeneralState,
+  logAccessChange,
+  updateUser,
   useStore,
+  type User,
 } from "@/lib/store";
+import { PLANES, planById, planIdDe, type PlanId } from "@/lib/pricing";
 
 export const Route = createFileRoute("/admin/estudiantes")({
   component: AdminEstudiantesPage,
@@ -127,8 +131,8 @@ function AdminEstudiantesPage() {
         </select>
         <select value={fPlan} onChange={(e) => setFPlan(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 130 }}>
           <option value="todos">Plan: todos</option>
-          <option value="paga">Plan de paga</option>
-          <option value="basica">Suscripción básica</option>
+          <option value="paga">Pro (de paga)</option>
+          <option value="basica">Básica (gratis)</option>
         </select>
         <select value={fMateriaDebil} onChange={(e) => setFMateriaDebil(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 150 }}>
           <option value="todas">Materia débil: todas</option>
@@ -192,7 +196,7 @@ function AdminEstudiantesPage() {
                 <td style={tdStyle}>{r.u.whatsapp || "—"}</td>
                 <td style={{ ...tdStyle, maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis" }}>{r.u.escuela || "—"}</td>
                 <td style={tdStyle}>{r.u.fechaCiaac ? fmtDate(r.u.fechaCiaac) : "—"}</td>
-                <td style={tdStyle}>{r.u.planNombre}</td>
+                <td style={tdStyle}><PlanSelect user={r.u} /></td>
                 <td style={tdStyle}>
                   <Badge text={ACCESS_LABEL[r.u.accessStatus] ?? r.u.accessStatus} color={ACCESS_COLOR[r.u.accessStatus] ?? "#3D5D91"} />
                 </td>
@@ -228,5 +232,43 @@ function AdminEstudiantesPage() {
         </table>
       </div>
     </AdminShell>
+  );
+}
+
+/**
+ * Cambia el plan del estudiante desde la propia lista.
+ *
+ * El cambio aplica el mismo parche que el modal del perfil (nivel de acceso,
+ * nombre del plan y vencimiento) y queda registrado en el historial de accesos.
+ */
+function PlanSelect({ user }: { user: User }) {
+  const actual = planIdDe(user);
+  const cambiar = (id: PlanId) => {
+    if (id === actual) return;
+    const def = planById(id);
+    updateUser(user.id, {
+      plan: def.tier,
+      planNombre: def.nombre,
+      accessStatus: def.id === "prueba" ? "prueba" : "activo",
+      accessEnd: def.dias === null ? null : new Date(Date.now() + def.dias * 86400000).toISOString(),
+    });
+    logAccessChange(user.id, "Cambio de plan", `${def.nombre} — desde la lista de estudiantes`);
+  };
+  return (
+    <select
+      value={actual}
+      onChange={(e) => cambiar(e.target.value as PlanId)}
+      title={`Plan actual: ${user.planNombre}`}
+      style={{
+        border: "2px solid #F2DCDB", borderRadius: 8, padding: "5px 8px",
+        fontSize: ".76rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif",
+        color: user.plan === "paga" ? "#3D5D91" : "#647DA0", background: "white",
+        outline: "none", cursor: "pointer", maxWidth: 150,
+      }}
+    >
+      {PLANES.map((p) => (
+        <option key={p.id} value={p.id}>{p.nombre}</option>
+      ))}
+    </select>
   );
 }

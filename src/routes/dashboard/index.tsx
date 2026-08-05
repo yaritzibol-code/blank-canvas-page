@@ -501,16 +501,29 @@ function DashboardHome() {
   const streak = stats.streak;
   const diasWord = streak === 1 ? "día" : "días";
 
+  // El inicio se adapta al foco elegido en el onboarding: quien va por la
+  // convocatoria de línea aérea aterriza en su módulo, no en las materias.
+  const enfocadoLineaAerea = user.focoRuta === "linea-aerea";
+  const materiaFoco = user.focoMateria
+    ? materias.find((m) => m.slug === user.focoMateria)
+    : undefined;
+
   const continueMateria =
-    materias.slice().sort((a, b) => a.pct - b.pct).find((m) => m.pct < 100) ?? materias[0];
-  const continueSub = continueMateria
-    ? continueMateria.pct === 0
-      ? `${continueMateria.name} — empieza aquí`
-      : `${continueMateria.name} — ${continueMateria.pct}% completado`
-    : "Elige una materia para comenzar";
-  const continuePath = continueMateria
-    ? `/dashboard/materias/${continueMateria.slug}`
-    : "/dashboard/materias";
+    materiaFoco ??
+    materias.slice().sort((a, b) => a.pct - b.pct).find((m) => m.pct < 100) ??
+    materias[0];
+  const continueSub = enfocadoLineaAerea
+    ? "Primer Oficial — Embraer 190"
+    : continueMateria
+      ? continueMateria.pct === 0
+        ? `${continueMateria.name} — empieza aquí`
+        : `${continueMateria.name} — ${continueMateria.pct}% completado`
+      : "Elige una materia para comenzar";
+  const continuePath = enfocadoLineaAerea
+    ? "/dashboard/linea-aerea"
+    : continueMateria
+      ? `/dashboard/materias/${continueMateria.slug}`
+      : "/dashboard/materias";
 
   // Featured materias for the top of the grid
   const inProgress = materias.filter((m) => m.pct > 0 && m.pct < 100);
@@ -656,23 +669,27 @@ function DashboardHome() {
               />
               <QuickRow
                 icon="help"
-                title="Hacer cuestionario"
+                title={enfocadoLineaAerea ? "Cuestionarios de la convocatoria" : "Hacer cuestionario"}
                 sub={
                   stats.quizCount > 0
                     ? `${stats.quizCount} cuestionarios completados`
-                    : "Elige materia y cantidad"
+                    : enfocadoLineaAerea
+                      ? "Un cuestionario por manual del curso"
+                      : "Elige materia y cantidad"
                 }
-                to="/dashboard/banco"
+                to={enfocadoLineaAerea ? "/dashboard/linea-aerea" : "/dashboard/banco"}
               />
               <QuickRow
                 icon="sim"
-                title="Examen simulado"
+                title={enfocadoLineaAerea ? "Practicar el CIAAC" : "Examen simulado"}
                 sub={
                   stats.simCount > 0
                     ? `${stats.simCount} simulacros completados`
-                    : "Simula el CIAAC completo"
+                    : enfocadoLineaAerea
+                      ? "El banco completo del examen teórico"
+                      : "Simula el CIAAC completo"
                 }
-                to="/simulador"
+                to="/dashboard/banco"
               />
               <QuickRow
                 icon="cards"

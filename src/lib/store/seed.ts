@@ -27,7 +27,7 @@ import type {
   User,
 } from "./types";
 
-export const SEED_VERSION = 7;
+export const SEED_VERSION = 8;
 
 const pad3 = (n: number) => String(n).padStart(3, "0");
 
@@ -58,7 +58,7 @@ function seedUsers(): User[] {
       perfilCiaac: "Ala Fija — Piloto Aviador Comercial",
       role: "student",
       plan: "paga",
-      planNombre: "Plan Anual",
+      planNombre: "Pro Anual",
       accessStatus: "activo",
       accessStart: "2026-02-05T10:00:00.000Z",
       accessEnd: "2027-02-05T10:00:00.000Z",
@@ -83,7 +83,7 @@ function seedUsers(): User[] {
       perfilCiaac: "",
       role: "student",
       plan: "basica",
-      planNombre: "Suscripción básica",
+      planNombre: "Básica (gratis)",
       accessStatus: "activo",
       accessStart: daysAgoISO(12, 10),
       accessEnd: null,
@@ -742,7 +742,9 @@ export function ensureSeeded() {
       write("questions", [...fresh, ...custom]);
       write("flashcards", seedFlashcards(fresh));
     }
-    if (current < 6) {
+    if (current < 8) {
+      // v8: el ATP del curso de Línea Aérea queda etiquetado como tal para que
+      // aparezca junto a los demás manuales del curso en la biblioteca.
       const seeded = new Set(seedMateriales().map((m) => m.id));
       const customMat = read<Material[]>("materiales", []).filter((m) => !seeded.has(m.id));
       write("materiales", [...seedMateriales(), ...customMat]);

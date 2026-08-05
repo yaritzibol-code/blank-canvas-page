@@ -4,6 +4,7 @@
  * Cuestionarios y Simulador). No garantizan aprobación.
  */
 import { MATERIAS_DEF } from "./materias";
+import { LINEA_AEREA_OFICIAL, LINEA_AEREA_QUIZZES } from "./linea-aerea-meta";
 import { SUBJECT_TEMAS } from "@/modules/data/registry";
 import {
   getActivity,
@@ -74,6 +75,76 @@ export function materiaPerformance(userId: string, period: Period = "todo"): Mat
       answered: v?.t ?? 0,
     };
   });
+}
+
+export interface RutaPerf {
+  /** Clave estable: slug de materia (CIAAC) o código de manual (Línea Aérea). */
+  key: string;
+  name: string;
+  icon: string;
+  avg: number | null;
+  answered: number;
+}
+
+/** Título del cuestionario oficial del proceso, para reconocer sus intentos. */
+const LA_TITULOS = new Map<string, { name: string; icon: string }>([
+  ...LINEA_AEREA_QUIZZES.map(
+    (q) => [q.titulo, { name: q.titulo, icon: q.icon }] as [string, { name: string; icon: string }],
+  ),
+  [LINEA_AEREA_OFICIAL.titulo, { name: "Guía oficial Embraer 190", icon: "target" }],
+]);
+
+/**
+ * Progreso separado por ruta.
+ *
+ * Los intentos del curso de Línea Aérea se reconocen por su `titulo` (el
+ * nombre del manual o de la guía oficial) y NO se promedian dentro de las
+ * materias del CIAAC, aunque sus preguntas estén clasificadas en una: mezclar
+ * ambas rutas hacía que "Legislación (CIAAC)" cambiara al practicar el CPAM
+ * del curso de línea aérea.
+ */
+export function progresoPorRuta(userId: string): { ciaac: RutaPerf[]; lineaAerea: RutaPerf[] } {
+  const attempts = getQuizAttempts(userId);
+  const laAcc = new Map<string, { c: number; t: number }>();
+  const ciaacAcc: Record<string, { c: number; t: number }> = {};
+  const addCiaac = (slug: string, c: number, t: number) => {
+    if (!ciaacAcc[slug]) ciaacAcc[slug] = { c: 0, t: 0 };
+    ciaacAcc[slug].c += c;
+    ciaacAcc[slug].t += t;
+  };
+
+  attempts.forEach((a) => {
+    if (a.titulo && LA_TITULOS.has(a.titulo)) {
+      const prev = laAcc.get(a.titulo) ?? { c: 0, t: 0 };
+      laAcc.set(a.titulo, { c: prev.c + a.correct, t: prev.t + a.total });
+      return;
+    }
+    Object.entries(a.porMateria).forEach(([m, v]) => addCiaac(m, v.correct, v.total));
+  });
+  // El simulador es siempre CIAAC.
+  getSimAttempts(userId).forEach((a) =>
+    Object.entries(a.porMateria).forEach(([m, v]) => addCiaac(m, v.correct, v.total)),
+  );
+
+  const pct = (v: { c: number; t: number } | undefined) =>
+    v && v.t > 0 ? Math.round((v.c / v.t) * 100) : null;
+
+  return {
+    ciaac: MATERIAS_DEF.map((m) => ({
+      key: m.slug,
+      name: m.name,
+      icon: m.icon,
+      avg: pct(ciaacAcc[m.slug]),
+      answered: ciaacAcc[m.slug]?.t ?? 0,
+    })),
+    lineaAerea: [...LA_TITULOS.entries()].map(([titulo, meta]) => ({
+      key: titulo,
+      name: meta.name,
+      icon: meta.icon,
+      avg: pct(laAcc.get(titulo)),
+      answered: laAcc.get(titulo)?.t ?? 0,
+    })),
+  };
 }
 
 /**

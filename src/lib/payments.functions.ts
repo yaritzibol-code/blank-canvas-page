@@ -5,7 +5,12 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { type StripeEnv, createStripeClient, getStripeErrorMessage } from "@/lib/stripe.server";
-import { PRO_MONTHLY_LOOKUP_KEY, PRO_SETUP_LOOKUP_KEY, type PlanPrice } from "@/lib/pricing";
+import {
+  PRO_ANNUAL_LOOKUP_KEY,
+  PRO_MONTHLY_LOOKUP_KEY,
+  PRO_SETUP_LOOKUP_KEY,
+  type PlanPrice,
+} from "@/lib/pricing";
 import { logBillingEvent } from "@/lib/billing-audit.server";
 
 type CheckoutResult = { clientSecret: string } | { error: string };
@@ -28,6 +33,26 @@ export const getPublicPricing = createServerFn({ method: "POST" })
       const interval = price.recurring?.interval;
       return {
         // Stripe entrega centavos; la UI muestra pesos.
+        amount: price.unit_amount / 100,
+        currency: price.currency.toUpperCase(),
+        interval: interval === "month" || interval === "year" ? interval : null,
+      };
+    } catch {
+      return null;
+    }
+  });
+
+/** Importe de la anualidad de Pro, leído de Stripe. `null` si no existe. */
+export const getPublicAnnualPricing = createServerFn({ method: "POST" })
+  .inputValidator((data: { environment: StripeEnv }) => data)
+  .handler(async ({ data }): Promise<PlanPrice | null> => {
+    try {
+      const stripe = createStripeClient(data.environment);
+      const prices = await stripe.prices.list({ lookup_keys: [PRO_ANNUAL_LOOKUP_KEY] });
+      const price = prices.data[0];
+      if (!price || price.unit_amount == null) return null;
+      const interval = price.recurring?.interval;
+      return {
         amount: price.unit_amount / 100,
         currency: price.currency.toUpperCase(),
         interval: interval === "month" || interval === "year" ? interval : null,
@@ -114,7 +139,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       // mensual se añade el pago único como segunda línea del mismo checkout.
       // Si el usuario ya pagó la inscripción antes, no se vuelve a cobrar.
       let setupPriceId: string | null = null;
-      if (isRecurring && data.priceId === PRO_MONTHLY_LOOKUP_KEY) {
+      if (isRecurring && (data.priceId === PRO_MONTHLY_LOOKUP_KEY || data.priceId === PRO_ANNUAL_LOOKUP_KEY)) {
         const setup = await stripe.prices.list({ lookup_keys: [PRO_SETUP_LOOKUP_KEY] });
         setupPriceId = setup.data[0]?.id ?? null;
       }
@@ -152,6 +177,11 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         ui_mode: "embedded_page",
         return_url: data.returnUrl,
         customer: customerId,
+        // El impuesto automático necesita la dirección del cliente. Se pide en
+        // el checkout y Stripe la guarda en el customer (`customer_update`);
+        // sin esto el cobro falla con "requires a valid address on the customer".
+        billing_address_collection: "required",
+        customer_update: { address: "auto", name: "auto" },
         automatic_tax: { enabled: true },
         metadata: { userId: context.userId },
         ...(isRecurring && {
@@ -296,7 +326,7 @@ export const syncMyPlan = createServerFn({ method: "POST" })
         }
       : {
           plan: "basica",
-          planNombre: "Suscripción básica",
+          planNombre: "Básica (gratis)",
           accessStatus: status && !inWindow ? "expirado" : "activo",
           accessEnd: currentPeriodEnd,
           subscribed: false,

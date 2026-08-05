@@ -1,7 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
-import { PRO_MONTHLY_FALLBACK, PRO_SETUP_FALLBACK } from "@/lib/pricing";
+import {
+  PRO_ANNUAL_FALLBACK,
+  PRO_MONTHLY_FALLBACK,
+  PRO_SETUP_FALLBACK,
+  PRO_SETUP_LIST_PRICE,
+  mesesAhorrados,
+} from "@/lib/pricing";
+
+/** Meses que se ahorran pagando el año completo (12 mensualidades vs anual). */
+const ahorroMeses = mesesAhorrados(PRO_MONTHLY_FALLBACK, PRO_ANNUAL_FALLBACK);
+
+/** Comprar lleva a crear cuenta y de ahí directo al checkout de Stripe. */
+const BUY_HREF = `/register?next=${encodeURIComponent("/dashboard/planes?checkout=1")}`;
 
 /**
  * Próxima convocatoria del examen CIAAC (hora Ciudad de México, UTC-6).
@@ -1306,10 +1318,20 @@ function Pricing() {
                 <span className="text-white/50 text-sm">{PRO_MONTHLY_FALLBACK.currency} / mes</span>
               </div>
               <div className="mt-2 text-[13px] text-white/55">
-                + ${PRO_SETUP_FALLBACK.amount.toLocaleString("es-MX")} {PRO_SETUP_FALLBACK.currency} de inscripción (pago único)
+                o ${PRO_ANNUAL_FALLBACK.amount.toLocaleString("es-MX")} {PRO_ANNUAL_FALLBACK.currency} al año
+                {ahorroMeses > 0 && <span className="text-coral-400 font-semibold"> — te ahorras {ahorroMeses} meses</span>}
+              </div>
+              <div className="mt-3 rounded-xl bg-white/[0.06] border border-white/10 px-4 py-3">
+                <div className="text-[12.5px] text-white/75">
+                  Inscripción de <strong className="text-white">${PRO_SETUP_FALLBACK.amount.toLocaleString("es-MX")} {PRO_SETUP_FALLBACK.currency}</strong>
+                  <span className="line-through text-white/40 ml-1.5">${PRO_SETUP_LIST_PRICE.toLocaleString("es-MX")}</span>
+                  <span className="block text-[11.5px] text-coral-400 font-semibold mt-0.5">
+                    Pago único · Promoción por la convocatoria
+                  </span>
+                </div>
               </div>
               <p className="text-[14px] text-white/60 mt-4">Plataforma completa, simulador ilimitado y tutor IA 24/7. Cancela cuando quieras.</p>
-              <Btn kind="primary" size="lg" icon="arrow" className="w-full mt-7" to="/register">Hazte Pro</Btn>
+              <Btn kind="primary" size="lg" icon="arrow" className="w-full mt-7" href={BUY_HREF}>Hazte Pro</Btn>
               <div className="mt-8 space-y-3">
                 {[
                   { b: "Banco de 2,800+ preguntas con explicación" },

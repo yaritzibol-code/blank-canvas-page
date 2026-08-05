@@ -49,7 +49,8 @@ export interface User {
   perfilCiaac: string;
   role: UserRole;
   plan: PlanTier;
-  planNombre: string; // "Suscripción básica" | "Plan Anual" | ...
+  /** Nombre del plan; catálogo canónico en `@/lib/pricing` (`PLANES`). */
+  planNombre: string;
   accessStatus: AccessStatus;
   accessStart: string; // ISO
   accessEnd: string | null; // ISO
@@ -57,6 +58,18 @@ export interface User {
   lastAccess: string;
   marketingOptIn: boolean;
   onboardingDone: boolean;
+  /**
+   * Cómo se dirige la plataforma al estudiante ("¿lista?" / "¿listo?").
+   * Se elige en el onboarding y se puede cambiar en Mi perfil.
+   */
+  genero?: "femenino" | "masculino" | "neutro";
+  /**
+   * Ruta en la que se enfoca: una materia del CIAAC (slug) o "linea-aerea".
+   * Personaliza el inicio del dashboard y los atajos.
+   */
+  focoRuta?: "ciaac" | "linea-aerea";
+  /** Materia del CIAAC en la que se está enfocando (slug), si aplica. */
+  focoMateria?: string | null;
   /** Solicitud de eliminación: fecha de desactivación; 30 días para recuperar. */
   deactivatedAt: string | null;
   notasInternas: string;
@@ -90,6 +103,12 @@ export interface QuizAttempt {
   correct: number;
   durationMin: number;
   porMateria: Record<string, { correct: number; total: number }>;
+  /**
+   * Nombre del cuestionario cuando no se define por materias (manuales del
+   * curso de Línea Aérea o guía oficial). Opcional: los intentos antiguos
+   * siguen mostrando su materia.
+   */
+  titulo?: string;
 }
 
 export interface SimAnswer {

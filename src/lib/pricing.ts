@@ -49,9 +49,13 @@ export function formatPriceWithInterval(price: PlanPrice): string {
 /** Lookup key del pago único de inscripción en Stripe. */
 export const PRO_SETUP_LOOKUP_KEY = "flightpath_pro_setup";
 
+/** Lookup key de la suscripción anual de Pro. */
+export const PRO_ANNUAL_LOOKUP_KEY = "flightpath_pro_annual";
+
 /**
- * Respaldo de la inscripción: pago único que se cobra junto con el primer mes
- * de Pro. Debe coincidir con el `lookup_key` de arriba en Stripe.
+ * Respaldo de la inscripción: pago único que se cobra junto con la primera
+ * mensualidad (o con la anualidad). Debe coincidir con el `lookup_key` de
+ * arriba en Stripe. Hoy está en promoción por la convocatoria.
  */
 export const PRO_SETUP_FALLBACK: PlanPrice = {
   amount: 3000,
@@ -59,7 +63,96 @@ export const PRO_SETUP_FALLBACK: PlanPrice = {
   interval: null,
 };
 
+/**
+ * Precio de lista de la inscripción (sin promoción). Solo se usa para mostrar
+ * el ahorro: el cobro real siempre sale del `lookup_key` de Stripe.
+ */
+export const PRO_SETUP_LIST_PRICE = 5000;
+
+/** Respaldo de la anualidad de Pro: doce meses por el precio de diez. */
+export const PRO_ANNUAL_FALLBACK: PlanPrice = {
+  amount: 5000,
+  currency: "MXN",
+  interval: "year",
+};
+
+/** Meses que se ahorran al pagar el año completo en vez de mes a mes. */
+export function mesesAhorrados(monthly: PlanPrice, annual: PlanPrice): number {
+  if (!monthly.amount) return 0;
+  return Math.max(0, Math.round((monthly.amount * 12 - annual.amount) / monthly.amount));
+}
+
 /** Texto completo del cobro de Pro: inscripción + mensualidad. */
 export function formatProTotal(setup: PlanPrice, monthly: PlanPrice): string {
   return `${formatPrice(setup)} de inscripción + ${formatPriceWithInterval(monthly)}`;
+}
+
+/* ───────────────────────── Catálogo de planes ───────────────────────── */
+
+export type PlanId = "basica" | "pro_mensual" | "pro_anual" | "prueba";
+
+export interface PlanDef {
+  id: PlanId;
+  /** Nombre canónico: se guarda en `user.planNombre` y se muestra en la app. */
+  nombre: string;
+  /** Nivel de acceso: "basica" es gratuita, "paga" desbloquea todo. */
+  tier: "basica" | "paga";
+  /** Días de acceso desde hoy al asignarlo; null = sin vencimiento. */
+  dias: number | null;
+  descripcion: string;
+}
+
+/**
+ * Los planes que la administradora puede asignar a mano desde el panel.
+ *
+ * Es la fuente única: el selector del panel, el resumen del estudiante y el
+ * historial de accesos leen de aquí para que un cambio de nombre no deje
+ * cuentas con etiquetas huérfanas.
+ */
+export const PLANES: PlanDef[] = [
+  {
+    id: "basica",
+    nombre: "Básica (gratis)",
+    tier: "basica",
+    dias: null,
+    descripcion: "Gratuita y sin vencimiento. Acceso limitado a cuestionarios y biblioteca.",
+  },
+  {
+    id: "pro_mensual",
+    nombre: "Pro Mensual",
+    tier: "paga",
+    dias: 30,
+    descripcion: "Acceso completo por 30 días desde hoy.",
+  },
+  {
+    id: "pro_anual",
+    nombre: "Pro Anual",
+    tier: "paga",
+    dias: 365,
+    descripcion: "Acceso completo por 365 días desde hoy.",
+  },
+  {
+    id: "prueba",
+    nombre: "Acceso de prueba",
+    tier: "paga",
+    dias: 14,
+    descripcion: "Acceso completo por 14 días para evaluar la plataforma.",
+  },
+];
+
+export const planById = (id: PlanId): PlanDef => PLANES.find((p) => p.id === id) ?? PLANES[0];
+
+/**
+ * Deduce el plan actual de una cuenta a partir de lo guardado.
+ *
+ * Tolera los nombres antiguos ("Plan Anual — $10,000 MXN", "Suscripción
+ * básica") de cuentas creadas antes de este catálogo.
+ */
+export function planIdDe(u: { plan: string; planNombre: string; accessEnd: string | null }): PlanId {
+  const exact = PLANES.find((p) => p.nombre === u.planNombre);
+  if (exact) return exact.id;
+  if (u.plan === "basica") return "basica";
+  if (/prueba/i.test(u.planNombre)) return "prueba";
+  if (/mensual/i.test(u.planNombre)) return "pro_mensual";
+  return "pro_anual";
 }

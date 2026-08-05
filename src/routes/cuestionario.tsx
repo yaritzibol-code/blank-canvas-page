@@ -22,6 +22,7 @@ import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
 import { LA_OFICIAL_FUENTE } from "@/lib/store/seed-linea-aerea-oficial";
+import { LINEA_AEREA_OFICIAL, LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
 
 export const Route = createFileRoute("/cuestionario")({
   component: CuestionarioPage,
@@ -127,6 +128,12 @@ function CuestionarioPage() {
     search.qty ?? "",
   ].join("|");
   const storeKey = user ? sessionKey("aprendiendo", user.id, sessionVariant) : "";
+  /** Nombre para el historial cuando la sesión es de Línea Aérea. */
+  const quizTitulo = search.fuente
+    ? LINEA_AEREA_QUIZZES.find((q) => q.code === search.fuente)?.titulo
+    : search.banco === "la" && search.modo === "oficial"
+      ? LINEA_AEREA_OFICIAL.titulo
+      : undefined;
   const [questions, setQuestions] = useState<Question[]>([]);
   const [pool, setPool] = useState<BankQuestion[]>([]);
   const [sessionSlugs, setSessionSlugs] = useState<string[]>([]);
@@ -149,6 +156,8 @@ function CuestionarioPage() {
   const [startTime, setStartTime] = useState(() => Date.now());
   const [elapsedMin, setElapsedMin] = useState(0);
   const msgsEndRef = useRef<HTMLDivElement>(null);
+  /** Caja de mensajes de Yaris: se desplaza sola, sin mover la página. */
+  const msgsBoxRef = useRef<HTMLDivElement>(null);
   const savedRef = useRef(false);
   const lastAnsweredRef = useRef<number | null>(null);
 
@@ -275,8 +284,11 @@ function CuestionarioPage() {
     return () => clearInterval(interval);
   }, [startTime]);
 
+  // El chat baja SOLO su propio contenedor. Con `scrollIntoView` el navegador
+  // arrastraba también la página y la pantalla se iba hasta abajo.
   useEffect(() => {
-    msgsEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const box = msgsBoxRef.current;
+    if (box) box.scrollTop = box.scrollHeight;
   }, [yarisMsgs, yarisTyping]);
 
   /** Desglose por materia de las respuestas de ESTA sesión. */
@@ -304,6 +316,9 @@ function CuestionarioPage() {
       correct: correctCount,
       durationMin: Math.max(0, Math.round((Date.now() - startTime) / 60000)),
       porMateria: computePorMateria(),
+      // Los cuestionarios de Línea Aérea se identifican por manual o guía,
+      // no por materia: el historial los muestra con su nombre real.
+      ...(quizTitulo ? { titulo: quizTitulo } : {}),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showResult, user]);
@@ -376,7 +391,6 @@ function CuestionarioPage() {
     const q = questions[idx] ?? questions[currentIdx];
     if (!q) return;
     const ctx = yarisCtx();
-    const materiaName = ctx.materiaName ?? "esta materia";
     const key = q.questionId || `idx-${idx}`;
     const again = yarisExplainedRef.current.has(key);
     yarisExplainedRef.current.add(key);
@@ -389,9 +403,10 @@ function CuestionarioPage() {
       ...prev,
       {
         role: "bot" as const,
+        // Sin nombrar la materia: el chat tampoco debe adelantar el tema.
         text: again
-          ? `Va otra vez la <b>pregunta ${idx + 1}</b> de <b>${materiaName}</b>, ahora con otro enfoque:`
-          : `Vamos con la <b>pregunta ${idx + 1}</b> de <b>${materiaName}</b>:`,
+          ? `Va otra vez la <b>pregunta ${idx + 1}</b>, ahora con otro enfoque:`
+          : `Vamos con la <b>pregunta ${idx + 1}</b>:`,
       },
     ]);
     setYarisTyping(true);
@@ -478,7 +493,11 @@ function CuestionarioPage() {
           fontFamily: "'Manrope', sans-serif",
           background: "#f5f7fc",
           color: "#22375C",
-          minHeight: "100vh",
+          // Alto fijo: la pantalla no crece con el chat, cada panel scrollea
+          // por dentro y Yaris queda contenida en lo que se ve.
+          height: "100dvh",
+          minHeight: "100dvh",
+          overflow: "hidden",
           display: "flex",
           flexDirection: "column",
         }}
@@ -742,18 +761,8 @@ function CuestionarioPage() {
             }}
             className="sm:p-8 p-5"
           >
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
-              <div
-                style={{
-                  display: "flex", alignItems: "center", gap: 6,
-                  background: "rgba(61,93,145,0.07)", color: "#3D5D91",
-                  padding: "4px 12px", borderRadius: 20,
-                  fontSize: "0.72rem", fontWeight: 700,
-                  textTransform: "uppercase", letterSpacing: "0.4px",
-                }}
-              >
-                <Icon n={currentQ.icon} size={14} /> {currentQ.materia}
-              </div>
+            {/* Sin etiqueta de materia: la pregunta no debe adelantar el tema. */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", marginBottom: 20 }}>
               <span style={{ fontSize: "0.78rem", color: "#8DA1BE", fontWeight: 600 }}>
                 {currentIdx + 1} / {total}
               </span>
@@ -1199,8 +1208,9 @@ function CuestionarioPage() {
 
           {/* Messages */}
           <div
+            ref={msgsBoxRef}
             style={{
-              flex: 1, overflowY: "auto", padding: 14,
+              flex: 1, minHeight: 0, overflowY: "auto", overscrollBehavior: "contain", padding: 14,
               display: "flex", flexDirection: "column", gap: 10,
             }}
           >

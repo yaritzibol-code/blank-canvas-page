@@ -8,34 +8,16 @@ import {
   updateUser,
   logout,
   studentStats,
-  materiaPerformance,
+  progresoPorRuta,
   getActivity,
   getSimAttempts,
+  MATERIAS_DEF,
 } from "@/lib/store";
-import type { User, StudentStats } from "@/lib/store";
+import type { User, StudentStats, RutaPerf } from "@/lib/store";
 
 export const Route = createFileRoute("/dashboard/perfil")({
   component: PerfilPage,
 });
-
-const PATHY_STAGES_DEF = [
-  { emoji: "spark",  name: "Pathy Misty",       max: 3,        req: "1–3 días de racha" },
-  { emoji: "star",   name: "Pathy Cherry",      max: 6,        req: "4–6 días de racha" },
-  { emoji: "heart",  name: "Pathy Silver Lake", max: 13,       req: "7–13 días de racha" },
-  { emoji: "cloud",  name: "Pathy Lapis",       max: 30,       req: "14–30 días de racha" },
-  { emoji: "trophy", name: "Pathy Burgundy",    max: Infinity, req: "30+ días de racha" },
-];
-
-function pathyStages(streak: number) {
-  const idx = PATHY_STAGES_DEF.findIndex((s) => streak <= s.max);
-  const cur = idx === -1 ? PATHY_STAGES_DEF.length - 1 : idx;
-  return PATHY_STAGES_DEF.map((s, i) => ({
-    emoji: s.emoji,
-    name: s.name,
-    req: i === cur ? `${s.req} · Llevas ${streak}` : s.req,
-    state: i < cur ? "done" : i === cur ? "current" : "locked",
-  }));
-}
 
 /**
  * Umbrales de los logros. La etiqueta se deriva del umbral para que no
@@ -101,7 +83,9 @@ function PerfilPage() {
   const navigate = useNavigate();
   const user = useSessionUser();
   const stats = useStore(() => (user ? studentStats(user.id) : null));
-  const materiasPerf = useStore(() => (user ? materiaPerformance(user.id) : []));
+  const progreso = useStore(() =>
+    user ? progresoPorRuta(user.id) : { ciaac: [] as RutaPerf[], lineaAerea: [] as RutaPerf[] },
+  );
   const hasBiblioteca = useStore(() =>
     user ? getActivity(user.id).some((a) => a.kind === "biblioteca") : false,
   );
@@ -116,6 +100,9 @@ function PerfilPage() {
 
   if (!user || !stats) return null;
 
+  /** Quien se prepara para línea aérea no tiene examen CIAAC que agendar. */
+  const enfocadoLineaAerea = user.focoRuta === "linea-aerea";
+
   const startEdit = () => {
     // En edición, la fecha CIAAC se maneja como "YYYY-MM-DD" (input type="date").
     setDraft({ ...buildInfo(user), ciaac: user.fechaCiaac ?? "" });
@@ -126,7 +113,7 @@ function PerfilPage() {
       nombre: draft.nombre.trim() || user.nombre,
       whatsapp: draft.whatsapp.trim(),
       escuela: draft.escuela.trim(),
-      fechaCiaac: draft.ciaac || null,
+      ...(enfocadoLineaAerea ? {} : { fechaCiaac: draft.ciaac || null }),
     });
     setInfo({ ...draft, nombre: draft.nombre.trim() || user.nombre, ciaac: fmtFechaCiaac(draft.ciaac || null) });
     setEditing(false);
@@ -134,7 +121,12 @@ function PerfilPage() {
     setTimeout(() => setSaved(false), 3000);
   };
 
-  const stages = pathyStages(stats.streak);
+  const setFoco = (ruta: "ciaac" | "linea-aerea", materia: string) => {
+    updateUser(user.id, { focoRuta: ruta, focoMateria: ruta === "ciaac" ? (materia || null) : null });
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
+
   const logros = buildLogros(stats, hasBiblioteca, sim80);
 
   const memberSince = (() => {
@@ -182,7 +174,7 @@ function PerfilPage() {
       {/* Editorial header */}
       <header style={{ position: "relative", zIndex: 1, marginBottom: 28, paddingTop: 8 }}>
         <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", letterSpacing: "0.22em", color: "#647DA0", textTransform: "uppercase", marginBottom: 10 }}>
-          Bitácora · Perfil de piloto
+          Mi cuenta · Perfil de piloto
         </div>
         <h1 style={{
           fontFamily: "'Instrument Serif', serif",
@@ -193,10 +185,12 @@ function PerfilPage() {
           color: "#22375C",
           margin: 0,
         }}>
-          Tu bitácora, <em style={{ color: "#6C0820" }}>{info.nombre.split(" ")[0] || "piloto"}</em>.
+          Tu perfil, <em style={{ color: "#6C0820" }}>{info.nombre.split(" ")[0] || "piloto"}</em>.
         </h1>
         <div style={{ marginTop: 10, maxWidth: 520, fontSize: "0.92rem", color: "#647DA0", lineHeight: 1.55 }}>
-          Registro editorial de tu preparación CIAAC — datos, rachas y la evolución de Pathy en un solo tablero.
+          {enfocadoLineaAerea
+            ? "Tus datos, tu enfoque y tu progreso rumbo a la línea aérea, en un solo tablero."
+            : "Tus datos, tu enfoque y tu progreso rumbo al CIAAC, en un solo tablero."}
         </div>
         <div aria-hidden="true" style={{ marginTop: 14, height: 1, background: "linear-gradient(90deg, #22375C 0%, transparent 70%)" }} />
       </header>
@@ -208,23 +202,6 @@ function PerfilPage() {
           <Icon n="check" size={16} /> ¡Perfil actualizado!
         </div>
       )}
-
-      {/* Edit button row */}
-      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 20 }}>
-        <button
-          onClick={editing ? saveEdit : startEdit}
-          style={{
-            padding: "8px 18px", borderRadius: 9, fontSize: ".84rem", fontWeight: 700, cursor: "pointer",
-            fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 6,
-            background: editing ? "#3D5D91" : "white",
-            color: editing ? "white" : "#3D5D91",
-            border: "2px solid #3D5D91",
-            transition: "all .2s",
-          }}
-        >
-          {editing ? <><Icon n="download" size={15} /> Guardar cambios</> : <><Icon n="pencil" size={15} /> Editar perfil</>}
-        </button>
-      </div>
 
       {/* Profile hero */}
       <div style={{ background: "linear-gradient(135deg,#22375C,#2a2a4e)", borderRadius: 20, padding: 28, display: "flex", alignItems: "center", gap: 24, marginBottom: 24, position: "relative", overflow: "hidden", flexWrap: "wrap" }}>
@@ -247,6 +224,108 @@ function PerfilPage() {
         </div>
 
         <div style={{ zIndex: 1, flexShrink: 0, animation: "float 3s ease-in-out infinite", color: "rgba(255,255,255,.9)" }}><Icon n="cloud" size={56} /></div>
+      </div>
+
+      {/* Información personal — arriba del todo: es lo que se viene a editar */}
+      <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 18 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 14, flexWrap: "wrap" }}>
+          <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n="user" size={15} /> Información personal</div>
+          <div style={{ display: "flex", gap: 8 }}>
+            {editing && (
+              <button
+                onClick={() => setEditing(false)}
+                style={{
+                  padding: "8px 16px", borderRadius: 9, fontSize: ".84rem", fontWeight: 700, cursor: "pointer",
+                  fontFamily: "'Manrope', sans-serif", background: "white", color: "#647DA0",
+                  border: "2px solid #F2DCDB",
+                }}
+              >
+                Cancelar
+              </button>
+            )}
+            <button
+              onClick={editing ? saveEdit : startEdit}
+              style={{
+                padding: "8px 18px", borderRadius: 9, fontSize: ".84rem", fontWeight: 700, cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 6,
+                background: editing ? "#3D5D91" : "white",
+                color: editing ? "white" : "#3D5D91",
+                border: "2px solid #3D5D91",
+                transition: "all .2s",
+              }}
+            >
+              {editing ? <><Icon n="check" size={15} /> Guardar cambios</> : <><Icon n="pencil" size={15} /> Editar perfil</>}
+            </button>
+          </div>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+            {infoField("Nombre completo", "nombre")}
+            {infoField("Correo electrónico", "email")}
+          </div>
+          <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+            {infoField("WhatsApp", "whatsapp")}
+            {infoField("Escuela de aviación", "escuela")}
+          </div>
+          {/* La fecha del CIAAC y el perfil CIAAC no aplican a quien se prepara
+              para una línea aérea: no se muestran ni se guardan. */}
+          {!enfocadoLineaAerea && (
+            <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+              {infoField("Fecha estimada del CIAAC", "ciaac", "date")}
+              <div style={{ flex: 1 }} />
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Enfoque de estudio */}
+      <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 24 }}>
+        <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 6, display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n="target" size={15} /> Materia en la que te enfocas</div>
+        <div style={{ fontSize: ".82rem", color: "#647DA0", marginBottom: 14, lineHeight: 1.5 }}>
+          Define qué te muestra el inicio de tu dashboard y los atajos de estudio.
+        </div>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
+          {[
+            { id: "ciaac" as const, label: "CIAAC", icon: "help", desc: "Las 12 materias del examen" },
+            { id: "linea-aerea" as const, label: "Línea Aérea", icon: "plane", desc: "Manuales de la convocatoria" },
+          ].map((r) => {
+            const sel = (user.focoRuta ?? "ciaac") === r.id;
+            return (
+              <button
+                key={r.id}
+                onClick={() => setFoco(r.id, user.focoMateria ?? "")}
+                style={{
+                  flex: 1, minWidth: 200, textAlign: "left", padding: "12px 14px", borderRadius: 12,
+                  border: `2px solid ${sel ? "#3D5D91" : "#F2DCDB"}`,
+                  background: sel ? "rgba(61,93,145,.06)" : "white",
+                  cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all .2s",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3, color: sel ? "#3D5D91" : "#22375C" }}>
+                  <Icon n={r.icon as never} size={16} />
+                  <span style={{ fontSize: ".9rem", fontWeight: 700 }}>{r.label}</span>
+                  {sel && <span style={{ marginLeft: "auto", fontSize: ".68rem", fontWeight: 700, color: "#3D5D91" }}>Activo</span>}
+                </div>
+                <div style={{ fontSize: ".76rem", color: "#647DA0" }}>{r.desc}</div>
+              </button>
+            );
+          })}
+        </div>
+        {(user.focoRuta ?? "ciaac") === "ciaac" && (
+          <label style={{ display: "block" }}>
+            <span style={{ fontSize: ".75rem", fontWeight: 700, color: "#647DA0", marginBottom: 5, display: "block" }}>Materia prioritaria</span>
+            <select
+              value={user.focoMateria ?? ""}
+              onChange={(e) => setFoco("ciaac", e.target.value)}
+              style={{ ...displayStyle, background: "white", cursor: "pointer", maxWidth: 360 }}
+            >
+              <option value="">Sin materia prioritaria</option>
+              {MATERIAS_DEF.map((m) => (
+                <option key={m.slug} value={m.slug}>{m.name}</option>
+              ))}
+            </select>
+          </label>
+        )}
       </div>
 
       {/* Stats */}
@@ -281,100 +360,65 @@ function PerfilPage() {
         </div>
       </div>
 
-      {/* Two col: Pathy evolution + Logros */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 18, marginBottom: 24 }}>
-
-        {/* Pathy evolution */}
-        <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)" }}>
-          <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n="cloud" size={15} /> Evolución de Pathy</div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {stages.map((stage) => (
-              <div
-                key={stage.name}
-                style={{
-                  display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", borderRadius: 10,
-                  border: stage.state === "current" ? "2px solid #3D5D91" : "2px solid transparent",
-                  background: stage.state === "current" ? "rgba(61,93,145,.04)" : undefined,
-                  opacity: stage.state === "locked" ? 0.3 : stage.state === "done" ? 0.6 : 1,
-                  transition: "all .2s",
-                }}
-              >
-                <div style={{ width: 44, display: "flex", justifyContent: "center", flexShrink: 0, color: "#22375C" }}><Icon n={stage.emoji as never} size={26} /></div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: ".85rem", fontWeight: 700, color: "#22375C", marginBottom: 2 }}>{stage.name}</div>
-                  <div style={{ fontSize: ".74rem", color: "#647DA0" }}>{stage.req}</div>
-                </div>
-                <span style={{
-                  padding: "3px 10px", borderRadius: 20, fontSize: ".68rem", fontWeight: 700, flexShrink: 0,
-                  background: stage.state === "current" ? "#3D5D91" : stage.state === "done" ? "#2ecc71" : "#F2DCDB",
-                  color: stage.state === "locked" ? "#8DA1BE" : "white",
-                  display: "inline-flex", alignItems: "center", gap: 4,
-                }}>
-                  {stage.state === "current" ? "Actual" : stage.state === "done" ? <><Icon n="check" size={12} /> Obtenido</> : <><Icon n="lock" size={12} /> Bloqueado</>}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Logros */}
-        <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)" }}>
-          <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n="trophy" size={15} /> Logros desbloqueados</div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))", gap: 10 }}>
-            {logros.map((l) => (
-              <div
-                key={l.name}
-                style={{
-                  textAlign: "center", padding: "12px 8px", borderRadius: 10, background: "#f8f9ff",
-                  opacity: l.locked ? 0.35 : 1,
-                  filter: l.locked ? "grayscale(1)" : undefined,
-                }}
-              >
-                <div style={{ marginBottom: 4, display: "flex", justifyContent: "center", color: "#3D5D91" }}><Icon n={l.icon as never} size={26} /></div>
-                <div style={{ fontSize: ".7rem", fontWeight: 700, color: "#22375C", marginBottom: 2, lineHeight: 1.2 }}>{l.name}</div>
-                <div style={{ fontSize: ".62rem", color: "#8DA1BE" }}>{l.desc}</div>
-              </div>
-            ))}
-          </div>
+      {/* Logros */}
+      <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 24 }}>
+        <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n="trophy" size={15} /> Logros desbloqueados</div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))", gap: 10 }}>
+          {logros.map((l) => (
+            <div
+              key={l.name}
+              style={{
+                textAlign: "center", padding: "12px 8px", borderRadius: 10, background: "#f8f9ff",
+                opacity: l.locked ? 0.35 : 1,
+                filter: l.locked ? "grayscale(1)" : undefined,
+              }}
+            >
+              <div style={{ marginBottom: 4, display: "flex", justifyContent: "center", color: "#3D5D91" }}><Icon n={l.icon as never} size={26} /></div>
+              <div style={{ fontSize: ".7rem", fontWeight: 700, color: "#22375C", marginBottom: 2, lineHeight: 1.2 }}>{l.name}</div>
+              <div style={{ fontSize: ".62rem", color: "#8DA1BE" }}>{l.desc}</div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Materias progress */}
-      <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 24 }}>
-        <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n="book" size={15} /> Progreso por materia</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {materiasPerf.map((m) => {
-            const color = colorFor(m.avg);
-            return (
-              <div key={m.slug} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: ".78rem", color: "#22375C", width: 170, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n={m.icon as never} size={16} /> {m.name}</span>
-                <div style={{ flex: 1, height: 8, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
-                  <div style={{ height: "100%", borderRadius: 10, background: color, width: `${m.avg ?? 0}%`, transition: "width .6s ease" }} />
-                </div>
-                <span style={{ fontSize: ".74rem", fontWeight: 700, width: 36, textAlign: "right", flexShrink: 0, color }}>{m.avg === null ? "—" : `${m.avg}%`}</span>
-              </div>
-            );
-          })}
-        </div>
+      {/* Progreso, separado por ruta */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(320px,1fr))", gap: 18, marginBottom: 24 }}>
+        <ProgresoCard titulo="Progreso — CIAAC" icon="help" filas={progreso.ciaac} />
+        <ProgresoCard titulo="Progreso — Línea Aérea" icon="plane" filas={progreso.lineaAerea} />
       </div>
+    </div>
+  );
+}
 
-      {/* Información personal */}
-      <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)", marginBottom: 24 }}>
-        <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "inline-flex", alignItems: "center", gap: 7 }}><Icon n="user" size={15} /> Información personal</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-          <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-            {infoField("Nombre completo", "nombre")}
-            {infoField("Correo electrónico", "email")}
-          </div>
-          <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-            {infoField("WhatsApp", "whatsapp")}
-            {infoField("Escuela de aviación", "escuela")}
-          </div>
-          <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-            {infoField("Fecha estimada del CIAAC", "ciaac", "date")}
-            {infoField("Perfil", "perfil")}
-          </div>
+/** Barras de aciertos de una ruta (materias del CIAAC o manuales de línea aérea). */
+function ProgresoCard({ titulo, icon, filas }: { titulo: string; icon: string; filas: RutaPerf[] }) {
+  const conDatos = filas.filter((f) => f.avg !== null).length;
+  return (
+    <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,.06)" }}>
+      <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "inline-flex", alignItems: "center", gap: 7 }}>
+        <Icon n={icon as never} size={15} /> {titulo}
+      </div>
+      {conDatos === 0 && (
+        <div style={{ fontSize: ".82rem", color: "#8DA1BE", marginBottom: 12 }}>
+          Aún no tienes cuestionarios de esta ruta. En cuanto hagas el primero verás aquí tu porcentaje de aciertos.
         </div>
+      )}
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {filas.map((m) => {
+          const color = colorFor(m.avg);
+          return (
+            <div key={m.key} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <span title={m.name} style={{ fontSize: ".78rem", color: "#22375C", flex: "1 1 auto", minWidth: 0, display: "inline-flex", alignItems: "center", gap: 7 }}>
+                <Icon n={m.icon as never} size={16} />
+                <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{m.name}</span>
+              </span>
+              <div style={{ width: 100, flexShrink: 0, height: 8, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
+                <div style={{ height: "100%", borderRadius: 10, background: color, width: `${m.avg ?? 0}%`, transition: "width .6s ease" }} />
+              </div>
+              <span style={{ fontSize: ".74rem", fontWeight: 700, width: 36, textAlign: "right", flexShrink: 0, color }}>{m.avg === null ? "—" : `${m.avg}%`}</span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

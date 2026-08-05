@@ -37,6 +37,7 @@ import {
   useStore,
   type User,
 } from "@/lib/store";
+import { PLANES, planById, planIdDe, type PlanId } from "@/lib/pricing";
 
 export const Route = createFileRoute("/admin/perfil")({
   component: AdminPerfilPage,
@@ -46,10 +47,6 @@ export const Route = createFileRoute("/admin/perfil")({
 });
 
 type ModalType = "wa" | "extend" | "garantia" | "change" | "cancel" | "reset" | "fechas" | null;
-
-const PLAN_BASICA = "Suscripción básica";
-const PLAN_ANUAL = "Plan Anual — $10,000 MXN";
-const PLAN_PRUEBA = "Acceso de prueba";
 
 function AdminPerfilPage() {
   const { id } = Route.useSearch();
@@ -73,7 +70,7 @@ function AdminPerfilPage() {
   const [extendDays, setExtendDays] = useState("30");
   const [extendReason, setExtendReason] = useState("Activación de garantía");
   const [garantiaDays, setGarantiaDays] = useState("30");
-  const [newPlan, setNewPlan] = useState(PLAN_ANUAL);
+  const [newPlan, setNewPlan] = useState<PlanId>("pro_anual");
   const [editStart, setEditStart] = useState("");
   const [editEnd, setEditEnd] = useState("");
 
@@ -88,7 +85,7 @@ function AdminPerfilPage() {
     setWaMsg(
       `Hola ${firstName}! Soy Yaris de FlightPath. ${streak > 0 ? `Vi que llevas ${streak} ${streak === 1 ? "día" : "días"} de racha — ¡sigue así!` : "Te extrañamos por la plataforma."} Estás cada vez más cerca de dominar el CIAAC.`,
     );
-    setNewPlan(student.planNombre === PLAN_BASICA ? PLAN_BASICA : student.planNombre === PLAN_PRUEBA ? PLAN_PRUEBA : PLAN_ANUAL);
+    setNewPlan(planIdDe(student));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [student?.id]);
 
@@ -122,18 +119,17 @@ function AdminPerfilPage() {
 
   const doChangePlan = () => {
     if (!student) return;
-    let patch: Partial<User>;
-    if (newPlan === PLAN_BASICA) {
-      patch = { plan: "basica", planNombre: PLAN_BASICA, accessStatus: "activo", accessEnd: null };
-    } else if (newPlan === PLAN_PRUEBA) {
-      patch = { plan: "paga", planNombre: PLAN_PRUEBA, accessStatus: "prueba", accessEnd: new Date(Date.now() + 14 * 86400000).toISOString() };
-    } else {
-      patch = { plan: "paga", planNombre: "Plan Anual", accessStatus: "activo", accessEnd: new Date(Date.now() + 365 * 86400000).toISOString() };
-    }
+    const def = planById(newPlan);
+    const patch: Partial<User> = {
+      plan: def.tier,
+      planNombre: def.nombre,
+      accessStatus: def.id === "prueba" ? "prueba" : "activo",
+      accessEnd: def.dias === null ? null : new Date(Date.now() + def.dias * 86400000).toISOString(),
+    };
     updateUser(student.id, patch);
-    logAccessChange(student.id, "Cambio de plan", newPlan);
+    logAccessChange(student.id, "Cambio de plan", def.nombre);
     setModal(null);
-    showFlash("Plan actualizado correctamente");
+    showFlash(`Plan actualizado a ${def.nombre}`);
   };
 
   const doPauseToggle = () => {
@@ -313,16 +309,31 @@ function AdminPerfilPage() {
       <Modal open={modal === "change"} onClose={() => setModal(null)}>
         <h2 style={modalTitleStyle}><Icon n="refresh" size={20} color="#6C0820" /> Cambiar plan</h2>
         <p style={modalSubStyle}>Selecciona el nuevo plan para {student.nombre}. Plan actual: <strong>{student.planNombre}</strong>.</p>
-        <div style={{ marginBottom: 14 }}>
-          <label style={labelStyle}>Nuevo plan</label>
-          <select value={newPlan} onChange={(e) => setNewPlan(e.target.value)} style={inputStyle}>
-            <option>{PLAN_BASICA}</option>
-            <option>{PLAN_ANUAL}</option>
-            <option>{PLAN_PRUEBA}</option>
-          </select>
-        </div>
-        <div style={{ marginBottom: 14, padding: "10px 12px", background: "rgba(61,93,145,.05)", borderRadius: 8, fontSize: ".76rem", color: "#647DA0", lineHeight: 1.5 }}>
-          Plan Anual: 365 días desde hoy · Acceso de prueba: 14 días · Suscripción básica: sin vencimiento.
+        <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 14 }}>
+          {PLANES.map((p) => {
+            const sel = newPlan === p.id;
+            return (
+              <button
+                key={p.id}
+                onClick={() => setNewPlan(p.id)}
+                style={{
+                  textAlign: "left", padding: "11px 13px", borderRadius: 10, cursor: "pointer",
+                  border: `2px solid ${sel ? "#3D5D91" : "#E8EEF6"}`,
+                  background: sel ? "rgba(61,93,145,.06)" : "white",
+                  fontFamily: "'Manrope', sans-serif", transition: "all .15s",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
+                  <Icon n={p.tier === "paga" ? "star" : "user"} size={15} color={sel ? "#3D5D91" : "#647DA0"} />
+                  <span style={{ fontSize: ".88rem", fontWeight: 700, color: "#22375C" }}>{p.nombre}</span>
+                  <span style={{ marginLeft: "auto", fontSize: ".7rem", fontWeight: 700, color: "#647DA0" }}>
+                    {p.dias === null ? "Sin vencimiento" : `${p.dias} días`}
+                  </span>
+                </div>
+                <div style={{ fontSize: ".76rem", color: "#647DA0", lineHeight: 1.45 }}>{p.descripcion}</div>
+              </button>
+            );
+          })}
         </div>
         <div style={{ display: "flex", gap: 10 }}>
           <button onClick={() => setModal(null)} style={cancelBtnStyle}>Cancelar</button>

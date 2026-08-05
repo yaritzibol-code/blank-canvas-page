@@ -81,7 +81,7 @@ function profileToUser(row: {
     perfilCiaac: d.perfilCiaac ?? "",
     role: row.role === "admin" ? "admin" : "student",
     plan: d.plan ?? "basica",
-    planNombre: d.planNombre ?? "Suscripción básica",
+    planNombre: d.planNombre ?? "Básica (gratis)",
     accessStatus: d.accessStatus ?? "activo",
     accessStart: d.accessStart ?? now,
     accessEnd: d.accessEnd ?? null,
@@ -123,11 +123,11 @@ async function fetchAll<T>(
   return { data: all, error: null };
 }
 
-async function hydrate(): Promise<void> {
+/** Contenido global (banco, biblioteca, clases, flashcards): pesado y estable. */
+async function hydrateContent(): Promise<void> {
   const s = supa();
   if (!s || !sessionUserId) return;
 
-  // 1) Contenido global (banco, biblioteca, clases, flashcards)
   const { data: contentRows, error: contentErr } = await fetchAll<{
     collection: string;
     id: string;
@@ -158,6 +158,16 @@ async function hydrate(): Promise<void> {
       });
     }
   }
+}
+
+/**
+ * Lo que cambia con el uso: perfiles, estado por usuario, reportes y config.
+ * Se separa del contenido para poder refrescarlo cada pocos segundos (panel
+ * admin en vivo) sin volver a bajar las ~3,600 filas del banco de preguntas.
+ */
+async function hydrateLive(): Promise<void> {
+  const s = supa();
+  if (!s || !sessionUserId) return;
 
   // 2) Perfiles (el estudiante recibe solo el suyo; la admin, todos)
   const { data: profRows } = await s.from("profiles").select("id,email,role,data");
@@ -226,6 +236,40 @@ async function hydrate(): Promise<void> {
         if ((APP_STATE_KEYS as readonly string[]).includes(r.key)) write(r.key, r.data);
       });
     });
+  }
+  lastRefreshAt = Date.now();
+}
+
+async function hydrate(): Promise<void> {
+  await hydrateContent();
+  await hydrateLive();
+}
+
+/** Marca de tiempo de la última lectura correcta de la nube (0 = nunca). */
+let lastRefreshAt = 0;
+let refreshing = false;
+
+export function lastCloudRefresh(): number {
+  return lastRefreshAt;
+}
+
+/**
+ * Vuelve a leer de la nube lo que cambia con el uso.
+ *
+ * El panel admin lo llama en intervalo y al volver a la pestaña: sin esto sólo
+ * veía la foto del momento del login y las altas, intentos y reportes nuevos
+ * no aparecían hasta recargar. No re-descarga el contenido global.
+ */
+export async function refreshCloudData(): Promise<boolean> {
+  if (!cloudSessionActive() || refreshing) return false;
+  refreshing = true;
+  try {
+    await hydrateLive();
+    return true;
+  } catch {
+    return false;
+  } finally {
+    refreshing = false;
   }
 }
 

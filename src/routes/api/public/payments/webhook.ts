@@ -38,7 +38,21 @@ function minimalPayload(obj: any) {
   };
 }
 
-async function syncProfileFromSubscription(userId: string, status: string, periodEndISO: string | null) {
+/**
+ * Nombre del plan a partir del precio contratado, con los mismos rótulos que
+ * ofrece el panel admin ("Pro Mensual" / "Pro Anual"): si el webhook escribiera
+ * un nombre distinto, la administradora vería el plan mal clasificado.
+ */
+function planNombreDeLookup(lookup: string): string {
+  return /annual|anual|year/i.test(lookup) ? "Pro Anual" : "Pro Mensual";
+}
+
+async function syncProfileFromSubscription(
+  userId: string,
+  status: string,
+  periodEndISO: string | null,
+  priceLookupKey = "",
+) {
   const now = Date.now();
   const periodEndMs = periodEndISO ? new Date(periodEndISO).getTime() : null;
   const inWindow = periodEndMs === null || periodEndMs > now;
@@ -53,7 +67,9 @@ async function syncProfileFromSubscription(userId: string, status: string, perio
   const nextData: Record<string, unknown> = {
     ...prevData,
     plan: subscribed ? "paga" : "basica",
-    planNombre: subscribed ? "FlightPath Pro" : (prevData.planNombre ?? "Suscripción básica"),
+    planNombre: subscribed
+      ? planNombreDeLookup(priceLookupKey)
+      : (prevData.planNombre ?? "Básica (gratis)"),
     accessStatus: subscribed ? "activo" : periodEndMs && !inWindow ? "expirado" : (prevData.accessStatus ?? "activo"),
     accessEnd: periodEndISO,
   };
@@ -88,7 +104,7 @@ async function handleSubscriptionUpsert(sub: any, env: StripeEnv) {
     { onConflict: "stripe_subscription_id" },
   );
 
-  await syncProfileFromSubscription(userId, sub.status, periodEndISO);
+  await syncProfileFromSubscription(userId, sub.status, periodEndISO, priceLookup(item));
 }
 
 async function handleSubscriptionDeleted(sub: any, env: StripeEnv) {
@@ -102,7 +118,7 @@ async function handleSubscriptionDeleted(sub: any, env: StripeEnv) {
     const item = sub.items?.data?.[0];
     const periodEnd = item?.current_period_end ?? sub.current_period_end;
     const periodEndISO = periodEnd ? new Date(periodEnd * 1000).toISOString() : null;
-    await syncProfileFromSubscription(userId, "canceled", periodEndISO);
+    await syncProfileFromSubscription(userId, "canceled", periodEndISO, priceLookup(item));
   }
 }
 

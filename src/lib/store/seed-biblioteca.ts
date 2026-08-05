@@ -1624,11 +1624,13 @@ export const LIBROS_SEED: LibroSeed[] = [
     status: "publicada",
   },
   {
+    // El ATP del curso de Línea Aérea es este mismo PDF: se etiqueta también
+    // como "linea-aerea" en vez de duplicar la entrada con otro id.
     id: "lib_001",
     titulo: "Airline Transport Pilot Test Prep (2018)",
     autor: "ASA — Test Prep",
-    materia: "",
-    tags: ["libro", "general"],
+    materia: "operaciones",
+    tags: ["libro", "linea-aerea", "operaciones"],
     badge: "Libro",
     badgeColor: "#647DA0",
     emoji: "book",
