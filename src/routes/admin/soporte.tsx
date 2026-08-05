@@ -108,8 +108,38 @@ function AdminSoportePage() {
 
 function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: boolean) => void }) {
   const navigate = useNavigate();
-  const [notas, setNotas] = useState(r.notasInternas);
+  // Las notas internas NO viven en `reports.data`: esa fila la puede leer la
+  // alumna dueña del ticket. Se guardan en `report_admin_notes`, cuya RLS sólo
+  // admite al equipo admin.
+  const [notas, setNotas] = useState("");
+  const [notasListas, setNotasListas] = useState(false);
   const isQuestion = r.recurso.startsWith("q_");
+
+  useEffect(() => {
+    let vivo = true;
+    void (async () => {
+      const { data } = await supabase
+        .from("report_admin_notes")
+        .select("notes")
+        .eq("report_id", r.id)
+        .maybeSingle();
+      if (vivo) {
+        setNotas(data?.notes ?? "");
+        setNotasListas(true);
+      }
+    })();
+    return () => {
+      vivo = false;
+    };
+  }, [r.id]);
+
+  const guardarNotas = async () => {
+    const { error } = await supabase
+      .from("report_admin_notes")
+      .upsert({ report_id: r.id, notes: notas, updated_at: new Date().toISOString() });
+    onFlash(error ? "No se pudieron guardar las notas" : "Notas guardadas", Boolean(error));
+  };
+
 
   return (
     <div style={cardStyle}>
