@@ -472,7 +472,7 @@ function QuizCards() {
           return bank ? (
             <QuizCard
               key={q.code}
-              badge="Banco por capítulos"
+              
               icon={q.icon as FPIconName}
               titulo={q.titulo}
               descripcion={q.descripcion}

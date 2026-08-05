@@ -128,7 +128,7 @@ function PreciosPage() {
   /** A dónde manda el botón de compra según haya sesión o no, conservando el
    *  ciclo elegido para que el checkout abra exactamente el plan mostrado. */
   const plan = anual ? "anual" : "mensual";
-  const buyTo = user ? "/dashboard/planes" : "/register";
+  const buyTo = user ? "/dashboard/planes" : "/login";
   const buySearch: Record<string, unknown> = user
     ? { checkout: 1, plan }
     : { next: `/dashboard/planes?checkout=1&plan=${plan}` };
