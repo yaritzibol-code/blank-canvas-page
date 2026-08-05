@@ -27,7 +27,7 @@ function chaptersFor(fuente: string) {
 
 function tituloCapitulo(fuente: string, cap: number, fallback?: string): string {
   if (fallback && fallback.trim()) return fallback.trim();
-  const found = chaptersFor(fuente).find((c) => c.cap === cap);
+  const found = chaptersFor(fuente).find((c) => c.num === cap);
   return found?.titulo ?? "";
 }
 
@@ -113,7 +113,9 @@ export function weakByCapitulo(answers: AttemptAnswer[]): PathyWeakSpot[] {
         pct: pctOf(e.b),
         muestraCorta: e.b.total < MUESTRA_MIN,
         to: "/cuestionario",
-        search: e.cap > 0 ? { fuente: e.fuente, caps: String(e.cap) } : { fuente: e.fuente },
+        search: (e.cap > 0
+          ? { fuente: e.fuente, caps: String(e.cap) }
+          : { fuente: e.fuente }) as Record<string, string>,
       };
     }),
   );
