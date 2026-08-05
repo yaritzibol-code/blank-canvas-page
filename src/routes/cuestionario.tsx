@@ -30,14 +30,16 @@ export const Route = createFileRoute("/cuestionario")({
   component: CuestionarioPage,
   validateSearch: (
     search: Record<string, unknown>,
-  ): { materias?: string; qty?: number; fuente?: string; banco?: "la"; fuentes?: string; modo?: "oficial" | "potenciado" } => {
-    const out: { materias?: string; qty?: number; fuente?: string; banco?: "la"; fuentes?: string; modo?: "oficial" | "potenciado" } = {};
+  ): { materias?: string; qty?: number; fuente?: string; banco?: "la"; fuentes?: string; modo?: "oficial" | "potenciado"; caps?: string } => {
+    const out: { materias?: string; qty?: number; fuente?: string; banco?: "la"; fuentes?: string; modo?: "oficial" | "potenciado"; caps?: string } = {};
     if (typeof search.materias === "string" && search.materias) out.materias = search.materias;
     // `fuente` acota el pool a un manual del curso de Línea Aérea (ATP, PHAK…).
     if (typeof search.fuente === "string" && search.fuente) out.fuente = search.fuente.toUpperCase();
     // `banco=la` usa el banco de Línea Aérea; `fuentes` lo acota a varios manuales.
     if (search.banco === "la") out.banco = "la";
     if (typeof search.fuentes === "string" && search.fuentes) out.fuentes = search.fuentes.toUpperCase();
+    // `caps` acota el banco ATP a ciertos capítulos ("1,3,8"); vacío = todos.
+    if (typeof search.caps === "string" && search.caps) out.caps = search.caps;
     // `modo=oficial` limita el banco de Línea Aérea al cuestionario oficial (LAOF).
     if (search.modo === "oficial" || search.modo === "potenciado") out.modo = search.modo;
     const q = Number(search.qty);
@@ -129,6 +131,7 @@ function CuestionarioPage() {
     search.banco ?? "",
     search.fuentes ?? "",
     search.modo ?? "",
+    search.caps ?? "",
     search.qty ?? "",
   ].join("|");
   const storeKey = user ? sessionKey("aprendiendo", user.id, sessionVariant) : "";
@@ -216,7 +219,12 @@ function CuestionarioPage() {
     if (search.fuente) {
       // Cuestionario de un manual completo (curso de Línea Aérea): se toma el
       // banco publicado sin recortar por materia para no perder preguntas.
-      const all = getPublishedQuestions().filter((q) => q.fuente === search.fuente);
+      const caps = search.caps
+        ? search.caps.split(",").map((c) => Number(c.trim())).filter((n) => Number.isFinite(n))
+        : [];
+      const all = getPublishedQuestions().filter(
+        (q) => q.fuente === search.fuente && (caps.length === 0 || caps.includes(Number(q.capitulo))),
+      );
       fullPool = paid ? all : all.slice(0, 10);
     } else if (search.banco === "la") {
       // Banco completo de Línea Aérea (opcionalmente acotado a manuales y/o
@@ -264,7 +272,7 @@ function CuestionarioPage() {
     setResults(new Array(picked.length).fill(null));
     setLoaded(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, loaded, user, search.materias, search.qty, search.fuente, search.banco, search.fuentes, search.modo]);
+  }, [ready, loaded, user, search.materias, search.qty, search.fuente, search.banco, search.fuentes, search.modo, search.caps]);
 
   const total = questions.length;
   const answeredCount = results.filter((r) => r !== null).length;
