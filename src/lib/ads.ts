@@ -10,7 +10,7 @@
 export const GOOGLE_ADS_ID = "AW-18369633402";
 
 /** Etiqueta `send_to` de la conversión de compra: `AW-XXXXXXXXX/etiqueta`. */
-export const GOOGLE_ADS_PURCHASE_LABEL = "";
+export const GOOGLE_ADS_PURCHASE_LABEL = "AW-18369633402/UpmWCN-v29wcEPq4qbdE";
 
 export function isAdsConfigured(): boolean {
   return GOOGLE_ADS_ID.startsWith("AW-");
