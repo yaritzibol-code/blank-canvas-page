@@ -119,7 +119,7 @@ function AdminBancoPage() {
   const publicadas = questions.filter((x) => x.status === "publicada").length;
   const borrador = questions.filter((x) => x.status === "borrador").length;
   const ocultas = questions.filter((x) => x.status === "oculta").length;
-  const sinClasificar = questions.filter((x) => x.materia === "").length;
+  const sinClasificar = questions.filter((x) => x.materia === "" && !x.fuente).length;
 
   const t = query.trim().toLowerCase();
   const filtered = questions
