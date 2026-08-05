@@ -52,9 +52,13 @@ function CheckoutReturn() {
 
   useEffect(() => {
     if (status !== "active") return;
-    const t = setTimeout(() => navigate({ to: "/dashboard" }), 1800);
+    const t = setTimeout(
+      () => navigate({ to: "/gracias", search: session_id ? { session_id } : {} }),
+      900,
+    );
     return () => clearTimeout(t);
-  }, [status, navigate]);
+  }, [status, navigate, session_id]);
+
 
   const title =
     status === "active"
