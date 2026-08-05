@@ -62,7 +62,10 @@ const STATUS_CONFIG = {
 
 function MateriasIndex() {
   const user = useSessionUser();
-  useQuestionBank();
+  const counts = useBankCounts();
+  const porMateria = new Map<string, number>();
+  counts.forEach((c) => porMateria.set(c.materia, (porMateria.get(c.materia) ?? 0) + Number(c.total)));
+
 
   const subjects = useStore<Subject[]>(() => {
     const perf = user ? materiaPerformance(user.id) : [];
