@@ -25,6 +25,14 @@ const GENEROS: { key: "femenino" | "masculino" | "neutro"; label: string; ejempl
   { key: "neutro", label: "Prefiero no decirlo", ejemplo: "“¿Te sientes con todo?”" },
 ];
 
+export type YarisTono = "formal" | "normal" | "amiga";
+
+export const YARIS_TONOS: { key: YarisTono; label: string; ejemplo: string }[] = [
+  { key: "formal", label: "Formal", ejemplo: "“Le explico: la MEA garantiza separación de obstáculos y recepción de señal.”" },
+  { key: "normal", label: "Normal", ejemplo: "“Va, te lo explico claro: la MEA te asegura obstáculos y señal.”" },
+  { key: "amiga", label: "Amiga Yaris", ejemplo: "“Ok, ese tema pega feo 😅 pero míralo así: la MEA es obstáculos + señal.”" },
+];
+
 const TOUR: { icon: FPIconName; title: string; sub: string }[] = [
   { icon: "help", title: "Cuestionarios", sub: "2,900+ preguntas con explicación, por materia y tema" },
   { icon: "sim", title: "Simulador CIAAC", sub: "Simulacros cronometrados como el examen real" },
