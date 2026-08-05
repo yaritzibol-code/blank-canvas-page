@@ -12,6 +12,8 @@ import {
 } from "@/lib/store";
 import type { UserPrefs } from "@/lib/store";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
+import { YARIS_TONOS, type YarisTono } from "@/components/shared/OnboardingModal";
+import { YarisAvatar } from "@/components/shared/YarisAvatar";
 
 export const Route = createFileRoute("/dashboard/configuracion")({
   component: ConfiguracionPage,
