@@ -15,7 +15,7 @@ import {
 } from "@/lib/store";
 import type { BankQuestion, SimAnswer } from "@/lib/store";
 import { yarisAiChat } from "@/lib/yaris-ai.functions";
-import { yarisToHtml } from "@/lib/yaris-format";
+import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { PathyMark } from "@/components/shared/PathyMark";
 
@@ -1539,7 +1539,7 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef 
               {msg.role === "bot" ? <Icon n="spark" size={15} color="#6C0820" /> : "MG"}
             </div>
             <div style={{ maxWidth: "84%", padding: "9px 12px", borderRadius: msg.role === "bot" ? "4px 12px 12px 12px" : "12px 4px 12px 12px", fontSize: "0.81rem", lineHeight: 1.55, background: msg.role === "bot" ? "#f0f4ff" : "#3D5D91", color: msg.role === "bot" ? "#22375C" : "white" }}>
-              <span dangerouslySetInnerHTML={{ __html: msg.text }} />
+              <span dangerouslySetInnerHTML={{ __html: sanitizeHtml(msg.text) }} />
               {msg.cite && <div style={{ marginTop: 6, padding: "4px 8px", background: "rgba(61,93,145,0.08)", borderLeft: "3px solid #3D5D91", borderRadius: 3, fontSize: "0.7rem", color: "#3D5D91", fontWeight: 600, display: "flex", alignItems: "center", gap: 4 }}><Icon n="book" size={12} /> {msg.cite}</div>}
             </div>
           </div>

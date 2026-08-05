@@ -17,6 +17,7 @@ import {
 import { PathyBubble } from "@/routes/index";
 import { ModuleHeader } from "@/components/shared/ModuleHeader";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
+import { sanitizeHtml } from "@/lib/yaris-format";
 
 export const Route = createFileRoute("/dashboard/bitacora")({
   component: BitacoraPage,
@@ -585,7 +586,7 @@ function BitacoraPage() {
                       {msg.isUser ? initials : <Icon n="spark" size={14} />}
                     </div>
                     <div style={{ maxWidth: "82%", padding: "8px 12px", borderRadius: msg.isUser ? "12px 4px 12px 12px" : "4px 12px 12px 12px", background: msg.isUser ? "#3D5D91" : "#f0f4ff", color: msg.isUser ? "white" : "#22375C", fontSize: ".81rem", lineHeight: 1.55 }}>
-                      {msg.isUser ? msg.text : <span dangerouslySetInnerHTML={{ __html: msg.text }} />}
+                      {msg.isUser ? msg.text : <span dangerouslySetInnerHTML={{ __html: sanitizeHtml(msg.text) }} />}
                     </div>
                   </div>
                 ))}
