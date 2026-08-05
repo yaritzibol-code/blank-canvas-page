@@ -1226,6 +1226,8 @@ function CuestionarioPage() {
                 }
               : {
                   width: yarisOpen ? 340 : 0,
+                  height: "100%",
+                  minHeight: 0,
                   overflow: "hidden",
                   flexShrink: 0,
                   background: "white",
@@ -1234,6 +1236,7 @@ function CuestionarioPage() {
                   flexDirection: "column",
                   transition: "width 0.35s ease",
                 }
+
           }
         >
           {/* Yaris header */}
