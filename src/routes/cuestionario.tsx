@@ -241,6 +241,9 @@ function CuestionarioPage() {
   const yarisExplainedRef = useRef<Set<string>>(new Set());
   const yarisBusyRef = useRef(false);
   const [reportOpen, setReportOpen] = useState(false);
+  /** Popup de suscripción cuando el plan Básica toca una función Pro. */
+  const [upgradeOpen, setUpgradeOpen] = useState(false);
+
   const [isMobile, setIsMobile] = useState(false);
   const [startTime, setStartTime] = useState(() => Date.now());
   const [elapsedMin, setElapsedMin] = useState(0);
