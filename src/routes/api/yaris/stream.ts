@@ -92,7 +92,11 @@ export const Route = createFileRoute("/api/yaris/stream")({
           supabase.from("profiles").select("role,data").eq("id", userId).maybeSingle(),
           supabase.rpc("has_active_subscription", { user_uuid: userId, check_env: "live" }),
         ]);
-        const profile = (profileRow?.data ?? {}) as { plan?: string; accessStatus?: string };
+        const profile = (profileRow?.data ?? {}) as {
+          plan?: string;
+          accessStatus?: string;
+          yarisTono?: "formal" | "normal" | "amiga";
+        };
         const isPro =
           Boolean(isAdmin) ||
           Boolean(hasSub) ||
