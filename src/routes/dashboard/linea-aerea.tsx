@@ -201,26 +201,50 @@ function QuizCard({
       </div>
 
       <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 8 }}>
-        <Link
-          to={to}
-          search={search as never}
-          style={{
-            padding: "13px 20px",
-            borderRadius: 12,
-            fontSize: "0.9rem",
-            fontWeight: 700,
-            textDecoration: "none",
-            textAlign: "center",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 8,
-            background: dark ? "#F2AEBC" : "#3D5D91",
-            color: dark ? "#6C0820" : "white",
-          }}
-        >
-          Iniciar cuestionario →
-        </Link>
+        {onStart ? (
+          <button
+            type="button"
+            onClick={onStart}
+            style={{
+              padding: "13px 20px",
+              borderRadius: 12,
+              fontSize: "0.9rem",
+              fontWeight: 700,
+              border: "none",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              background: dark ? "#F2AEBC" : "#3D5D91",
+              color: dark ? "#6C0820" : "white",
+            }}
+          >
+            {ctaLabel}
+          </button>
+        ) : (
+          <Link
+            to={to!}
+            search={(search ?? {}) as never}
+            style={{
+              padding: "13px 20px",
+              borderRadius: 12,
+              fontSize: "0.9rem",
+              fontWeight: 700,
+              textDecoration: "none",
+              textAlign: "center",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              background: dark ? "#F2AEBC" : "#3D5D91",
+              color: dark ? "#6C0820" : "white",
+            }}
+          >
+            {ctaLabel}
+          </Link>
+        )}
+
         {pdfUrl && (
           <a
             href={pdfUrl}
