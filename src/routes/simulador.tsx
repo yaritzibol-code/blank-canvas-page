@@ -21,6 +21,7 @@ import { yarisAiChat } from "@/lib/yaris-ai.functions";
 import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { PathyMark } from "@/components/shared/PathyMark";
+import { PathyDebrief } from "@/components/shared/PathyDebrief";
 import { QuestionImages } from "@/components/banco/QuestionImages";
 
 export const Route = createFileRoute("/simulador")({
@@ -191,6 +192,7 @@ interface SimResult {
   passed: boolean;
   timeUsed: number;
   porMateria: Record<string, { correct: number; total: number }>;
+  answers: SimAnswer[];
 }
 
 /* ─── Calculator state ───────────────────────────────────── */
@@ -501,7 +503,16 @@ function SimuladorPage() {
         entry.correct++;
       }
       porMateria[slug] = entry;
-      answers.push({ questionId: bq.id, materia: slug, selectedIndex: q.selectedOpt, correctIndex: bq.correctIndex });
+      answers.push({
+        questionId: bq.id,
+        materia: slug,
+        ...(bq.fuente ? { fuente: bq.fuente } : {}),
+        ...(bq.capitulo !== undefined ? { capitulo: bq.capitulo } : {}),
+        ...(bq.capituloTitulo ? { capituloTitulo: bq.capituloTitulo } : {}),
+        ...(bq.seccion ? { seccion: bq.seccion } : {}),
+        selectedIndex: q.selectedOpt,
+        correctIndex: bq.correctIndex,
+      });
     });
 
     // Las que dejó en blanco cuentan mal para la calificación (como en el
@@ -511,7 +522,7 @@ function SimuladorPage() {
     const passedNow = scorePctNum >= 80;
     const timeUsedNow = Math.max(0, 5 * 3600 - secondsLeft);
 
-    setResult({ correct, scorePct: scorePctNum, passed: passedNow, timeUsed: timeUsedNow, porMateria });
+    setResult({ correct, scorePct: scorePctNum, passed: passedNow, timeUsed: timeUsedNow, porMateria, answers });
     if (user) {
       saveSimAttempt({
         userId: user.id,
@@ -890,16 +901,16 @@ function SimuladorPage() {
             </div>
           </div>
 
-          {/* Pathy */}
-          <div style={{ background: "linear-gradient(135deg,#F2DCDB,#fce4ec)", borderRadius: 14, padding: 18, marginBottom: 18, display: "flex", alignItems: "flex-start", gap: 12 }}>
-            <PathyMark size={32} />
-            <div style={{ fontSize: "0.87rem", color: "#555", lineHeight: 1.6 }}>
-              {passed
-                ? <><strong style={{ color: "#6C0820" }}>Pathy dice:</strong> ¡FELICIDADES! Aprobaste el simulador con <strong>{scorePct}%</strong>. Tu dedicación y constancia están dando frutos. Sigue practicando para llegar al examen real con aún más confianza. ¡Tú puedes, aviador!</>
-                : <><strong style={{ color: "#6C0820" }}>Pathy dice:</strong> No te desanimes, cada simulador es un paso más hacia tu objetivo. Tu calificación fue <strong>{scorePct}%</strong> y necesitas <strong>80%</strong> para aprobar. Las materias en rojo son las que más necesitas reforzar. ¡Con más práctica lo lograrás!</>
-              }
-            </div>
-          </div>
+          {/* Informe real de Pathy */}
+          {user && (
+            <PathyDebrief
+              userId={user.id}
+              origen="simulador"
+              titulo={modo === "oficial" ? "Simulador oficial" : "Simulador potenciado"}
+              scorePct={scorePct}
+              answers={result.answers}
+            />
+          )}
 
           {/* Por materia */}
           <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(61,93,145,0.06)", marginBottom: 18 }}>
