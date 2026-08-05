@@ -272,6 +272,9 @@ function SimuladorPage() {
   const search = Route.useSearch();
   const [mode, setMode] = useState<SimMode>(search.modo ?? "oficial");
   const banco: SimBank = search.banco ?? "ciaac";
+  /** "Salir" vuelve al módulo de origen, no siempre al de CIAAC. */
+  const exitTo: "/dashboard/banco" | "/dashboard/linea-aerea" =
+    banco === "la" ? "/dashboard/linea-aerea" : "/dashboard/banco";
   const [agreed, setAgreed] = useState(false);
   const [questions, setQuestions] = useState<QState[]>(buildQuestions);
   const [bankQs, setBankQs] = useState<BankQuestion[]>([]);
@@ -488,6 +491,9 @@ function SimuladorPage() {
       answers.push({ questionId: bq.id, materia: slug, selectedIndex: q.selectedOpt, correctIndex: bq.correctIndex });
     });
 
+    // Las que dejó en blanco cuentan mal para la calificación (como en el
+    // examen real) pero no como "preguntas respondidas".
+    const answeredCount = questions.filter((q) => q.selectedOpt >= 0).length;
     const scorePctNum = TOTAL_QS > 0 ? (correct / TOTAL_QS) * 100 : 0;
     const passedNow = scorePctNum >= 80;
     const timeUsedNow = Math.max(0, 5 * 3600 - secondsLeft);
@@ -497,6 +503,7 @@ function SimuladorPage() {
       saveSimAttempt({
         userId: user.id,
         total: TOTAL_QS,
+        answered: answeredCount,
         correct,
         scorePct: scorePctNum,
         passed: passedNow,
@@ -806,7 +813,7 @@ function SimuladorPage() {
           </label>
 
           <div style={{ display: "flex", gap: 10 }}>
-            <Link to="/dashboard/banco" style={{ flex: 1, padding: 12, background: "white", color: "#647DA0", border: "2px solid #F2DCDB", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Link to={exitTo} style={{ flex: 1, padding: 12, background: "white", color: "#647DA0", border: "2px solid #F2DCDB", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center" }}>
               ← Volver
             </Link>
             <button
@@ -823,7 +830,7 @@ function SimuladorPage() {
         {!gate.allowed && (
           <UpgradeModal
             open
-            onClose={() => navigate({ to: "/dashboard/banco" })}
+            onClose={() => navigate({ to: exitTo })}
             feature="Simulador CIAAC"
             benefit={gate.reason}
             userId={user?.id}

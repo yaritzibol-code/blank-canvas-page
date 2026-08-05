@@ -288,10 +288,11 @@ export function Nav() {
         <Logo />
         <nav className="hidden lg:flex items-center gap-8 text-[14px] font-medium text-ink/65">
           {[
-            { label: "Funciones", href: "/#funciones" },
+            { label: "Home", href: "/" },
+            { label: "CIAAC", href: "/ciaac" },
+            // La convocatoria E190 vive dentro de la ruta de línea aérea.
+            { label: "Línea Aérea", href: "/convocatoria-aeromexico" },
             { label: "Precios", href: "/#precios" },
-            { label: "Convocatoria E190", href: "/convocatoria-aeromexico" },
-            { label: "Historias", href: "/#historias" },
             { label: "Blog", href: "/blog" },
           ].map((x) => (
             <a key={x.label} href={x.href} className="hover:text-ink transition-colors">{x.label}</a>
@@ -1344,6 +1345,7 @@ export function Footer() {
             { h: "Recursos", l: [
               { t: "Blog", href: "/blog" },
               { t: "Preguntas frecuentes", href: "/faq" },
+              { t: "Examen CIAAC — Piloto Comercial", href: "/ciaac" },
               { t: "Convocatoria Aeroméxico · Embraer 190", href: "/convocatoria-aeromexico" },
               { t: "Convocatoria CIAAC 2026", href: "https://www.gob.mx/afac", ext: true },
             ] },

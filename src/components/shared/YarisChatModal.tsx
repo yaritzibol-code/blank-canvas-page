@@ -6,7 +6,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { logYarisUse } from "@/lib/store";
-import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
+import { useYarisStream, toHistory } from "@/lib/yaris-ask";
 import { yarisToHtml } from "@/lib/yaris-format";
 import type { User } from "@/lib/store";
 
@@ -20,6 +20,8 @@ interface Msg {
   from: "yaris" | "user";
   text: string;
   cite?: string | null;
+  /** true mientras el modelo sigue escribiendo este mensaje. */
+  streaming?: boolean;
 }
 
 export function YarisChatModal({
@@ -38,7 +40,7 @@ export function YarisChatModal({
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
-  const askYaris = useYarisAsk();
+  const streamYaris = useYarisStream();
 
   useEffect(() => {
     if (open) {
@@ -49,7 +51,10 @@ export function YarisChatModal({
           ? [
               {
                 from: "yaris",
-                text: "Estoy aquí para tus dudas académicas. Cuéntame qué tema o pregunta te está costando y lo desarmamos juntas, paso a paso.",
+                // Todos los mensajes viajan ya como HTML saneado.
+                text: yarisToHtml(
+                  "Estoy aquí para tus dudas académicas. Cuéntame qué tema o pregunta te está costando y lo desarmamos juntas, paso a paso.",
+                ),
                 cite: null,
               },
             ]
@@ -79,8 +84,32 @@ export function YarisChatModal({
       const history = toHistory(
         nextUserMsgs.slice(1).map((m) => ({ text: m.text, fromUser: m.from === "user" })),
       );
-      const answer = await askYaris({ history, ctx: { materiaName: seccion } });
-      setMessages((m) => [...m, { from: "yaris", text: answer.text, cite: answer.cite }]);
+      // Se reserva el mensaje y se rellena con cada fragmento: la respuesta se
+      // ve escribirse en vez de aparecer de golpe al final.
+      let slot = -1;
+      setMessages((m) => {
+        slot = m.length;
+        return [...m, { from: "yaris" as const, text: "", streaming: true }];
+      });
+      let plain = "";
+      const answer = await streamYaris({
+        history,
+        ctx: { materiaName: seccion },
+        onDelta: (chunk) => {
+          plain += chunk;
+          const html = yarisToHtml(plain);
+          setMessages((m) => {
+            const copy = [...m];
+            if (copy[slot]) copy[slot] = { ...copy[slot], text: html, streaming: true };
+            return copy;
+          });
+        },
+      });
+      setMessages((m) => {
+        const copy = [...m];
+        if (copy[slot]) copy[slot] = { from: "yaris", text: answer.text, cite: answer.cite };
+        return copy;
+      });
     } finally {
       setTyping(false);
     }
@@ -142,7 +171,10 @@ export function YarisChatModal({
                   boxShadow: "0 2px 8px rgba(61,93,145,.05)",
                 }}
               >
-                <div dangerouslySetInnerHTML={{ __html: yarisToHtml(m.text) }} />
+                {/* `m.text` ya viene como HTML saneado (de `useYarisStream`
+                    o del respaldo): convertirlo otra vez anidaba envoltorios. */}
+                <div dangerouslySetInnerHTML={{ __html: m.text }} />
+                {m.streaming && <span className="yaris-caret" aria-hidden="true" />}
                 {m.cite && (
                   <div style={{ marginTop: 6, fontSize: ".72rem", color: "#8DA1BE" }}>Fuente: {m.cite}</div>
                 )}

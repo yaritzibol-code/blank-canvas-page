@@ -178,3 +178,143 @@ export async function callOpenAI(
     tokensOut: json.usage?.completion_tokens ?? 0,
   };
 }
+
+/* ───────────────────────── Prompt de Yaris ───────────────────────── */
+
+const LETTERS = ["A", "B", "C", "D", "E"];
+
+export interface YarisPromptContext {
+  materia?: string;
+  questionText?: string;
+  options?: string[];
+  correctIndex?: number;
+  userSelectedIndex?: number;
+  explanation?: string;
+  cite?: string;
+  resourceTitle?: string;
+}
+
+/** Base del carácter de Yaris cuando la administradora no configuró uno propio. */
+export const YARIS_DEFAULT_PROMPT = [
+  "Eres Yaris, instructora de vuelo y maestra de aeronáutica de FlightPath para pilotos que preparan el examen CIAAC de México (Piloto Comercial de la DGAC/AFAC) y procesos de línea aérea.",
+  "Responde SIEMPRE en español mexicano, tono cercano de tú. Da formato con Markdown estándar: **negritas** para lo clave, *cursivas*, listas con - o 1., y `código` cuando aplique. No escribas HTML.",
+  "Sé concisa: entre 3 y 8 oraciones por respuesta salvo que el usuario pida detalle.",
+  "Eres una maestra, no una porrista: NO eres complaciente. Si el estudiante se equivoca, dilo de frente desde la primera línea y explica por qué, con el dato, el principio físico o la norma que lo sustenta.",
+  "Si el estudiante insiste, te contradice o presiona, NO cambies tu respuesta para complacerlo: sostén tu postura y defiéndela con datos concretos (definiciones, fórmulas, artículos, procedimientos). Solo cambia de posición si te presenta evidencia técnica válida, y entonces reconócelo explícitamente.",
+  "Nunca abras con halagos vacíos ('¡excelente pregunta!') ni cierres pidiendo aprobación. Corrige con respeto y firmeza: primero el veredicto, luego el porqué, y al final un tip para recordarlo.",
+  "Explica conceptos usando tu conocimiento general de aeronáutica: aerodinámica, motores, meteorología, navegación aérea, legislación (DGAC/AFAC/OACI/RACM), factores humanos, medicina de aviación, comunicaciones, servicios de tránsito aéreo y operaciones.",
+  "Si la duda no es de aviación, responde brevemente y redirígela al estudio.",
+  "No inventes citas ni normativas específicas: cuando no tengas la certeza del número o artículo exacto, dilo con claridad y explica igual el fundamento técnico. Decir 'no estoy segura del artículo' es correcto; inventarlo, jamás.",
+].join(" ");
+
+/**
+ * Arma el system prompt con el contexto de la pantalla.
+ *
+ * Vive aquí para que la respuesta normal y la respuesta en streaming usen
+ * exactamente el mismo carácter y el mismo contexto: si divergieran, Yaris
+ * contestaría distinto según cómo se le pregunte.
+ */
+export function buildYarisSystemPrompt(adminPrompt: string | null, ctx: YarisPromptContext): string {
+  let system = adminPrompt ?? YARIS_DEFAULT_PROMPT;
+
+  if (ctx.resourceTitle) {
+    system += `\n\nEl estudiante está leyendo "${ctx.resourceTitle}" en la biblioteca del curso. Si la duda se refiere a ese material, respóndela con tu conocimiento de aeronáutica y aclara que no puedes citar páginas concretas del PDF.`;
+  }
+
+  if (ctx.questionText) {
+    const correcta =
+      ctx.options && ctx.correctIndex !== undefined && ctx.options[ctx.correctIndex] !== undefined
+        ? `${LETTERS[ctx.correctIndex]}. ${ctx.options[ctx.correctIndex]}`
+        : "?";
+    const elegida =
+      ctx.options && ctx.userSelectedIndex !== undefined && ctx.userSelectedIndex >= 0
+        ? `${LETTERS[ctx.userSelectedIndex]}. ${ctx.options[ctx.userSelectedIndex]}`
+        : "Sin responder";
+    const opts = (ctx.options ?? []).map((o, i) => `${LETTERS[i]}. ${o}`).join(" | ");
+    system +=
+      "\n\nCONTEXTO DE LA PREGUNTA EN REVISIÓN (úsalo como base y complementa con tu conocimiento):" +
+      `\n- Materia: ${ctx.materia ?? "N/D"}` +
+      `\n- Pregunta: ${ctx.questionText}` +
+      `\n- Opciones: ${opts}` +
+      `\n- Respuesta correcta: ${correcta}` +
+      `\n- Respuesta del estudiante: ${elegida}` +
+      `\n- Explicación oficial del curso: ${ctx.explanation ?? "—"}` +
+      (ctx.cite ? `\n- Fuente oficial: ${ctx.cite}` : "");
+  }
+  return system;
+}
+
+/**
+ * Llamada en streaming: entrega los fragmentos según los produce el modelo.
+ * `onDelta` recibe cada trozo de texto; devuelve el texto completo al final.
+ */
+export async function streamOpenAI(
+  apiKey: string,
+  messages: Array<{ role: string; content: string }>,
+  onDelta: (chunk: string) => void,
+  signal?: AbortSignal,
+): Promise<OpenAIResult> {
+  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    signal,
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: YARIS_MODEL,
+      messages,
+      reasoning_effort: "low",
+      max_completion_tokens: MAX_OUTPUT_TOKENS,
+      stream: true,
+      stream_options: { include_usage: true },
+    }),
+  });
+
+  if (!res.ok || !res.body) {
+    const body = await res.text().catch(() => "");
+    return { text: "", tokensIn: 0, tokensOut: 0, status: res.status, error: body.slice(0, 400) };
+  }
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+  let text = "";
+  let tokensIn = 0;
+  let tokensOut = 0;
+
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    // SSE: eventos separados por línea en blanco, campo `data:`.
+    let nl = buffer.indexOf("\n");
+    while (nl !== -1) {
+      const line = buffer.slice(0, nl).trim();
+      buffer = buffer.slice(nl + 1);
+      nl = buffer.indexOf("\n");
+      if (!line.startsWith("data:")) continue;
+      const payload = line.slice(5).trim();
+      if (payload === "[DONE]") continue;
+      try {
+        const evt = JSON.parse(payload) as {
+          choices?: Array<{ delta?: { content?: string } }>;
+          usage?: { prompt_tokens?: number; completion_tokens?: number };
+        };
+        const piece = evt.choices?.[0]?.delta?.content;
+        if (piece) {
+          text += piece;
+          onDelta(piece);
+        }
+        if (evt.usage) {
+          tokensIn = evt.usage.prompt_tokens ?? tokensIn;
+          tokensOut = evt.usage.completion_tokens ?? tokensOut;
+        }
+      } catch {
+        /* fragmento incompleto: el siguiente ciclo lo completa */
+      }
+    }
+  }
+
+  return { text: text.trim(), tokensIn, tokensOut };
+}

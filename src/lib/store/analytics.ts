@@ -23,7 +23,7 @@ import {
   getTotalStudyHours,
 } from "./domain";
 import { getUsers } from "./auth";
-import type { User } from "./types";
+import type { SimAttempt, User } from "./types";
 
 export type Period = "hoy" | "semana" | "mes" | "todo";
 
@@ -39,6 +39,16 @@ export function periodStart(period: Period): Date {
 }
 
 const inPeriod = (iso: string, since: Date) => new Date(iso).getTime() >= since.getTime();
+
+/**
+ * Preguntas que la estudiante realmente contestó en un intento de simulador.
+ *
+ * `total` es el tamaño del examen: las que deja en blanco cuentan mal para la
+ * calificación, pero no son "preguntas respondidas". Los intentos anteriores
+ * a este campo caen a `total`.
+ */
+const simAnswered = (a: SimAttempt): number => a.answered ?? a.total;
+
 
 /* ───────────────────────── Por estudiante ───────────────────────── */
 
@@ -252,17 +262,22 @@ export function studentStats(userId: string, period: Period = "todo"): StudentSt
     c += a.correct;
     t += a.total;
   });
+  let simRespondidas = 0;
   sims.forEach((a) => {
     c += a.correct;
     t += a.total;
+    simRespondidas += simAnswered(a);
   });
+  // `t` mide el desempeño (en blanco = error, como en el examen);
+  // `respondidas` mide el esfuerzo real y no cuenta lo que dejó vacío.
+  const respondidas = quiz.reduce((n, a) => n + a.total, 0) + simRespondidas;
   const days = getStudyDays(userId);
   const secsInPeriod = Object.entries(days)
     .filter(([d]) => new Date(`${d}T12:00:00`).getTime() >= since.getTime() - 86400000)
     .reduce((s, [, v]) => s + v, 0);
   return {
     streak: getStreak(userId),
-    answered: t,
+    answered: respondidas,
     avgScore: t > 0 ? Math.round((c / t) * 100) : null,
     studyHours: period === "todo" ? getTotalStudyHours(userId) : Math.round(secsInPeriod / 3600),
     quizCount: quiz.length,
@@ -341,7 +356,7 @@ export function adminSummary(): AdminSummary {
     quizCount += q.length;
     simCount += s.length;
     q.forEach((a) => (answered += a.total));
-    s.forEach((a) => (answered += a.total));
+    s.forEach((a) => (answered += simAnswered(a)));
     progresses.push(courseProgress(u.id));
     const r = estimatedReadiness(u.id);
     if (r !== null) readiness.push(r);

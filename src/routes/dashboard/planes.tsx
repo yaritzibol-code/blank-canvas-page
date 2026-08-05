@@ -55,6 +55,7 @@ function PlanesPage() {
   const { user, ready } = useRequireAuth();
   const navigate = useNavigate();
   const { checkout } = Route.useSearch();
+  const [cupon, setCupon] = useState("");
   const [sub, setSub] = useState<SubRow | null>(null);
   const [subChecked, setSubChecked] = useState(false);
   const [autoLaunched, setAutoLaunched] = useState(false);
@@ -157,6 +158,8 @@ function PlanesPage() {
           priceId: ciclo === "anual" ? PRO_ANNUAL_LOOKUP_KEY : PRO_MONTHLY_LOOKUP_KEY,
           returnUrl: `${window.location.origin}/checkout/return?session_id={CHECKOUT_SESSION_ID}`,
           environment: env,
+          // Sin código, el propio checkout deja escribir uno.
+          ...(cupon.trim() ? { promoCode: cupon.trim() } : {}),
         },
       });
       if ("error" in result) throw new Error(result.error);
@@ -355,9 +358,29 @@ function PlanesPage() {
                 {loading ? "Abriendo..." : "Gestionar suscripción →"}
               </button>
             ) : (
+              <>
+              {/* Cupón: si se escribe, se aplica al abrir el checkout; si se
+                  deja vacío, el propio checkout permite capturarlo. */}
+              <label style={{ display: "block", marginBottom: 12 }}>
+                <span style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#647DA0", marginBottom: 5 }}>
+                  ¿Tienes un cupón?
+                </span>
+                <input
+                  value={cupon}
+                  onChange={(e) => setCupon(e.target.value.toUpperCase().slice(0, 40))}
+                  placeholder="CÓDIGO DE DESCUENTO"
+                  style={{
+                    width: "100%", padding: "10px 12px", borderRadius: 10,
+                    border: "2px solid #E3EAF5", background: "white",
+                    fontSize: 13, fontWeight: 700, letterSpacing: ".06em",
+                    color: INK, outline: "none", fontFamily: "'Manrope', sans-serif",
+                  }}
+                />
+              </label>
               <button onClick={() => handleUpgrade()} disabled={loading} style={{ width: "100%", background: BRAND, color: "#fff", border: "none", padding: "12px 20px", borderRadius: 12, fontWeight: 700, fontSize: 14, cursor: "pointer" }}>
                 {loading ? "Preparando pago..." : ciclo === "anual" ? "Actualizar a Pro anual →" : "Actualizar a Pro mensual →"}
               </button>
+              </>
             )}
           </div>
         </div>
