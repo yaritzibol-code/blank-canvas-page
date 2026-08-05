@@ -191,6 +191,60 @@ export type Database = {
         }
         Relationships: []
       }
+      client_errors: {
+        Row: {
+          created_at: string
+          id: string
+          ip_hash: string | null
+          message: string
+          route: string | null
+          stack: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ip_hash?: string | null
+          message: string
+          route?: string | null
+          stack?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ip_hash?: string | null
+          message?: string
+          route?: string | null
+          stack?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      content: {
+        Row: {
+          collection: string
+          data: Json
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          collection: string
+          data: Json
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          collection?: string
+          data?: Json
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       disputes: {
         Row: {
           amount: number | null
@@ -278,60 +332,6 @@ export type Database = {
           timezone?: string | null
           user_agent?: string | null
           user_id?: string | null
-        }
-        Relationships: []
-      }
-      client_errors: {
-        Row: {
-          created_at: string
-          id: string
-          ip_hash: string | null
-          message: string
-          route: string | null
-          stack: string | null
-          user_agent: string | null
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          ip_hash?: string | null
-          message: string
-          route?: string | null
-          stack?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          ip_hash?: string | null
-          message?: string
-          route?: string | null
-          stack?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
-      content: {
-        Row: {
-          collection: string
-          data: Json
-          id: string
-          updated_at: string
-        }
-        Insert: {
-          collection: string
-          data: Json
-          id: string
-          updated_at?: string
-        }
-        Update: {
-          collection?: string
-          data?: Json
-          id?: string
-          updated_at?: string
         }
         Relationships: []
       }
