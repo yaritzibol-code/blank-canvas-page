@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { supabase } from "@/integrations/supabase/client";
 import { REPORT_TYPES } from "@/components/shared/ReportProblemModal";
+import { QuestionEditModal } from "@/components/admin/QuestionEditModal";
+
 import {
   AdminShell,
   Badge,
