@@ -32,6 +32,7 @@ import {
   type BankQuestion,
   type CsvImportResult,
   type QuestionStatus,
+  useQuestionBank,
 } from "@/lib/store";
 
 export const Route = createFileRoute("/admin/banco")({
