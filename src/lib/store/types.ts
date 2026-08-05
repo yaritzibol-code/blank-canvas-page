@@ -260,6 +260,24 @@ export interface Reminder {
 
 export type ReportStatus = "pendiente" | "en_proceso" | "resuelto" | "cerrado";
 
+/**
+ * Copia de la pregunta tal como la vio quien reporta. Se guarda con el ticket
+ * para que el equipo admin sepa exactamente qué reactivo se está reportando,
+ * aunque después se edite o se despublique.
+ */
+export interface ReportQuestionSnapshot {
+  id: string;
+  text: string;
+  options: string[];
+  correctIndex: number;
+  explanation?: string;
+  materia?: string;
+  fuente?: string;
+  capitulo?: number;
+  /** Índice elegido por la estudiante al reportar (null si no había respondido). */
+  selectedIndex?: number | null;
+}
+
 export interface Report {
   id: string;
   userId: string;
@@ -269,10 +287,13 @@ export interface Report {
   tipo: string;
   seccion: string;
   recurso: string; // id/nombre del recurso relacionado ("" si n/a)
+  /** Snapshot del reactivo reportado (solo en reportes de cuestionario). */
+  pregunta?: ReportQuestionSnapshot;
   mensaje: string;
   estado: ReportStatus;
   notasInternas: string;
 }
+
 
 export type ActivityKind =
   | "login"
