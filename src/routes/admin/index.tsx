@@ -54,9 +54,12 @@ function AdminResumenPage() {
     { icon: "help", num: String(summary.quizCount), lab: "Cuestionarios", color: "#3D5D91" },
   ];
 
+  const totalUsers = useStore(() => getUsers().length);
+
   return (
     <AdminShell title="Resumen general" active="resumen">
       {/* Stats */}
+
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 12, marginBottom: 20 }}>
         {stats.map((s) => (
           <div key={s.lab} style={{ ...cardStyle, padding: "16px 18px", display: "flex", flexDirection: "column", gap: 8 }}>
