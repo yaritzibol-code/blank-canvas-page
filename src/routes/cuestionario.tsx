@@ -1574,7 +1574,16 @@ function CuestionarioPage() {
 
 
       {/* Reportar problema */}
+      <UpgradeModal
+        open={upgradeOpen}
+        onClose={() => setUpgradeOpen(false)}
+        feature="Yaris con IA"
+        benefit="Con Pro te explica cada pregunta, te acompaña paso a paso y practicas sin límites."
+        {...(user ? { userId: user.id } : {})}
+      />
+
       <ReportProblemModal
+
         open={reportOpen}
         onClose={() => setReportOpen(false)}
         user={user}
