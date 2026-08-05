@@ -219,28 +219,38 @@ function Sidebar({ onClose, onYaris, onLogout }: { onClose?: () => void; onYaris
                       aria-label="En construcción — disponible próximamente"
                       style={{
                         display: "inline-flex", alignItems: "center", gap: 4,
-                        padding: "2px 8px", borderRadius: 20,
-                        background: "rgba(242,174,188,0.14)",
-                        color: "#F2AEBC", fontSize: "0.6rem", fontWeight: 700,
-                        textTransform: "uppercase", letterSpacing: "0.08em",
+                        padding: "3px 9px", borderRadius: 20,
+                        background: "linear-gradient(135deg, #F2AEBC, #E4708C)",
+                        color: "#4A0616", fontSize: "0.58rem", fontWeight: 800,
+                        textTransform: "uppercase", letterSpacing: "0.1em",
+                        boxShadow: "0 0 0 1px rgba(255,255,255,0.25), 0 4px 12px -4px rgba(228,112,140,0.8)",
+                        whiteSpace: "nowrap",
                       }}
                     >
-                      <Icon n="building" size={11} sw={1.7} /> Pronto
+                      <Icon n="building" size={11} sw={2} /> Pronto
                     </span>
                   )}
                   {item.nuevo && !showLock && (
                     <span
+                      className="fp-badge-nuevo"
                       style={{
-                        display: "inline-flex", alignItems: "center",
-                        padding: "2px 8px", borderRadius: 20,
-                        background: "rgba(46,204,113,0.18)",
-                        color: "#7FE0AC", fontSize: "0.6rem", fontWeight: 700,
-                        textTransform: "uppercase", letterSpacing: "0.08em",
+                        display: "inline-flex", alignItems: "center", gap: 4,
+                        padding: "3px 9px", borderRadius: 20,
+                        background: "linear-gradient(135deg, #38E58A, #12B26B)",
+                        color: "#04301C", fontSize: "0.58rem", fontWeight: 800,
+                        textTransform: "uppercase", letterSpacing: "0.1em",
+                        boxShadow: "0 0 0 1px rgba(255,255,255,0.3), 0 4px 14px -4px rgba(18,178,107,0.95)",
+                        whiteSpace: "nowrap",
                       }}
                     >
+                      <span
+                        aria-hidden
+                        style={{ width: 5, height: 5, borderRadius: 99, background: "#04301C", display: "inline-block" }}
+                      />
                       Nuevo
                     </span>
                   )}
+
                 </Link>
               );
             })}
