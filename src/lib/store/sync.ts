@@ -501,6 +501,10 @@ function flushPending() {
 }
 
 /** Como `flushPending`, pero espera a que las subidas terminen. */
+export async function flushCloudWrites(): Promise<void> {
+  await flushPendingAsync();
+}
+
 async function flushPendingAsync(): Promise<void> {
   const pending: Array<Promise<unknown>> = [];
   pushTimers.forEach((timer, key) => {
