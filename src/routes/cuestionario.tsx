@@ -872,9 +872,10 @@ function CuestionarioPage() {
 
       {/* ── PROGRESS BAR ── */}
       <div
+        className="px-3 sm:px-6"
         style={{
           background: "white",
-          padding: "0 24px 12px",
+          padding: "0 0 12px",
           borderBottom: "1px solid rgba(61,93,145,0.06)",
           flexShrink: 0,
         }}
@@ -882,12 +883,14 @@ function CuestionarioPage() {
         <div
           style={{
             display: "flex", justifyContent: "space-between", alignItems: "center",
-            fontSize: "0.75rem", color: "#647DA0", marginBottom: 6,
+            gap: 8,
+            fontSize: "0.76rem", color: "#5A6F92", marginBottom: 6,
           }}
         >
           <span>Progreso de la sesión</span>
-          <strong style={{ color: "#3D5D91" }}>{answeredCount}/{total} respondidas</strong>
+          <strong style={{ color: "#22375C", whiteSpace: "nowrap" }}>{answeredCount}/{total} respondidas</strong>
         </div>
+
         <div style={{ height: 6, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
           <div
             style={{
