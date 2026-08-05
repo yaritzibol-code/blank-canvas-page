@@ -3,6 +3,7 @@
  * y sincronización del plan Pro al perfil del usuario tras el webhook.
  */
 import { createServerFn } from "@tanstack/react-start";
+import type Stripe from "stripe";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { type StripeEnv, createStripeClient, getStripeErrorMessage } from "@/lib/stripe.server";
 import {
@@ -312,7 +313,7 @@ export const syncMyPlan = createServerFn({ method: "POST" })
     try {
       const stripe = createStripeClient(data.environment);
       const { data: { user } } = await supabase.auth.getUser();
-      const candidates = new Map<string, Awaited<ReturnType<typeof stripe.subscriptions.retrieve>>>();
+      const candidates = new Map<string, Stripe.Subscription>();
 
       if (data.sessionId) {
         const session = await stripe.checkout.sessions.retrieve(data.sessionId);
