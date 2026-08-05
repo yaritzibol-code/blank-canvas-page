@@ -130,6 +130,9 @@ function FacturacionPage() {
 
   const pro = isPaid(user);
   const esAdmin = user.role === "admin";
+  const estado = estadoVisible(billing, pro);
+  const ciclo = cicloActual(billing);
+  const puedeCambiar = Boolean(billing?.active) && ciclo !== null && !esAdmin;
 
   const doCancel = async () => {
     setBusy(true);
