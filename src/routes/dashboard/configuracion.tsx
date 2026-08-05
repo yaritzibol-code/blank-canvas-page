@@ -155,6 +155,7 @@ function ConfiguracionPage() {
   const [escuelaDraft, setEscuelaDraft] = useState(() => user?.escuela ?? "");
   const [ciaacDraft, setCiaacDraft] = useState(() => user?.fechaCiaac ?? "");
   const [deleteConfirm, setDeleteConfirm] = useState("");
+  const [yarisTono, setYarisTonoState] = useState<YarisTono>(() => user?.yarisTono ?? "normal");
 
   if (!user) return null;
 
