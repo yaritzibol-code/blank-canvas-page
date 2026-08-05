@@ -902,12 +902,12 @@ function SimuladorPage() {
           </div>
 
           {/* Informe real de Pathy */}
-          {user && (
+          {user && result && (
             <PathyDebrief
               userId={user.id}
               origen="simulador"
               titulo={mode === "oficial" ? "Simulador oficial" : "Simulador potenciado"}
-              scorePct={scorePct}
+              scorePct={Math.round(result.scorePct)}
               answers={result.answers}
             />
           )}
