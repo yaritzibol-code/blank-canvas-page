@@ -288,7 +288,10 @@ export const createPortalSession = createServerFn({ method: "POST" })
  */
 export const syncMyPlan = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data: { environment: StripeEnv }) => data)
+  .inputValidator((data: { environment: StripeEnv; sessionId?: string }) => {
+    if (data.sessionId && !/^cs_[a-zA-Z0-9_]+$/.test(data.sessionId)) throw new Error("Sesión de pago inválida");
+    return data;
+  })
   .handler(async ({ data, context }): Promise<PlanSyncResult> => {
     const { supabase, userId } = context;
     const { data: sub } = await supabase
@@ -303,27 +306,84 @@ export const syncMyPlan = createServerFn({ method: "POST" })
     let status: string | null = (sub?.status as string) ?? null;
     let currentPeriodEnd: string | null = (sub?.current_period_end as string | null) ?? null;
 
-    // Respaldo: si el webhook aún no llegó (o falló) preguntamos directamente a
-    // Stripe por las suscripciones del usuario. Así el regreso del checkout
-    // refleja el acceso Pro sin depender del tiempo de entrega del webhook.
-    if (!status) {
-      try {
-        const stripe = createStripeClient(data.environment);
-        const found = await stripe.subscriptions.search({
-          query: `metadata['userId']:'${userId}'`,
-          limit: 5,
-        });
-        const live = found.data
-          .filter((s) => ["active", "trialing", "past_due"].includes(s.status))
-          .sort((a, b) => b.created - a.created)[0];
-        if (live) {
-          status = live.status;
-          const end = live.items.data[0]?.current_period_end;
-          currentPeriodEnd = end ? new Date(end * 1000).toISOString() : null;
+    // Stripe es la fuente de verdad en cada sincronización. Esto también repara
+    // perfiles con una fila local vieja, y el sessionId activa el acceso apenas
+    // el checkout confirma el pago, sin esperar la entrega del webhook.
+    try {
+      const stripe = createStripeClient(data.environment);
+      const { data: { user } } = await supabase.auth.getUser();
+      const candidates = new Map<string, Awaited<ReturnType<typeof stripe.subscriptions.retrieve>>>();
+
+      if (data.sessionId) {
+        const session = await stripe.checkout.sessions.retrieve(data.sessionId);
+        if (session.metadata?.userId !== userId) throw new Error("Esta sesión de pago no pertenece a tu cuenta.");
+        if (session.payment_status !== "unpaid" && typeof session.subscription === "string") {
+          const exact = await stripe.subscriptions.retrieve(session.subscription);
+          candidates.set(exact.id, exact);
         }
-      } catch {
-        /* sin Stripe disponible nos quedamos con lo que hay en la base */
       }
+
+      const byMetadata = await stripe.subscriptions.search({
+        query: `metadata['userId']:'${userId}'`,
+        limit: 20,
+      });
+      for (const item of byMetadata.data) candidates.set(item.id, item);
+
+      // Compatibilidad con cuentas que pagaron antes de que agregáramos
+      // metadata.userId: resuelve clientes por metadata y, al final, por email.
+      const customerIds = new Set<string>();
+      const customers = await stripe.customers.search({
+        query: `metadata['userId']:'${userId}'`,
+        limit: 20,
+      });
+      for (const customer of customers.data) customerIds.add(customer.id);
+      if (customerIds.size === 0 && user?.email) {
+        const byEmail = await stripe.customers.list({ email: user.email, limit: 20 });
+        for (const customer of byEmail.data) customerIds.add(customer.id);
+      }
+      for (const customerId of customerIds) {
+        const list = await stripe.subscriptions.list({ customer: customerId, status: "all", limit: 20 });
+        for (const item of list.data) candidates.set(item.id, item);
+      }
+
+      const best = [...candidates.values()].sort((a, b) => {
+        const rank = (value: string) => ["active", "trialing", "past_due"].includes(value) ? 2 : value === "canceled" ? 1 : 0;
+        return rank(b.status) - rank(a.status) || b.created - a.created;
+      })[0];
+
+      if (best) {
+        const item = best.items.data[0];
+        const end = item?.current_period_end;
+        currentPeriodEnd = end ? new Date(end * 1000).toISOString() : null;
+        status = best.status;
+        const customerId = typeof best.customer === "string" ? best.customer : best.customer.id;
+        const productId = typeof item?.price.product === "string" ? item.price.product : item?.price.product?.id;
+        const priceId = item?.price.lookup_key ?? item?.price.metadata?.lovable_external_id ?? item?.price.id;
+        const start = item?.current_period_start;
+        const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+        const { error: upsertError } = await supabaseAdmin.from("subscriptions").upsert({
+          user_id: userId,
+          stripe_subscription_id: best.id,
+          stripe_customer_id: customerId,
+          product_id: productId ?? "",
+          price_id: priceId ?? "",
+          status: best.status,
+          current_period_start: start ? new Date(start * 1000).toISOString() : null,
+          current_period_end: currentPeriodEnd,
+          cancel_at_period_end: best.cancel_at_period_end ?? false,
+          environment: data.environment,
+          updated_at: new Date().toISOString(),
+        }, { onConflict: "stripe_subscription_id" });
+        if (upsertError) throw upsertError;
+      }
+    } catch (error) {
+      await logBillingEvent({
+        event: "plan_reconciliation_failed",
+        environment: data.environment,
+        userId,
+        ok: false,
+        message: error instanceof Error ? error.message : String(error),
+      });
     }
 
     const now = Date.now();

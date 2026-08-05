@@ -115,8 +115,9 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
       setError(res.info);
       return;
     }
-    // El primer registro en la nube queda como administradora y entra a su panel.
-    const dest = res.user?.role === "admin" ? "/admin" : (redirectTo ?? "/dashboard");
+    // Toda cuenta entra primero a su inicio personal; el panel admin queda
+    // disponible desde la navegación interna cuando corresponde.
+    const dest = redirectTo ?? "/dashboard";
     setTimeout(() => { window.location.href = dest; }, 400);
   }
 
@@ -230,8 +231,7 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
       setError(res.error ?? "No pudimos iniciar sesión. Inténtalo de nuevo.");
       return;
     }
-    // La administradora entra directo a su panel.
-    const dest = res.user?.role === "admin" ? "/admin" : (redirectTo ?? "/dashboard");
+    const dest = redirectTo ?? "/dashboard";
     setTimeout(() => { window.location.href = dest; }, 400);
   }
 

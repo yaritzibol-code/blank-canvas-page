@@ -29,7 +29,7 @@ function CheckoutReturn() {
       // El webhook puede tardar un par de segundos. Poll cada 1.5s hasta 20s.
       for (let i = 0; i < 14 && !cancelled; i++) {
         try {
-          const plan = await syncMyPlan({ data: { environment: env } });
+          const plan = await syncMyPlan({ data: { environment: env, sessionId: session_id } });
           if (plan.subscribed) {
             await refreshCloudProfile();
             if (!cancelled) setStatus("active");

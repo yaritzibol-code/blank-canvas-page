@@ -76,18 +76,42 @@ async function syncProfileFromSubscription(
   if (subscribed && prevData.plan !== "paga") {
     nextData.accessStart = new Date().toISOString();
   }
-  await supabase.from("profiles").update({ data: nextData as never }).eq("id", userId);
+  const { error } = await supabase.from("profiles").update({ data: nextData as never }).eq("id", userId);
+  if (error) throw error;
 }
 
 async function handleSubscriptionUpsert(sub: any, env: StripeEnv) {
-  const userId = sub.metadata?.userId;
-  if (!userId) throw new Error("subscription without userId metadata");
+  let userId = sub.metadata?.userId as string | undefined;
+  // Suscripciones antiguas pueden no llevar metadata. Recuperamos la relación
+  // desde el Customer y, como último respaldo, desde su correo verificado.
+  if (!userId && typeof sub.customer === "string") {
+    const { createStripeClient } = await import("@/lib/stripe.server");
+    const stripe = createStripeClient(env);
+    const customer = await stripe.customers.retrieve(sub.customer);
+    if (!("deleted" in customer && customer.deleted)) {
+      userId = customer.metadata?.userId;
+      if (!userId && customer.email) {
+        const { data: profile, error } = await getSupabase()
+          .from("profiles")
+          .select("id")
+          .ilike("email", customer.email)
+          .maybeSingle();
+        if (error) throw error;
+        userId = profile?.id;
+      }
+      if (userId) {
+        await stripe.customers.update(customer.id, { metadata: { ...customer.metadata, userId } });
+        await stripe.subscriptions.update(sub.id, { metadata: { ...sub.metadata, userId } });
+      }
+    }
+  }
+  if (!userId) throw new Error("subscription could not be linked to a FlightPath account");
   const item = sub.items?.data?.[0];
   const periodEnd = item?.current_period_end ?? sub.current_period_end;
   const periodEndISO = periodEnd ? new Date(periodEnd * 1000).toISOString() : null;
   const periodStart = item?.current_period_start ?? sub.current_period_start;
 
-  await getSupabase().from("subscriptions").upsert(
+  const { error: upsertError } = await getSupabase().from("subscriptions").upsert(
     {
       user_id: userId,
       stripe_subscription_id: sub.id,
@@ -103,6 +127,7 @@ async function handleSubscriptionUpsert(sub: any, env: StripeEnv) {
     },
     { onConflict: "stripe_subscription_id" },
   );
+  if (upsertError) throw upsertError;
 
   await syncProfileFromSubscription(userId, sub.status, periodEndISO, priceLookup(item));
 }
