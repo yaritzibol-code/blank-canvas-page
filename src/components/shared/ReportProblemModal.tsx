@@ -155,6 +155,27 @@ export function ReportProblemModal({
               ) : null}
             </p>
 
+            {pregunta ? (
+              <div
+                style={{
+                  border: "1px solid #E3EAF4",
+                  background: "#F7FAFF",
+                  borderRadius: 14,
+                  padding: "12px 14px",
+                  margin: "0 0 16px",
+                }}
+              >
+                <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: ".06em", color: "#647DA0" }}>
+                  PREGUNTA REPORTADA
+                </div>
+                <p style={{ margin: "6px 0 0", color: INK, fontSize: 13.5, lineHeight: 1.5 }}>
+                  {pregunta.text.length > 240 ? `${pregunta.text.slice(0, 240)}…` : pregunta.text}
+                </p>
+              </div>
+            ) : null}
+
+
+
             <label style={{ display: "block", fontSize: 12.5, fontWeight: 700, color: INK, marginBottom: 6 }}>
               Tipo de reporte
             </label>
