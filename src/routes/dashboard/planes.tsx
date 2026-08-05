@@ -119,6 +119,15 @@ function PlanesPage() {
         try {
           await syncMyPlan({ data: { environment: env } });
           await refreshCloudProfile();
+          const { data: reconciled } = await s
+            .from("subscriptions")
+            .select("status,current_period_end,cancel_at_period_end,price_id")
+            .eq("user_id", user.id)
+            .eq("environment", env)
+            .order("created_at", { ascending: false })
+            .limit(1)
+            .maybeSingle();
+          if (!cancelled) setSub((reconciled as SubRow | null) ?? null);
         } catch {
           /* noop */
         }

@@ -17,6 +17,7 @@ export type BillingAuditEvent =
   | "portal_session_failed"
   | "plan_sync"
   | "plan_changed"
+  | "plan_reconciliation_failed"
   | "webhook_received"
   | "webhook_processed"
   | "webhook_failed"
