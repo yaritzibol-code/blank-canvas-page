@@ -1362,22 +1362,23 @@ function CuestionarioPage() {
                 <Icon n="spark" size={18} color="#3D5D91" />
               </div>
               <div>
-                <div style={{ fontSize: "0.86rem", fontWeight: 700, color: "white" }}>Yaris IA</div>
-                <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.8)" }}>
+                <div style={{ fontSize: "0.9rem", fontWeight: 700, color: "white" }}>Yaris IA</div>
+                <div style={{ fontSize: "0.74rem", color: "rgba(255,255,255,0.95)", fontWeight: 600 }}>
                   {thinkMode ? "Modo guía · no revela la respuesta" : "Tutora de aviación 24/7"}
                 </div>
               </div>
             </div>
             <button
               onClick={() => setYarisOpen(false)}
+              aria-label="Cerrar el chat de Yaris"
               style={{
-                background: "rgba(255,255,255,0.2)", border: "none", color: "white",
-                borderRadius: 6, padding: "4px 8px", cursor: "pointer",
+                background: "rgba(255,255,255,0.22)", border: "none", color: "white",
+                borderRadius: 10, minWidth: 44, minHeight: 44, cursor: "pointer",
                 fontSize: "0.76rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif",
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}
             >
-              <Icon n="close" size={15} />
+              <Icon n="close" size={18} />
             </button>
           </div>
 
@@ -1385,23 +1386,27 @@ function CuestionarioPage() {
           {thinkMode && (
             <div
               role="status"
+              aria-live="polite"
               style={{
                 flexShrink: 0,
                 display: "flex", alignItems: "flex-start", gap: 8,
                 padding: "10px 14px",
-                background: "rgba(243,156,18,0.10)",
-                borderBottom: "1px solid rgba(243,156,18,0.28)",
-                color: "#8a5a00",
-                fontSize: "0.74rem", lineHeight: 1.45,
+                // Fondo sólido y tinta oscura: sobre el degradado translúcido
+                // anterior el texto no alcanzaba contraste AA.
+                background: "#FFF4DE",
+                borderBottom: "1px solid #E0A93C",
+                color: "#6B4200",
+                fontSize: "0.78rem", lineHeight: 1.5, fontWeight: 500,
               }}
             >
-              <span style={{ flexShrink: 0, marginTop: 1 }}><Icon n="lightbulb" size={14} color="#f39c12" /></span>
+              <span style={{ flexShrink: 0, marginTop: 1 }} aria-hidden="true"><Icon n="lightbulb" size={15} color="#8a5a00" /></span>
               <span>
                 <b>Modo “te ayudo a pensar”.</b> Aún no eliges opción, así que Yaris te guía con
                 conceptos y preguntas: no te dará la respuesta hasta que marques una.
               </span>
             </div>
           )}
+
 
           {/* Messages */}
           <div
