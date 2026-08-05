@@ -35,7 +35,7 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
     descripcion: "Pilot's Handbook of Aeronautical Knowledge (FAA-H-8083-25C) — banco por capítulos.",
     materia: "aerodinamica",
     icon: "plane",
-    total: 1475,
+    total: 2450,
     fileUrl: "https://drive.google.com/file/d/1It2xSBSn-vX4xYDFQHH2DMJd02J_k_zO/preview",
   },
   {
@@ -121,6 +121,12 @@ export const PHAK_CHAPTERS: AtpChapter[] = [
   { num: 9, titulo: "Manuales de Vuelo y Otros Documentos", tituloEn: "Flight Manuals and Other Documents", total: 85 },
   { num: 10, titulo: "Peso y Balance", tituloEn: "Weight and Balance", total: 100 },
   { num: 11, titulo: "Desempeño de la Aeronave", tituloEn: "Aircraft Performance", total: 165 },
+  { num: 12, titulo: "Teoría Meteorológica", tituloEn: "Weather Theory", total: 150 },
+  { num: 13, titulo: "Servicios Meteorológicos Aeronáuticos", tituloEn: "Aviation Weather Services", total: 140 },
+  { num: 14, titulo: "Operaciones en Aeródromo", tituloEn: "Airport Operations", total: 225 },
+  { num: 15, titulo: "Espacio Aéreo", tituloEn: "Airspace", total: 100 },
+  { num: 16, titulo: "Navegación", tituloEn: "Navigation", total: 195 },
+  { num: 17, titulo: "Factores Aeromédicos", tituloEn: "Aeromedical Factors", total: 165 },
 ];
 
 export const PHAK_TOTAL = PHAK_CHAPTERS.reduce((s, c) => s + c.total, 0);
