@@ -16,6 +16,7 @@ import type {
   FlashSession,
   InternalConfig,
   Material,
+  PathyReportEntry,
   QuizAttempt,
   Reminder,
   Report,

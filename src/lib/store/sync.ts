@@ -35,6 +35,7 @@ const USER_ARRAY_KEYS = [
   "clase_progress",
   "flash_states",
   "flash_sessions",
+  "pathy_reports",
 ] as const;
 
 /** Colecciones administrativas guardadas como llave/valor. */
