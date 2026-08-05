@@ -275,27 +275,37 @@ export function PlaneField({ count = 20, color = "26,35,64" }: { count?: number;
    NAV  (landing/sections-top.jsx)
    ═══════════════════════════════════════════════════════════════════ */
 
+const NAV_LINKS = [
+  { label: "Home", href: "/" },
+  { label: "CIAAC", href: "/ciaac" },
+  // La convocatoria E190 vive dentro de la ruta de línea aérea.
+  { label: "Línea Aérea", href: "/convocatoria-aeromexico" },
+  { label: "Precios", href: "/#precios" },
+  { label: "Blog", href: "/blog" },
+];
+
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     const f = () => setScrolled(window.scrollY > 12);
     f(); window.addEventListener("scroll", f, { passive: true });
     return () => window.removeEventListener("scroll", f);
   }, []);
+  // El menú abierto bloquea el scroll de fondo en móvil.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, [open]);
   return (
-    <header className={`sticky top-0 z-40 transition-all duration-300 ${scrolled ? "glass border-b border-ink/8" : "bg-transparent"}`}>
+    <header className={`sticky top-0 z-40 transition-all duration-300 ${scrolled || open ? "glass border-b border-ink/8" : "bg-transparent"}`}>
       <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8 h-[64px] sm:h-[68px] grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
         <div className="min-w-0 flex items-center gap-8">
           <Logo />
           <nav className="hidden lg:flex items-center gap-8 text-[14px] font-medium text-ink/65">
-            {[
-              { label: "Home", href: "/" },
-              { label: "CIAAC", href: "/ciaac" },
-              // La convocatoria E190 vive dentro de la ruta de línea aérea.
-              { label: "Línea Aérea", href: "/convocatoria-aeromexico" },
-              { label: "Precios", href: "/#precios" },
-              { label: "Blog", href: "/blog" },
-            ].map((x) => (
+            {NAV_LINKS.map((x) => (
               <a key={x.label} href={x.href} className="hover:text-ink transition-colors">{x.label}</a>
             ))}
           </nav>
@@ -306,11 +316,49 @@ export function Nav() {
             <span className="hidden sm:inline">Comenzar gratis</span>
             <span className="sm:hidden">Empezar</span>
           </Btn>
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={open}
+            aria-controls="nav-mobile"
+            className="lg:hidden w-11 h-11 -mr-1 grid place-items-center rounded-xl border border-ink/10 bg-white/80 text-ink"
+          >
+            <span className="relative block w-[18px] h-[12px]" aria-hidden="true">
+              <span className={`absolute left-0 w-full h-[2px] rounded bg-current transition-all duration-200 ${open ? "top-[5px] rotate-45" : "top-0"}`} />
+              <span className={`absolute left-0 top-[5px] w-full h-[2px] rounded bg-current transition-all duration-200 ${open ? "opacity-0" : "opacity-100"}`} />
+              <span className={`absolute left-0 w-full h-[2px] rounded bg-current transition-all duration-200 ${open ? "top-[5px] -rotate-45" : "top-[10px]"}`} />
+            </span>
+          </button>
         </div>
       </div>
+      {open && (
+        <div id="nav-mobile" className="lg:hidden border-t border-ink/8 bg-white/95 backdrop-blur">
+          <nav className="mx-auto max-w-[1240px] px-4 sm:px-6 py-3 flex flex-col">
+            {NAV_LINKS.map((x) => (
+              <a
+                key={x.label}
+                href={x.href}
+                onClick={() => setOpen(false)}
+                className="py-3.5 text-[15px] font-semibold text-ink/80 border-b border-ink/5 last:border-0"
+              >
+                {x.label}
+              </a>
+            ))}
+            <a
+              href="/login"
+              onClick={() => setOpen(false)}
+              className="mt-3 py-3.5 text-center text-[15px] font-semibold text-ink rounded-xl border border-ink/12"
+            >
+              Iniciar sesión
+            </a>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
+
 
 /* ═══════════════════════════════════════════════════════════════════
    HERO
