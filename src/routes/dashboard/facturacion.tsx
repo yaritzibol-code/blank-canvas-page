@@ -386,46 +386,51 @@ function FacturacionPage() {
       )}
 
       {/* Planes */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 16, marginBottom: 16 }}>
-        <div style={card}>
-          <div style={{ fontSize: ".95rem", fontWeight: 800, color: INK, marginBottom: 4 }}>Básica</div>
-          <div style={{ fontFamily: DISPLAY, fontSize: "1.6rem", fontWeight: 900, color: INK, marginBottom: 8 }}>Gratis</div>
-          <ul style={{ listStyle: "none", padding: 0, margin: 0, fontSize: ".84rem", color: HAZE, lineHeight: 1.9 }}>
-            <li>Parte del banco de preguntas</li>
-            <li>Un simulador al mes</li>
-            <li>Bitácora y recordatorios básicos</li>
-          </ul>
+      {!pro && !esAdmin ? (
+        <PlanesGratis />
+      ) : (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 16, marginBottom: 16 }}>
+          <div style={card}>
+            <div style={{ fontSize: ".95rem", fontWeight: 800, color: INK, marginBottom: 4 }}>Básica</div>
+            <div style={{ fontFamily: DISPLAY, fontSize: "1.6rem", fontWeight: 900, color: INK, marginBottom: 8 }}>Gratis</div>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, fontSize: ".84rem", color: HAZE, lineHeight: 1.9 }}>
+              <li>Parte del banco de preguntas</li>
+              <li>Un simulador al mes</li>
+              <li>Bitácora y recordatorios básicos</li>
+            </ul>
+          </div>
+          <div style={{ ...card, borderColor: "#F2AEBC", borderWidth: 2 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+              <span style={{ fontSize: ".95rem", fontWeight: 800, color: INK }}>Pro</span>
+              <span style={{ padding: "2px 9px", borderRadius: 20, background: "#F2AEBC", color: WINE, fontSize: ".64rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
+                Recomendado
+              </span>
+            </div>
+            <div style={{ fontFamily: DISPLAY, fontSize: "1.6rem", fontWeight: 900, color: INK, marginBottom: 2 }}>
+              {formatPriceWithInterval(PRO_MONTHLY_FALLBACK)}
+            </div>
+            <div style={{ fontSize: ".8rem", color: MIST, marginBottom: 8 }}>
+              o {formatPriceWithInterval(PRO_ANNUAL_FALLBACK)} · {formatPrice(PRO_SETUP_FALLBACK)} de inscripción por única vez
+            </div>
+            <ul style={{ listStyle: "none", padding: 0, margin: "0 0 14px", fontSize: ".84rem", color: HAZE, lineHeight: 1.9 }}>
+              <li>Banco completo y simulador ilimitado</li>
+              <li>Yaris con IA y el contexto del curso</li>
+              <li>Análisis completo por materia</li>
+            </ul>
+            <Link
+              to="/dashboard/planes"
+              style={{
+                display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
+                width: "100%", padding: "11px 16px", borderRadius: 10,
+                background: WINE, color: "white", fontSize: ".86rem", fontWeight: 700, textDecoration: "none",
+              }}
+            >
+              {pro ? "Cambiar de plan" : "Hacerme Pro"} <Icon n="arrow" size={15} />
+            </Link>
+          </div>
         </div>
-        <div style={{ ...card, borderColor: "#F2AEBC", borderWidth: 2 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-            <span style={{ fontSize: ".95rem", fontWeight: 800, color: INK }}>Pro</span>
-            <span style={{ padding: "2px 9px", borderRadius: 20, background: "#F2AEBC", color: WINE, fontSize: ".64rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
-              Recomendado
-            </span>
-          </div>
-          <div style={{ fontFamily: DISPLAY, fontSize: "1.6rem", fontWeight: 900, color: INK, marginBottom: 2 }}>
-            {formatPriceWithInterval(PRO_MONTHLY_FALLBACK)}
-          </div>
-          <div style={{ fontSize: ".8rem", color: MIST, marginBottom: 8 }}>
-            o {formatPriceWithInterval(PRO_ANNUAL_FALLBACK)} · {formatPrice(PRO_SETUP_FALLBACK)} de inscripción por única vez
-          </div>
-          <ul style={{ listStyle: "none", padding: 0, margin: "0 0 14px", fontSize: ".84rem", color: HAZE, lineHeight: 1.9 }}>
-            <li>Banco completo y simulador ilimitado</li>
-            <li>Yaris con IA y el contexto del curso</li>
-            <li>Análisis completo por materia</li>
-          </ul>
-          <Link
-            to="/dashboard/planes"
-            style={{
-              display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
-              width: "100%", padding: "11px 16px", borderRadius: 10,
-              background: WINE, color: "white", fontSize: ".86rem", fontWeight: 700, textDecoration: "none",
-            }}
-          >
-            {pro ? "Cambiar de plan" : "Hacerme Pro"} <Icon n="arrow" size={15} />
-          </Link>
-        </div>
-      </div>
+      )}
+
 
       {/* Gestión */}
       {!esAdmin && (
@@ -554,3 +559,134 @@ function FacturacionPage() {
     </div>
   );
 }
+
+/**
+ * Tarjetas de precio para cuentas gratis, con el mismo lenguaje visual de la
+ * landing: interruptor mensual/anual que arranca en **anual** (el plan que
+ * recomendamos) y muestra el porcentaje que se ahorra frente a pagar mes a
+ * mes. El cobro real siempre sale de Stripe; aquí sólo se muestra.
+ */
+function PlanesGratis() {
+  const [ciclo, setCiclo] = useState<"mensual" | "anual">("anual");
+  const anual = ciclo === "anual";
+  const precio = anual ? PRO_ANNUAL_FALLBACK : PRO_MONTHLY_FALLBACK;
+  const totalMensualAnualizado = PRO_MONTHLY_FALLBACK.amount * 12;
+  const ahorroPct = Math.max(
+    0,
+    Math.round(((totalMensualAnualizado - PRO_ANNUAL_FALLBACK.amount) / totalMensualAnualizado) * 100),
+  );
+
+  const pill = (activo: boolean): React.CSSProperties => ({
+    flex: 1,
+    padding: "9px 14px",
+    borderRadius: 999,
+    border: "none",
+    cursor: "pointer",
+    background: activo ? "white" : "transparent",
+    color: activo ? INK : HAZE,
+    fontFamily: "'Manrope', sans-serif",
+    fontSize: ".82rem",
+    fontWeight: 800,
+    boxShadow: activo ? "0 1px 4px rgba(34,55,92,.14)" : "none",
+    minHeight: 44,
+  });
+
+  return (
+    <div style={{ marginBottom: 16 }}>
+      {/* Interruptor de periodicidad */}
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: 16 }}>
+        <div
+          role="group"
+          aria-label="Periodicidad del plan"
+          style={{
+            display: "flex",
+            gap: 4,
+            padding: 4,
+            borderRadius: 999,
+            background: "#EEF3F9",
+            border: "1px solid #E8EEF6",
+            width: "100%",
+            maxWidth: 360,
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => setCiclo("mensual")}
+            aria-pressed={!anual}
+            style={pill(!anual)}
+          >
+            Mensual
+          </button>
+          <button
+            type="button"
+            onClick={() => setCiclo("anual")}
+            aria-pressed={anual}
+            style={pill(anual)}
+          >
+            Anual · −{ahorroPct}%
+          </button>
+        </div>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 16 }}>
+        {/* Básica */}
+        <div style={card}>
+          <div style={{ fontSize: ".95rem", fontWeight: 800, color: INK, marginBottom: 4 }}>Básica</div>
+          <div style={{ fontFamily: DISPLAY, fontSize: "2rem", fontWeight: 900, color: INK, lineHeight: 1 }}>
+            Gratis
+          </div>
+          <div style={{ fontSize: ".8rem", color: MIST, margin: "6px 0 12px" }}>Tu plan actual</div>
+          <ul style={{ listStyle: "none", padding: 0, margin: 0, fontSize: ".84rem", color: HAZE, lineHeight: 1.9 }}>
+            <li>Parte del banco de preguntas</li>
+            <li>Un simulador al mes</li>
+            <li>Bitácora y recordatorios básicos</li>
+          </ul>
+        </div>
+
+        {/* Pro */}
+        <div style={{ ...card, borderColor: "#F2AEBC", borderWidth: 2, position: "relative" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, flexWrap: "wrap" }}>
+            <span style={{ fontSize: ".95rem", fontWeight: 800, color: INK }}>
+              Pro {anual ? "Anual" : "Mensual"}
+            </span>
+            <span style={{ padding: "2px 9px", borderRadius: 20, background: "#F2AEBC", color: WINE, fontSize: ".64rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
+              Recomendado
+            </span>
+          </div>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
+            <span style={{ fontFamily: DISPLAY, fontSize: "2rem", fontWeight: 900, color: INK, lineHeight: 1 }}>
+              {formatPriceWithInterval(precio)}
+            </span>
+            {anual && (
+              <span style={{ fontSize: ".8rem", fontWeight: 800, color: "#1A7A4A" }}>
+                ahorras {ahorroPct}%
+              </span>
+            )}
+          </div>
+          <div style={{ fontSize: ".8rem", color: MIST, margin: "8px 0 12px", lineHeight: 1.55 }}>
+            {anual
+              ? `Equivale a ${formatPrice({ ...PRO_MONTHLY_FALLBACK, amount: Math.round(PRO_ANNUAL_FALLBACK.amount / 12) })} al mes.`
+              : `Con el anual pagarías ${formatPriceWithInterval(PRO_ANNUAL_FALLBACK)} y ahorrarías ${ahorroPct}%.`}{" "}
+            Más {formatPrice(PRO_SETUP_FALLBACK)} de inscripción por única vez.
+          </div>
+          <ul style={{ listStyle: "none", padding: 0, margin: "0 0 14px", fontSize: ".84rem", color: HAZE, lineHeight: 1.9 }}>
+            <li>Banco completo y simulador ilimitado</li>
+            <li>Yaris con IA y el contexto del curso</li>
+            <li>Análisis completo por materia</li>
+          </ul>
+          <Link
+            to="/dashboard/planes"
+            style={{
+              display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
+              width: "100%", padding: "12px 16px", borderRadius: 10, minHeight: 46,
+              background: WINE, color: "white", fontSize: ".88rem", fontWeight: 800, textDecoration: "none",
+            }}
+          >
+            Hacerme Pro {anual ? "Anual" : "Mensual"} <Icon n="arrow" size={15} />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
