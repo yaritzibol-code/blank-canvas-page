@@ -943,15 +943,20 @@ function CuestionarioPage() {
 
 
 
-            {/* Options */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
+            {/* Options — botones reales: foco por teclado y toque ≥48px */}
+            <div role="group" aria-label="Opciones de respuesta" style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
               {currentQ.options.map((opt, i) => (
-                <div
+                <button
                   key={i}
+                  type="button"
                   onClick={() => handleOptionClick(i)}
+                  disabled={answered}
+                  aria-pressed={selectedIdx === i}
                   style={{
                     display: "flex", alignItems: "center", gap: 14,
                     padding: "14px 18px", borderRadius: 12,
+                    minHeight: 56, width: "100%", textAlign: "left",
+                    font: "inherit", cursor: answered ? "default" : "pointer",
                     transition: "all 0.2s",
                     userSelect: "none",
                     ...getOptionStyle(i),
@@ -971,28 +976,30 @@ function CuestionarioPage() {
                     }
                   }}
                 >
-                  <div
+                  <span
+                    aria-hidden="true"
                     style={{
-                      width: 32, height: 32, borderRadius: "50%",
+                      width: 34, height: 34, borderRadius: "50%",
                       display: "flex", alignItems: "center", justifyContent: "center",
-                      fontSize: "0.8rem", fontWeight: 700, flexShrink: 0,
+                      fontSize: "0.82rem", fontWeight: 700, flexShrink: 0,
                       transition: "all 0.2s",
                       ...getLetterStyle(i),
                     }}
                   >
                     {LETTERS[i]}
-                  </div>
-                  <div style={{ fontSize: "0.9rem", color: "#22375C", lineHeight: 1.4, flex: 1 }}>
+                  </span>
+                  <span style={{ fontSize: "0.95rem", color: "#22375C", lineHeight: 1.45, flex: 1 }}>
                     {opt.text}
-                  </div>
+                  </span>
                   {answered && (
                     <span style={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
-                      {opt.correct ? <Icon n="checkCircle" size={20} color="#2ecc71" /> : (i === selectedIdx ? <Icon n="close" size={20} color="#e74c3c" /> : null)}
+                      {opt.correct ? <Icon n="checkCircle" size={20} color="#1a7a4a" /> : (i === selectedIdx ? <Icon n="close" size={20} color="#c0392b" /> : null)}
                     </span>
                   )}
-                </div>
+                </button>
               ))}
             </div>
+
 
             {/* Feedback card */}
             {answered && (
