@@ -276,15 +276,27 @@ function QuizCard({
   );
 }
 
-/* ─── Selector de capítulos del banco ATP ────────────── */
+/* ─── Selector de capítulos (bancos ATP y Jeppesen) ────────────── */
 
-function AtpChapterPicker({ onClose }: { onClose: () => void }) {
+function ChapterPicker({
+  code,
+  nombre,
+  chapters,
+  totalBanco,
+  onClose,
+}: {
+  code: string;
+  nombre: string;
+  chapters: AtpChapter[];
+  totalBanco: number;
+  onClose: () => void;
+}) {
   const navigate = useNavigate();
   const [sel, setSel] = useState<Set<number>>(new Set());
   const all = sel.size === 0;
   const total = all
-    ? ATP_TOTAL
-    : ATP_CHAPTERS.filter((c) => sel.has(c.num)).reduce((s, c) => s + c.total, 0);
+    ? totalBanco
+    : chapters.filter((c) => sel.has(c.num)).reduce((s, c) => s + c.total, 0);
 
   function toggle(num: number) {
     setSel((prev) => {
@@ -299,9 +311,10 @@ function AtpChapterPicker({ onClose }: { onClose: () => void }) {
     const caps = [...sel].sort((a, b) => a - b).join(",");
     void navigate({
       to: "/cuestionario",
-      search: (caps ? { fuente: "ATP", caps } : { fuente: "ATP" }) as never,
+      search: (caps ? { fuente: code, caps } : { fuente: code }) as never,
     });
   }
+
 
   return (
     <div
