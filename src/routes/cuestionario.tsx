@@ -795,7 +795,7 @@ function CuestionarioPage() {
       </div>
 
       {/* ── MAIN ── */}
-      <div style={{ flex: 1, display: "flex", overflow: "hidden" }}>
+      <div style={{ flex: 1, minHeight: 0, display: "flex", overflow: "hidden" }}>
 
         {/* ── QUESTION AREA ── */}
         <div
