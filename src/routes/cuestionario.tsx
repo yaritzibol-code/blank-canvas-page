@@ -22,6 +22,7 @@ import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
 import { LA_OFICIAL_FUENTE } from "@/lib/store/seed-linea-aerea-oficial";
+import { LINEA_AEREA_OFICIAL, LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
 
 export const Route = createFileRoute("/cuestionario")({
   component: CuestionarioPage,
@@ -127,6 +128,12 @@ function CuestionarioPage() {
     search.qty ?? "",
   ].join("|");
   const storeKey = user ? sessionKey("aprendiendo", user.id, sessionVariant) : "";
+  /** Nombre para el historial cuando la sesión es de Línea Aérea. */
+  const quizTitulo = search.fuente
+    ? LINEA_AEREA_QUIZZES.find((q) => q.code === search.fuente)?.titulo
+    : search.banco === "la" && search.modo === "oficial"
+      ? LINEA_AEREA_OFICIAL.titulo
+      : undefined;
   const [questions, setQuestions] = useState<Question[]>([]);
   const [pool, setPool] = useState<BankQuestion[]>([]);
   const [sessionSlugs, setSessionSlugs] = useState<string[]>([]);
@@ -304,6 +311,9 @@ function CuestionarioPage() {
       correct: correctCount,
       durationMin: Math.max(0, Math.round((Date.now() - startTime) / 60000)),
       porMateria: computePorMateria(),
+      // Los cuestionarios de Línea Aérea se identifican por manual o guía,
+      // no por materia: el historial los muestra con su nombre real.
+      ...(quizTitulo ? { titulo: quizTitulo } : {}),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showResult, user]);

@@ -3,8 +3,8 @@
  * La usan `/dashboard/banco` (CIAAC) y `/dashboard/linea-aerea` (banco LA),
  * para que ambas experiencias sean idénticas 1:1.
  */
-import { useNavigate } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState, type ReactNode } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import {
   useSessionUser,
@@ -13,12 +13,13 @@ import {
   getQuizAttempts,
   canStartSimulator,
   isPaid,
+  listActiveSessions,
   materiaBySlug,
   MATERIAS_DEF,
 } from "@/lib/store";
 import type { QuizAttempt, SimAttempt } from "@/lib/store";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
-import { LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
+import { LINEA_AEREA_OFICIAL, LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
 import { ExtrasPanel } from "@/components/banco/ExtrasPanel";
 
 /* ─── Types ─────────────────────────────────────────── */
@@ -144,9 +145,10 @@ function simToEntry(a: SimAttempt): HistEntry {
 function quizToEntry(a: QuizAttempt): HistEntry {
   const score = a.total > 0 ? Math.round((a.correct / a.total) * 100) : 0;
   const materiaTitle =
-    a.materias.length === 1
+    a.titulo ??
+    (a.materias.length === 1
       ? materiaBySlug(a.materias[0])?.name ?? a.materias[0]
-      : "Varias materias";
+      : "Varias materias");
   const items = materiaBreakdown(a.porMateria);
   const asc = [...items].sort((x, y) => x.pct - y.pct);
   const weak = asc.filter((m) => m.pct < 70).slice(0, 3);
@@ -173,6 +175,171 @@ function quizToEntry(a: QuizAttempt): HistEntry {
   };
 }
 
+/* ─── Sesiones a medias ──────────────────────────────── */
+
+const VERDE = "#2E9E63";
+const AMBAR = "#E0A800";
+
+const LA_QUIZ_BY_CODE = new Map(LINEA_AEREA_QUIZZES.map((q) => [q.code, q]));
+
+/** Una sesión sin terminar, lista para reanudarse desde el historial. */
+interface ResumeEntry {
+  key: string;
+  title: string;
+  when: string;
+  done: number;
+  total: number;
+  to: "/cuestionario" | "/simulador";
+  search: Record<string, unknown>;
+}
+
+function relTime(ts: number): string {
+  const min = Math.round((Date.now() - ts) / 60000);
+  if (min < 1) return "hace un momento";
+  if (min < 60) return `hace ${min} min`;
+  const h = Math.round(min / 60);
+  if (h < 24) return `hace ${h} h`;
+  const d = Math.round(h / 24);
+  return d <= 1 ? "ayer" : `hace ${d} días`;
+}
+
+/**
+ * Traduce las sesiones guardadas del navegador a filas del historial. Solo
+ * devuelve las de esta pantalla (CIAAC o Línea Aérea) y con avance real.
+ */
+function buildResumables(userId: string, la: boolean): ResumeEntry[] {
+  return listActiveSessions(userId)
+    .map((s): ResumeEntry | null => {
+      if (s.kind === "simulador") {
+        const esLa = s.variant === "la";
+        if (esLa !== la) return null;
+        const qs = (s.data as { questions?: { answered: boolean }[] } | null)?.questions ?? [];
+        const done = qs.filter((q) => q.answered).length;
+        if (qs.length === 0 || done === 0 || done >= qs.length) return null;
+        return {
+          key: `sim|${s.variant}`,
+          title: esLa ? "Simulador Línea Aérea" : "Simulador CIAAC",
+          when: relTime(s.savedAt),
+          done,
+          total: qs.length,
+          to: "/simulador",
+          search: esLa ? { banco: "la" } : {},
+        };
+      }
+
+      // Modo aprendiendo: la llave guarda la configuración de la sesión.
+      const [materias = "", fuente = "", banco = "", fuentes = "", modo = "", qty = ""] =
+        s.variant.split("|");
+      const esLa = banco === "la" || LA_QUIZ_BY_CODE.has(fuente);
+      if (esLa !== la) return null;
+
+      const data = s.data as { results?: (boolean | null)[]; qIds?: string[] } | null;
+      const total = data?.qIds?.length ?? 0;
+      const done = (data?.results ?? []).filter((r) => r !== null).length;
+      if (total === 0 || done === 0 || done >= total) return null;
+
+      const manual = fuente ? LA_QUIZ_BY_CODE.get(fuente) : undefined;
+      const title = manual
+        ? `Cuestionario — ${manual.titulo}`
+        : banco === "la" && modo === "oficial"
+          ? LINEA_AEREA_OFICIAL.titulo
+          : banco === "la"
+            ? "Cuestionario — Línea Aérea"
+            : !materias || materias === "all"
+              ? "Cuestionario — todas las materias"
+              : `Cuestionario — ${materias
+                  .split(",")
+                  .map((slug) => materiaBySlug(slug)?.name ?? slug)
+                  .join(", ")}`;
+
+      const search: Record<string, unknown> = {};
+      if (fuente) search.fuente = fuente;
+      if (banco === "la") search.banco = "la";
+      if (fuentes) search.fuentes = fuentes;
+      if (modo === "oficial" || modo === "potenciado") search.modo = modo;
+      if (materias && materias !== "all") search.materias = materias;
+      if (qty) search.qty = Number(qty);
+
+      return {
+        key: `apr|${s.variant}`,
+        title,
+        when: relTime(s.savedAt),
+        done,
+        total,
+        to: "/cuestionario",
+        search,
+      };
+    })
+    .filter((x): x is ResumeEntry => x !== null);
+}
+
+/** Fila ámbar del historial: cuestionario incompleto, con botón de reanudar. */
+function ResumeItem({ entry }: { entry: ResumeEntry }) {
+  const pct = Math.round((entry.done / entry.total) * 100);
+  return (
+    <div
+      style={{
+        background: "white",
+        borderRadius: 12,
+        borderLeft: `4px solid ${AMBAR}`,
+        boxShadow: "0 2px 8px rgba(61,93,145,0.05)",
+        overflow: "hidden",
+        fontFamily: "'Manrope', sans-serif",
+        padding: "14px 18px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: 14,
+        flexWrap: "wrap",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 12, flex: 1, minWidth: 220 }}>
+        <div
+          style={{
+            width: 36, height: 36, borderRadius: 10, flexShrink: 0,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            background: "rgba(224,168,0,0.12)", color: AMBAR,
+          }}
+        >
+          <Icon n="clock" size={18} />
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 3 }}>
+            <h4 style={{ fontSize: "0.85rem", fontWeight: 700, color: "#22375C" }}>{entry.title}</h4>
+            <span
+              style={{
+                padding: "2px 9px", borderRadius: 20, fontSize: "0.68rem", fontWeight: 800,
+                background: "rgba(224,168,0,0.14)", color: "#8a6000",
+                textTransform: "uppercase", letterSpacing: "0.04em",
+              }}
+            >
+              Incompleto
+            </span>
+          </div>
+          <p style={{ fontSize: "0.75rem", color: "#647DA0", marginBottom: 7 }}>
+            {entry.done} de {entry.total} respondidas · {entry.when}
+          </p>
+          <div style={{ height: 5, borderRadius: 4, background: "rgba(224,168,0,0.16)", overflow: "hidden", maxWidth: 260 }}>
+            <div style={{ width: `${pct}%`, height: "100%", background: AMBAR, borderRadius: 4 }} />
+          </div>
+        </div>
+      </div>
+
+      <Link
+        to={entry.to}
+        search={entry.search as never}
+        style={{
+          padding: "10px 18px", borderRadius: 11, background: AMBAR, color: "#3d2c00",
+          fontSize: "0.82rem", fontWeight: 800, textDecoration: "none",
+          display: "inline-flex", alignItems: "center", gap: 7, whiteSpace: "nowrap",
+        }}
+      >
+        <Icon n="play" size={14} /> Reanudar
+      </Link>
+    </div>
+  );
+}
+
 /* ─── HistItem ───────────────────────────────────────── */
 
 function HistItem({ entry }: { entry: HistEntry }) {
@@ -184,6 +351,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
       style={{
         background: "white",
         borderRadius: 12,
+        borderLeft: `4px solid ${VERDE}`,
         boxShadow: "0 2px 8px rgba(61,93,145,0.05)",
         overflow: "hidden",
         cursor: "pointer",
@@ -269,6 +437,20 @@ function HistItem({ entry }: { entry: HistEntry }) {
             }}
           >
             {entry.tag}
+          </span>
+          <span
+            style={{
+              padding: "3px 10px",
+              borderRadius: 20,
+              fontSize: "0.68rem",
+              fontWeight: 800,
+              textTransform: "uppercase",
+              letterSpacing: "0.04em",
+              background: "rgba(46,158,99,0.12)",
+              color: VERDE,
+            }}
+          >
+            Completado
           </span>
           <span
             style={{
@@ -1241,6 +1423,7 @@ export function BancoScreen({
   la = false,
   initialModal = null,
   modes = true,
+  extras = true,
   header,
   footer,
 }: {
@@ -1252,6 +1435,8 @@ export function BancoScreen({
    * en modo aprendiendo, así que las tarjetas genéricas sobran.
    */
   modes?: boolean;
+  /** Panel de flashcards, audio, presentaciones y Yaris con el material. */
+  extras?: boolean;
   header?: ReactNode;
   footer?: ReactNode;
 }) {
@@ -1263,6 +1448,14 @@ export function BancoScreen({
   const [learnHover, setLearnHover] = useState(false);
 
   const stats = user ? studentStats(user.id) : null;
+
+  // Las sesiones a medias viven en el navegador: se leen tras montar para no
+  // desincronizar el HTML del servidor.
+  const [resumables, setResumables] = useState<ResumeEntry[]>([]);
+  useEffect(() => {
+    if (!user) return;
+    setResumables(buildResumables(user.id, la));
+  }, [user, la]);
 
   const history: HistEntry[] = user
     ? [
@@ -1712,7 +1905,7 @@ export function BancoScreen({
         )}
 
         {/* Extras: flashcards, audio/podcast, presentaciones y Yaris con el material */}
-        <ExtrasPanel la={la} />
+        {extras && <ExtrasPanel la={la} />}
 
         {/* Historial */}
         <div style={{ maxWidth: 820, width: "100%" }}>
@@ -1727,7 +1920,11 @@ export function BancoScreen({
             Historial y análisis de sesiones
           </h3>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {history.length === 0 ? (
+            {/* Primero lo que quedó a medias: ámbar y con botón de reanudar. */}
+            {resumables.map((r) => (
+              <ResumeItem key={r.key} entry={r} />
+            ))}
+            {history.length === 0 && resumables.length === 0 ? (
               <div
                 style={{
                   background: "white",

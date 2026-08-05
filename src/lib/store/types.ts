@@ -90,6 +90,12 @@ export interface QuizAttempt {
   correct: number;
   durationMin: number;
   porMateria: Record<string, { correct: number; total: number }>;
+  /**
+   * Nombre del cuestionario cuando no se define por materias (manuales del
+   * curso de Línea Aérea o guía oficial). Opcional: los intentos antiguos
+   * siguen mostrando su materia.
+   */
+  titulo?: string;
 }
 
 export interface SimAnswer {
