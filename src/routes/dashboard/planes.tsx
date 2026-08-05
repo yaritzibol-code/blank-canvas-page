@@ -57,7 +57,7 @@ interface SubRow {
 function PlanesPage() {
   const { user, ready } = useRequireAuth();
   const navigate = useNavigate();
-  const { checkout } = Route.useSearch();
+  const { checkout, plan } = Route.useSearch();
   const [cupon, setCupon] = useState("");
   const [sub, setSub] = useState<SubRow | null>(null);
   const [subChecked, setSubChecked] = useState(false);
@@ -68,8 +68,10 @@ function PlanesPage() {
   const [proPrice, setProPrice] = useState<PlanPrice>(PRO_MONTHLY_FALLBACK);
   const [setupPrice, setSetupPrice] = useState<PlanPrice>(PRO_SETUP_FALLBACK);
   const [annualPrice, setAnnualPrice] = useState<PlanPrice>(PRO_ANNUAL_FALLBACK);
-  /** Periodicidad elegida para el cobro recurrente de Pro. */
-  const [ciclo, setCiclo] = useState<"mensual" | "anual">("mensual");
+  /** Periodicidad elegida para el cobro recurrente de Pro (la landing de
+   *  precios la manda en `?plan=` para que el checkout abra el mismo plan). */
+  const [ciclo, setCiclo] = useState<"mensual" | "anual">(plan ?? "mensual");
+
   const ahorro = mesesAhorrados(proPrice, annualPrice);
   const configured = isPaymentsConfigured();
 
