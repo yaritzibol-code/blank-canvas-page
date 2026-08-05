@@ -76,6 +76,7 @@ function AdminBancoPage() {
     if (searchQ) setQuery(searchQ);
   }, [searchQ]);
 
+  useQuestionBank({ all: true });
   const questions = useStore(getQuestions);
 
   const total = questions.length;
