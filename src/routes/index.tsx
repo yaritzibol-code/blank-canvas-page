@@ -280,7 +280,7 @@ const NAV_LINKS = [
   { label: "CIAAC", href: "/ciaac" },
   // La convocatoria E190 vive dentro de la ruta de línea aérea.
   { label: "Línea Aérea", href: "/convocatoria-aeromexico" },
-  { label: "Precios", href: "/#precios" },
+  { label: "Precios", href: "/precios" },
   { label: "Blog", href: "/blog" },
 ];
 
