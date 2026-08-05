@@ -846,3 +846,11 @@ html[data-theme="oscuro"] svg { color: inherit; }
     font-size: 16px;
   }
 }
+
+/* Badge "Nuevo" del sidebar — pulso suave */
+@keyframes fp-badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(255,255,255,0.3), 0 4px 14px -4px rgba(18,178,107,0.95); }
+  50% { box-shadow: 0 0 0 1px rgba(255,255,255,0.45), 0 6px 20px -3px rgba(56,229,138,1); }
+}
+.fp-badge-nuevo { animation: fp-badge-pulse 2.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .fp-badge-nuevo { animation: none; } }
