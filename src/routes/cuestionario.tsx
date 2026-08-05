@@ -782,66 +782,71 @@ function CuestionarioPage() {
     >
       {/* ── TOPBAR ── */}
       <div
+        className="px-3 sm:px-6"
         style={{
           background: "white",
           borderBottom: "1px solid rgba(61,93,145,0.08)",
-          padding: "0 24px",
-          height: 62,
+          minHeight: 62,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          gap: 8,
           position: "sticky",
           top: 0,
           zIndex: 100,
           flexShrink: 0,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
           <Link
             to={exitTo}
+            aria-label="Salir del cuestionario"
             style={{
-              display: "flex", alignItems: "center", gap: 5,
-              color: "#647DA0", fontSize: "0.8rem", textDecoration: "none",
-              padding: "5px 10px", borderRadius: 6, border: "1px solid #F2DCDB",
+              display: "flex", alignItems: "center", justifyContent: "center", gap: 5,
+              color: "#3D5D91", fontSize: "0.82rem", fontWeight: 600, textDecoration: "none",
+              minHeight: 44, minWidth: 44, padding: "0 12px", borderRadius: 8,
+              border: "1px solid #C9D4E5", flexShrink: 0,
               transition: "all 0.2s",
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = "#3D5D91"; e.currentTarget.style.borderColor = "#3D5D91"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = "#647DA0"; e.currentTarget.style.borderColor = "#F2DCDB"; }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = "#22375C"; e.currentTarget.style.borderColor = "#3D5D91"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "#3D5D91"; e.currentTarget.style.borderColor = "#C9D4E5"; }}
           >
-            ← Salir
+            <span aria-hidden="true">←</span> Salir
           </Link>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
             <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "#22375C", display: "flex", alignItems: "center", gap: 6 }}>
-              <Icon n="spark" size={15} color="#3D5D91" /> Modo Aprendiendo
+              <Icon n="spark" size={15} color="#3D5D91" /> <span className="truncate">Modo Aprendiendo</span>
             </span>
-            <span style={{ fontSize: "0.72rem", color: "#647DA0" }} className="hidden sm:block">
+            <span style={{ fontSize: "0.74rem", color: "#5A6F92" }} className="hidden md:block truncate">
               {materiaLabel} · {total} preguntas
             </span>
           </div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
           <div
+            className="hidden sm:block"
             style={{
               background: "#F2DCDB", color: "#6C0820",
-              padding: "5px 14px", borderRadius: 20,
-              fontSize: "0.82rem", fontWeight: 700,
+              padding: "6px 14px", borderRadius: 20,
+              fontSize: "0.82rem", fontWeight: 700, whiteSpace: "nowrap",
             }}
           >
             Pregunta {currentIdx + 1} de {total}
           </div>
           <button
             onClick={openYaris}
+            aria-label={thinkMode ? "Abrir Yaris en modo te ayudo a pensar" : "Abrir Yaris para que explique la pregunta"}
             style={{
-              padding: "7px 14px",
+              minHeight: 44, minWidth: 44, padding: "0 12px",
               background: "linear-gradient(135deg,#3D5D91,#5A86CB)",
-              color: "white", border: "none", borderRadius: 7,
-              fontSize: "0.8rem", fontWeight: 700, cursor: "pointer",
+              color: "white", border: "none", borderRadius: 9,
+              fontSize: "0.82rem", fontWeight: 700, cursor: "pointer",
               fontFamily: "'Manrope', sans-serif",
-              display: "flex", alignItems: "center", gap: 5,
+              display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
             }}
           >
-            <Icon n={thinkMode ? "lightbulb" : "spark"} size={16} />{" "}
-            <span className="hidden sm:inline">{thinkMode ? "Ayúdame a pensar" : "Explícamelo Yaris"}</span>
+            <Icon n={thinkMode ? "lightbulb" : "spark"} size={17} />
+            <span className="hidden lg:inline">{thinkMode ? "Ayúdame a pensar" : "Explícamelo Yaris"}</span>
           </button>
           <button
             onClick={() => {
@@ -851,10 +856,10 @@ function CuestionarioPage() {
             }}
             aria-label="Finalizar sesión de estudio"
             style={{
-              padding: "7px 14px",
+              minHeight: 44, minWidth: 44, padding: "0 14px",
               background: "#6C0820",
-              color: "white", border: "none", borderRadius: 7,
-              fontSize: "0.8rem", fontWeight: 700, cursor: "pointer",
+              color: "white", border: "none", borderRadius: 9,
+              fontSize: "0.82rem", fontWeight: 700, cursor: "pointer",
               fontFamily: "'Manrope', sans-serif",
             }}
           >
@@ -862,6 +867,7 @@ function CuestionarioPage() {
           </button>
         </div>
       </div>
+
 
 
       {/* ── PROGRESS BAR ── */}
