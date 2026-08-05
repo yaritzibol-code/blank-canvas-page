@@ -10,7 +10,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { ModuleHeader } from "@/components/shared/ModuleHeader";
-import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { useSessionUser, isPaid } from "@/lib/store";
 import {
   cancelMySubscription,
@@ -218,7 +217,6 @@ function FacturacionPage() {
 
   return (
     <div style={{ fontFamily: "'Manrope', sans-serif", maxWidth: 860 }}>
-      <PaymentTestModeBanner />
       <ModuleHeader
         eyebrow="Cuenta · Facturación"
         title="Tu suscripción,"

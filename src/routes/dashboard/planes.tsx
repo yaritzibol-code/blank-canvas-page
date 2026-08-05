@@ -29,7 +29,6 @@ import {
 import { refreshCloudProfile } from "@/lib/store/auth";
 import { useRequireAuth } from "@/lib/store/hooks";
 import { supa } from "@/lib/store/cloud";
-import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 
 export const Route = createFileRoute("/dashboard/planes")({
   component: PlanesPage,
