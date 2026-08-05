@@ -73,6 +73,8 @@ function AdminResumenPage() {
           </div>
         ))}
       </div>
+      <BackendAudit localUsers={totalUsers} localReports={pending.length} />
+
 
       {/* Alertas */}
       {alerts.length > 0 && (
