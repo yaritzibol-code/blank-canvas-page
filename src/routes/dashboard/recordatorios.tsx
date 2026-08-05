@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { ModuleHeader } from "@/components/shared/ModuleHeader";
+import { PathyMark } from "@/components/shared/PathyMark";
 import {
   deleteReminder,
   getReminders,
@@ -471,7 +472,7 @@ function RecordatoriosPage() {
 
         {/* Pathy tips */}
         <div style={{ background: "linear-gradient(135deg,#F2DCDB,#fce4ec)", borderRadius: 14, padding: 18, marginBottom: 24 }}>
-          <h3 style={{ fontSize: ".88rem", fontWeight: 700, color: "#6C0820", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}><Icon n="cloud" size={18} /> Consejos de Pathy para mantener tu racha</h3>
+          <h3 style={{ fontSize: ".88rem", fontWeight: 700, color: "#6C0820", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}><PathyMark size={22} /> Consejos de Pathy para mantener tu racha</h3>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {[
               "Estudia siempre a la misma hora — tu cerebro lo convertirá en hábito automático en 21 días.",

@@ -1,7 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { Icon } from "@/components/ui/fp-icon";
-import { useSessionUser, useStore, studentStats, materiaProgressPct, MATERIAS_DEF, getStudyDays } from "@/lib/store";
+import {
+  useSessionUser,
+  useStore,
+  studentStats,
+  materiaProgressPct,
+  MATERIAS_DEF,
+  getStudyDays,
+  progresoPorRuta,
+} from "@/lib/store";
+import {
+  LINEA_AEREA_OFICIAL_TOTAL,
+  LINEA_AEREA_QUIZZES,
+} from "@/lib/store/linea-aerea-meta";
 import { OnboardingModal } from "@/components/shared/OnboardingModal";
 import { DataSyncBanner } from "@/components/shared/DataSyncBanner";
 import { PlaneField } from "@/components/shared/PlaneField";
@@ -32,6 +44,20 @@ interface MateriaItem {
   slug: string;
 }
 
+/** Un manual del curso de Línea Aérea, con lo practicado hasta hoy. */
+interface ManualItem {
+  /** Código de fuente del cuestionario (ATP, PHAK, …). */
+  code: string;
+  name: string;
+  descripcion: string;
+  icon: string;
+  total: number;
+  /** Preguntas respondidas de ese manual. */
+  answered: number;
+  /** Promedio de aciertos, o `null` si aún no lo practica. */
+  avg: number | null;
+}
+
 const WEEK_DAYS = ["L", "M", "M", "J", "V", "S", "D"];
 
 /* ── Live countdown state ── */
@@ -58,7 +84,8 @@ function useCountdown(fecha: string | null) {
 }
 
 /* ── Countdown card (editorial cabina) ── */
-function CountdownCard({ fecha }: { fecha: string | null }) {
+function CountdownCard({ fecha, lineaAerea }: { fecha: string | null; lineaAerea?: boolean }) {
+  const destino = lineaAerea ? "E190" : "CIAAC";
   const cd = useCountdown(fecha);
   const pad = (n: number) => String(n).padStart(2, "0");
   const dateLabel = fecha
@@ -141,7 +168,7 @@ function CountdownCard({ fecha }: { fecha: string | null }) {
       ) : (
         <div>
           <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "1.4rem", color: NAVY, lineHeight: 1.2, marginBottom: 10 }}>
-            Configura tu fecha CIAAC
+            {lineaAerea ? "Configura la fecha de tu examen" : "Configura tu fecha CIAAC"}
           </div>
           <Link
             to="/dashboard/perfil"
@@ -161,7 +188,7 @@ function CountdownCard({ fecha }: { fecha: string | null }) {
       <div style={{ marginTop: 24, position: "relative", height: 34, padding: "0 4px" }}>
         <div style={{ position: "absolute", top: 4, left: 4, fontFamily: MONO, fontSize: "0.58rem", letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 700, color: HAZE }}>Hoy</div>
         <div style={{ position: "absolute", top: 4, right: 4, textAlign: "right" }}>
-          <div style={{ fontFamily: MONO, fontSize: "0.58rem", letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 800, color: CORAL }}>CIAAC</div>
+          <div style={{ fontFamily: MONO, fontSize: "0.58rem", letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 800, color: CORAL }}>{destino}</div>
         </div>
         {/* recorrido cumplido */}
         <div style={{ position: "absolute", top: "50%", left: 0, transform: "translateY(-50%)", height: 2, background: CORAL, borderRadius: 999, width: `calc(${pct}% - 14px)` }} />
@@ -196,7 +223,7 @@ function CountdownCard({ fecha }: { fecha: string | null }) {
             display: "flex", alignItems: "center", justifyContent: "center",
             color: CORAL,
           }}
-          aria-label="Tu posición en la ruta hacia el CIAAC"
+          aria-label={`Tu posición en la ruta hacia el ${destino}`}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style={{ transform: "rotate(45deg)" }} aria-hidden="true"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" /></svg>
         </div>
@@ -365,11 +392,23 @@ function QuickRow({ icon, title, sub, to, primary }: { icon: string; title: stri
 }
 
 /* ── Materia card (editorial with dark or sky header) ── */
-function MateriaCard({ m, variant, live }: { m: MateriaItem; variant: "dark" | "rose" | "plain"; live?: boolean }) {
+function MateriaCard({
+  m,
+  variant,
+  live,
+  eyebrow: eyebrowProp,
+}: {
+  m: MateriaItem;
+  variant: "dark" | "rose" | "plain";
+  live?: boolean;
+  /** Sobrescribe el distintivo (p. ej. "Tu enfoque" para la materia elegida). */
+  eyebrow?: string;
+}) {
   const [hov, setHov] = useState(false);
   const headerBg = variant === "dark" ? NAVY : variant === "rose" ? ROSE : "white";
   const headerFg = variant === "dark" ? "white" : variant === "rose" ? NAVY : NAVY;
-  const eyebrow = variant === "dark" ? "Nivel principal" : variant === "rose" ? "Fundamentos" : "Módulo";
+  const eyebrow =
+    eyebrowProp ?? (variant === "dark" ? "Nivel principal" : variant === "rose" ? "Fundamentos" : "Módulo");
   const eyebrowColor = variant === "dark" ? ROSE : variant === "rose" ? CORAL : HAZE;
   return (
     <div
@@ -400,27 +439,32 @@ function MateriaCard({ m, variant, live }: { m: MateriaItem; variant: "dark" | "
           gap: 10,
         }}
       >
-        {live && (
-          <span
-            style={{
-              position: "absolute", left: 16, bottom: 14,
-              fontFamily: MONO, fontSize: "0.55rem", letterSpacing: "0.2em",
-              textTransform: "uppercase", fontWeight: 800,
-              padding: "3px 8px", borderRadius: 999,
-              background: CORAL, color: "white",
-            }}
-          >
-            En vivo
-          </span>
-        )}
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 8 }}>
-          <span
-            style={{
-              fontFamily: MONO, fontSize: "0.58rem", letterSpacing: "0.2em",
-              textTransform: "uppercase", fontWeight: 700, color: eyebrowColor,
-            }}
-          >
-            {eyebrow}
+          {/* El distintivo "en vivo" va en la misma fila que el eyebrow: en
+              absoluto al pie de la cabecera se encimaba con el título. */}
+          <span style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", minWidth: 0 }}>
+            <span
+              style={{
+                fontFamily: MONO, fontSize: "0.58rem", letterSpacing: "0.2em",
+                textTransform: "uppercase", fontWeight: 700, color: eyebrowColor,
+              }}
+            >
+              {eyebrow}
+            </span>
+            {live && (
+              <span
+                style={{
+                  fontFamily: MONO, fontSize: "0.5rem", letterSpacing: "0.18em",
+                  textTransform: "uppercase", fontWeight: 800,
+                  padding: "3px 7px", borderRadius: 999,
+                  background: variant === "dark" ? CORAL : "white",
+                  color: variant === "dark" ? "white" : CORAL,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                En vivo
+              </span>
+            )}
           </span>
           <span style={{ display: "flex", color: variant === "dark" ? "rgba(255,255,255,0.7)" : NAVY, opacity: variant === "plain" ? 0.6 : 1 }}>
             <Icon n={m.icon as never} size={20} />
@@ -477,6 +521,165 @@ function MateriaCard({ m, variant, live }: { m: MateriaItem; variant: "dark" | "
   );
 }
 
+/**
+ * Tarjeta de manual de Línea Aérea.
+ *
+ * Misma anatomía que `MateriaCard` para que el inicio no cambie de lenguaje
+ * visual al cambiar de ruta: lo único distinto es que la barra mide cobertura
+ * del manual (preguntas practicadas) y el atajo abre su cuestionario.
+ */
+function ManualCard({ m, variant }: { m: ManualItem; variant: "dark" | "rose" | "plain" }) {
+  const [hov, setHov] = useState(false);
+  const headerBg = variant === "dark" ? NAVY : variant === "rose" ? ROSE : "white";
+  const headerFg = variant === "dark" ? "white" : NAVY;
+  const eyebrow = variant === "dark" ? "Manual principal" : variant === "rose" ? "Del curso" : "Manual";
+  const eyebrowColor = variant === "dark" ? ROSE : variant === "rose" ? CORAL : HAZE;
+  const cobertura = m.total > 0 ? Math.min(100, Math.round((m.answered / m.total) * 100)) : 0;
+
+  return (
+    <div
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        background: "white",
+        border: `1px solid ${NAVY}14`,
+        borderRadius: 22,
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        transition: "transform 0.15s, box-shadow 0.15s",
+        transform: hov ? "translateY(-2px)" : "none",
+        boxShadow: hov ? "0 12px 30px rgba(34,55,92,0.08)" : "0 1px 0 rgba(34,55,92,0.03)",
+      }}
+    >
+      <div
+        style={{
+          background: headerBg,
+          color: headerFg,
+          padding: "22px 20px 20px",
+          minHeight: 132,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          gap: 10,
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 8 }}>
+          <span
+            style={{
+              fontFamily: MONO, fontSize: "0.58rem", letterSpacing: "0.2em",
+              textTransform: "uppercase", fontWeight: 700, color: eyebrowColor,
+            }}
+          >
+            {eyebrow}
+          </span>
+          <span style={{ display: "flex", color: variant === "dark" ? "rgba(255,255,255,0.7)" : NAVY, opacity: variant === "plain" ? 0.6 : 1 }}>
+            <Icon n={m.icon as never} size={20} />
+          </span>
+        </div>
+        <div>
+          <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "1.35rem", lineHeight: 1.15, paddingRight: 40 }}>
+            {m.name}
+          </div>
+          <div
+            style={{
+              fontFamily: SANS, fontSize: "0.74rem", lineHeight: 1.4, marginTop: 6,
+              color: variant === "dark" ? "rgba(255,255,255,0.66)" : variant === "rose" ? `${NAVY}AA` : HAZE,
+              display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden",
+            }}
+          >
+            {m.descripcion}
+          </div>
+        </div>
+      </div>
+
+      <div style={{ padding: "16px 20px 18px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+          <span style={{ fontFamily: MONO, fontSize: "0.6rem", letterSpacing: "0.16em", textTransform: "uppercase", color: HAZE, fontWeight: 700 }}>
+            {m.avg !== null ? "Aciertos" : "Practicadas"}
+          </span>
+          <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "1.05rem", color: NAVY }}>
+            {m.avg !== null ? `${m.avg}%` : `${m.answered}/${m.total}`}
+          </span>
+        </div>
+        <div style={{ height: 3, background: SALMON, borderRadius: 999, marginBottom: 14 }}>
+          <div style={{ width: `${cobertura}%`, height: "100%", background: NAVY, borderRadius: 999, transition: "width 0.5s ease" }} />
+        </div>
+        <div style={{ display: "flex", gap: 6 }}>
+          <Link
+            to="/cuestionario"
+            search={{ fuente: m.code } as never}
+            style={manualBtn}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = CREAM;
+              e.currentTarget.style.borderColor = `${NAVY}33`;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.borderColor = `${NAVY}14`;
+            }}
+          >
+            Cuestionario
+          </Link>
+          <Link
+            to="/dashboard/linea-aerea"
+            style={manualBtn}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = CREAM;
+              e.currentTarget.style.borderColor = `${NAVY}33`;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.borderColor = `${NAVY}14`;
+            }}
+          >
+            Manual
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const manualBtn: React.CSSProperties = {
+  flex: 1,
+  padding: "7px 0",
+  border: `1px solid ${NAVY}14`,
+  borderRadius: 8,
+  fontFamily: MONO,
+  fontSize: "0.62rem",
+  fontWeight: 700,
+  color: NAVY,
+  letterSpacing: "0.1em",
+  textTransform: "uppercase",
+  cursor: "pointer",
+  background: "transparent",
+  transition: "all 0.15s",
+  textAlign: "center",
+  textDecoration: "none",
+};
+
+/** Distintivo del enfoque activo, con atajo para cambiarlo en el perfil. */
+function FocoChip({ label }: { label: string }) {
+  return (
+    <Link
+      to="/dashboard/perfil"
+      title="Cambiar mi enfoque en el perfil"
+      style={{
+        display: "inline-flex", alignItems: "center", gap: 8,
+        padding: "5px 12px", borderRadius: 999,
+        background: SALMON, border: `1px solid ${NAVY}14`,
+        fontFamily: MONO, fontSize: "0.6rem", letterSpacing: "0.14em",
+        textTransform: "uppercase", fontWeight: 700, color: CORAL,
+        textDecoration: "none", marginTop: 14,
+      }}
+    >
+      <Icon n="target" size={12} />
+      Enfoque · {label}
+    </Link>
+  );
+}
+
 function DashboardHome() {
   const user = useSessionUser();
   const stats = useStore(() => (user ? studentStats(user.id) : null));
@@ -489,6 +692,21 @@ function DashboardHome() {
     })),
   );
   const studyDays = useStore(() => (user ? getStudyDays(user.id) : {}));
+  const manuales = useStore<ManualItem[]>(() => {
+    const perf = user ? progresoPorRuta(user.id).lineaAerea : [];
+    return LINEA_AEREA_QUIZZES.map((q) => {
+      const p = perf.find((r) => r.key === q.titulo);
+      return {
+        code: q.code,
+        name: q.titulo,
+        descripcion: q.descripcion,
+        icon: q.icon,
+        total: q.total,
+        answered: p?.answered ?? 0,
+        avg: p?.avg ?? null,
+      };
+    });
+  });
 
   const now = new Date();
   const hour = now.getHours();
@@ -512,8 +730,13 @@ function DashboardHome() {
     materiaFoco ??
     materias.slice().sort((a, b) => a.pct - b.pct).find((m) => m.pct < 100) ??
     materias[0];
+  // Manual con el que sigue: el menos practicado del curso.
+  const continueManual =
+    manuales.slice().sort((a, b) => a.answered - b.answered)[0] ?? manuales[0];
   const continueSub = enfocadoLineaAerea
-    ? "Primer Oficial — Embraer 190"
+    ? continueManual
+      ? `${continueManual.name} — Primer Oficial E190`
+      : "Primer Oficial — Embraer 190"
     : continueMateria
       ? continueMateria.pct === 0
         ? `${continueMateria.name} — empieza aquí`
@@ -525,11 +748,35 @@ function DashboardHome() {
       ? `/dashboard/materias/${continueMateria.slug}`
       : "/dashboard/materias";
 
-  // Featured materias for the top of the grid
+  /**
+   * Lo destacado del inicio sigue al enfoque elegido en el perfil.
+   *
+   * Antes se destacaba siempre la primera materia empezada, así que elegir
+   * "Termodinámica" o la ruta de Línea Aérea no cambiaba nada visible: sólo
+   * los accesos rápidos. Ahora la materia (o el manual) del enfoque encabeza
+   * la parrilla y el resto se ordena detrás.
+   */
   const inProgress = materias.filter((m) => m.pct > 0 && m.pct < 100);
-  const featured = (inProgress[0] ?? materias[0]);
-  const secondary = (inProgress[1] ?? materias.find((m) => m.slug !== featured?.slug) ?? materias[1]);
+  const featured = materiaFoco ?? inProgress[0] ?? materias[0];
+  const secondary =
+    inProgress.find((m) => m.slug !== featured?.slug) ??
+    materias.find((m) => m.slug !== featured?.slug) ??
+    materias[1];
   const rest = materias.filter((m) => m.slug !== featured?.slug && m.slug !== secondary?.slug);
+
+  // Parrilla de manuales cuando el enfoque es la convocatoria.
+  const manualesOrdenados = manuales
+    .slice()
+    .sort((a, b) => a.answered - b.answered || a.name.localeCompare(b.name, "es"));
+  const manualFeatured = manualesOrdenados[0];
+  const manualSecondary = manualesOrdenados[1];
+  const manualRest = manualesOrdenados.slice(2);
+
+  const focoLabel = enfocadoLineaAerea
+    ? "Línea Aérea · E190"
+    : materiaFoco
+      ? materiaFoco.name
+      : "CIAAC completo";
 
   return (
     <div style={{ position: "relative", maxWidth: 1240, margin: "0 auto", fontFamily: SANS, isolation: "isolate" }}>
@@ -578,7 +825,9 @@ function DashboardHome() {
               }}
             >
               <span style={{ width: 22, height: 1, background: `${NAVY}55`, display: "block" }} />
-              Cabina de estudio · Sesión de hoy
+              {enfocadoLineaAerea
+                ? "Cabina de estudio · Convocatoria E190"
+                : "Cabina de estudio · Sesión de hoy"}
             </div>
             <h1
               style={{
@@ -604,11 +853,18 @@ function DashboardHome() {
               }}
             >
               {streak > 0
-                ? `Llevas ${streak} ${diasWord} volando en ruta. Pathy está muy orgullosa de ti — hoy toca continuar con ${continueMateria?.name ?? "tu materia pendiente"}.`
-                : "Aún no despegas esta semana. Una sesión corta hoy te vuelve a poner en ruta."}
+                ? `Llevas ${streak} ${diasWord} volando en ruta. Pathy está muy orgullosa de ti — hoy toca continuar con ${
+                    enfocadoLineaAerea
+                      ? (continueManual?.name ?? "los manuales del curso")
+                      : (continueMateria?.name ?? "tu materia pendiente")
+                  }.`
+                : enfocadoLineaAerea
+                  ? "Aún no despegas esta semana. Un manual del curso hoy te vuelve a poner en ruta hacia el E190."
+                  : "Aún no despegas esta semana. Una sesión corta hoy te vuelve a poner en ruta."}
             </p>
+            <FocoChip label={focoLabel} />
           </div>
-          <CountdownCard fecha={user.fechaCiaac} />
+          <CountdownCard fecha={user.fechaCiaac} lineaAerea={enfocadoLineaAerea} />
         </div>
 
         {/* KPI ROW */}
@@ -713,10 +969,14 @@ function DashboardHome() {
                   textTransform: "uppercase", fontWeight: 700, color: `${NAVY}66`,
                 }}
               >
-                Plan de formación · Destacadas
+                {enfocadoLineaAerea
+                  ? "Convocatoria E190 · Manuales"
+                  : materiaFoco
+                    ? "Plan de formación · Tu enfoque"
+                    : "Plan de formación · Destacadas"}
               </div>
               <Link
-                to="/dashboard/materias"
+                to={enfocadoLineaAerea ? "/dashboard/linea-aerea" : "/dashboard/materias"}
                 style={{
                   fontFamily: MONO, fontSize: "0.68rem", letterSpacing: "0.16em",
                   textTransform: "uppercase", fontWeight: 700, color: CORAL,
@@ -724,12 +984,28 @@ function DashboardHome() {
                   textUnderlineOffset: 4,
                 }}
               >
-                Ver todas →
+                {enfocadoLineaAerea ? "Ver el módulo →" : "Ver todas →"}
               </Link>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
-              {featured && <MateriaCard m={featured} variant="dark" live />}
-              {secondary && <MateriaCard m={secondary} variant="rose" />}
+              {enfocadoLineaAerea ? (
+                <>
+                  {manualFeatured && <ManualCard m={manualFeatured} variant="dark" />}
+                  {manualSecondary && <ManualCard m={manualSecondary} variant="rose" />}
+                </>
+              ) : (
+                <>
+                  {featured && (
+                    <MateriaCard
+                      m={featured}
+                      variant="dark"
+                      live
+                      eyebrow={materiaFoco ? "Tu enfoque" : undefined}
+                    />
+                  )}
+                  {secondary && <MateriaCard m={secondary} variant="rose" />}
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -747,7 +1023,7 @@ function DashboardHome() {
                 textTransform: "uppercase", fontWeight: 700, color: `${NAVY}66`,
               }}
             >
-              Bitácora de materias
+              {enfocadoLineaAerea ? "Bitácora del curso" : "Bitácora de materias"}
             </div>
             <h2
               style={{
@@ -755,7 +1031,11 @@ function DashboardHome() {
                 color: NAVY, margin: "4px 0 0", lineHeight: 1.1,
               }}
             >
-              Tus 12 materias en ruta
+              {enfocadoLineaAerea
+                ? "Tus manuales del proceso"
+                : materiaFoco
+                  ? `${materiaFoco.name} y tus otras materias`
+                  : "Tus 12 materias en ruta"}
             </h2>
           </div>
         </div>
@@ -767,10 +1047,36 @@ function DashboardHome() {
             gap: 16,
           }}
         >
-          {rest.map((m) => (
-            <MateriaCard key={m.slug} m={m} variant="plain" />
-          ))}
+          {enfocadoLineaAerea
+            ? manualRest.map((m) => <ManualCard key={m.code} m={m} variant="plain" />)
+            : rest.map((m) => <MateriaCard key={m.slug} m={m} variant="plain" />)}
         </div>
+
+        {/* La guía oficial y el CIAAC siguen a un clic para quien va por la convocatoria. */}
+        {enfocadoLineaAerea && (
+          <div
+            style={{
+              marginTop: 20,
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              gap: 12,
+            }}
+          >
+            <QuickRow
+              primary
+              icon="target"
+              title="Guía oficial del proceso"
+              sub={`Las ${LINEA_AEREA_OFICIAL_TOTAL} preguntas de la convocatoria`}
+              to="/dashboard/linea-aerea"
+            />
+            <QuickRow
+              icon="book"
+              title="El CIAAC sigue disponible"
+              sub="Tus 12 materias del examen teórico"
+              to="/dashboard/materias"
+            />
+          </div>
+        )}
       </div>
 
       <style>{`
