@@ -170,6 +170,11 @@ const AUDIT_COLOR: Record<string, string> = {
   webhook_received: "#f39c12",
   webhook_processed: "#2ecc71",
   webhook_failed: "#e74c3c",
+  plan_switched: "#2ecc71",
+  plan_switch_failed: "#e74c3c",
+  subscription_cancel_requested: "#f39c12",
+  subscription_cancel_failed: "#e74c3c",
+  subscription_resumed: "#2ecc71",
 };
 
 /** Bitácora de la app: checkout, portal, sincronización de plan y webhooks. */
@@ -210,6 +215,10 @@ function BillingAuditCard({ env }: { env: "sandbox" | "live" }) {
           <option value="plan_changed">Cambio de plan</option>
           <option value="plan_sync">Sincronización de plan</option>
           <option value="portal_session_created">Portal abierto</option>
+          <option value="plan_switched">Cambio mensual/anual</option>
+          <option value="plan_switch_failed">Cambio de plan fallido</option>
+          <option value="subscription_cancel_requested">Baja solicitada</option>
+          <option value="subscription_resumed">Suscripción reactivada</option>
           <option value="webhook_received">Webhook recibido</option>
           <option value="webhook_processed">Webhook procesado</option>
           <option value="webhook_failed">Webhook fallido</option>

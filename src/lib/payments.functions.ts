@@ -529,3 +529,145 @@ export const resumeMySubscription = createServerFn({ method: "POST" })
       return { error: getStripeErrorMessage(error) };
     }
   });
+
+/* ─────────────────── Historial de pagos y cambio de plan ─────────────────── */
+
+export interface InvoiceRow {
+  id: string;
+  /** `paid`, `open`, `void`, `uncollectible`… tal cual lo reporta Stripe. */
+  status: string | null;
+  /** Importe pagado en pesos (no centavos). */
+  amount: number;
+  currency: string;
+  /** Fecha del cobro en ISO. */
+  date: string | null;
+  /** Recibo/factura de Stripe para descargar. */
+  hostedUrl: string | null;
+  pdfUrl: string | null;
+  /** Concepto legible de la primera línea del cobro. */
+  concepto: string;
+}
+
+/**
+ * Historial de cobros del usuario leído directamente de Stripe.
+ *
+ * Se lee de Stripe y no de la base porque las facturas (recibos, PDF, importes
+ * con impuestos y prorrateos) sólo existen allá: la tabla `subscriptions`
+ * guarda el estado, no el dinero cobrado.
+ */
+export const getMyInvoices = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { environment: StripeEnv }) => data)
+  .handler(async ({ data, context }): Promise<{ invoices: InvoiceRow[]; error?: string }> => {
+    try {
+      const stripe = createStripeClient(data.environment);
+      const { data: { user } } = await context.supabase.auth.getUser();
+      const customerId = await resolveOrCreateCustomer(stripe, {
+        email: user?.email ?? undefined,
+        userId: context.userId,
+      });
+      const list = await stripe.invoices.list({ customer: customerId, limit: 24 });
+      const invoices: InvoiceRow[] = list.data.map((inv) => {
+        const line = inv.lines?.data?.[0];
+        return {
+          id: inv.id ?? "",
+          status: inv.status ?? null,
+          amount: (inv.amount_paid ?? 0) / 100,
+          currency: (inv.currency ?? "mxn").toUpperCase(),
+          date: inv.created ? new Date(inv.created * 1000).toISOString() : null,
+          hostedUrl: inv.hosted_invoice_url ?? null,
+          pdfUrl: inv.invoice_pdf ?? null,
+          concepto: line?.description ?? inv.description ?? "Suscripción FlightPath Pro",
+        };
+      });
+      return { invoices };
+    } catch (error) {
+      return { invoices: [], error: getStripeErrorMessage(error) };
+    }
+  });
+
+/**
+ * Cambio entre plan mensual y anual con prorrateo automático.
+ *
+ * Stripe calcula el crédito de lo no consumido y cobra la diferencia de
+ * inmediato (`always_invoice`), de forma que el usuario nunca paga dos veces
+ * el mismo periodo. La inscripción no se vuelve a cobrar: es un pago único
+ * que vive fuera de la suscripción.
+ */
+export const switchMyPlan = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { environment: StripeEnv; interval: "month" | "year" }) => {
+    if (data.interval !== "month" && data.interval !== "year") throw new Error("Intervalo inválido");
+    return data;
+  })
+  .handler(async ({ data, context }): Promise<{ ok?: true; renewsAt?: string | null; error?: string }> => {
+    const { data: sub } = await context.supabase
+      .from("subscriptions")
+      .select("stripe_subscription_id,price_id,status")
+      .eq("user_id", context.userId)
+      .eq("environment", data.environment)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const subId = sub?.stripe_subscription_id as string | undefined;
+    if (!subId) return { error: "No encontramos una suscripción activa a tu nombre." };
+    if (["canceled", "incomplete_expired"].includes((sub?.status as string) ?? "")) {
+      return { error: "Tu suscripción ya no está activa. Vuelve a suscribirte desde Planes." };
+    }
+
+    const targetKey = data.interval === "year" ? PRO_ANNUAL_LOOKUP_KEY : PRO_MONTHLY_LOOKUP_KEY;
+    if (sub?.price_id === targetKey) return { error: "Ya estás en ese plan." };
+
+    try {
+      const stripe = createStripeClient(data.environment);
+      const prices = await stripe.prices.list({ lookup_keys: [targetKey] });
+      const target = prices.data[0];
+      if (!target) return { error: "El plan solicitado no está disponible por ahora." };
+
+      const current = await stripe.subscriptions.retrieve(subId);
+      const item = current.items.data[0];
+      if (!item) return { error: "No pudimos leer tu suscripción en Stripe." };
+
+      const updated = await stripe.subscriptions.update(subId, {
+        items: [{ id: item.id, price: target.id }],
+        proration_behavior: "always_invoice",
+        cancel_at_period_end: false,
+        metadata: { userId: context.userId },
+      });
+
+      const end = updated.items.data[0]?.current_period_end ?? null;
+      const renewsAt = end ? new Date(end * 1000).toISOString() : null;
+
+      await context.supabase
+        .from("subscriptions")
+        .update({
+          price_id: targetKey,
+          status: updated.status,
+          current_period_end: renewsAt,
+          cancel_at_period_end: false,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("stripe_subscription_id", subId);
+
+      await logBillingEvent({
+        event: "plan_switched",
+        environment: data.environment,
+        userId: context.userId,
+        detail: { subscription: subId, from: sub?.price_id ?? null, to: targetKey, renews_at: renewsAt },
+      });
+
+      return { ok: true, renewsAt };
+    } catch (error) {
+      const message = getStripeErrorMessage(error);
+      await logBillingEvent({
+        event: "plan_switch_failed",
+        environment: data.environment,
+        userId: context.userId,
+        ok: false,
+        message,
+        detail: { to: targetKey },
+      });
+      return { error: message };
+    }
+  });
