@@ -6,7 +6,9 @@
 import { useEffect, useRef, useState } from "react";
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
 import { Icon } from "@/components/ui/fp-icon";
-import { logYarisUse } from "@/lib/store";
+import { canUseAI, logYarisUse } from "@/lib/store";
+import { UpgradeModal } from "@/components/shared/UpgradeModal";
+
 import { useYarisStream, toHistory } from "@/lib/yaris-ask";
 import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
 import type { User } from "@/lib/store";
