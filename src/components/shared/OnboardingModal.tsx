@@ -50,6 +50,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
   const [fecha, setFecha] = useState(user.fechaCiaac ?? "");
   const [recordatorios, setRecordatorios] = useState(true);
   const [genero, setGenero] = useState<"femenino" | "masculino" | "neutro">(user.genero ?? "neutro");
+  const [yarisTono, setYarisTono] = useState<YarisTono>(user.yarisTono ?? "normal");
   const [focoRuta, setFocoRuta] = useState<"ciaac" | "linea-aerea">(user.focoRuta ?? "ciaac");
   const [focoMateria, setFocoMateria] = useState<string>(user.focoMateria ?? "");
   const [nombreError, setNombreError] = useState(false);
