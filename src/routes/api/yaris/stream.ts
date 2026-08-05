@@ -24,9 +24,8 @@ const schema = z.object({
       options: z.array(z.string()).optional(),
       correctIndex: z.number().optional(),
       userSelectedIndex: z.number().optional(),
+      /** true = pide ayuda antes de responder (modo socrático). */
       preAnswer: z.boolean().optional(),
-    /** true = pide ayuda antes de responder (modo socrático). */
-    preAnswer: z.boolean().optional(),
       explanation: z.string().optional(),
       cite: z.string().optional(),
       resourceTitle: z.string().max(300).optional(),
