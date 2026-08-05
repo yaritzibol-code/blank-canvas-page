@@ -47,18 +47,22 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
   if (!open) return null;
   const config = getConfig();
 
-  /** Lleva a la página de planes, donde vive el checkout embebido de Stripe. */
-  const goPlanes = (cta: string) => {
+  /** Lleva a la landing de precios, donde vive la comparativa completa. */
+  const goPrecios = (cta: string) => {
     if (userId) logUpgradeClick(userId, cta);
     onClose();
-    navigate({ to: "/dashboard/planes" });
+    navigate({ to: "/precios" });
   };
 
+  /** Atajo al checkout embebido de Stripe para quien ya decidió. */
   const goCheckout = (cta: string) => {
     if (paying) return;
     setPaying(true);
-    goPlanes(cta);
+    if (userId) logUpgradeClick(userId, cta);
+    onClose();
+    navigate({ to: "/dashboard/planes", search: { checkout: 1 } });
   };
+
 
 
 
