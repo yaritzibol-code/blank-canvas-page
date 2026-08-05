@@ -1048,10 +1048,10 @@ function CuestionarioPage() {
                   <button
                     onClick={openYaris}
                     style={{
-                      padding: "8px 14px",
+                      minHeight: 44, padding: "0 16px",
                       background: "linear-gradient(135deg,#3D5D91,#5A86CB)",
-                      color: "white", border: "none", borderRadius: 7,
-                      fontSize: "0.78rem", fontWeight: 700, cursor: "pointer",
+                      color: "white", border: "none", borderRadius: 9,
+                      fontSize: "0.82rem", fontWeight: 700, cursor: "pointer",
                       fontFamily: "'Manrope', sans-serif",
                       display: "inline-flex", alignItems: "center", gap: 6,
                     }}
@@ -1061,10 +1061,10 @@ function CuestionarioPage() {
                   <button
                     onClick={() => setReportOpen(true)}
                     style={{
-                      padding: "8px 12px",
+                      minHeight: 44, padding: "0 14px",
                       background: "transparent",
-                      color: "#647DA0", border: "1px solid #F2DCDB", borderRadius: 7,
-                      fontSize: "0.78rem", fontWeight: 600, cursor: "pointer",
+                      color: "#3D5D91", border: "1px solid #C9D4E5", borderRadius: 9,
+                      fontSize: "0.82rem", fontWeight: 600, cursor: "pointer",
                       fontFamily: "'Manrope', sans-serif",
                       display: "inline-flex", alignItems: "center", gap: 5,
                     }}
@@ -1072,6 +1072,7 @@ function CuestionarioPage() {
                     <Icon n="alert" size={14} /> Reportar
                   </button>
                 </div>
+
               </div>
             )}
           </div>
