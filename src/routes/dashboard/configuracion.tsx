@@ -13,6 +13,15 @@ import {
 import type { UserPrefs } from "@/lib/store";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { YARIS_TONOS, type YarisTono } from "@/components/shared/OnboardingModal";
+
+/** Longitud de respuesta de Yaris (solo se elige aquí, no en el onboarding). */
+export type YarisLargo = "corta" | "normal" | "detallada";
+const YARIS_LARGOS_UI: { key: YarisLargo; label: string; desc: string }[] = [
+  { key: "corta", label: "Corta", desc: "Al grano: 2 o 3 líneas con lo esencial" },
+  { key: "normal", label: "Normal", desc: "Veredicto, fundamento y un tip para recordarlo" },
+  { key: "detallada", label: "Detallada", desc: "Explicación a fondo, con ejemplos y errores comunes" },
+];
+
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
 
 export const Route = createFileRoute("/dashboard/configuracion")({
