@@ -12,6 +12,8 @@ import {
 } from "@/lib/store";
 import type { UserPrefs } from "@/lib/store";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
+import { YARIS_TONOS, type YarisTono } from "@/components/shared/OnboardingModal";
+import { YarisAvatar } from "@/components/shared/YarisAvatar";
 
 export const Route = createFileRoute("/dashboard/configuracion")({
   component: ConfiguracionPage,
@@ -155,6 +157,7 @@ function ConfiguracionPage() {
   const [escuelaDraft, setEscuelaDraft] = useState(() => user?.escuela ?? "");
   const [ciaacDraft, setCiaacDraft] = useState(() => user?.fechaCiaac ?? "");
   const [deleteConfirm, setDeleteConfirm] = useState("");
+  const [yarisTono, setYarisTonoState] = useState<YarisTono>(() => user?.yarisTono ?? "normal");
 
   if (!user) return null;
 
@@ -342,6 +345,48 @@ function ConfiguracionPage() {
             </select>
           </div>
           <ConfigRow icon="spark" label="Animaciones de Pathy" sub="Desactiva si prefieres menos movimiento" right={<Toggle on={toggles.pathy} onToggle={() => toggle("pathy")} />} />
+
+          {/* Personalidad de Yaris IA */}
+          <div style={{ padding: "14px 20px 18px", borderTop: "1px solid rgba(61,93,145,.04)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
+              <span style={{ width: 20, display: "flex", justifyContent: "center" }}><YarisAvatar size={20} /></span>
+              <div>
+                <div style={{ fontSize: ".86rem", fontWeight: 600, color: "#22375C", marginBottom: 2 }}>Personalidad de Yaris</div>
+                <div style={{ fontSize: ".74rem", color: "#647DA0" }}>Cambia cómo te habla tu tutora IA, no su rigor técnico</div>
+              </div>
+            </div>
+            <div style={{ display: "grid", gap: 8 }}>
+              {YARIS_TONOS.map((t) => {
+                const activo = yarisTono === t.key;
+                return (
+                  <button
+                    key={t.key}
+                    onClick={() => {
+                      setYarisTonoState(t.key);
+                      updateUser(user.id, { yarisTono: t.key });
+                      setFlash(`Yaris ahora te habla en modo ${t.label}.`);
+                    }}
+                    style={{
+                      display: "flex", alignItems: "center", gap: 10, textAlign: "left", width: "100%",
+                      padding: "12px 14px", borderRadius: 10, cursor: "pointer",
+                      border: `2px solid ${activo ? "#3D5D91" : "#F2DCDB"}`,
+                      background: activo ? "rgba(61,93,145,.06)" : "white",
+                      fontFamily: "'Manrope', sans-serif", minHeight: 44,
+                    }}
+                    aria-pressed={activo}
+                  >
+                    <span style={{ width: 16, height: 16, borderRadius: "50%", flexShrink: 0, border: `2px solid ${activo ? "#3D5D91" : "#C9D6E8"}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      {activo && <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#3D5D91" }} />}
+                    </span>
+                    <span>
+                      <span style={{ display: "block", fontSize: ".84rem", fontWeight: 700, color: "#22375C" }}>{t.label}</span>
+                      <span style={{ display: "block", fontSize: ".74rem", color: "#647DA0", marginTop: 2 }}>{t.ejemplo}</span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
 

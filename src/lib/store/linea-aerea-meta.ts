@@ -26,7 +26,7 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
     descripcion: "Airline Transport Pilot Test Prep (ASA) — banco completo por capítulos.",
     materia: "operaciones",
     icon: "doc",
-    total: 1241,
+    total: 1191,
     fileUrl: "https://drive.google.com/file/d/1x_BE-nE3wNp3DJ2iEqGMjcxcPxLOzuaa/preview",
   },
   {
@@ -35,7 +35,7 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
     descripcion: "Pilot's Handbook of Aeronautical Knowledge (FAA-H-8083-25C) — banco por capítulos.",
     materia: "aerodinamica",
     icon: "plane",
-    total: 2450,
+    total: 2400,
     fileUrl: "https://drive.google.com/file/d/1It2xSBSn-vX4xYDFQHH2DMJd02J_k_zO/preview",
   },
   {
@@ -93,7 +93,7 @@ export const ATP_CHAPTERS: AtpChapter[] = [
   { num: 8, titulo: "Meteorología y Servicios Meteorológicos", tituloEn: "Meteorology and Weather Services", total: 232 },
 ];
 
-export const ATP_TOTAL = ATP_CHAPTERS.reduce((s, c) => s + c.total, 0) + 50;
+export const ATP_TOTAL = ATP_CHAPTERS.reduce((s, c) => s + c.total, 0);
 
 /** Capítulos del Jeppesen General Airway Manual (misma lógica que ATP). */
 export const JEPP_CHAPTERS: AtpChapter[] = [
@@ -110,7 +110,6 @@ export const JEPP_TOTAL = JEPP_CHAPTERS.reduce((s, c) => s + c.total, 0);
 
 /** Capítulos del Pilot's Handbook of Aeronautical Knowledge (FAA-H-8083-25C). */
 export const PHAK_CHAPTERS: AtpChapter[] = [
-  { num: 0, titulo: "Repaso general", tituloEn: "General Review", total: 50 },
   { num: 2, titulo: "Toma de Decisiones Aeronáuticas", tituloEn: "Aeronautical Decision-Making", total: 185 },
   { num: 3, titulo: "Construcción de la Aeronave", tituloEn: "Aircraft Construction", total: 85 },
   { num: 4, titulo: "Principios de Vuelo", tituloEn: "Principles of Flight", total: 85 },

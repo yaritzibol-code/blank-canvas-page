@@ -90,7 +90,8 @@ export const yarisAiChat = createServerFn({ method: "POST" })
     const adminPrompt = await loadAdminPrompt();
     // El prompt lo arma `buildYarisSystemPrompt` para que esta respuesta y la
     // versión en streaming compartan carácter y contexto.
-    const system = buildYarisSystemPrompt(adminPrompt, ctx);
+    const tono = (profileRow?.data as { yarisTono?: "formal" | "normal" | "amiga" } | null)?.yarisTono ?? "normal";
+    const system = buildYarisSystemPrompt(adminPrompt, { ...ctx, tono });
 
     const messages = fitInputBudget(system, data.history);
     const started = Date.now();

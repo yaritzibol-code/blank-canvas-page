@@ -64,6 +64,11 @@ export interface User {
    */
   genero?: "femenino" | "masculino" | "neutro";
   /**
+   * Personalidad con la que responde Yaris IA: formal (de usted), normal
+   * (cercana y profesional) o amiga (chat relajado, mismo rigor técnico).
+   */
+  yarisTono?: "formal" | "normal" | "amiga";
+  /**
    * Ruta en la que se enfoca: una materia del CIAAC (slug) o "linea-aerea".
    * Personaliza el inicio del dashboard y los atajos.
    */

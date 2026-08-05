@@ -183,7 +183,11 @@ export async function callOpenAI(
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 
+export type YarisTono = "formal" | "normal" | "amiga";
+
 export interface YarisPromptContext {
+  /** Personalidad elegida por la estudiante (onboarding / configuración). */
+  tono?: YarisTono;
   materia?: string;
   questionText?: string;
   options?: string[];
@@ -210,6 +214,29 @@ export const YARIS_DEFAULT_PROMPT = [
 ].join(" ");
 
 /**
+ * Personalidad de Yaris elegida por la estudiante. Cambia la voz, nunca el
+ * rigor técnico: el contenido y la firmeza al corregir se mantienen igual.
+ */
+export const YARIS_PERSONAS: Record<YarisTono, string> = {
+  formal: [
+    "VOZ (modo formal): habla de usted, con registro profesional de instructora de aviación.",
+    "Frases completas, sin coloquialismos, sin emojis, sin diminutivos. Estructura clara: veredicto, fundamento técnico y recomendación de estudio.",
+  ].join(" "),
+  normal: [
+    "VOZ (modo normal): español mexicano cercano de tú, claro y directo, con calidez profesional.",
+    "Sin exceso de emojis (máximo uno cuando aporte) y sin lenguaje rebuscado.",
+  ].join(" "),
+  amiga: [
+    "VOZ (modo Amiga Yaris): eres la amiga que además es instructora. Hablas de tú, en español mexicano natural y relajado, como en un chat: frases cortas, muletillas suaves ('mira', 'ok', 'va'), humor ligero y cero acartonamiento.",
+    "Eres cálida y motivadora, nunca romántica ni coqueta: la relación es de amistad y estudio. No uses apodos afectivos de pareja ni insinuaciones.",
+    "Puedes usar 1 o 2 emojis cuando de verdad aporten. Celebra los avances con honestidad y reconoce cuando algo está difícil ('sí, ese tema es de los que más pegan').",
+    "La confianza no baja el rigor: si la respuesta está mal, se lo dices claro y con cariño, y luego explicas el porqué técnico igual de bien que en modo formal.",
+    "Nada de sermones largos: primero lo importante, luego el detalle, y cierra con un empujón concreto ('repasa X y me cuentas').",
+  ].join(" "),
+};
+
+
+/**
  * Arma el system prompt con el contexto de la pantalla.
  *
  * Vive aquí para que la respuesta normal y la respuesta en streaming usen
@@ -218,6 +245,11 @@ export const YARIS_DEFAULT_PROMPT = [
  */
 export function buildYarisSystemPrompt(adminPrompt: string | null, ctx: YarisPromptContext): string {
   let system = adminPrompt ?? YARIS_DEFAULT_PROMPT;
+
+  const persona = YARIS_PERSONAS[ctx.tono ?? "normal"];
+  if (persona) system += `\n\n${persona}`;
+
+
 
   if (ctx.resourceTitle) {
     system += `\n\nEl estudiante está leyendo "${ctx.resourceTitle}" en la biblioteca del curso. Si la duda se refiere a ese material, respóndela con tu conocimiento de aeronáutica y aclara que no puedes citar páginas concretas del PDF.`;
