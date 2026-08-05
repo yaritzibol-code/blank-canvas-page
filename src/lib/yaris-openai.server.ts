@@ -185,10 +185,16 @@ const LETTERS = ["A", "B", "C", "D", "E"];
 
 export type YarisTono = "formal" | "normal" | "amiga";
 
+/** Cuánto se extiende Yaris al responder (Configuración → Apariencia). */
+export type YarisLargo = "corta" | "normal" | "detallada";
+
 export interface YarisPromptContext {
   /** Personalidad elegida por la estudiante (onboarding / configuración). */
   tono?: YarisTono;
+  /** Longitud de respuesta elegida en Configuración. */
+  largo?: YarisLargo;
   materia?: string;
+
   questionText?: string;
   options?: string[];
   correctIndex?: number;
