@@ -76,9 +76,9 @@ export const pathyAnalysis = createServerFn({ method: "POST" })
     // Los enunciados se leen en el servidor: el cliente sólo manda ids.
     const ids = data.wrong.map((w) => w.questionId);
     const { data: rows } = await supabase.rpc("get_bank_questions", {
-      p_materias: null,
-      p_fuentes: null,
-      p_caps: null,
+      p_materias: undefined,
+      p_fuentes: undefined,
+      p_caps: undefined,
       p_ids: ids,
       p_scope: "all",
       p_limit: ids.length,
