@@ -269,7 +269,6 @@ function AudioRepaso({ grupos, la, onClose }: { grupos: Grupo[]; la: boolean; on
   const [loading, setLoading] = useState(false);
   const askYaris = useYarisAsk();
   const user = useSessionUser();
-  useQuestionBank();
   const paid = canUseAI(user);
   const speech = useSpeech();
 
@@ -491,6 +490,8 @@ export function ExtrasPanel({ la = false }: { la?: boolean }) {
   const [open, setOpen] = useState<ExtraKind | null>(null);
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
+  // Lote acotado del banco (el banco completo nunca se descarga al navegador).
+  useQuestionBank({ scope: la ? "la" : "ciaac", limit: 400 });
 
   // Se lee con `useStore` para que el conteo se recalcule cuando el banco
   // termina de sembrarse o de hidratarse desde la nube: con `useMemo` a secas
