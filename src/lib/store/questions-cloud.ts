@@ -146,38 +146,45 @@ function mergeIntoMemory(rows: BankQuestion[]): void {
 
 /**
  * Garantiza que el lote pedido esté en memoria. Devuelve `true` si hay
- * preguntas utilizables.
+ * preguntas utilizables para ese ámbito.
+ *
+ * Cada ámbito lleva su propia promesa en vuelo, así que pedir varios lotes a
+ * la vez (o cambiar de capítulo antes de que llegue el anterior) ya no
+ * cancela ni confunde al otro.
  */
 export function ensureQuestions(scope: BankScope = {}, force = false): Promise<boolean> {
   const key = scopeKey(scope);
   if (force) {
-    loadedKey = null;
-    loading = null;
-    loadingKey = null;
+    loadedKeys.delete(key);
+    inFlight.delete(key);
   }
-  if (loadedKey === key) return Promise.resolve(true);
-  if (loading && loadingKey === key) return loading;
+  if (loadedKeys.has(key)) return Promise.resolve(true);
+  const running = inFlight.get(key);
+  if (running) return running;
 
-  loadingKey = key;
-  loading = (async () => {
-    const rows = await fetchScope(scope);
-    if (rows && rows.length > 0) {
-      if (scope.all) {
-        applyRemoteContent("questions", rows as unknown as Record<string, unknown>[]);
-      } else {
-        mergeIntoMemory(rows);
+  const job = (async () => {
+    try {
+      const rows = await fetchScope(scope);
+      if (rows && rows.length > 0) {
+        if (scope.all) {
+          applyRemoteContent("questions", rows as unknown as Record<string, unknown>[]);
+        } else {
+          mergeIntoMemory(rows);
+        }
+        loadedKeys.add(key);
+        return true;
       }
-      loadedKey = key;
-      loading = null;
-      return true;
+      // Sin nube o lote vacío: se usa lo que ya haya en memoria y se permite
+      // reintentar en la siguiente visita (no se marca como cargado).
+      return read<BankQuestion[]>("questions", []).length > 0;
+    } finally {
+      inFlight.delete(key);
     }
-    loading = null;
-    loadingKey = null;
-    // Sin nube o lote vacío: se usa lo que ya haya en memoria.
-    return read<BankQuestion[]>("questions", []).length > 0;
   })();
-  return loading;
+  inFlight.set(key, job);
+  return job;
 }
+
 
 /**
  * Recupera preguntas concretas por id (sesiones en curso que se retoman tras
