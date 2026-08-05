@@ -8,6 +8,7 @@ import { SUBJECT_TEMAS } from "@/modules/data/registry";
 import {
   MATERIAS_DEF,
   getPublishedQuestions,
+  useQuestionBank,
   getTemaProgress,
   materiaPerformance,
   materiaProgressPct,
@@ -62,6 +63,7 @@ const STATUS_CONFIG = {
 
 function MateriasIndex() {
   const user = useSessionUser();
+  useQuestionBank();
 
   const subjects = useStore<Subject[]>(() => {
     const perf = user ? materiaPerformance(user.id) : [];

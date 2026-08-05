@@ -12,7 +12,7 @@
  */
 import { useMemo, useRef, useState, useEffect } from "react";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
-import { getPublishedQuestions, materiaBySlug, useSessionUser, useStore, canUseAI, logYarisUse } from "@/lib/store";
+import { getPublishedQuestions, useQuestionBank, materiaBySlug, useSessionUser, useStore, canUseAI, logYarisUse } from "@/lib/store";
 import type { BankQuestion } from "@/lib/store";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import { LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
@@ -269,6 +269,7 @@ function AudioRepaso({ grupos, la, onClose }: { grupos: Grupo[]; la: boolean; on
   const [loading, setLoading] = useState(false);
   const askYaris = useYarisAsk();
   const user = useSessionUser();
+  useQuestionBank();
   const paid = canUseAI(user);
   const speech = useSpeech();
 
