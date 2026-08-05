@@ -1,9 +1,44 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const PLANE_PATH =
   "M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z";
 
-function runPlanes(canvas: HTMLCanvasElement, host: HTMLElement, count: number, color: string) {
+/** Tinta de los aviones en tema claro (azul de marca) y en oscuro (blanco). */
+export const PLANE_INK_LIGHT = "34,55,92";
+export const PLANE_INK_DARK = "255,255,255";
+
+/**
+ * Color de dibujo según el tema activo.
+ *
+ * El campo de aviones se pinta en canvas, así que ninguna regla CSS del tema
+ * oscuro lo alcanza: con fondo oscuro los aviones azul marino desaparecían.
+ * Este hook observa `html[data-theme]` para que el cambio de tema se refleje
+ * sin recargar.
+ */
+export function usePlaneInk(light: string = PLANE_INK_LIGHT, dark: string = PLANE_INK_DARK): string {
+  const [ink, setInk] = useState(light);
+  useEffect(() => {
+    const root = document.documentElement;
+    const read = () => setInk(root.dataset.theme === "oscuro" ? dark : light);
+    read();
+    const obs = new MutationObserver(read);
+    obs.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => obs.disconnect();
+  }, [light, dark]);
+  return ink;
+}
+
+/**
+ * Motor del campo de aviones. `getColor` se lee en cada fotograma para que un
+ * cambio de tema no obligue a reiniciar la animación (y a re-aleatorizar las
+ * posiciones).
+ */
+export function runPlanes(
+  canvas: HTMLCanvasElement,
+  host: HTMLElement,
+  count: number,
+  getColor: () => string,
+) {
   const ctx = canvas.getContext("2d");
   if (!ctx) return () => {};
   const planePath = new Path2D(PLANE_PATH);
@@ -58,6 +93,7 @@ function runPlanes(canvas: HTMLCanvasElement, host: HTMLElement, count: number, 
   let t = 0, raf = 0;
 
   function drawPlane(p: P) {
+    const color = getColor();
     const ang = Math.atan2(p.vy, p.vx);
     const s = p.size * 1.0;
     ctx!.save(); ctx!.translate(p.x, p.y); ctx!.rotate(ang + Math.PI / 2); ctx!.scale(s, s);
@@ -73,6 +109,7 @@ function runPlanes(canvas: HTMLCanvasElement, host: HTMLElement, count: number, 
   }
   function drawTrail(p: P) {
     if (p.trail.length < 2) return;
+    const color = getColor();
     ctx!.save(); ctx!.setLineDash([1.5, 6.5]); ctx!.lineCap = "round"; ctx!.lineWidth = 1;
     ctx!.strokeStyle = `rgba(${color},${(p.alpha * 0.38).toFixed(3)})`;
     ctx!.beginPath();
@@ -111,8 +148,22 @@ function runPlanes(canvas: HTMLCanvasElement, host: HTMLElement, count: number, 
     ctx!.clearRect(0, 0, W, H);
     for (let i = 0; i < planes.length; i++) { update(planes[i]); drawTrail(planes[i]); drawPlane(planes[i]); }
   }
-  if (prefersReduced) { planes.forEach((p) => { for (let k = 0; k < 24; k++) update(p); drawTrail(p); drawPlane(p); }); }
-  else { raf = requestAnimationFrame(frame); }
+  function paintStatic() {
+    ctx!.clearRect(0, 0, W, H);
+    planes.forEach((p) => { drawTrail(p); drawPlane(p); });
+  }
+
+  // Con movimiento reducido se pinta un solo fotograma; hay que repintarlo al
+  // cambiar de tema porque no hay bucle que recoja el color nuevo.
+  let themeObs: MutationObserver | null = null;
+  if (prefersReduced) {
+    planes.forEach((p) => { for (let k = 0; k < 24; k++) update(p); });
+    paintStatic();
+    themeObs = new MutationObserver(paintStatic);
+    themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  } else {
+    raf = requestAnimationFrame(frame);
+  }
 
   return function cleanup() {
     cancelAnimationFrame(raf);
@@ -122,24 +173,43 @@ function runPlanes(canvas: HTMLCanvasElement, host: HTMLElement, count: number, 
     host.removeEventListener("touchmove", pos);
     host.removeEventListener("touchend", clear);
     if (io) io.disconnect();
+    if (themeObs) themeObs.disconnect();
   };
 }
 
-export function PlaneField({ count = 14, color = "34,55,92" }: { count?: number; color?: string }) {
+/**
+ * Campo de aviones de fondo. `color` fija la tinta del tema claro; en oscuro
+ * siempre se pintan en blanco para que sigan viéndose sobre el fondo profundo.
+ */
+export function PlaneField({
+  count = 14,
+  color = PLANE_INK_LIGHT,
+  className,
+  style,
+}: {
+  count?: number;
+  color?: string;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   const ref = useRef<HTMLCanvasElement>(null);
+  const ink = usePlaneInk(color);
+  const inkRef = useRef(ink);
+  inkRef.current = ink;
   useEffect(() => {
     const canvas = ref.current;
     if (!canvas || !canvas.parentElement) return;
     const host = canvas.parentElement;
     if (getComputedStyle(host).position === "static") host.style.position = "relative";
     host.style.isolation = "isolate";
-    return runPlanes(canvas, host, count, color);
-  }, [count, color]);
+    return runPlanes(canvas, host, count, () => inkRef.current);
+  }, [count]);
   return (
     <canvas
       ref={ref}
       aria-hidden="true"
-      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 0 }}
+      className={className}
+      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 0, ...style }}
     />
   );
 }

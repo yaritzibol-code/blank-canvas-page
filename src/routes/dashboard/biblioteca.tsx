@@ -13,6 +13,7 @@ import {
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
+import { ModuleHeader } from "@/components/shared/ModuleHeader";
 
 export const Route = createFileRoute("/dashboard/biblioteca")({
   component: BibliotecaPage,
@@ -266,6 +267,13 @@ function BibliotecaPage() {
 
       {/* ── LIBRARY CONTENT ── */}
       <div style={{ fontFamily: "'Manrope', sans-serif" }}>
+        <ModuleHeader
+          eyebrow="Recursos · Biblioteca"
+          title="Todo el material,"
+          accent="a mano"
+          tail="."
+          subtitle="Los manuales oficiales, la normativa y los libros del curso, con Yaris leyendo a tu lado."
+        />
 
         {/* Search + filters */}
         <div style={{ display: "flex", gap: 12, marginBottom: 28, flexWrap: "wrap" }}>

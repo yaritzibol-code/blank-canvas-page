@@ -15,6 +15,7 @@ import {
   type Genero,
 } from "@/lib/store";
 import { PathyBubble } from "@/routes/index";
+import { ModuleHeader } from "@/components/shared/ModuleHeader";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 
 export const Route = createFileRoute("/dashboard/bitacora")({
@@ -318,6 +319,17 @@ function BitacoraPage() {
         .save-btn:hover{background:#8a0a28!important;transform:translateY(-2px);box-shadow:0 8px 20px rgba(108,8,32,.3)!important;}
         .ec-card:hover{transform:translateX(3px);box-shadow:0 4px 16px rgba(61,93,145,.1)!important;}
       `}</style>
+
+      <div style={{ padding: "0 32px" }}>
+        <ModuleHeader
+          eyebrow="Mi progreso · Bitácora"
+          title="Cómo te fue"
+          accent="hoy"
+          tail="."
+          subtitle="Tu registro personal de estudio. Pathy lo lee para entender no sólo qué fallaste, sino por qué."
+          planes={6}
+        />
+      </div>
 
       {/* TAB BAR */}
       <div style={{ padding: "16px 32px 0", background: "white", borderBottom: "1px solid rgba(61,93,145,.08)" }}>

@@ -15,6 +15,7 @@ import {
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
 import { adminOnly } from "@/components/shared/UnderConstruction";
+import { ModuleHeader } from "@/components/shared/ModuleHeader";
 
 export const Route = createFileRoute("/dashboard/flashcards")({
   component: adminOnly(FlashcardsPage, "Flashcards"),
@@ -208,12 +209,14 @@ function FlashcardsPage() {
   if (screen === "materias" || !materia || !tema) {
     return (
       <div style={{ fontFamily: "'Manrope', sans-serif" }}>
-        <div style={{ marginBottom: 28 }}>
-          <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", color: "#22375C", marginBottom: 6 }}>
-            Estudia con <span style={{ color: "#6C0820" }}>Flashcards</span>
-          </h1>
-          <p style={{ fontSize: "0.9rem", color: "#647DA0" }}>Elige una materia para repasar sus conceptos clave.</p>
-        </div>
+        <ModuleHeader
+          eyebrow="Recursos · Flashcards"
+          title="Repaso"
+          accent="rápido"
+          tail="."
+          subtitle="Elige una materia para repasar sus conceptos clave."
+          planes={6}
+        />
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 16 }}>
           {materias.map((m, i) => (
             <MateriaCard key={m.slug} materia={m} onClick={() => { setMateriaIdx(i); setTemaIdx(0); setScreen("temas"); }} />

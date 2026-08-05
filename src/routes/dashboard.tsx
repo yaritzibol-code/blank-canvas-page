@@ -5,6 +5,8 @@ import { syncMyPlan } from "@/lib/payments.functions";
 import { getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
 import { refreshCloudProfile } from "@/lib/store/auth";
 import { YarisChatModal } from "@/components/shared/YarisChatModal";
+import { useLiveData } from "@/hooks/use-live-data";
+import { LiveIndicator } from "@/components/shared/LiveIndicator";
 import { TimerProvider } from "@/contexts/StudyTimerContext";
 
 export const Route = createFileRoute("/dashboard")({
@@ -339,6 +341,10 @@ function DashboardLayout() {
   const snapshot = useStore(() =>
     user ? studySnapshot(user.id) : { topMateria: null, avgSessionMin: null, sessions: 0 },
   );
+  // Relee la nube mientras el dashboard está abierto: sin esto el progreso
+  // hecho en otro dispositivo (o los cambios de la administradora) no
+  // aparecían hasta recargar la página.
+  const live = useLiveData(ready);
 
   // Cierra el sidebar móvil con Escape (a11y)
   useEffect(() => {
@@ -491,6 +497,7 @@ function DashboardLayout() {
                 </div>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span className="hidden sm:inline-flex"><LiveIndicator state={live} compact /></span>
                 <div
                   style={{
                     display: "flex", alignItems: "center", gap: 6,

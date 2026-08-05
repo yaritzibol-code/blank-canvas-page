@@ -17,6 +17,7 @@ import {
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { adminOnly } from "@/components/shared/UnderConstruction";
+import { ModuleHeader } from "@/components/shared/ModuleHeader";
 
 export const Route = createFileRoute("/dashboard/clases")({
   component: adminOnly(ClasesPage, "Clases grabadas"),
@@ -613,12 +614,14 @@ function ClasesPage() {
   // ── MATERIAS GRID ────────────────────────────────────────────────────────────
   return (
     <div>
-      <div style={{ marginBottom: 28 }}>
-        <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", color: "#22375C", marginBottom: 6 }}>
-          Clases <span style={{ color: "#6C0820" }}>Grabadas</span>
-        </h1>
-        <p style={{ fontSize: ".9rem", color: "#647DA0" }}>Aprende a tu ritmo con videos explicados por Yaris, organizados por materia y tema.</p>
-      </div>
+      <ModuleHeader
+        eyebrow="Recursos · Clases grabadas"
+        title="Aprende a tu"
+        accent="ritmo"
+        tail="."
+        subtitle="Videos explicados por Yaris, organizados por materia y tema."
+        planes={6}
+      />
 
       {/* Próximamente banner (solo si aún no hay clases publicadas) */}
       {!anyPublished && (

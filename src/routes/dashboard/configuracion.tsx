@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
+import { ModuleHeader } from "@/components/shared/ModuleHeader";
 import {
   useSessionUser,
   updateUser,
@@ -227,6 +228,15 @@ function ConfiguracionPage() {
         .theme-btn:hover { border-color: #3D5D91; }
         .close-btn:hover { background: rgba(255,255,255,.08) !important; }
       `}</style>
+
+      <ModuleHeader
+        eyebrow="Cuenta · Configuración"
+        title="Ajusta tu"
+        accent="cabina"
+        tail="."
+        subtitle="Datos de la cuenta, avisos, apariencia y seguridad."
+        planes={6}
+      />
 
       {/* Flash */}
       {flash && (
