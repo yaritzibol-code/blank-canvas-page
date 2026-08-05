@@ -158,6 +158,8 @@ function ConfiguracionPage() {
   const [ciaacDraft, setCiaacDraft] = useState(() => user?.fechaCiaac ?? "");
   const [deleteConfirm, setDeleteConfirm] = useState("");
   const [yarisTono, setYarisTonoState] = useState<YarisTono>(() => user?.yarisTono ?? "normal");
+  const [yarisLargo, setYarisLargoState] = useState<YarisLargo>(() => user?.yarisLargo ?? "normal");
+
 
   if (!user) return null;
 
