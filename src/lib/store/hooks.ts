@@ -77,6 +77,7 @@ export function useRequireAuth(requiredRole?: "admin"): { user: User | null; rea
   useEffect(() => {
     if (!mounted || !settled) return;
     if (!user) {
+      if (location.pathname === "/login") return;
       const next = `${location.pathname}${location.searchStr}${location.hash}`;
       navigate({ to: "/login", search: { next }, replace: true });
     } else if (requiredRole === "admin" && user.role !== "admin") {
