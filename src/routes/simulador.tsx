@@ -1369,7 +1369,19 @@ function SimuladorPage() {
                 <span style={{ display: "flex", alignItems: "center" }}><Icon n="lightbulb" size={14} /></span>
                 <span>Atajos: <kbd style={{ background: "#f2f4fa", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>1-4</kbd> respuesta · <kbd style={{ background: "#f2f4fa", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>←/→</kbd> navegar · <kbd style={{ background: "#f2f4fa", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>F</kbd> marcar</span>
               </div>
+
+              <button
+                onClick={() => { void openYaris(); }}
+                aria-label="Abrir Yaris en modo te ayudo a pensar"
+                style={{ width: "100%", marginTop: 16, minHeight: 48, padding: "11px 14px", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}
+              >
+                <Icon n="lightbulb" size={16} /> Ayúdame a pensar
+              </button>
+              <p style={{ marginTop: 8, fontSize: "0.72rem", color: "#8DA1BE", textAlign: "center", lineHeight: 1.5 }}>
+                Yaris te guía con el concepto y preguntas clave, nunca con la respuesta.
+              </p>
             </div>
+
 
 
             {/* Nav */}
