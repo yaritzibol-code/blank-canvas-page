@@ -19,6 +19,7 @@ import {
   todayKey,
   useSessionUser,
   useStore,
+  getPathyReports,
 } from "@/lib/store";
 
 export const Route = createFileRoute("/dashboard/analisis")({
