@@ -1,0 +1,1 @@
+delete from content where collection='questions' and data->>'fuente' in ('ATP','PHAK') and data->>'capitulo' is null;
