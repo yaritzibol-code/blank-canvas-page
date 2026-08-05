@@ -4,6 +4,7 @@ import { Icon } from "@/components/ui/fp-icon";
 import { PlaneField } from "@/components/shared/PlaneField";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { PathyAnalysis } from "@/components/shared/PathyAnalysis";
+import { PathyDebriefHistory } from "@/components/shared/PathyDebriefHistory";
 import { useLiveData } from "@/hooks/use-live-data";
 import {
   contenidoDisponible,
@@ -132,6 +133,7 @@ function AnalisisPage() {
     if (!user) return null;
     const stats = studentStats(user.id, period);
     const pathy = pathyReport(user);
+    const debriefs = getPathyReports(user.id);
     const days = getStudyDays(user.id);
 
     // Heatmap: últimos 35 días, nivel 0-4 según minutos estudiados
@@ -283,6 +285,9 @@ function AnalisisPage() {
 
       {/* Análisis completo de Pathy */}
       <PathyAnalysis report={data.pathy} live={live} />
+
+      {/* Lectura de Pathy tras cada sesión (informes guardados) */}
+      <PathyDebriefHistory reports={data.debriefs} />
 
       {/* Avance del curso — la preparación estimada ya la reporta el análisis de Pathy */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(240px,1fr))", gap: 14, marginBottom: 14 }}>
