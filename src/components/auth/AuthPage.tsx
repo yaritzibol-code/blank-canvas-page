@@ -129,7 +129,7 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
     // Toda cuenta entra primero a su inicio personal; el panel admin queda
     // disponible desde la navegación interna cuando corresponde.
     const dest = redirectTo ?? "/dashboard";
-    await navigate({ to: dest });
+    await navigate(destino(dest) as never);
   }
 
   return (
@@ -244,7 +244,7 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
       return;
     }
     const dest = redirectTo ?? "/dashboard";
-    await navigate({ to: dest });
+    await navigate(destino(dest) as never);
   }
 
   async function handleReset() {
@@ -420,7 +420,7 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
   }, []);
 
   useEffect(() => {
-    if (sessionUser) void navigate({ to: redirectTo ?? "/dashboard", replace: true });
+    if (sessionUser) void navigate({ ...destino(redirectTo ?? "/dashboard"), replace: true } as never);
   }, [sessionUser, redirectTo, navigate]);
 
   return (
