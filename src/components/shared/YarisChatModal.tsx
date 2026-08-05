@@ -73,12 +73,27 @@ export function YarisChatModal({
 
   if (!open) return null;
 
+  // Yaris con IA es una función Pro: con plan Básica el panel no conversa,
+  // muestra el popup de suscripción que lleva a la página de precios.
+  if (!canUseAI(user)) {
+    return (
+      <UpgradeModal
+        open
+        onClose={onClose}
+        feature="Yaris con IA"
+        benefit="Con Pro puedes conversar con ella, pedirle que te explique un tema y practicar sin límites."
+        {...(user ? { userId: user.id } : {})}
+      />
+    );
+  }
+
   const send = async () => {
     const text = input.trim();
     if (!text || typing) return;
     const nextUserMsgs: Msg[] = [...messages, { from: "user", text }];
     setMessages(nextUserMsgs);
     setInput("");
+
     setTyping(true);
     try {
       // Se omite el saludo local: no es un turno del modelo.
