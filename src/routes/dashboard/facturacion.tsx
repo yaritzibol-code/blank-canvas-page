@@ -514,6 +514,43 @@ function FacturacionPage() {
           </div>
         </div>
       )}
+
+      {/* Confirmación del cambio de periodicidad */}
+      {switchTo && (
+        <div
+          onClick={(e) => { if (e.target === e.currentTarget) setSwitchTo(null); }}
+          style={{ position: "fixed", inset: 0, background: "rgba(26,26,46,.6)", zIndex: 1200, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}
+        >
+          <div style={{ background: "white", borderRadius: 18, padding: 24, maxWidth: 460, width: "100%" }}>
+            <h2 style={{ fontFamily: DISPLAY, fontSize: "1.2rem", fontWeight: 800, color: INK, marginBottom: 8 }}>
+              {switchTo === "year" ? "¿Pasar al plan anual?" : "¿Volver al plan mensual?"}
+            </h2>
+            <p style={{ fontSize: ".88rem", color: HAZE, lineHeight: 1.6, marginBottom: 18 }}>
+              El cambio es inmediato. Stripe calcula el prorrateo: te acredita lo que ya pagaste de
+              este periodo y sólo cobra la diferencia
+              {switchTo === "year"
+                ? ` para dejarte en ${formatPriceWithInterval(PRO_ANNUAL_FALLBACK)}.`
+                : ` para dejarte en ${formatPriceWithInterval(PRO_MONTHLY_FALLBACK)}.`}{" "}
+              El recibo te llega por correo y queda en tu historial de pagos.
+            </p>
+            <div style={{ display: "flex", gap: 10 }}>
+              <button
+                onClick={() => setSwitchTo(null)}
+                style={{ flex: 1, padding: 11, borderRadius: 10, background: "white", color: HAZE, border: "2px solid #E8EEF6", fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+              >
+                Mejor no
+              </button>
+              <button
+                onClick={() => doSwitch(switchTo)}
+                disabled={busy}
+                style={{ flex: 1, padding: 11, borderRadius: 10, background: INK, color: "white", border: "none", fontSize: ".86rem", fontWeight: 700, cursor: busy ? "wait" : "pointer", fontFamily: "'Manrope', sans-serif" }}
+              >
+                {busy ? "Cambiando…" : "Sí, cambiar"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
