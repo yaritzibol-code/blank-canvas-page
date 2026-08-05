@@ -1285,7 +1285,7 @@ function SimuladorPage() {
                 {examQ?.text ?? ""}
               </p>
 
-              <QuestionImages files={examQ?.imagenes} />
+              <QuestionImages files={examQ?.imagenes} fuente={examQ?.fuente} />
 
 
               <div role="radiogroup" aria-label="Opciones de respuesta" style={{ display: "flex", flexDirection: "column", gap: 10 }}>

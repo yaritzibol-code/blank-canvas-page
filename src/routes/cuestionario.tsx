@@ -970,7 +970,7 @@ function CuestionarioPage() {
               {currentQ.text}
             </p>
 
-            <QuestionImages files={currentQ.imagenes} />
+            <QuestionImages files={currentQ.imagenes} fuente={currentQ.fuente} />
 
 
 
