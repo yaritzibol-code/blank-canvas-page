@@ -6,13 +6,16 @@
  * proceso y un manual del curso por tarjeta. Debajo, el historial permite
  * reanudar lo que quedó a medias.
  */
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import { useRequireAuth } from "@/lib/store";
 import {
   LINEA_AEREA_OFICIAL,
   LINEA_AEREA_OFICIAL_TOTAL,
   LINEA_AEREA_QUIZZES,
+  ATP_CHAPTERS,
+  ATP_TOTAL,
 } from "@/lib/store/linea-aerea-meta";
 import { BancoScreen } from "@/components/banco/BancoScreen";
 
@@ -106,6 +109,8 @@ function QuizCard({
   to,
   search,
   pdfUrl,
+  onStart,
+  ctaLabel = "Iniciar cuestionario →",
 }: {
   dark?: boolean;
   badge: string;
@@ -113,10 +118,14 @@ function QuizCard({
   titulo: string;
   descripcion: string;
   features: string[];
-  to: string;
-  search: Record<string, unknown>;
+  to?: string;
+  search?: Record<string, unknown>;
   pdfUrl?: string;
+  /** Si se define, la tarjeta abre un selector en vez de navegar. */
+  onStart?: () => void;
+  ctaLabel?: string;
 }) {
+
   return (
     <div
       className={`fp-la-card${dark ? " fp-la-dark" : ""}`}
@@ -195,26 +204,50 @@ function QuizCard({
       </div>
 
       <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 8 }}>
-        <Link
-          to={to}
-          search={search as never}
-          style={{
-            padding: "13px 20px",
-            borderRadius: 12,
-            fontSize: "0.9rem",
-            fontWeight: 700,
-            textDecoration: "none",
-            textAlign: "center",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 8,
-            background: dark ? "#F2AEBC" : "#3D5D91",
-            color: dark ? "#6C0820" : "white",
-          }}
-        >
-          Iniciar cuestionario →
-        </Link>
+        {onStart ? (
+          <button
+            type="button"
+            onClick={onStart}
+            style={{
+              padding: "13px 20px",
+              borderRadius: 12,
+              fontSize: "0.9rem",
+              fontWeight: 700,
+              border: "none",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              background: dark ? "#F2AEBC" : "#3D5D91",
+              color: dark ? "#6C0820" : "white",
+            }}
+          >
+            {ctaLabel}
+          </button>
+        ) : (
+          <Link
+            to={to!}
+            search={(search ?? {}) as never}
+            style={{
+              padding: "13px 20px",
+              borderRadius: 12,
+              fontSize: "0.9rem",
+              fontWeight: 700,
+              textDecoration: "none",
+              textAlign: "center",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              background: dark ? "#F2AEBC" : "#3D5D91",
+              color: dark ? "#6C0820" : "white",
+            }}
+          >
+            {ctaLabel}
+          </Link>
+        )}
+
         {pdfUrl && (
           <a
             href={pdfUrl}
@@ -243,13 +276,142 @@ function QuizCard({
   );
 }
 
+/* ─── Selector de capítulos del banco ATP ────────────── */
+
+function AtpChapterPicker({ onClose }: { onClose: () => void }) {
+  const navigate = useNavigate();
+  const [sel, setSel] = useState<Set<number>>(new Set());
+  const all = sel.size === 0;
+  const total = all
+    ? ATP_TOTAL
+    : ATP_CHAPTERS.filter((c) => sel.has(c.num)).reduce((s, c) => s + c.total, 0);
+
+  function toggle(num: number) {
+    setSel((prev) => {
+      const next = new Set(prev);
+      if (next.has(num)) next.delete(num);
+      else next.add(num);
+      return next;
+    });
+  }
+
+  function start() {
+    const caps = [...sel].sort((a, b) => a - b).join(",");
+    void navigate({
+      to: "/cuestionario",
+      search: (caps ? { fuente: "ATP", caps } : { fuente: "ATP" }) as never,
+    });
+  }
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Elegir capítulos de ATP"
+      onClick={onClose}
+      style={{
+        position: "fixed", inset: 0, zIndex: 60, background: "rgba(26,26,46,0.55)",
+        display: "flex", alignItems: "center", justifyContent: "center", padding: 16,
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: "white", borderRadius: 20, padding: "26px 24px",
+          maxWidth: 560, width: "100%", maxHeight: "85vh", overflowY: "auto",
+          fontFamily: FONT, color: INK, boxShadow: "0 30px 80px rgba(26,26,46,0.35)",
+        }}
+      >
+        <h3 style={{ fontFamily: DISPLAY, fontSize: "1.3rem", marginBottom: 6 }}>
+          ATP — elige capítulos
+        </h3>
+        <p style={{ fontSize: "0.85rem", color: "#647DA0", marginBottom: 18, lineHeight: 1.5 }}>
+          Sin selección, el cuestionario mezcla todo el banco ATP. Marca uno o varios
+          capítulos para enfocarte.
+        </p>
+
+        <button
+          type="button"
+          onClick={() => setSel(new Set())}
+          style={{
+            width: "100%", textAlign: "left", marginBottom: 10, cursor: "pointer",
+            padding: "12px 14px", borderRadius: 12, fontFamily: FONT, fontSize: "0.88rem", fontWeight: 700,
+            border: all ? "2px solid #3D5D91" : "2px solid #F2DCDB",
+            background: all ? "rgba(61,93,145,0.08)" : "white", color: INK,
+          }}
+        >
+          Todo el banco ATP · {ATP_TOTAL} preguntas
+        </button>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          {ATP_CHAPTERS.map((c) => {
+            const on = sel.has(c.num);
+            return (
+              <button
+                key={c.num}
+                type="button"
+                aria-pressed={on}
+                onClick={() => toggle(c.num)}
+                style={{
+                  display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12,
+                  textAlign: "left", cursor: "pointer", padding: "12px 14px", borderRadius: 12,
+                  fontFamily: FONT, fontSize: "0.85rem", color: INK,
+                  border: on ? "2px solid #6C0820" : "2px solid #F2DCDB",
+                  background: on ? "rgba(108,8,32,0.06)" : "white",
+                }}
+              >
+                <span style={{ fontWeight: 700 }}>
+                  Cap. {c.num} · {c.titulo}
+                  <span style={{ display: "block", fontWeight: 500, color: "#647DA0", fontSize: "0.76rem" }}>
+                    {c.tituloEn}
+                  </span>
+                </span>
+                <span style={{ color: "#647DA0", fontSize: "0.78rem", whiteSpace: "nowrap" }}>
+                  {c.total} preg.
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
+          <button
+            type="button"
+            onClick={onClose}
+            style={{
+              flex: "0 0 auto", padding: "12px 18px", borderRadius: 12, cursor: "pointer",
+              border: "2px solid #F2DCDB", background: "white", color: INK,
+              fontFamily: FONT, fontWeight: 700, fontSize: "0.85rem",
+            }}
+          >
+            Cancelar
+          </button>
+          <button
+            type="button"
+            onClick={start}
+            style={{
+              flex: 1, padding: "12px 18px", borderRadius: 12, cursor: "pointer", border: "none",
+              background: "#3D5D91", color: "white", fontFamily: FONT, fontWeight: 700, fontSize: "0.9rem",
+            }}
+          >
+            Iniciar con {total} preguntas →
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function QuizCards() {
+  const [atpOpen, setAtpOpen] = useState(false);
   return (
     <div style={{ maxWidth: 820, width: "100%", fontFamily: FONT, color: INK, marginBottom: 8 }}>
       <style>{quizCardsCss}</style>
       <h2 style={{ fontFamily: DISPLAY, fontSize: "1.15rem", color: INK, display: "flex", alignItems: "center", gap: 8, marginBottom: 18 }}>
         <Icon n="book" size={18} color="#6C0820" /> Cuestionarios
       </h2>
+
+      {atpOpen && <AtpChapterPicker onClose={() => setAtpOpen(false)} />}
 
       <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 20 }}>
         {/* Guía oficial del proceso */}
@@ -270,25 +432,45 @@ function QuizCards() {
         />
 
         {/* Un cuestionario por manual del curso */}
-        {LINEA_AEREA_QUIZZES.map((q) => (
-          <QuizCard
-            key={q.code}
-            badge="Manual del curso"
-            icon={q.icon as FPIconName}
-            titulo={q.titulo}
-            descripcion={q.descripcion}
-            features={[
-              `${q.total} preguntas del manual`,
-              "Feedback inmediato por respuesta",
-              'Botón "Explícamelo Yaris" siempre visible',
-              "PDF del manual a la mano",
-            ]}
-            to="/cuestionario"
-            search={{ fuente: q.code }}
-            pdfUrl={q.fileUrl}
-          />
-        ))}
+        {LINEA_AEREA_QUIZZES.map((q) =>
+          q.code === "ATP" ? (
+            <QuizCard
+              key={q.code}
+              badge="Banco por capítulos"
+              icon={q.icon as FPIconName}
+              titulo={q.titulo}
+              descripcion={q.descripcion}
+              features={[
+                `${ATP_TOTAL} preguntas en ${ATP_CHAPTERS.length} capítulos`,
+                "Elige uno, varios o todos los capítulos",
+                "Feedback inmediato por respuesta",
+                'Botón "Explícamelo Yaris" siempre visible',
+              ]}
+              onStart={() => setAtpOpen(true)}
+              ctaLabel="Elegir capítulos →"
+              pdfUrl={q.fileUrl}
+            />
+          ) : (
+            <QuizCard
+              key={q.code}
+              badge="Manual del curso"
+              icon={q.icon as FPIconName}
+              titulo={q.titulo}
+              descripcion={q.descripcion}
+              features={[
+                `${q.total} preguntas del manual`,
+                "Feedback inmediato por respuesta",
+                'Botón "Explícamelo Yaris" siempre visible',
+                "PDF del manual a la mano",
+              ]}
+              to="/cuestionario"
+              search={{ fuente: q.code }}
+              pdfUrl={q.fileUrl}
+            />
+          ),
+        )}
       </div>
+
     </div>
   );
 }
