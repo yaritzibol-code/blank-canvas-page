@@ -53,7 +53,6 @@ import { Route as AdminOperacionesDisputasRouteImport } from './routes/admin/ope
 import { Route as AdminOperacionesStripeRouteImport } from './routes/admin/operaciones/stripe'
 import { Route as AdminOperacionesYarisRouteImport } from './routes/admin/operaciones/yaris'
 import { Route as ApiPublicClientErrorsRouteImport } from './routes/api/public/client-errors'
-import { Route as ApiPublicTmppricesRouteImport } from './routes/api/public/tmpprices'
 import { Route as ApiYarisStreamRouteImport } from './routes/api/yaris/stream'
 import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/materias/index'
 import { Route as DashboardMateriasSubjectIdRouteImport } from './routes/dashboard/materias/$subjectId'
@@ -281,11 +280,6 @@ const ApiPublicClientErrorsRoute = ApiPublicClientErrorsRouteImport.update({
   path: '/api/public/client-errors',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicTmppricesRoute = ApiPublicTmppricesRouteImport.update({
-  id: '/api/public/tmpprices',
-  path: '/api/public/tmpprices',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiYarisStreamRoute = ApiYarisStreamRouteImport.update({
   id: '/api/yaris/stream',
   path: '/api/yaris/stream',
@@ -358,7 +352,6 @@ export interface FileRoutesByFullPath {
   '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
   '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
-  '/api/public/tmpprices': typeof ApiPublicTmppricesRoute
   '/api/yaris/stream': typeof ApiYarisStreamRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones/': typeof AdminOperacionesIndexRoute
@@ -409,7 +402,6 @@ export interface FileRoutesByTo {
   '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
   '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
-  '/api/public/tmpprices': typeof ApiPublicTmppricesRoute
   '/api/yaris/stream': typeof ApiYarisStreamRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones': typeof AdminOperacionesIndexRoute
@@ -462,7 +454,6 @@ export interface FileRoutesById {
   '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
   '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
-  '/api/public/tmpprices': typeof ApiPublicTmppricesRoute
   '/api/yaris/stream': typeof ApiYarisStreamRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones/': typeof AdminOperacionesIndexRoute
@@ -516,7 +507,6 @@ export interface FileRouteTypes {
     | '/admin/operaciones/stripe'
     | '/admin/operaciones/yaris'
     | '/api/public/client-errors'
-    | '/api/public/tmpprices'
     | '/api/yaris/stream'
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones/'
@@ -567,7 +557,6 @@ export interface FileRouteTypes {
     | '/admin/operaciones/stripe'
     | '/admin/operaciones/yaris'
     | '/api/public/client-errors'
-    | '/api/public/tmpprices'
     | '/api/yaris/stream'
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones'
@@ -619,7 +608,6 @@ export interface FileRouteTypes {
     | '/admin/operaciones/stripe'
     | '/admin/operaciones/yaris'
     | '/api/public/client-errors'
-    | '/api/public/tmpprices'
     | '/api/yaris/stream'
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones/'
@@ -658,7 +646,6 @@ export interface RootRouteChildren {
   AdminOperacionesStripeRoute: typeof AdminOperacionesStripeRoute
   AdminOperacionesYarisRoute: typeof AdminOperacionesYarisRoute
   ApiPublicClientErrorsRoute: typeof ApiPublicClientErrorsRoute
-  ApiPublicTmppricesRoute: typeof ApiPublicTmppricesRoute
   ApiYarisStreamRoute: typeof ApiYarisStreamRoute
   AdminOperacionesIndexRoute: typeof AdminOperacionesIndexRoute
   AdminOperacionesDiaDayRoute: typeof AdminOperacionesDiaDayRoute
@@ -975,13 +962,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicClientErrorsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/tmpprices': {
-      id: '/api/public/tmpprices'
-      path: '/api/public/tmpprices'
-      fullPath: '/api/public/tmpprices'
-      preLoaderRoute: typeof ApiPublicTmppricesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/yaris/stream': {
       id: '/api/yaris/stream'
       path: '/api/yaris/stream'
@@ -1092,7 +1072,6 @@ const rootRouteChildren: RootRouteChildren = {
   AdminOperacionesStripeRoute: AdminOperacionesStripeRoute,
   AdminOperacionesYarisRoute: AdminOperacionesYarisRoute,
   ApiPublicClientErrorsRoute: ApiPublicClientErrorsRoute,
-  ApiPublicTmppricesRoute: ApiPublicTmppricesRoute,
   ApiYarisStreamRoute: ApiYarisStreamRoute,
   AdminOperacionesIndexRoute: AdminOperacionesIndexRoute,
   AdminOperacionesDiaDayRoute: AdminOperacionesDiaDayRoute,
