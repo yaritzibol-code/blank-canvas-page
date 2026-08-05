@@ -66,6 +66,14 @@ export function useYarisAsk() {
   const paid = canUseAI(user);
 
   return async function ask({ history, ctx }: YarisTurn): Promise<YarisAnswer> {
+    if (!paid && ctx.preAnswer) {
+      return {
+        text:
+          "Todavía no eliges respuesta, así que no te doy la solución: <b>lee la pregunta buscando la palabra clave</b> (qué te piden exactamente), descarta las opciones que contradigan lo que ya sabes y quédate con la que puedas justificar. Cuando marques una, te muestro la explicación oficial.",
+        cite: null,
+        source: "explicacion_oficial",
+      };
+    }
     if (!paid) {
       return officialExplanation(
         ctx,
@@ -86,6 +94,8 @@ export function useYarisAsk() {
               options: q.options,
               correctIndex: q.correctIndex,
               explanation: q.explanation,
+              ...(ctx.userSelectedIndex !== undefined && { userSelectedIndex: ctx.userSelectedIndex }),
+              ...(ctx.preAnswer && { preAnswer: true }),
               ...(q.cite && { cite: q.cite }),
             }),
           },
@@ -110,6 +120,8 @@ function serverContext(ctx: YarisContext): Record<string, unknown> {
       options: q.options,
       correctIndex: q.correctIndex,
       explanation: q.explanation,
+      ...(ctx.userSelectedIndex !== undefined && { userSelectedIndex: ctx.userSelectedIndex }),
+      ...(ctx.preAnswer && { preAnswer: true }),
       ...(q.cite && { cite: q.cite }),
     }),
   };

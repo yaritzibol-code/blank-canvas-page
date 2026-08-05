@@ -7,8 +7,7 @@ import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import { SUBJECT_TEMAS } from "@/modules/data/registry";
 import {
   MATERIAS_DEF,
-  getPublishedQuestions,
-  useQuestionBank,
+  useBankCounts,
   getTemaProgress,
   materiaPerformance,
   materiaProgressPct,
@@ -63,7 +62,10 @@ const STATUS_CONFIG = {
 
 function MateriasIndex() {
   const user = useSessionUser();
-  useQuestionBank();
+  const counts = useBankCounts();
+  const porMateria = new Map<string, number>();
+  counts.forEach((c) => porMateria.set(c.materia, (porMateria.get(c.materia) ?? 0) + Number(c.total)));
+
 
   const subjects = useStore<Subject[]>(() => {
     const perf = user ? materiaPerformance(user.id) : [];
@@ -80,7 +82,7 @@ function MateriasIndex() {
       const doneTopics = temas.filter((t) => doneTemaIds.has(t.id)).length;
       const progress = user ? materiaProgressPct(user.id, m.slug) : 0;
       const avg = perf.find((p) => p.slug === m.slug)?.avg ?? 0;
-      const questions = getPublishedQuestions(m.slug).length;
+      const questions = porMateria.get(m.slug) ?? 0;
       const status: Subject["status"] =
         totalTopics > 0 && doneTopics === totalTopics ? "done" : "active";
       const extra = SUBJECT_EXTRA[m.slug] ?? { color: "#3D5D91", description: "" };

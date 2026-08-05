@@ -7,6 +7,7 @@ import {
   canStartSimulator,
   getPublishedQuestions,
   useQuestionBank,
+  ensureQuestionsByIds,
   saveSimAttempt,
   logYarisUse,
   sessionKey,
@@ -270,12 +271,18 @@ interface SimSnapshot {
 
 function SimuladorPage() {
   const { user, ready } = useRequireAuth();
-  const bankReady = useQuestionBank();
   const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>("warning");
   const search = Route.useSearch();
   const [mode, setMode] = useState<SimMode>(search.modo ?? "oficial");
   const banco: SimBank = search.banco ?? "ciaac";
+  // Lote acotado del banco: el examen se arma con las preguntas que necesita,
+  // nunca con una descarga completa del banco.
+  const bankReady = useQuestionBank(
+    banco === "la"
+      ? { scope: "la", limit: 600 }
+      : { scope: "ciaac", materias: MATERIAS.map((m) => m.slug), limit: 200 },
+  );
   /** "Salir" vuelve al módulo de origen, no siempre al de CIAAC. */
   const exitTo: "/dashboard/banco" | "/dashboard/linea-aerea" =
     banco === "la" ? "/dashboard/linea-aerea" : "/dashboard/banco";
@@ -320,6 +327,8 @@ function SimuladorPage() {
     restoredRef.current = true;
     const snap = loadActiveSession<SimSnapshot>(storeKey);
     if (!snap || snap.bankIds.length === 0) return;
+    void (async () => {
+    await ensureQuestionsByIds(snap.bankIds);
     const byId = new Map(getPublishedQuestions().map((q) => [q.id, q]));
     const bank = snap.bankIds.map((id) => byId.get(id)).filter((q): q is BankQuestion => !!q);
     if (bank.length !== snap.bankIds.length) {
@@ -340,9 +349,8 @@ function SimuladorPage() {
     setAgreed(true);
     savedRef.current = false;
     setPhase("exam");
+    })();
   }, [ready, user, storeKey]);
-
-  /** Guarda el avance del examen mientras esté en curso (cada ~10 s o al responder). */
   const saveTick = Math.floor(secondsLeft / 10);
   useEffect(() => {
     if (!storeKey) return;

@@ -189,6 +189,8 @@ export interface YarisPromptContext {
   options?: string[];
   correctIndex?: number;
   userSelectedIndex?: number;
+  /** El estudiante aún no elige respuesta: modo socrático. */
+  preAnswer?: boolean;
   explanation?: string;
   cite?: string;
   resourceTitle?: string;
@@ -240,6 +242,15 @@ export function buildYarisSystemPrompt(adminPrompt: string | null, ctx: YarisPro
       `\n- Respuesta del estudiante: ${elegida}` +
       `\n- Explicación oficial del curso: ${ctx.explanation ?? "—"}` +
       (ctx.cite ? `\n- Fuente oficial: ${ctx.cite}` : "");
+
+    if (ctx.preAnswer) {
+      system +=
+        "\n\nMODO SOCRÁTICO (el estudiante AÚN NO responde esta pregunta):" +
+        "\n- PROHIBIDO revelar, insinuar o descartar hasta dejar una sola opción: no digas cuál es la correcta ni cuál letra elegir, aunque te lo pida." +
+        "\n- Tu trabajo es que piense: explica el concepto de fondo, define los términos clave de la pregunta y recuérdale la regla, tabla o criterio que aplica." +
+        "\n- Hazle 1 o 2 preguntas guía y sugiérele cómo comparar las opciones entre sí." +
+        "\n- Cierra invitándolo a elegir su respuesta: cuando la marque, entonces sí le confirmas y explicas a fondo.";
+    }
   }
   return system;
 }

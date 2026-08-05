@@ -7,6 +7,7 @@ import {
   canStartQuiz,
   getPublishedQuestions,
   useQuestionBank,
+  ensureQuestionsByIds,
   getFreeQuestions,
   saveQuizAttempt,
   logYarisUse,
@@ -18,7 +19,7 @@ import {
   loadActiveSession,
   clearActiveSession,
 } from "@/lib/store";
-import type { BankQuestion, YarisContext } from "@/lib/store";
+import type { BankQuestion, BankScope, YarisContext } from "@/lib/store";
 import { useYarisAsk, useYarisStream, toHistory } from "@/lib/yaris-ask";
 import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
 import { PathyMark } from "@/components/shared/PathyMark";
@@ -128,8 +129,49 @@ interface AprendiendoSnapshot {
 
 function CuestionarioPage() {
   const { user, ready } = useRequireAuth();
-  const bankReady = useQuestionBank();
   const search = Route.useSearch();
+  /**
+   * Lote del banco que necesita esta sesión. El banco completo nunca se baja
+   * al navegador: se piden solo las preguntas del ámbito abierto.
+   */
+  const bankScope: BankScope = (() => {
+    const paidUser = user ? isPaid(user) : false;
+    const capsList = search.caps
+      ? search.caps.split(",").map((c: string) => Number(c.trim())).filter((n: number) => Number.isFinite(n))
+      : [];
+    if (search.fuente) {
+      return {
+        scope: "la" as const,
+        fuentes: [search.fuente],
+        ...(capsList.length > 0 && { caps: capsList }),
+        limit: paidUser ? 600 : 10,
+        ordered: !paidUser,
+      };
+    }
+    if (search.banco === "la") {
+      const codes = search.fuentes ? search.fuentes.split(",").map((c: string) => c.trim()).filter(Boolean) : [];
+      const materiasLa = search.materias
+        ? search.materias.split(",").map((m: string) => m.trim()).filter(Boolean)
+        : [];
+      return {
+        scope: "la" as const,
+        ...(search.modo === "oficial"
+          ? { fuentes: [LA_OFICIAL_FUENTE] }
+          : codes.length > 0 && { fuentes: [LA_OFICIAL_FUENTE, ...codes] }),
+        ...(materiasLa.length > 0 && { materias: materiasLa }),
+        limit: paidUser ? Math.min(Math.max((search.qty ?? 50) * 4, 200), 600) : 10,
+        ordered: !paidUser,
+      };
+    }
+    const slugs = parseSlugs(search.materias);
+    return {
+      scope: "ciaac" as const,
+      ...(slugs.length > 0 && { materias: slugs }),
+      limit: paidUser ? 200 : 10,
+      ordered: !paidUser,
+    };
+  })();
+  const bankReady = useQuestionBank(bankScope);
   /** Clave de la sesión activa: distinta por usuario y por configuración. */
   const sessionVariant = [
     search.materias ?? "all",
@@ -219,12 +261,14 @@ function CuestionarioPage() {
   // Construye el pool real de preguntas al montar (una sola vez).
   useEffect(() => {
     if (!ready || !bankReady || loaded || !user) return;
+    let alive = true;
+    void (async () => {
     const slugs = parseSlugs(search.materias);
     const paid = isPaid(user);
     let fullPool: BankQuestion[] = [];
     if (search.fuente) {
       // Cuestionario de un manual completo (curso de Línea Aérea): se toma el
-      // banco publicado sin recortar por materia para no perder preguntas.
+      // lote publicado sin recortar por materia para no perder preguntas.
       const caps = search.caps
         ? search.caps.split(",").map((c: string) => Number(c.trim())).filter((n: number) => Number.isFinite(n))
         : [];
@@ -233,8 +277,8 @@ function CuestionarioPage() {
       );
       fullPool = paid ? all : all.slice(0, 10);
     } else if (search.banco === "la") {
-      // Banco completo de Línea Aérea (opcionalmente acotado a manuales y/o
-      // a materias: las tarjetas del módulo abren el oficial por materia).
+      // Banco de Línea Aérea (opcionalmente acotado a manuales y/o a materias:
+      // las tarjetas del módulo abren el oficial por materia).
       const codes = search.fuentes ? search.fuentes.split(",").map((c: string) => c.trim()).filter(Boolean) : [];
       const materiasLa = search.materias
         ? search.materias.split(",").map((m: string) => m.trim()).filter(Boolean)
@@ -251,9 +295,12 @@ function CuestionarioPage() {
         fullPool = fullPool.concat(paid ? getPublishedQuestions(s) : getFreeQuestions(s));
       });
     }
-    // Sesión en curso: se retoma tal cual hasta que el usuario finalice.
+    // Sesión en curso: se retoma tal cual hasta que el usuario finalice. El
+    // lote actual es aleatorio, así que se recuperan sus preguntas por id.
     const snap = storeKey ? loadActiveSession<AprendiendoSnapshot>(storeKey) : null;
     if (snap && snap.qIds.length > 0) {
+      await ensureQuestionsByIds(snap.qIds);
+      if (!alive) return;
       const byId = new Map(getPublishedQuestions().map((q) => [q.id, q]));
       const restored = snap.qIds.map((id) => byId.get(id)).filter((q): q is BankQuestion => !!q);
       if (restored.length === snap.qIds.length) {
@@ -272,11 +319,16 @@ function CuestionarioPage() {
     }
 
     const picked = pickSession(fullPool, paid).map(toLocalQ);
+    if (!alive) return;
     setPool(fullPool);
     setSessionSlugs(slugs);
     setQuestions(picked);
     setResults(new Array(picked.length).fill(null));
     setLoaded(true);
+    })();
+    return () => {
+      alive = false;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, bankReady, loaded, user, search.materias, search.qty, search.fuente, search.banco, search.fuentes, search.modo, search.caps]);
 
@@ -390,6 +442,9 @@ function CuestionarioPage() {
     const idx = lastAnsweredRef.current ?? currentIdx;
     const q = questions[idx] ?? questions[currentIdx];
     if (!q) return {};
+    // Si todavía no elige respuesta, Yaris entra en modo "te ayudo a pensar":
+    // guía el razonamiento sin revelar la correcta.
+    const preAnswer = idx === currentIdx && !answered;
     return {
       question: {
         text: q.text,
@@ -398,6 +453,8 @@ function CuestionarioPage() {
         explanation: q.explanation,
         cite: q.feedback.cite,
       },
+      userSelectedIndex: preAnswer ? -1 : (selectedIdx ?? -1),
+      ...(preAnswer && { preAnswer: true }),
       materiaName: q.materia,
     };
   }
@@ -419,9 +476,10 @@ function CuestionarioPage() {
     const ctx = yarisCtx();
     const key = q.questionId || `idx-${idx}`;
     const again = yarisExplainedRef.current.has(key);
-    yarisExplainedRef.current.add(key);
+    if (!ctx.preAnswer) yarisExplainedRef.current.add(key);
     yarisBusyRef.current = true;
 
+    const pensar = !!ctx.preAnswer;
     setYarisMsgs((prev) => [
       ...(prev.length === 0
         ? [{ role: "bot" as const, text: "¡Hola! Soy <b>Yaris</b>. Púlsame en cualquier pregunta las veces que necesites y te la explico." }]
@@ -430,18 +488,22 @@ function CuestionarioPage() {
       {
         role: "bot" as const,
         // Sin nombrar la materia: el chat tampoco debe adelantar el tema.
-        text: again
-          ? `Va otra vez la <b>pregunta ${idx + 1}</b>, ahora con otro enfoque:`
-          : `Vamos con la <b>pregunta ${idx + 1}</b>:`,
+        text: pensar
+          ? `Aún no respondes la <b>pregunta ${idx + 1}</b>, así que te ayudo a pensarla <i>sin darte la respuesta</i>:`
+          : again
+            ? `Va otra vez la <b>pregunta ${idx + 1}</b>, ahora con otro enfoque:`
+            : `Vamos con la <b>pregunta ${idx + 1}</b>:`,
       },
     ]);
     setYarisTyping(true);
     const answer = await streamInto([
       {
         role: "user" as const,
-        content: again
-          ? "Explícame esta misma pregunta otra vez, pero de otra forma más sencilla, con otro ejemplo o analogía."
-          : "Explícame esta pregunta: por qué la correcta es correcta, por qué las demás no, y un tip para recordarlo.",
+        content: pensar
+          ? "Todavía no respondo esta pregunta. NO me digas cuál es la correcta: explícame el concepto que se está evaluando, qué significan los términos clave y hazme preguntas guía para que yo razone y elija."
+          : again
+            ? "Explícame esta misma pregunta otra vez, pero de otra forma más sencilla, con otro ejemplo o analogía."
+            : "Explícame esta pregunta: por qué la correcta es correcta, por qué las demás no, y un tip para recordarlo.",
       },
     ], ctx);
     yarisBusyRef.current = false;

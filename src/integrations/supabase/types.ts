@@ -621,6 +621,28 @@ export type Database = {
       admin_platform_stats: { Args: never; Returns: Json }
       admin_pro_stats: { Args: { check_env?: string }; Returns: Json }
       admin_stripe_event_stats: { Args: { hours_back?: number }; Returns: Json }
+      get_bank_counts: {
+        Args: never
+        Returns: {
+          capitulo: number
+          fuente: string
+          materia: string
+          total: number
+        }[]
+      }
+      get_bank_questions: {
+        Args: {
+          p_caps?: number[]
+          p_fuentes?: string[]
+          p_ids?: string[]
+          p_limit?: number
+          p_materias?: string[]
+          p_offset?: number
+          p_ordered?: boolean
+          p_scope?: string
+        }
+        Returns: Json[]
+      }
       has_active_subscription: {
         Args: { check_env?: string; user_uuid: string }
         Returns: boolean

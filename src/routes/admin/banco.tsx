@@ -32,6 +32,7 @@ import {
   type BankQuestion,
   type CsvImportResult,
   type QuestionStatus,
+  useQuestionBank,
 } from "@/lib/store";
 
 export const Route = createFileRoute("/admin/banco")({
@@ -76,6 +77,7 @@ function AdminBancoPage() {
     if (searchQ) setQuery(searchQ);
   }, [searchQ]);
 
+  useQuestionBank({ all: true });
   const questions = useStore(getQuestions);
 
   const total = questions.length;
