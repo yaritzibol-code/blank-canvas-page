@@ -16,6 +16,7 @@ import type {
   FlashSession,
   InternalConfig,
   Material,
+  PathyReportEntry,
   QuizAttempt,
   Reminder,
   Report,
@@ -149,7 +150,29 @@ export function getFreeQuestions(materia: string): BankQuestion[] {
     .slice(0, 10);
 }
 
+/* ───────────────────────── Informes de Pathy ───────────────────────── */
+
+/** Informes guardados (más reciente primero). */
+export function getPathyReports(userId: string): PathyReportEntry[] {
+  return read<PathyReportEntry[]>("pathy_reports", [])
+    .filter((r) => r.userId === userId)
+    .sort((a, b) => b.date.localeCompare(a.date));
+}
+
+/** Guarda un informe y conserva los últimos 30 por usuario. */
+export function savePathyReport(r: Omit<PathyReportEntry, "id" | "date">): PathyReportEntry {
+  const full: PathyReportEntry = { ...r, id: uid("pathy"), date: nowISO() };
+  update<PathyReportEntry[]>("pathy_reports", [], (all) => {
+    const mine = [...all.filter((x) => x.userId === r.userId), full]
+      .sort((a, b) => b.date.localeCompare(a.date))
+      .slice(0, 30);
+    return [...all.filter((x) => x.userId !== r.userId), ...mine];
+  });
+  return full;
+}
+
 /* ───────────────────────── Intentos: cuestionarios y simulador ───────────────────────── */
+
 
 export function getQuizAttempts(userId: string): QuizAttempt[] {
   return read<QuizAttempt[]>("quiz_attempts", []).filter((a) => a.userId === userId);

@@ -105,6 +105,27 @@ export interface BankQuestion {
   updatedAt: string;
 }
 
+/**
+ * Respuesta concreta a un reactivo dentro de un intento. Guardar el detalle
+ * (y no solo el marcador por materia) es lo que permite que Pathy diga qué
+ * capítulo del manual costó de verdad.
+ */
+export interface AttemptAnswer {
+  questionId: string;
+  materia: string;
+  /** Manual de origen (ATP, JEPP, PHAK…) cuando el reactivo viene de Línea Aérea. */
+  fuente?: string;
+  capitulo?: number;
+  capituloTitulo?: string;
+  seccion?: string;
+  /** -1 / null = quedó en blanco. */
+  selectedIndex: number;
+  correctIndex: number;
+}
+
+/** Alias histórico: el simulador ya guardaba sus respuestas con este nombre. */
+export type SimAnswer = AttemptAnswer;
+
 export interface QuizAttempt {
   id: string;
   userId: string;
@@ -114,19 +135,14 @@ export interface QuizAttempt {
   correct: number;
   durationMin: number;
   porMateria: Record<string, { correct: number; total: number }>;
+  /** Detalle por pregunta de esta sesión (intentos nuevos). */
+  answers?: AttemptAnswer[];
   /**
    * Nombre del cuestionario cuando no se define por materias (manuales del
    * curso de Línea Aérea o guía oficial). Opcional: los intentos antiguos
    * siguen mostrando su materia.
    */
   titulo?: string;
-}
-
-export interface SimAnswer {
-  questionId: string;
-  materia: string;
-  selectedIndex: number;
-  correctIndex: number;
 }
 
 export interface SimAttempt {
@@ -146,8 +162,47 @@ export interface SimAttempt {
   passed: boolean;
   durationSecs: number;
   porMateria: Record<string, { correct: number; total: number }>;
-  answers: SimAnswer[];
+  answers: AttemptAnswer[];
 }
+
+/** Punto flojo detectado con datos duros (no con IA). */
+export interface PathyWeakSpot {
+  /** "materia" | "capitulo" */
+  tipo: "materia" | "capitulo";
+  /** Etiqueta lista para mostrar ("Meteorología", "ATP · Cap. 5 — Performance"). */
+  label: string;
+  correct: number;
+  total: number;
+  pct: number;
+  /** true cuando la muestra es demasiado pequeña para concluir. */
+  muestraCorta: boolean;
+  /** Ruta sugerida para practicarlo. */
+  to?: string;
+  search?: Record<string, string>;
+}
+
+/** Informe de Pathy guardado tras una sesión. */
+export interface PathyReportEntry {
+  id: string;
+  userId: string;
+  date: string; // ISO
+  /** Origen del informe. */
+  origen: "cuestionario" | "simulador";
+  /** Nombre de la sesión ("Meteorología", "ATP · Cap. 5"…). */
+  titulo: string;
+  scorePct: number;
+  answered: number;
+  wrong: number;
+  /** Rankings reales calculados en el cliente. */
+  puntos: PathyWeakSpot[];
+  /** Narrativa de la IA; null cuando no se pudo generar. */
+  diagnostico: string | null;
+  confusiones: string[];
+  acciones: string[];
+  /** Motivo cuando no hay narrativa ("sin_pro", "limite", "error", "sin_errores"). */
+  motivo?: string;
+}
+
 
 export interface TemaProgress {
   userId: string;
