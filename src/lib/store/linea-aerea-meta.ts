@@ -41,10 +41,10 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
   {
     code: "JEPP",
     titulo: "Jeppesen",
-    descripcion: "General Airway Manual, sección Introduction: cartas y simbología.",
+    descripcion: "General Airway Manual — banco completo por capítulos del manual.",
     materia: "navegacion",
     icon: "map",
-    total: 50,
+    total: 644,
     fileUrl: "https://drive.google.com/file/d/1NdiWKEH7vqMqW5Zst_UDyAHnu5IxJMGx/preview",
   },
   {
