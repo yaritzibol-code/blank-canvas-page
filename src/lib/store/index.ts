@@ -22,7 +22,7 @@ export * from "./yaris";
 export { ensureSeeded, DEMO_STUDENT_ID, DEMO_ADMIN_ID, DEMO_BASIC_ID, DEMO_PASSWORD } from "./seed";
 export { uid, nowISO, todayKey, subscribe as subscribeStore } from "./db";
 export { cloudEnabled } from "./cloud";
-export { cloudSessionActive, refreshCloudData, lastCloudRefresh } from "./sync";
+export { cloudSessionActive, refreshCloudData, lastCloudRefresh, flushCloudWrites } from "./sync";
 export {
   sessionKey,
   saveActiveSession,
