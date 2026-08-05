@@ -110,7 +110,10 @@ export const Route = createFileRoute("/api/yaris/stream")({
         const apiKey = process.env["OPENAI_API_KEY"];
         if (!apiKey) return new Response("missing key", { status: 503 });
 
-        const system = buildYarisSystemPrompt(await loadAdminPrompt(), ctx);
+        const system = buildYarisSystemPrompt(await loadAdminPrompt(), {
+          ...ctx,
+          tono: profile.yarisTono ?? "normal",
+        });
         const messages = fitInputBudget(system, parsed.history);
         const started = Date.now();
 
