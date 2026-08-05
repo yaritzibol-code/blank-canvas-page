@@ -671,9 +671,13 @@ function CuestionarioPage() {
         fontFamily: "'Manrope', sans-serif",
         background: "#f5f7fc",
         color: "#22375C",
-        minHeight: "100vh",
+        height: "100dvh",
+        minHeight: "100dvh",
+        maxHeight: "100dvh",
+        overflow: "hidden",
         display: "flex",
         flexDirection: "column",
+
       }}
     >
       {/* ── TOPBAR ── */}
@@ -791,7 +795,7 @@ function CuestionarioPage() {
       </div>
 
       {/* ── MAIN ── */}
-      <div style={{ flex: 1, display: "flex", overflow: "hidden" }}>
+      <div style={{ flex: 1, minHeight: 0, display: "flex", overflow: "hidden" }}>
 
         {/* ── QUESTION AREA ── */}
         <div
@@ -1222,6 +1226,8 @@ function CuestionarioPage() {
                 }
               : {
                   width: yarisOpen ? 340 : 0,
+                  height: "100%",
+                  minHeight: 0,
                   overflow: "hidden",
                   flexShrink: 0,
                   background: "white",
@@ -1230,6 +1236,7 @@ function CuestionarioPage() {
                   flexDirection: "column",
                   transition: "width 0.35s ease",
                 }
+
           }
         >
           {/* Yaris header */}
