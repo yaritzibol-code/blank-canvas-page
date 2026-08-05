@@ -1,6 +1,7 @@
 /** Punto de entrada de la capa de datos de FlightPath. */
 export * from "./types";
 export * from "./materias";
+export * from "./genero";
 export * from "./auth";
 export * from "./domain";
 export * from "./gating";

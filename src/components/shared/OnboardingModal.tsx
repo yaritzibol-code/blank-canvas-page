@@ -8,7 +8,7 @@
  */
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
-import { updateUser } from "@/lib/store";
+import { MATERIAS_DEF, updateUser } from "@/lib/store";
 import type { User } from "@/lib/store";
 
 const FONT = "'Manrope', system-ui, sans-serif";
@@ -17,7 +17,13 @@ const INK = "#22375C";
 const BRAND = "#6C0820";
 const CORAL = "#F2AEBC";
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 7;
+
+const GENEROS: { key: "femenino" | "masculino" | "neutro"; label: string; ejemplo: string }[] = [
+  { key: "femenino", label: "Femenino", ejemplo: "“¿Lista para despegar?”" },
+  { key: "masculino", label: "Masculino", ejemplo: "“¿Listo para despegar?”" },
+  { key: "neutro", label: "Prefiero no decirlo", ejemplo: "“¿Te sientes con todo?”" },
+];
 
 const TOUR: { icon: FPIconName; title: string; sub: string }[] = [
   { icon: "help", title: "Cuestionarios", sub: "2,900+ preguntas con explicación, por materia y tema" },
@@ -35,6 +41,9 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
   const [escuela, setEscuela] = useState(user.escuela);
   const [fecha, setFecha] = useState(user.fechaCiaac ?? "");
   const [recordatorios, setRecordatorios] = useState(true);
+  const [genero, setGenero] = useState<"femenino" | "masculino" | "neutro">(user.genero ?? "neutro");
+  const [focoRuta, setFocoRuta] = useState<"ciaac" | "linea-aerea">(user.focoRuta ?? "ciaac");
+  const [focoMateria, setFocoMateria] = useState<string>(user.focoMateria ?? "");
   const [nombreError, setNombreError] = useState(false);
   const nombreRef = useRef<HTMLInputElement>(null);
 
@@ -61,6 +70,11 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
       }
       setNombreError(false);
     }
+    // Quien se enfoca en Línea Aérea no presenta CIAAC: se salta esa fecha.
+    if (step === 4 && focoRuta === "linea-aerea") {
+      go(6);
+      return;
+    }
     go(step + 1);
   };
 
@@ -71,6 +85,9 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
         ? {}
         : {
             nombre: nombre.trim() || user.nombre,
+            genero,
+            focoRuta,
+            focoMateria: focoRuta === "ciaac" ? (focoMateria || null) : null,
             whatsapp: whatsapp.trim(),
             whatsappEstado: whatsapp.trim() ? "registrado" : "sin_numero",
             escuela: escuela.trim(),
@@ -262,8 +279,108 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
           </div>
         )}
 
-        {/* PASO 2 — Perfil de vuelo */}
+        {/* PASO 2 — Cómo dirigirnos a ti */}
         {step === 2 && (
+          <div className={`fp-ob-step ${dir === -1 ? "back" : ""}`} key="s2g">
+            <StepHead icon="user" title="¿Cómo nos dirigimos a ti?" sub="Para hablarte bien en toda la plataforma. Puedes cambiarlo después en tu perfil." />
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 16 }}>
+              {GENEROS.map((g) => {
+                const activo = genero === g.key;
+                return (
+                  <button
+                    key={g.key}
+                    onClick={() => setGenero(g.key)}
+                    style={{
+                      display: "flex", alignItems: "center", gap: 12, textAlign: "left",
+                      padding: "14px 16px", borderRadius: 14, cursor: "pointer", width: "100%",
+                      background: activo ? "rgba(108,8,32,0.05)" : "#fff",
+                      border: `1.5px solid ${activo ? BRAND : "#E3EAF5"}`,
+                      fontFamily: FONT,
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: 20, height: 20, borderRadius: "50%", flexShrink: 0,
+                        border: `2px solid ${activo ? BRAND : "#C9D6E8"}`,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                      }}
+                    >
+                      {activo && <span style={{ width: 10, height: 10, borderRadius: "50%", background: BRAND }} />}
+                    </span>
+                    <span>
+                      <span style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: INK }}>{g.label}</span>
+                      <span style={{ display: "block", fontSize: 12.5, color: "#647DA0", marginTop: 2 }}>{g.ejemplo}</span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            <NavBtns onBack={() => go(1)} onNext={advance} />
+          </div>
+        )}
+
+        {/* PASO 3 — En qué se enfoca */}
+        {step === 3 && (
+          <div className={`fp-ob-step ${dir === -1 ? "back" : ""}`} key="s3f">
+            <StepHead icon="target" title="¿En qué te vas a enfocar?" sub="Personalizamos tu inicio con lo que más te importa ahora." />
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 16 }}>
+              {([
+                { key: "ciaac" as const, icon: "graduation" as FPIconName, label: "Examen CIAAC", sub: "Las 12 materias oficiales del examen teórico" },
+                { key: "linea-aerea" as const, icon: "plane" as FPIconName, label: "Línea Aérea", sub: "Convocatoria de Primer Oficial (Embraer 190)" },
+              ]).map((r) => {
+                const activo = focoRuta === r.key;
+                return (
+                  <button
+                    key={r.key}
+                    onClick={() => setFocoRuta(r.key)}
+                    style={{
+                      display: "flex", alignItems: "center", gap: 12, textAlign: "left",
+                      padding: "14px 16px", borderRadius: 14, cursor: "pointer", width: "100%",
+                      background: activo ? "rgba(108,8,32,0.05)" : "#fff",
+                      border: `1.5px solid ${activo ? BRAND : "#E3EAF5"}`,
+                      fontFamily: FONT,
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: 38, height: 38, borderRadius: 11, flexShrink: 0,
+                        background: activo ? BRAND : "rgba(61,93,145,0.08)",
+                        color: activo ? CORAL : "#3D5D91",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                      }}
+                    >
+                      <Icon n={r.icon} size={19} />
+                    </span>
+                    <span>
+                      <span style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: INK }}>{r.label}</span>
+                      <span style={{ display: "block", fontSize: 12.5, color: "#647DA0", marginTop: 2 }}>{r.sub}</span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {focoRuta === "ciaac" && (
+              <>
+                <label style={labelStyle}>¿Alguna materia en especial? (opcional)</label>
+                <select
+                  value={focoMateria}
+                  onChange={(e) => setFocoMateria(e.target.value)}
+                  style={inputStyle}
+                >
+                  <option value="">Todas por igual</option>
+                  {MATERIAS_DEF.map((m) => (
+                    <option key={m.slug} value={m.slug}>{m.name}</option>
+                  ))}
+                </select>
+              </>
+            )}
+            <NavBtns onBack={() => go(2)} onNext={advance} />
+          </div>
+        )}
+
+        {/* PASO 4 — Perfil de vuelo */}
+        {step === 4 && (
           <div className={`fp-ob-step ${dir === -1 ? "back" : ""}`} key="s2">
             <StepHead icon="graduation" title={`Tu perfil de vuelo${firstName ? `, ${firstName}` : ""}`} sub="Nos ayuda a personalizar tu preparación. Todo es opcional y editable después." />
             <label style={labelStyle}>Escuela de aviación</label>
@@ -274,12 +391,12 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
               <input type="checkbox" checked={recordatorios} onChange={(e) => setRecordatorios(e.target.checked)} style={{ width: 18, height: 18, accentColor: "#3D5D91", flexShrink: 0 }} />
               Quiero recibir recordatorios de estudio por WhatsApp
             </label>
-            <NavBtns onBack={() => go(1)} onNext={advance} />
+            <NavBtns onBack={() => go(3)} onNext={advance} />
           </div>
         )}
 
-        {/* PASO 3 — Fecha CIAAC */}
-        {step === 3 && (
+        {/* PASO 5 — Fecha CIAAC (solo si se enfoca en el CIAAC) */}
+        {step === 5 && (
           <div className={`fp-ob-step ${dir === -1 ? "back" : ""}`} key="s3">
             <StepHead icon="calendar" title="¿Cuándo es tu CIAAC?" sub="Con tu fecha activamos la cuenta regresiva y ajustamos tu ritmo de estudio." />
             <label style={labelStyle}>Fecha estimada o programada</label>
@@ -290,12 +407,12 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
             >
               Aún no tengo fecha →
             </button>
-            <NavBtns onBack={() => go(2)} onNext={advance} />
+            <NavBtns onBack={() => go(4)} onNext={advance} />
           </div>
         )}
 
-        {/* PASO 4 — Tour + despegue */}
-        {step === 4 && (
+        {/* PASO 6 — Tour + despegue */}
+        {step === 6 && (
           <div className={`fp-ob-step ${dir === -1 ? "back" : ""}`} key="s4">
             <StepHead icon="rocket" title={`Todo listo${firstName ? `, ${firstName}` : ""}. Esto te espera:`} sub="Tu cabina de estudio, en cuatro instrumentos." />
             <div className="fp-ob-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 10, marginTop: 16 }}>
@@ -314,7 +431,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
             <button onClick={() => finish(false)} className="fp-ob-btn fp-ob-btn-primary" style={{ ...primaryBtn, marginTop: 22 }}>
               Despegar <Icon n="plane" size={17} color="#fff" />
             </button>
-            <button onClick={() => go(3)} style={ghostBtn}>← Atrás</button>
+            <button onClick={() => go(focoRuta === "linea-aerea" ? 4 : 5)} style={ghostBtn}>← Atrás</button>
           </div>
         )}
       </div>

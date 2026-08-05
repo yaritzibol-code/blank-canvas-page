@@ -57,6 +57,18 @@ export interface User {
   lastAccess: string;
   marketingOptIn: boolean;
   onboardingDone: boolean;
+  /**
+   * Cómo se dirige la plataforma al estudiante ("¿lista?" / "¿listo?").
+   * Se elige en el onboarding y se puede cambiar en Mi perfil.
+   */
+  genero?: "femenino" | "masculino" | "neutro";
+  /**
+   * Ruta en la que se enfoca: una materia del CIAAC (slug) o "linea-aerea".
+   * Personaliza el inicio del dashboard y los atajos.
+   */
+  focoRuta?: "ciaac" | "linea-aerea";
+  /** Materia del CIAAC en la que se está enfocando (slug), si aplica. */
+  focoMateria?: string | null;
   /** Solicitud de eliminación: fecha de desactivación; 30 días para recuperar. */
   deactivatedAt: string | null;
   notasInternas: string;
