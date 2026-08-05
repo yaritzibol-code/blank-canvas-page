@@ -19,7 +19,7 @@ import {
 } from "@/lib/store";
 import type { BankQuestion, YarisContext } from "@/lib/store";
 import { useYarisAsk, useYarisStream, toHistory } from "@/lib/yaris-ask";
-import { yarisToHtml } from "@/lib/yaris-format";
+import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
 import { PathyMark } from "@/components/shared/PathyMark";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
@@ -1312,7 +1312,7 @@ function CuestionarioPage() {
                     color: msg.role === "bot" ? "#22375C" : "white",
                   }}
                 >
-                  <span className="yaris-md" dangerouslySetInnerHTML={{ __html: msg.text }} />
+                  <span className="yaris-md" dangerouslySetInnerHTML={{ __html: sanitizeHtml(msg.text) }} />
                   {msg.streaming && <span className="yaris-caret" aria-hidden="true" />}
                   {msg.cite && (
                     <span

@@ -106,3 +106,17 @@ export function yarisToHtml(text: string): string {
   });
   return `<div class="yaris-md">${html}</div>`;
 }
+
+/**
+ * Sanea HTML arbitrario en el punto donde se renderiza.
+ *
+ * `yarisToHtml()` ya limpia lo que devuelve el modelo, pero las burbujas de
+ * chat reciben cadenas de varias fuentes (respaldo local, historial guardado,
+ * texto que llega por streaming). Sanear otra vez justo antes de pintar cierra
+ * la puerta a un XSS por inyección de prompt aunque una ruta se nos escape;
+ * la operación es idempotente, así que no altera el HTML ya válido.
+ */
+export function sanitizeHtml(html: string): string {
+  if (!html) return "";
+  return DOMPurify.sanitize(html, { ALLOWED_TAGS, ALLOWED_ATTR: ["class"] });
+}

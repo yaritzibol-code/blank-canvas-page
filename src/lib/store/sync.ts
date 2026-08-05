@@ -233,7 +233,9 @@ async function hydrateLive(): Promise<void> {
     silently(() =>
       write(
         "reports",
-        reportRows.map((r) => r.data as Report),
+        // `notasInternas` es material del equipo admin y vive en
+        // `report_admin_notes`; nunca se hidrata desde `reports.data`.
+        reportRows.map((r) => ({ ...(r.data as Report), notasInternas: "" })),
       ),
     );
   }
@@ -413,7 +415,12 @@ async function pushKey(key: string): Promise<void> {
   }
 
   if (key === "reports") {
-    const rows = read<Row[]>("reports", []);
+    // La fila de `reports` la puede leer su dueña: se publica sin las notas
+    // internas del equipo (esas viven en `report_admin_notes`, sólo admin).
+    const rows = read<Row[]>("reports", []).map((r) => {
+      const { notasInternas: _notas, ...rest } = r as Row & { notasInternas?: string };
+      return rest as Row;
+    });
     const own = rows.filter((r) => r.userId === sessionUserId);
     if (own.length > 0) {
       await s

@@ -27,6 +27,7 @@ import {
 } from "@/lib/store";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import { adminOnly } from "@/components/shared/UnderConstruction";
+import { sanitizeHtml } from "@/lib/yaris-format";
 
 export const Route = createFileRoute("/dashboard/estudiemos")({
   component: adminOnly(EstudiemosJuntosPage, "Estudiemos juntos"),
@@ -831,7 +832,7 @@ function PruebaModal({ mode, onClose }: { mode: PruebaMode; onClose: (interactio
                     {m.isUser ? <Icon n="user" size={13} /> : <Icon n="spark" size={13} />}
                   </div>
                   <div style={{ maxWidth: "84%", padding: "8px 12px", borderRadius: m.isUser ? "12px 4px 12px 12px" : "4px 12px 12px 12px", background: m.isUser ? "#3D5D91" : "#f0f4ff", color: m.isUser ? "white" : "#22375C", fontSize: "0.82rem", lineHeight: 1.55 }}>
-                    {m.isUser ? m.html : <span dangerouslySetInnerHTML={{ __html: m.html }} />}
+                    {m.isUser ? m.html : <span dangerouslySetInnerHTML={{ __html: sanitizeHtml(m.html) }} />}
                   </div>
                 </div>
               ))}

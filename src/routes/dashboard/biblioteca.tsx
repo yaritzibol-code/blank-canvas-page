@@ -14,6 +14,7 @@ import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { ModuleHeader } from "@/components/shared/ModuleHeader";
+import { sanitizeHtml } from "@/lib/yaris-format";
 
 export const Route = createFileRoute("/dashboard/biblioteca")({
   component: BibliotecaPage,
@@ -530,7 +531,7 @@ function BibliotecaPage() {
                       {msg.role === "bot" ? <Icon n="spark" size={14} /> : userInitials}
                     </div>
                     <div style={{ maxWidth: "84%", padding: "8px 11px", borderRadius: msg.role === "bot" ? "4px 12px 12px 12px" : "12px 4px 12px 12px", fontSize: "0.8rem", lineHeight: 1.5, background: msg.role === "bot" ? "#f0f4ff" : "#3D5D91", color: msg.role === "bot" ? "#22375C" : "white" }}>
-                      <span dangerouslySetInnerHTML={{ __html: msg.text }} />
+                      <span dangerouslySetInnerHTML={{ __html: sanitizeHtml(msg.text) }} />
                       {msg.cite && <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 5, padding: "3px 8px", background: "rgba(61,93,145,0.08)", borderLeft: "3px solid #3D5D91", borderRadius: 3, fontSize: "0.68rem", color: "#3D5D91", fontWeight: 600 }}><Icon n="book" size={12} /> {msg.cite}</div>}
                     </div>
                   </div>

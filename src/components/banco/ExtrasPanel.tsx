@@ -16,6 +16,7 @@ import { getPublishedQuestions, materiaBySlug, useSessionUser, useStore, canUseA
 import type { BankQuestion } from "@/lib/store";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import { LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
+import { sanitizeHtml } from "@/lib/yaris-format";
 
 
 type ExtraKind = "flashcards" | "audio" | "slides" | "ia";
@@ -458,7 +459,7 @@ function IaMateriales({ bank, la, onClose }: { bank: BankQuestion[]; la: boolean
                 color: m.user ? "white" : INK,
                 fontSize: "0.88rem", lineHeight: 1.6,
               }}
-              dangerouslySetInnerHTML={{ __html: m.html }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(m.html) }}
             />
             {m.fuentes && m.fuentes.length > 0 && (
               <p style={{ fontSize: "0.72rem", color: BLUE, margin: "6px 2px 0" }}>Material consultado: {m.fuentes.join(" · ")}</p>

@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { logYarisUse } from "@/lib/store";
 import { useYarisStream, toHistory } from "@/lib/yaris-ask";
-import { yarisToHtml } from "@/lib/yaris-format";
+import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
 import type { User } from "@/lib/store";
 
 
@@ -173,7 +173,7 @@ export function YarisChatModal({
               >
                 {/* `m.text` ya viene como HTML saneado (de `useYarisStream`
                     o del respaldo): convertirlo otra vez anidaba envoltorios. */}
-                <div dangerouslySetInnerHTML={{ __html: m.text }} />
+                <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(m.text) }} />
                 {m.streaming && <span className="yaris-caret" aria-hidden="true" />}
                 {m.cite && (
                   <div style={{ marginTop: 6, fontSize: ".72rem", color: "#8DA1BE" }}>Fuente: {m.cite}</div>

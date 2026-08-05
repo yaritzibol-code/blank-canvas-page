@@ -1,7 +1,8 @@
 /** Panel Admin — Soporte y feedback (PRD 9.9). */
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
+import { supabase } from "@/integrations/supabase/client";
 import { REPORT_TYPES } from "@/components/shared/ReportProblemModal";
 import {
   AdminShell,
@@ -108,8 +109,38 @@ function AdminSoportePage() {
 
 function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: boolean) => void }) {
   const navigate = useNavigate();
-  const [notas, setNotas] = useState(r.notasInternas);
+  // Las notas internas NO viven en `reports.data`: esa fila la puede leer la
+  // alumna dueña del ticket. Se guardan en `report_admin_notes`, cuya RLS sólo
+  // admite al equipo admin.
+  const [notas, setNotas] = useState("");
+  const [notasListas, setNotasListas] = useState(false);
   const isQuestion = r.recurso.startsWith("q_");
+
+  useEffect(() => {
+    let vivo = true;
+    void (async () => {
+      const { data } = await supabase
+        .from("report_admin_notes")
+        .select("notes")
+        .eq("report_id", r.id)
+        .maybeSingle();
+      if (vivo) {
+        setNotas(data?.notes ?? "");
+        setNotasListas(true);
+      }
+    })();
+    return () => {
+      vivo = false;
+    };
+  }, [r.id]);
+
+  const guardarNotas = async () => {
+    const { error } = await supabase
+      .from("report_admin_notes")
+      .upsert({ report_id: r.id, notes: notas, updated_at: new Date().toISOString() });
+    onFlash(error ? "No se pudieron guardar las notas" : "Notas guardadas", Boolean(error));
+  };
+
 
   return (
     <div style={cardStyle}>
@@ -166,10 +197,8 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
         />
         <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 8 }}>
           <button
-            onClick={() => {
-              updateReport(r.id, { notasInternas: notas });
-              onFlash("Notas guardadas");
-            }}
+            onClick={() => void guardarNotas()}
+            disabled={!notasListas}
             style={{ padding: "6px 14px", background: "#3D5D91", color: "white", border: "none", borderRadius: 7, fontSize: ".74rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 5 }}
           >
             <Icon n="check" size={13} /> Guardar notas
