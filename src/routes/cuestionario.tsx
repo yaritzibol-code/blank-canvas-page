@@ -507,8 +507,15 @@ function CuestionarioPage() {
    * seguía mostrando la explicación vieja.
    */
   async function openYaris() {
+    // Yaris con IA es Pro: con plan Básica se abre el popup de suscripción en
+    // vez de una respuesta a medias.
+    if (!isPaid(user)) {
+      setUpgradeOpen(true);
+      return;
+    }
     if (!yarisOpen && user) logYarisUse(user.id, "Cuestionarios");
     setYarisOpen(true);
+
     if (yarisBusyRef.current) return;
 
     const idx = yarisIdx();
