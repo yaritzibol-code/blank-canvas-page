@@ -60,25 +60,62 @@ function planLabel(b: BillingState | null, planNombre: string): string {
   return /annual|anual|year/i.test(b.priceId) ? "Pro Anual" : "Pro Mensual";
 }
 
+/** Ciclo vigente deducido del precio: define hacia dónde puede cambiarse. */
+function cicloActual(b: BillingState | null): "month" | "year" | null {
+  if (!b?.priceId) return null;
+  return /annual|anual|year/i.test(b.priceId) ? "year" : "month";
+}
+
+type EstadoVisible = { texto: string; fondo: string; borde: string; color: string };
+
+/**
+ * Traduce el estado de Stripe a algo que una estudiante entienda: "activa",
+ * "cancelada", "vencida" o "pago pendiente". Un `past_due` no es una baja —
+ * Stripe reintenta el cobro — y mostrarlo como cancelada asustaría de más.
+ */
+function estadoVisible(b: BillingState | null, pro: boolean): EstadoVisible {
+  const verde = { fondo: "#EAF6EE", borde: "#BFE7CE", color: "#1A7A4A" };
+  const ambar = { fondo: "#FDF3D6", borde: "#F0DFAE", color: "#856404" };
+  const rojo = { fondo: "#FEE2E2", borde: "#F3C7C2", color: "#B3261E" };
+  const gris = { fondo: "#F2F6FB", borde: "#E3EAF5", color: "#647DA0" };
+  const s = b?.status;
+  if (b?.cancelAtPeriodEnd && b.active) return { texto: "Cancelada (activa hasta el corte)", ...ambar };
+  if (s === "past_due" || s === "unpaid") return { texto: "Pago pendiente", ...ambar };
+  if (s === "trialing") return { texto: "Prueba activa", ...verde };
+  if (b?.active || (pro && !s)) return { texto: "Activa", ...verde };
+  if (s === "canceled") return { texto: "Cancelada", ...rojo };
+  if (s) return { texto: "Vencida", ...rojo };
+  return { texto: "Sin suscripción", ...gris };
+}
+
 function FacturacionPage() {
   const user = useSessionUser();
   const configured = isPaymentsConfigured();
   const [billing, setBilling] = useState<BillingState | null>(null);
+  const [invoices, setInvoices] = useState<InvoiceRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [switchTo, setSwitchTo] = useState<"month" | "year" | null>(null);
 
   const refresh = async () => {
     if (!configured) {
       setLoading(false);
       return;
     }
+    const env = getStripeEnvironment();
     try {
-      setBilling(await getMyBilling({ data: { environment: getStripeEnvironment() } }));
+      setBilling(await getMyBilling({ data: { environment: env } }));
     } catch {
       setBilling(null);
+    }
+    try {
+      const res = await getMyInvoices({ data: { environment: env } });
+      setInvoices(res.invoices);
+    } catch {
+      setInvoices([]);
     } finally {
       setLoading(false);
     }
