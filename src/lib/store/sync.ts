@@ -134,6 +134,12 @@ async function fetchAll<T>(
 }
 
 /** Contenido global (banco, biblioteca, clases, flashcards): pesado y estable. */
+/** Escribe datos venidos de la nube sin re-empujarlos (uso: questions-cloud). */
+export function applyRemoteContent(key: string, rows: Row[]): void {
+  silently(() => write(key, rows));
+  contentIds.set(key, new Set(rows.map((r) => String(r.id))));
+}
+
 async function hydrateContent(): Promise<void> {
   const s = supa();
   if (!s || !sessionUserId) return;
@@ -143,7 +149,15 @@ async function hydrateContent(): Promise<void> {
     id: string;
     data: unknown;
   }>((from, to) =>
-    s.from("content").select("collection,id,data").order("collection").order("id").range(from, to),
+    s
+      .from("content")
+      .select("collection,id,data")
+      // El banco de preguntas NO se hidrata aquí: se descarga bajo demanda
+      // desde questions-cloud.ts (pesa más que la cuota del navegador).
+      .neq("collection", "questions")
+      .order("collection")
+      .order("id")
+      .range(from, to),
   );
   if (!contentErr && contentRows) {
     if (contentRows.length === 0) {
@@ -161,6 +175,7 @@ async function hydrateContent(): Promise<void> {
       if (sessionIsAdmin) await republishSeedContent(byCol);
       silently(() => {
         CONTENT_KEYS.forEach((key) => {
+          if (key === "questions") return;
           const rows = byCol.get(key);
           if (rows) write(key, rows);
           contentIds.set(key, new Set((rows ?? []).map((r) => String(r.id))));
@@ -169,6 +184,7 @@ async function hydrateContent(): Promise<void> {
     }
   }
 }
+
 
 /**
  * Lo que cambia con el uso: perfiles, estado por usuario, reportes y config.
