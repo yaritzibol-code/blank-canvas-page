@@ -199,7 +199,7 @@ function Sidebar({ onClose, onYaris, onLogout }: { onClose?: () => void; onYaris
                     margin: "1px 12px",
                     padding: "10px 12px",
                     borderRadius: 10,
-                    color: isActive ? "white" : "rgba(255,255,255,0.62)",
+                    color: isActive ? "#ffffff" : "rgba(255,255,255,0.9)",
                     textDecoration: "none",
                     fontSize: "0.875rem",
                     fontWeight: isActive ? 600 : 500,
@@ -209,7 +209,7 @@ function Sidebar({ onClose, onYaris, onLogout }: { onClose?: () => void; onYaris
                   onMouseEnter={(e) => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,0.06)"; }}
                   onMouseLeave={(e) => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
                 >
-                  <span style={{ width: 20, display: "flex", justifyContent: "center", color: isActive ? "#F2AEBC" : "rgba(255,255,255,0.55)" }}>
+                  <span style={{ width: 20, display: "flex", justifyContent: "center", color: isActive ? "#ffffff" : "rgba(255,255,255,0.75)" }}>
                     <Icon n={item.icon} size={18} />
                   </span>
                   <span style={{ flex: 1 }}>{item.label}</span>
