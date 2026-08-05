@@ -52,6 +52,7 @@ const CHAPTERS_BY_FUENTE: Record<string, AtpChapter[]> = {
 /** Nombre legible del manual ("ATP", "Jeppesen", "Handbook"...). */
 function fuenteLabel(code?: string): string {
   if (!code) return "";
+  if (code === "LAOF") return "Guía oficial Línea Aérea";
   return LINEA_AEREA_QUIZZES.find((q) => q.code === code)?.titulo ?? code;
 }
 
@@ -299,6 +300,7 @@ function AdminBancoPage() {
           {LINEA_AEREA_QUIZZES.map((q) => (
             <option key={q.code} value={q.code}>{q.titulo} ({q.code})</option>
           ))}
+          <option value="LAOF">Guía oficial Línea Aérea (LAOF)</option>
         </select>
         {CHAPTERS_BY_FUENTE[fFuente] && (
           <select value={fCap} onChange={(e) => setFCap(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 200 }}>
