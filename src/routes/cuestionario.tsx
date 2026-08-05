@@ -27,6 +27,8 @@ import { PathyMark } from "@/components/shared/PathyMark";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { QuestionImages } from "@/components/banco/QuestionImages";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
+import { UpgradeModal } from "@/components/shared/UpgradeModal";
+
 import { LA_OFICIAL_FUENTE } from "@/lib/store/seed-linea-aerea-oficial";
 import { LINEA_AEREA_OFICIAL, LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
 
@@ -239,6 +241,9 @@ function CuestionarioPage() {
   const yarisExplainedRef = useRef<Set<string>>(new Set());
   const yarisBusyRef = useRef(false);
   const [reportOpen, setReportOpen] = useState(false);
+  /** Popup de suscripción cuando el plan Básica toca una función Pro. */
+  const [upgradeOpen, setUpgradeOpen] = useState(false);
+
   const [isMobile, setIsMobile] = useState(false);
   const [startTime, setStartTime] = useState(() => Date.now());
   const [elapsedMin, setElapsedMin] = useState(0);
@@ -502,8 +507,15 @@ function CuestionarioPage() {
    * seguía mostrando la explicación vieja.
    */
   async function openYaris() {
+    // Yaris con IA es Pro: con plan Básica se abre el popup de suscripción en
+    // vez de una respuesta a medias.
+    if (!isPaid(user)) {
+      setUpgradeOpen(true);
+      return;
+    }
     if (!yarisOpen && user) logYarisUse(user.id, "Cuestionarios");
     setYarisOpen(true);
+
     if (yarisBusyRef.current) return;
 
     const idx = yarisIdx();
@@ -1562,7 +1574,16 @@ function CuestionarioPage() {
 
 
       {/* Reportar problema */}
+      <UpgradeModal
+        open={upgradeOpen}
+        onClose={() => setUpgradeOpen(false)}
+        feature="Yaris con IA"
+        benefit="Con Pro te explica cada pregunta, te acompaña paso a paso y practicas sin límites."
+        {...(user ? { userId: user.id } : {})}
+      />
+
       <ReportProblemModal
+
         open={reportOpen}
         onClose={() => setReportOpen(false)}
         user={user}

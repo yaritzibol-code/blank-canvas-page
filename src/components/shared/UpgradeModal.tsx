@@ -47,18 +47,22 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
   if (!open) return null;
   const config = getConfig();
 
-  /** Lleva a la página de planes, donde vive el checkout embebido de Stripe. */
-  const goPlanes = (cta: string) => {
+  /** Lleva a la landing de precios, donde vive la comparativa completa. */
+  const goPrecios = (cta: string) => {
     if (userId) logUpgradeClick(userId, cta);
     onClose();
-    navigate({ to: "/dashboard/planes" });
+    navigate({ to: "/precios" });
   };
 
+  /** Atajo al checkout embebido de Stripe para quien ya decidió. */
   const goCheckout = (cta: string) => {
     if (paying) return;
     setPaying(true);
-    goPlanes(cta);
+    if (userId) logUpgradeClick(userId, cta);
+    onClose();
+    navigate({ to: "/dashboard/planes", search: { checkout: 1 } });
   };
+
 
 
 
@@ -150,24 +154,25 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
 
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           <button
-            onClick={() => void goCheckout("Desbloquear acceso completo")}
-            disabled={paying}
+            onClick={() => goPrecios("Ver planes y precios")}
             style={{
               padding: "13px 20px",
               borderRadius: 12,
               border: "none",
-              background: paying ? "#8DA1BE" : "#6C0820",
+              background: "#6C0820",
               color: "#fff",
               fontWeight: 800,
               fontSize: 15,
-              cursor: paying ? "default" : "pointer",
+              cursor: "pointer",
               fontFamily: FONT,
             }}
           >
-            {paying ? "Un momento…" : "Desbloquear acceso completo"}
+            Ver planes y precios
           </button>
           <button
-            onClick={() => goPlanes("Ver planes")}
+            onClick={() => goCheckout("Suscribirme ahora")}
+            disabled={paying}
+
             style={{
               padding: "12px 20px",
               borderRadius: 12,
@@ -180,7 +185,8 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
               fontFamily: FONT,
             }}
           >
-            Ver planes
+            {paying ? "Un momento…" : "Suscribirme ahora"}
+
           </button>
           <button
             onClick={onClose}

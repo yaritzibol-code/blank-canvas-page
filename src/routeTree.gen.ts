@@ -18,6 +18,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as PreciosRouteImport } from './routes/precios'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
@@ -102,6 +103,11 @@ const LegalRoute = LegalRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PreciosRoute = PreciosRouteImport.update({
+  id: '/precios',
+  path: '/precios',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterRoute = RegisterRouteImport.update({
@@ -318,6 +324,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/legal': typeof LegalRoute
   '/login': typeof LoginRoute
+  '/precios': typeof PreciosRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/robots.txt': typeof RobotsDottxtRoute
@@ -368,6 +375,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/legal': typeof LegalRoute
   '/login': typeof LoginRoute
+  '/precios': typeof PreciosRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/robots.txt': typeof RobotsDottxtRoute
@@ -420,6 +428,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/legal': typeof LegalRoute
   '/login': typeof LoginRoute
+  '/precios': typeof PreciosRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/robots.txt': typeof RobotsDottxtRoute
@@ -473,6 +482,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/legal'
     | '/login'
+    | '/precios'
     | '/register'
     | '/reset-password'
     | '/robots.txt'
@@ -523,6 +533,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/legal'
     | '/login'
+    | '/precios'
     | '/register'
     | '/reset-password'
     | '/robots.txt'
@@ -574,6 +585,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/legal'
     | '/login'
+    | '/precios'
     | '/register'
     | '/reset-password'
     | '/robots.txt'
@@ -626,6 +638,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   LegalRoute: typeof LegalRoute
   LoginRoute: typeof LoginRoute
+  PreciosRoute: typeof PreciosRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
@@ -715,6 +728,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/precios': {
+      id: '/precios'
+      path: '/precios'
+      fullPath: '/precios'
+      preLoaderRoute: typeof PreciosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register': {
@@ -1052,6 +1072,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   LegalRoute: LegalRoute,
   LoginRoute: LoginRoute,
+  PreciosRoute: PreciosRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
