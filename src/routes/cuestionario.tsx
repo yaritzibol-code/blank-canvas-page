@@ -671,9 +671,13 @@ function CuestionarioPage() {
         fontFamily: "'Manrope', sans-serif",
         background: "#f5f7fc",
         color: "#22375C",
-        minHeight: "100vh",
+        height: "100dvh",
+        minHeight: "100dvh",
+        maxHeight: "100dvh",
+        overflow: "hidden",
         display: "flex",
         flexDirection: "column",
+
       }}
     >
       {/* ── TOPBAR ── */}
