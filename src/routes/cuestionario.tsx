@@ -1559,7 +1559,17 @@ function CuestionarioPage() {
         seccion="Cuestionarios"
         recurso={currentQ.questionId}
         tipoInicial="Pregunta mal redactada"
+        pregunta={{
+          id: currentQ.questionId,
+          text: currentQ.text,
+          options: currentQ.options.map((o) => o.text),
+          correctIndex: currentQ.correctIndex,
+          explanation: currentQ.explanation,
+          materia: currentQ.slug,
+          selectedIndex: selectedIdx,
+        }}
       />
+
     </div>
   );
 }
