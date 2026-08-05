@@ -106,6 +106,8 @@ function QuizCard({
   to,
   search,
   pdfUrl,
+  onStart,
+  ctaLabel = "Iniciar cuestionario →",
 }: {
   dark?: boolean;
   badge: string;
@@ -113,10 +115,14 @@ function QuizCard({
   titulo: string;
   descripcion: string;
   features: string[];
-  to: string;
-  search: Record<string, unknown>;
+  to?: string;
+  search?: Record<string, unknown>;
   pdfUrl?: string;
+  /** Si se define, la tarjeta abre un selector en vez de navegar. */
+  onStart?: () => void;
+  ctaLabel?: string;
 }) {
+
   return (
     <div
       className={`fp-la-card${dark ? " fp-la-dark" : ""}`}
