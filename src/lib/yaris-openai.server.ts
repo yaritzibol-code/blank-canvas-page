@@ -183,7 +183,11 @@ export async function callOpenAI(
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 
+export type YarisTono = "formal" | "normal" | "amiga";
+
 export interface YarisPromptContext {
+  /** Personalidad elegida por la estudiante (onboarding / configuración). */
+  tono?: YarisTono;
   materia?: string;
   questionText?: string;
   options?: string[];
