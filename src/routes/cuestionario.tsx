@@ -1112,20 +1112,20 @@ function CuestionarioPage() {
             </button>
           </div>
 
-          {/* Mini tracker */}
-          <div style={{ maxWidth: 680, width: "100%", display: "flex", gap: 4, flexWrap: "wrap" }}>
+          {/* Mini tracker — decorativo: el conteo real ya se anuncia arriba */}
+          <div aria-hidden="true" style={{ maxWidth: 680, width: "100%", display: "flex", gap: 4, flexWrap: "wrap" }}>
             {questions.map((_, i) => {
               const res = results[i];
               const isCurrent = i === currentIdx && !showResult;
-              let bg = "#F2DCDB";
+              let bg = "#E2C9C8";
               let boxShadow = "none";
               if (isCurrent) {
-                bg = "#5A86CB";
-                boxShadow = "0 0 0 2px white, 0 0 0 4px #5A86CB";
+                bg = "#3D5D91";
+                boxShadow = "0 0 0 2px white, 0 0 0 4px #3D5D91";
               } else if (res === true) {
-                bg = "#2ecc71";
+                bg = "#1a7a4a";
               } else if (res === false) {
-                bg = "#e74c3c";
+                bg = "#c0392b";
               } else if (res === null && i < currentIdx) {
                 bg = "#3D5D91";
               }
@@ -1140,6 +1140,7 @@ function CuestionarioPage() {
               );
             })}
           </div>
+
         </div>
 
         {/* ── RESULT SCREEN ── */}
