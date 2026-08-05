@@ -4,6 +4,16 @@ import { Eye, EyeOff } from "lucide-react";
 import { register, login, resetPassword, ensureSeeded, useSessionUser } from "@/lib/store";
 import { lovable } from "@/integrations/lovable";
 
+/**
+ * El destino post-login puede traer query (p. ej. `/dashboard/planes?checkout=1&plan=anual`).
+ * El router necesita ruta y search por separado, si no la navegación se rompe.
+ */
+function destino(dest: string): { to: string; search?: Record<string, string> } {
+  const [path, qs] = dest.split("?");
+  if (!qs) return { to: path };
+  return { to: path, search: Object.fromEntries(new URLSearchParams(qs).entries()) };
+}
+
 async function signInWithGoogle(setError: (m: string) => void, redirectTo?: string) {
   try {
     const res = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
@@ -119,7 +129,7 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
     // Toda cuenta entra primero a su inicio personal; el panel admin queda
     // disponible desde la navegación interna cuando corresponde.
     const dest = redirectTo ?? "/dashboard";
-    await navigate({ to: dest });
+    await navigate(destino(dest) as never);
   }
 
   return (
@@ -234,7 +244,7 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
       return;
     }
     const dest = redirectTo ?? "/dashboard";
-    await navigate({ to: dest });
+    await navigate(destino(dest) as never);
   }
 
   async function handleReset() {
@@ -410,7 +420,7 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
   }, []);
 
   useEffect(() => {
-    if (sessionUser) void navigate({ to: redirectTo ?? "/dashboard", replace: true });
+    if (sessionUser) void navigate({ ...destino(redirectTo ?? "/dashboard"), replace: true } as never);
   }, [sessionUser, redirectTo, navigate]);
 
   return (

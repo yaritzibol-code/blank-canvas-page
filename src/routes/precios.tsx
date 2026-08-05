@@ -125,9 +125,14 @@ function PreciosPage() {
   const periodo = anual ? "/ año" : "/ mes";
   const equivalente = anual ? Math.round(annual.amount / 12) : monthly.amount;
 
-  /** A dónde manda el botón de compra según haya sesión o no. */
-  const checkoutTo = "/dashboard/planes?checkout=1";
-  const buyHref = user ? checkoutTo : `/register?next=${encodeURIComponent(checkoutTo)}`;
+  /** A dónde manda el botón de compra según haya sesión o no, conservando el
+   *  ciclo elegido para que el checkout abra exactamente el plan mostrado. */
+  const plan = anual ? "anual" : "mensual";
+  const buyTo = user ? "/dashboard/planes" : "/register";
+  const buySearch: Record<string, unknown> = user
+    ? { checkout: 1, plan }
+    : { next: `/dashboard/planes?checkout=1&plan=${plan}` };
+
 
   const faqLd = {
     "@context": "https://schema.org",
@@ -267,7 +272,7 @@ function PreciosPage() {
                   </p>
                 </div>
 
-                <Btn kind="primary" size="lg" icon="arrow" className="mt-6 w-full" href={buyHref}>
+                <Btn kind="primary" size="lg" icon="arrow" className="mt-6 w-full" to={buyTo} search={buySearch}>
                   {user ? "Suscribirme a Pro" : "Empezar con Pro"}
                 </Btn>
                 <p className="mt-3 text-center text-[12px] text-white/45">
@@ -378,7 +383,7 @@ function PreciosPage() {
                 Desbloquea el banco completo, los simuladores ilimitados y a Yaris con IA hoy mismo.
               </p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-                <Btn kind="primary" size="lg" icon="arrow" href={buyHref}>
+                <Btn kind="primary" size="lg" icon="arrow" to={buyTo} search={buySearch}>
                   {user ? "Suscribirme a Pro" : "Empezar con Pro"}
                 </Btn>
                 <Btn kind="outlineLight" size="lg" to={user ? "/dashboard" : "/register"}>

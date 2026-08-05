@@ -29,15 +29,17 @@ import {
 import { refreshCloudProfile } from "@/lib/store/auth";
 import { useRequireAuth } from "@/lib/store/hooks";
 import { supa } from "@/lib/store/cloud";
-import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 
 export const Route = createFileRoute("/dashboard/planes")({
   component: PlanesPage,
   // `?checkout=1` abre el checkout de Stripe en cuanto la página está lista
-  // (lo usa la landing de la convocatoria para llevar directo al pago).
-  validateSearch: (search: Record<string, unknown>): { checkout?: 1 } =>
-    search.checkout === "1" || search.checkout === 1 || search.checkout === true ? { checkout: 1 } : {},
+  // y `?plan=anual|mensual` respeta el ciclo elegido en la landing de precios.
+  validateSearch: (search: Record<string, unknown>): { checkout?: 1; plan?: "mensual" | "anual" } => ({
+    ...(search.checkout === "1" || search.checkout === 1 || search.checkout === true ? { checkout: 1 as const } : {}),
+    ...(search.plan === "anual" || search.plan === "mensual" ? { plan: search.plan } : {}),
+  }),
 });
+
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
@@ -54,7 +56,7 @@ interface SubRow {
 function PlanesPage() {
   const { user, ready } = useRequireAuth();
   const navigate = useNavigate();
-  const { checkout } = Route.useSearch();
+  const { checkout, plan } = Route.useSearch();
   const [cupon, setCupon] = useState("");
   const [sub, setSub] = useState<SubRow | null>(null);
   const [subChecked, setSubChecked] = useState(false);
@@ -65,8 +67,10 @@ function PlanesPage() {
   const [proPrice, setProPrice] = useState<PlanPrice>(PRO_MONTHLY_FALLBACK);
   const [setupPrice, setSetupPrice] = useState<PlanPrice>(PRO_SETUP_FALLBACK);
   const [annualPrice, setAnnualPrice] = useState<PlanPrice>(PRO_ANNUAL_FALLBACK);
-  /** Periodicidad elegida para el cobro recurrente de Pro. */
-  const [ciclo, setCiclo] = useState<"mensual" | "anual">("mensual");
+  /** Periodicidad elegida para el cobro recurrente de Pro (la landing de
+   *  precios la manda en `?plan=` para que el checkout abra el mismo plan). */
+  const [ciclo, setCiclo] = useState<"mensual" | "anual">(plan ?? "mensual");
+
   const ahorro = mesesAhorrados(proPrice, annualPrice);
   const configured = isPaymentsConfigured();
 
@@ -199,10 +203,42 @@ function PlanesPage() {
 
   if (!ready) return null;
 
+  // Transición continua desde /precios: mientras se pide la sesión de Stripe
+  // se muestra el mismo lienzo del checkout, no la tabla de planes.
+  const preparando = checkout === 1 && !clientSecret && !error && !isProActive;
+
+  if (preparando) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh", background: "#F7F9FC", fontFamily: FONT,
+          display: "grid", placeItems: "center", padding: 24, textAlign: "center",
+        }}
+        aria-live="polite"
+      >
+        <div>
+          <div
+            style={{
+              width: 40, height: 40, margin: "0 auto 18px", borderRadius: "50%",
+              border: `3px solid ${BRAND}22`, borderTopColor: BRAND,
+              animation: "fp-spin .8s linear infinite",
+            }}
+          />
+          <div style={{ fontFamily: DISPLAY, fontSize: 22, color: INK, marginBottom: 6 }}>
+            Preparando tu pago seguro
+          </div>
+          <div style={{ fontSize: 14, color: "#5B6B86" }}>
+            Plan Pro {ciclo === "anual" ? "anual" : "mensual"} · conectando con Stripe…
+          </div>
+        </div>
+        <style>{"@keyframes fp-spin{to{transform:rotate(360deg)}}"}</style>
+      </div>
+    );
+  }
+
   if (clientSecret) {
     return (
       <div style={{ minHeight: "100vh", background: "#F7F9FC", fontFamily: FONT }}>
-        <PaymentTestModeBanner />
         <div style={{ padding: "16px clamp(16px,4vw,32px)" }}>
           <button
             onClick={() => setClientSecret(null)}
@@ -222,7 +258,7 @@ function PlanesPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#F7F9FC", fontFamily: FONT }}>
-      <PaymentTestModeBanner />
+
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "clamp(24px,5vw,48px) 20px 80px" }}>
         <button
           onClick={() => navigate({ to: "/dashboard" })}
