@@ -261,12 +261,14 @@ function CuestionarioPage() {
   // Construye el pool real de preguntas al montar (una sola vez).
   useEffect(() => {
     if (!ready || !bankReady || loaded || !user) return;
+    let alive = true;
+    void (async () => {
     const slugs = parseSlugs(search.materias);
     const paid = isPaid(user);
     let fullPool: BankQuestion[] = [];
     if (search.fuente) {
       // Cuestionario de un manual completo (curso de Línea Aérea): se toma el
-      // banco publicado sin recortar por materia para no perder preguntas.
+      // lote publicado sin recortar por materia para no perder preguntas.
       const caps = search.caps
         ? search.caps.split(",").map((c: string) => Number(c.trim())).filter((n: number) => Number.isFinite(n))
         : [];
@@ -275,8 +277,8 @@ function CuestionarioPage() {
       );
       fullPool = paid ? all : all.slice(0, 10);
     } else if (search.banco === "la") {
-      // Banco completo de Línea Aérea (opcionalmente acotado a manuales y/o
-      // a materias: las tarjetas del módulo abren el oficial por materia).
+      // Banco de Línea Aérea (opcionalmente acotado a manuales y/o a materias:
+      // las tarjetas del módulo abren el oficial por materia).
       const codes = search.fuentes ? search.fuentes.split(",").map((c: string) => c.trim()).filter(Boolean) : [];
       const materiasLa = search.materias
         ? search.materias.split(",").map((m: string) => m.trim()).filter(Boolean)
@@ -293,9 +295,12 @@ function CuestionarioPage() {
         fullPool = fullPool.concat(paid ? getPublishedQuestions(s) : getFreeQuestions(s));
       });
     }
-    // Sesión en curso: se retoma tal cual hasta que el usuario finalice.
+    // Sesión en curso: se retoma tal cual hasta que el usuario finalice. El
+    // lote actual es aleatorio, así que se recuperan sus preguntas por id.
     const snap = storeKey ? loadActiveSession<AprendiendoSnapshot>(storeKey) : null;
     if (snap && snap.qIds.length > 0) {
+      await ensureQuestionsByIds(snap.qIds);
+      if (!alive) return;
       const byId = new Map(getPublishedQuestions().map((q) => [q.id, q]));
       const restored = snap.qIds.map((id) => byId.get(id)).filter((q): q is BankQuestion => !!q);
       if (restored.length === snap.qIds.length) {
@@ -314,11 +319,16 @@ function CuestionarioPage() {
     }
 
     const picked = pickSession(fullPool, paid).map(toLocalQ);
+    if (!alive) return;
     setPool(fullPool);
     setSessionSlugs(slugs);
     setQuestions(picked);
     setResults(new Array(picked.length).fill(null));
     setLoaded(true);
+    })();
+    return () => {
+      alive = false;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, bankReady, loaded, user, search.materias, search.qty, search.fuente, search.banco, search.fuentes, search.modo, search.caps]);
 
