@@ -54,14 +54,29 @@ function scopeKey(s: BankScope): string {
   ]);
 }
 
-let loadedKey: string | null = null;
-let loading: Promise<boolean> | null = null;
-let loadingKey: string | null = null;
 
-/** true cuando ya hay un lote del banco en memoria. */
-export function questionsLoaded(): boolean {
-  return loadedKey !== null;
+/**
+ * Caché por ámbito.
+ *
+ * Antes había un solo espacio (`loadedKey` + `loading`): si dos pantallas —o
+ * la misma al cambiar de capítulo— pedían lotes distintos casi al mismo
+ * tiempo, la segunda petición pisaba a la primera y el `loadedKey` acababa
+ * apuntando al ámbito equivocado. La UI se daba por lista sin tener sus
+ * preguntas en memoria: ese era el "a veces no cargan".
+ */
+const loadedKeys = new Set<string>();
+const inFlight = new Map<string, Promise<boolean>>();
+
+/** true cuando ese ámbito concreto ya se pidió con éxito. */
+export function scopeLoaded(scope: BankScope = {}): boolean {
+  return loadedKeys.has(scopeKey(scope));
 }
+
+/** true cuando ya hay algún lote del banco en memoria. */
+export function questionsLoaded(): boolean {
+  return loadedKeys.size > 0;
+}
+
 
 async function rpc(args: Partial<RpcArgs>): Promise<BankQuestion[] | null> {
   const s = supa();
