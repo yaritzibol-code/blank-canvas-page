@@ -35,7 +35,7 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
     descripcion: "Pilot's Handbook of Aeronautical Knowledge (FAA-H-8083-25C) — banco por capítulos.",
     materia: "aerodinamica",
     icon: "plane",
-    total: 1475,
+    total: 2450,
     fileUrl: "https://drive.google.com/file/d/1It2xSBSn-vX4xYDFQHH2DMJd02J_k_zO/preview",
   },
   {
