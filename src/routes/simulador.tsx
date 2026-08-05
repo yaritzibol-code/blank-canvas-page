@@ -1390,7 +1390,22 @@ function SimuladorPage() {
             </div>
           </div>
         </div>
+
+        {/* Yaris en modo guía durante el examen (mismo panel que la revisión) */}
+        <div style={isMobile && yarisOpen ? { position: "fixed", inset: 0, zIndex: 200, width: "100%", display: "flex", flexDirection: "column", background: "white" } : { width: yarisOpen ? 340 : 0, overflow: "hidden", flexShrink: 0, background: "white", borderLeft: yarisOpen ? "1px solid rgba(61,93,145,0.1)" : "none", display: "flex", flexDirection: "column", transition: "width 0.35s ease" }}>
+          <YarisPanel
+            msgs={yarisMsgs}
+            typing={yarisTyping}
+            input={yarisInput}
+            onInput={setYarisInput}
+            onSend={sendYaris}
+            onClose={() => setYarisOpen(false)}
+            msgsEndRef={msgsEndRef}
+            think
+          />
+        </div>
       </div>
+
 
       {/* Calculator modal */}
       {calcOpen && (
