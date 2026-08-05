@@ -17,7 +17,7 @@ import {
 } from "@/lib/store";
 import type { BankQuestion, SimAnswer } from "@/lib/store";
 import { yarisAiChat } from "@/lib/yaris-ai.functions";
-import { yarisToHtml, sanitizeHtml, maskAnswer } from "@/lib/yaris-format";
+import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { PathyMark } from "@/components/shared/PathyMark";
 import { QuestionImages } from "@/components/banco/QuestionImages";
@@ -571,51 +571,27 @@ function SimuladorPage() {
     setCalc((s) => calcReducer(s, { type, payload }));
   }
 
-  /*
-   * Yaris IA — misma UX que los cuestionarios (CIAAC y Línea Aérea):
-   *  · durante el examen entra en modo "te ayudo a pensar": guía el
-   *    razonamiento y jamás revela la correcta (prompt socrático + filtro).
-   *  · en la revisión explica a fondo, porque las respuestas ya son visibles.
-   */
+  /* Yaris IA — SOLO en fase review, con la pregunta seleccionada como contexto */
   const callYarisAi = useServerFn(yarisAiChat);
 
   const YARIS_EXPLAIN_PROMPT =
     "Explícame esta pregunta con tus propias palabras, por qué la correcta es la correcta y por qué las demás no. Al final dame un tip para recordarlo.";
   const YARIS_REEXPLAIN_PROMPT =
     "Explícame esta misma pregunta otra vez, pero de una forma distinta y más sencilla. Usa otro ejemplo o analogía para que me quede claro.";
-  const YARIS_THINK_PROMPT =
-    "Estoy en un examen y todavía no puedo ver la respuesta. NO me digas cuál es la correcta: explícame el concepto que se evalúa, qué significan los términos clave y hazme preguntas guía para que yo razone y elija.";
-  const YARIS_THINK_AGAIN_PROMPT =
-    "Sigo sin poder ver la respuesta. Guíame otra vez con otro enfoque o analogía, sin revelarme cuál opción es la correcta.";
-
-  /** En examen Yaris nunca revela; en revisión sí explica la correcta. */
-  const thinkMode = phase !== "review";
-  /** Índice de la pregunta que Yaris tiene como contexto según la fase. */
-  const yarisIdx = phase === "review" ? reviewCurrent : current;
 
   function aiContextPayload(idx: number) {
     const bq = bankQs[idx];
     if (!bq) return undefined;
     const mi = questions[idx]?.materia ?? 0;
-    const think = phaseRef.current !== "review";
     return {
       materia: MATERIAS[mi].name,
       questionText: bq.text,
       options: bq.options,
       correctIndex: bq.correctIndex,
-      userSelectedIndex: think ? -1 : (questions[idx]?.selectedOpt ?? -1),
+      userSelectedIndex: questions[idx]?.selectedOpt ?? -1,
       explanation: bq.explanation,
       cite: bq.cite,
-      ...(think && { preAnswer: true }),
     };
-  }
-
-  /** Tapa cualquier fuga de la respuesta mientras el examen sigue en curso. */
-  function guarded(text: string, idx: number): string {
-    if (phaseRef.current === "review") return text;
-    const bq = bankQs[idx];
-    const correct = bq?.options[bq.correctIndex] ?? "";
-    return correct ? maskAnswer(text, correct) : text;
   }
 
   function historyForAi(nextUserMsg?: string) {
@@ -630,15 +606,12 @@ function SimuladorPage() {
   }
 
   function ensureGreeting() {
-    const think = phaseRef.current !== "review";
     setYarisMsgs((p) =>
       p.length > 0
         ? p
         : [{
             role: "bot" as const,
-            text: think
-              ? "¡Hola! Soy <b>Yaris</b>. Mientras el examen está en curso te ayudo a <b>pensar</b> la pregunta: te explico el concepto y te hago preguntas guía, pero <i>no te doy la respuesta</i>."
-              : "¡Hola! Soy <b>Yaris</b>. Te explico las preguntas de tu simulador con base en su explicación oficial y en lo que sé de aeronáutica. Pulsa <b>Explícamelo Yaris</b> en cualquier pregunta, las veces que necesites.",
+            text: "¡Hola! Soy <b>Yaris</b>. Te explico las preguntas de tu simulador con base en su explicación oficial y en lo que sé de aeronáutica. Pulsa <b>Explícamelo Yaris</b> en cualquier pregunta, las veces que necesites.",
           }],
     );
   }
@@ -646,45 +619,36 @@ function SimuladorPage() {
   /**
    * Pide a la IA la explicación de la pregunta. Funciona cada vez que se pulsa
    * el botón: la primera vez explica completo y, si se repite sobre la misma
-   * pregunta, pide otro enfoque más sencillo. En examen siempre es guía.
+   * pregunta, pide otro enfoque más sencillo.
    */
   async function explainQuestion(idx: number) {
-    if (aiBusyRef.current) return;
-    const startPhase = phaseRef.current;
-    if (startPhase !== "review" && startPhase !== "exam") return;
+    if (phaseRef.current !== "review" || aiBusyRef.current) return;
     const bq = bankQs[idx];
     if (!bq) return;
-    const think = startPhase !== "review";
     const again = explainedRef.current.has(idx);
     aiBusyRef.current = true;
-    if (!think) explainedRef.current.add(idx);
+    explainedRef.current.add(idx);
     const mi = questions[idx]?.materia ?? 0;
     setYarisMsgs((p) => [...p, {
       role: "bot",
-      text: think
-        ? `Aún no puedes ver la respuesta de la <b>pregunta ${idx + 1}</b> de <b>${MATERIAS[mi].name}</b>, así que te ayudo a pensarla <i>sin dártela</i>:`
-        : again
-          ? `Va otra vez la <b>pregunta ${idx + 1}</b> de <b>${MATERIAS[mi].name}</b>, ahora con otro enfoque:`
-          : `Vamos con la <b>pregunta ${idx + 1}</b> de <b>${MATERIAS[mi].name}</b>:`,
+      text: again
+        ? `Va otra vez la <b>pregunta ${idx + 1}</b> de <b>${MATERIAS[mi].name}</b>, ahora con otro enfoque:`
+        : `Vamos con la <b>pregunta ${idx + 1}</b> de <b>${MATERIAS[mi].name}</b>:`,
     }]);
     setYarisTyping(true);
     try {
-      const prompt = think
-        ? (again ? YARIS_THINK_AGAIN_PROMPT : YARIS_THINK_PROMPT)
-        : (again ? YARIS_REEXPLAIN_PROMPT : YARIS_EXPLAIN_PROMPT);
-      if (think) explainedRef.current.add(idx);
       const r = await callYarisAi({
         data: {
-          history: [{ role: "user", content: prompt }],
+          history: [{ role: "user", content: again ? YARIS_REEXPLAIN_PROMPT : YARIS_EXPLAIN_PROMPT }],
           context: aiContextPayload(idx),
         },
       });
-      if (phaseRef.current !== startPhase) return;
-      setYarisMsgs((p) => [...p, { role: "bot", text: yarisToHtml(guarded(r.text, idx)), cite: r.cite ?? undefined }]);
+      if (phaseRef.current !== "review") return;
+      setYarisMsgs((p) => [...p, { role: "bot", text: yarisToHtml(r.text), cite: r.cite ?? undefined }]);
     } catch (err) {
       console.error("Yaris IA error", err);
       if (!again) explainedRef.current.delete(idx); // el siguiente intento repite la explicación completa
-      if (phaseRef.current === startPhase) {
+      if (phaseRef.current === "review") {
         setYarisMsgs((p) => [...p, { role: "bot", text: "No pude conectarme con la IA. Vuelve a intentarlo en un momento." }]);
       }
     } finally {
@@ -694,25 +658,24 @@ function SimuladorPage() {
   }
 
   async function openYaris() {
-    if (phase !== "review" && phase !== "exam") return;
-    if (!yarisOpen && user) logYarisUse(user.id, phase === "review" ? "Simulador (revisión)" : "Simulador (guía)");
+    if (phase !== "review") return;
+    if (!yarisOpen && user) logYarisUse(user.id, "Simulador (revisión)");
     setYarisOpen(true);
     ensureGreeting();
-    await explainQuestion(yarisIdx);
+    await explainQuestion(reviewCurrent);
   }
 
   async function sendYaris() {
     const text = yarisInput.trim();
     if (!text || yarisTyping || aiBusyRef.current) return;
-    const idx = yarisIdx;
     aiBusyRef.current = true;
     setYarisMsgs((p) => [...p, { role: "user", text }]);
     const history = historyForAi(text);
     setYarisInput("");
     setYarisTyping(true);
     try {
-      const r = await callYarisAi({ data: { history, context: aiContextPayload(idx) } });
-      setYarisMsgs((p) => [...p, { role: "bot", text: yarisToHtml(guarded(r.text, idx)), cite: r.cite ?? undefined }]);
+      const r = await callYarisAi({ data: { history, context: aiContextPayload(reviewCurrent) } });
+      setYarisMsgs((p) => [...p, { role: "bot", text: yarisToHtml(r.text), cite: r.cite ?? undefined }]);
     } catch (err) {
       console.error("Yaris IA error", err);
       setYarisMsgs((p) => [...p, { role: "bot", text: "No pude conectarme con la IA. Vuelve a intentarlo." }]);
@@ -721,7 +684,6 @@ function SimuladorPage() {
       setYarisTyping(false);
     }
   }
-
 
   /* Derived */
   const answeredCount = questions.filter((q) => q.answered).length;
@@ -1162,7 +1124,6 @@ function SimuladorPage() {
               onSend={sendYaris}
               onClose={() => setYarisOpen(false)}
               msgsEndRef={msgsEndRef}
-              think={thinkMode}
             />
           </div>
         </div>
@@ -1370,19 +1331,7 @@ function SimuladorPage() {
                 <span style={{ display: "flex", alignItems: "center" }}><Icon n="lightbulb" size={14} /></span>
                 <span>Atajos: <kbd style={{ background: "#f2f4fa", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>1-4</kbd> respuesta · <kbd style={{ background: "#f2f4fa", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>←/→</kbd> navegar · <kbd style={{ background: "#f2f4fa", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>F</kbd> marcar</span>
               </div>
-
-              <button
-                onClick={() => { void openYaris(); }}
-                aria-label="Abrir Yaris en modo te ayudo a pensar"
-                style={{ width: "100%", marginTop: 16, minHeight: 48, padding: "11px 14px", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}
-              >
-                <Icon n="lightbulb" size={16} /> Ayúdame a pensar
-              </button>
-              <p style={{ marginTop: 8, fontSize: "0.72rem", color: "#8DA1BE", textAlign: "center", lineHeight: 1.5 }}>
-                Yaris te guía con el concepto y preguntas clave, nunca con la respuesta.
-              </p>
             </div>
-
 
 
             {/* Nav */}
@@ -1403,22 +1352,7 @@ function SimuladorPage() {
             </div>
           </div>
         </div>
-
-        {/* Yaris en modo guía durante el examen (mismo panel que la revisión) */}
-        <div style={isMobile && yarisOpen ? { position: "fixed", inset: 0, zIndex: 200, width: "100%", display: "flex", flexDirection: "column", background: "white" } : { width: yarisOpen ? 340 : 0, overflow: "hidden", flexShrink: 0, background: "white", borderLeft: yarisOpen ? "1px solid rgba(61,93,145,0.1)" : "none", display: "flex", flexDirection: "column", transition: "width 0.35s ease" }}>
-          <YarisPanel
-            msgs={yarisMsgs}
-            typing={yarisTyping}
-            input={yarisInput}
-            onInput={setYarisInput}
-            onSend={sendYaris}
-            onClose={() => setYarisOpen(false)}
-            msgsEndRef={msgsEndRef}
-            think
-          />
-        </div>
       </div>
-
 
       {/* Calculator modal */}
       {calcOpen && (
@@ -1590,7 +1524,7 @@ function LeftPanel({ questions, current, expandedMaterias, onToggleMateria, onSe
 
 /* ─── Yaris Panel ─────────────────────────────────────────── */
 
-function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef, think = false }: {
+function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef }: {
   msgs: { role: "bot" | "user"; text: string; cite?: string }[];
   typing: boolean;
   input: string;
@@ -1598,7 +1532,6 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef,
   onSend: () => void;
   onClose: () => void;
   msgsEndRef: React.RefObject<HTMLDivElement | null>;
-  think?: boolean;
 }) {
   return (
     <>
@@ -1608,23 +1541,12 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef,
           <div style={{ width: 32, height: 32, background: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem" }}><Icon n="spark" size={18} color="#3D5D91" /></div>
           <div>
             <div style={{ fontSize: "0.86rem", fontWeight: 700, color: "white" }}>Yaris IA</div>
-            <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.8)" }}>{think ? "Modo guía · no revela la respuesta" : "Tutora de aviación 24/7"}</div>
+            <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.8)" }}>Tutora de aviación 24/7</div>
           </div>
         </div>
-        <button onClick={onClose} style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "white", borderRadius: 6, padding: "4px 8px", cursor: "pointer", fontSize: "0.76rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center" }} aria-label="Cerrar Yaris"><Icon n="close" size={15} /></button>
+        <button onClick={onClose} style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "white", borderRadius: 6, padding: "4px 8px", cursor: "pointer", fontSize: "0.76rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon n="close" size={15} /></button>
       </div>
-      {think && (
-        <div
-          role="status"
-          aria-live="polite"
-          style={{ display: "flex", alignItems: "flex-start", gap: 8, padding: "10px 14px", background: "#FFF4DE", borderBottom: "1px solid #F0D9A8", fontSize: "0.78rem", lineHeight: 1.5, color: "#5A4300", flexShrink: 0 }}
-        >
-          <span style={{ display: "flex", flexShrink: 0, marginTop: 1 }}><Icon n="lightbulb" size={15} color="#8a6000" /></span>
-          <span><b>Modo “te ayudo a pensar”.</b> El examen sigue en curso, así que Yaris te guía con conceptos y preguntas, sin darte la respuesta.</span>
-        </div>
-      )}
       <div style={{ flex: 1, overflowY: "auto", padding: 14, display: "flex", flexDirection: "column", gap: 10 }}>
-
         {msgs.map((msg, i) => (
           <div key={i} style={{ display: "flex", gap: 7, alignItems: "flex-start", flexDirection: msg.role === "user" ? "row-reverse" : "row" }}>
             <div style={{ width: 26, height: 26, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: msg.role === "bot" ? "0.78rem" : "0.6rem", fontWeight: msg.role === "user" ? 700 : undefined, background: msg.role === "bot" ? "#F2DCDB" : "#3D5D91", color: msg.role === "user" ? "white" : undefined, flexShrink: 0 }}>
@@ -1647,7 +1569,7 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef,
         <div ref={msgsEndRef} />
       </div>
       <div style={{ padding: "10px 14px", borderTop: "1px solid #F2DCDB", display: "flex", gap: 7, flexShrink: 0 }}>
-        <input value={input} onChange={(e) => onInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") onSend(); }} placeholder={think ? "Pregúntame conceptos, no la respuesta..." : "Escribe tu duda..."} style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 18, padding: "7px 12px", fontSize: "0.81rem", fontFamily: "'Manrope', sans-serif", outline: "none" }} onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }} />
+        <input value={input} onChange={(e) => onInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") onSend(); }} placeholder="Escribe tu duda..." style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 18, padding: "7px 12px", fontSize: "0.81rem", fontFamily: "'Manrope', sans-serif", outline: "none" }} onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }} />
         <button onClick={onSend} style={{ width: 32, height: 32, background: "#3D5D91", border: "none", borderRadius: "50%", color: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.82rem", flexShrink: 0 }}><Icon n="send" size={15} /></button>
       </div>
     </>
