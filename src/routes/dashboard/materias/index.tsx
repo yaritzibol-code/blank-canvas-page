@@ -8,6 +8,7 @@ import { SUBJECT_TEMAS } from "@/modules/data/registry";
 import {
   MATERIAS_DEF,
   getPublishedQuestions,
+  useQuestionBank,
   getTemaProgress,
   materiaPerformance,
   materiaProgressPct,

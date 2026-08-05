@@ -6,6 +6,7 @@ import {
   isPaid,
   canStartQuiz,
   getPublishedQuestions,
+  useQuestionBank,
   getFreeQuestions,
   saveQuizAttempt,
   logYarisUse,
@@ -212,7 +213,7 @@ function CuestionarioPage() {
 
   // Construye el pool real de preguntas al montar (una sola vez).
   useEffect(() => {
-    if (!ready || loaded || !user) return;
+    if (!ready || !bankReady || loaded || !user) return;
     const slugs = parseSlugs(search.materias);
     const paid = isPaid(user);
     let fullPool: BankQuestion[] = [];
@@ -272,7 +273,7 @@ function CuestionarioPage() {
     setResults(new Array(picked.length).fill(null));
     setLoaded(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, loaded, user, search.materias, search.qty, search.fuente, search.banco, search.fuentes, search.modo, search.caps]);
+  }, [ready, bankReady, loaded, user, search.materias, search.qty, search.fuente, search.banco, search.fuentes, search.modo, search.caps]);
 
   const total = questions.length;
   const answeredCount = results.filter((r) => r !== null).length;

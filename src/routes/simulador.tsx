@@ -6,6 +6,7 @@ import {
   useRequireAuth,
   canStartSimulator,
   getPublishedQuestions,
+  useQuestionBank,
   saveSimAttempt,
   logYarisUse,
   sessionKey,
@@ -268,6 +269,7 @@ interface SimSnapshot {
 
 function SimuladorPage() {
   const { user, ready } = useRequireAuth();
+  const bankReady = useQuestionBank();
   const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>("warning");
   const search = Route.useSearch();
@@ -692,8 +694,8 @@ function SimuladorPage() {
 
   /* Gating y disponibilidad del banco (solo relevante en fase warning) */
   const gate = canStartSimulator(user);
-  const bankEmpty = phase === "warning" && ready ? getPublishedQuestions().length === 0 : false;
-  const counts = phase === "warning" && ready ? bankCounts(banco) : { oficial: 0, extra: 0, total: 0 };
+  const bankEmpty = phase === "warning" && ready && bankReady ? getPublishedQuestions().length === 0 : false;
+  const counts = phase === "warning" && ready && bankReady ? bankCounts(banco) : { oficial: 0, extra: 0, total: 0 };
 
 
   if (!ready) {
