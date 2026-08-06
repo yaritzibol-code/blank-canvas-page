@@ -2,6 +2,7 @@ import { useSessionUser } from "@/lib/store";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { PlaneField as SharedPlaneField } from "@/components/shared/PlaneField";
 import {
   PRO_ANNUAL_FALLBACK,
@@ -302,6 +303,8 @@ export function Nav() {
   const sesion = Boolean(useSessionUser());
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   useEffect(() => {
     const f = () => setScrolled(window.scrollY > 12);
     f(); window.addEventListener("scroll", f, { passive: true });
