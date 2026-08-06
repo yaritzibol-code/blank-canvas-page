@@ -81,6 +81,7 @@ export function PathyDebrief({ userId, origen, titulo, scorePct, answers }: Prop
   const [confusiones, setConfusiones] = useState<string[]>([]);
   const [acciones, setAcciones] = useState<string[]>([]);
   const [motivo, setMotivo] = useState<string | undefined>();
+  const sesionUser = useSessionUser();
   const doneRef = useRef(false);
 
   const spots = weakSpots(answers, 3);
@@ -142,6 +143,9 @@ export function PathyDebrief({ userId, origen, titulo, scorePct, answers }: Prop
       },
     })
       .then((r) => {
+        // Los análisis de cortesía del plan gratuito se descuentan al recibir
+        // un diagnóstico real (el servidor lleva la cuenta autoritativa).
+        if (r.diagnostico && sesionUser && !isPaid(sesionUser)) consumeFree(sesionUser, "pathy");
         setDiagnostico(r.diagnostico);
         setConfusiones(r.confusiones);
         setAcciones(r.acciones);
