@@ -314,11 +314,21 @@ export function Nav() {
           </nav>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <Btn kind="ghost" size="sm" className="hidden md:inline-flex" to="/login">Iniciar sesión</Btn>
-          <Btn kind="primary" size="sm" icon="arrow" to="/register">
-            <span className="hidden sm:inline">Comenzar gratis</span>
-            <span className="sm:hidden">Empezar</span>
-          </Btn>
+          {/* Con sesión activa la home no redirige: sólo ofrece el atajo. */}
+          {sesion ? (
+            <Btn kind="primary" size="sm" icon="arrow" to="/dashboard">
+              <span className="hidden sm:inline">Ir a mi dashboard</span>
+              <span className="sm:hidden">Dashboard</span>
+            </Btn>
+          ) : (
+            <>
+              <Btn kind="ghost" size="sm" className="hidden md:inline-flex" to="/login">Iniciar sesión</Btn>
+              <Btn kind="primary" size="sm" icon="arrow" to="/register">
+                <span className="hidden sm:inline">Comenzar gratis</span>
+                <span className="sm:hidden">Empezar</span>
+              </Btn>
+            </>
+          )}
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -349,11 +359,11 @@ export function Nav() {
               </a>
             ))}
             <a
-              href="/login"
+              href={sesion ? "/dashboard" : "/login"}
               onClick={() => setOpen(false)}
               className="mt-3 py-3.5 text-center text-[15px] font-semibold text-ink rounded-xl border border-ink/12"
             >
-              Iniciar sesión
+              {sesion ? "Ir a mi dashboard" : "Iniciar sesión"}
             </a>
           </nav>
         </div>
