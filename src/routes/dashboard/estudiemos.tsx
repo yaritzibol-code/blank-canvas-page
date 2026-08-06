@@ -26,6 +26,7 @@ import {
   type BankQuestion,
   type User,
 } from "@/lib/store";
+import { LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import { adminOnly } from "@/components/shared/UnderConstruction";
 import { sanitizeHtml } from "@/lib/yaris-format";
@@ -941,7 +942,7 @@ function buildManualStats(userId: string): ManualStat[] {
       const tituloMatch = !rows.length && (a.titulo ?? "").toLowerCase().includes(q.titulo.toLowerCase());
       if (rows.length) {
         answered += rows.length;
-        correct += rows.filter((r) => r.correct).length;
+        correct += rows.filter((r) => r.selectedIndex === r.correctIndex).length;
       } else if (tituloMatch) {
         answered += a.total;
         correct += a.correct;
