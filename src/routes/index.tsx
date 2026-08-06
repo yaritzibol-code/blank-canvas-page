@@ -358,11 +358,25 @@ export function Nav() {
           </button>
         </div>
       </div>
-      {open && (
+      {open && mounted && createPortal(
         <div
           id="nav-mobile"
-          className="lg:hidden fixed inset-x-0 top-[64px] sm:top-[68px] bottom-0 z-50 overflow-y-auto border-t border-ink/8 bg-white"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menú de navegación"
+          className="lg:hidden fixed inset-0 z-[120] overflow-y-auto overscroll-contain bg-[#FAF8F4]"
         >
+          <div className="sticky top-0 z-10 flex items-center justify-between gap-3 bg-[#FAF8F4] border-b border-ink/8 px-4 sm:px-6 h-[64px]">
+            <span className="font-display text-[17px] font-bold text-ink">FlightPath</span>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Cerrar menú"
+              className="h-11 px-3.5 inline-flex items-center gap-2 rounded-xl border border-ink/15 bg-white text-ink text-[13px] font-semibold shadow-sm"
+            >
+              <span aria-hidden="true" className="text-[17px] leading-none">×</span> Cerrar
+            </button>
+          </div>
           <nav className="mx-auto max-w-[1240px] px-4 sm:px-6 py-4 flex flex-col">
             <p className="text-[11px] font-bold uppercase tracking-wider text-ink/40 mb-1">Páginas</p>
             {NAV_LINKS.map((x) => (
@@ -370,7 +384,7 @@ export function Nav() {
                 key={x.label}
                 href={x.href}
                 onClick={() => setOpen(false)}
-                className="py-3.5 flex items-center justify-between text-[15px] font-semibold text-ink/85 border-b border-ink/5"
+                className="min-h-[52px] py-3.5 flex items-center justify-between text-[15px] font-semibold text-ink/85 border-b border-ink/5"
               >
                 {x.label}
                 <span aria-hidden="true" className="text-ink/30">›</span>
@@ -385,18 +399,18 @@ export function Nav() {
                 key={s.hash}
                 href={`/${s.hash}`}
                 onClick={() => setOpen(false)}
-                className="py-3 flex items-center justify-between text-[14.5px] font-medium text-ink/70 border-b border-ink/5"
+                className="min-h-[48px] py-3 flex items-center justify-between text-[14.5px] font-medium text-ink/70 border-b border-ink/5"
               >
                 {s.label}
                 <span aria-hidden="true" className="text-ink/30">↓</span>
               </a>
             ))}
 
-            <div className="mt-6 flex flex-col gap-2.5 pb-8">
+            <div className="mt-6 flex flex-col gap-2.5 pb-[max(2rem,env(safe-area-inset-bottom))]">
               <a
                 href={sesion ? "/dashboard" : "/register"}
                 onClick={() => setOpen(false)}
-                className="py-3.5 text-center text-[15px] font-bold text-white bg-brand rounded-xl shadow-navy"
+                className="py-3.5 text-center text-[15px] font-bold text-white rounded-xl shadow-navy"
                 style={{ background: "#6C0820" }}
               >
                 {sesion ? "Ir a mi dashboard" : "Comenzar gratis"}
@@ -412,8 +426,10 @@ export function Nav() {
               )}
             </div>
           </nav>
-        </div>
+        </div>,
+        document.body,
       )}
+
     </header>
   );
 }
