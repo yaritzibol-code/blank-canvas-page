@@ -241,13 +241,20 @@ function attachAuthListener(s: SupabaseClient) {
         const userId = session.user.id;
         const finish = () => {
           markAuthSettled();
-          // Tras OAuth el broker regresa al origen (o a /login); con la sesión
-          // ya espejada, lleva al usuario a su dashboard.
+          // Sólo el regreso del broker de OAuth manda al dashboard. Si alguien
+          // ya tenía sesión y entra a la portada por su cuenta, se queda ahí:
+          // la home muestra "Ir a mi dashboard" y él decide.
+          const esRetornoOAuth =
+            /(?:^|[?&#])(?:code|access_token|token_hash)=/.test(
+              window.location.search + window.location.hash,
+            );
+          if (!esRetornoOAuth) return;
           const path = window.location.pathname;
           if (path === "/" || path === "/login" || path === "/register") {
             window.location.href = "/dashboard";
           }
         };
+
         if (getSessionUserId() !== userId) {
           void openCloudSession(userId).then((res) => {
             if (res.ok) finish();
