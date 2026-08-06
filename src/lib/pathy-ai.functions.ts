@@ -65,7 +65,18 @@ export const pathyAnalysis = createServerFn({ method: "POST" })
       Boolean(hasSub) ||
       (pdata.plan === "paga" &&
         ["activo", "extendido", "prueba"].includes(pdata.accessStatus ?? "activo"));
-    if (!isPro) return fail("sin_pro");
+    // Plan gratuito: 2 análisis de cortesía antes del popup de mejora.
+    if (!isPro) {
+      const { consumeServerFreeQuota } = await import("@/lib/free-quota.server");
+      const cuota = await consumeServerFreeQuota(
+        supabase,
+        userId,
+        "pathy",
+        (profileRow?.data ?? {}) as Record<string, unknown>,
+      );
+      if (!cuota.allowed) return fail("sin_pro");
+    }
+
 
     const verdict = await checkUserRateLimit(userId);
     if (!verdict.allowed) return fail("limite");
