@@ -71,12 +71,24 @@ function OperacionesPage() {
       calls: acc.calls + r.calls,
       errors: acc.errors + r.errors,
       tokens: acc.tokens + r.tokens_in + r.tokens_out,
+      tokensIn: acc.tokensIn + r.tokens_in,
+      tokensOut: acc.tokensOut + r.tokens_out,
       latSum: acc.latSum + r.avg_latency_ms * (r.calls > 0 ? 1 : 0),
       latN: acc.latN + (r.calls > 0 ? 1 : 0),
     }),
-    { calls: 0, errors: 0, tokens: 0, latSum: 0, latN: 0 },
+    { calls: 0, errors: 0, tokens: 0, tokensIn: 0, tokensOut: 0, latSum: 0, latN: 0 },
   );
   const avgLatency = aiTotals.latN > 0 ? Math.round(aiTotals.latSum / aiTotals.latN) : 0;
+
+  // Costo estimado de IA a partir de los tokens bitacorizados en `ai_usage`.
+  const cost30 = estimateAiCost(aiTotals.tokensIn, aiTotals.tokensOut);
+  const cost24 = data ? estimateAiCost(data.ai.tokens_in, data.ai.tokens_out) : { usd: 0, mxn: 0 };
+  const costPerCall = aiTotals.calls > 0 ? cost30.mxn / aiTotals.calls : 0;
+  const costPoints: SparkPoint[] = aiSeries.map((r) => ({
+    label: r.day,
+    value: Number(estimateAiCost(r.tokens_in, r.tokens_out).mxn.toFixed(2)),
+  }));
+
 
   return (
     <AdminShell title="Panel de operaciones" active="operaciones">
