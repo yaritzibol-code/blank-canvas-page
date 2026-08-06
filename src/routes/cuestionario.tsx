@@ -409,8 +409,14 @@ function CuestionarioPage() {
   // El chat baja SOLO su propio contenedor. Con `scrollIntoView` el navegador
   // arrastraba también la página y la pantalla se iba hasta abajo.
   // El chat NO persigue la respuesta en streaming: solo baja cuando el propio
-  // estudiante manda un mensaje. Mientras Yaris escribe, la vista se queda
-  // donde está y él decide cuándo hacer scroll dentro del widget.
+  // estudiante manda un mensaje o pulsa "Explícamelo Yaris" / "Ayúdame a
+  // pensar". Mientras Yaris escribe, la vista se queda donde está.
+  const scrollChat = () => {
+    requestAnimationFrame(() => {
+      const box = msgsBoxRef.current;
+      if (box) box.scrollTop = box.scrollHeight;
+    });
+  };
   useEffect(() => {
     if (yarisMsgs[yarisMsgs.length - 1]?.role !== "user") return;
     const box = msgsBoxRef.current;
