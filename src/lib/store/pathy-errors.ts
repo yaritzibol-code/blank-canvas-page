@@ -15,7 +15,9 @@ const MANUAL_NOMBRE: Record<string, string> = {
   JEPP: "Jeppesen",
   PHAK: "Handbook (PHAK)",
   ANX10: "Anexo 10",
-  CPAM: "CPAM",
+  LEG: "Legislación",
+  CPAM: "Compendio CPAM",
+
 };
 
 function chaptersFor(fuente: string) {
