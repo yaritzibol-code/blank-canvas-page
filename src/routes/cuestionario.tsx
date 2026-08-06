@@ -593,6 +593,9 @@ function CuestionarioPage() {
       },
     ]);
     setYarisTyping(true);
+    // Un nuevo "Explícamelo Yaris" / "Ayúdame a pensar" sí lleva la vista al
+    // final del chat; el streaming posterior ya no la mueve.
+    scrollChat();
     const answer = await streamInto([
       {
         role: "user" as const,
