@@ -38,6 +38,8 @@ import {
   ATP_CHAPTERS,
   JEPP_CHAPTERS,
   PHAK_CHAPTERS,
+  LEG_CHAPTERS,
+
   LINEA_AEREA_QUIZZES,
   type AtpChapter,
 } from "@/lib/store/linea-aerea-meta";
