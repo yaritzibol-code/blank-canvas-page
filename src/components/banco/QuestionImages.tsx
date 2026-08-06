@@ -10,10 +10,13 @@ import { supa } from "@/lib/store/cloud";
 
 const TTL = 60 * 60; // 1 hora
 
-/** Bucket por manual: Jeppesen y ATP (figuras del AKTS) viven separados. */
+/** Bucket por manual: Jeppesen, ATP (figuras del AKTS) y E190 viven separados. */
 function bucketFor(fuente?: string): string {
-  return fuente === "ATP" ? "atp-images" : "jeppesen-images";
+  if (fuente === "ATP") return "atp-images";
+  if (fuente === "LAOF") return "e190-images";
+  return "jeppesen-images";
 }
+
 
 /** Cache de la sesión: evita volver a firmar la misma lámina al navegar. */
 const signed = new Map<string, string>();
