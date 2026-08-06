@@ -2,6 +2,7 @@ import { useSessionUser } from "@/lib/store";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { PlaneField as SharedPlaneField } from "@/components/shared/PlaneField";
 import {
   PRO_ANNUAL_FALLBACK,
@@ -117,7 +118,7 @@ export function Logo({ light = false, size = 30 }: { light?: boolean; size?: num
         style={{ width: size, height: size }}
         className="rounded-[8px] object-cover shrink-0"
       />
-      <span className={`font-display text-[19px] tracking-tight ${light ? "text-white" : "text-ink"}`}>
+      <span className={`font-display text-[17px] sm:text-[19px] tracking-tight ${light ? "text-white" : "text-ink"}`}>
         Flight<span className="text-coral-600">Path</span>
       </span>
     </Link>
@@ -302,6 +303,8 @@ export function Nav() {
   const sesion = Boolean(useSessionUser());
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   useEffect(() => {
     const f = () => setScrolled(window.scrollY > 12);
     f(); window.addEventListener("scroll", f, { passive: true });
@@ -317,7 +320,7 @@ export function Nav() {
   return (
     <header className={`sticky top-0 z-40 transition-all duration-300 ${scrolled || open ? "glass border-b border-ink/8" : "bg-transparent"}`}>
       <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8 h-[64px] sm:h-[68px] grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
-        <div className="min-w-0 flex items-center gap-8">
+        <div className="min-w-0 flex items-center gap-6 lg:gap-8">
           <Logo />
           <nav className="hidden lg:flex items-center gap-8 text-[14px] font-medium text-ink/65">
             {NAV_LINKS.map((x) => (
@@ -325,7 +328,7 @@ export function Nav() {
             ))}
           </nav>
         </div>
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {/* Con sesión activa la home no redirige: sólo ofrece el atajo. */}
           {sesion ? (
             <Btn kind="primary" size="sm" icon="arrow" to="/dashboard">
@@ -347,22 +350,36 @@ export function Nav() {
             aria-label={open ? "Cerrar menú" : "Abrir menú de navegación"}
             aria-expanded={open}
             aria-controls="nav-mobile"
-            className="lg:hidden h-11 -mr-1 px-3 inline-flex items-center gap-2 rounded-xl border border-ink/15 bg-white text-ink shadow-sm"
+            className="lg:hidden h-11 -mr-1 px-2.5 sm:px-3 inline-flex items-center gap-2 rounded-xl border border-ink/15 bg-white text-ink shadow-sm"
           >
             <span className="relative block w-[18px] h-[12px]" aria-hidden="true">
               <span className={`absolute left-0 w-full h-[2px] rounded bg-current transition-all duration-200 ${open ? "top-[5px] rotate-45" : "top-0"}`} />
               <span className={`absolute left-0 top-[5px] w-full h-[2px] rounded bg-current transition-all duration-200 ${open ? "opacity-0" : "opacity-100"}`} />
               <span className={`absolute left-0 w-full h-[2px] rounded bg-current transition-all duration-200 ${open ? "top-[5px] -rotate-45" : "top-[10px]"}`} />
             </span>
-            <span className="text-[13px] font-semibold">{open ? "Cerrar" : "Menú"}</span>
+            <span className="hidden xs:inline text-[13px] font-semibold">{open ? "Cerrar" : "Menú"}</span>
           </button>
         </div>
       </div>
-      {open && (
+      {open && mounted && createPortal(
         <div
           id="nav-mobile"
-          className="lg:hidden fixed inset-x-0 top-[64px] sm:top-[68px] bottom-0 z-50 overflow-y-auto border-t border-ink/8 bg-white"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menú de navegación"
+          className="lg:hidden fixed inset-0 z-[120] overflow-y-auto overscroll-contain bg-[#FAF8F4]"
         >
+          <div className="sticky top-0 z-10 flex items-center justify-between gap-3 bg-[#FAF8F4] border-b border-ink/8 px-4 sm:px-6 h-[64px]">
+            <span className="font-display text-[17px] font-bold text-ink">FlightPath</span>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Cerrar menú"
+              className="h-11 px-3.5 inline-flex items-center gap-2 rounded-xl border border-ink/15 bg-white text-ink text-[13px] font-semibold shadow-sm"
+            >
+              <span aria-hidden="true" className="text-[17px] leading-none">×</span> Cerrar
+            </button>
+          </div>
           <nav className="mx-auto max-w-[1240px] px-4 sm:px-6 py-4 flex flex-col">
             <p className="text-[11px] font-bold uppercase tracking-wider text-ink/40 mb-1">Páginas</p>
             {NAV_LINKS.map((x) => (
@@ -370,7 +387,7 @@ export function Nav() {
                 key={x.label}
                 href={x.href}
                 onClick={() => setOpen(false)}
-                className="py-3.5 flex items-center justify-between text-[15px] font-semibold text-ink/85 border-b border-ink/5"
+                className="min-h-[52px] py-3.5 flex items-center justify-between text-[15px] font-semibold text-ink/85 border-b border-ink/5"
               >
                 {x.label}
                 <span aria-hidden="true" className="text-ink/30">›</span>
@@ -385,18 +402,18 @@ export function Nav() {
                 key={s.hash}
                 href={`/${s.hash}`}
                 onClick={() => setOpen(false)}
-                className="py-3 flex items-center justify-between text-[14.5px] font-medium text-ink/70 border-b border-ink/5"
+                className="min-h-[48px] py-3 flex items-center justify-between text-[14.5px] font-medium text-ink/70 border-b border-ink/5"
               >
                 {s.label}
                 <span aria-hidden="true" className="text-ink/30">↓</span>
               </a>
             ))}
 
-            <div className="mt-6 flex flex-col gap-2.5 pb-8">
+            <div className="mt-6 flex flex-col gap-2.5 pb-[max(2rem,env(safe-area-inset-bottom))]">
               <a
                 href={sesion ? "/dashboard" : "/register"}
                 onClick={() => setOpen(false)}
-                className="py-3.5 text-center text-[15px] font-bold text-white bg-brand rounded-xl shadow-navy"
+                className="py-3.5 text-center text-[15px] font-bold text-white rounded-xl shadow-navy"
                 style={{ background: "#6C0820" }}
               >
                 {sesion ? "Ir a mi dashboard" : "Comenzar gratis"}
@@ -412,8 +429,10 @@ export function Nav() {
               )}
             </div>
           </nav>
-        </div>
+        </div>,
+        document.body,
       )}
+
     </header>
   );
 }

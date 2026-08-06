@@ -187,7 +187,7 @@ function PerfilPage() {
   const inputStyle: React.CSSProperties = { ...fieldStyle, background: "white", border: "2px solid #3D5D91", outline: "none" };
 
   const infoField = (label: string, field: keyof Info, type: "text" | "date" = "text") => (
-    <div style={{ flex: 1 }}>
+    <div style={{ flex: "1 1 240px", minWidth: 0 }}>
       <label style={{ fontSize: ".75rem", fontWeight: 700, color: "#647DA0", marginBottom: 5, display: "block" }}>{label}</label>
       {editing
         ? <input type={type} value={draft[field]} onChange={(e) => setDraft((d) => ({ ...d, [field]: e.target.value }))} style={inputStyle} />
@@ -236,7 +236,7 @@ function PerfilPage() {
       )}
 
       {/* Profile hero */}
-      <div style={{ background: "linear-gradient(135deg,#22375C,#2a2a4e)", borderRadius: 20, padding: 28, display: "flex", alignItems: "center", gap: 24, marginBottom: 24, position: "relative", overflow: "hidden", flexWrap: "wrap" }}>
+      <div style={{ background: "linear-gradient(135deg,#22375C,#2a2a4e)", borderRadius: 20, padding: "clamp(18px,4vw,28px)", display: "flex", alignItems: "center", gap: "clamp(14px,3vw,24px)", marginBottom: 24, position: "relative", overflow: "hidden", flexWrap: "wrap" }}>
         <div style={{ position: "absolute", top: -60, right: -60, width: 220, height: 220, background: "radial-gradient(circle,rgba(90,134,203,.2) 0%,transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
 
         {/* Avatar (foto real o iniciales) */}
@@ -250,9 +250,10 @@ function PerfilPage() {
         </div>
 
 
-        <div style={{ flex: 1, zIndex: 1, minWidth: 200 }}>
-          <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", color: "white", fontWeight: 900, marginBottom: 4 }}>{info.nombre.split(" ").slice(0, 2).join(" ")}</div>
-          <div style={{ fontSize: ".82rem", color: "rgba(255,255,255,.5)", marginBottom: 10 }}>{info.email}{user.whatsapp ? ` · ${maskPhone(user.whatsapp)}` : ""}</div>
+        <div style={{ flex: "1 1 200px", zIndex: 1, minWidth: 0 }}>
+          <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "clamp(1.25rem,4.5vw,1.6rem)", color: "white", fontWeight: 900, marginBottom: 4 }}>{info.nombre.split(" ").slice(0, 2).join(" ")}</div>
+          <div style={{ fontSize: ".82rem", color: "rgba(255,255,255,.5)", marginBottom: 10, overflowWrap: "anywhere" }}>{info.email}{user.whatsapp ? ` · ${maskPhone(user.whatsapp)}` : ""}</div>
+
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             <span style={{ padding: "4px 12px", borderRadius: 20, fontSize: ".72rem", fontWeight: 700, background: "#F2AEBC", color: "#6C0820", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="plane" size={13} /> {user.planNombre}</span>
             <span style={{ padding: "4px 12px", borderRadius: 20, fontSize: ".72rem", fontWeight: 700, background: "rgba(255,255,255,.1)", color: "rgba(255,255,255,.8)", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="flame" size={13} /> {stats.streak} {stats.streak === 1 ? "día" : "días"} de racha</span>

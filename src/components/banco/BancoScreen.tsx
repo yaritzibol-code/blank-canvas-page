@@ -1592,14 +1592,14 @@ export function BancoScreen({
 
         {/* Stats row */}
         <div
+          className="grid w-full grid-cols-1 sm:flex sm:flex-wrap sm:justify-center"
           style={{
-            display: "flex",
-            gap: 16,
+            gap: 12,
             marginBottom: 48,
-            flexWrap: "wrap",
-            justifyContent: "center",
+            maxWidth: 820,
           }}
         >
+
           {[
             {
               icon: "help",
