@@ -84,6 +84,8 @@ export interface ActivityUserRow {
   last_label: string | null;
 }
 
+export type Jsonish = string | number | boolean | null | Jsonish[] | { [k: string]: Jsonish };
+
 export interface ActivityTimelineRow {
   created_at: string;
   type: string;
@@ -91,7 +93,7 @@ export interface ActivityTimelineRow {
   label: string | null;
   step: string | null;
   duration_ms: number;
-  metadata: unknown;
+  metadata: Jsonish;
 }
 
 export const adminActivityReport = createServerFn({ method: "POST" })
