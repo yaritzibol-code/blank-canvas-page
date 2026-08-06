@@ -10,6 +10,7 @@ import {
 import { useEffect } from "react";
 import { initAppStore, useSessionUser } from "@/lib/store";
 import { usePresence } from "@/hooks/use-presence";
+import { useActivityTracker } from "@/hooks/use-activity-tracker";
 import { installClientErrorReporter, reportClientError } from "@/lib/client-error-reporter";
 import { useApplyPrefs } from "@/hooks/use-apply-prefs";
 import { GOOGLE_ADS_ID, isAdsConfigured } from "@/lib/ads";
@@ -173,7 +174,10 @@ function RootComponent() {
 
   useApplyPrefs();
   // Presencia en vivo (canal efímero): alimenta "Usuarios activos" del panel admin.
-  usePresence(useSessionUser());
+  const sessionUser = useSessionUser();
+  usePresence(sessionUser);
+  // Activity Ratio: bounce rate y recorrido real de cada visita.
+  useActivityTracker(sessionUser);
 
   return (
     <QueryClientProvider client={queryClient}>
