@@ -9,6 +9,8 @@ import {
   logout,
   requestAccountDeletion,
   defaultPrefs,
+  flushCloudWrites,
+
 } from "@/lib/store";
 import type { UserPrefs } from "@/lib/store";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
@@ -168,6 +170,28 @@ function ConfiguracionPage() {
   const [deleteConfirm, setDeleteConfirm] = useState("");
   const [yarisTono, setYarisTonoState] = useState<YarisTono>(() => user?.yarisTono ?? "normal");
   const [yarisLargo, setYarisLargoState] = useState<YarisLargo>(() => user?.yarisLargo ?? "normal");
+  const [guardandoYaris, setGuardandoYaris] = useState(false);
+  // Hay cambios pendientes mientras lo elegido difiera de lo ya guardado.
+  const yarisSucio =
+    yarisTono !== (user?.yarisTono ?? "normal") || yarisLargo !== (user?.yarisLargo ?? "normal");
+
+  /**
+   * Guarda tono y longitud y espera a que la nube los tenga: Yaris lee estas
+   * preferencias del perfil en el servidor, así que sin el flush el siguiente
+   * mensaje todavía saldría con la personalidad anterior.
+   */
+  async function guardarYaris() {
+    if (!user || guardandoYaris) return;
+    setGuardandoYaris(true);
+    updateUser(user.id, { yarisTono, yarisLargo });
+    try {
+      await flushCloudWrites();
+    } catch {
+      /* el debounce reintenta en la siguiente escritura */
+    }
+    setGuardandoYaris(false);
+    setFlash("Listo: Yaris ya te responde con esa personalidad y longitud.");
+  }
 
 
   if (!user) return null;
@@ -374,8 +398,6 @@ function ConfiguracionPage() {
                     key={t.key}
                     onClick={() => {
                       setYarisTonoState(t.key);
-                      updateUser(user.id, { yarisTono: t.key });
-                      setFlash(`Yaris ahora te habla en modo ${t.label}.`);
                     }}
                     style={{
                       display: "flex", alignItems: "center", gap: 10, textAlign: "left", width: "100%",
@@ -416,8 +438,6 @@ function ConfiguracionPage() {
                     key={l.key}
                     onClick={() => {
                       setYarisLargoState(l.key);
-                      updateUser(user.id, { yarisLargo: l.key });
-                      setFlash(`Yaris responderá de forma ${l.label.toLowerCase()}.`);
                     }}
                     style={{
                       display: "flex", alignItems: "center", gap: 10, textAlign: "left", width: "100%",
@@ -438,6 +458,27 @@ function ConfiguracionPage() {
                   </button>
                 );
               })}
+            </div>
+
+            {/* Guardar: aplica tono y longitud de inmediato, en este equipo y en la nube */}
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 14, flexWrap: "wrap" }}>
+              <button
+                onClick={() => void guardarYaris()}
+                disabled={!yarisSucio || guardandoYaris}
+                style={{
+                  padding: "12px 20px", borderRadius: 10, border: "none", minHeight: 44,
+                  fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: ".86rem",
+                  color: "white", cursor: !yarisSucio || guardandoYaris ? "not-allowed" : "pointer",
+                  background: !yarisSucio || guardandoYaris ? "#C9D6E8" : "#3D5D91",
+                }}
+              >
+                {guardandoYaris ? "Guardando…" : "Guardar cambios de Yaris"}
+              </button>
+              {yarisSucio && !guardandoYaris && (
+                <span style={{ fontSize: ".76rem", color: "#6C0820", fontWeight: 600 }}>
+                  Tienes cambios sin guardar
+                </span>
+              )}
             </div>
           </div>
 
