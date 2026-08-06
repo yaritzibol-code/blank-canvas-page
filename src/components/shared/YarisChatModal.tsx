@@ -1,3 +1,4 @@
+import { setPresenceActivity } from "@/lib/presence";
 /**
  * Panel lateral de chat con Yaris (tutora académica) — se abre desde el
  * sidebar del dashboard. Usa Lovable AI Gateway (Gemini) mediante el
