@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { PRO_MONTHLY_FALLBACK, PRO_SETUP_FALLBACK } from "@/lib/pricing";
+import { PRO_MONTHLY_FALLBACK, PRO_SETUP_FALLBACK, formatPrice } from "@/lib/pricing";
 import {
   AeroBackdrop,
   Btn,
@@ -21,8 +21,13 @@ import {
  * Primer Oficial Embraer 190. Capta búsquedas como "convocatoria aeromexico",
  * "convocatoria aspa", "jeppesen", "ATP" y vende el acceso al cuestionario de
  * práctica: el CTA lleva a registro y de ahí directo al checkout de Stripe
- * (/dashboard/planes?checkout=1). El contenido del temario replica el material
- * oficial ya organizado en /dashboard/linea-aerea.
+ * (/dashboard/planes?checkout=1).
+ *
+ * Regla de compliance: FlightPath menciona el temario público de la
+ * convocatoria (uso informativo legítimo), pero nunca afirma replicar,
+ * copiar ni contener material de examen propiedad de la empresa. El banco
+ * que se vende es propio e independiente. Sin logotipos de Aeroméxico,
+ * ASPA, Volaris ni AFAC, y con el aviso de no afiliación siempre visible.
  */
 
 const CANONICAL = "https://flightpath.mx/convocatoria-aeromexico";
@@ -49,27 +54,27 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "¿Cómo me ayuda el cuestionario de práctica de FlightPath?",
-    a: "Organiza el temario oficial en materias con un banco de más de 2,800 preguntas con explicación, simulacros cronometrados, flashcards y un tutor IA disponible 24/7. Practicas cada fuente del temario (ATP, PHAK, Jeppesen, CPAM y OACI Anexo 10) hasta dominar los temas donde más fallas.",
+    a: "Cubre el temario publicado de la convocatoria con un banco propio de más de 2,800 preguntas con explicación, simulacros cronometrados y un tutor IA disponible 24/7. Practicas cada fuente del temario (ATP, PHAK, Jeppesen, CPAM y OACI Anexo 10) hasta dominar los temas donde más fallas.",
   },
   {
     q: "¿Qué es la evaluación AON Aviation Suite y cómo se prepara?",
     a: "AON Aviation Suite es la batería psicométrica y de aptitudes que aplica Aeroméxico Connect: atención dividida, memoria de trabajo, razonamiento y una prueba de inglés. Se prepara con práctica cronometrada y descanso: en FlightPath entrenas la parte teórica y el manejo del tiempo con simulacros con reloj.",
   },
   {
-    q: "¿Cuántas preguntas oficiales tiene el examen teórico de Primer Oficial Embraer 190?",
-    a: "El cuestionario oficial del proceso que replicamos en FlightPath tiene 377 preguntas repartidas en las cinco fuentes del temario (ATP, PHAK, Jeppesen General Airway Manual, CPAM y OACI Anexo 10). Puedes practicarlas en modo oficial o mezcladas con el banco potenciado de FlightPath.",
+    q: "¿Cuántas preguntas de práctica hay para el examen teórico de Primer Oficial Embraer 190?",
+    a: "FlightPath cuenta con un banco propio de más de 2,800 preguntas de práctica, desarrollado de forma independiente y mapeado al temario oficial publicado para la convocatoria. Puedes practicarlo por fuente (ATP, PHAK, Jeppesen General Airway Manual, CPAM y OACI Anexo 10) o mezclado en simulacros cronometrados.",
   },
   {
     q: "¿Cuánto cuesta prepararte con FlightPath para la convocatoria?",
-    a: `El acceso completo tiene un pago único de $${PRO_SETUP_FALLBACK.toLocaleString()} MXN y una mensualidad de $${PRO_MONTHLY_FALLBACK.toLocaleString()} MXN. Incluye el banco completo, simulacros cronometrados, flashcards, audios de repaso, presentaciones y Yaris, la tutora IA entrenada en los materiales del curso.`,
+    a: `El acceso completo tiene un pago único de inscripción de ${formatPrice(PRO_SETUP_FALLBACK)} y una mensualidad de ${formatPrice(PRO_MONTHLY_FALLBACK)}. Incluye el banco completo, simulacros cronometrados, el módulo Línea Aérea, análisis por materia y Yaris, la tutora IA entrenada en los materiales del curso.`,
   },
   {
     q: "¿Qué extras de estudio incluye el cuestionario?",
-    a: "Además de las preguntas con explicación, cada bloque tiene flashcards, audio-repaso tipo podcast narrado, presentaciones con los puntos clave y un chat con Yaris que consulta el material curado y cita la fuente del curso.",
+    a: "Además de las preguntas con explicación, incluye simulacros cronometrados, análisis de desempeño por materia y un chat con Yaris que consulta el material curado y cita la fuente del curso. Las flashcards, los audio-repasos tipo podcast y las presentaciones con puntos clave están en construcción y se liberarán próximamente.",
   },
   {
     q: "¿El cuestionario reemplaza al material oficial de la convocatoria?",
-    a: "No. El material de referencia es el temario y la guía oficiales proporcionados por la empresa; FlightPath únicamente organiza ese material y te da práctica estructurada sobre él. FlightPath no está afiliada a ASPA de México ni a Aeroméxico.",
+    a: "No. El material de referencia es el temario y la guía oficiales que la empresa entrega a cada candidato. FlightPath es una plataforma independiente: su banco de práctica es propio y está mapeado al temario público para darte práctica estructurada. FlightPath no está afiliada a ASPA de México ni a Aeroméxico.",
   },
 ];
 
@@ -88,44 +93,49 @@ const EVALUACIONES: { icon: IconName; title: string; sub: string }[] = [
   { icon: "user", title: "Panel", sub: "Entrevista con panel evaluador" },
 ];
 
-const TEMARIO: { icon: IconName; title: string; detail: string; materias: string[] }[] = [
+const TEMARIO: { icon: IconName; title: string; detail: string; materias: string[]; href: string }[] = [
   {
     icon: "book",
     title: "ATP — Airline Transport Pilot",
     detail: "Completo, excepto los capítulos de Performance y Weight & Balance.",
     materias: ["Aerodinámica", "Aeronaves y Motores", "Meteorología", "Navegación", "Operaciones"],
+    href: "/linea-aerea/atp",
   },
   {
     icon: "library",
     title: "Pilot's Handbook of Aeronautical Knowledge (PHAK)",
     detail: "Completo, excepto el capítulo 1.",
     materias: ["Aerodinámica", "Meteorología", "Medicina de Aviación", "Factores Humanos"],
+    href: "/linea-aerea/phak",
   },
   {
     icon: "compass",
     title: "Jeppesen General Airway Manual",
     detail: "Sección Introduction: cartas, simbología y procedimientos.",
     materias: ["Manuales AIS", "Navegación"],
+    href: "/linea-aerea/jeppesen",
   },
   {
     icon: "doc",
     title: "CPAM — Legislación nacional",
     detail: "Compendio de legislación nacional relacionada a tripulaciones de vuelo.",
     materias: ["Legislación Aeronáutica"],
+    href: "/linea-aerea/cpam",
   },
   {
     icon: "radio",
     title: "OACI Anexo 10, Volumen II",
     detail: "Telecomunicaciones aeronáuticas — procedimientos de comunicación.",
     materias: ["Comunicaciones"],
+    href: "/linea-aerea/oaci-anexo-10",
   },
 ];
 
 const INCLUYE: string[] = [
-  "Banco de 2,800+ preguntas con explicación, mapeado al temario oficial",
+  "Banco propio de 2,800+ preguntas con explicación, mapeado al temario oficial",
   "Simulacros cronometrados tipo examen",
   "Módulo Línea Aérea: la convocatoria organizada paso a paso",
-  "Flashcards y repaso dirigido por materia débil",
+  "Repaso dirigido a tus materias débiles, tema por tema",
   "Tutor IA Yaris 24/7 con el contexto del curso",
   "Análisis de desempeño por materia y tema",
 ];
@@ -160,7 +170,7 @@ export const Route = createFileRoute("/convocatoria-aeromexico")({
       {
         name: "twitter:description",
         content:
-          "Practica el temario oficial (ATP, PHAK, Jeppesen, CPAM y OACI Anexo 10) con 377 preguntas oficiales, simulacros, flashcards, audios y tutor IA.",
+          "Prepara el temario de la convocatoria (ATP, PHAK, Jeppesen, CPAM y OACI Anexo 10) con un banco propio de 2,800+ preguntas, simulacros cronometrados y tutor IA.",
       },
     ],
     links: [{ rel: "canonical", href: CANONICAL }],
@@ -182,7 +192,7 @@ export const Route = createFileRoute("/convocatoria-aeromexico")({
               "@type": "Course",
               name: "Preparación para la convocatoria ASPA · Aeroméxico Connect — Primer Oficial Embraer 190",
               description:
-                "Cuestionario de práctica del temario oficial: ATP, PHAK, Jeppesen General Airway Manual, CPAM y OACI Anexo 10, con simulacros cronometrados, flashcards, audios de repaso, presentaciones y tutor IA.",
+                "Cuestionario de práctica del temario publicado: ATP, PHAK, Jeppesen General Airway Manual, CPAM y OACI Anexo 10, con banco propio de 2,800+ preguntas, simulacros cronometrados y tutor IA.",
               inLanguage: "es-MX",
               url: CANONICAL,
               provider: { "@type": "Organization", name: "FlightPath", url: "https://flightpath.mx/" },
@@ -320,6 +330,12 @@ function Temario() {
                       <Pill key={m} tone="coral"><Icon n="check" className="w-3 h-3" />{m}</Pill>
                     ))}
                   </div>
+                  <a
+                    href={f.href}
+                    className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-coral-700 hover:text-coral-600 transition-colors"
+                  >
+                    Guía completa de esta fuente <Icon n="chevR" className="w-3.5 h-3.5" />
+                  </a>
                 </div>
               </div>
             </div>
@@ -451,8 +467,9 @@ function Aviso() {
           <Icon n="bell" className="w-4 h-4 mt-0.5 shrink-0" />
           <span>
             El material de referencia de la convocatoria es el temario y la guía oficiales
-            proporcionados por la empresa. FlightPath únicamente organiza ese material oficial y te da
-            práctica estructurada sobre él; <strong>no está afiliada a ASPA de México ni a Aeroméxico</strong>.
+            proporcionados por la empresa. FlightPath es una plataforma independiente: su banco de
+            práctica es propio, desarrollado de forma independiente y mapeado al temario público;{" "}
+            <strong>no está afiliada a ASPA de México ni a Aeroméxico</strong>.
           </span>
         </div>
       </div>

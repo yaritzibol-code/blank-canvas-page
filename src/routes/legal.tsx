@@ -20,7 +20,7 @@ export const Route = createFileRoute("/legal")({
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
 const INK = "#22375C";
-const CONTACT = "contacto@flowstateai.com.mx";
+const CONTACT = "contacto@flightpath.mx";
 
 function Section({ id, title, children }: { id?: string; title: string; children: React.ReactNode }) {
   return (

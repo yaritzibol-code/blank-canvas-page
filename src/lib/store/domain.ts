@@ -420,7 +420,7 @@ export function logAccessChange(userId: string, accion: string, detalle: string)
 export const DEFAULT_CONFIG: InternalConfig = {
   nombrePlataforma: "FlightPath",
   slogan: "Aprende, Domina y Vuela",
-  contactoEmail: "contacto@flowstateai.com.mx",
+  contactoEmail: "contacto@flightpath.mx",
   // Vacío a propósito: el número de soporte lo captura la admin en
   // Configuración. Antes traía el mismo teléfono ficticio de la cuenta demo.
   whatsappSoporte: "",

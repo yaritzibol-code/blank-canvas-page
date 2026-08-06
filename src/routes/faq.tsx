@@ -77,7 +77,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "¿Cómo los contacto?",
-    a: "Escríbenos a contacto@flowstateai.com.mx o usa el botón de Reportar problema dentro de la plataforma; el equipo da seguimiento a cada mensaje.",
+    a: "Escríbenos a contacto@flightpath.mx o usa el botón de Reportar problema dentro de la plataforma; el equipo da seguimiento a cada mensaje.",
   },
 ];
 
@@ -127,7 +127,7 @@ function FaqPage() {
         </h1>
         <p style={{ color: "#647DA0", fontSize: 14, marginBottom: 36 }}>
           Todo lo que necesitas saber sobre FlightPath. ¿No encuentras tu respuesta? Escríbenos a{" "}
-          <a href="mailto:contacto@flowstateai.com.mx" style={{ color: "#3D5D91", fontWeight: 700 }}>contacto@flowstateai.com.mx</a>.
+          <a href="mailto:contacto@flightpath.mx" style={{ color: "#3D5D91", fontWeight: 700 }}>contacto@flightpath.mx</a>.
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
