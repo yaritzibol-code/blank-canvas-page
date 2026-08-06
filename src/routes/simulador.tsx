@@ -381,10 +381,25 @@ function SimuladorPage() {
 
   // Solo baja cuando el estudiante manda su mensaje: la respuesta en streaming
   // no arrastra la vista.
+  /**
+   * Deja el último mensaje del estudiante arriba del todo (estilo ChatGPT):
+   * la respuesta de Yaris se lee hacia abajo sin perseguir el fondo.
+   */
+  const scrollChat = () => {
+    requestAnimationFrame(() => {
+      const box = msgsBoxRef.current;
+      if (!box) return;
+      const mine = box.querySelectorAll<HTMLElement>('[data-msg-role="user"]');
+      const last = mine[mine.length - 1];
+      box.scrollTop = last ? Math.max(0, last.offsetTop - box.offsetTop - 8) : box.scrollHeight;
+    });
+  };
   useEffect(() => {
     if (yarisMsgs[yarisMsgs.length - 1]?.role !== "user") return;
-    msgsEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    scrollChat();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [yarisMsgs]);
+
 
   useEffect(() => {
     if (phase !== "exam") return;
