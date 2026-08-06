@@ -12,6 +12,8 @@ import {
   type AiDailyPoint,
 } from "@/lib/admin.functions";
 import { getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
+import { estimateAiCost, fmtMxn, fmtUsd, USD_MXN } from "@/lib/ai-cost";
+
 
 export const Route = createFileRoute("/admin/operaciones/")({ component: OperacionesPage });
 
@@ -71,12 +73,24 @@ function OperacionesPage() {
       calls: acc.calls + r.calls,
       errors: acc.errors + r.errors,
       tokens: acc.tokens + r.tokens_in + r.tokens_out,
+      tokensIn: acc.tokensIn + r.tokens_in,
+      tokensOut: acc.tokensOut + r.tokens_out,
       latSum: acc.latSum + r.avg_latency_ms * (r.calls > 0 ? 1 : 0),
       latN: acc.latN + (r.calls > 0 ? 1 : 0),
     }),
-    { calls: 0, errors: 0, tokens: 0, latSum: 0, latN: 0 },
+    { calls: 0, errors: 0, tokens: 0, tokensIn: 0, tokensOut: 0, latSum: 0, latN: 0 },
   );
   const avgLatency = aiTotals.latN > 0 ? Math.round(aiTotals.latSum / aiTotals.latN) : 0;
+
+  // Costo estimado de IA a partir de los tokens bitacorizados en `ai_usage`.
+  const cost30 = estimateAiCost(aiTotals.tokensIn, aiTotals.tokensOut);
+  const cost24 = data ? estimateAiCost(data.ai.tokens_in, data.ai.tokens_out) : { usd: 0, mxn: 0 };
+  const costPerCall = aiTotals.calls > 0 ? cost30.mxn / aiTotals.calls : 0;
+  const costPoints: SparkPoint[] = aiSeries.map((r) => ({
+    label: r.day,
+    value: Number(estimateAiCost(r.tokens_in, r.tokens_out).mxn.toFixed(2)),
+  }));
+
 
   return (
     <AdminShell title="Panel de operaciones" active="operaciones">
@@ -94,8 +108,15 @@ function OperacionesPage() {
               <Kpi label="Pro activos" value={data.pro.active} sub={`${data.pro.trialing} en trial · ${data.pro.past_due} past due`} tone="#2ecc71" />
               <Kpi label="Cancelaciones (30d)" value={data.pro.canceled_last_30d} sub={`${data.pro.renewing_next_7d} renuevan en 7d`} tone="#e74c3c" />
               <Kpi label="Usuarios totales" value={data.platform.total_users} sub={`${data.platform.admins} admins`} tone="#3D5D91" />
+              <Kpi
+                label="Costo IA estimado (30d)"
+                value={fmtMxn(cost30.mxn)}
+                sub={`${fmtUsd(cost30.usd)} · ${fmtMxn(cost24.mxn)} en 24h`}
+                tone="#6C0820"
+              />
             </div>
           </section>
+
 
           {/* Gráficos de 30 días — click en un punto abre el drill-down del día */}
           <div style={{ fontSize: ".8rem", color: "#647DA0", marginBottom: 8 }}>
@@ -164,6 +185,29 @@ function OperacionesPage() {
                 </Link>
               </div>
             </div>
+            <div style={cardStyle}>
+              <div style={cardHeadStyle}>Costo estimado de IA por día (30d)</div>
+              <div style={{ padding: 16 }}>
+                <SparkChart
+                  points={costPoints}
+                  color="#22375C"
+                  fill="rgba(34,55,92,0.14)"
+                  formatValue={(n) => `$${n.toLocaleString("es-MX", { maximumFractionDigits: 2 })}`}
+                  formatLabel={shortDay}
+                  onPointClick={(p) => goDay(p.label)}
+                />
+                <div style={{ marginTop: 12, display: "grid", gap: 6 }}>
+                  <Row k="Costo 30d" v={`${fmtMxn(cost30.mxn)} · ${fmtUsd(cost30.usd)}`} />
+                  <Row k="Costo últimas 24h" v={fmtMxn(cost24.mxn)} />
+                  <Row k="Costo por llamada" v={fmtMxn(costPerCall)} />
+                  <Row k="Tokens entrada / salida (30d)" v={`${aiTotals.tokensIn.toLocaleString("es-MX")} / ${aiTotals.tokensOut.toLocaleString("es-MX")}`} />
+                </div>
+                <div style={{ marginTop: 10, fontSize: ".75rem", color: "#647DA0" }}>
+                  Estimado con las tarifas del modelo sobre los tokens registrados (tipo de cambio de referencia ${USD_MXN} MXN/USD). No sustituye la factura del proveedor.
+                </div>
+              </div>
+            </div>
+
           </section>
 
           <section style={{ display: "grid", gap: 14, gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))" }}>

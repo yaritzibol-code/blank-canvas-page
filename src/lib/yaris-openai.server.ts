@@ -121,20 +121,33 @@ export async function logAiUsage(row: {
   }
 }
 
+/** Prompt base + prompts por personalidad, configurables desde el panel admin. */
+export interface YarisAdminPrompt {
+  prompt: string | null;
+  personas: Partial<Record<"formal" | "normal" | "amiga", string>>;
+}
+
 /** System prompt configurable desde el panel admin (`ai_config`). */
-export async function loadAdminPrompt(): Promise<string | null> {
+export async function loadAdminPrompt(): Promise<YarisAdminPrompt> {
   try {
     const { data } = await supabaseAdmin
       .from("ai_config")
       .select("value")
       .eq("key", "yaris_system_prompt")
       .maybeSingle();
-    const prompt = (data?.value as { prompt?: string } | null)?.prompt?.trim();
-    return prompt && prompt.length > 0 ? prompt : null;
+    const val = (data?.value ?? null) as { prompt?: string; personas?: Record<string, string> } | null;
+    const prompt = val?.prompt?.trim();
+    const personas: YarisAdminPrompt["personas"] = {};
+    (["formal", "normal", "amiga"] as const).forEach((k) => {
+      const p = val?.personas?.[k]?.trim();
+      if (p) personas[k] = p;
+    });
+    return { prompt: prompt && prompt.length > 0 ? prompt : null, personas };
   } catch {
-    return null;
+    return { prompt: null, personas: {} };
   }
 }
+
 
 export interface OpenAIResult {
   text: string;
@@ -265,14 +278,22 @@ export const YARIS_LARGOS: Record<YarisLargo, string> = {
  * exactamente el mismo carácter y el mismo contexto: si divergieran, Yaris
  * contestaría distinto según cómo se le pregunte.
  */
-export function buildYarisSystemPrompt(adminPrompt: string | null, ctx: YarisPromptContext): string {
-  let system = adminPrompt ?? YARIS_DEFAULT_PROMPT;
+export function buildYarisSystemPrompt(
+  adminPrompt: string | null | YarisAdminPrompt,
+  ctx: YarisPromptContext,
+): string {
+  const admin: YarisAdminPrompt =
+    adminPrompt && typeof adminPrompt === "object" ? adminPrompt : { prompt: adminPrompt ?? null, personas: {} };
 
-  const persona = YARIS_PERSONAS[ctx.tono ?? "normal"];
+  let system = admin.prompt ?? YARIS_DEFAULT_PROMPT;
+
+  const tono = ctx.tono ?? "normal";
+  const persona = admin.personas[tono] ?? YARIS_PERSONAS[tono];
   if (persona) system += `\n\n${persona}`;
 
   const largo = YARIS_LARGOS[ctx.largo ?? "normal"];
   if (largo) system += `\n\n${largo}`;
+
 
 
 

@@ -101,6 +101,8 @@ function AdminBancoPage() {
   const [fEstado, setFEstado] = useState("todos");
   const [fFuente, setFFuente] = useState("todos");
   const [fCap, setFCap] = useState("todos");
+  const [fSeccion, setFSeccion] = useState("todas");
+
   const [limit, setLimit] = useState(60);
   const [importResult, setImportResult] = useState<CsvImportResult | null>(null);
 
@@ -122,6 +124,51 @@ function AdminBancoPage() {
   const ocultas = questions.filter((x) => x.status === "oculta").length;
   const sinClasificar = questions.filter((x) => x.materia === "" && !x.fuente).length;
 
+  /*
+   * Los filtros se arman con lo que REALMENTE hay en el banco (materias,
+   * manuales, capítulos y secciones), unido al catálogo. Así, cada vez que se
+   * sube un manual o una materia nueva, aparece sola en los desplegables.
+   */
+  const materiasEnBanco = [...new Set(questions.map((x) => x.materia).filter(Boolean))].sort();
+  const materiaOpts = [
+    ...MATERIAS_DEF.filter((m) => materiasEnBanco.includes(m.slug)).map((m) => ({ value: m.slug, label: m.name })),
+    ...materiasEnBanco
+      .filter((s) => !MATERIAS_DEF.some((m) => m.slug === s))
+      .map((s) => ({ value: s, label: s })),
+    ...MATERIAS_DEF.filter((m) => !materiasEnBanco.includes(m.slug)).map((m) => ({ value: m.slug, label: `${m.name} (0)` })),
+  ];
+
+  const fuentesEnBanco = [...new Set(questions.map((x) => x.fuente).filter(Boolean) as string[])].sort();
+  const fuenteOpts = [
+    ...fuentesEnBanco.map((code) => ({ value: code, label: `${fuenteLabel(code)} (${code})` })),
+    ...LINEA_AEREA_QUIZZES.filter((q) => !fuentesEnBanco.includes(q.code)).map((q) => ({ value: q.code, label: `${q.titulo} (${q.code})` })),
+    ...(fuentesEnBanco.includes("LAOF") ? [] : [{ value: "LAOF", label: "Guía oficial Línea Aérea (LAOF)" }]),
+  ];
+
+  // Capítulos: los del catálogo del manual + cualquiera que exista en datos.
+  const capsEnFuente = [
+    ...new Set(
+      questions
+        .filter((x) => (fFuente === "todos" ? true : x.fuente === fFuente))
+        .map((x) => x.capitulo)
+        .filter((c): c is number => c !== undefined && c !== null),
+    ),
+  ].sort((a, b) => a - b);
+  const capOpts = capsEnFuente.map((num) => ({
+    num,
+    titulo: CHAPTERS_BY_FUENTE[fFuente]?.find((c) => c.num === num)?.titulo ?? "",
+  }));
+
+  const seccionesEnScope = [
+    ...new Set(
+      questions
+        .filter((x) => (fFuente === "todos" ? true : x.fuente === fFuente))
+        .filter((x) => fCap === "todos" || String(x.capitulo ?? "") === fCap)
+        .map((x) => x.seccion)
+        .filter((s): s is string => Boolean(s)),
+    ),
+  ].sort();
+
   const t = query.trim().toLowerCase();
   const filtered = questions
     .filter((x) => {
@@ -131,10 +178,12 @@ function AdminBancoPage() {
       if (fFuente === "CIAAC" && x.fuente) return false;
       if (fFuente !== "todos" && fFuente !== "CIAAC" && x.fuente !== fFuente) return false;
       if (fCap !== "todos" && String(x.capitulo ?? "") !== fCap) return false;
+      if (fSeccion !== "todas" && (x.seccion ?? "") !== fSeccion) return false;
       if (t && !(x.text.toLowerCase().includes(t) || x.id.toLowerCase().includes(t))) return false;
       return true;
     })
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+
 
   /* ───────── CSV ───────── */
 
@@ -279,8 +328,8 @@ function AdminBancoPage() {
         </div>
         <select value={fMateria} onChange={(e) => setFMateria(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 170 }}>
           <option value="todas">Materia: todas</option>
-          {MATERIAS_DEF.map((m) => (
-            <option key={m.slug} value={m.slug}>{m.name}</option>
+          {materiaOpts.map((m) => (
+            <option key={m.value} value={m.value}>{m.label}</option>
           ))}
           <option value="sin">Sin clasificar</option>
         </select>
@@ -292,24 +341,36 @@ function AdminBancoPage() {
         </select>
         <select
           value={fFuente}
-          onChange={(e) => { setFFuente(e.target.value); setFCap("todos"); }}
+          onChange={(e) => { setFFuente(e.target.value); setFCap("todos"); setFSeccion("todas"); }}
           style={{ ...inputStyle, width: "auto", minWidth: 170 }}
         >
           <option value="todos">Banco: todos</option>
           <option value="CIAAC">CIAAC (sin manual)</option>
-          {LINEA_AEREA_QUIZZES.map((q) => (
-            <option key={q.code} value={q.code}>{q.titulo} ({q.code})</option>
+          {fuenteOpts.map((f) => (
+            <option key={f.value} value={f.value}>{f.label}</option>
           ))}
-          <option value="LAOF">Guía oficial Línea Aérea (LAOF)</option>
         </select>
-        {CHAPTERS_BY_FUENTE[fFuente] && (
-          <select value={fCap} onChange={(e) => setFCap(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 200 }}>
+        {capOpts.length > 0 && (
+          <select
+            value={fCap}
+            onChange={(e) => { setFCap(e.target.value); setFSeccion("todas"); }}
+            style={{ ...inputStyle, width: "auto", minWidth: 200 }}
+          >
             <option value="todos">Capítulo: todos</option>
-            {CHAPTERS_BY_FUENTE[fFuente]!.map((c) => (
-              <option key={c.num} value={String(c.num)}>Cap. {c.num} · {c.titulo}</option>
+            {capOpts.map((c) => (
+              <option key={c.num} value={String(c.num)}>Cap. {c.num}{c.titulo ? ` · ${c.titulo}` : ""}</option>
             ))}
           </select>
         )}
+        {seccionesEnScope.length > 0 && (
+          <select value={fSeccion} onChange={(e) => setFSeccion(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 200 }}>
+            <option value="todas">Sección: todas</option>
+            {seccionesEnScope.map((s) => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
+        )}
+
       </div>
 
       <div style={{ fontSize: ".76rem", color: "#647DA0", marginBottom: 10 }}>{filtered.length} de {total} preguntas</div>
