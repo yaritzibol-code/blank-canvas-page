@@ -34,6 +34,7 @@ import { Route as AdminContenidoRouteImport } from './routes/admin/contenido'
 import { Route as AdminEstudiantesRouteImport } from './routes/admin/estudiantes'
 import { Route as AdminPerfilRouteImport } from './routes/admin/perfil'
 import { Route as AdminSoporteRouteImport } from './routes/admin/soporte'
+import { Route as AdminUsuariosActivosRouteImport } from './routes/admin/usuarios-activos'
 import { Route as AdminWhatsappRouteImport } from './routes/admin/whatsapp'
 import { Route as CheckoutReturnRouteImport } from './routes/checkout.return'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
@@ -184,6 +185,11 @@ const AdminPerfilRoute = AdminPerfilRouteImport.update({
 const AdminSoporteRoute = AdminSoporteRouteImport.update({
   id: '/admin/soporte',
   path: '/admin/soporte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminUsuariosActivosRoute = AdminUsuariosActivosRouteImport.update({
+  id: '/admin/usuarios-activos',
+  path: '/admin/usuarios-activos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminWhatsappRoute = AdminWhatsappRouteImport.update({
@@ -345,6 +351,7 @@ export interface FileRoutesByFullPath {
   '/admin/estudiantes': typeof AdminEstudiantesRoute
   '/admin/perfil': typeof AdminPerfilRoute
   '/admin/soporte': typeof AdminSoporteRoute
+  '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
   '/admin/whatsapp': typeof AdminWhatsappRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/dashboard/analisis': typeof DashboardAnalisisRoute
@@ -397,6 +404,7 @@ export interface FileRoutesByTo {
   '/admin/estudiantes': typeof AdminEstudiantesRoute
   '/admin/perfil': typeof AdminPerfilRoute
   '/admin/soporte': typeof AdminSoporteRoute
+  '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
   '/admin/whatsapp': typeof AdminWhatsappRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/dashboard/analisis': typeof DashboardAnalisisRoute
@@ -451,6 +459,7 @@ export interface FileRoutesById {
   '/admin/estudiantes': typeof AdminEstudiantesRoute
   '/admin/perfil': typeof AdminPerfilRoute
   '/admin/soporte': typeof AdminSoporteRoute
+  '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
   '/admin/whatsapp': typeof AdminWhatsappRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/dashboard/analisis': typeof DashboardAnalisisRoute
@@ -506,6 +515,7 @@ export interface FileRouteTypes {
     | '/admin/estudiantes'
     | '/admin/perfil'
     | '/admin/soporte'
+    | '/admin/usuarios-activos'
     | '/admin/whatsapp'
     | '/checkout/return'
     | '/dashboard/analisis'
@@ -558,6 +568,7 @@ export interface FileRouteTypes {
     | '/admin/estudiantes'
     | '/admin/perfil'
     | '/admin/soporte'
+    | '/admin/usuarios-activos'
     | '/admin/whatsapp'
     | '/checkout/return'
     | '/dashboard/analisis'
@@ -611,6 +622,7 @@ export interface FileRouteTypes {
     | '/admin/estudiantes'
     | '/admin/perfil'
     | '/admin/soporte'
+    | '/admin/usuarios-activos'
     | '/admin/whatsapp'
     | '/checkout/return'
     | '/dashboard/analisis'
@@ -665,6 +677,7 @@ export interface RootRouteChildren {
   AdminEstudiantesRoute: typeof AdminEstudiantesRoute
   AdminPerfilRoute: typeof AdminPerfilRoute
   AdminSoporteRoute: typeof AdminSoporteRoute
+  AdminUsuariosActivosRoute: typeof AdminUsuariosActivosRoute
   AdminWhatsappRoute: typeof AdminWhatsappRoute
   CheckoutReturnRoute: typeof CheckoutReturnRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -853,6 +866,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/soporte'
       fullPath: '/admin/soporte'
       preLoaderRoute: typeof AdminSoporteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/usuarios-activos': {
+      id: '/admin/usuarios-activos'
+      path: '/admin/usuarios-activos'
+      fullPath: '/admin/usuarios-activos'
+      preLoaderRoute: typeof AdminUsuariosActivosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/whatsapp': {
@@ -1107,6 +1127,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminEstudiantesRoute: AdminEstudiantesRoute,
   AdminPerfilRoute: AdminPerfilRoute,
   AdminSoporteRoute: AdminSoporteRoute,
+  AdminUsuariosActivosRoute: AdminUsuariosActivosRoute,
   AdminWhatsappRoute: AdminWhatsappRoute,
   CheckoutReturnRoute: CheckoutReturnRoute,
   AdminIndexRoute: AdminIndexRoute,
@@ -1122,13 +1143,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

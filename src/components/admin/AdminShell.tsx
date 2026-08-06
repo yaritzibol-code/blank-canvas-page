@@ -23,7 +23,8 @@ export type AdminNavKey =
   | "operaciones"
   | "operaciones_stripe"
   | "operaciones_yaris"
-  | "operaciones_disputas";
+  | "operaciones_disputas"
+  | "usuarios_activos";
 
 interface NavItem {
   icon: FPIconName;
