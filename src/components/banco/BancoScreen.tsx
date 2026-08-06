@@ -264,7 +264,9 @@ function buildResumables(userId: string, la: boolean): ResumeEntry[] {
       if (fuentes) search.fuentes = fuentes;
       if (modo === "oficial" || modo === "potenciado") search.modo = modo;
       if (materias && materias !== "all") search.materias = materias;
-      if (qty) search.qty = Number(qty);
+      if (caps) search.caps = caps;
+      if (qty && Number.isFinite(Number(qty))) search.qty = Number(qty);
+
 
       return {
         key: `apr|${s.variant}`,
