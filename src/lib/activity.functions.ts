@@ -91,7 +91,7 @@ export interface ActivityTimelineRow {
   label: string | null;
   step: string | null;
   duration_ms: number;
-  metadata: Record<string, unknown>;
+  metadata: unknown;
 }
 
 export const adminActivityReport = createServerFn({ method: "POST" })
