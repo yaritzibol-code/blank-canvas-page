@@ -379,6 +379,8 @@ function DashboardLayout() {
   // hecho en otro dispositivo (o los cambios de la administradora) no
   // aparecían hasta recargar la página.
   const live = useLiveData(ready);
+  // Presencia en vivo: la administradora ve quién está dentro y en qué pantalla.
+  usePresence(user);
   const cerrarSesion = () => {
     logout();
     navigate({ to: "/login" });
