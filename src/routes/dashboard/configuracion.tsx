@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { ModuleHeader } from "@/components/shared/ModuleHeader";
 import {
