@@ -242,6 +242,7 @@ export function pathyReport(user: User): PathyReport {
     ritmo,
     materias: { fuertes, debiles, sinPracticar },
     lineaAerea: ruta.lineaAerea.filter((m) => m.answered > 0),
+    manuales: { fuertes: laFuertes, debiles: laDebiles, sinPracticar: laSinPracticar },
     animo,
     senales,
     plan,
