@@ -578,7 +578,9 @@ function CuestionarioPage() {
   async function openYaris() {
     // Yaris con IA es Pro: con plan Básica se abre el popup de suscripción en
     // vez de una respuesta a medias.
-    if (!isPaid(user)) {
+    // Cuenta gratis: hay 10 respuestas de cortesía; al agotarse se abre el
+    // popup de mejora en lugar de una respuesta a medias.
+    if (!isPaid(user) && !hasFreeLeft(user, "yaris")) {
       setUpgradeOpen(true);
       return;
     }
