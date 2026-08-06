@@ -189,6 +189,7 @@ function PlanesPage() {
       });
       if ("error" in result) throw new Error(result.error);
       setClientSecret(result.clientSecret);
+      trackMilestone("pago_abierto");
     } catch (e) {
       setError(e instanceof Error ? e.message : "No pudimos iniciar el pago.");
     } finally {
