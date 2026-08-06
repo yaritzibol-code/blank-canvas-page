@@ -1036,6 +1036,7 @@ function EstudiemosJuntosPage() {
   const [customMins, setCustomMins] = useState("45");
   const [upgradeOpen, setUpgradeOpen] = useState(false);
   const [pruebaMode, setPruebaMode] = useState<PruebaMode | null>(null);
+  const [track, setTrack] = useState<Track | null>(null);
 
   const profile = useStore(() => (user ? buildProfile(user) : null));
 
