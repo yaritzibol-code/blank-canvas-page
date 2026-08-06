@@ -24,6 +24,8 @@ function chaptersFor(fuente: string) {
   if (fuente === "ATP") return ATP_CHAPTERS;
   if (fuente === "JEPP") return JEPP_CHAPTERS;
   if (fuente === "PHAK") return PHAK_CHAPTERS;
+  if (fuente === "LEG") return LEG_CHAPTERS;
+
   return [];
 }
 
