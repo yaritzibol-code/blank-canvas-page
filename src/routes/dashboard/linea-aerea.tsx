@@ -21,6 +21,7 @@ import {
   PHAK_CHAPTERS,
   PHAK_TOTAL,
   LEG_CHAPTERS,
+  LEG_PDFS,
   LEG_TOTAL,
 
   type AtpChapter,
@@ -117,6 +118,7 @@ function QuizCard({
   to,
   search,
   pdfUrl,
+  pdfs,
   onStart,
   ctaLabel = "Iniciar cuestionario →",
 }: {
@@ -129,6 +131,8 @@ function QuizCard({
   to?: string;
   search?: Record<string, unknown>;
   pdfUrl?: string;
+  /** Varios PDFs (ej. leyes y reglamentos de Legislación): se muestran en un selector. */
+  pdfs?: readonly { label: string; url: string }[];
   /** Si se define, la tarjeta abre un selector en vez de navegar. */
   onStart?: () => void;
   ctaLabel?: string;
@@ -258,7 +262,40 @@ function QuizCard({
           </Link>
         )}
 
-        {pdfUrl && (
+        {pdfs && pdfs.length > 0 && (
+          <details className="fp-la-pdfs">
+            <summary
+              style={{
+                padding: "10px 20px", borderRadius: 12, fontSize: "0.82rem", fontWeight: 700,
+                cursor: "pointer", listStyle: "none", textAlign: "center",
+                display: "flex", alignItems: "center", justifyContent: "center", gap: 7,
+                background: "rgba(61,93,145,0.08)", color: "#3D5D91", minHeight: 44,
+              }}
+            >
+              <Icon n="book" size={14} /> Ver PDFs ({pdfs.length})
+            </summary>
+            <div style={{ display: "flex", flexDirection: "column", gap: 6, marginTop: 8 }}>
+              {pdfs.map((d) => (
+                <a
+                  key={d.url}
+                  href={d.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "flex", alignItems: "center", gap: 8, minHeight: 44,
+                    padding: "10px 12px", borderRadius: 10, textDecoration: "none",
+                    fontSize: "0.8rem", fontWeight: 600, lineHeight: 1.35,
+                    color: "#33527F", background: "#F7FAFF", border: "1px solid #E4ECF7",
+                  }}
+                >
+                  <Icon n="book" size={13} color="#6C0820" /> {d.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        )}
+
+        {pdfUrl && !pdfs && (
           <a
             href={pdfUrl}
             target="_blank"
@@ -563,6 +600,7 @@ function QuizCards() {
               onStart={() => setPicker(q.code)}
               ctaLabel="Elegir capítulos →"
               pdfUrl={q.fileUrl}
+              pdfs={q.code === "LEG" ? LEG_PDFS : undefined}
             />
           ) : (
             <QuizCard
