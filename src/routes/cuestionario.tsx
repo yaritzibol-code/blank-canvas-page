@@ -1576,7 +1576,10 @@ function CuestionarioPage() {
                 </div>
               </div>
             )}
+            {/* Colchón: permite que el mensaje del estudiante suba hasta arriba. */}
+            {yarisMsgs.length > 1 && <div style={{ flexShrink: 0, minHeight: "45%" }} aria-hidden="true" />}
             <div ref={msgsEndRef} />
+
           </div>
 
           {/* Input */}
