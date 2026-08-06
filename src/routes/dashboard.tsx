@@ -492,70 +492,70 @@ function DashboardLayout() {
               style={{
                 background: "white",
                 borderBottom: "1px solid rgba(61,93,145,0.08)",
-                height: 64,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
                 position: "sticky",
                 top: 0,
                 zIndex: 50,
               }}
-              className="px-4 md:px-8"
+              className="px-3 sm:px-4 md:px-8 h-[60px] md:h-16 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 sm:gap-3"
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <button
-                  onClick={() => setSidebarOpen(true)}
-                  aria-label="Abrir menú"
-                  aria-expanded={sidebarOpen}
-                  aria-controls="mobile-sidebar"
+              <button
+                onClick={() => setSidebarOpen(true)}
+                aria-label="Abrir menú"
+                aria-expanded={sidebarOpen}
+                aria-controls="mobile-sidebar"
+                style={{
+                  flexDirection: "column", gap: 5, alignItems: "center", justifyContent: "center",
+                  cursor: "pointer", background: "none", border: "none",
+                  minWidth: 44, minHeight: 44, borderRadius: 8,
+                }}
+                className="md:hidden flex shrink-0 -ml-1.5"
+              >
+                <span aria-hidden="true" style={{ display: "block", width: 22, height: 2, background: "#22375C", borderRadius: 2 }} />
+                <span aria-hidden="true" style={{ display: "block", width: 22, height: 2, background: "#22375C", borderRadius: 2 }} />
+                <span aria-hidden="true" style={{ display: "block", width: 22, height: 2, background: "#22375C", borderRadius: 2 }} />
+              </button>
+              <div className="min-w-0 md:col-start-2">
+                <h1
                   style={{
-                    display: "flex", flexDirection: "column", gap: 5, alignItems: "center", justifyContent: "center",
-                    cursor: "pointer", background: "none", border: "none",
-                    minWidth: 44, minHeight: 44, borderRadius: 8,
+                    fontFamily: DISPLAY,
+                    color: "#22375C",
+                    lineHeight: 1.2,
+                    letterSpacing: "-0.02em",
                   }}
-                  className="md:hidden"
+                  className="truncate text-[1.05rem] sm:text-[1.2rem] md:text-[1.3rem]"
                 >
-                  <span aria-hidden="true" style={{ display: "block", width: 22, height: 2, background: "#22375C", borderRadius: 2 }} />
-                  <span aria-hidden="true" style={{ display: "block", width: 22, height: 2, background: "#22375C", borderRadius: 2 }} />
-                  <span aria-hidden="true" style={{ display: "block", width: 22, height: 2, background: "#22375C", borderRadius: 2 }} />
-                </button>
-                <div>
-                  <h1
-                    style={{
-                      fontFamily: DISPLAY,
-                      fontSize: "1.3rem",
-                      color: "#22375C",
-                      lineHeight: 1.2,
-                      letterSpacing: "-0.02em",
-                    }}
-                  >
-                    {currentLabel}
-                  </h1>
-                  <p style={{ fontSize: "0.72rem", color: "#8DA1BE", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", marginTop: 2 }}>{dateStr}</p>
-                </div>
+                  {currentLabel}
+                </h1>
+                <p
+                  style={{ color: "#8DA1BE", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", marginTop: 2 }}
+                  className="hidden sm:block truncate text-[0.7rem]"
+                >
+                  {dateStr}
+                </p>
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span className="hidden sm:inline-flex"><LiveIndicator state={live} compact /></span>
+              <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 justify-self-end">
+                <span className="hidden lg:inline-flex"><LiveIndicator state={live} compact /></span>
                 <div
                   style={{
-                    display: "flex", alignItems: "center", gap: 6,
                     background: "#FAEFEE", border: "1px solid rgba(108,8,32,0.12)", borderRadius: 20,
-                    padding: "6px 12px",
-                    fontSize: "0.8rem", fontWeight: 600,
+                    fontWeight: 600,
                     color: "#6C0820",
                     whiteSpace: "nowrap",
                   }}
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 text-[0.75rem] sm:text-[0.8rem]"
+                  title={`${streak} días de racha`}
                 >
-                  <span style={{ display: "flex", color: "#6C0820" }}><Icon n="flame" size={15} /></span> {streak} días
+                  <span style={{ display: "flex", color: "#6C0820" }}><Icon n="flame" size={14} /></span>
+                  {streak}
+                  <span className="hidden xs:inline sm:inline">d</span>
                 </div>
                 <div
                   style={{
-                    width: 36, height: 36,
                     background: "#3D5D91", borderRadius: "50%",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    color: "white", fontSize: "0.8rem", fontWeight: 700,
+                    color: "white", fontWeight: 700,
                     flexShrink: 0, fontFamily: DISPLAY,
                   }}
+                  className="hidden sm:flex items-center justify-center w-9 h-9 text-[0.8rem]"
                 >
                   {user ? initialsOf(user.nombre) : ""}
                 </div>
@@ -563,12 +563,13 @@ function DashboardLayout() {
                   onClick={() => { logout(); navigate({ to: "/login" }); }}
                   title="Cerrar sesión"
                   aria-label="Cerrar sesión"
+                  data-compact
                   style={{
-                    width: 36, height: 36, borderRadius: "50%",
+                    borderRadius: "50%",
                     background: "white", border: "1px solid rgba(61,93,145,0.15)",
-                    display: "flex", alignItems: "center", justifyContent: "center",
                     cursor: "pointer", color: "#22375C", flexShrink: 0,
                   }}
+                  className="flex items-center justify-center w-10 h-10 sm:w-9 sm:h-9"
                 >
                   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M15 17l5-5-5-5M20 12H9M12 20H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6"/></svg>
                 </button>
@@ -579,32 +580,30 @@ function DashboardLayout() {
             <div
               style={{
                 background: "#22375C", color: "white",
-                display: "flex", alignItems: "center", justifyContent: "space-between",
-                fontSize: 12.5, fontWeight: 500,
                 fontFamily: FONT,
-                flexWrap: "wrap", gap: 4,
               }}
-              className="px-4 md:px-8 py-2"
+              className="px-3 sm:px-4 md:px-8 py-2 flex items-center justify-between gap-3 text-[12px] sm:text-[12.5px] font-medium"
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div className="flex items-center gap-2 min-w-0">
                 <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4ade80", flexShrink: 0 }} />
                 <span style={{ fontFamily: DISPLAY, fontSize: 15, fontWeight: 700, color: "#F2AEBC" }}>{streak}</span>
-                <span>{streak === 1 ? "día de racha" : "días de racha"}</span>
+                <span className="truncate">{streak === 1 ? "día de racha" : "días de racha"}</span>
               </div>
               {(snapshot.topMateria || snapshot.avgSessionMin !== null) && (
-                <div style={{ display: "flex", alignItems: "center", gap: 8, opacity: .85 }} className="hidden sm:flex">
+                <div className="hidden md:flex items-center gap-2 opacity-85 min-w-0">
                   {snapshot.topMateria && (
-                    <span>Tu materia más practicada: <strong>{snapshot.topMateria}</strong></span>
+                    <span className="truncate">Tu materia más practicada: <strong>{snapshot.topMateria}</strong></span>
                   )}
                   {snapshot.topMateria && snapshot.avgSessionMin !== null && (
                     <span style={{ opacity: .6 }}>|</span>
                   )}
                   {snapshot.avgSessionMin !== null && (
-                    <span>Tu promedio de sesión: <strong>{snapshot.avgSessionMin} min</strong></span>
+                    <span className="whitespace-nowrap">Promedio: <strong>{snapshot.avgSessionMin} min</strong></span>
                   )}
                 </div>
               )}
             </div>
+
 
             {/* Content */}
             <div style={{ flex: 1 }} className="p-4 sm:p-6 md:p-8">
