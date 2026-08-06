@@ -49,6 +49,8 @@ const CHAPTERS_BY_FUENTE: Record<string, AtpChapter[]> = {
   ATP: ATP_CHAPTERS,
   JEPP: JEPP_CHAPTERS,
   PHAK: PHAK_CHAPTERS,
+  LEG: LEG_CHAPTERS,
+
 };
 
 /** Nombre legible del manual ("ATP", "Jeppesen", "Handbook"...). */
