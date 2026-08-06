@@ -156,6 +156,8 @@ function ConfiguracionPage() {
   const [textSize, setTextSizeState] = useState<UserPrefs["textSize"]>(() => user?.prefs.textSize ?? "Normal");
   const [modal, setModal] = useState<ModalType>(null);
   const [flash, setFlash] = useState<string | null>(null);
+  const flashTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (flashTimer.current) clearTimeout(flashTimer.current); }, []);
   const [reportOpen, setReportOpen] = useState(false);
 
   // Modal states
