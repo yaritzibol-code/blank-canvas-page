@@ -6,10 +6,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ModuleHeader } from "@/components/shared/ModuleHeader";
 import { useEffect, useState } from "react";
+import { flashOfferActive, startFlashOffer as startFlashLocal } from "@/lib/flash-offer";
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
 import { getStripe, getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
 import {
   createCheckoutSession,
+  startFlashOffer as startFlashServer,
   createPortalSession,
   getPublicPricing,
   getPublicSetupPricing,
@@ -34,8 +36,11 @@ export const Route = createFileRoute("/dashboard/planes")({
   component: PlanesPage,
   // `?checkout=1` abre el checkout de Stripe en cuanto la página está lista
   // y `?plan=anual|mensual` respeta el ciclo elegido en la landing de precios.
-  validateSearch: (search: Record<string, unknown>): { checkout?: 1; plan?: "mensual" | "anual" } => ({
+  validateSearch: (
+    search: Record<string, unknown>,
+  ): { checkout?: 1; plan?: "mensual" | "anual"; flash?: 1 } => ({
     ...(search.checkout === "1" || search.checkout === 1 || search.checkout === true ? { checkout: 1 as const } : {}),
+    ...(search.flash === "1" || search.flash === 1 || search.flash === true ? { flash: 1 as const } : {}),
     ...(search.plan === "anual" || search.plan === "mensual" ? { plan: search.plan } : {}),
   }),
 });
@@ -176,6 +181,9 @@ function PlanesPage() {
           environment: env,
           // Sin código, el propio checkout deja escribir uno.
           ...(cupon.trim() ? { promoCode: cupon.trim() } : {}),
+          // Oferta relámpago viva: el servidor revalida la ventana y aplica el
+          // descuento de inscripción a $1,500.
+          ...(flashOfferActive() ? { flash: true as const } : {}),
         },
       });
       if ("error" in result) throw new Error(result.error);
@@ -185,6 +193,17 @@ function PlanesPage() {
     } finally {
       setLoading(false);
     }
+  }
+
+  /**
+   * Salir del checkout sin pagar dispara —una sola vez en la vida de la
+   * cuenta— la oferta relámpago de 30 minutos.
+   */
+  function abandonarCheckout() {
+    setClientSecret(null);
+    if (isProActive) return;
+    const local = startFlashLocal();
+    if (local) void startFlashServer({ data: {} }).catch(() => undefined);
   }
 
   async function handlePortal() {
@@ -244,7 +263,7 @@ function PlanesPage() {
       <div style={{ minHeight: "100vh", background: "#F7F9FC", fontFamily: FONT }}>
         <div style={{ padding: "16px clamp(16px,4vw,32px)" }}>
           <button
-            onClick={() => setClientSecret(null)}
+            onClick={abandonarCheckout}
             style={{ background: "none", border: "none", color: "#3D5D91", fontWeight: 700, cursor: "pointer", fontSize: 14 }}
           >
             ← Cancelar y volver
