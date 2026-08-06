@@ -12,6 +12,8 @@ import {
   type AiDailyPoint,
 } from "@/lib/admin.functions";
 import { getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
+import { estimateAiCost, fmtMxn, fmtUsd, USD_MXN } from "@/lib/ai-cost";
+
 
 export const Route = createFileRoute("/admin/operaciones/")({ component: OperacionesPage });
 
