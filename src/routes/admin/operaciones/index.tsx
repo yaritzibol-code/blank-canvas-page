@@ -108,8 +108,15 @@ function OperacionesPage() {
               <Kpi label="Pro activos" value={data.pro.active} sub={`${data.pro.trialing} en trial · ${data.pro.past_due} past due`} tone="#2ecc71" />
               <Kpi label="Cancelaciones (30d)" value={data.pro.canceled_last_30d} sub={`${data.pro.renewing_next_7d} renuevan en 7d`} tone="#e74c3c" />
               <Kpi label="Usuarios totales" value={data.platform.total_users} sub={`${data.platform.admins} admins`} tone="#3D5D91" />
+              <Kpi
+                label="Costo IA estimado (30d)"
+                value={fmtMxn(cost30.mxn)}
+                sub={`${fmtUsd(cost30.usd)} · ${fmtMxn(cost24.mxn)} en 24h`}
+                tone="#6C0820"
+              />
             </div>
           </section>
+
 
           {/* Gráficos de 30 días — click en un punto abre el drill-down del día */}
           <div style={{ fontSize: ".8rem", color: "#647DA0", marginBottom: 8 }}>
