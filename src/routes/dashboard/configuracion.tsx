@@ -216,9 +216,11 @@ function ConfiguracionPage() {
     persistPrefs({ textSize: t });
   };
 
+  // Todo aviso se retira solo a los 10 s: antes algunos se quedaban fijos.
   const showFlash = (msg: string) => {
     setFlash(msg);
-    setTimeout(() => setFlash(null), 3000);
+    if (flashTimer.current) clearTimeout(flashTimer.current);
+    flashTimer.current = setTimeout(() => setFlash(null), 10000);
   };
 
   const closeModal = () => {
