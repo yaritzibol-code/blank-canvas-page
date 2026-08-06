@@ -278,14 +278,22 @@ export const YARIS_LARGOS: Record<YarisLargo, string> = {
  * exactamente el mismo carácter y el mismo contexto: si divergieran, Yaris
  * contestaría distinto según cómo se le pregunte.
  */
-export function buildYarisSystemPrompt(adminPrompt: string | null, ctx: YarisPromptContext): string {
-  let system = adminPrompt ?? YARIS_DEFAULT_PROMPT;
+export function buildYarisSystemPrompt(
+  adminPrompt: string | null | YarisAdminPrompt,
+  ctx: YarisPromptContext,
+): string {
+  const admin: YarisAdminPrompt =
+    adminPrompt && typeof adminPrompt === "object" ? adminPrompt : { prompt: adminPrompt ?? null, personas: {} };
 
-  const persona = YARIS_PERSONAS[ctx.tono ?? "normal"];
+  let system = admin.prompt ?? YARIS_DEFAULT_PROMPT;
+
+  const tono = ctx.tono ?? "normal";
+  const persona = admin.personas[tono] ?? YARIS_PERSONAS[tono];
   if (persona) system += `\n\n${persona}`;
 
   const largo = YARIS_LARGOS[ctx.largo ?? "normal"];
   if (largo) system += `\n\n${largo}`;
+
 
 
 
