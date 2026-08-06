@@ -187,7 +187,7 @@ function PerfilPage() {
   const inputStyle: React.CSSProperties = { ...fieldStyle, background: "white", border: "2px solid #3D5D91", outline: "none" };
 
   const infoField = (label: string, field: keyof Info, type: "text" | "date" = "text") => (
-    <div style={{ flex: 1 }}>
+    <div style={{ flex: "1 1 240px", minWidth: 0 }}>
       <label style={{ fontSize: ".75rem", fontWeight: 700, color: "#647DA0", marginBottom: 5, display: "block" }}>{label}</label>
       {editing
         ? <input type={type} value={draft[field]} onChange={(e) => setDraft((d) => ({ ...d, [field]: e.target.value }))} style={inputStyle} />
