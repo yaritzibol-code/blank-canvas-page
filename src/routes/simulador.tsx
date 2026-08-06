@@ -1160,6 +1160,8 @@ function SimuladorPage() {
               onSend={sendYaris}
               onClose={() => setYarisOpen(false)}
               msgsEndRef={msgsEndRef}
+              msgsBoxRef={msgsBoxRef}
+
             />
           </div>
         </div>
