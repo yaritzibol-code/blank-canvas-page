@@ -101,6 +101,8 @@ function AdminBancoPage() {
   const [fEstado, setFEstado] = useState("todos");
   const [fFuente, setFFuente] = useState("todos");
   const [fCap, setFCap] = useState("todos");
+  const [fSeccion, setFSeccion] = useState("todas");
+
   const [limit, setLimit] = useState(60);
   const [importResult, setImportResult] = useState<CsvImportResult | null>(null);
 
