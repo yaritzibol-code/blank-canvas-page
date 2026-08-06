@@ -103,7 +103,7 @@ export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: s
         <a key={u} href={u} target="_blank" rel="noreferrer" style={{ display: "block" }}>
           <img
             src={u}
-            alt={`${fuente === "ATP" ? "Figura del suplemento FAA (AKTS)" : "Lámina del manual Jeppesen"} ${i + 1} de ${urls.length}`}
+            alt={`${fuente === "ATP" ? "Figura del suplemento FAA (AKTS)" : fuente === "LAOF" ? "Figura de la guía Embraer 190" : "Lámina del manual Jeppesen"} ${i + 1} de ${urls.length}`}
             loading="lazy"
             style={{
               width: "100%",
