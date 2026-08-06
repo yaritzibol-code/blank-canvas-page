@@ -288,6 +288,16 @@ const NAV_LINKS = [
   { label: "Blog", href: "/blog" },
 ];
 
+/** Secciones de la home: en móvil el menú también sirve para saltar a ellas. */
+const HOME_SECTIONS: { label: string; hash: string }[] = [
+  { label: "Cómo funciona", hash: "#como-funciona" },
+  { label: "Funciones", hash: "#funciones" },
+  { label: "Yaris, tu tutora IA", hash: "#yaris" },
+  { label: "Simulador", hash: "#simulador" },
+  { label: "Precios", hash: "#precios" },
+  { label: "Historias", hash: "#historias" },
+];
+
 export function Nav() {
   const sesion = Boolean(useSessionUser());
   const [scrolled, setScrolled] = useState(false);
