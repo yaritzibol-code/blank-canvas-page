@@ -411,17 +411,26 @@ function CuestionarioPage() {
   // El chat NO persigue la respuesta en streaming: solo baja cuando el propio
   // estudiante manda un mensaje o pulsa "Explícamelo Yaris" / "Ayúdame a
   // pensar". Mientras Yaris escribe, la vista se queda donde está.
+  /**
+   * Deja el ÚLTIMO mensaje del estudiante arriba del todo (estilo ChatGPT):
+   * así la respuesta de Yaris se lee de arriba hacia abajo en vez de tener que
+   * perseguirla al fondo de la caja.
+   */
   const scrollChat = () => {
     requestAnimationFrame(() => {
       const box = msgsBoxRef.current;
-      if (box) box.scrollTop = box.scrollHeight;
+      if (!box) return;
+      const mine = box.querySelectorAll<HTMLElement>('[data-msg-role="user"]');
+      const last = mine[mine.length - 1];
+      box.scrollTop = last ? Math.max(0, last.offsetTop - box.offsetTop - 8) : box.scrollHeight;
     });
   };
   useEffect(() => {
     if (yarisMsgs[yarisMsgs.length - 1]?.role !== "user") return;
-    const box = msgsBoxRef.current;
-    if (box) box.scrollTop = box.scrollHeight;
+    scrollChat();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [yarisMsgs]);
+
 
   /** Detalle por pregunta de ESTA sesión (base del informe de Pathy). */
   function sessionAnswers(): AttemptAnswer[] {
