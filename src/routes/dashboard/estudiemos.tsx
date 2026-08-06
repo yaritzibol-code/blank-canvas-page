@@ -1194,25 +1194,43 @@ function EstudiemosJuntosPage() {
           <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", fontWeight: 700, color: "#22375C", margin: 0 }}>
             Estudiemos juntos
           </h1>
-          <button
-            onClick={reopenOnboarding}
-            style={{
-              padding: "6px 14px",
-              border: "1.5px solid #F2DCDB",
-              borderRadius: 8,
-              background: "white",
-              fontSize: "0.78rem",
-              fontWeight: 600,
-              color: "#647DA0",
-              cursor: "pointer",
-              fontFamily: "'Manrope', sans-serif",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 5,
-            }}
-          >
-            Cambiar <Icon n="settings" size={14} />
-          </button>
+          <div style={{ display: "inline-flex", gap: 8 }}>
+            <button
+              onClick={() => setTrack(null)}
+              style={{
+                padding: "6px 14px",
+                border: "1.5px solid #F2DCDB",
+                borderRadius: 8,
+                background: "white",
+                fontSize: "0.78rem",
+                fontWeight: 600,
+                color: "#647DA0",
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+              }}
+            >
+              Cambiar examen
+            </button>
+            <button
+              onClick={reopenOnboarding}
+              style={{
+                padding: "6px 14px",
+                border: "1.5px solid #F2DCDB",
+                borderRadius: 8,
+                background: "white",
+                fontSize: "0.78rem",
+                fontWeight: 600,
+                color: "#647DA0",
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 5,
+              }}
+            >
+              Cambiar <Icon n="settings" size={14} />
+            </button>
+          </div>
         </div>
         <p style={{ fontSize: "0.88rem", color: "#647DA0", margin: 0 }}>
           Hola, {profile.name}. Paty revisó tu progreso y preparó tu plan de hoy.
