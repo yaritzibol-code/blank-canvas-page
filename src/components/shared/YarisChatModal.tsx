@@ -1,3 +1,4 @@
+import { setPresenceActivity } from "@/lib/presence";
 /**
  * Panel lateral de chat con Yaris (tutora académica) — se abre desde el
  * sidebar del dashboard. Usa Lovable AI Gateway (Gemini) mediante el
@@ -44,6 +45,15 @@ export function YarisChatModal({
   const [typing, setTyping] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const streamYaris = useYarisStream();
+
+  // Presencia en vivo para el panel admin.
+  useEffect(() => {
+    if (!open) return;
+    setPresenceActivity(`Chateando con Yaris · ${seccion}`);
+    return () => setPresenceActivity(null);
+  }, [open, seccion]);
+
+
 
   useEffect(() => {
     if (open) {

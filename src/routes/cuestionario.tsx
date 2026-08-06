@@ -1,3 +1,4 @@
+import { setPresenceActivity } from "@/lib/presence";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
 import { useState, useRef, useEffect } from "react";
@@ -166,6 +167,16 @@ interface AprendiendoSnapshot {
 function CuestionarioPage() {
   const { user, ready } = useRequireAuth();
   const search = Route.useSearch();
+  // Presencia en vivo para el panel admin.
+  useEffect(() => {
+    const etiqueta = search.fuente
+      ? `Cuestionario ${search.fuente}${search.caps ? ` · cap. ${search.caps}` : ""}`
+      : search.banco === "la"
+        ? "Cuestionario de línea aérea"
+        : "Cuestionario CIAAC";
+    setPresenceActivity(etiqueta);
+    return () => setPresenceActivity(null);
+  }, [search.fuente, search.caps, search.banco]);
   /**
    * Lote del banco que necesita esta sesión. El banco completo nunca se baja
    * al navegador: se piden solo las preguntas del ámbito abierto.

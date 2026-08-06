@@ -8,7 +8,8 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { initAppStore } from "@/lib/store";
+import { initAppStore, useSessionUser } from "@/lib/store";
+import { usePresence } from "@/hooks/use-presence";
 import { installClientErrorReporter, reportClientError } from "@/lib/client-error-reporter";
 import { useApplyPrefs } from "@/hooks/use-apply-prefs";
 import { GOOGLE_ADS_ID, isAdsConfigured } from "@/lib/ads";
@@ -169,6 +170,8 @@ function RootComponent() {
   }, []);
 
   useApplyPrefs();
+  // Presencia en vivo (canal efímero): alimenta "Usuarios activos" del panel admin.
+  usePresence(useSessionUser());
 
   return (
     <QueryClientProvider client={queryClient}>
