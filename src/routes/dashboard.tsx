@@ -8,6 +8,7 @@ import { YarisChatModal } from "@/components/shared/YarisChatModal";
 import { useLiveData } from "@/hooks/use-live-data";
 import { LiveIndicator } from "@/components/shared/LiveIndicator";
 import { TimerProvider } from "@/contexts/StudyTimerContext";
+import { usePresence } from "@/hooks/use-presence";
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardLayout,
