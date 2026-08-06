@@ -18,6 +18,7 @@
 import { useServerFn } from "@tanstack/react-start";
 import { yarisAiChat } from "@/lib/yaris-ai.functions";
 import { canUseAI, cloudEnabled, useSessionUser, type YarisContext } from "@/lib/store";
+import { consumeFree, hasFreeLeft, FREE_LIMITS } from "@/lib/store/free-quota";
 import { supabase } from "@/integrations/supabase/client";
 import { yarisToHtml } from "@/lib/yaris-format";
 
@@ -64,8 +65,14 @@ export function useYarisAsk() {
   const askAi = useServerFn(yarisAiChat);
   const user = useSessionUser();
   const paid = canUseAI(user);
+  // Cuenta gratis: 10 respuestas de cortesía con IA real antes del candado.
+  const conCortesia = !paid && hasFreeLeft(user, "yaris");
 
   return async function ask({ history, ctx }: YarisTurn): Promise<YarisAnswer> {
+    if (conCortesia) {
+      if (user) consumeFree(user, "yaris");
+      return askModel({ history, ctx });
+    }
     if (!paid && ctx.preAnswer) {
       return {
         text:
@@ -77,10 +84,14 @@ export function useYarisAsk() {
     if (!paid) {
       return officialExplanation(
         ctx,
-        "Yaris con IA es parte de FlightPath Pro, así que no puedo conversar libremente contigo todavía.",
+        `Ya usaste tus ${FREE_LIMITS.yaris} respuestas gratis conmigo; con FlightPath Pro seguimos sin límite.`,
       );
     }
 
+    return askModel({ history, ctx });
+  };
+
+  async function askModel({ history, ctx }: YarisTurn): Promise<YarisAnswer> {
     const q = ctx.question;
     try {
       const res = await askAi({
@@ -106,7 +117,7 @@ export function useYarisAsk() {
       // Sin conexión con el modelo: se entrega contenido real del curso.
       return officialExplanation(ctx, "No pude conectarme con la IA en este momento.");
     }
-  };
+  }
 }
 
 /** Contexto de la pregunta tal como lo espera el servidor. */
