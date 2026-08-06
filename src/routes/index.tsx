@@ -337,7 +337,9 @@ export function Nav() {
             </Btn>
           ) : (
             <>
-              <Btn kind="ghost" size="sm" className="hidden md:inline-flex" to="/login">Iniciar sesión</Btn>
+              <div className="hidden md:block">
+                <Btn kind="ghost" size="sm" to="/login">Iniciar sesión</Btn>
+              </div>
               <Btn kind="primary" size="sm" icon="arrow" to="/register">
                 <span className="hidden sm:inline">Comenzar gratis</span>
                 <span className="sm:hidden">Empezar</span>
