@@ -203,7 +203,7 @@ function PlanesPage() {
     setClientSecret(null);
     if (isProActive) return;
     const local = startFlashLocal();
-    if (local) void startFlashServer({ data: {} }).catch(() => undefined);
+    if (local) void startFlashServer().catch(() => undefined);
   }
 
   async function handlePortal() {
