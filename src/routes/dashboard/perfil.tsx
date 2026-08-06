@@ -122,8 +122,37 @@ function PerfilPage() {
     setTimeout(() => setSaved(false), 3000);
   };
 
+  const [focoRuta, setFocoRuta] = useState<"ciaac" | "linea-aerea">(user.focoRuta ?? "ciaac");
+  const [focoMateria, setFocoMateria] = useState<string>(user.focoMateria ?? "");
+  const [guardandoFoco, setGuardandoFoco] = useState(false);
+
+  /**
+   * El enfoque se elige y luego se guarda: cambiar de CIAAC a Línea Aérea
+   * reescribe medio dashboard, así que conviene confirmarlo. Al guardar se
+   * espera al flush para que la nube (y Yaris) vean el cambio de inmediato.
+   */
   const setFoco = (ruta: "ciaac" | "linea-aerea", materia: string) => {
-    updateUser(user.id, { focoRuta: ruta, focoMateria: ruta === "ciaac" ? (materia || null) : null });
+    setFocoRuta(ruta);
+    setFocoMateria(ruta === "ciaac" ? materia : "");
+  };
+
+  const focoSucio =
+    focoRuta !== (user.focoRuta ?? "ciaac") ||
+    (focoRuta === "ciaac" && focoMateria !== (user.focoMateria ?? ""));
+
+  const guardarFoco = async () => {
+    if (!focoSucio || guardandoFoco) return;
+    setGuardandoFoco(true);
+    updateUser(user.id, {
+      focoRuta: focoRuta,
+      focoMateria: focoRuta === "ciaac" ? (focoMateria || null) : null,
+    });
+    try {
+      await flushCloudWrites();
+    } catch {
+      /* el debounce reintenta */
+    }
+    setGuardandoFoco(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
   };
@@ -293,11 +322,11 @@ function PerfilPage() {
             { id: "ciaac" as const, label: "CIAAC", icon: "help", desc: "Las 12 materias del examen" },
             { id: "linea-aerea" as const, label: "Línea Aérea", icon: "plane", desc: "Manuales de la convocatoria" },
           ].map((r) => {
-            const sel = (user.focoRuta ?? "ciaac") === r.id;
+            const sel = focoRuta === r.id;
             return (
               <button
                 key={r.id}
-                onClick={() => setFoco(r.id, user.focoMateria ?? "")}
+                onClick={() => setFoco(r.id, focoMateria)}
                 style={{
                   flex: 1, minWidth: 200, textAlign: "left", padding: "12px 14px", borderRadius: 12,
                   border: `2px solid ${sel ? "#3D5D91" : "#F2DCDB"}`,
@@ -315,11 +344,11 @@ function PerfilPage() {
             );
           })}
         </div>
-        {(user.focoRuta ?? "ciaac") === "ciaac" && (
+        {focoRuta === "ciaac" && (
           <label style={{ display: "block" }}>
             <span style={{ fontSize: ".75rem", fontWeight: 700, color: "#647DA0", marginBottom: 5, display: "block" }}>Materia prioritaria</span>
             <select
-              value={user.focoMateria ?? ""}
+              value={focoMateria}
               onChange={(e) => setFoco("ciaac", e.target.value)}
               style={{ ...displayStyle, background: "white", cursor: "pointer", maxWidth: 360 }}
             >
