@@ -41,6 +41,16 @@ const TOUR: { icon: FPIconName; title: string; sub: string }[] = [
   { icon: "spark", title: "Yaris & Pathy", sub: "Tu tutora IA y tu copiloto de motivación, 24/7" },
 ];
 
+const ONB_STEP_IDS = [
+  "onboarding_inicio",
+  "onboarding_nombre",
+  "onboarding_avatar",
+  "onboarding_tono",
+  "onboarding_escuela",
+  "onboarding_whatsapp",
+  "onboarding_fecha",
+] as const;
+
 export function OnboardingModal({ user, onDone }: { user: User; onDone: () => void }) {
   const [step, setStep] = useState(0);
   // dir controla la animación de entrada del paso (adelante/atrás).
@@ -65,6 +75,20 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
 
   useEffect(() => {
     if (step === 1) setTimeout(() => nombreRef.current?.focus(), 380);
+  }, [step]);
+
+  // Activity Ratio: registramos hasta dónde llegó cada persona en el onboarding
+  // y avisamos si cierra la pestaña a media captura.
+  useEffect(() => {
+    trackMilestone(ONB_STEP_IDS[step] ?? `onboarding_paso_${step}`);
+  }, [step]);
+
+  const doneRef = useRef(false);
+  useEffect(() => {
+    return () => {
+      if (!doneRef.current) trackAbandon("onboarding_abandonado", { step });
+    };
+    // El paso vivo se lee del cierre más reciente.
   }, [step]);
 
   const go = (next: number) => {
@@ -111,6 +135,8 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
             },
           }),
     });
+    doneRef.current = true;
+    trackMilestone(skip ? "onboarding_omitido" : "onboarding_completado");
     onDone();
   };
 
