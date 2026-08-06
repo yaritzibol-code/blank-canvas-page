@@ -13,6 +13,7 @@ import {
   getActivity,
   getSimAttempts,
   MATERIAS_DEF,
+  flushCloudWrites,
 } from "@/lib/store";
 import type { User, StudentStats, RutaPerf } from "@/lib/store";
 
@@ -359,6 +360,24 @@ function PerfilPage() {
             </select>
           </label>
         )}
+
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 16, flexWrap: "wrap" }}>
+          <button
+            onClick={() => void guardarFoco()}
+            disabled={!focoSucio || guardandoFoco}
+            style={{
+              padding: "12px 20px", borderRadius: 10, border: "none", minHeight: 44,
+              fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: ".86rem", color: "white",
+              cursor: !focoSucio || guardandoFoco ? "not-allowed" : "pointer",
+              background: !focoSucio || guardandoFoco ? "#C9D6E8" : "#3D5D91",
+            }}
+          >
+            {guardandoFoco ? "Guardando…" : "Guardar enfoque"}
+          </button>
+          {focoSucio && !guardandoFoco && (
+            <span style={{ fontSize: ".76rem", color: "#6C0820", fontWeight: 600 }}>Tienes cambios sin guardar</span>
+          )}
+        </div>
       </div>
 
       {/* Stats */}
