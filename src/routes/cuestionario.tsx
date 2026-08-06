@@ -1505,11 +1505,13 @@ function CuestionarioPage() {
             {yarisMsgs.map((msg, i) => (
               <div
                 key={i}
+                data-msg-role={msg.role}
                 style={{
                   display: "flex", gap: 7, alignItems: "flex-start",
                   flexDirection: msg.role === "user" ? "row-reverse" : "row",
                 }}
               >
+
                 <div
                   style={{
                     width: 26, height: 26, borderRadius: "50%",
