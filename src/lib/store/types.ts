@@ -72,6 +72,8 @@ export interface User {
   yarisTono?: "formal" | "normal" | "amiga";
   /** Longitud de las respuestas de Yaris (Configuración → Apariencia). */
   yarisLargo?: "corta" | "normal" | "detallada";
+  /** Ruta del archivo dentro del bucket privado `avatars` (ej. "<uid>/avatar.jpg"). */
+  avatarPath?: string;
 
   /**
    * Ruta en la que se enfoca: una materia del CIAAC (slug) o "linea-aerea".

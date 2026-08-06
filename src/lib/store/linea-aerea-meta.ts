@@ -141,6 +141,19 @@ export const PHAK_CHAPTERS: AtpChapter[] = [
 export const PHAK_TOTAL = PHAK_CHAPTERS.reduce((s, c) => s + c.total, 0);
 
 /** Capítulos del banco de Legislación aeronáutica mexicana (fuente LEG). */
+/** Fuentes oficiales del banco de Legislación (texto vigente publicado). */
+export const LEG_PDFS: readonly { label: string; url: string }[] = [
+  { label: "Ley de Aviación Civil", url: "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAC.pdf" },
+  { label: "Reglamento de la Ley de Aviación Civil", url: "https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LAC.pdf" },
+  { label: "Reglamento de la Ley de Aeropuertos", url: "https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LAero.pdf" },
+  { label: "Reglamento de Medicina de Aviación Civil", url: "https://www.gob.mx/cms/uploads/attachment/file/849276/decreto-expide-reglamento-medicina-aviacion-02082023.pdf" },
+  { label: "Ley Aduanera", url: "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAdua.pdf" },
+  { label: "Reglamento de la Ley Aduanera", url: "https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LAdua.pdf" },
+  { label: "Ley Federal del Trabajo", url: "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf" },
+  { label: "Circular Obligatoria CO AV-12.1/07 R5", url: "https://www.gob.mx/cms/uploads/attachment/file/778808/co-av-12-1-07-r5.pdf" },
+  { label: "Circular Obligatoria CO SA-17.2/10 R3", url: "https://www.aicm.com.mx/informacionalpasajero/archivos/cosa-17_2-10r3.pdf" },
+];
+
 export const LEG_CHAPTERS: AtpChapter[] = [
   { num: 1, titulo: "Ley de Aviación Civil", tituloEn: "Ley de Aviación Civil", total: 35 },
   { num: 2, titulo: "Reglamento de la Ley de Aviación Civil", tituloEn: "Reglamento de la Ley de Aviación Civil", total: 80 },

@@ -9,6 +9,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import { MATERIAS_DEF, updateUser } from "@/lib/store";
+import { AvatarPicker } from "@/components/shared/AvatarPicker";
 import type { User } from "@/lib/store";
 
 const FONT = "'Manrope', system-ui, sans-serif";
@@ -53,6 +54,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
   const [yarisTono, setYarisTono] = useState<YarisTono>(user.yarisTono ?? "normal");
   const [focoRuta, setFocoRuta] = useState<"ciaac" | "linea-aerea">(user.focoRuta ?? "ciaac");
   const [focoMateria, setFocoMateria] = useState<string>(user.focoMateria ?? "");
+  const [avatarPath, setAvatarPath] = useState<string | undefined>(user.avatarPath);
   const [nombreError, setNombreError] = useState(false);
   const nombreRef = useRef<HTMLInputElement>(null);
 
@@ -94,6 +96,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
         ? {}
         : {
             nombre: nombre.trim() || user.nombre,
+            avatarPath,
             genero,
             yarisTono,
             focoRuta,
@@ -285,7 +288,19 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                 <Icon n="spark" size={15} color={BRAND} /> Así te verás: “Hola, {firstName} ✈️”
               </div>
             )}
+            <div style={{ marginTop: 20 }}>
+              <label style={labelStyle}>Tu foto (opcional)</label>
+              <AvatarPicker
+                userId={user.id}
+                path={avatarPath}
+                initials={(firstName[0] ?? "P").toUpperCase()}
+                size={72}
+                tone="light"
+                onChange={setAvatarPath}
+              />
+            </div>
             <NavBtns onBack={() => go(0)} onNext={advance} />
+
           </div>
         )}
 

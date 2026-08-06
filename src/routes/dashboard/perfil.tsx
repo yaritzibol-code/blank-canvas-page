@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { PlaneField } from "@/components/shared/PlaneField";
 import { PathyMark } from "@/components/shared/PathyMark";
+import { AvatarPicker } from "@/components/shared/AvatarPicker";
 import {
   useSessionUser,
   useStore,
@@ -238,11 +239,16 @@ function PerfilPage() {
       <div style={{ background: "linear-gradient(135deg,#22375C,#2a2a4e)", borderRadius: 20, padding: 28, display: "flex", alignItems: "center", gap: 24, marginBottom: 24, position: "relative", overflow: "hidden", flexWrap: "wrap" }}>
         <div style={{ position: "absolute", top: -60, right: -60, width: 220, height: 220, background: "radial-gradient(circle,rgba(90,134,203,.2) 0%,transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
 
-        {/* Avatar */}
+        {/* Avatar (foto real o iniciales) */}
         <div style={{ position: "relative", flexShrink: 0, zIndex: 1 }}>
-          <div style={{ width: 88, height: 88, borderRadius: "50%", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "2rem", fontWeight: 900, color: "white", border: "3px solid rgba(255,255,255,.2)" }}>{initialsOf(info.nombre)}</div>
-          <div style={{ position: "absolute", bottom: 0, right: 0, width: 26, height: 26, borderRadius: "50%", background: "#F2AEBC", border: "2px solid #22375C", display: "flex", alignItems: "center", justifyContent: "center", color: "#6C0820", cursor: "pointer" }}><Icon n="edit" size={13} /></div>
+          <AvatarPicker
+            userId={user.id}
+            path={user.avatarPath}
+            initials={initialsOf(info.nombre)}
+            onChange={(p) => updateUser(user.id, { avatarPath: p })}
+          />
         </div>
+
 
         <div style={{ flex: 1, zIndex: 1, minWidth: 200 }}>
           <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", color: "white", fontWeight: 900, marginBottom: 4 }}>{info.nombre.split(" ").slice(0, 2).join(" ")}</div>

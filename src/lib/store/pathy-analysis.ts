@@ -81,6 +81,12 @@ export interface PathyReport {
     sinPracticar: RutaPerf[];
   };
   lineaAerea: RutaPerf[];
+  /** Misma clasificación que CIAAC, pero para los manuales de la convocatoria. */
+  manuales: {
+    fuertes: RutaPerf[];
+    debiles: RutaPerf[];
+    sinPracticar: RutaPerf[];
+  };
   animo: {
     entradas: number;
     motivacion: number | null;
@@ -205,6 +211,12 @@ export function pathyReport(user: User): PathyReport {
   const debiles = practicadas.filter((m) => (m.avg ?? 100) < UMBRAL_DEBIL).sort((a, b) => (a.avg ?? 0) - (b.avg ?? 0));
   const sinPracticar = ruta.ciaac.filter((m) => m.answered === 0);
 
+  /* Manuales de Línea Aérea: misma clasificación que CIAAC. */
+  const laPracticadas = ruta.lineaAerea.filter((m) => m.avg !== null && m.answered >= 5);
+  const laFuertes = laPracticadas.filter((m) => (m.avg ?? 0) >= UMBRAL_FUERTE).sort((a, b) => (b.avg ?? 0) - (a.avg ?? 0));
+  const laDebiles = laPracticadas.filter((m) => (m.avg ?? 100) < UMBRAL_DEBIL).sort((a, b) => (a.avg ?? 0) - (b.avg ?? 0));
+  const laSinPracticar = ruta.lineaAerea.filter((m) => m.answered === 0);
+
   /* Ánimo: sólo lo que la estudiante escribió en su bitácora. */
   const bitacora = getBitacora(userId);
   const ultimas14 = bitacora.filter((e) => new Date(e.date).getTime() >= ahora - 14 * DAY);
@@ -230,6 +242,7 @@ export function pathyReport(user: User): PathyReport {
     ritmo,
     materias: { fuertes, debiles, sinPracticar },
     lineaAerea: ruta.lineaAerea.filter((m) => m.answered > 0),
+    manuales: { fuertes: laFuertes, debiles: laDebiles, sinPracticar: laSinPracticar },
     animo,
     senales,
     plan,
