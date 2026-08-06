@@ -285,7 +285,19 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                 <Icon n="spark" size={15} color={BRAND} /> Así te verás: “Hola, {firstName} ✈️”
               </div>
             )}
+            <div style={{ marginTop: 20 }}>
+              <label style={labelStyle}>Tu foto (opcional)</label>
+              <AvatarPicker
+                userId={user.id}
+                path={avatarPath}
+                initials={(firstName[0] ?? "P").toUpperCase()}
+                size={72}
+                tone="light"
+                onChange={setAvatarPath}
+              />
+            </div>
             <NavBtns onBack={() => go(0)} onNext={advance} />
+
           </div>
         )}
 
