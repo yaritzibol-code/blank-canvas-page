@@ -419,9 +419,19 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
     ensureSeeded();
   }, []);
 
+  // Si ya había sesión al montar (usuario que regresa), no lo empujamos: sólo
+  // redirigimos cuando la sesión nace aquí (login/registro/OAuth) o cuando hay
+  // un destino explícito, como volver al checkout.
+  const sesionAlMontar = useRef<boolean | null>(null);
+  if (sesionAlMontar.current === null) sesionAlMontar.current = Boolean(sessionUser);
+  const yaEstabaDentro = sesionAlMontar.current && !redirectTo;
+
   useEffect(() => {
-    if (sessionUser) void navigate({ ...destino(redirectTo ?? "/dashboard"), replace: true } as never);
-  }, [sessionUser, redirectTo, navigate]);
+    if (sessionUser && !yaEstabaDentro) {
+      void navigate({ ...destino(redirectTo ?? "/dashboard"), replace: true } as never);
+    }
+  }, [sessionUser, redirectTo, navigate, yaEstabaDentro]);
+
 
   return (
     <div style={{
