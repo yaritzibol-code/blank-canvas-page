@@ -236,7 +236,7 @@ function PerfilPage() {
       )}
 
       {/* Profile hero */}
-      <div style={{ background: "linear-gradient(135deg,#22375C,#2a2a4e)", borderRadius: 20, padding: 28, display: "flex", alignItems: "center", gap: 24, marginBottom: 24, position: "relative", overflow: "hidden", flexWrap: "wrap" }}>
+      <div style={{ background: "linear-gradient(135deg,#22375C,#2a2a4e)", borderRadius: 20, padding: "clamp(18px,4vw,28px)", display: "flex", alignItems: "center", gap: "clamp(14px,3vw,24px)", marginBottom: 24, position: "relative", overflow: "hidden", flexWrap: "wrap" }}>
         <div style={{ position: "absolute", top: -60, right: -60, width: 220, height: 220, background: "radial-gradient(circle,rgba(90,134,203,.2) 0%,transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
 
         {/* Avatar (foto real o iniciales) */}
