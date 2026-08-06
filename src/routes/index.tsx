@@ -118,7 +118,7 @@ export function Logo({ light = false, size = 30 }: { light?: boolean; size?: num
         style={{ width: size, height: size }}
         className="rounded-[8px] object-cover shrink-0"
       />
-      <span className={`font-display text-[19px] tracking-tight ${light ? "text-white" : "text-ink"}`}>
+      <span className={`font-display text-[17px] sm:text-[19px] tracking-tight ${light ? "text-white" : "text-ink"}`}>
         Flight<span className="text-coral-600">Path</span>
       </span>
     </Link>
@@ -320,7 +320,7 @@ export function Nav() {
   return (
     <header className={`sticky top-0 z-40 transition-all duration-300 ${scrolled || open ? "glass border-b border-ink/8" : "bg-transparent"}`}>
       <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8 h-[64px] sm:h-[68px] grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
-        <div className="min-w-0 flex items-center gap-8">
+        <div className="min-w-0 flex items-center gap-6 lg:gap-8">
           <Logo />
           <nav className="hidden lg:flex items-center gap-8 text-[14px] font-medium text-ink/65">
             {NAV_LINKS.map((x) => (
@@ -328,7 +328,7 @@ export function Nav() {
             ))}
           </nav>
         </div>
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {/* Con sesión activa la home no redirige: sólo ofrece el atajo. */}
           {sesion ? (
             <Btn kind="primary" size="sm" icon="arrow" to="/dashboard">
@@ -350,14 +350,14 @@ export function Nav() {
             aria-label={open ? "Cerrar menú" : "Abrir menú de navegación"}
             aria-expanded={open}
             aria-controls="nav-mobile"
-            className="lg:hidden h-11 -mr-1 px-3 inline-flex items-center gap-2 rounded-xl border border-ink/15 bg-white text-ink shadow-sm"
+            className="lg:hidden h-11 -mr-1 px-2.5 sm:px-3 inline-flex items-center gap-2 rounded-xl border border-ink/15 bg-white text-ink shadow-sm"
           >
             <span className="relative block w-[18px] h-[12px]" aria-hidden="true">
               <span className={`absolute left-0 w-full h-[2px] rounded bg-current transition-all duration-200 ${open ? "top-[5px] rotate-45" : "top-0"}`} />
               <span className={`absolute left-0 top-[5px] w-full h-[2px] rounded bg-current transition-all duration-200 ${open ? "opacity-0" : "opacity-100"}`} />
               <span className={`absolute left-0 w-full h-[2px] rounded bg-current transition-all duration-200 ${open ? "top-[5px] -rotate-45" : "top-[10px]"}`} />
             </span>
-            <span className="text-[13px] font-semibold">{open ? "Cerrar" : "Menú"}</span>
+            <span className="hidden xs:inline text-[13px] font-semibold">{open ? "Cerrar" : "Menú"}</span>
           </button>
         </div>
       </div>
