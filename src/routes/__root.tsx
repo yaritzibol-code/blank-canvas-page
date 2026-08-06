@@ -169,6 +169,8 @@ function RootComponent() {
   }, []);
 
   useApplyPrefs();
+  // Presencia en vivo (canal efímero): alimenta "Usuarios activos" del panel admin.
+  usePresence(useSessionUser());
 
   return (
     <QueryClientProvider client={queryClient}>
