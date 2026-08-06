@@ -163,16 +163,86 @@ async function resolveOrCreateCustomer(
 }
 
 
+/** Importe promocional de la inscripción durante la oferta relámpago (MXN). */
+const FLASH_SETUP_AMOUNT_MXN = 1500;
+/** Duración de la oferta relámpago por checkout abandonado. */
+const FLASH_DURATION_MS = 30 * 60_000;
+
+interface FlashOfferRow {
+  startedAt?: number;
+  expiresAt?: number;
+  done?: boolean;
+}
+
+/**
+ * Arranca (una única vez por cuenta) la oferta relámpago por pago abandonado.
+ * El servidor guarda la ventana para que el descuento no pueda falsificarse
+ * desde el navegador.
+ */
+export const startFlashOffer = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<{ expiresAt: number } | { none: true }> => {
+    const { supabase, userId } = context;
+    const { data: row } = await supabase
+      .from("profiles")
+      .select("data")
+      .eq("id", userId)
+      .maybeSingle();
+    const perfil = (row?.data ?? {}) as Record<string, unknown>;
+    const previa = perfil['flashOffer'] as FlashOfferRow | undefined;
+    if (previa?.startedAt) {
+      // Ya se ofreció antes: si sigue viva, se respeta; si no, no vuelve.
+      if (!previa.done && (previa.expiresAt ?? 0) > Date.now()) {
+        return { expiresAt: previa.expiresAt as number };
+      }
+      return { none: true };
+    }
+    const startedAt = Date.now();
+    const expiresAt = startedAt + FLASH_DURATION_MS;
+    await supabase
+      .from("profiles")
+      .update({ data: { ...perfil, flashOffer: { startedAt, expiresAt } } as never })
+      .eq("id", userId);
+    return { expiresAt };
+  });
+
+/**
+ * Cupón temporal que deja la inscripción en $1,500 mientras corre la oferta.
+ * Se restringe al producto de la inscripción para que la mensualidad no se
+ * descuente por accidente.
+ */
+async function flashSetupCoupon(
+  stripe: Stripe,
+  setupPriceId: string,
+): Promise<string | null> {
+  const price = await stripe.prices.retrieve(setupPriceId);
+  const unit = price.unit_amount ?? 0;
+  const off = unit - FLASH_SETUP_AMOUNT_MXN * 100;
+  if (off <= 0) return null;
+  const productId = typeof price.product === "string" ? price.product : price.product.id;
+  const coupon = await stripe.coupons.create({
+    amount_off: off,
+    currency: price.currency,
+    duration: "once",
+    name: "Oferta relámpago · inscripción $1,500",
+    applies_to: { products: [productId] },
+    max_redemptions: 1,
+    redeem_by: Math.floor((Date.now() + FLASH_DURATION_MS) / 1000),
+  });
+  return coupon.id;
+}
+
 export const createCheckoutSession = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(
-    (data: { priceId: string; returnUrl: string; environment: StripeEnv; promoCode?: string }) => {
+    (data: { priceId: string; returnUrl: string; environment: StripeEnv; promoCode?: string; flash?: boolean }) => {
       if (!/^[a-zA-Z0-9_-]+$/.test(data.priceId)) throw new Error("Invalid priceId");
       const promoCode = data.promoCode?.trim().toUpperCase();
       if (promoCode && !/^[A-Z0-9_-]{2,40}$/.test(promoCode)) throw new Error("Invalid promoCode");
       return { ...data, ...(promoCode ? { promoCode } : {}) };
     },
   )
+
   .handler(async ({ data, context }): Promise<CheckoutResult> => {
     try {
       const stripe = createStripeClient(data.environment);
