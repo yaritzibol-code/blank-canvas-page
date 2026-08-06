@@ -2,9 +2,8 @@ import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tansta
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
 import { useEffect, useState } from "react";
 import { useRequireAuth, useSessionUser, useStore, getStreak, logout, studySnapshot } from "@/lib/store";
-import { syncMyPlan } from "@/lib/payments.functions";
-import { getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
-import { refreshCloudProfile } from "@/lib/store/auth";
+import { syncPlanIfStale } from "@/lib/plan-sync";
+
 import { YarisChatModal } from "@/components/shared/YarisChatModal";
 import { useLiveData } from "@/hooks/use-live-data";
 import { LiveIndicator } from "@/components/shared/LiveIndicator";
@@ -395,19 +394,13 @@ function DashboardLayout() {
   // Cierra el sidebar móvil al cambiar de ruta
   useEffect(() => { setSidebarOpen(false); }, [location.pathname]);
 
-  // Sincroniza el plan con Stripe al entrar (cubre el regreso del checkout).
-  // Sin pagos configurados degrada sin ruido.
+  // Sincroniza el plan con Stripe sólo si la última sincronización ya está
+  // vieja: antes corría en cada montaje y saturaba el API de Stripe.
   useEffect(() => {
-    if (!ready || !isPaymentsConfigured()) return;
-    void (async () => {
-      try {
-        await syncMyPlan({ data: { environment: getStripeEnvironment() } });
-        await refreshCloudProfile();
-      } catch {
-        /* noop */
-      }
-    })();
+    if (!ready) return;
+    void syncPlanIfStale();
   }, [ready]);
+
 
   const isSubjectDetail = /^\/dashboard\/materias\/.+/.test(location.pathname);
 
