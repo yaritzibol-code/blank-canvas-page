@@ -1125,6 +1125,65 @@ function EstudiemosJuntosPage() {
     setPruebaMode(null);
   }
 
+  function pickTrack(t: Track) {
+    setTrack(t);
+    savePlanEstudio({ tiempo, track: t });
+  }
+
+  const headerBase = (
+    <div style={{ marginBottom: 24 }}>
+      <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", fontWeight: 700, color: "#22375C", margin: "0 0 4px" }}>
+        Estudiemos juntos
+      </h1>
+      <p style={{ fontSize: "0.88rem", color: "#647DA0", margin: 0 }}>
+        Hola, {profile.name}. Primero dime para qué examen estudiamos hoy.
+      </p>
+    </div>
+  );
+
+  // 1) Lo primero: elegir el examen (CIAAC o Línea Aérea).
+  if (paid && !showOnboarding && !track) {
+    return (
+      <div style={{ maxWidth: 680, margin: "0 auto", padding: "24px 16px 48px" }}>
+        {headerBase}
+        <TrackPicker value={track} onPick={pickTrack} />
+      </div>
+    );
+  }
+
+  // 2) Plan de Línea Aérea (manuales del curso).
+  if (paid && track === "la") {
+    return (
+      <div style={{ maxWidth: 680, margin: "0 auto", padding: "24px 16px 48px" }}>
+        <div style={{ marginBottom: 18, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
+          <div>
+            <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", fontWeight: 700, color: "#22375C", margin: "0 0 4px" }}>
+              Estudiemos juntos · Línea Aérea
+            </h1>
+            <p style={{ fontSize: "0.88rem", color: "#647DA0", margin: 0 }}>
+              Hola, {profile.name}. Este es tu plan por manual del curso.
+            </p>
+          </div>
+          <button
+            onClick={() => setTrack(null)}
+            style={{ minHeight: 40, padding: "8px 14px", border: "1.5px solid #F2DCDB", borderRadius: 8, background: "white", fontSize: "0.78rem", fontWeight: 700, color: "#647DA0", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+          >
+            Cambiar examen
+          </button>
+        </div>
+        <LineaAereaPlan
+          userId={user.id}
+          onStart={(m) => {
+            timer.startSession(m.titulo, "Línea Aérea", m.descripcion, "Sesión con Pathy");
+            logActivity({ userId: user.id, kind: "pathy_session", label: `Estudia con Pathy — ${m.titulo}`, durationMin: 0 });
+            navigate({ to: "/cuestionario", search: { banco: "la", fuente: m.code, qty: 20 } as never });
+          }}
+        />
+      </div>
+    );
+  }
+
+
   return (
     <div style={{ maxWidth: 680, margin: "0 auto", padding: "24px 16px 48px", position: "relative" }}>
       {paid && showOnboarding && <OnboardingModal onDone={handleOnboardingDone} userId={user.id} />}
