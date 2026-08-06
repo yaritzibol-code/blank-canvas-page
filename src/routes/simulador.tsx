@@ -1,3 +1,4 @@
+import { setPresenceActivity } from "@/lib/presence";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
 import { useServerFn } from "@tanstack/react-start";
