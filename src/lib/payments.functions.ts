@@ -310,7 +310,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       // Cupones: si llega un código lo resolvemos y lo aplicamos directo;
       // si no, el checkout deja escribir uno. Stripe no admite las dos cosas a
       // la vez (`discounts` y `allow_promotion_codes` son excluyentes).
-      let discounts: Array<{ promotion_code: string }> | null = null;
+      let discounts: Array<{ promotion_code: string } | { coupon: string }> | null = null;
       if (data.promoCode) {
         const found = await stripe.promotionCodes.list({
           code: data.promoCode,
@@ -320,7 +320,21 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         const promo = found.data[0];
         if (!promo) return { error: `El cupón "${data.promoCode}" no existe o ya no está activo.` };
         discounts = [{ promotion_code: promo.id }];
+      } else if (data.flash && setupPriceId) {
+        // Oferta relámpago por pago abandonado: la ventana la valida el
+        // servidor contra el perfil, nunca el navegador.
+        const oferta = perfilData['flashOffer'] as FlashOfferRow | undefined;
+        const viva = !!oferta?.expiresAt && !oferta.done && oferta.expiresAt > Date.now();
+        if (viva) {
+          try {
+            const couponId = await flashSetupCoupon(stripe, setupPriceId);
+            if (couponId) discounts = [{ coupon: couponId }];
+          } catch {
+            /* sin descuento: el checkout abre al precio normal */
+          }
+        }
       }
+
 
       const session = await stripe.checkout.sessions.create({
         line_items: [
