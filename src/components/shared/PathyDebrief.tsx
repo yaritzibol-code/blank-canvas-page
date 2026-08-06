@@ -189,8 +189,40 @@ export function PathyDebrief({ userId, origen, titulo, scorePct, answers }: Prop
       )}
 
       {loading && (
-        <div style={{ fontStyle: "italic", color: "#7a6a70" }}>
-          Pathy está revisando tus errores…
+        <div
+          role="status"
+          aria-live="polite"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "12px 14px",
+            borderRadius: 12,
+            background: "rgba(255,255,255,0.75)",
+            color: "#6C0820",
+            fontWeight: 700,
+            fontSize: "0.83rem",
+          }}
+        >
+          <style>{`@keyframes pathySpin{to{transform:rotate(360deg)}}`}</style>
+          <span
+            aria-hidden="true"
+            style={{
+              width: 18,
+              height: 18,
+              borderRadius: "50%",
+              border: "2.5px solid rgba(108,8,32,0.2)",
+              borderTopColor: "#6C0820",
+              animation: "pathySpin .8s linear infinite",
+              flexShrink: 0,
+            }}
+          />
+          <span>
+            Pathy está analizando tu resultado…
+            <span style={{ display: "block", fontWeight: 500, color: "#7a6a70", fontSize: "0.76rem" }}>
+              Revisando tus {wrong.length} errores y buscando el patrón. Tarda unos segundos.
+            </span>
+          </span>
         </div>
       )}
 
