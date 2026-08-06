@@ -371,14 +371,47 @@ async function seedCloudContent(): Promise<void> {
 
 /* ───────────────────────── Push local → nube ───────────────────────── */
 
+/**
+ * Campos de facturación cuyo dueño es el servidor (webhook de Stripe y
+ * `syncMyPlan`). El espejo local NUNCA debe subirlos para su propia cuenta:
+ * si lo hace, un localStorage viejo con `plan: "basica"` degrada a un usuario
+ * que sí está pagando y el plan queda parpadeando entre básica y Pro.
+ */
+const CAMPOS_DE_FACTURACION = [
+  "plan",
+  "planNombre",
+  "accessStatus",
+  "accessEnd",
+  "accessStart",
+] as const;
+
 async function pushProfiles(users: User[]): Promise<void> {
   const s = supa();
   if (!s) return;
-  const rows = users
-    .filter((u) => sessionIsAdmin || u.id === sessionUserId)
-    .map((u) => ({ id: u.id, email: u.email, role: u.role, data: userToProfileData(u) }));
-  if (rows.length > 0) await s.from("profiles").upsert(rows);
+  const candidatos = users.filter((u) => sessionIsAdmin || u.id === sessionUserId);
+  if (candidatos.length === 0) return;
+
+  // Para la propia cuenta conservamos lo que ya está en la nube en los campos
+  // de facturación (el upsert reemplaza el JSON completo, así que hay que
+  // volver a escribirlos con el valor bueno, no omitirlos).
+  let propioRemoto: Record<string, unknown> | null = null;
+  if (sessionUserId && candidatos.some((u) => u.id === sessionUserId)) {
+    const { data } = await s.from("profiles").select("data").eq("id", sessionUserId).maybeSingle();
+    propioRemoto = (data?.data ?? null) as Record<string, unknown> | null;
+  }
+
+  const rows = candidatos.map((u) => {
+    const data = userToProfileData(u);
+    if (u.id === sessionUserId && propioRemoto) {
+      for (const campo of CAMPOS_DE_FACTURACION) {
+        if (campo in propioRemoto) data[campo] = propioRemoto[campo];
+      }
+    }
+    return { id: u.id, email: u.email, role: u.role, data };
+  });
+  await s.from("profiles").upsert(rows);
 }
+
 
 async function pushKey(key: string): Promise<void> {
   const s = supa();

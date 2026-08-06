@@ -18,6 +18,8 @@ export type BillingAuditEvent =
   | "plan_sync"
   | "plan_changed"
   | "plan_reconciliation_failed"
+  | "plan_reconciliation_partial"
+
   | "webhook_received"
   | "webhook_processed"
   | "webhook_failed"

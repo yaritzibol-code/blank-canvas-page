@@ -11,7 +11,6 @@ import { getStripe, getStripeEnvironment, isPaymentsConfigured } from "@/lib/str
 import {
   createCheckoutSession,
   createPortalSession,
-  syncMyPlan,
   getPublicPricing,
   getPublicSetupPricing,
   getPublicAnnualPricing,
@@ -27,6 +26,7 @@ import {
   type PlanPrice,
 } from "@/lib/pricing";
 import { refreshCloudProfile } from "@/lib/store/auth";
+import { syncPlanIfStale } from "@/lib/plan-sync";
 import { useRequireAuth } from "@/lib/store/hooks";
 import { supa } from "@/lib/store/cloud";
 
@@ -119,9 +119,11 @@ function PlanesPage() {
         setSub((data as SubRow | null) ?? null);
         setSubChecked(true);
       }
-      if (configured) {
+      // Con ?checkout=1 no vale la pena reconciliar: el usuario viene a pagar
+      // y esa consulta sólo retrasa la apertura del checkout.
+      if (configured && checkout !== 1) {
         try {
-          await syncMyPlan({ data: { environment: env } });
+          await syncPlanIfStale();
           await refreshCloudProfile();
           const { data: reconciled } = await s
             .from("subscriptions")
@@ -136,11 +138,12 @@ function PlanesPage() {
           /* noop */
         }
       }
+
     })();
     return () => {
       cancelled = true;
     };
-  }, [user, configured]);
+  }, [user, configured, checkout]);
 
   const isProActive =
     !!sub &&

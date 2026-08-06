@@ -191,6 +191,23 @@ export async function processStripeEvent(event: { type: string; data: { object: 
       // Con métodos de pago diferidos el cobro aún puede no haberse liquidado.
       const session = event.data.object;
       if (session?.payment_status === "unpaid") return "ignored" as const;
+      // La inscripción es un pago único: al liquidarse dejamos la marca en el
+      // perfil para no volver a cobrarla ni tener que rastrear sesiones viejas.
+      const userId: string | undefined = session?.metadata?.userId;
+      if (userId) {
+        const { data: perfil } = await getSupabase()
+          .from("profiles")
+          .select("data")
+          .eq("id", userId)
+          .maybeSingle();
+        const prev = ((perfil?.data ?? {}) as Record<string, unknown>) || {};
+        if (prev.inscripcionPagada !== true) {
+          await getSupabase()
+            .from("profiles")
+            .update({ data: { ...prev, inscripcionPagada: true } as never })
+            .eq("id", userId);
+        }
+      }
       if (typeof session?.subscription === "string") {
         const { createStripeClient } = await import("@/lib/stripe.server");
         const sub = await createStripeClient(env).subscriptions.retrieve(session.subscription);
@@ -199,6 +216,7 @@ export async function processStripeEvent(event: { type: string; data: { object: 
       }
       return "ignored" as const;
     }
+
     // Evidence Engine: cada disputa queda registrada con su expediente listo
     // para armarse desde el panel admin (Operaciones → Disputas y evidencias).
     case "charge.dispute.created":

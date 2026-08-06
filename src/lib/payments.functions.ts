@@ -90,35 +90,78 @@ export type PlanSyncResult = {
   status: string | null;
 };
 
+/**
+ * Traduce los errores de Stripe (que llegan en inglés y con jerga del API) a
+ * un mensaje que un alumno pueda entender. Si no reconocemos el caso, dejamos
+ * un mensaje genérico y guardamos el original en la bitácora.
+ */
+function mensajeDePago(error: unknown): string {
+  const crudo = getStripeErrorMessage(error);
+  const t = crudo.toLowerCase();
+  if (t.includes("valid address")) {
+    return "Necesitamos tu dirección de facturación para calcular impuestos. Vuelve a intentarlo y completa el domicilio en el formulario de pago.";
+  }
+  if (t.includes("card") && (t.includes("declined") || t.includes("decline"))) {
+    return "Tu banco rechazó la tarjeta. Intenta con otra o comunícate con tu banco.";
+  }
+  if (t.includes("insufficient funds")) return "La tarjeta no tiene fondos suficientes.";
+  if (t.includes("expired")) return "La tarjeta está vencida. Usa otra tarjeta.";
+  if (t.includes("rate limit") || t.includes("too many requests")) {
+    return "El sistema de pagos está saturado en este momento. Espera unos segundos y vuelve a intentarlo.";
+  }
+  if (t.includes("no such") || t.includes("not found")) {
+    return "No encontramos ese plan en el sistema de pagos. Escríbenos y lo resolvemos.";
+  }
+  return "No pudimos completar la operación con el sistema de pagos. Inténtalo de nuevo en un momento.";
+}
+
+/** Busca el cliente de Stripe del usuario. NO crea uno nuevo. */
+async function findCustomer(
+  stripe: ReturnType<typeof createStripeClient>,
+  options: { email?: string; userId: string },
+): Promise<string | null> {
+  if (!/^[a-zA-Z0-9_-]+$/.test(options.userId)) throw new Error("Invalid userId");
+  try {
+    const found = await stripe.customers.search({
+      query: `metadata['userId']:'${options.userId}'`,
+      limit: 1,
+    });
+    if (found.data?.length) return found.data[0].id;
+  } catch {
+    /* seguimos con el email */
+  }
+  if (options.email) {
+    try {
+      const existing = await stripe.customers.list({ email: options.email, limit: 1 });
+      const customer = existing.data?.[0];
+      if (customer) {
+        if (customer.metadata?.userId !== options.userId) {
+          await stripe.customers.update(customer.id, {
+            metadata: { ...customer.metadata, userId: options.userId },
+          });
+        }
+        return customer.id;
+      }
+    } catch {
+      /* sin cliente localizable */
+    }
+  }
+  return null;
+}
+
 async function resolveOrCreateCustomer(
   stripe: ReturnType<typeof createStripeClient>,
   options: { email?: string; userId: string },
 ): Promise<string> {
-  if (!/^[a-zA-Z0-9_-]+$/.test(options.userId)) throw new Error("Invalid userId");
-  const found = await stripe.customers.search({
-    query: `metadata['userId']:'${options.userId}'`,
-    limit: 1,
-  });
-  if (found.data.length) return found.data[0].id;
-
-  if (options.email) {
-    const existing = await stripe.customers.list({ email: options.email, limit: 1 });
-    if (existing.data.length) {
-      const customer = existing.data[0];
-      if (customer.metadata?.userId !== options.userId) {
-        await stripe.customers.update(customer.id, {
-          metadata: { ...customer.metadata, userId: options.userId },
-        });
-      }
-      return customer.id;
-    }
-  }
+  const existente = await findCustomer(stripe, options);
+  if (existente) return existente;
   const created = await stripe.customers.create({
     ...(options.email && { email: options.email }),
     metadata: { userId: options.userId },
   });
   return created.id;
 }
+
 
 export const createCheckoutSession = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -155,21 +198,44 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         userId: context.userId,
       });
 
-      // ¿Ya pagó la inscripción en un checkout anterior?
+      // ¿Ya pagó la inscripción? Primero la marca guardada en el perfil (sin
+      // llamadas a Stripe); si no la hay, una sola consulta con las líneas
+      // expandidas —antes eran hasta 21 llamadas antes de abrir el checkout—
+      // y guardamos la marca para las siguientes veces.
+      const { data: perfilPrevio } = await context.supabase
+        .from("profiles")
+        .select("data")
+        .eq("id", context.userId)
+        .maybeSingle();
+      const perfilData = (perfilPrevio?.data ?? {}) as Record<string, unknown>;
+
+      if (setupPriceId && perfilData.inscripcionPagada === true) setupPriceId = null;
+
       if (setupPriceId) {
-        const previous = await stripe.checkout.sessions.list({
-          customer: customerId,
-          limit: 20,
-        });
-        for (const prev of previous.data) {
-          if (prev.payment_status !== "paid") continue;
-          const items = await stripe.checkout.sessions.listLineItems(prev.id, { limit: 10 });
-          if (items.data.some((li) => li.price?.id === setupPriceId)) {
+        try {
+          const previous = await stripe.checkout.sessions.list({
+            customer: customerId,
+            limit: 20,
+            expand: ["data.line_items"],
+          });
+          const yaPagada = (previous.data ?? []).some(
+            (prev) =>
+              prev.payment_status === "paid" &&
+              (prev.line_items?.data ?? []).some((li) => li.price?.id === setupPriceId),
+          );
+          if (yaPagada) {
             setupPriceId = null;
-            break;
+            await context.supabase
+              .from("profiles")
+              .update({ data: { ...perfilData, inscripcionPagada: true } as never })
+              .eq("id", context.userId);
           }
+        } catch {
+          // Si Stripe falla aquí preferimos abrir el checkout a bloquear la
+          // compra; el cupón/soporte resuelve un cobro duplicado excepcional.
         }
       }
+
 
       // Cupones: si llega un código lo resolvemos y lo aplicamos directo;
       // si no, el checkout deja escribir uno. Stripe no admite las dos cosas a
@@ -234,8 +300,10 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         message,
         detail: { price_lookup_key: data.priceId },
       });
-      return { error: message };
+      // Al usuario le llega el mensaje en español; el crudo queda en bitácora.
+      return { error: mensajeDePago(error) };
     }
+
   });
 
 export const createPortalSession = createServerFn({ method: "POST" })
@@ -277,7 +345,8 @@ export const createPortalSession = createServerFn({ method: "POST" })
         ok: false,
         message,
       });
-      return { error: message };
+      return { error: mensajeDePago(error) };
+
     }
   });
 
@@ -297,7 +366,8 @@ export const syncMyPlan = createServerFn({ method: "POST" })
     const { supabase, userId } = context;
     const { data: sub } = await supabase
       .from("subscriptions")
-      .select("status,current_period_end,cancel_at_period_end,price_id")
+      .select("status,current_period_end,cancel_at_period_end,price_id,stripe_customer_id")
+
       .eq("user_id", userId)
       .eq("environment", data.environment)
       .order("created_at", { ascending: false })
@@ -312,40 +382,72 @@ export const syncMyPlan = createServerFn({ method: "POST" })
     // el checkout confirma el pago, sin esperar la entrega del webhook.
     try {
       const stripe = createStripeClient(data.environment);
-      const { data: { user } } = await supabase.auth.getUser();
       const candidates = new Map<string, Stripe.Subscription>();
 
+      /**
+       * Cada llamada a Stripe se aísla: una respuesta rota o un límite de tasa
+       * en un paso ya no tira toda la reconciliación (antes eso dejaba al
+       * usuario sin plan y llenaba la bitácora de `plan_reconciliation_failed`).
+       */
+      const intenta = async <T>(paso: () => Promise<T>): Promise<T | null> => {
+        try {
+          return await paso();
+        } catch (error) {
+          await logBillingEvent({
+            event: "plan_reconciliation_partial",
+            environment: data.environment,
+            userId,
+            ok: false,
+            message: error instanceof Error ? error.message : String(error),
+          });
+          return null;
+        }
+      };
+
       if (data.sessionId) {
-        const session = await stripe.checkout.sessions.retrieve(data.sessionId);
-        if (session.metadata?.userId !== userId) throw new Error("Esta sesión de pago no pertenece a tu cuenta.");
-        if (session.payment_status !== "unpaid" && typeof session.subscription === "string") {
-          const exact = await stripe.subscriptions.retrieve(session.subscription);
-          candidates.set(exact.id, exact);
+        const session = await intenta(() => stripe.checkout.sessions.retrieve(data.sessionId!));
+        if (session && session.metadata?.userId !== userId) {
+          throw new Error("Esta sesión de pago no pertenece a tu cuenta.");
+        }
+        if (session && session.payment_status !== "unpaid" && typeof session.subscription === "string") {
+          const exact = await intenta(() => stripe.subscriptions.retrieve(session.subscription as string));
+          if (exact) candidates.set(exact.id, exact);
         }
       }
 
-      const byMetadata = await stripe.subscriptions.search({
-        query: `metadata['userId']:'${userId}'`,
-        limit: 20,
-      });
-      for (const item of byMetadata.data) candidates.set(item.id, item);
+      // Ruta barata primero: el cliente de Stripe que ya tenemos guardado.
+      const customerIds = new Set<string>();
+      const guardado = sub?.stripe_customer_id as string | undefined;
+      if (guardado) customerIds.add(guardado);
+
+      if (candidates.size === 0) {
+        const byMetadata = await intenta(() =>
+          stripe.subscriptions.search({ query: `metadata['userId']:'${userId}'`, limit: 20 }),
+        );
+        for (const item of byMetadata?.data ?? []) candidates.set(item.id, item);
+      }
 
       // Compatibilidad con cuentas que pagaron antes de que agregáramos
       // metadata.userId: resuelve clientes por metadata y, al final, por email.
-      const customerIds = new Set<string>();
-      const customers = await stripe.customers.search({
-        query: `metadata['userId']:'${userId}'`,
-        limit: 20,
-      });
-      for (const customer of customers.data) customerIds.add(customer.id);
-      if (customerIds.size === 0 && user?.email) {
-        const byEmail = await stripe.customers.list({ email: user.email, limit: 20 });
-        for (const customer of byEmail.data) customerIds.add(customer.id);
+      if (candidates.size === 0 && customerIds.size === 0) {
+        const { data: { user } } = await supabase.auth.getUser();
+        const customers = await intenta(() =>
+          stripe.customers.search({ query: `metadata['userId']:'${userId}'`, limit: 20 }),
+        );
+        for (const customer of customers?.data ?? []) customerIds.add(customer.id);
+        if (customerIds.size === 0 && user?.email) {
+          const byEmail = await intenta(() => stripe.customers.list({ email: user.email!, limit: 20 }));
+          for (const customer of byEmail?.data ?? []) customerIds.add(customer.id);
+        }
       }
+
       for (const customerId of customerIds) {
-        const list = await stripe.subscriptions.list({ customer: customerId, status: "all", limit: 20 });
-        for (const item of list.data) candidates.set(item.id, item);
+        const list = await intenta(() =>
+          stripe.subscriptions.list({ customer: customerId, status: "all", limit: 20 }),
+        );
+        for (const item of list?.data ?? []) candidates.set(item.id, item);
       }
+
 
       const best = [...candidates.values()].sort((a, b) => {
         const rank = (value: string) => ["active", "trialing", "past_due"].includes(value) ? 2 : value === "canceled" ? 1 : 0;
@@ -550,7 +652,7 @@ export const cancelMySubscription = createServerFn({ method: "POST" })
         ok: false,
         message,
       });
-      return { error: message };
+      return { error: mensajeDePago(error) };
     }
   });
 
@@ -587,7 +689,7 @@ export const resumeMySubscription = createServerFn({ method: "POST" })
       });
       return { ok: true };
     } catch (error) {
-      return { error: getStripeErrorMessage(error) };
+      return { error: mensajeDePago(error) };
     }
   });
 
@@ -622,12 +724,27 @@ export const getMyInvoices = createServerFn({ method: "POST" })
   .handler(async ({ data, context }): Promise<{ invoices: InvoiceRow[]; error?: string }> => {
     try {
       const stripe = createStripeClient(data.environment);
-      const { data: { user } } = await context.supabase.auth.getUser();
-      const customerId = await resolveOrCreateCustomer(stripe, {
-        email: user?.email ?? undefined,
-        userId: context.userId,
-      });
+      // Consultar facturas no debe crear nada en Stripe: antes, con sólo
+      // abrir Facturación, una cuenta gratis generaba un cliente fantasma.
+      const { data: sub } = await context.supabase
+        .from("subscriptions")
+        .select("stripe_customer_id")
+        .eq("user_id", context.userId)
+        .eq("environment", data.environment)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      let customerId = (sub?.stripe_customer_id as string | null) ?? null;
+      if (!customerId) {
+        const { data: { user } } = await context.supabase.auth.getUser();
+        customerId = await findCustomer(stripe, {
+          email: user?.email ?? undefined,
+          userId: context.userId,
+        });
+      }
+      if (!customerId) return { invoices: [] };
       const list = await stripe.invoices.list({ customer: customerId, limit: 24 });
+
       const invoices: InvoiceRow[] = list.data.map((inv) => {
         const line = inv.lines?.data?.[0];
         return {
@@ -643,7 +760,7 @@ export const getMyInvoices = createServerFn({ method: "POST" })
       });
       return { invoices };
     } catch (error) {
-      return { invoices: [], error: getStripeErrorMessage(error) };
+      return { invoices: [], error: mensajeDePago(error) };
     }
   });
 
@@ -729,6 +846,6 @@ export const switchMyPlan = createServerFn({ method: "POST" })
         message,
         detail: { to: targetKey },
       });
-      return { error: message };
+      return { error: mensajeDePago(error) };
     }
   });

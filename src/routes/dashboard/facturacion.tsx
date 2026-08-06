@@ -111,13 +111,17 @@ function FacturacionPage() {
       setBilling(null);
     }
     try {
-      const res = await getMyInvoices({ data: { environment: env } });
+      // Una cuenta gratis no tiene facturas: evitamos la llamada a Stripe.
+      const res = user && isPaid(user)
+        ? await getMyInvoices({ data: { environment: env } })
+        : { invoices: [] };
       setInvoices(res.invoices);
     } catch {
       setInvoices([]);
     } finally {
       setLoading(false);
     }
+
   };
 
   useEffect(() => {
