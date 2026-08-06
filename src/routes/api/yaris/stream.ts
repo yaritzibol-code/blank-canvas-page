@@ -104,7 +104,19 @@ export const Route = createFileRoute("/api/yaris/stream")({
           Boolean(hasSub) ||
           (profile.plan === "paga" &&
             ["activo", "extendido", "prueba"].includes(profile.accessStatus ?? "activo"));
-        if (!isPro) return new Response("forbidden", { status: 403 });
+        // Plan gratuito: 10 respuestas de cortesía. Al agotarse, 402 y el
+        // cliente muestra el popup de mejora.
+        if (!isPro) {
+          const { consumeServerFreeQuota } = await import("@/lib/free-quota.server");
+          const cuota = await consumeServerFreeQuota(
+            supabase,
+            userId,
+            "yaris",
+            (profileRow?.data ?? {}) as Record<string, unknown>,
+          );
+          if (!cuota.allowed) return new Response("free quota reached", { status: 402 });
+        }
+
 
         const verdict = await checkUserRateLimit(userId);
         if (!verdict.allowed) return new Response(verdict.message ?? "rate limited", { status: 429 });
