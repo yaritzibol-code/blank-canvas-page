@@ -45,6 +45,15 @@ export function YarisChatModal({
   const listRef = useRef<HTMLDivElement>(null);
   const streamYaris = useYarisStream();
 
+  // Presencia en vivo para el panel admin.
+  useEffect(() => {
+    if (!open) return;
+    setPresenceActivity(`Chateando con Yaris · ${seccion}`);
+    return () => setPresenceActivity(null);
+  }, [open, seccion]);
+
+
+
   useEffect(() => {
     if (open) {
       setVisible(true);
