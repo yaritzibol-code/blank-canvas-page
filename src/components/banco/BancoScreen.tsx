@@ -229,8 +229,13 @@ function buildResumables(userId: string, la: boolean): ResumeEntry[] {
       }
 
       // Modo aprendiendo: la llave guarda la configuración de la sesión.
-      const [materias = "", fuente = "", banco = "", fuentes = "", modo = "", qty = ""] =
+      // El orden debe coincidir EXACTO con `sessionVariant` de /cuestionario:
+      // materias|fuente|banco|fuentes|modo|caps|qty. Al faltar `caps` aquí,
+      // `qty` recibía la lista de capítulos ("1,2" → NaN) y el cuestionario
+      // reanudado se quedaba sin preguntas.
+      const [materias = "", fuente = "", banco = "", fuentes = "", modo = "", caps = "", qty = ""] =
         s.variant.split("|");
+
       const esLa = banco === "la" || LA_QUIZ_BY_CODE.has(fuente);
       if (esLa !== la) return null;
 
@@ -259,7 +264,9 @@ function buildResumables(userId: string, la: boolean): ResumeEntry[] {
       if (fuentes) search.fuentes = fuentes;
       if (modo === "oficial" || modo === "potenciado") search.modo = modo;
       if (materias && materias !== "all") search.materias = materias;
-      if (qty) search.qty = Number(qty);
+      if (caps) search.caps = caps;
+      if (qty && Number.isFinite(Number(qty))) search.qty = Number(qty);
+
 
       return {
         key: `apr|${s.variant}`,

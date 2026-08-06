@@ -310,6 +310,9 @@ function SimuladorPage() {
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const msgsEndRef = useRef<HTMLDivElement>(null);
+  /** Caja de mensajes: se desplaza sola, sin arrastrar la página. */
+  const msgsBoxRef = useRef<HTMLDivElement>(null);
+
   const leftPanelRef = useRef<HTMLDivElement>(null);
   const savedRef = useRef(false);
   const finishRef = useRef<() => void>(() => {});
@@ -378,10 +381,25 @@ function SimuladorPage() {
 
   // Solo baja cuando el estudiante manda su mensaje: la respuesta en streaming
   // no arrastra la vista.
+  /**
+   * Deja el último mensaje del estudiante arriba del todo (estilo ChatGPT):
+   * la respuesta de Yaris se lee hacia abajo sin perseguir el fondo.
+   */
+  const scrollChat = () => {
+    requestAnimationFrame(() => {
+      const box = msgsBoxRef.current;
+      if (!box) return;
+      const mine = box.querySelectorAll<HTMLElement>('[data-msg-role="user"]');
+      const last = mine[mine.length - 1];
+      box.scrollTop = last ? Math.max(0, last.offsetTop - box.offsetTop - 8) : box.scrollHeight;
+    });
+  };
   useEffect(() => {
     if (yarisMsgs[yarisMsgs.length - 1]?.role !== "user") return;
-    msgsEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    scrollChat();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [yarisMsgs]);
+
 
   useEffect(() => {
     if (phase !== "exam") return;
@@ -677,10 +695,9 @@ function SimuladorPage() {
     if (!yarisOpen && user) logYarisUse(user.id, "Simulador (revisión)");
     setYarisOpen(true);
     ensureGreeting();
-    // Sólo al pulsar el botón llevamos la vista al final del chat.
-    requestAnimationFrame(() =>
-      msgsEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }),
-    );
+    // Sólo al pulsar el botón movemos la caja del chat.
+    scrollChat();
+
     await explainQuestion(reviewCurrent);
   }
 
@@ -1143,6 +1160,8 @@ function SimuladorPage() {
               onSend={sendYaris}
               onClose={() => setYarisOpen(false)}
               msgsEndRef={msgsEndRef}
+              msgsBoxRef={msgsBoxRef}
+
             />
           </div>
         </div>
@@ -1543,7 +1562,7 @@ function LeftPanel({ questions, current, expandedMaterias, onToggleMateria, onSe
 
 /* ─── Yaris Panel ─────────────────────────────────────────── */
 
-function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef }: {
+function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef, msgsBoxRef }: {
   msgs: { role: "bot" | "user"; text: string; cite?: string }[];
   typing: boolean;
   input: string;
@@ -1551,7 +1570,9 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef 
   onSend: () => void;
   onClose: () => void;
   msgsEndRef: React.RefObject<HTMLDivElement | null>;
+  msgsBoxRef: React.RefObject<HTMLDivElement | null>;
 }) {
+
   return (
     <>
       <style>{`@keyframes yb{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}.yds{width:5px;height:5px;background:#5A86CB;border-radius:50%;animation:yb .8s infinite}.yds:nth-child(2){animation-delay:.15s}.yds:nth-child(3){animation-delay:.3s}`}</style>
@@ -1565,9 +1586,10 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef 
         </div>
         <button onClick={onClose} style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "white", borderRadius: 6, padding: "4px 8px", cursor: "pointer", fontSize: "0.76rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon n="close" size={15} /></button>
       </div>
-      <div style={{ flex: 1, overflowY: "auto", padding: 14, display: "flex", flexDirection: "column", gap: 10 }}>
+      <div ref={msgsBoxRef} style={{ flex: 1, overflowY: "auto", overscrollBehavior: "contain", padding: 14, display: "flex", flexDirection: "column", gap: 10 }}>
         {msgs.map((msg, i) => (
-          <div key={i} style={{ display: "flex", gap: 7, alignItems: "flex-start", flexDirection: msg.role === "user" ? "row-reverse" : "row" }}>
+          <div key={i} data-msg-role={msg.role} style={{ display: "flex", gap: 7, alignItems: "flex-start", flexDirection: msg.role === "user" ? "row-reverse" : "row" }}>
+
             <div style={{ width: 26, height: 26, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: msg.role === "bot" ? "0.78rem" : "0.6rem", fontWeight: msg.role === "user" ? 700 : undefined, background: msg.role === "bot" ? "#F2DCDB" : "#3D5D91", color: msg.role === "user" ? "white" : undefined, flexShrink: 0 }}>
               {msg.role === "bot" ? <YarisAvatar size={24} /> : "MG"}
             </div>
@@ -1585,7 +1607,9 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef 
             </div>
           </div>
         )}
+        {msgs.length > 1 && <div style={{ flexShrink: 0, minHeight: "45%" }} aria-hidden="true" />}
         <div ref={msgsEndRef} />
+
       </div>
       <div style={{ padding: "10px 14px", borderTop: "1px solid #F2DCDB", display: "flex", gap: 7, flexShrink: 0 }}>
         <input value={input} onChange={(e) => onInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") onSend(); }} placeholder="Escribe tu duda..." style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 18, padding: "7px 12px", fontSize: "0.81rem", fontFamily: "'Manrope', sans-serif", outline: "none" }} onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }} />
