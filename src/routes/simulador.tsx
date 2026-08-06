@@ -286,6 +286,13 @@ function SimuladorPage() {
       ? { scope: "la", limit: 600 }
       : { scope: "ciaac", materias: MATERIAS.map((m) => m.slug), limit: 200 },
   );
+  // Presencia en vivo para el panel admin.
+  useEffect(() => {
+    setPresenceActivity(
+      `Simulador ${mode === "oficial" ? "oficial" : "potenciado"} · ${banco === "la" ? "Línea aérea" : "CIAAC"}`,
+    );
+    return () => setPresenceActivity(null);
+  }, [mode, banco]);
   /** "Salir" vuelve al módulo de origen, no siempre al de CIAAC. */
   const exitTo: "/dashboard/banco" | "/dashboard/linea-aerea" =
     banco === "la" ? "/dashboard/linea-aerea" : "/dashboard/banco";
