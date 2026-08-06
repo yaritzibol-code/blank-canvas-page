@@ -34,6 +34,8 @@ export interface UserPrefs {
     customMinutos?: string;
     /** true cuando el estudiante ya completó el onboarding del módulo. */
     configurado?: boolean;
+    /** Examen que se está preparando en "Estudiemos juntos". */
+    track?: "ciaac" | "la";
   };
 }
 
