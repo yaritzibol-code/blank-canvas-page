@@ -190,7 +190,7 @@ function ConfiguracionPage() {
       /* el debounce reintenta en la siguiente escritura */
     }
     setGuardandoYaris(false);
-    setFlash("Listo: Yaris ya te responde con esa personalidad y longitud.");
+    showFlash("Listo: Yaris ya te responde con esa personalidad y longitud.");
   }
 
 
