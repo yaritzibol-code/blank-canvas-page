@@ -67,10 +67,17 @@ interface Props {
   /** Iniciales de respaldo cuando no hay foto. */
   initials: string;
   size?: number;
+  /** "dark" sobre fondos oscuros (perfil), "light" sobre tarjetas claras (onboarding). */
+  tone?: "dark" | "light";
   onChange: (path: string | undefined) => void;
 }
 
-export function AvatarPicker({ userId, path, initials, size = 88, onChange }: Props) {
+export function AvatarPicker({ userId, path, initials, size = 88, tone = "dark", onChange }: Props) {
+  const claro = tone === "light";
+  const txt = claro ? "#22375C" : "white";
+  const sutil = claro ? "#5B7099" : "rgba(255,255,255,.7)";
+  const borde = claro ? "1px solid #C9D6E8" : "1px solid rgba(255,255,255,.35)";
+  const fondoBtn = claro ? "white" : "rgba(255,255,255,.12)";
   const url = useAvatarUrl(path);
   const [preview, setPreview] = useState<string | null>(null);
   const [subiendo, setSubiendo] = useState(false);
@@ -140,9 +147,9 @@ export function AvatarPicker({ userId, path, initials, size = 88, onChange }: Pr
               padding: "10px 16px",
               borderRadius: 10,
               cursor: subiendo ? "wait" : "pointer",
-              border: "1px solid rgba(255,255,255,.35)",
-              background: "rgba(255,255,255,.12)",
-              color: "white",
+              border: borde,
+              background: fondoBtn,
+              color: txt,
               fontWeight: 700,
               fontSize: ".82rem",
               fontFamily: "'Manrope', sans-serif",
@@ -162,9 +169,9 @@ export function AvatarPicker({ userId, path, initials, size = 88, onChange }: Pr
                 padding: "10px 14px",
                 borderRadius: 10,
                 cursor: "pointer",
-                border: "1px solid rgba(255,255,255,.25)",
+                border: claro ? "1px solid #E0E7F2" : "1px solid rgba(255,255,255,.25)",
                 background: "transparent",
-                color: "rgba(255,255,255,.85)",
+                color: sutil,
                 fontWeight: 700,
                 fontSize: ".82rem",
                 fontFamily: "'Manrope', sans-serif",
@@ -174,7 +181,7 @@ export function AvatarPicker({ userId, path, initials, size = 88, onChange }: Pr
             </button>
           )}
         </div>
-        <span style={{ fontSize: ".72rem", color: "rgba(255,255,255,.7)", fontFamily: "'Manrope', sans-serif" }}>
+        <span style={{ fontSize: ".72rem", color: error ? "#e74c3c" : sutil, fontFamily: "'Manrope', sans-serif" }}>
           {error ?? "JPG o PNG · se recorta a 512px"}
         </span>
       </div>
