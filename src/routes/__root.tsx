@@ -13,6 +13,7 @@ import { usePresence } from "@/hooks/use-presence";
 import { installClientErrorReporter, reportClientError } from "@/lib/client-error-reporter";
 import { useApplyPrefs } from "@/hooks/use-apply-prefs";
 import { GOOGLE_ADS_ID, isAdsConfigured } from "@/lib/ads";
+import { FlashOfferWatch } from "@/components/shared/FlashOfferWatch";
 
 
 import appCss from "../styles.css?url";
@@ -154,6 +155,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <FlashOfferWatch />
         {children}
         <Scripts />
       </body>

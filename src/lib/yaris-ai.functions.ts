@@ -64,13 +64,25 @@ export const yarisAiChat = createServerFn({ method: "POST" })
 
     const ctx = data.context ?? {};
 
+    // Plan gratuito: 10 respuestas de cortesía antes del popup de mejora.
+    let freeUsed: number | undefined;
     if (!isPro) {
-      return {
-        text:
-          "Yaris IA está disponible sólo para FlightPath Pro. Actualiza tu plan para chatear conmigo sin límites.",
-        cite: null as string | null,
-      };
+      const { consumeServerFreeQuota } = await import("@/lib/free-quota.server");
+      const perfil = (profileRow?.data ?? {}) as Record<string, unknown>;
+      const cuota = await consumeServerFreeQuota(supabase, userId, "yaris", perfil);
+      if (!cuota.allowed) {
+        return {
+          text:
+            `Ya usaste tus ${cuota.limit} respuestas gratis conmigo. Con <b>FlightPath Pro</b> seguimos platicando sin límite y te explico cada pregunta las veces que quieras.`,
+          cite: null as string | null,
+          quotaReached: true as boolean | undefined,
+          freeUsed: cuota.used as number | undefined,
+          freeLimit: cuota.limit as number | undefined,
+        };
+      }
+      freeUsed = cuota.used;
     }
+
 
     // Rate limiting por usuario: 10/min · 100/hora · 300/día.
     const verdict = await checkUserRateLimit(userId);
@@ -149,7 +161,7 @@ export const yarisAiChat = createServerFn({ method: "POST" })
         latencyMs: Date.now() - started,
         success: true,
       });
-      return { text, cite: ctx.cite ?? null };
+      return { text, cite: ctx.cite ?? null, ...(freeUsed !== undefined ? { freeUsed } : {}) };
     } catch (err) {
       console.error("Yaris OpenAI fetch failed", err);
       await logAiUsage({

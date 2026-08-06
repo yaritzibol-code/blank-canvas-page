@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
 import { Icon } from "@/components/ui/fp-icon";
 import { canUseAI, logYarisUse } from "@/lib/store";
+import { hasFreeLeft } from "@/lib/store/free-quota";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
 import { useYarisStream, toHistory } from "@/lib/yaris-ask";
@@ -87,7 +88,7 @@ export function YarisChatModal({
 
   // Yaris con IA es una función Pro: con plan Básica el panel no conversa,
   // muestra el popup de suscripción que lleva a la página de precios.
-  if (!canUseAI(user)) {
+  if (!canUseAI(user) && !hasFreeLeft(user, "yaris")) {
     return (
       <UpgradeModal
         open

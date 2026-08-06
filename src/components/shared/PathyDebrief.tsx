@@ -11,6 +11,8 @@ import { PathyMark } from "@/components/shared/PathyMark";
 import { savePathyReport } from "@/lib/store/domain";
 import { weakSpots, wrongAnswers } from "@/lib/store/pathy-errors";
 import type { AttemptAnswer, PathyWeakSpot } from "@/lib/store/types";
+import { isPaid, useSessionUser } from "@/lib/store";
+import { consumeFree } from "@/lib/store/free-quota";
 
 interface Props {
   userId: string;
@@ -81,6 +83,7 @@ export function PathyDebrief({ userId, origen, titulo, scorePct, answers }: Prop
   const [confusiones, setConfusiones] = useState<string[]>([]);
   const [acciones, setAcciones] = useState<string[]>([]);
   const [motivo, setMotivo] = useState<string | undefined>();
+  const sesionUser = useSessionUser();
   const doneRef = useRef(false);
 
   const spots = weakSpots(answers, 3);
@@ -142,6 +145,9 @@ export function PathyDebrief({ userId, origen, titulo, scorePct, answers }: Prop
       },
     })
       .then((r) => {
+        // Los análisis de cortesía del plan gratuito se descuentan al recibir
+        // un diagnóstico real (el servidor lleva la cuenta autoritativa).
+        if (r.diagnostico && sesionUser && !isPaid(sesionUser)) consumeFree(sesionUser, "pathy");
         setDiagnostico(r.diagnostico);
         setConfusiones(r.confusiones);
         setAcciones(r.acciones);

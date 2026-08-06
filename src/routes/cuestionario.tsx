@@ -30,6 +30,13 @@ import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { QuestionImages } from "@/components/banco/QuestionImages";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
+import {
+  FREE_LIMITS,
+  consumeFree,
+  hasFreeLeft,
+  isFreeSource,
+  useFreeQuota,
+} from "@/lib/store/free-quota";
 
 import { LA_OFICIAL_FUENTE } from "@/lib/store/seed-linea-aerea-oficial";
 import { LINEA_AEREA_OFICIAL, LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
@@ -191,7 +198,8 @@ function CuestionarioPage() {
         scope: "la" as const,
         fuentes: [search.fuente],
         ...(capsList.length > 0 && { caps: capsList }),
-        limit: paidUser ? 600 : 10,
+        // El plan gratuito abre ATP y Handbook con su cuota de 50 preguntas.
+        limit: paidUser ? 600 : isFreeSource(search.fuente) ? FREE_LIMITS.preguntas : 10,
         ordered: !paidUser,
       };
     }
@@ -266,6 +274,10 @@ function CuestionarioPage() {
   const [reportOpen, setReportOpen] = useState(false);
   /** Popup de suscripción cuando el plan Básica toca una función Pro. */
   const [upgradeOpen, setUpgradeOpen] = useState(false);
+  const [upgradeFeature, setUpgradeFeature] = useState<"yaris" | "preguntas">("yaris");
+  /** Cuota gratuita de preguntas (ATP / Handbook) del plan Básica. */
+  const preguntasGratis = useFreeQuota(user, "preguntas");
+  const fuenteGratis = isFreeSource(search.fuente);
 
   const [isMobile, setIsMobile] = useState(false);
   const [startTime, setStartTime] = useState(() => Date.now());
@@ -330,7 +342,9 @@ function CuestionarioPage() {
       const all = getPublishedQuestions().filter(
         (q) => q.fuente === search.fuente && (caps.length === 0 || caps.includes(Number(q.capitulo))),
       );
-      fullPool = paid ? all : all.slice(0, 10);
+      fullPool = paid
+        ? all
+        : all.slice(0, isFreeSource(search.fuente) ? Math.max(0, preguntasGratis.remaining) : 10);
     } else if (search.banco === "la") {
       // Banco de Línea Aérea (opcionalmente acotado a manuales y/o a materias:
       // las tarjetas del módulo abren el oficial por materia).
@@ -499,6 +513,15 @@ function CuestionarioPage() {
 
   function handleOptionClick(optIdx: number) {
     if (answered) return;
+    // Cada pregunta respondida descuenta de las 50 gratis de ATP / Handbook.
+    if (fuenteGratis && user && !isPaid(user)) {
+      if (!hasFreeLeft(user, "preguntas")) {
+        setUpgradeFeature("preguntas");
+        setUpgradeOpen(true);
+        return;
+      }
+      consumeFree(user, "preguntas");
+    }
     const isCorrect = questions[currentIdx].options[optIdx].correct;
     setSelectedIdx(optIdx);
     setAnswered(true);
@@ -578,7 +601,10 @@ function CuestionarioPage() {
   async function openYaris() {
     // Yaris con IA es Pro: con plan Básica se abre el popup de suscripción en
     // vez de una respuesta a medias.
-    if (!isPaid(user)) {
+    // Cuenta gratis: hay 10 respuestas de cortesía; al agotarse se abre el
+    // popup de mejora en lugar de una respuesta a medias.
+    if (!isPaid(user) && !hasFreeLeft(user, "yaris")) {
+      setUpgradeFeature("yaris");
       setUpgradeOpen(true);
       return;
     }
@@ -1639,8 +1665,12 @@ function CuestionarioPage() {
       <UpgradeModal
         open={upgradeOpen}
         onClose={() => setUpgradeOpen(false)}
-        feature="Yaris con IA"
-        benefit="Con Pro te explica cada pregunta, te acompaña paso a paso y practicas sin límites."
+        feature={upgradeFeature === "preguntas" ? "Práctica ilimitada" : "Yaris con IA"}
+        benefit={
+          upgradeFeature === "preguntas"
+            ? `Ya completaste tus ${FREE_LIMITS.preguntas} preguntas gratis de ATP y Handbook. Con Pro practicas sin límite en todos los manuales.`
+            : "Con Pro te explica cada pregunta, te acompaña paso a paso y practicas sin límites."
+        }
         {...(user ? { userId: user.id } : {})}
       />
 
