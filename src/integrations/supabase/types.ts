@@ -14,6 +14,128 @@ export type Database = {
   }
   public: {
     Tables: {
+      activity_events: {
+        Row: {
+          created_at: string
+          duration_ms: number
+          id: string
+          label: string | null
+          metadata: Json
+          path: string | null
+          session_id: string | null
+          session_key: string
+          step: string | null
+          type: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          duration_ms?: number
+          id?: string
+          label?: string | null
+          metadata?: Json
+          path?: string | null
+          session_id?: string | null
+          session_key: string
+          step?: string | null
+          type?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          duration_ms?: number
+          id?: string
+          label?: string | null
+          metadata?: Json
+          path?: string | null
+          session_id?: string | null
+          session_key?: string
+          step?: string | null
+          type?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_events_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "activity_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      activity_sessions: {
+        Row: {
+          created_at: string
+          device: string
+          ended_at: string | null
+          engaged_ms: number
+          entry_label: string | null
+          entry_path: string
+          exit_label: string | null
+          exit_path: string | null
+          id: string
+          is_bounce: boolean
+          last_seen_at: string
+          onboarding_done: boolean
+          onboarding_step: string | null
+          plan: string | null
+          referrer: string | null
+          screen_count: number
+          session_key: string
+          started_at: string
+          updated_at: string
+          user_id: string | null
+          utm: Json
+        }
+        Insert: {
+          created_at?: string
+          device?: string
+          ended_at?: string | null
+          engaged_ms?: number
+          entry_label?: string | null
+          entry_path?: string
+          exit_label?: string | null
+          exit_path?: string | null
+          id?: string
+          is_bounce?: boolean
+          last_seen_at?: string
+          onboarding_done?: boolean
+          onboarding_step?: string | null
+          plan?: string | null
+          referrer?: string | null
+          screen_count?: number
+          session_key: string
+          started_at?: string
+          updated_at?: string
+          user_id?: string | null
+          utm?: Json
+        }
+        Update: {
+          created_at?: string
+          device?: string
+          ended_at?: string | null
+          engaged_ms?: number
+          entry_label?: string | null
+          entry_path?: string
+          exit_label?: string | null
+          exit_path?: string | null
+          id?: string
+          is_bounce?: boolean
+          last_seen_at?: string
+          onboarding_done?: boolean
+          onboarding_step?: string | null
+          plan?: string | null
+          referrer?: string | null
+          screen_count?: number
+          session_key?: string
+          started_at?: string
+          updated_at?: string
+          user_id?: string | null
+          utm?: Json
+        }
+        Relationships: []
+      }
       ai_config: {
         Row: {
           id: string
@@ -586,6 +708,57 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_activity_by_screen: {
+        Args: { days_back?: number }
+        Returns: {
+          avg_ms: number
+          bounce_rate: number
+          bounces: number
+          entries: number
+          exits: number
+          label: string
+          path: string
+          views: number
+        }[]
+      }
+      admin_activity_funnel: {
+        Args: { days_back?: number }
+        Returns: {
+          people: number
+          sessions: number
+          step: string
+        }[]
+      }
+      admin_activity_overview: { Args: { days_back?: number }; Returns: Json }
+      admin_activity_user_timeline: {
+        Args: { max_rows?: number; target_user: string }
+        Returns: {
+          created_at: string
+          duration_ms: number
+          label: string
+          metadata: Json
+          path: string
+          step: string
+          type: string
+        }[]
+      }
+      admin_activity_users: {
+        Args: { days_back?: number; max_rows?: number }
+        Returns: {
+          bounces: number
+          email: string
+          engaged_ms: number
+          last_label: string
+          last_path: string
+          last_seen: string
+          nombre: string
+          onboarding_done: boolean
+          plan: string
+          screens: number
+          sessions: number
+          user_id: string
+        }[]
+      }
       admin_ai_daily: {
         Args: { days_back?: number }
         Returns: {

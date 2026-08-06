@@ -27,6 +27,7 @@ import { Route as SimuladorRouteImport } from './routes/simulador'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminAccesosRouteImport } from './routes/admin/accesos'
+import { Route as AdminActivityRatioRouteImport } from './routes/admin/activity-ratio'
 import { Route as AdminAnaliticaRouteImport } from './routes/admin/analitica'
 import { Route as AdminBancoRouteImport } from './routes/admin/banco'
 import { Route as AdminConfiguracionRouteImport } from './routes/admin/configuracion'
@@ -150,6 +151,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
 const AdminAccesosRoute = AdminAccesosRouteImport.update({
   id: '/admin/accesos',
   path: '/admin/accesos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminActivityRatioRoute = AdminActivityRatioRouteImport.update({
+  id: '/admin/activity-ratio',
+  path: '/admin/activity-ratio',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminAnaliticaRoute = AdminAnaliticaRouteImport.update({
@@ -344,6 +350,7 @@ export interface FileRoutesByFullPath {
   '/simulador': typeof SimuladorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/accesos': typeof AdminAccesosRoute
+  '/admin/activity-ratio': typeof AdminActivityRatioRoute
   '/admin/analitica': typeof AdminAnaliticaRoute
   '/admin/banco': typeof AdminBancoRoute
   '/admin/configuracion': typeof AdminConfiguracionRoute
@@ -397,6 +404,7 @@ export interface FileRoutesByTo {
   '/simulador': typeof SimuladorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/accesos': typeof AdminAccesosRoute
+  '/admin/activity-ratio': typeof AdminActivityRatioRoute
   '/admin/analitica': typeof AdminAnaliticaRoute
   '/admin/banco': typeof AdminBancoRoute
   '/admin/configuracion': typeof AdminConfiguracionRoute
@@ -452,6 +460,7 @@ export interface FileRoutesById {
   '/simulador': typeof SimuladorRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/accesos': typeof AdminAccesosRoute
+  '/admin/activity-ratio': typeof AdminActivityRatioRoute
   '/admin/analitica': typeof AdminAnaliticaRoute
   '/admin/banco': typeof AdminBancoRoute
   '/admin/configuracion': typeof AdminConfiguracionRoute
@@ -508,6 +517,7 @@ export interface FileRouteTypes {
     | '/simulador'
     | '/sitemap.xml'
     | '/admin/accesos'
+    | '/admin/activity-ratio'
     | '/admin/analitica'
     | '/admin/banco'
     | '/admin/configuracion'
@@ -561,6 +571,7 @@ export interface FileRouteTypes {
     | '/simulador'
     | '/sitemap.xml'
     | '/admin/accesos'
+    | '/admin/activity-ratio'
     | '/admin/analitica'
     | '/admin/banco'
     | '/admin/configuracion'
@@ -615,6 +626,7 @@ export interface FileRouteTypes {
     | '/simulador'
     | '/sitemap.xml'
     | '/admin/accesos'
+    | '/admin/activity-ratio'
     | '/admin/analitica'
     | '/admin/banco'
     | '/admin/configuracion'
@@ -670,6 +682,7 @@ export interface RootRouteChildren {
   SimuladorRoute: typeof SimuladorRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   AdminAccesosRoute: typeof AdminAccesosRoute
+  AdminActivityRatioRoute: typeof AdminActivityRatioRoute
   AdminAnaliticaRoute: typeof AdminAnaliticaRoute
   AdminBancoRoute: typeof AdminBancoRoute
   AdminConfiguracionRoute: typeof AdminConfiguracionRoute
@@ -817,6 +830,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/accesos'
       fullPath: '/admin/accesos'
       preLoaderRoute: typeof AdminAccesosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/activity-ratio': {
+      id: '/admin/activity-ratio'
+      path: '/admin/activity-ratio'
+      fullPath: '/admin/activity-ratio'
+      preLoaderRoute: typeof AdminActivityRatioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/analitica': {
@@ -1120,6 +1140,7 @@ const rootRouteChildren: RootRouteChildren = {
   SimuladorRoute: SimuladorRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   AdminAccesosRoute: AdminAccesosRoute,
+  AdminActivityRatioRoute: AdminActivityRatioRoute,
   AdminAnaliticaRoute: AdminAnaliticaRoute,
   AdminBancoRoute: AdminBancoRoute,
   AdminConfiguracionRoute: AdminConfiguracionRoute,
@@ -1143,13 +1164,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

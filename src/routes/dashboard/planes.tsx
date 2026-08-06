@@ -7,6 +7,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ModuleHeader } from "@/components/shared/ModuleHeader";
 import { useEffect, useState } from "react";
 import { flashOfferActive, startFlashOffer as startFlashLocal } from "@/lib/flash-offer";
+import { trackAbandon, trackMilestone } from "@/lib/activity-tracker";
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
 import { getStripe, getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
 import {
@@ -188,6 +189,7 @@ function PlanesPage() {
       });
       if ("error" in result) throw new Error(result.error);
       setClientSecret(result.clientSecret);
+      trackMilestone("pago_abierto");
     } catch (e) {
       setError(e instanceof Error ? e.message : "No pudimos iniciar el pago.");
     } finally {
@@ -201,6 +203,7 @@ function PlanesPage() {
    */
   function abandonarCheckout() {
     setClientSecret(null);
+    trackAbandon("pago_abandonado");
     if (isProActive) return;
     const local = startFlashLocal();
     if (local) void startFlashServer().catch(() => undefined);
