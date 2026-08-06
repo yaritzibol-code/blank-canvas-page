@@ -11,6 +11,8 @@ import { PathyMark } from "@/components/shared/PathyMark";
 import { savePathyReport } from "@/lib/store/domain";
 import { weakSpots, wrongAnswers } from "@/lib/store/pathy-errors";
 import type { AttemptAnswer, PathyWeakSpot } from "@/lib/store/types";
+import { isPaid, useSessionUser } from "@/lib/store";
+import { consumeFree } from "@/lib/store/free-quota";
 
 interface Props {
   userId: string;
