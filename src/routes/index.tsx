@@ -1,3 +1,4 @@
+import { useSessionUser } from "@/lib/store";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
@@ -288,6 +289,7 @@ const NAV_LINKS = [
 ];
 
 export function Nav() {
+  const sesion = Boolean(useSessionUser());
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   useEffect(() => {
