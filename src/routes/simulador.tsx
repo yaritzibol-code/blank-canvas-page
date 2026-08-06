@@ -310,6 +310,9 @@ function SimuladorPage() {
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const msgsEndRef = useRef<HTMLDivElement>(null);
+  /** Caja de mensajes: se desplaza sola, sin arrastrar la página. */
+  const msgsBoxRef = useRef<HTMLDivElement>(null);
+
   const leftPanelRef = useRef<HTMLDivElement>(null);
   const savedRef = useRef(false);
   const finishRef = useRef<() => void>(() => {});
