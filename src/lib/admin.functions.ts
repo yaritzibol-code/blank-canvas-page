@@ -240,30 +240,57 @@ export const adminGrantPro = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
+/** Personalidades configurables de Yaris. */
+export type YarisTonoKey = "formal" | "normal" | "amiga";
+
 /** Prompt de Yaris + límites de IA. */
 export interface YarisConfig {
+  /** Prompt base (carácter, rigor, formato) común a las tres personalidades. */
   prompt: string;
+  /** Bloque de voz por personalidad; vacío = se usa el de fábrica. */
+  personas: Record<YarisTonoKey, string>;
   notes: string;
   version: number;
   updated_at: string | null;
   updated_by_email: string | null;
 }
 
+/** Textos de fábrica que usa Yaris cuando el admin no configuró los suyos. */
+export interface YarisDefaults {
+  prompt: string;
+  personas: Record<YarisTonoKey, string>;
+  largos: Record<"corta" | "normal" | "detallada", string>;
+  model: string;
+}
+
 export const adminGetYarisConfig = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }): Promise<Res<{ config: YarisConfig; history: Array<{ version: number; created_at: string; updated_by_email: string | null }> }>> => {
+  .handler(async ({ context }): Promise<Res<{ config: YarisConfig; defaults: YarisDefaults; history: Array<{ version: number; created_at: string; updated_by_email: string | null }> }>> => {
     const guard = await assertAdmin(context.supabase, context.userId);
     if (guard) return { error: guard };
+    const { YARIS_DEFAULT_PROMPT, YARIS_PERSONAS, YARIS_LARGOS, YARIS_MODEL } = await import("@/lib/yaris-openai.server");
     const { data } = await context.supabase.from("ai_config").select("value,version,updated_at,updated_by").eq("key", "yaris_system_prompt").maybeSingle();
     const val = (data?.value as any) ?? {};
+    const p = (val.personas ?? {}) as Record<string, string>;
     const hist = await context.supabase.from("ai_config_history").select("version,created_at,updated_by").eq("key", "yaris_system_prompt").order("version", { ascending: false }).limit(20);
     return {
       config: {
         prompt: val.prompt ?? "",
+        personas: {
+          formal: p.formal ?? "",
+          normal: p.normal ?? "",
+          amiga: p.amiga ?? "",
+        },
         notes: val.notes ?? "",
         version: data?.version ?? 1,
         updated_at: (data?.updated_at as string) ?? null,
         updated_by_email: null,
+      },
+      defaults: {
+        prompt: YARIS_DEFAULT_PROMPT,
+        personas: YARIS_PERSONAS,
+        largos: YARIS_LARGOS,
+        model: YARIS_MODEL,
       },
       history: (hist.data ?? []).map((h: any) => ({ version: h.version, created_at: h.created_at, updated_by_email: null })),
     };
@@ -271,7 +298,7 @@ export const adminGetYarisConfig = createServerFn({ method: "POST" })
 
 export const adminUpdateYarisPrompt = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data: { prompt: string; notes?: string }) => data)
+  .inputValidator((data: { prompt: string; personas?: Partial<Record<YarisTonoKey, string>>; notes?: string }) => data)
   .handler(async ({ data, context }): Promise<Res<{ ok: true; version: number }>> => {
     const guard = await assertAdmin(context.supabase, context.userId);
     if (guard) return { error: guard };
@@ -286,7 +313,16 @@ export const adminUpdateYarisPrompt = createServerFn({ method: "POST" })
         updated_by: context.userId,
       });
     }
-    const value = { prompt: data.prompt, notes: data.notes ?? "" };
+    const clean = (s?: string) => (s ?? "").trim();
+    const value = {
+      prompt: data.prompt,
+      notes: data.notes ?? "",
+      personas: {
+        formal: clean(data.personas?.formal),
+        normal: clean(data.personas?.normal),
+        amiga: clean(data.personas?.amiga),
+      },
+    };
     const { error } = await supabaseAdmin
       .from("ai_config")
       .upsert(
@@ -302,6 +338,7 @@ export const adminUpdateYarisPrompt = createServerFn({ method: "POST" })
     if (error) return { error: error.message };
     return { ok: true, version: nextVersion };
   });
+
 
 export const adminSetAILimit = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
