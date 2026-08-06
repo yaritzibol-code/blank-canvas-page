@@ -10,10 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BancoDePreguntasCiaacRouteImport } from './routes/banco-de-preguntas-ciaac'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as CalculadoraCiaacRouteImport } from './routes/calculadora-ciaac'
 import { Route as CiaacRouteImport } from './routes/ciaac'
 import { Route as ConvocatoriaAeromexicoRouteImport } from './routes/convocatoria-aeromexico'
+import { Route as ConvocatoriaCiaac2026RouteImport } from './routes/convocatoria-ciaac-2026'
 import { Route as CuestionarioRouteImport } from './routes/cuestionario'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -21,12 +23,17 @@ import { Route as GraciasRouteImport } from './routes/gracias'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as LineaAereaRouteImport } from './routes/linea-aerea'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as MejorPlataformaCiaacRouteImport } from './routes/mejor-plataforma-ciaac'
+import { Route as MejorPlataformaConvocatoriaAeromexicoRouteImport } from './routes/mejor-plataforma-convocatoria-aeromexico'
 import { Route as PreciosRouteImport } from './routes/precios'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as RespuestasRouteImport } from './routes/respuestas'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SimuladorRouteImport } from './routes/simulador'
+import { Route as SimuladorCiaacRouteImport } from './routes/simulador-ciaac'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SobreFlightpathRouteImport } from './routes/sobre-flightpath'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminAccesosRouteImport } from './routes/admin/accesos'
 import { Route as AdminActivityRatioRouteImport } from './routes/admin/activity-ratio'
@@ -56,6 +63,7 @@ import { Route as DashboardPerfilRouteImport } from './routes/dashboard/perfil'
 import { Route as DashboardPlanesRouteImport } from './routes/dashboard/planes'
 import { Route as DashboardRecordatoriosRouteImport } from './routes/dashboard/recordatorios'
 import { Route as LineaAereaFuenteRouteImport } from './routes/linea-aerea_.$fuente'
+import { Route as RespuestasSlugRouteImport } from './routes/respuestas_.$slug'
 import { Route as AdminOperacionesIndexRouteImport } from './routes/admin/operaciones/index'
 import { Route as AdminOperacionesDisputasRouteImport } from './routes/admin/operaciones/disputas'
 import { Route as AdminOperacionesStripeRouteImport } from './routes/admin/operaciones/stripe'
@@ -70,6 +78,11 @@ import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/publi
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BancoDePreguntasCiaacRoute = BancoDePreguntasCiaacRouteImport.update({
+  id: '/banco-de-preguntas-ciaac',
+  path: '/banco-de-preguntas-ciaac',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogRoute = BlogRouteImport.update({
@@ -90,6 +103,11 @@ const CiaacRoute = CiaacRouteImport.update({
 const ConvocatoriaAeromexicoRoute = ConvocatoriaAeromexicoRouteImport.update({
   id: '/convocatoria-aeromexico',
   path: '/convocatoria-aeromexico',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConvocatoriaCiaac2026Route = ConvocatoriaCiaac2026RouteImport.update({
+  id: '/convocatoria-ciaac-2026',
+  path: '/convocatoria-ciaac-2026',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CuestionarioRoute = CuestionarioRouteImport.update({
@@ -127,6 +145,17 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MejorPlataformaCiaacRoute = MejorPlataformaCiaacRouteImport.update({
+  id: '/mejor-plataforma-ciaac',
+  path: '/mejor-plataforma-ciaac',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MejorPlataformaConvocatoriaAeromexicoRoute =
+  MejorPlataformaConvocatoriaAeromexicoRouteImport.update({
+    id: '/mejor-plataforma-convocatoria-aeromexico',
+    path: '/mejor-plataforma-convocatoria-aeromexico',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const PreciosRoute = PreciosRouteImport.update({
   id: '/precios',
   path: '/precios',
@@ -142,6 +171,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RespuestasRoute = RespuestasRouteImport.update({
+  id: '/respuestas',
+  path: '/respuestas',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   id: '/robots.txt',
   path: '/robots.txt',
@@ -152,9 +186,19 @@ const SimuladorRoute = SimuladorRouteImport.update({
   path: '/simulador',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SimuladorCiaacRoute = SimuladorCiaacRouteImport.update({
+  id: '/simulador-ciaac',
+  path: '/simulador-ciaac',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SobreFlightpathRoute = SobreFlightpathRouteImport.update({
+  id: '/sobre-flightpath',
+  path: '/sobre-flightpath',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -302,6 +346,11 @@ const LineaAereaFuenteRoute = LineaAereaFuenteRouteImport.update({
   path: '/linea-aerea/$fuente',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RespuestasSlugRoute = RespuestasSlugRouteImport.update({
+  id: '/respuestas_/$slug',
+  path: '/respuestas/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminOperacionesIndexRoute = AdminOperacionesIndexRouteImport.update({
   id: '/admin/operaciones/',
   path: '/admin/operaciones/',
@@ -358,10 +407,12 @@ const ApiPublicPaymentsWebhookRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/banco-de-preguntas-ciaac': typeof BancoDePreguntasCiaacRoute
   '/blog': typeof BlogRoute
   '/calculadora-ciaac': typeof CalculadoraCiaacRoute
   '/ciaac': typeof CiaacRoute
   '/convocatoria-aeromexico': typeof ConvocatoriaAeromexicoRoute
+  '/convocatoria-ciaac-2026': typeof ConvocatoriaCiaac2026Route
   '/cuestionario': typeof CuestionarioRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/faq': typeof FaqRoute
@@ -369,12 +420,17 @@ export interface FileRoutesByFullPath {
   '/legal': typeof LegalRoute
   '/linea-aerea': typeof LineaAereaRoute
   '/login': typeof LoginRoute
+  '/mejor-plataforma-ciaac': typeof MejorPlataformaCiaacRoute
+  '/mejor-plataforma-convocatoria-aeromexico': typeof MejorPlataformaConvocatoriaAeromexicoRoute
   '/precios': typeof PreciosRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/respuestas': typeof RespuestasRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/simulador': typeof SimuladorRoute
+  '/simulador-ciaac': typeof SimuladorCiaacRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/sobre-flightpath': typeof SobreFlightpathRoute
   '/admin/accesos': typeof AdminAccesosRoute
   '/admin/activity-ratio': typeof AdminActivityRatioRoute
   '/admin/analitica': typeof AdminAnaliticaRoute
@@ -402,6 +458,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/planes': typeof DashboardPlanesRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/linea-aerea/$fuente': typeof LineaAereaFuenteRoute
+  '/respuestas/$slug': typeof RespuestasSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/admin/operaciones/disputas': typeof AdminOperacionesDisputasRoute
@@ -417,22 +474,29 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/banco-de-preguntas-ciaac': typeof BancoDePreguntasCiaacRoute
   '/blog': typeof BlogRoute
   '/calculadora-ciaac': typeof CalculadoraCiaacRoute
   '/ciaac': typeof CiaacRoute
   '/convocatoria-aeromexico': typeof ConvocatoriaAeromexicoRoute
+  '/convocatoria-ciaac-2026': typeof ConvocatoriaCiaac2026Route
   '/cuestionario': typeof CuestionarioRoute
   '/faq': typeof FaqRoute
   '/gracias': typeof GraciasRoute
   '/legal': typeof LegalRoute
   '/linea-aerea': typeof LineaAereaRoute
   '/login': typeof LoginRoute
+  '/mejor-plataforma-ciaac': typeof MejorPlataformaCiaacRoute
+  '/mejor-plataforma-convocatoria-aeromexico': typeof MejorPlataformaConvocatoriaAeromexicoRoute
   '/precios': typeof PreciosRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/respuestas': typeof RespuestasRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/simulador': typeof SimuladorRoute
+  '/simulador-ciaac': typeof SimuladorCiaacRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/sobre-flightpath': typeof SobreFlightpathRoute
   '/admin/accesos': typeof AdminAccesosRoute
   '/admin/activity-ratio': typeof AdminActivityRatioRoute
   '/admin/analitica': typeof AdminAnaliticaRoute
@@ -460,6 +524,7 @@ export interface FileRoutesByTo {
   '/dashboard/planes': typeof DashboardPlanesRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/linea-aerea/$fuente': typeof LineaAereaFuenteRoute
+  '/respuestas/$slug': typeof RespuestasSlugRoute
   '/admin': typeof AdminIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/admin/operaciones/disputas': typeof AdminOperacionesDisputasRoute
@@ -476,10 +541,12 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/banco-de-preguntas-ciaac': typeof BancoDePreguntasCiaacRoute
   '/blog': typeof BlogRoute
   '/calculadora-ciaac': typeof CalculadoraCiaacRoute
   '/ciaac': typeof CiaacRoute
   '/convocatoria-aeromexico': typeof ConvocatoriaAeromexicoRoute
+  '/convocatoria-ciaac-2026': typeof ConvocatoriaCiaac2026Route
   '/cuestionario': typeof CuestionarioRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/faq': typeof FaqRoute
@@ -487,12 +554,17 @@ export interface FileRoutesById {
   '/legal': typeof LegalRoute
   '/linea-aerea': typeof LineaAereaRoute
   '/login': typeof LoginRoute
+  '/mejor-plataforma-ciaac': typeof MejorPlataformaCiaacRoute
+  '/mejor-plataforma-convocatoria-aeromexico': typeof MejorPlataformaConvocatoriaAeromexicoRoute
   '/precios': typeof PreciosRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/respuestas': typeof RespuestasRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/simulador': typeof SimuladorRoute
+  '/simulador-ciaac': typeof SimuladorCiaacRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/sobre-flightpath': typeof SobreFlightpathRoute
   '/admin/accesos': typeof AdminAccesosRoute
   '/admin/activity-ratio': typeof AdminActivityRatioRoute
   '/admin/analitica': typeof AdminAnaliticaRoute
@@ -520,6 +592,7 @@ export interface FileRoutesById {
   '/dashboard/planes': typeof DashboardPlanesRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/linea-aerea_/$fuente': typeof LineaAereaFuenteRoute
+  '/respuestas_/$slug': typeof RespuestasSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/admin/operaciones/disputas': typeof AdminOperacionesDisputasRoute
@@ -537,10 +610,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/banco-de-preguntas-ciaac'
     | '/blog'
     | '/calculadora-ciaac'
     | '/ciaac'
     | '/convocatoria-aeromexico'
+    | '/convocatoria-ciaac-2026'
     | '/cuestionario'
     | '/dashboard'
     | '/faq'
@@ -548,12 +623,17 @@ export interface FileRouteTypes {
     | '/legal'
     | '/linea-aerea'
     | '/login'
+    | '/mejor-plataforma-ciaac'
+    | '/mejor-plataforma-convocatoria-aeromexico'
     | '/precios'
     | '/register'
     | '/reset-password'
+    | '/respuestas'
     | '/robots.txt'
     | '/simulador'
+    | '/simulador-ciaac'
     | '/sitemap.xml'
+    | '/sobre-flightpath'
     | '/admin/accesos'
     | '/admin/activity-ratio'
     | '/admin/analitica'
@@ -581,6 +661,7 @@ export interface FileRouteTypes {
     | '/dashboard/planes'
     | '/dashboard/recordatorios'
     | '/linea-aerea/$fuente'
+    | '/respuestas/$slug'
     | '/admin/'
     | '/dashboard/'
     | '/admin/operaciones/disputas'
@@ -596,22 +677,29 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/banco-de-preguntas-ciaac'
     | '/blog'
     | '/calculadora-ciaac'
     | '/ciaac'
     | '/convocatoria-aeromexico'
+    | '/convocatoria-ciaac-2026'
     | '/cuestionario'
     | '/faq'
     | '/gracias'
     | '/legal'
     | '/linea-aerea'
     | '/login'
+    | '/mejor-plataforma-ciaac'
+    | '/mejor-plataforma-convocatoria-aeromexico'
     | '/precios'
     | '/register'
     | '/reset-password'
+    | '/respuestas'
     | '/robots.txt'
     | '/simulador'
+    | '/simulador-ciaac'
     | '/sitemap.xml'
+    | '/sobre-flightpath'
     | '/admin/accesos'
     | '/admin/activity-ratio'
     | '/admin/analitica'
@@ -639,6 +727,7 @@ export interface FileRouteTypes {
     | '/dashboard/planes'
     | '/dashboard/recordatorios'
     | '/linea-aerea/$fuente'
+    | '/respuestas/$slug'
     | '/admin'
     | '/dashboard'
     | '/admin/operaciones/disputas'
@@ -654,10 +743,12 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/banco-de-preguntas-ciaac'
     | '/blog'
     | '/calculadora-ciaac'
     | '/ciaac'
     | '/convocatoria-aeromexico'
+    | '/convocatoria-ciaac-2026'
     | '/cuestionario'
     | '/dashboard'
     | '/faq'
@@ -665,12 +756,17 @@ export interface FileRouteTypes {
     | '/legal'
     | '/linea-aerea'
     | '/login'
+    | '/mejor-plataforma-ciaac'
+    | '/mejor-plataforma-convocatoria-aeromexico'
     | '/precios'
     | '/register'
     | '/reset-password'
+    | '/respuestas'
     | '/robots.txt'
     | '/simulador'
+    | '/simulador-ciaac'
     | '/sitemap.xml'
+    | '/sobre-flightpath'
     | '/admin/accesos'
     | '/admin/activity-ratio'
     | '/admin/analitica'
@@ -698,6 +794,7 @@ export interface FileRouteTypes {
     | '/dashboard/planes'
     | '/dashboard/recordatorios'
     | '/linea-aerea_/$fuente'
+    | '/respuestas_/$slug'
     | '/admin/'
     | '/dashboard/'
     | '/admin/operaciones/disputas'
@@ -714,10 +811,12 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BancoDePreguntasCiaacRoute: typeof BancoDePreguntasCiaacRoute
   BlogRoute: typeof BlogRoute
   CalculadoraCiaacRoute: typeof CalculadoraCiaacRoute
   CiaacRoute: typeof CiaacRoute
   ConvocatoriaAeromexicoRoute: typeof ConvocatoriaAeromexicoRoute
+  ConvocatoriaCiaac2026Route: typeof ConvocatoriaCiaac2026Route
   CuestionarioRoute: typeof CuestionarioRoute
   DashboardRoute: typeof DashboardRouteWithChildren
   FaqRoute: typeof FaqRoute
@@ -725,12 +824,17 @@ export interface RootRouteChildren {
   LegalRoute: typeof LegalRoute
   LineaAereaRoute: typeof LineaAereaRoute
   LoginRoute: typeof LoginRoute
+  MejorPlataformaCiaacRoute: typeof MejorPlataformaCiaacRoute
+  MejorPlataformaConvocatoriaAeromexicoRoute: typeof MejorPlataformaConvocatoriaAeromexicoRoute
   PreciosRoute: typeof PreciosRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  RespuestasRoute: typeof RespuestasRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SimuladorRoute: typeof SimuladorRoute
+  SimuladorCiaacRoute: typeof SimuladorCiaacRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  SobreFlightpathRoute: typeof SobreFlightpathRoute
   AdminAccesosRoute: typeof AdminAccesosRoute
   AdminActivityRatioRoute: typeof AdminActivityRatioRoute
   AdminAnaliticaRoute: typeof AdminAnaliticaRoute
@@ -745,6 +849,7 @@ export interface RootRouteChildren {
   CheckoutReturnRoute: typeof CheckoutReturnRoute
   CiaacMateriaRoute: typeof CiaacMateriaRoute
   LineaAereaFuenteRoute: typeof LineaAereaFuenteRoute
+  RespuestasSlugRoute: typeof RespuestasSlugRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminOperacionesDisputasRoute: typeof AdminOperacionesDisputasRoute
   AdminOperacionesStripeRoute: typeof AdminOperacionesStripeRoute
@@ -763,6 +868,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/banco-de-preguntas-ciaac': {
+      id: '/banco-de-preguntas-ciaac'
+      path: '/banco-de-preguntas-ciaac'
+      fullPath: '/banco-de-preguntas-ciaac'
+      preLoaderRoute: typeof BancoDePreguntasCiaacRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog': {
@@ -791,6 +903,13 @@ declare module '@tanstack/react-router' {
       path: '/convocatoria-aeromexico'
       fullPath: '/convocatoria-aeromexico'
       preLoaderRoute: typeof ConvocatoriaAeromexicoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/convocatoria-ciaac-2026': {
+      id: '/convocatoria-ciaac-2026'
+      path: '/convocatoria-ciaac-2026'
+      fullPath: '/convocatoria-ciaac-2026'
+      preLoaderRoute: typeof ConvocatoriaCiaac2026RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cuestionario': {
@@ -842,6 +961,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mejor-plataforma-ciaac': {
+      id: '/mejor-plataforma-ciaac'
+      path: '/mejor-plataforma-ciaac'
+      fullPath: '/mejor-plataforma-ciaac'
+      preLoaderRoute: typeof MejorPlataformaCiaacRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mejor-plataforma-convocatoria-aeromexico': {
+      id: '/mejor-plataforma-convocatoria-aeromexico'
+      path: '/mejor-plataforma-convocatoria-aeromexico'
+      fullPath: '/mejor-plataforma-convocatoria-aeromexico'
+      preLoaderRoute: typeof MejorPlataformaConvocatoriaAeromexicoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/precios': {
       id: '/precios'
       path: '/precios'
@@ -863,6 +996,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/respuestas': {
+      id: '/respuestas'
+      path: '/respuestas'
+      fullPath: '/respuestas'
+      preLoaderRoute: typeof RespuestasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/robots.txt': {
       id: '/robots.txt'
       path: '/robots.txt'
@@ -877,11 +1017,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SimuladorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/simulador-ciaac': {
+      id: '/simulador-ciaac'
+      path: '/simulador-ciaac'
+      fullPath: '/simulador-ciaac'
+      preLoaderRoute: typeof SimuladorCiaacRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre-flightpath': {
+      id: '/sobre-flightpath'
+      path: '/sobre-flightpath'
+      fullPath: '/sobre-flightpath'
+      preLoaderRoute: typeof SobreFlightpathRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -1087,6 +1241,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LineaAereaFuenteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/respuestas_/$slug': {
+      id: '/respuestas_/$slug'
+      path: '/respuestas/$slug'
+      fullPath: '/respuestas/$slug'
+      preLoaderRoute: typeof RespuestasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/operaciones/': {
       id: '/admin/operaciones/'
       path: '/admin/operaciones'
@@ -1204,10 +1365,12 @@ const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BancoDePreguntasCiaacRoute: BancoDePreguntasCiaacRoute,
   BlogRoute: BlogRoute,
   CalculadoraCiaacRoute: CalculadoraCiaacRoute,
   CiaacRoute: CiaacRoute,
   ConvocatoriaAeromexicoRoute: ConvocatoriaAeromexicoRoute,
+  ConvocatoriaCiaac2026Route: ConvocatoriaCiaac2026Route,
   CuestionarioRoute: CuestionarioRoute,
   DashboardRoute: DashboardRouteWithChildren,
   FaqRoute: FaqRoute,
@@ -1215,12 +1378,18 @@ const rootRouteChildren: RootRouteChildren = {
   LegalRoute: LegalRoute,
   LineaAereaRoute: LineaAereaRoute,
   LoginRoute: LoginRoute,
+  MejorPlataformaCiaacRoute: MejorPlataformaCiaacRoute,
+  MejorPlataformaConvocatoriaAeromexicoRoute:
+    MejorPlataformaConvocatoriaAeromexicoRoute,
   PreciosRoute: PreciosRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  RespuestasRoute: RespuestasRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SimuladorRoute: SimuladorRoute,
+  SimuladorCiaacRoute: SimuladorCiaacRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  SobreFlightpathRoute: SobreFlightpathRoute,
   AdminAccesosRoute: AdminAccesosRoute,
   AdminActivityRatioRoute: AdminActivityRatioRoute,
   AdminAnaliticaRoute: AdminAnaliticaRoute,
@@ -1235,6 +1404,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutReturnRoute: CheckoutReturnRoute,
   CiaacMateriaRoute: CiaacMateriaRoute,
   LineaAereaFuenteRoute: LineaAereaFuenteRoute,
+  RespuestasSlugRoute: RespuestasSlugRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminOperacionesDisputasRoute: AdminOperacionesDisputasRoute,
   AdminOperacionesStripeRoute: AdminOperacionesStripeRoute,

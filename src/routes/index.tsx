@@ -1496,13 +1496,17 @@ export function Footer() {
             { h: "Recursos", l: [
               { t: "Blog", href: "/blog" },
               { t: "Preguntas frecuentes", href: "/faq" },
+              { t: "Centro de respuestas CIAAC", href: "/respuestas" },
               { t: "Examen CIAAC — Piloto Comercial", href: "/ciaac" },
+              { t: "Convocatoria CIAAC 2026", href: "/convocatoria-ciaac-2026" },
               { t: "Calculadora de horas de estudio", href: "/calculadora-ciaac" },
               { t: "Convocatoria Aeroméxico · Embraer 190", href: "/convocatoria-aeromexico" },
               { t: "Fuentes del temario — Línea Aérea", href: "/linea-aerea" },
-              { t: "Convocatoria CIAAC 2026", href: "https://www.gob.mx/afac", ext: true },
+              { t: "¿Cómo elegir plataforma?", href: "/mejor-plataforma-ciaac" },
+              { t: "AFAC (sitio oficial)", href: "https://www.gob.mx/afac", ext: true },
             ] },
             { h: "FlightPath", l: [
+              { t: "Sobre FlightPath", href: "/sobre-flightpath" },
               { t: "Términos y condiciones", href: "/legal" },
               { t: "Contacto", href: "mailto:contacto@flightpath.mx" },
             ] },

@@ -454,6 +454,13 @@ function PreguntasFrecuentes() {
             </div>
           ))}
         </div>
+        <p className="mt-6 text-center text-[13.5px] text-ink/50">
+          ¿Comparando opciones? Lee{" "}
+          <a href="/mejor-plataforma-convocatoria-aeromexico" className="font-semibold text-coral-700 hover:text-coral-600">
+            cómo elegir tu preparación para esta convocatoria
+          </a>
+          , criterio por criterio.
+        </p>
       </div>
     </section>
   );

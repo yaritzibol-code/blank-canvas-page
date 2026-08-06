@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { MATERIAS_DEF } from "@/lib/store/materias";
 import { FUENTES_SEO } from "@/lib/seo/fuentes-seo";
+import { RESPUESTAS_SEO } from "@/lib/seo/respuestas-seo";
 
 const BASE_URL = "https://flightpath.mx";
 
@@ -33,6 +34,21 @@ export const Route = createFileRoute("/sitemap.xml")({
             path: `/linea-aerea/${f.slug}`,
             changefreq: "monthly" as const,
             priority: "0.8",
+          })),
+
+          // Capa AEO/GEO: comparativas, entidad, estacional y features.
+          { path: "/mejor-plataforma-ciaac", changefreq: "monthly", priority: "0.9" },
+          { path: "/mejor-plataforma-convocatoria-aeromexico", changefreq: "monthly", priority: "0.9" },
+          { path: "/convocatoria-ciaac-2026", changefreq: "weekly", priority: "0.9" },
+          { path: "/banco-de-preguntas-ciaac", changefreq: "monthly", priority: "0.8" },
+          { path: "/simulador-ciaac", changefreq: "monthly", priority: "0.8" },
+          { path: "/sobre-flightpath", changefreq: "monthly", priority: "0.7" },
+          { path: "/respuestas", changefreq: "weekly", priority: "0.8" },
+          // Centro de respuestas: una página por pregunta conversacional.
+          ...RESPUESTAS_SEO.map((r) => ({
+            path: `/respuestas/${r.slug}`,
+            changefreq: "monthly" as const,
+            priority: "0.7",
           })),
 
           { path: "/faq", changefreq: "monthly", priority: "0.7" },

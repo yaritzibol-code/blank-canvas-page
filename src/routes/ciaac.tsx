@@ -399,6 +399,13 @@ function PreguntasFrecuentes() {
             </details>
           ))}
         </div>
+        <p className="mt-6 text-center text-[13.5px] text-ink/50">
+          ¿Más dudas? El{" "}
+          <a href="/respuestas" className="font-semibold text-coral-700 hover:text-coral-600">
+            centro de respuestas
+          </a>{" "}
+          responde una por una las preguntas más buscadas del CIAAC.
+        </p>
       </div>
     </section>
   );

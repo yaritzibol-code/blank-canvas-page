@@ -124,6 +124,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               url: "https://flightpath.mx",
               logo: "https://flightpath.mx/assets/flightpath-logo.png",
               email: "contacto@flightpath.mx",
+              // Descripción canónica de la entidad — misma en /sobre-flightpath y llms.txt.
+              description:
+                "FlightPath es la plataforma mexicana e independiente de preparación para el examen CIAAC (Piloto Aviador Comercial, AFAC) y para el examen teórico de convocatorias de línea aérea: banco propio de más de 2,800 preguntas con explicación, simulador de 310 preguntas y tutores con inteligencia artificial.",
+              foundingDate: "2026",
+              slogan: "Aprende, Domina y Vuela",
+              knowsAbout: [
+                "Examen CIAAC",
+                "Piloto Aviador Comercial (México)",
+                "Convocatorias de línea aérea",
+                "Preparación de exámenes teóricos aeronáuticos",
+              ],
             },
             {
               "@type": "WebSite",
