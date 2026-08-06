@@ -1562,7 +1562,7 @@ function LeftPanel({ questions, current, expandedMaterias, onToggleMateria, onSe
 
 /* ─── Yaris Panel ─────────────────────────────────────────── */
 
-function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef }: {
+function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef, msgsBoxRef }: {
   msgs: { role: "bot" | "user"; text: string; cite?: string }[];
   typing: boolean;
   input: string;
@@ -1570,7 +1570,9 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef 
   onSend: () => void;
   onClose: () => void;
   msgsEndRef: React.RefObject<HTMLDivElement | null>;
+  msgsBoxRef: React.RefObject<HTMLDivElement | null>;
 }) {
+
   return (
     <>
       <style>{`@keyframes yb{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}.yds{width:5px;height:5px;background:#5A86CB;border-radius:50%;animation:yb .8s infinite}.yds:nth-child(2){animation-delay:.15s}.yds:nth-child(3){animation-delay:.3s}`}</style>
