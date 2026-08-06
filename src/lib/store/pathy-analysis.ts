@@ -81,6 +81,12 @@ export interface PathyReport {
     sinPracticar: RutaPerf[];
   };
   lineaAerea: RutaPerf[];
+  /** Misma clasificación que CIAAC, pero para los manuales de la convocatoria. */
+  manuales: {
+    fuertes: RutaPerf[];
+    debiles: RutaPerf[];
+    sinPracticar: RutaPerf[];
+  };
   animo: {
     entradas: number;
     motivacion: number | null;
