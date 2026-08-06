@@ -147,7 +147,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 const PREFS_BOOT_SCRIPT = `(function(){try{var p=JSON.parse(localStorage.getItem('fp_display_prefs')||'{}');var t=p.theme;var resolved=t==='oscuro'?'oscuro':t==='sistema'?(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'oscuro':'claro'):'claro';var r=document.documentElement;r.dataset.theme=resolved;if(resolved==='oscuro')r.classList.add('dark');var s={Normal:'16px',Grande:'17.5px','Muy grande':'19px'};r.style.fontSize=s[p.textSize]||'16px';r.dataset.motion=p.motion==='reduced'?'reduced':'full';}catch(e){}})();`;
 
-({ children }: { children: React.ReactNode }) {
+function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
