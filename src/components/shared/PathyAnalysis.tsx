@@ -219,11 +219,37 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
               Todavía no has practicado los cuestionarios por manual de la convocatoria.
             </p>
           ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {report.lineaAerea.map((m) => <BarraMateria key={m.key} m={m} />)}
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              {report.manuales.debiles.length > 0 && (
+                <div>
+                  <div style={{ fontSize: ".7rem", fontWeight: 800, color: "#B3261E", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 8 }}>Por reforzar</div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    {report.manuales.debiles.map((m) => <BarraMateria key={m.key} m={m} />)}
+                  </div>
+                </div>
+              )}
+              {report.manuales.fuertes.length > 0 && (
+                <div>
+                  <div style={{ fontSize: ".7rem", fontWeight: 800, color: "#1A7A4A", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 8 }}>Dominados</div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    {report.manuales.fuertes.map((m) => <BarraMateria key={m.key} m={m} />)}
+                  </div>
+                </div>
+              )}
+              {report.manuales.debiles.length === 0 && report.manuales.fuertes.length === 0 && (
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {report.lineaAerea.map((m) => <BarraMateria key={m.key} m={m} />)}
+                </div>
+              )}
+              {report.manuales.sinPracticar.length > 0 && (
+                <div style={{ fontSize: ".76rem", color: MIST, lineHeight: 1.5, paddingTop: 4, borderTop: "1px dashed #E8EEF6" }}>
+                  Sin practicar todavía: {report.manuales.sinPracticar.map((m) => m.name).join(", ")}.
+                </div>
+              )}
             </div>
           )}
         </Bloque>
+
 
         <Bloque titulo="Cómo lo estás viviendo" icon="heart">
           {animo.entradas === 0 ? (
