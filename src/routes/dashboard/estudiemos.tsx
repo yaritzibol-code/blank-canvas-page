@@ -1055,6 +1055,7 @@ function EstudiemosJuntosPage() {
       setExamDate(user.fechaCiaac);
       setTiempo((user.prefs.planEstudio.tiempo as TiempoDisponible) || "1h");
     }
+    setTrack(user.prefs.planEstudio?.track ?? null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id, paid]);
 
