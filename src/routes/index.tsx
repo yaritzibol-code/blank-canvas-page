@@ -11,6 +11,7 @@ import {
   PRO_SETUP_LIST_PRICE,
   mesesAhorrados,
 } from "@/lib/pricing";
+import { MATERIAS_DEF, SIM_TOTAL_QS } from "@/lib/store/materias";
 
 /** Meses que se ahorran pagando el año completo (12 mensualidades vs anual). */
 const ahorroMeses = mesesAhorrados(PRO_MONTHLY_FALLBACK, PRO_ANNUAL_FALLBACK);
@@ -21,18 +22,19 @@ const BUY_HREF = `/register?next=${encodeURIComponent("/dashboard/planes?checkou
 /**
  * Próxima convocatoria del examen CIAAC (hora Ciudad de México, UTC-6).
  * Actualízala cuando la AFAC publique la siguiente fecha: la cuenta regresiva
- * de la portada se oculta sola cuando esta fecha ya pasó.
+ * de la portada se oculta sola cuando esta fecha ya pasó. (Exportada: la
+ * calculadora de /calculadora-ciaac la usa como fecha por defecto.)
  */
-const PROXIMO_CIAAC = "2026-08-17T08:00:00-06:00";
+export const PROXIMO_CIAAC = "2026-08-17T08:00:00-06:00";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
   head: () => ({
     meta: [
       { title: "FlightPath — Prepárate para una línea aérea y vuela." },
-      { name: "description", content: "Simulador Aeroméxico Connect 2026 con preguntas FAA ATP, PHAK, Jeppesen, CPAM, OACI, inglés aeronáutico, COMPASS y examen piloto para primer oficial." },
+      { name: "description", content: "Prepárate para el examen CIAAC y la convocatoria de línea aérea: banco propio de 2,800+ preguntas con explicación, simulador de 310 preguntas, las 12 materias y tutor IA 24/7. Empieza gratis." },
       { property: "og:title", content: "FlightPath — Prepárate para una línea aérea y vuela." },
-      { property: "og:description", content: "Simulador Aeroméxico Connect 2026 con preguntas FAA ATP, PHAK, Jeppesen, CPAM, OACI, inglés aeronáutico, COMPASS y examen piloto para primer oficial." },
+      { property: "og:description", content: "Banco propio de 2,800+ preguntas con explicación, simulador de 310 preguntas, las 12 materias del CIAAC y tutor IA 24/7. Empieza gratis." },
       { property: "og:url", content: "https://flightpath.mx/" },
       { property: "og:type", content: "website" },
     ],
@@ -492,12 +494,17 @@ function Hero() {
         </div>
       </div>
 
-      {/* trust strip */}
+      {/* data strip — cifras propias de la plataforma; nunca marcas de terceros (regla de compliance) */}
       <div className="border-y border-ink/8 bg-white/50 backdrop-blur-sm">
         <div className="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8 py-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-          <span className="text-[11px] uppercase tracking-[0.2em] font-bold text-haze-400">Confiado por</span>
-          {["Aeroméxico Formación", "Volaris Cadetes", "Mayo Aviation", "Cessna Academy", "Pilot.mx"].map((t) => (
-            <span key={t} className="font-display text-[15px] text-ink/35 tracking-tight">{t}</span>
+          <span className="text-[11px] uppercase tracking-[0.2em] font-bold text-haze-400">FlightPath en números</span>
+          {[
+            "2,800+ preguntas con explicación",
+            `Simulador de ${SIM_TOTAL_QS} preguntas`,
+            `${MATERIAS_DEF.length} materias`,
+            "Tutor IA 24/7",
+          ].map((t) => (
+            <span key={t} className="font-display text-[15px] text-ink/45 tracking-tight">{t}</span>
           ))}
         </div>
       </div>
@@ -618,6 +625,12 @@ function Countdown({ show = true }: { show?: boolean }) {
               <div className="mt-4 flex items-center gap-2.5 text-[13.5px] font-medium text-ink/55">
                 <span className="w-5 h-px bg-burgundy/50" /> Cada sesión cuenta.
               </div>
+              <Link
+                to="/calculadora-ciaac"
+                className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-semibold text-burgundy hover:text-burgundy/75 transition-colors"
+              >
+                ¿Te alcanzan las horas? Calcula tu plan <Icon n="arrow" className="w-3.5 h-3.5" />
+              </Link>
             </div>
 
             <div>
@@ -1464,6 +1477,11 @@ export function Footer() {
             <p className="mt-5 text-[13.5px] text-white/55 leading-relaxed max-w-xs">
               La plataforma de preparación para el CIAAC. Hecha en México por pilotos, para pilotos.
             </p>
+            {/* Disclaimer permanente de no afiliación — no quitar (regla de compliance). */}
+            <p className="mt-4 text-[11.5px] text-white/35 leading-relaxed max-w-xs">
+              FlightPath es una plataforma independiente. No está afiliada a la AFAC ni al CIAAC, ni a
+              ASPA de México, Aeroméxico, Volaris o ninguna otra aerolínea o institución.
+            </p>
             <div className="flex items-center gap-2 mt-6">
               <Coord light>EST. CDMX · 2026</Coord>
             </div>
@@ -1479,12 +1497,14 @@ export function Footer() {
               { t: "Blog", href: "/blog" },
               { t: "Preguntas frecuentes", href: "/faq" },
               { t: "Examen CIAAC — Piloto Comercial", href: "/ciaac" },
+              { t: "Calculadora de horas de estudio", href: "/calculadora-ciaac" },
               { t: "Convocatoria Aeroméxico · Embraer 190", href: "/convocatoria-aeromexico" },
+              { t: "Fuentes del temario — Línea Aérea", href: "/linea-aerea" },
               { t: "Convocatoria CIAAC 2026", href: "https://www.gob.mx/afac", ext: true },
             ] },
             { h: "FlightPath", l: [
               { t: "Términos y condiciones", href: "/legal" },
-              { t: "Contacto", href: "mailto:contacto@flowstateai.com.mx" },
+              { t: "Contacto", href: "mailto:contacto@flightpath.mx" },
             ] },
           ].map((c, i) => (
             <div key={i}>

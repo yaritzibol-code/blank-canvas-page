@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogRouteImport } from './routes/blog'
+import { Route as CalculadoraCiaacRouteImport } from './routes/calculadora-ciaac'
 import { Route as CiaacRouteImport } from './routes/ciaac'
 import { Route as ConvocatoriaAeromexicoRouteImport } from './routes/convocatoria-aeromexico'
 import { Route as CuestionarioRouteImport } from './routes/cuestionario'
@@ -18,6 +19,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as GraciasRouteImport } from './routes/gracias'
 import { Route as LegalRouteImport } from './routes/legal'
+import { Route as LineaAereaRouteImport } from './routes/linea-aerea'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PreciosRouteImport } from './routes/precios'
 import { Route as RegisterRouteImport } from './routes/register'
@@ -38,6 +40,7 @@ import { Route as AdminSoporteRouteImport } from './routes/admin/soporte'
 import { Route as AdminUsuariosActivosRouteImport } from './routes/admin/usuarios-activos'
 import { Route as AdminWhatsappRouteImport } from './routes/admin/whatsapp'
 import { Route as CheckoutReturnRouteImport } from './routes/checkout.return'
+import { Route as CiaacMateriaRouteImport } from './routes/ciaac_.$materia'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as DashboardAnalisisRouteImport } from './routes/dashboard/analisis'
 import { Route as DashboardBancoRouteImport } from './routes/dashboard/banco'
@@ -52,6 +55,7 @@ import { Route as DashboardLineaAereaRouteImport } from './routes/dashboard/line
 import { Route as DashboardPerfilRouteImport } from './routes/dashboard/perfil'
 import { Route as DashboardPlanesRouteImport } from './routes/dashboard/planes'
 import { Route as DashboardRecordatoriosRouteImport } from './routes/dashboard/recordatorios'
+import { Route as LineaAereaFuenteRouteImport } from './routes/linea-aerea_.$fuente'
 import { Route as AdminOperacionesIndexRouteImport } from './routes/admin/operaciones/index'
 import { Route as AdminOperacionesDisputasRouteImport } from './routes/admin/operaciones/disputas'
 import { Route as AdminOperacionesStripeRouteImport } from './routes/admin/operaciones/stripe'
@@ -71,6 +75,11 @@ const IndexRoute = IndexRouteImport.update({
 const BlogRoute = BlogRouteImport.update({
   id: '/blog',
   path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalculadoraCiaacRoute = CalculadoraCiaacRouteImport.update({
+  id: '/calculadora-ciaac',
+  path: '/calculadora-ciaac',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CiaacRoute = CiaacRouteImport.update({
@@ -106,6 +115,11 @@ const GraciasRoute = GraciasRouteImport.update({
 const LegalRoute = LegalRouteImport.update({
   id: '/legal',
   path: '/legal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LineaAereaRoute = LineaAereaRouteImport.update({
+  id: '/linea-aerea',
+  path: '/linea-aerea',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -208,6 +222,11 @@ const CheckoutReturnRoute = CheckoutReturnRouteImport.update({
   path: '/checkout/return',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CiaacMateriaRoute = CiaacMateriaRouteImport.update({
+  id: '/ciaac_/$materia',
+  path: '/ciaac/$materia',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -278,6 +297,11 @@ const DashboardRecordatoriosRoute = DashboardRecordatoriosRouteImport.update({
   path: '/recordatorios',
   getParentRoute: () => DashboardRoute,
 } as any)
+const LineaAereaFuenteRoute = LineaAereaFuenteRouteImport.update({
+  id: '/linea-aerea_/$fuente',
+  path: '/linea-aerea/$fuente',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminOperacionesIndexRoute = AdminOperacionesIndexRouteImport.update({
   id: '/admin/operaciones/',
   path: '/admin/operaciones/',
@@ -335,6 +359,7 @@ const ApiPublicPaymentsWebhookRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/blog': typeof BlogRoute
+  '/calculadora-ciaac': typeof CalculadoraCiaacRoute
   '/ciaac': typeof CiaacRoute
   '/convocatoria-aeromexico': typeof ConvocatoriaAeromexicoRoute
   '/cuestionario': typeof CuestionarioRoute
@@ -342,6 +367,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/gracias': typeof GraciasRoute
   '/legal': typeof LegalRoute
+  '/linea-aerea': typeof LineaAereaRoute
   '/login': typeof LoginRoute
   '/precios': typeof PreciosRoute
   '/register': typeof RegisterRoute
@@ -361,6 +387,7 @@ export interface FileRoutesByFullPath {
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
   '/admin/whatsapp': typeof AdminWhatsappRoute
   '/checkout/return': typeof CheckoutReturnRoute
+  '/ciaac/$materia': typeof CiaacMateriaRoute
   '/dashboard/analisis': typeof DashboardAnalisisRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
@@ -374,6 +401,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/planes': typeof DashboardPlanesRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
+  '/linea-aerea/$fuente': typeof LineaAereaFuenteRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/admin/operaciones/disputas': typeof AdminOperacionesDisputasRoute
@@ -390,12 +418,14 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/blog': typeof BlogRoute
+  '/calculadora-ciaac': typeof CalculadoraCiaacRoute
   '/ciaac': typeof CiaacRoute
   '/convocatoria-aeromexico': typeof ConvocatoriaAeromexicoRoute
   '/cuestionario': typeof CuestionarioRoute
   '/faq': typeof FaqRoute
   '/gracias': typeof GraciasRoute
   '/legal': typeof LegalRoute
+  '/linea-aerea': typeof LineaAereaRoute
   '/login': typeof LoginRoute
   '/precios': typeof PreciosRoute
   '/register': typeof RegisterRoute
@@ -415,6 +445,7 @@ export interface FileRoutesByTo {
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
   '/admin/whatsapp': typeof AdminWhatsappRoute
   '/checkout/return': typeof CheckoutReturnRoute
+  '/ciaac/$materia': typeof CiaacMateriaRoute
   '/dashboard/analisis': typeof DashboardAnalisisRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
@@ -428,6 +459,7 @@ export interface FileRoutesByTo {
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/planes': typeof DashboardPlanesRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
+  '/linea-aerea/$fuente': typeof LineaAereaFuenteRoute
   '/admin': typeof AdminIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/admin/operaciones/disputas': typeof AdminOperacionesDisputasRoute
@@ -445,6 +477,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/blog': typeof BlogRoute
+  '/calculadora-ciaac': typeof CalculadoraCiaacRoute
   '/ciaac': typeof CiaacRoute
   '/convocatoria-aeromexico': typeof ConvocatoriaAeromexicoRoute
   '/cuestionario': typeof CuestionarioRoute
@@ -452,6 +485,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/gracias': typeof GraciasRoute
   '/legal': typeof LegalRoute
+  '/linea-aerea': typeof LineaAereaRoute
   '/login': typeof LoginRoute
   '/precios': typeof PreciosRoute
   '/register': typeof RegisterRoute
@@ -471,6 +505,7 @@ export interface FileRoutesById {
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
   '/admin/whatsapp': typeof AdminWhatsappRoute
   '/checkout/return': typeof CheckoutReturnRoute
+  '/ciaac_/$materia': typeof CiaacMateriaRoute
   '/dashboard/analisis': typeof DashboardAnalisisRoute
   '/dashboard/banco': typeof DashboardBancoRoute
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
@@ -484,6 +519,7 @@ export interface FileRoutesById {
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/planes': typeof DashboardPlanesRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
+  '/linea-aerea_/$fuente': typeof LineaAereaFuenteRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/admin/operaciones/disputas': typeof AdminOperacionesDisputasRoute
@@ -502,6 +538,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/blog'
+    | '/calculadora-ciaac'
     | '/ciaac'
     | '/convocatoria-aeromexico'
     | '/cuestionario'
@@ -509,6 +546,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/gracias'
     | '/legal'
+    | '/linea-aerea'
     | '/login'
     | '/precios'
     | '/register'
@@ -528,6 +566,7 @@ export interface FileRouteTypes {
     | '/admin/usuarios-activos'
     | '/admin/whatsapp'
     | '/checkout/return'
+    | '/ciaac/$materia'
     | '/dashboard/analisis'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
@@ -541,6 +580,7 @@ export interface FileRouteTypes {
     | '/dashboard/perfil'
     | '/dashboard/planes'
     | '/dashboard/recordatorios'
+    | '/linea-aerea/$fuente'
     | '/admin/'
     | '/dashboard/'
     | '/admin/operaciones/disputas'
@@ -557,12 +597,14 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/blog'
+    | '/calculadora-ciaac'
     | '/ciaac'
     | '/convocatoria-aeromexico'
     | '/cuestionario'
     | '/faq'
     | '/gracias'
     | '/legal'
+    | '/linea-aerea'
     | '/login'
     | '/precios'
     | '/register'
@@ -582,6 +624,7 @@ export interface FileRouteTypes {
     | '/admin/usuarios-activos'
     | '/admin/whatsapp'
     | '/checkout/return'
+    | '/ciaac/$materia'
     | '/dashboard/analisis'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
@@ -595,6 +638,7 @@ export interface FileRouteTypes {
     | '/dashboard/perfil'
     | '/dashboard/planes'
     | '/dashboard/recordatorios'
+    | '/linea-aerea/$fuente'
     | '/admin'
     | '/dashboard'
     | '/admin/operaciones/disputas'
@@ -611,6 +655,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/blog'
+    | '/calculadora-ciaac'
     | '/ciaac'
     | '/convocatoria-aeromexico'
     | '/cuestionario'
@@ -618,6 +663,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/gracias'
     | '/legal'
+    | '/linea-aerea'
     | '/login'
     | '/precios'
     | '/register'
@@ -637,6 +683,7 @@ export interface FileRouteTypes {
     | '/admin/usuarios-activos'
     | '/admin/whatsapp'
     | '/checkout/return'
+    | '/ciaac_/$materia'
     | '/dashboard/analisis'
     | '/dashboard/banco'
     | '/dashboard/biblioteca'
@@ -650,6 +697,7 @@ export interface FileRouteTypes {
     | '/dashboard/perfil'
     | '/dashboard/planes'
     | '/dashboard/recordatorios'
+    | '/linea-aerea_/$fuente'
     | '/admin/'
     | '/dashboard/'
     | '/admin/operaciones/disputas'
@@ -667,6 +715,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BlogRoute: typeof BlogRoute
+  CalculadoraCiaacRoute: typeof CalculadoraCiaacRoute
   CiaacRoute: typeof CiaacRoute
   ConvocatoriaAeromexicoRoute: typeof ConvocatoriaAeromexicoRoute
   CuestionarioRoute: typeof CuestionarioRoute
@@ -674,6 +723,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   GraciasRoute: typeof GraciasRoute
   LegalRoute: typeof LegalRoute
+  LineaAereaRoute: typeof LineaAereaRoute
   LoginRoute: typeof LoginRoute
   PreciosRoute: typeof PreciosRoute
   RegisterRoute: typeof RegisterRoute
@@ -693,6 +743,8 @@ export interface RootRouteChildren {
   AdminUsuariosActivosRoute: typeof AdminUsuariosActivosRoute
   AdminWhatsappRoute: typeof AdminWhatsappRoute
   CheckoutReturnRoute: typeof CheckoutReturnRoute
+  CiaacMateriaRoute: typeof CiaacMateriaRoute
+  LineaAereaFuenteRoute: typeof LineaAereaFuenteRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminOperacionesDisputasRoute: typeof AdminOperacionesDisputasRoute
   AdminOperacionesStripeRoute: typeof AdminOperacionesStripeRoute
@@ -718,6 +770,13 @@ declare module '@tanstack/react-router' {
       path: '/blog'
       fullPath: '/blog'
       preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calculadora-ciaac': {
+      id: '/calculadora-ciaac'
+      path: '/calculadora-ciaac'
+      fullPath: '/calculadora-ciaac'
+      preLoaderRoute: typeof CalculadoraCiaacRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ciaac': {
@@ -767,6 +826,13 @@ declare module '@tanstack/react-router' {
       path: '/legal'
       fullPath: '/legal'
       preLoaderRoute: typeof LegalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/linea-aerea': {
+      id: '/linea-aerea'
+      path: '/linea-aerea'
+      fullPath: '/linea-aerea'
+      preLoaderRoute: typeof LineaAereaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -909,6 +975,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckoutReturnRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ciaac_/$materia': {
+      id: '/ciaac_/$materia'
+      path: '/ciaac/$materia'
+      fullPath: '/ciaac/$materia'
+      preLoaderRoute: typeof CiaacMateriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard/': {
       id: '/dashboard/'
       path: '/'
@@ -1006,6 +1079,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/recordatorios'
       preLoaderRoute: typeof DashboardRecordatoriosRouteImport
       parentRoute: typeof DashboardRoute
+    }
+    '/linea-aerea_/$fuente': {
+      id: '/linea-aerea_/$fuente'
+      path: '/linea-aerea/$fuente'
+      fullPath: '/linea-aerea/$fuente'
+      preLoaderRoute: typeof LineaAereaFuenteRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/admin/operaciones/': {
       id: '/admin/operaciones/'
@@ -1125,6 +1205,7 @@ const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BlogRoute: BlogRoute,
+  CalculadoraCiaacRoute: CalculadoraCiaacRoute,
   CiaacRoute: CiaacRoute,
   ConvocatoriaAeromexicoRoute: ConvocatoriaAeromexicoRoute,
   CuestionarioRoute: CuestionarioRoute,
@@ -1132,6 +1213,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   GraciasRoute: GraciasRoute,
   LegalRoute: LegalRoute,
+  LineaAereaRoute: LineaAereaRoute,
   LoginRoute: LoginRoute,
   PreciosRoute: PreciosRoute,
   RegisterRoute: RegisterRoute,
@@ -1151,6 +1233,8 @@ const rootRouteChildren: RootRouteChildren = {
   AdminUsuariosActivosRoute: AdminUsuariosActivosRoute,
   AdminWhatsappRoute: AdminWhatsappRoute,
   CheckoutReturnRoute: CheckoutReturnRoute,
+  CiaacMateriaRoute: CiaacMateriaRoute,
+  LineaAereaFuenteRoute: LineaAereaFuenteRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminOperacionesDisputasRoute: AdminOperacionesDisputasRoute,
   AdminOperacionesStripeRoute: AdminOperacionesStripeRoute,
@@ -1164,3 +1248,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

@@ -1,13 +1,18 @@
 # FlightPath
 
-> Plataforma de estudio interactiva para aprobar el examen CIAAC a la primera: 12 materias, simuladores, banco de más de 2,800 preguntas, biblioteca oficial y tutores IA (Yaris y Pathy).
+> Plataforma de estudio interactiva para aprobar el examen CIAAC a la primera: 12 materias, simuladores, banco propio de más de 2,800 preguntas, biblioteca y tutores IA (Yaris y Pathy).
 
-FlightPath es una plataforma SaaS mexicana enfocada en la preparación del examen CIAAC (piloto privado y comercial). Combina contenido estructurado por materia, simuladores cronometrados, flashcards, un banco de reactivos y asistentes de IA especializados en aeronáutica.
+FlightPath es una plataforma SaaS mexicana e independiente enfocada en la preparación del examen CIAAC (Piloto Aviador Comercial, AFAC) y de procesos de selección de líneas aéreas. Combina contenido estructurado por materia, simuladores cronometrados, un banco propio de reactivos con explicación y asistentes de IA especializados en aeronáutica. No está afiliada a la AFAC, al CIAAC, a ASPA de México, a Aeroméxico ni a ninguna aerolínea.
 
 ## Pages
 
 - [Inicio](/): Resumen del producto, materias cubiertas, tutores IA y planes.
-- [Convocatoria Aeroméxico — Primer Oficial Embraer 190](/convocatoria-aeromexico): Requisitos y temario oficial de la convocatoria ASPA (ATP, PHAK, Jeppesen, CPAM, OACI Anexo 10) y compra del cuestionario de práctica.
+- [Examen CIAAC — Piloto Comercial](/ciaac): Qué es el examen, las 12 materias del temario, el simulador y cómo se estudia.
+- [Guías por materia](/ciaac/aerodinamica): Una guía por cada una de las 12 materias del CIAAC (aerodinámica, meteorología, navegación, legislación…), con temas frecuentes y preguntas de muestra.
+- [Convocatoria Aeroméxico — Primer Oficial Embraer 190](/convocatoria-aeromexico): Requisitos y temario publicado de la convocatoria ASPA (ATP, PHAK, Jeppesen, CPAM, OACI Anexo 10) y acceso al cuestionario de práctica propio.
+- [Temario Línea Aérea](/linea-aerea): Las 5 fuentes del examen teórico de la convocatoria, con una guía por fuente.
+- [Calculadora de estudio CIAAC](/calculadora-ciaac): Herramienta gratuita: fecha de examen + disponibilidad → plan de horas por materia.
+- [Precios](/precios): FlightPath Básica (gratis) y Pro, comparativa y preguntas de pago.
 - [Preguntas frecuentes](/faq): Respuestas sobre el examen CIAAC, la plataforma y los planes.
 - [Blog](/blog): Artículos y guías sobre el proceso CIAAC y preparación de vuelo.
 - [Aviso legal](/legal): Términos de servicio y política de privacidad.

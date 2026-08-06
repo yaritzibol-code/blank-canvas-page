@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { PRO_MONTHLY_FALLBACK, PRO_SETUP_FALLBACK } from "@/lib/pricing";
 import { MATERIAS_DEF } from "@/lib/store/materias";
+import { ICONO_MATERIA } from "@/lib/seo/materias-iconos";
 import {
   AeroBackdrop,
   Btn,
@@ -33,26 +34,7 @@ const CANONICAL = "https://flightpath.mx/ciaac";
 const START_HREF = "/register";
 const BUY_HREF = `/register?next=${encodeURIComponent("/dashboard/planes?checkout=1")}`;
 
-/**
- * Las materias guardan el icono del set del dashboard; la landing usa otro
- * juego de glifos, así que se traduce aquí en vez de duplicar la lista.
- */
-const ICONO_MATERIA: Record<string, IconName> = {
-  aerodinamica: "plane",
-  "aeronaves-motores": "bolt",
-  legislacion: "doc",
-  medicina: "heart",
-  meteorologia: "waypoint",
-  navegacion: "compass",
-  "servicios-transito": "grid",
-  comunicaciones: "radio",
-  "manuales-ais": "library",
-  "factores-humanos": "brain",
-  "seguridad-aerea": "shield",
-  operaciones: "sim",
-};
-
-/** Preguntas del simulador oficial: la suma real del reparto por materia. */
+/** Preguntas del simulador: la suma real del reparto por materia. */
 const SIM_TOTAL = MATERIAS_DEF.reduce((n, m) => n + m.simTotal, 0);
 
 const FAQS: { q: string; a: string }[] = [
@@ -300,21 +282,25 @@ function Temario() {
         />
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {MATERIAS_DEF.map((m, i) => (
-            <div
+            <a
               key={m.slug}
-              className="rounded-2xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card p-6 flex flex-col gap-3"
+              href={`/ciaac/${m.slug}`}
+              className="group rounded-2xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card p-6 flex flex-col gap-3 hover:border-coral-300 hover:shadow-lift transition-all"
             >
               <div className="flex items-center justify-between">
-                <span className="w-10 h-10 rounded-xl bg-ink/5 text-ink grid place-items-center">
+                <span className="w-10 h-10 rounded-xl bg-ink/5 text-ink grid place-items-center group-hover:bg-coral-50 group-hover:text-coral-700 transition-colors">
                   <Icon n={ICONO_MATERIA[m.slug] ?? "book"} className="w-5 h-5" />
                 </span>
                 <span className="font-mono text-[11px] text-ink/35">{String(i + 1).padStart(2, "0")}</span>
               </div>
               <h3 className="font-display text-[18px] text-ink leading-snug">{m.name}</h3>
               <p className="text-[13.5px] text-ink/50 leading-relaxed">
-                {m.simTotal} preguntas dentro del simulador oficial.
+                {m.simTotal} preguntas dentro del simulador.
               </p>
-            </div>
+              <span className="mt-auto inline-flex items-center gap-1.5 text-[13px] font-semibold text-coral-700 group-hover:text-coral-600 transition-colors">
+                Guía de la materia <Icon n="chevR" className="w-3.5 h-3.5" />
+              </span>
+            </a>
           ))}
         </div>
         <p className="mt-10 text-center text-[13px] text-ink/45">

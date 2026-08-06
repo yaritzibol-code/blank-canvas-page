@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
+import { MATERIAS_DEF } from "@/lib/store/materias";
+import { FUENTES_SEO } from "@/lib/seo/fuentes-seo";
 
 const BASE_URL = "https://flightpath.mx";
 
@@ -18,6 +20,20 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/ciaac", changefreq: "weekly", priority: "0.9" },
           { path: "/convocatoria-aeromexico", changefreq: "weekly", priority: "0.9" },
           { path: "/precios", changefreq: "monthly", priority: "0.8" },
+          { path: "/calculadora-ciaac", changefreq: "monthly", priority: "0.8" },
+          { path: "/linea-aerea", changefreq: "weekly", priority: "0.8" },
+          // Cluster CIAAC: una guía por materia (mismo catálogo que la app).
+          ...MATERIAS_DEF.map((m) => ({
+            path: `/ciaac/${m.slug}`,
+            changefreq: "monthly" as const,
+            priority: "0.8",
+          })),
+          // Cluster Línea Aérea: una guía por fuente del temario.
+          ...FUENTES_SEO.map((f) => ({
+            path: `/linea-aerea/${f.slug}`,
+            changefreq: "monthly" as const,
+            priority: "0.8",
+          })),
 
           { path: "/faq", changefreq: "monthly", priority: "0.7" },
           { path: "/blog", changefreq: "weekly", priority: "0.7" },
