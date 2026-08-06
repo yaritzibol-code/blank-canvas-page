@@ -9,6 +9,8 @@ import {
   logout,
   requestAccountDeletion,
   defaultPrefs,
+  flushCloudWrites,
+
 } from "@/lib/store";
 import type { UserPrefs } from "@/lib/store";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
