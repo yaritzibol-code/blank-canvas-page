@@ -1,0 +1,27 @@
+GRANT SELECT ON public.billing_audit TO authenticated;
+GRANT ALL ON public.billing_audit TO service_role;
+GRANT SELECT ON public.stripe_events TO authenticated;
+GRANT ALL ON public.stripe_events TO service_role;
+GRANT SELECT ON public.ai_usage TO authenticated;
+GRANT ALL ON public.ai_usage TO service_role;
+GRANT SELECT ON public.disputes TO authenticated;
+GRANT ALL ON public.disputes TO service_role;
+GRANT SELECT ON public.evidence_events TO authenticated;
+GRANT ALL ON public.evidence_events TO service_role;
+GRANT SELECT ON public.client_errors TO authenticated;
+GRANT ALL ON public.client_errors TO service_role;
+GRANT SELECT ON public.ai_config TO authenticated;
+GRANT ALL ON public.ai_config TO service_role;
+GRANT SELECT ON public.ai_config_history TO authenticated;
+GRANT ALL ON public.ai_config_history TO service_role;
+GRANT SELECT ON public.ai_limits TO authenticated;
+GRANT ALL ON public.ai_limits TO service_role;
+
+GRANT EXECUTE ON FUNCTION public.admin_platform_stats() TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_ai_stats(integer) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_ai_daily(integer) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_mrr(text) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_mrr_daily(text, integer) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_pro_stats(text) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_stripe_event_stats(integer) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_plan_drift(text) TO authenticated;
