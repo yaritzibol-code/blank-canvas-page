@@ -4,7 +4,7 @@
  * verificable. La IA solo interpreta este material.
  */
 import { MATERIAS_DEF } from "./materias";
-import { ATP_CHAPTERS, JEPP_CHAPTERS, PHAK_CHAPTERS } from "./linea-aerea-meta";
+import { ATP_CHAPTERS, JEPP_CHAPTERS, PHAK_CHAPTERS, LEG_CHAPTERS } from "./linea-aerea-meta";
 import type { AttemptAnswer, PathyWeakSpot } from "./types";
 
 /** Muestra mínima para declarar un punto débil sin advertencia. */
