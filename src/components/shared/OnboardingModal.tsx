@@ -9,6 +9,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import { MATERIAS_DEF, updateUser } from "@/lib/store";
+import { trackAbandon, trackMilestone } from "@/lib/activity-tracker";
 import { AvatarPicker } from "@/components/shared/AvatarPicker";
 import type { User } from "@/lib/store";
 
