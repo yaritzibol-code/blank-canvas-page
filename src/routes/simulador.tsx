@@ -677,6 +677,10 @@ function SimuladorPage() {
     if (!yarisOpen && user) logYarisUse(user.id, "Simulador (revisión)");
     setYarisOpen(true);
     ensureGreeting();
+    // Sólo al pulsar el botón llevamos la vista al final del chat.
+    requestAnimationFrame(() =>
+      msgsEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }),
+    );
     await explainQuestion(reviewCurrent);
   }
 

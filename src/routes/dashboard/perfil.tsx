@@ -120,7 +120,7 @@ function PerfilPage() {
     setInfo({ ...draft, nombre: draft.nombre.trim() || user.nombre, ciaac: fmtFechaCiaac(draft.ciaac || null) });
     setEditing(false);
     setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    setTimeout(() => setSaved(false), 10000);
   };
 
   const [focoRuta, setFocoRuta] = useState<"ciaac" | "linea-aerea">(user.focoRuta ?? "ciaac");
@@ -155,7 +155,7 @@ function PerfilPage() {
     }
     setGuardandoFoco(false);
     setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    setTimeout(() => setSaved(false), 10000);
   };
 
   const logros = buildLogros(stats, hasBiblioteca, sim80);

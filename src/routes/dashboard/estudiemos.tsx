@@ -26,6 +26,7 @@ import {
   type BankQuestion,
   type User,
 } from "@/lib/store";
+import { LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import { adminOnly } from "@/components/shared/UnderConstruction";
 import { sanitizeHtml } from "@/lib/yaris-format";
@@ -883,6 +884,143 @@ function LockOverlay({ onUnlock }: { onUnlock: () => void }) {
 }
 
 /* ══════════════════════════════════════════════════════════
+   SELECTOR DE EXAMEN — lo primero que se elige
+══════════════════════════════════════════════════════════ */
+type Track = "ciaac" | "la";
+
+function TrackPicker({ value, onPick }: { value: Track | null; onPick: (t: Track) => void }) {
+  const opciones: { id: Track; titulo: string; desc: string; icon: string }[] = [
+    { id: "ciaac", titulo: "CIAAC", desc: "Las 12 materias oficiales del examen CIAAC.", icon: "plane" },
+    { id: "la", titulo: "Línea Aérea", desc: "Manuales del curso: ATP, Handbook, Jeppesen y más.", icon: "doc" },
+  ];
+  return (
+    <div style={{ display: "grid", gap: 12, gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", marginBottom: 22 }}>
+      {opciones.map((o) => {
+        const sel = value === o.id;
+        return (
+          <button
+            key={o.id}
+            onClick={() => onPick(o.id)}
+            style={{
+              textAlign: "left", padding: "16px 18px", borderRadius: 16, cursor: "pointer",
+              border: `1.5px solid ${sel ? "#3D5D91" : "#F2DCDB"}`,
+              background: sel ? "rgba(61,93,145,0.07)" : "white",
+              fontFamily: "'Manrope', sans-serif", minHeight: 88,
+              display: "flex", gap: 12, alignItems: "flex-start",
+            }}
+          >
+            <span style={{ width: 38, height: 38, borderRadius: 12, background: "rgba(61,93,145,.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "#22375C", flexShrink: 0 }}>
+              <Icon n={o.icon as never} size={20} />
+            </span>
+            <span>
+              <span style={{ display: "block", fontWeight: 800, color: "#22375C", fontSize: "0.95rem", marginBottom: 3 }}>{o.titulo}</span>
+              <span style={{ display: "block", fontSize: "0.78rem", color: "#647DA0", lineHeight: 1.45 }}>{o.desc}</span>
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════
+   PLAN DE LÍNEA AÉREA — por manual, con datos reales
+══════════════════════════════════════════════════════════ */
+interface ManualStat {
+  code: string; titulo: string; descripcion: string; icon: string; total: number;
+  answered: number; correct: number; pct: number; lastStudied: Date | null;
+}
+
+function buildManualStats(userId: string): ManualStat[] {
+  const attempts = getQuizAttempts(userId);
+  return LINEA_AEREA_QUIZZES.map((q) => {
+    let answered = 0;
+    let correct = 0;
+    let last: Date | null = null;
+    attempts.forEach((a) => {
+      const rows = (a.answers ?? []).filter((r) => (r.fuente ?? "").toUpperCase() === q.code);
+      const tituloMatch = !rows.length && (a.titulo ?? "").toLowerCase().includes(q.titulo.toLowerCase());
+      if (rows.length) {
+        answered += rows.length;
+        correct += rows.filter((r) => r.selectedIndex === r.correctIndex).length;
+      } else if (tituloMatch) {
+        answered += a.total;
+        correct += a.correct;
+      } else {
+        return;
+      }
+      const d = new Date(a.date);
+      if (!last || d.getTime() > last.getTime()) last = d;
+    });
+    return {
+      code: q.code, titulo: q.titulo, descripcion: q.descripcion, icon: q.icon, total: q.total,
+      answered, correct,
+      pct: answered > 0 ? Math.round((correct / answered) * 100) : 0,
+      lastStudied: last,
+    };
+  });
+}
+
+function LineaAereaPlan({ userId, onStart }: { userId: string; onStart: (m: ManualStat) => void }) {
+  const stats = useStore(() => buildManualStats(userId));
+  const sinTocar = stats.filter((s) => s.answered === 0);
+  const flojo = [...stats].filter((s) => s.answered > 0).sort((a, b) => a.pct - b.pct)[0];
+  const foco = sinTocar[0] ?? flojo ?? stats[0];
+
+  return (
+    <div>
+      <div style={{ background: "linear-gradient(135deg,#F2DCDB,#fce4ec)", borderRadius: 16, padding: "18px 20px", marginBottom: 18, display: "flex", gap: 12, alignItems: "flex-start" }}>
+        <PathySVG size={40} />
+        <div style={{ fontSize: "0.87rem", color: "#4a4a4a", lineHeight: 1.6 }}>
+          <strong style={{ color: "#6C0820", display: "block", marginBottom: 4 }}>
+            Hoy nos toca {foco?.titulo ?? "tu curso"}
+          </strong>
+          {foco && foco.answered === 0
+            ? `Todavía no practicas ${foco.titulo}. Empecemos con 20 preguntas para medir el terreno.`
+            : foco
+              ? `${foco.titulo} va en ${foco.pct}% de aciertos (${foco.correct}/${foco.answered}). Ahí es donde más ganas hoy.`
+              : "Elige el manual con el que quieres volar hoy."}
+        </div>
+      </div>
+
+      <div style={{ display: "grid", gap: 12, gridTemplateColumns: "repeat(auto-fit,minmax(250px,1fr))", marginBottom: 20 }}>
+        {stats.map((m) => (
+          <div key={m.code} style={{ background: "white", borderRadius: 16, padding: "16px 18px", boxShadow: "0 2px 10px rgba(61,93,145,.06)", fontFamily: "'Manrope', sans-serif" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+              <span style={{ width: 34, height: 34, borderRadius: 10, background: "rgba(61,93,145,.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "#22375C" }}>
+                <Icon n={m.icon as never} size={18} />
+              </span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontWeight: 800, color: "#22375C", fontSize: "0.92rem" }}>{m.titulo}</div>
+                <div style={{ fontSize: "0.72rem", color: "#647DA0" }}>{m.total} preguntas</div>
+              </div>
+              {m.code === foco?.code && (
+                <span style={{ fontSize: "0.63rem", fontWeight: 800, letterSpacing: ".04em", textTransform: "uppercase", background: "#FDF3D6", color: "#856404", borderRadius: 20, padding: "3px 9px" }}>
+                  Hoy
+                </span>
+              )}
+            </div>
+            <div style={{ height: 6, borderRadius: 4, background: "rgba(61,93,145,.1)", overflow: "hidden", marginBottom: 8 }}>
+              <div style={{ width: `${Math.min(100, m.pct)}%`, height: "100%", background: m.pct >= 70 ? "#1a7a4a" : m.pct >= 50 ? "#b9770e" : "#c0392b" }} />
+            </div>
+            <div style={{ fontSize: "0.76rem", color: "#647DA0", marginBottom: 12 }}>
+              {m.answered > 0 ? `${m.pct}% de aciertos · ${m.answered} contestadas` : "Sin práctica todavía"}
+            </div>
+            <button
+              onClick={() => onStart(m)}
+              style={{ width: "100%", minHeight: 44, borderRadius: 10, border: "none", background: "#3D5D91", color: "white", fontWeight: 700, fontSize: "0.82rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+            >
+              Estudiar 20 preguntas
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+
+/* ══════════════════════════════════════════════════════════
    MAIN PAGE
 ══════════════════════════════════════════════════════════ */
 function EstudiemosJuntosPage() {
@@ -898,6 +1036,7 @@ function EstudiemosJuntosPage() {
   const [customMins, setCustomMins] = useState("45");
   const [upgradeOpen, setUpgradeOpen] = useState(false);
   const [pruebaMode, setPruebaMode] = useState<PruebaMode | null>(null);
+  const [track, setTrack] = useState<Track | null>(null);
 
   const profile = useStore(() => (user ? buildProfile(user) : null));
 
@@ -916,6 +1055,7 @@ function EstudiemosJuntosPage() {
       setExamDate(user.fechaCiaac);
       setTiempo((user.prefs.planEstudio.tiempo as TiempoDisponible) || "1h");
     }
+    setTrack(user.prefs.planEstudio?.track ?? null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id, paid]);
 
@@ -985,6 +1125,65 @@ function EstudiemosJuntosPage() {
     setPruebaMode(null);
   }
 
+  function pickTrack(t: Track) {
+    setTrack(t);
+    savePlanEstudio({ tiempo, track: t });
+  }
+
+  const headerBase = (
+    <div style={{ marginBottom: 24 }}>
+      <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", fontWeight: 700, color: "#22375C", margin: "0 0 4px" }}>
+        Estudiemos juntos
+      </h1>
+      <p style={{ fontSize: "0.88rem", color: "#647DA0", margin: 0 }}>
+        Hola, {profile.name}. Primero dime para qué examen estudiamos hoy.
+      </p>
+    </div>
+  );
+
+  // 1) Lo primero: elegir el examen (CIAAC o Línea Aérea).
+  if (paid && !showOnboarding && !track) {
+    return (
+      <div style={{ maxWidth: 680, margin: "0 auto", padding: "24px 16px 48px" }}>
+        {headerBase}
+        <TrackPicker value={track} onPick={pickTrack} />
+      </div>
+    );
+  }
+
+  // 2) Plan de Línea Aérea (manuales del curso).
+  if (paid && track === "la") {
+    return (
+      <div style={{ maxWidth: 680, margin: "0 auto", padding: "24px 16px 48px" }}>
+        <div style={{ marginBottom: 18, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
+          <div>
+            <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", fontWeight: 700, color: "#22375C", margin: "0 0 4px" }}>
+              Estudiemos juntos · Línea Aérea
+            </h1>
+            <p style={{ fontSize: "0.88rem", color: "#647DA0", margin: 0 }}>
+              Hola, {profile.name}. Este es tu plan por manual del curso.
+            </p>
+          </div>
+          <button
+            onClick={() => setTrack(null)}
+            style={{ minHeight: 40, padding: "8px 14px", border: "1.5px solid #F2DCDB", borderRadius: 8, background: "white", fontSize: "0.78rem", fontWeight: 700, color: "#647DA0", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+          >
+            Cambiar examen
+          </button>
+        </div>
+        <LineaAereaPlan
+          userId={user.id}
+          onStart={(m) => {
+            timer.startSession(m.titulo, "Línea Aérea", m.descripcion, "Sesión con Pathy");
+            logActivity({ userId: user.id, kind: "pathy_session", label: `Estudia con Pathy — ${m.titulo}`, durationMin: 0 });
+            navigate({ to: "/cuestionario", search: { banco: "la", fuente: m.code, qty: 20 } as never });
+          }}
+        />
+      </div>
+    );
+  }
+
+
   return (
     <div style={{ maxWidth: 680, margin: "0 auto", padding: "24px 16px 48px", position: "relative" }}>
       {paid && showOnboarding && <OnboardingModal onDone={handleOnboardingDone} userId={user.id} />}
@@ -995,25 +1194,43 @@ function EstudiemosJuntosPage() {
           <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", fontWeight: 700, color: "#22375C", margin: 0 }}>
             Estudiemos juntos
           </h1>
-          <button
-            onClick={reopenOnboarding}
-            style={{
-              padding: "6px 14px",
-              border: "1.5px solid #F2DCDB",
-              borderRadius: 8,
-              background: "white",
-              fontSize: "0.78rem",
-              fontWeight: 600,
-              color: "#647DA0",
-              cursor: "pointer",
-              fontFamily: "'Manrope', sans-serif",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 5,
-            }}
-          >
-            Cambiar <Icon n="settings" size={14} />
-          </button>
+          <div style={{ display: "inline-flex", gap: 8 }}>
+            <button
+              onClick={() => setTrack(null)}
+              style={{
+                padding: "6px 14px",
+                border: "1.5px solid #F2DCDB",
+                borderRadius: 8,
+                background: "white",
+                fontSize: "0.78rem",
+                fontWeight: 600,
+                color: "#647DA0",
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+              }}
+            >
+              Cambiar examen
+            </button>
+            <button
+              onClick={reopenOnboarding}
+              style={{
+                padding: "6px 14px",
+                border: "1.5px solid #F2DCDB",
+                borderRadius: 8,
+                background: "white",
+                fontSize: "0.78rem",
+                fontWeight: 600,
+                color: "#647DA0",
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 5,
+              }}
+            >
+              Cambiar <Icon n="settings" size={14} />
+            </button>
+          </div>
         </div>
         <p style={{ fontSize: "0.88rem", color: "#647DA0", margin: 0 }}>
           Hola, {profile.name}. Paty revisó tu progreso y preparó tu plan de hoy.

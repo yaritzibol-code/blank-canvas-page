@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { ModuleHeader } from "@/components/shared/ModuleHeader";
 import {
@@ -156,6 +156,8 @@ function ConfiguracionPage() {
   const [textSize, setTextSizeState] = useState<UserPrefs["textSize"]>(() => user?.prefs.textSize ?? "Normal");
   const [modal, setModal] = useState<ModalType>(null);
   const [flash, setFlash] = useState<string | null>(null);
+  const flashTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (flashTimer.current) clearTimeout(flashTimer.current); }, []);
   const [reportOpen, setReportOpen] = useState(false);
 
   // Modal states
@@ -190,7 +192,7 @@ function ConfiguracionPage() {
       /* el debounce reintenta en la siguiente escritura */
     }
     setGuardandoYaris(false);
-    setFlash("Listo: Yaris ya te responde con esa personalidad y longitud.");
+    showFlash("Listo: Yaris ya te responde con esa personalidad y longitud.");
   }
 
 
@@ -216,9 +218,11 @@ function ConfiguracionPage() {
     persistPrefs({ textSize: t });
   };
 
+  // Todo aviso se retira solo a los 10 s: antes algunos se quedaban fijos.
   const showFlash = (msg: string) => {
     setFlash(msg);
-    setTimeout(() => setFlash(null), 3000);
+    if (flashTimer.current) clearTimeout(flashTimer.current);
+    flashTimer.current = setTimeout(() => setFlash(null), 10000);
   };
 
   const closeModal = () => {

@@ -288,6 +288,16 @@ const NAV_LINKS = [
   { label: "Blog", href: "/blog" },
 ];
 
+/** Secciones de la home: en móvil el menú también sirve para saltar a ellas. */
+const HOME_SECTIONS: { label: string; hash: string }[] = [
+  { label: "Cómo funciona", hash: "#como-funciona" },
+  { label: "Funciones", hash: "#funciones" },
+  { label: "Yaris, tu tutora IA", hash: "#yaris" },
+  { label: "Simulador", hash: "#simulador" },
+  { label: "Precios", hash: "#precios" },
+  { label: "Historias", hash: "#historias" },
+];
+
 export function Nav() {
   const sesion = Boolean(useSessionUser());
   const [scrolled, setScrolled] = useState(false);
@@ -334,39 +344,73 @@ export function Nav() {
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            aria-label={open ? "Cerrar menú" : "Abrir menú de navegación"}
             aria-expanded={open}
             aria-controls="nav-mobile"
-            className="lg:hidden w-11 h-11 -mr-1 grid place-items-center rounded-xl border border-ink/10 bg-white/80 text-ink"
+            className="lg:hidden h-11 -mr-1 px-3 inline-flex items-center gap-2 rounded-xl border border-ink/15 bg-white text-ink shadow-sm"
           >
             <span className="relative block w-[18px] h-[12px]" aria-hidden="true">
               <span className={`absolute left-0 w-full h-[2px] rounded bg-current transition-all duration-200 ${open ? "top-[5px] rotate-45" : "top-0"}`} />
               <span className={`absolute left-0 top-[5px] w-full h-[2px] rounded bg-current transition-all duration-200 ${open ? "opacity-0" : "opacity-100"}`} />
               <span className={`absolute left-0 w-full h-[2px] rounded bg-current transition-all duration-200 ${open ? "top-[5px] -rotate-45" : "top-[10px]"}`} />
             </span>
+            <span className="text-[13px] font-semibold">{open ? "Cerrar" : "Menú"}</span>
           </button>
         </div>
       </div>
       {open && (
-        <div id="nav-mobile" className="lg:hidden border-t border-ink/8 bg-white/95 backdrop-blur">
-          <nav className="mx-auto max-w-[1240px] px-4 sm:px-6 py-3 flex flex-col">
+        <div
+          id="nav-mobile"
+          className="lg:hidden fixed inset-x-0 top-[64px] sm:top-[68px] bottom-0 z-50 overflow-y-auto border-t border-ink/8 bg-white"
+        >
+          <nav className="mx-auto max-w-[1240px] px-4 sm:px-6 py-4 flex flex-col">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-ink/40 mb-1">Páginas</p>
             {NAV_LINKS.map((x) => (
               <a
                 key={x.label}
                 href={x.href}
                 onClick={() => setOpen(false)}
-                className="py-3.5 text-[15px] font-semibold text-ink/80 border-b border-ink/5 last:border-0"
+                className="py-3.5 flex items-center justify-between text-[15px] font-semibold text-ink/85 border-b border-ink/5"
               >
                 {x.label}
+                <span aria-hidden="true" className="text-ink/30">›</span>
               </a>
             ))}
-            <a
-              href={sesion ? "/dashboard" : "/login"}
-              onClick={() => setOpen(false)}
-              className="mt-3 py-3.5 text-center text-[15px] font-semibold text-ink rounded-xl border border-ink/12"
-            >
-              {sesion ? "Ir a mi dashboard" : "Iniciar sesión"}
-            </a>
+
+            <p className="text-[11px] font-bold uppercase tracking-wider text-ink/40 mt-5 mb-1">
+              En esta página
+            </p>
+            {HOME_SECTIONS.map((s) => (
+              <a
+                key={s.hash}
+                href={`/${s.hash}`}
+                onClick={() => setOpen(false)}
+                className="py-3 flex items-center justify-between text-[14.5px] font-medium text-ink/70 border-b border-ink/5"
+              >
+                {s.label}
+                <span aria-hidden="true" className="text-ink/30">↓</span>
+              </a>
+            ))}
+
+            <div className="mt-6 flex flex-col gap-2.5 pb-8">
+              <a
+                href={sesion ? "/dashboard" : "/register"}
+                onClick={() => setOpen(false)}
+                className="py-3.5 text-center text-[15px] font-bold text-white bg-brand rounded-xl shadow-navy"
+                style={{ background: "#6C0820" }}
+              >
+                {sesion ? "Ir a mi dashboard" : "Comenzar gratis"}
+              </a>
+              {!sesion && (
+                <a
+                  href="/login"
+                  onClick={() => setOpen(false)}
+                  className="py-3.5 text-center text-[15px] font-semibold text-ink rounded-xl border border-ink/12"
+                >
+                  Iniciar sesión
+                </a>
+              )}
+            </div>
           </nav>
         </div>
       )}
