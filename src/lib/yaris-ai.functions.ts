@@ -161,7 +161,7 @@ export const yarisAiChat = createServerFn({ method: "POST" })
         latencyMs: Date.now() - started,
         success: true,
       });
-      return { text, cite: ctx.cite ?? null };
+      return { text, cite: ctx.cite ?? null, ...(freeUsed !== undefined ? { freeUsed } : {}) };
     } catch (err) {
       console.error("Yaris OpenAI fetch failed", err);
       await logAiUsage({
