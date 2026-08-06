@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
 import { Icon } from "@/components/ui/fp-icon";
 import { canUseAI, logYarisUse } from "@/lib/store";
-import { hasFreeLeft, useFreeQuota } from "@/lib/store/free-quota";
+import { hasFreeLeft } from "@/lib/store/free-quota";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
 import { useYarisStream, toHistory } from "@/lib/yaris-ask";

@@ -30,6 +30,13 @@ import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { QuestionImages } from "@/components/banco/QuestionImages";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
+import {
+  FREE_LIMITS,
+  consumeFree,
+  hasFreeLeft,
+  isFreeSource,
+  useFreeQuota,
+} from "@/lib/store/free-quota";
 
 import { LA_OFICIAL_FUENTE } from "@/lib/store/seed-linea-aerea-oficial";
 import { LINEA_AEREA_OFICIAL, LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
@@ -191,7 +198,8 @@ function CuestionarioPage() {
         scope: "la" as const,
         fuentes: [search.fuente],
         ...(capsList.length > 0 && { caps: capsList }),
-        limit: paidUser ? 600 : 10,
+        // El plan gratuito abre ATP y Handbook con su cuota de 50 preguntas.
+        limit: paidUser ? 600 : isFreeSource(search.fuente) ? FREE_LIMITS.preguntas : 10,
         ordered: !paidUser,
       };
     }
@@ -266,6 +274,9 @@ function CuestionarioPage() {
   const [reportOpen, setReportOpen] = useState(false);
   /** Popup de suscripción cuando el plan Básica toca una función Pro. */
   const [upgradeOpen, setUpgradeOpen] = useState(false);
+  /** Cuota gratuita de preguntas (ATP / Handbook) del plan Básica. */
+  const preguntasGratis = useFreeQuota(user, "preguntas");
+  const fuenteGratis = isFreeSource(search.fuente);
 
   const [isMobile, setIsMobile] = useState(false);
   const [startTime, setStartTime] = useState(() => Date.now());
@@ -330,7 +341,9 @@ function CuestionarioPage() {
       const all = getPublishedQuestions().filter(
         (q) => q.fuente === search.fuente && (caps.length === 0 || caps.includes(Number(q.capitulo))),
       );
-      fullPool = paid ? all : all.slice(0, 10);
+      fullPool = paid
+        ? all
+        : all.slice(0, isFreeSource(search.fuente) ? Math.max(0, preguntasGratis.remaining) : 10);
     } else if (search.banco === "la") {
       // Banco de Línea Aérea (opcionalmente acotado a manuales y/o a materias:
       // las tarjetas del módulo abren el oficial por materia).
@@ -499,6 +512,14 @@ function CuestionarioPage() {
 
   function handleOptionClick(optIdx: number) {
     if (answered) return;
+    // Cada pregunta respondida descuenta de las 50 gratis de ATP / Handbook.
+    if (fuenteGratis && user && !isPaid(user)) {
+      if (!hasFreeLeft(user, "preguntas")) {
+        setUpgradeOpen(true);
+        return;
+      }
+      consumeFree(user, "preguntas");
+    }
     const isCorrect = questions[currentIdx].options[optIdx].correct;
     setSelectedIdx(optIdx);
     setAnswered(true);
