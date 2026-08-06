@@ -20,6 +20,9 @@ import {
   JEPP_TOTAL,
   PHAK_CHAPTERS,
   PHAK_TOTAL,
+  LEG_CHAPTERS,
+  LEG_TOTAL,
+
   type AtpChapter,
 } from "@/lib/store/linea-aerea-meta";
 import { BancoScreen } from "@/components/banco/BancoScreen";
@@ -498,6 +501,8 @@ const CHAPTER_BANKS: Record<string, { chapters: AtpChapter[]; total: number }> =
   ATP: { chapters: ATP_CHAPTERS, total: ATP_TOTAL },
   JEPP: { chapters: JEPP_CHAPTERS, total: JEPP_TOTAL },
   PHAK: { chapters: PHAK_CHAPTERS, total: PHAK_TOTAL },
+  LEG: { chapters: LEG_CHAPTERS, total: LEG_TOTAL },
+
 };
 
 function QuizCards() {

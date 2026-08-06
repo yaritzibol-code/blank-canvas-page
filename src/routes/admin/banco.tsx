@@ -38,6 +38,8 @@ import {
   ATP_CHAPTERS,
   JEPP_CHAPTERS,
   PHAK_CHAPTERS,
+  LEG_CHAPTERS,
+
   LINEA_AEREA_QUIZZES,
   type AtpChapter,
 } from "@/lib/store/linea-aerea-meta";
@@ -47,6 +49,8 @@ const CHAPTERS_BY_FUENTE: Record<string, AtpChapter[]> = {
   ATP: ATP_CHAPTERS,
   JEPP: JEPP_CHAPTERS,
   PHAK: PHAK_CHAPTERS,
+  LEG: LEG_CHAPTERS,
+
 };
 
 /** Nombre legible del manual ("ATP", "Jeppesen", "Handbook"...). */

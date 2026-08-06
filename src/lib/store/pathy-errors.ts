@@ -4,7 +4,7 @@
  * verificable. La IA solo interpreta este material.
  */
 import { MATERIAS_DEF } from "./materias";
-import { ATP_CHAPTERS, JEPP_CHAPTERS, PHAK_CHAPTERS } from "./linea-aerea-meta";
+import { ATP_CHAPTERS, JEPP_CHAPTERS, PHAK_CHAPTERS, LEG_CHAPTERS } from "./linea-aerea-meta";
 import type { AttemptAnswer, PathyWeakSpot } from "./types";
 
 /** Muestra mínima para declarar un punto débil sin advertencia. */
@@ -15,13 +15,17 @@ const MANUAL_NOMBRE: Record<string, string> = {
   JEPP: "Jeppesen",
   PHAK: "Handbook (PHAK)",
   ANX10: "Anexo 10",
-  CPAM: "CPAM",
+  LEG: "Legislación",
+  CPAM: "Compendio CPAM",
+
 };
 
 function chaptersFor(fuente: string) {
   if (fuente === "ATP") return ATP_CHAPTERS;
   if (fuente === "JEPP") return JEPP_CHAPTERS;
   if (fuente === "PHAK") return PHAK_CHAPTERS;
+  if (fuente === "LEG") return LEG_CHAPTERS;
+
   return [];
 }
 

@@ -48,14 +48,24 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
     fileUrl: "https://drive.google.com/file/d/1NdiWKEH7vqMqW5Zst_UDyAHnu5IxJMGx/preview",
   },
   {
-    code: "CPAM",
+    code: "LEG",
     titulo: "Legislación",
+    descripcion: "Legislación aeronáutica mexicana — banco por capítulos (LAC, reglamentos, LFT, circulares).",
+    materia: "legislacion",
+    icon: "scale",
+    total: 240,
+    fileUrl: "https://drive.google.com/file/d/1Eq5EDfzqnKDrGDjBQtZDK26QFKp6Gfj0/preview",
+  },
+  {
+    code: "CPAM",
+    titulo: "Compendio CPAM",
     descripcion: "Compendio de legislación nacional para tripulaciones de vuelo.",
     materia: "legislacion",
     icon: "scale",
     total: 50,
     fileUrl: "https://drive.google.com/file/d/1Eq5EDfzqnKDrGDjBQtZDK26QFKp6Gfj0/preview",
   },
+
   {
     code: "ANX10",
     titulo: "OACI Anexo 10",
@@ -129,3 +139,17 @@ export const PHAK_CHAPTERS: AtpChapter[] = [
 ];
 
 export const PHAK_TOTAL = PHAK_CHAPTERS.reduce((s, c) => s + c.total, 0);
+
+/** Capítulos del banco de Legislación aeronáutica mexicana (fuente LEG). */
+export const LEG_CHAPTERS: AtpChapter[] = [
+  { num: 1, titulo: "Ley de Aviación Civil", tituloEn: "Ley de Aviación Civil", total: 35 },
+  { num: 2, titulo: "Reglamento de la Ley de Aviación Civil", tituloEn: "Reglamento de la Ley de Aviación Civil", total: 80 },
+  { num: 3, titulo: "Reglamento de la Ley de Aeropuertos", tituloEn: "Reglamento de la Ley de Aeropuertos", total: 25 },
+  { num: 4, titulo: "Reglamento de Medicina de Aviación Civil", tituloEn: "Reglamento de Medicina de Aviación Civil", total: 12 },
+  { num: 5, titulo: "Ley Aduanera", tituloEn: "Ley Aduanera", total: 10 },
+  { num: 6, titulo: "Reglamento de la Ley Aduanera", tituloEn: "Reglamento de la Ley Aduanera", total: 8 },
+  { num: 7, titulo: "Ley Federal del Trabajo", tituloEn: "Ley Federal del Trabajo", total: 50 },
+  { num: 8, titulo: "Circulares obligatorias", tituloEn: "Circulares obligatorias", total: 20 },
+];
+
+export const LEG_TOTAL = LEG_CHAPTERS.reduce((s, c) => s + c.total, 0);
