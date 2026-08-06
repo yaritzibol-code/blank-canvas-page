@@ -185,6 +185,29 @@ function OperacionesPage() {
                 </Link>
               </div>
             </div>
+            <div style={cardStyle}>
+              <div style={cardHeadStyle}>Costo estimado de IA por día (30d)</div>
+              <div style={{ padding: 16 }}>
+                <SparkChart
+                  points={costPoints}
+                  color="#22375C"
+                  fill="rgba(34,55,92,0.14)"
+                  formatValue={(n) => `$${n.toLocaleString("es-MX", { maximumFractionDigits: 2 })}`}
+                  formatLabel={shortDay}
+                  onPointClick={(p) => goDay(p.label)}
+                />
+                <div style={{ marginTop: 12, display: "grid", gap: 6 }}>
+                  <Row k="Costo 30d" v={`${fmtMxn(cost30.mxn)} · ${fmtUsd(cost30.usd)}`} />
+                  <Row k="Costo últimas 24h" v={fmtMxn(cost24.mxn)} />
+                  <Row k="Costo por llamada" v={fmtMxn(costPerCall)} />
+                  <Row k="Tokens entrada / salida (30d)" v={`${aiTotals.tokensIn.toLocaleString("es-MX")} / ${aiTotals.tokensOut.toLocaleString("es-MX")}`} />
+                </div>
+                <div style={{ marginTop: 10, fontSize: ".75rem", color: "#647DA0" }}>
+                  Estimado con las tarifas del modelo sobre los tokens registrados (tipo de cambio de referencia ${USD_MXN} MXN/USD). No sustituye la factura del proveedor.
+                </div>
+              </div>
+            </div>
+
           </section>
 
           <section style={{ display: "grid", gap: 14, gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))" }}>
