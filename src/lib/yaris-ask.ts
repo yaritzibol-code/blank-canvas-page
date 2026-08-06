@@ -153,9 +153,17 @@ export interface YarisStreamTurn extends YarisTurn {
  */
 export function useYarisStream() {
   const ask = useYarisAsk();
+  const user = useSessionUser();
+  const paid = canUseAI(user);
 
   return async function stream({ history, ctx, onDelta, signal }: YarisStreamTurn): Promise<YarisAnswer> {
     if (!cloudEnabled()) return ask({ history, ctx });
+    // Cuenta gratis: el contador local acompaña al del servidor para que la
+    // UI sepa cuántas respuestas de cortesía quedan.
+    if (!paid) {
+      if (!hasFreeLeft(user, "yaris")) return ask({ history, ctx });
+      if (user) consumeFree(user, "yaris");
+    }
 
     let token: string | undefined;
     try {
