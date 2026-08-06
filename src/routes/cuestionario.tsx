@@ -274,6 +274,7 @@ function CuestionarioPage() {
   const [reportOpen, setReportOpen] = useState(false);
   /** Popup de suscripción cuando el plan Básica toca una función Pro. */
   const [upgradeOpen, setUpgradeOpen] = useState(false);
+  const [upgradeFeature, setUpgradeFeature] = useState<"yaris" | "preguntas">("yaris");
   /** Cuota gratuita de preguntas (ATP / Handbook) del plan Básica. */
   const preguntasGratis = useFreeQuota(user, "preguntas");
   const fuenteGratis = isFreeSource(search.fuente);
@@ -515,6 +516,7 @@ function CuestionarioPage() {
     // Cada pregunta respondida descuenta de las 50 gratis de ATP / Handbook.
     if (fuenteGratis && user && !isPaid(user)) {
       if (!hasFreeLeft(user, "preguntas")) {
+        setUpgradeFeature("preguntas");
         setUpgradeOpen(true);
         return;
       }
@@ -602,6 +604,7 @@ function CuestionarioPage() {
     // Cuenta gratis: hay 10 respuestas de cortesía; al agotarse se abre el
     // popup de mejora en lugar de una respuesta a medias.
     if (!isPaid(user) && !hasFreeLeft(user, "yaris")) {
+      setUpgradeFeature("yaris");
       setUpgradeOpen(true);
       return;
     }
@@ -1662,8 +1665,12 @@ function CuestionarioPage() {
       <UpgradeModal
         open={upgradeOpen}
         onClose={() => setUpgradeOpen(false)}
-        feature="Yaris con IA"
-        benefit="Con Pro te explica cada pregunta, te acompaña paso a paso y practicas sin límites."
+        feature={upgradeFeature === "preguntas" ? "Práctica ilimitada" : "Yaris con IA"}
+        benefit={
+          upgradeFeature === "preguntas"
+            ? `Ya completaste tus ${FREE_LIMITS.preguntas} preguntas gratis de ATP y Handbook. Con Pro practicas sin límite en todos los manuales.`
+            : "Con Pro te explica cada pregunta, te acompaña paso a paso y practicas sin límites."
+        }
         {...(user ? { userId: user.id } : {})}
       />
 
