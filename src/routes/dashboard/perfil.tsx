@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { PlaneField } from "@/components/shared/PlaneField";
 import { PathyMark } from "@/components/shared/PathyMark";
+import { AvatarPicker } from "@/components/shared/AvatarPicker";
 import {
   useSessionUser,
   useStore,
