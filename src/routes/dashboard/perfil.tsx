@@ -250,9 +250,10 @@ function PerfilPage() {
         </div>
 
 
-        <div style={{ flex: 1, zIndex: 1, minWidth: 200 }}>
-          <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", color: "white", fontWeight: 900, marginBottom: 4 }}>{info.nombre.split(" ").slice(0, 2).join(" ")}</div>
-          <div style={{ fontSize: ".82rem", color: "rgba(255,255,255,.5)", marginBottom: 10 }}>{info.email}{user.whatsapp ? ` · ${maskPhone(user.whatsapp)}` : ""}</div>
+        <div style={{ flex: "1 1 200px", zIndex: 1, minWidth: 0 }}>
+          <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "clamp(1.25rem,4.5vw,1.6rem)", color: "white", fontWeight: 900, marginBottom: 4 }}>{info.nombre.split(" ").slice(0, 2).join(" ")}</div>
+          <div style={{ fontSize: ".82rem", color: "rgba(255,255,255,.5)", marginBottom: 10, overflowWrap: "anywhere" }}>{info.email}{user.whatsapp ? ` · ${maskPhone(user.whatsapp)}` : ""}</div>
+
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             <span style={{ padding: "4px 12px", borderRadius: 20, fontSize: ".72rem", fontWeight: 700, background: "#F2AEBC", color: "#6C0820", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="plane" size={13} /> {user.planNombre}</span>
             <span style={{ padding: "4px 12px", borderRadius: 20, fontSize: ".72rem", fontWeight: 700, background: "rgba(255,255,255,.1)", color: "rgba(255,255,255,.8)", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="flame" size={13} /> {stats.streak} {stats.streak === 1 ? "día" : "días"} de racha</span>
