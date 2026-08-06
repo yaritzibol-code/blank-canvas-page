@@ -48,14 +48,24 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
     fileUrl: "https://drive.google.com/file/d/1NdiWKEH7vqMqW5Zst_UDyAHnu5IxJMGx/preview",
   },
   {
-    code: "CPAM",
+    code: "LEG",
     titulo: "Legislación",
+    descripcion: "Legislación aeronáutica mexicana — banco por capítulos (LAC, reglamentos, LFT, circulares).",
+    materia: "legislacion",
+    icon: "scale",
+    total: 240,
+    fileUrl: "https://drive.google.com/file/d/1Eq5EDfzqnKDrGDjBQtZDK26QFKp6Gfj0/preview",
+  },
+  {
+    code: "CPAM",
+    titulo: "Compendio CPAM",
     descripcion: "Compendio de legislación nacional para tripulaciones de vuelo.",
     materia: "legislacion",
     icon: "scale",
     total: 50,
     fileUrl: "https://drive.google.com/file/d/1Eq5EDfzqnKDrGDjBQtZDK26QFKp6Gfj0/preview",
   },
+
   {
     code: "ANX10",
     titulo: "OACI Anexo 10",
