@@ -328,8 +328,8 @@ function AdminBancoPage() {
         </div>
         <select value={fMateria} onChange={(e) => setFMateria(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 170 }}>
           <option value="todas">Materia: todas</option>
-          {MATERIAS_DEF.map((m) => (
-            <option key={m.slug} value={m.slug}>{m.name}</option>
+          {materiaOpts.map((m) => (
+            <option key={m.value} value={m.value}>{m.label}</option>
           ))}
           <option value="sin">Sin clasificar</option>
         </select>
@@ -341,24 +341,36 @@ function AdminBancoPage() {
         </select>
         <select
           value={fFuente}
-          onChange={(e) => { setFFuente(e.target.value); setFCap("todos"); }}
+          onChange={(e) => { setFFuente(e.target.value); setFCap("todos"); setFSeccion("todas"); }}
           style={{ ...inputStyle, width: "auto", minWidth: 170 }}
         >
           <option value="todos">Banco: todos</option>
           <option value="CIAAC">CIAAC (sin manual)</option>
-          {LINEA_AEREA_QUIZZES.map((q) => (
-            <option key={q.code} value={q.code}>{q.titulo} ({q.code})</option>
+          {fuenteOpts.map((f) => (
+            <option key={f.value} value={f.value}>{f.label}</option>
           ))}
-          <option value="LAOF">Guía oficial Línea Aérea (LAOF)</option>
         </select>
-        {CHAPTERS_BY_FUENTE[fFuente] && (
-          <select value={fCap} onChange={(e) => setFCap(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 200 }}>
+        {capOpts.length > 0 && (
+          <select
+            value={fCap}
+            onChange={(e) => { setFCap(e.target.value); setFSeccion("todas"); }}
+            style={{ ...inputStyle, width: "auto", minWidth: 200 }}
+          >
             <option value="todos">Capítulo: todos</option>
-            {CHAPTERS_BY_FUENTE[fFuente]!.map((c) => (
-              <option key={c.num} value={String(c.num)}>Cap. {c.num} · {c.titulo}</option>
+            {capOpts.map((c) => (
+              <option key={c.num} value={String(c.num)}>Cap. {c.num}{c.titulo ? ` · ${c.titulo}` : ""}</option>
             ))}
           </select>
         )}
+        {seccionesEnScope.length > 0 && (
+          <select value={fSeccion} onChange={(e) => setFSeccion(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 200 }}>
+            <option value="todas">Sección: todas</option>
+            {seccionesEnScope.map((s) => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
+        )}
+
       </div>
 
       <div style={{ fontSize: ".76rem", color: "#647DA0", marginBottom: 10 }}>{filtered.length} de {total} preguntas</div>
