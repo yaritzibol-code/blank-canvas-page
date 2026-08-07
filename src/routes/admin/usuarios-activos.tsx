@@ -4,9 +4,9 @@ import { useEffect, useMemo, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { AdminShell, Badge, cardHeadStyle, cardStyle } from "@/components/admin/AdminShell";
 import {
-  agruparPorUsuario,
-  aplanarPresencia,
-  crearCanalPresencia,
+  observarPresencia,
+  presenciaActual,
+  presenciaConectada,
   type PresenciaUsuario,
 } from "@/lib/presence";
 
@@ -35,22 +35,23 @@ function UsuariosActivosPage() {
     return () => window.clearInterval(id);
   }, []);
 
+  // Canal compartido: la misma conexión que publica la presencia de esta
+  // pestaña. Abrir un segundo canal con el mismo tema deja la lista vacía.
   useEffect(() => {
-    const canal = crearCanalPresencia(`admin_${Math.random().toString(36).slice(2)}`);
-    if (!canal) return;
     const refrescar = () => {
-      const raw = canal.presenceState() as unknown as Record<string, unknown[]>;
-      setPresencias(agruparPorUsuario(aplanarPresencia(raw)));
+      setPresencias(presenciaActual());
+      setConectado(presenciaConectada());
     };
-    canal
-      .on("presence", { event: "sync" }, refrescar)
-      .on("presence", { event: "join" }, refrescar)
-      .on("presence", { event: "leave" }, refrescar)
-      .subscribe((status) => setConectado(status === "SUBSCRIBED"));
+    const off = observarPresencia(refrescar);
+    refrescar();
+    // Respaldo por si el canal se reconecta sin emitir eventos.
+    const id = window.setInterval(refrescar, 10_000);
     return () => {
-      void canal.unsubscribe();
+      off();
+      window.clearInterval(id);
     };
   }, []);
+
 
   const filtradas = useMemo(() => {
     const q = busqueda.trim().toLowerCase();
