@@ -332,7 +332,7 @@ export function Nav() {
         </div>
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {/* Con sesión activa la home no redirige: sólo ofrece el atajo. */}
-          {sesion ? (
+          {mounted && sesion ? (
             <Btn kind="primary" size="sm" icon="arrow" to="/dashboard">
               <span className="hidden sm:inline">Ir a mi dashboard</span>
               <span className="sm:hidden">Dashboard</span>
