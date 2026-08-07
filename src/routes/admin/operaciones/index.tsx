@@ -7,12 +7,18 @@ import {
   adminOverview,
   adminMrrDaily,
   adminAiDaily,
+  adminTotalGanado,
+  adminHealthChecks,
+  adminRunHealthChecks,
   type AdminOverview,
   type MrrDailyPoint,
   type AiDailyPoint,
+  type TotalGanado,
+  type HealthCheckRow,
 } from "@/lib/admin.functions";
 import { getAdminEnv, setAdminEnv } from "@/lib/admin-env";
 import { estimateAiCost, fmtMxn, fmtUsd, USD_MXN } from "@/lib/ai-cost";
+
 
 
 export const Route = createFileRoute("/admin/operaciones/")({ component: OperacionesPage });
