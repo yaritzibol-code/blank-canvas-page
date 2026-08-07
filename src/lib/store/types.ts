@@ -373,6 +373,7 @@ export type ActivityKind =
   | "biblioteca"
   | "pathy_session"
   | "yaris"
+  | "rtari"
   | "upgrade_prompt"
   | "upgrade_click";
 

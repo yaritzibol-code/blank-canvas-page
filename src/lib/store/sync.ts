@@ -36,6 +36,7 @@ const USER_ARRAY_KEYS = [
   "flash_states",
   "flash_sessions",
   "pathy_reports",
+  "rtari_sessions",
 ] as const;
 
 /** Colecciones administrativas guardadas como llave/valor. */

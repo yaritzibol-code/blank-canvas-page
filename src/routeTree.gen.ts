@@ -64,6 +64,7 @@ import { Route as DashboardLineaAereaRouteImport } from './routes/dashboard/line
 import { Route as DashboardPerfilRouteImport } from './routes/dashboard/perfil'
 import { Route as DashboardPlanesRouteImport } from './routes/dashboard/planes'
 import { Route as DashboardRecordatoriosRouteImport } from './routes/dashboard/recordatorios'
+import { Route as DashboardRtariRouteImport } from './routes/dashboard/rtari'
 import { Route as LineaAereaFuenteRouteImport } from './routes/linea-aerea_.$fuente'
 import { Route as RespuestasSlugRouteImport } from './routes/respuestas_.$slug'
 import { Route as AdminOperacionesIndexRouteImport } from './routes/admin/operaciones/index'
@@ -71,6 +72,8 @@ import { Route as AdminOperacionesDisputasRouteImport } from './routes/admin/ope
 import { Route as AdminOperacionesStripeRouteImport } from './routes/admin/operaciones/stripe'
 import { Route as AdminOperacionesYarisRouteImport } from './routes/admin/operaciones/yaris'
 import { Route as ApiPublicClientErrorsRouteImport } from './routes/api/public/client-errors'
+import { Route as ApiRtariDebriefRouteImport } from './routes/api/rtari/debrief'
+import { Route as ApiRtariSessionRouteImport } from './routes/api/rtari/session'
 import { Route as ApiYarisStreamRouteImport } from './routes/api/yaris/stream'
 import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/materias/index'
 import { Route as DashboardMateriasSubjectIdRouteImport } from './routes/dashboard/materias/$subjectId'
@@ -354,6 +357,11 @@ const DashboardRecordatoriosRoute = DashboardRecordatoriosRouteImport.update({
   path: '/recordatorios',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardRtariRoute = DashboardRtariRouteImport.update({
+  id: '/rtari',
+  path: '/rtari',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const LineaAereaFuenteRoute = LineaAereaFuenteRouteImport.update({
   id: '/linea-aerea_/$fuente',
   path: '/linea-aerea/$fuente',
@@ -388,6 +396,16 @@ const AdminOperacionesYarisRoute = AdminOperacionesYarisRouteImport.update({
 const ApiPublicClientErrorsRoute = ApiPublicClientErrorsRouteImport.update({
   id: '/api/public/client-errors',
   path: '/api/public/client-errors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRtariDebriefRoute = ApiRtariDebriefRouteImport.update({
+  id: '/api/rtari/debrief',
+  path: '/api/rtari/debrief',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRtariSessionRoute = ApiRtariSessionRouteImport.update({
+  id: '/api/rtari/session',
+  path: '/api/rtari/session',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiYarisStreamRoute = ApiYarisStreamRouteImport.update({
@@ -478,6 +496,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/planes': typeof DashboardPlanesRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
+  '/dashboard/rtari': typeof DashboardRtariRoute
   '/linea-aerea/$fuente': typeof LineaAereaFuenteRoute
   '/respuestas/$slug': typeof RespuestasSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -486,6 +505,8 @@ export interface FileRoutesByFullPath {
   '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
   '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
+  '/api/rtari/debrief': typeof ApiRtariDebriefRoute
+  '/api/rtari/session': typeof ApiRtariSessionRoute
   '/api/yaris/stream': typeof ApiYarisStreamRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones/': typeof AdminOperacionesIndexRoute
@@ -547,6 +568,7 @@ export interface FileRoutesByTo {
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/planes': typeof DashboardPlanesRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
+  '/dashboard/rtari': typeof DashboardRtariRoute
   '/linea-aerea/$fuente': typeof LineaAereaFuenteRoute
   '/respuestas/$slug': typeof RespuestasSlugRoute
   '/admin': typeof AdminIndexRoute
@@ -555,6 +577,8 @@ export interface FileRoutesByTo {
   '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
   '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
+  '/api/rtari/debrief': typeof ApiRtariDebriefRoute
+  '/api/rtari/session': typeof ApiRtariSessionRoute
   '/api/yaris/stream': typeof ApiYarisStreamRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones': typeof AdminOperacionesIndexRoute
@@ -618,6 +642,7 @@ export interface FileRoutesById {
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/planes': typeof DashboardPlanesRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
+  '/dashboard/rtari': typeof DashboardRtariRoute
   '/linea-aerea_/$fuente': typeof LineaAereaFuenteRoute
   '/respuestas_/$slug': typeof RespuestasSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -626,6 +651,8 @@ export interface FileRoutesById {
   '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
   '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
+  '/api/rtari/debrief': typeof ApiRtariDebriefRoute
+  '/api/rtari/session': typeof ApiRtariSessionRoute
   '/api/yaris/stream': typeof ApiYarisStreamRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones/': typeof AdminOperacionesIndexRoute
@@ -690,6 +717,7 @@ export interface FileRouteTypes {
     | '/dashboard/perfil'
     | '/dashboard/planes'
     | '/dashboard/recordatorios'
+    | '/dashboard/rtari'
     | '/linea-aerea/$fuente'
     | '/respuestas/$slug'
     | '/admin/'
@@ -698,6 +726,8 @@ export interface FileRouteTypes {
     | '/admin/operaciones/stripe'
     | '/admin/operaciones/yaris'
     | '/api/public/client-errors'
+    | '/api/rtari/debrief'
+    | '/api/rtari/session'
     | '/api/yaris/stream'
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones/'
@@ -759,6 +789,7 @@ export interface FileRouteTypes {
     | '/dashboard/perfil'
     | '/dashboard/planes'
     | '/dashboard/recordatorios'
+    | '/dashboard/rtari'
     | '/linea-aerea/$fuente'
     | '/respuestas/$slug'
     | '/admin'
@@ -767,6 +798,8 @@ export interface FileRouteTypes {
     | '/admin/operaciones/stripe'
     | '/admin/operaciones/yaris'
     | '/api/public/client-errors'
+    | '/api/rtari/debrief'
+    | '/api/rtari/session'
     | '/api/yaris/stream'
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones'
@@ -829,6 +862,7 @@ export interface FileRouteTypes {
     | '/dashboard/perfil'
     | '/dashboard/planes'
     | '/dashboard/recordatorios'
+    | '/dashboard/rtari'
     | '/linea-aerea_/$fuente'
     | '/respuestas_/$slug'
     | '/admin/'
@@ -837,6 +871,8 @@ export interface FileRouteTypes {
     | '/admin/operaciones/stripe'
     | '/admin/operaciones/yaris'
     | '/api/public/client-errors'
+    | '/api/rtari/debrief'
+    | '/api/rtari/session'
     | '/api/yaris/stream'
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones/'
@@ -894,6 +930,8 @@ export interface RootRouteChildren {
   AdminOperacionesStripeRoute: typeof AdminOperacionesStripeRoute
   AdminOperacionesYarisRoute: typeof AdminOperacionesYarisRoute
   ApiPublicClientErrorsRoute: typeof ApiPublicClientErrorsRoute
+  ApiRtariDebriefRoute: typeof ApiRtariDebriefRoute
+  ApiRtariSessionRoute: typeof ApiRtariSessionRoute
   ApiYarisStreamRoute: typeof ApiYarisStreamRoute
   AdminOperacionesIndexRoute: typeof AdminOperacionesIndexRoute
   AdminOperacionesDiaDayRoute: typeof AdminOperacionesDiaDayRoute
@@ -1288,6 +1326,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRecordatoriosRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/rtari': {
+      id: '/dashboard/rtari'
+      path: '/rtari'
+      fullPath: '/dashboard/rtari'
+      preLoaderRoute: typeof DashboardRtariRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/linea-aerea_/$fuente': {
       id: '/linea-aerea_/$fuente'
       path: '/linea-aerea/$fuente'
@@ -1335,6 +1380,20 @@ declare module '@tanstack/react-router' {
       path: '/api/public/client-errors'
       fullPath: '/api/public/client-errors'
       preLoaderRoute: typeof ApiPublicClientErrorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/rtari/debrief': {
+      id: '/api/rtari/debrief'
+      path: '/api/rtari/debrief'
+      fullPath: '/api/rtari/debrief'
+      preLoaderRoute: typeof ApiRtariDebriefRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/rtari/session': {
+      id: '/api/rtari/session'
+      path: '/api/rtari/session'
+      fullPath: '/api/rtari/session'
+      preLoaderRoute: typeof ApiRtariSessionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/yaris/stream': {
@@ -1396,6 +1455,7 @@ interface DashboardRouteChildren {
   DashboardPerfilRoute: typeof DashboardPerfilRoute
   DashboardPlanesRoute: typeof DashboardPlanesRoute
   DashboardRecordatoriosRoute: typeof DashboardRecordatoriosRoute
+  DashboardRtariRoute: typeof DashboardRtariRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardMateriasSubjectIdRoute: typeof DashboardMateriasSubjectIdRoute
   DashboardMateriasIndexRoute: typeof DashboardMateriasIndexRoute
@@ -1415,6 +1475,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardPerfilRoute: DashboardPerfilRoute,
   DashboardPlanesRoute: DashboardPlanesRoute,
   DashboardRecordatoriosRoute: DashboardRecordatoriosRoute,
+  DashboardRtariRoute: DashboardRtariRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardMateriasSubjectIdRoute: DashboardMateriasSubjectIdRoute,
   DashboardMateriasIndexRoute: DashboardMateriasIndexRoute,
@@ -1473,6 +1534,8 @@ const rootRouteChildren: RootRouteChildren = {
   AdminOperacionesStripeRoute: AdminOperacionesStripeRoute,
   AdminOperacionesYarisRoute: AdminOperacionesYarisRoute,
   ApiPublicClientErrorsRoute: ApiPublicClientErrorsRoute,
+  ApiRtariDebriefRoute: ApiRtariDebriefRoute,
+  ApiRtariSessionRoute: ApiRtariSessionRoute,
   ApiYarisStreamRoute: ApiYarisStreamRoute,
   AdminOperacionesIndexRoute: AdminOperacionesIndexRoute,
   AdminOperacionesDiaDayRoute: AdminOperacionesDiaDayRoute,
@@ -1482,3 +1545,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

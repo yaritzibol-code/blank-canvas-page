@@ -99,6 +99,8 @@ function formatWait(sec: number): string {
 export async function logAiUsage(row: {
   userId: string;
   materia?: string | null;
+  /** Modelo que atendió la llamada; por omisión el de Yaris. */
+  model?: string;
   tokensIn: number;
   tokensOut: number;
   latencyMs: number;
@@ -108,7 +110,7 @@ export async function logAiUsage(row: {
   try {
     await supabaseAdmin.from("ai_usage").insert({
       user_id: row.userId,
-      model: YARIS_MODEL,
+      model: row.model ?? YARIS_MODEL,
       materia: row.materia ?? null,
       tokens_in: row.tokensIn,
       tokens_out: row.tokensOut,
@@ -161,6 +163,11 @@ export interface OpenAIResult {
 export async function callOpenAI(
   apiKey: string,
   messages: Array<{ role: string; content: string }>,
+  opts?: {
+    /** Tope de salida cuando la respuesta no es un turno de chat (p. ej. el
+     *  debrief de RTARI, que devuelve un JSON largo). Por omisión, el de Yaris. */
+    maxOutputTokens?: number;
+  },
 ): Promise<OpenAIResult> {
   const res = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
@@ -172,7 +179,7 @@ export async function callOpenAI(
       model: YARIS_MODEL,
       messages,
       reasoning_effort: "low",
-      max_completion_tokens: MAX_OUTPUT_TOKENS,
+      max_completion_tokens: opts?.maxOutputTokens ?? MAX_OUTPUT_TOKENS,
     }),
   });
 

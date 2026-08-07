@@ -19,6 +19,7 @@ export {
   type BankCount,
 } from "./questions-cloud";
 export * from "./yaris";
+export * from "./rtari";
 export { ensureSeeded, DEMO_STUDENT_ID, DEMO_ADMIN_ID, DEMO_BASIC_ID, DEMO_PASSWORD } from "./seed";
 export { uid, nowISO, todayKey, subscribe as subscribeStore } from "./db";
 export { cloudEnabled } from "./cloud";

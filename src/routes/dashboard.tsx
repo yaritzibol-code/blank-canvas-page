@@ -27,7 +27,7 @@ function initialsOf(nombre: string): string {
 type IconName =
   | "home" | "book" | "help" | "sim" | "clock" | "library" | "cards" | "play"
   | "doc" | "chart" | "bell" | "user" | "settings" | "flame" | "spark" | "building" | "plane"
-  | "card" | "exit";
+  | "card" | "exit" | "radio";
 
 function Icon({ n, size = 18, sw = 1.6 }: { n: IconName; size?: number; sw?: number }) {
   const p = { fill: "none", stroke: "currentColor", strokeWidth: sw, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
@@ -49,6 +49,7 @@ function Icon({ n, size = 18, sw = 1.6 }: { n: IconName; size?: number; sw?: num
     spark: <path d="M12 3l1.6 5.8L19 11l-5.4 1.6L12 19l-1.6-6.4L5 11l5.4-2.2L12 3z" {...p} />,
     building: <><path d="M4 21V6l7-3v18M11 21h9V10l-9-3" {...p} /><path d="M14 11h2M14 14h2M14 17h2M7 8v.01M7 12v.01M7 16v.01" {...p} /></>,
     plane: <path d="M3.5 13l17-7.5L14 21l-2.5-7L3.5 13z" {...p} />,
+    radio: <><circle cx="12" cy="12" r="2.4" {...p} /><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7M6 6a8.5 8.5 0 0 0 0 12M18 6a8.5 8.5 0 0 1 0 12" {...p} /></>,
     card: <><rect x="3" y="5" width="18" height="14" rx="2.5" {...p} /><path d="M3 10h18M6.5 15h3" {...p} /></>,
     exit: <path d="M15 17l5-5-5-5M20 12H9M12 20H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6" {...p} />,
   };
@@ -78,6 +79,7 @@ const NAV_SECTIONS: { label: string; items: { icon: IconName; label: string; pat
       // sección (tarjeta "Simulador CIAAC" dentro de CIAAC).
       { icon: "help", label: "CIAAC", path: "/dashboard/banco" },
       { icon: "plane", label: "Línea Aérea", path: "/dashboard/linea-aerea", nuevo: true },
+      { icon: "radio", label: "RTARI · Entrevista", path: "/dashboard/rtari", nuevo: true },
       { icon: "clock", label: "Estudiemos Juntos", path: "/dashboard/estudiemos", locked: true },
     ],
   },
