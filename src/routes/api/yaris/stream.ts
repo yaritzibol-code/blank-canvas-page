@@ -137,10 +137,14 @@ export const Route = createFileRoute("/api/yaris/stream")({
           async start(controller) {
             const enc = new TextEncoder();
             const push = (chunk: string) => controller.enqueue(enc.encode(chunk));
+            const { logYarisMessage } = await import("@/lib/yaris-log.server");
+            const pregunta = [...parsed.history].reverse().find((m) => m.role === "user")?.content ?? "";
+            let texto = "";
             try {
-              const result = await streamOpenAI(apiKey, messages, (delta) =>
-                push(sse("delta", { t: delta })),
-              );
+              const result = await streamOpenAI(apiKey, messages, (delta) => {
+                texto += delta;
+                push(sse("delta", { t: delta }));
+              });
               if (result.error !== undefined) {
                 push(sse("error", { status: result.status ?? 500 }));
                 await logAiUsage({
@@ -152,11 +156,40 @@ export const Route = createFileRoute("/api/yaris/stream")({
                   success: false,
                   errorMessage: `HTTP ${result.status}: ${result.error}`,
                 });
+                await logYarisMessage({
+                  userId,
+                  pregunta,
+                  respuesta: texto,
+                  seccion: ctx.resourceTitle ?? ctx.materia ?? null,
+                  materia: ctx.materia ?? null,
+                  tono: profile.yarisTono ?? "normal",
+                  fuente: "stream",
+                  preAnswer: Boolean(ctx.preAnswer),
+                  questionText: ctx.questionText ?? null,
+                  latencyMs: Date.now() - started,
+                  success: false,
+                  errorMessage: `HTTP ${result.status}`,
+                });
               } else {
                 push(sse("done", { cite: ctx.cite ?? null }));
                 await logAiUsage({
                   userId,
                   materia: ctx.materia ?? null,
+                  tokensIn: result.tokensIn,
+                  tokensOut: result.tokensOut,
+                  latencyMs: Date.now() - started,
+                  success: true,
+                });
+                await logYarisMessage({
+                  userId,
+                  pregunta,
+                  respuesta: texto,
+                  seccion: ctx.resourceTitle ?? ctx.materia ?? null,
+                  materia: ctx.materia ?? null,
+                  tono: profile.yarisTono ?? "normal",
+                  fuente: "stream",
+                  preAnswer: Boolean(ctx.preAnswer),
+                  questionText: ctx.questionText ?? null,
                   tokensIn: result.tokensIn,
                   tokensOut: result.tokensOut,
                   latencyMs: Date.now() - started,
