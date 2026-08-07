@@ -486,7 +486,7 @@ function AdminPerfilPage() {
           ))}
         </div>
         {(() => {
-          const conDatos = perf.filter((m) => m.avg !== null);
+          const conDatos = [...rutas.ciaac, ...rutas.lineaAerea].filter((m) => m.avg !== null);
           if (conDatos.length === 0) return null;
           const fuerte = conDatos.reduce((a, b) => ((a.avg ?? 0) >= (b.avg ?? 0) ? a : b));
           const debil = conDatos.reduce((a, b) => ((a.avg ?? 100) <= (b.avg ?? 100) ? a : b));
