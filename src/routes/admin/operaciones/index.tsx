@@ -39,7 +39,20 @@ function OperacionesPage() {
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const env = isPaymentsConfigured() ? getStripeEnvironment() : "sandbox";
+  // El panel debe mostrar dinero real por defecto: el ambiente de datos se
+  // elige aquí (no se deriva del token del preview, que siempre es de prueba).
+  const clientEnv = isPaymentsConfigured() ? getStripeEnvironment() : "live";
+  const [env, setEnv] = useState<"live" | "sandbox">(() => {
+    if (typeof window === "undefined") return "live";
+    const saved = window.localStorage.getItem("fp_admin_env");
+    return saved === "sandbox" || saved === "live" ? saved : "live";
+  });
+  const setEnvPersist = (v: "live" | "sandbox") => {
+    setEnv(v);
+    if (typeof window !== "undefined") window.localStorage.setItem("fp_admin_env", v);
+  };
+  void clientEnv;
+
   const goDay = (day: string) => navigate({ to: "/admin/operaciones/dia/$day", params: { day } });
 
   useEffect(() => {
