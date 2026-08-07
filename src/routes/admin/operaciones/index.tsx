@@ -162,6 +162,17 @@ function OperacionesPage() {
           <section style={{ marginBottom: 20 }}>
             <div style={{ display: "grid", gap: 14, gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))" }}>
               <Kpi label="MRR estimado" value={`$${data.mrr.toLocaleString("es-MX")} MXN`} sub={`${env === "live" ? "Live" : "Sandbox"}`} tone="#22375C" />
+              <Kpi
+                label="Total ganado"
+                value={ganado ? `$${ganado.total.toLocaleString("es-MX", { maximumFractionDigits: 2 })} ${ganado.currency}` : "—"}
+                sub={
+                  ganado
+                    ? `${ganado.charges} cobros${ganado.refunded > 0 ? ` · $${ganado.refunded.toLocaleString("es-MX")} reembolsado` : ""}${ganado.truncado ? " · histórico parcial" : ""}`
+                    : "Sin datos de Stripe"
+                }
+                tone="#1e8449"
+              />
+
               <Kpi label="Pro activos" value={data.pro.active} sub={`${data.pro.trialing} en trial · ${data.pro.past_due} past due`} tone="#2ecc71" />
               <Kpi label="Cancelaciones (30d)" value={data.pro.canceled_last_30d} sub={`${data.pro.renewing_next_7d} renuevan en 7d`} tone="#e74c3c" />
               <Kpi label="Usuarios totales" value={data.platform.total_users} sub={`${data.platform.admins} admins`} tone="#3D5D91" />
