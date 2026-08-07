@@ -850,6 +850,7 @@ export type Database = {
       }
       admin_platform_stats: { Args: never; Returns: Json }
       admin_pro_stats: { Args: { check_env?: string }; Returns: Json }
+      admin_resumen: { Args: never; Returns: Json }
       admin_stripe_event_stats: { Args: { hours_back?: number }; Returns: Json }
       get_bank_counts: {
         Args: never
@@ -894,6 +895,7 @@ export type Database = {
           source_type: string
         }[]
       }
+      plan_mrr_amount: { Args: { p_price_id: string }; Returns: number }
       seed_content: {
         Args: { p_collection: string; p_items: Json }
         Returns: number
