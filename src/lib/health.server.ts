@@ -48,7 +48,7 @@ async function medir(
 async function revisarStripe(environment: StripeEnv): Promise<HealthResult> {
   return medir("stripe_live", environment, async () => {
     const stripe = createStripeClient(environment);
-    const account = await stripe.accounts.retrieve();
+    const account = await stripe.accounts.retrieve(undefined as never);
     const prices = await stripe.prices.list({ active: true, limit: 3 });
     const chargesEnabled = Boolean((account as { charges_enabled?: boolean }).charges_enabled);
     const problemas: string[] = [];
@@ -92,10 +92,11 @@ export async function ejecutarHealthChecks(environment: StripeEnv = "live"): Pro
       await medir(`rpc:${rpc.name}`, environment, async () => {
         const { data, error } = await supabaseAdmin.rpc(rpc.name as never, rpc.args as never);
         if (error) return { ok: false, message: error.message, detail: { rpc: rpc.name } };
+        const payload = data as unknown;
         const vacio =
-          data === null ||
-          data === undefined ||
-          (Array.isArray(data) && data.length === 0 && rpc.vacioEsFallo);
+          payload === null ||
+          payload === undefined ||
+          (Array.isArray(payload) && payload.length === 0 && rpc.vacioEsFallo);
         if (vacio) {
           return {
             ok: false,
