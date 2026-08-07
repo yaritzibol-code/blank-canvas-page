@@ -124,7 +124,7 @@ function asegurarCanal(): RealtimeChannel | null {
   if (canal) return canal;
   const client = supa();
   if (!client) return null;
-  const c = client.channel(PRESENCE_CHANNEL, { config: { presence: { key: TAB_ID } } });
+  const c = client.channel(PRESENCE_CHANNEL, { config: { presence: { key: tabId() } } });
   canal = c;
   c.on("presence", { event: "sync" }, avisar)
     .on("presence", { event: "join" }, avisar)
