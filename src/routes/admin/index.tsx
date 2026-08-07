@@ -53,15 +53,23 @@ function AdminResumenPage() {
   );
 
   const [real, setReal] = useState<AdminResumen | null>(null);
+  const [errReal, setErrReal] = useState<string | null>(null);
   useEffect(() => {
     let cancel = false;
-    adminResumen().then((r) => {
-      if (!cancel && !("error" in r)) setReal(r);
-    });
+    adminResumen()
+      .then((r) => {
+        if (cancel) return;
+        if ("error" in r) setErrReal(r.error);
+        else setReal(r);
+      })
+      .catch((e: unknown) => {
+        if (!cancel) setErrReal(e instanceof Error ? e.message : "Error desconocido");
+      });
     return () => {
       cancel = true;
     };
   }, []);
+
 
   const totalStudents = real ? real.total_students : summary.totalStudents;
   const activeStudents = real ? real.active_students : summary.activeStudents;
