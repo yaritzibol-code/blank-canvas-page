@@ -16,6 +16,7 @@ export const Route = createFileRoute("/api/public/hooks/health-check")({
           process.env["SUPABASE_ANON_KEY"],
           process.env["SUPABASE_PUBLISHABLE_KEY"],
           process.env["VITE_SUPABASE_PUBLISHABLE_KEY"],
+          import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"] as string | undefined,
         ].filter(Boolean) as string[];
         if (!apikey || !validas.includes(apikey)) {
           return new Response(JSON.stringify({ error: "unauthorized" }), {
