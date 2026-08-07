@@ -73,7 +73,9 @@ import { Route as AdminOperacionesStripeRouteImport } from './routes/admin/opera
 import { Route as AdminOperacionesYarisRouteImport } from './routes/admin/operaciones/yaris'
 import { Route as ApiPublicClientErrorsRouteImport } from './routes/api/public/client-errors'
 import { Route as ApiRtariDebriefRouteImport } from './routes/api/rtari/debrief'
+import { Route as ApiRtariSaldoRouteImport } from './routes/api/rtari/saldo'
 import { Route as ApiRtariSessionRouteImport } from './routes/api/rtari/session'
+import { Route as ApiRtariSettleRouteImport } from './routes/api/rtari/settle'
 import { Route as ApiYarisStreamRouteImport } from './routes/api/yaris/stream'
 import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/materias/index'
 import { Route as DashboardMateriasSubjectIdRouteImport } from './routes/dashboard/materias/$subjectId'
@@ -403,9 +405,19 @@ const ApiRtariDebriefRoute = ApiRtariDebriefRouteImport.update({
   path: '/api/rtari/debrief',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiRtariSaldoRoute = ApiRtariSaldoRouteImport.update({
+  id: '/api/rtari/saldo',
+  path: '/api/rtari/saldo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiRtariSessionRoute = ApiRtariSessionRouteImport.update({
   id: '/api/rtari/session',
   path: '/api/rtari/session',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRtariSettleRoute = ApiRtariSettleRouteImport.update({
+  id: '/api/rtari/settle',
+  path: '/api/rtari/settle',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiYarisStreamRoute = ApiYarisStreamRouteImport.update({
@@ -506,7 +518,9 @@ export interface FileRoutesByFullPath {
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
   '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
   '/api/rtari/debrief': typeof ApiRtariDebriefRoute
+  '/api/rtari/saldo': typeof ApiRtariSaldoRoute
   '/api/rtari/session': typeof ApiRtariSessionRoute
+  '/api/rtari/settle': typeof ApiRtariSettleRoute
   '/api/yaris/stream': typeof ApiYarisStreamRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones/': typeof AdminOperacionesIndexRoute
@@ -578,7 +592,9 @@ export interface FileRoutesByTo {
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
   '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
   '/api/rtari/debrief': typeof ApiRtariDebriefRoute
+  '/api/rtari/saldo': typeof ApiRtariSaldoRoute
   '/api/rtari/session': typeof ApiRtariSessionRoute
+  '/api/rtari/settle': typeof ApiRtariSettleRoute
   '/api/yaris/stream': typeof ApiYarisStreamRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones': typeof AdminOperacionesIndexRoute
@@ -652,7 +668,9 @@ export interface FileRoutesById {
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
   '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
   '/api/rtari/debrief': typeof ApiRtariDebriefRoute
+  '/api/rtari/saldo': typeof ApiRtariSaldoRoute
   '/api/rtari/session': typeof ApiRtariSessionRoute
+  '/api/rtari/settle': typeof ApiRtariSettleRoute
   '/api/yaris/stream': typeof ApiYarisStreamRoute
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones/': typeof AdminOperacionesIndexRoute
@@ -727,7 +745,9 @@ export interface FileRouteTypes {
     | '/admin/operaciones/yaris'
     | '/api/public/client-errors'
     | '/api/rtari/debrief'
+    | '/api/rtari/saldo'
     | '/api/rtari/session'
+    | '/api/rtari/settle'
     | '/api/yaris/stream'
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones/'
@@ -799,7 +819,9 @@ export interface FileRouteTypes {
     | '/admin/operaciones/yaris'
     | '/api/public/client-errors'
     | '/api/rtari/debrief'
+    | '/api/rtari/saldo'
     | '/api/rtari/session'
+    | '/api/rtari/settle'
     | '/api/yaris/stream'
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones'
@@ -872,7 +894,9 @@ export interface FileRouteTypes {
     | '/admin/operaciones/yaris'
     | '/api/public/client-errors'
     | '/api/rtari/debrief'
+    | '/api/rtari/saldo'
     | '/api/rtari/session'
+    | '/api/rtari/settle'
     | '/api/yaris/stream'
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones/'
@@ -931,7 +955,9 @@ export interface RootRouteChildren {
   AdminOperacionesYarisRoute: typeof AdminOperacionesYarisRoute
   ApiPublicClientErrorsRoute: typeof ApiPublicClientErrorsRoute
   ApiRtariDebriefRoute: typeof ApiRtariDebriefRoute
+  ApiRtariSaldoRoute: typeof ApiRtariSaldoRoute
   ApiRtariSessionRoute: typeof ApiRtariSessionRoute
+  ApiRtariSettleRoute: typeof ApiRtariSettleRoute
   ApiYarisStreamRoute: typeof ApiYarisStreamRoute
   AdminOperacionesIndexRoute: typeof AdminOperacionesIndexRoute
   AdminOperacionesDiaDayRoute: typeof AdminOperacionesDiaDayRoute
@@ -1389,11 +1415,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiRtariDebriefRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/rtari/saldo': {
+      id: '/api/rtari/saldo'
+      path: '/api/rtari/saldo'
+      fullPath: '/api/rtari/saldo'
+      preLoaderRoute: typeof ApiRtariSaldoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/rtari/session': {
       id: '/api/rtari/session'
       path: '/api/rtari/session'
       fullPath: '/api/rtari/session'
       preLoaderRoute: typeof ApiRtariSessionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/rtari/settle': {
+      id: '/api/rtari/settle'
+      path: '/api/rtari/settle'
+      fullPath: '/api/rtari/settle'
+      preLoaderRoute: typeof ApiRtariSettleRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/yaris/stream': {
@@ -1535,7 +1575,9 @@ const rootRouteChildren: RootRouteChildren = {
   AdminOperacionesYarisRoute: AdminOperacionesYarisRoute,
   ApiPublicClientErrorsRoute: ApiPublicClientErrorsRoute,
   ApiRtariDebriefRoute: ApiRtariDebriefRoute,
+  ApiRtariSaldoRoute: ApiRtariSaldoRoute,
   ApiRtariSessionRoute: ApiRtariSessionRoute,
+  ApiRtariSettleRoute: ApiRtariSettleRoute,
   ApiYarisStreamRoute: ApiYarisStreamRoute,
   AdminOperacionesIndexRoute: AdminOperacionesIndexRoute,
   AdminOperacionesDiaDayRoute: AdminOperacionesDiaDayRoute,

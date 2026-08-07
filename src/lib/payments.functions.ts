@@ -351,7 +351,10 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         billing_address_collection: "required",
         customer_update: { address: "auto", name: "auto" },
         automatic_tax: { enabled: true },
-        metadata: { userId: context.userId },
+        // El `lookup_key` viaja en la metadata para que el webhook sepa QUÉ se
+        // compró sin volver a pedirle las líneas a Stripe. Sin esto, un pago
+        // único de minutos RTARI sería indistinguible de la inscripción.
+        metadata: { userId: context.userId, priceLookupKey: data.priceId },
         ...(discounts ? { discounts } : { allow_promotion_codes: true }),
         ...(isRecurring && {
           subscription_data: { metadata: { userId: context.userId } },

@@ -29,7 +29,19 @@ export interface AdminOverview {
     renewing_next_7d: number;
   };
   stripe: { processed: number; failed: number; ignored: number; received: number };
-  ai: { calls: number; errors: number; tokens_in: number; tokens_out: number; latency_p50: number; latency_p95: number };
+  ai: {
+    calls: number;
+    errors: number;
+    tokens_in: number;
+    tokens_out: number;
+    /** Costo real sumado de `ai_usage.cost_usd` (0 en llamadas que no lo escriben). */
+    cost_usd: number;
+    /** Tokens de las llamadas SIN costo propio: son las que el panel estima. */
+    tokens_in_est: number;
+    tokens_out_est: number;
+    latency_p50: number;
+    latency_p95: number;
+  };
   platform: {
     total_users: number;
     admins: number;
@@ -68,14 +80,25 @@ export const adminOverview = createServerFn({ method: "POST" })
       mrr: Number(mrr.data ?? 0),
       pro: (pro.data as any) ?? { active: 0, trialing: 0, past_due: 0, canceled_last_30d: 0, renewing_next_7d: 0 },
       stripe: (stripe.data as any) ?? { processed: 0, failed: 0, ignored: 0, received: 0 },
-      ai: (ai.data as any) ?? { calls: 0, errors: 0, tokens_in: 0, tokens_out: 0, latency_p50: 0, latency_p95: 0 },
+      ai: (ai.data as any) ?? { calls: 0, errors: 0, tokens_in: 0, tokens_out: 0, cost_usd: 0, tokens_in_est: 0, tokens_out_est: 0, latency_p50: 0, latency_p95: 0 },
       platform: (platform.data as any) ?? { total_users: 0, admins: 0, reports_open: 0, reminders_last_24h: 0, reminders_failed_24h: 0, rag_chunks: 0 },
       drift: (drift.data as AdminOverview["drift"]) ?? [],
     };
   });
 
 export interface MrrDailyPoint { day: string; mrr: number; active_count: number }
-export interface AiDailyPoint { day: string; calls: number; errors: number; tokens_in: number; tokens_out: number; avg_latency_ms: number }
+export interface AiDailyPoint {
+  day: string;
+  calls: number;
+  errors: number;
+  tokens_in: number;
+  tokens_out: number;
+  cost_usd: number;
+  /** Tokens de las llamadas SIN costo propio: son las que el panel estima. */
+  tokens_in_est: number;
+  tokens_out_est: number;
+  avg_latency_ms: number;
+}
 
 export const adminMrrDaily = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -113,6 +136,9 @@ export const adminAiDaily = createServerFn({ method: "POST" })
       errors: Number(r.errors ?? 0),
       tokens_in: Number(r.tokens_in ?? 0),
       tokens_out: Number(r.tokens_out ?? 0),
+      cost_usd: Number(r.cost_usd ?? 0),
+      tokens_in_est: Number(r.tokens_in_est ?? 0),
+      tokens_out_est: Number(r.tokens_out_est ?? 0),
       avg_latency_ms: Number(r.avg_latency_ms ?? 0),
     }));
   });

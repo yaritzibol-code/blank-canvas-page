@@ -103,6 +103,12 @@ export async function logAiUsage(row: {
   model?: string;
   tokensIn: number;
   tokensOut: number;
+  /**
+   * Costo real en USD, cuando quien llama conoce la tarifa de su modelo.
+   * Sin esto el panel lo estima con tarifas de texto, que subestima la voz
+   * por un factor enorme (ver `@/lib/ai-cost`).
+   */
+  costUsd?: number;
   latencyMs: number;
   success: boolean;
   errorMessage?: string | null;
@@ -111,6 +117,7 @@ export async function logAiUsage(row: {
     await supabaseAdmin.from("ai_usage").insert({
       user_id: row.userId,
       model: row.model ?? YARIS_MODEL,
+      ...(row.costUsd !== undefined ? { cost_usd: row.costUsd } : {}),
       materia: row.materia ?? null,
       tokens_in: row.tokensIn,
       tokens_out: row.tokensOut,

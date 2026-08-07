@@ -11,13 +11,15 @@
  * está afiliada a la AFAC.
  */
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import { ModuleHeader } from "@/components/shared/ModuleHeader";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { InterviewStage, type InterviewResult } from "@/components/rtari/InterviewStage";
 import { DebriefPanel } from "@/components/rtari/DebriefPanel";
 import { QuestionBank } from "@/components/rtari/QuestionBank";
+import { SaldoPanel } from "@/components/rtari/SaldoPanel";
 import {
   getRtariSessions,
   isPaid,
@@ -29,15 +31,18 @@ import {
   useStore,
   type RtariSessionRecord,
 } from "@/lib/store";
-import { requestDebrief } from "@/lib/rtari-client";
+import { createCheckoutSession } from "@/lib/payments.functions";
+import { getStripe, getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
+import { fetchSaldo, requestDebrief, settleSession, type RtariSaldoInfo } from "@/lib/rtari-client";
 import { soportaEntrevista, type RtariError } from "@/lib/rtari-realtime";
 import {
   RTARI_MAX_MINUTOS,
+  RTARI_MINUTOS_INCLUIDOS_PRO,
   RTARI_NIVEL_DEFS,
   RTARI_PRESETS_PREGUNTAS,
-  RTARI_SESIONES_POR_DIA,
   RTARI_VOICE_DEFS,
   type RtariNivel,
+  type RtariPaqueteDef,
   type RtariVoice,
 } from "@/modules/rtari/config";
 import { ICAO_NIVEL_OPERACIONAL, icaoLevel } from "@/modules/rtari/icao";
@@ -50,6 +55,11 @@ import {
 } from "@/modules/rtari/questions";
 
 export const Route = createFileRoute("/dashboard/rtari")({
+  // `compra` es el id de la sesión de checkout con la que Stripe nos devuelve
+  // tras pagar un paquete de minutos.
+  validateSearch: (search: Record<string, unknown>): { compra?: string } => ({
+    compra: typeof search.compra === "string" ? search.compra : undefined,
+  }),
   component: RtariPage,
 });
 
@@ -280,6 +290,56 @@ function RtariPage() {
   const [aviso, setAviso] = useState<string | null>(null);
   const [upgrade, setUpgrade] = useState(false);
 
+  const [saldo, setSaldo] = useState<RtariSaldoInfo | null>(null);
+  const [saldoCargando, setSaldoCargando] = useState(true);
+  const [sinMinutos, setSinMinutos] = useState(false);
+  const [comprando, setComprando] = useState<string | null>(null);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+
+  const recargarSaldo = useCallback(async () => {
+    const s = await fetchSaldo();
+    setSaldo(s);
+    setSaldoCargando(false);
+    return s;
+  }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    void recargarSaldo();
+  }, [user, recargarSaldo]);
+
+  // Vuelta del checkout de un paquete: el webhook acredita en un par de
+  // segundos, así que se relee el saldo hasta verlo crecer.
+  const { compra } = Route.useSearch();
+  useEffect(() => {
+    if (!compra || !user) return;
+    let cancelado = false;
+    const antes = saldo?.comprados ?? 0;
+    (async () => {
+      for (let i = 0; i < 10 && !cancelado; i++) {
+        const s = await recargarSaldo();
+        if (s && s.comprados > antes) {
+          if (!cancelado) {
+            setSinMinutos(false);
+            setAviso(`Listo, ya tienes ${Math.floor(s.comprados / 60)} minutos comprados.`);
+          }
+          return;
+        }
+        await new Promise((r) => setTimeout(r, 1500));
+      }
+      if (!cancelado) {
+        setAviso(
+          "Tu pago se está procesando. Tus minutos aparecerán aquí en cuanto Stripe lo confirme.",
+        );
+      }
+    })();
+    return () => {
+      cancelado = true;
+    };
+    // Sólo debe correr al aterrizar de vuelta del pago.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [compra, user]);
+
   const comenzar = () => {
     if (!user) return;
     if (!pro) {
@@ -287,14 +347,46 @@ function RtariPage() {
       return;
     }
     setAviso(null);
+    setSinMinutos(false);
     setResultado(null);
     setGuion(pickQuestions(numPreguntas, bloque));
     setFase("entrevista");
   };
 
+  async function comprarPaquete(paquete: RtariPaqueteDef) {
+    if (!isPaymentsConfigured()) {
+      setAviso("Los pagos aún no están habilitados en este ambiente.");
+      return;
+    }
+    setComprando(paquete.lookupKey);
+    setAviso(null);
+    try {
+      const result = await createCheckoutSession({
+        data: {
+          priceId: paquete.lookupKey,
+          // Vuelve al módulo, no a la página de planes: lo que se compró son
+          // minutos de entrevista, no un cambio de suscripción.
+          returnUrl: `${window.location.origin}/dashboard/rtari?compra={CHECKOUT_SESSION_ID}`,
+          environment: getStripeEnvironment(),
+        },
+      });
+      if ("error" in result) throw new Error(result.error);
+      setClientSecret(result.clientSecret);
+    } catch (e) {
+      setAviso(e instanceof Error ? e.message : "No pude abrir el pago. Inténtalo de nuevo.");
+    } finally {
+      setComprando(null);
+    }
+  }
+
   const onError = useCallback((err: RtariError) => {
     if (err.code === "requiere_pro") {
       setUpgrade(true);
+      setFase("setup");
+      return;
+    }
+    if (err.code === "sin_minutos") {
+      setSinMinutos(true);
       setFase("setup");
       return;
     }
@@ -304,11 +396,16 @@ function RtariPage() {
     if (err.code !== "openai") setFase("setup");
   }, []);
 
-  /** Cierra la entrevista: guarda lo dicho y pide la evaluación. */
+  /** Cierra la entrevista: liquida los minutos, la guarda y pide la evaluación. */
   const onFinish = useCallback(
-    async ({ turns, durationSec }: InterviewResult) => {
+    async ({ turns, durationSec, cierre }: InterviewResult) => {
       if (!user) return;
       setFase("evaluando");
+
+      // Lo primero es devolverle sus minutos: no depende de que la evaluación
+      // salga bien, y es lo que el alumno paga.
+      const saldoNuevo = await settleSession(cierre);
+      if (saldoNuevo) setSaldo(saldoNuevo);
 
       const questionIds = guion.map((q) => q.id);
       const registro = saveRtariSession({
@@ -362,6 +459,36 @@ function RtariPage() {
   );
 
   const bloqueSel = RTARI_BLOQUES.find((b) => b.id === bloque);
+  const minutosDisponibles = saldo ? Math.floor(saldo.disponible / 60) : null;
+  const puedeArrancar = soportado && (!pro || minutosDisponibles !== 0);
+
+  // Pagar un paquete ocupa la pantalla completa: el checkout de Stripe pide
+  // dirección y tarjeta, y meterlo en una esquina del módulo se lee como
+  // fraude, no como compra.
+  if (clientSecret) {
+    return (
+      <div style={{ maxWidth: 760, margin: "0 auto", fontFamily: "'Manrope', sans-serif" }}>
+        <button
+          onClick={() => setClientSecret(null)}
+          style={{
+            background: "none",
+            border: "none",
+            color: "#3D5D91",
+            fontWeight: 700,
+            cursor: "pointer",
+            fontSize: 14,
+            padding: "8px 0 16px",
+            fontFamily: "inherit",
+          }}
+        >
+          ← Cancelar y volver a la entrevista
+        </button>
+        <EmbeddedCheckoutProvider stripe={getStripe()} options={{ clientSecret }}>
+          <EmbeddedCheckout />
+        </EmbeddedCheckoutProvider>
+      </div>
+    );
+  }
 
   return (
     <div style={{ maxWidth: 1180, margin: "0 auto", fontFamily: "'Manrope', sans-serif" }}>
@@ -521,6 +648,16 @@ function RtariPage() {
             />
           </div>
 
+          {pro && (
+            <SaldoPanel
+              saldo={saldo}
+              cargando={saldoCargando}
+              comprando={comprando}
+              onComprar={(p) => void comprarPaquete(p)}
+              destacarCompra={sinMinutos}
+            />
+          )}
+
           {/* Arranque */}
           <Card>
             <div
@@ -560,7 +697,7 @@ function RtariPage() {
               >
                 Máx. {RTARI_MAX_MINUTOS} min por sesión
                 <br />
-                {RTARI_SESIONES_POR_DIA} entrevistas al día
+                {RTARI_MINUTOS_INCLUIDOS_PRO} min incluidos al mes
               </div>
             </div>
 
@@ -652,7 +789,7 @@ function RtariPage() {
             >
               <button
                 onClick={comenzar}
-                disabled={!soportado}
+                disabled={!soportado || (pro && minutosDisponibles === 0)}
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -660,30 +797,42 @@ function RtariPage() {
                   padding: "14px 26px",
                   borderRadius: 12,
                   border: "none",
-                  background: soportado ? CORAL : `${NAVY}22`,
-                  color: soportado ? "white" : `${NAVY}88`,
+                  background: puedeArrancar ? CORAL : `${NAVY}22`,
+                  color: puedeArrancar ? "white" : `${NAVY}88`,
                   fontWeight: 700,
                   fontSize: "0.95rem",
-                  cursor: soportado ? "pointer" : "not-allowed",
+                  cursor: puedeArrancar ? "pointer" : "not-allowed",
                   fontFamily: "inherit",
                 }}
               >
                 <Icon n="audio" size={18} />
-                {pro ? "Comenzar entrevista" : "Comenzar entrevista (Pro)"}
+                {!pro
+                  ? "Comenzar entrevista (Pro)"
+                  : minutosDisponibles === 0
+                    ? "Sin minutos disponibles"
+                    : "Comenzar entrevista"}
               </button>
               <div
                 style={{ fontSize: "0.8rem", color: HAZE, lineHeight: 1.5, flex: 1, minWidth: 220 }}
               >
-                {soportado ? (
+                {!soportado ? (
+                  <>
+                    Este navegador no soporta la entrevista por voz. Ábrela desde Chrome, Edge o
+                    Safari actualizados.
+                  </>
+                ) : pro && minutosDisponibles === 0 ? (
+                  <>
+                    Se te acabaron los minutos de este ciclo. Compra un paquete aquí arriba para
+                    seguir hoy.
+                  </>
+                ) : (
                   <>
                     Te va a pedir permiso del micrófono. Usa audífonos si puedes y contesta{" "}
                     <strong style={{ color: NAVY }}>siempre en inglés</strong>: el sinodal no habla
                     español.
-                  </>
-                ) : (
-                  <>
-                    Este navegador no soporta la entrevista por voz. Ábrela desde Chrome, Edge o
-                    Safari actualizados.
+                    {minutosDisponibles !== null && pro && (
+                      <> Te quedan {minutosDisponibles} min de entrevista.</>
+                    )}
                   </>
                 )}
               </div>

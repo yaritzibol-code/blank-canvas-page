@@ -8,14 +8,19 @@
  * Del cliente sólo se aceptan tres cosas —qué preguntas, qué voz y qué nivel
  * de exigencia— y las preguntas se resuelven contra el banco del módulo. El
  * guion del sinodal jamás sale de texto libre del navegador.
+ *
+ * Los minutos se cobran POR ADELANTADO (ver `rtari-saldo.server.ts`): el audio
+ * no pasa por aquí, así que la única forma de no depender de la buena fe del
+ * cliente es apartar el máximo y devolver lo que sobre al colgar.
  */
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import {
   RTARI_MAX_PREGUNTAS,
   RTARI_MIN_PREGUNTAS,
+  RTARI_MINUTOS_MINIMOS,
+  RTARI_MODELO_POR_NIVEL,
   RTARI_NIVELES,
-  RTARI_SESIONES_POR_DIA,
   RTARI_VOICES,
 } from "@/modules/rtari/config";
 import { sanitizeQuestionIds } from "@/modules/rtari/questions";
@@ -57,31 +62,25 @@ export const Route = createFileRoute("/api/rtari/session")({
         // La voz a voz se cobra por minuto de audio: es función de Pro.
         if (!profile.isPro) return json({ error: "requiere_pro" }, 402);
 
-        const {
-          buildExaminerInstructions,
-          countRtariSessions,
-          createRealtimeSecret,
-          RTARI_REALTIME_MODEL,
-        } = await import("@/lib/rtari.server");
-        const { logAiUsage } = await import("@/lib/yaris-openai.server");
-
-        const usadas = await countRtariSessions(auth.userId);
-        if (usadas >= RTARI_SESIONES_POR_DIA) {
-          return json(
-            {
-              error: "limite_diario",
-              usadas,
-              limite: RTARI_SESIONES_POR_DIA,
-            },
-            429,
-          );
-        }
-
         const apiKey = process.env["OPENAI_API_KEY"];
         if (!apiKey) return json({ error: "sin_configurar" }, 503);
 
+        const { buildExaminerInstructions, createRealtimeSecret } =
+          await import("@/lib/rtari.server");
+        const { liquidarMinutos, reservarMinutos } = await import("@/lib/rtari-saldo.server");
+        const { logAiUsage } = await import("@/lib/yaris-openai.server");
+
+        // Un id propio: identifica la reserva y vuelve en la liquidación.
+        const sessionId = crypto.randomUUID();
+        const reserva = await reservarMinutos(auth.userId, profile.isPro, sessionId);
+        if (reserva.segundos <= 0) {
+          return json({ error: "sin_minutos", minimoMinutos: RTARI_MINUTOS_MINIMOS }, 429);
+        }
+
+        const model = RTARI_MODELO_POR_NIVEL[parsed.nivel];
         const started = Date.now();
         const secret = await createRealtimeSecret(apiKey, {
+          model,
           instructions: buildExaminerInstructions({
             nombre: profile.nombre,
             questions,
@@ -91,10 +90,13 @@ export const Route = createFileRoute("/api/rtari/session")({
         });
 
         if ("status" in secret) {
+          // La entrevista no llegó a abrirse: se devuelven íntegros los
+          // minutos apartados hace un instante.
+          await liquidarMinutos(auth.userId, reserva, 0, sessionId);
           await logAiUsage({
             userId: auth.userId,
             materia: "rtari",
-            model: RTARI_REALTIME_MODEL,
+            model,
             tokensIn: 0,
             tokensOut: 0,
             latencyMs: Date.now() - started,
@@ -104,23 +106,12 @@ export const Route = createFileRoute("/api/rtari/session")({
           return json({ error: "openai", status: secret.status }, 502);
         }
 
-        // La bitácora se escribe al ACUÑAR la credencial, no al colgar: es lo
-        // que cuenta el tope diario, y una sesión abierta ya consume audio.
-        await logAiUsage({
-          userId: auth.userId,
-          materia: "rtari",
-          model: RTARI_REALTIME_MODEL,
-          tokensIn: 0,
-          tokensOut: 0,
-          latencyMs: Date.now() - started,
-          success: true,
-        });
-
         return json({
           value: secret.value,
           expiresAt: secret.expiresAt,
-          model: RTARI_REALTIME_MODEL,
-          restantes: Math.max(0, RTARI_SESIONES_POR_DIA - usadas - 1),
+          model,
+          sessionId,
+          maxMinutos: Math.floor(reserva.segundos / 60),
         });
       },
     },

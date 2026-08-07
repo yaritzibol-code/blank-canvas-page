@@ -115,13 +115,28 @@ function OperacionesPage() {
   );
   const avgLatency = aiTotals.latN > 0 ? Math.round(aiTotals.latSum / aiTotals.latN) : 0;
 
-  // Costo estimado de IA a partir de los tokens bitacorizados en `ai_usage`.
-  const cost30 = estimateAiCost(aiTotals.tokensIn, aiTotals.tokensOut);
-  const cost24 = data ? estimateAiCost(data.ai.tokens_in, data.ai.tokens_out) : { usd: 0, mxn: 0 };
+  // Costo de IA. Las llamadas que conocen su tarifa (la voz de RTARI) escriben
+  // `cost_usd`; para las que no —Yaris, que sólo guardó tokens— se sigue
+  // estimando con la tarifa de texto. Sumar ambas cosas es lo único honesto:
+  // aplicarle la tarifa de texto al audio reportaría una fracción del gasto.
+  const costoTotal = (realUsd: number, tokensIn: number, tokensOut: number) => {
+    const est = estimateAiCost(tokensIn, tokensOut);
+    return { usd: realUsd + est.usd, mxn: realUsd * USD_MXN + est.mxn };
+  };
+  const cost30 = costoTotal(
+    aiSeries.reduce((acc, r) => acc + (r.cost_usd ?? 0), 0),
+    aiSeries.reduce((acc, r) => acc + (r.tokens_in_est ?? 0), 0),
+    aiSeries.reduce((acc, r) => acc + (r.tokens_out_est ?? 0), 0),
+  );
+  const cost24 = data
+    ? costoTotal(data.ai.cost_usd ?? 0, data.ai.tokens_in_est ?? 0, data.ai.tokens_out_est ?? 0)
+    : { usd: 0, mxn: 0 };
   const costPerCall = aiTotals.calls > 0 ? cost30.mxn / aiTotals.calls : 0;
   const costPoints: SparkPoint[] = aiSeries.map((r) => ({
     label: r.day,
-    value: Number(estimateAiCost(r.tokens_in, r.tokens_out).mxn.toFixed(2)),
+    value: Number(
+      costoTotal(r.cost_usd ?? 0, r.tokens_in_est ?? 0, r.tokens_out_est ?? 0).mxn.toFixed(2),
+    ),
   }));
 
 

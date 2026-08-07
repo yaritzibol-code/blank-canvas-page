@@ -16,7 +16,6 @@
  * cualquiera podría convertir la sesión —y la llave del proyecto— en un
  * asistente de voz de uso general.
  */
-import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { ICAO_SKILLS, type IcaoSkill } from "@/modules/rtari/icao";
 import type { RtariNivel, RtariVoice } from "@/modules/rtari/config";
 import type {
@@ -29,11 +28,12 @@ import type {
 import type { RtariQuestion } from "@/modules/rtari/questions";
 
 /**
- * Modelo de voz a voz de la entrevista.
+ * Modelo de voz de respaldo.
  *
- * También es la etiqueta con la que se bitacorizan las sesiones en `ai_usage`,
- * y por lo tanto lo que cuenta el tope diario. El debrief NO usa este modelo:
- * es texto y va por el mismo modelo que Yaris (`callOpenAI`).
+ * El modelo de cada entrevista lo decide el nivel de exigencia
+ * (`RTARI_MODELO_POR_NIVEL`); éste es al que se cae si la cuenta no tiene
+ * habilitado el alias elegido. El debrief NO usa modelos de voz: es texto y va
+ * por el mismo modelo que Yaris (`callOpenAI`).
  */
 export const RTARI_REALTIME_MODEL = "gpt-realtime";
 
@@ -129,11 +129,11 @@ export interface RealtimeSecretError {
  */
 export async function createRealtimeSecret(
   apiKey: string,
-  opts: { instructions: string; voice: RtariVoice },
+  opts: { instructions: string; voice: RtariVoice; model: string },
 ): Promise<RealtimeSecret | RealtimeSecretError> {
   const sesionBase = {
     type: "realtime",
-    model: RTARI_REALTIME_MODEL,
+    model: opts.model,
     instructions: opts.instructions,
     audio: {
       input: {
@@ -168,11 +168,26 @@ export async function createRealtimeSecret(
   };
 
   const primera = await postClientSecret(apiKey, completa);
+  if (!("status" in primera)) return primera;
+
   // Un 400 significa que a la API no le gustó algún ajuste fino (el tiempo de
   // vida o el detector de silencios). Se reintenta sin ellos: la entrevista
   // pierde afinación, no funcionalidad.
-  if ("status" in primera && primera.status === 400) {
-    return postClientSecret(apiKey, { session: sesionBase });
+  if (primera.status === 400) {
+    const segunda = await postClientSecret(apiKey, { session: sesionBase });
+    if (!("status" in segunda)) return segunda;
+    // Si el rechazo era por el modelo (un alias que esta cuenta no tiene
+    // habilitado), se cae al modelo base antes de darse por vencido.
+    if (opts.model !== RTARI_REALTIME_MODEL) {
+      return postClientSecret(apiKey, {
+        session: { ...sesionBase, model: RTARI_REALTIME_MODEL },
+      });
+    }
+    return segunda;
+  }
+
+  if (primera.status === 404 && opts.model !== RTARI_REALTIME_MODEL) {
+    return postClientSecret(apiKey, { session: { ...sesionBase, model: RTARI_REALTIME_MODEL } });
   }
   return primera;
 }
@@ -203,30 +218,6 @@ async function postClientSecret(
   const json = (await res.json()) as { value?: string; expires_at?: number };
   if (!json.value) return { status: 502, message: "respuesta sin client secret" };
   return { value: json.value, expiresAt: json.expires_at ?? null };
-}
-
-/* ───────────────────────── Tope de uso ───────────────────────── */
-
-/**
- * Entrevistas iniciadas por el usuario en las últimas 24 h.
- *
- * Sólo cuentan las que se abrieron de verdad (`success`): si OpenAI rechazó la
- * credencial, el alumno no gastó ni un segundo de audio y no debe pagarlo con
- * una de sus sesiones del día.
- */
-export async function countRtariSessions(userId: string): Promise<number> {
-  const since = new Date(Date.now() - 86_400_000).toISOString();
-  const { count, error } = await supabaseAdmin
-    .from("ai_usage")
-    .select("id", { count: "exact", head: true })
-    .eq("user_id", userId)
-    .eq("model", RTARI_REALTIME_MODEL)
-    .eq("success", true)
-    .gte("created_at", since);
-  // Si la lectura falla no bloqueamos al alumno: el tope es de costo, no de
-  // seguridad, y la llave sigue protegida por la credencial efímera.
-  if (error) return 0;
-  return count ?? 0;
 }
 
 /* ───────────────────────── Debrief ───────────────────────── */

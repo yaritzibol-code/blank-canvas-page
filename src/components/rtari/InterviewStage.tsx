@@ -11,10 +11,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import {
   RtariRealtimeSession,
+  type RtariCierre,
   type RtariError,
   type RtariEstado,
   type RtariTurn,
 } from "@/lib/rtari-realtime";
+import { settleSession } from "@/lib/rtari-client";
 import { RTARI_MAX_MINUTOS, type RtariNivel, type RtariVoice } from "@/modules/rtari/config";
 import type { RtariQuestion } from "@/modules/rtari/questions";
 
@@ -109,6 +111,8 @@ function reloj(ms: number): string {
 export interface InterviewResult {
   turns: RtariTurn[];
   durationSec: number;
+  /** Duración y consumo reportado, para liquidar los minutos reservados. */
+  cierre: RtariCierre;
 }
 
 export function InterviewStage({
@@ -171,7 +175,15 @@ export function InterviewStage({
         // `onError` ya avisó al padre; aquí sólo evitamos el rechazo suelto.
       });
 
-    return () => sesion.stop();
+    return () => {
+      // Red de seguridad: se salga como se salga —terminando, cancelando o
+      // por un error— los minutos reservados que no se usaron se devuelven.
+      // El servidor ignora la segunda liquidación de la misma sesión, así que
+      // no estorba cuando la pantalla ya la hizo.
+      const cierre = sesion.cierre();
+      sesion.stop();
+      if (cierre.sessionId) void settleSession(cierre);
+    };
   }, []);
 
   // Cronómetro de la entrevista.
@@ -189,14 +201,19 @@ export function InterviewStage({
 
   const terminar = useCallback(() => {
     const sesion = sesionRef.current;
-    const durationSec = Math.round((sesion?.elapsed() ?? transcurrido) / 1000);
-    sesion?.finish();
-    cfg.current.onFinish({ turns: turnsRef.current, durationSec });
-  }, [transcurrido]);
+    if (!sesion) return;
+    // El cierre se toma ANTES de colgar: `finish()` detiene el cronómetro.
+    const cierre = sesion.cierre();
+    sesion.finish();
+    cfg.current.onFinish({ turns: turnsRef.current, durationSec: cierre.durationSec, cierre });
+  }, []);
 
   const respuestas = turns.filter((t) => t.role === "candidate").length;
   const conectando = estado === "conectando";
-  const restanteMin = Math.max(0, RTARI_MAX_MINUTOS - Math.floor(transcurrido / 60000));
+  // El tope real es el que el servidor reservó con el saldo del alumno, que
+  // puede ser menor que el máximo del módulo si le quedan pocos minutos.
+  const topeMin = sesionRef.current?.maxMinutos || RTARI_MAX_MINUTOS;
+  const restanteMin = Math.max(0, topeMin - Math.floor(transcurrido / 60000));
 
   return (
     <div
@@ -500,11 +517,12 @@ export function InterviewStage({
             lineHeight: 1.5,
           }}
         >
-          La sesión se corta sola a los {RTARI_MAX_MINUTOS} min
-          {estado === "en_curso" && restanteMin < RTARI_MAX_MINUTOS
+          La sesión se corta sola a los {topeMin} min
+          {estado === "en_curso" && restanteMin < topeMin
             ? ` (te quedan ~${restanteMin}).`
             : "."}{" "}
-          El sinodal no te corrige durante la entrevista: la retroalimentación llega al final.
+          Sólo se te cobran los minutos que uses. El sinodal no te corrige durante la entrevista: la
+          retroalimentación llega al final.
         </div>
       </div>
 

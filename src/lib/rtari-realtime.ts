@@ -14,6 +14,7 @@
  * reconocimiento de voz configurado en la sesión.
  */
 import { supabase } from "@/integrations/supabase/client";
+import { EMPTY_REALTIME_USAGE, type RealtimeUsage } from "@/lib/ai-cost";
 import { RTARI_MAX_MINUTOS, type RtariNivel, type RtariVoice } from "@/modules/rtari/config";
 
 export type RtariEstado =
@@ -27,7 +28,7 @@ export interface RtariTurn {
 }
 
 export type RtariErrorCode =
-  "sin_sesion" | "requiere_pro" | "limite_diario" | "sin_configurar" | "micro" | "red" | "openai";
+  "sin_sesion" | "requiere_pro" | "sin_minutos" | "sin_configurar" | "micro" | "red" | "openai";
 
 export class RtariError extends Error {
   code: RtariErrorCode;
@@ -66,7 +67,18 @@ interface SessionResponse {
   value: string;
   expiresAt: number | null;
   model: string;
-  restantes: number;
+  /** Id con el que el servidor reservó los minutos; vuelve en la liquidación. */
+  sessionId: string;
+  /** Cuánto puede durar ESTA entrevista según el saldo del alumno. */
+  maxMinutos: number;
+}
+
+/** Lo que hay que liquidar al colgar: duración real y consumo reportado. */
+export interface RtariCierre {
+  sessionId: string;
+  model: string;
+  durationSec: number;
+  usage: RealtimeUsage;
 }
 
 export class RtariRealtimeSession {
@@ -82,11 +94,31 @@ export class RtariRealtimeSession {
   private parciales = new Map<string, string>();
   private cb: RtariCallbacks;
   private levelListener: LevelListener | null = null;
-  /** Sesiones que le quedan hoy, según el servidor. */
-  restantes: number | null = null;
+  /** Consumo acumulado que reporta la API en cada `response.done`. */
+  private usage: RealtimeUsage = { ...EMPTY_REALTIME_USAGE };
+  private sessionId = "";
+  private model = "";
+  /** Minutos que el servidor reservó para esta entrevista. */
+  maxMinutos = 0;
 
   constructor(cb: RtariCallbacks) {
     this.cb = cb;
+  }
+
+  /**
+   * Datos para liquidar la sesión: cuánto duró y cuánto consumió.
+   *
+   * El consumo lo reporta la propia API por el canal de datos, así que sirve
+   * para saber el costo real —no para cobrar—: quien cobra es el servidor, con
+   * los minutos que reservó por adelantado.
+   */
+  cierre(): RtariCierre {
+    return {
+      sessionId: this.sessionId,
+      model: this.model,
+      durationSec: Math.round(this.elapsed() / 1000),
+      usage: { ...this.usage },
+    };
   }
 
   getEstado(): RtariEstado {
@@ -124,9 +156,12 @@ export class RtariRealtimeSession {
     this.setEstado("conectando");
 
     const secret = await this.mintSecret(opts);
+    this.sessionId = secret.sessionId;
+    this.model = secret.model;
+    this.maxMinutos = secret.maxMinutos;
 
     // El micrófono se pide después de la credencial: si el usuario no es Pro o
-    // ya agotó sus sesiones, no tiene sentido molestarlo con el permiso.
+    // se quedó sin minutos, no tiene sentido molestarlo con el permiso.
     let mic: MediaStream;
     try {
       mic = await navigator.mediaDevices.getUserMedia({
@@ -198,10 +233,12 @@ export class RtariRealtimeSession {
     this.startedAt = Date.now();
     this.setEstado("en_curso");
 
-    // Corte duro: una sesión olvidada abierta sigue consumiendo audio.
+    // Corte duro a los minutos que el servidor reservó: pasado ese punto el
+    // alumno ya no tiene saldo y la sesión sólo seguiría generando costo.
+    const tope = Math.min(this.maxMinutos || RTARI_MAX_MINUTOS, RTARI_MAX_MINUTOS);
     this.cutoffTimer = setTimeout(() => {
       if (this.estado === "en_curso") this.finish();
-    }, RTARI_MAX_MINUTOS * 60_000);
+    }, tope * 60_000);
 
     // El sinodal abre la entrevista en cuanto el canal está listo.
     if (dc.readyState === "open") this.send({ type: "response.create" });
@@ -242,14 +279,11 @@ export class RtariRealtimeSession {
           new RtariError("requiere_pro", "La entrevista por voz es parte de FlightPath Pro."),
         );
       }
-      if (res.status === 429 || code === "limite_diario") {
+      if (res.status === 429 || code === "sin_minutos") {
         this.fail(
           new RtariError(
-            "limite_diario",
-            `Ya hiciste tus ${body.limite ?? ""} entrevistas de hoy. Vuelve mañana con la cabeza fresca.`.replace(
-              "  ",
-              " ",
-            ),
+            "sin_minutos",
+            "Te quedaste sin minutos de entrevista. Compra más o espera a tu siguiente ciclo.",
             body,
           ),
         );
@@ -265,9 +299,7 @@ export class RtariRealtimeSession {
       this.fail(new RtariError("openai", "No pude preparar la entrevista. Inténtalo de nuevo."));
     }
 
-    const data = (await res.json()) as SessionResponse;
-    this.restantes = typeof data.restantes === "number" ? data.restantes : null;
-    return data;
+    return (await res.json()) as SessionResponse;
   }
 
   private send(payload: Record<string, unknown>) {
@@ -375,6 +407,9 @@ export class RtariRealtimeSession {
 
     if (type === "response.done" || type === "output_audio_buffer.stopped") {
       this.cb.onSpeaking?.(false);
+      if (type === "response.done") {
+        this.acumulaUso((evt.response as { usage?: unknown } | undefined)?.usage);
+      }
       return;
     }
 
@@ -391,6 +426,55 @@ export class RtariRealtimeSession {
         new RtariError("openai", err.message ?? "El sinodal reportó un error de sesión."),
       );
     }
+  }
+
+  /**
+   * Suma el consumo que la API reporta al cerrar cada respuesta.
+   *
+   * Es la única forma de saber lo que costó de verdad una entrevista: el audio
+   * no pasa por nuestro servidor, así que sin estos eventos sólo tendríamos la
+   * duración en el reloj. Se lee a la defensiva porque el desglose por tipo de
+   * token es opcional en la respuesta.
+   */
+  private acumulaUso(raw: unknown) {
+    if (!raw || typeof raw !== "object") return;
+    const u = raw as {
+      input_tokens?: number;
+      output_tokens?: number;
+      input_token_details?: {
+        audio_tokens?: number;
+        text_tokens?: number;
+        cached_tokens?: number;
+        cached_tokens_details?: { audio_tokens?: number; text_tokens?: number };
+      };
+      output_token_details?: { audio_tokens?: number; text_tokens?: number };
+    };
+
+    const num = (v: unknown) => (typeof v === "number" && Number.isFinite(v) && v > 0 ? v : 0);
+    const inDet = u.input_token_details ?? {};
+    const outDet = u.output_token_details ?? {};
+
+    const cacheAudio = num(inDet.cached_tokens_details?.audio_tokens);
+    const cacheText = num(inDet.cached_tokens_details?.text_tokens);
+    // Sin desglose de la caché, se reparte todo a audio: es la tarifa más
+    // cara de las dos y preferimos sobrestimar el costo, no esconderlo.
+    const cacheTotal = num(inDet.cached_tokens);
+    const cachedAudio = cacheAudio || (cacheText ? 0 : cacheTotal);
+    const cachedText = cacheText;
+
+    // Los `*_token_details` ya incluyen lo servido por caché, así que se resta
+    // para no cobrar dos veces el mismo token.
+    const audioIn = Math.max(0, num(inDet.audio_tokens) - cachedAudio);
+    const textIn = Math.max(0, num(inDet.text_tokens) - cachedText);
+
+    this.usage = {
+      audioIn: this.usage.audioIn + audioIn,
+      audioCached: this.usage.audioCached + cachedAudio,
+      audioOut: this.usage.audioOut + num(outDet.audio_tokens),
+      textIn: this.usage.textIn + textIn,
+      textCached: this.usage.textCached + cachedText,
+      textOut: this.usage.textOut + num(outDet.text_tokens),
+    };
   }
 
   /* ── Indicador de nivel de micrófono ── */
