@@ -557,3 +557,144 @@ export const adminResumen = createServerFn({ method: "POST" })
         : [],
     };
   });
+
+/* ── Salud de la plataforma ─────────────────────────────────────────────── */
+
+export interface HealthCheckRow {
+  id: string;
+  check_key: string;
+  ok: boolean;
+  environment: string;
+  message: string | null;
+  detail: any;
+  duration_ms: number;
+  created_at: string;
+}
+
+/** Bitácora de revisiones automáticas (Stripe live + consultas del panel). */
+export const adminHealthChecks = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { limit?: number; soloFallos?: boolean }) => data)
+  .handler(async ({ data, context }): Promise<Res<HealthCheckRow[]>> => {
+    const guard = await assertAdmin(context.supabase, context.userId);
+    if (guard) return { error: guard };
+    let q = context.supabase
+      .from("health_checks")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(Math.min(data.limit ?? 40, 200));
+    if (data.soloFallos) q = q.eq("ok", false);
+    const { data: rows, error } = await q;
+    if (error) return { error: error.message };
+    return (rows ?? []) as HealthCheckRow[];
+  });
+
+/** Corre las revisiones al momento desde el panel (botón "Revisar ahora"). */
+export const adminRunHealthChecks = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { environment?: StripeEnv }) => data)
+  .handler(async ({ data, context }): Promise<Res<{ ok: boolean; total: number; fallos: number }>> => {
+    const guard = await assertAdmin(context.supabase, context.userId);
+    if (guard) return { error: guard };
+    const { ejecutarHealthChecks } = await import("@/lib/health.server");
+    const resultados = await ejecutarHealthChecks(data.environment ?? "live");
+    const fallos = resultados.filter((r) => !r.ok).length;
+    return { ok: fallos === 0, total: resultados.length, fallos };
+  });
+
+/* ── Presencia de respaldo ──────────────────────────────────────────────── */
+
+export interface PresenciaRecienteRow {
+  user_id: string;
+  email: string | null;
+  nombre: string;
+  plan: string;
+  role: string;
+  last_seen: string;
+  started_at: string;
+  path: string | null;
+  label: string | null;
+}
+
+/**
+ * Respaldo de "Usuarios activos": cuando el canal en vivo no reporta a nadie,
+ * se listan las personas con actividad registrada recientemente.
+ */
+export const adminPresenciaReciente = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { minutes?: number }) => data)
+  .handler(async ({ data, context }): Promise<Res<PresenciaRecienteRow[]>> => {
+    const guard = await assertAdmin(context.supabase, context.userId);
+    if (guard) return { error: guard };
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: rows, error } = await supabaseAdmin.rpc("admin_presencia_reciente", {
+      minutes_back: Math.min(Math.max(data.minutes ?? 15, 1), 240),
+    });
+    if (error) return { error: error.message };
+    return ((rows ?? []) as any[]).map((r) => ({
+      user_id: String(r.user_id),
+      email: r.email ?? null,
+      nombre: String(r.nombre ?? ""),
+      plan: String(r.plan ?? "basica"),
+      role: String(r.role ?? "student"),
+      last_seen: String(r.last_seen),
+      started_at: String(r.started_at),
+      path: r.path ?? null,
+      label: r.label ?? null,
+    }));
+  });
+
+/* ── Total ganado ───────────────────────────────────────────────────────── */
+
+export interface TotalGanado {
+  /** Cobrado neto (cargos exitosos menos reembolsos), en MXN. */
+  total: number;
+  currency: string;
+  charges: number;
+  refunded: number;
+  /** `true` si Stripe truncó el histórico (más de 1000 cargos). */
+  truncado: boolean;
+}
+
+/** Suma histórica realmente cobrada en Stripe para el ambiente elegido. */
+export const adminTotalGanado = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { environment: StripeEnv }) => data)
+  .handler(async ({ data, context }): Promise<Res<TotalGanado>> => {
+    const guard = await assertAdmin(context.supabase, context.userId);
+    if (guard) return { error: guard };
+    try {
+      const stripe = createStripeClient(data.environment);
+      let bruto = 0;
+      let reembolsado = 0;
+      let cargos = 0;
+      let currency = "mxn";
+      let truncado = false;
+      let starting_after: string | undefined;
+      for (let page = 0; page < 10; page++) {
+        const lote = await stripe.charges.list({
+          limit: 100,
+          ...(starting_after ? { starting_after } : {}),
+        });
+        for (const c of lote.data) {
+          if (c.status !== "succeeded" || !c.paid) continue;
+          cargos++;
+          bruto += c.amount_captured ?? c.amount ?? 0;
+          reembolsado += c.amount_refunded ?? 0;
+          if (c.currency) currency = c.currency;
+        }
+        if (!lote.has_more) break;
+        starting_after = lote.data[lote.data.length - 1]?.id;
+        if (page === 9 && lote.has_more) truncado = true;
+      }
+      return {
+        total: (bruto - reembolsado) / 100,
+        currency: currency.toUpperCase(),
+        charges: cargos,
+        refunded: reembolsado / 100,
+        truncado,
+      };
+    } catch (error) {
+      return { error: getStripeErrorMessage(error) };
+    }
+  });
