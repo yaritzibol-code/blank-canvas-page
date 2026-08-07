@@ -11,10 +11,12 @@ import {
   adminAttemptQuestions,
   adminAttemptsAudit,
   adminYarisLogs,
+  adminYarisUsage,
   type AuditAnswer,
   type AuditAttempt,
   type AuditQuestion,
   type YarisLogRow,
+  type YarisUsageSummary,
 } from "@/lib/audit.functions";
 import { cardStyle, inputStyle } from "@/components/admin/AdminShell";
 import { MATERIAS_DEF } from "@/lib/store";
@@ -262,6 +264,55 @@ function Cuestionarios({ userId, days }: { userId: string; days: number }) {
 
 /* ───────────────────────── Conversaciones ───────────────────────── */
 
+/** Resumen de en qué usó Yaris la estudiante durante el periodo. */
+function ResumenYaris({ userId, days }: { userId: string; days: number }) {
+  const [sum, setSum] = useState<YarisUsageSummary | null>(null);
+
+  useEffect(() => {
+    let vivo = true;
+    void adminYarisUsage({ data: { userId, days } }).then((res) => {
+      if (vivo && !("error" in res)) setSum(res);
+    });
+    return () => { vivo = false; };
+  }, [userId, days]);
+
+  if (!sum) return null;
+
+  const chip = (label: string, valor: string | number) => (
+    <div key={label} style={{ border: "1px solid #E8EEF6", borderRadius: 10, padding: "8px 12px", minWidth: 120 }}>
+      <div style={{ fontSize: ".68rem", color: MUTED, fontWeight: 700 }}>{label}</div>
+      <div style={{ fontSize: ".95rem", color: INK, fontWeight: 800, fontFamily: DISPLAY }}>{valor}</div>
+    </div>
+  );
+
+  return (
+    <div style={{ marginBottom: 14 }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 8 }}>
+        {chip("Intercambios", sum.conversaciones)}
+        {chip("Llamadas al modelo", sum.llamadas)}
+        {chip("Modo socrático", sum.socratico)}
+        {chip("Tokens", sum.tokens.toLocaleString("es-MX"))}
+        {chip("Errores", sum.errores)}
+        {chip("Último uso", sum.ultimo ? fecha(sum.ultimo) : "—")}
+      </div>
+      {sum.porSeccion.length > 0 && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 8 }}>
+          {sum.porSeccion.map((s) => (
+            <span key={s.seccion} style={{ fontSize: ".72rem", fontWeight: 700, color: "#3D5D91", background: "#F7F9FC", border: "1px solid #E8EEF6", borderRadius: 20, padding: "4px 10px" }}>
+              {s.seccion} · {s.total}
+            </span>
+          ))}
+        </div>
+      )}
+      {sum.sinTranscripcion > 0 && (
+        <p style={{ fontSize: ".74rem", color: MUTED }}>
+          {sum.sinTranscripcion} usos de IA sin transcripción (anteriores a la bitácora o de análisis de Pathy).
+        </p>
+      )}
+    </div>
+  );
+}
+
 function Conversaciones({ userId, days }: { userId: string; days: number }) {
   const [rows, setRows] = useState<YarisLogRow[]>([]);
   const [cargando, setCargando] = useState(true);
@@ -279,14 +330,15 @@ function Conversaciones({ userId, days }: { userId: string; days: number }) {
 
   useEffect(() => { void cargar(); }, [cargar]);
 
-  if (cargando) return <p style={{ fontSize: ".82rem", color: MUTED }}>Cargando conversaciones…</p>;
   if (error) return <p style={{ fontSize: ".82rem", color: "#c0392b" }}>{error}</p>;
-  if (rows.length === 0) {
-    return <p style={{ fontSize: ".82rem", color: MUTED }}>Sin conversaciones con Yaris en este periodo.</p>;
-  }
 
   return (
     <>
+      <ResumenYaris userId={userId} days={days} />
+      {cargando && <p style={{ fontSize: ".82rem", color: MUTED }}>Cargando conversaciones…</p>}
+      {!cargando && rows.length === 0 && (
+        <p style={{ fontSize: ".82rem", color: MUTED }}>Sin conversaciones con Yaris en este periodo.</p>
+      )}
       <div style={{ fontSize: ".76rem", color: MUTED, marginBottom: 8 }}>{rows.length} intercambios</div>
       <div style={{ display: "grid", gap: 10 }}>
         {rows.map((r) => (
