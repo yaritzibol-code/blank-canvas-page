@@ -37,6 +37,8 @@ import {
   useStore,
   type User,
 } from "@/lib/store";
+import { StudentAudit } from "@/components/admin/StudentAudit";
+
 import { PLANES, planById, planIdDe, type PlanId } from "@/lib/pricing";
 
 export const Route = createFileRoute("/admin/perfil")({
