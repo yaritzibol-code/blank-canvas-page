@@ -31,6 +31,7 @@ import { QuestionImages } from "@/components/banco/QuestionImages";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import {
+  FREE_CIAAC_MAX,
   FREE_LIMITS,
   consumeFree,
   hasFreeLeft,
