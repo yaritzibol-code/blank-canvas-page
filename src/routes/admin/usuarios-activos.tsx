@@ -7,8 +7,10 @@ import {
   observarPresencia,
   presenciaActual,
   presenciaConectada,
+  IDLE_MS,
   type PresenciaUsuario,
 } from "@/lib/presence";
+import { adminPresenciaReciente, type PresenciaRecienteRow } from "@/lib/admin.functions";
 
 export const Route = createFileRoute("/admin/usuarios-activos")({
   component: UsuariosActivosPage,
@@ -28,6 +30,8 @@ function UsuariosActivosPage() {
   const [incluirInactivos, setIncluirInactivos] = useState(true);
   const [busqueda, setBusqueda] = useState("");
   const [ahora, setAhora] = useState(() => Date.now());
+  const [respaldo, setRespaldo] = useState<PresenciaRecienteRow[]>([]);
+  const [usandoRespaldo, setUsandoRespaldo] = useState(false);
 
   // Reloj local: los "hace X min" se refrescan sin depender de eventos.
   useEffect(() => {
@@ -53,14 +57,51 @@ function UsuariosActivosPage() {
   }, []);
 
 
+  // Respaldo: si el canal en vivo no reporta a nadie, se consultan las
+  // sesiones con actividad reciente (`last_seen_at`) para no mostrar 0 falso.
+  useEffect(() => {
+    let cancel = false;
+    const consultar = async () => {
+      const r = await adminPresenciaReciente({ data: { minutes: 15 } });
+      if (!cancel && !("error" in r)) setRespaldo(r);
+    };
+    void consultar();
+    const id = window.setInterval(() => void consultar(), 60_000);
+    return () => {
+      cancel = true;
+      window.clearInterval(id);
+    };
+  }, []);
+
+  const lista: PresenciaUsuario[] = useMemo(() => {
+    if (presencias.length > 0) return presencias;
+    return respaldo.map((r) => ({
+      userId: r.user_id,
+      nombre: r.nombre || r.email || "Sin nombre",
+      email: r.email ?? "",
+      role: r.role,
+      plan: r.plan,
+      ruta: r.path ?? "/",
+      pantalla: r.label ?? r.path ?? "—",
+      actividad: `Última señal ${new Date(r.last_seen).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" })}`,
+      desde: r.started_at,
+      pestanas: 1,
+      inactivo: ahora - new Date(r.last_seen).getTime() > IDLE_MS,
+    })) as PresenciaUsuario[];
+  }, [presencias, respaldo, ahora]);
+
+  useEffect(() => {
+    setUsandoRespaldo(presencias.length === 0 && respaldo.length > 0);
+  }, [presencias, respaldo]);
+
   const filtradas = useMemo(() => {
     const q = busqueda.trim().toLowerCase();
-    return presencias
+    return lista
       .filter((p) => (incluirInactivos ? true : !p.inactivo))
       .filter((p) => !q || p.nombre.toLowerCase().includes(q) || p.email.toLowerCase().includes(q));
-  }, [presencias, incluirInactivos, busqueda]);
+  }, [lista, incluirInactivos, busqueda]);
 
-  const activos = presencias.filter((p) => !p.inactivo).length;
+  const activos = lista.filter((p) => !p.inactivo).length;
 
   return (
     <AdminShell title="Usuarios activos" active="usuarios_activos">
@@ -73,7 +114,7 @@ function UsuariosActivosPage() {
             {activos}
           </div>
           <div style={{ fontSize: ".76rem", color: "#647DA0", marginTop: 4 }}>
-            {presencias.length - activos} en reposo · {presencias.reduce((n, p) => n + p.pestanas, 0)} pestañas
+            {lista.length - activos} en reposo · {lista.reduce((n, p) => n + p.pestanas, 0)} pestañas
           </div>
         </div>
         <div style={{ ...cardStyle, padding: 18 }}>
@@ -83,11 +124,13 @@ function UsuariosActivosPage() {
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 10 }}>
             <span style={{ width: 10, height: 10, borderRadius: 999, background: conectado ? "#2ecc71" : "#f39c12" }} />
             <span style={{ fontSize: ".85rem", fontWeight: 700, color: "#22375C" }}>
-              {conectado ? "Escuchando" : "Conectando…"}
+              {usandoRespaldo ? "Respaldo por actividad" : conectado ? "Escuchando" : "Conectando…"}
             </span>
           </div>
           <div style={{ fontSize: ".76rem", color: "#647DA0", marginTop: 6 }}>
-            La lista se actualiza sola, sin recargar.
+            {usandoRespaldo
+              ? "El canal en vivo no reportó a nadie; se muestran las sesiones con señal en los últimos 15 minutos."
+              : "La lista se actualiza sola, sin recargar."}
           </div>
         </div>
       </div>
