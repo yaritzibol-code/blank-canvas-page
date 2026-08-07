@@ -15,7 +15,6 @@ import {
   logYarisUse,
   materiaBySlug,
   MATERIAS_DEF,
-  BASICA_SESSION_PER_MATERIA,
   sessionKey,
   saveActiveSession,
   loadActiveSession,
@@ -31,6 +30,7 @@ import { QuestionImages } from "@/components/banco/QuestionImages";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import {
+  FREE_CIAAC_MAX,
   FREE_LIMITS,
   consumeFree,
   hasFreeLeft,
@@ -312,18 +312,29 @@ function CuestionarioPage() {
     if (search.banco === "la")
       return shuffle(fromPool).slice(0, Math.min(search.qty ?? (paid ? 50 : 10), fromPool.length));
     if (paid) return shuffle(fromPool).slice(0, Math.min(search.qty ?? 10, fromPool.length));
+    // Plan gratuito en CIAAC: sesión de 25 reactivos como máximo, repartidos
+    // por turnos entre las materias elegidas para que ninguna quede fuera.
     const byMateria = new Map<string, BankQuestion[]>();
     fromPool.forEach((q) => {
       const list = byMateria.get(q.materia) ?? [];
       list.push(q);
       byMateria.set(q.materia, list);
     });
+    const colas = [...byMateria.values()].map((qs) => shuffle(qs));
+    const tope = Math.min(FREE_CIAAC_MAX, search.qty ?? FREE_CIAAC_MAX, fromPool.length);
     const picked: BankQuestion[] = [];
-    byMateria.forEach((qs) => {
-      picked.push(...shuffle(qs).slice(0, BASICA_SESSION_PER_MATERIA));
-    });
+    let vuelta = 0;
+    while (picked.length < tope && colas.some((c) => c.length > vuelta)) {
+      for (const cola of colas) {
+        if (picked.length >= tope) break;
+        const q = cola[vuelta];
+        if (q) picked.push(q);
+      }
+      vuelta += 1;
+    }
     return shuffle(picked);
   }
+
 
   // Construye el pool real de preguntas al montar (una sola vez).
   useEffect(() => {

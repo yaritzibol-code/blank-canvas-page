@@ -256,3 +256,76 @@ export const adminYarisLogs = createServerFn({ method: "POST" })
       })),
     };
   });
+
+/* ─────────────────── Resumen de uso de Yaris por alumno ─────────────────── */
+
+export interface YarisUsageSummary {
+  /** Intercambios con transcripción guardada. */
+  conversaciones: number;
+  /** Llamadas al modelo registradas (incluye las previas a la bitácora). */
+  llamadas: number;
+  sinTranscripcion: number;
+  tokens: number;
+  errores: number;
+  socratico: number;
+  ultimo: string | null;
+  porSeccion: Array<{ seccion: string; total: number }>;
+}
+
+export const adminYarisUsage = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { userId: string; days?: number }) => ({
+    userId: String(data?.userId ?? ""),
+    days: Math.min(Math.max(Math.round(data?.days ?? 90), 1), 365),
+  }))
+  .handler(async ({ data, context }): Promise<Res<YarisUsageSummary>> => {
+    const guard = await assertAdmin(context.supabase);
+    if (guard) return { error: guard };
+    if (!data.userId) return { error: "Falta el usuario" };
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+    const since = new Date(Date.now() - data.days * 86400000).toISOString();
+    const [msgs, usage] = await Promise.all([
+      supabaseAdmin
+        .from("yaris_messages")
+        .select("seccion,materia,tokens_in,tokens_out,success,pre_answer,created_at")
+        .eq("user_id", data.userId)
+        .gte("created_at", since),
+      supabaseAdmin
+        .from("ai_usage")
+        .select("id,created_at")
+        .eq("user_id", data.userId)
+        .gte("created_at", since),
+    ]);
+    if (msgs.error) return { error: msgs.error.message };
+
+    const rows = msgs.data ?? [];
+    const porSeccion = new Map<string, number>();
+    let tokens = 0;
+    let errores = 0;
+    let socratico = 0;
+    let ultimo: string | null = null;
+    for (const r of rows) {
+      const key = (r.seccion as string | null) || (r.materia as string | null) || "Chat general";
+      porSeccion.set(key, (porSeccion.get(key) ?? 0) + 1);
+      tokens += (r.tokens_in ?? 0) + (r.tokens_out ?? 0);
+      if (r.success === false) errores += 1;
+      if (r.pre_answer) socratico += 1;
+      const at = r.created_at as string;
+      if (!ultimo || at > ultimo) ultimo = at;
+    }
+    const llamadas = usage.data?.length ?? 0;
+
+    return {
+      conversaciones: rows.length,
+      llamadas,
+      sinTranscripcion: Math.max(0, llamadas - rows.length),
+      tokens,
+      errores,
+      socratico,
+      ultimo,
+      porSeccion: [...porSeccion.entries()]
+        .map(([seccion, total]) => ({ seccion, total }))
+        .sort((a, b) => b.total - a.total),
+    };
+  });
