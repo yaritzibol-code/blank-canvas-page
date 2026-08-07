@@ -107,6 +107,30 @@ function OperacionesPage() {
 
   return (
     <AdminShell title="Panel de operaciones" active="operaciones">
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
+        <span style={{ fontSize: ".74rem", color: "#647DA0", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".8px" }}>Ambiente de cobros</span>
+        {(["live", "sandbox"] as const).map((v) => (
+          <button
+            key={v}
+            type="button"
+            onClick={() => setEnvPersist(v)}
+            style={{
+              minHeight: 36,
+              padding: "6px 14px",
+              borderRadius: 999,
+              cursor: "pointer",
+              fontSize: ".78rem",
+              fontWeight: 700,
+              border: env === v ? "2px solid #22375C" : "1px solid rgba(61,93,145,.25)",
+              background: env === v ? "#22375C" : "#fff",
+              color: env === v ? "#fff" : "#3D5D91",
+            }}
+          >
+            {v === "live" ? "Real (live)" : "Pruebas (sandbox)"}
+          </button>
+        ))}
+      </div>
+
       {err && (
         <div style={{ background: "#FEE2E2", color: "#991B1B", border: "1px solid #FCA5A5", padding: 12, borderRadius: 12, marginBottom: 16 }}>
           {err}
