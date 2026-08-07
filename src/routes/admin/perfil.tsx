@@ -29,7 +29,8 @@ import {
   getUserById,
   getUsers,
   logAccessChange,
-  materiaPerformance,
+  progresoPorRuta,
+  type RutaPerf,
   recentActivity,
   resetPassword,
   studentStats,
@@ -61,7 +62,9 @@ function AdminPerfilPage() {
 
   const stats = useStore(() => (student ? studentStats(student.id) : null));
   const streak = useStore(() => (student ? getStreak(student.id) : 0));
-  const perf = useStore(() => (student ? materiaPerformance(student.id) : []));
+  const rutas = useStore(() =>
+    student ? progresoPorRuta(student.id) : { ciaac: [] as RutaPerf[], lineaAerea: [] as RutaPerf[] },
+  );
   const activity = useStore(() => (student ? recentActivity(student.id, 5) : []));
   const changes = useStore(() => (student ? getAccessChanges(student.id) : []));
 
