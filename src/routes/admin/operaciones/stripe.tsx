@@ -9,7 +9,7 @@ import {
   type StripeEventRow,
   type BillingAuditRow,
 } from "@/lib/admin.functions";
-import { getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
+import { getAdminEnv } from "@/lib/admin-env";
 
 export const Route = createFileRoute("/admin/operaciones/stripe")({ component: StripeEventsPage });
 
@@ -26,7 +26,7 @@ function StripeEventsPage() {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
-  const env = isPaymentsConfigured() ? getStripeEnvironment() : "sandbox";
+  const env = getAdminEnv();
 
   async function load() {
     setErr(null);

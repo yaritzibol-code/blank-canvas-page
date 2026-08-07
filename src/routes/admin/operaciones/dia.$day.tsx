@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AdminShell, cardStyle, cardHeadStyle } from "@/components/admin/AdminShell";
 import { adminDayDrilldown, type DayDrilldown } from "@/lib/admin.functions";
-import { getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
+import { getAdminEnv } from "@/lib/admin-env";
 
 export const Route = createFileRoute("/admin/operaciones/dia/$day")({
   component: DrilldownPage,
@@ -20,7 +20,7 @@ function DrilldownPage() {
   const [data, setData] = useState<DayDrilldown | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const env = isPaymentsConfigured() ? getStripeEnvironment() : "sandbox";
+  const env = getAdminEnv();
 
   useEffect(() => {
     let cancel = false;

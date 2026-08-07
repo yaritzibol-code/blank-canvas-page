@@ -11,7 +11,7 @@ import {
   type MrrDailyPoint,
   type AiDailyPoint,
 } from "@/lib/admin.functions";
-import { getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
+import { getAdminEnv, setAdminEnv } from "@/lib/admin-env";
 import { estimateAiCost, fmtMxn, fmtUsd, USD_MXN } from "@/lib/ai-cost";
 
 
@@ -41,17 +41,12 @@ function OperacionesPage() {
   const navigate = useNavigate();
   // El panel debe mostrar dinero real por defecto: el ambiente de datos se
   // elige aquí (no se deriva del token del preview, que siempre es de prueba).
-  const clientEnv = isPaymentsConfigured() ? getStripeEnvironment() : "live";
-  const [env, setEnv] = useState<"live" | "sandbox">(() => {
-    if (typeof window === "undefined") return "live";
-    const saved = window.localStorage.getItem("fp_admin_env");
-    return saved === "sandbox" || saved === "live" ? saved : "live";
-  });
+
+  const [env, setEnv] = useState<"live" | "sandbox">(() => getAdminEnv());
   const setEnvPersist = (v: "live" | "sandbox") => {
     setEnv(v);
-    if (typeof window !== "undefined") window.localStorage.setItem("fp_admin_env", v);
+    setAdminEnv(v);
   };
-  void clientEnv;
 
   const goDay = (day: string) => navigate({ to: "/admin/operaciones/dia/$day", params: { day } });
 
