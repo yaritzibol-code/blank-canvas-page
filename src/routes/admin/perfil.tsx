@@ -495,7 +495,7 @@ function AdminPerfilPage() {
               <span style={{ padding: "5px 12px", borderRadius: 20, fontSize: ".74rem", fontWeight: 700, background: "rgba(46,204,113,.12)", color: "#1a7a4a", display: "inline-flex", alignItems: "center", gap: 5 }}>
                 <Icon n="arrowUp" size={13} /> Materia más fuerte: {fuerte.name} ({fuerte.avg}%)
               </span>
-              {debil.slug !== fuerte.slug && (
+              {debil.key !== fuerte.key && (
                 <span style={{ padding: "5px 12px", borderRadius: 20, fontSize: ".74rem", fontWeight: 700, background: "rgba(231,76,60,.1)", color: "#c0392b", display: "inline-flex", alignItems: "center", gap: 5 }}>
                   <Icon n="arrowDown" size={13} /> Materia más débil: {debil.name} ({debil.avg}%)
                 </span>
@@ -549,20 +549,31 @@ function AdminPerfilPage() {
       {/* ───────── Materias progress ───────── */}
       <div style={{ ...cardStyle, marginBottom: 20 }}>
         <div style={cardHeadStyle}><Icon n="book" size={15} /> Progreso por materia</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          {perf.map((m) => (
-            <div key={m.slug} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ fontSize: ".75rem", color: "#22375C", width: 170, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "flex", alignItems: "center", gap: 6 }}>
-                <Icon n={m.icon as FPIconName} size={14} color="#647DA0" /> {m.name}
-              </span>
-              <div style={{ flex: 1, height: 6, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
-                <div style={{ height: "100%", borderRadius: 10, background: barColor(m.avg), width: `${m.avg ?? 0}%`, transition: "width .6s ease" }} />
-              </div>
-              <span style={{ fontSize: ".72rem", fontWeight: 700, width: 34, textAlign: "right", flexShrink: 0, color: barColor(m.avg) }}>{m.avg !== null ? `${m.avg}%` : "—"}</span>
+        {([
+          { titulo: "CIAAC · materias", items: rutas.ciaac },
+          { titulo: "Línea Aérea · manuales", items: rutas.lineaAerea },
+        ] as { titulo: string; items: RutaPerf[] }[]).map((grupo) => (
+          <div key={grupo.titulo} style={{ marginBottom: 14 }}>
+            <div style={{ fontSize: ".7rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "#8DA1BE", marginBottom: 8 }}>{grupo.titulo}</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              {grupo.items.length === 0 ? (
+                <p style={{ fontSize: ".78rem", color: "#8DA1BE" }}>Sin datos.</p>
+              ) : grupo.items.map((m) => (
+                <div key={m.key} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <span style={{ fontSize: ".75rem", color: "#22375C", width: 170, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "flex", alignItems: "center", gap: 6 }}>
+                    <Icon n={m.icon as FPIconName} size={14} color="#647DA0" /> {m.name}
+                  </span>
+                  <div style={{ flex: 1, height: 6, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
+                    <div style={{ height: "100%", borderRadius: 10, background: barColor(m.avg), width: `${m.avg ?? 0}%`, transition: "width .6s ease" }} />
+                  </div>
+                  <span style={{ fontSize: ".72rem", fontWeight: 700, width: 34, textAlign: "right", flexShrink: 0, color: barColor(m.avg) }}>{m.avg !== null ? `${m.avg}%` : "—"}</span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
+
 
       {/* ───────── Auditoría (cuestionarios + Yaris) ───────── */}
       <StudentAudit userId={student.id} />
