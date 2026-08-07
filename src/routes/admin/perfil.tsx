@@ -559,6 +559,11 @@ function AdminPerfilPage() {
         </div>
       </div>
 
+      {/* ───────── Auditoría (cuestionarios + Yaris) ───────── */}
+      <StudentAudit userId={student.id} />
+
+
+
       {/* ───────── Notas internas ───────── */}
       <div style={{ ...cardStyle, marginBottom: 20 }}>
         <div style={{ ...cardHeadStyle, marginBottom: 12 }}><Icon n="pencil" size={15} /> Notas internas</div>
