@@ -130,11 +130,11 @@ function AdminResumenPage() {
         {/* Materias con menor desempeño */}
         <div style={cardStyle}>
           <div style={cardHeadStyle}><Icon n="book" size={15} /> Materias con menor desempeño</div>
-          {summary.weakestMaterias.length === 0 ? (
+          {weakest.length === 0 ? (
             <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>Aún no hay datos suficientes de cuestionarios o simuladores.</p>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {summary.weakestMaterias.map((m) => (
+              {weakest.map((m) => (
                 <div key={m.name} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <span style={{ fontSize: ".78rem", color: "#22375C", width: 170, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{m.name}</span>
                   <div style={{ flex: 1, height: 6, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
