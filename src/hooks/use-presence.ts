@@ -7,7 +7,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouterState } from "@tanstack/react-router";
 import {
-  TAB_ID,
+  tabId,
   getPresenceActivity,
   nombrePantalla,
   onPresenceActivityChange,
@@ -51,7 +51,7 @@ export function usePresence(user: User | null | undefined): void {
     if (!user || typeof window === "undefined") return;
 
     const estado = (): PresenceState => ({
-      tabId: TAB_ID,
+      tabId: tabId(),
       userId: user.id,
       nombre: user.nombre || "Sin nombre",
       email: user.email || "",
@@ -82,7 +82,7 @@ export function usePresence(user: User | null | undefined): void {
     if (!user) return;
     interaccionRef.current = Date.now();
     publicarPresencia({
-      tabId: TAB_ID,
+      tabId: tabId(),
       userId: user.id,
       nombre: user.nombre || "Sin nombre",
       email: user.email || "",

@@ -99,10 +99,17 @@ export function nombrePantalla(ruta: string): string {
  * hook que publica como la pantalla admin que observa usan este singleton.
  */
 
-export const TAB_ID: string =
-  typeof crypto !== "undefined" && "randomUUID" in crypto
-    ? crypto.randomUUID()
-    : `tab_${Math.random().toString(36).slice(2)}`;
+// Se genera de forma perezosa: en el runtime del servidor no se permite
+// generar valores aleatorios al cargar el módulo (sólo dentro de un handler).
+let tabIdCache: string | null = null;
+export function tabId(): string {
+  if (tabIdCache) return tabIdCache;
+  tabIdCache =
+    typeof crypto !== "undefined" && "randomUUID" in crypto
+      ? crypto.randomUUID()
+      : `tab_${Math.random().toString(36).slice(2)}`;
+  return tabIdCache;
+}
 
 let canal: RealtimeChannel | null = null;
 let estadoPropio: PresenceState | null = null;
@@ -117,7 +124,7 @@ function asegurarCanal(): RealtimeChannel | null {
   if (canal) return canal;
   const client = supa();
   if (!client) return null;
-  const c = client.channel(PRESENCE_CHANNEL, { config: { presence: { key: TAB_ID } } });
+  const c = client.channel(PRESENCE_CHANNEL, { config: { presence: { key: tabId() } } });
   canal = c;
   c.on("presence", { event: "sync" }, avisar)
     .on("presence", { event: "join" }, avisar)
