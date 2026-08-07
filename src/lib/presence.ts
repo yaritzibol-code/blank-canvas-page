@@ -93,13 +93,75 @@ export function nombrePantalla(ruta: string): string {
   return RUTAS.find((r) => r.test.test(limpia))?.label ?? limpia;
 }
 
-/* ----------------------------------------------------------------- canales */
+/* ----------------------------------------------------------------- canal ---
+ * Un solo canal por pestaña: la nube no admite dos suscripciones al mismo
+ * tema sobre la misma conexión (la segunda nunca recibe el estado). Tanto el
+ * hook que publica como la pantalla admin que observa usan este singleton.
+ */
 
-export function crearCanalPresencia(tabId: string): RealtimeChannel | null {
+export const TAB_ID: string =
+  typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID()
+    : `tab_${Math.random().toString(36).slice(2)}`;
+
+let canal: RealtimeChannel | null = null;
+let estadoPropio: PresenceState | null = null;
+let estadoCanal = "idle";
+const oyentes = new Set<() => void>();
+
+function avisar(): void {
+  oyentes.forEach((fn) => fn());
+}
+
+function asegurarCanal(): RealtimeChannel | null {
+  if (canal) return canal;
   const client = supa();
   if (!client) return null;
-  return client.channel(PRESENCE_CHANNEL, { config: { presence: { key: tabId } } });
+  const c = client.channel(PRESENCE_CHANNEL, { config: { presence: { key: TAB_ID } } });
+  canal = c;
+  c.on("presence", { event: "sync" }, avisar)
+    .on("presence", { event: "join" }, avisar)
+    .on("presence", { event: "leave" }, avisar)
+    .subscribe((status) => {
+      estadoCanal = status;
+      if (status === "SUBSCRIBED" && estadoPropio) void c.track(estadoPropio);
+      avisar();
+    });
+  return c;
 }
+
+/** Publica (o actualiza) la presencia de esta pestaña. */
+export function publicarPresencia(estado: PresenceState): void {
+  estadoPropio = estado;
+  const c = asegurarCanal();
+  if (c && estadoCanal === "SUBSCRIBED") void c.track(estado);
+}
+
+/** Deja de publicar la presencia de esta pestaña (sin cerrar el canal). */
+export function retirarPresencia(): void {
+  estadoPropio = null;
+  if (canal && estadoCanal === "SUBSCRIBED") void canal.untrack();
+}
+
+/** Se engancha al canal compartido; devuelve la función para desengancharse. */
+export function observarPresencia(fn: () => void): () => void {
+  oyentes.add(fn);
+  asegurarCanal();
+  return () => {
+    oyentes.delete(fn);
+  };
+}
+
+/** Lista agregada por persona con el estado actual del canal. */
+export function presenciaActual(): PresenciaUsuario[] {
+  if (!canal) return [];
+  return agruparPorUsuario(aplanarPresencia(canal.presenceState() as unknown as Record<string, unknown[]>));
+}
+
+export function presenciaConectada(): boolean {
+  return estadoCanal === "SUBSCRIBED";
+}
+
 
 /** Aplana el objeto de presencia de Supabase a una lista de estados. */
 export function aplanarPresencia(raw: Record<string, unknown[]>): PresenceState[] {

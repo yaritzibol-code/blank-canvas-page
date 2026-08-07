@@ -53,15 +53,23 @@ function AdminResumenPage() {
   );
 
   const [real, setReal] = useState<AdminResumen | null>(null);
+  const [errReal, setErrReal] = useState<string | null>(null);
   useEffect(() => {
     let cancel = false;
-    adminResumen().then((r) => {
-      if (!cancel && !("error" in r)) setReal(r);
-    });
+    adminResumen()
+      .then((r) => {
+        if (cancel) return;
+        if ("error" in r) setErrReal(r.error);
+        else setReal(r);
+      })
+      .catch((e: unknown) => {
+        if (!cancel) setErrReal(e instanceof Error ? e.message : "Error desconocido");
+      });
     return () => {
       cancel = true;
     };
   }, []);
+
 
   const totalStudents = real ? real.total_students : summary.totalStudents;
   const activeStudents = real ? real.active_students : summary.activeStudents;
@@ -86,7 +94,14 @@ function AdminResumenPage() {
 
   return (
     <AdminShell title="Resumen general" active="resumen">
+      {errReal && (
+        <div style={{ background: "rgba(231,76,60,.07)", border: "2px solid rgba(231,76,60,.25)", borderRadius: 12, padding: "12px 14px", marginBottom: 16, fontSize: ".82rem", color: "#8a1c12" }}>
+          No se pudieron leer las métricas reales de la plataforma: {errReal}. Las cifras mostradas provienen del respaldo local.
+        </div>
+      )}
       {/* Stats */}
+
+
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 12, marginBottom: 20 }}>
         {stats.map((s) => (
