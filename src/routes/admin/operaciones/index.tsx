@@ -320,7 +320,51 @@ function OperacionesPage() {
                 <Row k="RAG chunks" v={data.platform.rag_chunks} />
               </div>
             </div>
+
+            <div style={cardStyle}>
+              <div style={cardHeadStyle}>Revisiones automáticas de salud</div>
+              <div style={{ padding: 16 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10, flexWrap: "wrap" }}>
+                  <button
+                    type="button"
+                    onClick={() => void revisarAhora()}
+                    disabled={revisando}
+                    style={{
+                      minHeight: 38,
+                      padding: "0 14px",
+                      borderRadius: 10,
+                      border: "1.5px solid #E3EAF5",
+                      background: revisando ? "#E3EAF5" : "#22375C",
+                      color: revisando ? "#647DA0" : "#fff",
+                      fontSize: ".8rem",
+                      fontWeight: 700,
+                      cursor: revisando ? "default" : "pointer",
+                    }}
+                  >
+                    {revisando ? "Revisando…" : "Revisar ahora"}
+                  </button>
+                  <span style={{ fontSize: ".76rem", color: "#647DA0" }}>
+                    Stripe {env} + consultas críticas del panel. Corre sola cada hora.
+                  </span>
+                </div>
+                {salud.length === 0 ? (
+                  <div style={{ fontSize: ".82rem", color: "#8DA1BE" }}>Aún no hay revisiones registradas.</div>
+                ) : (
+                  <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 8, maxHeight: 260, overflowY: "auto" }}>
+                    {salud.map((h) => (
+                      <li key={h.id} style={{ fontSize: ".82rem", color: "#22375C", borderBottom: "1px solid #F2DCDB", paddingBottom: 6 }}>
+                        <span style={{ color: h.ok ? "#2ecc71" : "#e74c3c", fontWeight: 800 }}>{h.ok ? "✓" : "✕"}</span>{" "}
+                        <strong>{h.check_key}</strong>
+                        <span style={{ color: "#8DA1BE" }}> · {new Date(h.created_at).toLocaleString("es-MX")}</span>
+                        {h.message && <div style={{ color: h.ok ? "#647DA0" : "#e74c3c", fontSize: ".75rem" }}>{h.message}</div>}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
           </section>
+
         </>
       )}
     </AdminShell>
