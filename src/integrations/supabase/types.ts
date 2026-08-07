@@ -703,6 +703,63 @@ export type Database = {
         }
         Relationships: []
       }
+      yaris_messages: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          fuente: string
+          id: string
+          latency_ms: number
+          materia: string | null
+          pre_answer: boolean
+          pregunta: string
+          question_text: string | null
+          respuesta: string
+          seccion: string | null
+          success: boolean
+          tokens_in: number
+          tokens_out: number
+          tono: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          fuente?: string
+          id?: string
+          latency_ms?: number
+          materia?: string | null
+          pre_answer?: boolean
+          pregunta?: string
+          question_text?: string | null
+          respuesta?: string
+          seccion?: string | null
+          success?: boolean
+          tokens_in?: number
+          tokens_out?: number
+          tono?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          fuente?: string
+          id?: string
+          latency_ms?: number
+          materia?: string | null
+          pre_answer?: boolean
+          pregunta?: string
+          question_text?: string | null
+          respuesta?: string
+          seccion?: string | null
+          success?: boolean
+          tokens_in?: number
+          tokens_out?: number
+          tono?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
