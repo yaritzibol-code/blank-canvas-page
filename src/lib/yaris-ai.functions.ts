@@ -161,6 +161,23 @@ export const yarisAiChat = createServerFn({ method: "POST" })
         latencyMs: Date.now() - started,
         success: true,
       });
+      // Bitácora auditable de la conversación (panel admin).
+      const { logYarisMessage } = await import("@/lib/yaris-log.server");
+      await logYarisMessage({
+        userId,
+        pregunta: [...data.history].reverse().find((m) => m.role === "user")?.content ?? "",
+        respuesta: text,
+        seccion: ctx.resourceTitle ?? ctx.materia ?? null,
+        materia: ctx.materia ?? null,
+        tono,
+        fuente: "chat",
+        preAnswer: Boolean(ctx.preAnswer),
+        questionText: ctx.questionText ?? null,
+        tokensIn: result.tokensIn,
+        tokensOut: result.tokensOut,
+        latencyMs: Date.now() - started,
+        success: true,
+      });
       return { text, cite: ctx.cite ?? null, ...(freeUsed !== undefined ? { freeUsed } : {}) };
     } catch (err) {
       console.error("Yaris OpenAI fetch failed", err);

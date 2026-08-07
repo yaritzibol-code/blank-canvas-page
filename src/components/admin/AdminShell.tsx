@@ -25,6 +25,8 @@ export type AdminNavKey =
   | "operaciones_yaris"
   | "operaciones_disputas"
   | "usuarios_activos"
+  | "auditoria"
+  | "yaris_chats"
   | "activity_ratio";
 
 interface NavItem {
@@ -54,6 +56,8 @@ const ADMIN_NAV: { label: string; items: NavItem[] }[] = [
       { icon: "help", label: "Eventos de Stripe", key: "operaciones_stripe", path: "/admin/operaciones/stripe" },
       { icon: "shield", label: "Disputas y evidencias", key: "operaciones_disputas", path: "/admin/operaciones/disputas" },
       { icon: "chat", label: "Yaris & IA", key: "operaciones_yaris", path: "/admin/operaciones/yaris" },
+      { icon: "doc", label: "Auditoría de cuestionarios", key: "auditoria", path: "/admin/auditoria" },
+      { icon: "chat", label: "Conversaciones con Yaris", key: "yaris_chats", path: "/admin/yaris-chats" },
     ],
   },
   {
