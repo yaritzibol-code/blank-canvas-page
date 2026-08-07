@@ -1,4 +1,5 @@
 /** Panel Admin — Resumen general (PRD 9.2). */
+import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import {
@@ -12,6 +13,8 @@ import {
   activityVisual,
 } from "@/components/admin/AdminShell";
 import { BackendAudit } from "@/components/admin/BackendAudit";
+import { adminResumen, type AdminResumen } from "@/lib/admin.functions";
+import { MATERIAS_DEF } from "@/lib/store/materias";
 
 import {
   adminSummary,
@@ -26,6 +29,10 @@ import {
 export const Route = createFileRoute("/admin/")({
   component: AdminResumenPage,
 });
+
+const materiaNombre = (slug: string) =>
+  MATERIAS_DEF.find((m) => m.slug === slug)?.name ?? slug;
+
 
 const REPORT_STATE_COLOR: Record<string, string> = {
   pendiente: "#e74c3c",
@@ -45,18 +52,37 @@ function AdminResumenPage() {
       .filter((x) => x.state === "En riesgo de abandono" || x.state === "Cerca del CIAAC"),
   );
 
+  const [real, setReal] = useState<AdminResumen | null>(null);
+  useEffect(() => {
+    let cancel = false;
+    adminResumen().then((r) => {
+      if (!cancel && !("error" in r)) setReal(r);
+    });
+    return () => {
+      cancel = true;
+    };
+  }, []);
+
+  const totalStudents = real ? real.total_students : summary.totalStudents;
+  const activeStudents = real ? real.active_students : summary.activeStudents;
+
   const stats: { icon: FPIconName; num: string; lab: string; color: string }[] = [
-    { icon: "users", num: String(summary.totalStudents), lab: "Estudiantes totales", color: "#3D5D91" },
-    { icon: "check", num: String(summary.activeStudents), lab: "Activos (7 días)", color: "#2ecc71" },
-    { icon: "clock", num: String(summary.inactiveStudents), lab: "Inactivos", color: "#f39c12" },
-    { icon: "spark", num: String(summary.newLast7), lab: "Nuevos (7 días)", color: "#6C0820" },
-    { icon: "chart", num: `${summary.avgCourseProgress}%`, lab: "Avance promedio", color: "#3D5D91" },
-    { icon: "target", num: summary.avgReadiness !== null ? `${summary.avgReadiness}%` : "—", lab: "Preparación promedio", color: "#6C0820" },
-    { icon: "sim", num: String(summary.simCount), lab: "Simuladores", color: "#3D5D91" },
-    { icon: "help", num: String(summary.quizCount), lab: "Cuestionarios", color: "#3D5D91" },
+    { icon: "users", num: String(totalStudents), lab: "Estudiantes totales", color: "#3D5D91" },
+    { icon: "check", num: String(activeStudents), lab: "Activos (7 días)", color: "#2ecc71" },
+    { icon: "clock", num: String(Math.max(totalStudents - activeStudents, 0)), lab: "Inactivos", color: "#f39c12" },
+    { icon: "spark", num: String(real ? real.new_last7 : summary.newLast7), lab: "Nuevos (7 días)", color: "#6C0820" },
+    { icon: "chart", num: real ? `${real.answered}` : String(summary.avgCourseProgress), lab: "Reactivos respondidos", color: "#3D5D91" },
+    { icon: "target", num: real ? `${real.avg_score}%` : (summary.avgReadiness !== null ? `${summary.avgReadiness}%` : "—"), lab: "Acierto promedio", color: "#6C0820" },
+    { icon: "sim", num: String(real ? real.sim_count : summary.simCount), lab: "Simuladores", color: "#3D5D91" },
+    { icon: "help", num: String(real ? real.quiz_count : summary.quizCount), lab: "Cuestionarios", color: "#3D5D91" },
   ];
 
+  const weakest = real
+    ? real.weakest_materias.slice(0, 3).map((m) => ({ name: materiaNombre(m.name), avg: m.avg }))
+    : summary.weakestMaterias;
+
   const totalUsers = useStore(() => getUsers().length);
+
 
   return (
     <AdminShell title="Resumen general" active="resumen">
@@ -104,11 +130,11 @@ function AdminResumenPage() {
         {/* Materias con menor desempeño */}
         <div style={cardStyle}>
           <div style={cardHeadStyle}><Icon n="book" size={15} /> Materias con menor desempeño</div>
-          {summary.weakestMaterias.length === 0 ? (
+          {weakest.length === 0 ? (
             <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>Aún no hay datos suficientes de cuestionarios o simuladores.</p>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {summary.weakestMaterias.map((m) => (
+              {weakest.map((m) => (
                 <div key={m.name} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <span style={{ fontSize: ".78rem", color: "#22375C", width: 170, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{m.name}</span>
                   <div style={{ flex: 1, height: 6, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
