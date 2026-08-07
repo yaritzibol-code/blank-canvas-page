@@ -38,6 +38,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminAccesosRouteImport } from './routes/admin/accesos'
 import { Route as AdminActivityRatioRouteImport } from './routes/admin/activity-ratio'
 import { Route as AdminAnaliticaRouteImport } from './routes/admin/analitica'
+import { Route as AdminAuditoriaRouteImport } from './routes/admin/auditoria'
 import { Route as AdminBancoRouteImport } from './routes/admin/banco'
 import { Route as AdminConfiguracionRouteImport } from './routes/admin/configuracion'
 import { Route as AdminContenidoRouteImport } from './routes/admin/contenido'
@@ -219,6 +220,11 @@ const AdminActivityRatioRoute = AdminActivityRatioRouteImport.update({
 const AdminAnaliticaRoute = AdminAnaliticaRouteImport.update({
   id: '/admin/analitica',
   path: '/admin/analitica',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAuditoriaRoute = AdminAuditoriaRouteImport.update({
+  id: '/admin/auditoria',
+  path: '/admin/auditoria',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminBancoRoute = AdminBancoRouteImport.update({
@@ -434,6 +440,7 @@ export interface FileRoutesByFullPath {
   '/admin/accesos': typeof AdminAccesosRoute
   '/admin/activity-ratio': typeof AdminActivityRatioRoute
   '/admin/analitica': typeof AdminAnaliticaRoute
+  '/admin/auditoria': typeof AdminAuditoriaRoute
   '/admin/banco': typeof AdminBancoRoute
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
@@ -500,6 +507,7 @@ export interface FileRoutesByTo {
   '/admin/accesos': typeof AdminAccesosRoute
   '/admin/activity-ratio': typeof AdminActivityRatioRoute
   '/admin/analitica': typeof AdminAnaliticaRoute
+  '/admin/auditoria': typeof AdminAuditoriaRoute
   '/admin/banco': typeof AdminBancoRoute
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
@@ -568,6 +576,7 @@ export interface FileRoutesById {
   '/admin/accesos': typeof AdminAccesosRoute
   '/admin/activity-ratio': typeof AdminActivityRatioRoute
   '/admin/analitica': typeof AdminAnaliticaRoute
+  '/admin/auditoria': typeof AdminAuditoriaRoute
   '/admin/banco': typeof AdminBancoRoute
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
@@ -637,6 +646,7 @@ export interface FileRouteTypes {
     | '/admin/accesos'
     | '/admin/activity-ratio'
     | '/admin/analitica'
+    | '/admin/auditoria'
     | '/admin/banco'
     | '/admin/configuracion'
     | '/admin/contenido'
@@ -703,6 +713,7 @@ export interface FileRouteTypes {
     | '/admin/accesos'
     | '/admin/activity-ratio'
     | '/admin/analitica'
+    | '/admin/auditoria'
     | '/admin/banco'
     | '/admin/configuracion'
     | '/admin/contenido'
@@ -770,6 +781,7 @@ export interface FileRouteTypes {
     | '/admin/accesos'
     | '/admin/activity-ratio'
     | '/admin/analitica'
+    | '/admin/auditoria'
     | '/admin/banco'
     | '/admin/configuracion'
     | '/admin/contenido'
@@ -838,6 +850,7 @@ export interface RootRouteChildren {
   AdminAccesosRoute: typeof AdminAccesosRoute
   AdminActivityRatioRoute: typeof AdminActivityRatioRoute
   AdminAnaliticaRoute: typeof AdminAnaliticaRoute
+  AdminAuditoriaRoute: typeof AdminAuditoriaRoute
   AdminBancoRoute: typeof AdminBancoRoute
   AdminConfiguracionRoute: typeof AdminConfiguracionRoute
   AdminContenidoRoute: typeof AdminContenidoRoute
@@ -1064,6 +1077,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/analitica'
       fullPath: '/admin/analitica'
       preLoaderRoute: typeof AdminAnaliticaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/auditoria': {
+      id: '/admin/auditoria'
+      path: '/admin/auditoria'
+      fullPath: '/admin/auditoria'
+      preLoaderRoute: typeof AdminAuditoriaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/banco': {
@@ -1393,6 +1413,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminAccesosRoute: AdminAccesosRoute,
   AdminActivityRatioRoute: AdminActivityRatioRoute,
   AdminAnaliticaRoute: AdminAnaliticaRoute,
+  AdminAuditoriaRoute: AdminAuditoriaRoute,
   AdminBancoRoute: AdminBancoRoute,
   AdminConfiguracionRoute: AdminConfiguracionRoute,
   AdminContenidoRoute: AdminContenidoRoute,
