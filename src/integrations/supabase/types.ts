@@ -879,6 +879,7 @@ export type Database = {
         Returns: boolean
       }
       is_admin: { Args: never; Returns: boolean }
+      is_admin_ctx: { Args: never; Returns: boolean }
       match_rag_chunks: {
         Args: {
           match_count?: number
