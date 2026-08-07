@@ -522,3 +522,38 @@ export const adminListBillingAudit = createServerFn({ method: "POST" })
     if (error) return { error: error.message };
     return (rows ?? []) as BillingAuditRow[];
   });
+
+export interface AdminResumen {
+  total_students: number;
+  active_students: number;
+  new_last7: number;
+  quiz_count: number;
+  sim_count: number;
+  answered: number;
+  avg_score: number;
+  weakest_materias: Array<{ name: string; avg: number }>;
+}
+
+/** Resumen real de la plataforma (calculado en la base de datos, no en el store local). */
+export const adminResumen = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<Res<AdminResumen>> => {
+    const guard = await assertAdmin(context.supabase, context.userId);
+    if (guard) return { error: guard };
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data, error } = await supabaseAdmin.rpc("admin_resumen");
+    if (error) return { error: error.message };
+    const r = (data as any) ?? {};
+    return {
+      total_students: Number(r.total_students ?? 0),
+      active_students: Number(r.active_students ?? 0),
+      new_last7: Number(r.new_last7 ?? 0),
+      quiz_count: Number(r.quiz_count ?? 0),
+      sim_count: Number(r.sim_count ?? 0),
+      answered: Number(r.answered ?? 0),
+      avg_score: Number(r.avg_score ?? 0),
+      weakest_materias: Array.isArray(r.weakest_materias)
+        ? r.weakest_materias.map((m: any) => ({ name: String(m.name), avg: Number(m.avg ?? 0) }))
+        : [],
+    };
+  });
