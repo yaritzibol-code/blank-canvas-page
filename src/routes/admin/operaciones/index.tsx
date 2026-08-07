@@ -42,6 +42,9 @@ function OperacionesPage() {
   const [data, setData] = useState<AdminOverview | null>(null);
   const [mrrSeries, setMrrSeries] = useState<MrrDailyPoint[]>([]);
   const [aiSeries, setAiSeries] = useState<AiDailyPoint[]>([]);
+  const [ganado, setGanado] = useState<TotalGanado | null>(null);
+  const [salud, setSalud] = useState<HealthCheckRow[]>([]);
+  const [revisando, setRevisando] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -56,26 +59,42 @@ function OperacionesPage() {
 
   const goDay = (day: string) => navigate({ to: "/admin/operaciones/dia/$day", params: { day } });
 
+  const cargarSalud = async () => {
+    const filas = await adminHealthChecks({ data: { limit: 40 } });
+    if (!("error" in filas)) setSalud(filas);
+  };
+
+  const revisarAhora = async () => {
+    setRevisando(true);
+    await adminRunHealthChecks({ data: { environment: env } });
+    await cargarSalud();
+    setRevisando(false);
+  };
+
   useEffect(() => {
     let cancel = false;
     (async () => {
       setLoading(true);
-      const [ov, mrr, ai] = await Promise.all([
+      const [ov, mrr, ai, tot] = await Promise.all([
         adminOverview({ data: { environment: env } }),
         adminMrrDaily({ data: { environment: env, days: 30 } }),
         adminAiDaily({ data: { days: 30 } }),
+        adminTotalGanado({ data: { environment: env } }),
       ]);
       if (cancel) return;
       if ("error" in ov) setErr(ov.error);
       else setData(ov);
       if (!("error" in mrr)) setMrrSeries(mrr);
       if (!("error" in ai)) setAiSeries(ai);
+      setGanado("error" in tot ? null : tot);
       setLoading(false);
+      void cargarSalud();
     })();
     return () => {
       cancel = true;
     };
   }, [env]);
+
 
   const mrrPoints: SparkPoint[] = mrrSeries.map((r) => ({ label: r.day, value: r.mrr }));
   const proPoints: SparkPoint[] = mrrSeries.map((r) => ({ label: r.day, value: r.active_count }));
