@@ -20,6 +20,13 @@ export const FREE_LIMITS = {
   pathy: 2,
 } as const;
 
+/**
+ * Tope de preguntas por sesión CIAAC (cuestionario y simulador) para el plan
+ * gratuito: ve el formato completo, pero sólo 25 reactivos.
+ */
+export const FREE_CIAAC_MAX = 25;
+
+
 export type FreeKind = keyof typeof FREE_LIMITS;
 
 /** Manuales cuyo banco está abierto al plan gratuito. */
