@@ -15,7 +15,6 @@ import {
   logYarisUse,
   materiaBySlug,
   MATERIAS_DEF,
-  BASICA_SESSION_PER_MATERIA,
   sessionKey,
   saveActiveSession,
   loadActiveSession,
