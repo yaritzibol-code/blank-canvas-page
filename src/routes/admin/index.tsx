@@ -1,4 +1,5 @@
 /** Panel Admin — Resumen general (PRD 9.2). */
+import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import {
@@ -12,6 +13,8 @@ import {
   activityVisual,
 } from "@/components/admin/AdminShell";
 import { BackendAudit } from "@/components/admin/BackendAudit";
+import { adminResumen, type AdminResumen } from "@/lib/admin.functions";
+import { MATERIAS_DEF } from "@/lib/store/materias";
 
 import {
   adminSummary,
@@ -26,6 +29,10 @@ import {
 export const Route = createFileRoute("/admin/")({
   component: AdminResumenPage,
 });
+
+const materiaNombre = (slug: string) =>
+  MATERIAS_DEF.find((m) => m.slug === slug)?.name ?? slug;
+
 
 const REPORT_STATE_COLOR: Record<string, string> = {
   pendiente: "#e74c3c",
