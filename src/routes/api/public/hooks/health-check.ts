@@ -12,8 +12,12 @@ export const Route = createFileRoute("/api/public/hooks/health-check")({
         const apikey =
           request.headers.get("apikey") ??
           request.headers.get("authorization")?.replace("Bearer ", "");
-        const esperada = process.env["SUPABASE_ANON_KEY"] ?? process.env["SUPABASE_PUBLISHABLE_KEY"];
-        if (!apikey || !esperada || apikey !== esperada) {
+        const validas = [
+          process.env["SUPABASE_ANON_KEY"],
+          process.env["SUPABASE_PUBLISHABLE_KEY"],
+          process.env["VITE_SUPABASE_PUBLISHABLE_KEY"],
+        ].filter(Boolean) as string[];
+        if (!apikey || !validas.includes(apikey)) {
           return new Response(JSON.stringify({ error: "unauthorized" }), {
             status: 401,
             headers: { "Content-Type": "application/json" },
