@@ -47,6 +47,7 @@ import { Route as AdminPerfilRouteImport } from './routes/admin/perfil'
 import { Route as AdminSoporteRouteImport } from './routes/admin/soporte'
 import { Route as AdminUsuariosActivosRouteImport } from './routes/admin/usuarios-activos'
 import { Route as AdminWhatsappRouteImport } from './routes/admin/whatsapp'
+import { Route as AdminYarisChatsRouteImport } from './routes/admin/yaris-chats'
 import { Route as CheckoutReturnRouteImport } from './routes/checkout.return'
 import { Route as CiaacMateriaRouteImport } from './routes/ciaac_.$materia'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
@@ -267,6 +268,11 @@ const AdminWhatsappRoute = AdminWhatsappRouteImport.update({
   path: '/admin/whatsapp',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminYarisChatsRoute = AdminYarisChatsRouteImport.update({
+  id: '/admin/yaris-chats',
+  path: '/admin/yaris-chats',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckoutReturnRoute = CheckoutReturnRouteImport.update({
   id: '/checkout/return',
   path: '/checkout/return',
@@ -449,6 +455,7 @@ export interface FileRoutesByFullPath {
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
   '/admin/whatsapp': typeof AdminWhatsappRoute
+  '/admin/yaris-chats': typeof AdminYarisChatsRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/ciaac/$materia': typeof CiaacMateriaRoute
   '/dashboard/analisis': typeof DashboardAnalisisRoute
@@ -516,6 +523,7 @@ export interface FileRoutesByTo {
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
   '/admin/whatsapp': typeof AdminWhatsappRoute
+  '/admin/yaris-chats': typeof AdminYarisChatsRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/ciaac/$materia': typeof CiaacMateriaRoute
   '/dashboard/analisis': typeof DashboardAnalisisRoute
@@ -585,6 +593,7 @@ export interface FileRoutesById {
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
   '/admin/whatsapp': typeof AdminWhatsappRoute
+  '/admin/yaris-chats': typeof AdminYarisChatsRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/ciaac_/$materia': typeof CiaacMateriaRoute
   '/dashboard/analisis': typeof DashboardAnalisisRoute
@@ -655,6 +664,7 @@ export interface FileRouteTypes {
     | '/admin/soporte'
     | '/admin/usuarios-activos'
     | '/admin/whatsapp'
+    | '/admin/yaris-chats'
     | '/checkout/return'
     | '/ciaac/$materia'
     | '/dashboard/analisis'
@@ -722,6 +732,7 @@ export interface FileRouteTypes {
     | '/admin/soporte'
     | '/admin/usuarios-activos'
     | '/admin/whatsapp'
+    | '/admin/yaris-chats'
     | '/checkout/return'
     | '/ciaac/$materia'
     | '/dashboard/analisis'
@@ -790,6 +801,7 @@ export interface FileRouteTypes {
     | '/admin/soporte'
     | '/admin/usuarios-activos'
     | '/admin/whatsapp'
+    | '/admin/yaris-chats'
     | '/checkout/return'
     | '/ciaac_/$materia'
     | '/dashboard/analisis'
@@ -859,6 +871,7 @@ export interface RootRouteChildren {
   AdminSoporteRoute: typeof AdminSoporteRoute
   AdminUsuariosActivosRoute: typeof AdminUsuariosActivosRoute
   AdminWhatsappRoute: typeof AdminWhatsappRoute
+  AdminYarisChatsRoute: typeof AdminYarisChatsRoute
   CheckoutReturnRoute: typeof CheckoutReturnRoute
   CiaacMateriaRoute: typeof CiaacMateriaRoute
   LineaAereaFuenteRoute: typeof LineaAereaFuenteRoute
@@ -1142,6 +1155,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminWhatsappRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/yaris-chats': {
+      id: '/admin/yaris-chats'
+      path: '/admin/yaris-chats'
+      fullPath: '/admin/yaris-chats'
+      preLoaderRoute: typeof AdminYarisChatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkout/return': {
       id: '/checkout/return'
       path: '/checkout/return'
@@ -1422,6 +1442,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminSoporteRoute: AdminSoporteRoute,
   AdminUsuariosActivosRoute: AdminUsuariosActivosRoute,
   AdminWhatsappRoute: AdminWhatsappRoute,
+  AdminYarisChatsRoute: AdminYarisChatsRoute,
   CheckoutReturnRoute: CheckoutReturnRoute,
   CiaacMateriaRoute: CiaacMateriaRoute,
   LineaAereaFuenteRoute: LineaAereaFuenteRoute,

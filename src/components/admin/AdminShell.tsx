@@ -25,6 +25,8 @@ export type AdminNavKey =
   | "operaciones_yaris"
   | "operaciones_disputas"
   | "usuarios_activos"
+  | "auditoria"
+  | "yaris_chats"
   | "activity_ratio";
 
 interface NavItem {
