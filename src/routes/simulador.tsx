@@ -325,6 +325,13 @@ function SimuladorPage() {
     );
     return () => setPresenceActivity(null);
   }, [mode, banco]);
+  // El reparto por materia depende del plan (gratis = 25 reactivos).
+  useEffect(() => {
+    if (!ready) return;
+    applyPlanTotals(!isPaid(user));
+    setQuestions(buildQuestions());
+  }, [ready, user]);
+
   /** "Salir" vuelve al módulo de origen, no siempre al de CIAAC. */
   const exitTo: "/dashboard/banco" | "/dashboard/linea-aerea" =
     banco === "la" ? "/dashboard/linea-aerea" : "/dashboard/banco";
@@ -627,6 +634,7 @@ function SimuladorPage() {
   function resetSimulator() {
     if (storeKey) clearActiveSession(storeKey);
     setPhase("warning");
+    applyPlanTotals(!isPaid(user));
     setQuestions(buildQuestions());
     setBankQs([]);
     setSecondsLeft(5 * 3600);
