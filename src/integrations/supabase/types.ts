@@ -457,6 +457,39 @@ export type Database = {
         }
         Relationships: []
       }
+      health_checks: {
+        Row: {
+          check_key: string
+          created_at: string
+          detail: Json
+          duration_ms: number
+          environment: string
+          id: string
+          message: string | null
+          ok: boolean
+        }
+        Insert: {
+          check_key: string
+          created_at?: string
+          detail?: Json
+          duration_ms?: number
+          environment?: string
+          id?: string
+          message?: string | null
+          ok?: boolean
+        }
+        Update: {
+          check_key?: string
+          created_at?: string
+          detail?: Json
+          duration_ms?: number
+          environment?: string
+          id?: string
+          message?: string | null
+          ok?: boolean
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           data: Json
@@ -849,6 +882,20 @@ export type Database = {
         }[]
       }
       admin_platform_stats: { Args: never; Returns: Json }
+      admin_presencia_reciente: {
+        Args: { minutes_back?: number }
+        Returns: {
+          email: string
+          label: string
+          last_seen: string
+          nombre: string
+          path: string
+          plan: string
+          role: string
+          started_at: string
+          user_id: string
+        }[]
+      }
       admin_pro_stats: { Args: { check_env?: string }; Returns: Json }
       admin_resumen: { Args: never; Returns: Json }
       admin_stripe_event_stats: { Args: { hours_back?: number }; Returns: Json }

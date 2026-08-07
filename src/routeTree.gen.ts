@@ -75,6 +75,7 @@ import { Route as ApiYarisStreamRouteImport } from './routes/api/yaris/stream'
 import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/materias/index'
 import { Route as DashboardMateriasSubjectIdRouteImport } from './routes/dashboard/materias/$subjectId'
 import { Route as AdminOperacionesDiaDayRouteImport } from './routes/admin/operaciones/dia.$day'
+import { Route as ApiPublicHooksHealthCheckRouteImport } from './routes/api/public/hooks/health-check'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const IndexRoute = IndexRouteImport.update({
@@ -410,6 +411,12 @@ const AdminOperacionesDiaDayRoute = AdminOperacionesDiaDayRouteImport.update({
   path: '/admin/operaciones/dia/$day',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicHooksHealthCheckRoute =
+  ApiPublicHooksHealthCheckRouteImport.update({
+    id: '/api/public/hooks/health-check',
+    path: '/api/public/hooks/health-check',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicPaymentsWebhookRoute =
   ApiPublicPaymentsWebhookRouteImport.update({
     id: '/api/public/payments/webhook',
@@ -484,6 +491,7 @@ export interface FileRoutesByFullPath {
   '/admin/operaciones/': typeof AdminOperacionesIndexRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
   '/admin/operaciones/dia/$day': typeof AdminOperacionesDiaDayRoute
+  '/api/public/hooks/health-check': typeof ApiPublicHooksHealthCheckRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -552,6 +560,7 @@ export interface FileRoutesByTo {
   '/admin/operaciones': typeof AdminOperacionesIndexRoute
   '/dashboard/materias': typeof DashboardMateriasIndexRoute
   '/admin/operaciones/dia/$day': typeof AdminOperacionesDiaDayRoute
+  '/api/public/hooks/health-check': typeof ApiPublicHooksHealthCheckRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
@@ -622,6 +631,7 @@ export interface FileRoutesById {
   '/admin/operaciones/': typeof AdminOperacionesIndexRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
   '/admin/operaciones/dia/$day': typeof AdminOperacionesDiaDayRoute
+  '/api/public/hooks/health-check': typeof ApiPublicHooksHealthCheckRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
@@ -693,6 +703,7 @@ export interface FileRouteTypes {
     | '/admin/operaciones/'
     | '/dashboard/materias/'
     | '/admin/operaciones/dia/$day'
+    | '/api/public/hooks/health-check'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -761,6 +772,7 @@ export interface FileRouteTypes {
     | '/admin/operaciones'
     | '/dashboard/materias'
     | '/admin/operaciones/dia/$day'
+    | '/api/public/hooks/health-check'
     | '/api/public/payments/webhook'
   id:
     | '__root__'
@@ -830,6 +842,7 @@ export interface FileRouteTypes {
     | '/admin/operaciones/'
     | '/dashboard/materias/'
     | '/admin/operaciones/dia/$day'
+    | '/api/public/hooks/health-check'
     | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
@@ -884,6 +897,7 @@ export interface RootRouteChildren {
   ApiYarisStreamRoute: typeof ApiYarisStreamRoute
   AdminOperacionesIndexRoute: typeof AdminOperacionesIndexRoute
   AdminOperacionesDiaDayRoute: typeof AdminOperacionesDiaDayRoute
+  ApiPublicHooksHealthCheckRoute: typeof ApiPublicHooksHealthCheckRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
@@ -1351,6 +1365,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminOperacionesDiaDayRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/health-check': {
+      id: '/api/public/hooks/health-check'
+      path: '/api/public/hooks/health-check'
+      fullPath: '/api/public/hooks/health-check'
+      preLoaderRoute: typeof ApiPublicHooksHealthCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/payments/webhook': {
       id: '/api/public/payments/webhook'
       path: '/api/public/payments/webhook'
@@ -1455,6 +1476,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiYarisStreamRoute: ApiYarisStreamRoute,
   AdminOperacionesIndexRoute: AdminOperacionesIndexRoute,
   AdminOperacionesDiaDayRoute: AdminOperacionesDiaDayRoute,
+  ApiPublicHooksHealthCheckRoute: ApiPublicHooksHealthCheckRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport

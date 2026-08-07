@@ -7,12 +7,18 @@ import {
   adminOverview,
   adminMrrDaily,
   adminAiDaily,
+  adminTotalGanado,
+  adminHealthChecks,
+  adminRunHealthChecks,
   type AdminOverview,
   type MrrDailyPoint,
   type AiDailyPoint,
+  type TotalGanado,
+  type HealthCheckRow,
 } from "@/lib/admin.functions";
 import { getAdminEnv, setAdminEnv } from "@/lib/admin-env";
 import { estimateAiCost, fmtMxn, fmtUsd, USD_MXN } from "@/lib/ai-cost";
+
 
 
 export const Route = createFileRoute("/admin/operaciones/")({ component: OperacionesPage });
@@ -36,6 +42,9 @@ function OperacionesPage() {
   const [data, setData] = useState<AdminOverview | null>(null);
   const [mrrSeries, setMrrSeries] = useState<MrrDailyPoint[]>([]);
   const [aiSeries, setAiSeries] = useState<AiDailyPoint[]>([]);
+  const [ganado, setGanado] = useState<TotalGanado | null>(null);
+  const [salud, setSalud] = useState<HealthCheckRow[]>([]);
+  const [revisando, setRevisando] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -50,26 +59,42 @@ function OperacionesPage() {
 
   const goDay = (day: string) => navigate({ to: "/admin/operaciones/dia/$day", params: { day } });
 
+  const cargarSalud = async () => {
+    const filas = await adminHealthChecks({ data: { limit: 40 } });
+    if (!("error" in filas)) setSalud(filas);
+  };
+
+  const revisarAhora = async () => {
+    setRevisando(true);
+    await adminRunHealthChecks({ data: { environment: env } });
+    await cargarSalud();
+    setRevisando(false);
+  };
+
   useEffect(() => {
     let cancel = false;
     (async () => {
       setLoading(true);
-      const [ov, mrr, ai] = await Promise.all([
+      const [ov, mrr, ai, tot] = await Promise.all([
         adminOverview({ data: { environment: env } }),
         adminMrrDaily({ data: { environment: env, days: 30 } }),
         adminAiDaily({ data: { days: 30 } }),
+        adminTotalGanado({ data: { environment: env } }),
       ]);
       if (cancel) return;
       if ("error" in ov) setErr(ov.error);
       else setData(ov);
       if (!("error" in mrr)) setMrrSeries(mrr);
       if (!("error" in ai)) setAiSeries(ai);
+      setGanado("error" in tot ? null : tot);
       setLoading(false);
+      void cargarSalud();
     })();
     return () => {
       cancel = true;
     };
   }, [env]);
+
 
   const mrrPoints: SparkPoint[] = mrrSeries.map((r) => ({ label: r.day, value: r.mrr }));
   const proPoints: SparkPoint[] = mrrSeries.map((r) => ({ label: r.day, value: r.active_count }));
@@ -137,6 +162,17 @@ function OperacionesPage() {
           <section style={{ marginBottom: 20 }}>
             <div style={{ display: "grid", gap: 14, gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))" }}>
               <Kpi label="MRR estimado" value={`$${data.mrr.toLocaleString("es-MX")} MXN`} sub={`${env === "live" ? "Live" : "Sandbox"}`} tone="#22375C" />
+              <Kpi
+                label="Total ganado"
+                value={ganado ? `$${ganado.total.toLocaleString("es-MX", { maximumFractionDigits: 2 })} ${ganado.currency}` : "—"}
+                sub={
+                  ganado
+                    ? `${ganado.charges} cobros${ganado.refunded > 0 ? ` · $${ganado.refunded.toLocaleString("es-MX")} reembolsado` : ""}${ganado.truncado ? " · histórico parcial" : ""}`
+                    : "Sin datos de Stripe"
+                }
+                tone="#1e8449"
+              />
+
               <Kpi label="Pro activos" value={data.pro.active} sub={`${data.pro.trialing} en trial · ${data.pro.past_due} past due`} tone="#2ecc71" />
               <Kpi label="Cancelaciones (30d)" value={data.pro.canceled_last_30d} sub={`${data.pro.renewing_next_7d} renuevan en 7d`} tone="#e74c3c" />
               <Kpi label="Usuarios totales" value={data.platform.total_users} sub={`${data.platform.admins} admins`} tone="#3D5D91" />
@@ -284,7 +320,51 @@ function OperacionesPage() {
                 <Row k="RAG chunks" v={data.platform.rag_chunks} />
               </div>
             </div>
+
+            <div style={cardStyle}>
+              <div style={cardHeadStyle}>Revisiones automáticas de salud</div>
+              <div style={{ padding: 16 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10, flexWrap: "wrap" }}>
+                  <button
+                    type="button"
+                    onClick={() => void revisarAhora()}
+                    disabled={revisando}
+                    style={{
+                      minHeight: 38,
+                      padding: "0 14px",
+                      borderRadius: 10,
+                      border: "1.5px solid #E3EAF5",
+                      background: revisando ? "#E3EAF5" : "#22375C",
+                      color: revisando ? "#647DA0" : "#fff",
+                      fontSize: ".8rem",
+                      fontWeight: 700,
+                      cursor: revisando ? "default" : "pointer",
+                    }}
+                  >
+                    {revisando ? "Revisando…" : "Revisar ahora"}
+                  </button>
+                  <span style={{ fontSize: ".76rem", color: "#647DA0" }}>
+                    Stripe {env} + consultas críticas del panel. Corre sola cada hora.
+                  </span>
+                </div>
+                {salud.length === 0 ? (
+                  <div style={{ fontSize: ".82rem", color: "#8DA1BE" }}>Aún no hay revisiones registradas.</div>
+                ) : (
+                  <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 8, maxHeight: 260, overflowY: "auto" }}>
+                    {salud.map((h) => (
+                      <li key={h.id} style={{ fontSize: ".82rem", color: "#22375C", borderBottom: "1px solid #F2DCDB", paddingBottom: 6 }}>
+                        <span style={{ color: h.ok ? "#2ecc71" : "#e74c3c", fontWeight: 800 }}>{h.ok ? "✓" : "✕"}</span>{" "}
+                        <strong>{h.check_key}</strong>
+                        <span style={{ color: "#8DA1BE" }}> · {new Date(h.created_at).toLocaleString("es-MX")}</span>
+                        {h.message && <div style={{ color: h.ok ? "#647DA0" : "#e74c3c", fontSize: ".75rem" }}>{h.message}</div>}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
           </section>
+
         </>
       )}
     </AdminShell>
