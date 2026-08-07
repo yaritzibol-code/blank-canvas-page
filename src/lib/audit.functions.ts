@@ -15,9 +15,8 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 type Res<T> = T | { error: string };
 
-async function assertAdmin(supabase: {
-  rpc: (fn: string) => Promise<{ data: unknown; error: { message: string } | null }>;
-}): Promise<string | null> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function assertAdmin(supabase: any): Promise<string | null> {
   const { data, error } = await supabase.rpc("is_admin");
   if (error) return `No se pudo validar rol admin: ${error.message}`;
   if (!data) return "Requiere rol admin.";
