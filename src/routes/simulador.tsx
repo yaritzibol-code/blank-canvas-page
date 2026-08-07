@@ -18,6 +18,8 @@ import {
   clearActiveSession,
 } from "@/lib/store";
 import type { BankQuestion, SimAnswer } from "@/lib/store";
+import { isPaid } from "@/lib/store/gating";
+import { FREE_CIAAC_MAX } from "@/lib/store/free-quota";
 import { yarisAiChat } from "@/lib/yaris-ai.functions";
 import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
@@ -63,7 +65,36 @@ const MATERIAS = [
   { icon: "plane" as FPIconName, name: "Operaciones Aeronáuticas", total: 30, slug: "operaciones" },
 ];
 
-const TOTAL_QS = MATERIAS.reduce((s, m) => s + m.total, 0); // 310
+const BASE_TOTALS = MATERIAS.map((m) => m.total);
+let TOTAL_QS = BASE_TOTALS.reduce((s, n) => s + n, 0); // 310
+
+/**
+ * Reparto de reactivos según el plan. El plan gratuito hace el simulador
+ * completo (mismas materias, mismo formato) pero recortado a 25 preguntas,
+ * repartidas de forma proporcional al peso real de cada materia.
+ */
+function applyPlanTotals(free: boolean) {
+  if (!free) {
+    MATERIAS.forEach((m, i) => { m.total = BASE_TOTALS[i]; });
+  } else {
+    const base = BASE_TOTALS.reduce((s, n) => s + n, 0);
+    const exact = BASE_TOTALS.map((n) => (n / base) * FREE_CIAAC_MAX);
+    const alloc = exact.map(() => 1);
+    let rest = Math.max(0, FREE_CIAAC_MAX - alloc.length);
+    const order = exact
+      .map((v, i) => ({ i, frac: v - 1 }))
+      .sort((a, b) => b.frac - a.frac);
+    let k = 0;
+    while (rest > 0 && order.length > 0) {
+      const idx = order[k % order.length].i;
+      alloc[idx] += 1;
+      rest -= 1;
+      k += 1;
+    }
+    MATERIAS.forEach((m, i) => { m.total = alloc[i]; });
+  }
+  TOTAL_QS = MATERIAS.reduce((s, m) => s + m.total, 0);
+}
 
 const LETTERS = ["A", "B", "C", "D"];
 
@@ -579,6 +610,8 @@ function SimuladorPage() {
   function startExam() {
     const gate = canStartSimulator(user);
     if (!gate.allowed) return;
+    // Plan gratuito: examen recortado a 25 reactivos.
+    applyPlanTotals(!isPaid(user));
     const bank = buildBank(mode, banco);
     if (bank.length === 0) return;
     setBankQs(bank);
