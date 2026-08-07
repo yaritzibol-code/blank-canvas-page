@@ -131,7 +131,7 @@ function Relacionadas({ r }: { r: RespuestaSeo }) {
 }
 
 function RespuestaPage() {
-  const { r } = Route.useLoaderData();
+  const { r }: { r: RespuestaSeo } = Route.useLoaderData();
 
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
