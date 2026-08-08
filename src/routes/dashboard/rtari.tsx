@@ -315,7 +315,8 @@ function RtariPage() {
   // segundos, así que se relee el saldo hasta verlo crecer.
   const { compra } = Route.useSearch();
   useEffect(() => {
-    if (!compra || !user) return;
+    if (!compra || !userId) return;
+
     let cancelado = false;
     const antes = saldo?.comprados ?? 0;
     (async () => {
