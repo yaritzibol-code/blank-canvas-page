@@ -22,6 +22,7 @@ import type { QuizAttempt, SimAttempt } from "@/lib/store";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import {
   LINEA_AEREA_OFICIAL,
+  LINEA_AEREA_QUIZZES as LINEA_AEREA_QUIZZES_LA,
   ALL_MANUAL_QUIZZES,
   isAeronaveFuente,
 } from "@/lib/store/linea-aerea-meta";
@@ -1052,8 +1053,8 @@ function ModalAprendiendo({
   function handleStart() {
     const keys = la
       ? allSelected || selectedMaterias.size === 0
-        ? LINEA_AEREA_QUIZZES.map((q) => q.code)
-        : LINEA_AEREA_QUIZZES.filter((q) => selectedMaterias.has(q.code)).map((q) => q.code)
+        ? LINEA_AEREA_QUIZZES_LA.map((q) => q.code)
+        : LINEA_AEREA_QUIZZES_LA.filter((q) => selectedMaterias.has(q.code)).map((q) => q.code)
       : allSelected || selectedMaterias.size === 0
         ? MATERIAS.map((m) => m.slug)
         : MATERIAS.filter((m) => selectedMaterias.has(m.label)).map((m) => m.slug);
@@ -1212,7 +1213,7 @@ function ModalAprendiendo({
               {la ? "Todos los manuales" : "Todas las materias"}
             </button>
             {la
-              ? LINEA_AEREA_QUIZZES.map((q) => {
+              ? LINEA_AEREA_QUIZZES_LA.map((q) => {
                   const sel = selectedMaterias.has(q.code);
                   return (
                     <button

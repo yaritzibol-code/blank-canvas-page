@@ -61,6 +61,7 @@ import { Route as DashboardEstudiemosRouteImport } from './routes/dashboard/estu
 import { Route as DashboardFacturacionRouteImport } from './routes/dashboard/facturacion'
 import { Route as DashboardFlashcardsRouteImport } from './routes/dashboard/flashcards'
 import { Route as DashboardLineaAereaRouteImport } from './routes/dashboard/linea-aerea'
+import { Route as DashboardManualesRouteImport } from './routes/dashboard/manuales'
 import { Route as DashboardPerfilRouteImport } from './routes/dashboard/perfil'
 import { Route as DashboardPlanesRouteImport } from './routes/dashboard/planes'
 import { Route as DashboardRecordatoriosRouteImport } from './routes/dashboard/recordatorios'
@@ -344,6 +345,11 @@ const DashboardLineaAereaRoute = DashboardLineaAereaRouteImport.update({
   path: '/linea-aerea',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardManualesRoute = DashboardManualesRouteImport.update({
+  id: '/manuales',
+  path: '/manuales',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardPerfilRoute = DashboardPerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
@@ -505,6 +511,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/facturacion': typeof DashboardFacturacionRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/linea-aerea': typeof DashboardLineaAereaRoute
+  '/dashboard/manuales': typeof DashboardManualesRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/planes': typeof DashboardPlanesRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
@@ -579,6 +586,7 @@ export interface FileRoutesByTo {
   '/dashboard/facturacion': typeof DashboardFacturacionRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/linea-aerea': typeof DashboardLineaAereaRoute
+  '/dashboard/manuales': typeof DashboardManualesRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/planes': typeof DashboardPlanesRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
@@ -655,6 +663,7 @@ export interface FileRoutesById {
   '/dashboard/facturacion': typeof DashboardFacturacionRoute
   '/dashboard/flashcards': typeof DashboardFlashcardsRoute
   '/dashboard/linea-aerea': typeof DashboardLineaAereaRoute
+  '/dashboard/manuales': typeof DashboardManualesRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/planes': typeof DashboardPlanesRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
@@ -732,6 +741,7 @@ export interface FileRouteTypes {
     | '/dashboard/facturacion'
     | '/dashboard/flashcards'
     | '/dashboard/linea-aerea'
+    | '/dashboard/manuales'
     | '/dashboard/perfil'
     | '/dashboard/planes'
     | '/dashboard/recordatorios'
@@ -806,6 +816,7 @@ export interface FileRouteTypes {
     | '/dashboard/facturacion'
     | '/dashboard/flashcards'
     | '/dashboard/linea-aerea'
+    | '/dashboard/manuales'
     | '/dashboard/perfil'
     | '/dashboard/planes'
     | '/dashboard/recordatorios'
@@ -881,6 +892,7 @@ export interface FileRouteTypes {
     | '/dashboard/facturacion'
     | '/dashboard/flashcards'
     | '/dashboard/linea-aerea'
+    | '/dashboard/manuales'
     | '/dashboard/perfil'
     | '/dashboard/planes'
     | '/dashboard/recordatorios'
@@ -1331,6 +1343,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardLineaAereaRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/manuales': {
+      id: '/dashboard/manuales'
+      path: '/manuales'
+      fullPath: '/dashboard/manuales'
+      preLoaderRoute: typeof DashboardManualesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/perfil': {
       id: '/dashboard/perfil'
       path: '/perfil'
@@ -1492,6 +1511,7 @@ interface DashboardRouteChildren {
   DashboardFacturacionRoute: typeof DashboardFacturacionRoute
   DashboardFlashcardsRoute: typeof DashboardFlashcardsRoute
   DashboardLineaAereaRoute: typeof DashboardLineaAereaRoute
+  DashboardManualesRoute: typeof DashboardManualesRoute
   DashboardPerfilRoute: typeof DashboardPerfilRoute
   DashboardPlanesRoute: typeof DashboardPlanesRoute
   DashboardRecordatoriosRoute: typeof DashboardRecordatoriosRoute
@@ -1512,6 +1532,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardFacturacionRoute: DashboardFacturacionRoute,
   DashboardFlashcardsRoute: DashboardFlashcardsRoute,
   DashboardLineaAereaRoute: DashboardLineaAereaRoute,
+  DashboardManualesRoute: DashboardManualesRoute,
   DashboardPerfilRoute: DashboardPerfilRoute,
   DashboardPlanesRoute: DashboardPlanesRoute,
   DashboardRecordatoriosRoute: DashboardRecordatoriosRoute,
