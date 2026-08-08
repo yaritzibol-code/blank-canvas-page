@@ -166,3 +166,55 @@ export const LEG_CHAPTERS: AtpChapter[] = [
 ];
 
 export const LEG_TOTAL = LEG_CHAPTERS.reduce((s, c) => s + c.total, 0);
+
+/* ─── Módulo "Manuales de Aeronave" ──────────────────────────────
+ * Bancos por tipo de avión. Viven en su propio módulo del sidebar, pero
+ * comparten toda la maquinaria de Línea Aérea (cuestionario por capítulos,
+ * auditoría, analítica y panel admin).
+ */
+
+/** Capítulos del Boeing 737 MAX FCOM (Flight Crew Operations Manual). */
+export const B737MAX_CHAPTERS: AtpChapter[] = [
+  { num: 1, titulo: "Limitaciones y procedimientos normales", tituloEn: "Limitations and Normal Procedures", total: 250 },
+  { num: 2, titulo: "Procedimientos suplementarios", tituloEn: "Supplementary Procedures", total: 250 },
+  { num: 3, titulo: "Rendimiento para despacho", tituloEn: "Performance Dispatch", total: 250 },
+  { num: 4, titulo: "Rendimiento en vuelo", tituloEn: "Performance Inflight", total: 250 },
+  { num: 5, titulo: "Célula, sistemas de aire, antihielo y protección contra incendio", tituloEn: "Airframe, Air Systems, Anti-Ice and Fire Protection", total: 300 },
+  { num: 6, titulo: "Vuelo automático, controles de vuelo, comunicaciones y sistema eléctrico", tituloEn: "Automatic Flight, Flight Controls, Communications and Electrical", total: 400 },
+  { num: 7, titulo: "Motores, APU, combustible, hidráulicos y tren de aterrizaje", tituloEn: "Engines, APU, Fuel, Hydraulics and Landing Gear", total: 250 },
+  { num: 8, titulo: "Instrumentos de vuelo y pantallas", tituloEn: "Flight Instruments and Displays", total: 250 },
+  { num: 9, titulo: "Gestión de vuelo, navegación y sistemas de advertencia", tituloEn: "Flight Management, Navigation and Warning Systems", total: 300 },
+];
+
+export const B737MAX_TOTAL = B737MAX_CHAPTERS.reduce((s, c) => s + c.total, 0);
+
+/** Manuales de aeronave disponibles (una tarjeta por tipo de avión). */
+export const AERONAVE_QUIZZES: LineaAereaQuiz[] = [
+  {
+    code: "B737MAX",
+    titulo: "Boeing 737 MAX",
+    descripcion: "FCOM del 737 MAX — limitaciones, procedimientos, rendimiento y sistemas, por capítulos.",
+    materia: "aeronaves-motores",
+    icon: "plane",
+    total: B737MAX_TOTAL,
+    fileUrl: "",
+  },
+];
+
+/** Todos los manuales del sistema (Línea Aérea + Aeronave). */
+export const ALL_MANUAL_QUIZZES: LineaAereaQuiz[] = [
+  ...LINEA_AEREA_QUIZZES,
+  ...AERONAVE_QUIZZES,
+];
+
+const AERONAVE_CODES = new Set(AERONAVE_QUIZZES.map((q) => q.code));
+
+/** ¿La fuente pertenece al módulo de Manuales de Aeronave? */
+export function isAeronaveFuente(code?: string | null): boolean {
+  return !!code && AERONAVE_CODES.has(code);
+}
+
+/** Nombre legible de cualquier manual (Línea Aérea o Aeronave). */
+export function manualTitulo(code: string): string {
+  return ALL_MANUAL_QUIZZES.find((q) => q.code === code)?.titulo ?? code;
+}
