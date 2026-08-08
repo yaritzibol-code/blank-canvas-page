@@ -489,10 +489,52 @@ export class RtariRealtimeSession {
     });
   }
 
+  /* ── Orden de la transcripción ── */
+
+  /**
+   * Entrega los turnos que ya están listos, sin adelantarse a los que faltan.
+   *
+   * Si el primero de la fila es un hueco del alumno todavía sin texto, todo
+   * espera: así nunca se ven dos turnos del sinodal seguidos con la respuesta
+   * del alumno colada después. Pasada la espera máxima el hueco se descarta y
+   * la conversación sigue.
+   */
+  private vaciarCola(forzar = false) {
+    while (this.cola.length > 0) {
+      const primero = this.cola[0]!;
+      if (primero.turn) {
+        this.cola.shift();
+        this.cb.onTurn(primero.turn);
+        continue;
+      }
+      if (forzar || Date.now() - primero.desde > ESPERA_TRANSCRIPCION_MS) {
+        this.cola.shift();
+        continue;
+      }
+      break;
+    }
+    if (this.cola.length > 0 && !forzar) this.programarVaciado();
+    else if (this.colaTimer) {
+      clearTimeout(this.colaTimer);
+      this.colaTimer = null;
+    }
+  }
+
+  private programarVaciado() {
+    if (this.colaTimer) return;
+    this.colaTimer = setTimeout(() => {
+      this.colaTimer = null;
+      this.vaciarCola();
+    }, 400);
+  }
+
   /** Cierra la entrevista de forma ordenada (el debrief lo pide la UI). */
   finish() {
     if (this.estado !== "en_curso") return;
     this.setEstado("terminando");
+    // Lo que quedó en la fila se entrega antes de colgar: si no, el último
+    // turno del sinodal nunca llegaría a la transcripción que se evalúa.
+    this.vaciarCola(true);
     this.stop();
     this.setEstado("terminada");
   }
