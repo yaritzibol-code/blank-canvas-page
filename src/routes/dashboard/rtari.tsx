@@ -278,12 +278,6 @@ function RtariPage() {
       ? rtariStats(user.id)
       : { sesiones: 0, minutos: 0, mejorNivel: null, ultimoNivel: null, preguntasVistas: 0 },
   );
-  const vistas = useMemo(() => {
-    const set = new Set<string>();
-    sesiones.forEach((s) => s.questionIds.forEach((q) => set.add(q)));
-    return set;
-  }, [sesiones]);
-
   const [fase, setFase] = useState<Fase>("setup");
   const [numPreguntas, setNumPreguntas] = useState<number>(RTARI_PRESETS_PREGUNTAS[1]);
   const [bloque, setBloque] = useState<RtariBloque | "todos">("todos");
@@ -466,11 +460,17 @@ function RtariPage() {
       if (res.ok && res.debrief) {
         setRtariDebrief(registro.id, res.debrief);
         setResultado({ ...registro, debrief: res.debrief });
-        void actualizarNivelGrabacion(
-          user.id,
-          cierre.sessionId || registro.id,
-          res.debrief.nivelGlobal,
-        ).catch(() => {});
+        // El nivel OACI es el más bajo de las seis áreas, no el promedio.
+        const nivelesEval = Object.values(res.debrief.niveles).filter(
+          (n): n is number => typeof n === "number",
+        );
+        if (nivelesEval.length > 0) {
+          void actualizarNivelGrabacion(
+            user.id,
+            cierre.sessionId || registro.id,
+            Math.min(...nivelesEval),
+          ).catch(() => {});
+        }
         setFase("debrief");
         return;
       }
