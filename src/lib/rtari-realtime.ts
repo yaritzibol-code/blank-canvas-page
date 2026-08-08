@@ -131,6 +131,18 @@ export class RtariRealtimeSession {
    * encimadas. Esta bandera es lo que garantiza que sólo haya una.
    */
   private respuestaEnCurso = false;
+  /**
+   * Cola de turnos para que la transcripción salga en el orden real.
+   *
+   * Lo que dice el sinodal llega casi al instante, pero lo que dijo el alumno
+   * tarda: Whisper transcribe cuando el turno ya se cerró. Si cada turno se
+   * pinta al llegar, la pantalla muestra "sinodal, sinodal, alumno" y parece
+   * que el examinador habló dos veces. Aquí se aparta el lugar del alumno en
+   * cuanto se corta su audio y los turnos posteriores esperan a que llegue su
+   * texto (o a que se agote la espera).
+   */
+  private cola: Array<{ itemId?: string; turn: RtariTurn | null; desde: number }> = [];
+  private colaTimer: ReturnType<typeof setTimeout> | null = null;
   /** Se pidió repetir mientras hablaba: se dispara al confirmarse el corte. */
   private repeticionPendiente = false;
   /**
