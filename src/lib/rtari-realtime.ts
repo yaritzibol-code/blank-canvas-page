@@ -128,6 +128,15 @@ export class RtariRealtimeSession {
   private respuestaEnCurso = false;
   /** Se pidió repetir mientras hablaba: se dispara al confirmarse el corte. */
   private repeticionPendiente = false;
+  /**
+   * Entró un `stop()` mientras `start()` seguía trabajando.
+   *
+   * `start()` tiene cuatro esperas (credencial, micrófono, oferta, respuesta
+   * SDP) y cerrar la sesión durante cualquiera de ellas no detenía nada: al
+   * volver de la espera seguía conectándose. Así es como acababan dos
+   * sinodales hablando encima, cada uno con su propia transcripción.
+   */
+  private cancelada = false;
   /** Minutos que el servidor reservó para esta entrevista. */
   maxMinutos = 0;
 
@@ -197,6 +206,7 @@ export class RtariRealtimeSession {
   /** Abre la entrevista. Resuelve cuando el sinodal ya puede oír al alumno. */
   async start(opts: RtariStartOptions): Promise<void> {
     if (this.estado === "conectando" || this.estado === "en_curso") return;
+    this.cancelada = false;
     this.setEstado("conectando");
 
     // Sólo puede haber una entrevista a la vez. Si quedó una viva —una pestaña
@@ -209,6 +219,9 @@ export class RtariRealtimeSession {
     this.sessionId = secret.sessionId;
     this.model = secret.model;
     this.maxMinutos = secret.maxMinutos;
+    // A partir de aquí ya hay minutos reservados: si la sesión se canceló
+    // durante la espera hay que soltarlos, no sólo dejar de conectarse.
+    if (this.cancelada) return this.abortar();
 
     // El micrófono se pide después de la credencial: si el usuario no es Pro o
     // se quedó sin minutos, no tiene sentido molestarlo con el permiso.
@@ -224,6 +237,10 @@ export class RtariRealtimeSession {
           "No pude usar tu micrófono. Revisa el permiso del navegador y vuelve a intentarlo.",
         ),
       );
+    }
+    if (this.cancelada) {
+      mic.getTracks().forEach((t) => t.stop());
+      return this.abortar();
     }
     this.mic = mic;
     this.watchLevel(mic);
@@ -283,11 +300,16 @@ export class RtariRealtimeSession {
       if (!res.ok) {
         this.fail(new RtariError("openai", `OpenAI rechazó la conexión (${res.status}).`));
       }
-      await pc.setRemoteDescription({ type: "answer", sdp: await res.text() });
+      const answer = await res.text();
+      // Última oportunidad de no conectar: pasado este punto ya hay audio.
+      if (this.cancelada) return this.abortar();
+      await pc.setRemoteDescription({ type: "answer", sdp: answer });
     } catch (err) {
       if (err instanceof RtariError) throw err;
       this.fail(new RtariError("red", "No pude abrir la sesión de voz. Revisa tu conexión."));
     }
+
+    if (this.cancelada) return this.abortar();
 
     this.startedAt = Date.now();
     this.setEstado("en_curso");
@@ -302,6 +324,41 @@ export class RtariRealtimeSession {
     // El sinodal abre la entrevista en cuanto el canal está listo.
     if (dc.readyState === "open") this.pedirRespuesta();
     else dc.addEventListener("open", () => this.pedirRespuesta(), { once: true });
+  }
+
+  /**
+   * Deshace un arranque que se canceló a media conexión.
+   *
+   * Cierra lo que se haya alcanzado a abrir y, sobre todo, devuelve los
+   * minutos que el servidor ya había reservado: la sesión nunca llegó a sonar,
+   * así que no debe costarle nada al alumno.
+   */
+  private async abortar(): Promise<void> {
+    const sessionId = this.sessionId;
+    const model = this.model;
+    this.stop();
+    this.setEstado("terminada");
+    if (!sessionId || this.liquidada) return;
+    this.liquidada = true;
+
+    try {
+      const { data } = await supabase.auth.getSession();
+      const token = data.session?.access_token;
+      if (!token) return;
+      await fetch("/api/rtari/settle", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({
+          sessionId,
+          model,
+          durationSec: 0,
+          usage: {},
+        }),
+      });
+    } catch {
+      // Si no se pudo avisar, los minutos quedan apartados hasta que el alumno
+      // vuelva a entrar: preferible eso a dejar la sesión conectada.
+    }
   }
 
   /** Pide la credencial efímera a nuestro servidor. */
@@ -419,6 +476,7 @@ export class RtariRealtimeSession {
   /** Libera micrófono, conexión y temporizadores. Es idempotente. */
   stop() {
     soltarElTurno(this);
+    this.cancelada = true;
     this.respuestaEnCurso = false;
     this.repeticionPendiente = false;
     if (this.cutoffTimer) {
@@ -459,6 +517,10 @@ export class RtariRealtimeSession {
   /* ── Eventos del canal de datos ── */
 
   private onEvent(raw: string) {
+    // Una sesión cancelada ya no aporta a la transcripción: si dos llegaran a
+    // convivir un instante, sólo la vigente escribe.
+    if (this.cancelada) return;
+
     let evt: Record<string, unknown>;
     try {
       evt = JSON.parse(raw) as Record<string, unknown>;
