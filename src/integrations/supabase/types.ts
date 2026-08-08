@@ -222,6 +222,7 @@ export type Database = {
       }
       ai_usage: {
         Row: {
+          cost_usd: number | null
           created_at: string
           error_message: string | null
           id: string
@@ -234,6 +235,7 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
+          cost_usd?: number | null
           created_at?: string
           error_message?: string | null
           id?: string
@@ -246,6 +248,7 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
+          cost_usd?: number | null
           created_at?: string
           error_message?: string | null
           id?: string
@@ -601,6 +604,63 @@ export type Database = {
         }
         Relationships: []
       }
+      rtari_movimientos: {
+        Row: {
+          created_at: string
+          detalle: Json
+          id: string
+          ref: string | null
+          segundos: number
+          tipo: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          detalle?: Json
+          id?: string
+          ref?: string | null
+          segundos: number
+          tipo: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          detalle?: Json
+          id?: string
+          ref?: string | null
+          segundos?: number
+          tipo?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      rtari_saldo: {
+        Row: {
+          ciclo: string
+          segundos_comprados: number
+          segundos_incluidos: number
+          segundos_incluidos_usados: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ciclo: string
+          segundos_comprados?: number
+          segundos_incluidos?: number
+          segundos_incluidos_usados?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ciclo?: string
+          segundos_comprados?: number
+          segundos_incluidos?: number
+          segundos_incluidos_usados?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       reports: {
         Row: {
           data: Json
@@ -798,6 +858,35 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      rtari_acreditar_compra: {
+        Args: { p_detalle?: Json; p_ref: string; p_segundos: number; p_user: string }
+        Returns: number
+      }
+      rtari_asegurar_ciclo: {
+        Args: { p_ciclo: string; p_segundos_incluidos: number; p_user: string }
+        Returns: {
+          ciclo: string
+          segundos_comprados: number
+          segundos_incluidos: number
+          segundos_incluidos_usados: number
+          updated_at: string
+          user_id: string
+        }
+      }
+      rtari_consumir: {
+        Args: { p_detalle?: Json; p_ref?: string; p_segundos: number; p_user: string }
+        Returns: number
+      }
+      rtari_devolver: {
+        Args: {
+          p_detalle?: Json
+          p_ref?: string
+          p_segundos_comprados: number
+          p_segundos_incluidos: number
+          p_user: string
+        }
+        Returns: number
+      }
       admin_activity_by_screen: {
         Args: { days_back?: number }
         Returns: {
@@ -854,10 +943,13 @@ export type Database = {
         Returns: {
           avg_latency_ms: number
           calls: number
+          cost_usd: number
           day: string
           errors: number
           tokens_in: number
+          tokens_in_est: number
           tokens_out: number
+          tokens_out_est: number
         }[]
       }
       admin_ai_stats: { Args: { hours_back?: number }; Returns: Json }

@@ -191,9 +191,28 @@ export async function processStripeEvent(event: { type: string; data: { object: 
       // Con métodos de pago diferidos el cobro aún puede no haberse liquidado.
       const session = event.data.object;
       if (session?.payment_status === "unpaid") return "ignored" as const;
+      const userId: string | undefined = session?.metadata?.userId;
+      const lookupKey: string = session?.metadata?.priceLookupKey ?? "";
+
+      // Paquete de minutos de entrevista RTARI: se acredita y ya. NO toca el
+      // plan ni la inscripción — comprar minutos no da acceso a nada más.
+      const { paquetePorLookupKey } = await import("@/modules/rtari/config");
+      const paquete = paquetePorLookupKey(lookupKey);
+      if (paquete) {
+        if (!userId) throw new Error("compra de minutos sin usuario en la metadata");
+        const { error } = await getSupabase().rpc("rtari_acreditar_compra", {
+          p_user: userId,
+          p_segundos: paquete.minutos * 60,
+          // Idempotencia: el mismo checkout no acredita dos veces.
+          p_ref: String(session.id),
+          p_detalle: { lookup_key: lookupKey, minutos: paquete.minutos },
+        });
+        if (error) throw error;
+        return "processed" as const;
+      }
+
       // La inscripción es un pago único: al liquidarse dejamos la marca en el
       // perfil para no volver a cobrarla ni tener que rastrear sesiones viejas.
-      const userId: string | undefined = session?.metadata?.userId;
       if (userId) {
         const { data: perfil } = await getSupabase()
           .from("profiles")
