@@ -56,6 +56,7 @@ import { Route as DashboardBancoRouteImport } from './routes/dashboard/banco'
 import { Route as DashboardBibliotecaRouteImport } from './routes/dashboard/biblioteca'
 import { Route as DashboardBitacoraRouteImport } from './routes/dashboard/bitacora'
 import { Route as DashboardClasesRouteImport } from './routes/dashboard/clases'
+import { Route as DashboardCompassRouteImport } from './routes/dashboard/compass'
 import { Route as DashboardConfiguracionRouteImport } from './routes/dashboard/configuracion'
 import { Route as DashboardEstudiemosRouteImport } from './routes/dashboard/estudiemos'
 import { Route as DashboardFacturacionRouteImport } from './routes/dashboard/facturacion'
@@ -320,6 +321,11 @@ const DashboardClasesRoute = DashboardClasesRouteImport.update({
   path: '/clases',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardCompassRoute = DashboardCompassRouteImport.update({
+  id: '/compass',
+  path: '/compass',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardConfiguracionRoute = DashboardConfiguracionRouteImport.update({
   id: '/configuracion',
   path: '/configuracion',
@@ -506,6 +512,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
   '/dashboard/bitacora': typeof DashboardBitacoraRoute
   '/dashboard/clases': typeof DashboardClasesRoute
+  '/dashboard/compass': typeof DashboardCompassRoute
   '/dashboard/configuracion': typeof DashboardConfiguracionRoute
   '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
   '/dashboard/facturacion': typeof DashboardFacturacionRoute
@@ -581,6 +588,7 @@ export interface FileRoutesByTo {
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
   '/dashboard/bitacora': typeof DashboardBitacoraRoute
   '/dashboard/clases': typeof DashboardClasesRoute
+  '/dashboard/compass': typeof DashboardCompassRoute
   '/dashboard/configuracion': typeof DashboardConfiguracionRoute
   '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
   '/dashboard/facturacion': typeof DashboardFacturacionRoute
@@ -658,6 +666,7 @@ export interface FileRoutesById {
   '/dashboard/biblioteca': typeof DashboardBibliotecaRoute
   '/dashboard/bitacora': typeof DashboardBitacoraRoute
   '/dashboard/clases': typeof DashboardClasesRoute
+  '/dashboard/compass': typeof DashboardCompassRoute
   '/dashboard/configuracion': typeof DashboardConfiguracionRoute
   '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
   '/dashboard/facturacion': typeof DashboardFacturacionRoute
@@ -736,6 +745,7 @@ export interface FileRouteTypes {
     | '/dashboard/biblioteca'
     | '/dashboard/bitacora'
     | '/dashboard/clases'
+    | '/dashboard/compass'
     | '/dashboard/configuracion'
     | '/dashboard/estudiemos'
     | '/dashboard/facturacion'
@@ -811,6 +821,7 @@ export interface FileRouteTypes {
     | '/dashboard/biblioteca'
     | '/dashboard/bitacora'
     | '/dashboard/clases'
+    | '/dashboard/compass'
     | '/dashboard/configuracion'
     | '/dashboard/estudiemos'
     | '/dashboard/facturacion'
@@ -887,6 +898,7 @@ export interface FileRouteTypes {
     | '/dashboard/biblioteca'
     | '/dashboard/bitacora'
     | '/dashboard/clases'
+    | '/dashboard/compass'
     | '/dashboard/configuracion'
     | '/dashboard/estudiemos'
     | '/dashboard/facturacion'
@@ -1308,6 +1320,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardClasesRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/compass': {
+      id: '/dashboard/compass'
+      path: '/compass'
+      fullPath: '/dashboard/compass'
+      preLoaderRoute: typeof DashboardCompassRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/configuracion': {
       id: '/dashboard/configuracion'
       path: '/configuracion'
@@ -1506,6 +1525,7 @@ interface DashboardRouteChildren {
   DashboardBibliotecaRoute: typeof DashboardBibliotecaRoute
   DashboardBitacoraRoute: typeof DashboardBitacoraRoute
   DashboardClasesRoute: typeof DashboardClasesRoute
+  DashboardCompassRoute: typeof DashboardCompassRoute
   DashboardConfiguracionRoute: typeof DashboardConfiguracionRoute
   DashboardEstudiemosRoute: typeof DashboardEstudiemosRoute
   DashboardFacturacionRoute: typeof DashboardFacturacionRoute
@@ -1527,6 +1547,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardBibliotecaRoute: DashboardBibliotecaRoute,
   DashboardBitacoraRoute: DashboardBitacoraRoute,
   DashboardClasesRoute: DashboardClasesRoute,
+  DashboardCompassRoute: DashboardCompassRoute,
   DashboardConfiguracionRoute: DashboardConfiguracionRoute,
   DashboardEstudiemosRoute: DashboardEstudiemosRoute,
   DashboardFacturacionRoute: DashboardFacturacionRoute,
@@ -1608,3 +1629,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
