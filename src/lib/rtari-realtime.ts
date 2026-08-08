@@ -602,12 +602,35 @@ export class RtariRealtimeSession {
       return;
     }
 
+    // El alumno terminó de hablar: se le aparta su lugar en la transcripción
+    // aunque el texto tarde en llegar.
+    if (type === "input_audio_buffer.committed" || type === "input_audio_buffer.speech_stopped") {
+      const id = String(evt.item_id ?? "");
+      if (id && !this.cola.some((e) => e.itemId === id)) {
+        this.cola.push({ itemId: id, turn: null, desde: Date.now() });
+        this.programarVaciado();
+      }
+      return;
+    }
+
     // Lo que dijo el alumno, ya transcrito.
     if (type === "conversation.item.input_audio_transcription.completed") {
       const text = String(evt.transcript ?? "").trim();
-      if (text) this.cb.onTurn({ role: "candidate", text, at: this.elapsed() });
+      const id = String(evt.item_id ?? "");
+      const turn: RtariTurn | null = text
+        ? { role: "candidate", text, at: this.elapsed() }
+        : null;
+      const hueco = this.cola.find((e) => e.itemId === id && e.turn === null);
+      if (hueco) {
+        if (turn) hueco.turn = turn;
+        else this.cola.splice(this.cola.indexOf(hueco), 1);
+      } else if (turn) {
+        this.cola.push({ itemId: id, turn, desde: Date.now() });
+      }
+      this.vaciarCola();
       return;
     }
+
 
     if (type === "error") {
       // Si la respuesta murió a medias, soltar la bandera: si no, el sinodal
