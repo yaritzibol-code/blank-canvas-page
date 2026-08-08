@@ -15,6 +15,8 @@ import {
   type AiDailyPoint,
   type TotalGanado,
   type HealthCheckRow,
+  adminRtariStats,
+  type AdminRtariStats,
 } from "@/lib/admin.functions";
 import { getAdminEnv, setAdminEnv } from "@/lib/admin-env";
 import { estimateAiCost, fmtMxn, fmtUsd, USD_MXN } from "@/lib/ai-cost";
@@ -44,6 +46,7 @@ function OperacionesPage() {
   const [aiSeries, setAiSeries] = useState<AiDailyPoint[]>([]);
   const [ganado, setGanado] = useState<TotalGanado | null>(null);
   const [salud, setSalud] = useState<HealthCheckRow[]>([]);
+  const [rtari, setRtari] = useState<AdminRtariStats | null>(null);
   const [revisando, setRevisando] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -75,11 +78,12 @@ function OperacionesPage() {
     let cancel = false;
     (async () => {
       setLoading(true);
-      const [ov, mrr, ai, tot] = await Promise.all([
+      const [ov, mrr, ai, tot, rt] = await Promise.all([
         adminOverview({ data: { environment: env } }),
         adminMrrDaily({ data: { environment: env, days: 30 } }),
         adminAiDaily({ data: { days: 30 } }),
         adminTotalGanado({ data: { environment: env } }),
+        adminRtariStats({ data: { days: 30 } }),
       ]);
       if (cancel) return;
       if ("error" in ov) setErr(ov.error);
@@ -87,6 +91,7 @@ function OperacionesPage() {
       if (!("error" in mrr)) setMrrSeries(mrr);
       if (!("error" in ai)) setAiSeries(ai);
       setGanado("error" in tot ? null : tot);
+      setRtari("error" in rt ? null : rt);
       setLoading(false);
       void cargarSalud();
     })();
@@ -191,6 +196,18 @@ function OperacionesPage() {
               <Kpi label="Pro activos" value={data.pro.active} sub={`${data.pro.trialing} en trial · ${data.pro.past_due} past due`} tone="#2ecc71" />
               <Kpi label="Cancelaciones (30d)" value={data.pro.canceled_last_30d} sub={`${data.pro.renewing_next_7d} renuevan en 7d`} tone="#e74c3c" />
               <Kpi label="Usuarios totales" value={data.platform.total_users} sub={`${data.platform.admins} admins`} tone="#3D5D91" />
+              <Kpi
+                label="RTARI · minutos (30d)"
+                value={rtari ? rtari.minutos.toLocaleString("es-MX") : "—"}
+                sub={rtari ? `${rtari.sesiones} entrevistas · ${rtari.con_audio} con audio` : undefined}
+                tone="#3D5D91"
+              />
+              <Kpi
+                label="RTARI · costo voz (30d)"
+                value={rtari ? fmtMxn(rtari.costo_real_usd * USD_MXN) : "—"}
+                sub={rtari ? `${fmtUsd(rtari.costo_real_usd)} real · ${rtari.llamadas} sesiones cobradas` : undefined}
+                tone="#e67e22"
+              />
               <Kpi
                 label="Costo IA estimado (30d)"
                 value={fmtMxn(cost30.mxn)}
