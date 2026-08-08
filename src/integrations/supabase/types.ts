@@ -604,6 +604,27 @@ export type Database = {
         }
         Relationships: []
       }
+      reports: {
+        Row: {
+          data: Json
+          id: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          data: Json
+          id: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          data?: Json
+          id?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       rtari_movimientos: {
         Row: {
           created_at: string
@@ -658,27 +679,6 @@ export type Database = {
           segundos_incluidos_usados?: number
           updated_at?: string
           user_id?: string
-        }
-        Relationships: []
-      }
-      reports: {
-        Row: {
-          data: Json
-          id: string
-          updated_at: string
-          user_id: string | null
-        }
-        Insert: {
-          data: Json
-          id: string
-          updated_at?: string
-          user_id?: string | null
-        }
-        Update: {
-          data?: Json
-          id?: string
-          updated_at?: string
-          user_id?: string | null
         }
         Relationships: []
       }
@@ -858,35 +858,6 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      rtari_acreditar_compra: {
-        Args: { p_detalle?: Json; p_ref: string; p_segundos: number; p_user: string }
-        Returns: number
-      }
-      rtari_asegurar_ciclo: {
-        Args: { p_ciclo: string; p_segundos_incluidos: number; p_user: string }
-        Returns: {
-          ciclo: string
-          segundos_comprados: number
-          segundos_incluidos: number
-          segundos_incluidos_usados: number
-          updated_at: string
-          user_id: string
-        }
-      }
-      rtari_consumir: {
-        Args: { p_detalle?: Json; p_ref?: string; p_segundos: number; p_user: string }
-        Returns: number
-      }
-      rtari_devolver: {
-        Args: {
-          p_detalle?: Json
-          p_ref?: string
-          p_segundos_comprados: number
-          p_segundos_incluidos: number
-          p_user: string
-        }
-        Returns: number
-      }
       admin_activity_by_screen: {
         Args: { days_back?: number }
         Returns: {
@@ -1036,6 +1007,51 @@ export type Database = {
         }[]
       }
       plan_mrr_amount: { Args: { p_price_id: string }; Returns: number }
+      rtari_acreditar_compra: {
+        Args: {
+          p_detalle?: Json
+          p_ref: string
+          p_segundos: number
+          p_user: string
+        }
+        Returns: number
+      }
+      rtari_asegurar_ciclo: {
+        Args: { p_ciclo: string; p_segundos_incluidos: number; p_user: string }
+        Returns: {
+          ciclo: string
+          segundos_comprados: number
+          segundos_incluidos: number
+          segundos_incluidos_usados: number
+          updated_at: string
+          user_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "rtari_saldo"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      rtari_consumir: {
+        Args: {
+          p_detalle?: Json
+          p_ref?: string
+          p_segundos: number
+          p_user: string
+        }
+        Returns: number
+      }
+      rtari_devolver: {
+        Args: {
+          p_detalle?: Json
+          p_ref?: string
+          p_segundos_comprados: number
+          p_segundos_incluidos: number
+          p_user: string
+        }
+        Returns: number
+      }
       seed_content: {
         Args: { p_collection: string; p_items: Json }
         Returns: number
