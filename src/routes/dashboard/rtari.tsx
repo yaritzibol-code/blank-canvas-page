@@ -18,7 +18,6 @@ import { ModuleHeader } from "@/components/shared/ModuleHeader";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { InterviewStage, type InterviewResult } from "@/components/rtari/InterviewStage";
 import { DebriefPanel } from "@/components/rtari/DebriefPanel";
-import { QuestionBank } from "@/components/rtari/QuestionBank";
 import { SaldoPanel } from "@/components/rtari/SaldoPanel";
 import {
   getRtariSessions,
@@ -33,7 +32,13 @@ import {
 } from "@/lib/store";
 import { createCheckoutSession } from "@/lib/payments.functions";
 import { getStripe, getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
-import { fetchSaldo, requestDebrief, settleSession, type RtariSaldoInfo } from "@/lib/rtari-client";
+import {
+  fetchSaldo,
+  requestDebrief,
+  settleSessionDetallado,
+  type RtariSaldoInfo,
+} from "@/lib/rtari-client";
+import { actualizarNivelGrabacion, registrarGrabacion } from "@/lib/rtari-grabaciones";
 import { soportaEntrevista, type RtariError } from "@/lib/rtari-realtime";
 import {
   RTARI_MAX_MINUTOS,
@@ -402,13 +407,13 @@ function RtariPage() {
 
   /** Cierra la entrevista: liquida los minutos, la guarda y pide la evaluación. */
   const onFinish = useCallback(
-    async ({ turns, durationSec, cierre }: InterviewResult) => {
+    async ({ turns, durationSec, cierre, audio }: InterviewResult) => {
       if (!user) return;
       setFase("evaluando");
 
       // Lo primero es devolverle sus minutos: no depende de que la evaluación
       // salga bien, y es lo que el alumno paga.
-      const saldoNuevo = await settleSession(cierre);
+      const { saldo: saldoNuevo, costoUsd } = await settleSessionDetallado(cierre);
       if (saldoNuevo) setSaldo(saldoNuevo);
 
       const questionIds = guion.map((q) => q.id);
@@ -428,6 +433,21 @@ function RtariPage() {
       });
       setResultado(registro);
 
+      // Bitácora auditable: minutos, costo real y audio de la entrevista.
+      void registrarGrabacion({
+        userId: user.id,
+        sessionId: cierre.sessionId || registro.id,
+        localSessionId: registro.id,
+        durationSec,
+        model: cierre.model ?? "",
+        nivel,
+        voice,
+        nivelGlobal: null,
+        costUsd: costoUsd,
+        preguntas: questionIds.length,
+        audio,
+      }).catch(() => {});
+
       const respuestas = turns.filter((t) => t.role === "candidate");
       if (respuestas.length === 0) {
         setAviso(
@@ -446,6 +466,11 @@ function RtariPage() {
       if (res.ok && res.debrief) {
         setRtariDebrief(registro.id, res.debrief);
         setResultado({ ...registro, debrief: res.debrief });
+        void actualizarNivelGrabacion(
+          user.id,
+          cierre.sessionId || registro.id,
+          res.debrief.nivelGlobal,
+        ).catch(() => {});
         setFase("debrief");
         return;
       }
@@ -863,8 +888,6 @@ function RtariPage() {
               </div>
             </Card>
           )}
-
-          <QuestionBank vistas={vistas} />
 
           {/* Cómo se califica */}
           <Card style={{ background: CREAM }}>
