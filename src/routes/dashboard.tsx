@@ -27,7 +27,7 @@ function initialsOf(nombre: string): string {
 type IconName =
   | "home" | "book" | "help" | "sim" | "clock" | "library" | "cards" | "play"
   | "doc" | "chart" | "bell" | "user" | "settings" | "flame" | "spark" | "building" | "plane"
-  | "card" | "exit" | "radio";
+  | "card" | "exit" | "radio" | "compass";
 
 function Icon({ n, size = 18, sw = 1.6 }: { n: IconName; size?: number; sw?: number }) {
   const p = { fill: "none", stroke: "currentColor", strokeWidth: sw, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
@@ -50,6 +50,7 @@ function Icon({ n, size = 18, sw = 1.6 }: { n: IconName; size?: number; sw?: num
     building: <><path d="M4 21V6l7-3v18M11 21h9V10l-9-3" {...p} /><path d="M14 11h2M14 14h2M14 17h2M7 8v.01M7 12v.01M7 16v.01" {...p} /></>,
     plane: <path d="M3.5 13l17-7.5L14 21l-2.5-7L3.5 13z" {...p} />,
     radio: <><circle cx="12" cy="12" r="2.4" {...p} /><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7M6 6a8.5 8.5 0 0 0 0 12M18 6a8.5 8.5 0 0 1 0 12" {...p} /></>,
+    compass: <><circle cx="12" cy="12" r="9" {...p} /><path d="M15 9l-2.2 6L9 16l2-6 4-1z" {...p} /></>,
     card: <><rect x="3" y="5" width="18" height="14" rx="2.5" {...p} /><path d="M3 10h18M6.5 15h3" {...p} /></>,
     exit: <path d="M15 17l5-5-5-5M20 12H9M12 20H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6" {...p} />,
   };
@@ -81,6 +82,7 @@ const NAV_SECTIONS: { label: string; items: { icon: IconName; label: string; pat
       { icon: "plane", label: "Línea Aérea", path: "/dashboard/linea-aerea", nuevo: true },
       { icon: "plane", label: "Aeronaves", path: "/dashboard/manuales", nuevo: true },
       { icon: "radio", label: "RTARI", path: "/dashboard/rtari", nuevo: true },
+      { icon: "compass", label: "Aptitudes", path: "/dashboard/compass", nuevo: true },
       { icon: "clock", label: "Estudiemos Juntos", path: "/dashboard/estudiemos", locked: true },
     ],
   },

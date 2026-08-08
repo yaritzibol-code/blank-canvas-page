@@ -374,6 +374,7 @@ export type ActivityKind =
   | "pathy_session"
   | "yaris"
   | "rtari"
+  | "compass"
   | "upgrade_prompt"
   | "upgrade_click";
 
