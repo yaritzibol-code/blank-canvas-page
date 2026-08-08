@@ -303,10 +303,13 @@ function RtariPage() {
     return s;
   }, []);
 
+  const userId = user?.id ?? null;
+
   useEffect(() => {
-    if (!user) return;
+    if (!userId) return;
     void recargarSaldo();
-  }, [user, recargarSaldo]);
+  }, [userId, recargarSaldo]);
+
 
   // Vuelta del checkout de un paquete: el webhook acredita en un par de
   // segundos, así que se relee el saldo hasta verlo crecer.
