@@ -549,6 +549,10 @@ export class RtariRealtimeSession {
       clearTimeout(this.cutoffTimer);
       this.cutoffTimer = null;
     }
+    if (this.colaTimer) {
+      clearTimeout(this.colaTimer);
+      this.colaTimer = null;
+    }
     if (this.rafId !== null) {
       cancelAnimationFrame(this.rafId);
       this.rafId = null;
