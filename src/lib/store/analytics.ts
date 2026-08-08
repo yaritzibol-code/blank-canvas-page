@@ -4,7 +4,7 @@
  * Cuestionarios y Simulador). No garantizan aprobación.
  */
 import { MATERIAS_DEF } from "./materias";
-import { LINEA_AEREA_OFICIAL, LINEA_AEREA_QUIZZES } from "./linea-aerea-meta";
+import { LINEA_AEREA_OFICIAL, ALL_MANUAL_QUIZZES } from "./linea-aerea-meta";
 import { SUBJECT_TEMAS } from "@/modules/data/registry";
 import {
   getActivity,
@@ -98,7 +98,7 @@ export interface RutaPerf {
 
 /** Título del cuestionario oficial del proceso, para reconocer sus intentos. */
 const LA_TITULOS = new Map<string, { name: string; icon: string }>([
-  ...LINEA_AEREA_QUIZZES.map(
+  ...ALL_MANUAL_QUIZZES.map(
     (q) => [q.titulo, { name: q.titulo, icon: q.icon }] as [string, { name: string; icon: string }],
   ),
   [LINEA_AEREA_OFICIAL.titulo, { name: "Guía oficial Embraer 190", icon: "target" }],

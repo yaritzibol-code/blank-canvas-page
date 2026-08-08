@@ -39,7 +39,7 @@ import {
 } from "@/lib/store/free-quota";
 
 import { LA_OFICIAL_FUENTE } from "@/lib/store/seed-linea-aerea-oficial";
-import { LINEA_AEREA_OFICIAL, LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
+import { LINEA_AEREA_OFICIAL, ALL_MANUAL_QUIZZES, isAeronaveFuente } from "@/lib/store/linea-aerea-meta";
 
 export const Route = createFileRoute("/cuestionario")({
   component: CuestionarioPage,
@@ -243,11 +243,15 @@ function CuestionarioPage() {
    * caía en CIAAC, así que quien entraba desde Línea Aérea acababa en otro
    * módulo al cerrar.
    */
-  const exitTo: "/dashboard/banco" | "/dashboard/linea-aerea" =
-    search.banco === "la" || search.fuente ? "/dashboard/linea-aerea" : "/dashboard/banco";
+  const exitTo: "/dashboard/banco" | "/dashboard/linea-aerea" | "/dashboard/manuales" =
+    isAeronaveFuente(search.fuente)
+      ? "/dashboard/manuales"
+      : search.banco === "la" || search.fuente
+        ? "/dashboard/linea-aerea"
+        : "/dashboard/banco";
   /** Nombre para el historial cuando la sesión es de Línea Aérea. */
   const quizTitulo = search.fuente
-    ? LINEA_AEREA_QUIZZES.find((q) => q.code === search.fuente)?.titulo
+    ? ALL_MANUAL_QUIZZES.find((q) => q.code === search.fuente)?.titulo
     : search.banco === "la" && search.modo === "oficial"
       ? LINEA_AEREA_OFICIAL.titulo
       : undefined;

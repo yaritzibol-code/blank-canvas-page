@@ -4,7 +4,7 @@
  * verificable. La IA solo interpreta este material.
  */
 import { MATERIAS_DEF } from "./materias";
-import { ATP_CHAPTERS, JEPP_CHAPTERS, PHAK_CHAPTERS, LEG_CHAPTERS } from "./linea-aerea-meta";
+import { ATP_CHAPTERS, JEPP_CHAPTERS, PHAK_CHAPTERS, LEG_CHAPTERS, B737MAX_CHAPTERS } from "./linea-aerea-meta";
 import type { AttemptAnswer, PathyWeakSpot } from "./types";
 
 /** Muestra mínima para declarar un punto débil sin advertencia. */
@@ -17,6 +17,7 @@ const MANUAL_NOMBRE: Record<string, string> = {
   ANX10: "Anexo 10",
   LEG: "Legislación",
   CPAM: "Compendio CPAM",
+  B737MAX: "Boeing 737 MAX (FCOM)",
 
 };
 
@@ -25,6 +26,7 @@ function chaptersFor(fuente: string) {
   if (fuente === "JEPP") return JEPP_CHAPTERS;
   if (fuente === "PHAK") return PHAK_CHAPTERS;
   if (fuente === "LEG") return LEG_CHAPTERS;
+  if (fuente === "B737MAX") return B737MAX_CHAPTERS;
 
   return [];
 }

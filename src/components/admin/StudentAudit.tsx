@@ -20,7 +20,7 @@ import {
 } from "@/lib/audit.functions";
 import { cardStyle, inputStyle } from "@/components/admin/AdminShell";
 import { MATERIAS_DEF } from "@/lib/store";
-import { LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
+import { ALL_MANUAL_QUIZZES } from "@/lib/store/linea-aerea-meta";
 import { sanitizeHtml, yarisToHtml } from "@/lib/yaris-format";
 
 const MUTED = "#647DA0";
@@ -32,7 +32,7 @@ const TONOS: Record<string, string> = { formal: "Formal", normal: "Normal", amig
 const materiaName = (slug: string | null | undefined) =>
   !slug ? "Sin materia" : (MATERIAS_DEF.find((m) => m.slug === slug)?.name ?? slug);
 const fuenteName = (code: string) =>
-  LINEA_AEREA_QUIZZES.find((q) => q.code === code)?.titulo ?? code;
+  ALL_MANUAL_QUIZZES.find((q) => q.code === code)?.titulo ?? code;
 
 function fecha(iso: string): string {
   return new Date(iso).toLocaleString("es-MX", {

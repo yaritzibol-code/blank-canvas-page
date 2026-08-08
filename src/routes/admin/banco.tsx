@@ -39,8 +39,9 @@ import {
   JEPP_CHAPTERS,
   PHAK_CHAPTERS,
   LEG_CHAPTERS,
+  B737MAX_CHAPTERS,
 
-  LINEA_AEREA_QUIZZES,
+  ALL_MANUAL_QUIZZES,
   type AtpChapter,
 } from "@/lib/store/linea-aerea-meta";
 
@@ -50,6 +51,7 @@ const CHAPTERS_BY_FUENTE: Record<string, AtpChapter[]> = {
   JEPP: JEPP_CHAPTERS,
   PHAK: PHAK_CHAPTERS,
   LEG: LEG_CHAPTERS,
+  B737MAX: B737MAX_CHAPTERS,
 
 };
 
@@ -57,7 +59,7 @@ const CHAPTERS_BY_FUENTE: Record<string, AtpChapter[]> = {
 function fuenteLabel(code?: string): string {
   if (!code) return "";
   if (code === "LAOF") return "Guía oficial Línea Aérea";
-  return LINEA_AEREA_QUIZZES.find((q) => q.code === code)?.titulo ?? code;
+  return ALL_MANUAL_QUIZZES.find((q) => q.code === code)?.titulo ?? code;
 }
 
 /** Etiqueta de catálogo: "Jeppesen · Cap. 2 Leyenda de cartas" o la materia CIAAC. */
@@ -145,7 +147,7 @@ function AdminBancoPage() {
   const fuentesEnBanco = [...new Set(questions.map((x) => x.fuente).filter(Boolean) as string[])].sort();
   const fuenteOpts = [
     ...fuentesEnBanco.map((code) => ({ value: code, label: `${fuenteLabel(code)} (${code})` })),
-    ...LINEA_AEREA_QUIZZES.filter((q) => !fuentesEnBanco.includes(q.code)).map((q) => ({ value: q.code, label: `${q.titulo} (${q.code})` })),
+    ...ALL_MANUAL_QUIZZES.filter((q) => !fuentesEnBanco.includes(q.code)).map((q) => ({ value: q.code, label: `${q.titulo} (${q.code})` })),
     ...(fuentesEnBanco.includes("LAOF") ? [] : [{ value: "LAOF", label: "Guía oficial Línea Aérea (LAOF)" }]),
   ];
 
