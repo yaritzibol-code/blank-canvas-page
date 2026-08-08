@@ -40,6 +40,21 @@ no se publica.
 - Metadata OG/Twitter propia: imagen `public/og-image.png` (1200×630) y sin `twitter:site`
   de herramientas externas (p. ej. `@Lovable`).
 
+## 5. Pilot Aptitude Trainer (módulo "Compass")
+
+- El módulo entrena **familias de aptitud** (coordinación, tracking, memoria, cálculo,
+  orientación, multitarea) con **ejercicios 100% originales** generados proceduralmente.
+  Nunca afirmar que replica, contiene o equivale a la batería COMPASS/EPST ni a ninguna
+  prueba oficial de aerolínea.
+- "COMPASS" solo se menciona en texto con uso informativo ("procesos de selección tipo
+  COMPASS") y siempre acompañado del aviso de no afiliación que vive en el hub del módulo
+  (`/dashboard/compass`) — no quitarlo.
+- Los scores del módulo son métricas de entrenamiento sobre el historial del propio alumno:
+  prohibido presentarlos como porcentaje de aprobación, percentil oficial o predicción de
+  contratación. No publicar percentiles de comunidad sin muestra suficiente y revisión.
+- El scoring es determinista y versionado (`COMPASS_SCORING_VERSION`); la IA no interviene
+  en generación de estímulos ni en calificación de modos evaluados.
+
 > Nota interna (no publicar): el módulo Línea Aérea contiene un banco marcado como "oficial"
 > (`seed-linea-aerea-oficial.ts`, guía de estudio de la convocatoria). Su permanencia dentro
 > del producto es una decisión de negocio pendiente — ver PR "Limpieza legal + SEO" para el
