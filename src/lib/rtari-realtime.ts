@@ -106,6 +106,11 @@ export class RtariRealtimeSession {
   private audioEl: HTMLAudioElement | null = null;
   private audioCtx: AudioContext | null = null;
   private rafId: number | null = null;
+  /* ── Grabación de la entrevista (para auditoría) ── */
+  private recCtx: AudioContext | null = null;
+  private recorder: MediaRecorder | null = null;
+  private recChunks: Blob[] = [];
+  private recDone: Promise<Blob | null> | null = null;
   private cutoffTimer: ReturnType<typeof setTimeout> | null = null;
   private startedAt = 0;
   private estado: RtariEstado = "inactiva";
@@ -262,7 +267,11 @@ export class RtariRealtimeSession {
     document.body.appendChild(audioEl);
     this.audioEl = audioEl;
     pc.ontrack = (e) => {
-      audioEl.srcObject = e.streams[0] ?? null;
+      const remoto = e.streams[0] ?? null;
+      audioEl.srcObject = remoto;
+      // Se graba la mezcla (alumno + sinodal) para que la entrevista pueda
+      // escucharse después en la auditoría del panel.
+      if (remoto) this.startRecording(mic, remoto);
     };
 
     const track = mic.getAudioTracks()[0];
@@ -500,6 +509,7 @@ export class RtariRealtimeSession {
       /* la conexión ya estaba cerrada */
     }
     this.pc = null;
+    this.stopRecorder();
     this.mic?.getTracks().forEach((t) => t.stop());
     this.mic = null;
     if (this.audioEl) {
@@ -644,6 +654,79 @@ export class RtariRealtimeSession {
       textCached: this.usage.textCached + cachedText,
       textOut: this.usage.textOut + num(outDet.text_tokens),
     };
+  }
+
+  /* ── Grabación ── */
+
+  /**
+   * Mezcla el micrófono y la voz del sinodal en una sola pista y la graba.
+   *
+   * Es para auditoría: la administradora necesita poder escuchar la entrevista
+   * completa, no sólo leer la transcripción. Si el navegador no soporta
+   * `MediaRecorder`, la entrevista sigue igual y simplemente no hay audio.
+   */
+  private startRecording(mic: MediaStream, remoto: MediaStream) {
+    if (this.recorder || typeof MediaRecorder === "undefined") return;
+    try {
+      const Ctx: typeof AudioContext =
+        window.AudioContext ??
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const ctx = new Ctx();
+      this.recCtx = ctx;
+      const dest = ctx.createMediaStreamDestination();
+      ctx.createMediaStreamSource(mic).connect(dest);
+      ctx.createMediaStreamSource(remoto).connect(dest);
+
+      const mime = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4"].find((m) =>
+        MediaRecorder.isTypeSupported(m),
+      );
+      const rec = new MediaRecorder(dest.stream, mime ? { mimeType: mime } : undefined);
+      this.recChunks = [];
+      rec.ondataavailable = (e) => {
+        if (e.data && e.data.size > 0) this.recChunks.push(e.data);
+      };
+      this.recDone = new Promise<Blob | null>((resolve) => {
+        rec.onstop = () => {
+          const blob =
+            this.recChunks.length > 0
+              ? new Blob(this.recChunks, { type: rec.mimeType || "audio/webm" })
+              : null;
+          resolve(blob);
+        };
+      });
+      rec.start(2000);
+      this.recorder = rec;
+    } catch {
+      /* sin grabación: la entrevista funciona igual */
+    }
+  }
+
+  private stopRecorder() {
+    const rec = this.recorder;
+    this.recorder = null;
+    try {
+      if (rec && rec.state !== "inactive") rec.stop();
+    } catch {
+      /* ya estaba detenido */
+    }
+    // El contexto se cierra hasta que el grabador entregó su último trozo:
+    // cerrarlo antes corta el final de la entrevista.
+    const ctx = this.recCtx;
+    this.recCtx = null;
+    void (this.recDone ?? Promise.resolve()).finally(() => {
+      void ctx?.close().catch(() => {});
+    });
+  }
+
+  /** Audio de la entrevista, una vez colgada. `null` si no se pudo grabar. */
+  async takeRecording(): Promise<Blob | null> {
+    if (!this.recDone) return null;
+    const blob = await Promise.race([
+      this.recDone,
+      new Promise<null>((r) => setTimeout(() => r(null), 8000)),
+    ]);
+    this.recDone = null;
+    return blob;
   }
 
   /* ── Indicador de nivel de micrófono ── */

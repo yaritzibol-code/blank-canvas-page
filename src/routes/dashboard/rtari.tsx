@@ -18,7 +18,6 @@ import { ModuleHeader } from "@/components/shared/ModuleHeader";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { InterviewStage, type InterviewResult } from "@/components/rtari/InterviewStage";
 import { DebriefPanel } from "@/components/rtari/DebriefPanel";
-import { QuestionBank } from "@/components/rtari/QuestionBank";
 import { SaldoPanel } from "@/components/rtari/SaldoPanel";
 import {
   getRtariSessions,
@@ -33,7 +32,14 @@ import {
 } from "@/lib/store";
 import { createCheckoutSession } from "@/lib/payments.functions";
 import { getStripe, getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
-import { fetchSaldo, requestDebrief, settleSession, type RtariSaldoInfo } from "@/lib/rtari-client";
+import {
+  fetchSaldo,
+  requestDebrief,
+  settleSessionDetallado,
+  type RtariSaldoInfo,
+} from "@/lib/rtari-client";
+import { actualizarNivelGrabacion, registrarGrabacion } from "@/lib/rtari-grabaciones";
+import { pausarLiveData } from "@/hooks/use-live-data";
 import { soportaEntrevista, type RtariError } from "@/lib/rtari-realtime";
 import {
   RTARI_MAX_MINUTOS,
@@ -273,13 +279,14 @@ function RtariPage() {
       ? rtariStats(user.id)
       : { sesiones: 0, minutos: 0, mejorNivel: null, ultimoNivel: null, preguntasVistas: 0 },
   );
-  const vistas = useMemo(() => {
-    const set = new Set<string>();
-    sesiones.forEach((s) => s.questionIds.forEach((q) => set.add(q)));
-    return set;
-  }, [sesiones]);
-
   const [fase, setFase] = useState<Fase>("setup");
+
+  // Mientras la entrevista corre (o se evalúa) se congela el refresco de la
+  // nube: cada relectura re-renderizaba la pantalla y parecía recarga sola.
+  useEffect(() => {
+    if (fase !== "entrevista" && fase !== "evaluando") return;
+    return pausarLiveData();
+  }, [fase]);
   const [numPreguntas, setNumPreguntas] = useState<number>(RTARI_PRESETS_PREGUNTAS[1]);
   const [bloque, setBloque] = useState<RtariBloque | "todos">("todos");
   const [voice, setVoice] = useState<RtariVoice>("marin");
@@ -402,13 +409,13 @@ function RtariPage() {
 
   /** Cierra la entrevista: liquida los minutos, la guarda y pide la evaluación. */
   const onFinish = useCallback(
-    async ({ turns, durationSec, cierre }: InterviewResult) => {
+    async ({ turns, durationSec, cierre, audio }: InterviewResult) => {
       if (!user) return;
       setFase("evaluando");
 
       // Lo primero es devolverle sus minutos: no depende de que la evaluación
       // salga bien, y es lo que el alumno paga.
-      const saldoNuevo = await settleSession(cierre);
+      const { saldo: saldoNuevo, costoUsd } = await settleSessionDetallado(cierre);
       if (saldoNuevo) setSaldo(saldoNuevo);
 
       const questionIds = guion.map((q) => q.id);
@@ -428,6 +435,21 @@ function RtariPage() {
       });
       setResultado(registro);
 
+      // Bitácora auditable: minutos, costo real y audio de la entrevista.
+      void registrarGrabacion({
+        userId: user.id,
+        sessionId: cierre.sessionId || registro.id,
+        localSessionId: registro.id,
+        durationSec,
+        model: cierre.model ?? "",
+        nivel,
+        voice,
+        nivelGlobal: null,
+        costUsd: costoUsd,
+        preguntas: questionIds.length,
+        audio,
+      }).catch(() => {});
+
       const respuestas = turns.filter((t) => t.role === "candidate");
       if (respuestas.length === 0) {
         setAviso(
@@ -446,6 +468,17 @@ function RtariPage() {
       if (res.ok && res.debrief) {
         setRtariDebrief(registro.id, res.debrief);
         setResultado({ ...registro, debrief: res.debrief });
+        // El nivel OACI es el más bajo de las seis áreas, no el promedio.
+        const nivelesEval = Object.values(res.debrief.niveles).filter(
+          (n): n is number => typeof n === "number",
+        );
+        if (nivelesEval.length > 0) {
+          void actualizarNivelGrabacion(
+            user.id,
+            cierre.sessionId || registro.id,
+            Math.min(...nivelesEval),
+          ).catch(() => {});
+        }
         setFase("debrief");
         return;
       }
@@ -863,8 +896,6 @@ function RtariPage() {
               </div>
             </Card>
           )}
-
-          <QuestionBank vistas={vistas} />
 
           {/* Cómo se califica */}
           <Card style={{ background: CREAM }}>

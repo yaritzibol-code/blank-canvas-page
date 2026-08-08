@@ -111,6 +111,8 @@ function reloj(ms: number): string {
 export interface InterviewResult {
   turns: RtariTurn[];
   durationSec: number;
+  /** Audio mezclado de la entrevista, para la auditoría. `null` si no se grabó. */
+  audio: Blob | null;
   /** Duración y consumo reportado, para liquidar los minutos reservados. */
   cierre: RtariCierre;
 }
@@ -207,7 +209,16 @@ export function InterviewStage({
     // liquidación la hace la pantalla, que sí puede usar el saldo devuelto.
     const cierre = sesion.tomarCierre() ?? sesion.cierre();
     sesion.finish();
-    cfg.current.onFinish({ turns: turnsRef.current, durationSec: cierre.durationSec, cierre });
+    // La grabación se cierra en cuanto se cuelga; se espera a que el navegador
+    // entregue el último trozo antes de mandar el resultado.
+    void sesion.takeRecording().then((audio) => {
+      cfg.current.onFinish({
+        turns: turnsRef.current,
+        durationSec: cierre.durationSec,
+        cierre,
+        audio,
+      });
+    });
   }, []);
 
   const respuestas = turns.filter((t) => t.role === "candidate").length;

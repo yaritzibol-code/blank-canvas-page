@@ -54,6 +54,31 @@ export async function fetchSaldo(): Promise<RtariSaldoInfo | null> {
  * Se llama siempre al colgar, aunque el debrief falle: lo que está en juego
  * son los minutos del alumno.
  */
+export interface RtariLiquidacion {
+  saldo: RtariSaldoInfo | null;
+  /** Costo real de la voz en USD, tal como quedó bitacorizado. */
+  costoUsd: number | null;
+}
+
+/** Igual que `settleSession`, pero conserva el costo real para la auditoría. */
+export async function settleSessionDetallado(cierre: RtariCierre): Promise<RtariLiquidacion> {
+  if (!cierre.sessionId) return { saldo: null, costoUsd: null };
+  const token = await bearer();
+  if (!token) return { saldo: null, costoUsd: null };
+  try {
+    const res = await fetch("/api/rtari/settle", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      body: JSON.stringify(cierre),
+    });
+    if (!res.ok) return { saldo: null, costoUsd: null };
+    const body = (await res.json()) as { saldo?: RtariSaldoInfo; costoUsd?: number };
+    return { saldo: body.saldo ?? null, costoUsd: body.costoUsd ?? null };
+  } catch {
+    return { saldo: null, costoUsd: null };
+  }
+}
+
 export async function settleSession(cierre: RtariCierre): Promise<RtariSaldoInfo | null> {
   if (!cierre.sessionId) return null;
   const token = await bearer();
