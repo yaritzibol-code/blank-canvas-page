@@ -39,6 +39,7 @@ import {
   type RtariSaldoInfo,
 } from "@/lib/rtari-client";
 import { actualizarNivelGrabacion, registrarGrabacion } from "@/lib/rtari-grabaciones";
+import { pausarLiveData } from "@/hooks/use-live-data";
 import { soportaEntrevista, type RtariError } from "@/lib/rtari-realtime";
 import {
   RTARI_MAX_MINUTOS,
@@ -279,6 +280,13 @@ function RtariPage() {
       : { sesiones: 0, minutos: 0, mejorNivel: null, ultimoNivel: null, preguntasVistas: 0 },
   );
   const [fase, setFase] = useState<Fase>("setup");
+
+  // Mientras la entrevista corre (o se evalúa) se congela el refresco de la
+  // nube: cada relectura re-renderizaba la pantalla y parecía recarga sola.
+  useEffect(() => {
+    if (fase !== "entrevista" && fase !== "evaluando") return;
+    return pausarLiveData();
+  }, [fase]);
   const [numPreguntas, setNumPreguntas] = useState<number>(RTARI_PRESETS_PREGUNTAS[1]);
   const [bloque, setBloque] = useState<RtariBloque | "todos">("todos");
   const [voice, setVoice] = useState<RtariVoice>("marin");
