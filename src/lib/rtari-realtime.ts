@@ -63,6 +63,24 @@ export interface RtariStartOptions {
 /** Nivel de voz del micrófono (0-1) para pintar el indicador. */
 export type LevelListener = (level: number) => void;
 
+/**
+ * La entrevista en curso en esta pestaña, si la hay.
+ *
+ * Vive en el módulo y no en la clase porque lo que se quiere impedir es que
+ * dos INSTANCIAS distintas estén sonando a la vez.
+ */
+let sesionViva: RtariRealtimeSession | null = null;
+
+/** Deja a `sesion` como la única entrevista viva, cerrando la anterior. */
+function tomarElTurno(sesion: RtariRealtimeSession) {
+  if (sesionViva && sesionViva !== sesion) sesionViva.stop();
+  sesionViva = sesion;
+}
+
+function soltarElTurno(sesion: RtariRealtimeSession) {
+  if (sesionViva === sesion) sesionViva = null;
+}
+
 interface SessionResponse {
   value: string;
   expiresAt: number | null;
@@ -98,6 +116,18 @@ export class RtariRealtimeSession {
   private usage: RealtimeUsage = { ...EMPTY_REALTIME_USAGE };
   private sessionId = "";
   private model = "";
+  /** Ya se entregó el cierre a quien va a liquidar esta sesión. */
+  private liquidada = false;
+  /**
+   * El sinodal tiene una respuesta en curso.
+   *
+   * La API Realtime no serializa las respuestas: si se le pide una segunda
+   * mientras la primera sigue, genera las dos y el alumno oye dos voces
+   * encimadas. Esta bandera es lo que garantiza que sólo haya una.
+   */
+  private respuestaEnCurso = false;
+  /** Se pidió repetir mientras hablaba: se dispara al confirmarse el corte. */
+  private repeticionPendiente = false;
   /** Minutos que el servidor reservó para esta entrevista. */
   maxMinutos = 0;
 
@@ -119,6 +149,20 @@ export class RtariRealtimeSession {
       durationSec: Math.round(this.elapsed() / 1000),
       usage: { ...this.usage },
     };
+  }
+
+  /**
+   * Igual que `cierre()`, pero sólo la PRIMERA vez; después devuelve `null`.
+   *
+   * La entrevista puede terminar por dos caminos —el botón de terminar y la
+   * limpieza al desmontar— y ambos quieren liquidar. Que el permiso lo dé la
+   * sesión, y una sola vez, evita que el mismo consumo se bitacorice dos veces
+   * y que se devuelvan minutos por duplicado.
+   */
+  tomarCierre(): RtariCierre | null {
+    if (this.liquidada || !this.sessionId) return null;
+    this.liquidada = true;
+    return this.cierre();
   }
 
   getEstado(): RtariEstado {
@@ -155,6 +199,12 @@ export class RtariRealtimeSession {
     if (this.estado === "conectando" || this.estado === "en_curso") return;
     this.setEstado("conectando");
 
+    // Sólo puede haber una entrevista a la vez. Si quedó una viva —una pestaña
+    // que no terminó de limpiar, un montaje repetido del componente— se cierra
+    // aquí: dos sesiones abiertas significan dos sinodales hablando encima y el
+    // doble de minutos consumidos.
+    tomarElTurno(this);
+
     const secret = await this.mintSecret(opts);
     this.sessionId = secret.sessionId;
     this.model = secret.model;
@@ -182,8 +232,17 @@ export class RtariRealtimeSession {
     this.pc = pc;
 
     // Voz del sinodal.
+    //
+    // El elemento va colgado del DOM, aunque no se vea: un `<audio>` suelto
+    // reproduce, pero queda fuera de lo que el navegador considera su salida
+    // de audio, y la cancelación de eco del micrófono deja de reconocer esa
+    // voz como propia. Resultado: el micro se oye a sí mismo y el detector de
+    // silencios cree que el alumno habló.
     const audioEl = document.createElement("audio");
     audioEl.autoplay = true;
+    audioEl.setAttribute("playsinline", "");
+    audioEl.style.display = "none";
+    document.body.appendChild(audioEl);
     this.audioEl = audioEl;
     pc.ontrack = (e) => {
       audioEl.srcObject = e.streams[0] ?? null;
@@ -241,8 +300,8 @@ export class RtariRealtimeSession {
     }, tope * 60_000);
 
     // El sinodal abre la entrevista en cuanto el canal está listo.
-    if (dc.readyState === "open") this.send({ type: "response.create" });
-    else dc.addEventListener("open", () => this.send({ type: "response.create" }), { once: true });
+    if (dc.readyState === "open") this.pedirRespuesta();
+    else dc.addEventListener("open", () => this.pedirRespuesta(), { once: true });
   }
 
   /** Pide la credencial efímera a nuestro servidor. */
@@ -317,6 +376,28 @@ export class RtariRealtimeSession {
         content: [{ type: "input_text", text: "Could you repeat the question, please?" }],
       },
     });
+
+    // Si el sinodal está hablando hay que CORTARLO antes de pedirle otra cosa.
+    // La API acepta respuestas concurrentes: pedir una segunda sin cancelar la
+    // primera no la reemplaza, la encima, y se oyen las dos voces a la vez.
+    if (this.respuestaEnCurso) {
+      this.repeticionPendiente = true;
+      this.send({ type: "response.cancel" });
+      return;
+    }
+    this.pedirRespuesta();
+  }
+
+  /**
+   * Pide una respuesta al sinodal, y sólo si no hay otra en curso.
+   *
+   * Es el único lugar del que sale un `response.create`. La bandera se levanta
+   * aquí mismo, sin esperar la confirmación del servidor, porque dos clics
+   * seguidos son más rápidos que el viaje de ida y vuelta.
+   */
+  private pedirRespuesta() {
+    if (this.respuestaEnCurso) return;
+    this.respuestaEnCurso = true;
     this.send({ type: "response.create" });
   }
 
@@ -337,6 +418,9 @@ export class RtariRealtimeSession {
 
   /** Libera micrófono, conexión y temporizadores. Es idempotente. */
   stop() {
+    soltarElTurno(this);
+    this.respuestaEnCurso = false;
+    this.repeticionPendiente = false;
     if (this.cutoffTimer) {
       clearTimeout(this.cutoffTimer);
       this.cutoffTimer = null;
@@ -361,7 +445,11 @@ export class RtariRealtimeSession {
     this.mic?.getTracks().forEach((t) => t.stop());
     this.mic = null;
     if (this.audioEl) {
+      // Pausar antes de soltar la fuente: si no, el elemento puede seguir
+      // sonando con lo que ya tenía en el búfer.
+      this.audioEl.pause();
       this.audioEl.srcObject = null;
+      this.audioEl.remove();
       this.audioEl = null;
     }
     void this.audioCtx?.close().catch(() => {});
@@ -405,10 +493,24 @@ export class RtariRealtimeSession {
       return;
     }
 
+    // El servidor confirma que empezó una respuesta. Puede nacer de nuestro
+    // `response.create` o del detector de silencios cuando el alumno termina
+    // de hablar; en los dos casos ocupa el turno del sinodal.
+    if (type === "response.created") {
+      this.respuestaEnCurso = true;
+      return;
+    }
+
     if (type === "response.done" || type === "output_audio_buffer.stopped") {
       this.cb.onSpeaking?.(false);
       if (type === "response.done") {
+        this.respuestaEnCurso = false;
         this.acumulaUso((evt.response as { usage?: unknown } | undefined)?.usage);
+        // La repetición esperaba a que se cortara la respuesta anterior.
+        if (this.repeticionPendiente) {
+          this.repeticionPendiente = false;
+          this.pedirRespuesta();
+        }
       }
       return;
     }
@@ -421,6 +523,11 @@ export class RtariRealtimeSession {
     }
 
     if (type === "error") {
+      // Si la respuesta murió a medias, soltar la bandera: si no, el sinodal
+      // se quedaría mudo el resto de la entrevista esperando un `response.done`
+      // que ya no va a llegar.
+      this.respuestaEnCurso = false;
+      this.repeticionPendiente = false;
       const err = (evt.error ?? {}) as { message?: string };
       this.cb.onError?.(
         new RtariError("openai", err.message ?? "El sinodal reportó un error de sesión."),

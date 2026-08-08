@@ -58,7 +58,7 @@ export const Route = createFileRoute("/api/rtari/settle")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const { authenticateRequest } = await import("@/lib/route-auth.server");
+        const { authenticateRequest, loadRouteProfile } = await import("@/lib/route-auth.server");
         const auth = await authenticateRequest(request);
         if (!auth) return json({ error: "unauthorized" }, 401);
 
@@ -69,16 +69,43 @@ export const Route = createFileRoute("/api/rtari/settle")({
           return json({ error: "bad_request" }, 400);
         }
 
-        const { leerSaldo, liquidarMinutos, reservaPendiente } =
+        const { asegurarSaldo, leerSaldo, liquidarMinutos, reservaPendiente } =
           await import("@/lib/rtari-saldo.server");
         const { logAiUsage } = await import("@/lib/yaris-openai.server");
         const { realtimeCost, realtimeTotals } = await import("@/lib/ai-cost");
 
+        // La bitácora del costo va SIEMPRE y va primero, aunque no haya nada
+        // que devolver: las sesiones de la administración no gastan minutos
+        // pero sí cuestan dinero, y el panel tiene que verlas.
+        const { tokensIn, tokensOut } = realtimeTotals(parsed.usage);
+        const costo = realtimeCost(parsed.model, parsed.usage);
+        if (tokensIn > 0 || tokensOut > 0) {
+          await logAiUsage({
+            userId: auth.userId,
+            materia: "rtari",
+            model: parsed.model,
+            tokensIn,
+            tokensOut,
+            costUsd: costo.usd,
+            latencyMs: parsed.durationSec * 1000,
+            success: true,
+          });
+        }
+
+        const profile = await loadRouteProfile(auth);
+        const saldoDe = async () =>
+          profile.isAdmin ? asegurarSaldo(auth.userId, true, true) : leerSaldo(auth.userId);
+
         const reserva = await reservaPendiente(auth.userId, parsed.sessionId);
         if (!reserva) {
-          // Sesión desconocida o ya liquidada: no es un error del alumno, sólo
-          // no hay nada que devolver. Se le informa su saldo y se acaba.
-          return json({ ok: true, yaLiquidada: true, saldo: await leerSaldo(auth.userId) });
+          // Sesión sin cargo, desconocida o ya liquidada: no hay minutos que
+          // devolver. No es un error, sólo no queda nada por hacer.
+          return json({
+            ok: true,
+            yaLiquidada: true,
+            costoUsd: Number(costo.usd.toFixed(4)),
+            saldo: await saldoDe(),
+          });
         }
 
         const devueltos = await liquidarMinutos(
@@ -88,24 +115,11 @@ export const Route = createFileRoute("/api/rtari/settle")({
           parsed.sessionId,
         );
 
-        const { tokensIn, tokensOut } = realtimeTotals(parsed.usage);
-        const costo = realtimeCost(parsed.model, parsed.usage);
-        await logAiUsage({
-          userId: auth.userId,
-          materia: "rtari",
-          model: parsed.model,
-          tokensIn,
-          tokensOut,
-          costUsd: costo.usd,
-          latencyMs: parsed.durationSec * 1000,
-          success: true,
-        });
-
         return json({
           ok: true,
           devueltos,
           costoUsd: Number(costo.usd.toFixed(4)),
-          saldo: await leerSaldo(auth.userId),
+          saldo: await saldoDe(),
         });
       },
     },

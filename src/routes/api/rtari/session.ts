@@ -72,7 +72,12 @@ export const Route = createFileRoute("/api/rtari/session")({
 
         // Un id propio: identifica la reserva y vuelve en la liquidación.
         const sessionId = crypto.randomUUID();
-        const reserva = await reservarMinutos(auth.userId, profile.isPro, sessionId);
+        const reserva = await reservarMinutos(
+          auth.userId,
+          profile.isPro,
+          sessionId,
+          profile.isAdmin,
+        );
         if (reserva.segundos <= 0) {
           return json({ error: "sin_minutos", minimoMinutos: RTARI_MINUTOS_MINIMOS }, 429);
         }

@@ -37,6 +37,12 @@ export interface RouteProfile {
   data: Record<string, unknown>;
   /** Pro real: admin, suscripción activa en Stripe o plan de pago vigente. */
   isPro: boolean;
+  /**
+   * Administradora de la plataforma. Se expone aparte de `isPro` porque hay
+   * funciones —las que se cobran por consumo— donde no basta con "tiene
+   * acceso": el equipo necesita usarlas sin gastar cuota de nadie.
+   */
+  isAdmin: boolean;
   /** Nombre del estudiante, "" si no lo capturó. */
   nombre: string;
 }
@@ -52,10 +58,11 @@ export async function loadRouteProfile(auth: RouteAuth): Promise<RouteProfile> {
   const data = (profileRow?.data ?? {}) as Record<string, unknown>;
   const plan = String(data.plan ?? "");
   const accessStatus = String(data.accessStatus ?? "activo");
+  const admin = Boolean(isAdmin);
   const isPro =
-    Boolean(isAdmin) ||
+    admin ||
     Boolean(hasSub) ||
     (plan === "paga" && ["activo", "extendido", "prueba"].includes(accessStatus));
 
-  return { data, isPro, nombre: String(data.nombre ?? "").trim() };
+  return { data, isPro, isAdmin: admin, nombre: String(data.nombre ?? "").trim() };
 }

@@ -27,6 +27,8 @@ export interface RtariSaldoInfo {
   comprados: number;
   disponible: number;
   ciclo: string;
+  /** Administración: usa el módulo sin gastar minutos. */
+  ilimitado?: boolean;
 }
 
 /** Saldo del alumno, con los minutos del ciclo ya otorgados. */
