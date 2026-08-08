@@ -278,8 +278,15 @@ export function buildDebriefMessages(input: {
     .map((t) => `${t.role === "examiner" ? "EXAMINER" : "CANDIDATE"}: ${t.text}`)
     .join("\n");
 
+  // Datos duros de la muestra: sin ellos el modelo tiende a suponer que el
+  // alumno habló más de lo que en realidad habló.
+  const delAlumno = input.turns.filter((t) => t.role === "candidate");
+  const palabras = delAlumno.reduce((n, t) => n + t.text.trim().split(/\s+/).length, 0);
+  const promedio = delAlumno.length > 0 ? Math.round(palabras / delAlumno.length) : 0;
+
   const user = [
     `Duración de la entrevista: ${Math.round(input.duracionSec / 60)} min ${input.duracionSec % 60} s.`,
+    `Muestra: ${delAlumno.length} turnos del candidato, ${palabras} palabras en total, ${promedio} palabras por turno en promedio, sobre ${input.questions.length} preguntas del guion.`,
     "",
     "PREGUNTAS DEL GUION:",
     guion,
@@ -288,6 +295,8 @@ export function buildDebriefMessages(input: {
     "<<<TRANSCRIPT",
     transcript || "(sin respuestas del candidato)",
     "TRANSCRIPT",
+    "",
+    DEBRIEF_RUBRICA,
     "",
     DEBRIEF_FORMATO,
   ].join("\n");
