@@ -13,6 +13,40 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cloudSessionActive, refreshCloudData } from "@/lib/store";
 
+/**
+ * Pantallas que no toleran que les cambien los datos debajo (una entrevista de
+ * voz en curso, por ejemplo) pueden congelar el refresco mientras duran: cada
+ * relectura de la nube re-renderiza el tablero completo y se sentía como si la
+ * página se recargara sola.
+ */
+let pausas = 0;
+const oyentes = new Set<() => void>();
+
+export function pausarLiveData(): () => void {
+  pausas++;
+  oyentes.forEach((f) => f());
+  let liberado = false;
+  return () => {
+    if (liberado) return;
+    liberado = true;
+    pausas = Math.max(0, pausas - 1);
+    oyentes.forEach((f) => f());
+  };
+}
+
+function useLiveDataPausado(): boolean {
+  const [pausado, setPausado] = useState(() => pausas > 0);
+  useEffect(() => {
+    const f = () => setPausado(pausas > 0);
+    oyentes.add(f);
+    f();
+    return () => {
+      oyentes.delete(f);
+    };
+  }, []);
+  return pausado;
+}
+
 export interface LiveDataState {
   /** false en modo local: no hay nada que refrescar. */
   enabled: boolean;
@@ -23,7 +57,8 @@ export interface LiveDataState {
 }
 
 export function useLiveData(active: boolean, intervalMs = 20000): LiveDataState {
-  const enabled = active && cloudSessionActive();
+  const pausado = useLiveDataPausado();
+  const enabled = active && !pausado && cloudSessionActive();
   const [lastAt, setLastAt] = useState(() => Date.now());
   const [busy, setBusy] = useState(false);
   const [now, setNow] = useState(() => Date.now());
@@ -43,7 +78,9 @@ export function useLiveData(active: boolean, intervalMs = 20000): LiveDataState 
   useEffect(() => {
     if (!enabled) return;
     const poll = setInterval(refresh, intervalMs);
-    const tick = setInterval(() => setNow(Date.now()), 1000);
+    // El reloj del indicador sólo alimenta un texto ("hace 35s"): a 1s obligaba
+    // a re-renderizar el tablero entero cada segundo.
+    const tick = setInterval(() => setNow(Date.now()), 5000);
     const onVisible = () => {
       if (document.visibilityState === "visible") refresh();
     };
