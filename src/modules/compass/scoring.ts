@@ -36,8 +36,9 @@ export function scoreControl(raw: ControlRaw): {
 } {
   const rms = (raw.rmsX + raw.rmsY) / 2;
   const inBand = (raw.inBandX + raw.inBandY) / 2;
-  // Precisión: RMS 0.08 ≈ perfecto, 0.5 ≈ sin control efectivo.
-  const precision = clamp01(1 - (rms - 0.08) / 0.42);
+  // Precisión (v2, dinámica con inercia): RMS 0.10 ≈ excelente, 0.55 ≈ sin
+  // control efectivo.
+  const precision = clamp01(1 - (rms - 0.1) / 0.45);
   const score = to100(0.55 * precision + 0.45 * inBand) - Math.min(20, raw.saturations * 4);
 
   const asym = Math.abs(raw.rmsX - raw.rmsY) > 0.08;
@@ -47,8 +48,8 @@ export function scoreControl(raw: ControlRaw): {
       : asym
         ? `Tu eje ${raw.rmsX > raw.rmsY ? "horizontal" : "vertical"} está notablemente más flojo: en la próxima práctica fija la vista al centro y trabaja ese eje con correcciones tempranas.`
         : inBand < 0.5
-          ? "Pasas la mitad del tiempo fuera de banda: baja un nivel y prioriza mantener el centro sobre reaccionar rápido."
-          : "Buen control base. Sube de nivel y cuida que la suavidad no se pierda con más turbulencia.";
+          ? "Pasas la mitad del tiempo fuera de banda: el mando tiene inercia — suelta la corrección ANTES de llegar al centro y deja que el momentum termine el trabajo."
+          : "Buen control base. Sube de nivel: más turbulencia, más inercia de mando y acoplamiento entre ejes.";
 
   return {
     score: Math.max(0, score),
@@ -105,6 +106,7 @@ export interface SlalomRaw {
   gatesClean: number;
   gatesTouch: number;
   gatesMiss: number;
+  wallHits: number;
   meanDev: number;
   reversalsPerGate: number;
 }
@@ -118,16 +120,21 @@ export function scoreSlalom(raw: SlalomRaw): {
   const touchPct = raw.gatesTotal > 0 ? raw.gatesTouch / raw.gatesTotal : 0;
   // Centrado: desviación media 0.25 del medio-ancho ≈ excelente, 1 = al poste.
   const centering = clamp01(1 - (raw.meanDev - 0.25) / 0.75);
-  const score = to100(0.6 * (cleanPct + 0.5 * touchPct) + 0.4 * centering);
+  const score = Math.max(
+    0,
+    to100(0.6 * (cleanPct + 0.5 * touchPct) + 0.4 * centering) - Math.min(12, raw.wallHits * 2),
+  );
 
   const advice =
-    raw.gatesMiss > raw.gatesTotal * 0.25
-      ? "Fallas 1 de cada 4 puertas: mira siempre la SIGUIENTE puerta y empieza la corrección al cruzar la actual."
-      : raw.reversalsPerGate > 2.2
-        ? "Demasiados bandazos por puerta: comanda una corrección y espérala — el avión tiene inercia y llega solo."
-        : raw.meanDev > 0.6
-          ? "Cruzas rozando los postes: apunta al centro exacto, no a 'pasar'. El margen es tu colchón cuando la pista se cierre."
-          : "Trayectoria limpia. Sube de nivel para entrenar con puertas más cerradas y mayor velocidad.";
+    raw.wallHits >= 3
+      ? "Chocaste contra los muros varias veces: el viento cruzado empuja incluso en recta — mantén una corrección base contra el viento y ajusta sobre ella."
+      : raw.gatesMiss > raw.gatesTotal * 0.25
+        ? "Fallas 1 de cada 4 puertas: mira siempre la SIGUIENTE puerta y empieza la corrección al cruzar la actual — en las chicanes, la salida se prepara desde la entrada."
+        : raw.reversalsPerGate > 2.2
+          ? "Demasiados bandazos por puerta: comanda una corrección y espérala — el avión tiene inercia y llega solo."
+          : raw.meanDev > 0.6
+            ? "Cruzas rozando los postes: apunta al centro exacto, no a 'pasar'. El margen es tu colchón cuando la pista se cierre."
+            : "Trayectoria limpia. Sube de nivel: más velocidad, puertas más cerradas, chicanes más frecuentes y viento más fuerte.";
 
   return {
     score,
@@ -146,6 +153,13 @@ export function scoreSlalom(raw: SlalomRaw): {
         hint: "Cruzaste el vano pero clipaste el poste.",
       },
       { key: "gates_miss", label: "Falladas", value: String(raw.gatesMiss), higherIsBetter: false },
+      {
+        key: "wall_hits",
+        label: "Golpes al muro",
+        value: String(raw.wallHits),
+        higherIsBetter: false,
+        hint: "Veces que el viento o un bandazo te llevaron al límite del corredor.",
+      },
       {
         key: "mean_dev",
         label: "Desviación del centro",

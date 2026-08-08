@@ -1,16 +1,21 @@
 /**
- * Slalom — pursuit tracking por puertas sobre canvas.
+ * Slalom — pursuit tracking por puertas sobre canvas (v2).
  *
- * El corredor avanza a velocidad constante (el mundo baja hacia el avión);
- * el avión responde con inercia al alerón comandado. Mismo esquema que
- * Control: simulación con paso fijo, render por rAF, input teclado/puntero.
+ * El corredor acelera durante la sesión, las puertas llegan con separación
+ * variable (con chicanes cerradas en niveles 2+) y un viento cruzado lento
+ * empuja el avión incluso en recta. El avión responde con inercia al alerón
+ * comandado. Paso fijo vía use-game-loop; todo determinista por seed.
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
+  buildCrosswind,
   buildGates,
+  crosswindAt,
   slalomLevel,
+  slalomSpeedAt,
   SlalomMetrics,
   PLANE_HALF_WIDTH,
+  type CrosswindProfile,
   type SlalomGate,
 } from "@/modules/compass/slalom";
 import { scoreSlalom } from "@/modules/compass/scoring";
@@ -48,13 +53,17 @@ export function SlalomGame({ cfg, onFinish, onQuit }: Props) {
   const [size, setSize] = useState({ w: 420, h: 460 });
   const [remaining, setRemaining] = useState(cfg.durationSec);
 
+  const params = slalomLevel(cfg.level);
   const gates = useRef<SlalomGate[]>([]);
+  const wind = useRef<CrosswindProfile | null>(null);
   const sim = useRef({
     worldY: 0,
     planeX: 0,
     velX: 0,
+    windNow: 0,
     nextGate: 0,
     done: false,
+    wallTouching: false,
     flashes: [] as Flash[],
   });
   const metrics = useRef(new SlalomMetrics());
@@ -69,6 +78,7 @@ export function SlalomGame({ cfg, onFinish, onQuit }: Props) {
 
   if (gates.current.length === 0) {
     gates.current = buildGates(cfg.seed, cfg.level, cfg.durationSec);
+    wind.current = buildCrosswind(cfg.seed, cfg.level);
   }
 
   useEffect(() => {
@@ -108,7 +118,6 @@ export function SlalomGame({ cfg, onFinish, onQuit }: Props) {
         finish();
         return;
       }
-      const p = slalomLevel(cfg.level);
       const inp = input.current;
 
       let u = 0;
@@ -119,23 +128,29 @@ export function SlalomGame({ cfg, onFinish, onQuit }: Props) {
       }
       inp.u = u;
 
-      s.velX += (u * p.accel - p.damping * s.velX) * dt;
-      s.planeX += s.velX * dt;
-      if (s.planeX < -1) {
-        s.planeX = -1;
+      s.velX += (u * params.accel - params.damping * s.velX) * dt;
+      s.windNow = crosswindAt(wind.current!, t);
+      s.planeX += (s.velX + s.windNow) * dt;
+      if (s.planeX < -1 || s.planeX > 1) {
+        s.planeX = Math.max(-1, Math.min(1, s.planeX));
         s.velX = 0;
-      } else if (s.planeX > 1) {
-        s.planeX = 1;
-        s.velX = 0;
+        // Un golpe por contacto, no por frame: se re-arma al despegarse.
+        if (!s.wallTouching) {
+          metrics.current.wallHits++;
+          s.flashes.push({ text: "MURO", color: "#C24545", atY: s.worldY + 0.4, ttl: 0.8 });
+        }
+        s.wallTouching = true;
+      } else if (Math.abs(s.planeX) < 0.96) {
+        s.wallTouching = false;
       }
       metrics.current.stepVelocity(s.velX);
 
-      s.worldY += p.speed * dt;
+      s.worldY += slalomSpeedAt(cfg.level, t, cfg.durationSec) * dt;
 
       // Cruce de puertas pendientes.
       while (s.nextGate < gates.current.length && gates.current[s.nextGate].y <= s.worldY) {
         const gate = gates.current[s.nextGate];
-        const out = metrics.current.crossGate(s.planeX, gate, cfg.level);
+        const out = metrics.current.crossGate(s.planeX, gate);
         const outcome = out === "clean" ? "✓" : out === "touch" ? "ROCE" : "FALLO";
         const color = out === "clean" ? "#12B26B" : out === "touch" ? "#C88A00" : "#C24545";
         s.flashes.push({ text: outcome, color, atY: gate.y, ttl: 0.9 });
@@ -147,7 +162,7 @@ export function SlalomGame({ cfg, onFinish, onQuit }: Props) {
       const rem = Math.ceil(cfg.durationSec - t);
       setRemaining((prev) => (prev !== rem ? rem : prev));
     },
-    [cfg.durationSec, cfg.level, finish],
+    [cfg.durationSec, cfg.level, params, finish],
   );
 
   const draw = useCallback(() => {
@@ -164,7 +179,6 @@ export function SlalomGame({ cfg, onFinish, onQuit }: Props) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, w, h);
 
-    const p = slalomLevel(cfg.level);
     const s = sim.current;
     const margin = 14;
     const usable = w - margin * 2;
@@ -191,10 +205,10 @@ export function SlalomGame({ cfg, onFinish, onQuit }: Props) {
       const gy = yToPx(g.y);
       if (gy < -30) break;
       if (gy > h + 30) continue;
-      const left = toPx(g.center - p.gateHalfWidth);
-      const right = toPx(g.center + p.gateHalfWidth);
+      const left = toPx(g.center - g.halfWidth);
+      const right = toPx(g.center + g.halfWidth);
       const passed = i < s.nextGate;
-      ctx.strokeStyle = passed ? `${NAVY}26` : NAVY;
+      ctx.strokeStyle = passed ? `${NAVY}26` : g.chicane ? CORAL : NAVY;
       ctx.lineWidth = 3;
       ctx.lineCap = "round";
       // Postes hacia los muros
@@ -232,6 +246,43 @@ export function SlalomGame({ cfg, onFinish, onQuit }: Props) {
       ctx.globalAlpha = 1;
     }
 
+    // Indicador de viento cruzado (arriba-izquierda): hacia dónde te empuja.
+    const windFrac = params.windAmp > 0 ? s.windNow / params.windAmp : 0;
+    const wx = margin + 46;
+    const wy = 26;
+    ctx.font = `700 9px 'JetBrains Mono', monospace`;
+    ctx.textAlign = "center";
+    ctx.fillStyle = HAZE;
+    ctx.fillText("VIENTO", wx, wy - 12);
+    ctx.strokeStyle = `${NAVY}22`;
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    ctx.moveTo(wx - 34, wy);
+    ctx.lineTo(wx + 34, wy);
+    ctx.stroke();
+    const wlen = windFrac * 30;
+    if (Math.abs(wlen) > 2) {
+      ctx.strokeStyle = CORAL;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(wx, wy);
+      ctx.lineTo(wx + wlen, wy);
+      ctx.stroke();
+      const dir = Math.sign(wlen);
+      ctx.fillStyle = CORAL;
+      ctx.beginPath();
+      ctx.moveTo(wx + wlen + dir * 6, wy);
+      ctx.lineTo(wx + wlen, wy - 4);
+      ctx.lineTo(wx + wlen, wy + 4);
+      ctx.closePath();
+      ctx.fill();
+    } else {
+      ctx.fillStyle = `${NAVY}55`;
+      ctx.beginPath();
+      ctx.arc(wx, wy, 2.4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
     // Avión (nariz arriba, banqueo según velocidad lateral)
     const px = toPx(s.planeX);
     const halfW = (PLANE_HALF_WIDTH / 2) * usable;
@@ -247,7 +298,7 @@ export function SlalomGame({ cfg, onFinish, onQuit }: Props) {
     ctx.closePath();
     ctx.fill();
     ctx.restore();
-  }, [cfg.level, size]);
+  }, [size, params]);
 
   useGameLoop({
     running: fase === "run",
@@ -353,7 +404,7 @@ export function SlalomGame({ cfg, onFinish, onQuit }: Props) {
           padding: "8px 12px",
         }}
       >
-        Cruza cada puerta por el centro · ← → / A D o arrastra hacia donde quieres ir
+        Cruza cada puerta por el centro · vigila la flecha de viento · ← → / A D o arrastra
       </p>
     </div>
   );
