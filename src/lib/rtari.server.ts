@@ -54,7 +54,7 @@ const NIVEL_INSTRUCCIONES: Record<RtariNivel, string> = {
   exigente: [
     "PACE: demanding. Speak at a natural, brisk pace, the way a real examiner in a hurry would.",
     "Repeat a question at most once, and do not slow down much.",
-    "Ask one unscripted follow-up question after most answers, based on what the candidate just said.",
+    "You may ask AT MOST one short unscripted follow-up per scripted question, based on what the candidate just said. Never add extra questions of your own beyond that.",
   ].join(" "),
 };
 
