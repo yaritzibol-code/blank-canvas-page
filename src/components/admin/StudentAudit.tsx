@@ -20,7 +20,7 @@ import {
 } from "@/lib/audit.functions";
 import { cardStyle, inputStyle } from "@/components/admin/AdminShell";
 import { MATERIAS_DEF } from "@/lib/store";
-import { ALL_MANUAL_QUIZZES } from "@/lib/store/linea-aerea-meta";
+import { ALL_MANUAL_QUIZZES, isAeronaveFuente } from "@/lib/store/linea-aerea-meta";
 import { sanitizeHtml, yarisToHtml } from "@/lib/yaris-format";
 
 const MUTED = "#647DA0";
@@ -48,14 +48,17 @@ function pctColor(p: number): string {
 
 interface Bucket { key: string; label: string; sub?: string; correct: number; total: number }
 
-function agrupar(answers: AuditAnswer[], track: "ciaac" | "la"): Bucket[] {
+function agrupar(answers: AuditAnswer[], track: "ciaac" | "la" | "ac"): Bucket[] {
   const map = new Map<string, Bucket>();
   for (const a of answers) {
-    const esLA = Boolean(a.fuente);
-    if ((track === "la") !== esLA) continue;
-    const key = esLA ? `${a.fuente}·${a.capitulo ?? 0}` : (a.materia || "sin-materia");
-    const label = esLA ? fuenteName(a.fuente!) : materiaName(a.materia);
-    const sub = esLA
+    const esAC = isAeronaveFuente(a.fuente);
+    const esLA = Boolean(a.fuente) && !esAC;
+    const suTrack = esAC ? "ac" : esLA ? "la" : "ciaac";
+    if (suTrack !== track) continue;
+    const conFuente = esLA || esAC;
+    const key = conFuente ? `${a.fuente}·${a.capitulo ?? 0}` : (a.materia || "sin-materia");
+    const label = conFuente ? fuenteName(a.fuente!) : materiaName(a.materia);
+    const sub = conFuente
       ? `Cap. ${a.capitulo ?? "—"}${a.capituloTitulo ? ` — ${a.capituloTitulo}` : ""}`
       : undefined;
     const cur = map.get(key) ?? { key, label, ...(sub ? { sub } : {}), correct: 0, total: 0 };
@@ -108,6 +111,7 @@ function Detalle({ attempt }: { attempt: AuditAttempt }) {
 
   const ciaac = agrupar(attempt.answers, "ciaac");
   const la = agrupar(attempt.answers, "la");
+  const ac = agrupar(attempt.answers, "ac");
 
   return (
     <div style={{ background: "#F7F9FC", borderRadius: 12, padding: 14, marginTop: 10, display: "grid", gap: 14 }}>
@@ -121,6 +125,12 @@ function Detalle({ attempt }: { attempt: AuditAttempt }) {
         <section>
           <h4 style={{ fontFamily: DISPLAY, fontSize: ".8rem", color: INK, marginBottom: 7 }}>Línea Aérea — por manual y capítulo</h4>
           <BucketList buckets={la} />
+        </section>
+      )}
+      {ac.length > 0 && (
+        <section>
+          <h4 style={{ fontFamily: DISPLAY, fontSize: ".8rem", color: INK, marginBottom: 7 }}>Manuales de Aeronave — por manual y capítulo</h4>
+          <BucketList buckets={ac} />
         </section>
       )}
 
