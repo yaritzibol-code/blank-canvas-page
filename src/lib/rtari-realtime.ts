@@ -709,8 +709,13 @@ export class RtariRealtimeSession {
     } catch {
       /* ya estaba detenido */
     }
-    void this.recCtx?.close().catch(() => {});
+    // El contexto se cierra hasta que el grabador entregó su último trozo:
+    // cerrarlo antes corta el final de la entrevista.
+    const ctx = this.recCtx;
     this.recCtx = null;
+    void (this.recDone ?? Promise.resolve()).finally(() => {
+      void ctx?.close().catch(() => {});
+    });
   }
 
   /** Audio de la entrevista, una vez colgada. `null` si no se pudo grabar. */
