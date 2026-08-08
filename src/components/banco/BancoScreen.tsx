@@ -20,7 +20,11 @@ import {
 } from "@/lib/store";
 import type { QuizAttempt, SimAttempt } from "@/lib/store";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
-import { LINEA_AEREA_OFICIAL, LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
+import {
+  LINEA_AEREA_OFICIAL,
+  ALL_MANUAL_QUIZZES,
+  isAeronaveFuente,
+} from "@/lib/store/linea-aerea-meta";
 import { ExtrasPanel } from "@/components/banco/ExtrasPanel";
 
 /* ─── Types ─────────────────────────────────────────── */
@@ -181,7 +185,10 @@ function quizToEntry(a: QuizAttempt): HistEntry {
 const VERDE = "#2E9E63";
 const AMBAR = "#E0A800";
 
-const LA_QUIZ_BY_CODE = new Map(LINEA_AEREA_QUIZZES.map((q) => [q.code, q]));
+const LA_QUIZ_BY_CODE = new Map(ALL_MANUAL_QUIZZES.map((q) => [q.code, q]));
+
+/** Módulo al que pertenece cada pantalla del banco. */
+export type BancoTrack = "ciaac" | "la" | "ac";
 
 /** Una sesión sin terminar, lista para reanudarse desde el historial. */
 interface ResumeEntry {
@@ -208,12 +215,13 @@ function relTime(ts: number): string {
  * Traduce las sesiones guardadas del navegador a filas del historial. Solo
  * devuelve las de esta pantalla (CIAAC o Línea Aérea) y con avance real.
  */
-function buildResumables(userId: string, la: boolean): ResumeEntry[] {
+function buildResumables(userId: string, track: BancoTrack): ResumeEntry[] {
   return listActiveSessions(userId)
     .map((s): ResumeEntry | null => {
       if (s.kind === "simulador") {
         const esLa = s.variant === "la";
-        if (esLa !== la) return null;
+        if (track === "ac") return null;
+        if (esLa !== (track === "la")) return null;
         const qs = (s.data as { questions?: { answered: boolean }[] } | null)?.questions ?? [];
         const done = qs.filter((q) => q.answered).length;
         if (qs.length === 0 || done === 0 || done >= qs.length) return null;
@@ -236,8 +244,12 @@ function buildResumables(userId: string, la: boolean): ResumeEntry[] {
       const [materias = "", fuente = "", banco = "", fuentes = "", modo = "", caps = "", qty = ""] =
         s.variant.split("|");
 
-      const esLa = banco === "la" || LA_QUIZ_BY_CODE.has(fuente);
-      if (esLa !== la) return null;
+      const sesionTrack: BancoTrack = isAeronaveFuente(fuente)
+        ? "ac"
+        : banco === "la" || LA_QUIZ_BY_CODE.has(fuente)
+          ? "la"
+          : "ciaac";
+      if (sesionTrack !== track) return null;
 
       const data = s.data as { results?: (boolean | null)[]; qIds?: string[] } | null;
       const total = data?.qIds?.length ?? 0;
@@ -1429,6 +1441,7 @@ function ModalAprendiendo({
 
 export function BancoScreen({
   la = false,
+  ac = false,
   initialModal = null,
   modes = true,
   extras = true,
@@ -1436,6 +1449,8 @@ export function BancoScreen({
   footer,
 }: {
   la?: boolean;
+  /** Módulo "Manuales de Aeronave": historial y sesiones propias. */
+  ac?: boolean;
   initialModal?: "examen" | "aprendiendo" | null;
   /**
    * Muestra las tarjetas de modo (Simulador / Aprendiendo) y su encabezado.
@@ -1462,8 +1477,8 @@ export function BancoScreen({
   const [resumables, setResumables] = useState<ResumeEntry[]>([]);
   useEffect(() => {
     if (!user) return;
-    setResumables(buildResumables(user.id, la));
-  }, [user, la]);
+    setResumables(buildResumables(user.id, ac ? "ac" : la ? "la" : "ciaac"));
+  }, [user, la, ac]);
 
   const history: HistEntry[] = user
     ? [
