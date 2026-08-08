@@ -625,6 +625,54 @@ export type Database = {
         }
         Relationships: []
       }
+      rtari_grabaciones: {
+        Row: {
+          cost_usd: number | null
+          created_at: string
+          duration_sec: number
+          id: string
+          local_session_id: string | null
+          model: string | null
+          nivel: string | null
+          nivel_global: number | null
+          preguntas: number
+          session_id: string
+          storage_path: string | null
+          user_id: string
+          voice: string | null
+        }
+        Insert: {
+          cost_usd?: number | null
+          created_at?: string
+          duration_sec?: number
+          id?: string
+          local_session_id?: string | null
+          model?: string | null
+          nivel?: string | null
+          nivel_global?: number | null
+          preguntas?: number
+          session_id: string
+          storage_path?: string | null
+          user_id: string
+          voice?: string | null
+        }
+        Update: {
+          cost_usd?: number | null
+          created_at?: string
+          duration_sec?: number
+          id?: string
+          local_session_id?: string | null
+          model?: string | null
+          nivel?: string | null
+          nivel_global?: number | null
+          preguntas?: number
+          session_id?: string
+          storage_path?: string | null
+          user_id?: string
+          voice?: string | null
+        }
+        Relationships: []
+      }
       rtari_movimientos: {
         Row: {
           created_at: string
@@ -961,6 +1009,7 @@ export type Database = {
       }
       admin_pro_stats: { Args: { check_env?: string }; Returns: Json }
       admin_resumen: { Args: never; Returns: Json }
+      admin_rtari_stats: { Args: { days_back?: number }; Returns: Json }
       admin_stripe_event_stats: { Args: { hours_back?: number }; Returns: Json }
       get_bank_counts: {
         Args: never
