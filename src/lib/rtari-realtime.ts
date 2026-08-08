@@ -575,7 +575,13 @@ export class RtariRealtimeSession {
       const id = String(evt.item_id ?? evt.response_id ?? "actual");
       const text = String(evt.transcript ?? this.parciales.get(id) ?? "").trim();
       this.parciales.delete(id);
-      if (text) this.cb.onTurn({ role: "examiner", text, at: this.elapsed() });
+      if (text) {
+        this.cola.push({
+          turn: { role: "examiner", text, at: this.elapsed() },
+          desde: Date.now(),
+        });
+        this.vaciarCola();
+      }
       this.cb.onExaminerPartial?.("");
       return;
     }
