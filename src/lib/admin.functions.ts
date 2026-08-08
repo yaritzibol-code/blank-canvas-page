@@ -724,3 +724,92 @@ export const adminTotalGanado = createServerFn({ method: "POST" })
       return { error: getStripeErrorMessage(error) };
     }
   });
+
+/* ── RTARI: minutos, costo de voz y grabaciones auditables ── */
+
+export interface AdminRtariStats {
+  sesiones: number;
+  minutos: number;
+  con_audio: number;
+  costo_real_usd: number;
+  llamadas: number;
+  minutos_ia: number;
+}
+
+/** Consumo del módulo RTARI en el periodo elegido. */
+export const adminRtariStats = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { days?: number }) => data)
+  .handler(async ({ data, context }): Promise<Res<AdminRtariStats>> => {
+    const guard = await assertAdmin(context.supabase, context.userId);
+    if (guard) return { error: guard };
+    const { data: stats, error } = await context.supabase.rpc("admin_rtari_stats", {
+      days_back: Math.min(Math.max(data.days ?? 30, 1), 365),
+    });
+    if (error) return { error: error.message };
+    return (stats ?? {
+      sesiones: 0,
+      minutos: 0,
+      con_audio: 0,
+      costo_real_usd: 0,
+      llamadas: 0,
+      minutos_ia: 0,
+    }) as AdminRtariStats;
+  });
+
+export interface AdminRtariGrabacion {
+  id: string;
+  created_at: string;
+  duration_sec: number;
+  nivel: string | null;
+  voice: string | null;
+  model: string | null;
+  nivel_global: number | null;
+  cost_usd: number | null;
+  preguntas: number;
+  /** URL firmada temporal para escuchar la entrevista, si hay audio. */
+  audio_url: string | null;
+}
+
+/** Entrevistas de un alumno, con enlace temporal para escucharlas. */
+export const adminRtariGrabaciones = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { userId: string }) => data)
+  .handler(async ({ data, context }): Promise<Res<AdminRtariGrabacion[]>> => {
+    const guard = await assertAdmin(context.supabase, context.userId);
+    if (guard) return { error: guard };
+    const { data: filas, error } = await context.supabase
+      .from("rtari_grabaciones")
+      .select(
+        "id, created_at, duration_sec, nivel, voice, model, nivel_global, cost_usd, preguntas, storage_path",
+      )
+      .eq("user_id", data.userId)
+      .order("created_at", { ascending: false })
+      .limit(100);
+    if (error) return { error: error.message };
+
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const out: AdminRtariGrabacion[] = [];
+    for (const f of (filas ?? []) as Array<Record<string, any>>) {
+      let audio_url: string | null = null;
+      if (f["storage_path"]) {
+        const { data: signed } = await supabaseAdmin.storage
+          .from("rtari-audio")
+          .createSignedUrl(f["storage_path"] as string, 60 * 60);
+        audio_url = signed?.signedUrl ?? null;
+      }
+      out.push({
+        id: f["id"] as string,
+        created_at: f["created_at"] as string,
+        duration_sec: (f["duration_sec"] as number) ?? 0,
+        nivel: (f["nivel"] as string) ?? null,
+        voice: (f["voice"] as string) ?? null,
+        model: (f["model"] as string) ?? null,
+        nivel_global: (f["nivel_global"] as number) ?? null,
+        cost_usd: (f["cost_usd"] as number) ?? null,
+        preguntas: (f["preguntas"] as number) ?? 0,
+        audio_url,
+      });
+    }
+    return out;
+  });
