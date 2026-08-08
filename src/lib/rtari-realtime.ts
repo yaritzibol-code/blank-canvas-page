@@ -98,6 +98,8 @@ export class RtariRealtimeSession {
   private usage: RealtimeUsage = { ...EMPTY_REALTIME_USAGE };
   private sessionId = "";
   private model = "";
+  /** Ya se entregó el cierre a quien va a liquidar esta sesión. */
+  private liquidada = false;
   /** Minutos que el servidor reservó para esta entrevista. */
   maxMinutos = 0;
 
@@ -119,6 +121,20 @@ export class RtariRealtimeSession {
       durationSec: Math.round(this.elapsed() / 1000),
       usage: { ...this.usage },
     };
+  }
+
+  /**
+   * Igual que `cierre()`, pero sólo la PRIMERA vez; después devuelve `null`.
+   *
+   * La entrevista puede terminar por dos caminos —el botón de terminar y la
+   * limpieza al desmontar— y ambos quieren liquidar. Que el permiso lo dé la
+   * sesión, y una sola vez, evita que el mismo consumo se bitacorice dos veces
+   * y que se devuelvan minutos por duplicado.
+   */
+  tomarCierre(): RtariCierre | null {
+    if (this.liquidada || !this.sessionId) return null;
+    this.liquidada = true;
+    return this.cierre();
   }
 
   getEstado(): RtariEstado {

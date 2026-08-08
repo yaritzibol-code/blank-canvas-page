@@ -41,11 +41,16 @@ export function SaldoPanel({
   /** Resalta la compra cuando el alumno se quedó sin minutos. */
   destacarCompra?: boolean;
 }) {
+  const ilimitado = saldo?.ilimitado === true;
   const incluidos = saldo ? min(saldo.incluidosRestantes) : 0;
   const incluidosTotales = saldo ? min(saldo.incluidosTotales) : RTARI_MINUTOS_INCLUIDOS_PRO;
   const comprados = saldo ? min(saldo.comprados) : 0;
   const total = incluidos + comprados;
-  const pct = incluidosTotales > 0 ? Math.min(100, (incluidos / incluidosTotales) * 100) : 0;
+  const pct = ilimitado
+    ? 100
+    : incluidosTotales > 0
+      ? Math.min(100, (incluidos / incluidosTotales) * 100)
+      : 0;
 
   return (
     <div
@@ -84,17 +89,19 @@ export function SaldoPanel({
               fontStyle: "italic",
               fontSize: "2.6rem",
               lineHeight: 1.1,
-              color: total === 0 ? CORAL : NAVY,
+              color: !ilimitado && total === 0 ? CORAL : NAVY,
             }}
           >
-            {cargando ? "…" : `${total} min`}
+            {cargando ? "…" : ilimitado ? "Sin límite" : `${total} min`}
           </div>
           <div style={{ fontSize: "0.8rem", color: HAZE, marginTop: 2 }}>
             {cargando
               ? "Consultando tu saldo…"
-              : comprados > 0
-                ? `${incluidos} de tu plan este mes · ${comprados} comprados`
-                : `${incluidos} de los ${incluidosTotales} incluidos este mes`}
+              : ilimitado
+                ? "Cuenta de administración: no gastas minutos, pero el costo sí se registra."
+                : comprados > 0
+                  ? `${incluidos} de tu plan este mes · ${comprados} comprados`
+                  : `${incluidos} de los ${incluidosTotales} incluidos este mes`}
           </div>
         </div>
 
@@ -109,10 +116,12 @@ export function SaldoPanel({
               lineHeight: 1.7,
             }}
           >
-            Sólo se cobran los minutos que hablas
+            {ilimitado ? "Acceso de administración" : "Sólo se cobran los minutos que hablas"}
           </div>
           <div style={{ fontSize: "0.76rem", color: HAZE, marginTop: 4, lineHeight: 1.5 }}>
-            Los minutos del plan se renuevan cada mes y no se acumulan. Los que compras no vencen.
+            {ilimitado
+              ? "Puedes probar el módulo sin tope. Tu consumo aparece en Operaciones como el de cualquier otra llamada."
+              : "Los minutos del plan se renuevan cada mes y no se acumulan. Los que compras no vencen."}
           </div>
         </div>
       </div>
@@ -156,8 +165,8 @@ export function SaldoPanel({
         </div>
       )}
 
-      {/* Paquetes */}
-      <div style={{ marginTop: 20 }}>
+      {/* Paquetes — a quien no gasta minutos no se le ofrece comprarlos. */}
+      <div style={{ marginTop: 20, display: ilimitado ? "none" : undefined }}>
         <div
           style={{
             fontFamily: MONO,

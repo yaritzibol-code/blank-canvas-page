@@ -459,7 +459,8 @@ function RtariPage() {
   );
 
   const bloqueSel = RTARI_BLOQUES.find((b) => b.id === bloque);
-  const minutosDisponibles = saldo ? Math.floor(saldo.disponible / 60) : null;
+  const ilimitado = saldo?.ilimitado === true;
+  const minutosDisponibles = !saldo || ilimitado ? null : Math.floor(saldo.disponible / 60);
   const puedeArrancar = soportado && (!pro || minutosDisponibles !== 0);
 
   // Pagar un paquete ocupa la pantalla completa: el checkout de Stripe pide

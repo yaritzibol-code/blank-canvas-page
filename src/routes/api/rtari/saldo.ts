@@ -25,7 +25,7 @@ export const Route = createFileRoute("/api/rtari/saldo")({
 
         const profile = await loadRouteProfile(auth);
         const { asegurarSaldo } = await import("@/lib/rtari-saldo.server");
-        const saldo = await asegurarSaldo(auth.userId, profile.isPro);
+        const saldo = await asegurarSaldo(auth.userId, profile.isPro, profile.isAdmin);
 
         return json({
           saldo,

@@ -176,13 +176,13 @@ export function InterviewStage({
       });
 
     return () => {
-      // Red de seguridad: se salga como se salga —terminando, cancelando o
-      // por un error— los minutos reservados que no se usaron se devuelven.
-      // El servidor ignora la segunda liquidación de la misma sesión, así que
-      // no estorba cuando la pantalla ya la hizo.
-      const cierre = sesion.cierre();
+      // Red de seguridad: si se sale sin pasar por el botón de terminar
+      // —cancelando o por un error— aquí se liquidan los minutos reservados.
+      // `tomarCierre` devuelve null cuando la pantalla ya se encargó, así que
+      // el consumo nunca se bitacoriza dos veces.
+      const cierre = sesion.tomarCierre();
       sesion.stop();
-      if (cierre.sessionId) void settleSession(cierre);
+      if (cierre) void settleSession(cierre);
     };
   }, []);
 
@@ -203,7 +203,9 @@ export function InterviewStage({
     const sesion = sesionRef.current;
     if (!sesion) return;
     // El cierre se toma ANTES de colgar: `finish()` detiene el cronómetro.
-    const cierre = sesion.cierre();
+    // Tomarlo aquí también le quita el turno a la limpieza al desmontar: la
+    // liquidación la hace la pantalla, que sí puede usar el saldo devuelto.
+    const cierre = sesion.tomarCierre() ?? sesion.cierre();
     sesion.finish();
     cfg.current.onFinish({ turns: turnsRef.current, durationSec: cierre.durationSec, cierre });
   }, []);

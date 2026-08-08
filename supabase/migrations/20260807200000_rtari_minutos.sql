@@ -292,6 +292,11 @@ grant execute on function public.rtari_acreditar_compra(uuid, integer, text, jso
 -- tarifa, y escribe aquí el costo ya calculado.
 alter table public.ai_usage add column if not exists cost_usd numeric;
 
+-- La firma de retorno gana columnas, y `create or replace` no puede cambiarla:
+-- Postgres rechaza el reemplazo con "cannot change return type of existing
+-- function". Hay que soltar la función primero.
+drop function if exists public.admin_ai_daily(integer);
+
 create or replace function public.admin_ai_daily(days_back integer default 30)
  returns table (
    day date,

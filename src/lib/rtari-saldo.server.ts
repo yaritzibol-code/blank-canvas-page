@@ -28,6 +28,14 @@ export interface RtariSaldo {
   /** Suma de los dos, que es lo que puede gastar hoy. */
   disponible: number;
   ciclo: string;
+  /**
+   * Sin límite de minutos: el equipo administrador.
+   *
+   * El módulo es su herramienta para revisar contenido y probar cambios; si
+   * gastara cuota, revisar el producto competiría con usarlo. Su consumo SÍ se
+   * bitacoriza en `ai_usage`, así que sigue apareciendo en el costo del panel.
+   */
+  ilimitado: boolean;
 }
 
 const VACIO: RtariSaldo = {
@@ -36,6 +44,7 @@ const VACIO: RtariSaldo = {
   comprados: 0,
   disponible: 0,
   ciclo: "",
+  ilimitado: false,
 };
 
 /** Ciclo mensual en el mismo formato que usa la base ('YYYY-MM'). */
@@ -63,16 +72,28 @@ function toSaldo(row: SaldoRow | null): RtariSaldo {
     comprados,
     disponible: incluidosRestantes + comprados,
     ciclo: row.ciclo ?? "",
+    ilimitado: false,
   };
+}
+
+/** Saldo de quien no gasta minutos. */
+function saldoIlimitado(): RtariSaldo {
+  return { ...VACIO, ciclo: cicloActual(), ilimitado: true };
 }
 
 /**
  * Saldo del usuario, ya con los minutos del ciclo otorgados.
  *
  * `esPro` decide la cuota mensual: quien no tiene suscripción activa queda con
- * cero incluidos, pero conserva lo que haya comprado.
+ * cero incluidos, pero conserva lo que haya comprado. A la administradora ni
+ * se le abre renglón en el ledger: no gasta minutos.
  */
-export async function asegurarSaldo(userId: string, esPro: boolean): Promise<RtariSaldo> {
+export async function asegurarSaldo(
+  userId: string,
+  esPro: boolean,
+  esAdmin = false,
+): Promise<RtariSaldo> {
+  if (esAdmin) return saldoIlimitado();
   const ciclo = cicloActual();
   const segundosIncluidos = esPro ? RTARI_MINUTOS_INCLUIDOS_PRO * 60 : 0;
 
@@ -105,6 +126,8 @@ export interface Reserva {
   /** De dónde salieron, para devolverlos al mismo bolsillo. */
   deIncluidos: number;
   deComprados: number;
+  /** No salieron de ningún saldo: no hay nada que devolver al colgar. */
+  sinCargo?: boolean;
 }
 
 /**
@@ -119,7 +142,19 @@ export async function reservarMinutos(
   userId: string,
   esPro: boolean,
   sessionId: string,
+  esAdmin = false,
 ): Promise<Reserva> {
+  // La administradora arranca siempre con la sesión completa y sin tocar el
+  // ledger. Lo que sí queda registrado es el costo, en `ai_usage`.
+  if (esAdmin) {
+    return {
+      segundos: RTARI_MAX_MINUTOS * 60,
+      deIncluidos: 0,
+      deComprados: 0,
+      sinCargo: true,
+    };
+  }
+
   const saldo = await asegurarSaldo(userId, esPro);
   if (saldo.disponible < RTARI_MINUTOS_MINIMOS * 60) {
     return { segundos: 0, deIncluidos: 0, deComprados: 0 };
@@ -152,6 +187,9 @@ export async function liquidarMinutos(
   usadosSec: number,
   sessionId: string,
 ): Promise<number> {
+  // Una sesión sin cargo (administración) no tomó nada del ledger.
+  if (reserva.sinCargo) return 0;
+
   const usados = Math.min(Math.max(0, Math.round(usadosSec)), reserva.segundos);
   const sobrante = reserva.segundos - usados;
   if (sobrante <= 0) return 0;
