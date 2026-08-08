@@ -17,6 +17,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { EMPTY_REALTIME_USAGE, type RealtimeUsage } from "@/lib/ai-cost";
 import { RTARI_MAX_MINUTOS, type RtariNivel, type RtariVoice } from "@/modules/rtari/config";
 
+/** Cuánto se espera la transcripción del alumno antes de seguir sin ella. */
+const ESPERA_TRANSCRIPCION_MS = 12_000;
+
 export type RtariEstado =
   "inactiva" | "conectando" | "en_curso" | "terminando" | "terminada" | "error";
 
