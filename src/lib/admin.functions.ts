@@ -754,7 +754,7 @@ export const adminRtariStats = createServerFn({ method: "POST" })
       costo_real_usd: 0,
       llamadas: 0,
       minutos_ia: 0,
-    }) as AdminRtariStats;
+    }) as unknown as AdminRtariStats;
   });
 
 export interface AdminRtariGrabacion {
