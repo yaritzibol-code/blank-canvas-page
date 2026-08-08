@@ -21,6 +21,7 @@ import {
 import { cardStyle, inputStyle } from "@/components/admin/AdminShell";
 import { MATERIAS_DEF } from "@/lib/store";
 import { ALL_MANUAL_QUIZZES, isAeronaveFuente } from "@/lib/store/linea-aerea-meta";
+import { adminRtariGrabaciones, type AdminRtariGrabacion } from "@/lib/admin.functions";
 import { sanitizeHtml, yarisToHtml } from "@/lib/yaris-format";
 
 const MUTED = "#647DA0";
@@ -400,7 +401,7 @@ function Conversaciones({ userId, days }: { userId: string; days: number }) {
 
 /** Bloque de auditoría (cuestionarios + Yaris) para el perfil del estudiante. */
 export function StudentAudit({ userId }: { userId: string }) {
-  const [tab, setTab] = useState<"quiz" | "yaris">("quiz");
+  const [tab, setTab] = useState<"quiz" | "yaris" | "rtari">("quiz");
   const [days, setDays] = useState(90);
 
   const tabStyle = (on: boolean) => ({
@@ -423,6 +424,7 @@ export function StudentAudit({ userId }: { userId: string }) {
         </h3>
         <button onClick={() => setTab("quiz")} style={tabStyle(tab === "quiz")}>Cuestionarios</button>
         <button onClick={() => setTab("yaris")} style={tabStyle(tab === "yaris")}>Conversaciones con Yaris</button>
+        <button onClick={() => setTab("rtari")} style={tabStyle(tab === "rtari")}>Entrevistas RTARI</button>
         <select value={days} onChange={(e) => setDays(Number(e.target.value))} style={{ ...inputStyle, width: "auto", minWidth: 130 }}>
           <option value={7}>Últimos 7 días</option>
           <option value={30}>Últimos 30 días</option>
@@ -430,9 +432,88 @@ export function StudentAudit({ userId }: { userId: string }) {
           <option value={365}>Último año</option>
         </select>
       </div>
-      {tab === "quiz"
-        ? <Cuestionarios userId={userId} days={days} />
-        : <Conversaciones userId={userId} days={days} />}
+      {tab === "quiz" ? (
+        <Cuestionarios userId={userId} days={days} />
+      ) : tab === "yaris" ? (
+        <Conversaciones userId={userId} days={days} />
+      ) : (
+        <EntrevistasRtari userId={userId} />
+      )}
+    </div>
+  );
+}
+
+/* ── Entrevistas RTARI: minutos, costo y audio para escuchar ── */
+
+function mmss(total: number): string {
+  const m = Math.floor(total / 60);
+  const s = Math.round(total % 60);
+  return `${m}:${String(s).padStart(2, "0")}`;
+}
+
+function EntrevistasRtari({ userId }: { userId: string }) {
+  const [filas, setFilas] = useState<AdminRtariGrabacion[]>([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancel = false;
+    setCargando(true);
+    void adminRtariGrabaciones({ data: { userId } }).then((r) => {
+      if (cancel) return;
+      if ("error" in r) setError(r.error);
+      else {
+        setFilas(r);
+        setError(null);
+      }
+      setCargando(false);
+    });
+    return () => {
+      cancel = true;
+    };
+  }, [userId]);
+
+  if (cargando) return <p style={{ fontSize: ".85rem", color: "#647DA0" }}>Cargando entrevistas…</p>;
+  if (error) return <p style={{ fontSize: ".85rem", color: "#e74c3c" }}>{error}</p>;
+  if (filas.length === 0)
+    return <p style={{ fontSize: ".85rem", color: "#647DA0" }}>Este alumno no ha hecho entrevistas RTARI.</p>;
+
+  const minutos = filas.reduce((a, f) => a + f.duration_sec, 0) / 60;
+  const costo = filas.reduce((a, f) => a + (f.cost_usd ?? 0), 0);
+
+  return (
+    <div>
+      <p style={{ fontSize: ".8rem", color: "#647DA0", marginTop: 0 }}>
+        {filas.length} entrevistas · {minutos.toFixed(1)} minutos hablados · costo real de voz{" "}
+        {costo > 0 ? `US$${costo.toFixed(2)}` : "sin registro"}
+      </p>
+      <div style={{ display: "grid", gap: 12 }}>
+        {filas.map((f) => (
+          <div key={f.id} style={{ border: "2px solid #F2DCDB", borderRadius: 14, padding: 14 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center", fontSize: ".8rem", color: "#22375C" }}>
+              <strong>{new Date(f.created_at).toLocaleString("es-MX")}</strong>
+              <span>· {mmss(f.duration_sec)}</span>
+              <span>· {f.preguntas} preguntas</span>
+              {f.nivel && <span>· {f.nivel}</span>}
+              {f.voice && <span>· voz {f.voice}</span>}
+              {f.nivel_global != null && <span>· OACI {f.nivel_global}</span>}
+              {f.cost_usd != null && <span>· US${f.cost_usd.toFixed(3)}</span>}
+            </div>
+            {f.audio_url ? (
+              <audio
+                controls
+                preload="none"
+                src={f.audio_url}
+                style={{ width: "100%", marginTop: 10 }}
+              />
+            ) : (
+              <p style={{ fontSize: ".78rem", color: "#647DA0", margin: "8px 0 0" }}>
+                Sin audio guardado para esta entrevista.
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
