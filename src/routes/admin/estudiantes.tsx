@@ -1,6 +1,6 @@
 /** Panel Admin — Lista de estudiantes (PRD 9.3). */
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import {
   AdminShell,
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/admin/estudiantes")({
 });
 
 const thStyle: CSSProperties = {
-  padding: "10px 12px",
+  padding: "10px 9px",
   fontSize: ".66rem",
   fontWeight: 700,
   color: "#8DA1BE",
@@ -46,13 +46,51 @@ const thStyle: CSSProperties = {
 };
 
 const tdStyle: CSSProperties = {
-  padding: "12px 12px",
+  padding: "12px 9px",
   fontSize: ".8rem",
   color: "#22375C",
   verticalAlign: "middle",
   borderBottom: "1px solid rgba(61,93,145,.05)",
   whiteSpace: "nowrap",
 };
+
+const PAGE_SIZE = 10;
+
+/**
+ * Permite arrastrar la tabla con el mouse para desplazarla en horizontal,
+ * además de la barra de scroll nativa.
+ */
+function useDragScroll<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let down = false, startX = 0, startLeft = 0;
+    const onDown = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).closest("button, select, input, a")) return;
+      down = true; startX = e.pageX; startLeft = el.scrollLeft;
+      el.style.cursor = "grabbing"; el.style.userSelect = "none";
+    };
+    const onMove = (e: MouseEvent) => {
+      if (!down) return;
+      e.preventDefault();
+      el.scrollLeft = startLeft - (e.pageX - startX);
+    };
+    const onUp = () => {
+      down = false; el.style.cursor = "grab"; el.style.userSelect = "";
+    };
+    el.style.cursor = "grab";
+    el.addEventListener("mousedown", onDown);
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => {
+      el.removeEventListener("mousedown", onDown);
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+  }, []);
+  return ref;
+}
 
 function AdminEstudiantesPage() {
   const navigate = useNavigate();
@@ -63,6 +101,8 @@ function AdminEstudiantesPage() {
   const [orden, setOrden] = useState("acceso");
   const [soloInactivos, setSoloInactivos] = useState(false);
   const [proxCiaac, setProxCiaac] = useState(false);
+  const [page, setPage] = useState(0);
+  const scrollRef = useDragScroll<HTMLDivElement>();
 
   const rows = useStore(() =>
     getUsers()
@@ -81,6 +121,8 @@ function AdminEstudiantesPage() {
         };
       }),
   );
+
+  useEffect(() => { setPage(0); }, [query, fEstado, fPlan, fMateriaDebil, orden, soloInactivos, proxCiaac]);
 
   const q = query.trim().toLowerCase();
   const filtered = rows
@@ -107,6 +149,14 @@ function AdminEstudiantesPage() {
       if (orden === "preparacion") return (a.readiness ?? 101) - (b.readiness ?? 101);
       return b.u.lastAccess.localeCompare(a.u.lastAccess); // último acceso
     });
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const pageSafe = Math.min(page, totalPages - 1);
+  const visibles = useMemo(
+    () => filtered.slice(pageSafe * PAGE_SIZE, pageSafe * PAGE_SIZE + PAGE_SIZE),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [filtered.map((r) => r.u.id).join(","), pageSafe],
+  );
 
   return (
     <AdminShell title="Estudiantes" active="estudiantes">
@@ -157,12 +207,12 @@ function AdminEstudiantesPage() {
       </div>
 
       <div style={{ fontSize: ".76rem", color: "#647DA0", marginBottom: 10 }}>
-        {filtered.length} de {rows.length} estudiantes
+        Mostrando {visibles.length} de {filtered.length} estudiantes filtrados ({rows.length} en total)
       </div>
 
       {/* Tabla */}
-      <div style={{ ...cardStyle, padding: 0, overflowX: "auto" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 1180 }}>
+      <div ref={scrollRef} style={{ ...cardStyle, padding: 0, overflowX: "auto" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 1040, tableLayout: "auto" }}>
           <thead>
             <tr>
               <th style={thStyle}>Estudiante</th>
@@ -180,14 +230,14 @@ function AdminEstudiantesPage() {
             </tr>
           </thead>
           <tbody>
-            {filtered.length === 0 && (
+            {visibles.length === 0 && (
               <tr>
                 <td colSpan={12} style={{ ...tdStyle, textAlign: "center", color: "#8DA1BE", padding: "26px 12px" }}>
                   No hay estudiantes que coincidan con los filtros.
                 </td>
               </tr>
             )}
-            {filtered.map((r) => (
+            {visibles.map((r) => (
               <tr key={r.u.id}>
                 <td style={tdStyle}>
                   <div style={{ fontWeight: 700 }}>{r.u.nombre}</div>
@@ -231,8 +281,44 @@ function AdminEstudiantesPage() {
           </tbody>
         </table>
       </div>
+
+      {totalPages > 1 && (
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginTop: 14 }}>
+          <button
+            onClick={() => setPage((p) => Math.max(0, p - 1))}
+            disabled={pageSafe === 0}
+            style={pagerBtn(pageSafe === 0)}
+          >
+            ← Anterior
+          </button>
+          <span style={{ fontSize: ".78rem", color: "#647DA0", fontWeight: 700 }}>
+            Página {pageSafe + 1} de {totalPages}
+          </span>
+          <button
+            onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+            disabled={pageSafe >= totalPages - 1}
+            style={pagerBtn(pageSafe >= totalPages - 1)}
+          >
+            Siguiente →
+          </button>
+        </div>
+      )}
     </AdminShell>
   );
+}
+
+function pagerBtn(disabled: boolean): CSSProperties {
+  return {
+    padding: "7px 14px",
+    background: "white",
+    color: disabled ? "#B7C4D6" : "#3D5D91",
+    border: "2px solid #F2DCDB",
+    borderRadius: 8,
+    fontSize: ".76rem",
+    fontWeight: 700,
+    cursor: disabled ? "default" : "pointer",
+    fontFamily: "'Manrope', sans-serif",
+  };
 }
 
 /**

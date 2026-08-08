@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
 import { useState, useEffect } from "react";
 import { PathySVG, useTimer } from "../../contexts/StudyTimerContext";
@@ -34,6 +34,22 @@ import { sanitizeHtml } from "@/lib/yaris-format";
 export const Route = createFileRoute("/dashboard/estudiemos")({
   component: adminOnly(EstudiemosJuntosPage, "Estudiemos juntos"),
 });
+
+/** Regreso al inicio del dashboard, presente en todas las vistas del módulo. */
+function VolverDashboard() {
+  return (
+    <Link
+      to="/dashboard"
+      style={{
+        display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 14,
+        color: "#3D5D91", fontWeight: 700, fontSize: "0.82rem", textDecoration: "none",
+        fontFamily: "'Manrope', sans-serif",
+      }}
+    >
+      ← Volver al dashboard
+    </Link>
+  );
+}
 
 /* ══════════════════════════════════════════════════════════
    TYPES
@@ -1145,6 +1161,7 @@ function EstudiemosJuntosPage() {
   if (paid && !showOnboarding && !track) {
     return (
       <div style={{ maxWidth: 680, margin: "0 auto", padding: "24px 16px 48px" }}>
+        <VolverDashboard />
         {headerBase}
         <TrackPicker value={track} onPick={pickTrack} />
       </div>
@@ -1155,6 +1172,7 @@ function EstudiemosJuntosPage() {
   if (paid && track === "la") {
     return (
       <div style={{ maxWidth: 680, margin: "0 auto", padding: "24px 16px 48px" }}>
+        <VolverDashboard />
         <div style={{ marginBottom: 18, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
           <div>
             <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", fontWeight: 700, color: "#22375C", margin: "0 0 4px" }}>
@@ -1187,6 +1205,8 @@ function EstudiemosJuntosPage() {
   return (
     <div style={{ maxWidth: 680, margin: "0 auto", padding: "24px 16px 48px", position: "relative" }}>
       {paid && showOnboarding && <OnboardingModal onDone={handleOnboardingDone} userId={user.id} />}
+
+      <VolverDashboard />
 
       {/* Page header */}
       <div style={{ marginBottom: 24 }}>

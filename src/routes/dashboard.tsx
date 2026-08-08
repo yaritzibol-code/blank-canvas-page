@@ -79,8 +79,8 @@ const NAV_SECTIONS: { label: string; items: { icon: IconName; label: string; pat
       // sección (tarjeta "Simulador CIAAC" dentro de CIAAC).
       { icon: "help", label: "CIAAC", path: "/dashboard/banco" },
       { icon: "plane", label: "Línea Aérea", path: "/dashboard/linea-aerea", nuevo: true },
-      { icon: "doc", label: "Manuales de Aeronave", path: "/dashboard/manuales", nuevo: true },
-      { icon: "radio", label: "RTARI · Entrevista", path: "/dashboard/rtari", nuevo: true },
+      { icon: "plane", label: "Aeronaves", path: "/dashboard/manuales", nuevo: true },
+      { icon: "radio", label: "RTARI", path: "/dashboard/rtari", nuevo: true },
       { icon: "clock", label: "Estudiemos Juntos", path: "/dashboard/estudiemos", locked: true },
     ],
   },
