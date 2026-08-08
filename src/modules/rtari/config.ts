@@ -63,7 +63,7 @@ export const RTARI_MODELO_POR_NIVEL: Record<RtariNivel, string> = {
 export const RTARI_MIN_PREGUNTAS = 4;
 export const RTARI_MAX_PREGUNTAS = 15;
 /** Opciones que ofrece la pantalla de arranque. */
-export const RTARI_PRESETS_PREGUNTAS = [5, 8, 12] as const;
+export const RTARI_PRESETS_PREGUNTAS = [4, 6, 8, 10, 12, 15] as const;
 
 /** Corte automático de la sesión de voz (minutos), por costo y por foco. */
 export const RTARI_MAX_MINUTOS = 20;

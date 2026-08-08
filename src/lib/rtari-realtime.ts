@@ -17,6 +17,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { EMPTY_REALTIME_USAGE, type RealtimeUsage } from "@/lib/ai-cost";
 import { RTARI_MAX_MINUTOS, type RtariNivel, type RtariVoice } from "@/modules/rtari/config";
 
+/** Cuánto se espera la transcripción del alumno antes de seguir sin ella. */
+const ESPERA_TRANSCRIPCION_MS = 12_000;
+
 export type RtariEstado =
   "inactiva" | "conectando" | "en_curso" | "terminando" | "terminada" | "error";
 
@@ -131,6 +134,18 @@ export class RtariRealtimeSession {
    * encimadas. Esta bandera es lo que garantiza que sólo haya una.
    */
   private respuestaEnCurso = false;
+  /**
+   * Cola de turnos para que la transcripción salga en el orden real.
+   *
+   * Lo que dice el sinodal llega casi al instante, pero lo que dijo el alumno
+   * tarda: Whisper transcribe cuando el turno ya se cerró. Si cada turno se
+   * pinta al llegar, la pantalla muestra "sinodal, sinodal, alumno" y parece
+   * que el examinador habló dos veces. Aquí se aparta el lugar del alumno en
+   * cuanto se corta su audio y los turnos posteriores esperan a que llegue su
+   * texto (o a que se agote la espera).
+   */
+  private cola: Array<{ itemId?: string; turn: RtariTurn | null; desde: number }> = [];
+  private colaTimer: ReturnType<typeof setTimeout> | null = null;
   /** Se pidió repetir mientras hablaba: se dispara al confirmarse el corte. */
   private repeticionPendiente = false;
   /**
@@ -474,10 +489,52 @@ export class RtariRealtimeSession {
     });
   }
 
+  /* ── Orden de la transcripción ── */
+
+  /**
+   * Entrega los turnos que ya están listos, sin adelantarse a los que faltan.
+   *
+   * Si el primero de la fila es un hueco del alumno todavía sin texto, todo
+   * espera: así nunca se ven dos turnos del sinodal seguidos con la respuesta
+   * del alumno colada después. Pasada la espera máxima el hueco se descarta y
+   * la conversación sigue.
+   */
+  private vaciarCola(forzar = false) {
+    while (this.cola.length > 0) {
+      const primero = this.cola[0]!;
+      if (primero.turn) {
+        this.cola.shift();
+        this.cb.onTurn(primero.turn);
+        continue;
+      }
+      if (forzar || Date.now() - primero.desde > ESPERA_TRANSCRIPCION_MS) {
+        this.cola.shift();
+        continue;
+      }
+      break;
+    }
+    if (this.cola.length > 0 && !forzar) this.programarVaciado();
+    else if (this.colaTimer) {
+      clearTimeout(this.colaTimer);
+      this.colaTimer = null;
+    }
+  }
+
+  private programarVaciado() {
+    if (this.colaTimer) return;
+    this.colaTimer = setTimeout(() => {
+      this.colaTimer = null;
+      this.vaciarCola();
+    }, 400);
+  }
+
   /** Cierra la entrevista de forma ordenada (el debrief lo pide la UI). */
   finish() {
     if (this.estado !== "en_curso") return;
     this.setEstado("terminando");
+    // Lo que quedó en la fila se entrega antes de colgar: si no, el último
+    // turno del sinodal nunca llegaría a la transcripción que se evalúa.
+    this.vaciarCola(true);
     this.stop();
     this.setEstado("terminada");
   }
@@ -491,6 +548,10 @@ export class RtariRealtimeSession {
     if (this.cutoffTimer) {
       clearTimeout(this.cutoffTimer);
       this.cutoffTimer = null;
+    }
+    if (this.colaTimer) {
+      clearTimeout(this.colaTimer);
+      this.colaTimer = null;
     }
     if (this.rafId !== null) {
       cancelAnimationFrame(this.rafId);
@@ -560,7 +621,13 @@ export class RtariRealtimeSession {
       const id = String(evt.item_id ?? evt.response_id ?? "actual");
       const text = String(evt.transcript ?? this.parciales.get(id) ?? "").trim();
       this.parciales.delete(id);
-      if (text) this.cb.onTurn({ role: "examiner", text, at: this.elapsed() });
+      if (text) {
+        this.cola.push({
+          turn: { role: "examiner", text, at: this.elapsed() },
+          desde: Date.now(),
+        });
+        this.vaciarCola();
+      }
       this.cb.onExaminerPartial?.("");
       return;
     }
@@ -587,12 +654,35 @@ export class RtariRealtimeSession {
       return;
     }
 
+    // El alumno terminó de hablar: se le aparta su lugar en la transcripción
+    // aunque el texto tarde en llegar.
+    if (type === "input_audio_buffer.committed" || type === "input_audio_buffer.speech_stopped") {
+      const id = String(evt.item_id ?? "");
+      if (id && !this.cola.some((e) => e.itemId === id)) {
+        this.cola.push({ itemId: id, turn: null, desde: Date.now() });
+        this.programarVaciado();
+      }
+      return;
+    }
+
     // Lo que dijo el alumno, ya transcrito.
     if (type === "conversation.item.input_audio_transcription.completed") {
       const text = String(evt.transcript ?? "").trim();
-      if (text) this.cb.onTurn({ role: "candidate", text, at: this.elapsed() });
+      const id = String(evt.item_id ?? "");
+      const turn: RtariTurn | null = text
+        ? { role: "candidate", text, at: this.elapsed() }
+        : null;
+      const hueco = this.cola.find((e) => e.itemId === id && e.turn === null);
+      if (hueco) {
+        if (turn) hueco.turn = turn;
+        else this.cola.splice(this.cola.indexOf(hueco), 1);
+      } else if (turn) {
+        this.cola.push({ itemId: id, turn, desde: Date.now() });
+      }
+      this.vaciarCola();
       return;
     }
+
 
     if (type === "error") {
       // Si la respuesta murió a medias, soltar la bandera: si no, el sinodal
