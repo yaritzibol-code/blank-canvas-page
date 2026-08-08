@@ -87,7 +87,9 @@ function PerfilPage() {
   const user = useSessionUser();
   const stats = useStore(() => (user ? studentStats(user.id) : null));
   const progreso = useStore(() =>
-    user ? progresoPorRuta(user.id) : { ciaac: [] as RutaPerf[], lineaAerea: [] as RutaPerf[] },
+    user
+      ? progresoPorRuta(user.id)
+      : { ciaac: [] as RutaPerf[], lineaAerea: [] as RutaPerf[], aeronave: [] as RutaPerf[] },
   );
   const hasBiblioteca = useStore(() =>
     user ? getActivity(user.id).some((a) => a.kind === "biblioteca") : false,
@@ -444,6 +446,7 @@ function PerfilPage() {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(320px,1fr))", gap: 18, marginBottom: 24 }}>
         <ProgresoCard titulo="Progreso — CIAAC" icon="help" filas={progreso.ciaac} />
         <ProgresoCard titulo="Progreso — Línea Aérea" icon="plane" filas={progreso.lineaAerea} />
+        <ProgresoCard titulo="Progreso — Manuales de Aeronave" icon="doc" filas={progreso.aeronave} />
       </div>
     </div>
   );

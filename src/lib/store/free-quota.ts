@@ -30,7 +30,7 @@ export const FREE_CIAAC_MAX = 25;
 export type FreeKind = keyof typeof FREE_LIMITS;
 
 /** Manuales cuyo banco está abierto al plan gratuito. */
-export const FREE_SOURCES = ["ATP", "PHAK"] as const;
+export const FREE_SOURCES = ["ATP", "PHAK", "B737MAX"] as const;
 
 export function isFreeSource(fuente?: string | null): boolean {
   return !!fuente && (FREE_SOURCES as readonly string[]).includes(fuente);

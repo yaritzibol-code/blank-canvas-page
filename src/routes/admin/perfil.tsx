@@ -63,7 +63,9 @@ function AdminPerfilPage() {
   const stats = useStore(() => (student ? studentStats(student.id) : null));
   const streak = useStore(() => (student ? getStreak(student.id) : 0));
   const rutas = useStore(() =>
-    student ? progresoPorRuta(student.id) : { ciaac: [] as RutaPerf[], lineaAerea: [] as RutaPerf[] },
+    student
+      ? progresoPorRuta(student.id)
+      : { ciaac: [] as RutaPerf[], lineaAerea: [] as RutaPerf[], aeronave: [] as RutaPerf[] },
   );
   const activity = useStore(() => (student ? recentActivity(student.id, 5) : []));
   const changes = useStore(() => (student ? getAccessChanges(student.id) : []));
@@ -486,7 +488,7 @@ function AdminPerfilPage() {
           ))}
         </div>
         {(() => {
-          const conDatos = [...rutas.ciaac, ...rutas.lineaAerea].filter((m) => m.avg !== null);
+          const conDatos = [...rutas.ciaac, ...rutas.lineaAerea, ...rutas.aeronave].filter((m) => m.avg !== null);
           if (conDatos.length === 0) return null;
           const fuerte = conDatos.reduce((a, b) => ((a.avg ?? 0) >= (b.avg ?? 0) ? a : b));
           const debil = conDatos.reduce((a, b) => ((a.avg ?? 100) <= (b.avg ?? 100) ? a : b));
@@ -552,6 +554,7 @@ function AdminPerfilPage() {
         {([
           { titulo: "CIAAC · materias", items: rutas.ciaac },
           { titulo: "Línea Aérea · manuales", items: rutas.lineaAerea },
+          { titulo: "Manuales de Aeronave", items: rutas.aeronave },
         ] as { titulo: string; items: RutaPerf[] }[]).map((grupo) => (
           <div key={grupo.titulo} style={{ marginBottom: 14 }}>
             <div style={{ fontSize: ".7rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "#8DA1BE", marginBottom: 8 }}>{grupo.titulo}</div>

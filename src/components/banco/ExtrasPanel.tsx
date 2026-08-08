@@ -15,7 +15,7 @@ import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import { getPublishedQuestions, useQuestionBank, materiaBySlug, useSessionUser, useStore, canUseAI, logYarisUse } from "@/lib/store";
 import type { BankQuestion } from "@/lib/store";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
-import { LINEA_AEREA_QUIZZES } from "@/lib/store/linea-aerea-meta";
+import { ALL_MANUAL_QUIZZES } from "@/lib/store/linea-aerea-meta";
 import { sanitizeHtml } from "@/lib/yaris-format";
 
 
@@ -50,7 +50,7 @@ function groupsFor(la: boolean, bank: BankQuestion[]): Grupo[] {
     });
     return [...byCode.entries()]
       .map(([code, questions]) => {
-        const meta = LINEA_AEREA_QUIZZES.find((m) => m.code === code);
+        const meta = ALL_MANUAL_QUIZZES.find((m) => m.code === code);
         return {
           key: code,
           label: meta?.titulo ?? `Cuestionario ${code}`,

@@ -108,7 +108,7 @@ const quizCardsCss = `
  * Tarjeta con la anatomía de los modos del CIAAC: distintivo, ícono, título,
  * descripción, lista de lo que incluye y botón de ancho completo.
  */
-function QuizCard({
+export function QuizCard({
   dark = false,
   badge,
   icon,
@@ -325,7 +325,7 @@ function QuizCard({
 
 /* ─── Selector de capítulos (bancos ATP y Jeppesen) ────────────── */
 
-function ChapterPicker({
+export function ChapterPicker({
   code,
   nombre,
   chapters,

@@ -171,7 +171,7 @@ export function pathyReport(user: User): PathyReport {
   const ahora = Date.now();
 
   const ruta = progresoPorRuta(userId);
-  const conDatos = [...ruta.ciaac, ...ruta.lineaAerea].filter((m) => m.avg !== null && m.answered > 0);
+  const conDatos = [...ruta.ciaac, ...ruta.lineaAerea, ...ruta.aeronave].filter((m) => m.avg !== null && m.answered > 0);
   const sinDatos = conDatos.length === 0;
 
   /* Aciertos: últimos 30 días contra los 30 anteriores. */
