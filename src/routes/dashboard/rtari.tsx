@@ -342,7 +342,7 @@ function RtariPage() {
     };
     // Sólo debe correr al aterrizar de vuelta del pago.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [compra, user]);
+  }, [compra, userId]);
 
   const comenzar = () => {
     if (!user) return;
