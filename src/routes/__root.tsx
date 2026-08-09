@@ -18,6 +18,7 @@ import { FlashOfferWatch } from "@/components/shared/FlashOfferWatch";
 
 
 import appCss from "../styles.css?url";
+import fontsCss from "../fonts.css?url";
 
 function NotFoundComponent() {
   return (
@@ -117,11 +118,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      // Fuentes self-hosteadas (src/fonts.css + public/fonts): sin CSS externo
+      // de Google Fonts en el camino crítico. DM Sans se eliminó: no se usaba.
+      { rel: "stylesheet", href: fontsCss },
+      // Preload de las dos caras que pintan el above-the-fold de toda página.
       {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Manrope:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap",
+        rel: "preload",
+        as: "font",
+        type: "font/woff2",
+        href: "/fonts/bricolage-grotesque-latin-600-normal.woff2",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "preload",
+        as: "font",
+        type: "font/woff2",
+        href: "/fonts/manrope-latin-400-normal.woff2",
+        crossOrigin: "anonymous",
       },
     ],
     scripts: [
