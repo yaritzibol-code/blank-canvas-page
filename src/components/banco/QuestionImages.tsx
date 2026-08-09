@@ -10,10 +10,11 @@ import { supa } from "@/lib/store/cloud";
 
 const TTL = 60 * 60; // 1 hora
 
-/** Bucket por manual: Jeppesen, ATP (figuras del AKTS) y E190 viven separados. */
+/** Bucket por manual: Jeppesen, ATP (figuras del AKTS), E190 y 737 MAX. */
 function bucketFor(fuente?: string): string {
   if (fuente === "ATP") return "atp-images";
   if (fuente === "LAOF") return "e190-images";
+  if (fuente === "B737MAX") return "737-images";
   return "jeppesen-images";
 }
 
