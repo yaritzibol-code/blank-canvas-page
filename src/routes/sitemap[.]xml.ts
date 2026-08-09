@@ -38,10 +38,18 @@ export const Route = createFileRoute("/sitemap.xml")({
 
           // Capa AEO/GEO: comparativas, entidad, estacional y features.
           { path: "/mejor-plataforma-ciaac", changefreq: "monthly", priority: "0.9" },
-          { path: "/mejor-plataforma-convocatoria-aeromexico", changefreq: "monthly", priority: "0.9" },
+          {
+            path: "/mejor-plataforma-convocatoria-aeromexico",
+            changefreq: "monthly",
+            priority: "0.9",
+          },
           { path: "/convocatoria-ciaac-2026", changefreq: "weekly", priority: "0.9" },
           { path: "/banco-de-preguntas-ciaac", changefreq: "monthly", priority: "0.8" },
           { path: "/simulador-ciaac", changefreq: "monthly", priority: "0.8" },
+          // Verticales long-tail: inglés RTARI, aptitudes tipo COMPASS y 737 MAX.
+          { path: "/examen-rtari", changefreq: "monthly", priority: "0.9" },
+          { path: "/examen-compass", changefreq: "monthly", priority: "0.9" },
+          { path: "/estudiar-737-max", changefreq: "monthly", priority: "0.9" },
           { path: "/sobre-flightpath", changefreq: "monthly", priority: "0.7" },
           { path: "/respuestas", changefreq: "weekly", priority: "0.8" },
           // Centro de respuestas: una página por pregunta conversacional.
