@@ -497,6 +497,7 @@ const NAV_LINKS = [
 
 /** Secciones de la home: en móvil el menú también sirve para saltar a ellas. */
 const HOME_SECTIONS: { label: string; hash: string }[] = [
+  { label: "La ruta completa", hash: "#ruta" },
   { label: "Cómo funciona", hash: "#como-funciona" },
   { label: "Funciones", hash: "#funciones" },
   { label: "Yaris, tu tutora IA", hash: "#yaris" },
