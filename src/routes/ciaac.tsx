@@ -332,6 +332,21 @@ function ComoFunciona() {
             </div>
           ))}
         </div>
+        <p className="mt-8 text-center text-[14px] text-ink/55 max-w-[700px] mx-auto leading-relaxed">
+          Y el CIAAC es solo la primera puerta: en la misma cuenta practicas la{" "}
+          <a href="/examen-rtari" className="font-semibold text-coral-700 hover:text-coral-600">
+            entrevista en inglés del RTARI
+          </a>
+          , entrenas{" "}
+          <a href="/examen-compass" className="font-semibold text-coral-700 hover:text-coral-600">
+            aptitudes tipo COMPASS
+          </a>{" "}
+          para selecciones y estudias{" "}
+          <a href="/estudiar-737-max" className="font-semibold text-coral-700 hover:text-coral-600">
+            el 737 MAX por capítulos
+          </a>
+          .
+        </p>
       </div>
     </section>
   );

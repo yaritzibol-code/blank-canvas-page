@@ -32,10 +32,10 @@ export const Route = createFileRoute("/")({
   component: LandingPage,
   head: () => ({
     meta: [
-      { title: "FlightPath — Prepárate para una línea aérea y vuela." },
-      { name: "description", content: "Prepárate para el examen CIAAC y la convocatoria de línea aérea: banco propio de 2,800+ preguntas con explicación, simulador de 310 preguntas, las 12 materias y tutor IA 24/7. Empieza gratis." },
-      { property: "og:title", content: "FlightPath — Prepárate para una línea aérea y vuela." },
-      { property: "og:description", content: "Banco propio de 2,800+ preguntas con explicación, simulador de 310 preguntas, las 12 materias del CIAAC y tutor IA 24/7. Empieza gratis." },
+      { title: "FlightPath — Estudia aviación en México: CIAAC, línea aérea e inglés" },
+      { name: "description", content: "La plataforma de México para estudiar aviación: banco CIAAC de 2,800+ preguntas con explicación, simulador de 310, entrevista RTARI en inglés por voz, aptitudes tipo COMPASS y manuales de aeronave. Empieza gratis." },
+      { property: "og:title", content: "FlightPath — Estudia aviación en México: CIAAC, línea aérea e inglés" },
+      { property: "og:description", content: "Banco CIAAC de 2,800+ preguntas con explicación, simulador de 310, inglés RTARI por voz, aptitudes tipo COMPASS y manuales. Empieza gratis." },
       { property: "og:url", content: "https://flightpath.mx/" },
       { property: "og:type", content: "website" },
     ],
@@ -464,7 +464,7 @@ function Hero() {
               <span className="block text-coral-600 mt-1">No tú a él.</span>
             </h1>
             <p className="mt-7 text-lg lg:text-xl text-ink/55 max-w-xl leading-relaxed">
-              FlightPath aprende cómo estudias y construye tu ruta hacia el examen. Materias, simulador real y un copiloto inteligente que vuela contigo.
+              FlightPath aprende cómo estudias y construye tu ruta hacia el examen CIAAC y la línea aérea. Las 12 materias, simulador real, inglés y un copiloto inteligente que vuela contigo.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Btn kind="primary" size="lg" icon="arrow" to="/register">Comenzar gratis</Btn>

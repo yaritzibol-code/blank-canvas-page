@@ -168,7 +168,12 @@ function Fuentes() {
         </div>
         <p className="mt-10 text-center text-[13.5px] text-ink/50 max-w-2xl mx-auto">
           En FlightPath practicas las cinco fuentes con un banco propio de más de 2,800 preguntas
-          con explicación, mapeado al temario publicado, y simulacros cronometrados.
+          con explicación, mapeado al temario publicado, y simulacros cronometrados. ¿Tu meta
+          incluye equipo Boeing? También puedes{" "}
+          <a href="/estudiar-737-max" className="font-semibold text-coral-700 hover:text-coral-600">
+            estudiar el 737 MAX por capítulos del FCOM
+          </a>
+          .
         </p>
       </div>
     </section>

@@ -374,6 +374,17 @@ function Evaluaciones() {
             </div>
           ))}
         </div>
+        <p className="mt-7 text-center text-[14px] text-ink/55 max-w-[680px] mx-auto leading-relaxed">
+          Las otras puertas también se entrenan en FlightPath: practica la{" "}
+          <a href="/examen-rtari" className="font-semibold text-coral-700 hover:text-coral-600">
+            entrevista en inglés (RTARI)
+          </a>{" "}
+          con un sinodal de voz y entrena las{" "}
+          <a href="/examen-compass" className="font-semibold text-coral-700 hover:text-coral-600">
+            aptitudes tipo COMPASS
+          </a>{" "}
+          con ejercicios en línea — todo en la misma cuenta.
+        </p>
       </div>
     </section>
   );
