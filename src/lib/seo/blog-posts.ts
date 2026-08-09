@@ -190,7 +190,10 @@ export const BLOG_POSTS: BlogPost[] = [
     ],
     paginas: [
       { label: "Calculadora de horas de estudio CIAAC", href: "/calculadora-ciaac" },
-      { label: "Cómo ser piloto en México: la ruta completa", href: "/blog/como-ser-piloto-aviador-en-mexico" },
+      {
+        label: "Cómo ser piloto en México: la ruta completa",
+        href: "/blog/como-ser-piloto-aviador-en-mexico",
+      },
       { label: "Precios de FlightPath", href: "/precios" },
     ],
   },
@@ -266,7 +269,10 @@ export const BLOG_POSTS: BlogPost[] = [
     paginas: [
       { label: "Examen CIAAC: el filtro teórico de la PCA", href: "/ciaac" },
       { label: "Examen RTARI: tu inglés OACI", href: "/examen-rtari" },
-      { label: "Cómo ser piloto en México: la ruta completa", href: "/blog/como-ser-piloto-aviador-en-mexico" },
+      {
+        label: "Cómo ser piloto en México: la ruta completa",
+        href: "/blog/como-ser-piloto-aviador-en-mexico",
+      },
     ],
   },
   {
@@ -306,7 +312,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         h2: "Qué significa esto si vas a presentar una prueba de aptitud",
         parrafos: [
-          "Primero: la dificultad de estas pruebas es real y no lineal — los niveles altos no son \"lo mismo más rápido\", son otra física. Llegar sin haber hecho nunca tracking compensatorio significa gastar tus primeros intentos reales en aprender la mecánica, no en demostrar tu aptitud.",
+          'Primero: la dificultad de estas pruebas es real y no lineal — los niveles altos no son "lo mismo más rápido", son otra física. Llegar sin haber hecho nunca tracking compensatorio significa gastar tus primeros intentos reales en aprender la mecánica, no en demostrar tu aptitud.',
           "Segundo: la familiaridad es la parte entrenable. Nuestro piloto sintético no mejora con la práctica — tú sí. Los puntajes de un entrenador son métricas de tu progreso contra tu propia línea base, no un pronóstico del resultado de ninguna selección; pero eliminar la sorpresa del formato es una ventaja que está completamente en tus manos.",
           "Metodología, en corto: controlador proporcional con retardo de 250 ms, simulación determinista de paso fijo a 120 Hz, tres semillas promediadas por nivel, misma física que juegan los usuarios (inercia de mando, acoplamiento cruzado, viento y chicanes en niveles altos). Los ejercicios son originales de FlightPath: entrenan las familias de aptitud de las pruebas tipo COMPASS, sin replicar ningún examen.",
         ],
@@ -328,7 +334,10 @@ export const BLOG_POSTS: BlogPost[] = [
     ],
     paginas: [
       { label: "Entrena las 6 aptitudes tipo COMPASS", href: "/examen-compass" },
-      { label: "Cómo ser piloto en México: la ruta completa", href: "/blog/como-ser-piloto-aviador-en-mexico" },
+      {
+        label: "Cómo ser piloto en México: la ruta completa",
+        href: "/blog/como-ser-piloto-aviador-en-mexico",
+      },
     ],
   },
 ];

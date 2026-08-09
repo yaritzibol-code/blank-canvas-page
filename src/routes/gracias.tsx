@@ -14,14 +14,20 @@ import { trackPurchase } from "@/lib/ads";
 import { PRO_ANNUAL_FALLBACK, PRO_MONTHLY_FALLBACK, PRO_SETUP_FALLBACK } from "@/lib/pricing";
 
 export const Route = createFileRoute("/gracias")({
-  validateSearch: (search: Record<string, unknown>): { plan?: "mensual" | "anual"; session_id?: string } => ({
+  validateSearch: (
+    search: Record<string, unknown>,
+  ): { plan?: "mensual" | "anual"; session_id?: string } => ({
     ...(search.plan === "anual" || search.plan === "mensual" ? { plan: search.plan } : {}),
     ...(typeof search.session_id === "string" ? { session_id: search.session_id } : {}),
   }),
   head: () => ({
     meta: [
       { title: "¡Bienvenido a bordo! — FlightPath Pro" },
-      { name: "description", content: "Tu acceso a FlightPath Pro está activo. Empieza a prepararte para tu examen de línea aérea." },
+      {
+        name: "description",
+        content:
+          "Tu acceso a FlightPath Pro está activo. Empieza a prepararte para tu examen de línea aérea.",
+      },
       { name: "robots", content: "noindex, nofollow" },
       { property: "og:title", content: "¡Bienvenido a bordo! — FlightPath Pro" },
       { property: "og:description", content: "Tu acceso a FlightPath Pro está activo." },
@@ -134,8 +140,9 @@ function GraciasPage() {
               margin: "14px auto 0",
             }}
           >
-            Tu acceso a <strong style={{ color: INK }}>FlightPath Pro {anual ? "anual" : "mensual"}</strong> ya está
-            activo. Pathy y Yaris te acompañan desde aquí hasta tu examen.
+            Tu acceso a{" "}
+            <strong style={{ color: INK }}>FlightPath Pro {anual ? "anual" : "mensual"}</strong> ya
+            está activo. Pathy y Yaris te acompañan desde aquí hasta tu examen.
           </p>
 
           {/* Pathy y Yaris */}
@@ -151,7 +158,16 @@ function GraciasPage() {
             <PathyBubble size={168} />
             <div style={{ paddingBottom: 12, textAlign: "center" }}>
               <YarisAvatar size={92} />
-              <div style={{ fontSize: 12, fontWeight: 800, color: "#8DA1BE", letterSpacing: ".08em", marginTop: 8, textTransform: "uppercase" }}>
+              <div
+                style={{
+                  fontSize: 12,
+                  fontWeight: 800,
+                  color: "#8DA1BE",
+                  letterSpacing: ".08em",
+                  marginTop: 8,
+                  textTransform: "uppercase",
+                }}
+              >
                 Yaris
               </div>
             </div>
@@ -243,7 +259,13 @@ function GraciasPage() {
             Checklist previo al despegue.
           </p>
 
-          <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))" }}>
+          <div
+            style={{
+              display: "grid",
+              gap: 16,
+              gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))",
+            }}
+          >
             {PASOS.map((p) => (
               <div
                 key={p.n}
@@ -257,11 +279,25 @@ function GraciasPage() {
                   gap: 10,
                 }}
               >
-                <span style={{ fontFamily: "ui-monospace, monospace", fontSize: 12, color: BRAND, fontWeight: 700, letterSpacing: ".14em" }}>
+                <span
+                  style={{
+                    fontFamily: "ui-monospace, monospace",
+                    fontSize: 12,
+                    color: BRAND,
+                    fontWeight: 700,
+                    letterSpacing: ".14em",
+                  }}
+                >
                   {p.n}
                 </span>
-                <div style={{ fontFamily: DISPLAY, fontSize: "1.12rem", fontWeight: 800, color: INK }}>{p.titulo}</div>
-                <p style={{ color: "#5B6B86", fontSize: 14, lineHeight: 1.6, margin: 0, flex: 1 }}>{p.copy}</p>
+                <div
+                  style={{ fontFamily: DISPLAY, fontSize: "1.12rem", fontWeight: 800, color: INK }}
+                >
+                  {p.titulo}
+                </div>
+                <p style={{ color: "#5B6B86", fontSize: 14, lineHeight: 1.6, margin: 0, flex: 1 }}>
+                  {p.copy}
+                </p>
                 <Link
                   to={p.to}
                   style={{
@@ -296,10 +332,21 @@ function GraciasPage() {
 function Dato({ etiqueta, valor, tono = INK }: { etiqueta: string; valor: string; tono?: string }) {
   return (
     <div>
-      <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: ".12em", textTransform: "uppercase", color: "#8DA1BE", marginBottom: 6 }}>
+      <div
+        style={{
+          fontSize: 11.5,
+          fontWeight: 800,
+          letterSpacing: ".12em",
+          textTransform: "uppercase",
+          color: "#8DA1BE",
+          marginBottom: 6,
+        }}
+      >
         {etiqueta}
       </div>
-      <div style={{ fontFamily: DISPLAY, fontSize: "1.35rem", fontWeight: 800, color: tono }}>{valor}</div>
+      <div style={{ fontFamily: DISPLAY, fontSize: "1.35rem", fontWeight: 800, color: tono }}>
+        {valor}
+      </div>
     </div>
   );
 }

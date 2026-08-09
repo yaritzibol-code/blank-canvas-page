@@ -94,7 +94,12 @@ export const Route = createFileRoute("/blog")({
             {
               "@type": "BreadcrumbList",
               itemListElement: [
-                { "@type": "ListItem", position: 1, name: "Inicio", item: "https://flightpath.mx/" },
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "Inicio",
+                  item: "https://flightpath.mx/",
+                },
                 { "@type": "ListItem", position: 2, name: "Blog", item: CANONICAL },
               ],
             },

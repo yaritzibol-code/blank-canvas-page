@@ -28,8 +28,6 @@ function initOnce() {
     .catch(() => {});
 }
 
-
-
 /**
  * Arranque explícito de la capa de datos (lo llama el layout raíz).
  * Garantiza que el cliente de Supabase se cree en CUALQUIER página — necesario
@@ -43,11 +41,7 @@ export function initAppStore() {
 
 export function useStoreVersion(): number {
   initOnce();
-  return useSyncExternalStore(
-    subscribe,
-    getVersion,
-    () => 0,
-  );
+  return useSyncExternalStore(subscribe, getVersion, () => 0);
 }
 
 /** Ejecuta un selector sobre el store; se actualiza con cada cambio. */
@@ -92,7 +86,16 @@ export function useRequireAuth(requiredRole?: "admin"): { user: User | null; rea
     } else if (requiredRole === "admin" && user.role !== "admin") {
       navigate({ to: "/dashboard" });
     }
-  }, [mounted, settled, user, requiredRole, navigate, location.pathname, location.searchStr, location.hash]);
+  }, [
+    mounted,
+    settled,
+    user,
+    requiredRole,
+    navigate,
+    location.pathname,
+    location.searchStr,
+    location.hash,
+  ]);
 
   const ready = mounted && settled && !!user && (requiredRole !== "admin" || user.role === "admin");
   return { user, ready };

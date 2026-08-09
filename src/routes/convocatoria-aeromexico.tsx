@@ -81,19 +81,32 @@ const FAQS: { q: string; a: string }[] = [
 const REQUISITOS: { icon: IconName; text: string }[] = [
   { icon: "cal", text: "Edad: de 18 años hasta 50 años con 11 meses" },
   { icon: "waypoint", text: "Nacionalidad mexicana por nacimiento" },
-  { icon: "clock", text: "250 horas de vuelo certificadas en bitácora: mínimo 180 de vuelo real y hasta 70 de simulador" },
+  {
+    icon: "clock",
+    text: "250 horas de vuelo certificadas en bitácora: mínimo 180 de vuelo real y hasta 70 de simulador",
+  },
   { icon: "doc", text: "Carta de presentación de ASPA" },
   { icon: "shield", text: "Expediente completo y actualizado en el área de archivo del sindicato" },
 ];
 
 const EVALUACIONES: { icon: IconName; title: string; sub: string }[] = [
   { icon: "doc", title: "Examen teórico", sub: "Sobre el temario oficial de la convocatoria" },
-  { icon: "brain", title: "AON (Aviation Suite)", sub: "Psicométrica y de aptitudes; incluye la prueba de inglés" },
+  {
+    icon: "brain",
+    title: "AON (Aviation Suite)",
+    sub: "Psicométrica y de aptitudes; incluye la prueba de inglés",
+  },
   { icon: "sim", title: "Simulador", sub: "Evaluación práctica de vuelo" },
   { icon: "user", title: "Panel", sub: "Entrevista con panel evaluador" },
 ];
 
-const TEMARIO: { icon: IconName; title: string; detail: string; materias: string[]; href: string }[] = [
+const TEMARIO: {
+  icon: IconName;
+  title: string;
+  detail: string;
+  materias: string[];
+  href: string;
+}[] = [
   {
     icon: "book",
     title: "ATP — Airline Transport Pilot",
@@ -155,7 +168,10 @@ export const Route = createFileRoute("/convocatoria-aeromexico")({
         content:
           "convocatoria aeromexico, convocatoria aspa, primer oficial embraer 190, jeppesen, jeppesen general airway manual, ATP airline transport pilot, PHAK, CPAM, OACI anexo 10, examen teorico aeromexico connect",
       },
-      { property: "og:title", content: "Convocatoria Aeroméxico · ASPA — Primer Oficial Embraer 190" },
+      {
+        property: "og:title",
+        content: "Convocatoria Aeroméxico · ASPA — Primer Oficial Embraer 190",
+      },
       {
         property: "og:description",
         content:
@@ -166,7 +182,10 @@ export const Route = createFileRoute("/convocatoria-aeromexico")({
       { property: "og:site_name", content: "FlightPath" },
       { property: "og:locale", content: "es_MX" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Convocatoria Aeroméxico · ASPA — Primer Oficial Embraer 190" },
+      {
+        name: "twitter:title",
+        content: "Convocatoria Aeroméxico · ASPA — Primer Oficial Embraer 190",
+      },
       {
         name: "twitter:description",
         content:
@@ -195,7 +214,11 @@ export const Route = createFileRoute("/convocatoria-aeromexico")({
                 "Cuestionario de práctica del temario publicado: ATP, PHAK, Jeppesen General Airway Manual, CPAM y OACI Anexo 10, con banco propio de 2,800+ preguntas, simulacros cronometrados y tutor IA.",
               inLanguage: "es-MX",
               url: CANONICAL,
-              provider: { "@type": "Organization", name: "FlightPath", url: "https://flightpath.mx/" },
+              provider: {
+                "@type": "Organization",
+                name: "FlightPath",
+                url: "https://flightpath.mx/",
+              },
               offers: {
                 "@type": "Offer",
                 price: String(PRO_SETUP_FALLBACK.amount),
@@ -212,8 +235,18 @@ export const Route = createFileRoute("/convocatoria-aeromexico")({
             {
               "@type": "BreadcrumbList",
               itemListElement: [
-                { "@type": "ListItem", position: 1, name: "Inicio", item: "https://flightpath.mx/" },
-                { "@type": "ListItem", position: 2, name: "Convocatoria Aeroméxico — Embraer 190", item: CANONICAL },
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "Inicio",
+                  item: "https://flightpath.mx/",
+                },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: "Convocatoria Aeroméxico — Embraer 190",
+                  item: CANONICAL,
+                },
               ],
             },
           ],
@@ -232,7 +265,9 @@ function Hero() {
           <div className="relative z-10">
             <div className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white/70 backdrop-blur px-3 py-1.5 shadow-card">
               <span className="w-1.5 h-1.5 rounded-full bg-coral-600 animate-pulse-dot" />
-              <span className="text-[12px] font-semibold text-ink/70">ASPA de México · Aeroméxico Connect</span>
+              <span className="text-[12px] font-semibold text-ink/70">
+                ASPA de México · Aeroméxico Connect
+              </span>
             </div>
             <h1 className="font-display mt-6 text-[40px] sm:text-[54px] lg:text-[60px] leading-[1.0] tracking-tight text-ink">
               Convocatoria Aeroméxico:
@@ -244,11 +279,16 @@ function Hero() {
               que te dice exactamente dónde estás fallando.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
-              <Btn kind="primary" size="lg" icon="arrow" href={BUY_HREF}>Comprar acceso al cuestionario</Btn>
-              <Btn kind="light" size="lg" iconLeft="book" href="#temario">Ver el temario oficial</Btn>
+              <Btn kind="primary" size="lg" icon="arrow" href={BUY_HREF}>
+                Comprar acceso al cuestionario
+              </Btn>
+              <Btn kind="light" size="lg" iconLeft="book" href="#temario">
+                Ver el temario oficial
+              </Btn>
             </div>
             <p className="mt-4 text-[12.5px] text-ink/45 flex items-center gap-1.5">
-              <Icon n="shield" className="w-3.5 h-3.5" /> Pago seguro procesado por Stripe · Cancela cuando quieras
+              <Icon n="shield" className="w-3.5 h-3.5" /> Pago seguro procesado por Stripe · Cancela
+              cuando quieras
             </p>
           </div>
 
@@ -259,12 +299,18 @@ function Hero() {
                 <Icon n="target" className="w-3.5 h-3.5 text-coral-400" /> Cuestionario E190
               </div>
               <div className="text-white text-[14px] leading-snug">
-                5 fuentes oficiales,<br />
+                5 fuentes oficiales,
+                <br />
                 <span className="text-coral-400 font-semibold">una sola ruta de práctica.</span>
               </div>
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {["ATP", "PHAK", "Jeppesen", "CPAM", "OACI A10"].map((t) => (
-                  <span key={t} className="text-[10.5px] font-mono text-white/70 border border-white/15 rounded-full px-2 py-0.5">{t}</span>
+                  <span
+                    key={t}
+                    className="text-[10.5px] font-mono text-white/70 border border-white/15 rounded-full px-2 py-0.5"
+                  >
+                    {t}
+                  </span>
                 ))}
               </div>
             </div>
@@ -282,12 +328,19 @@ function Requisitos() {
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-start">
           <SectionHead
             eyebrow="La convocatoria"
-            title={<>Requisitos de la <span className="text-coral-600">convocatoria ASPA.</span></>}
+            title={
+              <>
+                Requisitos de la <span className="text-coral-600">convocatoria ASPA.</span>
+              </>
+            }
             sub="ASPA de México invita a unirse a su grupo de pilotos como Primer Oficial de la flota Embraer 190 de Aeroméxico Connect. Esto es lo que pide el proceso."
           />
           <div className="space-y-3">
             {REQUISITOS.map((r) => (
-              <div key={r.text} className="flex items-start gap-4 rounded-2xl bg-white/80 backdrop-blur-sm border border-ink/8 shadow-card px-5 py-4">
+              <div
+                key={r.text}
+                className="flex items-start gap-4 rounded-2xl bg-white/80 backdrop-blur-sm border border-ink/8 shadow-card px-5 py-4"
+              >
                 <span className="w-9 h-9 rounded-xl bg-coral-50 text-coral-700 grid place-items-center shrink-0">
                   <Icon n={r.icon} className="w-[18px] h-[18px]" />
                 </span>
@@ -312,22 +365,34 @@ function Temario() {
         <SectionHead
           center
           eyebrow="Temario oficial"
-          title={<>Lo que evalúa el <span className="text-coral-600">examen teórico.</span></>}
+          title={
+            <>
+              Lo que evalúa el <span className="text-coral-600">examen teórico.</span>
+            </>
+          }
           sub="Estas son las cinco fuentes que define la empresa para el examen de Primer Oficial Embraer 190, y las materias de FlightPath con las que practicas cada una."
         />
         <div className="mt-14 space-y-4">
           {TEMARIO.map((f) => (
-            <div key={f.title} className="rounded-3xl bg-white border border-ink/8 shadow-card p-6 lg:p-7">
+            <div
+              key={f.title}
+              className="rounded-3xl bg-white border border-ink/8 shadow-card p-6 lg:p-7"
+            >
               <div className="flex items-start gap-5">
                 <span className="w-12 h-12 rounded-2xl bg-ink text-coral-400 grid place-items-center shrink-0">
                   <Icon n={f.icon} className="w-6 h-6" />
                 </span>
                 <div className="flex-1">
-                  <h3 className="font-display text-[19px] lg:text-[21px] text-ink tracking-tight">{f.title}</h3>
+                  <h3 className="font-display text-[19px] lg:text-[21px] text-ink tracking-tight">
+                    {f.title}
+                  </h3>
                   <p className="mt-1 text-[14px] text-ink/55">{f.detail}</p>
                   <div className="mt-3.5 flex flex-wrap gap-2">
                     {f.materias.map((m) => (
-                      <Pill key={m} tone="coral"><Icon n="check" className="w-3 h-3" />{m}</Pill>
+                      <Pill key={m} tone="coral">
+                        <Icon n="check" className="w-3 h-3" />
+                        {m}
+                      </Pill>
                     ))}
                   </div>
                   <a
@@ -357,12 +422,19 @@ function Evaluaciones() {
         <SectionHead
           center
           eyebrow="El proceso"
-          title={<>Las 4 evaluaciones <span className="text-coral-600">de la convocatoria.</span></>}
+          title={
+            <>
+              Las 4 evaluaciones <span className="text-coral-600">de la convocatoria.</span>
+            </>
+          }
           sub="El examen teórico es la primera puerta. Llega con el temario dominado y el resto del proceso se vuela mejor."
         />
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {EVALUACIONES.map((e, i) => (
-            <div key={e.title} className="rounded-3xl bg-white/80 backdrop-blur-sm border border-ink/8 shadow-card p-6">
+            <div
+              key={e.title}
+              className="rounded-3xl bg-white/80 backdrop-blur-sm border border-ink/8 shadow-card p-6"
+            >
               <div className="flex items-center justify-between">
                 <span className="w-10 h-10 rounded-xl bg-coral-50 text-coral-700 grid place-items-center">
                   <Icon n={e.icon} className="w-5 h-5" />
@@ -402,9 +474,9 @@ function Comprar() {
               Compra tu acceso y <span className="text-coral-600">practica hasta dominarlo.</span>
             </h2>
             <p className="mt-5 text-[16.5px] leading-relaxed text-ink/55 max-w-lg">
-              El cuestionario Embraer 190 — Primer Oficial vive dentro de FlightPath Pro: practicas el
-              temario oficial completo, mides tu avance por materia y repites los temas débiles hasta
-              que el examen teórico deje de ser incógnita.
+              El cuestionario Embraer 190 — Primer Oficial vive dentro de FlightPath Pro: practicas
+              el temario oficial completo, mides tu avance por materia y repites los temas débiles
+              hasta que el examen teórico deje de ser incógnita.
             </p>
             <div className="mt-7 space-y-3">
               {INCLUYE.map((b) => (
@@ -417,10 +489,17 @@ function Comprar() {
           </div>
 
           <div className="relative rounded-3xl bg-ink p-8 lg:p-10 shadow-navy overflow-hidden">
-            <div className="absolute -top-12 -right-12 w-52 h-52 rounded-full" style={{ background: "radial-gradient(closest-side, rgba(242,174,188,0.20), transparent)" }} />
+            <div
+              className="absolute -top-12 -right-12 w-52 h-52 rounded-full"
+              style={{
+                background: "radial-gradient(closest-side, rgba(242,174,188,0.20), transparent)",
+              }}
+            />
             <div className="relative">
               <div className="flex items-center justify-between">
-                <div className="text-[11px] uppercase tracking-[0.18em] font-bold text-coral-400">Embraer 190 · Primer Oficial</div>
+                <div className="text-[11px] uppercase tracking-[0.18em] font-bold text-coral-400">
+                  Embraer 190 · Primer Oficial
+                </div>
                 <Pill tone="light">Acceso completo</Pill>
               </div>
               <div className="mt-5 flex items-baseline gap-2">
@@ -430,13 +509,16 @@ function Comprar() {
                 <span className="text-white/50 text-sm">{PRO_MONTHLY_FALLBACK.currency} / mes</span>
               </div>
               <div className="mt-2 text-[13px] text-white/55">
-                + ${PRO_SETUP_FALLBACK.amount.toLocaleString()} {PRO_SETUP_FALLBACK.currency} de inscripción (pago único)
+                + ${PRO_SETUP_FALLBACK.amount.toLocaleString()} {PRO_SETUP_FALLBACK.currency} de
+                inscripción (pago único)
               </div>
               <p className="text-[14px] text-white/60 mt-4">
                 Acceso Pro a toda la plataforma: cuestionario de la convocatoria, banco completo,
                 simulacros y tutor IA. Sin plazos forzosos.
               </p>
-              <Btn kind="primary" size="lg" icon="arrow" className="w-full mt-7" href={BUY_HREF}>Comprar acceso</Btn>
+              <Btn kind="primary" size="lg" icon="arrow" className="w-full mt-7" href={BUY_HREF}>
+                Comprar acceso
+              </Btn>
               <p className="mt-4 text-center text-[12px] text-white/45">
                 Crea tu cuenta y paga en la página segura de Stripe. Cancela cuando quieras.
               </p>
@@ -455,19 +537,31 @@ function PreguntasFrecuentes() {
         <SectionHead
           center
           eyebrow="Preguntas frecuentes"
-          title={<>Convocatoria, temario <span className="text-coral-600">y cuestionario.</span></>}
+          title={
+            <>
+              Convocatoria, temario <span className="text-coral-600">y cuestionario.</span>
+            </>
+          }
         />
         <div className="mt-12 space-y-4">
           {FAQS.map((f) => (
-            <div key={f.q} className="rounded-3xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card p-6 lg:p-7">
-              <h3 className="font-display text-[17px] lg:text-[18px] text-ink tracking-tight">{f.q}</h3>
+            <div
+              key={f.q}
+              className="rounded-3xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card p-6 lg:p-7"
+            >
+              <h3 className="font-display text-[17px] lg:text-[18px] text-ink tracking-tight">
+                {f.q}
+              </h3>
               <p className="mt-2.5 text-[14.5px] leading-relaxed text-ink/60">{f.a}</p>
             </div>
           ))}
         </div>
         <p className="mt-6 text-center text-[13.5px] text-ink/50">
           ¿Comparando opciones? Lee{" "}
-          <a href="/mejor-plataforma-convocatoria-aeromexico" className="font-semibold text-coral-700 hover:text-coral-600">
+          <a
+            href="/mejor-plataforma-convocatoria-aeromexico"
+            className="font-semibold text-coral-700 hover:text-coral-600"
+          >
             cómo elegir tu preparación para esta convocatoria
           </a>
           , criterio por criterio.
@@ -499,16 +593,22 @@ function CierreCta() {
   return (
     <section className="relative py-24 lg:py-32">
       <div className="mx-auto max-w-[820px] px-6 lg:px-8 text-center">
-        <div className="flex justify-center mb-8"><PathyBubble size={120} /></div>
+        <div className="flex justify-center mb-8">
+          <PathyBubble size={120} />
+        </div>
         <h2 className="font-display text-5xl lg:text-[64px] leading-[0.98] tracking-tight text-ink">
-          El examen teórico<br /><span className="text-coral-600">se gana practicando.</span>
+          El examen teórico
+          <br />
+          <span className="text-coral-600">se gana practicando.</span>
         </h2>
         <p className="mt-6 text-lg text-ink/55 max-w-xl mx-auto leading-relaxed">
           Llega a la convocatoria con las 5 fuentes del temario dominadas y tu preparación medida
           materia por materia.
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-          <Btn kind="primary" size="lg" icon="arrow" href={BUY_HREF}>Comprar acceso al cuestionario</Btn>
+          <Btn kind="primary" size="lg" icon="arrow" href={BUY_HREF}>
+            Comprar acceso al cuestionario
+          </Btn>
         </div>
       </div>
     </section>
@@ -518,7 +618,9 @@ function CierreCta() {
 function ConvocatoriaAeromexicoPage() {
   useEffect(() => {
     document.body.classList.add("theme-hueso");
-    return () => { document.body.classList.remove("theme-hueso"); };
+    return () => {
+      document.body.classList.remove("theme-hueso");
+    };
   }, []);
 
   return (

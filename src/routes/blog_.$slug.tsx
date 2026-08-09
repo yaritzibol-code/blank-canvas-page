@@ -172,11 +172,7 @@ function BlogPostPage() {
                   <ul className="mt-4 space-y-2.5">
                     {s.lista.map((item) => (
                       <li key={item} className="flex items-start gap-3">
-                        <Icon
-                          n="check"
-                          className="w-4 h-4 text-coral-600 mt-1 shrink-0"
-                          sw={2.2}
-                        />
+                        <Icon n="check" className="w-4 h-4 text-coral-600 mt-1 shrink-0" sw={2.2} />
                         <span className="text-[14.5px] text-ink/65 leading-relaxed">{item}</span>
                       </li>
                     ))}
@@ -245,8 +241,8 @@ function BlogPostPage() {
               <span className="block text-coral-600">una sesión a la vez.</span>
             </h2>
             <p className="mt-4 text-[15px] text-ink/55 leading-relaxed max-w-[520px] mx-auto">
-              Crea tu cuenta gratis y empieza hoy: banco CIAAC, inglés RTARI, aptitudes y manuales
-              — todo el camino del piloto mexicano en un solo lugar.
+              Crea tu cuenta gratis y empieza hoy: banco CIAAC, inglés RTARI, aptitudes y manuales —
+              todo el camino del piloto mexicano en un solo lugar.
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
               <Btn kind="primary" size="lg" icon="arrow" to="/register">
@@ -254,7 +250,8 @@ function BlogPostPage() {
               </Btn>
               {relacionados.map((r) => (
                 <Btn key={r.slug} kind="light" size="lg" href={`/blog/${r.slug}`}>
-                  {r.categoria === "Datos" ? "Ver los datos" : "Seguir leyendo"}: {r.titulo.split(":")[0]}
+                  {r.categoria === "Datos" ? "Ver los datos" : "Seguir leyendo"}:{" "}
+                  {r.titulo.split(":")[0]}
                 </Btn>
               ))}
             </div>

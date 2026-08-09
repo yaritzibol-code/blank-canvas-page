@@ -1025,9 +1025,7 @@ export const RESPUESTAS_SEO: RespuestaSeo[] = [
       },
     ],
     relacionadas: ["que-nivel-de-ingles-necesito-para-ser-piloto", "que-es-el-ingles-oaci"],
-    paginas: [
-      { label: "Examen RTARI: guía completa y práctica", href: "/examen-rtari" },
-    ],
+    paginas: [{ label: "Examen RTARI: guía completa y práctica", href: "/examen-rtari" }],
     categoria: "Inglés y RTARI",
     publicado: "2026-08-09",
   },
@@ -1163,7 +1161,10 @@ export const RESPUESTAS_SEO: RespuestaSeo[] = [
         a: "Idealmente 3–4 semanas antes, con sesiones cortas y constantes. Practicar la noche anterior solo te quita sueño — y el descanso pesa en estas pruebas tanto como la práctica.",
       },
     ],
-    relacionadas: ["que-es-el-examen-compass-de-seleccion", "como-prepararse-para-aon-aviation-suite"],
+    relacionadas: [
+      "que-es-el-examen-compass-de-seleccion",
+      "como-prepararse-para-aon-aviation-suite",
+    ],
     paginas: [{ label: "Empieza a entrenar aptitudes gratis", href: "/examen-compass" }],
     categoria: "Selección y aptitudes",
     publicado: "2026-08-09",
@@ -1195,7 +1196,10 @@ export const RESPUESTAS_SEO: RespuestaSeo[] = [
         a: "Cada institución define cortes y perfiles; más que 'reprobar', quedas dentro o fuera del perfil que busca esa convocatoria en ese momento. Lo que sí está en tus manos: llegar entrenado en las aptitudes, descansado, y sin que el formato te sorprenda.",
       },
     ],
-    relacionadas: ["que-es-el-examen-compass-de-seleccion", "como-practicar-para-el-examen-compass"],
+    relacionadas: [
+      "que-es-el-examen-compass-de-seleccion",
+      "como-practicar-para-el-examen-compass",
+    ],
     paginas: [
       { label: "Entrenador de aptitudes de FlightPath", href: "/examen-compass" },
       { label: "Practica la entrevista en inglés", href: "/examen-rtari" },

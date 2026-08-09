@@ -16,7 +16,6 @@ import { useApplyPrefs } from "@/hooks/use-apply-prefs";
 import { GOOGLE_ADS_ID, isAdsConfigured } from "@/lib/ads";
 import { FlashOfferWatch } from "@/components/shared/FlashOfferWatch";
 
-
 import appCss from "../styles.css?url";
 import fontsCss from "../fonts.css?url";
 
@@ -99,16 +98,34 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "FlightPath — Estudia aviación en México: CIAAC, línea aérea e inglés" },
-      { name: "description", content: "La plataforma de México para estudiar aviación: banco CIAAC de 2,800+ preguntas con explicación, simulador de 310, entrevista RTARI en inglés por voz, aptitudes tipo COMPASS y manuales. Empieza gratis." },
+      {
+        name: "description",
+        content:
+          "La plataforma de México para estudiar aviación: banco CIAAC de 2,800+ preguntas con explicación, simulador de 310, entrevista RTARI en inglés por voz, aptitudes tipo COMPASS y manuales. Empieza gratis.",
+      },
       { name: "author", content: "FlightPath" },
-      { property: "og:title", content: "FlightPath — Estudia aviación en México: CIAAC, línea aérea e inglés" },
-      { property: "og:description", content: "Banco CIAAC de 2,800+ preguntas con explicación, simulador de 310, inglés RTARI por voz, aptitudes tipo COMPASS y manuales. Empieza gratis." },
+      {
+        property: "og:title",
+        content: "FlightPath — Estudia aviación en México: CIAAC, línea aérea e inglés",
+      },
+      {
+        property: "og:description",
+        content:
+          "Banco CIAAC de 2,800+ preguntas con explicación, simulador de 310, inglés RTARI por voz, aptitudes tipo COMPASS y manuales. Empieza gratis.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "FlightPath" },
       { property: "og:locale", content: "es_MX" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "FlightPath — Estudia aviación en México: CIAAC, línea aérea e inglés" },
-      { name: "twitter:description", content: "Banco CIAAC de 2,800+ preguntas con explicación, simulador de 310, inglés RTARI por voz, aptitudes tipo COMPASS y manuales." },
+      {
+        name: "twitter:title",
+        content: "FlightPath — Estudia aviación en México: CIAAC, línea aérea e inglés",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Banco CIAAC de 2,800+ preguntas con explicación, simulador de 310, inglés RTARI por voz, aptitudes tipo COMPASS y manuales.",
+      },
       // Imagen OG propia (Pathy + CIAAC), generada en public/og-image.png — 1200×630.
       { property: "og:image", content: "https://flightpath.mx/og-image.png" },
       { property: "og:image:width", content: "1200" },
@@ -180,7 +197,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           ]
         : []),
     ],
-
   }),
   shellComponent: RootShell,
   component: RootComponent,

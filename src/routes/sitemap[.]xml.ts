@@ -54,7 +54,12 @@ export const Route = createFileRoute("/sitemap.xml")({
             lastmod: V2,
           },
           { path: "/convocatoria-ciaac-2026", changefreq: "weekly", priority: "0.9", lastmod: V2 },
-          { path: "/banco-de-preguntas-ciaac", changefreq: "monthly", priority: "0.8", lastmod: V2 },
+          {
+            path: "/banco-de-preguntas-ciaac",
+            changefreq: "monthly",
+            priority: "0.8",
+            lastmod: V2,
+          },
           { path: "/simulador-ciaac", changefreq: "monthly", priority: "0.8", lastmod: V2 },
           // Verticales long-tail: inglés RTARI, aptitudes tipo COMPASS y 737 MAX.
           { path: "/examen-rtari", changefreq: "monthly", priority: "0.9", lastmod: V2 },

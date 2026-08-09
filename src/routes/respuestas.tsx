@@ -1,7 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { RESPUESTAS_CATEGORIAS, RESPUESTAS_SEO } from "@/lib/seo/respuestas-seo";
-import { AeroBackdrop, Btn, Coord, Footer, Icon, Nav, PathyBubble, PlaneField } from "@/components/landing/shared";
+import {
+  AeroBackdrop,
+  Btn,
+  Coord,
+  Footer,
+  Icon,
+  Nav,
+  PathyBubble,
+  PlaneField,
+} from "@/components/landing/shared";
 
 /**
  * Hub del centro de respuestas (cluster AEO/GEO): agrupa las preguntas

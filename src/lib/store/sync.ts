@@ -188,7 +188,6 @@ async function hydrateContent(): Promise<void> {
   }
 }
 
-
 /**
  * Lo que cambia con el uso: perfiles, estado por usuario, reportes y config.
  * Se separa del contenido para poder refrescarlo cada pocos segundos (panel
@@ -416,7 +415,6 @@ async function pushProfiles(users: User[]): Promise<void> {
   });
   await s.from("profiles").upsert(rows);
 }
-
 
 async function pushKey(key: string): Promise<void> {
   const s = supa();

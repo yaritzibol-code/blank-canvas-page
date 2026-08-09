@@ -28,6 +28,9 @@ import { ICONO_MATERIA } from "@/lib/seo/materias-iconos";
  */
 
 const BASE = "https://flightpath.mx";
+
+/** Materias piloto del schema Course (medir en GSC antes de extender a las 12). */
+const COURSE_PILOT_SLUGS = new Set(["aerodinamica", "meteorologia", "navegacion"]);
 const START_HREF = "/register";
 
 /** FAQs de la página, generadas desde los mismos datos que se renderizan. */
@@ -96,6 +99,36 @@ export const Route = createFileRoute("/ciaac_/$materia")({
                   acceptedAnswer: { "@type": "Answer", text: f.a },
                 })),
               },
+              // Piloto de rich results de curso (F-15 del audit SEO): solo en
+              // tres materias mientras se mide el impacto en Search Console.
+              ...(COURSE_PILOT_SLUGS.has(def.slug)
+                ? [
+                    {
+                      "@type": "Course",
+                      name: `${def.name} para el examen CIAAC — curso de práctica`,
+                      description,
+                      inLanguage: "es-MX",
+                      url: canonical,
+                      provider: {
+                        "@type": "Organization",
+                        name: "FlightPath",
+                        url: "https://flightpath.mx/",
+                      },
+                      offers: {
+                        "@type": "Offer",
+                        price: "0",
+                        priceCurrency: "MXN",
+                        category: "Free",
+                        url: canonical,
+                      },
+                      hasCourseInstance: {
+                        "@type": "CourseInstance",
+                        courseMode: "online",
+                        courseWorkload: "PT12H",
+                      },
+                    },
+                  ]
+                : []),
               {
                 "@type": "Quiz",
                 name: `Preguntas de muestra de ${def.name} — CIAAC`,

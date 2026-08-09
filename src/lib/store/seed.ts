@@ -45,7 +45,6 @@ function daysAgoISO(days: number, hour = 18): string {
   return d.toISOString();
 }
 
-
 function seedUsers(): User[] {
   const registeredAt = daysAgoISO(150, 10);
   return [
