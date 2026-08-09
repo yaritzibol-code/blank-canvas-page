@@ -175,15 +175,15 @@ export const LEG_TOTAL = LEG_CHAPTERS.reduce((s, c) => s + c.total, 0);
 
 /** Capítulos del Boeing 737 MAX FCOM (Flight Crew Operations Manual). */
 export const B737MAX_CHAPTERS: AtpChapter[] = [
-  { num: 1, titulo: "Limitaciones y procedimientos normales", tituloEn: "Limitations and Normal Procedures", total: 250 },
-  { num: 2, titulo: "Procedimientos suplementarios", tituloEn: "Supplementary Procedures", total: 250 },
-  { num: 3, titulo: "Rendimiento para despacho", tituloEn: "Performance Dispatch", total: 250 },
-  { num: 4, titulo: "Rendimiento en vuelo", tituloEn: "Performance Inflight", total: 250 },
-  { num: 5, titulo: "Célula, sistemas de aire, antihielo y protección contra incendio", tituloEn: "Airframe, Air Systems, Anti-Ice and Fire Protection", total: 300 },
-  { num: 6, titulo: "Vuelo automático, controles de vuelo, comunicaciones y sistema eléctrico", tituloEn: "Automatic Flight, Flight Controls, Communications and Electrical", total: 400 },
-  { num: 7, titulo: "Motores, APU, combustible, hidráulicos y tren de aterrizaje", tituloEn: "Engines, APU, Fuel, Hydraulics and Landing Gear", total: 250 },
-  { num: 8, titulo: "Instrumentos de vuelo y pantallas", tituloEn: "Flight Instruments and Displays", total: 250 },
-  { num: 9, titulo: "Gestión de vuelo, navegación y sistemas de advertencia", tituloEn: "Flight Management, Navigation and Warning Systems", total: 300 },
+  { num: 1, titulo: "Limitaciones y procedimientos normales", tituloEn: "Limitations and Normal Procedures", total: 450 },
+  { num: 2, titulo: "Procedimientos suplementarios", tituloEn: "Supplementary Procedures", total: 450 },
+  { num: 3, titulo: "Rendimiento para despacho", tituloEn: "Performance Dispatch", total: 450 },
+  { num: 4, titulo: "Rendimiento en vuelo", tituloEn: "Performance Inflight", total: 450 },
+  { num: 5, titulo: "Célula, sistemas de aire, antihielo y protección contra incendio", tituloEn: "Airframe, Air Systems, Anti-Ice and Fire Protection", total: 500 },
+  { num: 6, titulo: "Vuelo automático, controles de vuelo, comunicaciones y sistema eléctrico", tituloEn: "Automatic Flight, Flight Controls, Communications and Electrical", total: 600 },
+  { num: 7, titulo: "Motores, APU, combustible, hidráulicos y tren de aterrizaje", tituloEn: "Engines, APU, Fuel, Hydraulics and Landing Gear", total: 450 },
+  { num: 8, titulo: "Instrumentos de vuelo y pantallas", tituloEn: "Flight Instruments and Displays", total: 450 },
+  { num: 9, titulo: "Gestión de vuelo, navegación y sistemas de advertencia", tituloEn: "Flight Management, Navigation and Warning Systems", total: 500 },
 ];
 
 export const B737MAX_TOTAL = B737MAX_CHAPTERS.reduce((s, c) => s + c.total, 0);
