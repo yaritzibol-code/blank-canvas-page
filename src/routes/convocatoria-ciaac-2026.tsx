@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { MATERIAS_DEF, SIM_TOTAL_QS } from "@/lib/store/materias";
 import { ICONO_MATERIA } from "@/lib/seo/materias-iconos";
+import { PROXIMO_CIAAC_CORTO, PROXIMO_CIAAC_TEXTO, ciaacYaPaso } from "@/lib/convocatoria";
 import {
   AeroBackdrop,
   Btn,
@@ -26,12 +27,16 @@ import {
  */
 
 const CANONICAL = "https://flightpath.mx/convocatoria-ciaac-2026";
-const PUBLICADO = "2026-08-06";
-/** Actualízala junto con PROXIMO_CIAAC de la portada en cada periodo. */
-const FECHA_EXAMEN = "2026-08-17";
-const FECHA_EXAMEN_TEXTO = "17 de agosto de 2026";
+const PUBLICADO = "2026-08-09";
+/** La fecha vive en src/lib/convocatoria.ts (fuente única con la portada). */
+const FECHA_EXAMEN_TEXTO = PROXIMO_CIAAC_TEXTO;
 
-const RESPUESTA_CORTA = `La próxima aplicación del examen CIAAC registrada en FlightPath es el ${FECHA_EXAMEN_TEXTO}. Las convocatorias, requisitos y trámites oficiales los publica la AFAC a través de sus canales y del CIAAC — verifícalos ahí antes de planear. Lo que sí depende de ti desde hoy: llegar con las 12 materias dominadas.`;
+/** Respuesta rápida según el momento: antes o después de la aplicación. */
+function respuestaCorta(pasada: boolean): string {
+  return pasada
+    ? `La aplicación del examen CIAAC del ${FECHA_EXAMEN_TEXTO} ya se realizó. La siguiente fecha la publica la AFAC a través de sus canales oficiales y del CIAAC — en cuanto se registre, aparecerá aquí. Si vas al siguiente periodo, esta es la mejor semana para empezar: los que aprueban llegan con 8–10 semanas de preparación medida.`
+    : `La próxima aplicación del examen CIAAC registrada en FlightPath es el ${FECHA_EXAMEN_TEXTO}. Las convocatorias, requisitos y trámites oficiales los publica la AFAC a través de sus canales y del CIAAC — verifícalos ahí antes de planear. Lo que sí depende de ti desde hoy: llegar con las 12 materias dominadas.`;
+}
 
 const CHECKLIST: { titulo: string; detalle: string }[] = [
   {
@@ -55,10 +60,13 @@ const CHECKLIST: { titulo: string; detalle: string }[] = [
   },
 ];
 
-const FAQS: { q: string; a: string }[] = [
+function buildFaqs(pasada: boolean): { q: string; a: string }[] {
+  return [
   {
     q: "¿Cuándo es el examen CIAAC 2026?",
-    a: `La fecha registrada en FlightPath para la próxima aplicación es el ${FECHA_EXAMEN_TEXTO}. La confirmación oficial de fechas y sedes corresponde a la AFAC y al CIAAC; consúltala en sus canales al hacer tu trámite.`,
+    a: pasada
+      ? `La aplicación registrada del ${FECHA_EXAMEN_TEXTO} ya se realizó. La siguiente fecha la publican la AFAC y el CIAAC en sus canales oficiales; en cuanto se registre se actualizará esta página. Mientras tanto, la preparación del siguiente periodo empieza hoy.`
+      : `La fecha registrada en FlightPath para la próxima aplicación es el ${FECHA_EXAMEN_TEXTO}. La confirmación oficial de fechas y sedes corresponde a la AFAC y al CIAAC; consúltala en sus canales al hacer tu trámite.`,
   },
   {
     q: "¿Cómo me registro para el examen?",
@@ -72,11 +80,16 @@ const FAQS: { q: string; a: string }[] = [
     q: "¿Qué pasa si no llego preparado a esta fecha?",
     a: "Presentar sin estar listo cuesta tiempo y trámites. Si tus simulacros están lejos del 80%, suele ser mejor apuntar al siguiente periodo con un plan serio — la calculadora te dice qué ritmo exigiría cada escenario.",
   },
-];
+  ];
+}
 
 export const Route = createFileRoute("/convocatoria-ciaac-2026")({
   component: ConvocatoriaCiaac2026Page,
-  head: () => ({
+  head: () => {
+    const pasada = ciaacYaPaso();
+    const RESPUESTA_CORTA = respuestaCorta(pasada);
+    const FAQS = buildFaqs(pasada);
+    return {
     meta: [
       {
         title:
@@ -84,7 +97,7 @@ export const Route = createFileRoute("/convocatoria-ciaac-2026")({
       },
       {
         name: "description",
-        content: `Próxima aplicación del examen CIAAC registrada: ${FECHA_EXAMEN_TEXTO}. Dónde verificar la convocatoria oficial (AFAC), cuántas horas de estudio necesitas y el plan por materia para llegar al 80%.`,
+        content: RESPUESTA_CORTA,
       },
       {
         name: "keywords",
@@ -153,10 +166,14 @@ export const Route = createFileRoute("/convocatoria-ciaac-2026")({
         }),
       },
     ],
-  }),
+    };
+  },
 });
 
 function ConvocatoriaCiaac2026Page() {
+  const pasada = ciaacYaPaso();
+  const RESPUESTA_CORTA = respuestaCorta(pasada);
+  const FAQS = buildFaqs(pasada);
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
     return () => {
@@ -208,14 +225,18 @@ function ConvocatoriaCiaac2026Page() {
             </div>
             <div className="mt-5 flex items-center gap-5 rounded-2xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card px-6 py-5">
               <div className="font-display text-[34px] lg:text-[40px] leading-none text-coral-600 shrink-0">
-                {FECHA_EXAMEN.split("-")[2]} ago
+                {pasada ? "—" : PROXIMO_CIAAC_CORTO}
               </div>
               <div>
                 <div className="text-[14.5px] font-semibold text-ink/80 leading-snug">
-                  Próxima aplicación registrada en FlightPath ({FECHA_EXAMEN_TEXTO})
+                  {pasada
+                    ? `La aplicación del ${FECHA_EXAMEN_TEXTO} ya pasó — siguiente fecha por anunciar`
+                    : `Próxima aplicación registrada en FlightPath (${FECHA_EXAMEN_TEXTO})`}
                 </div>
                 <div className="text-[12px] text-ink/45 mt-0.5">
-                  Verifícala con la AFAC/CIAAC · La cuenta regresiva vive en la portada
+                  {pasada
+                    ? "La AFAC/CIAAC publica los periodos en sus canales oficiales · Empieza a preparar el siguiente hoy"
+                    : "Verifícala con la AFAC/CIAAC · La cuenta regresiva vive en la portada"}
                 </div>
               </div>
             </div>

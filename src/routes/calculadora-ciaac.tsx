@@ -12,9 +12,9 @@ import {
   PathyBubble,
   PlaneField,
   SectionHead,
-  PROXIMO_CIAAC,
   type IconName,
 } from "./index";
+import { PROXIMO_CIAAC } from "@/lib/convocatoria";
 
 /**
  * Calculadora pública de horas de estudio para el CIAAC — el asset linkeable
@@ -158,8 +158,13 @@ function Calculadora() {
   }, []);
 
   const defaultFecha = useMemo(() => {
+    // Si la aplicación registrada ya pasó, propone un horizonte sano de 8
+    // semanas en lugar de una fecha caduca.
     const conv = new Date(PROXIMO_CIAAC);
-    return isoDia(conv);
+    if (conv.getTime() > Date.now()) return isoDia(conv);
+    const f = new Date();
+    f.setDate(f.getDate() + 56);
+    return isoDia(f);
   }, []);
 
   const [fecha, setFecha] = useState<string>(defaultFecha);

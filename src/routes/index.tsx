@@ -25,7 +25,8 @@ const BUY_HREF = `/register?next=${encodeURIComponent("/dashboard/planes?checkou
  * de la portada se oculta sola cuando esta fecha ya pasó. (Exportada: la
  * calculadora de /calculadora-ciaac la usa como fecha por defecto.)
  */
-export const PROXIMO_CIAAC = "2026-08-17T08:00:00-06:00";
+export { PROXIMO_CIAAC } from "@/lib/convocatoria";
+import { PROXIMO_CIAAC } from "@/lib/convocatoria";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
