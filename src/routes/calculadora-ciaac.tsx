@@ -12,9 +12,9 @@ import {
   PathyBubble,
   PlaneField,
   SectionHead,
-  PROXIMO_CIAAC,
   type IconName,
-} from "./index";
+} from "@/components/landing/shared";
+import { PROXIMO_CIAAC } from "@/lib/convocatoria";
 
 /**
  * Calculadora pública de horas de estudio para el CIAAC — el asset linkeable
@@ -158,8 +158,13 @@ function Calculadora() {
   }, []);
 
   const defaultFecha = useMemo(() => {
+    // Si la aplicación registrada ya pasó, propone un horizonte sano de 8
+    // semanas en lugar de una fecha caduca.
     const conv = new Date(PROXIMO_CIAAC);
-    return isoDia(conv);
+    if (conv.getTime() > Date.now()) return isoDia(conv);
+    const f = new Date();
+    f.setDate(f.getDate() + 56);
+    return isoDia(f);
   }, []);
 
   const [fecha, setFecha] = useState<string>(defaultFecha);
@@ -449,7 +454,7 @@ function Faqs() {
               className="group rounded-2xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card px-6 py-5"
             >
               <summary className="cursor-pointer list-none flex items-start justify-between gap-4 text-[15.5px] font-semibold text-ink">
-                {f.q}
+                <h3 style={{ margin: 0, font: "inherit" }}>{f.q}</h3>
                 <span className="text-coral-600 shrink-0 transition-transform group-open:rotate-180">
                   <Icon n="chevD" className="w-4 h-4" />
                 </span>

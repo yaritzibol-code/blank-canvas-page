@@ -15,7 +15,7 @@ import {
   PlaneField,
   SectionHead,
   type IconName,
-} from "./index";
+} from "@/components/landing/shared";
 
 /**
  * Landing AEO/GEO para "estudiar 737 MAX" y sus long-tail ("preguntas 737
@@ -277,9 +277,17 @@ function Estudiar737MaxPage() {
               </div>
             </div>
             <p className="mt-4 text-[13px] text-ink/45">
-              Transparencia: esta guía la publica FlightPath, que no está afiliada a Boeing ni a
-              ninguna aerolínea. Los reactivos son propios y la documentación oficial de tu operador
-              es siempre la fuente normativa.
+              Transparencia: esta guía la publica FlightPath, que no está afiliada a{" "}
+              <a
+                href="https://www.boeing.com/commercial/737max"
+                target="_blank"
+                rel="noreferrer"
+                className="underline hover:text-ink"
+              >
+                Boeing
+              </a>{" "}
+              ni a ninguna aerolínea. Los reactivos son propios y la documentación oficial de tu
+              operador es siempre la fuente normativa.
             </p>
           </div>
         </section>
@@ -443,7 +451,7 @@ function Estudiar737MaxPage() {
                   className="group rounded-2xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card px-6 py-5"
                 >
                   <summary className="cursor-pointer list-none flex items-start justify-between gap-4 text-[15.5px] font-semibold text-ink">
-                    {f.q}
+                    <h3 style={{ margin: 0, font: "inherit" }}>{f.q}</h3>
                     <span className="text-coral-600 shrink-0 transition-transform group-open:rotate-180">
                       <Icon n="chevD" className="w-4 h-4" />
                     </span>

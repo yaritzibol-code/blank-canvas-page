@@ -21,7 +21,13 @@ export {
 export * from "./yaris";
 export * from "./rtari";
 export * from "./compass";
-export { ensureSeeded, DEMO_STUDENT_ID, DEMO_ADMIN_ID, DEMO_BASIC_ID, DEMO_PASSWORD } from "./seed";
+export {
+  ensureSeededAsync,
+  DEMO_STUDENT_ID,
+  DEMO_ADMIN_ID,
+  DEMO_BASIC_ID,
+  DEMO_PASSWORD,
+} from "./seed-meta";
 export { uid, nowISO, todayKey, subscribe as subscribeStore } from "./db";
 export { cloudEnabled } from "./cloud";
 export { cloudSessionActive, refreshCloudData, lastCloudRefresh, flushCloudWrites } from "./sync";

@@ -25,16 +25,50 @@ const BUY_HREF = `/register?next=${encodeURIComponent("/dashboard/planes?checkou
  * de la portada se oculta sola cuando esta fecha ya pasó. (Exportada: la
  * calculadora de /calculadora-ciaac la usa como fecha por defecto.)
  */
-export const PROXIMO_CIAAC = "2026-08-17T08:00:00-06:00";
+export { PROXIMO_CIAAC } from "@/lib/convocatoria";
+import { PROXIMO_CIAAC } from "@/lib/convocatoria";
+
+/*
+ * El sistema de diseño público (Nav, Footer, Icon, Btn…) vive en
+ * components/landing/shared: así las landings SEO no cargan el chunk de la
+ * portada. Se re-exporta todo por compatibilidad con imports antiguos.
+ */
+export * from "@/components/landing/shared";
+import {
+  AeroBackdrop,
+  Btn,
+  Coord,
+  Eyebrow,
+  Footer,
+  Icon,
+  Logo,
+  Nav,
+  PathyBubble,
+  Pill,
+  PlaneField,
+  SectionHead,
+  type IconName,
+} from "@/components/landing/shared";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
   head: () => ({
     meta: [
-      { title: "FlightPath — Prepárate para una línea aérea y vuela." },
-      { name: "description", content: "Prepárate para el examen CIAAC y la convocatoria de línea aérea: banco propio de 2,800+ preguntas con explicación, simulador de 310 preguntas, las 12 materias y tutor IA 24/7. Empieza gratis." },
-      { property: "og:title", content: "FlightPath — Prepárate para una línea aérea y vuela." },
-      { property: "og:description", content: "Banco propio de 2,800+ preguntas con explicación, simulador de 310 preguntas, las 12 materias del CIAAC y tutor IA 24/7. Empieza gratis." },
+      { title: "FlightPath — Estudia aviación en México: CIAAC, línea aérea e inglés" },
+      {
+        name: "description",
+        content:
+          "La plataforma de México para estudiar aviación: banco CIAAC de 2,800+ preguntas con explicación, simulador de 310, entrevista RTARI en inglés por voz, aptitudes tipo COMPASS y manuales de aeronave. Empieza gratis.",
+      },
+      {
+        property: "og:title",
+        content: "FlightPath — Estudia aviación en México: CIAAC, línea aérea e inglés",
+      },
+      {
+        property: "og:description",
+        content:
+          "Banco CIAAC de 2,800+ preguntas con explicación, simulador de 310, inglés RTARI por voz, aptitudes tipo COMPASS y manuales. Empieza gratis.",
+      },
       { property: "og:url", content: "https://flightpath.mx/" },
       { property: "og:type", content: "website" },
     ],
@@ -45,402 +79,24 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-/* ═══════════════════════════════════════════════════════════════════
-   SHARED PRIMITIVES  (ported from landing/shared.jsx)
-   ═══════════════════════════════════════════════════════════════════ */
-
-export type IconName =
-  | "arrow" | "arrowUp" | "play" | "check" | "spark" | "compass" | "target"
-  | "book" | "cards" | "sim" | "chat" | "audio" | "bolt" | "clock" | "flame"
-  | "chart" | "shield" | "plane" | "radio" | "grid" | "cal" | "doc" | "user"
-  | "bell" | "chevD" | "chevR" | "menu" | "close" | "moon" | "waypoint"
-  | "alarm" | "brain" | "heart" | "library";
-
-export function Icon({ n, className = "w-5 h-5", sw = 1.6 }: { n: IconName; className?: string; sw?: number }) {
-  const p = { fill: "none", stroke: "currentColor", strokeWidth: sw, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
-  const g: Record<IconName, ReactNode> = {
-    arrow: <path d="M5 12h14M13 6l6 6-6 6" {...p} />,
-    arrowUp: <path d="M7 17 17 7M9 7h8v8" {...p} />,
-    play: <path d="M8 5v14l11-7L8 5z" fill="currentColor" stroke="none" />,
-    check: <path d="M5 12l4 4 10-10" {...p} />,
-    spark: <path d="M12 3l1.6 5.8L19 11l-5.4 1.6L12 19l-1.6-6.4L5 11l5.4-2.2L12 3z" {...p} />,
-    compass: <><circle cx="12" cy="12" r="9" {...p} /><path d="M15 9l-2.2 6L9 16l2-6 4-1z" {...p} /></>,
-    target: <><circle cx="12" cy="12" r="8" {...p} /><circle cx="12" cy="12" r="3.4" {...p} /></>,
-    book: <path d="M5 5a2 2 0 0 1 2-2h11v15H7a2 2 0 0 0-2 2V5zM7 18h11" {...p} />,
-    cards: <><rect x="4" y="7" width="13" height="13" rx="2.5" {...p} /><path d="M8 7V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-2" {...p} /></>,
-    sim: <><rect x="3" y="4" width="18" height="13" rx="2" {...p} /><path d="M8 21h8M12 17v4" {...p} /></>,
-    chat: <path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-4l-4 4v-4H6a2 2 0 0 1-2-2V6z" {...p} />,
-    audio: <path d="M3 10v4a1 1 0 0 0 1 1h3l4 4V5L7 9H4a1 1 0 0 0-1 1zM16 8a5 5 0 0 1 0 8" {...p} />,
-    bolt: <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" {...p} />,
-    clock: <><circle cx="12" cy="12" r="9" {...p} /><path d="M12 7v5l3.5 2" {...p} /></>,
-    flame: <path d="M12 3s4.5 4 4.5 8.5A4.5 4.5 0 1 1 7.5 11.5c0-2 1-3 2-4-1 4 2.5 4 2.5 7.5 0-3.5 4-3.5 4-7.5 0-3.5-4-4-4-4z" {...p} />,
-    chart: <path d="M4 19V5M4 19h16M8 16v-4M12 16V9M16 16v-2" {...p} />,
-    shield: <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z" {...p} />,
-    plane: <path d="M3.5 13l17-7.5L14 21l-2.5-7L3.5 13z" {...p} />,
-    radio: <><circle cx="12" cy="12" r="2.4" {...p} /><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7M6 6a8.5 8.5 0 0 0 0 12M18 6a8.5 8.5 0 0 1 0 12" {...p} /></>,
-    grid: <><rect x="4" y="4" width="7" height="7" rx="1.4" {...p} /><rect x="13" y="4" width="7" height="7" rx="1.4" {...p} /><rect x="4" y="13" width="7" height="7" rx="1.4" {...p} /><rect x="13" y="13" width="7" height="7" rx="1.4" {...p} /></>,
-    cal: <><rect x="4" y="5" width="16" height="16" rx="2.5" {...p} /><path d="M4 9h16M8 3v4M16 3v4" {...p} /></>,
-    doc: <path d="M7 3h7l5 5v13H7zM14 3v5h5" {...p} />,
-    user: <><circle cx="12" cy="8" r="4" {...p} /><path d="M4.5 20a7.5 7.5 0 0 1 15 0" {...p} /></>,
-    bell: <path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6M10 20a2 2 0 0 0 4 0" {...p} />,
-    chevD: <path d="M6 9l6 6 6-6" {...p} />,
-    chevR: <path d="M9 6l6 6-6 6" {...p} />,
-    menu: <path d="M4 7h16M4 12h16M4 17h16" {...p} />,
-    close: <path d="M6 6l12 12M18 6L6 18" {...p} />,
-    moon: <path d="M20 14a8 8 0 1 1-9-9 6 6 0 0 0 9 9z" {...p} />,
-    waypoint: <><circle cx="12" cy="12" r="3" {...p} /><path d="M12 2v3M12 19v3M2 12h3M19 12h3" {...p} /></>,
-    alarm: <><circle cx="12" cy="13" r="8" {...p} /><path d="M12 9v4l2.5 2M5 3L2.5 6M19 3l2.5 3M9 21h6" {...p} /></>,
-    brain: <path d="M9 4a3 3 0 0 0-3 3 3 3 0 0 0-1 5 3 3 0 0 0 2 4 3 3 0 0 0 5 1V4.5A2.5 2.5 0 0 0 9 4zM15 4a3 3 0 0 1 3 3 3 3 0 0 1 1 5 3 3 0 0 1-2 4 3 3 0 0 1-5 1" {...p} />,
-    heart: <path d="M12 20s-7-4.3-9.3-8.2C1.2 9 2.3 5.5 5.5 5.1c2-.2 3.4 1 4.5 2.4 1.1-1.4 2.5-2.6 4.5-2.4 3.2.4 4.3 3.9 2.8 6.7C19 15.7 12 20 12 20z" {...p} />,
-    library: <path d="M5 4v16M9 4v16M14 6l5 14M5 4h4M14 6l4-1" {...p} />,
-  };
-  return <svg viewBox="0 0 24 24" className={className} aria-hidden="true">{g[n]}</svg>;
-}
-
-export function FMark({ size = 30, light = false }: { size?: number; light?: boolean }) {
-  return (
-    <span className="inline-flex items-center justify-center rounded-xl shrink-0" style={{ width: size, height: size, background: light ? "rgba(255,255,255,0.1)" : "#3D5D91" }}>
-      <svg viewBox="0 0 24 24" width={size * 0.62} height={size * 0.62} aria-hidden="true">
-        <path d="M7 21V5h10" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M7 12.5h7" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" />
-        <path d="M15.5 4.5l3.5 1-1 3.5" fill="none" stroke="#F2AEBC" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </span>
-  );
-}
-
-export function Logo({ light = false, size = 30 }: { light?: boolean; size?: number }) {
-  return (
-    <Link to="/" aria-label="FlightPath — ir al inicio" className="flex items-center gap-2.5 transition-opacity hover:opacity-80">
-      <img
-        src="/assets/flightpath-logo.png"
-        alt="Logo de FlightPath"
-        width={size}
-        height={size}
-        style={{ width: size, height: size }}
-        className="rounded-[8px] object-cover shrink-0"
-      />
-      <span className={`font-display text-[17px] sm:text-[19px] tracking-tight ${light ? "text-white" : "text-ink"}`}>
-        Flight<span className="text-coral-600">Path</span>
-      </span>
-    </Link>
-  );
-}
-
-type BtnKind = "primary" | "navy" | "light" | "ghost" | "ghostLight" | "soft" | "outlineLight";
-export function Btn({
-  children, kind = "primary", size = "md", icon, iconLeft, className = "", href, to, search, onClick,
+function PlaneGlyph({
+  className = "w-5 h-5",
+  style,
+  fill = "currentColor",
 }: {
-  children: ReactNode; kind?: BtnKind; size?: "sm" | "md" | "lg";
-  icon?: IconName; iconLeft?: IconName; className?: string;
-  href?: string; to?: string; search?: Record<string, unknown>; onClick?: () => void;
+  className?: string;
+  style?: CSSProperties;
+  fill?: string;
 }) {
-  const base = "inline-flex items-center justify-center gap-2 font-semibold rounded-full transition-all duration-200 whitespace-nowrap";
-  const sizes = { sm: "h-9 px-4 text-[13px]", md: "h-11 px-5 text-[14px]", lg: "h-[52px] px-7 text-[15px]" };
-  const kinds: Record<BtnKind, string> = {
-    primary: "bg-coral-600 text-white hover:bg-coral-700 shadow-coral hover:-translate-y-0.5",
-    navy: "bg-ink text-white hover:bg-ink-800 shadow-navy hover:-translate-y-0.5",
-    light: "bg-white text-ink border border-ink/10 hover:border-ink/25 hover:shadow-card",
-    ghost: "text-ink/70 hover:text-ink hover:bg-ink/5",
-    ghostLight: "text-white/80 hover:text-white hover:bg-white/10",
-    soft: "bg-coral-50 text-coral-700 hover:bg-coral-100",
-    outlineLight: "border border-white/25 text-white hover:bg-white hover:text-ink",
-  };
-  const cls = `${base} ${sizes[size]} ${kinds[kind]} ${className}`;
-  const inner = <>{iconLeft && <Icon n={iconLeft} className="w-[18px] h-[18px]" />}{children}{icon && <Icon n={icon} className="w-[18px] h-[18px]" />}</>;
-  // Navegación interna con el router (sin recarga completa): así el salto de
-  // /precios al checkout de Stripe es continuo.
-  if (to) return <Link to={to} search={search as never} className={cls} onClick={onClick}>{inner}</Link>;
-  if (href) return <a href={href} className={cls} onClick={onClick}>{inner}</a>;
-
-  return <button onClick={onClick} className={cls}>{inner}</button>;
-}
-
-export function Eyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {
-  return (
-    <span className={`inline-flex items-center gap-2.5 text-[11px] uppercase tracking-[0.22em] font-bold ${light ? "text-white/55" : "text-haze-500"}`}>
-      <span className="w-5 h-px bg-coral-600" />
-      {children}
-    </span>
-  );
-}
-
-export function Pill({ children, tone = "ink" }: { children: ReactNode; tone?: "ink" | "coral" | "light" | "live" }) {
-  const tones = {
-    ink: "border-ink/10 text-ink/65 bg-white/70",
-    coral: "border-coral-300/50 text-coral-700 bg-coral-50",
-    light: "border-white/15 text-white/75 bg-white/5",
-    live: "border-coral-300/50 text-coral-700 bg-coral-50",
-  };
-  return <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-semibold ${tones[tone]}`}>{children}</span>;
-}
-
-export function Coord({ children, light = false }: { children: ReactNode; light?: boolean }) {
-  return <span className={`font-mono text-[10px] tracking-wide ${light ? "text-white/40" : "text-haze-400"}`}>{children}</span>;
-}
-
-function PlaneGlyph({ className = "w-5 h-5", style, fill = "currentColor" }: { className?: string; style?: CSSProperties; fill?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={className} style={style} aria-hidden="true">
-      <path fill={fill} d="M21.5 15.5v-1.6l-7.8-4.9V3.6c0-.95-.77-1.7-1.7-1.7s-1.7.75-1.7 1.7v5.4l-7.8 4.9v1.6l7.8-2.45V18.4l-2.1 1.55v1.45L12 20.3l3.5 1.1v-1.45L13.4 18.4v-4.95l8.1 2.05z" />
+      <path
+        fill={fill}
+        d="M21.5 15.5v-1.6l-7.8-4.9V3.6c0-.95-.77-1.7-1.7-1.7s-1.7.75-1.7 1.7v5.4l-7.8 4.9v1.6l7.8-2.45V18.4l-2.1 1.55v1.45L12 20.3l3.5 1.1v-1.45L13.4 18.4v-4.95l8.1 2.05z"
+      />
     </svg>
   );
 }
-
-export function PathyBubble({ size = 220, glow = true, className = "" }: { size?: number; float?: boolean; glow?: boolean; className?: string }) {
-  const [anim, setAnim] = useState<"" | "is-jumping" | "is-wiggling">("");
-  const nextRef = useRef<"is-jumping" | "is-wiggling">("is-jumping");
-
-  const play = useCallback((kind?: "is-jumping" | "is-wiggling") => {
-    setAnim((cur) => {
-      if (cur) return cur;
-      const k = kind ?? nextRef.current;
-      nextRef.current = k === "is-jumping" ? "is-wiggling" : "is-jumping";
-      return k;
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!anim) return;
-    const t = setTimeout(() => setAnim(""), anim === "is-jumping" ? 950 : 1200);
-    return () => clearTimeout(t);
-  }, [anim]);
-
-  useEffect(() => {
-    const id = setInterval(() => play(), 5000);
-    return () => clearInterval(id);
-  }, [play]);
-
-  return (
-    <div
-      className={`fp-mascot ${anim} ${className}`}
-      style={{ width: size, height: size * 1.02, ["--fp-size" as string]: `${size}px` }}
-      onClick={() => play()}
-      role="img"
-      aria-label="Pathy, tu copiloto de estudio"
-    >
-      {glow && (
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(closest-side, rgba(242,174,188,0.30), transparent 70%)", transform: "scale(1.2)", filter: "blur(10px)" }}
-        />
-      )}
-      <div className="fp-shadow" />
-      <div className="fp-jump">
-        <div className="fp-squash">
-          <img
-            className="fp-img"
-            src="/assets/pathy-cloud.png"
-            alt=""
-            draggable={false}
-            width={size}
-            height={size}
-            fetchPriority="high"
-            decoding="async"
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-
-export function SectionHead({
-  eyebrow, title, sub, light = false, center = false, max = "max-w-2xl",
-}: { eyebrow: ReactNode; title: ReactNode; sub?: ReactNode; light?: boolean; center?: boolean; max?: string }) {
-  return (
-    <div className={`${center ? "text-center mx-auto" : ""} ${max}`}>
-      <Eyebrow light={light}>{eyebrow}</Eyebrow>
-      <h2 className={`font-display mt-5 text-4xl lg:text-[52px] leading-[1.02] tracking-tight ${light ? "text-white" : "text-ink"}`}>{title}</h2>
-      {sub && <p className={`mt-5 text-[17px] leading-relaxed ${light ? "text-white/65" : "text-ink/55"} ${center ? "mx-auto" : ""} max-w-xl`}>{sub}</p>}
-    </div>
-  );
-}
-
-export function AeroBackdrop({ theme = "hueso" }: { theme?: "hueso" | "cherry" | "azul" }) {
-  return <div className={`cloudscape cs-${theme} fixed inset-0 -z-10 overflow-hidden pointer-events-none`} aria-hidden="true" />;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   PLANES ENGINE — vive en @/components/shared/PlaneField
-   La landing y el dashboard comparten motor y tinta: en tema oscuro los
-   aviones se pintan en blanco en vez de desaparecer sobre el fondo profundo.
-   ═══════════════════════════════════════════════════════════════════ */
-
-export function PlaneField({ count = 20, color = "26,35,64" }: { count?: number; color?: string }) {
-  return (
-    <SharedPlaneField
-      count={count}
-      color={color}
-      className="absolute inset-0 w-full h-full pointer-events-none"
-      style={{ zIndex: -1 }}
-    />
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   NAV  (landing/sections-top.jsx)
-   ═══════════════════════════════════════════════════════════════════ */
-
-const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "CIAAC", href: "/ciaac" },
-  // La convocatoria E190 vive dentro de la ruta de línea aérea.
-  { label: "Línea Aérea", href: "/convocatoria-aeromexico" },
-  { label: "Precios", href: "/precios" },
-  { label: "Blog", href: "/blog" },
-];
-
-/** Secciones de la home: en móvil el menú también sirve para saltar a ellas. */
-const HOME_SECTIONS: { label: string; hash: string }[] = [
-  { label: "Cómo funciona", hash: "#como-funciona" },
-  { label: "Funciones", hash: "#funciones" },
-  { label: "Yaris, tu tutora IA", hash: "#yaris" },
-  { label: "Simulador", hash: "#simulador" },
-  { label: "Precios", hash: "#precios" },
-  { label: "Historias", hash: "#historias" },
-];
-
-export function Nav() {
-  const sesion = Boolean(useSessionUser());
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
-  useEffect(() => {
-    const f = () => setScrolled(window.scrollY > 12);
-    f(); window.addEventListener("scroll", f, { passive: true });
-    return () => window.removeEventListener("scroll", f);
-  }, []);
-  // El menú abierto bloquea el scroll de fondo en móvil.
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
-  }, [open]);
-  return (
-    <header className={`sticky top-0 z-40 transition-all duration-300 ${scrolled || open ? "glass border-b border-ink/8" : "bg-transparent"}`}>
-      <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8 h-[64px] sm:h-[68px] grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
-        <div className="min-w-0 flex items-center gap-6 lg:gap-8">
-          <Logo />
-          <nav className="hidden lg:flex items-center gap-8 text-[14px] font-medium text-ink/65">
-            {NAV_LINKS.map((x) => (
-              <a key={x.label} href={x.href} className="hover:text-ink transition-colors">{x.label}</a>
-            ))}
-          </nav>
-        </div>
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          {/* Con sesión activa la home no redirige: sólo ofrece el atajo. */}
-          {mounted && sesion ? (
-            <Btn kind="primary" size="sm" icon="arrow" to="/dashboard">
-              <span className="hidden sm:inline">Ir a mi dashboard</span>
-              <span className="sm:hidden">Dashboard</span>
-            </Btn>
-          ) : (
-            <>
-              <div className="hidden md:block">
-                <Btn kind="ghost" size="sm" to="/login">Iniciar sesión</Btn>
-              </div>
-              <Btn kind="primary" size="sm" icon="arrow" to="/register">
-                <span className="hidden sm:inline">Comenzar gratis</span>
-                <span className="sm:hidden">Empezar</span>
-              </Btn>
-            </>
-          )}
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? "Cerrar menú" : "Abrir menú de navegación"}
-            aria-expanded={open}
-            aria-controls="nav-mobile"
-            className="lg:hidden h-11 -mr-1 px-2.5 sm:px-3 inline-flex items-center gap-2 rounded-xl border border-ink/15 bg-white text-ink shadow-sm"
-          >
-            <span className="relative block w-[18px] h-[12px]" aria-hidden="true">
-              <span className={`absolute left-0 w-full h-[2px] rounded bg-current transition-all duration-200 ${open ? "top-[5px] rotate-45" : "top-0"}`} />
-              <span className={`absolute left-0 top-[5px] w-full h-[2px] rounded bg-current transition-all duration-200 ${open ? "opacity-0" : "opacity-100"}`} />
-              <span className={`absolute left-0 w-full h-[2px] rounded bg-current transition-all duration-200 ${open ? "top-[5px] -rotate-45" : "top-[10px]"}`} />
-            </span>
-            <span className="hidden xs:inline text-[13px] font-semibold">{open ? "Cerrar" : "Menú"}</span>
-          </button>
-        </div>
-      </div>
-      {open && mounted && createPortal(
-        <div
-          id="nav-mobile"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Menú de navegación"
-          className="lg:hidden fixed inset-0 z-[120] overflow-y-auto overscroll-contain bg-[#FAF8F4]"
-        >
-          <div className="sticky top-0 z-10 flex items-center justify-between gap-3 bg-[#FAF8F4] border-b border-ink/8 px-4 sm:px-6 h-[64px]">
-            <span className="font-display text-[17px] font-bold text-ink">FlightPath</span>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              aria-label="Cerrar menú"
-              className="h-11 px-3.5 inline-flex items-center gap-2 rounded-xl border border-ink/15 bg-white text-ink text-[13px] font-semibold shadow-sm"
-            >
-              <span aria-hidden="true" className="text-[17px] leading-none">×</span> Cerrar
-            </button>
-          </div>
-          <nav className="mx-auto max-w-[1240px] px-4 sm:px-6 py-4 flex flex-col">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-ink/40 mb-1">Páginas</p>
-            {NAV_LINKS.map((x) => (
-              <a
-                key={x.label}
-                href={x.href}
-                onClick={() => setOpen(false)}
-                className="min-h-[52px] py-3.5 flex items-center justify-between text-[15px] font-semibold text-ink/85 border-b border-ink/5"
-              >
-                {x.label}
-                <span aria-hidden="true" className="text-ink/30">›</span>
-              </a>
-            ))}
-
-            <p className="text-[11px] font-bold uppercase tracking-wider text-ink/40 mt-5 mb-1">
-              En esta página
-            </p>
-            {HOME_SECTIONS.map((s) => (
-              <a
-                key={s.hash}
-                href={`/${s.hash}`}
-                onClick={() => setOpen(false)}
-                className="min-h-[48px] py-3 flex items-center justify-between text-[14.5px] font-medium text-ink/70 border-b border-ink/5"
-              >
-                {s.label}
-                <span aria-hidden="true" className="text-ink/30">↓</span>
-              </a>
-            ))}
-
-            <div className="mt-6 flex flex-col gap-2.5 pb-[max(2rem,env(safe-area-inset-bottom))]">
-              <a
-                href={sesion ? "/dashboard" : "/register"}
-                onClick={() => setOpen(false)}
-                className="py-3.5 text-center text-[15px] font-bold text-white rounded-xl shadow-navy"
-                style={{ background: "#6C0820" }}
-              >
-                {sesion ? "Ir a mi dashboard" : "Comenzar gratis"}
-              </a>
-              {!sesion && (
-                <a
-                  href="/login"
-                  onClick={() => setOpen(false)}
-                  className="py-3.5 text-center text-[15px] font-semibold text-ink rounded-xl border border-ink/12"
-                >
-                  Iniciar sesión
-                </a>
-              )}
-            </div>
-          </nav>
-        </div>,
-        document.body,
-      )}
-
-    </header>
-  );
-}
-
 
 /* ═══════════════════════════════════════════════════════════════════
    HERO
@@ -456,18 +112,27 @@ function Hero() {
           <div className="relative z-10">
             <div className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white/70 backdrop-blur px-3 py-1.5 shadow-card">
               <span className="w-1.5 h-1.5 rounded-full bg-coral-600 animate-pulse-dot" />
-              <span className="text-[12px] font-semibold text-ink/70">Preparación CIAAC · Edición 2026</span>
+              <span className="text-[12px] font-semibold text-ink/70">
+                Preparación CIAAC · Edición 2026
+              </span>
             </div>
             <h1 className="font-display mt-6 text-[44px] sm:text-[58px] lg:text-[66px] leading-[0.98] tracking-tight text-ink">
-              El sistema de estudio<br className="hidden sm:block" /> que se adapta a ti.
+              El sistema de estudio
+              <br className="hidden sm:block" /> que se adapta a ti.
               <span className="block text-coral-600 mt-1">No tú a él.</span>
             </h1>
             <p className="mt-7 text-lg lg:text-xl text-ink/55 max-w-xl leading-relaxed">
-              FlightPath aprende cómo estudias y construye tu ruta hacia el examen. Materias, simulador real y un copiloto inteligente que vuela contigo.
+              FlightPath aprende cómo estudias y construye tu ruta hacia el examen CIAAC y la línea
+              aérea. Las 12 materias, simulador real, inglés y un copiloto inteligente que vuela
+              contigo.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
-              <Btn kind="primary" size="lg" icon="arrow" to="/register">Comenzar gratis</Btn>
-              <Btn kind="light" size="lg" iconLeft="play" href="#como-funciona">Ver cómo funciona</Btn>
+              <Btn kind="primary" size="lg" icon="arrow" to="/register">
+                Comenzar gratis
+              </Btn>
+              <Btn kind="light" size="lg" iconLeft="play" href="#como-funciona">
+                Ver cómo funciona
+              </Btn>
             </div>
           </div>
 
@@ -481,12 +146,35 @@ function Hero() {
               <div className="flex items-center gap-3">
                 <div className="relative w-14 h-14 shrink-0">
                   <svg viewBox="0 0 36 36" className="w-14 h-14 -rotate-90">
-                    <circle cx="18" cy="18" r="15.5" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="3.4" />
-                    <circle cx="18" cy="18" r="15.5" fill="none" stroke="#F2AEBC" strokeWidth="3.4" strokeLinecap="round" strokeDasharray="97.4" strokeDashoffset="31" />
+                    <circle
+                      cx="18"
+                      cy="18"
+                      r="15.5"
+                      fill="none"
+                      stroke="rgba(255,255,255,0.12)"
+                      strokeWidth="3.4"
+                    />
+                    <circle
+                      cx="18"
+                      cy="18"
+                      r="15.5"
+                      fill="none"
+                      stroke="#F2AEBC"
+                      strokeWidth="3.4"
+                      strokeLinecap="round"
+                      strokeDasharray="97.4"
+                      strokeDashoffset="31"
+                    />
                   </svg>
-                  <div className="absolute inset-0 grid place-items-center font-display text-white text-[15px]">68%</div>
+                  <div className="absolute inset-0 grid place-items-center font-display text-white text-[15px]">
+                    68%
+                  </div>
                 </div>
-                <div className="text-white/70 text-[12.5px] leading-snug">Vas por<br /><span className="text-white font-semibold">muy buen camino.</span></div>
+                <div className="text-white/70 text-[12.5px] leading-snug">
+                  Vas por
+                  <br />
+                  <span className="text-white font-semibold">muy buen camino.</span>
+                </div>
               </div>
             </div>
             <HeroPathyCard />
@@ -497,14 +185,18 @@ function Hero() {
       {/* data strip — cifras propias de la plataforma; nunca marcas de terceros (regla de compliance) */}
       <div className="border-y border-ink/8 bg-white/50 backdrop-blur-sm">
         <div className="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8 py-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-          <span className="text-[11px] uppercase tracking-[0.2em] font-bold text-haze-400">FlightPath en números</span>
+          <span className="text-[11px] uppercase tracking-[0.2em] font-bold text-haze-400">
+            FlightPath en números
+          </span>
           {[
             "2,800+ preguntas con explicación",
             `Simulador de ${SIM_TOTAL_QS} preguntas`,
             `${MATERIAS_DEF.length} materias`,
             "Tutor IA 24/7",
           ].map((t) => (
-            <span key={t} className="font-display text-[15px] text-ink/45 tracking-tight">{t}</span>
+            <span key={t} className="font-display text-[15px] text-ink/45 tracking-tight">
+              {t}
+            </span>
           ))}
         </div>
       </div>
@@ -515,11 +207,26 @@ function Hero() {
 /** Tarjeta de Pathy en el héroe: rota mensajes motivacionales, de progreso y recordatorios. */
 function HeroPathyCard() {
   const msgs: ReactNode[] = [
-    <>Hoy toca <span className="text-coral-700 font-semibold">Meteorología</span>. Te preparé una sesión de 15 min — ¿despegamos?</>,
-    <>Llevas <span className="text-coral-700 font-semibold">racha de 14 días</span>. La constancia es lo que te sube al avión. ✦</>,
-    <>Subiste <span className="text-coral-700 font-semibold">8% en Aerodinámica</span> esta semana. ¡Vas increíble!</>,
-    <>Recuerda tu <span className="text-coral-700 font-semibold">simulador del jueves</span> — yo te aviso a tiempo.</>,
-    <>Cada sesión te acerca al <span className="text-coral-700 font-semibold">CIAAC</span>. Un paso a la vez, sin estrés.</>,
+    <>
+      Hoy toca <span className="text-coral-700 font-semibold">Meteorología</span>. Te preparé una
+      sesión de 15 min — ¿despegamos?
+    </>,
+    <>
+      Llevas <span className="text-coral-700 font-semibold">racha de 14 días</span>. La constancia
+      es lo que te sube al avión. ✦
+    </>,
+    <>
+      Subiste <span className="text-coral-700 font-semibold">8% en Aerodinámica</span> esta semana.
+      ¡Vas increíble!
+    </>,
+    <>
+      Recuerda tu <span className="text-coral-700 font-semibold">simulador del jueves</span> — yo te
+      aviso a tiempo.
+    </>,
+    <>
+      Cada sesión te acerca al <span className="text-coral-700 font-semibold">CIAAC</span>. Un paso
+      a la vez, sin estrés.
+    </>,
   ];
   const [i, setI] = useState(0);
   useEffect(() => {
@@ -528,11 +235,21 @@ function HeroPathyCard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="relative w-full max-w-[280px] lg:absolute lg:-bottom-2 lg:right-6 lg:w-[250px] bg-white rounded-2xl p-3.5 shadow-float border border-ink/8 animate-float-y" style={{ animationDelay: "-2s" }}>
+    <div
+      className="relative w-full max-w-[280px] lg:absolute lg:-bottom-2 lg:right-6 lg:w-[250px] bg-white rounded-2xl p-3.5 shadow-float border border-ink/8 animate-float-y"
+      style={{ animationDelay: "-2s" }}
+    >
       <div className="flex items-center gap-2 mb-1.5">
-        <span className="w-6 h-6 rounded-full bg-ink grid place-items-center"><Icon n="spark" className="w-3 h-3 text-coral-400" /></span>
+        <span className="w-6 h-6 rounded-full bg-ink grid place-items-center">
+          <Icon n="spark" className="w-3 h-3 text-coral-400" />
+        </span>
         <span className="text-[12px] font-bold text-ink">Pathy</span>
-        <span className="ml-auto"><Pill tone="coral"><span className="w-1.5 h-1.5 rounded-full bg-coral-600 animate-pulse-dot" />en vivo</Pill></span>
+        <span className="ml-auto">
+          <Pill tone="coral">
+            <span className="w-1.5 h-1.5 rounded-full bg-coral-600 animate-pulse-dot" />
+            en vivo
+          </Pill>
+        </span>
       </div>
       <p key={i} className="text-[12.5px] text-ink/65 leading-snug animate-flip min-h-[48px]">
         {msgs[i]}
@@ -562,9 +279,12 @@ function Countdown({ show = true }: { show?: boolean }) {
         return;
       }
       let diff = Math.max(0, target.current - now);
-      const d = Math.floor(diff / 86400000); diff -= d * 86400000;
-      const h = Math.floor(diff / 3600000); diff -= h * 3600000;
-      const m = Math.floor(diff / 60000); diff -= m * 60000;
+      const d = Math.floor(diff / 86400000);
+      diff -= d * 86400000;
+      const h = Math.floor(diff / 3600000);
+      diff -= h * 3600000;
+      const m = Math.floor(diff / 60000);
+      diff -= m * 60000;
       const s = Math.floor(diff / 1000);
       setT({ d, h, m, s });
       const p = (now - start.current) / (target.current - start.current);
@@ -578,9 +298,17 @@ function Countdown({ show = true }: { show?: boolean }) {
 
   const Digit = ({ d }: { d: number }) => (
     <div className="relative overflow-hidden" style={{ height: "1em", width: "0.62em" }}>
-      <div className="absolute inset-x-0 top-0" style={{ transform: `translateY(${-d * 10}%)`, transition: "transform 0.75s cubic-bezier(.34,1.32,.42,1)" }}>
+      <div
+        className="absolute inset-x-0 top-0"
+        style={{
+          transform: `translateY(${-d * 10}%)`,
+          transition: "transform 0.75s cubic-bezier(.34,1.32,.42,1)",
+        }}
+      >
         {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
-          <div key={n} className="flex items-center justify-center" style={{ height: "1em" }}>{n}</div>
+          <div key={n} className="flex items-center justify-center" style={{ height: "1em" }}>
+            {n}
+          </div>
         ))}
       </div>
     </div>
@@ -589,10 +317,16 @@ function Countdown({ show = true }: { show?: boolean }) {
     const s = String(v).padStart(2, "0");
     return (
       <div className="flex flex-col items-center">
-        <div className="flex font-display text-[34px] lg:text-[40px] leading-none tabular-nums tracking-tight text-burgundy" style={{ height: "1em" }}>
-          <Digit d={+s[0]} /><Digit d={+s[1]} />
+        <div
+          className="flex font-display text-[34px] lg:text-[40px] leading-none tabular-nums tracking-tight text-burgundy"
+          style={{ height: "1em" }}
+        >
+          <Digit d={+s[0]} />
+          <Digit d={+s[1]} />
         </div>
-        <span className="mt-2.5 text-[10px] uppercase tracking-[0.18em] font-bold text-burgundy/55">{l}</span>
+        <span className="mt-2.5 text-[10px] uppercase tracking-[0.18em] font-bold text-burgundy/55">
+          {l}
+        </span>
       </div>
     );
   };
@@ -607,18 +341,29 @@ function Countdown({ show = true }: { show?: boolean }) {
     <section className="relative">
       <div className="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8 mt-10 lg:-mt-12 relative z-20">
         <div className="relative rounded-[28px] border border-burgundy/10 bg-white shadow-lift overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(130% 150% at 100% 0%, rgba(242,220,219,0.6), rgba(255,255,255,0) 55%)" }} />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(130% 150% at 100% 0%, rgba(242,220,219,0.6), rgba(255,255,255,0) 55%)",
+            }}
+          />
           <div className="absolute -top-12 right-[14%] w-72 h-44 rounded-full bg-cherry/50 blur-3xl animate-breathe pointer-events-none" />
 
           <div className="relative px-5 sm:px-6 lg:px-10 py-7 sm:py-8 lg:py-9 grid lg:grid-cols-[280px_1fr] gap-8 lg:gap-12 items-center">
             <div className="lg:border-r border-burgundy/10 lg:pr-10">
               <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-bold text-lapis">
-                <span className="w-1.5 h-1.5 rounded-full bg-burgundy animate-pulse-dot" />CIAAC · Edición 2026
+                <span className="w-1.5 h-1.5 rounded-full bg-burgundy animate-pulse-dot" />
+                CIAAC · Edición 2026
               </div>
               <div className="mt-4 flex items-end gap-3">
-                <div className="font-display text-[76px] lg:text-[92px] leading-[0.82] tracking-tight text-burgundy">{t.d}</div>
+                <div className="font-display text-[76px] lg:text-[92px] leading-[0.82] tracking-tight text-burgundy">
+                  {t.d}
+                </div>
                 <div className="pb-2.5">
-                  <div className="font-display text-2xl lg:text-3xl text-ink leading-none">días</div>
+                  <div className="font-display text-2xl lg:text-3xl text-ink leading-none">
+                    días
+                  </div>
                   <div className="text-[12.5px] text-ink/45 mt-1.5">para tu examen</div>
                 </div>
               </div>
@@ -635,34 +380,78 @@ function Countdown({ show = true }: { show?: boolean }) {
 
             <div>
               <div className="relative h-24 sm:h-20 px-1">
-                <div className="absolute left-0 top-0 text-[10px] uppercase tracking-[0.16em] font-bold text-haze-400">Hoy</div>
+                <div className="absolute left-0 top-0 text-[10px] uppercase tracking-[0.16em] font-bold text-haze-400">
+                  Hoy
+                </div>
                 <div className="absolute right-0 top-0 text-right">
-                  <div className="text-[10px] uppercase tracking-[0.16em] font-bold text-burgundy">CIAAC</div>
+                  <div className="text-[10px] uppercase tracking-[0.16em] font-bold text-burgundy">
+                    CIAAC
+                  </div>
                   <div className="text-[10px] font-mono text-haze-400 mt-0.5">17 ago</div>
                 </div>
-                <div className="absolute top-1/2 left-0 -translate-y-1/2 h-[2px] bg-burgundy rounded-full" style={{ width: `calc(${prog}% - 14px)` }} />
-                <div className="absolute top-1/2 -translate-y-1/2 h-[2px] animate-flow" style={{ left: `calc(${prog}% + 14px)`, right: 0, backgroundImage: "repeating-linear-gradient(to right, rgba(61,93,145,0.45) 0 5px, transparent 5px 14px)" }} />
+                <div
+                  className="absolute top-1/2 left-0 -translate-y-1/2 h-[2px] bg-burgundy rounded-full"
+                  style={{ width: `calc(${prog}% - 14px)` }}
+                />
+                <div
+                  className="absolute top-1/2 -translate-y-1/2 h-[2px] animate-flow"
+                  style={{
+                    left: `calc(${prog}% + 14px)`,
+                    right: 0,
+                    backgroundImage:
+                      "repeating-linear-gradient(to right, rgba(61,93,145,0.45) 0 5px, transparent 5px 14px)",
+                  }}
+                />
                 <div className="absolute top-1/2 left-0 -translate-y-1/2 w-3 h-3 rounded-full bg-white border-2 border-burgundy" />
                 <div className="absolute top-1/2 right-0 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-burgundy ring-4 ring-cherry/40" />
                 {[16, 33, 50, 67, 83].map((pos) => (
-                  <div key={pos} className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
-                       style={{ left: `${pos}%`, background: pos <= prog ? "#6C0820" : "transparent", border: pos <= prog ? "none" : "1.5px solid rgba(61,93,145,0.4)" }} />
+                  <div
+                    key={pos}
+                    className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
+                    style={{
+                      left: `${pos}%`,
+                      background: pos <= prog ? "#6C0820" : "transparent",
+                      border: pos <= prog ? "none" : "1.5px solid rgba(61,93,145,0.4)",
+                    }}
+                  />
                 ))}
-                <div className="absolute top-1/2" style={{ left: `min(${prog}%, calc(100% - 26px))`, transform: "translate(-50%,-50%)", transition: "left 1s linear" }}>
+                <div
+                  className="absolute top-1/2"
+                  style={{
+                    left: `min(${prog}%, calc(100% - 26px))`,
+                    transform: "translate(-50%,-50%)",
+                    transition: "left 1s linear",
+                  }}
+                >
                   <div className="absolute left-1/2 top-1/2 w-9 h-9 -translate-x-1/2 -translate-y-1/2 rounded-full border border-burgundy/55 animate-radar" />
-                  <div className="absolute left-1/2 top-1/2 w-9 h-9 -translate-x-1/2 -translate-y-1/2 rounded-full border border-burgundy/45 animate-radar" style={{ animationDelay: "0.6s" }} />
-                  <div className="absolute left-1/2 top-1/2 w-9 h-9 -translate-x-1/2 -translate-y-1/2 rounded-full border border-burgundy/35 animate-radar" style={{ animationDelay: "1.2s" }} />
+                  <div
+                    className="absolute left-1/2 top-1/2 w-9 h-9 -translate-x-1/2 -translate-y-1/2 rounded-full border border-burgundy/45 animate-radar"
+                    style={{ animationDelay: "0.6s" }}
+                  />
+                  <div
+                    className="absolute left-1/2 top-1/2 w-9 h-9 -translate-x-1/2 -translate-y-1/2 rounded-full border border-burgundy/35 animate-radar"
+                    style={{ animationDelay: "1.2s" }}
+                  />
                   <div className="relative animate-float-y-sm">
                     <div className="absolute inset-0 -m-2 rounded-full bg-burgundy/25 blur-md animate-breathe" />
                     <div className="relative w-10 h-10 rounded-full bg-white shadow-card ring-1 ring-burgundy/10 grid place-items-center">
                       <PlaneGlyph className="w-5 h-5 rotate-90 animate-blink" fill="#6C0820" />
                     </div>
-                    <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-burgundy ring-2 ring-white animate-blink" style={{ animationDelay: "0.3s" }} />
+                    <span
+                      className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-burgundy ring-2 ring-white animate-blink"
+                      style={{ animationDelay: "0.3s" }}
+                    />
                   </div>
                 </div>
               </div>
               <div className="mt-6 flex items-end gap-5 lg:gap-7">
-                <Unit v={t.d} l="Días" /><Sep /><Unit v={t.h} l="Horas" /><Sep /><Unit v={t.m} l="Min" /><Sep /><Unit v={t.s} l="Seg" />
+                <Unit v={t.d} l="Días" />
+                <Sep />
+                <Unit v={t.h} l="Horas" />
+                <Sep />
+                <Unit v={t.m} l="Min" />
+                <Sep />
+                <Unit v={t.s} l="Seg" />
               </div>
             </div>
           </div>
@@ -678,10 +467,62 @@ function Countdown({ show = true }: { show?: boolean }) {
 
 function Showcase() {
   const students = [
-    { name: "Andre", init: "AS", prog: 68, missMin: 45, missDone: 20, subj: "Meteorología", desc: "Formación de nubes y fenómenos", time: "Hoy · 7:00 PM", sim: "Navegación VOR", focus: "Meteorología", streak: 14, acc: 74 },
-    { name: "María", init: "MG", prog: 42, missMin: 60, missDone: 38, subj: "Aerodinámica", desc: "Sustentación y resistencia", time: "Hoy · 9:00 PM", sim: "Aproximación ILS", focus: "Aerodinámica", streak: 8, acc: 81 },
-    { name: "Diego", init: "DR", prog: 85, missMin: 30, missDone: 30, subj: "Navegación", desc: "Cartas y radioayudas", time: "Mañana · 6:00 AM", sim: "Ruta VFR", focus: "Reglamentación", streak: 23, acc: 88 },
-    { name: "Sofía", init: "SP", prog: 57, missMin: 45, missDone: 12, subj: "Reglamentación", desc: "Espacio aéreo y reglas", time: "Hoy · 8:30 PM", sim: "Emergencias", focus: "Sistemas", streak: 5, acc: 69 },
+    {
+      name: "Andre",
+      init: "AS",
+      prog: 68,
+      missMin: 45,
+      missDone: 20,
+      subj: "Meteorología",
+      desc: "Formación de nubes y fenómenos",
+      time: "Hoy · 7:00 PM",
+      sim: "Navegación VOR",
+      focus: "Meteorología",
+      streak: 14,
+      acc: 74,
+    },
+    {
+      name: "María",
+      init: "MG",
+      prog: 42,
+      missMin: 60,
+      missDone: 38,
+      subj: "Aerodinámica",
+      desc: "Sustentación y resistencia",
+      time: "Hoy · 9:00 PM",
+      sim: "Aproximación ILS",
+      focus: "Aerodinámica",
+      streak: 8,
+      acc: 81,
+    },
+    {
+      name: "Diego",
+      init: "DR",
+      prog: 85,
+      missMin: 30,
+      missDone: 30,
+      subj: "Navegación",
+      desc: "Cartas y radioayudas",
+      time: "Mañana · 6:00 AM",
+      sim: "Ruta VFR",
+      focus: "Reglamentación",
+      streak: 23,
+      acc: 88,
+    },
+    {
+      name: "Sofía",
+      init: "SP",
+      prog: 57,
+      missMin: 45,
+      missDone: 12,
+      subj: "Reglamentación",
+      desc: "Espacio aéreo y reglas",
+      time: "Hoy · 8:30 PM",
+      sim: "Emergencias",
+      focus: "Sistemas",
+      streak: 5,
+      acc: 69,
+    },
   ];
   const [si, setSi] = useState(0);
   const [scan, setScan] = useState(false);
@@ -696,55 +537,114 @@ function Showcase() {
   }, []);
   const s = students[si];
   const C = 97.4;
-  const Fade = ({ k, children, className = "" }: { k: ReactNode; children: ReactNode; className?: string }) => (
-    <span key={String(k)} className={`inline-block ${className}`} style={{ animation: "softIn 0.85s ease both" }}>{children}</span>
+  const Fade = ({
+    k,
+    children,
+    className = "",
+  }: {
+    k: ReactNode;
+    children: ReactNode;
+    className?: string;
+  }) => (
+    <span
+      key={String(k)}
+      className={`inline-block ${className}`}
+      style={{ animation: "softIn 0.85s ease both" }}
+    >
+      {children}
+    </span>
   );
 
   return (
     <section className="relative py-16 sm:py-24 lg:py-32" id="como-funciona">
       <PlaneField count={20} />
       <div className="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
-        <SectionHead center eyebrow="Tu cabina de estudio"
-          title={<>Todo lo que necesitas <span className="text-coral-600">para aprobar el CIAAC.</span></>}
-          sub="Un solo lugar para estudiar, practicar, resolver dudas y seguir tu progreso. Sin perder tiempo cambiando entre aplicaciones." />
+        <SectionHead
+          center
+          eyebrow="Tu cabina de estudio"
+          title={
+            <>
+              Todo lo que necesitas <span className="text-coral-600">para aprobar el CIAAC.</span>
+            </>
+          }
+          sub="Un solo lugar para estudiar, practicar, resolver dudas y seguir tu progreso. Sin perder tiempo cambiando entre aplicaciones."
+        />
         <div className="mt-7 flex justify-center">
           <div className="inline-flex max-w-full flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-full border border-burgundy/15 bg-white/70 backdrop-blur px-4 py-2 text-center shadow-card">
-            <span className="relative flex w-2 h-2"><span className="absolute inset-0 rounded-full bg-burgundy animate-ping" /><span className="relative w-2 h-2 rounded-full bg-burgundy" /></span>
-            <span className="text-[12.5px] font-semibold text-ink/70">Análisis personalizado para cada alumno —</span>
-            <Fade k={s.name} className="text-[12.5px] font-bold text-burgundy">{s.name}</Fade>
+            <span className="relative flex w-2 h-2">
+              <span className="absolute inset-0 rounded-full bg-burgundy animate-ping" />
+              <span className="relative w-2 h-2 rounded-full bg-burgundy" />
+            </span>
+            <span className="text-[12.5px] font-semibold text-ink/70">
+              Análisis personalizado para cada alumno —
+            </span>
+            <Fade k={s.name} className="text-[12.5px] font-bold text-burgundy">
+              {s.name}
+            </Fade>
           </div>
         </div>
 
         <div className="mt-8 relative rounded-[28px] border border-ink/8 bg-white/70 backdrop-blur-sm shadow-lift p-4 lg:p-6 overflow-hidden">
-          <div className={`pointer-events-none absolute inset-0 z-20 transition-opacity duration-500 ${scan ? "opacity-100" : "opacity-0"}`}>
-            <div className="absolute inset-y-0 w-1/3" style={{ background: "linear-gradient(90deg, transparent, rgba(90,134,203,0.14), transparent)", animation: scan ? "scanSweep 1.4s ease-in-out" : "none" }} />
+          <div
+            className={`pointer-events-none absolute inset-0 z-20 transition-opacity duration-500 ${scan ? "opacity-100" : "opacity-0"}`}
+          >
+            <div
+              className="absolute inset-y-0 w-1/3"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent, rgba(90,134,203,0.14), transparent)",
+                animation: scan ? "scanSweep 1.4s ease-in-out" : "none",
+              }}
+            />
             <div className="absolute top-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-2 rounded-full bg-ink text-white px-3.5 py-1.5 text-[11.5px] font-semibold shadow-navy">
-              <span className="w-1.5 h-1.5 rounded-full bg-cherry animate-pulse-dot" /> Analizando perfil de {students[(si) % students.length].name}…
+              <span className="w-1.5 h-1.5 rounded-full bg-cherry animate-pulse-dot" /> Analizando
+              perfil de {students[si % students.length].name}…
             </div>
           </div>
 
           <div className="flex items-center justify-between gap-3 px-2 lg:px-3 py-2 mb-4">
             <div className="flex items-center gap-2.5">
               <Logo size={26} />
-              <span className="hidden sm:inline text-[12px] text-ink/40 font-mono">/ <Fade k={s.name}>{s.name.toLowerCase()}</Fade></span>
+              <span className="hidden sm:inline text-[12px] text-ink/40 font-mono">
+                / <Fade k={s.name}>{s.name.toLowerCase()}</Fade>
+              </span>
             </div>
             <div className="flex items-center gap-4">
-              <span className="hidden sm:inline"><Coord>HDG 047° · GS 142kt</Coord></span>
+              <span className="hidden sm:inline">
+                <Coord>HDG 047° · GS 142kt</Coord>
+              </span>
               <div className="flex items-center gap-2">
-                <span className="w-8 h-8 rounded-full bg-haze-100 grid place-items-center text-ink/50"><Icon n="bell" className="w-4 h-4" /></span>
-                <span className="w-8 h-8 rounded-full bg-ink grid place-items-center text-white text-[12px] font-bold font-display"><Fade k={s.init}>{s.init}</Fade></span>
+                <span className="w-8 h-8 rounded-full bg-haze-100 grid place-items-center text-ink/50">
+                  <Icon n="bell" className="w-4 h-4" />
+                </span>
+                <span className="w-8 h-8 rounded-full bg-ink grid place-items-center text-white text-[12px] font-bold font-display">
+                  <Fade k={s.init}>{s.init}</Fade>
+                </span>
               </div>
             </div>
           </div>
 
           <div className="px-2 lg:px-3 mb-5">
-            <h3 className="font-display text-3xl lg:text-4xl tracking-tight text-ink">¡Hola, <Fade k={s.name} className="text-burgundy">{s.name}</Fade>!</h3>
-            <p className="text-[15px] text-ink/50 mt-1">Tu ruta se recalcula con cada sesión — esto es lo que te toca hoy.</p>
+            <h3 className="font-display text-3xl lg:text-4xl tracking-tight text-ink">
+              ¡Hola,{" "}
+              <Fade k={s.name} className="text-burgundy">
+                {s.name}
+              </Fade>
+              !
+            </h3>
+            <p className="text-[15px] text-ink/50 mt-1">
+              Tu ruta se recalcula con cada sesión — esto es lo que te toca hoy.
+            </p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-4">
             <div className="lg:row-span-2 relative overflow-hidden rounded-2xl bg-ink p-6 shadow-navy hover-lift">
-              <div className="absolute -right-10 -bottom-10 w-44 h-44 rounded-full" style={{ background: "radial-gradient(closest-side, rgba(124,160,216,0.22), transparent)" }} />
+              <div
+                className="absolute -right-10 -bottom-10 w-44 h-44 rounded-full"
+                style={{
+                  background: "radial-gradient(closest-side, rgba(124,160,216,0.22), transparent)",
+                }}
+              />
               <div className="relative">
                 <div className="flex items-center gap-2 text-white/55 text-[11px] uppercase tracking-[0.16em] font-bold mb-7">
                   <Icon n="shield" className="w-4 h-4 text-coral-400" /> Tu progreso general
@@ -752,25 +652,56 @@ function Showcase() {
                 <div className="flex items-center justify-center my-2">
                   <div className="relative w-40 h-40">
                     <svg viewBox="0 0 36 36" className="w-40 h-40 -rotate-90">
-                      <circle cx="18" cy="18" r="15.5" fill="none" stroke="rgba(255,255,255,0.10)" strokeWidth="2.8" />
-                      <circle cx="18" cy="18" r="15.5" fill="none" stroke="#F2AEBC" strokeWidth="2.8" strokeLinecap="round" strokeDasharray={C} strokeDashoffset={C * (1 - s.prog / 100)} style={{ transition: "stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)" }} />
+                      <circle
+                        cx="18"
+                        cy="18"
+                        r="15.5"
+                        fill="none"
+                        stroke="rgba(255,255,255,0.10)"
+                        strokeWidth="2.8"
+                      />
+                      <circle
+                        cx="18"
+                        cy="18"
+                        r="15.5"
+                        fill="none"
+                        stroke="#F2AEBC"
+                        strokeWidth="2.8"
+                        strokeLinecap="round"
+                        strokeDasharray={C}
+                        strokeDashoffset={C * (1 - s.prog / 100)}
+                        style={{ transition: "stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)" }}
+                      />
                     </svg>
                     <div className="absolute inset-0 grid place-items-center text-center">
                       <div>
-                        <div className="font-display text-[42px] leading-none text-white"><Fade k={s.prog}>{s.prog}%</Fade></div>
-                        <div className="text-[11px] text-white/45 uppercase tracking-[0.15em] mt-1">completado</div>
+                        <div className="font-display text-[42px] leading-none text-white">
+                          <Fade k={s.prog}>{s.prog}%</Fade>
+                        </div>
+                        <div className="text-[11px] text-white/45 uppercase tracking-[0.15em] mt-1">
+                          completado
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-2.5 mt-4">
                   <div className="rounded-xl bg-white/[0.06] px-3 py-2.5">
-                    <div className="text-[10px] uppercase tracking-[0.14em] text-white/45 font-bold">Racha</div>
-                    <div className="font-display text-xl text-white"><Fade k={s.streak}>{s.streak}</Fade> <span className="text-[12px] text-white/55">días</span></div>
+                    <div className="text-[10px] uppercase tracking-[0.14em] text-white/45 font-bold">
+                      Racha
+                    </div>
+                    <div className="font-display text-xl text-white">
+                      <Fade k={s.streak}>{s.streak}</Fade>{" "}
+                      <span className="text-[12px] text-white/55">días</span>
+                    </div>
                   </div>
                   <div className="rounded-xl bg-white/[0.06] px-3 py-2.5">
-                    <div className="text-[10px] uppercase tracking-[0.14em] text-white/45 font-bold">Aciertos</div>
-                    <div className="font-display text-xl text-white"><Fade k={s.acc}>{s.acc}%</Fade></div>
+                    <div className="text-[10px] uppercase tracking-[0.14em] text-white/45 font-bold">
+                      Aciertos
+                    </div>
+                    <div className="font-display text-xl text-white">
+                      <Fade k={s.acc}>{s.acc}%</Fade>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -780,17 +711,31 @@ function Showcase() {
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 text-haze-500 text-[11px] uppercase tracking-[0.16em] font-bold mb-4">
-                    <Icon n="target" className="w-4 h-4 text-coral-600" /> Misión del día · personalizada
+                    <Icon n="target" className="w-4 h-4 text-coral-600" /> Misión del día ·
+                    personalizada
                   </div>
                   <p className="text-[14px] text-ink/55">Hoy enfócate en</p>
-                  <div className="font-display text-3xl text-coral-600 tracking-tight my-0.5"><Fade k={s.focus}>{s.focus}</Fade></div>
-                  <p className="text-[13.5px] text-ink/50">Tu punto más débil esta semana. {s.missMin} min recomendados.</p>
+                  <div className="font-display text-3xl text-coral-600 tracking-tight my-0.5">
+                    <Fade k={s.focus}>{s.focus}</Fade>
+                  </div>
+                  <p className="text-[13.5px] text-ink/50">
+                    Tu punto más débil esta semana. {s.missMin} min recomendados.
+                  </p>
                   <div className="mt-5">
                     <div className="flex justify-between text-[12px] text-ink/45 mb-1.5">
-                      <span className="font-mono">{s.missDone} / {s.missMin} min</span><span>{Math.round(s.missDone / s.missMin * 100)}%</span>
+                      <span className="font-mono">
+                        {s.missDone} / {s.missMin} min
+                      </span>
+                      <span>{Math.round((s.missDone / s.missMin) * 100)}%</span>
                     </div>
                     <div className="h-2 rounded-full bg-haze-100 overflow-hidden">
-                      <div className="h-full rounded-full bg-coral-600" style={{ width: `${Math.round(s.missDone / s.missMin * 100)}%`, transition: "width 1.2s cubic-bezier(.4,0,.2,1)" }} />
+                      <div
+                        className="h-full rounded-full bg-coral-600"
+                        style={{
+                          width: `${Math.round((s.missDone / s.missMin) * 100)}%`,
+                          transition: "width 1.2s cubic-bezier(.4,0,.2,1)",
+                        }}
+                      />
                     </div>
                   </div>
                 </div>
@@ -805,9 +750,13 @@ function Showcase() {
                 <Icon n="book" className="w-4 h-4 text-coral-600" /> Próxima sesión
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-haze-100 grid place-items-center text-lapis"><Icon n="compass" className="w-6 h-6" /></div>
+                <div className="w-12 h-12 rounded-xl bg-haze-100 grid place-items-center text-lapis">
+                  <Icon n="compass" className="w-6 h-6" />
+                </div>
                 <div>
-                  <div className="font-semibold text-ink text-[15px]"><Fade k={s.subj}>{s.subj}</Fade></div>
+                  <div className="font-semibold text-ink text-[15px]">
+                    <Fade k={s.subj}>{s.subj}</Fade>
+                  </div>
                   <div className="text-[12.5px] text-ink/45">{s.desc}</div>
                 </div>
               </div>
@@ -821,8 +770,12 @@ function Showcase() {
                 <Icon n="plane" className="w-4 h-4 text-coral-600" /> Simulador rápido
               </div>
               <div className="text-[12.5px] text-ink/45">Última sesión</div>
-              <div className="font-semibold text-ink text-[15px] mb-4"><Fade k={s.sim}>{s.sim}</Fade></div>
-              <Btn kind="soft" size="sm" icon="arrow" className="w-full">Continuar simulador</Btn>
+              <div className="font-semibold text-ink text-[15px] mb-4">
+                <Fade k={s.sim}>{s.sim}</Fade>
+              </div>
+              <Btn kind="soft" size="sm" icon="arrow" className="w-full">
+                Continuar simulador
+              </Btn>
             </div>
           </div>
         </div>
@@ -837,26 +790,62 @@ function Showcase() {
 
 function Features() {
   const feats: { icon: IconName; t: string; d: string; soon?: boolean }[] = [
-    { icon: "target", t: "Learning Paths", d: "Aprende cada materia con una ruta clara, paso a paso.", soon: true },
-    { icon: "cards", t: "Cuestionarios", d: "Practica después de cada tema y recibe retroalimentación inmediata." },
+    {
+      icon: "target",
+      t: "Learning Paths",
+      d: "Aprende cada materia con una ruta clara, paso a paso.",
+      soon: true,
+    },
+    {
+      icon: "cards",
+      t: "Cuestionarios",
+      d: "Practica después de cada tema y recibe retroalimentación inmediata.",
+    },
     { icon: "sim", t: "Simuladores", d: "Entrena con el mismo formato del examen oficial." },
-    { icon: "book", t: "Biblioteca", d: "Todo el material de consulta organizado en un solo lugar." },
-    { icon: "brain", t: "Flashcards", d: "Memoriza conceptos con repasos inteligentes.", soon: true },
-    { icon: "play", t: "Clases grabadas", d: "Explicaciones claras para estudiar a tu ritmo.", soon: true },
+    {
+      icon: "book",
+      t: "Biblioteca",
+      d: "Todo el material de consulta organizado en un solo lugar.",
+    },
+    {
+      icon: "brain",
+      t: "Flashcards",
+      d: "Memoriza conceptos con repasos inteligentes.",
+      soon: true,
+    },
+    {
+      icon: "play",
+      t: "Clases grabadas",
+      d: "Explicaciones claras para estudiar a tu ritmo.",
+      soon: true,
+    },
   ];
   return (
     <section className="relative py-24 lg:py-32" id="funciones">
       <PlaneField count={20} />
       <div className="mx-auto max-w-[1240px] px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14">
-          <SectionHead eyebrow="Plataforma completa" title={<>Todo lo que necesitas,<br /><span className="text-coral-600">en un solo lugar.</span></>} />
+          <SectionHead
+            eyebrow="Plataforma completa"
+            title={
+              <>
+                Todo lo que necesitas,
+                <br />
+                <span className="text-coral-600">en un solo lugar.</span>
+              </>
+            }
+          />
           <p className="text-[15px] text-ink/50 max-w-sm leading-relaxed lg:pb-2">
-            Explora todo lo que incluye FlightPath para acompañarte antes, durante y después de cada sesión de estudio.
+            Explora todo lo que incluye FlightPath para acompañarte antes, durante y después de cada
+            sesión de estudio.
           </p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {feats.map((f, i) => (
-            <div key={i} className="group rounded-2xl bg-white border border-ink/8 p-7 shadow-card hover-lift hover:shadow-lift">
+            <div
+              key={i}
+              className="group rounded-2xl bg-white border border-ink/8 p-7 shadow-card hover-lift hover:shadow-lift"
+            >
               <div className="flex items-start justify-between mb-12">
                 <div className="w-12 h-12 rounded-xl bg-coral-50 grid place-items-center text-coral-600 group-hover:bg-coral-600 group-hover:text-white transition-colors">
                   <Icon n={f.icon} className="w-6 h-6" />
@@ -883,17 +872,37 @@ function Features() {
 
 function PathyPhone() {
   const msgs: { ic: IconName; t: string; time: string }[] = [
-    { ic: "book", t: "Hora de estudiar ✦ Te dejé lista una sesión de 15 min de Meteorología. ¿Despegamos?", time: "7:00 p.m." },
-    { ic: "flame", t: "¡No pierdas tu racha de 14 días! Te faltan solo 12 min para cerrar el día.", time: "9:30 p.m." },
-    { ic: "chart", t: "Tu análisis de esta semana: subiste 8% en Aerodinámica. ¡Vas increíble, sigue así!", time: "Dom 6:00 p.m." },
-    { ic: "plane", t: "Faltan 23 días para tu CIAAC. Hoy toca Navegación — yo te acompaño paso a paso.", time: "6:15 a.m." },
+    {
+      ic: "book",
+      t: "Hora de estudiar ✦ Te dejé lista una sesión de 15 min de Meteorología. ¿Despegamos?",
+      time: "7:00 p.m.",
+    },
+    {
+      ic: "flame",
+      t: "¡No pierdas tu racha de 14 días! Te faltan solo 12 min para cerrar el día.",
+      time: "9:30 p.m.",
+    },
+    {
+      ic: "chart",
+      t: "Tu análisis de esta semana: subiste 8% en Aerodinámica. ¡Vas increíble, sigue así!",
+      time: "Dom 6:00 p.m.",
+    },
+    {
+      ic: "plane",
+      t: "Faltan 23 días para tu CIAAC. Hoy toca Navegación — yo te acompaño paso a paso.",
+      time: "6:15 a.m.",
+    },
   ];
   const [n, setN] = useState(1);
   const [typing, setTyping] = useState(true);
   useEffect(() => {
     let id: ReturnType<typeof setTimeout>;
     if (typing) id = setTimeout(() => setTyping(false), 1400);
-    else id = setTimeout(() => { setN((v) => (v % msgs.length) + 1); setTyping(true); }, 2400);
+    else
+      id = setTimeout(() => {
+        setN((v) => (v % msgs.length) + 1);
+        setTyping(true);
+      }, 2400);
     return () => clearTimeout(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [typing]);
@@ -903,53 +912,91 @@ function PathyPhone() {
     <div className="relative mx-auto w-[272px]">
       <div className="absolute -inset-6 rounded-[3rem] bg-cherry/25 blur-3xl" />
       <div className="relative rounded-[2.4rem] bg-ink p-2.5 shadow-navy ring-1 ring-white/10">
-        <div className="relative rounded-[1.9rem] overflow-hidden h-[486px] flex flex-col" style={{ background: "linear-gradient(180deg,#F2DCDB 0%, #FAEFEE 40%, #EAF0FA 100%)" }}>
+        <div
+          className="relative rounded-[1.9rem] overflow-hidden h-[486px] flex flex-col"
+          style={{ background: "linear-gradient(180deg,#F2DCDB 0%, #FAEFEE 40%, #EAF0FA 100%)" }}
+        >
           <div className="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-5 rounded-full bg-ink z-20" />
           <div className="relative z-10 bg-lapis text-white px-3.5 pt-7 pb-3 flex items-center gap-2.5 shadow-md">
             <Icon n="chevD" className="w-4 h-4 rotate-90 text-white/70" />
             <span className="w-9 h-9 rounded-full overflow-hidden ring-2 ring-white/40 shrink-0 bg-ink">
-              <img src="/assets/pathy-small.png" alt="Avatar de Pathy, copiloto de estudio" className="w-full h-full object-cover scale-110" />
+              <img
+                src="/assets/pathy-small.png"
+                alt="Avatar de Pathy, copiloto de estudio"
+                className="w-full h-full object-cover scale-110"
+              />
             </span>
             <div className="leading-tight">
               <div className="text-[13.5px] font-bold flex items-center gap-1.5">Pathy</div>
               <div className="text-[10.5px] text-white/70 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-cherry animate-pulse-dot" /> tu copiloto · en línea
+                <span className="w-1.5 h-1.5 rounded-full bg-cherry animate-pulse-dot" /> tu
+                copiloto · en línea
               </div>
             </div>
             <div className="ml-auto flex items-center gap-3 text-white/70">
-              <Icon n="audio" className="w-4 h-4" /><Icon n="radio" className="w-4 h-4" />
+              <Icon n="audio" className="w-4 h-4" />
+              <Icon n="radio" className="w-4 h-4" />
             </div>
           </div>
           <div className="relative flex-1 px-3 py-4 flex flex-col justify-end gap-2.5 overflow-hidden">
-            <div className="absolute top-3 left-1/2 -translate-x-1/2 text-[9.5px] uppercase tracking-[0.16em] font-bold text-ink/35 bg-white/60 rounded-full px-2.5 py-1">Recordatorios de Pathy</div>
+            <div className="absolute top-3 left-1/2 -translate-x-1/2 text-[9.5px] uppercase tracking-[0.16em] font-bold text-ink/35 bg-white/60 rounded-full px-2.5 py-1">
+              Recordatorios de Pathy
+            </div>
             {visible.map((m, i) => (
               <div key={`${n}-${i}`} className="flex items-end gap-2 animate-flip">
-                <span className="w-6 h-6 rounded-full bg-burgundy grid place-items-center shrink-0"><Icon n={m.ic} className="w-3 h-3 text-white" sw={2} /></span>
+                <span className="w-6 h-6 rounded-full bg-burgundy grid place-items-center shrink-0">
+                  <Icon n={m.ic} className="w-3 h-3 text-white" sw={2} />
+                </span>
                 <div className="max-w-[80%] bg-white rounded-2xl rounded-bl-sm px-3 py-2 shadow-card">
                   <p className="text-[12.5px] text-ink/85 leading-snug">{m.t}</p>
                   <div className="flex items-center justify-end gap-1 mt-1 text-[9.5px] text-ink/35">
                     {m.time}
-                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-silver" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M2 13l3.5 3.5L11 9" /><path d="M11 16l1 1L22 7" /></svg>
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="w-3.5 h-3.5 text-silver"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M2 13l3.5 3.5L11 9" />
+                      <path d="M11 16l1 1L22 7" />
+                    </svg>
                   </div>
                 </div>
               </div>
             ))}
             {typing && (
               <div className="flex items-end gap-2 animate-flip">
-                <span className="w-6 h-6 rounded-full bg-burgundy grid place-items-center shrink-0"><Icon n="spark" className="w-3 h-3 text-white" /></span>
+                <span className="w-6 h-6 rounded-full bg-burgundy grid place-items-center shrink-0">
+                  <Icon n="spark" className="w-3 h-3 text-white" />
+                </span>
                 <div className="bg-white rounded-2xl rounded-bl-sm px-3.5 py-3 shadow-card flex items-center gap-1.5">
-                  {[0, 1, 2].map((d) => <span key={d} className="w-1.5 h-1.5 rounded-full bg-burgundy/55 animate-pulse-dot" style={{ animationDelay: `${d * 0.2}s` }} />)}
+                  {[0, 1, 2].map((d) => (
+                    <span
+                      key={d}
+                      className="w-1.5 h-1.5 rounded-full bg-burgundy/55 animate-pulse-dot"
+                      style={{ animationDelay: `${d * 0.2}s` }}
+                    />
+                  ))}
                 </div>
               </div>
             )}
           </div>
           <div className="relative z-10 px-3 py-2.5 bg-white/70 backdrop-blur flex items-center gap-2">
-            <div className="flex-1 h-9 rounded-full bg-white border border-ink/10 flex items-center px-3.5 text-[12px] text-ink/35">Mensaje a Pathy…</div>
-            <span className="w-9 h-9 rounded-full bg-burgundy text-white grid place-items-center shrink-0"><Icon n="audio" className="w-4 h-4" /></span>
+            <div className="flex-1 h-9 rounded-full bg-white border border-ink/10 flex items-center px-3.5 text-[12px] text-ink/35">
+              Mensaje a Pathy…
+            </div>
+            <span className="w-9 h-9 rounded-full bg-burgundy text-white grid place-items-center shrink-0">
+              <Icon n="audio" className="w-4 h-4" />
+            </span>
           </div>
         </div>
       </div>
-      <div className="absolute -top-3 -right-3 bg-burgundy text-white text-[11px] font-bold rounded-full px-2.5 py-1 shadow-coral animate-float-y-sm">1 nuevo</div>
+      <div className="absolute -top-3 -right-3 bg-burgundy text-white text-[11px] font-bold rounded-full px-2.5 py-1 shadow-coral animate-float-y-sm">
+        1 nuevo
+      </div>
     </div>
   );
 }
@@ -959,33 +1006,69 @@ function Companion() {
     <section className="relative py-24 lg:py-32">
       <div className="mx-auto max-w-[1240px] px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-[32px] bg-ink shadow-navy">
-          <div className="absolute -top-20 -right-16 w-96 h-96 rounded-full" style={{ background: "radial-gradient(closest-side, rgba(242,174,188,0.18), transparent)" }} />
-          <div className="absolute -bottom-24 -left-10 w-96 h-96 rounded-full" style={{ background: "radial-gradient(closest-side, rgba(124,160,216,0.18), transparent)" }} />
-          <svg className="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <path d="M-50 480 C 300 540, 700 360, 1100 460 S 1300 520, 1300 480" className="dash-line" stroke="#7CA0D8" strokeOpacity="0.3" strokeWidth="1.5" fill="none" />
+          <div
+            className="absolute -top-20 -right-16 w-96 h-96 rounded-full"
+            style={{
+              background: "radial-gradient(closest-side, rgba(242,174,188,0.18), transparent)",
+            }}
+          />
+          <div
+            className="absolute -bottom-24 -left-10 w-96 h-96 rounded-full"
+            style={{
+              background: "radial-gradient(closest-side, rgba(124,160,216,0.18), transparent)",
+            }}
+          />
+          <svg
+            className="absolute inset-0 w-full h-full opacity-40"
+            viewBox="0 0 1200 600"
+            preserveAspectRatio="xMidYMid slice"
+            aria-hidden="true"
+          >
+            <path
+              d="M-50 480 C 300 540, 700 360, 1100 460 S 1300 520, 1300 480"
+              className="dash-line"
+              stroke="#7CA0D8"
+              strokeOpacity="0.3"
+              strokeWidth="1.5"
+              fill="none"
+            />
           </svg>
           <div className="relative grid lg:grid-cols-2 gap-12 items-center p-8 lg:p-14">
             <div>
               <Eyebrow light>Pathy · tu copiloto</Eyebrow>
               <h2 className="font-display mt-5 text-4xl lg:text-[52px] leading-[1.02] tracking-tight text-white">
-                Pathy te cuida.<br /><span className="text-coral-400">Aunque cierres la app.</span>
+                Pathy te cuida.
+                <br />
+                <span className="text-coral-400">Aunque cierres la app.</span>
               </h2>
               <p className="mt-5 text-[17px] text-white/65 leading-relaxed max-w-md">
-                Pathy te escribe al teléfono en el momento justo: que es hora de estudiar, que no pierdas tu racha, o tu análisis de la semana. Recordatorios cálidos — nunca presión.
+                Pathy te escribe al teléfono en el momento justo: que es hora de estudiar, que no
+                pierdas tu racha, o tu análisis de la semana. Recordatorios cálidos — nunca presión.
               </p>
               <div className="mt-8 grid sm:grid-cols-2 gap-x-6 gap-y-3.5 max-w-md">
-                {["“Es hora de estudiar” a tu hora ideal", "Te avisa antes de perder la racha", "Tu análisis semanal, en un mensaje", "Cuenta regresiva al CIAAC, sin estrés"].map((b, i) => (
+                {[
+                  "“Es hora de estudiar” a tu hora ideal",
+                  "Te avisa antes de perder la racha",
+                  "Tu análisis semanal, en un mensaje",
+                  "Cuenta regresiva al CIAAC, sin estrés",
+                ].map((b, i) => (
                   <div key={i} className="flex items-start gap-2.5">
-                    <span className="w-5 h-5 rounded-full bg-coral-600/20 grid place-items-center shrink-0 mt-0.5"><Icon n="check" className="w-3 h-3 text-coral-400" sw={2.2} /></span>
+                    <span className="w-5 h-5 rounded-full bg-coral-600/20 grid place-items-center shrink-0 mt-0.5">
+                      <Icon n="check" className="w-3 h-3 text-coral-400" sw={2.2} />
+                    </span>
                     <span className="text-[14px] text-white/80">{b}</span>
                   </div>
                 ))}
               </div>
               <div className="mt-9">
-                <Btn kind="primary" size="lg" icon="arrow" to="/register">Conoce a tu copiloto</Btn>
+                <Btn kind="primary" size="lg" icon="arrow" to="/register">
+                  Conoce a tu copiloto
+                </Btn>
               </div>
             </div>
-            <div className="relative"><PathyPhone /></div>
+            <div className="relative">
+              <PathyPhone />
+            </div>
           </div>
         </div>
       </div>
@@ -999,17 +1082,76 @@ function Companion() {
 
 function PathyEvolution() {
   const stages = [
-    { name: "Despegando", days: "1–3 días", token: "MISTY ROSE", color: "#F2DCDB", img: "/assets/pathy-1-misty.png", copy: "Todo gran vuelo comienza con un pequeño paso." },
-    { name: "En progreso", days: "4–6 días", token: "CHERRY BLOSSOM", color: "#F2AEBC", img: "/assets/pathy-2-pink.png", copy: "¡Vas por buen camino! Sigue así." },
-    { name: "En ruta", days: "7–13 días", token: "SILVER LAKE", color: "#5A86CB", img: "/assets/pathy-3-blue.png", copy: "La constancia te está llevando lejos." },
-    { name: "Modo piloto", days: "14–30 días", token: "LAPIS LAZULI", color: "#3D5D91", img: "/assets/pathy-4-pilot.png", copy: "¡Eres imparable! Sigue volando alto." },
-    { name: "Piloto élite", days: "30+ días", token: "BURGUNDY", color: "#6C0820", img: "/assets/pathy-5-elite.png", copy: "Disciplina, enfoque y pasión. Nivel élite." },
+    {
+      name: "Despegando",
+      days: "1–3 días",
+      token: "MISTY ROSE",
+      color: "#F2DCDB",
+      img: "/assets/pathy-1-misty.png",
+      copy: "Todo gran vuelo comienza con un pequeño paso.",
+    },
+    {
+      name: "En progreso",
+      days: "4–6 días",
+      token: "CHERRY BLOSSOM",
+      color: "#F2AEBC",
+      img: "/assets/pathy-2-pink.png",
+      copy: "¡Vas por buen camino! Sigue así.",
+    },
+    {
+      name: "En ruta",
+      days: "7–13 días",
+      token: "SILVER LAKE",
+      color: "#5A86CB",
+      img: "/assets/pathy-3-blue.png",
+      copy: "La constancia te está llevando lejos.",
+    },
+    {
+      name: "Modo piloto",
+      days: "14–30 días",
+      token: "LAPIS LAZULI",
+      color: "#3D5D91",
+      img: "/assets/pathy-4-pilot.png",
+      copy: "¡Eres imparable! Sigue volando alto.",
+    },
+    {
+      name: "Piloto élite",
+      days: "30+ días",
+      token: "BURGUNDY",
+      color: "#6C0820",
+      img: "/assets/pathy-5-elite.png",
+      copy: "Disciplina, enfoque y pasión. Nivel élite.",
+    },
   ];
   const [active, setActive] = useState(3);
   const s = stages[active];
-  const Avatar = ({ src, size, scale = 1.32, ring }: { src: string; size: number; scale?: number; ring?: string }) => (
-    <div className="relative rounded-full overflow-hidden" style={{ width: size, height: size, boxShadow: "inset 0 0 0 1px rgba(15,26,51,0.06)", outline: ring ? `2px solid ${ring}` : "none", outlineOffset: 3 }}>
-      <img src={src} alt="Pathy" className="w-full h-full object-cover" style={{ transform: `scale(${scale})` }} />
+  const Avatar = ({
+    src,
+    size,
+    scale = 1.32,
+    ring,
+  }: {
+    src: string;
+    size: number;
+    scale?: number;
+    ring?: string;
+  }) => (
+    <div
+      className="relative rounded-full overflow-hidden"
+      style={{
+        width: size,
+        height: size,
+        boxShadow: "inset 0 0 0 1px rgba(15,26,51,0.06)",
+        outline: ring ? `2px solid ${ring}` : "none",
+        outlineOffset: 3,
+      }}
+    >
+      <img
+        src={src}
+        alt="Pathy"
+        className="w-full h-full object-cover"
+        style={{ transform: `scale(${scale})` }}
+      />
     </div>
   );
 
@@ -1017,40 +1159,91 @@ function PathyEvolution() {
     <section className="relative py-24 lg:py-32">
       <PlaneField count={20} />
       <div className="mx-auto max-w-[1240px] px-6 lg:px-8">
-        <SectionHead center eyebrow="Conoce a Pathy"
-          title={<>Tu copiloto. <span className="text-burgundy">En cada etapa del vuelo.</span></>}
-          sub="Pathy evoluciona contigo: cuanto más constante seas, más alto vuela — y más te anima en cada etapa." />
+        <SectionHead
+          center
+          eyebrow="Conoce a Pathy"
+          title={
+            <>
+              Tu copiloto. <span className="text-burgundy">En cada etapa del vuelo.</span>
+            </>
+          }
+          sub="Pathy evoluciona contigo: cuanto más constante seas, más alto vuela — y más te anima en cada etapa."
+        />
         <div className="mt-14 grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-16 items-center">
           <div className="relative flex justify-center">
             <div className="absolute inset-0 grid place-items-center pointer-events-none">
-              <div className="w-72 h-72 rounded-full blur-3xl animate-breathe" style={{ background: s.color, opacity: 0.45 }} />
+              <div
+                className="w-72 h-72 rounded-full blur-3xl animate-breathe"
+                style={{ background: s.color, opacity: 0.45 }}
+              />
             </div>
-            <div className="relative animate-float-y"><Avatar src={s.img} size={300} ring={s.color} /></div>
+            <div className="relative animate-float-y">
+              <Avatar src={s.img} size={300} ring={s.color} />
+            </div>
             <span className="absolute top-6 left-10 text-burgundy text-xl animate-twinkle">✦</span>
-            <span className="absolute bottom-12 right-8 text-lapis text-lg animate-twinkle" style={{ animationDelay: ".6s" }}>✦</span>
+            <span
+              className="absolute bottom-12 right-8 text-lapis text-lg animate-twinkle"
+              style={{ animationDelay: ".6s" }}
+            >
+              ✦
+            </span>
           </div>
           <div>
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] uppercase tracking-[0.18em] font-bold border"
-                  style={{ background: s.color + "22", color: s.color, borderColor: s.color + "55" }}>
-              <span className="w-1.5 h-1.5 rounded-full" style={{ background: s.color }} />{s.token}
+            <span
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] uppercase tracking-[0.18em] font-bold border"
+              style={{ background: s.color + "22", color: s.color, borderColor: s.color + "55" }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: s.color }} />
+              {s.token}
             </span>
-            <div className="mt-5 font-display text-5xl lg:text-6xl text-ink tracking-tight">{s.name}</div>
-            <div className="mt-2 text-burgundy/70 text-[12px] uppercase tracking-[0.2em] font-bold">{s.days} de racha</div>
-            <p className="mt-6 text-xl text-ink/70 leading-relaxed max-w-md" style={{ fontStyle: "italic" }}>“{s.copy}”</p>
+            <div className="mt-5 font-display text-5xl lg:text-6xl text-ink tracking-tight">
+              {s.name}
+            </div>
+            <div className="mt-2 text-burgundy/70 text-[12px] uppercase tracking-[0.2em] font-bold">
+              {s.days} de racha
+            </div>
+            <p
+              className="mt-6 text-xl text-ink/70 leading-relaxed max-w-md"
+              style={{ fontStyle: "italic" }}
+            >
+              “{s.copy}”
+            </p>
             <div className="mt-8 flex items-center gap-3">
-              <Btn kind="light" size="md" iconLeft="chevD" className="!rounded-full" onClick={() => setActive(Math.max(0, active - 1))}>Anterior</Btn>
-              <Btn kind="primary" size="md" icon="arrow" onClick={() => setActive(Math.min(stages.length - 1, active + 1))}>Siguiente nivel</Btn>
+              <Btn
+                kind="light"
+                size="md"
+                iconLeft="chevD"
+                className="!rounded-full"
+                onClick={() => setActive(Math.max(0, active - 1))}
+              >
+                Anterior
+              </Btn>
+              <Btn
+                kind="primary"
+                size="md"
+                icon="arrow"
+                onClick={() => setActive(Math.min(stages.length - 1, active + 1))}
+              >
+                Siguiente nivel
+              </Btn>
             </div>
             <div className="mt-10 grid grid-cols-5 gap-2 sm:gap-3">
               {stages.map((st, i) => {
                 const on = i === active;
                 return (
-                  <button key={i} onClick={() => setActive(i)}
-                          className={`group rounded-2xl p-2.5 text-center border transition-all ${on ? "bg-white border-burgundy/25 shadow-card scale-105" : "bg-white/60 border-ink/8 hover:bg-white hover:border-burgundy/20"}`}>
+                  <button
+                    key={i}
+                    onClick={() => setActive(i)}
+                    className={`group rounded-2xl p-2.5 text-center border transition-all ${on ? "bg-white border-burgundy/25 shadow-card scale-105" : "bg-white/60 border-ink/8 hover:bg-white hover:border-burgundy/20"}`}
+                  >
                     <div className="mx-auto" style={{ width: 56 }}>
                       <Avatar src={st.img} size={56} scale={1.3} />
                     </div>
-                    <div className={`mt-1.5 text-[10.5px] font-semibold leading-tight ${on ? "text-burgundy" : "text-ink/60"}`}>{st.name}</div>
+                    <div
+                      className={`mt-1.5 text-[10.5px] font-semibold leading-tight ${on ? "text-burgundy" : "text-ink/60"}`}
+                    >
+                      {st.name}
+                    </div>
                   </button>
                 );
               })}
@@ -1067,12 +1260,57 @@ function PathyEvolution() {
    ═══════════════════════════════════════════════════════════════════ */
 
 function YarisChat() {
-  type Scene = { type: string; header: string; title: string; opts?: string[]; correct?: number; reply: { title: string; body: string; ref?: string; tags?: string[] } };
+  type Scene = {
+    type: string;
+    header: string;
+    title: string;
+    opts?: string[];
+    correct?: number;
+    reply: { title: string; body: string; ref?: string; tags?: string[] };
+  };
   const scenes: Scene[] = [
-    { type: "question", header: "Meteorología · Pregunta 23 de 50", title: "¿Qué fenómeno causa la formación de nubes cumulonimbus?", opts: ["Evaporación", "Convección", "Subsidencia", "Radiación"], correct: 1, reply: { title: "¡Correcto! La respuesta es B) Convección.", body: "El aire cálido asciende, se enfría, se condensa y forma cumulonimbus — responsables de las tormentas eléctricas.", ref: "Meteorología para Pilotos · Cap. 5 · Pág. 142" } },
-    { type: "mnemo", header: "Nemotecnia · Antes de cada vuelo", title: "Chequea tu estado con I-M-SAFE", reply: { title: "💡 Nemotecnia: I-M-SAFE", body: "Illness · Medication · Stress · Alcohol · Fatigue · Emotion. Una palabra, seis chequeos antes de despegar.", tags: ["Checklist", "Factor humano"] } },
-    { type: "real", header: "Ejemplo de la vida real", title: "Por qué los procedimientos no son opcionales", reply: { title: "🎯 Piénsalo así:", body: "Un procedimiento existe porque alguien aprendió algo por las malas. Seguirlo es respetar esa lección — es tu seguro de vida.", tags: ["Disciplina", "Criterio"] } },
-    { type: "support", header: "Apoyo cuando lo necesitas", title: "¿Te sientes abrumada hoy?", reply: { title: "💖 Respira. Tú puedes.", body: "Un mal día de estudio no define tu carrera. Toma 10 minutos, hidrátate y volvemos. Pathy y yo te esperamos aquí.", tags: ["Bienestar", "Pathy contigo"] } },
+    {
+      type: "question",
+      header: "Meteorología · Pregunta 23 de 50",
+      title: "¿Qué fenómeno causa la formación de nubes cumulonimbus?",
+      opts: ["Evaporación", "Convección", "Subsidencia", "Radiación"],
+      correct: 1,
+      reply: {
+        title: "¡Correcto! La respuesta es B) Convección.",
+        body: "El aire cálido asciende, se enfría, se condensa y forma cumulonimbus — responsables de las tormentas eléctricas.",
+        ref: "Meteorología para Pilotos · Cap. 5 · Pág. 142",
+      },
+    },
+    {
+      type: "mnemo",
+      header: "Nemotecnia · Antes de cada vuelo",
+      title: "Chequea tu estado con I-M-SAFE",
+      reply: {
+        title: "💡 Nemotecnia: I-M-SAFE",
+        body: "Illness · Medication · Stress · Alcohol · Fatigue · Emotion. Una palabra, seis chequeos antes de despegar.",
+        tags: ["Checklist", "Factor humano"],
+      },
+    },
+    {
+      type: "real",
+      header: "Ejemplo de la vida real",
+      title: "Por qué los procedimientos no son opcionales",
+      reply: {
+        title: "🎯 Piénsalo así:",
+        body: "Un procedimiento existe porque alguien aprendió algo por las malas. Seguirlo es respetar esa lección — es tu seguro de vida.",
+        tags: ["Disciplina", "Criterio"],
+      },
+    },
+    {
+      type: "support",
+      header: "Apoyo cuando lo necesitas",
+      title: "¿Te sientes abrumada hoy?",
+      reply: {
+        title: "💖 Respira. Tú puedes.",
+        body: "Un mal día de estudio no define tu carrera. Toma 10 minutos, hidrátate y volvemos. Pathy y yo te esperamos aquí.",
+        tags: ["Bienestar", "Pathy contigo"],
+      },
+    },
   ];
   const phaseDur = [1500, 1100, 1100, 3600];
   const [idx, setIdx] = useState(0);
@@ -1082,16 +1320,23 @@ function YarisChat() {
     if (!playing) return;
     const id = setTimeout(() => {
       if (phase < 3) setPhase(phase + 1);
-      else { setPhase(0); setIdx((idx + 1) % scenes.length); }
+      else {
+        setPhase(0);
+        setIdx((idx + 1) % scenes.length);
+      }
     }, phaseDur[phase]);
     return () => clearTimeout(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, playing, idx]);
-  useEffect(() => { setPhase(0); }, [idx]);
+  useEffect(() => {
+    setPhase(0);
+  }, [idx]);
 
   const sc = scenes[idx];
   const isQ = sc.type === "question";
-  const showPick = phase >= 1, showTyping = phase === 2, showAnswer = phase >= 3;
+  const showPick = phase >= 1,
+    showTyping = phase === 2,
+    showAnswer = phase >= 3;
   const letters = ["A", "B", "C", "D"];
   const bullets: { ic: IconName; t: string }[] = [
     { ic: "book", t: "Cita el libro, capítulo y página exactas." },
@@ -1105,9 +1350,16 @@ function YarisChat() {
     <section className="relative py-24 lg:py-32" id="yaris">
       <PlaneField count={20} />
       <div className="mx-auto max-w-[1240px] px-6 lg:px-8">
-        <SectionHead center eyebrow="Conoce a Yaris"
-          title={<>Tu tutor IA, <span className="text-burgundy">en acción.</span></>}
-          sub="Mira cómo Yaris responde, explica y te acompaña. No es un chatbot — es un copiloto que sabe cómo aprendes." />
+        <SectionHead
+          center
+          eyebrow="Conoce a Yaris"
+          title={
+            <>
+              Tu tutor IA, <span className="text-burgundy">en acción.</span>
+            </>
+          }
+          sub="Mira cómo Yaris responde, explica y te acompaña. No es un chatbot — es un copiloto que sabe cómo aprendes."
+        />
 
         <div className="mt-14 grid lg:grid-cols-[1fr_1fr] gap-10 lg:gap-14 items-center">
           <div className="relative max-w-[560px] w-full mx-auto lg:mx-0">
@@ -1115,32 +1367,65 @@ function YarisChat() {
             <div className="relative rounded-3xl overflow-hidden bg-white border border-burgundy/10 shadow-lift">
               <div className="flex items-center justify-between px-5 py-3 bg-burgundy text-white">
                 <div className="flex items-center gap-2.5">
-                  <div className="flex gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-cherry" /><span className="w-2.5 h-2.5 rounded-full bg-cherry/40" /><span className="w-2.5 h-2.5 rounded-full bg-cherry/40" /></div>
+                  <div className="flex gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-cherry" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-cherry/40" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-cherry/40" />
+                  </div>
                   <div className="text-[11px] uppercase tracking-[0.18em] font-bold flex items-center gap-1.5">
-                    <span className="relative flex w-2 h-2"><span className="absolute inset-0 rounded-full bg-cherry animate-ping" /><span className="relative w-2 h-2 rounded-full bg-cherry" /></span>
+                    <span className="relative flex w-2 h-2">
+                      <span className="absolute inset-0 rounded-full bg-cherry animate-ping" />
+                      <span className="relative w-2 h-2 rounded-full bg-cherry" />
+                    </span>
                     En vivo · Yaris IA
                   </div>
                 </div>
-                <div className="text-[11px] text-cherry/90 font-medium">Escena {idx + 1}/{scenes.length}</div>
+                <div className="text-[11px] text-cherry/90 font-medium">
+                  Escena {idx + 1}/{scenes.length}
+                </div>
               </div>
               <div className="relative px-5 md:px-6 py-5 md:py-6 min-h-[400px]">
                 <div className="text-[11px] uppercase tracking-[0.18em] text-burgundy font-bold flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-burgundy animate-pulse-dot" />{sc.header}
+                  <span className="w-1.5 h-1.5 rounded-full bg-burgundy animate-pulse-dot" />
+                  {sc.header}
                 </div>
-                <div key={`t-${idx}`} className="mt-2.5 font-display text-2xl md:text-[28px] text-ink leading-snug tracking-tight animate-flip">{sc.title}</div>
+                <div
+                  key={`t-${idx}`}
+                  className="mt-2.5 font-display text-2xl md:text-[28px] text-ink leading-snug tracking-tight animate-flip"
+                >
+                  {sc.title}
+                </div>
 
                 {isQ && (
                   <div className="mt-5 grid gap-2.5">
                     {sc.opts!.map((o, i) => {
-                      const ok = i === sc.correct, reveal = showPick;
-                      const cls = !reveal ? "border-ink/10" : ok ? "border-emerald-500 bg-emerald-50 scale-[1.02]" : "border-ink/8 opacity-40";
+                      const ok = i === sc.correct,
+                        reveal = showPick;
+                      const cls = !reveal
+                        ? "border-ink/10"
+                        : ok
+                          ? "border-emerald-500 bg-emerald-50 scale-[1.02]"
+                          : "border-ink/8 opacity-40";
                       return (
-                        <div key={i} className={`flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all duration-500 ${cls}`}>
-                          <span className={`shrink-0 w-7 h-7 rounded-lg grid place-items-center text-xs font-bold ${reveal && ok ? "bg-emerald-500 text-white" : "bg-ink/5 text-ink/55"}`}>
-                            {reveal && ok ? <Icon n="check" className="w-4 h-4" sw={2.4} /> : letters[i]}
+                        <div
+                          key={i}
+                          className={`flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all duration-500 ${cls}`}
+                        >
+                          <span
+                            className={`shrink-0 w-7 h-7 rounded-lg grid place-items-center text-xs font-bold ${reveal && ok ? "bg-emerald-500 text-white" : "bg-ink/5 text-ink/55"}`}
+                          >
+                            {reveal && ok ? (
+                              <Icon n="check" className="w-4 h-4" sw={2.4} />
+                            ) : (
+                              letters[i]
+                            )}
                           </span>
                           <span className="text-[14px] text-ink/85">{o}</span>
-                          {!reveal && ok && phase === 0 && <span className="ml-auto text-[10px] uppercase tracking-[0.18em] text-burgundy/70 font-bold">cursor →</span>}
+                          {!reveal && ok && phase === 0 && (
+                            <span className="ml-auto text-[10px] uppercase tracking-[0.18em] text-burgundy/70 font-bold">
+                              cursor →
+                            </span>
+                          )}
                         </div>
                       );
                     })}
@@ -1148,26 +1433,46 @@ function YarisChat() {
                 )}
                 {showTyping && (
                   <div className="mt-5 flex items-center gap-3 animate-flip">
-                    <div className="w-8 h-8 rounded-full bg-burgundy grid place-items-center text-white text-xs font-bold">Y</div>
+                    <div className="w-8 h-8 rounded-full bg-burgundy grid place-items-center text-white text-xs font-bold">
+                      Y
+                    </div>
                     <div className="px-4 py-3 rounded-2xl rounded-bl-sm bg-misty flex items-center gap-1.5">
-                      {[0, 1, 2].map((i) => <span key={i} className="w-1.5 h-1.5 rounded-full bg-burgundy/60 animate-pulse-dot" style={{ animationDelay: `${i * 0.2}s` }} />)}
+                      {[0, 1, 2].map((i) => (
+                        <span
+                          key={i}
+                          className="w-1.5 h-1.5 rounded-full bg-burgundy/60 animate-pulse-dot"
+                          style={{ animationDelay: `${i * 0.2}s` }}
+                        />
+                      ))}
                     </div>
                   </div>
                 )}
                 {showAnswer && (
                   <div className="mt-5 flex items-start gap-3 animate-flip">
-                    <div className="shrink-0 w-9 h-9 rounded-full bg-burgundy grid place-items-center text-white text-sm font-bold">Y</div>
+                    <div className="shrink-0 w-9 h-9 rounded-full bg-burgundy grid place-items-center text-white text-sm font-bold">
+                      Y
+                    </div>
                     <div className="flex-1 rounded-2xl rounded-bl-sm bg-misty/50 p-4 border border-cherry/40">
                       <div className="text-sm font-bold text-burgundy">{sc.reply.title}</div>
-                      <div className="mt-1.5 text-[14px] text-ink/75 leading-relaxed">{sc.reply.body}</div>
+                      <div className="mt-1.5 text-[14px] text-ink/75 leading-relaxed">
+                        {sc.reply.body}
+                      </div>
                       {sc.reply.ref && (
                         <div className="mt-3 flex items-center gap-2 text-[12px] text-ink/60 bg-white px-3 py-2 rounded-lg border border-ink/8">
-                          <Icon n="book" className="w-3.5 h-3.5 text-burgundy" /><span className="font-semibold">Referencia:</span> {sc.reply.ref}
+                          <Icon n="book" className="w-3.5 h-3.5 text-burgundy" />
+                          <span className="font-semibold">Referencia:</span> {sc.reply.ref}
                         </div>
                       )}
                       {sc.reply.tags && (
                         <div className="mt-3 flex flex-wrap gap-1.5">
-                          {sc.reply.tags.map((tg) => <span key={tg} className="text-[10px] uppercase tracking-[0.14em] font-bold px-2 py-1 rounded-md bg-cherry/25 text-burgundy">{tg}</span>)}
+                          {sc.reply.tags.map((tg) => (
+                            <span
+                              key={tg}
+                              className="text-[10px] uppercase tracking-[0.14em] font-bold px-2 py-1 rounded-md bg-cherry/25 text-burgundy"
+                            >
+                              {tg}
+                            </span>
+                          ))}
                         </div>
                       )}
                     </div>
@@ -1176,16 +1481,48 @@ function YarisChat() {
               </div>
               <div className="px-5 py-3 border-t border-ink/8 bg-misty/30">
                 <div className="flex items-center gap-3">
-                  <button onClick={() => setPlaying(!playing)} aria-label={playing ? "Pausar demostración de Yaris" : "Reproducir demostración de Yaris"} className="w-9 h-9 rounded-full bg-burgundy hover:bg-burgundy-700 text-white grid place-items-center transition-colors">
-                    {playing ? <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg> : <Icon n="play" className="w-4 h-4" />}
+                  <button
+                    onClick={() => setPlaying(!playing)}
+                    aria-label={
+                      playing ? "Pausar demostración de Yaris" : "Reproducir demostración de Yaris"
+                    }
+                    className="w-9 h-9 rounded-full bg-burgundy hover:bg-burgundy-700 text-white grid place-items-center transition-colors"
+                  >
+                    {playing ? (
+                      <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                        <rect x="6" y="5" width="4" height="14" rx="1" />
+                        <rect x="14" y="5" width="4" height="14" rx="1" />
+                      </svg>
+                    ) : (
+                      <Icon n="play" className="w-4 h-4" />
+                    )}
                   </button>
                   <div className="flex-1 flex items-center gap-1.5">
                     {scenes.map((_, i) => {
-                      const on = i === idx, done = i < idx;
-                      const pct = on ? (phaseDur.slice(0, phase + 1).reduce((a, b) => a + b, 0) / phaseDur.reduce((a, b) => a + b, 0)) * 100 : done ? 100 : 0;
+                      const on = i === idx,
+                        done = i < idx;
+                      const pct = on
+                        ? (phaseDur.slice(0, phase + 1).reduce((a, b) => a + b, 0) /
+                            phaseDur.reduce((a, b) => a + b, 0)) *
+                          100
+                        : done
+                          ? 100
+                          : 0;
                       return (
-                        <button key={i} onClick={() => { setIdx(i); setPhase(0); }} aria-label={`Ir a la escena ${i + 1} de ${scenes.length}`} aria-current={on ? "true" : undefined} className="flex-1 h-1.5 rounded-full bg-ink/10 overflow-hidden relative">
-                          <div className="absolute inset-y-0 left-0 bg-burgundy transition-all duration-200" style={{ width: `${pct}%` }} />
+                        <button
+                          key={i}
+                          onClick={() => {
+                            setIdx(i);
+                            setPhase(0);
+                          }}
+                          aria-label={`Ir a la escena ${i + 1} de ${scenes.length}`}
+                          aria-current={on ? "true" : undefined}
+                          className="flex-1 h-1.5 rounded-full bg-ink/10 overflow-hidden relative"
+                        >
+                          <div
+                            className="absolute inset-y-0 left-0 bg-burgundy transition-all duration-200"
+                            style={{ width: `${pct}%` }}
+                          />
                         </button>
                       );
                     })}
@@ -1193,7 +1530,12 @@ function YarisChat() {
                 </div>
                 <div className="mt-2 flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] text-ink/45">
                   {["Pregunta", "Nemotecnia", "Vida real", "Apoyo"].map((l, i) => (
-                    <div key={i} className={`flex-1 text-center ${i === idx ? "text-burgundy font-bold" : ""}`}>{l}</div>
+                    <div
+                      key={i}
+                      className={`flex-1 text-center ${i === idx ? "text-burgundy font-bold" : ""}`}
+                    >
+                      {l}
+                    </div>
                   ))}
                 </div>
               </div>
@@ -1202,12 +1544,21 @@ function YarisChat() {
 
           <div className="space-y-3">
             {bullets.map((b, i) => (
-              <div key={i} className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-cherry/30 hover:border-cherry hover:shadow-card hover-lift transition-all">
-                <div className="shrink-0 w-10 h-10 rounded-xl bg-burgundy text-white grid place-items-center"><Icon n={b.ic} className="w-5 h-5" /></div>
+              <div
+                key={i}
+                className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-cherry/30 hover:border-cherry hover:shadow-card hover-lift transition-all"
+              >
+                <div className="shrink-0 w-10 h-10 rounded-xl bg-burgundy text-white grid place-items-center">
+                  <Icon n={b.ic} className="w-5 h-5" />
+                </div>
                 <div className="text-[14.5px] text-ink/80 leading-relaxed pt-2">{b.t}</div>
               </div>
             ))}
-            <div className="pt-2"><Btn kind="primary" size="md" icon="chat" className="w-full" to="/register">Pregúntale a Yaris</Btn></div>
+            <div className="pt-2">
+              <Btn kind="primary" size="md" icon="chat" className="w-full" to="/register">
+                Pregúntale a Yaris
+              </Btn>
+            </div>
           </div>
         </div>
       </div>
@@ -1226,22 +1577,45 @@ function Simulator() {
       <div className="mx-auto max-w-[1240px] px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>
-            <SectionHead eyebrow="Simulador CIAAC"
-              title={<>Conoce el examen<br /><span className="text-coral-600">antes de presentarlo.</span></>}
-              sub="Familiarízate con el formato, administra tu tiempo y detecta qué materias necesitas reforzar antes del día real." />
+            <SectionHead
+              eyebrow="Simulador CIAAC"
+              title={
+                <>
+                  Conoce el examen
+                  <br />
+                  <span className="text-coral-600">antes de presentarlo.</span>
+                </>
+              }
+              sub="Familiarízate con el formato, administra tu tiempo y detecta qué materias necesitas reforzar antes del día real."
+            />
             <div className="mt-10 grid grid-cols-3 gap-5 max-w-md">
-              {[["310", "Preguntas"], ["5h", "Duración"], ["12", "Materias"]].map(([v, l], i) => (
+              {[
+                ["310", "Preguntas"],
+                ["5h", "Duración"],
+                ["12", "Materias"],
+              ].map(([v, l], i) => (
                 <div key={i} className="border-t-2 border-coral-100 pt-3">
                   <div className="font-display text-4xl text-ink tracking-tight">{v}</div>
-                  <div className="text-[11px] uppercase tracking-[0.16em] text-haze-500 font-bold mt-1.5">{l}</div>
+                  <div className="text-[11px] uppercase tracking-[0.16em] text-haze-500 font-bold mt-1.5">
+                    {l}
+                  </div>
                 </div>
               ))}
             </div>
-            <div className="mt-9"><Btn kind="navy" size="lg" icon="arrow" to="/register">Probar el simulador</Btn></div>
+            <div className="mt-9">
+              <Btn kind="navy" size="lg" icon="arrow" to="/register">
+                Probar el simulador
+              </Btn>
+            </div>
           </div>
 
           <div className="relative">
-            <div className="absolute -inset-4 rounded-[32px]" style={{ background: "radial-gradient(closest-side, rgba(124,160,216,0.16), transparent)" }} />
+            <div
+              className="absolute -inset-4 rounded-[32px]"
+              style={{
+                background: "radial-gradient(closest-side, rgba(124,160,216,0.16), transparent)",
+              }}
+            />
             <div className="relative rounded-3xl bg-ink shadow-navy p-6 lg:p-7 border border-white/5">
               <div className="flex items-center justify-between pb-4 border-b border-white/10">
                 <div className="flex items-center gap-2.5">
@@ -1253,9 +1627,12 @@ function Simulator() {
                 </div>
               </div>
               <div className="mt-5">
-                <div className="text-[11px] uppercase tracking-[0.16em] text-white/40 font-bold mb-3">Reglamento aéreo</div>
+                <div className="text-[11px] uppercase tracking-[0.16em] text-white/40 font-bold mb-3">
+                  Reglamento aéreo
+                </div>
                 <p className="text-[16px] lg:text-[17px] text-white leading-snug">
-                  En vuelo VFR controlado, ¿cuál es la separación vertical mínima sobre obstáculos en zona montañosa?
+                  En vuelo VFR controlado, ¿cuál es la separación vertical mínima sobre obstáculos
+                  en zona montañosa?
                 </p>
                 <div className="mt-5 space-y-2.5">
                   {[
@@ -1264,15 +1641,26 @@ function Simulator() {
                     ["C", "2,000 ft sobre el obstáculo en un radio de 4 NM", false],
                     ["D", "500 ft sobre el terreno", false],
                   ].map(([l, txt, sel], i) => (
-                    <button key={i} className={`w-full text-left flex items-center gap-3.5 px-4 py-3 rounded-xl border transition-colors ${sel ? "bg-coral-600/15 border-coral-400/60" : "bg-white/[0.03] border-white/10 hover:border-white/25"}`}>
-                      <span className={`w-7 h-7 rounded-lg grid place-items-center text-[12px] font-bold font-mono shrink-0 ${sel ? "bg-coral-600 text-white" : "border border-white/20 text-white/55"}`}>{l}</span>
+                    <button
+                      key={i}
+                      className={`w-full text-left flex items-center gap-3.5 px-4 py-3 rounded-xl border transition-colors ${sel ? "bg-coral-600/15 border-coral-400/60" : "bg-white/[0.03] border-white/10 hover:border-white/25"}`}
+                    >
+                      <span
+                        className={`w-7 h-7 rounded-lg grid place-items-center text-[12px] font-bold font-mono shrink-0 ${sel ? "bg-coral-600 text-white" : "border border-white/20 text-white/55"}`}
+                      >
+                        {l}
+                      </span>
                       <span className="text-[13.5px] text-white/85">{txt}</span>
                     </button>
                   ))}
                 </div>
                 <div className="flex items-center justify-between mt-5 pt-4 border-t border-white/10">
-                  <button className="text-[12.5px] text-white/50 hover:text-white">Marcar para revisar</button>
-                  <Btn kind="primary" size="sm" icon="arrow">Siguiente</Btn>
+                  <button className="text-[12.5px] text-white/50 hover:text-white">
+                    Marcar para revisar
+                  </button>
+                  <Btn kind="primary" size="sm" icon="arrow">
+                    Siguiente
+                  </Btn>
                 </div>
               </div>
             </div>
@@ -1292,19 +1680,32 @@ function Pricing() {
     <section id="precios" className="relative py-24 lg:py-32">
       <PlaneField count={20} />
       <div className="mx-auto max-w-[1100px] px-6 lg:px-8">
-        <SectionHead center eyebrow="Precios"
-          title={<>Empieza gratis. <span className="text-coral-600">Vuela Pro.</span></>}
-          sub="FlightPath Basic es gratuito con funciones esenciales. FlightPath Pro desbloquea toda la plataforma." />
+        <SectionHead
+          center
+          eyebrow="Precios"
+          title={
+            <>
+              Empieza gratis. <span className="text-coral-600">Vuela Pro.</span>
+            </>
+          }
+          sub="FlightPath Basic es gratuito con funciones esenciales. FlightPath Pro desbloquea toda la plataforma."
+        />
 
         <div className="mt-14 grid md:grid-cols-2 gap-5">
           <div className="rounded-3xl bg-white border border-ink/8 p-8 lg:p-10 shadow-card">
-            <div className="text-[11px] uppercase tracking-[0.18em] font-bold text-haze-500">FlightPath Basic</div>
+            <div className="text-[11px] uppercase tracking-[0.18em] font-bold text-haze-500">
+              FlightPath Basic
+            </div>
             <div className="mt-5 flex items-baseline gap-2">
               <span className="font-display text-6xl tracking-tight text-ink">$0</span>
               <span className="text-ink/45 text-sm">MXN</span>
             </div>
-            <p className="text-[14px] text-ink/55 mt-3">Crea tu cuenta y conoce la plataforma con funciones limitadas y básicas.</p>
-            <Btn kind="light" size="lg" icon="arrow" className="w-full mt-7" to="/register">Crear cuenta gratis</Btn>
+            <p className="text-[14px] text-ink/55 mt-3">
+              Crea tu cuenta y conoce la plataforma con funciones limitadas y básicas.
+            </p>
+            <Btn kind="light" size="lg" icon="arrow" className="w-full mt-7" to="/register">
+              Crear cuenta gratis
+            </Btn>
             <div className="mt-8 space-y-3">
               {[
                 { b: "10 preguntas de práctica por materia" },
@@ -1328,10 +1729,17 @@ function Pricing() {
           </div>
 
           <div className="relative rounded-3xl bg-ink p-8 lg:p-10 shadow-navy overflow-hidden">
-            <div className="absolute -top-12 -right-12 w-52 h-52 rounded-full" style={{ background: "radial-gradient(closest-side, rgba(242,174,188,0.20), transparent)" }} />
+            <div
+              className="absolute -top-12 -right-12 w-52 h-52 rounded-full"
+              style={{
+                background: "radial-gradient(closest-side, rgba(242,174,188,0.20), transparent)",
+              }}
+            />
             <div className="relative">
               <div className="flex items-center justify-between">
-                <div className="text-[11px] uppercase tracking-[0.18em] font-bold text-coral-400">FlightPath Pro</div>
+                <div className="text-[11px] uppercase tracking-[0.18em] font-bold text-coral-400">
+                  FlightPath Pro
+                </div>
                 <Pill tone="light">Acceso completo</Pill>
               </div>
               <div className="mt-5 flex items-baseline gap-2">
@@ -1341,20 +1749,36 @@ function Pricing() {
                 <span className="text-white/50 text-sm">{PRO_MONTHLY_FALLBACK.currency} / mes</span>
               </div>
               <div className="mt-2 text-[13px] text-white/55">
-                o ${PRO_ANNUAL_FALLBACK.amount.toLocaleString("es-MX")} {PRO_ANNUAL_FALLBACK.currency} al año
-                {ahorroMeses > 0 && <span className="text-coral-400 font-semibold"> — te ahorras {ahorroMeses} meses</span>}
+                o ${PRO_ANNUAL_FALLBACK.amount.toLocaleString("es-MX")}{" "}
+                {PRO_ANNUAL_FALLBACK.currency} al año
+                {ahorroMeses > 0 && (
+                  <span className="text-coral-400 font-semibold">
+                    {" "}
+                    — te ahorras {ahorroMeses} meses
+                  </span>
+                )}
               </div>
               <div className="mt-3 rounded-xl bg-white/[0.06] border border-white/10 px-4 py-3">
                 <div className="text-[12.5px] text-white/75">
-                  Inscripción de <strong className="text-white">${PRO_SETUP_FALLBACK.amount.toLocaleString("es-MX")} {PRO_SETUP_FALLBACK.currency}</strong>
-                  <span className="line-through text-white/40 ml-1.5">${PRO_SETUP_LIST_PRICE.toLocaleString("es-MX")}</span>
+                  Inscripción de{" "}
+                  <strong className="text-white">
+                    ${PRO_SETUP_FALLBACK.amount.toLocaleString("es-MX")}{" "}
+                    {PRO_SETUP_FALLBACK.currency}
+                  </strong>
+                  <span className="line-through text-white/40 ml-1.5">
+                    ${PRO_SETUP_LIST_PRICE.toLocaleString("es-MX")}
+                  </span>
                   <span className="block text-[11.5px] text-coral-400 font-semibold mt-0.5">
                     Pago único · Promoción por la convocatoria
                   </span>
                 </div>
               </div>
-              <p className="text-[14px] text-white/60 mt-4">Plataforma completa, simulador ilimitado y tutor IA 24/7. Cancela cuando quieras.</p>
-              <Btn kind="primary" size="lg" icon="arrow" className="w-full mt-7" href={BUY_HREF}>Hazte Pro</Btn>
+              <p className="text-[14px] text-white/60 mt-4">
+                Plataforma completa, simulador ilimitado y tutor IA 24/7. Cancela cuando quieras.
+              </p>
+              <Btn kind="primary" size="lg" icon="arrow" className="w-full mt-7" href={BUY_HREF}>
+                Hazte Pro
+              </Btn>
               <div className="mt-8 space-y-3">
                 {[
                   { b: "Banco de 2,800+ preguntas con explicación" },
@@ -1394,35 +1818,68 @@ function Historias() {
   // así que la sección cuenta el viaje real del estudiante y invita a
   // escribir las primeras historias.
   const etapas: { icon: IconName; fase: string; title: string; sub: string }[] = [
-    { icon: "compass", fase: "Despegue", title: "Tu ruta se traza sola", sub: "Cuentas tu meta y tu fecha; FlightPath arma tu plan por materias y detecta desde el día uno dónde estás fuerte y dónde no." },
-    { icon: "flame", fase: "Crucero", title: "La constancia se vuelve racha", sub: "Sesiones cortas, cuestionarios que se adaptan y a Pathy recordándote volar un poco cada día. Los temas débiles se repiten hasta caer." },
-    { icon: "target", fase: "Aterrizaje", title: "El examen deja de ser incógnita", sub: "Simulacros cronometrados como el CIAAC real, una preparación medida materia por materia y la seguridad de llegar sabiendo cuánto sabes." },
+    {
+      icon: "compass",
+      fase: "Despegue",
+      title: "Tu ruta se traza sola",
+      sub: "Cuentas tu meta y tu fecha; FlightPath arma tu plan por materias y detecta desde el día uno dónde estás fuerte y dónde no.",
+    },
+    {
+      icon: "flame",
+      fase: "Crucero",
+      title: "La constancia se vuelve racha",
+      sub: "Sesiones cortas, cuestionarios que se adaptan y a Pathy recordándote volar un poco cada día. Los temas débiles se repiten hasta caer.",
+    },
+    {
+      icon: "target",
+      fase: "Aterrizaje",
+      title: "El examen deja de ser incógnita",
+      sub: "Simulacros cronometrados como el CIAAC real, una preparación medida materia por materia y la seguridad de llegar sabiendo cuánto sabes.",
+    },
   ];
   return (
     <section id="historias" className="relative py-24 lg:py-32">
       <PlaneField count={16} />
       <div className="mx-auto max-w-[1100px] px-6 lg:px-8">
-        <SectionHead center eyebrow="Historias"
-          title={<>Las primeras historias <span className="text-coral-600">se están escribiendo.</span></>}
-          sub="FlightPath despega con la generación CIAAC 2026. Este es el viaje que cada estudiante recorre — y el lugar donde pronto estarán sus historias, con nombre y apellido." />
+        <SectionHead
+          center
+          eyebrow="Historias"
+          title={
+            <>
+              Las primeras historias <span className="text-coral-600">se están escribiendo.</span>
+            </>
+          }
+          sub="FlightPath despega con la generación CIAAC 2026. Este es el viaje que cada estudiante recorre — y el lugar donde pronto estarán sus historias, con nombre y apellido."
+        />
 
         <div className="mt-14 grid md:grid-cols-3 gap-5">
           {etapas.map((e, i) => (
-            <div key={e.fase} className="relative rounded-3xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card p-7 lg:p-8">
+            <div
+              key={e.fase}
+              className="relative rounded-3xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card p-7 lg:p-8"
+            >
               <div className="flex items-center justify-between">
                 <span className="w-11 h-11 rounded-2xl bg-ink text-coral-400 grid place-items-center">
                   <Icon n={e.icon} className="w-[22px] h-[22px]" />
                 </span>
                 <Coord>{`FASE ${String(i + 1).padStart(2, "0")} · ${e.fase.toUpperCase()}`}</Coord>
               </div>
-              <h3 className="font-display mt-5 text-[19px] lg:text-[21px] tracking-tight text-ink">{e.title}</h3>
+              <h3 className="font-display mt-5 text-[19px] lg:text-[21px] tracking-tight text-ink">
+                {e.title}
+              </h3>
               <p className="mt-2.5 text-[14px] leading-relaxed text-ink/55">{e.sub}</p>
             </div>
           ))}
         </div>
 
         <div className="mt-8 relative rounded-[28px] border border-burgundy/10 bg-white shadow-lift overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(130% 150% at 0% 0%, rgba(242,220,219,0.55), rgba(255,255,255,0) 55%)" }} />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(130% 150% at 0% 0%, rgba(242,220,219,0.55), rgba(255,255,255,0) 55%)",
+            }}
+          />
           <div className="relative px-7 lg:px-10 py-8 flex flex-col md:flex-row items-start md:items-center gap-6">
             <div className="flex-1">
               <h3 className="font-display text-[22px] lg:text-[26px] tracking-tight text-ink leading-snug">
@@ -1434,8 +1891,12 @@ function Historias() {
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-3 shrink-0">
-              <Btn kind="primary" size="md" icon="arrow" to="/register">Empezar mi historia</Btn>
-              <Btn kind="light" size="md" to="/blog">Ir al blog</Btn>
+              <Btn kind="primary" size="md" icon="arrow" to="/register">
+                Empezar mi historia
+              </Btn>
+              <Btn kind="light" size="md" to="/blog">
+                Ir al blog
+              </Btn>
             </div>
           </div>
         </div>
@@ -1452,87 +1913,25 @@ function FinalCta() {
   return (
     <section className="relative py-28 lg:py-36">
       <div className="mx-auto max-w-[900px] px-6 lg:px-8 text-center">
-        <div className="flex justify-center mb-8"><PathyBubble size={130} /></div>
+        <div className="flex justify-center mb-8">
+          <PathyBubble size={130} />
+        </div>
         <h2 className="font-display text-5xl lg:text-[76px] leading-[0.98] tracking-tight text-ink">
-          No es suerte.<br /><span className="text-coral-600">Es preparación.</span>
+          No es suerte.
+          <br />
+          <span className="text-coral-600">Es preparación.</span>
         </h2>
         <p className="mt-6 text-lg text-ink/55 max-w-xl mx-auto leading-relaxed">
-          Si completas tu ruta de estudio y no notas una mejora real en tu preparación y seguridad para el CIAAC, extendemos tu acceso y ajustamos contigo tu plan de estudio.
+          Si completas tu ruta de estudio y no notas una mejora real en tu preparación y seguridad
+          para el CIAAC, extendemos tu acceso y ajustamos contigo tu plan de estudio.
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-          <Btn kind="primary" size="lg" icon="arrow" to="/register">Únete a FlightPath</Btn>
+          <Btn kind="primary" size="lg" icon="arrow" to="/register">
+            Únete a FlightPath
+          </Btn>
         </div>
       </div>
     </section>
-  );
-}
-
-export function Footer() {
-  return (
-    <footer className="relative bg-ink text-white">
-      <div className="mx-auto max-w-[1240px] px-6 lg:px-8 pt-16 pb-9">
-        <div className="grid md:grid-cols-[1.6fr_1fr_1fr_1fr] gap-10 pb-12 border-b border-white/10">
-          <div>
-            <Logo light size={30} />
-            <p className="mt-5 text-[13.5px] text-white/55 leading-relaxed max-w-xs">
-              La plataforma de preparación para el CIAAC. Hecha en México por pilotos, para pilotos.
-            </p>
-            {/* Disclaimer permanente de no afiliación — no quitar (regla de compliance). */}
-            <p className="mt-4 text-[11.5px] text-white/35 leading-relaxed max-w-xs">
-              FlightPath es una plataforma independiente. No está afiliada a la AFAC ni al CIAAC, ni a
-              ASPA de México, Aeroméxico, Volaris o ninguna otra aerolínea o institución.
-            </p>
-            <div className="flex items-center gap-2 mt-6">
-              <Coord light>EST. CDMX · 2026</Coord>
-            </div>
-          </div>
-          {[
-            { h: "Plataforma", l: [
-              { t: "Funciones", href: "/#funciones" },
-              { t: "Simulador", href: "/#simulador" },
-              { t: "Tutor IA", href: "/#yaris" },
-              { t: "Precios", href: "/#precios" },
-            ] },
-            { h: "Recursos", l: [
-              { t: "Blog", href: "/blog" },
-              { t: "Preguntas frecuentes", href: "/faq" },
-              { t: "Centro de respuestas CIAAC", href: "/respuestas" },
-              { t: "Examen CIAAC — Piloto Comercial", href: "/ciaac" },
-              { t: "Convocatoria CIAAC 2026", href: "/convocatoria-ciaac-2026" },
-              { t: "Calculadora de horas de estudio", href: "/calculadora-ciaac" },
-              { t: "Convocatoria Aeroméxico · Embraer 190", href: "/convocatoria-aeromexico" },
-              { t: "Fuentes del temario — Línea Aérea", href: "/linea-aerea" },
-              { t: "Examen RTARI — entrevista en inglés", href: "/examen-rtari" },
-              { t: "Examen COMPASS — aptitudes de piloto", href: "/examen-compass" },
-              { t: "Estudiar el Boeing 737 MAX", href: "/estudiar-737-max" },
-              { t: "¿Cómo elegir plataforma?", href: "/mejor-plataforma-ciaac" },
-              { t: "AFAC (sitio oficial)", href: "https://www.gob.mx/afac", ext: true },
-            ] },
-            { h: "FlightPath", l: [
-              { t: "Sobre FlightPath", href: "/sobre-flightpath" },
-              { t: "Términos y condiciones", href: "/legal" },
-              { t: "Contacto", href: "mailto:contacto@flightpath.mx" },
-            ] },
-          ].map((c, i) => (
-            <div key={i}>
-              <div className="text-[11px] uppercase tracking-[0.18em] font-bold text-white/40">{c.h}</div>
-              <ul className="mt-5 space-y-3">
-                {c.l.map((x) => (
-                  <li key={x.t}>
-                    <a href={x.href} target={"ext" in x && x.ext ? "_blank" : undefined} rel={"ext" in x && x.ext ? "noreferrer" : undefined}
-                       className="text-[13.5px] text-white/70 hover:text-coral-400 transition-colors">{x.t}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-        <div className="mt-7 flex flex-wrap items-center justify-between gap-4">
-          <div className="text-[12px] text-white/40">© 2026 FlightPath. Hecho con cuidado en CDMX.</div>
-          <Coord light>v1.0.0 · CIAAC 2026</Coord>
-        </div>
-      </div>
-    </footer>
   );
 }
 
@@ -1541,7 +1940,17 @@ export function Footer() {
    ═══════════════════════════════════════════════════════════════════ */
 
 type Sky = "hueso" | "cherry" | "azul";
-function ThemeSwitcher({ sky, setSky, show, setShow }: { sky: Sky; setSky: (s: Sky) => void; show: boolean; setShow: (s: boolean) => void }) {
+function ThemeSwitcher({
+  sky,
+  setSky,
+  show,
+  setShow,
+}: {
+  sky: Sky;
+  setSky: (s: Sky) => void;
+  show: boolean;
+  setShow: (s: boolean) => void;
+}) {
   const [open, setOpen] = useState(false);
   return (
     <div className="fixed bottom-5 right-5 z-50 font-mono text-[11px]">
@@ -1549,28 +1958,48 @@ function ThemeSwitcher({ sky, setSky, show, setShow }: { sky: Sky; setSky: (s: S
         <div className="mb-3 w-[260px] rounded-2xl border border-ink/10 bg-white shadow-lift p-4">
           <div className="flex items-center justify-between mb-3">
             <span className="font-display text-[13px] text-ink">Cielo</span>
-            <button onClick={() => setOpen(false)} className="text-ink/50 hover:text-ink"><Icon n="close" className="w-4 h-4" /></button>
+            <button onClick={() => setOpen(false)} className="text-ink/50 hover:text-ink">
+              <Icon n="close" className="w-4 h-4" />
+            </button>
           </div>
           <div className="grid grid-cols-3 gap-1.5 mb-4">
             {(["hueso", "cherry", "azul"] as Sky[]).map((s) => (
-              <button key={s} onClick={() => setSky(s)}
-                className={`rounded-lg p-2 border transition-all ${sky === s ? "border-coral-600 bg-coral-50 text-coral-700" : "border-ink/10 text-ink/65 hover:border-ink/25"}`}>
-                <span className="block w-full h-5 rounded mb-1 border border-ink/8" style={{
-                  background: s === "cherry" ? "linear-gradient(180deg,#FBE7EC,#F6D9E1)" : s === "azul" ? "linear-gradient(180deg,#E7EFFB,#DAE6F6)" : "linear-gradient(180deg,#FBFAF7,#F8F7F3)",
-                }} />
+              <button
+                key={s}
+                onClick={() => setSky(s)}
+                className={`rounded-lg p-2 border transition-all ${sky === s ? "border-coral-600 bg-coral-50 text-coral-700" : "border-ink/10 text-ink/65 hover:border-ink/25"}`}
+              >
+                <span
+                  className="block w-full h-5 rounded mb-1 border border-ink/8"
+                  style={{
+                    background:
+                      s === "cherry"
+                        ? "linear-gradient(180deg,#FBE7EC,#F6D9E1)"
+                        : s === "azul"
+                          ? "linear-gradient(180deg,#E7EFFB,#DAE6F6)"
+                          : "linear-gradient(180deg,#FBFAF7,#F8F7F3)",
+                  }}
+                />
                 <span className="text-[10.5px] font-semibold">{s}</span>
               </button>
             ))}
           </div>
           <label className="flex items-center justify-between gap-3 text-ink/70">
             <span className="text-[12px]">Cuenta regresiva</span>
-            <input type="checkbox" checked={show} onChange={(e) => setShow(e.target.checked)} className="accent-coral-600" />
+            <input
+              type="checkbox"
+              checked={show}
+              onChange={(e) => setShow(e.target.checked)}
+              className="accent-coral-600"
+            />
           </label>
         </div>
       )}
-      <button onClick={() => setOpen(!open)}
+      <button
+        onClick={() => setOpen(!open)}
         className="w-11 h-11 rounded-full bg-ink text-white shadow-navy grid place-items-center hover:bg-ink-800 transition-colors"
-        aria-label="Tema">
+        aria-label="Tema"
+      >
         <Icon n="moon" className="w-4 h-4" />
       </button>
     </div>
@@ -1587,7 +2016,9 @@ function LandingPage() {
   useEffect(() => {
     document.body.classList.remove("theme-hueso", "theme-cherry", "theme-azul");
     document.body.classList.add("theme-" + sky);
-    return () => { document.body.classList.remove("theme-hueso", "theme-cherry", "theme-azul"); };
+    return () => {
+      document.body.classList.remove("theme-hueso", "theme-cherry", "theme-azul");
+    };
   }, [sky]);
 
   return (
@@ -1611,4 +2042,3 @@ function LandingPage() {
     </>
   );
 }
-

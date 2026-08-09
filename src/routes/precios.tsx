@@ -12,7 +12,7 @@
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Nav, Footer, SectionHead, Btn, Pill, Icon, PlaneField } from "@/routes/index";
+import { Nav, Footer, SectionHead, Btn, Pill, Icon, PlaneField } from "@/components/landing/shared";
 import { useSessionUser } from "@/lib/store";
 import { getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
 import {
@@ -62,7 +62,11 @@ const FAQS = [
 
 const COMPARE: Array<{ label: string; basica: string | boolean; pro: string | boolean }> = [
   { label: "Banco de preguntas CIAAC", basica: "Muestra por materia", pro: "Completo" },
-  { label: "Bancos de Línea Aérea (ATP · Jeppesen · Handbook)", basica: false, pro: "Completo por capítulos" },
+  {
+    label: "Bancos de Línea Aérea (ATP · Jeppesen · Handbook)",
+    basica: false,
+    pro: "Completo por capítulos",
+  },
   { label: "Cuestionarios de práctica", basica: "Limitados", pro: "Ilimitados" },
   { label: "Simulador de examen", basica: "1 al mes", pro: "Ilimitados" },
   { label: "Yaris con IA conversacional", basica: false, pro: true },
@@ -81,8 +85,10 @@ export const Route = createFileRoute("/precios")({
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESC },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://flightpath.mx/precios" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://flightpath.mx/precios" }],
   }),
   component: PreciosPage,
 });
@@ -120,7 +126,8 @@ function PreciosPage() {
 
   const anual = ciclo === "anual";
   const doceMeses = monthly.amount * 12;
-  const ahorroPct = doceMeses > 0 ? Math.max(0, Math.round(((doceMeses - annual.amount) / doceMeses) * 100)) : 0;
+  const ahorroPct =
+    doceMeses > 0 ? Math.max(0, Math.round(((doceMeses - annual.amount) / doceMeses) * 100)) : 0;
   const precioPro = anual ? annual : monthly;
   const periodo = anual ? "/ año" : "/ mes";
   const equivalente = anual ? Math.round(annual.amount / 12) : monthly.amount;
@@ -132,7 +139,6 @@ function PreciosPage() {
   const buySearch: Record<string, unknown> = user
     ? { checkout: 1, plan }
     : { next: `/dashboard/planes?checkout=1&plan=${plan}` };
-
 
   const faqLd = {
     "@context": "https://schema.org",
@@ -146,7 +152,10 @@ function PreciosPage() {
 
   return (
     <div className="min-h-screen bg-bone text-ink">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
       <Nav />
 
       {/* ── Hero ─────────────────────────────────────────────── */}
@@ -194,15 +203,24 @@ function PreciosPage() {
           <div className="mt-10 grid gap-5 md:grid-cols-2">
             {/* Básica */}
             <div className="rounded-3xl border border-ink/8 bg-white p-8 shadow-card lg:p-10">
-              <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-haze-500">FlightPath Básica</div>
+              <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-haze-500">
+                FlightPath Básica
+              </div>
               <div className="mt-5 flex items-baseline gap-2">
                 <span className="font-display text-6xl tracking-tight text-ink">$0</span>
                 <span className="text-sm text-ink/45">MXN</span>
               </div>
               <p className="mt-3 text-[14px] text-ink/55">
-                Para conocer la plataforma: una muestra del banco, un simulador al mes y tu bitácora de estudio.
+                Para conocer la plataforma: una muestra del banco, un simulador al mes y tu bitácora
+                de estudio.
               </p>
-              <Btn kind="light" size="lg" icon="arrow" className="mt-7 w-full" to={user ? "/dashboard" : "/register"}>
+              <Btn
+                kind="light"
+                size="lg"
+                icon="arrow"
+                className="mt-7 w-full"
+                to={user ? "/dashboard" : "/register"}
+              >
                 {user ? "Ir a mi dashboard" : "Crear cuenta gratis"}
               </Btn>
               <ul className="mt-8 space-y-3">
@@ -224,7 +242,9 @@ function PreciosPage() {
             <div className="relative overflow-hidden rounded-3xl bg-ink p-8 shadow-navy lg:p-10">
               <div
                 className="pointer-events-none absolute -right-12 -top-12 h-52 w-52 rounded-full"
-                style={{ background: "radial-gradient(closest-side, rgba(242,174,188,0.22), transparent)" }}
+                style={{
+                  background: "radial-gradient(closest-side, rgba(242,174,188,0.22), transparent)",
+                }}
               />
               <div className="relative">
                 <div className="flex items-center justify-between gap-3">
@@ -244,13 +264,13 @@ function PreciosPage() {
                 <div className="mt-2 text-[13px] text-white/60">
                   {anual ? (
                     <>
-                      Equivale a ${equivalente.toLocaleString("es-MX")} {annual.currency} al mes · ahorras{" "}
-                      <b className="text-coral-300">{ahorroPct}%</b> frente al mensual
+                      Equivale a ${equivalente.toLocaleString("es-MX")} {annual.currency} al mes ·
+                      ahorras <b className="text-coral-300">{ahorroPct}%</b> frente al mensual
                     </>
                   ) : (
                     <>
-                      Con el anual pagas ${annual.amount.toLocaleString("es-MX")} {annual.currency} y ahorras{" "}
-                      <b className="text-coral-300">{ahorroPct}%</b>
+                      Con el anual pagas ${annual.amount.toLocaleString("es-MX")} {annual.currency}{" "}
+                      y ahorras <b className="text-coral-300">{ahorroPct}%</b>
                     </>
                   )}
                 </div>
@@ -268,11 +288,19 @@ function PreciosPage() {
                     )}
                   </div>
                   <p className="mt-1.5 text-[12.5px] leading-relaxed text-white/55">
-                    Se cobra una sola vez junto con tu primer periodo y activa tu acceso al material del curso.
+                    Se cobra una sola vez junto con tu primer periodo y activa tu acceso al material
+                    del curso.
                   </p>
                 </div>
 
-                <Btn kind="primary" size="lg" icon="arrow" className="mt-6 w-full" to={buyTo} search={buySearch}>
+                <Btn
+                  kind="primary"
+                  size="lg"
+                  icon="arrow"
+                  className="mt-6 w-full"
+                  to={buyTo}
+                  search={buySearch}
+                >
                   {user ? "Suscribirme a Pro" : "Empezar con Pro"}
                 </Btn>
                 <p className="mt-3 text-center text-[12px] text-white/45">
@@ -314,16 +342,27 @@ function PreciosPage() {
           />
           <div className="mt-10 overflow-x-auto rounded-3xl border border-ink/8 bg-white shadow-card">
             <table className="w-full min-w-[560px] border-collapse text-left">
-              <caption className="sr-only">Comparación de funciones entre el plan Básica y el plan Pro</caption>
+              <caption className="sr-only">
+                Comparación de funciones entre el plan Básica y el plan Pro
+              </caption>
               <thead>
                 <tr className="border-b border-ink/8">
-                  <th scope="col" className="px-5 py-4 text-[12px] font-bold uppercase tracking-[0.14em] text-haze-500">
+                  <th
+                    scope="col"
+                    className="px-5 py-4 text-[12px] font-bold uppercase tracking-[0.14em] text-haze-500"
+                  >
                     Función
                   </th>
-                  <th scope="col" className="px-5 py-4 text-[12px] font-bold uppercase tracking-[0.14em] text-haze-500">
+                  <th
+                    scope="col"
+                    className="px-5 py-4 text-[12px] font-bold uppercase tracking-[0.14em] text-haze-500"
+                  >
                     Básica
                   </th>
-                  <th scope="col" className="px-5 py-4 text-[12px] font-bold uppercase tracking-[0.14em] text-coral-700">
+                  <th
+                    scope="col"
+                    className="px-5 py-4 text-[12px] font-bold uppercase tracking-[0.14em] text-coral-700"
+                  >
                     Pro
                   </th>
                 </tr>
@@ -355,10 +394,16 @@ function PreciosPage() {
           <SectionHead center eyebrow="Preguntas" title={<>Dudas frecuentes de pago</>} />
           <div className="mt-10 space-y-3">
             {FAQS.map((f) => (
-              <details key={f.q} className="group rounded-2xl border border-ink/8 bg-white px-5 py-4 shadow-card">
+              <details
+                key={f.q}
+                className="group rounded-2xl border border-ink/8 bg-white px-5 py-4 shadow-card"
+              >
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[15px] font-semibold text-ink">
-                  {f.q}
-                  <Icon n="arrow" className="h-4 w-4 shrink-0 text-coral-600 transition-transform group-open:rotate-90" />
+                  <h3 style={{ margin: 0, font: "inherit" }}>{f.q}</h3>
+                  <Icon
+                    n="arrow"
+                    className="h-4 w-4 shrink-0 text-coral-600 transition-transform group-open:rotate-90"
+                  />
                 </summary>
                 <p className="mt-3 text-[14.5px] leading-relaxed text-ink/60">{f.a}</p>
               </details>
@@ -373,7 +418,9 @@ function PreciosPage() {
           <div className="relative overflow-hidden rounded-[32px] bg-ink px-8 py-14 text-center shadow-navy lg:px-16">
             <div
               className="pointer-events-none absolute -left-16 -top-16 h-64 w-64 rounded-full"
-              style={{ background: "radial-gradient(closest-side, rgba(242,174,188,0.18), transparent)" }}
+              style={{
+                background: "radial-gradient(closest-side, rgba(242,174,188,0.18), transparent)",
+              }}
             />
             <div className="relative">
               <h2 className="font-display text-3xl leading-tight text-white lg:text-[42px]">
@@ -411,7 +458,11 @@ function Cell({ value, pro = false }: { value: string | boolean; pro?: boolean }
   if (value === true)
     return (
       <span className="inline-flex items-center gap-1.5">
-        <Icon n="check" className={`h-4 w-4 ${pro ? "text-coral-600" : "text-haze-400"}`} sw={2.2} />
+        <Icon
+          n="check"
+          className={`h-4 w-4 ${pro ? "text-coral-600" : "text-haze-400"}`}
+          sw={2.2}
+        />
         <span className="sr-only">Incluido</span>
       </span>
     );

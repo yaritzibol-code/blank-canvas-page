@@ -1,0 +1,132 @@
+/**
+ * Fuentes self-hosteadas (antes: CSS externo de Google Fonts, render-blocking
+ * y dependencia de terceros en el camino crítico). Los woff2 (subset latin,
+ * cubre el español) viven en public/fonts y se sirven del mismo dominio.
+ * Origen de los archivos: paquetes @fontsource (licencias OFL).
+ */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300;
+  src: url(/fonts/bricolage-grotesque-latin-300-normal.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(/fonts/bricolage-grotesque-latin-400-normal.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(/fonts/bricolage-grotesque-latin-500-normal.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(/fonts/bricolage-grotesque-latin-600-normal.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(/fonts/bricolage-grotesque-latin-700-normal.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 800;
+  src: url(/fonts/bricolage-grotesque-latin-800-normal.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300;
+  src: url(/fonts/manrope-latin-300-normal.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(/fonts/manrope-latin-400-normal.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(/fonts/manrope-latin-500-normal.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(/fonts/manrope-latin-600-normal.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(/fonts/manrope-latin-700-normal.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 800;
+  src: url(/fonts/manrope-latin-800-normal.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(/fonts/instrument-serif-latin-400-normal.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(/fonts/instrument-serif-latin-400-italic.woff2) format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(/fonts/jetbrains-mono-latin-400-normal.woff2) format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(/fonts/jetbrains-mono-latin-500-normal.woff2) format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(/fonts/jetbrains-mono-latin-600-normal.woff2) format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(/fonts/jetbrains-mono-latin-700-normal.woff2) format("woff2");
+}

@@ -7,6 +7,13 @@ import { read, write, todayKey } from "./db";
 import { cloudEnabled } from "./cloud";
 import { hashPassword, defaultPrefs } from "./auth";
 import { MATERIAS_DEF } from "./materias";
+import {
+  SEED_VERSION,
+  DEMO_STUDENT_ID,
+  DEMO_ADMIN_ID,
+  DEMO_BASIC_ID,
+  DEMO_PASSWORD,
+} from "./seed-meta";
 import { SEED_QUESTIONS } from "./seed-questions";
 import { LINEA_AEREA_QUESTIONS } from "./seed-linea-aerea";
 import { LINEA_AEREA_OFICIAL } from "./seed-linea-aerea-oficial";
@@ -27,7 +34,7 @@ import type {
   User,
 } from "./types";
 
-export const SEED_VERSION = 8;
+export { SEED_VERSION, DEMO_STUDENT_ID, DEMO_ADMIN_ID, DEMO_BASIC_ID, DEMO_PASSWORD };
 
 const pad3 = (n: number) => String(n).padStart(3, "0");
 
@@ -37,11 +44,6 @@ function daysAgoISO(days: number, hour = 18): string {
   d.setHours(hour, 15, 0, 0);
   return d.toISOString();
 }
-
-export const DEMO_STUDENT_ID = "usr_maria";
-export const DEMO_ADMIN_ID = "usr_admin";
-export const DEMO_BASIC_ID = "usr_carlos";
-export const DEMO_PASSWORD = "flightpath2026";
 
 function seedUsers(): User[] {
   const registeredAt = daysAgoISO(150, 10);

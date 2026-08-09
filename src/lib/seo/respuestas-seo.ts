@@ -33,7 +33,14 @@ export interface RespuestaSeo {
   relacionadas: string[];
   /** Páginas del sitio para profundizar. */
   paginas: { label: string; href: string }[];
-  categoria: "Examen CIAAC" | "Convocatoria de línea aérea" | "Preparación";
+  categoria:
+    | "Examen CIAAC"
+    | "Convocatoria de línea aérea"
+    | "Preparación"
+    | "Inglés y RTARI"
+    | "Selección y aptitudes";
+  /** Fecha de publicación propia (si difiere de RESPUESTAS_PUBLICADO). */
+  publicado?: string;
 }
 
 /** Fechas de publicación/actualización para el schema Article (freshness). */
@@ -982,6 +989,264 @@ export const RESPUESTAS_SEO: RespuestaSeo[] = [
     ],
     categoria: "Convocatoria de línea aérea",
   },
+
+  /* ─── Inglés y RTARI (spokes de /examen-rtari) ─── */
+  {
+    slug: "que-es-el-examen-rtari",
+    pregunta: "¿Qué es el examen RTARI?",
+    keywords:
+      "que es el examen rtari, rtari significado, radiotelefonista aeronautico restringido internacional, examen rtari afac",
+    respuestaCorta:
+      "El RTARI es el certificado de capacidad de Radiotelefonista Aeronáutico Restringido Internacional: acredita ante la autoridad aeronáutica mexicana tu competencia lingüística en inglés con la escala OACI. El mínimo para operar internacionalmente es el nivel 4 de 6, y la parte decisiva de la evaluación es una entrevista oral en inglés.",
+    secciones: [
+      {
+        h2: "¿Para qué sirve el RTARI?",
+        parrafos: [
+          "Habilita las radiocomunicaciones aeronáuticas en inglés: sin él no hay operaciones donde el inglés es el idioma de la frecuencia — que en la práctica significa rutas internacionales y cualquier aerolínea con ambiciones fuera del espacio doméstico.",
+          "Las aerolíneas lo dan por sentado en sus procesos de selección: llegar sin nivel 4 vigente descarta candidatos antes de la primera entrevista.",
+        ],
+      },
+      {
+        h2: "¿Cómo se evalúa?",
+        parrafos: [
+          "Con la escala de competencia lingüística de la OACI: seis áreas (pronunciación, estructura, vocabulario, fluidez, comprensión e interacción) calificadas por separado, y una regla que sorprende: tu nivel global es el más bajo de las seis, no el promedio.",
+          "El trámite y los centros donde se presenta los define la autoridad — verifica los requisitos vigentes con la AFAC antes de agendar.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "¿El RTARI es una licencia?",
+        a: "No: es un certificado de capacidad, complementario a tus licencias de piloto. Acredita una habilidad específica — comunicarte en inglés aeronáutico — y tiene su propia vigencia y renovación.",
+      },
+      {
+        q: "¿Cómo se practica la entrevista del RTARI?",
+        a: "Hablando: es una evaluación oral. En FlightPath la practicas con un sinodal de IA por voz que te entrevista en inglés, te repregunta y te entrega un debrief por las seis áreas OACI — las veces que quieras, sin agendar.",
+      },
+    ],
+    relacionadas: ["que-nivel-de-ingles-necesito-para-ser-piloto", "que-es-el-ingles-oaci"],
+    paginas: [{ label: "Examen RTARI: guía completa y práctica", href: "/examen-rtari" }],
+    categoria: "Inglés y RTARI",
+    publicado: "2026-08-09",
+  },
+  {
+    slug: "que-nivel-de-ingles-necesito-para-ser-piloto",
+    pregunta: "¿Qué nivel de inglés necesito para ser piloto?",
+    keywords:
+      "que nivel de ingles necesito para ser piloto, nivel 4 oaci, ingles para pilotos, nivel de ingles aerolinea",
+    respuestaCorta:
+      "El estándar es el nivel 4 OACI (operacional), en una escala de 1 a 6: comunicarte con eficacia en inglés aeronáutico, aunque con acento y errores ocasionales que no impidan entenderte. En México se acredita con el certificado RTARI, y las aerolíneas lo exigen como requisito de entrada en sus convocatorias.",
+    secciones: [
+      {
+        h2: "La escala OACI en corto",
+        parrafos: [
+          "Del 1 (pre-elemental) al 6 (experto). El 4 es el mínimo operacional aceptado; el 5 (extendido) da vigencias más largas y el 6 no vence. La evaluación no es un examen de gramática escolar: mide si puedes escuchar, entender y responder en contexto aeronáutico, incluida una entrevista oral.",
+        ],
+      },
+      {
+        h2: "¿Inglés general o inglés aeronáutico?",
+        parrafos: [
+          "Los dos. La base es inglés general sólido; encima va el vocabulario y los patrones del inglés de cabina: fraseología, situaciones operacionales, describir problemas técnicos. El error típico es prepararlo leyendo: la evaluación es oral y se entrena hablando.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "¿Con nivel 3 OACI puedo volar?",
+        a: "El nivel 3 (pre-operacional) está por debajo del mínimo aceptado para operaciones internacionales en inglés. El objetivo realista de cualquier aspirante a aerolínea es el 4 — y si puedes certificar 5, mejor: renovaciones más espaciadas y mejor carta de presentación.",
+      },
+      {
+        q: "¿Cómo subo de nivel si no tengo con quién practicar?",
+        a: "Con práctica oral estructurada y frecuente: entrevistas simuladas, describir situaciones en voz alta, escuchar comunicaciones reales. El módulo RTARI de FlightPath te da un sinodal de voz disponible 24/7 con debrief por las seis áreas OACI, para dirigir el esfuerzo al área que te fija el nivel.",
+      },
+    ],
+    relacionadas: ["que-es-el-examen-rtari", "que-es-el-ingles-oaci"],
+    paginas: [{ label: "Practica la entrevista RTARI por voz", href: "/examen-rtari" }],
+    categoria: "Inglés y RTARI",
+    publicado: "2026-08-09",
+  },
+  {
+    slug: "cada-cuanto-se-renueva-el-rtari",
+    pregunta: "¿Cada cuánto se renueva el RTARI?",
+    keywords:
+      "cada cuanto se renueva el rtari, vigencia rtari, renovacion rtari nivel 4, cuanto dura el rtari",
+    respuestaCorta:
+      "La vigencia del RTARI depende del nivel OACI que certifiques: el esquema clásico renueva el nivel 4 periódicamente (tradicionalmente cada 3 años), da plazos más largos al nivel 5 y no vence con el nivel 6. La autoridad ha anunciado ajustes al esquema de certificación lingüística, así que confirma el plazo vigente con la AFAC antes de programar tu renovación.",
+    secciones: [
+      {
+        h2: "Por qué renovar no debería asustarte",
+        parrafos: [
+          "La renovación evalúa lo mismo que la certificación inicial: tu inglés operacional real. Quien mantiene el idioma vivo — vuela en inglés, practica entrevistas, consume material técnico — llega a renovar sin drama. Quien lo congela tres años, vuelve a empezar.",
+          "La estrategia barata: práctica oral corta pero constante entre renovaciones, en lugar de un curso de pánico cada vencimiento. Y si puedes subir a nivel 5, cada renovación se espacia.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "¿Qué pasa si se me vence el RTARI?",
+        a: "Sin certificado vigente no puedes ejercer las atribuciones que ampara — las comunicaciones internacionales en inglés. Los detalles del trámite de renovación y sus tiempos los publica la AFAC; no dejes el vencimiento para el mes del trámite.",
+      },
+    ],
+    relacionadas: ["que-es-el-examen-rtari", "que-nivel-de-ingles-necesito-para-ser-piloto"],
+    paginas: [{ label: "Examen RTARI: guía y práctica de entrevista", href: "/examen-rtari" }],
+    categoria: "Inglés y RTARI",
+    publicado: "2026-08-09",
+  },
+
+  /* ─── Selección y aptitudes (spokes de /examen-compass y /estudiar-737-max) ─── */
+  {
+    slug: "que-es-el-examen-compass-de-seleccion",
+    pregunta: "¿Qué es el examen COMPASS de selección de pilotos?",
+    keywords:
+      "que es el examen compass, compass test pilotos, prueba compass seleccion, compass epst que evalua",
+    respuestaCorta:
+      "El COMPASS (Computerised Pilot Aptitude Screening System) es una batería computarizada de pruebas de aptitud desarrollada por la firma europea EPST, usada por escuelas de vuelo, programas de cadetes y aerolíneas para evaluar candidatos a piloto. Sus módulos típicos miden coordinación mano-ojo, memoria de corto plazo, cálculo mental, orientación espacial y capacidad de multitarea.",
+    secciones: [
+      {
+        h2: "¿Dónde te lo vas a encontrar?",
+        parrafos: [
+          "Al inicio de procesos de selección: escuelas que filtran aspirantes antes de invertir horas de vuelo en ellos, programas de cadetes y aerolíneas que criban candidatos. Cada institución decide qué versión aplica, qué módulos pesa más y dónde pone el corte — el formato exacto lo define tu convocatoria.",
+        ],
+      },
+      {
+        h2: "¿Se puede preparar?",
+        parrafos: [
+          "La aptitud base es estable, pero el desempeño del día depende también de familiaridad: quien nunca ha hecho tracking compensatorio ni multitarea cronometrada pierde puntos por sorpresa, no por falta de capacidad. Esa parte sí se entrena — con ejercicios de las mismas familias de aptitud, práctica medida y descanso antes de la prueba.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "¿FlightPath ofrece el COMPASS?",
+        a: "No: COMPASS es un producto de EPST, con quien FlightPath no tiene afiliación. Lo que FlightPath ofrece es un entrenador con seis ejercicios originales de esas mismas familias de aptitud — control biaxial, slalom, memoria, cálculo, orientación y multitarea — jugables con teclado, mouse o touch.",
+      },
+      {
+        q: "¿Cuánto dura una prueba de aptitud tipo COMPASS?",
+        a: "Depende de la versión y la institución; las baterías suelen tomar del orden de una a dos horas con todos sus módulos. El dato exacto viene en tu convocatoria. Para entrenar la resistencia, el simulacro compacto de FlightPath encadena los seis ejercicios en una sola sesión.",
+      },
+    ],
+    relacionadas: ["como-practicar-para-el-examen-compass", "que-es-aon-aviation-suite"],
+    paginas: [{ label: "Entrena las 6 aptitudes tipo COMPASS", href: "/examen-compass" }],
+    categoria: "Selección y aptitudes",
+    publicado: "2026-08-09",
+  },
+  {
+    slug: "como-practicar-para-el-examen-compass",
+    pregunta: "¿Cómo practicar para el examen COMPASS?",
+    keywords:
+      "como practicar para el examen compass, practicar compass test, ejercicios compass online, entrenar aptitudes piloto",
+    respuestaCorta:
+      "Practica las familias de aptitud que evalúa la prueba — tracking compensatorio de dos ejes, seguimiento tipo slalom, memoria de corto plazo, cálculo mental aeronáutico, orientación espacial y multitarea — con ejercicios cronometrados y puntuación comparable entre sesiones, y cierra con simulacros que encadenen todos los módulos. La regla de oro: el día de la prueba no debería ser tu primera vez haciendo ninguna de esas tareas.",
+    secciones: [
+      {
+        h2: "Un plan de práctica que funciona",
+        parrafos: [
+          "Semana 1: prueba los seis tipos de ejercicio y encuentra tu módulo débil (el radar de aptitudes de FlightPath te lo dice con datos). Semanas siguientes: sesiones cortas y frecuentes — 15 a 20 minutos diarios rinden más que un maratón semanal — con el módulo débil primero. Última semana: simulacros completos y descanso real; las pruebas de aptitud miden vigilancia casi tanto como habilidad.",
+        ],
+      },
+      {
+        h2: "Qué medir para saber que mejoras",
+        parrafos: [
+          "Tu tendencia contra tu propia línea base, con reglas de puntuación fijas: si el sistema cambia la calificación entre versiones, tu 'mejora' puede ser inflación. En FlightPath la puntuación es determinista y versionada — la tendencia solo compara sesiones calificadas con las mismas reglas — y el debrief te dice qué métrica concreta te está costando puntos.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "¿Necesito joystick para practicar?",
+        a: "Para las pruebas reales depende del centro; para entrenar las aptitudes, no: los ejercicios de FlightPath están diseñados para teclado, mouse y touch — el hardware que sí tienes. Lo que entrenas es la aptitud (anticipación, coordinación, reparto de atención), que transfiere entre dispositivos.",
+      },
+      {
+        q: "¿Cuánto tiempo antes debo empezar a practicar?",
+        a: "Idealmente 3–4 semanas antes, con sesiones cortas y constantes. Practicar la noche anterior solo te quita sueño — y el descanso pesa en estas pruebas tanto como la práctica.",
+      },
+    ],
+    relacionadas: [
+      "que-es-el-examen-compass-de-seleccion",
+      "como-prepararse-para-aon-aviation-suite",
+    ],
+    paginas: [{ label: "Empieza a entrenar aptitudes gratis", href: "/examen-compass" }],
+    categoria: "Selección y aptitudes",
+    publicado: "2026-08-09",
+  },
+  {
+    slug: "que-evalua-un-examen-psicometrico-para-pilotos",
+    pregunta: "¿Qué evalúa un examen psicométrico para pilotos?",
+    keywords:
+      "examen psicometrico para pilotos, prueba psicometrica aviacion, test psicometrico aerolinea que evalua",
+    respuestaCorta:
+      "Los exámenes psicométricos de aviación evalúan dos planos: aptitudes cognitivas y psicomotoras — coordinación, memoria de trabajo, cálculo mental, orientación espacial, atención dividida y multitarea — y rasgos de personalidad y comportamiento relevantes para cabina, como manejo de estrés, toma de decisiones y trabajo en equipo. Cada institución arma su propia batería y define sus cortes.",
+    secciones: [
+      {
+        h2: "La parte de aptitudes: entrenable en su familiaridad",
+        parrafos: [
+          "Tracking compensatorio, seguimiento de trayectorias, retención de parámetros, aritmética bajo presión, orientación con instrumentos y tareas simultáneas con alertas. El formato exacto varía (COMPASS de EPST y las suites de evaluación de aerolíneas son ejemplos conocidos), pero las familias de aptitud se repiten — y la familiaridad con ellas es la parte que depende de ti.",
+        ],
+      },
+      {
+        h2: "La parte de personalidad: sin trucos",
+        parrafos: [
+          "Los cuestionarios de personalidad buscan consistencia, no respuestas 'correctas': detectan perfiles inflados y contradicciones. El único consejo honesto es responder con verdad y descansado. Donde sí puedes trabajar es en la evidencia conductual: cómo cuentas tus decisiones difíciles en la entrevista.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "¿Se puede reprobar un psicométrico?",
+        a: "Cada institución define cortes y perfiles; más que 'reprobar', quedas dentro o fuera del perfil que busca esa convocatoria en ese momento. Lo que sí está en tus manos: llegar entrenado en las aptitudes, descansado, y sin que el formato te sorprenda.",
+      },
+    ],
+    relacionadas: [
+      "que-es-el-examen-compass-de-seleccion",
+      "como-practicar-para-el-examen-compass",
+    ],
+    paginas: [
+      { label: "Entrenador de aptitudes de FlightPath", href: "/examen-compass" },
+      { label: "Practica la entrevista en inglés", href: "/examen-rtari" },
+    ],
+    categoria: "Selección y aptitudes",
+    publicado: "2026-08-09",
+  },
+  {
+    slug: "que-estudiar-para-la-entrevista-tecnica-de-una-aerolinea",
+    pregunta: "¿Qué estudiar para la entrevista técnica de una aerolínea?",
+    keywords:
+      "entrevista tecnica aerolinea que estudiar, preguntas entrevista tecnica piloto, entrevista tecnica 737 airbus",
+    respuestaCorta:
+      "Las entrevistas técnicas de aerolínea giran alrededor de tres bloques: limitaciones y memory items del equipo al que aplicas (o del que has volado), sistemas del avión explicados con claridad, y conocimiento aeronáutico general — rendimiento, meteorología, normativa. Se preparan con reactivos de práctica hasta que la recuperación sea inmediata: en la mesa no hay tiempo de 'déjame pensarlo'.",
+    secciones: [
+      {
+        h2: "El método: preguntas, no relectura",
+        parrafos: [
+          "Releer el FCOM completo es el plan que se siente productivo y rinde poco. Lo que la entrevista exige es recuperación rápida: que el límite, el flujo o el sistema salgan al primer intento. Eso se construye respondiendo cientos de reactivos con explicación, capítulo por capítulo, y reabriendo justo donde fallas.",
+          "Si tu convocatoria es de equipo Boeing, el banco del 737 MAX por capítulos del FCOM de FlightPath sigue exactamente esa lógica; para el conocimiento general, el banco CIAAC y las fuentes de línea aérea (ATP, PHAK, Jeppesen) cubren la base.",
+        ],
+      },
+      {
+        h2: "Lo que la técnica no cubre",
+        parrafos: [
+          "La misma convocatoria suele incluir inglés OACI, pruebas de aptitud y entrevista de competencias. Prepararlas por separado — y con la misma seriedad — es lo que distingue a los candidatos que avanzan de los que 'casi'.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "¿Qué preguntan en una entrevista técnica de piloto?",
+        a: "Típicamente: limitaciones del equipo (velocidades, pesos, altitudes), memory items, funcionamiento de sistemas (hidráulico, eléctrico, neumático, combustible), rendimiento y escenarios operacionales ('¿qué harías si…?'). El nivel de detalle depende de tu experiencia y del puesto.",
+      },
+      {
+        q: "¿Cuánto tiempo antes debo empezar a estudiar el avión?",
+        a: "Semanas, no días: la retención de cientos de números y flujos exige repaso espaciado. Un banco por capítulos te deja avanzar 20–30 reactivos diarios y llegar a la entrevista con el material fresco en lugar de recién leído.",
+      },
+    ],
+    relacionadas: ["que-es-el-examen-compass-de-seleccion", "requisitos-convocatoria-aeromexico"],
+    paginas: [
+      { label: "Estudiar el 737 MAX por capítulos del FCOM", href: "/estudiar-737-max" },
+      { label: "Fuentes del temario de línea aérea", href: "/linea-aerea" },
+    ],
+    categoria: "Selección y aptitudes",
+    publicado: "2026-08-09",
+  },
 ];
 
 export function respuestaBySlug(slug: string): RespuestaSeo | undefined {
@@ -992,4 +1257,6 @@ export const RESPUESTAS_CATEGORIAS: RespuestaSeo["categoria"][] = [
   "Examen CIAAC",
   "Convocatoria de línea aérea",
   "Preparación",
+  "Inglés y RTARI",
+  "Selección y aptitudes",
 ];

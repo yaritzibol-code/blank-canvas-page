@@ -20,7 +20,7 @@ import {
   PlaneField,
   SectionHead,
   type IconName,
-} from "./index";
+} from "@/components/landing/shared";
 
 /**
  * Landing AEO/GEO para la búsqueda "examen RTARI" y sus long-tail ("cómo es
@@ -36,7 +36,7 @@ import {
 const CANONICAL = "https://flightpath.mx/examen-rtari";
 const PUBLICADO = "2026-08-09";
 
-const RESPUESTA_CORTA = `El RTARI (Radiotelefonista Aeronáutico Restringido Internacional) es el certificado de capacidad con el que la autoridad aeronáutica mexicana acredita tu competencia lingüística en inglés según la escala OACI; el mínimo para operar internacionalmente es el nivel 4 de 6 y la parte decisiva es una entrevista oral en inglés. En FlightPath practicas esa entrevista en línea: un sinodal de IA te entrevista por voz en inglés, te repregunta como en el examen real y al terminar te entrega un debrief por las seis áreas OACI, con banco propio de ${RTARI_TOTAL} preguntas y historial de tu progreso.`;
+const RESPUESTA_CORTA = `El RTARI (Radiotelefonista Aeronáutico Restringido Internacional) es el certificado de capacidad con el que la autoridad aeronáutica mexicana acredita tu competencia lingüística en inglés según la escala OACI. El mínimo para operar internacionalmente es el nivel 4 de 6 y la parte decisiva es una entrevista oral en inglés. En FlightPath practicas esa entrevista en línea: un sinodal de IA te entrevista por voz en inglés, te repregunta como en el examen real y al terminar te entrega un debrief por las seis áreas OACI, con banco propio de ${RTARI_TOTAL} preguntas y historial de tu progreso.`;
 
 const DATOS_EXAMEN: { icon: IconName; titulo: string; detalle: string }[] = [
   {
@@ -284,8 +284,16 @@ function ExamenRtariPage() {
             </div>
             <p className="mt-4 text-[13px] text-ink/45">
               Transparencia: esta guía la publica FlightPath, que no está afiliada a la AFAC. La
-              información del examen es pública y general; los trámites vigentes se confirman con la
-              autoridad.
+              información del examen es pública y general; los trámites vigentes se confirman con la{" "}
+              <a
+                href="https://www.gob.mx/afac"
+                target="_blank"
+                rel="noreferrer"
+                className="underline hover:text-ink"
+              >
+                AFAC (gob.mx/afac)
+              </a>
+              . La escala de competencia lingüística es la de la OACI (Doc 9835).
             </p>
           </div>
         </section>
@@ -442,6 +450,26 @@ function ExamenRtariPage() {
           </div>
         </section>
 
+        {/* Curso vs práctica */}
+        <section className="relative py-14 lg:py-18" id="curso">
+          <div className="mx-auto max-w-[860px] px-6 lg:px-8">
+            <div className="rounded-3xl bg-white border border-ink/8 shadow-card p-7 lg:p-9">
+              <h2 className="font-display text-[24px] lg:text-[28px] text-ink tracking-tight">
+                ¿Buscas un curso RTARI?
+              </h2>
+              <p className="mt-3 text-[14.5px] text-ink/60 leading-relaxed">
+                Un curso con instructor te da estructura, teoría y fraseología — y se complementa,
+                no compite, con la práctica de FlightPath: las horas de conversación real que un
+                grupo no alcanza a darte a ti en persona. Si tu inglés de base es sólido y solo te
+                falta soltura de entrevista, muchos pilotos preparan el RTARI únicamente
+                practicando; si vienes desde más atrás, combina un curso con entrevistas simuladas
+                cada semana. En los dos casos, la regla es la misma: al examen se llega hablando, no
+                subrayando.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* FAQ */}
         <section className="relative py-14 lg:py-18" id="faq">
           <div className="mx-auto max-w-[860px] px-6 lg:px-8">
@@ -461,7 +489,7 @@ function ExamenRtariPage() {
                   className="group rounded-2xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card px-6 py-5"
                 >
                   <summary className="cursor-pointer list-none flex items-start justify-between gap-4 text-[15.5px] font-semibold text-ink">
-                    {f.q}
+                    <h3 style={{ margin: 0, font: "inherit" }}>{f.q}</h3>
                     <span className="text-coral-600 shrink-0 transition-transform group-open:rotate-180">
                       <Icon n="chevD" className="w-4 h-4" />
                     </span>

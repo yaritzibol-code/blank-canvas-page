@@ -6,7 +6,7 @@ import {
   respuestaBySlug,
   type RespuestaSeo,
 } from "@/lib/seo/respuestas-seo";
-import { AeroBackdrop, Btn, Coord, Footer, Icon, Nav, Pill } from "./index";
+import { AeroBackdrop, Btn, Coord, Footer, Icon, Nav, Pill } from "@/components/landing/shared";
 
 /**
  * Cluster AEO/GEO /respuestas/$slug — una página por pregunta conversacional,
@@ -248,7 +248,7 @@ function RespuestaPage() {
                 className="group rounded-2xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card px-6 py-5"
               >
                 <summary className="cursor-pointer list-none flex items-start justify-between gap-4 text-[15px] font-semibold text-ink">
-                  {f.q}
+                  <h3 style={{ margin: 0, font: "inherit" }}>{f.q}</h3>
                   <span className="text-coral-600 shrink-0 transition-transform group-open:rotate-180">
                     <Icon n="chevD" className="w-4 h-4" />
                   </span>

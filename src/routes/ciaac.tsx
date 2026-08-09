@@ -16,7 +16,7 @@ import {
   PlaneField,
   SectionHead,
   type IconName,
-} from "./index";
+} from "@/components/landing/shared";
 
 /**
  * Landing SEO pública del examen CIAAC (Piloto Comercial · AFAC).
@@ -106,8 +106,7 @@ export const Route = createFileRoute("/ciaac")({
       { title: "Examen CIAAC — Piloto Comercial AFAC: temario, simulador y práctica | FlightPath" },
       {
         name: "description",
-        content:
-          `Prepárate para el examen CIAAC de Piloto Aviador Comercial (AFAC, México). Practica las 12 materias del temario oficial, haz simulacros de ${SIM_TOTAL} preguntas cronometrados y estudia con una tutora IA. Empieza gratis.`,
+        content: `Prepárate para el examen CIAAC de Piloto Aviador Comercial (AFAC, México). Practica las 12 materias del temario oficial, haz simulacros de ${SIM_TOTAL} preguntas cronometrados y estudia con una tutora IA. Empieza gratis.`,
       },
       {
         name: "keywords",
@@ -117,8 +116,7 @@ export const Route = createFileRoute("/ciaac")({
       { property: "og:title", content: "Examen CIAAC — Piloto Comercial AFAC | FlightPath" },
       {
         property: "og:description",
-        content:
-          `Las 12 materias del temario oficial, simulacros de ${SIM_TOTAL} preguntas y una tutora IA que te dice dónde estás fallando.`,
+        content: `Las 12 materias del temario oficial, simulacros de ${SIM_TOTAL} preguntas y una tutora IA que te dice dónde estás fallando.`,
       },
       { property: "og:url", content: CANONICAL },
       { property: "og:type", content: "website" },
@@ -153,7 +151,11 @@ export const Route = createFileRoute("/ciaac")({
                 "Práctica de las 12 materias del temario oficial del CIAAC con banco de preguntas, simulador cronometrado, tutora IA y análisis de desempeño por materia.",
               inLanguage: "es-MX",
               url: CANONICAL,
-              provider: { "@type": "Organization", name: "FlightPath", url: "https://flightpath.mx/" },
+              provider: {
+                "@type": "Organization",
+                name: "FlightPath",
+                url: "https://flightpath.mx/",
+              },
               offers: {
                 "@type": "Offer",
                 price: String(PRO_MONTHLY_FALLBACK.amount),
@@ -170,7 +172,12 @@ export const Route = createFileRoute("/ciaac")({
             {
               "@type": "BreadcrumbList",
               itemListElement: [
-                { "@type": "ListItem", position: 1, name: "Inicio", item: "https://flightpath.mx/" },
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "Inicio",
+                  item: "https://flightpath.mx/",
+                },
                 { "@type": "ListItem", position: 2, name: "Examen CIAAC", item: CANONICAL },
               ],
             },
@@ -192,7 +199,9 @@ function Hero() {
           <div className="relative z-10">
             <div className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white/70 backdrop-blur px-3 py-1.5 shadow-card">
               <span className="w-1.5 h-1.5 rounded-full bg-coral-600 animate-pulse-dot" />
-              <span className="text-[12px] font-semibold text-ink/70">AFAC · Piloto Aviador Comercial</span>
+              <span className="text-[12px] font-semibold text-ink/70">
+                AFAC · Piloto Aviador Comercial
+              </span>
             </div>
             <h1 className="font-display mt-6 text-[40px] sm:text-[54px] lg:text-[60px] leading-[1.0] tracking-tight text-ink">
               Examen CIAAC:
@@ -203,12 +212,17 @@ function Hero() {
               y una tutora que te dice exactamente dónde estás fallando. Empieza gratis.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
-              <Btn kind="primary" size="lg" icon="arrow" href={START_HREF}>Empezar gratis</Btn>
-              <Btn kind="light" size="lg" iconLeft="book" href="#temario">Ver el temario</Btn>
+              <Btn kind="primary" size="lg" icon="arrow" href={START_HREF}>
+                Empezar gratis
+              </Btn>
+              <Btn kind="light" size="lg" iconLeft="book" href="#temario">
+                Ver el temario
+              </Btn>
             </div>
             <p className="mt-4 text-[12.5px] text-ink/45 flex items-center gap-1.5">
               <Icon n="shield" className="w-3.5 h-3.5" /> Sin tarjeta para empezar · Pro desde{" "}
-              {PRO_MONTHLY_FALLBACK.amount.toLocaleString("es-MX")} {PRO_MONTHLY_FALLBACK.currency}/mes
+              {PRO_MONTHLY_FALLBACK.amount.toLocaleString("es-MX")} {PRO_MONTHLY_FALLBACK.currency}
+              /mes
             </p>
           </div>
 
@@ -219,12 +233,18 @@ function Hero() {
                 <Icon n="target" className="w-3.5 h-3.5 text-coral-400" /> Simulador CIAAC
               </div>
               <div className="text-white text-[14px] leading-snug">
-                {SIM_TOTAL} preguntas, 5 horas,<br />
+                {SIM_TOTAL} preguntas, 5 horas,
+                <br />
                 <span className="text-coral-400 font-semibold">calificación al terminar.</span>
               </div>
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {["12 materias", "80% para aprobar", "Por materia"].map((t) => (
-                  <span key={t} className="text-[10.5px] font-mono text-white/70 border border-white/15 rounded-full px-2 py-0.5">{t}</span>
+                  <span
+                    key={t}
+                    className="text-[10.5px] font-mono text-white/70 border border-white/15 rounded-full px-2 py-0.5"
+                  >
+                    {t}
+                  </span>
                 ))}
               </div>
             </div>
@@ -242,17 +262,36 @@ function QueEs() {
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-start">
           <SectionHead
             eyebrow="El examen"
-            title={<>Qué es el <span className="text-coral-600">CIAAC.</span></>}
+            title={
+              <>
+                Qué es el <span className="text-coral-600">CIAAC.</span>
+              </>
+            }
             sub="El examen teórico del Centro Internacional de Adiestramiento de Aviación Civil, de la AFAC. Es el que separa a quien vuela por gusto de quien vuela por profesión."
           />
           <div className="space-y-3">
             {[
-              { icon: "doc" as IconName, text: "Es el examen teórico para la licencia de Piloto Aviador Comercial en México." },
-              { icon: "book" as IconName, text: "Cubre 12 materias del temario oficial en una sola evaluación." },
-              { icon: "target" as IconName, text: "El estándar de referencia para aprobar es 80% de aciertos." },
-              { icon: "clock" as IconName, text: "Es largo: se sostiene con constancia, no con un fin de semana de estudio." },
+              {
+                icon: "doc" as IconName,
+                text: "Es el examen teórico para la licencia de Piloto Aviador Comercial en México.",
+              },
+              {
+                icon: "book" as IconName,
+                text: "Cubre 12 materias del temario oficial en una sola evaluación.",
+              },
+              {
+                icon: "target" as IconName,
+                text: "El estándar de referencia para aprobar es 80% de aciertos.",
+              },
+              {
+                icon: "clock" as IconName,
+                text: "Es largo: se sostiene con constancia, no con un fin de semana de estudio.",
+              },
             ].map((r) => (
-              <div key={r.text} className="flex items-start gap-4 rounded-2xl bg-white/80 backdrop-blur-sm border border-ink/8 shadow-card px-5 py-4">
+              <div
+                key={r.text}
+                className="flex items-start gap-4 rounded-2xl bg-white/80 backdrop-blur-sm border border-ink/8 shadow-card px-5 py-4"
+              >
                 <span className="w-9 h-9 rounded-xl bg-coral-50 text-coral-700 grid place-items-center shrink-0">
                   <Icon n={r.icon} className="w-[18px] h-[18px]" />
                 </span>
@@ -277,7 +316,11 @@ function Temario() {
         <SectionHead
           center
           eyebrow="Temario oficial"
-          title={<>Las 12 materias, <span className="text-coral-600">una por una.</span></>}
+          title={
+            <>
+              Las 12 materias, <span className="text-coral-600">una por una.</span>
+            </>
+          }
           sub="Cada materia tiene su propio banco de preguntas con explicación y fuente. Practícalas por separado o mézclalas en una sola sesión."
         />
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -291,7 +334,9 @@ function Temario() {
                 <span className="w-10 h-10 rounded-xl bg-ink/5 text-ink grid place-items-center group-hover:bg-coral-50 group-hover:text-coral-700 transition-colors">
                   <Icon n={ICONO_MATERIA[m.slug] ?? "book"} className="w-5 h-5" />
                 </span>
-                <span className="font-mono text-[11px] text-ink/35">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-mono text-[11px] text-ink/35">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
               </div>
               <h3 className="font-display text-[18px] text-ink leading-snug">{m.name}</h3>
               <p className="text-[13.5px] text-ink/50 leading-relaxed">
@@ -304,7 +349,8 @@ function Temario() {
           ))}
         </div>
         <p className="mt-10 text-center text-[13px] text-ink/45">
-          El simulador reparte {SIM_TOTAL} preguntas entre las 12 materias, con el mismo peso del examen real.
+          El simulador reparte {SIM_TOTAL} preguntas entre las 12 materias, con el mismo peso del
+          examen real.
         </p>
       </div>
     </section>
@@ -318,12 +364,19 @@ function ComoFunciona() {
         <SectionHead
           center
           eyebrow="Cómo se estudia"
-          title={<>Practicar, simular, <span className="text-coral-600">corregir.</span></>}
+          title={
+            <>
+              Practicar, simular, <span className="text-coral-600">corregir.</span>
+            </>
+          }
           sub="No es leer y esperar. Es medir dónde estás, atacar el hueco y volver a medir."
         />
         <div className="mt-14 grid sm:grid-cols-2 gap-5">
           {COMO_FUNCIONA.map((c) => (
-            <div key={c.title} className="rounded-2xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card p-7">
+            <div
+              key={c.title}
+              className="rounded-2xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card p-7"
+            >
               <span className="w-11 h-11 rounded-xl bg-coral-50 text-coral-700 grid place-items-center mb-4">
                 <Icon n={c.icon} className="w-5 h-5" />
               </span>
@@ -332,6 +385,21 @@ function ComoFunciona() {
             </div>
           ))}
         </div>
+        <p className="mt-8 text-center text-[14px] text-ink/55 max-w-[700px] mx-auto leading-relaxed">
+          Y el CIAAC es solo la primera puerta: en la misma cuenta practicas la{" "}
+          <a href="/examen-rtari" className="font-semibold text-coral-700 hover:text-coral-600">
+            entrevista en inglés del RTARI
+          </a>
+          , entrenas{" "}
+          <a href="/examen-compass" className="font-semibold text-coral-700 hover:text-coral-600">
+            aptitudes tipo COMPASS
+          </a>{" "}
+          para selecciones y estudias{" "}
+          <a href="/estudiar-737-max" className="font-semibold text-coral-700 hover:text-coral-600">
+            el 737 MAX por capítulos
+          </a>
+          .
+        </p>
       </div>
     </section>
   );
@@ -342,7 +410,13 @@ function Incluye() {
     <section className="relative py-20 lg:py-24" id="incluye">
       <div className="mx-auto max-w-[1100px] px-6 lg:px-8">
         <div className="rounded-3xl bg-ink shadow-navy px-8 py-12 lg:px-14 lg:py-16 relative overflow-hidden">
-          <div aria-hidden className="absolute -top-24 -right-24 w-72 h-72 rounded-full" style={{ background: "radial-gradient(circle, rgba(242,174,188,.16) 0%, transparent 70%)" }} />
+          <div
+            aria-hidden
+            className="absolute -top-24 -right-24 w-72 h-72 rounded-full"
+            style={{
+              background: "radial-gradient(circle, rgba(242,174,188,.16) 0%, transparent 70%)",
+            }}
+          />
           <div className="relative z-10 grid lg:grid-cols-[1fr_1fr] gap-10 items-center">
             <div>
               <Eyebrow light>Tu acceso</Eyebrow>
@@ -353,16 +427,24 @@ function Incluye() {
                 Empieza gratis con la cuenta Básica. Pro abre el banco completo y el simulador sin
                 límite, con un pago único de inscripción de{" "}
                 {PRO_SETUP_FALLBACK.amount.toLocaleString("es-MX")} {PRO_SETUP_FALLBACK.currency} y
-                desde {PRO_MONTHLY_FALLBACK.amount.toLocaleString("es-MX")} {PRO_MONTHLY_FALLBACK.currency} al mes.
+                desde {PRO_MONTHLY_FALLBACK.amount.toLocaleString("es-MX")}{" "}
+                {PRO_MONTHLY_FALLBACK.currency} al mes.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Btn kind="primary" size="lg" icon="arrow" href={START_HREF}>Crear mi cuenta gratis</Btn>
-                <Btn kind="ghostLight" size="lg" href={BUY_HREF}>Ver Pro</Btn>
+                <Btn kind="primary" size="lg" icon="arrow" href={START_HREF}>
+                  Crear mi cuenta gratis
+                </Btn>
+                <Btn kind="ghostLight" size="lg" href={BUY_HREF}>
+                  Ver Pro
+                </Btn>
               </div>
             </div>
             <ul className="space-y-3">
               {INCLUYE.map((x) => (
-                <li key={x} className="flex items-start gap-3 text-[14.5px] text-white/75 leading-relaxed">
+                <li
+                  key={x}
+                  className="flex items-start gap-3 text-[14.5px] text-white/75 leading-relaxed"
+                >
                   <span className="w-5 h-5 rounded-full bg-coral-400/20 text-coral-400 grid place-items-center shrink-0 mt-0.5">
                     <Icon n="check" className="w-3 h-3" />
                   </span>
@@ -384,13 +466,20 @@ function PreguntasFrecuentes() {
         <SectionHead
           center
           eyebrow="Preguntas frecuentes"
-          title={<>Lo que todos <span className="text-coral-600">preguntan.</span></>}
+          title={
+            <>
+              Lo que todos <span className="text-coral-600">preguntan.</span>
+            </>
+          }
         />
         <div className="mt-12 space-y-3">
           {FAQS.map((f) => (
-            <details key={f.q} className="group rounded-2xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card px-6 py-5">
+            <details
+              key={f.q}
+              className="group rounded-2xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card px-6 py-5"
+            >
               <summary className="cursor-pointer list-none flex items-start justify-between gap-4 text-[15.5px] font-semibold text-ink">
-                {f.q}
+                <h3 style={{ margin: 0, font: "inherit" }}>{f.q}</h3>
                 <span className="text-coral-600 shrink-0 transition-transform group-open:rotate-180">
                   <Icon n="chevD" className="w-4 h-4" />
                 </span>
@@ -432,7 +521,9 @@ function CierreCta() {
     <section className="relative py-20 lg:py-28">
       <PlaneField count={14} />
       <div className="mx-auto max-w-[820px] px-6 lg:px-8 text-center relative z-10">
-        <div className="flex justify-center mb-8"><PathyBubble size={120} /></div>
+        <div className="flex justify-center mb-8">
+          <PathyBubble size={120} />
+        </div>
         <Pill>Empieza hoy</Pill>
         <h2 className="font-display text-[32px] lg:text-[44px] text-ink leading-tight mt-5">
           El CIAAC no se aprueba leyendo.
@@ -443,8 +534,12 @@ function CierreCta() {
           empezar.
         </p>
         <div className="mt-9 flex flex-wrap justify-center gap-3">
-          <Btn kind="primary" size="lg" icon="arrow" href={START_HREF}>Empezar gratis</Btn>
-          <Btn kind="light" size="lg" href="/convocatoria-aeromexico">Voy por línea aérea</Btn>
+          <Btn kind="primary" size="lg" icon="arrow" href={START_HREF}>
+            Empezar gratis
+          </Btn>
+          <Btn kind="light" size="lg" href="/convocatoria-aeromexico">
+            Voy por línea aérea
+          </Btn>
         </div>
       </div>
     </section>

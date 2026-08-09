@@ -1,4 +1,4 @@
-import type { IconName } from "@/routes/index";
+import type { IconName } from "@/components/landing/shared";
 
 /**
  * Icono de landing por materia. Las materias guardan el icono del set del

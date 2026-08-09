@@ -6,7 +6,7 @@
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { useLocation, useNavigate } from "@tanstack/react-router";
 import { subscribe, getVersion } from "./db";
-import { ensureSeeded } from "./seed";
+import { ensureSeededAsync } from "./seed-meta";
 import { getSessionUser, purgeExpiredAccounts, restoreCloudSession, isAuthSettled } from "./auth";
 import type { User } from "./types";
 
@@ -14,14 +14,19 @@ let initialized = false;
 function initOnce() {
   if (initialized || typeof window === "undefined") return;
   initialized = true;
-  ensureSeeded();
-  purgeExpiredAccounts();
-  // Con Lovable Cloud activo, restaura la sesión de Supabase e hidrata en
-  // segundo plano; la UI se actualiza sola conforme llegan los datos.
-  void restoreCloudSession().catch(() => {});
+  // El seed (banco completo, ~2 MB) se carga con import() dinámico para que
+  // no viaje en el chunk de entrada de cada página pública. El resto del
+  // arranque espera a que termine para operar sobre usuarios ya sembrados;
+  // la UI se entera por las notificaciones normales del store.
+  void ensureSeededAsync()
+    .then(() => {
+      purgeExpiredAccounts();
+      // Con Lovable Cloud activo, restaura la sesión de Supabase e hidrata en
+      // segundo plano; la UI se actualiza sola conforme llegan los datos.
+      return restoreCloudSession();
+    })
+    .catch(() => {});
 }
-
-
 
 /**
  * Arranque explícito de la capa de datos (lo llama el layout raíz).
@@ -36,11 +41,7 @@ export function initAppStore() {
 
 export function useStoreVersion(): number {
   initOnce();
-  return useSyncExternalStore(
-    subscribe,
-    getVersion,
-    () => 0,
-  );
+  return useSyncExternalStore(subscribe, getVersion, () => 0);
 }
 
 /** Ejecuta un selector sobre el store; se actualiza con cada cambio. */
@@ -85,7 +86,16 @@ export function useRequireAuth(requiredRole?: "admin"): { user: User | null; rea
     } else if (requiredRole === "admin" && user.role !== "admin") {
       navigate({ to: "/dashboard" });
     }
-  }, [mounted, settled, user, requiredRole, navigate, location.pathname, location.searchStr, location.hash]);
+  }, [
+    mounted,
+    settled,
+    user,
+    requiredRole,
+    navigate,
+    location.pathname,
+    location.searchStr,
+    location.hash,
+  ]);
 
   const ready = mounted && settled && !!user && (requiredRole !== "admin" || user.role === "admin");
   return { user, ready };
