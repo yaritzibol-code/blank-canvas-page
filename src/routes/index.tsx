@@ -113,7 +113,7 @@ function Hero() {
             <div className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white/70 backdrop-blur px-3 py-1.5 shadow-card">
               <span className="w-1.5 h-1.5 rounded-full bg-coral-600 animate-pulse-dot" />
               <span className="text-[12px] font-semibold text-ink/70">
-                La plataforma de estudio para pilotos · México
+                La mejor plataforma de México para estudiar aviación
               </span>
             </div>
             <h1 className="font-display mt-6 text-[44px] sm:text-[58px] lg:text-[66px] leading-[0.98] tracking-tight text-ink">
@@ -478,7 +478,6 @@ function Countdown({ show = true }: { show?: boolean }) {
 
 function RutaCompleta() {
   const etapas: {
-    coord: string;
     icon: IconName;
     t: string;
     d: string;
@@ -486,52 +485,46 @@ function RutaCompleta() {
     href: string;
   }[] = [
     {
-      coord: "ETAPA 01",
       icon: "cards",
       t: "Examen CIAAC",
       d: "El filtro teórico de tu licencia comercial: las 12 materias con banco explicado, simulador en formato real y análisis por materia.",
       chips: ["2,800+ preguntas", `Simulador de ${SIM_TOTAL_QS}`, "12 materias"],
-      href: "/ciaac",
+      href: "/modulos/ciaac",
     },
     {
-      coord: "ETAPA 02",
       icon: "radio",
       t: "Inglés OACI · RTARI",
       d: "La entrevista en inglés se entrena hablando: un sinodal de voz te pregunta, te repregunta y te evalúa por las seis áreas OACI.",
       chips: ["Entrevista por voz", "Debrief 6 áreas", "Nivel 4+"],
-      href: "/examen-rtari",
+      href: "/modulos/rtari",
     },
     {
-      coord: "ETAPA 03",
       icon: "compass",
       t: "Aptitudes tipo COMPASS",
       d: "Coordinación, memoria, cálculo mental, orientación y multitarea: los ejercicios de las selecciones, jugables con teclado, mouse o touch.",
       chips: ["6 ejercicios", "5 niveles", "Simulacro 20 min"],
-      href: "/examen-compass",
+      href: "/modulos/compass",
     },
     {
-      coord: "ETAPA 04",
       icon: "plane",
       t: "Convocatorias de línea aérea",
       d: "Las 5 fuentes del examen teórico — ATP, PHAK, Jeppesen, CPAM y Anexo 10 — por capítulos, con explicación en español.",
       chips: ["5 fuentes", "Por capítulos", "Simulacros"],
-      href: "/linea-aerea",
+      href: "/modulos/linea-aerea",
     },
     {
-      coord: "ETAPA 05",
       icon: "doc",
       t: "Manuales de aeronave",
       d: "El avión que vas a volar, a base de preguntas: el 737 MAX por los 9 capítulos del FCOM, para type rating y entrevista técnica.",
       chips: ["737 MAX", "9 capítulos FCOM", "Empieza gratis"],
-      href: "/estudiar-737-max",
+      href: "/modulos/manuales",
     },
     {
-      coord: "SIEMPRE",
       icon: "chart",
       t: "Biblioteca y análisis",
       d: "100+ manuales de consulta y el análisis que conecta todo: tu avance por materia, tu radar de aptitudes y lo que te toca hoy.",
       chips: ["100+ manuales", "Análisis por materia", "Pathy y Yaris"],
-      href: "/register",
+      href: "/modulos/biblioteca",
     },
   ];
   return (
@@ -547,7 +540,7 @@ function RutaCompleta() {
               <span className="block text-coral-600">Aquí se estudian todas.</span>
             </>
           }
-          sub="Del examen teórico de tu licencia a los manuales de tu aeronave, pasando por el inglés y las pruebas de selección — una sola cuenta para todo el camino."
+          sub="La mejor plataforma de México para estudiar aviación: del examen teórico de tu licencia a los manuales de tu aeronave, pasando por el inglés y las pruebas de selección — todo en una sola cuenta."
         />
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {etapas.map((e) => (
@@ -563,11 +556,10 @@ function RutaCompleta() {
                 }}
               />
               <div className="relative">
-                <div className="flex items-start justify-between mb-6">
+                <div className="mb-6">
                   <div className="w-12 h-12 rounded-xl bg-ink grid place-items-center text-coral-400 group-hover:bg-coral-600 group-hover:text-white transition-colors">
                     <Icon n={e.icon} className="w-6 h-6" />
                   </div>
-                  <Coord>{e.coord}</Coord>
                 </div>
                 <h3 className="font-display text-[21px] tracking-tight text-ink">{e.t}</h3>
                 <p className="text-[14px] text-ink/55 mt-2 leading-relaxed">{e.d}</p>
@@ -582,7 +574,7 @@ function RutaCompleta() {
                   ))}
                 </div>
                 <span className="mt-5 inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-coral-700 group-hover:text-coral-600 transition-colors">
-                  Explorar <Icon n="chevR" className="w-4 h-4" />
+                  Más información <Icon n="chevR" className="w-4 h-4" />
                 </span>
               </div>
             </a>

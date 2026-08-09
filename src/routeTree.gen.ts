@@ -72,6 +72,7 @@ import { Route as DashboardPlanesRouteImport } from './routes/dashboard/planes'
 import { Route as DashboardRecordatoriosRouteImport } from './routes/dashboard/recordatorios'
 import { Route as DashboardRtariRouteImport } from './routes/dashboard/rtari'
 import { Route as LineaAereaFuenteRouteImport } from './routes/linea-aerea_.$fuente'
+import { Route as ModulosSlugRouteImport } from './routes/modulos_.$slug'
 import { Route as RespuestasSlugRouteImport } from './routes/respuestas_.$slug'
 import { Route as AdminOperacionesIndexRouteImport } from './routes/admin/operaciones/index'
 import { Route as AdminOperacionesDisputasRouteImport } from './routes/admin/operaciones/disputas'
@@ -405,6 +406,11 @@ const LineaAereaFuenteRoute = LineaAereaFuenteRouteImport.update({
   path: '/linea-aerea/$fuente',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ModulosSlugRoute = ModulosSlugRouteImport.update({
+  id: '/modulos_/$slug',
+  path: '/modulos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RespuestasSlugRoute = RespuestasSlugRouteImport.update({
   id: '/respuestas_/$slug',
   path: '/respuestas/$slug',
@@ -552,6 +558,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/dashboard/rtari': typeof DashboardRtariRoute
   '/linea-aerea/$fuente': typeof LineaAereaFuenteRoute
+  '/modulos/$slug': typeof ModulosSlugRoute
   '/respuestas/$slug': typeof RespuestasSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
@@ -632,6 +639,7 @@ export interface FileRoutesByTo {
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/dashboard/rtari': typeof DashboardRtariRoute
   '/linea-aerea/$fuente': typeof LineaAereaFuenteRoute
+  '/modulos/$slug': typeof ModulosSlugRoute
   '/respuestas/$slug': typeof RespuestasSlugRoute
   '/admin': typeof AdminIndexRoute
   '/dashboard': typeof DashboardIndexRoute
@@ -714,6 +722,7 @@ export interface FileRoutesById {
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/dashboard/rtari': typeof DashboardRtariRoute
   '/linea-aerea_/$fuente': typeof LineaAereaFuenteRoute
+  '/modulos_/$slug': typeof ModulosSlugRoute
   '/respuestas_/$slug': typeof RespuestasSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
@@ -797,6 +806,7 @@ export interface FileRouteTypes {
     | '/dashboard/recordatorios'
     | '/dashboard/rtari'
     | '/linea-aerea/$fuente'
+    | '/modulos/$slug'
     | '/respuestas/$slug'
     | '/admin/'
     | '/dashboard/'
@@ -877,6 +887,7 @@ export interface FileRouteTypes {
     | '/dashboard/recordatorios'
     | '/dashboard/rtari'
     | '/linea-aerea/$fuente'
+    | '/modulos/$slug'
     | '/respuestas/$slug'
     | '/admin'
     | '/dashboard'
@@ -958,6 +969,7 @@ export interface FileRouteTypes {
     | '/dashboard/recordatorios'
     | '/dashboard/rtari'
     | '/linea-aerea_/$fuente'
+    | '/modulos_/$slug'
     | '/respuestas_/$slug'
     | '/admin/'
     | '/dashboard/'
@@ -1024,6 +1036,7 @@ export interface RootRouteChildren {
   CheckoutReturnRoute: typeof CheckoutReturnRoute
   CiaacMateriaRoute: typeof CiaacMateriaRoute
   LineaAereaFuenteRoute: typeof LineaAereaFuenteRoute
+  ModulosSlugRoute: typeof ModulosSlugRoute
   RespuestasSlugRoute: typeof RespuestasSlugRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminOperacionesDisputasRoute: typeof AdminOperacionesDisputasRoute
@@ -1484,6 +1497,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LineaAereaFuenteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/modulos_/$slug': {
+      id: '/modulos_/$slug'
+      path: '/modulos/$slug'
+      fullPath: '/modulos/$slug'
+      preLoaderRoute: typeof ModulosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/respuestas_/$slug': {
       id: '/respuestas_/$slug'
       path: '/respuestas/$slug'
@@ -1694,6 +1714,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutReturnRoute: CheckoutReturnRoute,
   CiaacMateriaRoute: CiaacMateriaRoute,
   LineaAereaFuenteRoute: LineaAereaFuenteRoute,
+  ModulosSlugRoute: ModulosSlugRoute,
   RespuestasSlugRoute: RespuestasSlugRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminOperacionesDisputasRoute: AdminOperacionesDisputasRoute,

@@ -4,6 +4,7 @@ import { MATERIAS_DEF } from "@/lib/store/materias";
 import { FUENTES_SEO } from "@/lib/seo/fuentes-seo";
 import { RESPUESTAS_PUBLICADO, RESPUESTAS_SEO } from "@/lib/seo/respuestas-seo";
 import { BLOG_POSTS } from "@/lib/seo/blog-posts";
+import { MODULOS_LANDING } from "@/lib/seo/modulos-landing";
 
 const BASE_URL = "https://flightpath.mx";
 
@@ -65,6 +66,13 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/examen-rtari", changefreq: "monthly", priority: "0.9", lastmod: V2 },
           { path: "/examen-compass", changefreq: "monthly", priority: "0.9", lastmod: V2 },
           { path: "/estudiar-737-max", changefreq: "monthly", priority: "0.9", lastmod: V2 },
+          // Landings de producto: cómo se ve cada módulo.
+          ...MODULOS_LANDING.map((m) => ({
+            path: `/modulos/${m.slug}`,
+            changefreq: "monthly" as const,
+            priority: "0.7",
+            lastmod: V2,
+          })),
           { path: "/sobre-flightpath", changefreq: "monthly", priority: "0.7", lastmod: V1 },
           { path: "/respuestas", changefreq: "weekly", priority: "0.8", lastmod: V2 },
           // Centro de respuestas: una página por pregunta conversacional.
