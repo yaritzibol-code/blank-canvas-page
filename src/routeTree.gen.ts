@@ -18,6 +18,9 @@ import { Route as ConvocatoriaAeromexicoRouteImport } from './routes/convocatori
 import { Route as ConvocatoriaCiaac2026RouteImport } from './routes/convocatoria-ciaac-2026'
 import { Route as CuestionarioRouteImport } from './routes/cuestionario'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as Estudiar737MaxRouteImport } from './routes/estudiar-737-max'
+import { Route as ExamenCompassRouteImport } from './routes/examen-compass'
+import { Route as ExamenRtariRouteImport } from './routes/examen-rtari'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as GraciasRouteImport } from './routes/gracias'
 import { Route as LegalRouteImport } from './routes/legal'
@@ -128,6 +131,21 @@ const CuestionarioRoute = CuestionarioRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Estudiar737MaxRoute = Estudiar737MaxRouteImport.update({
+  id: '/estudiar-737-max',
+  path: '/estudiar-737-max',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExamenCompassRoute = ExamenCompassRouteImport.update({
+  id: '/examen-compass',
+  path: '/examen-compass',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExamenRtariRoute = ExamenRtariRouteImport.update({
+  id: '/examen-rtari',
+  path: '/examen-rtari',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -476,6 +494,9 @@ export interface FileRoutesByFullPath {
   '/convocatoria-ciaac-2026': typeof ConvocatoriaCiaac2026Route
   '/cuestionario': typeof CuestionarioRoute
   '/dashboard': typeof DashboardRouteWithChildren
+  '/estudiar-737-max': typeof Estudiar737MaxRoute
+  '/examen-compass': typeof ExamenCompassRoute
+  '/examen-rtari': typeof ExamenRtariRoute
   '/faq': typeof FaqRoute
   '/gracias': typeof GraciasRoute
   '/legal': typeof LegalRoute
@@ -552,6 +573,9 @@ export interface FileRoutesByTo {
   '/convocatoria-aeromexico': typeof ConvocatoriaAeromexicoRoute
   '/convocatoria-ciaac-2026': typeof ConvocatoriaCiaac2026Route
   '/cuestionario': typeof CuestionarioRoute
+  '/estudiar-737-max': typeof Estudiar737MaxRoute
+  '/examen-compass': typeof ExamenCompassRoute
+  '/examen-rtari': typeof ExamenRtariRoute
   '/faq': typeof FaqRoute
   '/gracias': typeof GraciasRoute
   '/legal': typeof LegalRoute
@@ -630,6 +654,9 @@ export interface FileRoutesById {
   '/convocatoria-ciaac-2026': typeof ConvocatoriaCiaac2026Route
   '/cuestionario': typeof CuestionarioRoute
   '/dashboard': typeof DashboardRouteWithChildren
+  '/estudiar-737-max': typeof Estudiar737MaxRoute
+  '/examen-compass': typeof ExamenCompassRoute
+  '/examen-rtari': typeof ExamenRtariRoute
   '/faq': typeof FaqRoute
   '/gracias': typeof GraciasRoute
   '/legal': typeof LegalRoute
@@ -709,6 +736,9 @@ export interface FileRouteTypes {
     | '/convocatoria-ciaac-2026'
     | '/cuestionario'
     | '/dashboard'
+    | '/estudiar-737-max'
+    | '/examen-compass'
+    | '/examen-rtari'
     | '/faq'
     | '/gracias'
     | '/legal'
@@ -785,6 +815,9 @@ export interface FileRouteTypes {
     | '/convocatoria-aeromexico'
     | '/convocatoria-ciaac-2026'
     | '/cuestionario'
+    | '/estudiar-737-max'
+    | '/examen-compass'
+    | '/examen-rtari'
     | '/faq'
     | '/gracias'
     | '/legal'
@@ -862,6 +895,9 @@ export interface FileRouteTypes {
     | '/convocatoria-ciaac-2026'
     | '/cuestionario'
     | '/dashboard'
+    | '/estudiar-737-max'
+    | '/examen-compass'
+    | '/examen-rtari'
     | '/faq'
     | '/gracias'
     | '/legal'
@@ -940,6 +976,9 @@ export interface RootRouteChildren {
   ConvocatoriaCiaac2026Route: typeof ConvocatoriaCiaac2026Route
   CuestionarioRoute: typeof CuestionarioRoute
   DashboardRoute: typeof DashboardRouteWithChildren
+  Estudiar737MaxRoute: typeof Estudiar737MaxRoute
+  ExamenCompassRoute: typeof ExamenCompassRoute
+  ExamenRtariRoute: typeof ExamenRtariRoute
   FaqRoute: typeof FaqRoute
   GraciasRoute: typeof GraciasRoute
   LegalRoute: typeof LegalRoute
@@ -1052,6 +1091,27 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estudiar-737-max': {
+      id: '/estudiar-737-max'
+      path: '/estudiar-737-max'
+      fullPath: '/estudiar-737-max'
+      preLoaderRoute: typeof Estudiar737MaxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/examen-compass': {
+      id: '/examen-compass'
+      path: '/examen-compass'
+      fullPath: '/examen-compass'
+      preLoaderRoute: typeof ExamenCompassRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/examen-rtari': {
+      id: '/examen-rtari'
+      path: '/examen-rtari'
+      fullPath: '/examen-rtari'
+      preLoaderRoute: typeof ExamenRtariRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -1577,6 +1637,9 @@ const rootRouteChildren: RootRouteChildren = {
   ConvocatoriaCiaac2026Route: ConvocatoriaCiaac2026Route,
   CuestionarioRoute: CuestionarioRoute,
   DashboardRoute: DashboardRouteWithChildren,
+  Estudiar737MaxRoute: Estudiar737MaxRoute,
+  ExamenCompassRoute: ExamenCompassRoute,
+  ExamenRtariRoute: ExamenRtariRoute,
   FaqRoute: FaqRoute,
   GraciasRoute: GraciasRoute,
   LegalRoute: LegalRoute,
