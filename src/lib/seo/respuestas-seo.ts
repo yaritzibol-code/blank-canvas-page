@@ -33,7 +33,14 @@ export interface RespuestaSeo {
   relacionadas: string[];
   /** Páginas del sitio para profundizar. */
   paginas: { label: string; href: string }[];
-  categoria: "Examen CIAAC" | "Convocatoria de línea aérea" | "Preparación";
+  categoria:
+    | "Examen CIAAC"
+    | "Convocatoria de línea aérea"
+    | "Preparación"
+    | "Inglés y RTARI"
+    | "Selección y aptitudes";
+  /** Fecha de publicación propia (si difiere de RESPUESTAS_PUBLICADO). */
+  publicado?: string;
 }
 
 /** Fechas de publicación/actualización para el schema Article (freshness). */

@@ -81,8 +81,10 @@ export const Route = createFileRoute("/precios")({
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESC },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://flightpath.mx/precios" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://flightpath.mx/precios" }],
   }),
   component: PreciosPage,
 });

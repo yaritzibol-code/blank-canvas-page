@@ -19,6 +19,9 @@ FlightPath es una plataforma SaaS mexicana e independiente enfocada en la prepar
 - [Banco de preguntas CIAAC](/banco-de-preguntas-ciaac): 2,800+ reactivos propios con explicación y fuente, con muestras auditables.
 - [Simulador CIAAC](/simulador-ciaac): 310 preguntas, 5 horas, reparto real por materia y calificación con desglose.
 - [Calculadora de estudio CIAAC](/calculadora-ciaac): Herramienta gratuita: fecha de examen + disponibilidad → plan de horas por materia.
+- [Examen RTARI](/examen-rtari): Qué es el certificado RTARI, las 6 áreas OACI de la entrevista en inglés y la práctica por voz con sinodal de IA.
+- [Examen COMPASS](/examen-compass): Qué es la prueba de aptitud para pilotos y los 6 ejercicios en línea para entrenarla (teclado, mouse o touch).
+- [Estudiar el Boeing 737 MAX](/estudiar-737-max): Banco de práctica por los 9 capítulos del FCOM para type rating, entrevista técnica o recurrent.
 - [Precios](/precios): FlightPath Básica (gratis) y Pro, comparativa y preguntas de pago.
 - [Preguntas frecuentes](/faq): Respuestas sobre el examen CIAAC, la plataforma y los planes.
 - [Blog](/blog): Artículos y guías sobre el proceso CIAAC y preparación de vuelo.
