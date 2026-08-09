@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
 import { BackLink } from "@/components/shared/BackLink";
 import { PRO_MONTHLY_FALLBACK, PRO_SETUP_FALLBACK, formatProTotal } from "@/lib/pricing";
 
@@ -8,25 +7,35 @@ export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
       { title: "Preguntas frecuentes — FlightPath CIAAC" },
-      { name: "description", content: "Respuestas sobre planes, simuladores, Yaris y Pathy, cancelación y funcionamiento de FlightPath para el examen CIAAC." },
+      {
+        name: "description",
+        content:
+          "Respuestas sobre planes, simuladores, Yaris y Pathy, cancelación y funcionamiento de FlightPath para el examen CIAAC.",
+      },
       { property: "og:title", content: "Preguntas frecuentes — FlightPath" },
-      { property: "og:description", content: "Planes, simulador CIAAC, tutores IA y todo lo que necesitas saber antes de empezar." },
+      {
+        property: "og:description",
+        content:
+          "Planes, simulador CIAAC, tutores IA y todo lo que necesitas saber antes de empezar.",
+      },
       { property: "og:url", content: "https://flightpath.mx/faq" },
       { property: "og:type", content: "website" },
     ],
     links: [{ rel: "canonical", href: "https://flightpath.mx/faq" }],
-    scripts: [{
-      type: "application/ld+json",
-      children: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: FAQS.map((f) => ({
-          "@type": "Question",
-          name: f.q,
-          acceptedAnswer: { "@type": "Answer", text: f.a },
-        })),
-      }),
-    }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: FAQS.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
+    ],
   }),
 });
 
@@ -81,58 +90,101 @@ const FAQS: { q: string; a: string }[] = [
   },
 ];
 
-function FaqItem({ q, a, open, onToggle }: { q: string; a: string; open: boolean; onToggle: () => void }) {
+/**
+ * Cada pregunta/respuesta vive en <details>/<summary> con la pregunta como
+ * <h3>: así TODAS las respuestas existen en el HTML del SSR (no solo la
+ * abierta) y los buscadores asocian pregunta→respuesta para PAA.
+ */
+function FaqItem({ q, a, open }: { q: string; a: string; open: boolean }) {
   return (
-    <div style={{ background: "#fff", border: "1px solid #E3EAF5", borderRadius: 14, overflow: "hidden" }}>
-      <button
-        onClick={onToggle}
+    <details
+      open={open}
+      style={{
+        background: "#fff",
+        border: "1px solid #E3EAF5",
+        borderRadius: 14,
+        overflow: "hidden",
+      }}
+    >
+      <summary
         style={{
-          width: "100%", textAlign: "left", background: "none", border: "none", cursor: "pointer",
-          padding: "18px 20px", display: "flex", alignItems: "center", justifyContent: "space-between",
-          gap: 12, fontFamily: DISPLAY, fontSize: 16, fontWeight: 700, color: INK,
+          listStyle: "none",
+          cursor: "pointer",
+          padding: "18px 20px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 12,
+          fontFamily: DISPLAY,
+          fontSize: 16,
+          fontWeight: 700,
+          color: INK,
         }}
       >
-        {q}
-        <span style={{ color: "#6C0820", fontSize: 18, transform: open ? "rotate(45deg)" : "none", transition: "transform .2s", flexShrink: 0 }}>+</span>
-      </button>
-      {open && (
-        <div style={{ padding: "0 20px 18px", color: "#4A5F80", fontSize: 14.5, lineHeight: 1.75 }}>{a}</div>
-      )}
-    </div>
+        <h3 style={{ margin: 0, font: "inherit" }}>{q}</h3>
+        <span style={{ color: "#6C0820", fontSize: 18, flexShrink: 0 }}>+</span>
+      </summary>
+      <div style={{ padding: "0 20px 18px", color: "#4A5F80", fontSize: 14.5, lineHeight: 1.75 }}>
+        {a}
+      </div>
+    </details>
   );
 }
 
 /** Preguntas frecuentes (enlazada desde el pie de la página principal). */
 function FaqPage() {
-  const [open, setOpen] = useState<number | null>(0);
   return (
     <div style={{ minHeight: "100vh", background: "#F7F9FC", fontFamily: FONT }}>
       <header
         style={{
-          background: "#fff", borderBottom: "1px solid #E3EAF5",
+          background: "#fff",
+          borderBottom: "1px solid #E3EAF5",
           padding: "16px clamp(16px, 5vw, 48px)",
-          display: "flex", alignItems: "center", justifyContent: "space-between",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
         }}
       >
-        <Link to="/" style={{ fontFamily: DISPLAY, fontWeight: 800, color: INK, textDecoration: "none", fontSize: 18 }}>
+        <Link
+          to="/"
+          style={{
+            fontFamily: DISPLAY,
+            fontWeight: 800,
+            color: INK,
+            textDecoration: "none",
+            fontSize: 18,
+          }}
+        >
           FlightPath ✈
         </Link>
         <BackLink />
-
       </header>
 
-      <main style={{ maxWidth: 780, margin: "0 auto", padding: "clamp(28px, 6vw, 56px) 20px 80px" }}>
-        <h1 style={{ fontFamily: DISPLAY, fontSize: "clamp(1.6rem, 5vw, 2.2rem)", color: INK, fontWeight: 800, margin: "0 0 8px" }}>
+      <main
+        style={{ maxWidth: 780, margin: "0 auto", padding: "clamp(28px, 6vw, 56px) 20px 80px" }}
+      >
+        <h1
+          style={{
+            fontFamily: DISPLAY,
+            fontSize: "clamp(1.6rem, 5vw, 2.2rem)",
+            color: INK,
+            fontWeight: 800,
+            margin: "0 0 8px",
+          }}
+        >
           Preguntas frecuentes
         </h1>
         <p style={{ color: "#647DA0", fontSize: 14, marginBottom: 36 }}>
           Todo lo que necesitas saber sobre FlightPath. ¿No encuentras tu respuesta? Escríbenos a{" "}
-          <a href="mailto:contacto@flightpath.mx" style={{ color: "#3D5D91", fontWeight: 700 }}>contacto@flightpath.mx</a>.
+          <a href="mailto:contacto@flightpath.mx" style={{ color: "#3D5D91", fontWeight: 700 }}>
+            contacto@flightpath.mx
+          </a>
+          .
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           {FAQS.map((f, i) => (
-            <FaqItem key={i} q={f.q} a={f.a} open={open === i} onToggle={() => setOpen(open === i ? null : i)} />
+            <FaqItem key={i} q={f.q} a={f.a} open={i === 0} />
           ))}
         </div>
 
@@ -140,8 +192,15 @@ function FaqPage() {
           <Link
             to="/register"
             style={{
-              display: "inline-block", background: "#6C0820", color: "#fff", textDecoration: "none",
-              fontWeight: 700, fontSize: 15, padding: "13px 28px", borderRadius: 12, fontFamily: FONT,
+              display: "inline-block",
+              background: "#6C0820",
+              color: "#fff",
+              textDecoration: "none",
+              fontWeight: 700,
+              fontSize: 15,
+              padding: "13px 28px",
+              borderRadius: 12,
+              fontFamily: FONT,
             }}
           >
             Únete a FlightPath →

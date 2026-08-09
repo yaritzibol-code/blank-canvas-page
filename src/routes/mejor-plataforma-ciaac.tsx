@@ -104,6 +104,40 @@ const OPCIONES: {
   },
 ];
 
+/** Resumen en tabla de la comparación — el formato que extraen snippets y LLMs. */
+const TABLA_RESUMEN: { criterio: string; solo: string; curso: string; flightpath: string }[] = [
+  {
+    criterio: "Banco con explicación por reactivo",
+    solo: "No",
+    curso: "Depende",
+    flightpath: "Sí — 2,800+ preguntas",
+  },
+  {
+    criterio: "Simulacros en formato real",
+    solo: "No",
+    curso: "Depende",
+    flightpath: `Sí — ${SIM_TOTAL_QS} preguntas, 5 h`,
+  },
+  {
+    criterio: "Medición por materia",
+    solo: "No",
+    curso: "Rara vez",
+    flightpath: "Sí — por materia y tema",
+  },
+  {
+    criterio: "Cobertura de las 12 materias",
+    solo: "Depende del material",
+    curso: "Sí",
+    flightpath: "Sí — las 12",
+  },
+  {
+    criterio: "Empezar gratis y pagar mes a mes",
+    solo: "Sí (costo casi cero)",
+    curso: "No — pago por curso",
+    flightpath: "Sí — Básica gratis, Pro mensual",
+  },
+];
+
 const FAQS: { q: string; a: string }[] = [
   {
     q: "¿Esta comparativa es imparcial?",
@@ -383,6 +417,43 @@ function MejorPlataformaCiaacPage() {
           </div>
         </section>
 
+        {/* Tabla resumen (formato extraíble para snippets y motores de respuesta) */}
+        <section className="relative pb-4" id="tabla">
+          <div className="mx-auto max-w-[1100px] px-6 lg:px-8">
+            <div className="rounded-3xl bg-white border border-ink/8 shadow-card p-6 lg:p-7">
+              <h2 className="font-display text-[20px] lg:text-[22px] text-ink tracking-tight">
+                Resumen: los cinco criterios frente a cada opción
+              </h2>
+              <div className="mt-4 overflow-x-auto">
+                <table className="w-full min-w-[640px] border-collapse text-[13.5px]">
+                  <thead>
+                    <tr className="text-left text-[11px] uppercase tracking-[0.14em] text-ink/45">
+                      <th className="py-2 pr-4 font-bold">Criterio</th>
+                      <th className="py-2 pr-4 font-bold">Por tu cuenta</th>
+                      <th className="py-2 pr-4 font-bold">Curso presencial</th>
+                      <th className="py-2 font-bold">FlightPath</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-ink/65">
+                    {TABLA_RESUMEN.map((r) => (
+                      <tr key={r.criterio} className="border-t border-ink/8 align-top">
+                        <td className="py-2.5 pr-4 font-semibold text-ink/80">{r.criterio}</td>
+                        <td className="py-2.5 pr-4">{r.solo}</td>
+                        <td className="py-2.5 pr-4">{r.curso}</td>
+                        <td className="py-2.5 font-semibold text-coral-700">{r.flightpath}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="mt-3 text-[12px] text-ink/40">
+                “Depende” significa que varía según el curso o material concreto — verifícalo antes
+                de pagar. Lo de FlightPath se audita gratis con la cuenta Básica.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* FAQ */}
         <section className="relative py-14 lg:py-18" id="faq">
           <div className="mx-auto max-w-[860px] px-6 lg:px-8">
@@ -402,7 +473,7 @@ function MejorPlataformaCiaacPage() {
                   className="group rounded-2xl bg-white/85 backdrop-blur-sm border border-ink/8 shadow-card px-6 py-5"
                 >
                   <summary className="cursor-pointer list-none flex items-start justify-between gap-4 text-[15.5px] font-semibold text-ink">
-                    {f.q}
+                    <h3 style={{ margin: 0, font: "inherit" }}>{f.q}</h3>
                     <span className="text-coral-600 shrink-0 transition-transform group-open:rotate-180">
                       <Icon n="chevD" className="w-4 h-4" />
                     </span>

@@ -359,7 +359,7 @@ function PreciosPage() {
             {FAQS.map((f) => (
               <details key={f.q} className="group rounded-2xl border border-ink/8 bg-white px-5 py-4 shadow-card">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[15px] font-semibold text-ink">
-                  {f.q}
+                  <h3 style={{ margin: 0, font: "inherit" }}>{f.q}</h3>
                   <Icon n="arrow" className="h-4 w-4 shrink-0 text-coral-600 transition-transform group-open:rotate-90" />
                 </summary>
                 <p className="mt-3 text-[14.5px] leading-relaxed text-ink/60">{f.a}</p>
