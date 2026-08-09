@@ -1,11 +1,12 @@
 /**
- * Motor del módulo Control — seguimiento compensatorio de dos ejes.
+ * Motor del módulo Control — seguimiento compensatorio de dos ejes (v2).
  *
- * Modelo clásico de primer orden: el error de cada eje se mueve con una
- * velocidad = perturbación(t) + ráfagas + corrección del usuario (rate
- * control, como un stick). La perturbación es una suma de senos con fases y
- * frecuencias derivadas de la seed — imposible de memorizar, idéntica al
- * repetir la misma seed.
+ * El error de cada eje deriva con una perturbación suma-de-senos + ráfagas
+ * (todo por seed). La corrección del usuario ya NO es tasa directa: comanda la
+ * aceleración de una tasa propia del mando (dinámica de primer orden con
+ * inercia), de modo que soltar tarde produce sobrecorrección real. En niveles
+ * altos se suma acoplamiento cruzado: parte de la corrección de un eje se
+ * filtra al otro, como el alabeo induce guiñada.
  *
  * La simulación corre con paso fijo (ver use-game-loop): estas funciones son
  * puras respecto al tiempo simulado, por lo que el resultado no depende del
@@ -19,17 +20,66 @@ export interface ControlLevelParams {
   /** Ráfagas: impulso extra cada burstEverySec aprox. */
   burstEverySec: number;
   burstStrength: number;
-  /** Tasa máxima de corrección del usuario (unidades/seg). */
-  userRate: number;
+  /** Aceleración de la tasa de corrección a deflexión plena (u/seg²). */
+  authority: number;
+  /**
+   * Amortiguación de la tasa de corrección (1/seg). Baja = el mando "sigue
+   * empujando" al soltar (más inercia); alta = respuesta casi directa.
+   */
+  damping: number;
+  /** Fracción de la corrección de un eje que contamina al otro (0-1). */
+  crossCoupling: number;
+  /** Medio-ancho de la banda "centrado" para este nivel. */
+  band: number;
 }
 
 /** Nivel 1-5. El examen usa el nivel 3. */
 export const CONTROL_LEVELS: ControlLevelParams[] = [
-  { amplitude: 0.22, burstEverySec: 14, burstStrength: 0.5, userRate: 1.1 },
-  { amplitude: 0.3, burstEverySec: 12, burstStrength: 0.65, userRate: 1.1 },
-  { amplitude: 0.38, burstEverySec: 10, burstStrength: 0.8, userRate: 1.05 },
-  { amplitude: 0.47, burstEverySec: 8.5, burstStrength: 0.95, userRate: 1.0 },
-  { amplitude: 0.56, burstEverySec: 7, burstStrength: 1.1, userRate: 0.95 },
+  {
+    amplitude: 0.3,
+    burstEverySec: 10,
+    burstStrength: 0.7,
+    authority: 2.2,
+    damping: 6.0,
+    crossCoupling: 0,
+    band: 0.16,
+  },
+  {
+    amplitude: 0.42,
+    burstEverySec: 8,
+    burstStrength: 0.9,
+    authority: 2.4,
+    damping: 3.6,
+    crossCoupling: 0,
+    band: 0.145,
+  },
+  {
+    amplitude: 0.55,
+    burstEverySec: 6.5,
+    burstStrength: 1.1,
+    authority: 2.6,
+    damping: 2.6,
+    crossCoupling: 0.1,
+    band: 0.13,
+  },
+  {
+    amplitude: 0.68,
+    burstEverySec: 5.5,
+    burstStrength: 1.3,
+    authority: 2.8,
+    damping: 2.0,
+    crossCoupling: 0.18,
+    band: 0.115,
+  },
+  {
+    amplitude: 0.82,
+    burstEverySec: 4.5,
+    burstStrength: 1.5,
+    authority: 3.0,
+    damping: 1.6,
+    crossCoupling: 0.26,
+    band: 0.1,
+  },
 ];
 
 export function controlLevel(level: number): ControlLevelParams {
@@ -48,9 +98,6 @@ export interface AxisPerturbation {
   bursts: { at: number; vel: number }[];
 }
 
-/** Banda considerada "centrado" (fracción del medio recorrido). */
-export const CONTROL_BAND = 0.15;
-
 /**
  * Genera la perturbación determinista de un eje para toda la sesión.
  * `axis` diferencia X de Y para que no se muevan en espejo.
@@ -64,18 +111,25 @@ export function buildAxisPerturbation(
   const p = controlLevel(level);
   const rng = mulberry32(deriveSeed(seed, 100 + axis));
   const sines: SineComponent[] = [];
-  // 4 componentes lentas-medias: la dificultad viene de la mezcla, no de picos.
-  const freqs = [0.05 + rng() * 0.05, 0.11 + rng() * 0.07, 0.2 + rng() * 0.09, 0.31 + rng() * 0.11];
-  const weights = [0.4, 0.28, 0.2, 0.12];
+  // 4 componentes lentas-medias + 1 rápida pequeña: la dificultad viene de la
+  // mezcla (imposible de predecir), no de un pico aislado.
+  const freqs = [
+    0.05 + rng() * 0.05,
+    0.11 + rng() * 0.07,
+    0.2 + rng() * 0.09,
+    0.31 + rng() * 0.11,
+    0.5 + rng() * 0.25,
+  ];
+  const weights = [0.36, 0.26, 0.18, 0.12, 0.08];
   freqs.forEach((f, i) => {
     sines.push({ amp: p.amplitude * weights[i], freq: f, phase: rng() * Math.PI * 2 });
   });
   const bursts: { at: number; vel: number }[] = [];
-  let t = 4 + rng() * p.burstEverySec;
+  let t = 3 + rng() * p.burstEverySec;
   while (t < durationSec - 3) {
     const sign = rng() < 0.5 ? -1 : 1;
     bursts.push({ at: t, vel: sign * p.burstStrength * (0.75 + rng() * 0.5) });
-    t += p.burstEverySec * (0.7 + rng() * 0.6);
+    t += p.burstEverySec * (0.6 + rng() * 0.8);
   }
   return { sines, bursts };
 }
@@ -97,8 +151,54 @@ export function burstImpulse(pert: AxisPerturbation, t0: number, t1: number): nu
   return v;
 }
 
+/**
+ * Estado de la dinámica de control de un eje (v2).
+ *
+ * `uVel` es la tasa de corrección efectiva del mando: persigue a la deflexión
+ * comandada con inercia. Estado estacionario = u * authority / damping.
+ */
+export interface ControlAxisState {
+  pos: number;
+  burstVel: number;
+  uVel: number;
+}
+
+export function newAxisState(): ControlAxisState {
+  return { pos: 0, burstVel: 0, uVel: 0 };
+}
+
+/**
+ * Avanza un paso la dinámica de un eje. `uOwn` es la deflexión comandada del
+ * eje; `uVelOther` la tasa efectiva del eje contrario (para el acoplamiento).
+ * Devuelve true si hubo ráfaga en esta ventana (para métricas de recovery).
+ */
+export function stepAxis(
+  s: ControlAxisState,
+  pert: AxisPerturbation,
+  p: ControlLevelParams,
+  uOwn: number,
+  uVelOther: number,
+  t: number,
+  dt: number,
+): boolean {
+  const imp = burstImpulse(pert, t - dt, t);
+  if (imp !== 0) s.burstVel += imp;
+  s.burstVel *= Math.exp(-dt / 0.9);
+
+  // Mando con inercia: la tasa persigue a la deflexión comandada.
+  s.uVel += (uOwn * p.authority - s.uVel * p.damping) * dt;
+
+  const correction = s.uVel + p.crossCoupling * uVelOther;
+  s.pos += (perturbVelocity(pert, t) + s.burstVel - correction) * dt;
+  s.pos = Math.max(-1, Math.min(1, s.pos));
+  return imp !== 0;
+}
+
 /** Acumulador de métricas de un eje (se alimenta cada paso de simulación). */
 export class AxisMetrics {
+  /** Medio-ancho de la banda "centrado" usada para esta sesión. */
+  constructor(private band: number) {}
+
   private sumSq = 0;
   private inBand = 0;
   private samples = 0;
@@ -111,7 +211,7 @@ export class AxisMetrics {
   step(t: number, error: number, dt: number, burstNow: boolean) {
     const abs = Math.abs(error);
     this.sumSq += error * error * dt;
-    if (abs <= CONTROL_BAND) this.inBand += dt;
+    if (abs <= this.band) this.inBand += dt;
     this.samples += dt;
     // Saturación: tocar el tope del indicador cuenta una sola vez por excursión.
     if (abs >= 0.995) {
@@ -121,7 +221,7 @@ export class AxisMetrics {
       this.saturated = false;
     }
     if (burstNow) this.pendingBurstAt = t;
-    if (this.pendingBurstAt !== null && abs <= CONTROL_BAND && t > this.pendingBurstAt) {
+    if (this.pendingBurstAt !== null && abs <= this.band && t > this.pendingBurstAt) {
       this.recoveries.push(t - this.pendingBurstAt);
       this.pendingBurstAt = null;
     }

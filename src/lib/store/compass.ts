@@ -89,7 +89,7 @@ export function saveCompassSession(input: {
   return row;
 }
 
-/** Sesiones comparables entre sí: mismo módulo, modo y versión de scoring. */
+/** Sesiones comparables entre sí: mismo módulo, modo y versiones de motor/scoring. */
 function comparable(
   sessions: CompassSessionRecord[],
   moduleId: CompassModuleId,
@@ -99,6 +99,7 @@ function comparable(
     (s) =>
       s.moduleId === moduleId &&
       s.scoringVersion === COMPASS_SCORING_VERSION &&
+      s.moduleVersion === COMPASS_MODULE_VERSION &&
       (mode === undefined || s.mode === mode),
   );
 }

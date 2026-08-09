@@ -10,10 +10,15 @@
 import type { FPIconName } from "@/components/ui/fp-icon";
 import type { CompassModuleId, CompassMode, CompassRunConfig } from "./types";
 
-/** Versión del motor (formatos y generadores). */
-export const COMPASS_MODULE_VERSION = 1;
+/**
+ * Versión del motor (formatos y generadores).
+ * v2: Control con inercia de mando + acoplamiento cruzado y turbulencia más
+ * fuerte; Slalom con viento cruzado, chicanes, gaps variables y rampa de
+ * velocidad. Las sesiones v1 dejan de alimentar tendencias (no comparables).
+ */
+export const COMPASS_MODULE_VERSION = 2;
 /** Versión de las fórmulas de scoring (ver scoring.ts). */
-export const COMPASS_SCORING_VERSION = 1;
+export const COMPASS_SCORING_VERSION = 2;
 
 export interface CompassModuleDef {
   id: CompassModuleId;
@@ -43,10 +48,10 @@ export const COMPASS_MODULES: CompassModuleDef[] = [
     nombre: "Control",
     aptitud: "Coordinación mano-ojo en dos ejes",
     descripcion:
-      "Mantén centradas las dos agujas de un indicador de desviación mientras la turbulencia las empuja. Mide estabilidad, no fuerza: correcciones pequeñas y constantes.",
+      "Mantén centradas las dos agujas mientras la turbulencia las empuja. El mando tiene inercia: la corrección tarda en actuar y sigue actuando al soltar. En niveles altos, corregir un eje contamina al otro.",
     icon: "target",
     controlesDesktop:
-      "Mouse: arrastra dentro del panel — la distancia al centro es la tasa de corrección. Teclado: flechas o WASD.",
+      "Mouse: arrastra dentro del panel — la distancia al centro es la deflexión del mando. Teclado: flechas o WASD.",
     controlesMovil: "Arrastra el pulgar sobre el panel como si fuera un stick virtual.",
     practicaSec: 120,
     practicaItems: 0,
@@ -54,8 +59,8 @@ export const COMPASS_MODULES: CompassModuleDef[] = [
     examenItems: 0,
     examenNivel: 3,
     erroresComunes: [
-      "Sobrecorregir: soltar tarde una corrección grande genera oscilación.",
-      "Mirar una sola aguja: reparte la atención entre ambos ejes.",
+      "Soltar tarde: el mando tiene momentum — libera la corrección antes de llegar al centro.",
+      "Mirar una sola aguja: en niveles altos un eje contamina al otro (acoplamiento).",
       "Perseguir la aguja: anticipa la deriva en lugar de reaccionar tarde.",
     ],
   },
@@ -64,7 +69,7 @@ export const COMPASS_MODULES: CompassModuleDef[] = [
     nombre: "Slalom",
     aptitud: "Seguimiento con anticipación",
     descripcion:
-      "Cruza cada puerta por el centro con un avión que tiene inercia real. Gana quien corrige temprano y suave, no quien reacciona al final.",
+      "Cruza cada puerta por el centro con un avión con inercia, viento cruzado que empuja incluso en recta y chicanes que se cierran. La velocidad sube durante la sesión: gana quien corrige temprano y suave.",
     icon: "wind",
     controlesDesktop: "Flechas ← → (o A/D). Con mouse: apunta a donde quieres el avión.",
     controlesMovil: "Arrastra a los lados para comandar el alerón.",
@@ -74,9 +79,9 @@ export const COMPASS_MODULES: CompassModuleDef[] = [
     examenItems: 0,
     examenNivel: 3,
     erroresComunes: [
-      "Corregir tarde: mira la siguiente puerta, no la actual.",
+      "Ignorar el viento: la flecha indica hacia dónde te empuja — vuela con corrección base.",
+      "Entrar recto a una chicane: la salida se prepara desde la primera puerta.",
       "Bandazos: dos correcciones suaves valen más que una brusca.",
-      "Velocidad de crucero mental: el patrón de puertas cambia, tu ritmo también.",
     ],
   },
   {

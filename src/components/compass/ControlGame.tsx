@@ -1,21 +1,22 @@
 /**
- * Control — seguimiento compensatorio de dos ejes sobre canvas.
+ * Control — seguimiento compensatorio de dos ejes sobre canvas (v2).
  *
  * Visual tipo indicador de desviación (localizer/glideslope): una aguja
  * vertical marca el error horizontal y una horizontal el vertical; el objetivo
- * es mantener ambas en el centro. La simulación corre con paso fijo (ver
- * use-game-loop); el input (mouse/touch como stick virtual, teclado como
- * rate) comanda tasa de corrección, igual que un mando real.
+ * es mantener ambas en el centro. El input (mouse/touch como stick virtual,
+ * teclado) comanda la deflexión del mando; la dinámica con inercia y el
+ * acoplamiento cruzado viven en el motor (stepAxis). Paso fijo vía
+ * use-game-loop.
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   AxisMetrics,
   buildAxisPerturbation,
-  burstImpulse,
   controlLevel,
-  perturbVelocity,
-  CONTROL_BAND,
+  newAxisState,
+  stepAxis,
   type AxisPerturbation,
+  type ControlAxisState,
 } from "@/modules/compass/control";
 import { scoreControl } from "@/modules/compass/scoring";
 import type { CompassResult, CompassRunConfig } from "@/modules/compass/types";
@@ -44,19 +45,16 @@ export function ControlGame({ cfg, onFinish, onQuit }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [side, setSide] = useState(420);
 
+  const params = controlLevel(cfg.level);
+
   // Estado de simulación en refs: el loop no debe re-renderizar React.
-  const sim = useRef({
-    posX: 0,
-    posY: 0,
-    burstVelX: 0,
-    burstVelY: 0,
-    lastT: 0,
-    done: false,
-  });
+  const axisX = useRef<ControlAxisState>(newAxisState());
+  const axisY = useRef<ControlAxisState>(newAxisState());
+  const done = useRef(false);
   const pertX = useRef<AxisPerturbation | null>(null);
   const pertY = useRef<AxisPerturbation | null>(null);
-  const metricsX = useRef(new AxisMetrics());
-  const metricsY = useRef(new AxisMetrics());
+  const metricsX = useRef(new AxisMetrics(params.band));
+  const metricsY = useRef(new AxisMetrics(params.band));
   const input = useRef({
     stickX: 0,
     stickY: 0,
@@ -86,8 +84,8 @@ export function ControlGame({ cfg, onFinish, onQuit }: Props) {
   }, []);
 
   const finish = useCallback(() => {
-    if (sim.current.done) return;
-    sim.current.done = true;
+    if (done.current) return;
+    done.current = true;
     const rx = metricsX.current.result();
     const ry = metricsY.current.result();
     const recovery =
@@ -124,48 +122,36 @@ export function ControlGame({ cfg, onFinish, onQuit }: Props) {
 
   const step = useCallback(
     (t: number, dt: number) => {
-      const s = sim.current;
-      if (s.done) return;
+      if (done.current) return;
       if (t >= cfg.durationSec) {
         finish();
         return;
       }
-      const p = controlLevel(cfg.level);
       const inp = input.current;
-      // Teclado se suma al stick (cada uno clamp a [-1,1]).
       let kx = 0;
       let ky = 0;
       if (inp.keys.has("ArrowLeft") || inp.keys.has("a")) kx -= 1;
       if (inp.keys.has("ArrowRight") || inp.keys.has("d")) kx += 1;
       if (inp.keys.has("ArrowUp") || inp.keys.has("w")) ky -= 1;
       if (inp.keys.has("ArrowDown") || inp.keys.has("s")) ky += 1;
+      // La corrección se OPONE al error: deflexión hacia la aguja la recentra.
       const ux = Math.max(-1, Math.min(1, inp.stickX + kx));
       const uy = Math.max(-1, Math.min(1, inp.stickY + ky));
 
-      const bx = burstImpulse(pertX.current!, s.lastT, t);
-      const by = burstImpulse(pertY.current!, s.lastT, t);
-      if (bx !== 0) s.burstVelX += bx;
-      if (by !== 0) s.burstVelY += by;
-      const decay = Math.exp(-dt / 0.9);
-      s.burstVelX *= decay;
-      s.burstVelY *= decay;
+      // El acoplamiento usa la tasa del eje contrario ANTES de este paso.
+      const uVelXPrev = axisX.current.uVel;
+      const uVelYPrev = axisY.current.uVel;
+      const burstX = stepAxis(axisX.current, pertX.current!, params, ux, uVelYPrev, t, dt);
+      const burstY = stepAxis(axisY.current, pertY.current!, params, uy, uVelXPrev, t, dt);
 
-      // La corrección se OPONE al error: deflexión derecha empuja la aguja
-      // (el error) hacia la izquierda, como al nivelar un alabeo.
-      s.posX += (perturbVelocity(pertX.current!, t) + s.burstVelX - ux * p.userRate) * dt;
-      s.posY += (perturbVelocity(pertY.current!, t) + s.burstVelY - uy * p.userRate) * dt;
-      s.posX = Math.max(-1, Math.min(1, s.posX));
-      s.posY = Math.max(-1, Math.min(1, s.posY));
-
-      metricsX.current.step(t, s.posX, dt, bx !== 0);
-      metricsY.current.step(t, s.posY, dt, by !== 0);
-      s.lastT = t;
+      metricsX.current.step(t, axisX.current.pos, dt, burstX);
+      metricsY.current.step(t, axisY.current.pos, dt, burstY);
 
       // El reloj visible sólo cambia una vez por segundo.
       const rem = Math.ceil(cfg.durationSec - t);
       setRemaining((prev) => (prev !== rem ? rem : prev));
     },
-    [cfg.durationSec, cfg.level, finish],
+    [cfg.durationSec, params, finish],
   );
 
   const draw = useCallback(() => {
@@ -192,8 +178,8 @@ export function ControlGame({ cfg, onFinish, onQuit }: Props) {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Banda "centrado"
-    const band = CONTROL_BAND * track;
+    // Banda "centrado" (depende del nivel)
+    const band = params.band * track;
     ctx.fillStyle = `${SALMON}88`;
     ctx.fillRect(c - band, c - R * 0.92, band * 2, R * 1.84);
     ctx.fillRect(c - R * 0.92, c - band, R * 1.84, band * 2);
@@ -221,9 +207,8 @@ export function ControlGame({ cfg, onFinish, onQuit }: Props) {
     ctx.lineTo(c, c + 12);
     ctx.stroke();
 
-    const s = sim.current;
-    const nx = c + s.posX * track;
-    const ny = c + s.posY * track;
+    const nx = c + axisX.current.pos * track;
+    const ny = c + axisY.current.pos * track;
 
     // Aguja vertical (error horizontal)
     ctx.strokeStyle = CORAL;
@@ -250,7 +235,8 @@ export function ControlGame({ cfg, onFinish, onQuit }: Props) {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Stick virtual: burbuja que muestra la deflexión comandada actual.
+    // Stick virtual: deflexión comandada (hueco) y tasa efectiva del mando
+    // (relleno). La separación entre ambos ES la inercia que hay que anticipar.
     const inp = input.current;
     const bx = side - 44;
     const by = side - 44;
@@ -259,11 +245,23 @@ export function ControlGame({ cfg, onFinish, onQuit }: Props) {
     ctx.strokeStyle = `${NAVY}22`;
     ctx.lineWidth = 1.5;
     ctx.stroke();
+    const ssMax = Math.max(0.4, params.authority / params.damping);
     ctx.beginPath();
-    ctx.arc(bx + inp.stickX * 15, by + inp.stickY * 15, 6, 0, Math.PI * 2);
+    ctx.arc(
+      bx + Math.max(-1, Math.min(1, axisX.current.uVel / ssMax)) * 15,
+      by + Math.max(-1, Math.min(1, axisY.current.uVel / ssMax)) * 15,
+      6,
+      0,
+      Math.PI * 2,
+    );
     ctx.fillStyle = HAZE;
     ctx.fill();
-  }, [side]);
+    ctx.beginPath();
+    ctx.arc(bx + inp.stickX * 15, by + inp.stickY * 15, 8, 0, Math.PI * 2);
+    ctx.strokeStyle = CORAL;
+    ctx.lineWidth = 1.6;
+    ctx.stroke();
+  }, [side, params]);
 
   useGameLoop({
     running: fase === "run",
@@ -370,7 +368,7 @@ export function ControlGame({ cfg, onFinish, onQuit }: Props) {
           padding: "8px 12px",
         }}
       >
-        Centra ambas agujas · arrastra como stick virtual o usa ← → ↑ ↓ / WASD
+        Centra ambas agujas · el mando tiene inercia: suelta antes de llegar · ← → ↑ ↓ / WASD
       </p>
     </div>
   );
