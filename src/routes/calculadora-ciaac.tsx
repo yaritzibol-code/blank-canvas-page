@@ -13,7 +13,7 @@ import {
   PlaneField,
   SectionHead,
   type IconName,
-} from "./index";
+} from "@/components/landing/shared";
 import { PROXIMO_CIAAC } from "@/lib/convocatoria";
 
 /**

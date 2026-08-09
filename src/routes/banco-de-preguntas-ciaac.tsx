@@ -15,7 +15,7 @@ import {
   PlaneField,
   SectionHead,
   type IconName,
-} from "./index";
+} from "@/components/landing/shared";
 
 /**
  * Landing de feature para la búsqueda transaccional "banco de preguntas

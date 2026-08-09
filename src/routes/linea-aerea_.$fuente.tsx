@@ -13,7 +13,7 @@ import {
   PlaneField,
   SectionHead,
   type IconName,
-} from "./index";
+} from "@/components/landing/shared";
 
 /**
  * Cluster SEO /linea-aerea/$fuente — una guía pública por cada fuente del

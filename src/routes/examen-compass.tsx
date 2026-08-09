@@ -14,7 +14,7 @@ import {
   PlaneField,
   SectionHead,
   type IconName,
-} from "./index";
+} from "@/components/landing/shared";
 
 /**
  * Landing AEO/GEO para "examen COMPASS" y sus long-tail ("test de aptitud

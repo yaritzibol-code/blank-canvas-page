@@ -12,7 +12,7 @@ import {
   Pill,
   PlaneField,
   type IconName,
-} from "./index";
+} from "@/components/landing/shared";
 
 /**
  * Hub público del cluster /linea-aerea: presenta las 5 fuentes del temario

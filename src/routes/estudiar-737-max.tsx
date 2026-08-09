@@ -15,7 +15,7 @@ import {
   PlaneField,
   SectionHead,
   type IconName,
-} from "./index";
+} from "@/components/landing/shared";
 
 /**
  * Landing AEO/GEO para "estudiar 737 MAX" y sus long-tail ("preguntas 737

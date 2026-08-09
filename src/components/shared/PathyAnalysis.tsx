@@ -8,7 +8,7 @@
  */
 import { Link } from "@tanstack/react-router";
 import { Icon } from "@/components/ui/fp-icon";
-import { PathyBubble } from "@/routes/index";
+import { PathyBubble } from "@/components/landing/shared";
 import type { PathyReport, PathySignal, SignalTone, RutaPerf } from "@/lib/store";
 import { LiveIndicator } from "@/components/shared/LiveIndicator";
 import type { LiveDataState } from "@/hooks/use-live-data";

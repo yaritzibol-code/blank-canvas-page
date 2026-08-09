@@ -20,7 +20,7 @@ import {
   PlaneField,
   SectionHead,
   type IconName,
-} from "./index";
+} from "@/components/landing/shared";
 
 /**
  * Landing AEO/GEO para la búsqueda "examen RTARI" y sus long-tail ("cómo es

@@ -16,7 +16,7 @@ import {
   PlaneField,
   SectionHead,
   type IconName,
-} from "./index";
+} from "@/components/landing/shared";
 
 /**
  * Landing SEO pública del examen CIAAC (Piloto Comercial · AFAC).

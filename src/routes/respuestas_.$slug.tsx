@@ -6,7 +6,7 @@ import {
   respuestaBySlug,
   type RespuestaSeo,
 } from "@/lib/seo/respuestas-seo";
-import { AeroBackdrop, Btn, Coord, Footer, Icon, Nav, Pill } from "./index";
+import { AeroBackdrop, Btn, Coord, Footer, Icon, Nav, Pill } from "@/components/landing/shared";
 
 /**
  * Cluster AEO/GEO /respuestas/$slug — una página por pregunta conversacional,

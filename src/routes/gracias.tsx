@@ -9,7 +9,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { PlaneField } from "@/components/shared/PlaneField";
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
-import { PathyBubble } from "@/routes/index";
+import { PathyBubble } from "@/components/landing/shared";
 import { trackPurchase } from "@/lib/ads";
 import { PRO_ANNUAL_FALLBACK, PRO_MONTHLY_FALLBACK, PRO_SETUP_FALLBACK } from "@/lib/pricing";
 

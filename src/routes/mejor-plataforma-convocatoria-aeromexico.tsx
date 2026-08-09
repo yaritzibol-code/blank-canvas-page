@@ -13,7 +13,7 @@ import {
   PlaneField,
   SectionHead,
   type IconName,
-} from "./index";
+} from "@/components/landing/shared";
 
 /**
  * Página comparativa GEO: responde "¿cuál es la mejor plataforma para

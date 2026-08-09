@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Eye, EyeOff } from "lucide-react";
-import { register, login, resetPassword, ensureSeeded, useSessionUser } from "@/lib/store";
+import { register, login, resetPassword, ensureSeededAsync, useSessionUser } from "@/lib/store";
 import { lovable } from "@/integrations/lovable";
 
 /**
@@ -237,6 +237,9 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
     if (loading) return;
     setError(null);
     setLoading(true);
+    // El seed es asíncrono (chunk aparte): garantiza que las cuentas demo
+    // existan antes de validar credenciales en un navegador recién llegado.
+    await ensureSeededAsync().catch(() => {});
     const res = await login(email, password);
     if (!res.ok) {
       setLoading(false);
@@ -416,7 +419,7 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
   const sessionUser = useSessionUser();
 
   useEffect(() => {
-    ensureSeeded();
+    void ensureSeededAsync();
   }, []);
 
   // Si ya había sesión al montar (usuario que regresa), no lo empujamos: sólo

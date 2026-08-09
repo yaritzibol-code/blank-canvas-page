@@ -14,7 +14,7 @@ import {
   Pill,
   PlaneField,
   SectionHead,
-} from "./index";
+} from "@/components/landing/shared";
 
 /**
  * Página estacional evergreen de la convocatoria CIAAC: concentra las

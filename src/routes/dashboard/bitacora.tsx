@@ -15,7 +15,7 @@ import {
   type BitacoraEntry,
   type Genero,
 } from "@/lib/store";
-import { PathyBubble } from "@/routes/index";
+import { PathyBubble } from "@/components/landing/shared";
 import { ModuleHeader } from "@/components/shared/ModuleHeader";
 import { useYarisAsk, toHistory } from "@/lib/yaris-ask";
 import { sanitizeHtml } from "@/lib/yaris-format";

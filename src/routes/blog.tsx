@@ -12,7 +12,7 @@ import {
   Pill,
   PlaneField,
   type IconName,
-} from "./index";
+} from "@/components/landing/shared";
 
 /**
  * Blog e historias — mismo sistema de diseño que la portada (Nav, Footer,

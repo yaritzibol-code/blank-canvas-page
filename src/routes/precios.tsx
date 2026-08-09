@@ -12,7 +12,7 @@
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Nav, Footer, SectionHead, Btn, Pill, Icon, PlaneField } from "@/routes/index";
+import { Nav, Footer, SectionHead, Btn, Pill, Icon, PlaneField } from "@/components/landing/shared";
 import { useSessionUser } from "@/lib/store";
 import { getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
 import {

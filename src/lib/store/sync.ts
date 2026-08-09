@@ -17,7 +17,7 @@
 import { read, write, setWriteHook } from "./db";
 import { supa, cloudEnabled } from "./cloud";
 import { defaultPrefs } from "./auth";
-import { SEED_VERSION, seedQuestions, seedFlashcards, seedMateriales } from "./seed";
+import { SEED_VERSION } from "./seed-meta";
 import type { BankQuestion, Material, Clase, FlashCardItem, Report, User } from "./types";
 
 /** Colecciones de contenido global (fuente: Panel Admin). */
@@ -328,6 +328,9 @@ async function republishSeedContent(byCol: Map<string, Row[]>): Promise<void> {
   const cloudVersion = Number((verRow?.data as { version?: number } | null)?.version ?? 0);
   if (cloudVersion >= SEED_VERSION) return;
 
+  // Los datos del seed se cargan bajo demanda: este camino solo corre cuando
+  // la nube va atrás de la versión local, no en cada arranque.
+  const { seedQuestions, seedFlashcards, seedMateriales } = await import("./seed");
   const questions = seedQuestions();
   const fresh: Record<"questions" | "flashcards" | "materiales", Row[]> = {
     questions: questions as unknown as Row[],

@@ -13,7 +13,7 @@ import {
   PlaneField,
   SectionHead,
   type IconName,
-} from "./index";
+} from "@/components/landing/shared";
 
 /**
  * Página de entidad (GEO): define QUÉ es FlightPath con la descripción
