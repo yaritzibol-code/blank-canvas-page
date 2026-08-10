@@ -11,7 +11,7 @@ import {
   PRO_SETUP_LIST_PRICE,
   mesesAhorrados,
 } from "@/lib/pricing";
-import { MATERIAS_DEF, SIM_TOTAL_QS } from "@/lib/store/materias";
+import { SIM_TOTAL_QS } from "@/lib/store/materias";
 
 /** Meses que se ahorran pagando el año completo (12 mensualidades vs anual). */
 const ahorroMeses = mesesAhorrados(PRO_MONTHLY_FALLBACK, PRO_ANNUAL_FALLBACK);
@@ -113,18 +113,18 @@ function Hero() {
             <div className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white/70 backdrop-blur px-3 py-1.5 shadow-card">
               <span className="w-1.5 h-1.5 rounded-full bg-coral-600 animate-pulse-dot" />
               <span className="text-[12px] font-semibold text-ink/70">
-                Preparación CIAAC · Edición 2026
+                La mejor plataforma de México para estudiar aviación
               </span>
             </div>
             <h1 className="font-display mt-6 text-[44px] sm:text-[58px] lg:text-[66px] leading-[0.98] tracking-tight text-ink">
-              El sistema de estudio
-              <br className="hidden sm:block" /> que se adapta a ti.
-              <span className="block text-coral-600 mt-1">No tú a él.</span>
+              Todo lo que estudia
+              <br className="hidden sm:block" /> un piloto.
+              <span className="block text-coral-600 mt-1">Del CIAAC a tu aeronave.</span>
             </h1>
             <p className="mt-7 text-lg lg:text-xl text-ink/55 max-w-xl leading-relaxed">
-              FlightPath aprende cómo estudias y construye tu ruta hacia el examen CIAAC y la línea
-              aérea. Las 12 materias, simulador real, inglés y un copiloto inteligente que vuela
-              contigo.
+              Banco CIAAC, fuentes de línea aérea (ATP, PHAK, Jeppesen), aptitudes tipo COMPASS,
+              entrevista RTARI en inglés y manuales de aeronave — con un copiloto IA que aprende
+              cómo estudias y construye tu ruta.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Btn kind="primary" size="lg" icon="arrow" to="/register">
@@ -191,7 +191,9 @@ function Hero() {
           {[
             "2,800+ preguntas con explicación",
             `Simulador de ${SIM_TOTAL_QS} preguntas`,
-            `${MATERIAS_DEF.length} materias`,
+            "5 fuentes de línea aérea",
+            "6 ejercicios de aptitud",
+            "Entrevista RTARI por voz",
             "Tutor IA 24/7",
           ].map((t) => (
             <span key={t} className="font-display text-[15px] text-ink/45 tracking-tight">
@@ -222,6 +224,14 @@ function HeroPathyCard() {
     <>
       Recuerda tu <span className="text-coral-700 font-semibold">simulador del jueves</span> — yo te
       aviso a tiempo.
+    </>,
+    <>
+      Tu <span className="text-coral-700 font-semibold">entrevista RTARI</span> de práctica te
+      espera: 10 minutos y sales hablando mejor.
+    </>,
+    <>
+      Nuevo récord en <span className="text-coral-700 font-semibold">Slalom nivel 3</span> — tus
+      aptitudes van subiendo. ✦
     </>,
     <>
       Cada sesión te acerca al <span className="text-coral-700 font-semibold">CIAAC</span>. Un paso
@@ -462,6 +472,120 @@ function Countdown({ show = true }: { show?: boolean }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
+   RUTA COMPLETA — el mapa de la carrera (tesis del posicionamiento:
+   FlightPath cubre todas las etapas de estudio del piloto, no solo una)
+   ═══════════════════════════════════════════════════════════════════ */
+
+function RutaCompleta() {
+  const etapas: {
+    icon: IconName;
+    t: string;
+    d: string;
+    chips: string[];
+    href: string;
+  }[] = [
+    {
+      icon: "cards",
+      t: "Examen CIAAC",
+      d: "El filtro teórico de tu licencia comercial: las 12 materias con banco explicado, simulador en formato real y análisis por materia.",
+      chips: ["2,800+ preguntas", `Simulador de ${SIM_TOTAL_QS}`, "12 materias"],
+      href: "/modulos/ciaac",
+    },
+    {
+      icon: "radio",
+      t: "Inglés OACI · RTARI",
+      d: "La entrevista en inglés se entrena hablando: un sinodal de voz te pregunta, te repregunta y te evalúa por las seis áreas OACI.",
+      chips: ["Entrevista por voz", "Debrief 6 áreas", "Nivel 4+"],
+      href: "/modulos/rtari",
+    },
+    {
+      icon: "compass",
+      t: "Aptitudes tipo COMPASS",
+      d: "Coordinación, memoria, cálculo mental, orientación y multitarea: los ejercicios de las selecciones, jugables con teclado, mouse o touch.",
+      chips: ["6 ejercicios", "5 niveles", "Simulacro 20 min"],
+      href: "/modulos/compass",
+    },
+    {
+      icon: "plane",
+      t: "Convocatorias de línea aérea",
+      d: "Las 5 fuentes del examen teórico — ATP, PHAK, Jeppesen, CPAM y Anexo 10 — por capítulos, con explicación en español.",
+      chips: ["5 fuentes", "Por capítulos", "Simulacros"],
+      href: "/modulos/linea-aerea",
+    },
+    {
+      icon: "doc",
+      t: "Manuales de aeronave",
+      d: "El avión que vas a volar, a base de preguntas: el 737 MAX por los 9 capítulos del FCOM, para type rating y entrevista técnica.",
+      chips: ["737 MAX", "9 capítulos FCOM", "Empieza gratis"],
+      href: "/modulos/manuales",
+    },
+    {
+      icon: "chart",
+      t: "Biblioteca y análisis",
+      d: "100+ manuales de consulta y el análisis que conecta todo: tu avance por materia, tu radar de aptitudes y lo que te toca hoy.",
+      chips: ["100+ manuales", "Análisis por materia", "Pathy y Yaris"],
+      href: "/modulos/biblioteca",
+    },
+  ];
+  return (
+    <section className="relative py-20 lg:py-28" id="ruta">
+      <PlaneField count={22} />
+      <div className="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
+        <SectionHead
+          center
+          eyebrow="La ruta completa"
+          title={
+            <>
+              Una carrera tiene etapas.
+              <span className="block text-coral-600">Aquí se estudian todas.</span>
+            </>
+          }
+          sub="La mejor plataforma de México para estudiar aviación: del examen teórico de tu licencia a los manuales de tu aeronave, pasando por el inglés y las pruebas de selección — todo en una sola cuenta."
+        />
+        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {etapas.map((e) => (
+            <a
+              key={e.t}
+              href={e.href}
+              className="group relative rounded-3xl bg-white/90 backdrop-blur-sm border border-ink/8 p-7 shadow-card hover-lift hover:shadow-lift overflow-hidden"
+            >
+              <div
+                className="absolute -top-12 -right-12 w-40 h-40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{
+                  background: "radial-gradient(closest-side, rgba(242,174,188,0.25), transparent)",
+                }}
+              />
+              <div className="relative">
+                <div className="mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-ink grid place-items-center text-coral-400 group-hover:bg-coral-600 group-hover:text-white transition-colors">
+                    <Icon n={e.icon} className="w-6 h-6" />
+                  </div>
+                </div>
+                <h3 className="font-display text-[21px] tracking-tight text-ink">{e.t}</h3>
+                <p className="text-[14px] text-ink/55 mt-2 leading-relaxed">{e.d}</p>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {e.chips.map((c) => (
+                    <span
+                      key={c}
+                      className="rounded-full border border-ink/10 bg-white px-2.5 py-1 text-[11px] font-semibold text-ink/55"
+                    >
+                      {c}
+                    </span>
+                  ))}
+                </div>
+                <span className="mt-5 inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-coral-700 group-hover:text-coral-600 transition-colors">
+                  Más información <Icon n="chevR" className="w-4 h-4" />
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    SHOWCASE  (Dashboard cycling through students)
    ═══════════════════════════════════════════════════════════════════ */
 
@@ -564,10 +688,10 @@ function Showcase() {
           eyebrow="Tu cabina de estudio"
           title={
             <>
-              Todo lo que necesitas <span className="text-coral-600">para aprobar el CIAAC.</span>
+              Una cabina de estudio <span className="text-coral-600">para toda tu carrera.</span>
             </>
           }
-          sub="Un solo lugar para estudiar, practicar, resolver dudas y seguir tu progreso. Sin perder tiempo cambiando entre aplicaciones."
+          sub="Estudia, practica, resuelve dudas y sigue tu progreso en cada etapa — del CIAAC a tu aeronave — sin cambiar de aplicación."
         />
         <div className="mt-7 flex justify-center">
           <div className="inline-flex max-w-full flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-full border border-burgundy/15 bg-white/70 backdrop-blur px-4 py-2 text-center shadow-card">
@@ -826,17 +950,17 @@ function Features() {
       <div className="mx-auto max-w-[1240px] px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14">
           <SectionHead
-            eyebrow="Plataforma completa"
+            eyebrow="Herramientas de estudio"
             title={
               <>
-                Todo lo que necesitas,
+                Las herramientas que hacen
                 <br />
-                <span className="text-coral-600">en un solo lugar.</span>
+                <span className="text-coral-600">el trabajo pesado.</span>
               </>
             }
           />
           <p className="text-[15px] text-ink/50 max-w-sm leading-relaxed lg:pb-2">
-            Explora todo lo que incluye FlightPath para acompañarte antes, durante y después de cada
+            Las mismas herramientas te acompañan en cada etapa — antes, durante y después de cada
             sesión de estudio.
           </p>
         </div>
@@ -2028,6 +2152,7 @@ function LandingPage() {
       <main>
         <Hero />
         <Countdown show={true} />
+        <RutaCompleta />
         <Showcase />
         <Features />
         <PathyEvolution />
