@@ -119,12 +119,11 @@ function Hero() {
             <h1 className="font-display mt-6 text-[44px] sm:text-[58px] lg:text-[66px] leading-[0.98] tracking-tight text-ink">
               Todo lo que estudia
               <br className="hidden sm:block" /> un piloto.
-              <span className="block text-coral-600 mt-1">Del CIAAC a tu aeronave.</span>
+              <span className="block text-coral-600 mt-1">En un solo lugar.</span>
             </h1>
             <p className="mt-7 text-lg lg:text-xl text-ink/55 max-w-xl leading-relaxed">
-              Banco CIAAC, fuentes de línea aérea (ATP, PHAK, Jeppesen), aptitudes tipo COMPASS,
-              entrevista RTARI en inglés y manuales de aeronave — con un copiloto IA que aprende
-              cómo estudias y construye tu ruta.
+              Banco CIAAC, fuentes de línea aérea (ATP, PHAK, Jeppesen), aptitudes tipo COMPASS, entrevista RTARI en
+              inglés y manuales de aeronave — con un copiloto IA que aprende cómo estudias y construye tu ruta.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Btn kind="primary" size="lg" icon="arrow" to="/register">
@@ -146,14 +145,7 @@ function Hero() {
               <div className="flex items-center gap-3">
                 <div className="relative w-14 h-14 shrink-0">
                   <svg viewBox="0 0 36 36" className="w-14 h-14 -rotate-90">
-                    <circle
-                      cx="18"
-                      cy="18"
-                      r="15.5"
-                      fill="none"
-                      stroke="rgba(255,255,255,0.12)"
-                      strokeWidth="3.4"
-                    />
+                    <circle cx="18" cy="18" r="15.5" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="3.4" />
                     <circle
                       cx="18"
                       cy="18"
@@ -185,9 +177,7 @@ function Hero() {
       {/* data strip — cifras propias de la plataforma; nunca marcas de terceros (regla de compliance) */}
       <div className="border-y border-ink/8 bg-white/50 backdrop-blur-sm">
         <div className="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8 py-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-          <span className="text-[11px] uppercase tracking-[0.2em] font-bold text-haze-400">
-            FlightPath en números
-          </span>
+          <span className="text-[11px] uppercase tracking-[0.2em] font-bold text-haze-400">FlightPath en números</span>
           {[
             "2,800+ preguntas con explicación",
             `Simulador de ${SIM_TOTAL_QS} preguntas`,
@@ -210,32 +200,30 @@ function Hero() {
 function HeroPathyCard() {
   const msgs: ReactNode[] = [
     <>
-      Hoy toca <span className="text-coral-700 font-semibold">Meteorología</span>. Te preparé una
-      sesión de 15 min — ¿despegamos?
+      Hoy toca <span className="text-coral-700 font-semibold">Meteorología</span>. Te preparé una sesión de 15 min —
+      ¿despegamos?
     </>,
     <>
-      Llevas <span className="text-coral-700 font-semibold">racha de 14 días</span>. La constancia
-      es lo que te sube al avión. ✦
+      Llevas <span className="text-coral-700 font-semibold">racha de 14 días</span>. La constancia es lo que te sube al
+      avión. ✦
     </>,
     <>
-      Subiste <span className="text-coral-700 font-semibold">8% en Aerodinámica</span> esta semana.
-      ¡Vas increíble!
+      Subiste <span className="text-coral-700 font-semibold">8% en Aerodinámica</span> esta semana. ¡Vas increíble!
     </>,
     <>
-      Recuerda tu <span className="text-coral-700 font-semibold">simulador del jueves</span> — yo te
-      aviso a tiempo.
+      Recuerda tu <span className="text-coral-700 font-semibold">simulador del jueves</span> — yo te aviso a tiempo.
     </>,
     <>
-      Tu <span className="text-coral-700 font-semibold">entrevista RTARI</span> de práctica te
-      espera: 10 minutos y sales hablando mejor.
+      Tu <span className="text-coral-700 font-semibold">entrevista RTARI</span> de práctica te espera: 10 minutos y
+      sales hablando mejor.
     </>,
     <>
-      Nuevo récord en <span className="text-coral-700 font-semibold">Slalom nivel 3</span> — tus
-      aptitudes van subiendo. ✦
+      Nuevo récord en <span className="text-coral-700 font-semibold">Slalom nivel 3</span> — tus aptitudes van subiendo.
+      ✦
     </>,
     <>
-      Cada sesión te acerca al <span className="text-coral-700 font-semibold">CIAAC</span>. Un paso
-      a la vez, sin estrés.
+      Cada sesión te acerca al <span className="text-coral-700 font-semibold">CIAAC</span>. Un paso a la vez, sin
+      estrés.
     </>,
   ];
   const [i, setI] = useState(0);
@@ -334,9 +322,7 @@ function Countdown({ show = true }: { show?: boolean }) {
           <Digit d={+s[0]} />
           <Digit d={+s[1]} />
         </div>
-        <span className="mt-2.5 text-[10px] uppercase tracking-[0.18em] font-bold text-burgundy/55">
-          {l}
-        </span>
+        <span className="mt-2.5 text-[10px] uppercase tracking-[0.18em] font-bold text-burgundy/55">{l}</span>
       </div>
     );
   };
@@ -354,8 +340,7 @@ function Countdown({ show = true }: { show?: boolean }) {
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background:
-                "radial-gradient(130% 150% at 100% 0%, rgba(242,220,219,0.6), rgba(255,255,255,0) 55%)",
+              background: "radial-gradient(130% 150% at 100% 0%, rgba(242,220,219,0.6), rgba(255,255,255,0) 55%)",
             }}
           />
           <div className="absolute -top-12 right-[14%] w-72 h-44 rounded-full bg-cherry/50 blur-3xl animate-breathe pointer-events-none" />
@@ -371,9 +356,7 @@ function Countdown({ show = true }: { show?: boolean }) {
                   {t.d}
                 </div>
                 <div className="pb-2.5">
-                  <div className="font-display text-2xl lg:text-3xl text-ink leading-none">
-                    días
-                  </div>
+                  <div className="font-display text-2xl lg:text-3xl text-ink leading-none">días</div>
                   <div className="text-[12.5px] text-ink/45 mt-1.5">para tu examen</div>
                 </div>
               </div>
@@ -394,9 +377,7 @@ function Countdown({ show = true }: { show?: boolean }) {
                   Hoy
                 </div>
                 <div className="absolute right-0 top-0 text-right">
-                  <div className="text-[10px] uppercase tracking-[0.16em] font-bold text-burgundy">
-                    CIAAC
-                  </div>
+                  <div className="text-[10px] uppercase tracking-[0.16em] font-bold text-burgundy">CIAAC</div>
                   <div className="text-[10px] font-mono text-haze-400 mt-0.5">17 ago</div>
                 </div>
                 <div
@@ -661,20 +642,8 @@ function Showcase() {
   }, []);
   const s = students[si];
   const C = 97.4;
-  const Fade = ({
-    k,
-    children,
-    className = "",
-  }: {
-    k: ReactNode;
-    children: ReactNode;
-    className?: string;
-  }) => (
-    <span
-      key={String(k)}
-      className={`inline-block ${className}`}
-      style={{ animation: "softIn 0.85s ease both" }}
-    >
+  const Fade = ({ k, children, className = "" }: { k: ReactNode; children: ReactNode; className?: string }) => (
+    <span key={String(k)} className={`inline-block ${className}`} style={{ animation: "softIn 0.85s ease both" }}>
       {children}
     </span>
   );
@@ -699,9 +668,7 @@ function Showcase() {
               <span className="absolute inset-0 rounded-full bg-burgundy animate-ping" />
               <span className="relative w-2 h-2 rounded-full bg-burgundy" />
             </span>
-            <span className="text-[12.5px] font-semibold text-ink/70">
-              Análisis personalizado para cada alumno —
-            </span>
+            <span className="text-[12.5px] font-semibold text-ink/70">Análisis personalizado para cada alumno —</span>
             <Fade k={s.name} className="text-[12.5px] font-bold text-burgundy">
               {s.name}
             </Fade>
@@ -715,14 +682,13 @@ function Showcase() {
             <div
               className="absolute inset-y-0 w-1/3"
               style={{
-                background:
-                  "linear-gradient(90deg, transparent, rgba(90,134,203,0.14), transparent)",
+                background: "linear-gradient(90deg, transparent, rgba(90,134,203,0.14), transparent)",
                 animation: scan ? "scanSweep 1.4s ease-in-out" : "none",
               }}
             />
             <div className="absolute top-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-2 rounded-full bg-ink text-white px-3.5 py-1.5 text-[11.5px] font-semibold shadow-navy">
-              <span className="w-1.5 h-1.5 rounded-full bg-cherry animate-pulse-dot" /> Analizando
-              perfil de {students[si % students.length].name}…
+              <span className="w-1.5 h-1.5 rounded-full bg-cherry animate-pulse-dot" /> Analizando perfil de{" "}
+              {students[si % students.length].name}…
             </div>
           </div>
 
@@ -776,14 +742,7 @@ function Showcase() {
                 <div className="flex items-center justify-center my-2">
                   <div className="relative w-40 h-40">
                     <svg viewBox="0 0 36 36" className="w-40 h-40 -rotate-90">
-                      <circle
-                        cx="18"
-                        cy="18"
-                        r="15.5"
-                        fill="none"
-                        stroke="rgba(255,255,255,0.10)"
-                        strokeWidth="2.8"
-                      />
+                      <circle cx="18" cy="18" r="15.5" fill="none" stroke="rgba(255,255,255,0.10)" strokeWidth="2.8" />
                       <circle
                         cx="18"
                         cy="18"
@@ -802,27 +761,20 @@ function Showcase() {
                         <div className="font-display text-[42px] leading-none text-white">
                           <Fade k={s.prog}>{s.prog}%</Fade>
                         </div>
-                        <div className="text-[11px] text-white/45 uppercase tracking-[0.15em] mt-1">
-                          completado
-                        </div>
+                        <div className="text-[11px] text-white/45 uppercase tracking-[0.15em] mt-1">completado</div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-2.5 mt-4">
                   <div className="rounded-xl bg-white/[0.06] px-3 py-2.5">
-                    <div className="text-[10px] uppercase tracking-[0.14em] text-white/45 font-bold">
-                      Racha
-                    </div>
+                    <div className="text-[10px] uppercase tracking-[0.14em] text-white/45 font-bold">Racha</div>
                     <div className="font-display text-xl text-white">
-                      <Fade k={s.streak}>{s.streak}</Fade>{" "}
-                      <span className="text-[12px] text-white/55">días</span>
+                      <Fade k={s.streak}>{s.streak}</Fade> <span className="text-[12px] text-white/55">días</span>
                     </div>
                   </div>
                   <div className="rounded-xl bg-white/[0.06] px-3 py-2.5">
-                    <div className="text-[10px] uppercase tracking-[0.14em] text-white/45 font-bold">
-                      Aciertos
-                    </div>
+                    <div className="text-[10px] uppercase tracking-[0.14em] text-white/45 font-bold">Aciertos</div>
                     <div className="font-display text-xl text-white">
                       <Fade k={s.acc}>{s.acc}%</Fade>
                     </div>
@@ -835,8 +787,7 @@ function Showcase() {
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 text-haze-500 text-[11px] uppercase tracking-[0.16em] font-bold mb-4">
-                    <Icon n="target" className="w-4 h-4 text-coral-600" /> Misión del día ·
-                    personalizada
+                    <Icon n="target" className="w-4 h-4 text-coral-600" /> Misión del día · personalizada
                   </div>
                   <p className="text-[14px] text-ink/55">Hoy enfócate en</p>
                   <div className="font-display text-3xl text-coral-600 tracking-tight my-0.5">
@@ -960,8 +911,7 @@ function Features() {
             }
           />
           <p className="text-[15px] text-ink/50 max-w-sm leading-relaxed lg:pb-2">
-            Las mismas herramientas te acompañan en cada etapa — antes, durante y después de cada
-            sesión de estudio.
+            Las mismas herramientas te acompañan en cada etapa — antes, durante y después de cada sesión de estudio.
           </p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -1053,8 +1003,7 @@ function PathyPhone() {
             <div className="leading-tight">
               <div className="text-[13.5px] font-bold flex items-center gap-1.5">Pathy</div>
               <div className="text-[10.5px] text-white/70 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-cherry animate-pulse-dot" /> tu
-                copiloto · en línea
+                <span className="w-1.5 h-1.5 rounded-full bg-cherry animate-pulse-dot" /> tu copiloto · en línea
               </div>
             </div>
             <div className="ml-auto flex items-center gap-3 text-white/70">
@@ -1166,8 +1115,8 @@ function Companion() {
                 <span className="text-coral-400">Aunque cierres la app.</span>
               </h2>
               <p className="mt-5 text-[17px] text-white/65 leading-relaxed max-w-md">
-                Pathy te escribe al teléfono en el momento justo: que es hora de estudiar, que no
-                pierdas tu racha, o tu análisis de la semana. Recordatorios cálidos — nunca presión.
+                Pathy te escribe al teléfono en el momento justo: que es hora de estudiar, que no pierdas tu racha, o tu
+                análisis de la semana. Recordatorios cálidos — nunca presión.
               </p>
               <div className="mt-8 grid sm:grid-cols-2 gap-x-6 gap-y-3.5 max-w-md">
                 {[
@@ -1249,17 +1198,7 @@ function PathyEvolution() {
   ];
   const [active, setActive] = useState(3);
   const s = stages[active];
-  const Avatar = ({
-    src,
-    size,
-    scale = 1.32,
-    ring,
-  }: {
-    src: string;
-    size: number;
-    scale?: number;
-    ring?: string;
-  }) => (
+  const Avatar = ({ src, size, scale = 1.32, ring }: { src: string; size: number; scale?: number; ring?: string }) => (
     <div
       className="relative rounded-full overflow-hidden"
       style={{
@@ -1270,12 +1209,7 @@ function PathyEvolution() {
         outlineOffset: 3,
       }}
     >
-      <img
-        src={src}
-        alt="Pathy"
-        className="w-full h-full object-cover"
-        style={{ transform: `scale(${scale})` }}
-      />
+      <img src={src} alt="Pathy" className="w-full h-full object-cover" style={{ transform: `scale(${scale})` }} />
     </div>
   );
 
@@ -1320,16 +1254,11 @@ function PathyEvolution() {
               <span className="w-1.5 h-1.5 rounded-full" style={{ background: s.color }} />
               {s.token}
             </span>
-            <div className="mt-5 font-display text-5xl lg:text-6xl text-ink tracking-tight">
-              {s.name}
-            </div>
+            <div className="mt-5 font-display text-5xl lg:text-6xl text-ink tracking-tight">{s.name}</div>
             <div className="mt-2 text-burgundy/70 text-[12px] uppercase tracking-[0.2em] font-bold">
               {s.days} de racha
             </div>
-            <p
-              className="mt-6 text-xl text-ink/70 leading-relaxed max-w-md"
-              style={{ fontStyle: "italic" }}
-            >
+            <p className="mt-6 text-xl text-ink/70 leading-relaxed max-w-md" style={{ fontStyle: "italic" }}>
               “{s.copy}”
             </p>
             <div className="mt-8 flex items-center gap-3">
@@ -1538,11 +1467,7 @@ function YarisChat() {
                           <span
                             className={`shrink-0 w-7 h-7 rounded-lg grid place-items-center text-xs font-bold ${reveal && ok ? "bg-emerald-500 text-white" : "bg-ink/5 text-ink/55"}`}
                           >
-                            {reveal && ok ? (
-                              <Icon n="check" className="w-4 h-4" sw={2.4} />
-                            ) : (
-                              letters[i]
-                            )}
+                            {reveal && ok ? <Icon n="check" className="w-4 h-4" sw={2.4} /> : letters[i]}
                           </span>
                           <span className="text-[14px] text-ink/85">{o}</span>
                           {!reveal && ok && phase === 0 && (
@@ -1578,9 +1503,7 @@ function YarisChat() {
                     </div>
                     <div className="flex-1 rounded-2xl rounded-bl-sm bg-misty/50 p-4 border border-cherry/40">
                       <div className="text-sm font-bold text-burgundy">{sc.reply.title}</div>
-                      <div className="mt-1.5 text-[14px] text-ink/75 leading-relaxed">
-                        {sc.reply.body}
-                      </div>
+                      <div className="mt-1.5 text-[14px] text-ink/75 leading-relaxed">{sc.reply.body}</div>
                       {sc.reply.ref && (
                         <div className="mt-3 flex items-center gap-2 text-[12px] text-ink/60 bg-white px-3 py-2 rounded-lg border border-ink/8">
                           <Icon n="book" className="w-3.5 h-3.5 text-burgundy" />
@@ -1607,9 +1530,7 @@ function YarisChat() {
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => setPlaying(!playing)}
-                    aria-label={
-                      playing ? "Pausar demostración de Yaris" : "Reproducir demostración de Yaris"
-                    }
+                    aria-label={playing ? "Pausar demostración de Yaris" : "Reproducir demostración de Yaris"}
                     className="w-9 h-9 rounded-full bg-burgundy hover:bg-burgundy-700 text-white grid place-items-center transition-colors"
                   >
                     {playing ? (
@@ -1654,10 +1575,7 @@ function YarisChat() {
                 </div>
                 <div className="mt-2 flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] text-ink/45">
                   {["Pregunta", "Nemotecnia", "Vida real", "Apoyo"].map((l, i) => (
-                    <div
-                      key={i}
-                      className={`flex-1 text-center ${i === idx ? "text-burgundy font-bold" : ""}`}
-                    >
+                    <div key={i} className={`flex-1 text-center ${i === idx ? "text-burgundy font-bold" : ""}`}>
                       {l}
                     </div>
                   ))}
@@ -1720,9 +1638,7 @@ function Simulator() {
               ].map(([v, l], i) => (
                 <div key={i} className="border-t-2 border-coral-100 pt-3">
                   <div className="font-display text-4xl text-ink tracking-tight">{v}</div>
-                  <div className="text-[11px] uppercase tracking-[0.16em] text-haze-500 font-bold mt-1.5">
-                    {l}
-                  </div>
+                  <div className="text-[11px] uppercase tracking-[0.16em] text-haze-500 font-bold mt-1.5">{l}</div>
                 </div>
               ))}
             </div>
@@ -1755,8 +1671,7 @@ function Simulator() {
                   Reglamento aéreo
                 </div>
                 <p className="text-[16px] lg:text-[17px] text-white leading-snug">
-                  En vuelo VFR controlado, ¿cuál es la separación vertical mínima sobre obstáculos
-                  en zona montañosa?
+                  En vuelo VFR controlado, ¿cuál es la separación vertical mínima sobre obstáculos en zona montañosa?
                 </p>
                 <div className="mt-5 space-y-2.5">
                   {[
@@ -1779,9 +1694,7 @@ function Simulator() {
                   ))}
                 </div>
                 <div className="flex items-center justify-between mt-5 pt-4 border-t border-white/10">
-                  <button className="text-[12.5px] text-white/50 hover:text-white">
-                    Marcar para revisar
-                  </button>
+                  <button className="text-[12.5px] text-white/50 hover:text-white">Marcar para revisar</button>
                   <Btn kind="primary" size="sm" icon="arrow">
                     Siguiente
                   </Btn>
@@ -1817,9 +1730,7 @@ function Pricing() {
 
         <div className="mt-14 grid md:grid-cols-2 gap-5">
           <div className="rounded-3xl bg-white border border-ink/8 p-8 lg:p-10 shadow-card">
-            <div className="text-[11px] uppercase tracking-[0.18em] font-bold text-haze-500">
-              FlightPath Basic
-            </div>
+            <div className="text-[11px] uppercase tracking-[0.18em] font-bold text-haze-500">FlightPath Basic</div>
             <div className="mt-5 flex items-baseline gap-2">
               <span className="font-display text-6xl tracking-tight text-ink">$0</span>
               <span className="text-ink/45 text-sm">MXN</span>
@@ -1861,9 +1772,7 @@ function Pricing() {
             />
             <div className="relative">
               <div className="flex items-center justify-between">
-                <div className="text-[11px] uppercase tracking-[0.18em] font-bold text-coral-400">
-                  FlightPath Pro
-                </div>
+                <div className="text-[11px] uppercase tracking-[0.18em] font-bold text-coral-400">FlightPath Pro</div>
                 <Pill tone="light">Acceso completo</Pill>
               </div>
               <div className="mt-5 flex items-baseline gap-2">
@@ -1873,21 +1782,16 @@ function Pricing() {
                 <span className="text-white/50 text-sm">{PRO_MONTHLY_FALLBACK.currency} / mes</span>
               </div>
               <div className="mt-2 text-[13px] text-white/55">
-                o ${PRO_ANNUAL_FALLBACK.amount.toLocaleString("es-MX")}{" "}
-                {PRO_ANNUAL_FALLBACK.currency} al año
+                o ${PRO_ANNUAL_FALLBACK.amount.toLocaleString("es-MX")} {PRO_ANNUAL_FALLBACK.currency} al año
                 {ahorroMeses > 0 && (
-                  <span className="text-coral-400 font-semibold">
-                    {" "}
-                    — te ahorras {ahorroMeses} meses
-                  </span>
+                  <span className="text-coral-400 font-semibold"> — te ahorras {ahorroMeses} meses</span>
                 )}
               </div>
               <div className="mt-3 rounded-xl bg-white/[0.06] border border-white/10 px-4 py-3">
                 <div className="text-[12.5px] text-white/75">
                   Inscripción de{" "}
                   <strong className="text-white">
-                    ${PRO_SETUP_FALLBACK.amount.toLocaleString("es-MX")}{" "}
-                    {PRO_SETUP_FALLBACK.currency}
+                    ${PRO_SETUP_FALLBACK.amount.toLocaleString("es-MX")} {PRO_SETUP_FALLBACK.currency}
                   </strong>
                   <span className="line-through text-white/40 ml-1.5">
                     ${PRO_SETUP_LIST_PRICE.toLocaleString("es-MX")}
@@ -1988,9 +1892,7 @@ function Historias() {
                 </span>
                 <Coord>{`FASE ${String(i + 1).padStart(2, "0")} · ${e.fase.toUpperCase()}`}</Coord>
               </div>
-              <h3 className="font-display mt-5 text-[19px] lg:text-[21px] tracking-tight text-ink">
-                {e.title}
-              </h3>
+              <h3 className="font-display mt-5 text-[19px] lg:text-[21px] tracking-tight text-ink">{e.title}</h3>
               <p className="mt-2.5 text-[14px] leading-relaxed text-ink/55">{e.sub}</p>
             </div>
           ))}
@@ -2000,8 +1902,7 @@ function Historias() {
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background:
-                "radial-gradient(130% 150% at 0% 0%, rgba(242,220,219,0.55), rgba(255,255,255,0) 55%)",
+              background: "radial-gradient(130% 150% at 0% 0%, rgba(242,220,219,0.55), rgba(255,255,255,0) 55%)",
             }}
           />
           <div className="relative px-7 lg:px-10 py-8 flex flex-col md:flex-row items-start md:items-center gap-6">
@@ -2010,8 +1911,8 @@ function Historias() {
                 Tu historia puede ser <span className="text-coral-600">la primera.</span>
               </h3>
               <p className="mt-2 text-[14px] text-ink/55 leading-relaxed max-w-xl">
-                Cuando apruebes tu CIAAC con FlightPath, este espacio contará cómo lo hiciste.
-                Mientras tanto, las guías de estudio viven en el blog.
+                Cuando apruebes tu CIAAC con FlightPath, este espacio contará cómo lo hiciste. Mientras tanto, las guías
+                de estudio viven en el blog.
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-3 shrink-0">
@@ -2046,8 +1947,8 @@ function FinalCta() {
           <span className="text-coral-600">Es preparación.</span>
         </h2>
         <p className="mt-6 text-lg text-ink/55 max-w-xl mx-auto leading-relaxed">
-          Si completas tu ruta de estudio y no notas una mejora real en tu preparación y seguridad
-          para el CIAAC, extendemos tu acceso y ajustamos contigo tu plan de estudio.
+          Si completas tu ruta de estudio y no notas una mejora real en tu preparación y seguridad para el CIAAC,
+          extendemos tu acceso y ajustamos contigo tu plan de estudio.
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
           <Btn kind="primary" size="lg" icon="arrow" to="/register">
