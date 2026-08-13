@@ -6,12 +6,14 @@ import {
   AeroBackdrop,
   Btn,
   Coord,
+  CountUp,
   Footer,
   Icon,
   Nav,
   PathyBubble,
   Pill,
   PlaneField,
+  Reveal,
   SectionHead,
   type IconName,
 } from "@/components/landing/shared";
@@ -146,7 +148,59 @@ function ModuloPage() {
                   </Btn>
                 </div>
               </div>
-              <div className="relative">{Mockup && <Mockup />}</div>
+              <div className="relative animate-float-y-sm">{Mockup && <Mockup />}</div>
+            </div>
+
+            {/* Cifras del módulo */}
+            <Reveal>
+              <div className="mt-14 lg:mt-16 grid sm:grid-cols-3 gap-4">
+                {modulo.stats.map((s, i) => (
+                  <div
+                    key={s.label}
+                    className="rounded-2xl bg-white/80 backdrop-blur-sm border border-ink/8 shadow-card px-6 py-5 flex items-center gap-4"
+                    style={{ animationDelay: `${i * 90}ms` }}
+                  >
+                    <div className="font-display text-[34px] lg:text-[40px] leading-none tracking-tight text-coral-600">
+                      <CountUp value={s.n} />
+                    </div>
+                    <div className="text-[12.5px] font-semibold text-ink/55 leading-snug">
+                      {s.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Cómo funciona: 3 pasos */}
+        <section className="relative py-14 lg:py-18">
+          <div className="mx-auto max-w-[1240px] px-6 lg:px-8">
+            <div className="flex items-center gap-3 mb-10">
+              <Coord>CÓMO FUNCIONA · TRES PASOS</Coord>
+              <span className="flex-1 h-px bg-ink/8" />
+            </div>
+            <div className="grid md:grid-cols-3 gap-4 relative">
+              <div
+                aria-hidden
+                className="hidden md:block absolute top-[34px] left-[12%] right-[12%] border-t-2 border-dashed border-ink/12"
+              />
+              {modulo.pasos.map((p, i) => (
+                <Reveal key={p.t} delay={i * 140}>
+                  <div className="relative rounded-2xl bg-white border border-ink/8 p-7 shadow-card hover-lift h-full">
+                    <div className="w-[68px] h-[68px] rounded-2xl bg-ink text-white grid place-items-center mb-5 relative">
+                      <span className="font-mono text-[15px] tracking-[0.14em]">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      {i === modulo.pasos.length - 1 && (
+                        <span className="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 rounded-full bg-coral-500 animate-pulse-dot" />
+                      )}
+                    </div>
+                    <h3 className="font-display text-[19px] tracking-tight text-ink">{p.t}</h3>
+                    <p className="text-[14px] text-ink/55 mt-2 leading-relaxed">{p.d}</p>
+                  </div>
+                </Reveal>
+              ))}
             </div>
           </div>
         </section>
@@ -164,17 +218,16 @@ function ModuloPage() {
               }
             />
             <div className="mt-12 grid sm:grid-cols-2 gap-4">
-              {modulo.features.map((f) => (
-                <div
-                  key={f.t}
-                  className="group rounded-2xl bg-white border border-ink/8 p-7 shadow-card hover-lift"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-coral-50 grid place-items-center text-coral-600 group-hover:bg-coral-600 group-hover:text-white transition-colors mb-5">
-                    <Icon n={f.icon as IconName} className="w-6 h-6" />
+              {modulo.features.map((f, i) => (
+                <Reveal key={f.t} delay={(i % 2) * 120}>
+                  <div className="group rounded-2xl bg-white border border-ink/8 p-7 shadow-card hover-lift h-full">
+                    <div className="w-12 h-12 rounded-xl bg-coral-50 grid place-items-center text-coral-600 group-hover:bg-coral-600 group-hover:text-white transition-colors mb-5">
+                      <Icon n={f.icon as IconName} className="w-6 h-6" />
+                    </div>
+                    <h3 className="font-display text-xl tracking-tight text-ink">{f.t}</h3>
+                    <p className="text-[14.5px] text-ink/55 mt-2 leading-relaxed">{f.d}</p>
                   </div>
-                  <h3 className="font-display text-xl tracking-tight text-ink">{f.t}</h3>
-                  <p className="text-[14.5px] text-ink/55 mt-2 leading-relaxed">{f.d}</p>
-                </div>
+                </Reveal>
               ))}
             </div>
             <div className="mt-8 flex flex-wrap justify-center gap-2">
@@ -187,6 +240,67 @@ function ModuloPage() {
                 </span>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Detalle: el catálogo del módulo, pieza por pieza */}
+        <section className="relative py-14 lg:py-20">
+          <div className="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
+            <Reveal>
+              <div className="relative overflow-hidden rounded-[32px] bg-ink shadow-navy px-6 py-10 sm:px-10 lg:px-14 lg:py-14">
+                <PlaneField count={14} color="255,255,255" />
+                <div
+                  aria-hidden
+                  className="absolute -top-24 -right-24 w-[340px] h-[340px] rounded-full animate-breathe"
+                  style={{
+                    background:
+                      "radial-gradient(closest-side, rgba(242,174,188,0.14), transparent)",
+                  }}
+                />
+                <div className="relative z-10">
+                  <div className="flex items-center gap-3">
+                    <Coord light>{modulo.detalle.eyebrow.toUpperCase()}</Coord>
+                    <span className="flex-1 h-px bg-white/10" />
+                  </div>
+                  <h2 className="font-display mt-5 text-[30px] sm:text-[38px] lg:text-[44px] leading-[1.02] tracking-tight text-white max-w-3xl">
+                    {modulo.detalle.titulo}{" "}
+                    <span className="text-coral-300">{modulo.detalle.tituloCoral}</span>
+                  </h2>
+                  <p className="mt-4 text-[15.5px] text-white/55 leading-relaxed max-w-2xl">
+                    {modulo.detalle.sub}
+                  </p>
+                  <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {modulo.detalle.items.map((it, i) => (
+                      <Reveal key={it.t} delay={Math.min(i, 8) * 70}>
+                        <div className="group rounded-2xl bg-white/[0.05] border border-white/10 px-5 py-4 h-full hover:bg-white/[0.09] transition-colors">
+                          {it.k && (
+                            <div className="font-mono text-[10px] tracking-[0.18em] text-coral-300/80 mb-2">
+                              {it.k}
+                            </div>
+                          )}
+                          <div className="text-[15px] font-semibold text-white leading-snug">
+                            {it.t}
+                          </div>
+                          {it.d && (
+                            <p className="mt-1.5 text-[12.5px] text-white/45 leading-relaxed">
+                              {it.d}
+                            </p>
+                          )}
+                        </div>
+                      </Reveal>
+                    ))}
+                  </div>
+                  {modulo.detalle.nota && (
+                    <div className="mt-8 flex items-center gap-3">
+                      <span className="w-2 h-2 rounded-full bg-coral-400 animate-pulse-dot shrink-0" />
+                      <span className="font-mono text-[10.5px] tracking-[0.16em] text-white/40">
+                        {modulo.detalle.nota}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </Reveal>
           </div>
         </section>
 

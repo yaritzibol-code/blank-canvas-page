@@ -7,7 +7,24 @@
  * guía hermana en `guiaHref`. Reglas de COMPLIANCE.md: cifras propias
  * verificables, menciones nominativas con aviso donde aplique y ninguna
  * promesa de resultado.
+ *
+ * Las cifras y catálogos (materias, capítulos FCOM, ejercicios) se derivan de
+ * las constantes del producto para que la landing nunca se desvíe de la app.
  */
+import { MATERIAS_DEF } from "@/lib/store/materias";
+import { B737MAX_CHAPTERS, B737MAX_TOTAL } from "@/lib/store/linea-aerea-meta";
+import { COMPASS_MODULES } from "@/modules/compass/config";
+
+const FMT_737 = B737MAX_TOTAL.toLocaleString("es-MX");
+
+export interface DetalleItem {
+  /** Nombre de la pieza (materia, capítulo, ejercicio, fuente…). */
+  t: string;
+  /** Descripción corta (opcional). */
+  d?: string;
+  /** Etiqueta mono a la derecha ("30 EN SIM", "CAP. 01"…). */
+  k?: string;
+}
 
 export interface ModuloLanding {
   slug: string;
@@ -20,8 +37,22 @@ export interface ModuloLanding {
   tituloCoral: string;
   descripcion: string;
   keywords: string;
+  /** Cifras del módulo para la banda del hero (con count-up si `n` es numérico). */
+  stats: { n: string; label: string }[];
+  /** Cómo se usa el módulo, en 3 pasos. */
+  pasos: { t: string; d: string }[];
   /** Features del módulo (icono del set de la landing). */
   features: { icon: string; t: string; d: string }[];
+  /** Sección "qué contiene": el catálogo del módulo pieza por pieza. */
+  detalle: {
+    eyebrow: string;
+    titulo: string;
+    tituloCoral: string;
+    sub: string;
+    items: DetalleItem[];
+    /** Nota mono al pie del grid (opcional). */
+    nota?: string;
+  };
   /** Qué incluye, en chips. */
   incluye: string[];
   faqs: { q: string; a: string }[];
@@ -43,6 +74,25 @@ export const MODULOS_LANDING: ModuloLanding[] = [
       "Banco de más de 2,800 preguntas con explicación y fuente, simulador de 310 preguntas en formato real y análisis por materia: sabes exactamente qué estudiar cada día y si ya estás listo.",
     keywords:
       "modulo ciaac flightpath, banco de preguntas ciaac como funciona, simulador ciaac plataforma, practicar ciaac online",
+    stats: [
+      { n: "2,800+", label: "reactivos con explicación y fuente" },
+      { n: "310", label: "preguntas por simulacro, como el real" },
+      { n: "12", label: "materias del temario completas" },
+    ],
+    pasos: [
+      {
+        t: "Diagnostica tu línea base",
+        d: "Responde un bloque por materia y descubre tu porcentaje real — la materia débil deja de ser una sensación.",
+      },
+      {
+        t: "Practica con explicación",
+        d: "Cada reactivo te dice por qué la correcta es correcta. El error de hoy es el acierto del examen.",
+      },
+      {
+        t: "Valida en el simulador",
+        d: "310 preguntas, 5 horas y reparto real por materia. Sales con un veredicto, no con una corazonada.",
+      },
+    ],
     features: [
       {
         icon: "cards",
@@ -65,6 +115,14 @@ export const MODULOS_LANDING: ModuloLanding[] = [
         d: "Conoce la pregunta que tienes enfrente: explica, da nemotecnias y no te da la razón por complacerte.",
       },
     ],
+    detalle: {
+      eyebrow: "El temario",
+      titulo: "Las 12 materias,",
+      tituloCoral: "con el reparto real del simulador.",
+      sub: "El simulador reparte sus 310 preguntas igual que el examen: estas son las materias y cuántas preguntas aporta cada una.",
+      items: MATERIAS_DEF.map((m) => ({ t: m.name, k: `${m.simTotal} EN SIM` })),
+      nota: "REPARTO DEL SIMULACRO · 310 PREGUNTAS · 5 HORAS",
+    },
     incluye: [
       "2,800+ preguntas con explicación",
       "Simulador de 310 preguntas",
@@ -100,6 +158,25 @@ export const MODULOS_LANDING: ModuloLanding[] = [
       "Un sinodal de IA te entrevista por voz en inglés, te repregunta como en el examen real y te entrega un debrief por las seis áreas OACI. Disponible 24/7 — sin agendar y sin pena.",
     keywords:
       "modulo rtari flightpath, practicar entrevista rtari online, ingles aeronautico por voz, sinodal ia entrevista piloto",
+    stats: [
+      { n: "6", label: "áreas OACI evaluadas en el debrief" },
+      { n: "45", label: "preguntas reales con guía de respuesta" },
+      { n: "3", label: "sinodales de voz, dos exigencias" },
+    ],
+    pasos: [
+      {
+        t: "Configura la mesa",
+        d: "Eliges sinodal, exigencia (estándar o exigente) y de 4 a 15 preguntas. Sin agendar: la mesa siempre está libre.",
+      },
+      {
+        t: "Habla en inglés",
+        d: "El sinodal entiende lo que dijiste y repregunta sobre tu respuesta — la parte que no puedes ensayar con flashcards.",
+      },
+      {
+        t: "Recibe tu debrief",
+        d: "Nivel estimado por área OACI, correcciones sobre frases tuyas y la transcripción completa en tu historial.",
+      },
+    ],
     features: [
       {
         icon: "audio",
@@ -122,6 +199,41 @@ export const MODULOS_LANDING: ModuloLanding[] = [
         d: "Los temas reales de la entrevista personal, cada uno con traducción y tips de qué debe contener una buena respuesta.",
       },
     ],
+    detalle: {
+      eyebrow: "El debrief",
+      titulo: "Las 6 áreas OACI,",
+      tituloCoral: "una por una.",
+      sub: "El marco de descriptores OACI evalúa la competencia lingüística en seis áreas. Tu debrief estima el nivel de cada una y te dice qué corregir.",
+      items: [
+        {
+          t: "Pronunciación",
+          d: "Qué tan interferido está tu acento y si obliga a re-escuchar.",
+          k: "ÁREA 1",
+        },
+        {
+          t: "Estructura",
+          d: "Gramática y construcciones: tiempos, condicionales, orden.",
+          k: "ÁREA 2",
+        },
+        {
+          t: "Vocabulario",
+          d: "Rango y precisión, incluida la fraseología aeronáutica.",
+          k: "ÁREA 3",
+        },
+        { t: "Fluidez", d: "Ritmo, pausas y muletillas al hilar ideas largas.", k: "ÁREA 4" },
+        {
+          t: "Comprensión",
+          d: "Qué tanto entiendes a la primera, incluso con repreguntas.",
+          k: "ÁREA 5",
+        },
+        {
+          t: "Interacción",
+          d: "Cómo respondes, pides aclarar y mantienes la conversación viva.",
+          k: "ÁREA 6",
+        },
+      ],
+      nota: "MARCO DE DESCRIPTORES OACI · NIVEL OPERACIONAL = 4+",
+    },
     incluye: [
       "Sinodal de voz con IA",
       "45 preguntas en 6 bloques",
@@ -158,6 +270,25 @@ export const MODULOS_LANDING: ModuloLanding[] = [
       "Seis ejercicios originales de las familias que evalúan las pruebas tipo COMPASS — control biaxial, slalom, memoria, cálculo mental, orientación y multitarea — con 5 niveles, puntuación comparable y radar de progreso.",
     keywords:
       "modulo compass flightpath, entrenador de aptitudes piloto, ejercicios tipo compass online, pilot aptitude trainer español",
+    stats: [
+      { n: "6", label: "ejercicios de familias reales de aptitud" },
+      { n: "5", label: "niveles de dificultad con física" },
+      { n: "20", label: "minutos dura el simulacro completo" },
+    ],
+    pasos: [
+      {
+        t: "Briefing del ejercicio",
+        d: "Controles, física de la tarea y los errores comunes que cuestan puntos — antes de tocar el mando.",
+      },
+      {
+        t: "Vuela la sesión medida",
+        d: "Práctica por nivel o examen de módulo: cada corrida queda registrada con seed, nivel y métricas.",
+      },
+      {
+        t: "Lee tu debrief",
+        d: "Score 0–100, métricas de la sesión, consejo concreto y tu radar de seis aptitudes actualizado.",
+      },
+    ],
     features: [
       {
         icon: "target",
@@ -180,6 +311,18 @@ export const MODULOS_LANDING: ModuloLanding[] = [
         d: "Los seis ejercicios encadenados en ~20 minutos, como un día de selección en miniatura. Teclado, mouse o touch — sin joystick.",
       },
     ],
+    detalle: {
+      eyebrow: "Los ejercicios",
+      titulo: "Seis aptitudes,",
+      tituloCoral: "seis ejercicios medidos.",
+      sub: "Cada ejercicio entrena una familia de aptitud de las baterías de selección, con práctica por nivel y modo examen.",
+      items: COMPASS_MODULES.map((m, i) => ({
+        t: m.nombre,
+        d: m.aptitud,
+        k: `EJERCICIO ${String(i + 1).padStart(2, "0")}`,
+      })),
+      nota: "PRÁCTICA POR NIVEL 1–5 · EXAMEN DE MÓDULO · SIMULACRO ENCADENADO",
+    },
     incluye: [
       "6 ejercicios de aptitud",
       "5 niveles de dificultad",
@@ -216,6 +359,25 @@ export const MODULOS_LANDING: ModuloLanding[] = [
       "Las 5 fuentes del examen teórico de línea aérea — ATP, PHAK, Jeppesen, CPAM y OACI Anexo 10 — convertidas en bancos por capítulos con explicación en español y simulacros cronometrados.",
     keywords:
       "modulo linea aerea flightpath, banco atp espanol, jeppesen preguntas practica, examen teorico convocatoria aerolinea",
+    stats: [
+      { n: "5", label: "fuentes del temario publicado" },
+      { n: "ES", label: "explicación en tu idioma, término en inglés" },
+      { n: "24/7", label: "simulacros cuando tú puedas" },
+    ],
+    pasos: [
+      {
+        t: "Elige la fuente",
+        d: "ATP, PHAK, Jeppesen, CPAM o Anexo 10 — cada una con su banco propio y su guía pública.",
+      },
+      {
+        t: "Estudia por capítulos",
+        d: "Reactivos con explicación en español que conservan la terminología del manual — como te lo van a preguntar.",
+      },
+      {
+        t: "Valida con simulacro",
+        d: "Cronómetro corriendo y historial por fuente: sabes qué dominas antes de que la convocatoria lo pregunte.",
+      },
+    ],
     features: [
       {
         icon: "book",
@@ -238,6 +400,40 @@ export const MODULOS_LANDING: ModuloLanding[] = [
         d: "Sabes qué fuente dominas y cuál te está costando puntos — y el historial te dice exactamente dónde reabrir.",
       },
     ],
+    detalle: {
+      eyebrow: "Las fuentes",
+      titulo: "El temario publicado,",
+      tituloCoral: "fuente por fuente.",
+      sub: "Las cinco fuentes del examen teórico de convocatoria, cada una convertida en banco por capítulos con su guía pública.",
+      items: [
+        {
+          t: "ATP — Airline Transport Pilot Test Prep",
+          d: "La fuente más pesada: aerodinámica, motores, meteorología, navegación y operaciones.",
+          k: "FUENTE 01",
+        },
+        {
+          t: "PHAK — Pilot's Handbook",
+          d: "El manual de la FAA: aerodinámica, meteorología, medicina y factores humanos.",
+          k: "FUENTE 02",
+        },
+        {
+          t: "Jeppesen General Airway Manual",
+          d: "Cartas, mínimos y manuales de información aeronáutica — el lenguaje de la navegación.",
+          k: "FUENTE 03",
+        },
+        {
+          t: "CPAM — Legislación nacional",
+          d: "El compendio de legislación aeronáutica mexicana que sí o sí cae.",
+          k: "FUENTE 04",
+        },
+        {
+          t: "OACI Anexo 10 — Telecomunicaciones",
+          d: "Volumen II: procedimientos de comunicación palabra por palabra.",
+          k: "FUENTE 05",
+        },
+      ],
+      nota: "TEMARIO PUBLICADO DE CONVOCATORIA · UNA GUÍA PÚBLICA POR FUENTE",
+    },
     incluye: [
       "ATP · PHAK · Jeppesen · CPAM · Anexo 10",
       "Bancos por capítulos",
@@ -270,10 +466,28 @@ export const MODULOS_LANDING: ModuloLanding[] = [
     nombre: "Manuales de Aeronave",
     titulo: "El avión que vas a volar,",
     tituloCoral: "a base de preguntas.",
-    descripcion:
-      "El Boeing 737 MAX por los 9 capítulos del FCOM: limitaciones, procedimientos, rendimiento y sistemas en 2,500 reactivos con explicación — para type rating, entrevista técnica o recurrent.",
+    descripcion: `El Boeing 737 MAX por los 9 capítulos del FCOM: limitaciones, procedimientos, rendimiento y sistemas en ${FMT_737} reactivos con explicación — para type rating, entrevista técnica o recurrent.`,
     keywords:
       "modulo manuales aeronave flightpath, banco 737 max fcom, preguntas type rating 737, estudiar sistemas boeing",
+    stats: [
+      { n: "9", label: "capítulos, en el orden del FCOM" },
+      { n: FMT_737, label: "reactivos con explicación" },
+      { n: "3", label: "momentos: type rating, entrevista, recurrent" },
+    ],
+    pasos: [
+      {
+        t: "Abre el capítulo que toca",
+        d: "La estructura es la del manual: limitaciones primero, sistemas por bloques, rendimiento al final.",
+      },
+      {
+        t: "Practica hasta que salga solo",
+        d: "Velocidades, pesos y altitudes a base de repetición medida — fallar aquí es barato.",
+      },
+      {
+        t: "Revisa tu historial",
+        d: "El porcentaje por capítulo te dice exactamente qué reabrir antes del examen o la entrevista.",
+      },
+    ],
     features: [
       {
         icon: "doc",
@@ -296,9 +510,21 @@ export const MODULOS_LANDING: ModuloLanding[] = [
         d: "El banco del 737 MAX es de los abiertos al plan gratuito: auditas la calidad de las preguntas antes de pagar un peso.",
       },
     ],
+    detalle: {
+      eyebrow: "El banco",
+      titulo: "Los 9 capítulos,",
+      tituloCoral: "como en el FCOM.",
+      sub: `${FMT_737} reactivos organizados con la estructura del manual del 737 MAX, para estudiar bloque por bloque.`,
+      items: B737MAX_CHAPTERS.map((c) => ({
+        t: c.titulo,
+        d: c.tituloEn,
+        k: `CAP. ${String(c.num).padStart(2, "0")} · ${c.total.toLocaleString("es-MX")}`,
+      })),
+      nota: `FCOM · ${FMT_737} REACTIVOS · MISMA ESTRUCTURA QUE EL MANUAL`,
+    },
     incluye: [
       "737 MAX · 9 capítulos FCOM",
-      "2,500 reactivos",
+      `${FMT_737} reactivos`,
       "Explicaciones en español",
       "Historial por capítulo",
       "Muestra gratis",
@@ -332,6 +558,25 @@ export const MODULOS_LANDING: ModuloLanding[] = [
       "Más de 100 manuales de consulta organizados, tu avance por materia contra el 80% de referencia, el radar de aptitudes y dos copilotos IA — Yaris para dudas y Pathy para constancia.",
     keywords:
       "biblioteca aeronautica digital, analisis de estudio piloto, manuales de aviacion consulta, tutor ia aviacion",
+    stats: [
+      { n: "104", label: "manuales de consulta organizados" },
+      { n: "12", label: "materias medidas contra el 80%" },
+      { n: "2", label: "copilotos IA: Yaris y Pathy" },
+    ],
+    pasos: [
+      {
+        t: "Estudia en cualquier módulo",
+        d: "CIAAC, línea aérea, aptitudes o manuales: todo lo que haces alimenta el mismo tablero.",
+      },
+      {
+        t: "Consulta la fuente",
+        d: "La biblioteca te da el manual organizado por materia cuando la explicación te sabe a poco.",
+      },
+      {
+        t: "Lee tu análisis",
+        d: "Avance por materia, radar de aptitudes y racha: sabes qué toca mañana sin pensarlo.",
+      },
+    ],
     features: [
       {
         icon: "library",
@@ -354,6 +599,45 @@ export const MODULOS_LANDING: ModuloLanding[] = [
         d: "Rachas, recordatorios y tu misión del día — porque la carrera se gana en las semanas aburridas, no en las inspiradas.",
       },
     ],
+    detalle: {
+      eyebrow: "El tablero",
+      titulo: "Un solo tablero",
+      tituloCoral: "para toda tu preparación.",
+      sub: "Seis piezas conectadas: lo que practicas en un módulo cambia lo que el análisis te recomienda en los demás.",
+      items: [
+        {
+          t: "Biblioteca por materia",
+          d: "104 manuales y documentos de consulta, buscables y ligados a lo que practicas.",
+          k: "CONSULTA",
+        },
+        {
+          t: "Avance por materia y tema",
+          d: "Tu porcentaje real contra el estándar de referencia de 80%.",
+          k: "ANÁLISIS",
+        },
+        {
+          t: "Radar de aptitudes",
+          d: "Las seis aptitudes del Pilot Aptitude Trainer en un vistazo.",
+          k: "ANÁLISIS",
+        },
+        {
+          t: "Bitácora de estudio",
+          d: "Sesiones, rachas y tiempo — tu constancia también se mide.",
+          k: "REGISTRO",
+        },
+        {
+          t: "Yaris",
+          d: "La tutora académica: explica la pregunta que tienes enfrente.",
+          k: "COPILOTO IA",
+        },
+        {
+          t: "Pathy",
+          d: "El copiloto de constancia: rachas, recordatorios y tu misión del día.",
+          k: "COPILOTO IA",
+        },
+      ],
+      nota: "TODO ALIMENTA EL MISMO TABLERO · ESTUDIAS CON EVIDENCIA",
+    },
     incluye: [
       "100+ manuales",
       "Análisis por materia",

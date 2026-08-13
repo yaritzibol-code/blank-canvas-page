@@ -191,6 +191,104 @@ export function Icon({
   );
 }
 
+/** true si el visitante pidió menos movimiento (o aún no hidratamos). */
+function reducedMotion(): boolean {
+  return (
+    typeof window === "undefined" ||
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true
+  );
+}
+
+/**
+ * Aparición al entrar en viewport. El contenido SIEMPRE está en el DOM y
+ * visible sin JS (SSR/crawlers): la animación softIn solo se dispara cuando el
+ * elemento entra a pantalla, así que no hay estado oculto que dependa de
+ * hidratar. Con prefers-reduced-motion no anima.
+ */
+export function Reveal({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || reducedMotion() || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setOn(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -6% 0px", threshold: 0.1 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={on ? { animation: `softIn .8s cubic-bezier(.2,.8,.2,1) ${delay}ms both` } : undefined}
+    >
+      {children}
+    </div>
+  );
+}
+
+/**
+ * Cifra que cuenta de 0 al valor al entrar en viewport. El SSR imprime el
+ * valor final (los crawlers ven el número real); si el texto no arranca con
+ * dígitos ("ES", "24/7") se muestra tal cual, sin animar.
+ */
+export function CountUp({ value, className = "" }: { value: string; className?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [shown, setShown] = useState(value);
+  useEffect(() => {
+    const el = ref.current;
+    const match = /^([\d,]+)(.*)$/.exec(value);
+    if (!el || !match || reducedMotion() || typeof IntersectionObserver === "undefined") return;
+    const target = parseInt(match[1].replace(/,/g, ""), 10);
+    const suffix = match[2] ?? "";
+    if (!Number.isFinite(target) || target <= 0) return;
+    const grouped = match[1].includes(",");
+    let raf = 0;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        const t0 = performance.now();
+        const dur = Math.min(1600, 700 + target / 4);
+        const tickFrame = (t: number) => {
+          const p = Math.min(1, (t - t0) / dur);
+          const eased = 1 - Math.pow(1 - p, 3);
+          const n = Math.round(target * eased);
+          setShown((grouped ? n.toLocaleString("es-MX") : String(n)) + suffix);
+          if (p < 1) raf = requestAnimationFrame(tickFrame);
+        };
+        raf = requestAnimationFrame(tickFrame);
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, [value]);
+  return (
+    <span ref={ref} className={className}>
+      {shown}
+    </span>
+  );
+}
+
 export function FMark({ size = 30, light = false }: { size?: number; light?: boolean }) {
   return (
     <span
