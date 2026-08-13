@@ -326,7 +326,7 @@ export function Logo({ light = false, size = 30 }: { light?: boolean; size?: num
       className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
     >
       <img
-        src="/assets/flightpath-logo.png"
+        src="/img/flightpath-logo.png"
         alt="Logo de FlightPath"
         width={size}
         height={size}
@@ -511,7 +511,7 @@ export function PathyBubble({
         <div className="fp-squash">
           <img
             className="fp-img"
-            src="/assets/pathy-cloud.png"
+            src="/img/pathy-cloud.png"
             alt=""
             draggable={false}
             width={size}
@@ -532,6 +532,7 @@ export function SectionHead({
   light = false,
   center = false,
   max = "max-w-2xl",
+  as: Heading = "h2",
 }: {
   eyebrow: ReactNode;
   title: ReactNode;
@@ -539,15 +540,17 @@ export function SectionHead({
   light?: boolean;
   center?: boolean;
   max?: string;
+  /** "h1" cuando el SectionHead es el encabezado principal de la página. */
+  as?: "h1" | "h2";
 }) {
   return (
     <div className={`${center ? "text-center mx-auto" : ""} ${max}`}>
       <Eyebrow light={light}>{eyebrow}</Eyebrow>
-      <h2
+      <Heading
         className={`font-display mt-5 text-4xl lg:text-[52px] leading-[1.02] tracking-tight ${light ? "text-white" : "text-ink"}`}
       >
         {title}
-      </h2>
+      </Heading>
       {sub && (
         <p
           className={`mt-5 text-[17px] leading-relaxed ${light ? "text-white/65" : "text-ink/55"} ${center ? "mx-auto" : ""} max-w-xl`}

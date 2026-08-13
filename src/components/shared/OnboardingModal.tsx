@@ -30,13 +30,29 @@ const GENEROS: { key: "femenino" | "masculino" | "neutro"; label: string; ejempl
 export type YarisTono = "formal" | "normal" | "amiga";
 
 export const YARIS_TONOS: { key: YarisTono; label: string; ejemplo: string }[] = [
-  { key: "formal", label: "Formal", ejemplo: "“Le explico: la MEA garantiza separación de obstáculos y recepción de señal.”" },
-  { key: "normal", label: "Normal", ejemplo: "“Va, te lo explico claro: la MEA te asegura obstáculos y señal.”" },
-  { key: "amiga", label: "Amiga Yaris", ejemplo: "“Ok, ese tema pega feo 😅 pero míralo así: la MEA es obstáculos + señal.”" },
+  {
+    key: "formal",
+    label: "Formal",
+    ejemplo: "“Le explico: la MEA garantiza separación de obstáculos y recepción de señal.”",
+  },
+  {
+    key: "normal",
+    label: "Normal",
+    ejemplo: "“Va, te lo explico claro: la MEA te asegura obstáculos y señal.”",
+  },
+  {
+    key: "amiga",
+    label: "Amiga Yaris",
+    ejemplo: "“Ok, ese tema pega feo 😅 pero míralo así: la MEA es obstáculos + señal.”",
+  },
 ];
 
 const TOUR: { icon: FPIconName; title: string; sub: string }[] = [
-  { icon: "help", title: "Cuestionarios", sub: "2,900+ preguntas con explicación, por materia y tema" },
+  {
+    icon: "help",
+    title: "Cuestionarios",
+    sub: "2,900+ preguntas con explicación, por materia y tema",
+  },
   { icon: "sim", title: "Simulador CIAAC", sub: "Simulacros cronometrados como el examen real" },
   { icon: "library", title: "Biblioteca", sub: "Los manuales oficiales, organizados y listos" },
   { icon: "spark", title: "Yaris & Pathy", sub: "Tu tutora IA y tu copiloto de motivación, 24/7" },
@@ -61,7 +77,9 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
   const [escuela, setEscuela] = useState(user.escuela);
   const [fecha, setFecha] = useState(user.fechaCiaac ?? "");
   const [recordatorios, setRecordatorios] = useState(true);
-  const [genero, setGenero] = useState<"femenino" | "masculino" | "neutro">(user.genero ?? "neutro");
+  const [genero, setGenero] = useState<"femenino" | "masculino" | "neutro">(
+    user.genero ?? "neutro",
+  );
   const [yarisTono, setYarisTono] = useState<YarisTono>(user.yarisTono ?? "normal");
   const [focoRuta, setFocoRuta] = useState<"ciaac" | "linea-aerea">(user.focoRuta ?? "ciaac");
   const [focoMateria, setFocoMateria] = useState<string>(user.focoMateria ?? "");
@@ -125,7 +143,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
             genero,
             yarisTono,
             focoRuta,
-            focoMateria: focoRuta === "ciaac" ? (focoMateria || null) : null,
+            focoMateria: focoRuta === "ciaac" ? focoMateria || null : null,
             whatsapp: whatsapp.trim(),
             whatsappEstado: whatsapp.trim() ? "registrado" : "sin_numero",
             escuela: escuela.trim(),
@@ -232,33 +250,110 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
         }
       `}</style>
 
-      <div className="fp-ob-card" role="dialog" aria-modal="true" aria-label="Bienvenida a FlightPath">
+      <div
+        className="fp-ob-card"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Bienvenida a FlightPath"
+      >
         {/* Ruta de vuelo: progreso del onboarding */}
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 22 }}>
-          <span style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".14em", color: "#8DA1BE", whiteSpace: "nowrap" }}>
+          <span
+            style={{
+              fontSize: 10.5,
+              fontWeight: 800,
+              letterSpacing: ".14em",
+              color: "#8DA1BE",
+              whiteSpace: "nowrap",
+            }}
+          >
             {step + 1} / {TOTAL_STEPS}
           </span>
           <div style={{ position: "relative", flex: 1, height: 22 }}>
-            <div style={{ position: "absolute", top: "50%", left: 0, right: 0, height: 2, transform: "translateY(-50%)", background: "rgba(61,93,145,.16)", borderRadius: 2 }} />
-            <div className="fp-ob-track-fill" style={{ position: "absolute", top: "50%", left: 0, height: 2, transform: "translateY(-50%)", background: BRAND, borderRadius: 2, width: `${prog}%` }} />
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: 0,
+                right: 0,
+                height: 2,
+                transform: "translateY(-50%)",
+                background: "rgba(61,93,145,.16)",
+                borderRadius: 2,
+              }}
+            />
+            <div
+              className="fp-ob-track-fill"
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: 0,
+                height: 2,
+                transform: "translateY(-50%)",
+                background: BRAND,
+                borderRadius: 2,
+                width: `${prog}%`,
+              }}
+            />
             {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
-              <span key={i} style={{
-                position: "absolute", top: "50%", left: `${(i / (TOTAL_STEPS - 1)) * 100}%`,
-                width: 7, height: 7, borderRadius: "50%", transform: "translate(-50%,-50%)",
-                background: i <= step ? BRAND : "#fff",
-                border: i <= step ? "none" : "1.5px solid rgba(61,93,145,.35)",
-                transition: "background .3s",
-              }} />
+              <span
+                key={i}
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: `${(i / (TOTAL_STEPS - 1)) * 100}%`,
+                  width: 7,
+                  height: 7,
+                  borderRadius: "50%",
+                  transform: "translate(-50%,-50%)",
+                  background: i <= step ? BRAND : "#fff",
+                  border: i <= step ? "none" : "1.5px solid rgba(61,93,145,.35)",
+                  transition: "background .3s",
+                }}
+              />
             ))}
-            <span className="fp-ob-plane" style={{ position: "absolute", top: "50%", left: `${prog}%`, transform: "translate(-50%,-50%)", zIndex: 1 }}>
-              <span style={{ width: 26, height: 26, borderRadius: "50%", background: "#fff", boxShadow: "0 4px 14px rgba(15,26,51,.22)", display: "flex", alignItems: "center", justifyContent: "center", border: `1.5px solid ${BRAND}22` }}>
-                <span style={{ transform: "rotate(90deg)", display: "flex" }}><Icon n="plane" size={14} color={BRAND} /></span>
+            <span
+              className="fp-ob-plane"
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: `${prog}%`,
+                transform: "translate(-50%,-50%)",
+                zIndex: 1,
+              }}
+            >
+              <span
+                style={{
+                  width: 26,
+                  height: 26,
+                  borderRadius: "50%",
+                  background: "#fff",
+                  boxShadow: "0 4px 14px rgba(15,26,51,.22)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  border: `1.5px solid ${BRAND}22`,
+                }}
+              >
+                <span style={{ transform: "rotate(90deg)", display: "flex" }}>
+                  <Icon n="plane" size={14} color={BRAND} />
+                </span>
               </span>
             </span>
           </div>
           <button
             onClick={() => finish(true)}
-            style={{ background: "none", border: "none", color: "#8DA1BE", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: FONT, padding: 6, whiteSpace: "nowrap" }}
+            style={{
+              background: "none",
+              border: "none",
+              color: "#8DA1BE",
+              fontSize: 12,
+              fontWeight: 700,
+              cursor: "pointer",
+              fontFamily: FONT,
+              padding: 6,
+              whiteSpace: "nowrap",
+            }}
           >
             Saltar
           </button>
@@ -268,17 +363,63 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
         {step === 0 && (
           <div className="fp-ob-step" key="s0" style={{ textAlign: "center" }}>
             <div style={{ position: "relative", width: 132, height: 132, margin: "6px auto 18px" }}>
-              <div className="fp-ob-halo" style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "radial-gradient(closest-side, rgba(242,174,188,.5), transparent 70%)", filter: "blur(10px)" }} />
-              <div className="fp-ob-pathy" style={{ position: "relative", width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden", boxShadow: "0 22px 50px -22px rgba(15,26,51,.55)" }}>
-                <img src="/assets/pathy-cloud.png" alt="Pathy, tu copiloto de estudio" style={{ width: "100%", height: "100%", objectFit: "cover", transform: "scale(1.1)" }} />
+              <div
+                className="fp-ob-halo"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  borderRadius: "50%",
+                  background:
+                    "radial-gradient(closest-side, rgba(242,174,188,.5), transparent 70%)",
+                  filter: "blur(10px)",
+                }}
+              />
+              <div
+                className="fp-ob-pathy"
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "50%",
+                  overflow: "hidden",
+                  boxShadow: "0 22px 50px -22px rgba(15,26,51,.55)",
+                }}
+              >
+                <img
+                  src="/img/pathy-cloud.png"
+                  alt="Pathy, tu copiloto de estudio"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    transform: "scale(1.1)",
+                  }}
+                />
               </div>
             </div>
-            <h2 style={{ fontFamily: DISPLAY, fontSize: "clamp(1.5rem,5.5vw,1.9rem)", color: INK, fontWeight: 800, margin: "0 0 8px", letterSpacing: "-0.02em" }}>
+            <h2
+              style={{
+                fontFamily: DISPLAY,
+                fontSize: "clamp(1.5rem,5.5vw,1.9rem)",
+                color: INK,
+                fontWeight: 800,
+                margin: "0 0 8px",
+                letterSpacing: "-0.02em",
+              }}
+            >
               ¡Bienvenido a bordo! ✈️
             </h2>
-            <p style={{ color: "#647DA0", fontSize: 14.5, lineHeight: 1.65, margin: "0 auto", maxWidth: 400 }}>
-              Soy <strong style={{ color: BRAND }}>Pathy</strong>, tu copiloto de estudio. Antes de despegar,
-              preparemos tu cabina — te toma menos de un minuto.
+            <p
+              style={{
+                color: "#647DA0",
+                fontSize: 14.5,
+                lineHeight: 1.65,
+                margin: "0 auto",
+                maxWidth: 400,
+              }}
+            >
+              Soy <strong style={{ color: BRAND }}>Pathy</strong>, tu copiloto de estudio. Antes de
+              despegar, preparemos tu cabina — te toma menos de un minuto.
             </p>
             <button onClick={advance} className="fp-ob-btn fp-ob-btn-primary" style={primaryBtn}>
               Preparar mi cabina <Icon n="arrow" size={17} color="#fff" />
@@ -289,12 +430,19 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
         {/* PASO 1 — Nombre */}
         {step === 1 && (
           <div className={`fp-ob-step ${dir === -1 ? "back" : ""}`} key="s1">
-            <StepHead icon="user" title="¿Cómo quieres que te llamemos?" sub="Tu nombre aparece en tu cabina, tu bitácora y tus estadísticas." />
+            <StepHead
+              icon="user"
+              title="¿Cómo quieres que te llamemos?"
+              sub="Tu nombre aparece en tu cabina, tu bitácora y tus estadísticas."
+            />
             <label style={labelStyle}>Tu nombre</label>
             <input
               ref={nombreRef}
               value={nombre}
-              onChange={(e) => { setNombre(e.target.value); if (nombreError) setNombreError(false); }}
+              onChange={(e) => {
+                setNombre(e.target.value);
+                if (nombreError) setNombreError(false);
+              }}
               placeholder="Ej. María González"
               style={{ ...inputStyle, ...(nombreError ? { borderColor: "#e74c3c" } : {}) }}
               onFocus={focus}
@@ -307,11 +455,21 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
               </p>
             )}
             {firstName && (
-              <div style={{
-                marginTop: 16, display: "inline-flex", alignItems: "center", gap: 9,
-                background: "rgba(61,93,145,.07)", border: "1px solid rgba(61,93,145,.14)",
-                borderRadius: 999, padding: "8px 16px", fontSize: 13.5, color: "#33527F", fontWeight: 600,
-              }}>
+              <div
+                style={{
+                  marginTop: 16,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 9,
+                  background: "rgba(61,93,145,.07)",
+                  border: "1px solid rgba(61,93,145,.14)",
+                  borderRadius: 999,
+                  padding: "8px 16px",
+                  fontSize: 13.5,
+                  color: "#33527F",
+                  fontWeight: 600,
+                }}
+              >
                 <Icon n="spark" size={15} color={BRAND} /> Así te verás: “Hola, {firstName} ✈️”
               </div>
             )}
@@ -327,14 +485,17 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
               />
             </div>
             <NavBtns onBack={() => go(0)} onNext={advance} />
-
           </div>
         )}
 
         {/* PASO 2 — Cómo dirigirnos a ti */}
         {step === 2 && (
           <div className={`fp-ob-step ${dir === -1 ? "back" : ""}`} key="s2g">
-            <StepHead icon="user" title="¿Cómo nos dirigimos a ti?" sub="Para hablarte bien en toda la plataforma. Puedes cambiarlo después en tu perfil." />
+            <StepHead
+              icon="user"
+              title="¿Cómo nos dirigimos a ti?"
+              sub="Para hablarte bien en toda la plataforma. Puedes cambiarlo después en tu perfil."
+            />
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 16 }}>
               {GENEROS.map((g) => {
                 const activo = genero === g.key;
@@ -343,8 +504,14 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                     key={g.key}
                     onClick={() => setGenero(g.key)}
                     style={{
-                      display: "flex", alignItems: "center", gap: 12, textAlign: "left",
-                      padding: "14px 16px", borderRadius: 14, cursor: "pointer", width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 12,
+                      textAlign: "left",
+                      padding: "14px 16px",
+                      borderRadius: 14,
+                      cursor: "pointer",
+                      width: "100%",
                       background: activo ? "rgba(108,8,32,0.05)" : "#fff",
                       border: `1.5px solid ${activo ? BRAND : "#E3EAF5"}`,
                       fontFamily: FONT,
@@ -352,16 +519,33 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                   >
                     <span
                       style={{
-                        width: 20, height: 20, borderRadius: "50%", flexShrink: 0,
+                        width: 20,
+                        height: 20,
+                        borderRadius: "50%",
+                        flexShrink: 0,
                         border: `2px solid ${activo ? BRAND : "#C9D6E8"}`,
-                        display: "flex", alignItems: "center", justifyContent: "center",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                       }}
                     >
-                      {activo && <span style={{ width: 10, height: 10, borderRadius: "50%", background: BRAND }} />}
+                      {activo && (
+                        <span
+                          style={{ width: 10, height: 10, borderRadius: "50%", background: BRAND }}
+                        />
+                      )}
                     </span>
                     <span>
-                      <span style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: INK }}>{g.label}</span>
-                      <span style={{ display: "block", fontSize: 12.5, color: "#647DA0", marginTop: 2 }}>{g.ejemplo}</span>
+                      <span
+                        style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: INK }}
+                      >
+                        {g.label}
+                      </span>
+                      <span
+                        style={{ display: "block", fontSize: 12.5, color: "#647DA0", marginTop: 2 }}
+                      >
+                        {g.ejemplo}
+                      </span>
                     </span>
                   </button>
                 );
@@ -374,7 +558,8 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                 ¿Cómo quieres que te hable Yaris?
               </div>
               <div style={{ fontSize: 12.5, color: "#647DA0", marginBottom: 12 }}>
-                Tu tutora IA. Cambia su forma de hablar, nunca su rigor técnico. Puedes cambiarlo en Configuración.
+                Tu tutora IA. Cambia su forma de hablar, nunca su rigor técnico. Puedes cambiarlo en
+                Configuración.
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {YARIS_TONOS.map((t) => {
@@ -384,8 +569,14 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                       key={t.key}
                       onClick={() => setYarisTono(t.key)}
                       style={{
-                        display: "flex", alignItems: "center", gap: 12, textAlign: "left",
-                        padding: "14px 16px", borderRadius: 14, cursor: "pointer", width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 12,
+                        textAlign: "left",
+                        padding: "14px 16px",
+                        borderRadius: 14,
+                        cursor: "pointer",
+                        width: "100%",
                         background: activo ? "rgba(108,8,32,0.05)" : "#fff",
                         border: `1.5px solid ${activo ? BRAND : "#E3EAF5"}`,
                         fontFamily: FONT,
@@ -393,16 +584,43 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                     >
                       <span
                         style={{
-                          width: 20, height: 20, borderRadius: "50%", flexShrink: 0,
+                          width: 20,
+                          height: 20,
+                          borderRadius: "50%",
+                          flexShrink: 0,
                           border: `2px solid ${activo ? BRAND : "#C9D6E8"}`,
-                          display: "flex", alignItems: "center", justifyContent: "center",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
                         }}
                       >
-                        {activo && <span style={{ width: 10, height: 10, borderRadius: "50%", background: BRAND }} />}
+                        {activo && (
+                          <span
+                            style={{
+                              width: 10,
+                              height: 10,
+                              borderRadius: "50%",
+                              background: BRAND,
+                            }}
+                          />
+                        )}
                       </span>
                       <span>
-                        <span style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: INK }}>{t.label}</span>
-                        <span style={{ display: "block", fontSize: 12.5, color: "#647DA0", marginTop: 2 }}>{t.ejemplo}</span>
+                        <span
+                          style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: INK }}
+                        >
+                          {t.label}
+                        </span>
+                        <span
+                          style={{
+                            display: "block",
+                            fontSize: 12.5,
+                            color: "#647DA0",
+                            marginTop: 2,
+                          }}
+                        >
+                          {t.ejemplo}
+                        </span>
                       </span>
                     </button>
                   );
@@ -416,20 +634,40 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
         {/* PASO 3 — En qué se enfoca */}
         {step === 3 && (
           <div className={`fp-ob-step ${dir === -1 ? "back" : ""}`} key="s3f">
-            <StepHead icon="target" title="¿En qué te vas a enfocar?" sub="Personalizamos tu inicio con lo que más te importa ahora." />
+            <StepHead
+              icon="target"
+              title="¿En qué te vas a enfocar?"
+              sub="Personalizamos tu inicio con lo que más te importa ahora."
+            />
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 16 }}>
-              {([
-                { key: "ciaac" as const, icon: "graduation" as FPIconName, label: "Examen CIAAC", sub: "Las 12 materias oficiales del examen teórico" },
-                { key: "linea-aerea" as const, icon: "plane" as FPIconName, label: "Línea Aérea", sub: "Convocatoria de Primer Oficial (Embraer 190)" },
-              ]).map((r) => {
+              {[
+                {
+                  key: "ciaac" as const,
+                  icon: "graduation" as FPIconName,
+                  label: "Examen CIAAC",
+                  sub: "Las 12 materias oficiales del examen teórico",
+                },
+                {
+                  key: "linea-aerea" as const,
+                  icon: "plane" as FPIconName,
+                  label: "Línea Aérea",
+                  sub: "Convocatoria de Primer Oficial (Embraer 190)",
+                },
+              ].map((r) => {
                 const activo = focoRuta === r.key;
                 return (
                   <button
                     key={r.key}
                     onClick={() => setFocoRuta(r.key)}
                     style={{
-                      display: "flex", alignItems: "center", gap: 12, textAlign: "left",
-                      padding: "14px 16px", borderRadius: 14, cursor: "pointer", width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 12,
+                      textAlign: "left",
+                      padding: "14px 16px",
+                      borderRadius: 14,
+                      cursor: "pointer",
+                      width: "100%",
                       background: activo ? "rgba(108,8,32,0.05)" : "#fff",
                       border: `1.5px solid ${activo ? BRAND : "#E3EAF5"}`,
                       fontFamily: FONT,
@@ -437,17 +675,30 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                   >
                     <span
                       style={{
-                        width: 38, height: 38, borderRadius: 11, flexShrink: 0,
+                        width: 38,
+                        height: 38,
+                        borderRadius: 11,
+                        flexShrink: 0,
                         background: activo ? BRAND : "rgba(61,93,145,0.08)",
                         color: activo ? CORAL : "#3D5D91",
-                        display: "flex", alignItems: "center", justifyContent: "center",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                       }}
                     >
                       <Icon n={r.icon} size={19} />
                     </span>
                     <span>
-                      <span style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: INK }}>{r.label}</span>
-                      <span style={{ display: "block", fontSize: 12.5, color: "#647DA0", marginTop: 2 }}>{r.sub}</span>
+                      <span
+                        style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: INK }}
+                      >
+                        {r.label}
+                      </span>
+                      <span
+                        style={{ display: "block", fontSize: 12.5, color: "#647DA0", marginTop: 2 }}
+                      >
+                        {r.sub}
+                      </span>
                     </span>
                   </button>
                 );
@@ -464,7 +715,9 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                 >
                   <option value="">Todas por igual</option>
                   {MATERIAS_DEF.map((m) => (
-                    <option key={m.slug} value={m.slug}>{m.name}</option>
+                    <option key={m.slug} value={m.slug}>
+                      {m.name}
+                    </option>
                   ))}
                 </select>
               </>
@@ -476,13 +729,48 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
         {/* PASO 4 — Perfil de vuelo */}
         {step === 4 && (
           <div className={`fp-ob-step ${dir === -1 ? "back" : ""}`} key="s2">
-            <StepHead icon="graduation" title={`Tu perfil de vuelo${firstName ? `, ${firstName}` : ""}`} sub="Nos ayuda a personalizar tu preparación. Todo es opcional y editable después." />
+            <StepHead
+              icon="graduation"
+              title={`Tu perfil de vuelo${firstName ? `, ${firstName}` : ""}`}
+              sub="Nos ayuda a personalizar tu preparación. Todo es opcional y editable después."
+            />
             <label style={labelStyle}>Escuela de aviación</label>
-            <input value={escuela} onChange={(e) => setEscuela(e.target.value)} placeholder="Ej. Escuela de Aviación del Pacífico" style={inputStyle} onFocus={focus} onBlur={blur} />
+            <input
+              value={escuela}
+              onChange={(e) => setEscuela(e.target.value)}
+              placeholder="Ej. Escuela de Aviación del Pacífico"
+              style={inputStyle}
+              onFocus={focus}
+              onBlur={blur}
+            />
             <label style={labelStyle}>WhatsApp (para recordatorios de estudio)</label>
-            <input value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} placeholder="+52 55 1234 5678" style={inputStyle} onFocus={focus} onBlur={blur} inputMode="tel" autoComplete="tel" />
-            <label style={{ display: "flex", alignItems: "center", gap: 10, margin: "16px 0 0", fontSize: 13.5, color: "#4A5F80", cursor: "pointer" }}>
-              <input type="checkbox" checked={recordatorios} onChange={(e) => setRecordatorios(e.target.checked)} style={{ width: 18, height: 18, accentColor: "#3D5D91", flexShrink: 0 }} />
+            <input
+              value={whatsapp}
+              onChange={(e) => setWhatsapp(e.target.value)}
+              placeholder="+52 55 1234 5678"
+              style={inputStyle}
+              onFocus={focus}
+              onBlur={blur}
+              inputMode="tel"
+              autoComplete="tel"
+            />
+            <label
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                margin: "16px 0 0",
+                fontSize: 13.5,
+                color: "#4A5F80",
+                cursor: "pointer",
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={recordatorios}
+                onChange={(e) => setRecordatorios(e.target.checked)}
+                style={{ width: 18, height: 18, accentColor: "#3D5D91", flexShrink: 0 }}
+              />
               Quiero recibir recordatorios de estudio por WhatsApp
             </label>
             <NavBtns onBack={() => go(3)} onNext={advance} />
@@ -492,12 +780,36 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
         {/* PASO 5 — Fecha CIAAC (solo si se enfoca en el CIAAC) */}
         {step === 5 && (
           <div className={`fp-ob-step ${dir === -1 ? "back" : ""}`} key="s3">
-            <StepHead icon="calendar" title="¿Cuándo es tu CIAAC?" sub="Con tu fecha activamos la cuenta regresiva y ajustamos tu ritmo de estudio." />
+            <StepHead
+              icon="calendar"
+              title="¿Cuándo es tu CIAAC?"
+              sub="Con tu fecha activamos la cuenta regresiva y ajustamos tu ritmo de estudio."
+            />
             <label style={labelStyle}>Fecha estimada o programada</label>
-            <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} style={inputStyle} onFocus={focus} onBlur={blur} />
+            <input
+              type="date"
+              value={fecha}
+              onChange={(e) => setFecha(e.target.value)}
+              style={inputStyle}
+              onFocus={focus}
+              onBlur={blur}
+            />
             <button
-              onClick={() => { setFecha(""); advance(); }}
-              style={{ background: "none", border: "none", color: "#3D5D91", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: FONT, padding: "12px 0 0", display: "block" }}
+              onClick={() => {
+                setFecha("");
+                advance();
+              }}
+              style={{
+                background: "none",
+                border: "none",
+                color: "#3D5D91",
+                fontSize: 13,
+                fontWeight: 700,
+                cursor: "pointer",
+                fontFamily: FONT,
+                padding: "12px 0 0",
+                display: "block",
+              }}
             >
               Aún no tengo fecha →
             </button>
@@ -508,24 +820,87 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
         {/* PASO 6 — Tour + despegue */}
         {step === 6 && (
           <div className={`fp-ob-step ${dir === -1 ? "back" : ""}`} key="s4">
-            <StepHead icon="rocket" title={`Todo listo${firstName ? `, ${firstName}` : ""}. Esto te espera:`} sub="Tu cabina de estudio, en cuatro instrumentos." />
-            <div className="fp-ob-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 10, marginTop: 16 }}>
+            <StepHead
+              icon="rocket"
+              title={`Todo listo${firstName ? `, ${firstName}` : ""}. Esto te espera:`}
+              sub="Tu cabina de estudio, en cuatro instrumentos."
+            />
+            <div
+              className="fp-ob-stagger"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                gap: 10,
+                marginTop: 16,
+              }}
+            >
               {TOUR.map((t) => (
-                <div key={t.title} style={{ display: "flex", alignItems: "flex-start", gap: 12, background: "#fff", border: "1px solid #E8EEF6", borderRadius: 14, padding: "13px 15px", boxShadow: "0 1px 2px rgba(15,26,51,.04), 0 10px 26px -18px rgba(15,26,51,.18)" }}>
-                  <span style={{ width: 38, height: 38, borderRadius: 10, background: "#FAEFEE", color: BRAND, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <div
+                  key={t.title}
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: 12,
+                    background: "#fff",
+                    border: "1px solid #E8EEF6",
+                    borderRadius: 14,
+                    padding: "13px 15px",
+                    boxShadow: "0 1px 2px rgba(15,26,51,.04), 0 10px 26px -18px rgba(15,26,51,.18)",
+                  }}
+                >
+                  <span
+                    style={{
+                      width: 38,
+                      height: 38,
+                      borderRadius: 10,
+                      background: "#FAEFEE",
+                      color: BRAND,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                    }}
+                  >
                     <Icon n={t.icon} size={19} />
                   </span>
                   <span>
-                    <span style={{ display: "block", fontSize: 14, fontWeight: 800, color: INK, fontFamily: DISPLAY, letterSpacing: "-0.01em" }}>{t.title}</span>
-                    <span style={{ display: "block", fontSize: 12.5, color: "#647DA0", lineHeight: 1.45, marginTop: 2 }}>{t.sub}</span>
+                    <span
+                      style={{
+                        display: "block",
+                        fontSize: 14,
+                        fontWeight: 800,
+                        color: INK,
+                        fontFamily: DISPLAY,
+                        letterSpacing: "-0.01em",
+                      }}
+                    >
+                      {t.title}
+                    </span>
+                    <span
+                      style={{
+                        display: "block",
+                        fontSize: 12.5,
+                        color: "#647DA0",
+                        lineHeight: 1.45,
+                        marginTop: 2,
+                      }}
+                    >
+                      {t.sub}
+                    </span>
                   </span>
                 </div>
               ))}
             </div>
-            <button onClick={() => finish(false)} className="fp-ob-btn fp-ob-btn-primary" style={{ ...primaryBtn, marginTop: 22 }}>
+            <button
+              onClick={() => finish(false)}
+              className="fp-ob-btn fp-ob-btn-primary"
+              style={{ ...primaryBtn, marginTop: 22 }}
+            >
               Despegar <Icon n="plane" size={17} color="#fff" />
             </button>
-            <button onClick={() => go(focoRuta === "linea-aerea" ? 4 : 5)} style={ghostBtn}>← Atrás</button>
+            <button onClick={() => go(focoRuta === "linea-aerea" ? 4 : 5)} style={ghostBtn}>
+              ← Atrás
+            </button>
           </div>
         )}
       </div>
@@ -570,10 +945,32 @@ const ghostBtn: React.CSSProperties = {
 function StepHead({ icon, title, sub }: { icon: FPIconName; title: string; sub: string }) {
   return (
     <>
-      <div style={{ width: 52, height: 52, borderRadius: 15, background: `linear-gradient(135deg, ${INK}, #3D5D91)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14, boxShadow: "0 12px 26px -14px rgba(34,55,92,.55)" }}>
+      <div
+        style={{
+          width: 52,
+          height: 52,
+          borderRadius: 15,
+          background: `linear-gradient(135deg, ${INK}, #3D5D91)`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: 14,
+          boxShadow: "0 12px 26px -14px rgba(34,55,92,.55)",
+        }}
+      >
         <Icon n={icon} size={24} color={CORAL} />
       </div>
-      <h2 style={{ fontFamily: DISPLAY, fontSize: "clamp(1.3rem,4.6vw,1.55rem)", color: INK, fontWeight: 800, margin: "0 0 6px", letterSpacing: "-0.02em", lineHeight: 1.15 }}>
+      <h2
+        style={{
+          fontFamily: DISPLAY,
+          fontSize: "clamp(1.3rem,4.6vw,1.55rem)",
+          color: INK,
+          fontWeight: 800,
+          margin: "0 0 6px",
+          letterSpacing: "-0.02em",
+          lineHeight: 1.15,
+        }}
+      >
         {title}
       </h2>
       <p style={{ color: "#647DA0", fontSize: 14, lineHeight: 1.6, margin: 0 }}>{sub}</p>
@@ -587,7 +984,9 @@ function NavBtns({ onBack, onNext }: { onBack: () => void; onNext: () => void })
       <button onClick={onNext} className="fp-ob-btn fp-ob-btn-primary" style={primaryBtn}>
         Continuar <Icon n="arrow" size={17} color="#fff" />
       </button>
-      <button onClick={onBack} style={ghostBtn}>← Atrás</button>
+      <button onClick={onBack} style={ghostBtn}>
+        ← Atrás
+      </button>
     </>
   );
 }

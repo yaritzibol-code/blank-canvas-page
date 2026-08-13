@@ -76,7 +76,7 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: "https://flightpath.mx/" },
-      { rel: "preload", as: "image", href: "/assets/pathy-cloud.png", fetchpriority: "high" },
+      { rel: "preload", as: "image", href: "/img/pathy-cloud.png", fetchPriority: "high" },
     ],
   }),
 });
@@ -1096,7 +1096,7 @@ function PathyPhone() {
             <Icon n="chevD" className="w-4 h-4 rotate-90 text-white/70" />
             <span className="w-9 h-9 rounded-full overflow-hidden ring-2 ring-white/40 shrink-0 bg-ink">
               <img
-                src="/assets/pathy-small.png"
+                src="/img/pathy-small.png"
                 alt="Avatar de Pathy, copiloto de estudio"
                 className="w-full h-full object-cover scale-110"
               />
@@ -1262,7 +1262,7 @@ function PathyEvolution() {
       days: "1–3 días",
       token: "MISTY ROSE",
       color: "#F2DCDB",
-      img: "/assets/pathy-1-misty.png",
+      img: "/img/pathy-1-misty.png",
       copy: "Todo gran vuelo comienza con un pequeño paso.",
     },
     {
@@ -1270,7 +1270,7 @@ function PathyEvolution() {
       days: "4–6 días",
       token: "CHERRY BLOSSOM",
       color: "#F2AEBC",
-      img: "/assets/pathy-2-pink.png",
+      img: "/img/pathy-2-pink.png",
       copy: "¡Vas por buen camino! Sigue así.",
     },
     {
@@ -1278,7 +1278,7 @@ function PathyEvolution() {
       days: "7–13 días",
       token: "SILVER LAKE",
       color: "#5A86CB",
-      img: "/assets/pathy-3-blue.png",
+      img: "/img/pathy-3-blue.png",
       copy: "La constancia te está llevando lejos.",
     },
     {
@@ -1286,7 +1286,7 @@ function PathyEvolution() {
       days: "14–30 días",
       token: "LAPIS LAZULI",
       color: "#3D5D91",
-      img: "/assets/pathy-4-pilot.png",
+      img: "/img/pathy-4-pilot.png",
       copy: "¡Eres imparable! Sigue volando alto.",
     },
     {
@@ -1294,7 +1294,7 @@ function PathyEvolution() {
       days: "30+ días",
       token: "BURGUNDY",
       color: "#6C0820",
-      img: "/assets/pathy-5-elite.png",
+      img: "/img/pathy-5-elite.png",
       copy: "Disciplina, enfoque y pasión. Nivel élite.",
     },
   ];

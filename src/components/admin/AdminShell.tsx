@@ -212,7 +212,7 @@ export function AdminShell({
           }}
         >
           <img
-            src="/assets/flightpath-logo.png"
+            src="/img/flightpath-logo.png"
             alt="Logo de FlightPath"
             width={30}
             height={30}

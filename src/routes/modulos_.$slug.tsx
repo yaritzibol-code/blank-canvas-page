@@ -1,6 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { moduloBySlug, MODULOS_LANDING, type ModuloLanding } from "@/lib/seo/modulos-landing";
+import { MODULOS_LANDING, type ModuloLanding } from "@/lib/seo/modulos-landing";
 import { MOCKUPS } from "@/components/landing/modulo-mockups";
 import {
   AeroBackdrop,
@@ -28,7 +28,12 @@ import {
 const BASE = "https://flightpath.mx";
 
 export const Route = createFileRoute("/modulos_/$slug")({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
+    // Import dinámico a propósito: el loader vive en el route-tree (chunk de
+    // entrada de TODAS las páginas) y un import estático arrastraba ahí el
+    // copy completo de las 6 landings. Así, la data solo viaja al visitar
+    // /modulos/* (y en SSR se resuelve en el servidor antes de responder).
+    const { moduloBySlug } = await import("@/lib/seo/modulos-landing");
     const modulo = moduloBySlug(params.slug);
     if (!modulo) throw notFound();
     return { modulo };

@@ -126,7 +126,7 @@ export const Route = createFileRoute("/sobre-flightpath")({
                 "@type": "Organization",
                 name: "FlightPath",
                 url: "https://flightpath.mx",
-                logo: "https://flightpath.mx/assets/flightpath-logo.png",
+                logo: "https://flightpath.mx/img/flightpath-logo.png",
                 description: DESCRIPCION_CANONICA,
                 foundingDate: "2026",
                 foundingLocation: { "@type": "Place", name: "Ciudad de México, México" },

@@ -24,6 +24,33 @@ origen: 2026-08-09.
 5. **Marcas de terceros** (Boeing, COMPASS/EPST, AFAC, aerolíneas) → mención
    nominativa + aviso de no afiliación en la misma página (ver COMPLIANCE.md).
 
+## Reglas de velocidad (audit 2026-08-13)
+
+6. **El seed jamás se descarga en páginas públicas.** `initOnce` (hooks.ts)
+   solo siembra si el navegador ya estaba sembrado o la ruta está en
+   `RUTAS_APP` (/dashboard, /admin, /login, /register, /reset-password,
+   /checkout). Una superficie nueva que use el banco local debe agregarse a
+   esa regex; sus formularios deben `await ensureSeededAsync()` antes de
+   operar (patrón de handleLogin/handleRegister).
+7. **Datos de landings fuera del entry.** El `loader`/`head` de una ruta
+   viven en el route-tree, que viaja en el chunk de entrada de TODAS las
+   páginas: los archivos de contenido (p. ej. `modulos-landing.ts`) se traen
+   con `await import()` dentro del loader, nunca con import estático.
+8. **Constantes chicas nunca dentro de archivos de datos grandes.** Importar
+   un string desde un archivo de 200 KB arrastra el archivo entero al grafo
+   (caso `LA_OFICIAL_FUENTE`, que vive en `linea-aerea-meta.ts`). Antes de
+   importar algo en una ruta, revisar cuánto pesa el módulo que lo exporta.
+9. **Imágenes públicas** → comprimidas (sharp con paleta, `quality` ~82) y
+   servidas desde `/img/` con caché immutable (`public/_headers`): para
+   cambiar una imagen se RENOMBRA (sufijo `-v2`), nunca se reemplaza en el
+   mismo path. `og-image.png` es la excepción: mismo path, caché de 1 día.
+   Preload manual solo para la imagen del hero (`fetchPriority: "high"` en
+   camelCase — en minúsculas React lo descarta).
+10. **Verificar el entry tras cambios estructurales**: `npm run build` y
+    revisar que `index-*.js` no gane peso ni referencie chunks de datos
+    (`grep -c 'seed-linea\|texto de un landing' .output/public/assets/index-*.js`).
+    Línea base 2026-08-13: 263 KB gzip.
+
 ## Protocolo de convocatoria CIAAC
 
 La fecha vive en `src/lib/convocatoria.ts` (única fuente; la portada, la

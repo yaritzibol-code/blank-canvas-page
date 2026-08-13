@@ -15,6 +15,20 @@ export const DEMO_BASIC_ID = "usr_carlos";
 export const DEMO_PASSWORD = "flightpath2026";
 
 /**
+ * true si este navegador ya tiene el banco sembrado en la versión vigente.
+ * Solo lee el marcador de localStorage: no descarga ni ejecuta nada.
+ */
+export function isSeededLocally(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    const raw = window.localStorage.getItem("fp_db_seed_version");
+    return raw !== null && Number(JSON.parse(raw)) >= SEED_VERSION;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Carga los datos del seed bajo demanda y siembra si hace falta.
  *
  * El chequeo de versión se hace ANTES del import(): un navegador ya sembrado
@@ -23,12 +37,7 @@ export const DEMO_PASSWORD = "flightpath2026";
  */
 export async function ensureSeededAsync(): Promise<void> {
   if (typeof window === "undefined") return;
-  try {
-    const raw = window.localStorage.getItem("fp_db_seed_version");
-    if (raw !== null && Number(JSON.parse(raw)) >= SEED_VERSION) return;
-  } catch {
-    /* localStorage bloqueado o valor corrupto: el seed decide */
-  }
+  if (isSeededLocally()) return;
   const m = await import("./seed");
   m.ensureSeeded();
 }

@@ -164,7 +164,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               "@type": "Organization",
               name: "FlightPath",
               url: "https://flightpath.mx",
-              logo: "https://flightpath.mx/assets/flightpath-logo.png",
+              logo: "https://flightpath.mx/img/flightpath-logo.png",
               email: "contacto@flightpath.mx",
               // Descripción canónica de la entidad — misma en /sobre-flightpath y llms.txt.
               description:

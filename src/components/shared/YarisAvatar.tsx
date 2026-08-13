@@ -17,7 +17,7 @@ export function YarisAvatar({
 }) {
   return (
     <img
-      src="/assets/yaris-face.png"
+      src="/img/yaris-face.png"
       alt=""
       aria-hidden="true"
       draggable={false}
