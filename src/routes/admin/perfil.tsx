@@ -39,6 +39,7 @@ import {
   type User,
 } from "@/lib/store";
 import { StudentAudit } from "@/components/admin/StudentAudit";
+import { CompassLogCard } from "@/components/compass/CompassLogCard";
 
 import { PLANES, planById, planIdDe, type PlanId } from "@/lib/pricing";
 
@@ -119,7 +120,11 @@ function AdminPerfilPage() {
       accessEnd: new Date(base.getTime() + days * 86400000).toISOString(),
       accessStatus: "extendido",
     });
-    logAccessChange(student.id, "Garantía activada", `${days} días adicionales de acceso sin costo`);
+    logAccessChange(
+      student.id,
+      "Garantía activada",
+      `${days} días adicionales de acceso sin costo`,
+    );
     setModal(null);
     showFlash("Garantía activada correctamente");
   };
@@ -131,7 +136,8 @@ function AdminPerfilPage() {
       plan: def.tier,
       planNombre: def.nombre,
       accessStatus: def.id === "prueba" ? "prueba" : "activo",
-      accessEnd: def.dias === null ? null : new Date(Date.now() + def.dias * 86400000).toISOString(),
+      accessEnd:
+        def.dias === null ? null : new Date(Date.now() + def.dias * 86400000).toISOString(),
     };
     updateUser(student.id, patch);
     logAccessChange(student.id, "Cambio de plan", def.nombre);
@@ -143,7 +149,11 @@ function AdminPerfilPage() {
     if (!student) return;
     const paused = student.accessStatus === "pausado";
     updateUser(student.id, { accessStatus: paused ? "activo" : "pausado" });
-    logAccessChange(student.id, paused ? "Reactivar acceso" : "Pausar acceso", paused ? "Acceso reactivado por la administradora" : "Acceso pausado por la administradora");
+    logAccessChange(
+      student.id,
+      paused ? "Reactivar acceso" : "Pausar acceso",
+      paused ? "Acceso reactivado por la administradora" : "Acceso pausado por la administradora",
+    );
     showFlash(paused ? "Acceso reactivado" : "Acceso pausado");
   };
 
@@ -157,10 +167,16 @@ function AdminPerfilPage() {
   const doEditDates = () => {
     if (!student) return;
     updateUser(student.id, {
-      accessStart: editStart ? new Date(`${editStart}T10:00:00`).toISOString() : student.accessStart,
+      accessStart: editStart
+        ? new Date(`${editStart}T10:00:00`).toISOString()
+        : student.accessStart,
       accessEnd: editEnd ? new Date(`${editEnd}T10:00:00`).toISOString() : null,
     });
-    logAccessChange(student.id, "Editar fechas", `Inicio: ${editStart || "sin cambio"} · Vencimiento: ${editEnd || "sin vencimiento"}`);
+    logAccessChange(
+      student.id,
+      "Editar fechas",
+      `Inicio: ${editStart || "sin cambio"} · Vencimiento: ${editEnd || "sin vencimiento"}`,
+    );
     setModal(null);
     showFlash("Fechas de acceso actualizadas");
   };
@@ -176,9 +192,19 @@ function AdminPerfilPage() {
   const doReset = async () => {
     if (!student) return;
     const res = await resetPassword(student.email, "flightpath123");
-    if (res.ok) logAccessChange(student.id, "Reset de contraseña", res.info ? "Correo de restablecimiento enviado" : "Contraseña temporal asignada");
+    if (res.ok)
+      logAccessChange(
+        student.id,
+        "Reset de contraseña",
+        res.info ? "Correo de restablecimiento enviado" : "Contraseña temporal asignada",
+      );
     setModal(null);
-    showFlash(res.ok ? (res.info ?? "Contraseña temporal: flightpath123") : (res.error ?? "No se pudo restablecer la contraseña"), !res.ok);
+    showFlash(
+      res.ok
+        ? (res.info ?? "Contraseña temporal: flightpath123")
+        : (res.error ?? "No se pudo restablecer la contraseña"),
+      !res.ok,
+    );
   };
 
   const doWa = () => {
@@ -198,9 +224,16 @@ function AdminPerfilPage() {
 
   if (!student) {
     return (
-      <AdminShell title="Perfil de estudiante" active="estudiantes" backTo={{ label: "Estudiantes", to: "/admin/estudiantes" }} maxWidth={900}>
+      <AdminShell
+        title="Perfil de estudiante"
+        active="estudiantes"
+        backTo={{ label: "Estudiantes", to: "/admin/estudiantes" }}
+        maxWidth={900}
+      >
         <div style={cardStyle}>
-          <p style={{ fontSize: ".86rem", color: "#647DA0" }}>No hay estudiantes registrados todavía.</p>
+          <p style={{ fontSize: ".86rem", color: "#647DA0" }}>
+            No hay estudiantes registrados todavía.
+          </p>
         </div>
       </AdminShell>
     );
@@ -219,7 +252,10 @@ function AdminPerfilPage() {
 
   const heroStats = [
     { num: `${stats?.courseProgress ?? 0}%`, lab: "Progreso" },
-    { num: stats?.avgScore !== null && stats?.avgScore !== undefined ? `${stats.avgScore}%` : "—", lab: "Promedio" },
+    {
+      num: stats?.avgScore !== null && stats?.avgScore !== undefined ? `${stats.avgScore}%` : "—",
+      lab: "Promedio",
+    },
     { num: String(stats?.simCount ?? 0), lab: "Simuladores" },
   ];
 
@@ -250,10 +286,39 @@ function AdminPerfilPage() {
       maxWidth={900}
       actions={
         <>
-          <button onClick={() => setModal("wa")} style={{ padding: "7px 14px", background: "#25D366", color: "white", border: "none", borderRadius: 8, fontSize: ".8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
+          <button
+            onClick={() => setModal("wa")}
+            style={{
+              padding: "7px 14px",
+              background: "#25D366",
+              color: "white",
+              border: "none",
+              borderRadius: 8,
+              fontSize: ".8rem",
+              fontWeight: 700,
+              cursor: "pointer",
+              fontFamily: "'Manrope', sans-serif",
+              display: "flex",
+              alignItems: "center",
+              gap: 5,
+            }}
+          >
             <Icon n="chat" size={16} /> Enviar WhatsApp
           </button>
-          <button onClick={() => setModal("cancel")} style={{ padding: "7px 14px", background: "white", color: "#e74c3c", border: "2px solid #e74c3c", borderRadius: 8, fontSize: ".8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
+          <button
+            onClick={() => setModal("cancel")}
+            style={{
+              padding: "7px 14px",
+              background: "white",
+              color: "#e74c3c",
+              border: "2px solid #e74c3c",
+              borderRadius: 8,
+              fontSize: ".8rem",
+              fontWeight: 700,
+              cursor: "pointer",
+              fontFamily: "'Manrope', sans-serif",
+            }}
+          >
             Cancelar acceso
           </button>
         </>
@@ -263,31 +328,75 @@ function AdminPerfilPage() {
 
       {/* ───────── Modales ───────── */}
       <Modal open={modal === "wa"} onClose={() => setModal(null)}>
-        <h2 style={modalTitleStyle}><Icon n="chat" size={20} color="#6C0820" /> Enviar WhatsApp</h2>
-        <p style={modalSubStyle}>El mensaje llegará al {student.whatsapp || "número registrado"} de {firstName}.</p>
+        <h2 style={modalTitleStyle}>
+          <Icon n="chat" size={20} color="#6C0820" /> Enviar WhatsApp
+        </h2>
+        <p style={modalSubStyle}>
+          El mensaje llegará al {student.whatsapp || "número registrado"} de {firstName}.
+        </p>
         <div style={{ marginBottom: 14 }}>
           <label style={labelStyle}>Mensaje</label>
-          <textarea value={waMsg} onChange={(e) => setWaMsg(e.target.value)} rows={4} style={{ ...inputStyle, resize: "vertical" }} />
+          <textarea
+            value={waMsg}
+            onChange={(e) => setWaMsg(e.target.value)}
+            rows={4}
+            style={{ ...inputStyle, resize: "vertical" }}
+          />
         </div>
         <div style={{ display: "flex", gap: 10 }}>
-          <button onClick={() => setModal(null)} style={cancelBtnStyle}>Cancelar</button>
-          <button onClick={doWa} style={{ ...confirmBtnStyle, background: "#25D366", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}><Icon n="chat" size={16} /> Enviar</button>
+          <button onClick={() => setModal(null)} style={cancelBtnStyle}>
+            Cancelar
+          </button>
+          <button
+            onClick={doWa}
+            style={{
+              ...confirmBtnStyle,
+              background: "#25D366",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 6,
+            }}
+          >
+            <Icon n="chat" size={16} /> Enviar
+          </button>
         </div>
       </Modal>
 
       <Modal open={modal === "extend"} onClose={() => setModal(null)}>
-        <h2 style={modalTitleStyle}><Icon n="calendar" size={20} color="#6C0820" /> Extender acceso</h2>
+        <h2 style={modalTitleStyle}>
+          <Icon n="calendar" size={20} color="#6C0820" /> Extender acceso
+        </h2>
         <p style={modalSubStyle}>
-          {student.accessEnd ? (<>El plan actual vence el <strong>{fmtDate(student.accessEnd)}</strong>.</>) : (<>El plan actual no tiene fecha de vencimiento; la extensión contará <strong>desde hoy</strong>.</>)}{" "}
+          {student.accessEnd ? (
+            <>
+              El plan actual vence el <strong>{fmtDate(student.accessEnd)}</strong>.
+            </>
+          ) : (
+            <>
+              El plan actual no tiene fecha de vencimiento; la extensión contará{" "}
+              <strong>desde hoy</strong>.
+            </>
+          )}{" "}
           ¿Cuántos días adicionales quieres darle?
         </p>
         <div style={{ marginBottom: 14 }}>
           <label style={labelStyle}>Días adicionales</label>
-          <input type="number" value={extendDays} onChange={(e) => setExtendDays(e.target.value)} min="1" style={inputStyle} />
+          <input
+            type="number"
+            value={extendDays}
+            onChange={(e) => setExtendDays(e.target.value)}
+            min="1"
+            style={inputStyle}
+          />
         </div>
         <div style={{ marginBottom: 14 }}>
           <label style={labelStyle}>Motivo</label>
-          <select value={extendReason} onChange={(e) => setExtendReason(e.target.value)} style={inputStyle}>
+          <select
+            value={extendReason}
+            onChange={(e) => setExtendReason(e.target.value)}
+            style={inputStyle}
+          >
             <option>Activación de garantía</option>
             <option>Cortesía</option>
             <option>Error técnico</option>
@@ -295,27 +404,70 @@ function AdminPerfilPage() {
           </select>
         </div>
         <div style={{ display: "flex", gap: 10 }}>
-          <button onClick={() => setModal(null)} style={cancelBtnStyle}>Cancelar</button>
-          <button onClick={doExtend} style={{ ...confirmBtnStyle, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}><Icon n="calendar" size={16} /> Extender acceso</button>
+          <button onClick={() => setModal(null)} style={cancelBtnStyle}>
+            Cancelar
+          </button>
+          <button
+            onClick={doExtend}
+            style={{
+              ...confirmBtnStyle,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 6,
+            }}
+          >
+            <Icon n="calendar" size={16} /> Extender acceso
+          </button>
         </div>
       </Modal>
 
       <Modal open={modal === "garantia"} onClose={() => setModal(null)}>
-        <h2 style={modalTitleStyle}><Icon n="alert" size={20} color="#6C0820" /> Activar garantía de mejora</h2>
-        <p style={modalSubStyle}>Al activar la garantía, {firstName} recibirá <strong>{garantiaDays || "30"} días adicionales de acceso sin costo</strong>. El cambio quedará registrado en el historial.</p>
+        <h2 style={modalTitleStyle}>
+          <Icon n="alert" size={20} color="#6C0820" /> Activar garantía de mejora
+        </h2>
+        <p style={modalSubStyle}>
+          Al activar la garantía, {firstName} recibirá{" "}
+          <strong>{garantiaDays || "30"} días adicionales de acceso sin costo</strong>. El cambio
+          quedará registrado en el historial.
+        </p>
         <div style={{ marginBottom: 14 }}>
           <label style={labelStyle}>Días de extensión</label>
-          <input type="number" value={garantiaDays} onChange={(e) => setGarantiaDays(e.target.value)} min="1" style={inputStyle} />
+          <input
+            type="number"
+            value={garantiaDays}
+            onChange={(e) => setGarantiaDays(e.target.value)}
+            min="1"
+            style={inputStyle}
+          />
         </div>
         <div style={{ display: "flex", gap: 10 }}>
-          <button onClick={() => setModal(null)} style={cancelBtnStyle}>Cancelar</button>
-          <button onClick={doGarantia} style={{ ...confirmBtnStyle, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}><Icon n="check" size={16} /> Activar garantía</button>
+          <button onClick={() => setModal(null)} style={cancelBtnStyle}>
+            Cancelar
+          </button>
+          <button
+            onClick={doGarantia}
+            style={{
+              ...confirmBtnStyle,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 6,
+            }}
+          >
+            <Icon n="check" size={16} /> Activar garantía
+          </button>
         </div>
       </Modal>
 
       <Modal open={modal === "change"} onClose={() => setModal(null)}>
-        <h2 style={modalTitleStyle}><Icon n="refresh" size={20} color="#6C0820" /> Cambiar plan</h2>
-        <p style={modalSubStyle}>Selecciona el nuevo plan para {student.nombre}. Plan actual: <strong>{student.planNombre}</strong>.</p>
+        <h2 style={modalTitleStyle}>
+          <Icon n="refresh" size={20} color="#6C0820" /> Cambiar plan
+        </h2>
+        <p style={modalSubStyle}>
+          Selecciona el nuevo plan para {student.nombre}. Plan actual:{" "}
+          <strong>{student.planNombre}</strong>.
+        </p>
         <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 14 }}>
           {PLANES.map((p) => {
             const sel = newPlan === p.id;
@@ -324,140 +476,549 @@ function AdminPerfilPage() {
                 key={p.id}
                 onClick={() => setNewPlan(p.id)}
                 style={{
-                  textAlign: "left", padding: "11px 13px", borderRadius: 10, cursor: "pointer",
+                  textAlign: "left",
+                  padding: "11px 13px",
+                  borderRadius: 10,
+                  cursor: "pointer",
                   border: `2px solid ${sel ? "#3D5D91" : "#E8EEF6"}`,
                   background: sel ? "rgba(61,93,145,.06)" : "white",
-                  fontFamily: "'Manrope', sans-serif", transition: "all .15s",
+                  fontFamily: "'Manrope', sans-serif",
+                  transition: "all .15s",
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
-                  <Icon n={p.tier === "paga" ? "star" : "user"} size={15} color={sel ? "#3D5D91" : "#647DA0"} />
-                  <span style={{ fontSize: ".88rem", fontWeight: 700, color: "#22375C" }}>{p.nombre}</span>
-                  <span style={{ marginLeft: "auto", fontSize: ".7rem", fontWeight: 700, color: "#647DA0" }}>
+                  <Icon
+                    n={p.tier === "paga" ? "star" : "user"}
+                    size={15}
+                    color={sel ? "#3D5D91" : "#647DA0"}
+                  />
+                  <span style={{ fontSize: ".88rem", fontWeight: 700, color: "#22375C" }}>
+                    {p.nombre}
+                  </span>
+                  <span
+                    style={{
+                      marginLeft: "auto",
+                      fontSize: ".7rem",
+                      fontWeight: 700,
+                      color: "#647DA0",
+                    }}
+                  >
                     {p.dias === null ? "Sin vencimiento" : `${p.dias} días`}
                   </span>
                 </div>
-                <div style={{ fontSize: ".76rem", color: "#647DA0", lineHeight: 1.45 }}>{p.descripcion}</div>
+                <div style={{ fontSize: ".76rem", color: "#647DA0", lineHeight: 1.45 }}>
+                  {p.descripcion}
+                </div>
               </button>
             );
           })}
         </div>
         <div style={{ display: "flex", gap: 10 }}>
-          <button onClick={() => setModal(null)} style={cancelBtnStyle}>Cancelar</button>
-          <button onClick={doChangePlan} style={{ ...confirmBtnStyle, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}><Icon n="refresh" size={16} /> Cambiar plan</button>
+          <button onClick={() => setModal(null)} style={cancelBtnStyle}>
+            Cancelar
+          </button>
+          <button
+            onClick={doChangePlan}
+            style={{
+              ...confirmBtnStyle,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 6,
+            }}
+          >
+            <Icon n="refresh" size={16} /> Cambiar plan
+          </button>
         </div>
       </Modal>
 
       <Modal open={modal === "cancel"} onClose={() => setModal(null)}>
-        <h2 style={modalTitleStyle}><Icon n="alert" size={20} color="#6C0820" /> Cancelar acceso</h2>
-        <p style={modalSubStyle}>¿Estás segura de que quieres cancelar el acceso de <strong>{student.nombre}</strong>? Esta acción desactivará su cuenta inmediatamente.</p>
+        <h2 style={modalTitleStyle}>
+          <Icon n="alert" size={20} color="#6C0820" /> Cancelar acceso
+        </h2>
+        <p style={modalSubStyle}>
+          ¿Estás segura de que quieres cancelar el acceso de <strong>{student.nombre}</strong>? Esta
+          acción desactivará su cuenta inmediatamente.
+        </p>
         <div style={{ display: "flex", gap: 10 }}>
-          <button onClick={() => setModal(null)} style={cancelBtnStyle}>No, volver</button>
-          <button onClick={doCancel} style={{ ...confirmBtnStyle, background: "#e74c3c" }}>Sí, cancelar acceso</button>
+          <button onClick={() => setModal(null)} style={cancelBtnStyle}>
+            No, volver
+          </button>
+          <button onClick={doCancel} style={{ ...confirmBtnStyle, background: "#e74c3c" }}>
+            Sí, cancelar acceso
+          </button>
         </div>
       </Modal>
 
       <Modal open={modal === "fechas"} onClose={() => setModal(null)}>
-        <h2 style={modalTitleStyle}><Icon n="calendar" size={20} color="#6C0820" /> Editar fechas de acceso</h2>
-        <p style={modalSubStyle}>Ajusta manualmente el periodo de acceso de {firstName}. Deja el vencimiento vacío para acceso sin fecha límite.</p>
+        <h2 style={modalTitleStyle}>
+          <Icon n="calendar" size={20} color="#6C0820" /> Editar fechas de acceso
+        </h2>
+        <p style={modalSubStyle}>
+          Ajusta manualmente el periodo de acceso de {firstName}. Deja el vencimiento vacío para
+          acceso sin fecha límite.
+        </p>
         <div style={{ marginBottom: 14 }}>
           <label style={labelStyle}>Fecha de inicio</label>
-          <input type="date" value={editStart} onChange={(e) => setEditStart(e.target.value)} style={inputStyle} />
+          <input
+            type="date"
+            value={editStart}
+            onChange={(e) => setEditStart(e.target.value)}
+            style={inputStyle}
+          />
         </div>
         <div style={{ marginBottom: 14 }}>
           <label style={labelStyle}>Fecha de vencimiento</label>
-          <input type="date" value={editEnd} onChange={(e) => setEditEnd(e.target.value)} style={inputStyle} />
+          <input
+            type="date"
+            value={editEnd}
+            onChange={(e) => setEditEnd(e.target.value)}
+            style={inputStyle}
+          />
         </div>
         <div style={{ display: "flex", gap: 10 }}>
-          <button onClick={() => setModal(null)} style={cancelBtnStyle}>Cancelar</button>
-          <button onClick={doEditDates} style={{ ...confirmBtnStyle, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}><Icon n="check" size={16} /> Guardar fechas</button>
+          <button onClick={() => setModal(null)} style={cancelBtnStyle}>
+            Cancelar
+          </button>
+          <button
+            onClick={doEditDates}
+            style={{
+              ...confirmBtnStyle,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 6,
+            }}
+          >
+            <Icon n="check" size={16} /> Guardar fechas
+          </button>
         </div>
       </Modal>
 
       <Modal open={modal === "reset"} onClose={() => setModal(null)}>
-        <h2 style={modalTitleStyle}><Icon n="lock" size={20} color="#6C0820" /> Resetear contraseña</h2>
-        <p style={modalSubStyle}>Se asignará la contraseña temporal <strong>flightpath123</strong> a la cuenta <strong>{student.email}</strong>. Pídele que la cambie al entrar.</p>
+        <h2 style={modalTitleStyle}>
+          <Icon n="lock" size={20} color="#6C0820" /> Resetear contraseña
+        </h2>
+        <p style={modalSubStyle}>
+          Se asignará la contraseña temporal <strong>flightpath123</strong> a la cuenta{" "}
+          <strong>{student.email}</strong>. Pídele que la cambie al entrar.
+        </p>
         <div style={{ display: "flex", gap: 10 }}>
-          <button onClick={() => setModal(null)} style={cancelBtnStyle}>Cancelar</button>
-          <button onClick={doReset} style={{ ...confirmBtnStyle, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}><Icon n="lock" size={16} /> Resetear contraseña</button>
+          <button onClick={() => setModal(null)} style={cancelBtnStyle}>
+            Cancelar
+          </button>
+          <button
+            onClick={doReset}
+            style={{
+              ...confirmBtnStyle,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 6,
+            }}
+          >
+            <Icon n="lock" size={16} /> Resetear contraseña
+          </button>
         </div>
       </Modal>
 
       {/* ───────── Hero ───────── */}
-      <div style={{ background: "linear-gradient(135deg,#22375C,#2a2a4e)", borderRadius: 18, padding: "24px 28px", display: "flex", alignItems: "center", gap: 20, marginBottom: 22, position: "relative", overflow: "hidden", flexWrap: "wrap" }}>
-        <div style={{ position: "absolute", top: -50, right: -50, width: 180, height: 180, background: "radial-gradient(circle,rgba(90,134,203,.2) 0%,transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
-        <div style={{ width: 72, height: 72, borderRadius: "50%", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.6rem", fontWeight: 900, color: "white", border: "3px solid rgba(255,255,255,.2)", flexShrink: 0, zIndex: 1 }}>{initials}</div>
+      <div
+        style={{
+          background: "linear-gradient(135deg,#22375C,#2a2a4e)",
+          borderRadius: 18,
+          padding: "24px 28px",
+          display: "flex",
+          alignItems: "center",
+          gap: 20,
+          marginBottom: 22,
+          position: "relative",
+          overflow: "hidden",
+          flexWrap: "wrap",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: -50,
+            right: -50,
+            width: 180,
+            height: 180,
+            background: "radial-gradient(circle,rgba(90,134,203,.2) 0%,transparent 70%)",
+            borderRadius: "50%",
+            pointerEvents: "none",
+          }}
+        />
+        <div
+          style={{
+            width: 72,
+            height: 72,
+            borderRadius: "50%",
+            background: "linear-gradient(135deg,#3D5D91,#5A86CB)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontFamily: "'Bricolage Grotesque', sans-serif",
+            fontSize: "1.6rem",
+            fontWeight: 900,
+            color: "white",
+            border: "3px solid rgba(255,255,255,.2)",
+            flexShrink: 0,
+            zIndex: 1,
+          }}
+        >
+          {initials}
+        </div>
         <div style={{ flex: 1, zIndex: 1, minWidth: 180 }}>
-          <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", color: "white", fontWeight: 900, marginBottom: 3 }}>{student.nombre}</div>
-          <div style={{ fontSize: ".8rem", color: "rgba(255,255,255,.5)", marginBottom: 8 }}>{student.email}{student.whatsapp ? ` · ${student.whatsapp}` : ""}</div>
+          <div
+            style={{
+              fontFamily: "'Bricolage Grotesque', sans-serif",
+              fontSize: "1.4rem",
+              color: "white",
+              fontWeight: 900,
+              marginBottom: 3,
+            }}
+          >
+            {student.nombre}
+          </div>
+          <div style={{ fontSize: ".8rem", color: "rgba(255,255,255,.5)", marginBottom: 8 }}>
+            {student.email}
+            {student.whatsapp ? ` · ${student.whatsapp}` : ""}
+          </div>
           <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
-            <span style={{ padding: "3px 10px", borderRadius: 20, fontSize: ".7rem", fontWeight: 700, background: "#F2AEBC", color: "#6C0820", display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="plane" size={13} /> {student.planNombre}</span>
-            <span style={{ padding: "3px 10px", borderRadius: 20, fontSize: ".7rem", fontWeight: 700, background: "rgba(255,255,255,.1)", color: "rgba(255,255,255,.8)", display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="flame" size={13} /> {streak} {streak === 1 ? "día" : "días"} de racha</span>
-            <span style={{ padding: "3px 10px", borderRadius: 20, fontSize: ".7rem", fontWeight: 700, background: `${accessColor}33`, color: "white" }}>● {accessLabel}</span>
+            <span
+              style={{
+                padding: "3px 10px",
+                borderRadius: 20,
+                fontSize: ".7rem",
+                fontWeight: 700,
+                background: "#F2AEBC",
+                color: "#6C0820",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 4,
+              }}
+            >
+              <Icon n="plane" size={13} /> {student.planNombre}
+            </span>
+            <span
+              style={{
+                padding: "3px 10px",
+                borderRadius: 20,
+                fontSize: ".7rem",
+                fontWeight: 700,
+                background: "rgba(255,255,255,.1)",
+                color: "rgba(255,255,255,.8)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 4,
+              }}
+            >
+              <Icon n="flame" size={13} /> {streak} {streak === 1 ? "día" : "días"} de racha
+            </span>
+            <span
+              style={{
+                padding: "3px 10px",
+                borderRadius: 20,
+                fontSize: ".7rem",
+                fontWeight: 700,
+                background: `${accessColor}33`,
+                color: "white",
+              }}
+            >
+              ● {accessLabel}
+            </span>
           </div>
         </div>
         <div style={{ display: "flex", gap: 20, zIndex: 1, flexShrink: 0 }}>
           {heroStats.map((s) => (
             <div key={s.lab} style={{ textAlign: "center" }}>
-              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", fontWeight: 900, color: "white", lineHeight: 1 }}>{s.num}</div>
-              <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.4)", marginTop: 2 }}>{s.lab}</div>
+              <div
+                style={{
+                  fontFamily: "'Bricolage Grotesque', sans-serif",
+                  fontSize: "1.4rem",
+                  fontWeight: 900,
+                  color: "white",
+                  lineHeight: 1,
+                }}
+              >
+                {s.num}
+              </div>
+              <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.4)", marginTop: 2 }}>
+                {s.lab}
+              </div>
             </div>
           ))}
         </div>
       </div>
 
       {/* ───────── Plan card ───────── */}
-      <div style={{ background: "linear-gradient(135deg,#3D5D91,#5A86CB)", borderRadius: 14, padding: "18px 20px", marginBottom: 20 }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10, marginBottom: 4 }}>
+      <div
+        style={{
+          background: "linear-gradient(135deg,#3D5D91,#5A86CB)",
+          borderRadius: 14,
+          padding: "18px 20px",
+          marginBottom: 20,
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: 10,
+            marginBottom: 4,
+          }}
+        >
           <div>
-            <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "white", marginBottom: 2, display: "flex", alignItems: "center", gap: 7 }}><Icon n="plane" size={17} /> {student.planNombre} — {accessLabel}</h3>
+            <h3
+              style={{
+                fontSize: "1rem",
+                fontWeight: 700,
+                color: "white",
+                marginBottom: 2,
+                display: "flex",
+                alignItems: "center",
+                gap: 7,
+              }}
+            >
+              <Icon n="plane" size={17} /> {student.planNombre} — {accessLabel}
+            </h3>
             <p style={{ fontSize: ".78rem", color: "rgba(255,255,255,.7)" }}>
-              Desde el {fmtDate(student.accessStart)} · {student.accessEnd ? `Vence el ${fmtDate(student.accessEnd)}` : "Sin fecha de vencimiento"}
+              Desde el {fmtDate(student.accessStart)} ·{" "}
+              {student.accessEnd
+                ? `Vence el ${fmtDate(student.accessEnd)}`
+                : "Sin fecha de vencimiento"}
             </p>
           </div>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            <button onClick={() => setModal("extend")} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "white", color: "#3D5D91", border: "none", display: "flex", alignItems: "center", gap: 6 }}><Icon n="calendar" size={15} /> Extender acceso</button>
-            <button onClick={() => setModal("change")} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(255,255,255,.15)", color: "white", border: "1px solid rgba(255,255,255,.3)", display: "flex", alignItems: "center", gap: 6 }}><Icon n="refresh" size={15} /> Cambiar plan</button>
-            <button onClick={() => setModal("fechas")} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(255,255,255,.15)", color: "white", border: "1px solid rgba(255,255,255,.3)", display: "flex", alignItems: "center", gap: 6 }}><Icon n="pencil" size={15} /> Editar fechas</button>
+            <button
+              onClick={() => setModal("extend")}
+              style={{
+                padding: "8px 14px",
+                borderRadius: 8,
+                fontSize: ".78rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+                background: "white",
+                color: "#3D5D91",
+                border: "none",
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+              }}
+            >
+              <Icon n="calendar" size={15} /> Extender acceso
+            </button>
+            <button
+              onClick={() => setModal("change")}
+              style={{
+                padding: "8px 14px",
+                borderRadius: 8,
+                fontSize: ".78rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+                background: "rgba(255,255,255,.15)",
+                color: "white",
+                border: "1px solid rgba(255,255,255,.3)",
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+              }}
+            >
+              <Icon n="refresh" size={15} /> Cambiar plan
+            </button>
+            <button
+              onClick={() => setModal("fechas")}
+              style={{
+                padding: "8px 14px",
+                borderRadius: 8,
+                fontSize: ".78rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+                background: "rgba(255,255,255,.15)",
+                color: "white",
+                border: "1px solid rgba(255,255,255,.3)",
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+              }}
+            >
+              <Icon n="pencil" size={15} /> Editar fechas
+            </button>
             {student.accessStatus === "cancelado" || student.accessStatus === "vencido" ? (
-              <button onClick={doActivate} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(46,204,113,.25)", color: "#d5ffe6", border: "1px solid rgba(46,204,113,.4)", display: "flex", alignItems: "center", gap: 6 }}>
+              <button
+                onClick={doActivate}
+                style={{
+                  padding: "8px 14px",
+                  borderRadius: 8,
+                  fontSize: ".78rem",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  fontFamily: "'Manrope', sans-serif",
+                  background: "rgba(46,204,113,.25)",
+                  color: "#d5ffe6",
+                  border: "1px solid rgba(46,204,113,.4)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                }}
+              >
                 <Icon n="play" size={15} /> Activar acceso
               </button>
             ) : (
-              <button onClick={doPauseToggle} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(255,255,255,.15)", color: "white", border: "1px solid rgba(255,255,255,.3)", display: "flex", alignItems: "center", gap: 6 }}>
-                <Icon n={isPaused ? "play" : "pause"} size={15} /> {isPaused ? "Reactivar" : "Pausar"}
+              <button
+                onClick={doPauseToggle}
+                style={{
+                  padding: "8px 14px",
+                  borderRadius: 8,
+                  fontSize: ".78rem",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  fontFamily: "'Manrope', sans-serif",
+                  background: "rgba(255,255,255,.15)",
+                  color: "white",
+                  border: "1px solid rgba(255,255,255,.3)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                }}
+              >
+                <Icon n={isPaused ? "play" : "pause"} size={15} />{" "}
+                {isPaused ? "Reactivar" : "Pausar"}
               </button>
             )}
-            <button onClick={() => setModal("cancel")} style={{ padding: "8px 14px", borderRadius: 8, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", background: "rgba(231,76,60,.2)", color: "#ffaaaa", border: "1px solid rgba(231,76,60,.3)", display: "flex", alignItems: "center", gap: 6 }}><Icon n="close" size={15} /> Cancelar</button>
+            <button
+              onClick={() => setModal("cancel")}
+              style={{
+                padding: "8px 14px",
+                borderRadius: 8,
+                fontSize: ".78rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+                background: "rgba(231,76,60,.2)",
+                color: "#ffaaaa",
+                border: "1px solid rgba(231,76,60,.3)",
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+              }}
+            >
+              <Icon n="close" size={15} /> Cancelar
+            </button>
           </div>
         </div>
       </div>
 
       {/* ───────── Garantía card ───────── */}
-      <div style={{ background: "rgba(243,156,18,.06)", border: "2px solid rgba(243,156,18,.2)", borderRadius: 12, padding: "14px 16px", marginBottom: 20, display: "flex", alignItems: "flex-start", gap: 12 }}>
-        <div style={{ flexShrink: 0, display: "flex", alignItems: "center" }}><Icon n="alert" size={24} color="#f39c12" /></div>
-        <div style={{ flex: 1 }}>
-          <h4 style={{ fontSize: ".88rem", fontWeight: 700, color: "#8a6000", marginBottom: 3 }}>Garantía de mejora disponible</h4>
-          <p style={{ fontSize: ".78rem", color: "#a07800", lineHeight: 1.5 }}>Si {firstName} completó su ruta de estudio pero no ha alcanzado el 80% en el simulador, la garantía de FlightPath te permite extenderle el acceso 30 días sin costo adicional.</p>
+      <div
+        style={{
+          background: "rgba(243,156,18,.06)",
+          border: "2px solid rgba(243,156,18,.2)",
+          borderRadius: 12,
+          padding: "14px 16px",
+          marginBottom: 20,
+          display: "flex",
+          alignItems: "flex-start",
+          gap: 12,
+        }}
+      >
+        <div style={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
+          <Icon n="alert" size={24} color="#f39c12" />
         </div>
-        <button onClick={() => setModal("garantia")} style={{ padding: "8px 16px", background: "#f39c12", color: "white", border: "none", borderRadius: 8, fontSize: ".8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", flexShrink: 0, whiteSpace: "nowrap" }}>Activar garantía</button>
+        <div style={{ flex: 1 }}>
+          <h4 style={{ fontSize: ".88rem", fontWeight: 700, color: "#8a6000", marginBottom: 3 }}>
+            Garantía de mejora disponible
+          </h4>
+          <p style={{ fontSize: ".78rem", color: "#a07800", lineHeight: 1.5 }}>
+            Si {firstName} completó su ruta de estudio pero no ha alcanzado el 80% en el simulador,
+            la garantía de FlightPath te permite extenderle el acceso 30 días sin costo adicional.
+          </p>
+        </div>
+        <button
+          onClick={() => setModal("garantia")}
+          style={{
+            padding: "8px 16px",
+            background: "#f39c12",
+            color: "white",
+            border: "none",
+            borderRadius: 8,
+            fontSize: ".8rem",
+            fontWeight: 700,
+            cursor: "pointer",
+            fontFamily: "'Manrope', sans-serif",
+            flexShrink: 0,
+            whiteSpace: "nowrap",
+          }}
+        >
+          Activar garantía
+        </button>
       </div>
 
       {/* ───────── Quick actions ───────── */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 10, marginBottom: 20 }}>
-        {([
-          { icon: "chat" as FPIconName, label: "WhatsApp", sub: "Enviar mensaje", action: () => setModal("wa" as ModalType), hoverColor: "#25D366" },
-          { icon: "calendar" as FPIconName, label: "Extender", sub: "Más días de acceso", action: () => setModal("extend" as ModalType), hoverColor: "#3D5D91" },
-          { icon: "lock" as FPIconName, label: "Contraseña", sub: "Resetear acceso", action: () => setModal("reset" as ModalType), hoverColor: "#3D5D91" },
-        ]).map((qa) => (
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+          gap: 10,
+          marginBottom: 20,
+        }}
+      >
+        {[
+          {
+            icon: "chat" as FPIconName,
+            label: "WhatsApp",
+            sub: "Enviar mensaje",
+            action: () => setModal("wa" as ModalType),
+            hoverColor: "#25D366",
+          },
+          {
+            icon: "calendar" as FPIconName,
+            label: "Extender",
+            sub: "Más días de acceso",
+            action: () => setModal("extend" as ModalType),
+            hoverColor: "#3D5D91",
+          },
+          {
+            icon: "lock" as FPIconName,
+            label: "Contraseña",
+            sub: "Resetear acceso",
+            action: () => setModal("reset" as ModalType),
+            hoverColor: "#3D5D91",
+          },
+        ].map((qa) => (
           <button
             key={qa.label}
             onClick={qa.action}
-            style={{ padding: "14px 10px", borderRadius: 12, border: "2px solid #F2DCDB", background: "white", cursor: "pointer", fontFamily: "'Manrope', sans-serif", textAlign: "center", transition: "all .2s" }}
-            onMouseEnter={(e) => { e.currentTarget.style.borderColor = qa.hoverColor; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 6px 16px rgba(61,93,145,.1)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}
+            style={{
+              padding: "14px 10px",
+              borderRadius: 12,
+              border: "2px solid #F2DCDB",
+              background: "white",
+              cursor: "pointer",
+              fontFamily: "'Manrope', sans-serif",
+              textAlign: "center",
+              transition: "all .2s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = qa.hoverColor;
+              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.boxShadow = "0 6px 16px rgba(61,93,145,.1)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "#F2DCDB";
+              e.currentTarget.style.transform = "none";
+              e.currentTarget.style.boxShadow = "none";
+            }}
           >
-            <div style={{ marginBottom: 5, display: "flex", justifyContent: "center" }}><Icon n={qa.icon} size={22} color="#22375C" /></div>
+            <div style={{ marginBottom: 5, display: "flex", justifyContent: "center" }}>
+              <Icon n={qa.icon} size={22} color="#22375C" />
+            </div>
             <div style={{ fontSize: ".76rem", fontWeight: 700, color: "#22375C" }}>{qa.label}</div>
             <div style={{ fontSize: ".66rem", color: "#8DA1BE", marginTop: 2 }}>{qa.sub}</div>
           </button>
@@ -466,39 +1027,97 @@ function AdminPerfilPage() {
 
       {/* ───────── Estadísticas académicas (PRD 9.4) ───────── */}
       <div style={{ ...cardStyle, marginBottom: 20 }}>
-        <div style={cardHeadStyle}><Icon n="stats" size={15} /> Estadísticas académicas</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: 12 }}>
-          {([
+        <div style={cardHeadStyle}>
+          <Icon n="stats" size={15} /> Estadísticas académicas
+        </div>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))",
+            gap: 12,
+          }}
+        >
+          {[
             { lab: "Avance del curso", val: `${stats?.courseProgress ?? 0}%` },
-            { lab: "Preparación estimada", val: stats?.readiness !== null && stats?.readiness !== undefined ? `${stats.readiness}%` : "—" },
+            {
+              lab: "Preparación estimada",
+              val:
+                stats?.readiness !== null && stats?.readiness !== undefined
+                  ? `${stats.readiness}%`
+                  : "—",
+            },
             { lab: "Racha", val: `${streak} ${streak === 1 ? "día" : "días"}` },
             { lab: "Tiempo de estudio", val: `${stats?.studyHours ?? 0} h` },
             { lab: "Preguntas respondidas", val: String(stats?.answered ?? 0) },
-            { lab: "Promedio de aciertos", val: stats?.avgScore !== null && stats?.avgScore !== undefined ? `${stats.avgScore}%` : "—" },
+            {
+              lab: "Promedio de aciertos",
+              val:
+                stats?.avgScore !== null && stats?.avgScore !== undefined
+                  ? `${stats.avgScore}%`
+                  : "—",
+            },
             { lab: "Cuestionarios", val: String(stats?.quizCount ?? 0) },
             { lab: "Simuladores", val: String(stats?.simCount ?? 0) },
             { lab: "Learning Paths completados", val: String(stats?.temasDone ?? 0) },
             { lab: "Clases vistas", val: String(stats?.clasesVistas ?? 0) },
             { lab: "Flashcards dominadas", val: String(stats?.flashDominadas ?? 0) },
-          ]).map((s) => (
-            <div key={s.lab} style={{ background: "rgba(61,93,145,.04)", borderRadius: 10, padding: "10px 12px" }}>
-              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", fontWeight: 900, color: "#22375C" }}>{s.val}</div>
+          ].map((s) => (
+            <div
+              key={s.lab}
+              style={{ background: "rgba(61,93,145,.04)", borderRadius: 10, padding: "10px 12px" }}
+            >
+              <div
+                style={{
+                  fontFamily: "'Bricolage Grotesque', sans-serif",
+                  fontSize: "1.1rem",
+                  fontWeight: 900,
+                  color: "#22375C",
+                }}
+              >
+                {s.val}
+              </div>
               <div style={{ fontSize: ".66rem", color: "#647DA0", marginTop: 2 }}>{s.lab}</div>
             </div>
           ))}
         </div>
         {(() => {
-          const conDatos = [...rutas.ciaac, ...rutas.lineaAerea, ...rutas.aeronave].filter((m) => m.avg !== null);
+          const conDatos = [...rutas.ciaac, ...rutas.lineaAerea, ...rutas.aeronave].filter(
+            (m) => m.avg !== null,
+          );
           if (conDatos.length === 0) return null;
           const fuerte = conDatos.reduce((a, b) => ((a.avg ?? 0) >= (b.avg ?? 0) ? a : b));
           const debil = conDatos.reduce((a, b) => ((a.avg ?? 100) <= (b.avg ?? 100) ? a : b));
           return (
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 14 }}>
-              <span style={{ padding: "5px 12px", borderRadius: 20, fontSize: ".74rem", fontWeight: 700, background: "rgba(46,204,113,.12)", color: "#1a7a4a", display: "inline-flex", alignItems: "center", gap: 5 }}>
+              <span
+                style={{
+                  padding: "5px 12px",
+                  borderRadius: 20,
+                  fontSize: ".74rem",
+                  fontWeight: 700,
+                  background: "rgba(46,204,113,.12)",
+                  color: "#1a7a4a",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 5,
+                }}
+              >
                 <Icon n="arrowUp" size={13} /> Materia más fuerte: {fuerte.name} ({fuerte.avg}%)
               </span>
               {debil.key !== fuerte.key && (
-                <span style={{ padding: "5px 12px", borderRadius: 20, fontSize: ".74rem", fontWeight: 700, background: "rgba(231,76,60,.1)", color: "#c0392b", display: "inline-flex", alignItems: "center", gap: 5 }}>
+                <span
+                  style={{
+                    padding: "5px 12px",
+                    borderRadius: 20,
+                    fontSize: ".74rem",
+                    fontWeight: 700,
+                    background: "rgba(231,76,60,.1)",
+                    color: "#c0392b",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 5,
+                  }}
+                >
                   <Icon n="arrowDown" size={13} /> Materia más débil: {debil.name} ({debil.avg}%)
                 </span>
               )}
@@ -508,15 +1127,51 @@ function AdminPerfilPage() {
       </div>
 
       {/* ───────── Two col: Info + Activity ───────── */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr))", gap: 18, marginBottom: 20 }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr))",
+          gap: 18,
+          marginBottom: 20,
+        }}
+      >
         {/* Info personal */}
         <div style={cardStyle}>
-          <div style={cardHeadStyle}><Icon n="user" size={15} /> Información personal</div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12 }}>
+          <div style={cardHeadStyle}>
+            <Icon n="user" size={15} /> Información personal
+          </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+              gap: 12,
+            }}
+          >
             {infoFields.map((f) => (
               <div key={f.label}>
-                <span style={{ fontSize: ".72rem", fontWeight: 700, color: "#8DA1BE", display: "block", marginBottom: 4, textTransform: "uppercase", letterSpacing: ".4px" }}>{f.label}</span>
-                <div style={{ fontSize: ".86rem", color: "#22375C", fontWeight: 500, overflowWrap: "anywhere" }}>{f.value}</div>
+                <span
+                  style={{
+                    fontSize: ".72rem",
+                    fontWeight: 700,
+                    color: "#8DA1BE",
+                    display: "block",
+                    marginBottom: 4,
+                    textTransform: "uppercase",
+                    letterSpacing: ".4px",
+                  }}
+                >
+                  {f.label}
+                </span>
+                <div
+                  style={{
+                    fontSize: ".86rem",
+                    color: "#22375C",
+                    fontWeight: 500,
+                    overflowWrap: "anywhere",
+                  }}
+                >
+                  {f.value}
+                </div>
               </div>
             ))}
           </div>
@@ -524,21 +1179,71 @@ function AdminPerfilPage() {
 
         {/* Actividad reciente */}
         <div style={cardStyle}>
-          <div style={{ ...cardHeadStyle, marginBottom: 4 }}><Icon n="clock" size={15} /> Actividad reciente</div>
+          <div style={{ ...cardHeadStyle, marginBottom: 4 }}>
+            <Icon n="clock" size={15} /> Actividad reciente
+          </div>
           {activity.length === 0 ? (
-            <p style={{ fontSize: ".82rem", color: "#8DA1BE", marginTop: 10 }}>Sin actividad registrada todavía.</p>
+            <p style={{ fontSize: ".82rem", color: "#8DA1BE", marginTop: 10 }}>
+              Sin actividad registrada todavía.
+            </p>
           ) : (
             activity.map((a, i) => {
               const vis = activityVisual(a.kind);
               return (
-                <div key={a.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 0", borderBottom: i < activity.length - 1 ? "1px solid rgba(61,93,145,.05)" : undefined }}>
-                  <div style={{ width: 30, height: 30, borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: vis.bg }}><Icon n={vis.icon} size={16} color="#22375C" /></div>
+                <div
+                  key={a.id}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
+                    padding: "9px 0",
+                    borderBottom:
+                      i < activity.length - 1 ? "1px solid rgba(61,93,145,.05)" : undefined,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 30,
+                      height: 30,
+                      borderRadius: 8,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      background: vis.bg,
+                    }}
+                  >
+                    <Icon n={vis.icon} size={16} color="#22375C" />
+                  </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: ".82rem", fontWeight: 600, color: "#22375C", marginBottom: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{a.label}</div>
-                    <div style={{ fontSize: ".72rem", color: "#647DA0" }}>{a.durationMin > 0 ? `${a.durationMin} min` : "—"}</div>
+                    <div
+                      style={{
+                        fontSize: ".82rem",
+                        fontWeight: 600,
+                        color: "#22375C",
+                        marginBottom: 1,
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {a.label}
+                    </div>
+                    <div style={{ fontSize: ".72rem", color: "#647DA0" }}>
+                      {a.durationMin > 0 ? `${a.durationMin} min` : "—"}
+                    </div>
                   </div>
                   <div style={{ textAlign: "right", flexShrink: 0 }}>
-                    <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: ".95rem", fontWeight: 900, color: scoreColor(a.score) }}>{a.score !== null ? `${a.score}%` : "—"}</div>
+                    <div
+                      style={{
+                        fontFamily: "'Bricolage Grotesque', sans-serif",
+                        fontSize: ".95rem",
+                        fontWeight: 900,
+                        color: scoreColor(a.score),
+                      }}
+                    >
+                      {a.score !== null ? `${a.score}%` : "—"}
+                    </div>
                     <div style={{ fontSize: ".68rem", color: "#8DA1BE" }}>{timeAgo(a.date)}</div>
                   </div>
                 </div>
@@ -550,68 +1255,189 @@ function AdminPerfilPage() {
 
       {/* ───────── Materias progress ───────── */}
       <div style={{ ...cardStyle, marginBottom: 20 }}>
-        <div style={cardHeadStyle}><Icon n="book" size={15} /> Progreso por materia</div>
-        {([
-          { titulo: "CIAAC · materias", items: rutas.ciaac },
-          { titulo: "Línea Aérea · manuales", items: rutas.lineaAerea },
-          { titulo: "Manuales de Aeronave", items: rutas.aeronave },
-        ] as { titulo: string; items: RutaPerf[] }[]).map((grupo) => (
+        <div style={cardHeadStyle}>
+          <Icon n="book" size={15} /> Progreso por materia
+        </div>
+        {(
+          [
+            { titulo: "CIAAC · materias", items: rutas.ciaac },
+            { titulo: "Línea Aérea · manuales", items: rutas.lineaAerea },
+            { titulo: "Manuales de Aeronave", items: rutas.aeronave },
+          ] as { titulo: string; items: RutaPerf[] }[]
+        ).map((grupo) => (
           <div key={grupo.titulo} style={{ marginBottom: 14 }}>
-            <div style={{ fontSize: ".7rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "#8DA1BE", marginBottom: 8 }}>{grupo.titulo}</div>
+            <div
+              style={{
+                fontSize: ".7rem",
+                fontWeight: 800,
+                letterSpacing: ".06em",
+                textTransform: "uppercase",
+                color: "#8DA1BE",
+                marginBottom: 8,
+              }}
+            >
+              {grupo.titulo}
+            </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {grupo.items.length === 0 ? (
                 <p style={{ fontSize: ".78rem", color: "#8DA1BE" }}>Sin datos.</p>
-              ) : grupo.items.map((m) => (
-                <div key={m.key} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: ".75rem", color: "#22375C", width: 170, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "flex", alignItems: "center", gap: 6 }}>
-                    <Icon n={m.icon as FPIconName} size={14} color="#647DA0" /> {m.name}
-                  </span>
-                  <div style={{ flex: 1, height: 6, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
-                    <div style={{ height: "100%", borderRadius: 10, background: barColor(m.avg), width: `${m.avg ?? 0}%`, transition: "width .6s ease" }} />
+              ) : (
+                grupo.items.map((m) => (
+                  <div key={m.key} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <span
+                      style={{
+                        fontSize: ".75rem",
+                        color: "#22375C",
+                        width: 170,
+                        flexShrink: 0,
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 6,
+                      }}
+                    >
+                      <Icon n={m.icon as FPIconName} size={14} color="#647DA0" /> {m.name}
+                    </span>
+                    <div
+                      style={{
+                        flex: 1,
+                        height: 6,
+                        background: "#F2DCDB",
+                        borderRadius: 10,
+                        overflow: "hidden",
+                      }}
+                    >
+                      <div
+                        style={{
+                          height: "100%",
+                          borderRadius: 10,
+                          background: barColor(m.avg),
+                          width: `${m.avg ?? 0}%`,
+                          transition: "width .6s ease",
+                        }}
+                      />
+                    </div>
+                    <span
+                      style={{
+                        fontSize: ".72rem",
+                        fontWeight: 700,
+                        width: 34,
+                        textAlign: "right",
+                        flexShrink: 0,
+                        color: barColor(m.avg),
+                      }}
+                    >
+                      {m.avg !== null ? `${m.avg}%` : "—"}
+                    </span>
                   </div>
-                  <span style={{ fontSize: ".72rem", fontWeight: 700, width: 34, textAlign: "right", flexShrink: 0, color: barColor(m.avg) }}>{m.avg !== null ? `${m.avg}%` : "—"}</span>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         ))}
       </div>
 
+      {/* ───────── Pilot Aptitude Trainer (Compass) ───────── */}
+      <CompassLogCard userId={student.id} style={{ ...cardStyle, marginBottom: 20 }} />
 
       {/* ───────── Auditoría (cuestionarios + Yaris) ───────── */}
       <StudentAudit userId={student.id} />
 
-
-
       {/* ───────── Notas internas ───────── */}
       <div style={{ ...cardStyle, marginBottom: 20 }}>
-        <div style={{ ...cardHeadStyle, marginBottom: 12 }}><Icon n="pencil" size={15} /> Notas internas</div>
+        <div style={{ ...cardHeadStyle, marginBottom: 12 }}>
+          <Icon n="pencil" size={15} /> Notas internas
+        </div>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           placeholder="Agrega notas sobre este estudiante..."
-          style={{ width: "100%", minHeight: 100, border: "2px solid #F2DCDB", borderRadius: 10, padding: "12px 14px", fontSize: ".85rem", fontFamily: "'Manrope', sans-serif", color: "#22375C", outline: "none", resize: "vertical", lineHeight: 1.6 }}
-          onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }}
-          onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }}
+          style={{
+            width: "100%",
+            minHeight: 100,
+            border: "2px solid #F2DCDB",
+            borderRadius: 10,
+            padding: "12px 14px",
+            fontSize: ".85rem",
+            fontFamily: "'Manrope', sans-serif",
+            color: "#22375C",
+            outline: "none",
+            resize: "vertical",
+            lineHeight: 1.6,
+          }}
+          onFocus={(e) => {
+            e.currentTarget.style.borderColor = "#3D5D91";
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.borderColor = "#F2DCDB";
+          }}
         />
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 8 }}>
-          <span style={{ fontSize: ".72rem", color: "#8DA1BE" }}>Solo tú puedes ver estas notas</span>
-          <button onClick={doSaveNotes} style={{ padding: "7px 16px", background: "#3D5D91", color: "white", border: "none", borderRadius: 7, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 6 }}><Icon n="check" size={15} /> Guardar nota</button>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginTop: 8,
+          }}
+        >
+          <span style={{ fontSize: ".72rem", color: "#8DA1BE" }}>
+            Solo tú puedes ver estas notas
+          </span>
+          <button
+            onClick={doSaveNotes}
+            style={{
+              padding: "7px 16px",
+              background: "#3D5D91",
+              color: "white",
+              border: "none",
+              borderRadius: 7,
+              fontSize: ".78rem",
+              fontWeight: 700,
+              cursor: "pointer",
+              fontFamily: "'Manrope', sans-serif",
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+            }}
+          >
+            <Icon n="check" size={15} /> Guardar nota
+          </button>
         </div>
       </div>
 
       {/* ───────── Historial de cambios ───────── */}
       <div style={{ ...cardStyle, marginBottom: 20 }}>
-        <div style={cardHeadStyle}><Icon n="list" size={15} /> Historial de cambios</div>
+        <div style={cardHeadStyle}>
+          <Icon n="list" size={15} /> Historial de cambios
+        </div>
         {changes.length === 0 ? (
           <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>Sin cambios registrados.</p>
         ) : (
           <div style={{ display: "flex", flexDirection: "column" }}>
             {changes.map((c, i) => (
-              <div key={c.id} style={{ display: "flex", gap: 10, padding: "8px 0", borderBottom: i < changes.length - 1 ? "1px solid rgba(61,93,145,.05)" : undefined, flexWrap: "wrap", alignItems: "baseline" }}>
-                <span style={{ fontSize: ".72rem", color: "#8DA1BE", width: 160, flexShrink: 0 }}>{fmtDateTime(c.fecha)}</span>
-                <span style={{ fontSize: ".8rem", fontWeight: 700, color: "#22375C" }}>{c.accion}</span>
-                <span style={{ fontSize: ".78rem", color: "#647DA0", flex: 1, minWidth: 160 }}>{c.detalle}</span>
+              <div
+                key={c.id}
+                style={{
+                  display: "flex",
+                  gap: 10,
+                  padding: "8px 0",
+                  borderBottom:
+                    i < changes.length - 1 ? "1px solid rgba(61,93,145,.05)" : undefined,
+                  flexWrap: "wrap",
+                  alignItems: "baseline",
+                }}
+              >
+                <span style={{ fontSize: ".72rem", color: "#8DA1BE", width: 160, flexShrink: 0 }}>
+                  {fmtDateTime(c.fecha)}
+                </span>
+                <span style={{ fontSize: ".8rem", fontWeight: 700, color: "#22375C" }}>
+                  {c.accion}
+                </span>
+                <span style={{ fontSize: ".78rem", color: "#647DA0", flex: 1, minWidth: 160 }}>
+                  {c.detalle}
+                </span>
               </div>
             ))}
           </div>

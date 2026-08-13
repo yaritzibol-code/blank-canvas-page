@@ -11,6 +11,7 @@ const BASE_URL = "https://flightpath.mx";
 /** Última edición editorial de las capas del sitio (actualízalas al editar). */
 const V1 = "2026-08-06"; // primera ola SEO
 const V2 = "2026-08-09"; // ola AEO/GEO: verticales nuevas + formato snippet
+const V3 = "2026-08-13"; // home + landings de módulo con detalle, pasos y cifras
 
 interface SitemapEntry {
   path: string;
@@ -25,7 +26,7 @@ export const Route = createFileRoute("/sitemap.xml")({
     handlers: {
       GET: async () => {
         const entries: SitemapEntry[] = [
-          { path: "/", changefreq: "weekly", priority: "1.0", lastmod: V2 },
+          { path: "/", changefreq: "weekly", priority: "1.0", lastmod: V3 },
           { path: "/ciaac", changefreq: "weekly", priority: "0.9", lastmod: V2 },
           { path: "/convocatoria-aeromexico", changefreq: "weekly", priority: "0.9", lastmod: V2 },
           { path: "/precios", changefreq: "monthly", priority: "0.8", lastmod: V2 },
@@ -71,7 +72,7 @@ export const Route = createFileRoute("/sitemap.xml")({
             path: `/modulos/${m.slug}`,
             changefreq: "monthly" as const,
             priority: "0.7",
-            lastmod: V2,
+            lastmod: V3,
           })),
           { path: "/sobre-flightpath", changefreq: "monthly", priority: "0.7", lastmod: V1 },
           { path: "/respuestas", changefreq: "weekly", priority: "0.8", lastmod: V2 },

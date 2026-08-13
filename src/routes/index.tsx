@@ -38,6 +38,7 @@ import {
   AeroBackdrop,
   Btn,
   Coord,
+  CountUp,
   Eyebrow,
   Footer,
   Icon,
@@ -46,6 +47,7 @@ import {
   PathyBubble,
   Pill,
   PlaneField,
+  Reveal,
   SectionHead,
   type IconName,
 } from "@/components/landing/shared";
@@ -189,15 +191,20 @@ function Hero() {
             FlightPath en números
           </span>
           {[
-            "2,800+ preguntas con explicación",
-            `Simulador de ${SIM_TOTAL_QS} preguntas`,
-            "5 fuentes de línea aérea",
-            "6 ejercicios de aptitud",
-            "Entrevista RTARI por voz",
-            "Tutor IA 24/7",
-          ].map((t) => (
-            <span key={t} className="font-display text-[15px] text-ink/45 tracking-tight">
-              {t}
+            { n: "2,800+", t: "preguntas con explicación" },
+            { n: String(SIM_TOTAL_QS), t: "preguntas por simulacro" },
+            { n: "5", t: "fuentes de línea aérea" },
+            { n: "6", t: "ejercicios de aptitud" },
+            { n: null, t: "Entrevista RTARI por voz" },
+            { n: null, t: "Tutor IA 24/7" },
+          ].map((c) => (
+            <span key={c.t} className="font-display text-[15px] text-ink/45 tracking-tight">
+              {c.n && (
+                <>
+                  <CountUp value={c.n} className="text-ink/75" />{" "}
+                </>
+              )}
+              {c.t}
             </span>
           ))}
         </div>
@@ -476,6 +483,42 @@ function Countdown({ show = true }: { show?: boolean }) {
    FlightPath cubre todas las etapas de estudio del piloto, no solo una)
    ═══════════════════════════════════════════════════════════════════ */
 
+/**
+ * Cinta de módulos estilo panel de salidas: decorativa (aria-hidden, el
+ * contenido real está en las cards de abajo), contenido duplicado para que el
+ * loop de media pista sea continuo.
+ */
+function ModulosTicker() {
+  const items = [
+    "PREPARACIÓN CIAAC",
+    "ENTREVISTA RTARI",
+    "PILOT APTITUDE TRAINER",
+    "LÍNEA AÉREA · 5 FUENTES",
+    "MANUALES · 737 MAX",
+    "BIBLIOTECA + ANÁLISIS",
+  ];
+  const pista = [...items, ...items];
+  return (
+    <div aria-hidden className="relative overflow-hidden border-y border-white/5 bg-ink py-3.5">
+      <div className="flex w-max animate-marquee-x">
+        {pista.map((t, i) => (
+          <span key={i} className="flex items-center shrink-0">
+            <span className="font-mono text-[11px] tracking-[0.22em] text-white/40 whitespace-nowrap">
+              {t}
+            </span>
+            <span className="mx-6 text-coral-400/70">
+              <Icon n="plane" className="w-3.5 h-3.5" />
+            </span>
+          </span>
+        ))}
+      </div>
+      {/* degradados laterales para que la cinta entre y salga suave */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-ink to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-ink to-transparent" />
+    </div>
+  );
+}
+
 function RutaCompleta() {
   const etapas: {
     icon: IconName;
@@ -531,53 +574,61 @@ function RutaCompleta() {
     <section className="relative py-20 lg:py-28" id="ruta">
       <PlaneField count={22} />
       <div className="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
-        <SectionHead
-          center
-          eyebrow="La ruta completa"
-          title={
-            <>
-              Una carrera tiene etapas.
-              <span className="block text-coral-600">Aquí se estudian todas.</span>
-            </>
-          }
-          sub="La mejor plataforma de México para estudiar aviación: del examen teórico de tu licencia a los manuales de tu aeronave, pasando por el inglés y las pruebas de selección — todo en una sola cuenta."
-        />
+        <Reveal>
+          <SectionHead
+            center
+            eyebrow="La ruta completa"
+            title={
+              <>
+                Una carrera tiene etapas.
+                <span className="block text-coral-600">Aquí se estudian todas.</span>
+              </>
+            }
+            sub="La mejor plataforma de México para estudiar aviación: del examen teórico de tu licencia a los manuales de tu aeronave, pasando por el inglés y las pruebas de selección — todo en una sola cuenta."
+          />
+        </Reveal>
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {etapas.map((e) => (
-            <a
-              key={e.t}
-              href={e.href}
-              className="group relative rounded-3xl bg-white/90 backdrop-blur-sm border border-ink/8 p-7 shadow-card hover-lift hover:shadow-lift overflow-hidden"
-            >
-              <div
-                className="absolute -top-12 -right-12 w-40 h-40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{
-                  background: "radial-gradient(closest-side, rgba(242,174,188,0.25), transparent)",
-                }}
-              />
-              <div className="relative">
-                <div className="mb-6">
-                  <div className="w-12 h-12 rounded-xl bg-ink grid place-items-center text-coral-400 group-hover:bg-coral-600 group-hover:text-white transition-colors">
-                    <Icon n={e.icon} className="w-6 h-6" />
+          {etapas.map((e, i) => (
+            <Reveal key={e.t} delay={(i % 3) * 110} className="h-full">
+              <a
+                href={e.href}
+                className="group relative block h-full rounded-3xl bg-white/90 backdrop-blur-sm border border-ink/8 p-7 shadow-card hover-lift hover:shadow-lift overflow-hidden"
+              >
+                <div
+                  className="absolute -top-12 -right-12 w-40 h-40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{
+                    background:
+                      "radial-gradient(closest-side, rgba(242,174,188,0.25), transparent)",
+                  }}
+                />
+                <div className="relative">
+                  <div className="mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-ink grid place-items-center text-coral-400 group-hover:bg-coral-600 group-hover:text-white transition-colors">
+                      <Icon n={e.icon} className="w-6 h-6" />
+                    </div>
                   </div>
+                  <h3 className="font-display text-[21px] tracking-tight text-ink">{e.t}</h3>
+                  <p className="text-[14px] text-ink/55 mt-2 leading-relaxed">{e.d}</p>
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {e.chips.map((c) => (
+                      <span
+                        key={c}
+                        className="rounded-full border border-ink/10 bg-white px-2.5 py-1 text-[11px] font-semibold text-ink/55"
+                      >
+                        {c}
+                      </span>
+                    ))}
+                  </div>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-coral-700 group-hover:text-coral-600 transition-colors">
+                    Más información{" "}
+                    <Icon
+                      n="chevR"
+                      className="w-4 h-4 transition-transform group-hover:translate-x-0.5"
+                    />
+                  </span>
                 </div>
-                <h3 className="font-display text-[21px] tracking-tight text-ink">{e.t}</h3>
-                <p className="text-[14px] text-ink/55 mt-2 leading-relaxed">{e.d}</p>
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {e.chips.map((c) => (
-                    <span
-                      key={c}
-                      className="rounded-full border border-ink/10 bg-white px-2.5 py-1 text-[11px] font-semibold text-ink/55"
-                    >
-                      {c}
-                    </span>
-                  ))}
-                </div>
-                <span className="mt-5 inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-coral-700 group-hover:text-coral-600 transition-colors">
-                  Más información <Icon n="chevR" className="w-4 h-4" />
-                </span>
-              </div>
-            </a>
+              </a>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -2151,6 +2202,7 @@ function LandingPage() {
       <Nav />
       <main>
         <Hero />
+        <ModulosTicker />
         <Countdown show={true} />
         <RutaCompleta />
         <Showcase />

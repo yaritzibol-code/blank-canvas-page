@@ -16,13 +16,22 @@ function Ventana({ titulo, children }: { titulo: string; children: React.ReactNo
           background: "radial-gradient(closest-side, rgba(124,160,216,0.16), transparent)",
         }}
       />
-      <div className="relative rounded-3xl bg-ink shadow-navy p-5 lg:p-6 border border-white/5">
+      <div className="relative overflow-hidden rounded-3xl bg-ink shadow-navy p-5 lg:p-6 border border-white/5">
+        {/* Barrido de luz recurrente, como escaneo de instrumento */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 w-1/3 animate-scan-loop"
+          style={{
+            background:
+              "linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.055) 45%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.055) 55%, transparent 100%)",
+          }}
+        />
         <div className="flex items-center justify-between pb-4 border-b border-white/10">
           <Coord light>{titulo}</Coord>
           <div className="flex gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
             <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
-            <span className="w-2.5 h-2.5 rounded-full bg-coral-400/70" />
+            <span className="w-2.5 h-2.5 rounded-full bg-coral-400/70 animate-pulse-dot" />
           </div>
         </div>
         <div className="mt-4">{children}</div>

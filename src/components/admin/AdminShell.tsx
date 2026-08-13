@@ -51,13 +51,48 @@ const ADMIN_NAV: { label: string; items: NavItem[] }[] = [
     label: "Operaciones",
     items: [
       { icon: "chart", label: "Panel de control", key: "operaciones", path: "/admin/operaciones" },
-      { icon: "users", label: "Usuarios activos", key: "usuarios_activos", path: "/admin/usuarios-activos" },
-      { icon: "stats", label: "Activity Ratio", key: "activity_ratio", path: "/admin/activity-ratio" },
-      { icon: "help", label: "Eventos de Stripe", key: "operaciones_stripe", path: "/admin/operaciones/stripe" },
-      { icon: "shield", label: "Disputas y evidencias", key: "operaciones_disputas", path: "/admin/operaciones/disputas" },
-      { icon: "chat", label: "Yaris & IA", key: "operaciones_yaris", path: "/admin/operaciones/yaris" },
-      { icon: "doc", label: "Auditoría de cuestionarios", key: "auditoria", path: "/admin/auditoria" },
-      { icon: "chat", label: "Conversaciones con Yaris", key: "yaris_chats", path: "/admin/yaris-chats" },
+      {
+        icon: "users",
+        label: "Usuarios activos",
+        key: "usuarios_activos",
+        path: "/admin/usuarios-activos",
+      },
+      {
+        icon: "stats",
+        label: "Activity Ratio",
+        key: "activity_ratio",
+        path: "/admin/activity-ratio",
+      },
+      {
+        icon: "help",
+        label: "Eventos de Stripe",
+        key: "operaciones_stripe",
+        path: "/admin/operaciones/stripe",
+      },
+      {
+        icon: "shield",
+        label: "Disputas y evidencias",
+        key: "operaciones_disputas",
+        path: "/admin/operaciones/disputas",
+      },
+      {
+        icon: "chat",
+        label: "Yaris & IA",
+        key: "operaciones_yaris",
+        path: "/admin/operaciones/yaris",
+      },
+      {
+        icon: "doc",
+        label: "Auditoría de cuestionarios",
+        key: "auditoria",
+        path: "/admin/auditoria",
+      },
+      {
+        icon: "chat",
+        label: "Conversaciones con Yaris",
+        key: "yaris_chats",
+        path: "/admin/yaris-chats",
+      },
     ],
   },
   {
@@ -77,7 +112,12 @@ const ADMIN_NAV: { label: string; items: NavItem[] }[] = [
   {
     label: "Cuenta",
     items: [
-      { icon: "settings", label: "Configuración interna", key: "configuracion", path: "/admin/configuracion" },
+      {
+        icon: "settings",
+        label: "Configuración interna",
+        key: "configuracion",
+        path: "/admin/configuracion",
+      },
       { icon: "eye", label: "Ver como estudiante", path: "/dashboard" },
       { icon: "close", label: "Cerrar sesión", action: "logout" },
     ],
@@ -130,10 +170,20 @@ export function AdminShell({
   });
 
   return (
-    <div style={{ fontFamily: "'Manrope', sans-serif", display: "flex", minHeight: "100vh", background: "#f5f7fc" }}>
+    <div
+      style={{
+        fontFamily: "'Manrope', sans-serif",
+        display: "flex",
+        minHeight: "100vh",
+        background: "#f5f7fc",
+      }}
+    >
       {/* Mobile overlay */}
       {sidebarOpen && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.5)", zIndex: 199 }} onClick={() => setSidebarOpen(false)} />
+        <div
+          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.5)", zIndex: 199 }}
+          onClick={() => setSidebarOpen(false)}
+        />
       )}
 
       {/* Sidebar */}
@@ -152,38 +202,116 @@ export function AdminShell({
         className="hidden md:flex"
       >
         {/* Logo */}
-        <div style={{ padding: "18px 16px", borderBottom: "1px solid rgba(255,255,255,.08)", display: "flex", alignItems: "center", gap: 10 }}>
+        <div
+          style={{
+            padding: "18px 16px",
+            borderBottom: "1px solid rgba(255,255,255,.08)",
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+          }}
+        >
           <img
             src="/assets/flightpath-logo.png"
             alt="Logo de FlightPath"
             width={30}
             height={30}
-            style={{ width: 30, height: 30, borderRadius: 7, objectFit: "cover", flexShrink: 0, display: "block" }}
+            style={{
+              width: 30,
+              height: 30,
+              borderRadius: 7,
+              objectFit: "cover",
+              flexShrink: 0,
+              display: "block",
+            }}
           />
-          <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "white", fontWeight: 700 }}>
+          <span
+            style={{
+              fontFamily: "'Bricolage Grotesque', sans-serif",
+              fontSize: "1.1rem",
+              color: "white",
+              fontWeight: 700,
+            }}
+          >
             Flight<span style={{ color: "#F2AEBC" }}>Path</span>
           </span>
-          <span style={{ background: "#6C0820", color: "white", fontSize: ".6rem", fontWeight: 700, padding: "2px 7px", borderRadius: 10, textTransform: "uppercase", letterSpacing: ".5px", marginLeft: "auto" }}>Admin</span>
+          <span
+            style={{
+              background: "#6C0820",
+              color: "white",
+              fontSize: ".6rem",
+              fontWeight: 700,
+              padding: "2px 7px",
+              borderRadius: 10,
+              textTransform: "uppercase",
+              letterSpacing: ".5px",
+              marginLeft: "auto",
+            }}
+          >
+            Admin
+          </span>
         </div>
 
         {/* Nav */}
         <nav style={{ flex: 1, padding: "10px 0", overflowY: "auto" }}>
           {ADMIN_NAV.map((sec) => (
             <div key={sec.label}>
-              <div style={{ padding: "8px 16px", fontSize: ".6rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "1.5px", color: "rgba(255,255,255,.3)", marginTop: 6 }}>{sec.label}</div>
+              <div
+                style={{
+                  padding: "8px 16px",
+                  fontSize: ".6rem",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "1.5px",
+                  color: "rgba(255,255,255,.3)",
+                  marginTop: 6,
+                }}
+              >
+                {sec.label}
+              </div>
               {sec.items.map((item) =>
                 item.action === "logout" ? (
                   <button
                     key={item.label}
                     onClick={handleLogout}
-                    style={{ ...itemBase(false), width: "100%", border: "none", borderLeft: "3px solid transparent", cursor: "pointer", fontFamily: "'Manrope', sans-serif", textAlign: "left" }}
+                    style={{
+                      ...itemBase(false),
+                      width: "100%",
+                      border: "none",
+                      borderLeft: "3px solid transparent",
+                      cursor: "pointer",
+                      fontFamily: "'Manrope', sans-serif",
+                      textAlign: "left",
+                    }}
                   >
-                    <span style={{ width: 18, display: "flex", alignItems: "center", justifyContent: "center" }}><Icon n={item.icon} size={16} /></span>
+                    <span
+                      style={{
+                        width: 18,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Icon n={item.icon} size={16} />
+                    </span>
                     {item.label}
                   </button>
                 ) : (
-                  <Link key={item.label} to={item.path as "/dashboard"} style={itemBase(!!item.key && item.key === active)}>
-                    <span style={{ width: 18, display: "flex", alignItems: "center", justifyContent: "center" }}><Icon n={item.icon} size={16} /></span>
+                  <Link
+                    key={item.label}
+                    to={item.path as "/dashboard"}
+                    style={itemBase(!!item.key && item.key === active)}
+                  >
+                    <span
+                      style={{
+                        width: 18,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Icon n={item.icon} size={16} />
+                    </span>
                     {item.label}
                   </Link>
                 ),
@@ -193,8 +321,32 @@ export function AdminShell({
         </nav>
 
         {/* Footer */}
-        <div style={{ padding: "12px 16px", borderTop: "1px solid rgba(255,255,255,.08)", display: "flex", alignItems: "center", gap: 9 }}>
-          <div style={{ width: 32, height: 32, background: "#6C0820", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: ".75rem", fontWeight: 700, flexShrink: 0 }}>{initial}</div>
+        <div
+          style={{
+            padding: "12px 16px",
+            borderTop: "1px solid rgba(255,255,255,.08)",
+            display: "flex",
+            alignItems: "center",
+            gap: 9,
+          }}
+        >
+          <div
+            style={{
+              width: 32,
+              height: 32,
+              background: "#6C0820",
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+              fontSize: ".75rem",
+              fontWeight: 700,
+              flexShrink: 0,
+            }}
+          >
+            {initial}
+          </div>
           <div>
             <div style={{ fontSize: ".8rem", fontWeight: 700, color: "white" }}>{firstName}</div>
             <div style={{ fontSize: ".66rem", color: "#F2AEBC" }}>Administradora</div>
@@ -203,21 +355,107 @@ export function AdminShell({
       </aside>
 
       {/* Main */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: "100vh", minWidth: 0 }} className="md:ml-[220px]">
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+          minWidth: 0,
+        }}
+        className="md:ml-[220px]"
+      >
         {/* Topbar */}
-        <div style={{ height: 58, background: "white", borderBottom: "1px solid rgba(61,93,145,.08)", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 24px", position: "sticky", top: 0, zIndex: 100, gap: 10 }}>
+        <div
+          style={{
+            height: 58,
+            background: "white",
+            borderBottom: "1px solid rgba(61,93,145,.08)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0 24px",
+            position: "sticky",
+            top: 0,
+            zIndex: 100,
+            gap: 10,
+          }}
+        >
           <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
-            <button onClick={() => setSidebarOpen(true)} style={{ display: "flex", flexDirection: "column", gap: 4, cursor: "pointer", background: "none", border: "none", padding: 3 }} className="md:hidden">
-              <span style={{ display: "block", width: 20, height: 2, background: "#22375C", borderRadius: 2 }} />
-              <span style={{ display: "block", width: 20, height: 2, background: "#22375C", borderRadius: 2 }} />
-              <span style={{ display: "block", width: 20, height: 2, background: "#22375C", borderRadius: 2 }} />
+            <button
+              onClick={() => setSidebarOpen(true)}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 4,
+                cursor: "pointer",
+                background: "none",
+                border: "none",
+                padding: 3,
+              }}
+              className="md:hidden"
+            >
+              <span
+                style={{
+                  display: "block",
+                  width: 20,
+                  height: 2,
+                  background: "#22375C",
+                  borderRadius: 2,
+                }}
+              />
+              <span
+                style={{
+                  display: "block",
+                  width: 20,
+                  height: 2,
+                  background: "#22375C",
+                  borderRadius: 2,
+                }}
+              />
+              <span
+                style={{
+                  display: "block",
+                  width: 20,
+                  height: 2,
+                  background: "#22375C",
+                  borderRadius: 2,
+                }}
+              />
             </button>
             {backTo && (
-              <Link to={backTo.to as "/dashboard"} style={{ display: "flex", alignItems: "center", gap: 5, color: "#647DA0", fontSize: ".8rem", textDecoration: "none", padding: "5px 10px", borderRadius: 6, border: "1px solid #F2DCDB", transition: "all .2s", whiteSpace: "nowrap" }}>
+              <Link
+                to={backTo.to as "/dashboard"}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 5,
+                  color: "#647DA0",
+                  fontSize: ".8rem",
+                  textDecoration: "none",
+                  padding: "5px 10px",
+                  borderRadius: 6,
+                  border: "1px solid #F2DCDB",
+                  transition: "all .2s",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 ← {backTo.label}
               </Link>
             )}
-            <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.05rem", fontWeight: 700, color: "#22375C", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{title}</span>
+            <span
+              style={{
+                fontFamily: "'Bricolage Grotesque', sans-serif",
+                fontSize: "1.05rem",
+                fontWeight: 700,
+                color: "#22375C",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {title}
+            </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
             <LiveIndicator state={live} />
@@ -350,20 +588,63 @@ export const modalSubStyle: CSSProperties = {
 
 export function Badge({ text, color, bg }: { text: string; color: string; bg?: string }) {
   return (
-    <span style={{ padding: "3px 10px", borderRadius: 20, fontSize: ".7rem", fontWeight: 700, color, background: bg ?? `${color}1c`, whiteSpace: "nowrap", display: "inline-block" }}>
+    <span
+      style={{
+        padding: "3px 10px",
+        borderRadius: 20,
+        fontSize: ".7rem",
+        fontWeight: 700,
+        color,
+        background: bg ?? `${color}1c`,
+        whiteSpace: "nowrap",
+        display: "inline-block",
+      }}
+    >
       {text}
     </span>
   );
 }
 
-export function Modal({ open, onClose, maxWidth = 440, children }: { open: boolean; onClose: () => void; maxWidth?: number; children: ReactNode }) {
+export function Modal({
+  open,
+  onClose,
+  maxWidth = 440,
+  children,
+}: {
+  open: boolean;
+  onClose: () => void;
+  maxWidth?: number;
+  children: ReactNode;
+}) {
   if (!open) return null;
   return (
     <div
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-      style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.5)", zIndex: 300, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "rgba(0,0,0,.5)",
+        zIndex: 300,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 20,
+      }}
     >
-      <div onClick={(e) => e.stopPropagation()} style={{ background: "white", borderRadius: 16, padding: 26, maxWidth, width: "100%", maxHeight: "90vh", overflowY: "auto" }}>
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: "white",
+          borderRadius: 16,
+          padding: 26,
+          maxWidth,
+          width: "100%",
+          maxHeight: "90vh",
+          overflowY: "auto",
+        }}
+      >
         {children}
       </div>
     </div>
@@ -375,7 +656,10 @@ export interface FlashMsg {
   error?: boolean;
 }
 
-export function useFlash(): { flash: FlashMsg | null; showFlash: (msg: string, error?: boolean) => void } {
+export function useFlash(): {
+  flash: FlashMsg | null;
+  showFlash: (msg: string, error?: boolean) => void;
+} {
   const [flash, setFlash] = useState<FlashMsg | null>(null);
   const showFlash = (msg: string, error = false) => {
     setFlash({ msg, error });
@@ -387,7 +671,22 @@ export function useFlash(): { flash: FlashMsg | null; showFlash: (msg: string, e
 export function Flash({ flash }: { flash: FlashMsg | null }) {
   if (!flash) return null;
   return (
-    <div style={{ position: "fixed", top: 72, right: 24, background: flash.error ? "#e74c3c" : "#2ecc71", color: "white", padding: "10px 18px", borderRadius: 10, fontWeight: 700, fontSize: ".85rem", zIndex: 400, boxShadow: "0 4px 16px rgba(0,0,0,.2)", maxWidth: 380 }}>
+    <div
+      style={{
+        position: "fixed",
+        top: 72,
+        right: 24,
+        background: flash.error ? "#e74c3c" : "#2ecc71",
+        color: "white",
+        padding: "10px 18px",
+        borderRadius: 10,
+        fontWeight: 700,
+        fontSize: ".85rem",
+        zIndex: 400,
+        boxShadow: "0 4px 16px rgba(0,0,0,.2)",
+        maxWidth: 380,
+      }}
+    >
       {flash.msg}
     </div>
   );
@@ -395,7 +694,20 @@ export function Flash({ flash }: { flash: FlashMsg | null }) {
 
 /* ───────────────────────── Helpers de formato ───────────────────────── */
 
-const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+const MESES = [
+  "enero",
+  "febrero",
+  "marzo",
+  "abril",
+  "mayo",
+  "junio",
+  "julio",
+  "agosto",
+  "septiembre",
+  "octubre",
+  "noviembre",
+  "diciembre",
+];
 
 export function fmtDate(iso: string | null | undefined): string {
   if (!iso) return "—";
@@ -452,15 +764,24 @@ export const ACCESS_COLOR: Record<string, string> = {
 
 export function generalStateColor(state: string): string {
   switch (state) {
-    case "En riesgo de abandono": return "#e74c3c";
-    case "Acceso vencido": return "#e74c3c";
-    case "Inactivo": return "#f39c12";
-    case "Necesita apoyo": return "#f39c12";
-    case "Cerca del CIAAC": return "#6C0820";
-    case "Acceso de prueba": return "#8e6cc0";
-    case "Eliminación pendiente": return "#8DA1BE";
-    case "Buen avance": return "#2ecc71";
-    default: return "#3D5D91"; // "Activo" y otros
+    case "En riesgo de abandono":
+      return "#e74c3c";
+    case "Acceso vencido":
+      return "#e74c3c";
+    case "Inactivo":
+      return "#f39c12";
+    case "Necesita apoyo":
+      return "#f39c12";
+    case "Cerca del CIAAC":
+      return "#6C0820";
+    case "Acceso de prueba":
+      return "#8e6cc0";
+    case "Eliminación pendiente":
+      return "#8DA1BE";
+    case "Buen avance":
+      return "#2ecc71";
+    default:
+      return "#3D5D91"; // "Activo" y otros
   }
 }
 
@@ -486,16 +807,28 @@ export function scoreColor(score: number | null | undefined): string {
 /** Icono y fondo para eventos de actividad (kind de ActivityEvent). */
 export function activityVisual(kind: string): { icon: FPIconName; bg: string } {
   switch (kind) {
-    case "quiz": return { icon: "help", bg: "rgba(61,93,145,.08)" };
-    case "simulador": return { icon: "sim", bg: "rgba(108,8,32,.08)" };
-    case "flashcards": return { icon: "cards", bg: "rgba(90,134,203,.1)" };
-    case "clase": return { icon: "play", bg: "rgba(90,134,203,.1)" };
-    case "tema": return { icon: "book", bg: "rgba(61,93,145,.08)" };
-    case "bitacora": return { icon: "doc", bg: "rgba(243,156,18,.1)" };
-    case "biblioteca": return { icon: "library", bg: "rgba(61,93,145,.08)" };
+    case "quiz":
+      return { icon: "help", bg: "rgba(61,93,145,.08)" };
+    case "simulador":
+      return { icon: "sim", bg: "rgba(108,8,32,.08)" };
+    case "flashcards":
+      return { icon: "cards", bg: "rgba(90,134,203,.1)" };
+    case "clase":
+      return { icon: "play", bg: "rgba(90,134,203,.1)" };
+    case "tema":
+      return { icon: "book", bg: "rgba(61,93,145,.08)" };
+    case "bitacora":
+      return { icon: "doc", bg: "rgba(243,156,18,.1)" };
+    case "biblioteca":
+      return { icon: "library", bg: "rgba(61,93,145,.08)" };
+    case "compass":
+      return { icon: "compass", bg: "rgba(108,8,32,.08)" };
     case "pathy_session":
-    case "yaris": return { icon: "chat", bg: "rgba(108,8,32,.08)" };
-    case "login": return { icon: "user", bg: "rgba(141,161,190,.12)" };
-    default: return { icon: "bolt", bg: "rgba(61,93,145,.08)" };
+    case "yaris":
+      return { icon: "chat", bg: "rgba(108,8,32,.08)" };
+    case "login":
+      return { icon: "user", bg: "rgba(141,161,190,.12)" };
+    default:
+      return { icon: "bolt", bg: "rgba(61,93,145,.08)" };
   }
 }
