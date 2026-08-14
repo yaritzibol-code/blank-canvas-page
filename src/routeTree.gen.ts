@@ -74,6 +74,7 @@ import { Route as DashboardRtariRouteImport } from './routes/dashboard/rtari'
 import { Route as LineaAereaFuenteRouteImport } from './routes/linea-aerea_.$fuente'
 import { Route as ModulosSlugRouteImport } from './routes/modulos_.$slug'
 import { Route as RespuestasSlugRouteImport } from './routes/respuestas_.$slug'
+import { Route as Ruta737MaxRouteImport } from './routes/ruta_.737-max'
 import { Route as AdminOperacionesIndexRouteImport } from './routes/admin/operaciones/index'
 import { Route as AdminOperacionesDisputasRouteImport } from './routes/admin/operaciones/disputas'
 import { Route as AdminOperacionesStripeRouteImport } from './routes/admin/operaciones/stripe'
@@ -416,6 +417,11 @@ const RespuestasSlugRoute = RespuestasSlugRouteImport.update({
   path: '/respuestas/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Ruta737MaxRoute = Ruta737MaxRouteImport.update({
+  id: '/ruta_/737-max',
+  path: '/ruta/737-max',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminOperacionesIndexRoute = AdminOperacionesIndexRouteImport.update({
   id: '/admin/operaciones/',
   path: '/admin/operaciones/',
@@ -560,6 +566,7 @@ export interface FileRoutesByFullPath {
   '/linea-aerea/$fuente': typeof LineaAereaFuenteRoute
   '/modulos/$slug': typeof ModulosSlugRoute
   '/respuestas/$slug': typeof RespuestasSlugRoute
+  '/ruta/737-max': typeof Ruta737MaxRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/admin/operaciones/disputas': typeof AdminOperacionesDisputasRoute
@@ -641,6 +648,7 @@ export interface FileRoutesByTo {
   '/linea-aerea/$fuente': typeof LineaAereaFuenteRoute
   '/modulos/$slug': typeof ModulosSlugRoute
   '/respuestas/$slug': typeof RespuestasSlugRoute
+  '/ruta/737-max': typeof Ruta737MaxRoute
   '/admin': typeof AdminIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/admin/operaciones/disputas': typeof AdminOperacionesDisputasRoute
@@ -724,6 +732,7 @@ export interface FileRoutesById {
   '/linea-aerea_/$fuente': typeof LineaAereaFuenteRoute
   '/modulos_/$slug': typeof ModulosSlugRoute
   '/respuestas_/$slug': typeof RespuestasSlugRoute
+  '/ruta_/737-max': typeof Ruta737MaxRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/admin/operaciones/disputas': typeof AdminOperacionesDisputasRoute
@@ -808,6 +817,7 @@ export interface FileRouteTypes {
     | '/linea-aerea/$fuente'
     | '/modulos/$slug'
     | '/respuestas/$slug'
+    | '/ruta/737-max'
     | '/admin/'
     | '/dashboard/'
     | '/admin/operaciones/disputas'
@@ -889,6 +899,7 @@ export interface FileRouteTypes {
     | '/linea-aerea/$fuente'
     | '/modulos/$slug'
     | '/respuestas/$slug'
+    | '/ruta/737-max'
     | '/admin'
     | '/dashboard'
     | '/admin/operaciones/disputas'
@@ -971,6 +982,7 @@ export interface FileRouteTypes {
     | '/linea-aerea_/$fuente'
     | '/modulos_/$slug'
     | '/respuestas_/$slug'
+    | '/ruta_/737-max'
     | '/admin/'
     | '/dashboard/'
     | '/admin/operaciones/disputas'
@@ -1038,6 +1050,7 @@ export interface RootRouteChildren {
   LineaAereaFuenteRoute: typeof LineaAereaFuenteRoute
   ModulosSlugRoute: typeof ModulosSlugRoute
   RespuestasSlugRoute: typeof RespuestasSlugRoute
+  Ruta737MaxRoute: typeof Ruta737MaxRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminOperacionesDisputasRoute: typeof AdminOperacionesDisputasRoute
   AdminOperacionesStripeRoute: typeof AdminOperacionesStripeRoute
@@ -1511,6 +1524,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RespuestasSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ruta_/737-max': {
+      id: '/ruta_/737-max'
+      path: '/ruta/737-max'
+      fullPath: '/ruta/737-max'
+      preLoaderRoute: typeof Ruta737MaxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/operaciones/': {
       id: '/admin/operaciones/'
       path: '/admin/operaciones'
@@ -1716,6 +1736,7 @@ const rootRouteChildren: RootRouteChildren = {
   LineaAereaFuenteRoute: LineaAereaFuenteRoute,
   ModulosSlugRoute: ModulosSlugRoute,
   RespuestasSlugRoute: RespuestasSlugRoute,
+  Ruta737MaxRoute: Ruta737MaxRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminOperacionesDisputasRoute: AdminOperacionesDisputasRoute,
   AdminOperacionesStripeRoute: AdminOperacionesStripeRoute,
