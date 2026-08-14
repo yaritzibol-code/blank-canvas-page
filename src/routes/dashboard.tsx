@@ -193,7 +193,7 @@ const NAV_SECTIONS: {
     label: "Principal",
     items: [
       { icon: "home", label: "Inicio", path: "/dashboard" },
-      { icon: "book", label: "Learning paths", path: "/ruta/737-max", nuevo: true },
+      { icon: "book", label: "Learning paths", path: "/ruta", nuevo: true },
       // El simulador CIAAC no es un módulo aparte: se inicia desde esta misma
       // sección (tarjeta "Simulador CIAAC" dentro de CIAAC).
       { icon: "help", label: "CIAAC", path: "/dashboard/banco" },

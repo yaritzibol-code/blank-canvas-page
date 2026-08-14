@@ -74,7 +74,8 @@ import { Route as DashboardRtariRouteImport } from './routes/dashboard/rtari'
 import { Route as LineaAereaFuenteRouteImport } from './routes/linea-aerea_.$fuente'
 import { Route as ModulosSlugRouteImport } from './routes/modulos_.$slug'
 import { Route as RespuestasSlugRouteImport } from './routes/respuestas_.$slug'
-import { Route as Ruta737MaxRouteImport } from './routes/ruta_.737-max'
+import { Route as RutaIndexRouteImport } from './routes/ruta_.index'
+import { Route as RutaCursoRouteImport } from './routes/ruta_.$curso'
 import { Route as AdminOperacionesIndexRouteImport } from './routes/admin/operaciones/index'
 import { Route as AdminOperacionesDisputasRouteImport } from './routes/admin/operaciones/disputas'
 import { Route as AdminOperacionesStripeRouteImport } from './routes/admin/operaciones/stripe'
@@ -417,9 +418,14 @@ const RespuestasSlugRoute = RespuestasSlugRouteImport.update({
   path: '/respuestas/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const Ruta737MaxRoute = Ruta737MaxRouteImport.update({
-  id: '/ruta_/737-max',
-  path: '/ruta/737-max',
+const RutaIndexRoute = RutaIndexRouteImport.update({
+  id: '/ruta_/',
+  path: '/ruta/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RutaCursoRoute = RutaCursoRouteImport.update({
+  id: '/ruta_/$curso',
+  path: '/ruta/$curso',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminOperacionesIndexRoute = AdminOperacionesIndexRouteImport.update({
@@ -566,9 +572,10 @@ export interface FileRoutesByFullPath {
   '/linea-aerea/$fuente': typeof LineaAereaFuenteRoute
   '/modulos/$slug': typeof ModulosSlugRoute
   '/respuestas/$slug': typeof RespuestasSlugRoute
-  '/ruta/737-max': typeof Ruta737MaxRoute
+  '/ruta/$curso': typeof RutaCursoRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/ruta/': typeof RutaIndexRoute
   '/admin/operaciones/disputas': typeof AdminOperacionesDisputasRoute
   '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
@@ -648,9 +655,10 @@ export interface FileRoutesByTo {
   '/linea-aerea/$fuente': typeof LineaAereaFuenteRoute
   '/modulos/$slug': typeof ModulosSlugRoute
   '/respuestas/$slug': typeof RespuestasSlugRoute
-  '/ruta/737-max': typeof Ruta737MaxRoute
+  '/ruta/$curso': typeof RutaCursoRoute
   '/admin': typeof AdminIndexRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/ruta': typeof RutaIndexRoute
   '/admin/operaciones/disputas': typeof AdminOperacionesDisputasRoute
   '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
@@ -732,9 +740,10 @@ export interface FileRoutesById {
   '/linea-aerea_/$fuente': typeof LineaAereaFuenteRoute
   '/modulos_/$slug': typeof ModulosSlugRoute
   '/respuestas_/$slug': typeof RespuestasSlugRoute
-  '/ruta_/737-max': typeof Ruta737MaxRoute
+  '/ruta_/$curso': typeof RutaCursoRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/ruta_/': typeof RutaIndexRoute
   '/admin/operaciones/disputas': typeof AdminOperacionesDisputasRoute
   '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
@@ -817,9 +826,10 @@ export interface FileRouteTypes {
     | '/linea-aerea/$fuente'
     | '/modulos/$slug'
     | '/respuestas/$slug'
-    | '/ruta/737-max'
+    | '/ruta/$curso'
     | '/admin/'
     | '/dashboard/'
+    | '/ruta/'
     | '/admin/operaciones/disputas'
     | '/admin/operaciones/stripe'
     | '/admin/operaciones/yaris'
@@ -899,9 +909,10 @@ export interface FileRouteTypes {
     | '/linea-aerea/$fuente'
     | '/modulos/$slug'
     | '/respuestas/$slug'
-    | '/ruta/737-max'
+    | '/ruta/$curso'
     | '/admin'
     | '/dashboard'
+    | '/ruta'
     | '/admin/operaciones/disputas'
     | '/admin/operaciones/stripe'
     | '/admin/operaciones/yaris'
@@ -982,9 +993,10 @@ export interface FileRouteTypes {
     | '/linea-aerea_/$fuente'
     | '/modulos_/$slug'
     | '/respuestas_/$slug'
-    | '/ruta_/737-max'
+    | '/ruta_/$curso'
     | '/admin/'
     | '/dashboard/'
+    | '/ruta_/'
     | '/admin/operaciones/disputas'
     | '/admin/operaciones/stripe'
     | '/admin/operaciones/yaris'
@@ -1050,8 +1062,9 @@ export interface RootRouteChildren {
   LineaAereaFuenteRoute: typeof LineaAereaFuenteRoute
   ModulosSlugRoute: typeof ModulosSlugRoute
   RespuestasSlugRoute: typeof RespuestasSlugRoute
-  Ruta737MaxRoute: typeof Ruta737MaxRoute
+  RutaCursoRoute: typeof RutaCursoRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  RutaIndexRoute: typeof RutaIndexRoute
   AdminOperacionesDisputasRoute: typeof AdminOperacionesDisputasRoute
   AdminOperacionesStripeRoute: typeof AdminOperacionesStripeRoute
   AdminOperacionesYarisRoute: typeof AdminOperacionesYarisRoute
@@ -1524,11 +1537,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RespuestasSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/ruta_/737-max': {
-      id: '/ruta_/737-max'
-      path: '/ruta/737-max'
-      fullPath: '/ruta/737-max'
-      preLoaderRoute: typeof Ruta737MaxRouteImport
+    '/ruta_/': {
+      id: '/ruta_/'
+      path: '/ruta'
+      fullPath: '/ruta/'
+      preLoaderRoute: typeof RutaIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ruta_/$curso': {
+      id: '/ruta_/$curso'
+      path: '/ruta/$curso'
+      fullPath: '/ruta/$curso'
+      preLoaderRoute: typeof RutaCursoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/operaciones/': {
@@ -1736,8 +1756,9 @@ const rootRouteChildren: RootRouteChildren = {
   LineaAereaFuenteRoute: LineaAereaFuenteRoute,
   ModulosSlugRoute: ModulosSlugRoute,
   RespuestasSlugRoute: RespuestasSlugRoute,
-  Ruta737MaxRoute: Ruta737MaxRoute,
+  RutaCursoRoute: RutaCursoRoute,
   AdminIndexRoute: AdminIndexRoute,
+  RutaIndexRoute: RutaIndexRoute,
   AdminOperacionesDisputasRoute: AdminOperacionesDisputasRoute,
   AdminOperacionesStripeRoute: AdminOperacionesStripeRoute,
   AdminOperacionesYarisRoute: AdminOperacionesYarisRoute,

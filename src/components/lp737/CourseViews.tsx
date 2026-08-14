@@ -9,6 +9,7 @@ import { CourseHero, ProgressTrack, fmtNum } from "./CourseShell";
 import { LessonStage } from "./LessonStage";
 import type { Lp737Consolidation, Lp737Course, Lp737Lesson, Lp737Module } from "@/lib/lp737/types";
 import type { Lp737ConsolidationResult } from "@/lib/store";
+import type { LpCourseDef } from "@/lib/lp/registry";
 
 export interface ModuleStats {
   completed: number;
@@ -28,12 +29,14 @@ export function moduleStats(module: Lp737Module, completedLessons: string[]): Mo
 /* ───────────────────────── Tablero ───────────────────────── */
 
 export function CourseDashboard({
+  def,
   course,
   completedLessons,
   percent,
   complete,
   onOpenModule,
 }: {
+  def: LpCourseDef;
   course: Lp737Course;
   completedLessons: string[];
   percent: number;
@@ -46,37 +49,16 @@ export function CourseDashboard({
     (m) => !q || `${m.id} ${m.title} ${m.summary}`.toLowerCase().includes(q),
   );
 
-  const stats = [
-    {
-      label: "Temas del manual",
-      value: fmtNum(course.meta.topics_traced ?? 1915),
-      small: "Todos trazados",
-    },
-    {
-      label: "Lecciones técnicas",
-      value: String(course.meta.lesson_count),
-      small: "De principio a fin",
-    },
-    {
-      label: "Evaluaciones",
-      value: String(course.meta.question_count),
-      small: "Desde las lecciones",
-    },
-    { label: "Tu avance", value: `${percent}%`, small: `${complete} completadas` },
-  ];
+  const stats = def.dashboardStats(course.meta, percent, complete);
 
   return (
     <>
       <CourseHero
-        eyebrow="FCOM Rev. 16 · Ruta completa"
-        title="Comprende el 737 MAX"
-        accent="sistema por sistema"
-        description="Una ruta técnica y digerible. Lees, conectas la lógica operacional y después respondes preguntas creadas únicamente a partir de lo que acabas de estudiar."
-        meta={[
-          `${fmtNum(course.meta.source_pages)} páginas`,
-          `${course.meta.lesson_count} lecciones`,
-          `${course.meta.question_count} preguntas derivadas`,
-        ]}
+        eyebrow={def.hero.eyebrow}
+        title={def.hero.title}
+        accent={def.hero.accent}
+        description={def.hero.description}
+        meta={def.hero.meta(course.meta)}
       />
       <div className="mx-auto max-w-[1080px] px-5 sm:px-8 py-8">
         {/* Cifras */}
@@ -109,13 +91,8 @@ export function CourseDashboard({
               className="h-20 w-20 sm:h-24 sm:w-24 shrink-0 rounded-full border border-coral-300/50 bg-coral-50 object-cover object-top"
             />
             <div className="min-w-0 rounded-2xl border border-ink/8 px-5 py-4">
-              <strong className="text-[14.5px] text-coral-700">
-                No es suerte. Es preparación.
-              </strong>
-              <p className="mt-1 text-[13.5px] leading-relaxed text-ink-950/75">
-                Primero entiende qué hace el sistema y por qué. Al final de cada lección compruebas
-                el razonamiento; no memorizas preguntas sueltas.
-              </p>
+              <strong className="text-[14.5px] text-coral-700">{def.yaris.strong}</strong>
+              <p className="mt-1 text-[13.5px] leading-relaxed text-ink-950/75">{def.yaris.p}</p>
             </div>
           </div>
         </section>
@@ -208,6 +185,7 @@ export function CourseDashboard({
 /* ───────────────────────── Vista de módulo ───────────────────────── */
 
 export function ModuleView({
+  def,
   module,
   lesson,
   completedLessons,
@@ -220,6 +198,7 @@ export function ModuleView({
   onGoEvaluacion,
   onGoDashboard,
 }: {
+  def: LpCourseDef;
   module: Lp737Module;
   lesson: Lp737Lesson;
   completedLessons: string[];
@@ -240,7 +219,7 @@ export function ModuleView({
     <>
       <CourseHero
         compact
-        eyebrow={`Módulo ${module.id} · Capítulo ${module.chapter_code}`}
+        eyebrow={def.moduloEyebrow(module)}
         title={module.title}
         description={module.summary}
         meta={[
@@ -327,6 +306,7 @@ export function ModuleView({
           </aside>
 
           <LessonStage
+            def={def}
             module={module}
             lesson={lesson}
             lessonIndex={lessonIndex}
@@ -621,33 +601,27 @@ export function CourseSimulator({ course }: { course: Lp737Course }) {
 /* ───────────────────────── Cobertura ───────────────────────── */
 
 export function CourseCoverage({
+  def,
   course,
   completedLessons,
   onOpenModule,
 }: {
+  def: LpCourseDef;
   course: Lp737Course;
   completedLessons: string[];
   onOpenModule: (id: string) => void;
 }) {
-  const resumen = [
-    { label: "Primera página", value: "1" },
-    { label: "Última página", value: fmtNum(course.meta.source_pages) },
-    { label: "Huecos", value: "0" },
-    { label: "Preguntas externas", value: "0" },
-  ];
+  const resumen = def.coverage.resumen(course.meta);
+  const conVisuales = def.coverage.conVisuales;
   return (
     <>
       <CourseHero
         compact
-        eyebrow="Trazabilidad completa"
-        title="Cobertura del manual"
-        accent="sin atajos"
-        description="Cada página del FCOM pertenece a una lección; cada lección declara su referencia y evalúa sólo lo que explica."
-        meta={[
-          `${course.meta.module_count} módulos`,
-          `${course.meta.lesson_count} lecciones`,
-          `${fmtNum(course.meta.topics_traced ?? 1915)} temas trazados`,
-        ]}
+        eyebrow={def.coverage.hero.eyebrow}
+        title={def.coverage.hero.title}
+        accent={def.coverage.hero.accent}
+        description={def.coverage.hero.description}
+        meta={def.coverage.hero.meta(course.meta)}
       />
       <div className="mx-auto max-w-[1080px] px-5 sm:px-8 py-8">
         <section className="relative z-10 -mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -666,14 +640,13 @@ export function CourseCoverage({
 
         <section className="mt-6 rounded-3xl border border-ink/8 bg-white p-6 shadow-card">
           <span className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-haze-500">
-            Regla de calidad
+            {def.coverage.quality.eyebrow}
           </span>
           <h2 className="font-display mt-1 text-[22px] tracking-tight text-ink-950">
-            La evaluación nace después de explicar.
+            {def.coverage.quality.title}
           </h2>
           <p className="mt-2 max-w-[70ch] text-[13.5px] leading-relaxed text-haze-600">
-            El contenido de esta ruta se compila exclusivamente desde los 21 módulos de lecciones
-            validados. No existe conexión con ningún banco externo.
+            {def.coverage.quality.p}
           </p>
         </section>
 
@@ -681,13 +654,22 @@ export function CourseCoverage({
           <table className="w-full min-w-[720px] border-collapse text-[13.5px]">
             <thead>
               <tr className="text-left font-mono text-[10px] uppercase tracking-[0.14em] text-haze-500">
-                {["Módulo", "Contenido", "Páginas PDF", "Lecciones", "Preguntas", "Tu avance"].map(
-                  (h) => (
-                    <th key={h} className="border-b-2 border-ink/10 px-4 py-3 whitespace-nowrap">
-                      {h}
-                    </th>
-                  ),
-                )}
+                {(conVisuales
+                  ? [
+                      "Módulo",
+                      "Contenido",
+                      "Fuente",
+                      "Lecciones",
+                      "Visuales",
+                      "Preguntas",
+                      "Tu avance",
+                    ]
+                  : ["Módulo", "Contenido", "Páginas PDF", "Lecciones", "Preguntas", "Tu avance"]
+                ).map((h) => (
+                  <th key={h} className="border-b-2 border-ink/10 px-4 py-3 whitespace-nowrap">
+                    {h}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -710,9 +692,14 @@ export function CourseCoverage({
                       </button>
                     </td>
                     <td className="px-4 py-3 font-mono text-[12px] whitespace-nowrap text-haze-600">
-                      {m.source_pages[0]}–{m.source_pages[1]}
+                      {conVisuales
+                        ? `${new Set(m.lessons.map((l) => l.source_pages.join("-"))).size} rangos exactos`
+                        : `${m.source_pages[0]}–${m.source_pages[1]}`}
                     </td>
                     <td className="px-4 py-3">{m.lessons.length}</td>
+                    {conVisuales && (
+                      <td className="px-4 py-3">{m.lessons.filter((l) => l.visual).length}</td>
+                    )}
                     <td className="px-4 py-3">{s.questions}</td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2.5">

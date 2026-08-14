@@ -14,3 +14,7 @@
 
 /favicon.ico
   Cache-Control: public, max-age=604800
+
+# Evidencia visual de los learning paths (cartas y páginas del manual).
+/lp/*
+  Cache-Control: public, max-age=31536000, immutable

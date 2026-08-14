@@ -1,26 +1,28 @@
 /**
- * Ruta de aprendizaje 737 MAX (FCOM Rev. 16) — /ruta/737-max
+ * Learning path — /ruta/$curso (737-max, jeppesen, …)
  *
- * Réplica 1:1 del paquete FlightPath737MAXLearningPath dentro de la app:
- * shell propio (sidebar de 21 módulos), tablero, lección con capa pedagógica,
- * evaluación derivada y cobertura. Requiere sesión; el progreso vive en el
- * store (lp737_state + tema_progress) y se sincroniza a la nube.
+ * Réplica 1:1 de los paquetes de cursos dentro de la app: shell propio con
+ * selector de ruta, tablero, lección con capa pedagógica (y evidencia visual
+ * cuando el curso la trae), evaluación derivada y cobertura. Requiere sesión;
+ * el progreso vive en el store (lp737_state + tema_progress por prefijo) y se
+ * sincroniza a la nube.
  *
- * El contenido (~1.7 MB) se carga con import() dinámico al entrar (SEO.md §7):
- * ninguna otra página paga ese peso.
+ * El contenido de cada curso se carga con import() dinámico al entrar
+ * (SEO.md §7): ninguna otra página paga ese peso.
  */
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
-  answerLp737Question,
-  completeLp737Lesson,
-  getLp737State,
-  lp737CompletedLessons,
-  saveLp737Consolidation,
+  answerLpQuestion,
+  completeLpLesson,
+  getLpState,
+  lpCompletedLessons,
+  saveLpConsolidation,
   useRequireAuth,
   useStore,
 } from "@/lib/store";
 import type { Lp737Consolidation, Lp737Course } from "@/lib/lp737/types";
+import { lpCourseBySlug } from "@/lib/lp/registry";
 import { CourseShell, type CourseVista } from "@/components/lp737/CourseShell";
 import {
   CourseCoverage,
@@ -35,7 +37,7 @@ interface RutaSearch {
   vista?: "evaluacion" | "cobertura";
 }
 
-export const Route = createFileRoute("/ruta_/737-max")({
+export const Route = createFileRoute("/ruta_/$curso")({
   validateSearch: (search: Record<string, unknown>): RutaSearch => ({
     m: typeof search.m === "string" ? search.m : undefined,
     l: typeof search.l === "string" ? search.l : undefined,
@@ -43,32 +45,56 @@ export const Route = createFileRoute("/ruta_/737-max")({
   }),
   head: () => ({
     // Página de app (auth): sin indexar.
-    meta: [{ title: "Ruta 737 MAX · FlightPath" }, { name: "robots", content: "noindex" }],
+    meta: [{ title: "Learning path · FlightPath" }, { name: "robots", content: "noindex" }],
   }),
-  component: Ruta737Page,
+  component: RutaCursoPage,
 });
 
-function Ruta737Page() {
+function RutaCursoPage() {
+  const { curso } = Route.useParams();
+  const def = lpCourseBySlug(curso);
   const { user, ready } = useRequireAuth();
   const navigate = useNavigate();
   const search = Route.useSearch();
   const [course, setCourse] = useState<Lp737Course | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Contenido bajo demanda: chunk propio, solo para quien entra a la ruta.
+  // Contenido bajo demanda: chunk propio por curso, solo para quien entra.
   useEffect(() => {
+    if (!def) return;
     let alive = true;
-    void import("@/lib/lp737/content").then((m) => {
-      if (alive) setCourse(m.LP737_COURSE);
+    setCourse(null);
+    void def.load().then((c) => {
+      if (alive) setCourse(c);
     });
     return () => {
       alive = false;
     };
-  }, []);
+  }, [def]);
 
   const userId = user?.id ?? "";
-  const state = useStore(() => getLp737State(userId));
-  const completed = useStore(() => lp737CompletedLessons(userId));
+  const state = useStore(() => getLpState(userId, def?.slug ?? ""));
+  const completed = useStore(() => lpCompletedLessons(userId, def?.temaPrefix ?? "lp∅:"));
+
+  if (!def) {
+    return (
+      <div
+        className="grid min-h-screen place-items-center px-6 text-center"
+        style={{ background: "#FBFAF7" }}
+      >
+        <div>
+          <h1 className="font-display text-[26px] text-ink-950">No encontramos esta ruta.</h1>
+          <button
+            type="button"
+            onClick={() => void navigate({ to: "/ruta" })}
+            className="mt-5 rounded-full bg-coral-600 px-6 py-2.5 text-[13.5px] font-bold text-white"
+          >
+            Ver learning paths
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (!ready || !user) return <div className="min-h-screen" style={{ background: "#FBFAF7" }} />;
 
@@ -82,7 +108,7 @@ function Ruta737Page() {
         <div className="text-center">
           <div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-ink/15 border-t-coral-600" />
           <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.22em] text-haze-500">
-            Cargando la ruta 737 MAX…
+            Cargando {def.nombre}…
           </p>
         </div>
       </div>
@@ -108,7 +134,14 @@ function Ruta737Page() {
           : v.tipo === "cobertura"
             ? { vista: "cobertura" }
             : {};
-    void navigate({ to: "/ruta/737-max", search: s as never });
+    void navigate({ to: "/ruta/$curso", params: { curso: def.slug }, search: s as never });
+    window.scrollTo({ top: 0 });
+  };
+
+  const cambiarCurso = (slug: string) => {
+    if (slug === def.slug) return;
+    setMenuOpen(false);
+    void navigate({ to: "/ruta/$curso", params: { curso: slug }, search: {} as never });
     window.scrollTo({ top: 0 });
   };
 
@@ -131,28 +164,29 @@ function Ruta737Page() {
         </div>
       );
     } else {
-      // Igual que el original: lección pedida o la primera sin completar.
+      // Igual que los paquetes: lección pedida o la primera sin completar.
       const lesson =
         (search.l && module.lessons.find((x) => x.id === search.l)) ||
         module.lessons.find((x) => !completed.includes(x.id)) ||
         module.lessons[0];
       contenido = (
         <ModuleView
+          def={def}
           module={module}
           lesson={lesson}
           completedLessons={completed}
           answers={state.answers}
           consolidation={state.consolidation}
           onSelectLesson={(id) => irA({ tipo: "modulo", moduleId: module.id }, id)}
-          onAnswer={(qid, option) => answerLp737Question(userId, qid, option)}
+          onAnswer={(qid, option) => answerLpQuestion(userId, def.slug, qid, option)}
           onConsolidate={(activity: Lp737Consolidation, input) =>
-            saveLp737Consolidation(userId, activity, input)
+            saveLpConsolidation(userId, def.slug, activity, input)
           }
           onComplete={() => {
-            completeLp737Lesson(userId, lesson.id, lesson.title);
-            // Fija la lección en la URL: sin esto, el selector "primera sin
-            // completar" saltaría a la siguiente y el estado "Estudiada"
-            // nunca se vería (el original conserva la lección activa).
+            completeLpLesson(userId, def.temaPrefix, def.actividadLabel, lesson.id, lesson.title);
+            // Fija la lección en la URL para que el estado "Estudiada" sea
+            // visible (el selector "primera sin completar" saltaría a la
+            // siguiente en el mismo render).
             irA({ tipo: "modulo", moduleId: module.id }, lesson.id);
           }}
           onGoEvaluacion={() => irA({ tipo: "evaluacion" })}
@@ -165,6 +199,7 @@ function Ruta737Page() {
   } else if (vista.tipo === "cobertura") {
     contenido = (
       <CourseCoverage
+        def={def}
         course={course}
         completedLessons={completed}
         onOpenModule={(id) => irA({ tipo: "modulo", moduleId: id })}
@@ -173,6 +208,7 @@ function Ruta737Page() {
   } else {
     contenido = (
       <CourseDashboard
+        def={def}
         course={course}
         completedLessons={completed}
         percent={percent}
@@ -184,6 +220,7 @@ function Ruta737Page() {
 
   return (
     <CourseShell
+      def={def}
       course={course}
       vista={vista}
       percent={percent}
@@ -191,6 +228,7 @@ function Ruta737Page() {
       menuOpen={menuOpen}
       onMenuToggle={() => setMenuOpen((v) => !v)}
       onNavigate={(v) => irA(v)}
+      onSwitchCourse={cambiarCurso}
     >
       {contenido}
     </CourseShell>
