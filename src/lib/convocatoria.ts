@@ -1,7 +1,7 @@
 /**
  * Fuente única de la próxima aplicación registrada del examen CIAAC.
  *
- * La consumen la portada (countdown), /convocatoria-ciaac-2026 y la
+ * La consumen /ciaac (countdown), /convocatoria-ciaac-2026 y la
  * calculadora. Al pasar la fecha, las páginas cambian solas a su estado
  * "aplicación pasada" (ver ciaacYaPaso) — aun así, actualiza estas
  * constantes en cuanto se conozca el siguiente periodo para volver al

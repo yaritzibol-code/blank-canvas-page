@@ -53,9 +53,10 @@ origen: 2026-08-09.
 
 ## Protocolo de convocatoria CIAAC
 
-La fecha vive en `src/lib/convocatoria.ts` (única fuente; la portada, la
-página de convocatoria y la calculadora la leen de ahí). Las páginas cambian
-solas a modo "aplicación pasada" cuando la fecha vence (`ciaacYaPaso()`), así
+La fecha vive en `src/lib/convocatoria.ts` (única fuente; `/ciaac` con su
+countdown, la página de convocatoria y la calculadora la leen de ahí). Las
+páginas cambian solas a modo "aplicación pasada" cuando la fecha vence
+(`ciaacYaPaso()`), así
 que nada queda caduco — pero el modo "pasada" es un paracaídas, no un estado
 deseable:
 
@@ -67,9 +68,8 @@ deseable:
 
 ## Pendientes operativos (no son de código — requieren cuentas)
 
-- [ ] **Google Search Console**: verificar propiedad de flightpath.mx,
-      enviar `https://flightpath.mx/sitemap.xml`, revisar "Páginas" tras
-      cada despliegue grande.
+- [x] **Google Search Console**: alta hecha (2026-08-14). Queda el hábito:
+      revisar "Páginas" y enviar el sitemap tras cada despliegue grande.
 - [ ] **Bing Webmaster Tools**: alta del sitio + sitemap (ChatGPT/Copilot
       beben del índice de Bing). La llave IndexNow ya está hosteada en
       `public/4cf8c192308fce550b28642710f8825e.txt`; para avisar de URLs
