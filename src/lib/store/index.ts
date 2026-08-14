@@ -21,6 +21,7 @@ export {
 export * from "./yaris";
 export * from "./rtari";
 export * from "./compass";
+export * from "./lp737";
 export {
   ensureSeededAsync,
   DEMO_STUDENT_ID,
