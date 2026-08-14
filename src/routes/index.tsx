@@ -1,7 +1,7 @@
 import { useSessionUser } from "@/lib/store";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useCallback, useEffect, useRef, useState } from "react";
-import type { CSSProperties, ReactNode } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+import { useCallback, useEffect, useState } from "react";
+import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { PlaneField as SharedPlaneField } from "@/components/shared/PlaneField";
 import {
@@ -18,15 +18,6 @@ const ahorroMeses = mesesAhorrados(PRO_MONTHLY_FALLBACK, PRO_ANNUAL_FALLBACK);
 
 /** Comprar lleva a crear cuenta y de ahí directo al checkout de Stripe. */
 const BUY_HREF = `/register?next=${encodeURIComponent("/dashboard/planes?checkout=1")}`;
-
-/**
- * Próxima convocatoria del examen CIAAC (hora Ciudad de México, UTC-6).
- * Actualízala cuando la AFAC publique la siguiente fecha: la cuenta regresiva
- * de la portada se oculta sola cuando esta fecha ya pasó. (Exportada: la
- * calculadora de /calculadora-ciaac la usa como fecha por defecto.)
- */
-export { PROXIMO_CIAAC } from "@/lib/convocatoria";
-import { PROXIMO_CIAAC } from "@/lib/convocatoria";
 
 /*
  * El sistema de diseño público (Nav, Footer, Icon, Btn…) vive en
@@ -80,25 +71,6 @@ export const Route = createFileRoute("/")({
     ],
   }),
 });
-
-function PlaneGlyph({
-  className = "w-5 h-5",
-  style,
-  fill = "currentColor",
-}: {
-  className?: string;
-  style?: CSSProperties;
-  fill?: string;
-}) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} style={style} aria-hidden="true">
-      <path
-        fill={fill}
-        d="M21.5 15.5v-1.6l-7.8-4.9V3.6c0-.95-.77-1.7-1.7-1.7s-1.7.75-1.7 1.7v5.4l-7.8 4.9v1.6l7.8-2.45V18.4l-2.1 1.55v1.45L12 20.3l3.5 1.1v-1.45L13.4 18.4v-4.95l8.1 2.05z"
-      />
-    </svg>
-  );
-}
 
 /* ═══════════════════════════════════════════════════════════════════
    HERO
@@ -272,209 +244,6 @@ function HeroPathyCard() {
         {msgs[i]}
       </p>
     </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   COUNTDOWN  — rolling-digit odometer + flight trajectory
-   ═══════════════════════════════════════════════════════════════════ */
-
-function Countdown({ show = true }: { show?: boolean }) {
-  // Próxima convocatoria CIAAC (hora Ciudad de México, UTC-6). Al pasar la
-  // fecha el componente se oculta solo, en vez de quedarse clavado en 00:00:00.
-  const target = useRef(new Date(PROXIMO_CIAAC).getTime());
-  const [expired, setExpired] = useState(() => Date.now() >= target.current);
-  const WINDOW = 90 * 24 * 3600 * 1000;
-  const start = useRef(target.current - WINDOW);
-  const [t, setT] = useState({ d: 0, h: 0, m: 0, s: 0 });
-  const [prog, setProg] = useState(74);
-  useEffect(() => {
-    const tick = () => {
-      const now = Date.now();
-      if (now >= target.current) {
-        setExpired(true);
-        return;
-      }
-      let diff = Math.max(0, target.current - now);
-      const d = Math.floor(diff / 86400000);
-      diff -= d * 86400000;
-      const h = Math.floor(diff / 3600000);
-      diff -= h * 3600000;
-      const m = Math.floor(diff / 60000);
-      diff -= m * 60000;
-      const s = Math.floor(diff / 1000);
-      setT({ d, h, m, s });
-      const p = (now - start.current) / (target.current - start.current);
-      setProg(Math.min(96, Math.max(4, p * 100)));
-    };
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
-  if (!show || expired) return null;
-
-  const Digit = ({ d }: { d: number }) => (
-    <div className="relative overflow-hidden" style={{ height: "1em", width: "0.62em" }}>
-      <div
-        className="absolute inset-x-0 top-0"
-        style={{
-          transform: `translateY(${-d * 10}%)`,
-          transition: "transform 0.75s cubic-bezier(.34,1.32,.42,1)",
-        }}
-      >
-        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
-          <div key={n} className="flex items-center justify-center" style={{ height: "1em" }}>
-            {n}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-  const Unit = ({ v, l }: { v: number; l: string }) => {
-    const s = String(v).padStart(2, "0");
-    return (
-      <div className="flex flex-col items-center">
-        <div
-          className="flex font-display text-[34px] lg:text-[40px] leading-none tabular-nums tracking-tight text-burgundy"
-          style={{ height: "1em" }}
-        >
-          <Digit d={+s[0]} />
-          <Digit d={+s[1]} />
-        </div>
-        <span className="mt-2.5 text-[10px] uppercase tracking-[0.18em] font-bold text-burgundy/55">
-          {l}
-        </span>
-      </div>
-    );
-  };
-  const Sep = () => (
-    <div className="flex flex-col gap-1.5 pb-6">
-      <span className="w-1 h-1 rounded-full bg-burgundy/35" />
-      <span className="w-1 h-1 rounded-full bg-burgundy/35" />
-    </div>
-  );
-
-  return (
-    <section className="relative">
-      <div className="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8 mt-10 lg:-mt-12 relative z-20">
-        <div className="relative rounded-[28px] border border-burgundy/10 bg-white shadow-lift overflow-hidden">
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(130% 150% at 100% 0%, rgba(242,220,219,0.6), rgba(255,255,255,0) 55%)",
-            }}
-          />
-          <div className="absolute -top-12 right-[14%] w-72 h-44 rounded-full bg-cherry/50 blur-3xl animate-breathe pointer-events-none" />
-
-          <div className="relative px-5 sm:px-6 lg:px-10 py-7 sm:py-8 lg:py-9 grid lg:grid-cols-[280px_1fr] gap-8 lg:gap-12 items-center">
-            <div className="lg:border-r border-burgundy/10 lg:pr-10">
-              <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-bold text-lapis">
-                <span className="w-1.5 h-1.5 rounded-full bg-burgundy animate-pulse-dot" />
-                CIAAC · Edición 2026
-              </div>
-              <div className="mt-4 flex items-end gap-3">
-                <div className="font-display text-[76px] lg:text-[92px] leading-[0.82] tracking-tight text-burgundy">
-                  {t.d}
-                </div>
-                <div className="pb-2.5">
-                  <div className="font-display text-2xl lg:text-3xl text-ink leading-none">
-                    días
-                  </div>
-                  <div className="text-[12.5px] text-ink/45 mt-1.5">para tu examen</div>
-                </div>
-              </div>
-              <div className="mt-4 flex items-center gap-2.5 text-[13.5px] font-medium text-ink/55">
-                <span className="w-5 h-px bg-burgundy/50" /> Cada sesión cuenta.
-              </div>
-              <Link
-                to="/calculadora-ciaac"
-                className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-semibold text-burgundy hover:text-burgundy/75 transition-colors"
-              >
-                ¿Te alcanzan las horas? Calcula tu plan <Icon n="arrow" className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-
-            <div>
-              <div className="relative h-24 sm:h-20 px-1">
-                <div className="absolute left-0 top-0 text-[10px] uppercase tracking-[0.16em] font-bold text-haze-400">
-                  Hoy
-                </div>
-                <div className="absolute right-0 top-0 text-right">
-                  <div className="text-[10px] uppercase tracking-[0.16em] font-bold text-burgundy">
-                    CIAAC
-                  </div>
-                  <div className="text-[10px] font-mono text-haze-400 mt-0.5">17 ago</div>
-                </div>
-                <div
-                  className="absolute top-1/2 left-0 -translate-y-1/2 h-[2px] bg-burgundy rounded-full"
-                  style={{ width: `calc(${prog}% - 14px)` }}
-                />
-                <div
-                  className="absolute top-1/2 -translate-y-1/2 h-[2px] animate-flow"
-                  style={{
-                    left: `calc(${prog}% + 14px)`,
-                    right: 0,
-                    backgroundImage:
-                      "repeating-linear-gradient(to right, rgba(61,93,145,0.45) 0 5px, transparent 5px 14px)",
-                  }}
-                />
-                <div className="absolute top-1/2 left-0 -translate-y-1/2 w-3 h-3 rounded-full bg-white border-2 border-burgundy" />
-                <div className="absolute top-1/2 right-0 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-burgundy ring-4 ring-cherry/40" />
-                {[16, 33, 50, 67, 83].map((pos) => (
-                  <div
-                    key={pos}
-                    className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
-                    style={{
-                      left: `${pos}%`,
-                      background: pos <= prog ? "#6C0820" : "transparent",
-                      border: pos <= prog ? "none" : "1.5px solid rgba(61,93,145,0.4)",
-                    }}
-                  />
-                ))}
-                <div
-                  className="absolute top-1/2"
-                  style={{
-                    left: `min(${prog}%, calc(100% - 26px))`,
-                    transform: "translate(-50%,-50%)",
-                    transition: "left 1s linear",
-                  }}
-                >
-                  <div className="absolute left-1/2 top-1/2 w-9 h-9 -translate-x-1/2 -translate-y-1/2 rounded-full border border-burgundy/55 animate-radar" />
-                  <div
-                    className="absolute left-1/2 top-1/2 w-9 h-9 -translate-x-1/2 -translate-y-1/2 rounded-full border border-burgundy/45 animate-radar"
-                    style={{ animationDelay: "0.6s" }}
-                  />
-                  <div
-                    className="absolute left-1/2 top-1/2 w-9 h-9 -translate-x-1/2 -translate-y-1/2 rounded-full border border-burgundy/35 animate-radar"
-                    style={{ animationDelay: "1.2s" }}
-                  />
-                  <div className="relative animate-float-y-sm">
-                    <div className="absolute inset-0 -m-2 rounded-full bg-burgundy/25 blur-md animate-breathe" />
-                    <div className="relative w-10 h-10 rounded-full bg-white shadow-card ring-1 ring-burgundy/10 grid place-items-center">
-                      <PlaneGlyph className="w-5 h-5 rotate-90 animate-blink" fill="#6C0820" />
-                    </div>
-                    <span
-                      className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-burgundy ring-2 ring-white animate-blink"
-                      style={{ animationDelay: "0.3s" }}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="mt-6 flex items-end gap-5 lg:gap-7">
-                <Unit v={t.d} l="Días" />
-                <Sep />
-                <Unit v={t.h} l="Horas" />
-                <Sep />
-                <Unit v={t.m} l="Min" />
-                <Sep />
-                <Unit v={t.s} l="Seg" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -2203,7 +1972,6 @@ function LandingPage() {
       <main>
         <Hero />
         <ModulosTicker />
-        <Countdown show={true} />
         <RutaCompleta />
         <Showcase />
         <Features />
