@@ -8,6 +8,7 @@ import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { Icon } from "@/components/ui/fp-icon";
 import type { Lp737Course } from "@/lib/lp737/types";
+import { LP_COURSES, type LpCourseDef } from "@/lib/lp/registry";
 
 export type CourseVista =
   | { tipo: "dashboard" }
@@ -143,6 +144,7 @@ export function CourseHero({
 }
 
 export function CourseShell({
+  def,
   course,
   vista,
   percent,
@@ -150,8 +152,10 @@ export function CourseShell({
   menuOpen,
   onMenuToggle,
   onNavigate,
+  onSwitchCourse,
   children,
 }: {
+  def: LpCourseDef;
   course: Lp737Course;
   vista: CourseVista;
   percent: number;
@@ -159,6 +163,7 @@ export function CourseShell({
   menuOpen: boolean;
   onMenuToggle: () => void;
   onNavigate: (vista: CourseVista) => void;
+  onSwitchCourse: (slug: string) => void;
   children: ReactNode;
 }) {
   const activeModule = vista.tipo === "modulo" ? vista.moduleId : null;
@@ -189,10 +194,30 @@ export function CourseShell({
         </span>
       </Link>
       <div className="border-b border-white/10 px-5 py-4">
-        <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/45">
+        <label
+          className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/45"
+          htmlFor="lp-course-select"
+        >
           Ruta de aprendizaje
+        </label>
+        {/* Selector de ruta: cambia de curso conservando el progreso de cada uno */}
+        <div className="relative mt-1.5">
+          <select
+            id="lp-course-select"
+            value={def.slug}
+            onChange={(e) => onSwitchCourse(e.target.value)}
+            className="w-full appearance-none rounded-lg border border-white/15 bg-white/8 py-2 pl-3 pr-8 text-[13px] font-bold text-white outline-none transition-colors hover:bg-white/12 focus:border-coral-300/60 [&>option]:text-ink-950"
+          >
+            {LP_COURSES.map((c) => (
+              <option key={c.slug} value={c.slug}>
+                {c.nombre}
+              </option>
+            ))}
+          </select>
+          <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-coral-300">
+            <Icon n="chevD" size={13} />
+          </span>
         </div>
-        <div className="mt-1 text-[14.5px] font-bold">737 MAX · FCOM Rev. 16</div>
       </div>
       <nav className="min-h-0 flex-1 overflow-y-auto px-2.5 py-3" aria-label="Módulos">
         {course.modules.map((m) => (

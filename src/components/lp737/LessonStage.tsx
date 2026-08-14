@@ -5,7 +5,7 @@
  * "Marcar como estudiada" se habilita solo con TODO respondido (preguntas +
  * consolidaciones), igual que el original.
  */
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import type {
   Lp737Consolidation,
@@ -14,6 +14,7 @@ import type {
   Lp737Question,
 } from "@/lib/lp737/types";
 import type { Lp737ConsolidationResult } from "@/lib/store";
+import type { LpCourseDef } from "@/lib/lp/registry";
 
 const LETTERS = "ABCDEFGHIJ";
 
@@ -294,6 +295,7 @@ export function ConsolidationCard({
 }
 
 export function LessonStage({
+  def,
   module,
   lesson,
   lessonIndex,
@@ -307,6 +309,7 @@ export function LessonStage({
   onGoEvaluacion,
   onGoDashboard,
 }: {
+  def: LpCourseDef;
   module: Lp737Module;
   lesson: Lp737Lesson;
   lessonIndex: number;
@@ -398,6 +401,9 @@ export function LessonStage({
           ))}
         </div>
       </section>
+
+      {lesson.academic_note && <EvidenceSection lesson={lesson} />}
+      {lesson.visual && <VisualSection lesson={lesson} />}
 
       {/* Puntos técnicos */}
       <section className="mt-7">
@@ -546,8 +552,7 @@ export function LessonStage({
         <div className="flex items-center gap-2 text-[12.5px] text-haze-600">
           <Icon n="book" size={15} />
           <span>
-            <strong className="text-ink-950">Fuente</strong> FCOM ref. {lesson.reference} · PDF{" "}
-            {lesson.source_pages[0]}–{lesson.source_pages[1]}
+            <strong className="text-ink-950">Fuente</strong> {def.fuenteFooter(lesson)}
           </span>
         </div>
         <nav aria-label="Navegación entre lecciones" className="flex gap-2.5">
@@ -588,5 +593,186 @@ export function LessonStage({
         </nav>
       </footer>
     </article>
+  );
+}
+
+/* ─────────── Secciones exclusivas de rutas con evidencia (Jeppesen) ─────────── */
+
+/** "Evidencia y jurisdicción": afirmación auditada, cátedra, alcance y fuentes. */
+function EvidenceSection({ lesson }: { lesson: Lp737Lesson }) {
+  const note = lesson.academic_note;
+  const claim = lesson.claim_evidence;
+  if (!note) return null;
+  return (
+    <section className="mt-7 rounded-2xl border border-lapis/25 bg-white p-5">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <SectionLabel>Evidencia y jurisdicción</SectionLabel>
+          <h3 className="font-display mt-1 text-[17px] tracking-tight text-ink-950">
+            {note.title || "Fuente verificada"}
+          </h3>
+        </div>
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-lapis/10 px-3 py-1 text-[11.5px] font-bold text-lapis">
+          <Icon n="check" size={13} /> Verificada
+        </span>
+      </div>
+      {claim?.claim && (
+        <div className="mt-4 rounded-xl bg-haze-50 px-4 py-3">
+          <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-haze-500">
+            Afirmación auditada
+          </span>
+          <p className="mt-1 text-[13.5px] leading-relaxed text-ink-950/85">{claim.claim}</p>
+          {claim.verification_method && (
+            <small className="mt-1 block text-[11.5px] text-haze-500">
+              {claim.verification_method}
+            </small>
+          )}
+        </div>
+      )}
+      <p className="mt-3 text-[13.5px] leading-relaxed text-ink-950/80">{note.content}</p>
+      {(note.scope || lesson.jurisdiction_scope) && (
+        <div className="mt-3 flex gap-2 text-[12.5px] leading-relaxed">
+          <strong className="shrink-0 text-ink-950">Alcance</strong>
+          <span className="text-haze-600">{note.scope || lesson.jurisdiction_scope}</span>
+        </div>
+      )}
+      {note.verification && (
+        <div className="mt-1.5 flex gap-2 text-[12.5px] leading-relaxed">
+          <strong className="shrink-0 text-coral-700">Límite</strong>
+          <span className="text-haze-600">{note.verification}</span>
+        </div>
+      )}
+      {lesson.source_refs && lesson.source_refs.length > 0 && (
+        <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
+          {lesson.source_refs.map((src) => {
+            const body = (
+              <>
+                <strong className="block text-[13px] text-ink-950">{src.label}</strong>
+                <span className="mt-0.5 block text-[12px] leading-relaxed text-haze-600">
+                  {src.detail}
+                </span>
+                <small className="mt-1 block text-[11px] text-haze-400">
+                  {src.supports || src.authority || ""}
+                </small>
+              </>
+            );
+            return src.url ? (
+              <a
+                key={src.label + src.detail}
+                href={src.url}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-xl border border-ink/10 bg-white px-4 py-3 transition-colors hover:border-lapis/50"
+              >
+                {body}
+              </a>
+            ) : (
+              <div
+                key={src.label + src.detail}
+                className="rounded-xl border border-ink/10 bg-white px-4 py-3"
+              >
+                {body}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </section>
+  );
+}
+
+/** "Lectura visual guiada": recorte real del manual con lightbox y laboratorio. */
+function VisualSection({ lesson }: { lesson: Lp737Lesson }) {
+  const visual = lesson.visual;
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const d = dialogRef.current;
+    if (!d) return;
+    if (open && !d.open) d.showModal();
+    if (!open && d.open) d.close();
+  }, [open]);
+  if (!visual) return null;
+  return (
+    <section className="mt-7">
+      <div className="flex items-end justify-between gap-3">
+        <div>
+          <SectionLabel>Lectura visual guiada</SectionLabel>
+          <h3 className="font-display mt-1 text-[19px] tracking-tight text-ink-950">
+            Encuentra la evidencia en la carta
+          </h3>
+        </div>
+        <span className="text-[12.5px] font-semibold text-haze-500">Imagen real</span>
+      </div>
+      <button
+        type="button"
+        aria-label={`Ampliar: ${visual.alt}`}
+        onClick={() => setOpen(true)}
+        className="group relative mt-3 block w-full overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-card"
+      >
+        <img
+          src={visual.src}
+          alt={visual.alt}
+          loading="lazy"
+          className="max-h-[420px] w-full bg-white object-contain"
+        />
+        <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-ink-950/85 px-3 py-1.5 text-[11.5px] font-bold text-white opacity-80 transition-opacity group-hover:opacity-100">
+          <Icon n="search" size={13} /> Ampliar
+        </span>
+      </button>
+      <p className="mt-2.5 text-[12.5px] leading-relaxed">
+        <strong className="text-ink-950">{visual.caption}</strong>{" "}
+        <span className="text-haze-500">{visual.source}</span>
+      </p>
+      {lesson.visual_task && (
+        <details className="mt-3 rounded-2xl border border-ink/10 bg-haze-50 px-5 py-4">
+          <summary className="flex cursor-pointer list-none items-center gap-2 text-[13.5px] font-bold text-ink-950">
+            <Icon n="target" size={15} /> Laboratorio visual
+          </summary>
+          <div className="mt-3">
+            {lesson.visual_task.method && (
+              <span className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-haze-500">
+                {lesson.visual_task.method}
+              </span>
+            )}
+            <p className="mt-1.5 text-[13.5px] leading-relaxed text-ink-950/85">
+              {lesson.visual_task.prompt}
+            </p>
+            <details className="mt-2.5">
+              <summary className="cursor-pointer list-none text-[12.5px] font-bold text-coral-700">
+                Ver criterio de comprobación
+              </summary>
+              <p className="mt-1.5 text-[13px] leading-relaxed text-haze-600">
+                {lesson.visual_task.expected}
+              </p>
+            </details>
+          </div>
+        </details>
+      )}
+
+      {/* Lightbox nativo: click en el fondo o en cerrar lo apaga */}
+      <dialog
+        ref={dialogRef}
+        aria-label={`Vista ampliada: ${visual.alt}`}
+        onClose={() => setOpen(false)}
+        onClick={(e) => {
+          if (e.target === dialogRef.current) setOpen(false);
+        }}
+        className="m-auto w-[min(96vw,1100px)] rounded-2xl border-0 bg-white p-3 shadow-navy backdrop:bg-ink-950/80"
+      >
+        <button
+          type="button"
+          aria-label="Cerrar"
+          onClick={() => setOpen(false)}
+          className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full bg-ink-950 text-white"
+        >
+          <Icon n="close" size={16} />
+        </button>
+        {open && (
+          <img src={visual.src} alt={visual.alt} className="max-h-[86vh] w-full object-contain" />
+        )}
+        <p className="px-2 py-2 text-[12.5px] text-haze-600">{visual.alt}</p>
+      </dialog>
+    </section>
   );
 }
