@@ -814,7 +814,7 @@ function BitacoraPage() {
               }}
             >
               <img
-                src="/assets/pathy-small.png"
+                src="/img/pathy-small.png"
                 alt=""
                 width={18}
                 height={18}

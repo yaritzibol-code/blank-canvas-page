@@ -5,9 +5,10 @@
  * cuestionarios puedan aislarlas del resto del banco.
  */
 import type { SeedQuestion } from "./seed-questions";
-
-/** Código de `fuente` reservado para el examen oficial de Línea Aérea. */
-export const LA_OFICIAL_FUENTE = "LAOF";
+// El código de fuente vive en linea-aerea-meta (módulo ligero); se re-exporta
+// por compatibilidad con los consumidores históricos de este archivo.
+import { LA_OFICIAL_FUENTE } from "./linea-aerea-meta";
+export { LA_OFICIAL_FUENTE };
 
 export interface LineaAereaOficialQuestion extends SeedQuestion {
   id: string;

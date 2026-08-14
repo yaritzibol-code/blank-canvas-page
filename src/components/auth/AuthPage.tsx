@@ -98,7 +98,7 @@ function Icon({
 function PlaneMark({ size = 38 }: { size?: number }) {
   return (
     <img
-      src="/assets/flightpath-logo.png"
+      src="/img/flightpath-logo.png"
       alt="Logo de FlightPath"
       width={size}
       height={size}
@@ -177,6 +177,9 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
       setError("Debes aceptar los Términos y condiciones y el Aviso de privacidad.");
       return;
     }
+    // Igual que en login: en un navegador virgen el seed va en chunk aparte;
+    // registrar antes de sembrar dejaría al usuario fuera del banco inicial.
+    await ensureSeededAsync().catch(() => {});
     setLoading(true);
     const res = await register({ nombre, email, password, marketingOptIn: marketing });
     if (!res.ok) {
@@ -821,7 +824,7 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
               }}
             />
             <img
-              src="/assets/pathy-cloud.png"
+              src="/img/pathy-cloud.png"
               alt="Pathy, tu copiloto de estudio"
               style={{
                 position: "relative",

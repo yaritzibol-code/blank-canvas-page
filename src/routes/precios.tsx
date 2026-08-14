@@ -164,6 +164,7 @@ function PreciosPage() {
         <div className="mx-auto max-w-[1100px] px-6 lg:px-8">
           <SectionHead
             center
+            as="h1"
             eyebrow="Precios"
             title={
               <>

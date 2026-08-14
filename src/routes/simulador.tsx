@@ -147,8 +147,8 @@ function isLineaAerea(q: BankQuestion) {
   return !!q.fuente;
 }
 
-export { LA_OFICIAL_FUENTE } from "@/lib/store/seed-linea-aerea-oficial";
-import { LA_OFICIAL_FUENTE as LAOF } from "@/lib/store/seed-linea-aerea-oficial";
+export { LA_OFICIAL_FUENTE } from "@/lib/store/linea-aerea-meta";
+import { LA_OFICIAL_FUENTE as LAOF } from "@/lib/store/linea-aerea-meta";
 
 function isLineaAereaOficial(q: BankQuestion) {
   return q.fuente === LAOF;

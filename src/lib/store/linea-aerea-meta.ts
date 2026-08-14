@@ -19,6 +19,14 @@ export interface LineaAereaQuiz {
 /** Total del cuestionario OFICIAL de la convocatoria (fuente LAOF). */
 export const LINEA_AEREA_OFICIAL_TOTAL = 377;
 
+/**
+ * Código de `fuente` reservado para el examen oficial de Línea Aérea.
+ * Vive aquí (y no en seed-linea-aerea-oficial.ts) para que importar el código
+ * no arrastre las ~217 KB de reactivos al chunk de entrada: simulador.tsx y
+ * cuestionario.tsx solo necesitan el string.
+ */
+export const LA_OFICIAL_FUENTE = "LAOF";
+
 export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
   {
     code: "ATP",

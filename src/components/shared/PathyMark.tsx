@@ -19,7 +19,7 @@ export function PathyMark({
 }) {
   return (
     <img
-      src="/assets/pathy-cloud.png"
+      src="/img/pathy-cloud.png"
       alt=""
       aria-hidden="true"
       draggable={false}

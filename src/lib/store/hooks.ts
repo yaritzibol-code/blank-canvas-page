@@ -6,14 +6,33 @@
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { useLocation, useNavigate } from "@tanstack/react-router";
 import { subscribe, getVersion } from "./db";
-import { ensureSeededAsync } from "./seed-meta";
+import { ensureSeededAsync, isSeededLocally } from "./seed-meta";
 import { getSessionUser, purgeExpiredAccounts, restoreCloudSession, isAuthSettled } from "./auth";
 import type { User } from "./types";
 
-let initialized = false;
+/** Superficies que sí operan sobre el banco local (siembran al entrar). */
+const RUTAS_APP = /^\/(dashboard|admin|login|register|reset-password|checkout)/;
+
+let booted = false;
+let cloudOnly = false;
 function initOnce() {
-  if (initialized || typeof window === "undefined") return;
-  initialized = true;
+  if (booted || typeof window === "undefined") return;
+
+  // Visitante de paso en una página pública con navegador virgen: NO le
+  // descargamos el banco (~450 KB gzip de JS) solo por pintar el Nav. La nube
+  // sí arranca — el retorno de Google OAuth / enlaces de correo puede
+  // aterrizar en la landing con tokens en el hash y hay que procesarlos.
+  // `booted` queda apagado a propósito: el siguiente mount de un hook (al
+  // navegar a /login, /register o la app) reevalúa y siembra entonces.
+  if (!isSeededLocally() && !RUTAS_APP.test(window.location.pathname)) {
+    if (!cloudOnly) {
+      cloudOnly = true;
+      void restoreCloudSession().catch(() => {});
+    }
+    return;
+  }
+
+  booted = true;
   // El seed (banco completo, ~2 MB) se carga con import() dinámico para que
   // no viaje en el chunk de entrada de cada página pública. El resto del
   // arranque espera a que termine para operar sobre usuarios ya sembrados;

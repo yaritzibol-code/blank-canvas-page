@@ -38,8 +38,12 @@ import {
   useFreeQuota,
 } from "@/lib/store/free-quota";
 
-import { LA_OFICIAL_FUENTE } from "@/lib/store/seed-linea-aerea-oficial";
-import { LINEA_AEREA_OFICIAL, ALL_MANUAL_QUIZZES, isAeronaveFuente } from "@/lib/store/linea-aerea-meta";
+import {
+  LA_OFICIAL_FUENTE,
+  LINEA_AEREA_OFICIAL,
+  ALL_MANUAL_QUIZZES,
+  isAeronaveFuente,
+} from "@/lib/store/linea-aerea-meta";
 
 export const Route = createFileRoute("/cuestionario")({
   component: CuestionarioPage,
