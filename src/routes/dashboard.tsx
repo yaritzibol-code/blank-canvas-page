@@ -193,13 +193,13 @@ const NAV_SECTIONS: {
     label: "Principal",
     items: [
       { icon: "home", label: "Inicio", path: "/dashboard" },
-      { icon: "book", label: "Learning paths", path: "/ruta", nuevo: true },
+      { icon: "book", label: "Learning paths", path: "/ruta", locked: true },
       // El simulador CIAAC no es un módulo aparte: se inicia desde esta misma
       // sección (tarjeta "Simulador CIAAC" dentro de CIAAC).
       { icon: "help", label: "CIAAC", path: "/dashboard/banco" },
       { icon: "plane", label: "Línea Aérea", path: "/dashboard/linea-aerea", nuevo: true },
       { icon: "plane", label: "Aeronaves", path: "/dashboard/manuales", nuevo: true },
-      { icon: "radio", label: "RTARI", path: "/dashboard/rtari", nuevo: true },
+      { icon: "radio", label: "Inglés", path: "/dashboard/rtari", nuevo: true },
       { icon: "compass", label: "Aptitudes", path: "/dashboard/compass", nuevo: true },
       { icon: "clock", label: "Estudiemos Juntos", path: "/dashboard/estudiemos", locked: true },
     ],

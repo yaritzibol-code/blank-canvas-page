@@ -49,6 +49,17 @@ no se publica.
 - "COMPASS" solo se menciona en texto con uso informativo ("procesos de selección tipo
   COMPASS") y siempre acompañado del aviso de no afiliación que vive en el hub del módulo
   (`/dashboard/compass`) — no quitarlo.
+- Lo mismo aplica a **CUT-E / AON**: el hub incluye una ficha de contexto (`modules/compass/cute.ts`)
+  que describe de dónde viene esa batería, qué familia de aptitud mide cada bloque y qué empresas
+  la usan. Es material de referencia con uso nominativo — nunca reproducir sus reactivos, sus
+  estímulos ni sus baremos, ni afirmar que el módulo los replica o equivale a ellos. Los nombres
+  de las pruebas se citan para describir el panorama de evaluación, y cada familia se entrena con
+  el ejercicio original de FlightPath que le corresponde.
+- La lista de aerolíneas y escuelas que usan una batería se publica como información pública,
+  no exhaustiva y sujeta a cambio, y sin logotipos. No usarla para insinuar que FlightPath prepara
+  "para el proceso de X" ni que tiene relación con esas empresas.
+- Una familia sin módulo propio se marca "Próximamente" (hoy: razonamiento lógico/inductivo).
+  No presentarla como cubierta — misma regla que §3.
 - Los scores del módulo son métricas de entrenamiento sobre el historial del propio alumno:
   prohibido presentarlos como porcentaje de aprobación, percentil oficial o predicción de
   contratación. No publicar percentiles de comunidad sin muestra suficiente y revisión.

@@ -26,6 +26,7 @@ import {
 
   type AtpChapter,
 } from "@/lib/store/linea-aerea-meta";
+import { LA_CONVOCATORIA_AVISO, LA_CONVOCATORIA_ESTADO } from "@/lib/convocatoria";
 import { BancoScreen } from "@/components/banco/BancoScreen";
 
 export const Route = createFileRoute("/dashboard/linea-aerea")({
@@ -79,15 +80,15 @@ function LineaAereaHero() {
           textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 14,
         }}
       >
-        <Icon n="plane" size={14} /> Convocatoria activa
+        <Icon n="plane" size={14} /> {LA_CONVOCATORIA_ESTADO}
       </div>
       <h1 style={{ fontFamily: DISPLAY, fontSize: "1.7rem", color: "white", marginBottom: 8, lineHeight: 1.2 }}>
         Primer Oficial — Embraer 190
       </h1>
       <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.6, maxWidth: 620 }}>
-        Tu tablero de estudio para la convocatoria de ASPA de México con Aeroméxico Connect.
-        Cada cuestionario es un mini simulador en modo aprendiendo, con feedback inmediato
-        y Yaris explicándote cada pregunta.
+        {LA_CONVOCATORIA_AVISO} Este es tu tablero para tenerlo cubierto antes de que abra la
+        siguiente: cada cuestionario es un mini simulador en modo aprendiendo, con feedback
+        inmediato y Yaris explicándote cada pregunta.
       </p>
     </div>
   );

@@ -16,6 +16,8 @@ const MANUAL_NOMBRE: Record<string, string> = {
   PHAK: "Handbook (PHAK)",
   ANX10: "Anexo 10",
   LEG: "Legislación",
+  // Legado: el compendio CPAM ahora es el capítulo 9 de Legislación. Se
+  // conserva el nombre para que el historial anterior siga legible.
   CPAM: "Compendio CPAM",
   B737MAX: "Boeing 737 MAX (FCOM)",
 

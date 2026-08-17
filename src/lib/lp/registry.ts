@@ -62,6 +62,14 @@ export function fmtNum(value: number): string {
   return new Intl.NumberFormat("es-MX").format(value).replaceAll(",", " ");
 }
 
+/**
+ * Copy del "próximamente" de Learning paths. Las rutas siguen cerradas a
+ * estudiantes (sólo admin entra al módulo real) mientras se validan las
+ * lecciones y su evaluación.
+ */
+export const LP_PROXIMAMENTE =
+  "Las rutas de aprendizaje están en preparación. Estamos terminando de validar las lecciones y su evaluación antes de abrirlas; mientras tanto, tu banco CIAAC, Línea Aérea y Aeronaves siguen disponibles.";
+
 export const LP_COURSES: LpCourseDef[] = [
   {
     slug: "737-max",

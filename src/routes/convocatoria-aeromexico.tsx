@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { PRO_MONTHLY_FALLBACK, PRO_SETUP_FALLBACK, formatPrice } from "@/lib/pricing";
+import { LA_CONVOCATORIA_AVISO, LA_CONVOCATORIA_ESTADO } from "@/lib/convocatoria";
 import {
   AeroBackdrop,
   Btn,
@@ -23,6 +24,11 @@ import {
  * práctica: el CTA lleva a registro y de ahí directo al checkout de Stripe
  * (/dashboard/planes?checkout=1).
  *
+ * Estado: la convocatoria publicada fue cancelada (ver `lib/convocatoria.ts`).
+ * La página no promete un proceso abierto — está escrita como preparación
+ * anticipada para cuando salga la siguiente, porque el temario publicado es el
+ * mismo y estudiarlo antes es justamente la ventaja que se vende.
+ *
  * Regla de compliance: FlightPath menciona el temario público de la
  * convocatoria (uso informativo legítimo), pero nunca afirma replicar,
  * copiar ni contener material de examen propiedad de la empresa. El banco
@@ -37,12 +43,20 @@ const BUY_HREF = `/register?next=${encodeURIComponent("/dashboard/planes?checkou
 
 const FAQS: { q: string; a: string }[] = [
   {
-    q: "¿Qué es la convocatoria de ASPA y Aeroméxico Connect?",
-    a: "ASPA de México invita a pilotos a unirse como Primer Oficial de la flota Embraer 190 de Aeroméxico Connect. El proceso incluye un examen teórico sobre el temario oficial, la evaluación AON (Aviation Suite, con prueba de inglés), una evaluación en simulador y una entrevista con panel.",
+    q: "¿La convocatoria de Aeroméxico Connect sigue abierta?",
+    a: "No. La convocatoria de Primer Oficial Embraer 190 fue cancelada y por ahora no hay un proceso abierto ni una fecha anunciada para el siguiente. Conviene seguir los canales oficiales de ASPA de México para enterarte en cuanto se publique uno nuevo.",
   },
   {
-    q: "¿Qué requisitos pide la convocatoria de ASPA?",
-    a: "Edad de 18 a 50 años con 11 meses, nacionalidad mexicana por nacimiento, 250 horas de vuelo certificadas en bitácora (mínimo 180 de vuelo real y hasta 70 de simulador), carta de presentación de ASPA y expediente completo y actualizado en el archivo del sindicato.",
+    q: "Si se canceló, ¿tiene caso prepararse ahora?",
+    a: "Sí, y es el mejor momento. El temario del examen teórico es material publicado y estable — ATP, PHAK, Jeppesen, legislación nacional y el Anexo 10 de la OACI — así que no cambia de un proceso a otro. Quien empieza cuando sale la convocatoria estudia contrarreloj; quien ya lo tiene cubierto sólo repasa. Además, las mismas fuentes se usan en procesos de otras aerolíneas.",
+  },
+  {
+    q: "¿Qué es la convocatoria de ASPA y Aeroméxico Connect?",
+    a: "Es la invitación de ASPA de México a pilotos para unirse como Primer Oficial de la flota Embraer 190 de Aeroméxico Connect. El proceso incluye un examen teórico sobre el temario oficial, la evaluación AON (Aviation Suite, con prueba de inglés), una evaluación en simulador y una entrevista con panel. La última convocatoria publicada fue cancelada.",
+  },
+  {
+    q: "¿Qué requisitos pedía la convocatoria de ASPA?",
+    a: "Edad de 18 a 50 años con 11 meses, nacionalidad mexicana por nacimiento, 250 horas de vuelo certificadas en bitácora (mínimo 180 de vuelo real y hasta 70 de simulador), carta de presentación de ASPA y expediente completo y actualizado en el archivo del sindicato. Son la referencia de la convocatoria cancelada: la próxima puede ajustarlos, así que verifícalos en la publicación oficial cuando salga.",
   },
   {
     q: "¿Qué se estudia para el examen teórico del Embraer 190?",
@@ -54,7 +68,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "¿Cómo me ayuda el cuestionario de práctica de FlightPath?",
-    a: "Cubre el temario publicado de la convocatoria con un banco propio de más de 2,800 preguntas con explicación, simulacros cronometrados y un tutor IA disponible 24/7. Practicas cada fuente del temario (ATP, PHAK, Jeppesen, CPAM y OACI Anexo 10) hasta dominar los temas donde más fallas.",
+    a: "Cubre el temario publicado de la convocatoria con un banco propio de más de 2,800 preguntas con explicación, simulacros cronometrados y un tutor IA disponible 24/7. Practicas cada fuente del temario (ATP, PHAK, Jeppesen, CPAM y OACI Anexo 10) hasta dominar los temas donde más fallas, y llegas listo el día que se publique la siguiente convocatoria.",
   },
   {
     q: "¿Qué es la evaluación AON Aviation Suite y cómo se prepara?",
@@ -157,11 +171,14 @@ export const Route = createFileRoute("/convocatoria-aeromexico")({
   component: ConvocatoriaAeromexicoPage,
   head: () => ({
     meta: [
-      { title: "Convocatoria Aeroméxico · ASPA — Primer Oficial Embraer 190 | FlightPath" },
+      {
+        title:
+          "Convocatoria Aeroméxico · ASPA — Primer Oficial Embraer 190: cancelada | FlightPath",
+      },
       {
         name: "description",
         content:
-          "Prepárate para la convocatoria de Aeroméxico Connect y ASPA: Primer Oficial Embraer 190. Practica el temario oficial — ATP, PHAK, Jeppesen General Airway Manual, CPAM y OACI Anexo 10 — con el cuestionario de FlightPath.",
+          "La convocatoria de Primer Oficial Embraer 190 (ASPA · Aeroméxico Connect) fue cancelada. El temario del examen teórico no cambia: prepara ATP, PHAK, Jeppesen General Airway Manual, CPAM y OACI Anexo 10 desde ahora y llega listo a la próxima.",
       },
       {
         name: "keywords",
@@ -170,12 +187,12 @@ export const Route = createFileRoute("/convocatoria-aeromexico")({
       },
       {
         property: "og:title",
-        content: "Convocatoria Aeroméxico · ASPA — Primer Oficial Embraer 190",
+        content: "Convocatoria Aeroméxico · ASPA — Primer Oficial Embraer 190: cancelada",
       },
       {
         property: "og:description",
         content:
-          "Cuestionario de práctica del temario oficial: ATP, PHAK, Jeppesen, CPAM y OACI Anexo 10. Compra tu acceso y practica hasta dominarlo.",
+          "Se canceló la convocatoria, pero el temario sigue igual: ATP, PHAK, Jeppesen, CPAM y OACI Anexo 10. Prepáralo con calma y llega listo a la próxima.",
       },
       { property: "og:url", content: CANONICAL },
       { property: "og:type", content: "website" },
@@ -184,12 +201,12 @@ export const Route = createFileRoute("/convocatoria-aeromexico")({
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "twitter:title",
-        content: "Convocatoria Aeroméxico · ASPA — Primer Oficial Embraer 190",
+        content: "Convocatoria Aeroméxico · ASPA — Primer Oficial Embraer 190: cancelada",
       },
       {
         name: "twitter:description",
         content:
-          "Prepara el temario de la convocatoria (ATP, PHAK, Jeppesen, CPAM y OACI Anexo 10) con un banco propio de 2,800+ preguntas, simulacros cronometrados y tutor IA.",
+          "Convocatoria cancelada, temario intacto: prepara ATP, PHAK, Jeppesen, CPAM y OACI Anexo 10 con un banco propio de 2,800+ preguntas, simulacros cronometrados y tutor IA.",
       },
     ],
     links: [{ rel: "canonical", href: CANONICAL }],
@@ -211,7 +228,7 @@ export const Route = createFileRoute("/convocatoria-aeromexico")({
               "@type": "Course",
               name: "Preparación para la convocatoria ASPA · Aeroméxico Connect — Primer Oficial Embraer 190",
               description:
-                "Cuestionario de práctica del temario publicado: ATP, PHAK, Jeppesen General Airway Manual, CPAM y OACI Anexo 10, con banco propio de 2,800+ preguntas, simulacros cronometrados y tutor IA.",
+                "Preparación anticipada del temario publicado (ATP, PHAK, Jeppesen General Airway Manual, CPAM y OACI Anexo 10) para la próxima convocatoria de Primer Oficial Embraer 190: banco propio de 2,800+ preguntas, simulacros cronometrados y tutor IA. La última convocatoria publicada fue cancelada.",
               inLanguage: "es-MX",
               url: CANONICAL,
               provider: {
@@ -256,6 +273,26 @@ export const Route = createFileRoute("/convocatoria-aeromexico")({
   }),
 });
 
+/** Cintillo de estado: lo primero que ve quien llega buscando la convocatoria. */
+function EstadoConvocatoria() {
+  return (
+    <section className="relative pt-6">
+      <div className="mx-auto max-w-[1240px] px-6 lg:px-8">
+        <div className="flex items-start gap-3 rounded-2xl border border-ink/10 bg-white/80 backdrop-blur px-5 py-4 shadow-card">
+          <span className="w-9 h-9 rounded-xl bg-ink/5 text-ink/60 grid place-items-center shrink-0">
+            <Icon n="bell" className="w-[18px] h-[18px]" />
+          </span>
+          <p className="text-[13.5px] leading-relaxed text-ink/65">
+            <strong className="text-ink">{LA_CONVOCATORIA_ESTADO}.</strong> {LA_CONVOCATORIA_AVISO}{" "}
+            Esta página es una guía de preparación anticipada, no un aviso de proceso abierto: las
+            fechas y requisitos oficiales los publica ASPA de México.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Hero() {
   return (
     <section className="relative">
@@ -264,23 +301,24 @@ function Hero() {
         <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-10 items-center">
           <div className="relative z-10">
             <div className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white/70 backdrop-blur px-3 py-1.5 shadow-card">
-              <span className="w-1.5 h-1.5 rounded-full bg-coral-600 animate-pulse-dot" />
+              <span className="w-1.5 h-1.5 rounded-full bg-ink/35" />
               <span className="text-[12px] font-semibold text-ink/70">
-                ASPA de México · Aeroméxico Connect
+                ASPA de México · Aeroméxico Connect · {LA_CONVOCATORIA_ESTADO}
               </span>
             </div>
             <h1 className="font-display mt-6 text-[40px] sm:text-[54px] lg:text-[60px] leading-[1.0] tracking-tight text-ink">
               Convocatoria Aeroméxico:
-              <span className="block text-coral-600 mt-1">Primer Oficial Embraer 190.</span>
+              <span className="block text-coral-600 mt-1">prepárate para la próxima.</span>
             </h1>
             <p className="mt-7 text-lg lg:text-xl text-ink/55 max-w-xl leading-relaxed">
-              ¿Vas por la convocatoria de ASPA? Practica el temario oficial del examen teórico —
-              ATP, PHAK, Jeppesen General Airway Manual, CPAM y OACI Anexo 10 — con un cuestionario
-              que te dice exactamente dónde estás fallando.
+              La convocatoria de Primer Oficial Embraer 190 fue cancelada. El temario del examen
+              teórico no cambia — ATP, PHAK, Jeppesen General Airway Manual, CPAM y OACI Anexo 10 —
+              así que puedes llegar con él dominado el día que se publique la siguiente, en lugar de
+              empezar contrarreloj.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Btn kind="primary" size="lg" icon="arrow" href={BUY_HREF}>
-                Comprar acceso al cuestionario
+                Empezar mi preparación
               </Btn>
               <Btn kind="light" size="lg" iconLeft="book" href="#temario">
                 Ver el temario oficial
@@ -299,9 +337,9 @@ function Hero() {
                 <Icon n="target" className="w-3.5 h-3.5 text-coral-400" /> Cuestionario E190
               </div>
               <div className="text-white text-[14px] leading-snug">
-                5 fuentes oficiales,
+                5 fuentes del temario,
                 <br />
-                <span className="text-coral-400 font-semibold">una sola ruta de práctica.</span>
+                <span className="text-coral-400 font-semibold">listas antes de que abra.</span>
               </div>
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {["ATP", "PHAK", "Jeppesen", "CPAM", "OACI A10"].map((t) => (
@@ -333,7 +371,7 @@ function Requisitos() {
                 Requisitos de la <span className="text-coral-600">convocatoria ASPA.</span>
               </>
             }
-            sub="ASPA de México invita a unirse a su grupo de pilotos como Primer Oficial de la flota Embraer 190 de Aeroméxico Connect. Esto es lo que pide el proceso."
+            sub="Así se perfilaba el candidato en la última convocatoria publicada para Primer Oficial del Embraer 190 de Aeroméxico Connect. Tenlos listos —expediente, horas y carta— para no perder tiempo cuando se abra la siguiente."
           />
           <div className="space-y-3">
             {REQUISITOS.map((r) => (
@@ -370,7 +408,7 @@ function Temario() {
               Lo que evalúa el <span className="text-coral-600">examen teórico.</span>
             </>
           }
-          sub="Estas son las cinco fuentes que define la empresa para el examen de Primer Oficial Embraer 190, y las materias de FlightPath con las que practicas cada una."
+          sub="Estas son las cinco fuentes que define la empresa para el examen de Primer Oficial Embraer 190, y las materias de FlightPath con las que practicas cada una. Es material publicado y estable: lo que estudias hoy sigue vigente cuando abra el próximo proceso."
         />
         <div className="mt-14 space-y-4">
           {TEMARIO.map((f) => (
@@ -427,7 +465,7 @@ function Evaluaciones() {
               Las 4 evaluaciones <span className="text-coral-600">de la convocatoria.</span>
             </>
           }
-          sub="El examen teórico es la primera puerta. Llega con el temario dominado y el resto del proceso se vuela mejor."
+          sub="El examen teórico es la primera puerta. Es también la única que puedes tener ganada de antemano: llega con el temario dominado y el resto del proceso se vuela mejor."
         />
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {EVALUACIONES.map((e, i) => (
@@ -471,12 +509,14 @@ function Comprar() {
           <div>
             <Eyebrow>Cuestionario de práctica</Eyebrow>
             <h2 className="font-display mt-5 text-4xl lg:text-[48px] leading-[1.02] tracking-tight text-ink">
-              Compra tu acceso y <span className="text-coral-600">practica hasta dominarlo.</span>
+              Empieza hoy y <span className="text-coral-600">llega listo el día uno.</span>
             </h2>
             <p className="mt-5 text-[16.5px] leading-relaxed text-ink/55 max-w-lg">
               El cuestionario Embraer 190 — Primer Oficial vive dentro de FlightPath Pro: practicas
-              el temario oficial completo, mides tu avance por materia y repites los temas débiles
-              hasta que el examen teórico deje de ser incógnita.
+              el temario publicado completo, mides tu avance por materia y repites los temas débiles
+              hasta que el examen teórico deje de ser incógnita. Sin convocatoria abierta no hay
+              prisa, y esa es justo la ventaja: estudias con calma lo que otros estudiarán con
+              reloj.
             </p>
             <div className="mt-7 space-y-3">
               {INCLUYE.map((b) => (
@@ -513,11 +553,11 @@ function Comprar() {
                 inscripción (pago único)
               </div>
               <p className="text-[14px] text-white/60 mt-4">
-                Acceso Pro a toda la plataforma: cuestionario de la convocatoria, banco completo,
-                simulacros y tutor IA. Sin plazos forzosos.
+                Acceso Pro a toda la plataforma: temario de línea aérea, banco completo, simulacros
+                y tutor IA. Sin plazos forzosos.
               </p>
               <Btn kind="primary" size="lg" icon="arrow" className="w-full mt-7" href={BUY_HREF}>
-                Comprar acceso
+                Empezar mi preparación
               </Btn>
               <p className="mt-4 text-center text-[12px] text-white/45">
                 Crea tu cuenta y paga en la página segura de Stripe. Cancela cuando quieras.
@@ -578,9 +618,12 @@ function Aviso() {
         <div className="flex items-start gap-3 rounded-2xl border border-amber-400/40 bg-amber-50/70 px-5 py-4 text-[13px] leading-relaxed text-amber-900/80">
           <Icon n="bell" className="w-4 h-4 mt-0.5 shrink-0" />
           <span>
-            El material de referencia de la convocatoria es el temario y la guía oficiales
-            proporcionados por la empresa. FlightPath es una plataforma independiente: su banco de
-            práctica es propio, desarrollado de forma independiente y mapeado al temario público;{" "}
+            La convocatoria de Primer Oficial Embraer 190 fue cancelada y FlightPath no anuncia,
+            gestiona ni garantiza ningún proceso de selección: las fechas, requisitos y resultados
+            los publica exclusivamente ASPA de México. El material de referencia es el temario y la
+            guía oficiales proporcionados por la empresa. FlightPath es una plataforma
+            independiente: su banco de práctica es propio, desarrollado de forma independiente y
+            mapeado al temario público;{" "}
             <strong>no está afiliada a ASPA de México ni a Aeroméxico</strong>.
           </span>
         </div>
@@ -597,17 +640,17 @@ function CierreCta() {
           <PathyBubble size={120} />
         </div>
         <h2 className="font-display text-5xl lg:text-[64px] leading-[0.98] tracking-tight text-ink">
-          El examen teórico
+          La convocatoria avisa tarde.
           <br />
-          <span className="text-coral-600">se gana practicando.</span>
+          <span className="text-coral-600">Tú puedes ir adelantado.</span>
         </h2>
         <p className="mt-6 text-lg text-ink/55 max-w-xl mx-auto leading-relaxed">
-          Llega a la convocatoria con las 5 fuentes del temario dominadas y tu preparación medida
-          materia por materia.
+          Cuando se publique la siguiente, el temario será el mismo y el plazo será corto. Llega con
+          las 5 fuentes dominadas y tu preparación medida materia por materia.
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
           <Btn kind="primary" size="lg" icon="arrow" href={BUY_HREF}>
-            Comprar acceso al cuestionario
+            Empezar mi preparación
           </Btn>
         </div>
       </div>
@@ -628,6 +671,7 @@ function ConvocatoriaAeromexicoPage() {
       <AeroBackdrop theme="hueso" />
       <Nav />
       <main>
+        <EstadoConvocatoria />
         <Hero />
         <Requisitos />
         <Temario />

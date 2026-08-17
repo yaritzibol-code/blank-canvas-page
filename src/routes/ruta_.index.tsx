@@ -8,13 +8,14 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Icon } from "@/components/ui/fp-icon";
 import { lpCompletedLessons, useRequireAuth, useStore } from "@/lib/store";
-import { LP_COURSES } from "@/lib/lp/registry";
+import { LP_COURSES, LP_PROXIMAMENTE } from "@/lib/lp/registry";
+import { adminOnly } from "@/components/shared/UnderConstruction";
 
 export const Route = createFileRoute("/ruta_/")({
   head: () => ({
     meta: [{ title: "Learning paths · FlightPath" }, { name: "robots", content: "noindex" }],
   }),
-  component: RutaHubPage,
+  component: adminOnly(RutaHubPage, "Learning paths", LP_PROXIMAMENTE),
 });
 
 function RutaHubPage() {
