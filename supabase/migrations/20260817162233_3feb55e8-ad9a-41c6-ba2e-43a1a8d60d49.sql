@@ -1,0 +1,1 @@
+DELETE FROM public.content WHERE collection='questions' AND data->>'fuente'='LEG';
