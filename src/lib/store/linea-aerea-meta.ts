@@ -61,7 +61,7 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
     descripcion: "Legislación aeronáutica mexicana — banco por capítulos (LAC, reglamentos, LFT, circulares y el compendio CPAM).",
     materia: "legislacion",
     icon: "scale",
-    total: 290,
+    total: 80,
     fileUrl: "https://drive.google.com/file/d/1Eq5EDfzqnKDrGDjBQtZDK26QFKp6Gfj0/preview",
   },
 
