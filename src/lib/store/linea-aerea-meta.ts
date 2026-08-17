@@ -154,20 +154,11 @@ export const LEG_PDFS: readonly { label: string; url: string }[] = [
 ];
 
 export const LEG_CHAPTERS: AtpChapter[] = [
-  { num: 1, titulo: "Ley de Aviación Civil", tituloEn: "Ley de Aviación Civil", total: 35 },
-  { num: 2, titulo: "Reglamento de la Ley de Aviación Civil", tituloEn: "Reglamento de la Ley de Aviación Civil", total: 80 },
-  { num: 3, titulo: "Reglamento de la Ley de Aeropuertos", tituloEn: "Reglamento de la Ley de Aeropuertos", total: 25 },
-  { num: 4, titulo: "Reglamento de Medicina de Aviación Civil", tituloEn: "Reglamento de Medicina de Aviación Civil", total: 12 },
-  { num: 5, titulo: "Ley Aduanera", tituloEn: "Ley Aduanera", total: 10 },
-  { num: 6, titulo: "Reglamento de la Ley Aduanera", tituloEn: "Reglamento de la Ley Aduanera", total: 8 },
-  { num: 7, titulo: "Ley Federal del Trabajo", tituloEn: "Ley Federal del Trabajo", total: 50 },
-  { num: 8, titulo: "Circulares obligatorias", tituloEn: "Circulares obligatorias", total: 20 },
-  {
-    num: 9,
-    titulo: "Compendio CPAM",
-    tituloEn: "Compendio de legislación nacional para tripulaciones de vuelo",
-    total: 50,
-  },
+  { num: 1, titulo: "Artículo 32 constitucional y leyes nacionales", tituloEn: "Article 32 and National Laws", total: 10 },
+  { num: 2, titulo: "Convenios internacionales y cronología", tituloEn: "International Conventions and Chronology", total: 10 },
+  { num: 3, titulo: "Convenio de Chicago de 1944", tituloEn: "Chicago Convention 1944", total: 15 },
+  { num: 4, titulo: "Anexos de la OACI", tituloEn: "ICAO Annexes", total: 15 },
+  { num: 5, titulo: "Convenio de Varsovia 1929 y Montreal 1999", tituloEn: "Warsaw 1929 and Montreal 1999", total: 30 },
 ];
 
 export const LEG_TOTAL = LEG_CHAPTERS.reduce((s, c) => s + c.total, 0);
