@@ -66,6 +66,17 @@ function driveDownloadUrl(fileUrl: string): string {
   return m ? `https://drive.google.com/uc?export=download&id=${m[1]}` : fileUrl;
 }
 
+/**
+ * Portada real del material: Drive renderiza la primera página del PDF como
+ * miniatura, así que cada libro muestra su propia portada sin subir imágenes
+ * aparte. Si el archivo no es de Drive (o no da miniatura) se devuelve "" y la
+ * tarjeta cae al degradado con ícono de siempre.
+ */
+function driveCoverUrl(fileUrl: string, width = 420): string {
+  const m = fileUrl.match(/drive\.google\.com\/file\/d\/([\w-]+)/);
+  return m ? `https://drive.google.com/thumbnail?id=${m[1]}&sz=w${width}` : "";
+}
+
 interface YarisMsg { role: "bot" | "user"; text: string; cite?: string; }
 
 /* ─── Main component ─────────────────────────────────────── */
@@ -357,7 +368,7 @@ function BibliotecaPage() {
               style={{ background: "linear-gradient(135deg,#22375C,#2a2a4e)", borderRadius: 18, padding: 28, display: "flex", alignItems: "center", gap: 24, color: "white", cursor: "pointer", transition: "all 0.2s", position: "relative", overflow: "hidden", transform: featHover ? "translateY(-3px)" : "none", boxShadow: featHover ? "0 12px 40px rgba(26,26,46,0.4)" : "none", flexWrap: "wrap" }}
             >
               <div style={{ position: "absolute", top: -60, right: -60, width: 200, height: 200, background: "radial-gradient(circle,rgba(90,134,203,0.3) 0%,transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
-              <div style={{ fontSize: "5rem", flexShrink: 0, display: "flex" }}><Icon n="book" size={72} /></div>
+              <FeaturedCover book={featured} />
               <div style={{ flex: 1, zIndex: 1 }}>
                 <div style={{ display: "inline-flex", alignItems: "center", gap: 5, background: "#F2AEBC", color: "#6C0820", padding: "3px 10px", borderRadius: 20, fontSize: "0.7rem", fontWeight: 700, marginBottom: 8 }}><Icon n="star" size={14} /> Más consultado</div>
                 <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", marginBottom: 6 }}>{featured.title}</h3>
@@ -610,10 +621,48 @@ function BibliotecaPage() {
   );
 }
 
+/* ─── Portada del destacado ──────────────────────────────── */
+
+/** Portada real del libro destacado, con el ícono genérico como respaldo. */
+function FeaturedCover({ book }: { book: Book }) {
+  const cover = driveCoverUrl(book.fileUrl, 300);
+  const [ok, setOk] = useState(cover !== "");
+
+  if (!ok) {
+    return (
+      <div style={{ fontSize: "5rem", flexShrink: 0, display: "flex", zIndex: 1 }}>
+        <Icon n="book" size={72} />
+      </div>
+    );
+  }
+  return (
+    <img
+      src={cover}
+      alt={`Portada de ${book.title}`}
+      loading="lazy"
+      onError={() => setOk(false)}
+      style={{
+        width: 104,
+        height: 140,
+        objectFit: "cover",
+        objectPosition: "top center",
+        borderRadius: 8,
+        flexShrink: 0,
+        zIndex: 1,
+        boxShadow: "0 10px 26px rgba(0,0,0,0.35)",
+      }}
+    />
+  );
+}
+
 /* ─── Book Card ──────────────────────────────────────────── */
 
 function BookCard({ book, locked = false, onOpen }: { book: Book; locked?: boolean; onOpen: () => void }) {
   const [hover, setHover] = useState(false);
+  // Portada real (primera página del PDF). Si Drive no la entrega, se cae al
+  // degradado con ícono que ya usaba la tarjeta.
+  const cover = driveCoverUrl(book.fileUrl);
+  const [coverOk, setCoverOk] = useState(cover !== "");
 
   return (
     <div
@@ -622,9 +671,19 @@ function BookCard({ book, locked = false, onOpen }: { book: Book; locked?: boole
       onMouseLeave={() => setHover(false)}
       style={{ background: "white", borderRadius: 14, overflow: "hidden", cursor: "pointer", transition: "all 0.2s", boxShadow: hover ? "0 8px 24px rgba(61,93,145,0.12)" : "0 2px 10px rgba(61,93,145,0.06)", border: hover ? "2px solid #5A86CB" : "2px solid transparent", transform: hover ? "translateY(-3px)" : "none" }}
     >
-      <div style={{ height: 130, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "3.5rem", position: "relative", background: book.gradient, color: "white" }}>
-        <span style={{ display: "flex" }}><Icon n={book.emoji as never} size={52} /></span>
-        <span style={{ position: "absolute", top: 8, right: 8, padding: "2px 8px", borderRadius: 10, fontSize: "0.62rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.3px", background: book.badgeColor, color: "white" }}>
+      <div style={{ height: 190, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "3.5rem", position: "relative", background: book.gradient, color: "white" }}>
+        {coverOk ? (
+          <img
+            src={cover}
+            alt={`Portada de ${book.title}`}
+            loading="lazy"
+            onError={() => setCoverOk(false)}
+            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block" }}
+          />
+        ) : (
+          <span style={{ display: "flex" }}><Icon n={book.emoji as never} size={52} /></span>
+        )}
+        <span style={{ position: "absolute", top: 8, right: 8, padding: "2px 8px", borderRadius: 10, fontSize: "0.62rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.3px", background: book.badgeColor, color: "white", boxShadow: "0 1px 6px rgba(26,26,46,0.28)" }}>
           {book.badge}
         </span>
         {locked && (

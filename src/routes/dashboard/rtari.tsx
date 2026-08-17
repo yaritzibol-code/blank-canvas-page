@@ -531,7 +531,7 @@ function RtariPage() {
   return (
     <div style={{ maxWidth: 1180, margin: "0 auto", fontFamily: "'Manrope', sans-serif" }}>
       <ModuleHeader
-        eyebrow="Inglés aeronáutico · RTARI"
+        eyebrow="Inglés · Entrevista RTARI"
         title="Tu entrevista"
         accent="personal"
         tail=", en voz alta"

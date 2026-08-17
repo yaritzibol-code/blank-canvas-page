@@ -7,7 +7,7 @@
  * El seed completo se carga con import() dinámico (ver hooks.ts).
  */
 
-export const SEED_VERSION = 8;
+export const SEED_VERSION = 9;
 
 export const DEMO_STUDENT_ID = "usr_maria";
 export const DEMO_ADMIN_ID = "usr_admin";

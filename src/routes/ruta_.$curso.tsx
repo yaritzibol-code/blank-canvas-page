@@ -22,7 +22,8 @@ import {
   useStore,
 } from "@/lib/store";
 import type { Lp737Consolidation, Lp737Course } from "@/lib/lp737/types";
-import { lpCourseBySlug } from "@/lib/lp/registry";
+import { LP_PROXIMAMENTE, lpCourseBySlug } from "@/lib/lp/registry";
+import { adminOnly } from "@/components/shared/UnderConstruction";
 import { CourseShell, type CourseVista } from "@/components/lp737/CourseShell";
 import {
   CourseCoverage,
@@ -47,7 +48,7 @@ export const Route = createFileRoute("/ruta_/$curso")({
     // Página de app (auth): sin indexar.
     meta: [{ title: "Learning path · FlightPath" }, { name: "robots", content: "noindex" }],
   }),
-  component: RutaCursoPage,
+  component: adminOnly(RutaCursoPage, "Learning paths", LP_PROXIMAMENTE),
 });
 
 function RutaCursoPage() {

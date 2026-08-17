@@ -138,13 +138,14 @@ export function seedQuestions(): BankQuestion[] {
     createdAt: daysAgoISO(120, 12),
     updatedAt: daysAgoISO(120, 12),
   }));
-  // Cuestionarios del curso de Línea Aérea (5 manuales × 50 preguntas). Entran
-  // al mismo banco con su materia CIAAC y conservan `fuente` para practicarlos
-  // por manual desde el módulo de Línea Aérea.
+  // Cuestionarios del curso de Línea Aérea. Entran al mismo banco con su
+  // materia CIAAC y conservan `fuente` (y `capitulo` cuando el manual se
+  // practica por capítulos) para practicarlos desde el módulo de Línea Aérea.
   const lineaAerea: BankQuestion[] = LINEA_AEREA_QUESTIONS.map((q) => ({
     id: q.id,
     materia: q.materia,
     fuente: q.fuente,
+    ...(q.capitulo !== undefined && { capitulo: q.capitulo }),
     text: q.text,
     options: q.options,
     correctIndex: q.correctIndex,

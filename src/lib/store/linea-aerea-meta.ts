@@ -58,19 +58,10 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
   {
     code: "LEG",
     titulo: "Legislación",
-    descripcion: "Legislación aeronáutica mexicana — banco por capítulos (LAC, reglamentos, LFT, circulares).",
+    descripcion: "Legislación aeronáutica mexicana — banco por capítulos (LAC, reglamentos, LFT, circulares y el compendio CPAM).",
     materia: "legislacion",
     icon: "scale",
-    total: 240,
-    fileUrl: "https://drive.google.com/file/d/1Eq5EDfzqnKDrGDjBQtZDK26QFKp6Gfj0/preview",
-  },
-  {
-    code: "CPAM",
-    titulo: "Compendio CPAM",
-    descripcion: "Compendio de legislación nacional para tripulaciones de vuelo.",
-    materia: "legislacion",
-    icon: "scale",
-    total: 50,
+    total: 290,
     fileUrl: "https://drive.google.com/file/d/1Eq5EDfzqnKDrGDjBQtZDK26QFKp6Gfj0/preview",
   },
 
@@ -171,6 +162,12 @@ export const LEG_CHAPTERS: AtpChapter[] = [
   { num: 6, titulo: "Reglamento de la Ley Aduanera", tituloEn: "Reglamento de la Ley Aduanera", total: 8 },
   { num: 7, titulo: "Ley Federal del Trabajo", tituloEn: "Ley Federal del Trabajo", total: 50 },
   { num: 8, titulo: "Circulares obligatorias", tituloEn: "Circulares obligatorias", total: 20 },
+  {
+    num: 9,
+    titulo: "Compendio CPAM",
+    tituloEn: "Compendio de legislación nacional para tripulaciones de vuelo",
+    total: 50,
+  },
 ];
 
 export const LEG_TOTAL = LEG_CHAPTERS.reduce((s, c) => s + c.total, 0);
