@@ -10,6 +10,7 @@ import { read, update, uid, nowISO } from "./db";
 import { logActivity } from "./domain";
 import {
   COMPASS_MODULE_MAP,
+  COMPASS_MODULES,
   COMPASS_MODULE_VERSION,
   COMPASS_SCORING_VERSION,
 } from "@/modules/compass/config";
@@ -164,14 +165,8 @@ export interface CompassProfile {
   minutosTotales: number;
 }
 
-const MODULE_IDS: CompassModuleId[] = [
-  "control",
-  "slalom",
-  "memoria",
-  "calculo",
-  "orientacion",
-  "multitarea",
-];
+/** Se deriva del registro de módulos: añadir uno nuevo no exige tocar esto. */
+const MODULE_IDS: CompassModuleId[] = COMPASS_MODULES.map((m) => m.id);
 
 export function compassProfile(userId: string): CompassProfile {
   const sessions = getCompassSessions(userId);

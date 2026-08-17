@@ -30,7 +30,7 @@ import {
 const CANONICAL = "https://flightpath.mx/examen-compass";
 const PUBLICADO = "2026-08-09";
 
-const RESPUESTA_CORTA = `El COMPASS (Computerised Pilot Aptitude Screening System) es la prueba computarizada de aptitud de la firma europea EPST que muchas escuelas de vuelo y aerolíneas usan para filtrar aspirantes a piloto: mide coordinación mano-ojo, memoria de corto plazo, cálculo mental, orientación espacial y capacidad de multitarea. En FlightPath entrenas esas mismas seis familias de aptitud con ejercicios originales en línea — 5 niveles de dificultad, puntuación 0–100 comparable entre sesiones y un simulacro compacto de ~${SIMULACRO_MIN_APROX} minutos — usando solo teclado, mouse o el touch de tu celular.`;
+const RESPUESTA_CORTA = `El COMPASS (Computerised Pilot Aptitude Screening System) es la prueba computarizada de aptitud de la firma europea EPST que muchas escuelas de vuelo y aerolíneas usan para filtrar aspirantes a piloto: mide coordinación mano-ojo, memoria de corto plazo, cálculo mental, orientación espacial y capacidad de multitarea. En FlightPath entrenas esas familias de aptitud con ejercicios originales en línea — 5 niveles de dificultad, puntuación 0–100 comparable entre sesiones y un simulacro compacto de ~${SIMULACRO_MIN_APROX} minutos — usando solo teclado, mouse o el touch de tu celular.`;
 
 const ICONO_MODULO: Record<CompassModuleId, IconName> = {
   control: "target",
@@ -39,6 +39,7 @@ const ICONO_MODULO: Record<CompassModuleId, IconName> = {
   calculo: "grid",
   orientacion: "compass",
   multitarea: "bolt",
+  logica: "spark",
 };
 
 const RASGOS: { icon: IconName; titulo: string; detalle: string }[] = [
@@ -52,7 +53,7 @@ const RASGOS: { icon: IconName; titulo: string; detalle: string }[] = [
     icon: "clock",
     titulo: `Simulacro compacto de ~${SIMULACRO_MIN_APROX} minutos`,
     detalle:
-      "Los seis ejercicios encadenados en una sola sesión con formato fijo, como un día de selección en miniatura: rendir con la cabeza cansada también se entrena.",
+      "Los siete ejercicios encadenados en una sola sesión con formato fijo, como un día de selección en miniatura: rendir con la cabeza cansada también se entrena.",
   },
   {
     icon: "target",
@@ -73,7 +74,7 @@ const CRITERIOS: { icon: IconName; titulo: string; detalle: string }[] = [
     icon: "brain",
     titulo: "Entrena las aptitudes correctas",
     detalle:
-      "Los seis ejercicios cubren las familias clásicas de las pruebas de selección: tracking compensatorio, pursuit, memoria de parámetros, cálculo aeronáutico, orientación QDM/QDR y multitarea con alertas.",
+      "Los siete ejercicios cubren las familias clásicas de las pruebas de selección: tracking compensatorio, pursuit, memoria de parámetros, cálculo aeronáutico, orientación QDM/QDR, multitarea con alertas y razonamiento inductivo.",
   },
   {
     icon: "shield",
@@ -102,7 +103,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "¿Qué módulos tiene el COMPASS?",
-    a: "Las versiones típicas combinan control de vuelo con dos ejes, slalom, memoria de corto plazo, matemáticas mentales, orientación espacial y multitarea; algunas añaden cuestionarios de personalidad o inglés técnico. Los seis ejercicios de FlightPath entrenan esas mismas familias de aptitud con mecánicas originales.",
+    a: "Las versiones típicas combinan control de vuelo con dos ejes, slalom, memoria de corto plazo, matemáticas mentales, orientación espacial y multitarea; algunas añaden cuestionarios de personalidad o inglés técnico. Los siete ejercicios de FlightPath entrenan esas mismas familias de aptitud con mecánicas originales, incluida la de razonamiento inductivo que aparece en los screenings en línea.",
   },
   {
     q: "¿Se puede practicar para una prueba de aptitud, o mide talento fijo?",
@@ -281,7 +282,7 @@ function ExamenCompassPage() {
               eyebrow="El entrenamiento"
               title={
                 <>
-                  Seis ejercicios, <span className="text-coral-600">seis aptitudes.</span>
+                  Siete ejercicios, <span className="text-coral-600">siete aptitudes.</span>
                 </>
               }
               sub="Las mismas familias de aptitud que evalúan las pruebas de selección, convertidas en ejercicios jugables con teclado, mouse o touch."
