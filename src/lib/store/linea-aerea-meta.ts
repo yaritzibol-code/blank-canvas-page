@@ -58,7 +58,7 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
   {
     code: "LEG",
     titulo: "Legislación",
-    descripcion: "Legislación aeronáutica mexicana — banco por capítulos (LAC, reglamentos, LFT, circulares y el compendio CPAM).",
+    descripcion: "Legislación aeronáutica nacional e internacional — Artículo 32, convenios, Chicago, Anexos OACI, Varsovia y Montreal.",
     materia: "legislacion",
     icon: "scale",
     total: 80,
