@@ -164,6 +164,26 @@ export const COMPASS_MODULES: CompassModuleDef[] = [
       "Cambiar de tarea a medias: termina el dato que empezaste.",
     ],
   },
+  {
+    id: "logica",
+    nombre: "Lógica",
+    aptitud: "Razonamiento inductivo con reglas no enunciadas",
+    descripcion:
+      "Una cuadrícula donde cada figura aparece una sola vez por fila y una por columna. Deduce cuál va en el hueco. Nadie te dice la regla: se descubre mirando lo que ya está puesto, y en los niveles altos hay que resolver otra casilla antes de llegar al hueco.",
+    icon: "lightbulb",
+    controlesDesktop: "Click o teclas 1-5 para elegir la figura.",
+    controlesMovil: "Toca la figura.",
+    practicaSec: 0,
+    practicaItems: 8,
+    examenSec: 360,
+    examenItems: 15,
+    examenNivel: 3,
+    erroresComunes: [
+      "Revisar sólo la fila (o sólo la columna): una figura se descarta por las dos.",
+      "Empezar por el hueco: arranca por la fila o columna más llena del tablero.",
+      "Quedarse atorado en una casilla: si no sale de un vistazo, deduce otra primero.",
+    ],
+  },
 ];
 
 export const COMPASS_MODULE_MAP: Record<CompassModuleId, CompassModuleDef> = Object.fromEntries(
@@ -210,7 +230,7 @@ export function buildRunConfig(
 }
 
 /**
- * Simulacro compacto v1 (~20 min): los seis módulos en secuencia con formatos
+ * Simulacro compacto (~24 min): los siete módulos en secuencia con formatos
  * reducidos. Se comunica como entrenamiento integral, nunca como batería
  * oficial ni como equivalencia de resultados.
  */
@@ -226,7 +246,8 @@ export const SIMULACRO_COMPACTO: {
   { moduleId: "memoria", durationSec: 0, items: 5, level: 3 },
   { moduleId: "multitarea", durationSec: 150, items: 0, level: 3 },
   { moduleId: "orientacion", durationSec: 300, items: 8, level: 3 },
+  { moduleId: "logica", durationSec: 240, items: 6, level: 3 },
 ];
 
 /** Duración estimada del simulacro compacto, para mostrarla en el hub. */
-export const SIMULACRO_MIN_APROX = 20;
+export const SIMULACRO_MIN_APROX = 24;

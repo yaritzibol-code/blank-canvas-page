@@ -43,23 +43,18 @@ no se publica.
 ## 5. Pilot Aptitude Trainer (módulo "Compass")
 
 - El módulo entrena **familias de aptitud** (coordinación, tracking, memoria, cálculo,
-  orientación, multitarea) con **ejercicios 100% originales** generados proceduralmente.
-  Nunca afirmar que replica, contiene o equivale a la batería COMPASS/EPST ni a ninguna
-  prueba oficial de aerolínea.
-- "COMPASS" solo se menciona en texto con uso informativo ("procesos de selección tipo
-  COMPASS") y siempre acompañado del aviso de no afiliación que vive en el hub del módulo
-  (`/dashboard/compass`) — no quitarlo.
-- Lo mismo aplica a **CUT-E / AON**: el hub incluye una ficha de contexto (`modules/compass/cute.ts`)
-  que describe de dónde viene esa batería, qué familia de aptitud mide cada bloque y qué empresas
-  la usan. Es material de referencia con uso nominativo — nunca reproducir sus reactivos, sus
-  estímulos ni sus baremos, ni afirmar que el módulo los replica o equivale a ellos. Los nombres
-  de las pruebas se citan para describir el panorama de evaluación, y cada familia se entrena con
-  el ejercicio original de FlightPath que le corresponde.
-- La lista de aerolíneas y escuelas que usan una batería se publica como información pública,
-  no exhaustiva y sujeta a cambio, y sin logotipos. No usarla para insinuar que FlightPath prepara
-  "para el proceso de X" ni que tiene relación con esas empresas.
-- Una familia sin módulo propio se marca "Próximamente" (hoy: razonamiento lógico/inductivo).
-  No presentarla como cubierta — misma regla que §3.
+  orientación, multitarea, razonamiento inductivo) con **ejercicios 100% originales**
+  generados proceduralmente. Nunca afirmar que replica, contiene o equivale a la batería
+  COMPASS/EPST, a CUT-E/AON ni a ninguna prueba oficial de aerolínea.
+- "COMPASS" y "CUT-E / AON" solo se mencionan en texto con uso informativo ("screenings de
+  tipo COMPASS o CUT-E/AON") y siempre acompañados del aviso de no afiliación que vive en el
+  hub del módulo (`/dashboard/compass`) — no quitarlo.
+- Al añadir un ejercicio inspirado en una familia que evalúan esas baterías, lo que se toma es
+  **la aptitud, nunca el reactivo**: el estímulo se genera desde cero con reglas propias y
+  documentadas (ver `modules/compass/logica.ts`). Prohibido reproducir sus ítems, sus
+  ilustraciones o sus baremos, y prohibido nombrar el módulo como la prueba de un tercero.
+- Una familia sin módulo propio se marca "Próximamente" y no se presenta como cubierta —
+  misma regla que §3.
 - Los scores del módulo son métricas de entrenamiento sobre el historial del propio alumno:
   prohibido presentarlos como porcentaje de aprobación, percentil oficial o predicción de
   contratación. No publicar percentiles de comunidad sin muestra suficiente y revisión.

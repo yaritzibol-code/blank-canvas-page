@@ -8,9 +8,9 @@
  *    módulo, modo e input (teclado / mouse / touch).
  */
 
-/** Los seis módulos procedurales de la v1. */
+/** Los módulos procedurales del entrenador. */
 export type CompassModuleId =
-  "control" | "slalom" | "memoria" | "calculo" | "orientacion" | "multitarea";
+  "control" | "slalom" | "memoria" | "calculo" | "orientacion" | "multitarea" | "logica";
 
 export type CompassMode = "practica" | "examen" | "simulacro";
 

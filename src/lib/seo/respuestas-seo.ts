@@ -1118,11 +1118,11 @@ export const RESPUESTAS_SEO: RespuestaSeo[] = [
     faqs: [
       {
         q: "¿FlightPath ofrece el COMPASS?",
-        a: "No: COMPASS es un producto de EPST, con quien FlightPath no tiene afiliación. Lo que FlightPath ofrece es un entrenador con seis ejercicios originales de esas mismas familias de aptitud — control biaxial, slalom, memoria, cálculo, orientación y multitarea — jugables con teclado, mouse o touch.",
+        a: "No: COMPASS es un producto de EPST, con quien FlightPath no tiene afiliación. Lo que FlightPath ofrece es un entrenador con siete ejercicios originales de esas mismas familias de aptitud — control biaxial, slalom, memoria, cálculo, orientación, multitarea y razonamiento inductivo — jugables con teclado, mouse o touch.",
       },
       {
         q: "¿Cuánto dura una prueba de aptitud tipo COMPASS?",
-        a: "Depende de la versión y la institución; las baterías suelen tomar del orden de una a dos horas con todos sus módulos. El dato exacto viene en tu convocatoria. Para entrenar la resistencia, el simulacro compacto de FlightPath encadena los seis ejercicios en una sola sesión.",
+        a: "Depende de la versión y la institución; las baterías suelen tomar del orden de una a dos horas con todos sus módulos. El dato exacto viene en tu convocatoria. Para entrenar la resistencia, el simulacro compacto de FlightPath encadena los siete ejercicios en una sola sesión.",
       },
     ],
     relacionadas: ["como-practicar-para-el-examen-compass", "que-es-aon-aviation-suite"],

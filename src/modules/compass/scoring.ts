@@ -292,9 +292,14 @@ export function scoreCalc(raw: ItemsRaw): {
   };
 }
 
-/* ── Orientación ─────────────────────────────────────────────────────── */
+/* ── Reactivos con error tipificado (Orientación, Lógica) ────────────── */
 
-export function scoreOrientation(
+/**
+ * Scoring de reactivos cuyo `breakdown` cuenta TIPOS DE ERROR en vez de temas.
+ * El score es el de `scoreCalc`; lo que cambia es el consejo, que nombra la
+ * confusión dominante en vez de dar un genérico.
+ */
+export function scoreItemsConError(
   raw: ItemsRaw,
   confusionLabels: Record<string, string>,
 ): { score: number; metrics: CompassMetric[]; advice: string } {

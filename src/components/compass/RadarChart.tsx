@@ -1,5 +1,5 @@
 /**
- * Radar de aptitudes: seis ejes con el score de perfil por módulo (mediana de
+ * Radar de aptitudes: un eje por módulo con su score de perfil (mediana de
  * las últimas sesiones comparables). Los módulos sin datos se dibujan en el
  * anillo mínimo con etiqueta atenuada.
  */

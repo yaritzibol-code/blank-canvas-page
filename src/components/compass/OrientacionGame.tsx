@@ -13,7 +13,7 @@ import {
   type OrientationItem,
   type OrientationOption,
 } from "@/modules/compass/orientacion";
-import { scoreOrientation } from "@/modules/compass/scoring";
+import { scoreItemsConError } from "@/modules/compass/scoring";
 import type { CompassResult, CompassRunConfig } from "@/modules/compass/types";
 import { classifyInput } from "./use-game-loop";
 import { CButton, CCard, Eyebrow, GameTopBar, CORAL, CREAM, HAZE, MONO, NAVY, SERIF } from "./ui";
@@ -301,7 +301,7 @@ export function OrientacionGame({ cfg, onFinish, onQuit }: Props) {
       medianCorrectSec: median,
       breakdown: t.breakdown,
     };
-    const { score, metrics, advice } = scoreOrientation(raw, CONFUSION_LABEL);
+    const { score, metrics, advice } = scoreItemsConError(raw, CONFUSION_LABEL);
     onFinish({
       moduleId: "orientacion",
       score,

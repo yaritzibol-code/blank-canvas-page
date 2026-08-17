@@ -286,7 +286,7 @@ export const MODULOS_LANDING: ModuloLanding[] = [
       },
       {
         t: "Lee tu debrief",
-        d: "Score 0–100, métricas de la sesión, consejo concreto y tu radar de seis aptitudes actualizado.",
+        d: "Score 0–100, métricas de la sesión, consejo concreto y tu radar de aptitudes actualizado.",
       },
     ],
     features: [
@@ -303,18 +303,18 @@ export const MODULOS_LANDING: ModuloLanding[] = [
       {
         icon: "compass",
         t: "Radar de aptitudes",
-        d: "Tus seis aptitudes en un vistazo, con tu módulo débil señalado y consejos concretos según tus métricas de cada sesión.",
+        d: "Tus siete aptitudes en un vistazo, con tu módulo débil señalado y consejos concretos según tus métricas de cada sesión.",
       },
       {
         icon: "clock",
         t: "Simulacro compacto",
-        d: "Los seis ejercicios encadenados en ~20 minutos, como un día de selección en miniatura. Teclado, mouse o touch — sin joystick.",
+        d: "Los siete ejercicios encadenados en ~24 minutos, como un día de selección en miniatura. Teclado, mouse o touch — sin joystick.",
       },
     ],
     detalle: {
       eyebrow: "Los ejercicios",
       titulo: "Seis aptitudes,",
-      tituloCoral: "seis ejercicios medidos.",
+      tituloCoral: "siete ejercicios medidos.",
       sub: "Cada ejercicio entrena una familia de aptitud de las baterías de selección, con práctica por nivel y modo examen.",
       items: COMPASS_MODULES.map((m, i) => ({
         t: m.nombre,
@@ -586,7 +586,7 @@ export const MODULOS_LANDING: ModuloLanding[] = [
       {
         icon: "chart",
         t: "Análisis que conecta todo",
-        d: "Aciertos por materia y tema, tendencia contra tu propia línea base y el radar de tus seis aptitudes. Estudias con evidencia, no con sensaciones.",
+        d: "Aciertos por materia y tema, tendencia contra tu propia línea base y el radar de tus aptitudes. Estudias con evidencia, no con sensaciones.",
       },
       {
         icon: "spark",
@@ -617,7 +617,7 @@ export const MODULOS_LANDING: ModuloLanding[] = [
         },
         {
           t: "Radar de aptitudes",
-          d: "Las seis aptitudes del Pilot Aptitude Trainer en un vistazo.",
+          d: "Las siete aptitudes del Pilot Aptitude Trainer en un vistazo.",
           k: "ANÁLISIS",
         },
         {

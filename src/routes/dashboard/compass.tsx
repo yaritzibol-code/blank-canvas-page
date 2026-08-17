@@ -1,8 +1,8 @@
 /**
  * Pilot Aptitude Trainer — hub del módulo "Compass" de FlightPath.
  *
- * Seis ejercicios procedurales (Control, Slalom, Memoria, Cálculo,
- * Orientación, Multitarea) con práctica por niveles, examen de formato fijo y
+ * Siete ejercicios procedurales (Control, Slalom, Memoria, Cálculo,
+ * Orientación, Multitarea y Lógica) con práctica por niveles, examen fijo y
  * simulacro compacto. Todo determinista por seed, con scoring versionado en el
  * cliente y tendencias que sólo comparan sesiones comparables.
  *
@@ -32,7 +32,6 @@ import {
   SIMULACRO_MIN_APROX,
   type CompassModuleDef,
 } from "@/modules/compass/config";
-import { CUTE_FAMILIAS, CUTE_HISTORIA, CUTE_OPERADORES } from "@/modules/compass/cute";
 import { newSeed, deriveSeed } from "@/modules/compass/rng";
 import type {
   CompassMode,
@@ -46,6 +45,7 @@ import { MemoriaGame } from "@/components/compass/MemoriaGame";
 import { CalculoGame } from "@/components/compass/CalculoGame";
 import { OrientacionGame } from "@/components/compass/OrientacionGame";
 import { MultitareaGame } from "@/components/compass/MultitareaGame";
+import { LogicaGame } from "@/components/compass/LogicaGame";
 import { RadarChart } from "@/components/compass/RadarChart";
 import {
   CButton,
@@ -82,6 +82,7 @@ const GAME: Record<
   calculo: CalculoGame,
   orientacion: OrientacionGame,
   multitarea: MultitareaGame,
+  logica: LogicaGame,
 };
 
 type Fase =
@@ -404,7 +405,7 @@ function CompassPage() {
                   lineHeight: 1.15,
                 }}
               >
-                Simulacro compacto: los seis módulos en secuencia
+                Simulacro compacto: los siete módulos en secuencia
               </div>
               <p
                 style={{
@@ -416,7 +417,7 @@ function CompassPage() {
                 }}
               >
                 Sin pausas largas y con debrief hasta el final, como en un screening real. Tu perfil
-                de aptitudes se actualiza con los seis resultados.
+                de aptitudes se actualiza con los siete resultados.
               </p>
             </div>
             <div style={{ position: "relative" }}>
@@ -446,7 +447,7 @@ function CompassPage() {
       </div>
 
       {/* Módulos */}
-      <Eyebrow style={{ marginBottom: 12 }}>Los seis módulos</Eyebrow>
+      <Eyebrow style={{ marginBottom: 12 }}>Los siete módulos</Eyebrow>
       <div
         style={{
           display: "grid",
@@ -466,9 +467,6 @@ function CompassPage() {
           />
         ))}
       </div>
-
-      {/* Contexto: cómo se arma una batería de screening en línea */}
-      <CuteContexto />
 
       {/* Aptitudes cubiertas en otros módulos de FlightPath */}
       <Eyebrow style={{ marginBottom: 12 }}>Las otras familias, donde ya viven</Eyebrow>
@@ -581,244 +579,9 @@ function CompassPage() {
       <style>{`
         @media (max-width: 900px) {
           .fp-compass-top { grid-template-columns: 1fr !important; }
-          .fp-cute-intro { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>
-  );
-}
-
-/* ── Contexto CUT-E / AON ───────────────────────────────────────────── */
-
-/**
- * Ficha de referencia sobre la batería CUT-E (hoy AON): de dónde viene, qué
- * familia mide cada bloque y con qué ejercicio propio se entrena esa familia.
- *
- * Es contexto de estudio, no contenido de examen: ningún ejercicio del módulo
- * proviene de esa batería (ver `COMPLIANCE.md` §5 y el aviso al pie del hub).
- */
-function CuteContexto() {
-  return (
-    <section style={{ marginBottom: 30 }}>
-      <Eyebrow style={{ marginBottom: 12 }}>Contra qué te vas a medir</Eyebrow>
-
-      {/* Qué es la batería */}
-      <CCard style={{ padding: "24px 26px", marginBottom: 14 }}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "minmax(0, 1fr) minmax(260px, 0.85fr)",
-            gap: 26,
-            alignItems: "start",
-          }}
-          className="fp-cute-intro"
-        >
-          <div>
-            <h2
-              style={{
-                fontFamily: SERIF,
-                fontStyle: "italic",
-                fontSize: "1.75rem",
-                lineHeight: 1.12,
-                color: NAVY,
-                marginBottom: 10,
-              }}
-            >
-              La batería CUT-E, hoy AON
-            </h2>
-            <p style={{ fontSize: "0.88rem", color: HAZE, lineHeight: 1.6, marginBottom: 14 }}>
-              Es el formato que domina el screening en línea de pilotos: pruebas cortas, reglas de
-              una frase y estética de videojuego. Esa sencillez es el disfraz — miden velocidad y
-              precisión al mismo tiempo, y filtran duro. Saber cómo está armada la batería vale
-              tanto como entrenar: ninguna de estas pruebas te va a explicar en el momento qué está
-              midiendo.
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {CUTE_HISTORIA.map((h) => (
-                <div key={h.año} style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
-                  <span
-                    style={{
-                      fontFamily: MONO,
-                      fontSize: "0.62rem",
-                      letterSpacing: "0.1em",
-                      textTransform: "uppercase",
-                      fontWeight: 700,
-                      color: CORAL,
-                      background: `${SALMON}99`,
-                      borderRadius: 999,
-                      padding: "4px 9px",
-                      flexShrink: 0,
-                      minWidth: 78,
-                      textAlign: "center",
-                    }}
-                  >
-                    {h.año}
-                  </span>
-                  <span style={{ fontSize: "0.82rem", color: NAVY, lineHeight: 1.55 }}>
-                    {h.texto}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Quién la usa */}
-          <div
-            style={{
-              background: CREAM,
-              border: `1px solid ${NAVY}12`,
-              borderRadius: 16,
-              padding: "18px 18px 16px",
-            }}
-          >
-            <Eyebrow style={{ marginBottom: 10 }}>Quién la usa</Eyebrow>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 12 }}>
-              {CUTE_OPERADORES.map((o) => (
-                <span
-                  key={o}
-                  style={{
-                    fontSize: "0.72rem",
-                    fontWeight: 700,
-                    color: NAVY,
-                    background: "white",
-                    border: `1px solid ${NAVY}14`,
-                    borderRadius: 999,
-                    padding: "5px 10px",
-                  }}
-                >
-                  {o}
-                </span>
-              ))}
-            </div>
-            <p style={{ fontSize: "0.72rem", color: HAZE, lineHeight: 1.5 }}>
-              Aerolíneas y escuelas que la han usado para seleccionar pilotos, según la información
-              pública de cada proceso. La lista no es exhaustiva y cambia: cada empresa decide sus
-              pruebas y puede cambiarlas sin aviso — confirma siempre en la convocatoria vigente.
-            </p>
-          </div>
-        </div>
-      </CCard>
-
-      {/* Familias de la batería ↔ módulos propios */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          gap: 14,
-        }}
-      >
-        {CUTE_FAMILIAS.map((f) => (
-          <CCard key={f.familia} style={{ padding: "18px 20px" }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "baseline",
-                justifyContent: "space-between",
-                gap: 10,
-                marginBottom: 6,
-              }}
-            >
-              <h3
-                style={{
-                  fontFamily: SERIF,
-                  fontStyle: "italic",
-                  fontSize: "1.25rem",
-                  color: NAVY,
-                  lineHeight: 1.1,
-                }}
-              >
-                {f.familia}
-              </h3>
-              <span
-                style={{
-                  fontFamily: MONO,
-                  fontSize: "0.58rem",
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  fontWeight: 700,
-                  color: f.modulos.length > 0 ? "#0B7A49" : HAZE,
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {f.modulos.length > 0 ? "Entrenable" : "Próximamente"}
-              </span>
-            </div>
-            <p style={{ fontSize: "0.8rem", color: HAZE, lineHeight: 1.55, marginBottom: 12 }}>
-              {f.queMide}
-            </p>
-
-            <div
-              style={{
-                fontFamily: MONO,
-                fontSize: "0.56rem",
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                fontWeight: 700,
-                color: `${NAVY}80`,
-                marginBottom: 6,
-              }}
-            >
-              Pruebas del bloque
-            </div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 14 }}>
-              {f.pruebas.map((p) => (
-                <span
-                  key={p}
-                  style={{
-                    fontSize: "0.7rem",
-                    color: HAZE,
-                    background: CREAM,
-                    border: `1px solid ${NAVY}10`,
-                    borderRadius: 8,
-                    padding: "4px 8px",
-                  }}
-                >
-                  {p}
-                </span>
-              ))}
-            </div>
-
-            <div
-              style={{
-                borderTop: `1px solid ${NAVY}0F`,
-                paddingTop: 11,
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                flexWrap: "wrap",
-              }}
-            >
-              {f.modulos.length > 0 ? (
-                <>
-                  <span style={{ fontSize: "0.74rem", color: HAZE }}>Lo entrenas en</span>
-                  {f.modulos.map((id) => (
-                    <span
-                      key={id}
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: 5,
-                        fontSize: "0.74rem",
-                        fontWeight: 700,
-                        color: CORAL,
-                        background: `${SALMON}80`,
-                        borderRadius: 999,
-                        padding: "4px 10px",
-                      }}
-                    >
-                      <Icon n={COMPASS_MODULE_MAP[id].icon} size={12} />
-                      {COMPASS_MODULE_MAP[id].nombre}
-                    </span>
-                  ))}
-                </>
-              ) : (
-                <span style={{ fontSize: "0.74rem", color: HAZE }}>{f.pendiente}</span>
-              )}
-            </div>
-          </CCard>
-        ))}
-      </div>
-    </section>
   );
 }
 
@@ -1491,7 +1254,7 @@ function SimIntroView({ onBack, onStart }: { onBack: () => void; onStart: () => 
             lineHeight: 1.1,
           }}
         >
-          Los seis módulos, <em style={{ color: CORAL }}>sin descanso</em>
+          Los siete módulos, <em style={{ color: CORAL }}>sin descanso</em>
         </h2>
         <p style={{ color: `${NAVY}99`, fontSize: "0.92rem", lineHeight: 1.6, maxWidth: 560 }}>
           La secuencia corre completa y el debrief llega hasta el final, como en un proceso real.
