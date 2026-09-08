@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { FUENTES_SEO } from "@/lib/seo/fuentes-seo";
+import { LA_CONVOCATORIA_COPY } from "@/lib/convocatoria";
 import {
   AeroBackdrop,
   Btn,
@@ -102,7 +103,7 @@ function Hero() {
             <div className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white/70 backdrop-blur px-3 py-1.5 shadow-card">
               <span className="w-1.5 h-1.5 rounded-full bg-coral-600 animate-pulse-dot" />
               <span className="text-[12px] font-semibold text-ink/70">
-                Examen teórico · Convocatoria de línea aérea
+                Examen teórico · {LA_CONVOCATORIA_COPY.estado}
               </span>
             </div>
             <h1 className="font-display mt-6 text-[38px] sm:text-[52px] lg:text-[58px] leading-[1.0] tracking-tight text-ink">
