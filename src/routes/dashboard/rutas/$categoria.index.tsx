@@ -2,6 +2,7 @@
 import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { LpBreadcrumbs, LpCard, LpGrid, LpHeader } from "@/components/lp/nav";
 import { CATEGORY_STYLE } from "./index";
+import type { FPIconName } from "@/components/ui/fp-icon";
 import { lpCategory, subjectLpCount } from "@/lib/lp/taxonomy";
 import { useSessionUser, useStore } from "@/lib/store";
 import { subjectProgress } from "@/lib/store/lp-nav";
@@ -13,7 +14,7 @@ export const Route = createFileRoute("/dashboard/rutas/$categoria/")({
   component: CategoriaPage,
 });
 
-const SUBJECT_ICONS = ["book", "compass", "cloud", "gauge", "radio", "map", "wind", "tower", "shield", "globe", "brain", "doc"];
+const SUBJECT_ICONS: FPIconName[] = ["book", "compass", "cloud", "gauge", "radio", "map", "wind", "tower", "shield", "globe", "brain", "doc"];
 
 function CategoriaPage() {
   const { categoria } = Route.useParams();
