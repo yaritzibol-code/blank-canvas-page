@@ -69,6 +69,7 @@ import { Route as DashboardLineaAereaRouteImport } from './routes/dashboard/line
 import { Route as DashboardManualesRouteImport } from './routes/dashboard/manuales'
 import { Route as DashboardPerfilRouteImport } from './routes/dashboard/perfil'
 import { Route as DashboardPlanesRouteImport } from './routes/dashboard/planes'
+import { Route as DashboardPruebaRouteImport } from './routes/dashboard/prueba'
 import { Route as DashboardRecordatoriosRouteImport } from './routes/dashboard/recordatorios'
 import { Route as DashboardRtariRouteImport } from './routes/dashboard/rtari'
 import { Route as LineaAereaFuenteRouteImport } from './routes/linea-aerea_.$fuente'
@@ -393,6 +394,11 @@ const DashboardPlanesRoute = DashboardPlanesRouteImport.update({
   path: '/planes',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardPruebaRoute = DashboardPruebaRouteImport.update({
+  id: '/prueba',
+  path: '/prueba',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardRecordatoriosRoute = DashboardRecordatoriosRouteImport.update({
   id: '/recordatorios',
   path: '/recordatorios',
@@ -567,6 +573,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/manuales': typeof DashboardManualesRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/planes': typeof DashboardPlanesRoute
+  '/dashboard/prueba': typeof DashboardPruebaRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/dashboard/rtari': typeof DashboardRtariRoute
   '/linea-aerea/$fuente': typeof LineaAereaFuenteRoute
@@ -650,6 +657,7 @@ export interface FileRoutesByTo {
   '/dashboard/manuales': typeof DashboardManualesRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/planes': typeof DashboardPlanesRoute
+  '/dashboard/prueba': typeof DashboardPruebaRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/dashboard/rtari': typeof DashboardRtariRoute
   '/linea-aerea/$fuente': typeof LineaAereaFuenteRoute
@@ -735,6 +743,7 @@ export interface FileRoutesById {
   '/dashboard/manuales': typeof DashboardManualesRoute
   '/dashboard/perfil': typeof DashboardPerfilRoute
   '/dashboard/planes': typeof DashboardPlanesRoute
+  '/dashboard/prueba': typeof DashboardPruebaRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/dashboard/rtari': typeof DashboardRtariRoute
   '/linea-aerea_/$fuente': typeof LineaAereaFuenteRoute
@@ -821,6 +830,7 @@ export interface FileRouteTypes {
     | '/dashboard/manuales'
     | '/dashboard/perfil'
     | '/dashboard/planes'
+    | '/dashboard/prueba'
     | '/dashboard/recordatorios'
     | '/dashboard/rtari'
     | '/linea-aerea/$fuente'
@@ -904,6 +914,7 @@ export interface FileRouteTypes {
     | '/dashboard/manuales'
     | '/dashboard/perfil'
     | '/dashboard/planes'
+    | '/dashboard/prueba'
     | '/dashboard/recordatorios'
     | '/dashboard/rtari'
     | '/linea-aerea/$fuente'
@@ -988,6 +999,7 @@ export interface FileRouteTypes {
     | '/dashboard/manuales'
     | '/dashboard/perfil'
     | '/dashboard/planes'
+    | '/dashboard/prueba'
     | '/dashboard/recordatorios'
     | '/dashboard/rtari'
     | '/linea-aerea_/$fuente'
@@ -1502,6 +1514,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardPlanesRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/prueba': {
+      id: '/dashboard/prueba'
+      path: '/prueba'
+      fullPath: '/dashboard/prueba'
+      preLoaderRoute: typeof DashboardPruebaRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/recordatorios': {
       id: '/dashboard/recordatorios'
       path: '/recordatorios'
@@ -1674,6 +1693,7 @@ interface DashboardRouteChildren {
   DashboardManualesRoute: typeof DashboardManualesRoute
   DashboardPerfilRoute: typeof DashboardPerfilRoute
   DashboardPlanesRoute: typeof DashboardPlanesRoute
+  DashboardPruebaRoute: typeof DashboardPruebaRoute
   DashboardRecordatoriosRoute: typeof DashboardRecordatoriosRoute
   DashboardRtariRoute: typeof DashboardRtariRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
@@ -1696,6 +1716,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardManualesRoute: DashboardManualesRoute,
   DashboardPerfilRoute: DashboardPerfilRoute,
   DashboardPlanesRoute: DashboardPlanesRoute,
+  DashboardPruebaRoute: DashboardPruebaRoute,
   DashboardRecordatoriosRoute: DashboardRecordatoriosRoute,
   DashboardRtariRoute: DashboardRtariRoute,
   DashboardIndexRoute: DashboardIndexRoute,

@@ -54,7 +54,8 @@ type IconName =
   | "card"
   | "exit"
   | "radio"
-  | "compass";
+  | "compass"
+  | "target";
 
 function Icon({ n, size = 18, sw = 1.6 }: { n: IconName; size?: number; sw?: number }) {
   const p = {
@@ -153,6 +154,12 @@ function Icon({ n, size = 18, sw = 1.6 }: { n: IconName; size?: number; sw?: num
       </>
     ),
     exit: <path d="M15 17l5-5-5-5M20 12H9M12 20H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6" {...p} />,
+    target: (
+      <>
+        <circle cx="12" cy="12" r="8" {...p} />
+        <circle cx="12" cy="12" r="3.4" {...p} />
+      </>
+    ),
   };
   return (
     <svg
@@ -204,6 +211,7 @@ const NAV_SECTIONS: {
       { icon: "radio", label: "Inglés", path: "/dashboard/rtari", nuevo: true },
       { icon: "compass", label: "Aptitudes", path: "/dashboard/compass", nuevo: true },
       { icon: "clock", label: "Estudiemos Juntos", path: "/dashboard/estudiemos", locked: true },
+      { icon: "target", label: "Ponme a Prueba", path: "/dashboard/prueba", nuevo: true },
     ],
   },
   {
