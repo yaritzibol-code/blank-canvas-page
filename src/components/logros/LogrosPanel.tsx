@@ -5,7 +5,7 @@
  */
 import { useMemo, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
-import { useStore } from "@/lib/store";
+import { useStoreVersion } from "@/lib/store";
 import {
   listarLogros,
   getDestacados,
