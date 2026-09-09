@@ -316,6 +316,69 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_posts: {
+        Row: {
+          author: string
+          category: string
+          content: string
+          cover_image: string | null
+          created_at: string
+          cta_link: string | null
+          cta_text: string | null
+          cta_title: string | null
+          excerpt: string
+          featured: boolean
+          id: string
+          published_at: string | null
+          reading_time: number
+          slug: string
+          status: string
+          tags: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author?: string
+          category?: string
+          content?: string
+          cover_image?: string | null
+          created_at?: string
+          cta_link?: string | null
+          cta_text?: string | null
+          cta_title?: string | null
+          excerpt?: string
+          featured?: boolean
+          id?: string
+          published_at?: string | null
+          reading_time?: number
+          slug: string
+          status?: string
+          tags?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string
+          category?: string
+          content?: string
+          cover_image?: string | null
+          created_at?: string
+          cta_link?: string | null
+          cta_text?: string | null
+          cta_title?: string | null
+          excerpt?: string
+          featured?: boolean
+          id?: string
+          published_at?: string | null
+          reading_time?: number
+          slug?: string
+          status?: string
+          tags?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       client_errors: {
         Row: {
           created_at: string

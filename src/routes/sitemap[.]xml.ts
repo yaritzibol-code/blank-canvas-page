@@ -3,7 +3,7 @@ import type {} from "@tanstack/react-start";
 import { MATERIAS_DEF } from "@/lib/store/materias";
 import { FUENTES_SEO } from "@/lib/seo/fuentes-seo";
 import { RESPUESTAS_PUBLICADO, RESPUESTAS_SEO } from "@/lib/seo/respuestas-seo";
-import { BLOG_POSTS } from "@/lib/seo/blog-posts";
+import { listBlogPosts } from "@/lib/blog.functions";
 import { MODULOS_LANDING } from "@/lib/seo/modulos-landing";
 
 const BASE_URL = "https://flightpath.mx";
@@ -86,12 +86,12 @@ export const Route = createFileRoute("/sitemap.xml")({
 
           { path: "/faq", changefreq: "monthly", priority: "0.7", lastmod: V2 },
           { path: "/blog", changefreq: "weekly", priority: "0.7", lastmod: V2 },
-          // Artículos del blog (cluster TOFU de carrera).
-          ...BLOG_POSTS.map((p) => ({
+          // Artículos del blog: salen de la base de datos (tabla blog_posts).
+          ...(await listBlogPosts()).map((p) => ({
             path: `/blog/${p.slug}`,
             changefreq: "monthly" as const,
             priority: "0.7",
-            lastmod: p.publicado,
+            lastmod: (p.updated_at ?? p.published_at ?? "").slice(0, 10) || undefined,
           })),
           { path: "/legal", changefreq: "yearly", priority: "0.3" },
           // /register queda fuera a propósito: está bloqueada en robots.txt y
