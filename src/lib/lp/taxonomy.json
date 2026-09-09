@@ -256,7 +256,7 @@
     },
     {
      "id": "ciaac/aeronaves-y-motores",
-     "titulo": "Aeronaves Y Motores",
+     "titulo": "Aeronaves y Motores",
      "tipo": "materia",
      "containerLabel": "Módulos",
      "containers": [
@@ -838,7 +838,7 @@
     },
     {
      "id": "ciaac/manuales-de-informacion-aeronautica",
-     "titulo": "Manuales De Información Aeronáutica",
+     "titulo": "Manuales de Información Aeronáutica",
      "tipo": "materia",
      "containerLabel": "Módulos",
      "containers": [
@@ -1908,7 +1908,7 @@
     },
     {
      "id": "ciaac/servicios-de-transito-aereo",
-     "titulo": "Servicios De Tránsito Aéreo",
+     "titulo": "Servicios de Tránsito Aéreo",
      "tipo": "materia",
      "containerLabel": "Módulos",
      "containers": [
@@ -2807,7 +2807,7 @@
     },
     {
      "id": "ciaac/medicina-de-aviacion",
-     "titulo": "Medicina De Aviación",
+     "titulo": "Medicina de Aviación",
      "tipo": "materia",
      "containerLabel": "Módulos",
      "containers": [
