@@ -130,10 +130,10 @@ function Badge({
 }
 
 export function LogrosPanel({ userId }: { userId: string }) {
-  useStore();
+  const version = useStoreVersion();
   const [editando, setEditando] = useState(false);
-  const logros = useMemo(() => listarLogros(userId), [userId, editando, useStore()]);
-  const destacados = getDestacados(userId);
+  const logros = useMemo(() => listarLogros(userId), [userId, version]);
+  const destacados = useMemo(() => getDestacados(userId), [userId, version]);
 
   const total = logros.length;
   const desbloqueados = logros.filter((l) => l.desbloqueado).length;
