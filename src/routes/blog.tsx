@@ -112,24 +112,35 @@ function BlogPage() {
             <div className="mx-auto max-w-[1100px] px-6 lg:px-8">
               <a
                 href={`/blog/${destacado.slug}`}
-                className="group grid lg:grid-cols-[1.05fr_1fr] gap-0 overflow-hidden rounded-[28px] border border-ink/8 bg-white shadow-card transition-all duration-300 hover:shadow-lift"
+                className="group relative block overflow-hidden rounded-[28px] bg-ink px-7 py-10 lg:px-14 lg:py-16 shadow-card transition-all duration-300 hover:shadow-lift"
               >
-                <Portada post={destacado} className="h-56 w-full lg:h-full min-h-[220px]" />
-                <div className="p-7 lg:p-10 flex flex-col justify-center">
+                <span
+                  aria-hidden
+                  className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${acento(destacado.category).grad}`}
+                />
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-gradient-to-br from-coral-500/25 to-transparent blur-2xl"
+                />
+                <div className="relative max-w-2xl">
                   <div className="flex items-center gap-3 flex-wrap">
-                    <Pill tone="coral">{destacado.category}</Pill>
-                    <Coord>DESTACADO</Coord>
+                    <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white/80">
+                      {destacado.category}
+                    </span>
+                    <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-white/40">
+                      {acento(destacado.category).code} · DESTACADO
+                    </span>
                   </div>
-                  <h2 className="font-display mt-4 text-[24px] lg:text-[32px] leading-tight tracking-tight text-ink">
+                  <h2 className="font-display mt-6 text-[28px] sm:text-[38px] lg:text-[46px] leading-[1.05] tracking-tight text-white">
                     {destacado.title}
                   </h2>
-                  <p className="mt-3 text-[15px] leading-relaxed text-ink/55">
+                  <p className="mt-4 text-[15.5px] lg:text-[17px] leading-relaxed text-white/60">
                     {destacado.excerpt}
                   </p>
-                  <div className="mt-5 text-[12.5px] text-ink/40">
-                    {fechaCorta(destacado.published_at)} · {destacado.reading_time} min de lectura
+                  <div className="mt-6 font-mono text-[11.5px] uppercase tracking-[0.16em] text-white/35">
+                    {fechaCorta(destacado.published_at)} · {destacado.reading_time} min
                   </div>
-                  <span className="mt-5 inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-coral-700 group-hover:text-coral-600 transition-colors">
+                  <span className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-[13.5px] font-semibold text-ink transition-transform duration-300 group-hover:translate-x-1">
                     Leer el artículo <Icon n="chevR" className="w-4 h-4" />
                   </span>
                 </div>
@@ -137,6 +148,7 @@ function BlogPage() {
             </div>
           </section>
         )}
+
 
         {/* Categorías */}
         <section className="relative pb-6">
