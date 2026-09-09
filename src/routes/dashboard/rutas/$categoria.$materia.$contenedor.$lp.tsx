@@ -7,10 +7,19 @@
 import { useEffect } from "react";
 import { createFileRoute, Link, Navigate, useNavigate } from "@tanstack/react-router";
 import { Icon } from "@/components/ui/fp-icon";
-import { LpBreadcrumbs, LpHeader, LpProgressBar, LpStatusPill } from "@/components/lp/nav";
+import {
+  LpActionBar,
+  LpBreadcrumbs,
+  LpEmptyState,
+  LpHeader,
+  LpProgressBar,
+  LpStatusPill,
+  lpButtonStyle,
+} from "@/components/lp/nav";
 import { lpCategory, lpContainer, lpSubject } from "@/lib/lp/taxonomy";
 import { useSessionUser, useStore } from "@/lib/store";
 import { completeLp, lpAccess, lpNeighbors, startLp, subjectProgress } from "@/lib/store/lp-nav";
+
 
 export const Route = createFileRoute("/dashboard/rutas/$categoria/$materia/$contenedor/$lp")({
   head: () => ({
