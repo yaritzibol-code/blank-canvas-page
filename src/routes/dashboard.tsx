@@ -16,6 +16,7 @@ import { useLiveData } from "@/hooks/use-live-data";
 import { LiveIndicator } from "@/components/shared/LiveIndicator";
 import { TimerProvider } from "@/contexts/StudyTimerContext";
 import { StudySessionProvider } from "@/contexts/StudySessionContext";
+import { LogroWatcher } from "@/components/logros/LogroWatcher";
 import { PathyCloud } from "@/components/estudiemos/PathyCloud";
 
 export const Route = createFileRoute("/dashboard")({
@@ -965,6 +966,7 @@ function DashboardLayout() {
 
         <YarisChatModal open={yarisOpen} onClose={() => setYarisOpen(false)} user={user} />
         <PathyCloud />
+        <LogroWatcher />
       </div>
       </StudySessionProvider>
     </TimerProvider>
