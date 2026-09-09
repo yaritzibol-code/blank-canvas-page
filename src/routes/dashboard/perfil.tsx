@@ -197,7 +197,6 @@ function PerfilPage() {
     setTimeout(() => setSaved(false), 10000);
   };
 
-  const logros = buildLogros(stats, hasBiblioteca, sim80);
 
   const memberSince = (() => {
     const d = new Date(user.createdAt).toLocaleDateString("es-MX", {
