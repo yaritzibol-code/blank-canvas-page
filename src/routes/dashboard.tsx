@@ -15,6 +15,8 @@ import { YarisChatModal } from "@/components/shared/YarisChatModal";
 import { useLiveData } from "@/hooks/use-live-data";
 import { LiveIndicator } from "@/components/shared/LiveIndicator";
 import { TimerProvider } from "@/contexts/StudyTimerContext";
+import { StudySessionProvider } from "@/contexts/StudySessionContext";
+import { PathyCloud } from "@/components/estudiemos/PathyCloud";
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardLayout,
@@ -664,6 +666,7 @@ function DashboardLayout() {
 
   return (
     <TimerProvider>
+      <StudySessionProvider>
       <div
         style={{
           fontFamily: "'Manrope', sans-serif",
@@ -953,7 +956,9 @@ function DashboardLayout() {
         </div>
 
         <YarisChatModal open={yarisOpen} onClose={() => setYarisOpen(false)} user={user} />
+        <PathyCloud />
       </div>
+      </StudySessionProvider>
     </TimerProvider>
   );
 }
