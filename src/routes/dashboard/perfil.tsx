@@ -860,75 +860,7 @@ function PerfilPage() {
       </div>
 
       {/* Logros */}
-      <div
-        style={{
-          background: "white",
-          borderRadius: 16,
-          padding: 20,
-          boxShadow: "0 2px 10px rgba(61,93,145,.06)",
-          marginBottom: 24,
-        }}
-      >
-        <div
-          style={{
-            fontSize: ".78rem",
-            fontWeight: 700,
-            color: "#647DA0",
-            textTransform: "uppercase",
-            letterSpacing: ".5px",
-            marginBottom: 14,
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 7,
-          }}
-        >
-          <Icon n="trophy" size={15} /> Logros desbloqueados
-        </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
-            gap: 10,
-          }}
-        >
-          {logros.map((l) => (
-            <div
-              key={l.name}
-              style={{
-                textAlign: "center",
-                padding: "12px 8px",
-                borderRadius: 10,
-                background: "#f8f9ff",
-                opacity: l.locked ? 0.35 : 1,
-                filter: l.locked ? "grayscale(1)" : undefined,
-              }}
-            >
-              <div
-                style={{
-                  marginBottom: 4,
-                  display: "flex",
-                  justifyContent: "center",
-                  color: "#3D5D91",
-                }}
-              >
-                <Icon n={l.icon as never} size={26} />
-              </div>
-              <div
-                style={{
-                  fontSize: ".7rem",
-                  fontWeight: 700,
-                  color: "#22375C",
-                  marginBottom: 2,
-                  lineHeight: 1.2,
-                }}
-              >
-                {l.name}
-              </div>
-              <div style={{ fontSize: ".62rem", color: "#8DA1BE" }}>{l.desc}</div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <LogrosPanel userId={user.id} />
 
       {/* Progreso, separado por ruta */}
       <div
