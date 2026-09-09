@@ -15,6 +15,8 @@ import { YarisChatModal } from "@/components/shared/YarisChatModal";
 import { useLiveData } from "@/hooks/use-live-data";
 import { LiveIndicator } from "@/components/shared/LiveIndicator";
 import { TimerProvider } from "@/contexts/StudyTimerContext";
+import { StudySessionProvider } from "@/contexts/StudySessionContext";
+import { PathyCloud } from "@/components/estudiemos/PathyCloud";
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardLayout,
