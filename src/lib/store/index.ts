@@ -22,6 +22,7 @@ export * from "./yaris";
 export * from "./rtari";
 export * from "./compass";
 export * from "./lp737";
+export * from "./lp-nav";
 export {
   ensureSeededAsync,
   DEMO_STUDENT_ID,

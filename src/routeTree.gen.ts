@@ -96,6 +96,8 @@ import { Route as ApiPublicHooksHealthCheckRouteImport } from './routes/api/publ
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as DashboardRutasCategoriaIndexRouteImport } from './routes/dashboard/rutas/$categoria.index'
 import { Route as DashboardRutasCategoriaMateriaIndexRouteImport } from './routes/dashboard/rutas/$categoria.$materia.index'
+import { Route as DashboardRutasCategoriaMateriaContenedorIndexRouteImport } from './routes/dashboard/rutas/$categoria.$materia.$contenedor.index'
+import { Route as DashboardRutasCategoriaMateriaContenedorLpRouteImport } from './routes/dashboard/rutas/$categoria.$materia.$contenedor.$lp'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -539,6 +541,18 @@ const DashboardRutasCategoriaMateriaIndexRoute =
     path: '/$categoria/$materia/',
     getParentRoute: () => DashboardRutasRoute,
   } as any)
+const DashboardRutasCategoriaMateriaContenedorIndexRoute =
+  DashboardRutasCategoriaMateriaContenedorIndexRouteImport.update({
+    id: '/$categoria/$materia/$contenedor/',
+    path: '/$categoria/$materia/$contenedor/',
+    getParentRoute: () => DashboardRutasRoute,
+  } as any)
+const DashboardRutasCategoriaMateriaContenedorLpRoute =
+  DashboardRutasCategoriaMateriaContenedorLpRouteImport.update({
+    id: '/$categoria/$materia/$contenedor/$lp',
+    path: '/$categoria/$materia/$contenedor/$lp',
+    getParentRoute: () => DashboardRutasRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -628,6 +642,8 @@ export interface FileRoutesByFullPath {
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/dashboard/rutas/$categoria/': typeof DashboardRutasCategoriaIndexRoute
   '/dashboard/rutas/$categoria/$materia/': typeof DashboardRutasCategoriaMateriaIndexRoute
+  '/dashboard/rutas/$categoria/$materia/$contenedor/$lp': typeof DashboardRutasCategoriaMateriaContenedorLpRoute
+  '/dashboard/rutas/$categoria/$materia/$contenedor/': typeof DashboardRutasCategoriaMateriaContenedorIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -715,6 +731,8 @@ export interface FileRoutesByTo {
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/dashboard/rutas/$categoria': typeof DashboardRutasCategoriaIndexRoute
   '/dashboard/rutas/$categoria/$materia': typeof DashboardRutasCategoriaMateriaIndexRoute
+  '/dashboard/rutas/$categoria/$materia/$contenedor/$lp': typeof DashboardRutasCategoriaMateriaContenedorLpRoute
+  '/dashboard/rutas/$categoria/$materia/$contenedor': typeof DashboardRutasCategoriaMateriaContenedorIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -805,6 +823,8 @@ export interface FileRoutesById {
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/dashboard/rutas/$categoria/': typeof DashboardRutasCategoriaIndexRoute
   '/dashboard/rutas/$categoria/$materia/': typeof DashboardRutasCategoriaMateriaIndexRoute
+  '/dashboard/rutas/$categoria/$materia/$contenedor/$lp': typeof DashboardRutasCategoriaMateriaContenedorLpRoute
+  '/dashboard/rutas/$categoria/$materia/$contenedor/': typeof DashboardRutasCategoriaMateriaContenedorIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -896,6 +916,8 @@ export interface FileRouteTypes {
     | '/api/public/payments/webhook'
     | '/dashboard/rutas/$categoria/'
     | '/dashboard/rutas/$categoria/$materia/'
+    | '/dashboard/rutas/$categoria/$materia/$contenedor/$lp'
+    | '/dashboard/rutas/$categoria/$materia/$contenedor/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -983,6 +1005,8 @@ export interface FileRouteTypes {
     | '/api/public/payments/webhook'
     | '/dashboard/rutas/$categoria'
     | '/dashboard/rutas/$categoria/$materia'
+    | '/dashboard/rutas/$categoria/$materia/$contenedor/$lp'
+    | '/dashboard/rutas/$categoria/$materia/$contenedor'
   id:
     | '__root__'
     | '/'
@@ -1072,6 +1096,8 @@ export interface FileRouteTypes {
     | '/api/public/payments/webhook'
     | '/dashboard/rutas/$categoria/'
     | '/dashboard/rutas/$categoria/$materia/'
+    | '/dashboard/rutas/$categoria/$materia/$contenedor/$lp'
+    | '/dashboard/rutas/$categoria/$materia/$contenedor/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1751,6 +1777,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRutasCategoriaMateriaIndexRouteImport
       parentRoute: typeof DashboardRutasRoute
     }
+    '/dashboard/rutas/$categoria/$materia/$contenedor/': {
+      id: '/dashboard/rutas/$categoria/$materia/$contenedor/'
+      path: '/$categoria/$materia/$contenedor'
+      fullPath: '/dashboard/rutas/$categoria/$materia/$contenedor/'
+      preLoaderRoute: typeof DashboardRutasCategoriaMateriaContenedorIndexRouteImport
+      parentRoute: typeof DashboardRutasRoute
+    }
+    '/dashboard/rutas/$categoria/$materia/$contenedor/$lp': {
+      id: '/dashboard/rutas/$categoria/$materia/$contenedor/$lp'
+      path: '/$categoria/$materia/$contenedor/$lp'
+      fullPath: '/dashboard/rutas/$categoria/$materia/$contenedor/$lp'
+      preLoaderRoute: typeof DashboardRutasCategoriaMateriaContenedorLpRouteImport
+      parentRoute: typeof DashboardRutasRoute
+    }
   }
 }
 
@@ -1758,6 +1798,8 @@ interface DashboardRutasRouteChildren {
   DashboardRutasIndexRoute: typeof DashboardRutasIndexRoute
   DashboardRutasCategoriaIndexRoute: typeof DashboardRutasCategoriaIndexRoute
   DashboardRutasCategoriaMateriaIndexRoute: typeof DashboardRutasCategoriaMateriaIndexRoute
+  DashboardRutasCategoriaMateriaContenedorLpRoute: typeof DashboardRutasCategoriaMateriaContenedorLpRoute
+  DashboardRutasCategoriaMateriaContenedorIndexRoute: typeof DashboardRutasCategoriaMateriaContenedorIndexRoute
 }
 
 const DashboardRutasRouteChildren: DashboardRutasRouteChildren = {
@@ -1765,6 +1807,10 @@ const DashboardRutasRouteChildren: DashboardRutasRouteChildren = {
   DashboardRutasCategoriaIndexRoute: DashboardRutasCategoriaIndexRoute,
   DashboardRutasCategoriaMateriaIndexRoute:
     DashboardRutasCategoriaMateriaIndexRoute,
+  DashboardRutasCategoriaMateriaContenedorLpRoute:
+    DashboardRutasCategoriaMateriaContenedorLpRoute,
+  DashboardRutasCategoriaMateriaContenedorIndexRoute:
+    DashboardRutasCategoriaMateriaContenedorIndexRoute,
 }
 
 const DashboardRutasRouteWithChildren = DashboardRutasRoute._addFileChildren(

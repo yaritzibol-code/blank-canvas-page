@@ -39,6 +39,7 @@ const USER_ARRAY_KEYS = [
   "rtari_sessions",
   "compass_sessions",
   "lp737_state",
+  "lp_started",
 ] as const;
 
 /** Colecciones administrativas guardadas como llave/valor. */
