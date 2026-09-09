@@ -666,6 +666,7 @@ function DashboardLayout() {
 
   return (
     <TimerProvider>
+      <StudySessionProvider>
       <div
         style={{
           fontFamily: "'Manrope', sans-serif",
