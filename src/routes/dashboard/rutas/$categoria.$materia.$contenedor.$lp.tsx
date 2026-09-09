@@ -143,87 +143,73 @@ function LearningPathPage() {
         right={<LpStatusPill status={acceso?.status ?? "en_progreso"} />}
       />
 
-      <div style={{ marginBottom: 22 }}>
+      <div
+        style={{
+          marginBottom: 22,
+          padding: 16,
+          borderRadius: 18,
+          border: "1px solid var(--border)",
+          background: "var(--card)",
+        }}
+      >
         <LpProgressBar percent={estado?.progreso.percent ?? 0} />
-        <div style={{ fontSize: 12.5, color: "hsl(var(--muted-foreground))", marginTop: 8 }}>
+        <div style={{ fontSize: 12.5, color: "var(--muted-foreground)", marginTop: 8 }}>
           {estado?.progreso.done} de {estado?.progreso.total} completados en {subject.titulo}
         </div>
       </div>
 
-      <div
-        style={{
-          padding: 26,
-          borderRadius: 18,
-          border: "1px dashed hsl(var(--border))",
-          background: "hsl(var(--card))",
-          marginBottom: 22,
-        }}
-      >
-        <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 6 }}>Contenido en preparación</div>
-        <p style={{ margin: 0, fontSize: 14, color: "hsl(var(--muted-foreground))" }}>
-          Este learning path ya está creado dentro de la secuencia de {cont.titulo}. Su material de
-          estudio se cargará aquí.
-        </p>
+      <div style={{ marginBottom: 22 }}>
+        <LpEmptyState
+          icon="spark"
+          title="Contenido en preparación"
+          description={`Este learning path ya está creado dentro de la secuencia de ${cont.titulo}. Su material de estudio se cargará aquí.`}
+        />
       </div>
 
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
-        {vecinos?.prev && (
+      <LpActionBar>
+        <div>
+          {vecinos?.prev && (
+            <button
+              type="button"
+              onClick={() => irA(vecinos.prev!.id)}
+              style={lpButtonStyle("ghost")}
+              aria-label={`Anterior: ${vecinos.prev.titulo}`}
+            >
+              <Icon n="chevL" size={15} /> Anterior
+            </button>
+          )}
+        </div>
+
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
+          {!completado && user && (
+            <button
+              type="button"
+              onClick={() => completeLp(user.id, item, subject.titulo)}
+              style={lpButtonStyle("primary")}
+            >
+              <Icon n="check" size={15} /> Marcar como completado
+            </button>
+          )}
+
           <button
             type="button"
-            onClick={() => irA(vecinos.prev!.id)}
-            style={btn("ghost")}
-            aria-label={`Anterior: ${vecinos.prev.titulo}`}
+            disabled={!completado || !vecinos?.next}
+            onClick={() => vecinos?.next && irA(vecinos.next.id)}
+            style={lpButtonStyle(completado && vecinos?.next ? "primary" : "disabled")}
+            title={
+              completado
+                ? vecinos?.next
+                  ? vecinos.next.titulo
+                  : "Terminaste esta materia"
+                : "Completa este learning path para avanzar"
+            }
           >
-            <Icon n="chevL" size={15} /> Anterior
+            Siguiente <Icon n="chevR" size={15} />
           </button>
-        )}
-
-        {!completado && user && (
-          <button
-            type="button"
-            onClick={() => completeLp(user.id, item, subject.titulo)}
-            style={btn("primary")}
-          >
-            <Icon n="check" size={15} /> Marcar como completado
-          </button>
-        )}
-
-        <button
-          type="button"
-          disabled={!completado || !vecinos?.next}
-          onClick={() => vecinos?.next && irA(vecinos.next.id)}
-          style={{
-            ...btn(completado && vecinos?.next ? "primary" : "ghost"),
-            opacity: completado && vecinos?.next ? 1 : 0.5,
-            cursor: completado && vecinos?.next ? "pointer" : "not-allowed",
-          }}
-          title={
-            completado
-              ? vecinos?.next
-                ? vecinos.next.titulo
-                : "Terminaste esta materia"
-              : "Completa este learning path para avanzar"
-          }
-        >
-          Siguiente <Icon n="chevR" size={15} />
-        </button>
-      </div>
+        </div>
+      </LpActionBar>
     </>
   );
 }
 
-function btn(kind: "primary" | "ghost"): React.CSSProperties {
-  return {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 8,
-    padding: "10px 16px",
-    borderRadius: 12,
-    fontWeight: 700,
-    fontSize: 13.5,
-    cursor: "pointer",
-    border: kind === "primary" ? "none" : "1px solid hsl(var(--border))",
-    background: kind === "primary" ? "hsl(var(--primary))" : "transparent",
-    color: kind === "primary" ? "hsl(var(--primary-foreground))" : "inherit",
-  };
 }
