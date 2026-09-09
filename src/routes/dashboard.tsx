@@ -956,7 +956,9 @@ function DashboardLayout() {
         </div>
 
         <YarisChatModal open={yarisOpen} onClose={() => setYarisOpen(false)} user={user} />
+        <PathyCloud />
       </div>
+      </StudySessionProvider>
     </TimerProvider>
   );
 }
