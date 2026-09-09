@@ -5,6 +5,7 @@ import { PlaneField } from "@/components/shared/PlaneField";
 import { PathyMark } from "@/components/shared/PathyMark";
 import { AvatarPicker } from "@/components/shared/AvatarPicker";
 import { CompassLogCard } from "@/components/compass/CompassLogCard";
+import { LogrosPanel } from "@/components/logros/LogrosPanel";
 import {
   useSessionUser,
   useStore,
