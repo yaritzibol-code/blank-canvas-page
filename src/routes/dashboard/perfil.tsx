@@ -5,6 +5,7 @@ import { PlaneField } from "@/components/shared/PlaneField";
 import { PathyMark } from "@/components/shared/PathyMark";
 import { AvatarPicker } from "@/components/shared/AvatarPicker";
 import { CompassLogCard } from "@/components/compass/CompassLogCard";
+import { LogrosPanel } from "@/components/logros/LogrosPanel";
 import {
   useSessionUser,
   useStore,
@@ -17,61 +18,13 @@ import {
   MATERIAS_DEF,
   flushCloudWrites,
 } from "@/lib/store";
-import type { User, StudentStats, RutaPerf } from "@/lib/store";
+import type { User, RutaPerf } from "@/lib/store";
 
 export const Route = createFileRoute("/dashboard/perfil")({
   component: PerfilPage,
 });
 
-/**
- * Umbrales de los logros. La etiqueta se deriva del umbral para que no
- * puedan divergir: antes "Flashmaster / 50 flashcards" se desbloqueaba con 10
- * y "Listo pa' volar / 100% del curso" con una preparación del 80%.
- */
-const LOGRO_RACHA_1 = 7;
-const LOGRO_RACHA_2 = 30;
-const LOGRO_PREGUNTAS = 100;
-const LOGRO_FLASHCARDS = 50;
-const LOGRO_READINESS = 80;
-
-function buildLogros(stats: StudentStats, hasBiblioteca: boolean, sim80: boolean) {
-  return [
-    { icon: "rocket", name: "Primer vuelo", desc: "Primera sesión", locked: stats.temasDone < 1 },
-    {
-      icon: "flame",
-      name: `Racha de ${LOGRO_RACHA_1}`,
-      desc: `${LOGRO_RACHA_1} días seguidos`,
-      locked: stats.streak < LOGRO_RACHA_1,
-    },
-    {
-      icon: "checkCircle",
-      name: `${LOGRO_PREGUNTAS} preguntas`,
-      desc: "Respondidas",
-      locked: stats.answered < LOGRO_PREGUNTAS,
-    },
-    { icon: "target", name: "Simulador", desc: "Primer simulacro", locked: stats.simCount < 1 },
-    { icon: "book", name: "Lector", desc: "Abrió la biblioteca", locked: !hasBiblioteca },
-    {
-      icon: "cards",
-      name: "Flashmaster",
-      desc: `${LOGRO_FLASHCARDS} flashcards dominadas`,
-      locked: stats.flashDominadas < LOGRO_FLASHCARDS,
-    },
-    {
-      icon: "star",
-      name: `Racha de ${LOGRO_RACHA_2}`,
-      desc: `${LOGRO_RACHA_2} días seguidos`,
-      locked: stats.streak < LOGRO_RACHA_2,
-    },
-    { icon: "medal", name: "80% en sim", desc: "Aprobar simulador", locked: !sim80 },
-    {
-      icon: "plane",
-      name: "Listo pa' volar",
-      desc: `${LOGRO_READINESS}% de preparación estimada`,
-      locked: stats.readiness === null || stats.readiness < LOGRO_READINESS,
-    },
-  ];
-}
+/* Los logros viven ahora en `@/lib/logros` (catálogo oficial de 100). */
 
 const colorFor = (avg: number | null) =>
   avg === null ? "#3D5D91" : avg >= 70 ? "#2ecc71" : avg >= 50 ? "#f39c12" : "#e74c3c";
@@ -197,7 +150,6 @@ function PerfilPage() {
     setTimeout(() => setSaved(false), 10000);
   };
 
-  const logros = buildLogros(stats, hasBiblioteca, sim80);
 
   const memberSince = (() => {
     const d = new Date(user.createdAt).toLocaleDateString("es-MX", {
@@ -860,75 +812,7 @@ function PerfilPage() {
       </div>
 
       {/* Logros */}
-      <div
-        style={{
-          background: "white",
-          borderRadius: 16,
-          padding: 20,
-          boxShadow: "0 2px 10px rgba(61,93,145,.06)",
-          marginBottom: 24,
-        }}
-      >
-        <div
-          style={{
-            fontSize: ".78rem",
-            fontWeight: 700,
-            color: "#647DA0",
-            textTransform: "uppercase",
-            letterSpacing: ".5px",
-            marginBottom: 14,
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 7,
-          }}
-        >
-          <Icon n="trophy" size={15} /> Logros desbloqueados
-        </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
-            gap: 10,
-          }}
-        >
-          {logros.map((l) => (
-            <div
-              key={l.name}
-              style={{
-                textAlign: "center",
-                padding: "12px 8px",
-                borderRadius: 10,
-                background: "#f8f9ff",
-                opacity: l.locked ? 0.35 : 1,
-                filter: l.locked ? "grayscale(1)" : undefined,
-              }}
-            >
-              <div
-                style={{
-                  marginBottom: 4,
-                  display: "flex",
-                  justifyContent: "center",
-                  color: "#3D5D91",
-                }}
-              >
-                <Icon n={l.icon as never} size={26} />
-              </div>
-              <div
-                style={{
-                  fontSize: ".7rem",
-                  fontWeight: 700,
-                  color: "#22375C",
-                  marginBottom: 2,
-                  lineHeight: 1.2,
-                }}
-              >
-                {l.name}
-              </div>
-              <div style={{ fontSize: ".62rem", color: "#8DA1BE" }}>{l.desc}</div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <LogrosPanel userId={user.id} />
 
       {/* Progreso, separado por ruta */}
       <div
