@@ -23,55 +23,7 @@ export const Route = createFileRoute("/dashboard/perfil")({
   component: PerfilPage,
 });
 
-/**
- * Umbrales de los logros. La etiqueta se deriva del umbral para que no
- * puedan divergir: antes "Flashmaster / 50 flashcards" se desbloqueaba con 10
- * y "Listo pa' volar / 100% del curso" con una preparación del 80%.
- */
-const LOGRO_RACHA_1 = 7;
-const LOGRO_RACHA_2 = 30;
-const LOGRO_PREGUNTAS = 100;
-const LOGRO_FLASHCARDS = 50;
-const LOGRO_READINESS = 80;
-
-function buildLogros(stats: StudentStats, hasBiblioteca: boolean, sim80: boolean) {
-  return [
-    { icon: "rocket", name: "Primer vuelo", desc: "Primera sesión", locked: stats.temasDone < 1 },
-    {
-      icon: "flame",
-      name: `Racha de ${LOGRO_RACHA_1}`,
-      desc: `${LOGRO_RACHA_1} días seguidos`,
-      locked: stats.streak < LOGRO_RACHA_1,
-    },
-    {
-      icon: "checkCircle",
-      name: `${LOGRO_PREGUNTAS} preguntas`,
-      desc: "Respondidas",
-      locked: stats.answered < LOGRO_PREGUNTAS,
-    },
-    { icon: "target", name: "Simulador", desc: "Primer simulacro", locked: stats.simCount < 1 },
-    { icon: "book", name: "Lector", desc: "Abrió la biblioteca", locked: !hasBiblioteca },
-    {
-      icon: "cards",
-      name: "Flashmaster",
-      desc: `${LOGRO_FLASHCARDS} flashcards dominadas`,
-      locked: stats.flashDominadas < LOGRO_FLASHCARDS,
-    },
-    {
-      icon: "star",
-      name: `Racha de ${LOGRO_RACHA_2}`,
-      desc: `${LOGRO_RACHA_2} días seguidos`,
-      locked: stats.streak < LOGRO_RACHA_2,
-    },
-    { icon: "medal", name: "80% en sim", desc: "Aprobar simulador", locked: !sim80 },
-    {
-      icon: "plane",
-      name: "Listo pa' volar",
-      desc: `${LOGRO_READINESS}% de preparación estimada`,
-      locked: stats.readiness === null || stats.readiness < LOGRO_READINESS,
-    },
-  ];
-}
+/* Los logros viven ahora en `@/lib/logros` (catálogo oficial de 100). */
 
 const colorFor = (avg: number | null) =>
   avg === null ? "#3D5D91" : avg >= 70 ? "#2ecc71" : avg >= 50 ? "#f39c12" : "#e74c3c";
