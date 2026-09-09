@@ -18,7 +18,7 @@ import {
   MATERIAS_DEF,
   flushCloudWrites,
 } from "@/lib/store";
-import type { User, StudentStats, RutaPerf } from "@/lib/store";
+import type { User, RutaPerf } from "@/lib/store";
 
 export const Route = createFileRoute("/dashboard/perfil")({
   component: PerfilPage,
