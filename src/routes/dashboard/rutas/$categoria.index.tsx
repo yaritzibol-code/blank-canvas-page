@@ -1,6 +1,8 @@
 /** Categoría → materias (CIAAC) o módulos (Línea Aérea). */
 import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { LpBreadcrumbs, LpCard, LpGrid, LpHeader } from "@/components/lp/nav";
+import { CATEGORY_STYLE } from "./index";
+import type { FPIconName } from "@/components/ui/fp-icon";
 import { lpCategory, subjectLpCount } from "@/lib/lp/taxonomy";
 import { useSessionUser, useStore } from "@/lib/store";
 import { subjectProgress } from "@/lib/store/lp-nav";
@@ -11,6 +13,8 @@ export const Route = createFileRoute("/dashboard/rutas/$categoria/")({
   }),
   component: CategoriaPage,
 });
+
+const SUBJECT_ICONS: FPIconName[] = ["book", "compass", "cloud", "gauge", "radio", "map", "wind", "tower", "shield", "globe", "brain", "doc"];
 
 function CategoriaPage() {
   const { categoria } = Route.useParams();
@@ -24,6 +28,8 @@ function CategoriaPage() {
 
   if (!cat) return <Navigate to="/dashboard/rutas" />;
 
+  const accent = CATEGORY_STYLE[cat.id]?.accent ?? "var(--primary)";
+
   return (
     <>
       <LpBreadcrumbs
@@ -31,7 +37,7 @@ function CategoriaPage() {
       />
       <LpHeader eyebrow={cat.subjectLabel} title={cat.titulo} />
       <LpGrid>
-        {cat.subjects.map((s) => {
+        {cat.subjects.map((s, i) => {
           const p = avance.find((a) => a.id === s.id);
           const slug = s.id.split("/")[1];
           return (
@@ -40,10 +46,13 @@ function CategoriaPage() {
               to="/dashboard/rutas/$categoria/$materia"
               params={{ categoria: cat.id, materia: slug }}
               title={s.titulo}
+              icon={SUBJECT_ICONS[i % SUBJECT_ICONS.length]}
+              accent={accent}
               meta={`${s.containers.length} ${s.containerLabel.toLowerCase()} · ${subjectLpCount(s)} learning paths${
                 p && p.done ? ` · ${p.done} completados` : ""
               }`}
               percent={p?.percent ?? 0}
+              right={<span />}
             />
           );
         })}

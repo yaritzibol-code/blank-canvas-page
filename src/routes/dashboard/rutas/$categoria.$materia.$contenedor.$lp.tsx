@@ -7,10 +7,19 @@
 import { useEffect } from "react";
 import { createFileRoute, Link, Navigate, useNavigate } from "@tanstack/react-router";
 import { Icon } from "@/components/ui/fp-icon";
-import { LpBreadcrumbs, LpHeader, LpProgressBar, LpStatusPill } from "@/components/lp/nav";
+import {
+  LpActionBar,
+  LpBreadcrumbs,
+  LpEmptyState,
+  LpHeader,
+  LpProgressBar,
+  LpStatusPill,
+  lpButtonStyle,
+} from "@/components/lp/nav";
 import { lpCategory, lpContainer, lpSubject } from "@/lib/lp/taxonomy";
 import { useSessionUser, useStore } from "@/lib/store";
 import { completeLp, lpAccess, lpNeighbors, startLp, subjectProgress } from "@/lib/store/lp-nav";
+
 
 export const Route = createFileRoute("/dashboard/rutas/$categoria/$materia/$contenedor/$lp")({
   head: () => ({
@@ -71,43 +80,29 @@ function LearningPathPage() {
             { label: item.titulo },
           ]}
         />
-        <div
-          style={{
-            padding: 28,
-            borderRadius: 18,
-            border: "1px solid hsl(var(--border))",
-            background: "hsl(var(--card))",
-            textAlign: "center",
-          }}
-        >
-          <Icon n="lock" size={26} />
-          <h1 style={{ fontSize: 20, margin: "12px 0 6px" }}>{item.titulo}</h1>
-          <p style={{ color: "hsl(var(--muted-foreground))", fontSize: 14.5, margin: "0 0 18px" }}>
-            {acceso.lock === "plan"
+        <LpEmptyState
+          icon="lock"
+          title={item.titulo}
+          description={
+            acceso.lock === "plan"
               ? "Este learning path está incluido en FlightPath Pro."
-              : "Completa el learning path anterior de la secuencia para abrir este."}
-          </p>
-          <Link
-            to={
-              acceso.lock === "plan"
-                ? "/dashboard/planes"
-                : "/dashboard/rutas/$categoria/$materia/$contenedor"
-            }
-            params={acceso.lock === "plan" ? undefined : { categoria, materia, contenedor }}
-            style={{
-              display: "inline-block",
-              padding: "10px 18px",
-              borderRadius: 12,
-              background: "hsl(var(--primary))",
-              color: "hsl(var(--primary-foreground))",
-              textDecoration: "none",
-              fontWeight: 700,
-              fontSize: 14,
-            }}
-          >
-            {acceso.lock === "plan" ? "Ver planes" : "Volver al listado"}
-          </Link>
-        </div>
+              : "Completa el learning path anterior de la secuencia para abrir este."
+          }
+          action={
+            <Link
+              to={
+                acceso.lock === "plan"
+                  ? "/dashboard/planes"
+                  : "/dashboard/rutas/$categoria/$materia/$contenedor"
+              }
+              params={acceso.lock === "plan" ? undefined : { categoria, materia, contenedor }}
+              style={{ ...lpButtonStyle("primary"), textDecoration: "none" }}
+            >
+              {acceso.lock === "plan" ? "Ver planes" : "Volver al listado"}
+            </Link>
+          }
+        />
+
       </>
     );
   }
@@ -148,87 +143,72 @@ function LearningPathPage() {
         right={<LpStatusPill status={acceso?.status ?? "en_progreso"} />}
       />
 
-      <div style={{ marginBottom: 22 }}>
+      <div
+        style={{
+          marginBottom: 22,
+          padding: 16,
+          borderRadius: 18,
+          border: "1px solid var(--border)",
+          background: "var(--card)",
+        }}
+      >
         <LpProgressBar percent={estado?.progreso.percent ?? 0} />
-        <div style={{ fontSize: 12.5, color: "hsl(var(--muted-foreground))", marginTop: 8 }}>
+        <div style={{ fontSize: 12.5, color: "var(--muted-foreground)", marginTop: 8 }}>
           {estado?.progreso.done} de {estado?.progreso.total} completados en {subject.titulo}
         </div>
       </div>
 
-      <div
-        style={{
-          padding: 26,
-          borderRadius: 18,
-          border: "1px dashed hsl(var(--border))",
-          background: "hsl(var(--card))",
-          marginBottom: 22,
-        }}
-      >
-        <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 6 }}>Contenido en preparación</div>
-        <p style={{ margin: 0, fontSize: 14, color: "hsl(var(--muted-foreground))" }}>
-          Este learning path ya está creado dentro de la secuencia de {cont.titulo}. Su material de
-          estudio se cargará aquí.
-        </p>
+      <div style={{ marginBottom: 22 }}>
+        <LpEmptyState
+          icon="spark"
+          title="Contenido en preparación"
+          description={`Este learning path ya está creado dentro de la secuencia de ${cont.titulo}. Su material de estudio se cargará aquí.`}
+        />
       </div>
 
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
-        {vecinos?.prev && (
+      <LpActionBar>
+        <div>
+          {vecinos?.prev && (
+            <button
+              type="button"
+              onClick={() => irA(vecinos.prev!.id)}
+              style={lpButtonStyle("ghost")}
+              aria-label={`Anterior: ${vecinos.prev.titulo}`}
+            >
+              <Icon n="chevL" size={15} /> Anterior
+            </button>
+          )}
+        </div>
+
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
+          {!completado && user && (
+            <button
+              type="button"
+              onClick={() => completeLp(user.id, item, subject.titulo)}
+              style={lpButtonStyle("primary")}
+            >
+              <Icon n="check" size={15} /> Marcar como completado
+            </button>
+          )}
+
           <button
             type="button"
-            onClick={() => irA(vecinos.prev!.id)}
-            style={btn("ghost")}
-            aria-label={`Anterior: ${vecinos.prev.titulo}`}
+            disabled={!completado || !vecinos?.next}
+            onClick={() => vecinos?.next && irA(vecinos.next.id)}
+            style={lpButtonStyle(completado && vecinos?.next ? "primary" : "disabled")}
+            title={
+              completado
+                ? vecinos?.next
+                  ? vecinos.next.titulo
+                  : "Terminaste esta materia"
+                : "Completa este learning path para avanzar"
+            }
           >
-            <Icon n="chevL" size={15} /> Anterior
+            Siguiente <Icon n="chevR" size={15} />
           </button>
-        )}
-
-        {!completado && user && (
-          <button
-            type="button"
-            onClick={() => completeLp(user.id, item, subject.titulo)}
-            style={btn("primary")}
-          >
-            <Icon n="check" size={15} /> Marcar como completado
-          </button>
-        )}
-
-        <button
-          type="button"
-          disabled={!completado || !vecinos?.next}
-          onClick={() => vecinos?.next && irA(vecinos.next.id)}
-          style={{
-            ...btn(completado && vecinos?.next ? "primary" : "ghost"),
-            opacity: completado && vecinos?.next ? 1 : 0.5,
-            cursor: completado && vecinos?.next ? "pointer" : "not-allowed",
-          }}
-          title={
-            completado
-              ? vecinos?.next
-                ? vecinos.next.titulo
-                : "Terminaste esta materia"
-              : "Completa este learning path para avanzar"
-          }
-        >
-          Siguiente <Icon n="chevR" size={15} />
-        </button>
-      </div>
+        </div>
+      </LpActionBar>
     </>
   );
 }
 
-function btn(kind: "primary" | "ghost"): React.CSSProperties {
-  return {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 8,
-    padding: "10px 16px",
-    borderRadius: 12,
-    fontWeight: 700,
-    fontSize: 13.5,
-    cursor: "pointer",
-    border: kind === "primary" ? "none" : "1px solid hsl(var(--border))",
-    background: kind === "primary" ? "hsl(var(--primary))" : "transparent",
-    color: kind === "primary" ? "hsl(var(--primary-foreground))" : "inherit",
-  };
-}

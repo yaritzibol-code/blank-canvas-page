@@ -1,6 +1,7 @@
 /** Materia/módulo → sus contenedores (módulos, chapters, bloques, documentos). */
-import { createFileRoute, Link, Navigate } from "@tanstack/react-router";
-import { LpBreadcrumbs, LpCard, LpGrid, LpHeader } from "@/components/lp/nav";
+import { createFileRoute, Navigate } from "@tanstack/react-router";
+import { LpBreadcrumbs, LpCard, LpContinueCard, LpGrid, LpHeader } from "@/components/lp/nav";
+import { CATEGORY_STYLE } from "./index";
 import { lpCategory, lpSubject } from "@/lib/lp/taxonomy";
 import { useSessionUser, useStore } from "@/lib/store";
 import { getLpCompleted, subjectContinue, subjectProgress } from "@/lib/store/lp-nav";
@@ -37,6 +38,7 @@ function MateriaPage() {
 
   const siguiente = estado?.siguiente ?? null;
   const sig = siguiente ? siguiente.id.split("/") : null;
+  const accent = CATEGORY_STYLE[cat.id]?.accent ?? "var(--primary)";
 
   return (
     <>
@@ -57,40 +59,31 @@ function MateriaPage() {
         }
       />
 
-      {sig && (
-        <Link
+      {sig && siguiente && (
+        <LpContinueCard
           to="/dashboard/rutas/$categoria/$materia/$contenedor/$lp"
           params={{ categoria, materia, contenedor: sig[2], lp: sig[3] }}
-          style={{
-            display: "block",
-            marginBottom: 20,
-            padding: "14px 18px",
-            borderRadius: 14,
-            background: "hsl(var(--primary) / 0.08)",
-            border: "1px solid hsl(var(--primary) / 0.25)",
-            textDecoration: "none",
-            color: "inherit",
-          }}
-        >
-          <div style={{ fontSize: 12, fontWeight: 700, color: "hsl(var(--primary))" }}>
-            Continuar estudiando
-          </div>
-          <div style={{ fontSize: 15, fontWeight: 700, marginTop: 3 }}>{siguiente?.titulo}</div>
-        </Link>
+          titulo={siguiente.titulo}
+          contexto={subject.titulo}
+        />
       )}
 
       <LpGrid>
         {subject.containers.map((c) => {
           const slug = c.id.split("/")[2];
           const done = estado?.porContenedor.find((x) => x.id === c.id)?.done ?? 0;
+          const total = c.learningPaths.length;
           return (
             <LpCard
               key={c.id}
               to="/dashboard/rutas/$categoria/$materia/$contenedor"
               params={{ categoria, materia, contenedor: slug }}
               title={c.titulo}
-              meta={`${c.learningPaths.length} learning paths · ${done} completados`}
-              percent={c.learningPaths.length ? Math.round((done / c.learningPaths.length) * 100) : 0}
+              icon="list"
+              accent={accent}
+              meta={`${total} learning paths · ${done} completados`}
+              percent={total ? Math.round((done / total) * 100) : 0}
+              status={done === 0 ? "no_iniciado" : done === total ? "completado" : "en_progreso"}
             />
           );
         })}

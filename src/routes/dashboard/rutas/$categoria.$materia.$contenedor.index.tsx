@@ -1,7 +1,6 @@
 /** Contenedor → sus Learning Paths, con candado por progresión y por plan. */
 import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
-import { Icon } from "@/components/ui/fp-icon";
-import { LpBreadcrumbs, LpCard, LpGrid, LpHeader, LpStatusPill } from "@/components/lp/nav";
+import { LpBreadcrumbs, LpGrid, LpHeader, LpStepCard } from "@/components/lp/nav";
 import { lpCategory, lpContainer, lpSubject } from "@/lib/lp/taxonomy";
 import { useSessionUser, useStore } from "@/lib/store";
 import { lpAccess } from "@/lib/store/lp-nav";
@@ -43,18 +42,26 @@ function ContenedorPage() {
           { label: cont.titulo },
         ]}
       />
-      <LpHeader eyebrow="Learning paths" title={cont.titulo} />
-      <LpGrid>
-        {cont.learningPaths.map((l) => {
+      <LpHeader
+        eyebrow="Learning paths"
+        title={cont.titulo}
+        subtitle="Sigue la secuencia del temario: cada tema se abre al completar el anterior."
+      />
+      <LpGrid single>
+        {cont.learningPaths.map((l, i) => {
           const a = accesos.find((x) => x.id === l.id);
           const bloqueado = !a?.allowed;
           const slug = l.id.split("/")[3];
           return (
-            <LpCard
+            <LpStepCard
               key={l.id}
-              to={bloqueado ? undefined : "/dashboard/rutas/$categoria/$materia/$contenedor/$lp"}
+              n={l.orden}
+              connector={i > 0}
+              to="/dashboard/rutas/$categoria/$materia/$contenedor/$lp"
               params={{ categoria, materia, contenedor, lp: slug }}
-              title={`${String(l.orden).padStart(2, "0")} · ${l.titulo}`}
+              title={l.titulo}
+              status={a?.status ?? "no_iniciado"}
+              locked={bloqueado}
               meta={
                 bloqueado
                   ? a?.lock === "plan"
@@ -62,18 +69,10 @@ function ContenedorPage() {
                     : "Completa el learning path anterior para abrirlo"
                   : `Paso ${a?.posicion} de ${a?.total} en ${subject.titulo}`
               }
-              disabled={bloqueado}
               onClick={
                 bloqueado && a?.lock === "plan"
                   ? () => void navigate({ to: "/dashboard/planes" })
                   : undefined
-              }
-              right={
-                bloqueado ? (
-                  <Icon n="lock" size={15} />
-                ) : (
-                  <LpStatusPill status={a?.status ?? "no_iniciado"} />
-                )
               }
             />
           );
