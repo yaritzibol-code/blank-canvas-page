@@ -198,28 +198,36 @@ function BlogPage() {
               </p>
             ) : (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {lista.map((p) => (
+                {lista.map((p, i) => (
                   <a
                     key={p.slug}
                     href={`/blog/${p.slug}`}
-                    className="group flex flex-col overflow-hidden rounded-3xl border border-ink/8 bg-white transition-all duration-300 hover:shadow-lift hover:-translate-y-0.5"
+                    className="group relative flex flex-col overflow-hidden rounded-3xl border border-ink/8 bg-white p-6 transition-all duration-300 hover:border-coral-300 hover:shadow-lift hover:-translate-y-1"
                   >
-                    <Portada post={p} className="h-40 w-full" />
-                    <div className="flex flex-1 flex-col p-6">
+                    <span
+                      aria-hidden
+                      className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${acento(p.category).grad} opacity-70 transition-opacity duration-300 group-hover:opacity-100`}
+                    />
+                    <div className="flex items-center justify-between gap-3">
                       <Pill tone="ink">{p.category}</Pill>
-                      <h3 className="font-display mt-3 text-[18px] leading-snug tracking-tight text-ink">
-                        {p.title}
-                      </h3>
-                      <p className="mt-2 text-[13.5px] leading-relaxed text-ink/55 flex-1">
-                        {p.excerpt}
-                      </p>
-                      <div className="mt-4 text-[12px] text-ink/40">
-                        {fechaCorta(p.published_at)} · {p.reading_time} min
-                      </div>
+                      <span className="font-mono text-[11px] tracking-[0.18em] text-ink/20">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                    </div>
+                    <h3 className="font-display mt-4 text-[19px] leading-snug tracking-tight text-ink transition-colors group-hover:text-coral-700">
+                      {p.title}
+                    </h3>
+                    <p className="mt-2.5 text-[13.5px] leading-relaxed text-ink/55 flex-1">
+                      {p.excerpt}
+                    </p>
+                    <div className="mt-5 flex items-center justify-between border-t border-ink/6 pt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink/35">
+                      <span>{fechaCorta(p.published_at)}</span>
+                      <span>{p.reading_time} min</span>
                     </div>
                   </a>
                 ))}
               </div>
+
             )}
           </div>
         </section>
