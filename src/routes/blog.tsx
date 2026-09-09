@@ -57,29 +57,17 @@ export const Route = createFileRoute("/blog")({
   }),
 });
 
-function Portada({ post, className }: { post: BlogPostCard; className?: string }) {
-  if (!post.cover_image) {
-    return (
-      <div
-        className={`bg-gradient-to-br from-haze-100 to-white flex items-center justify-center ${className ?? ""}`}
-      >
-        <span className="text-[10px] uppercase tracking-[0.18em] font-bold text-ink/25">
-          Portada pendiente
-        </span>
-      </div>
-    );
-  }
-  return (
-    <img
-      src={post.cover_image}
-      alt={post.title}
-      loading="lazy"
-      width={1200}
-      height={630}
-      className={`object-cover ${className ?? ""}`}
-    />
-  );
+/** Acento visual por categoría (sustituye a las portadas fotográficas). */
+const ACENTO: Record<string, { grad: string; code: string }> = {
+  CIAAC: { grad: "from-coral-500 to-coral-300", code: "EGE-PC" },
+  Aerolíneas: { grad: "from-ink to-haze-500", code: "AIRLINE" },
+  Convocatorias: { grad: "from-haze-600 to-coral-400", code: "CONVOC" },
+};
+
+function acento(cat: string) {
+  return ACENTO[cat] ?? { grad: "from-ink to-haze-500", code: "FLIGHTPATH" };
 }
+
 
 function BlogPage() {
   const { posts } = Route.useLoaderData();
