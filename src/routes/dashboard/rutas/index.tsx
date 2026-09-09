@@ -2,11 +2,23 @@
  * ¿Qué quieres estudiar hoy? — primera pantalla de Learning Paths.
  * Muestra las tres categorías y, si hay avance, el punto de continuidad.
  */
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { LpBreadcrumbs, LpCard, LpGrid, LpHeader } from "@/components/lp/nav";
+import { createFileRoute } from "@tanstack/react-router";
+import {
+  LpBreadcrumbs,
+  LpCategoryCard,
+  LpContinueCard,
+  LpGrid,
+  LpHeader,
+} from "@/components/lp/nav";
 import { LP_CATEGORIES, B737_CATEGORY, subjectLpCount } from "@/lib/lp/taxonomy";
 import { useSessionUser, useStore } from "@/lib/store";
 import { getLpCompleted, subjectContinue } from "@/lib/store/lp-nav";
+
+export const CATEGORY_STYLE: Record<string, { icon: string; accent: string }> = {
+  ciaac: { icon: "graduation", accent: "var(--primary)" },
+  "linea-aerea": { icon: "plane", accent: "var(--fp-silver)" },
+  b737: { icon: "gauge", accent: "var(--fp-burgundy)" },
+};
 
 export const Route = createFileRoute("/dashboard/rutas/")({
   head: () => ({
@@ -22,30 +34,48 @@ function RutasIndex() {
   const user = useSessionUser();
   const userId = user?.id ?? "";
 
-  const continuar = useStore(() => {
-    if (!userId) return null;
+  const estado = useStore(() => {
+    if (!userId) return { continuar: null, percent: {} as Record<string, number> };
     const completed = new Set(getLpCompleted(userId));
+    const percent: Record<string, number> = {};
+    let continuar: {
+      categoria: string;
+      materia: string;
+      contenedor: string;
+      lp: string;
+      titulo: string;
+      subject: string;
+    } | null = null;
+
     for (const cat of LP_CATEGORIES) {
+      let done = 0;
+      let total = 0;
       for (const subject of cat.subjects) {
-        const done = subject.containers
-          .flatMap((c) => c.learningPaths)
-          .filter((l) => completed.has(l.id)).length;
-        if (done === 0) continue;
-        const item = subjectContinue(userId, subject);
-        if (!item) continue;
-        const [, materia, contenedor, lp] = item.id.split("/");
-        return {
-          categoria: cat.id,
-          materia,
-          contenedor,
-          lp,
-          titulo: item.titulo,
-          subject: subject.titulo,
-        };
+        const paths = subject.containers.flatMap((c) => c.learningPaths);
+        total += paths.length;
+        const sDone = paths.filter((l) => completed.has(l.id)).length;
+        done += sDone;
+        if (!continuar && sDone > 0) {
+          const item = subjectContinue(userId, subject);
+          if (item) {
+            const [, materia, contenedor, lp] = item.id.split("/");
+            continuar = {
+              categoria: cat.id,
+              materia,
+              contenedor,
+              lp,
+              titulo: item.titulo,
+              subject: subject.titulo,
+            };
+          }
+        }
       }
+      percent[cat.id] = total ? Math.round((done / total) * 100) : 0;
     }
-    return null;
+    return { continuar, percent };
   });
+
+  const continuar = estado?.continuar ?? null;
 
   return (
     <>
@@ -56,7 +86,7 @@ function RutasIndex() {
       />
 
       {continuar && (
-        <Link
+        <LpContinueCard
           to="/dashboard/rutas/$categoria/$materia/$contenedor/$lp"
           params={{
             categoria: continuar.categoria,
@@ -64,45 +94,38 @@ function RutasIndex() {
             contenedor: continuar.contenedor,
             lp: continuar.lp,
           }}
-          style={{
-            display: "block",
-            marginBottom: 20,
-            padding: "16px 18px",
-            borderRadius: 16,
-            background: "hsl(var(--primary) / 0.08)",
-            border: "1px solid hsl(var(--primary) / 0.25)",
-            textDecoration: "none",
-            color: "inherit",
-          }}
-        >
-          <div style={{ fontSize: 12, fontWeight: 700, color: "hsl(var(--primary))" }}>
-            Continuar estudiando
-          </div>
-          <div style={{ fontSize: 15.5, fontWeight: 700, marginTop: 4 }}>{continuar.titulo}</div>
-          <div style={{ fontSize: 12.5, color: "hsl(var(--muted-foreground))", marginTop: 2 }}>
-            {continuar.subject}
-          </div>
-        </Link>
+          titulo={continuar.titulo}
+          contexto={continuar.subject}
+        />
       )}
 
       <LpGrid>
-        {LP_CATEGORIES.map((cat) => (
-          <LpCard
-            key={cat.id}
-            to="/dashboard/rutas/$categoria"
-            params={{ categoria: cat.id }}
-            title={cat.titulo}
-            meta={`${cat.subjects.length} ${cat.subjectLabel.toLowerCase()} · ${cat.subjects.reduce(
-              (n, s) => n + subjectLpCount(s),
-              0,
-            )} learning paths`}
-          />
-        ))}
-        <LpCard
+        {LP_CATEGORIES.map((cat) => {
+          const s = CATEGORY_STYLE[cat.id] ?? { icon: "book", accent: "var(--primary)" };
+          return (
+            <LpCategoryCard
+              key={cat.id}
+              to="/dashboard/rutas/$categoria"
+              params={{ categoria: cat.id }}
+              title={cat.titulo}
+              icon={s.icon}
+              accent={s.accent}
+              percent={estado?.percent[cat.id] ?? 0}
+              meta={`${cat.subjects.length} ${cat.subjectLabel.toLowerCase()} · ${cat.subjects.reduce(
+                (n, sub) => n + subjectLpCount(sub),
+                0,
+              )} learning paths`}
+            />
+          );
+        })}
+        <LpCategoryCard
           to="/ruta/$curso"
           params={{ curso: B737_CATEGORY.curso }}
           title={B737_CATEGORY.titulo}
-          meta={B737_CATEGORY.descripcion}
+          icon={CATEGORY_STYLE.b737.icon}
+          accent={CATEGORY_STYLE.b737.accent}
+          descripcion={B737_CATEGORY.descripcion}
+          meta="Ruta técnica"
         />
       </LpGrid>
     </>
