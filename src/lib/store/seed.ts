@@ -752,6 +752,14 @@ export function ensureSeeded() {
       const customMat = read<Material[]>("materiales", []).filter((m) => !seeded.has(m.id));
       write("materiales", [...seedMateriales(), ...customMat]);
     }
+    if (current < 10) {
+      // v10: se retira el manual "Simbología y Definiciones" (lib_102) de la
+      // biblioteca porque su contenido quedó fuera del catálogo vigente.
+      const remaining = read<Material[]>("materiales", []).filter(
+        (m) => m.id !== "lib_102" && m.titulo !== "Simbología y Definiciones",
+      );
+      write("materiales", remaining);
+    }
     write("seed_version", SEED_VERSION);
     return;
   }
