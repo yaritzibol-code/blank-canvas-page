@@ -72,6 +72,7 @@ import { Route as DashboardPlanesRouteImport } from './routes/dashboard/planes'
 import { Route as DashboardPruebaRouteImport } from './routes/dashboard/prueba'
 import { Route as DashboardRecordatoriosRouteImport } from './routes/dashboard/recordatorios'
 import { Route as DashboardRtariRouteImport } from './routes/dashboard/rtari'
+import { Route as DashboardRutasRouteImport } from './routes/dashboard/rutas'
 import { Route as LineaAereaFuenteRouteImport } from './routes/linea-aerea_.$fuente'
 import { Route as ModulosSlugRouteImport } from './routes/modulos_.$slug'
 import { Route as RespuestasSlugRouteImport } from './routes/respuestas_.$slug'
@@ -89,9 +90,14 @@ import { Route as ApiRtariSettleRouteImport } from './routes/api/rtari/settle'
 import { Route as ApiYarisStreamRouteImport } from './routes/api/yaris/stream'
 import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/materias/index'
 import { Route as DashboardMateriasSubjectIdRouteImport } from './routes/dashboard/materias/$subjectId'
+import { Route as DashboardRutasIndexRouteImport } from './routes/dashboard/rutas/index'
 import { Route as AdminOperacionesDiaDayRouteImport } from './routes/admin/operaciones/dia.$day'
 import { Route as ApiPublicHooksHealthCheckRouteImport } from './routes/api/public/hooks/health-check'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
+import { Route as DashboardRutasCategoriaIndexRouteImport } from './routes/dashboard/rutas/$categoria.index'
+import { Route as DashboardRutasCategoriaMateriaIndexRouteImport } from './routes/dashboard/rutas/$categoria.$materia.index'
+import { Route as DashboardRutasCategoriaMateriaContenedorIndexRouteImport } from './routes/dashboard/rutas/$categoria.$materia.$contenedor.index'
+import { Route as DashboardRutasCategoriaMateriaContenedorLpRouteImport } from './routes/dashboard/rutas/$categoria.$materia.$contenedor.$lp'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -409,6 +415,11 @@ const DashboardRtariRoute = DashboardRtariRouteImport.update({
   path: '/rtari',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardRutasRoute = DashboardRutasRouteImport.update({
+  id: '/rutas',
+  path: '/rutas',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const LineaAereaFuenteRoute = LineaAereaFuenteRouteImport.update({
   id: '/linea-aerea_/$fuente',
   path: '/linea-aerea/$fuente',
@@ -496,6 +507,11 @@ const DashboardMateriasSubjectIdRoute =
     path: '/materias/$subjectId',
     getParentRoute: () => DashboardRoute,
   } as any)
+const DashboardRutasIndexRoute = DashboardRutasIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRutasRoute,
+} as any)
 const AdminOperacionesDiaDayRoute = AdminOperacionesDiaDayRouteImport.update({
   id: '/admin/operaciones/dia/$day',
   path: '/admin/operaciones/dia/$day',
@@ -512,6 +528,30 @@ const ApiPublicPaymentsWebhookRoute =
     id: '/api/public/payments/webhook',
     path: '/api/public/payments/webhook',
     getParentRoute: () => rootRouteImport,
+  } as any)
+const DashboardRutasCategoriaIndexRoute =
+  DashboardRutasCategoriaIndexRouteImport.update({
+    id: '/$categoria/',
+    path: '/$categoria/',
+    getParentRoute: () => DashboardRutasRoute,
+  } as any)
+const DashboardRutasCategoriaMateriaIndexRoute =
+  DashboardRutasCategoriaMateriaIndexRouteImport.update({
+    id: '/$categoria/$materia/',
+    path: '/$categoria/$materia/',
+    getParentRoute: () => DashboardRutasRoute,
+  } as any)
+const DashboardRutasCategoriaMateriaContenedorIndexRoute =
+  DashboardRutasCategoriaMateriaContenedorIndexRouteImport.update({
+    id: '/$categoria/$materia/$contenedor/',
+    path: '/$categoria/$materia/$contenedor/',
+    getParentRoute: () => DashboardRutasRoute,
+  } as any)
+const DashboardRutasCategoriaMateriaContenedorLpRoute =
+  DashboardRutasCategoriaMateriaContenedorLpRouteImport.update({
+    id: '/$categoria/$materia/$contenedor/$lp',
+    path: '/$categoria/$materia/$contenedor/$lp',
+    getParentRoute: () => DashboardRutasRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -576,6 +616,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/prueba': typeof DashboardPruebaRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/dashboard/rtari': typeof DashboardRtariRoute
+  '/dashboard/rutas': typeof DashboardRutasRouteWithChildren
   '/linea-aerea/$fuente': typeof LineaAereaFuenteRoute
   '/modulos/$slug': typeof ModulosSlugRoute
   '/respuestas/$slug': typeof RespuestasSlugRoute
@@ -595,9 +636,14 @@ export interface FileRoutesByFullPath {
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones/': typeof AdminOperacionesIndexRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
+  '/dashboard/rutas/': typeof DashboardRutasIndexRoute
   '/admin/operaciones/dia/$day': typeof AdminOperacionesDiaDayRoute
   '/api/public/hooks/health-check': typeof ApiPublicHooksHealthCheckRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
+  '/dashboard/rutas/$categoria/': typeof DashboardRutasCategoriaIndexRoute
+  '/dashboard/rutas/$categoria/$materia/': typeof DashboardRutasCategoriaMateriaIndexRoute
+  '/dashboard/rutas/$categoria/$materia/$contenedor/$lp': typeof DashboardRutasCategoriaMateriaContenedorLpRoute
+  '/dashboard/rutas/$categoria/$materia/$contenedor/': typeof DashboardRutasCategoriaMateriaContenedorIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -679,9 +725,14 @@ export interface FileRoutesByTo {
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones': typeof AdminOperacionesIndexRoute
   '/dashboard/materias': typeof DashboardMateriasIndexRoute
+  '/dashboard/rutas': typeof DashboardRutasIndexRoute
   '/admin/operaciones/dia/$day': typeof AdminOperacionesDiaDayRoute
   '/api/public/hooks/health-check': typeof ApiPublicHooksHealthCheckRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
+  '/dashboard/rutas/$categoria': typeof DashboardRutasCategoriaIndexRoute
+  '/dashboard/rutas/$categoria/$materia': typeof DashboardRutasCategoriaMateriaIndexRoute
+  '/dashboard/rutas/$categoria/$materia/$contenedor/$lp': typeof DashboardRutasCategoriaMateriaContenedorLpRoute
+  '/dashboard/rutas/$categoria/$materia/$contenedor': typeof DashboardRutasCategoriaMateriaContenedorIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -746,6 +797,7 @@ export interface FileRoutesById {
   '/dashboard/prueba': typeof DashboardPruebaRoute
   '/dashboard/recordatorios': typeof DashboardRecordatoriosRoute
   '/dashboard/rtari': typeof DashboardRtariRoute
+  '/dashboard/rutas': typeof DashboardRutasRouteWithChildren
   '/linea-aerea_/$fuente': typeof LineaAereaFuenteRoute
   '/modulos_/$slug': typeof ModulosSlugRoute
   '/respuestas_/$slug': typeof RespuestasSlugRoute
@@ -765,9 +817,14 @@ export interface FileRoutesById {
   '/dashboard/materias/$subjectId': typeof DashboardMateriasSubjectIdRoute
   '/admin/operaciones/': typeof AdminOperacionesIndexRoute
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
+  '/dashboard/rutas/': typeof DashboardRutasIndexRoute
   '/admin/operaciones/dia/$day': typeof AdminOperacionesDiaDayRoute
   '/api/public/hooks/health-check': typeof ApiPublicHooksHealthCheckRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
+  '/dashboard/rutas/$categoria/': typeof DashboardRutasCategoriaIndexRoute
+  '/dashboard/rutas/$categoria/$materia/': typeof DashboardRutasCategoriaMateriaIndexRoute
+  '/dashboard/rutas/$categoria/$materia/$contenedor/$lp': typeof DashboardRutasCategoriaMateriaContenedorLpRoute
+  '/dashboard/rutas/$categoria/$materia/$contenedor/': typeof DashboardRutasCategoriaMateriaContenedorIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -833,6 +890,7 @@ export interface FileRouteTypes {
     | '/dashboard/prueba'
     | '/dashboard/recordatorios'
     | '/dashboard/rtari'
+    | '/dashboard/rutas'
     | '/linea-aerea/$fuente'
     | '/modulos/$slug'
     | '/respuestas/$slug'
@@ -852,9 +910,14 @@ export interface FileRouteTypes {
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones/'
     | '/dashboard/materias/'
+    | '/dashboard/rutas/'
     | '/admin/operaciones/dia/$day'
     | '/api/public/hooks/health-check'
     | '/api/public/payments/webhook'
+    | '/dashboard/rutas/$categoria/'
+    | '/dashboard/rutas/$categoria/$materia/'
+    | '/dashboard/rutas/$categoria/$materia/$contenedor/$lp'
+    | '/dashboard/rutas/$categoria/$materia/$contenedor/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -936,9 +999,14 @@ export interface FileRouteTypes {
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones'
     | '/dashboard/materias'
+    | '/dashboard/rutas'
     | '/admin/operaciones/dia/$day'
     | '/api/public/hooks/health-check'
     | '/api/public/payments/webhook'
+    | '/dashboard/rutas/$categoria'
+    | '/dashboard/rutas/$categoria/$materia'
+    | '/dashboard/rutas/$categoria/$materia/$contenedor/$lp'
+    | '/dashboard/rutas/$categoria/$materia/$contenedor'
   id:
     | '__root__'
     | '/'
@@ -1002,6 +1070,7 @@ export interface FileRouteTypes {
     | '/dashboard/prueba'
     | '/dashboard/recordatorios'
     | '/dashboard/rtari'
+    | '/dashboard/rutas'
     | '/linea-aerea_/$fuente'
     | '/modulos_/$slug'
     | '/respuestas_/$slug'
@@ -1021,9 +1090,14 @@ export interface FileRouteTypes {
     | '/dashboard/materias/$subjectId'
     | '/admin/operaciones/'
     | '/dashboard/materias/'
+    | '/dashboard/rutas/'
     | '/admin/operaciones/dia/$day'
     | '/api/public/hooks/health-check'
     | '/api/public/payments/webhook'
+    | '/dashboard/rutas/$categoria/'
+    | '/dashboard/rutas/$categoria/$materia/'
+    | '/dashboard/rutas/$categoria/$materia/$contenedor/$lp'
+    | '/dashboard/rutas/$categoria/$materia/$contenedor/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1535,6 +1609,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRtariRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/rutas': {
+      id: '/dashboard/rutas'
+      path: '/rutas'
+      fullPath: '/dashboard/rutas'
+      preLoaderRoute: typeof DashboardRutasRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/linea-aerea_/$fuente': {
       id: '/linea-aerea_/$fuente'
       path: '/linea-aerea/$fuente'
@@ -1654,6 +1735,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardMateriasSubjectIdRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/rutas/': {
+      id: '/dashboard/rutas/'
+      path: '/'
+      fullPath: '/dashboard/rutas/'
+      preLoaderRoute: typeof DashboardRutasIndexRouteImport
+      parentRoute: typeof DashboardRutasRoute
+    }
     '/admin/operaciones/dia/$day': {
       id: '/admin/operaciones/dia/$day'
       path: '/admin/operaciones/dia/$day'
@@ -1675,8 +1763,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/rutas/$categoria/': {
+      id: '/dashboard/rutas/$categoria/'
+      path: '/$categoria'
+      fullPath: '/dashboard/rutas/$categoria/'
+      preLoaderRoute: typeof DashboardRutasCategoriaIndexRouteImport
+      parentRoute: typeof DashboardRutasRoute
+    }
+    '/dashboard/rutas/$categoria/$materia/': {
+      id: '/dashboard/rutas/$categoria/$materia/'
+      path: '/$categoria/$materia'
+      fullPath: '/dashboard/rutas/$categoria/$materia/'
+      preLoaderRoute: typeof DashboardRutasCategoriaMateriaIndexRouteImport
+      parentRoute: typeof DashboardRutasRoute
+    }
+    '/dashboard/rutas/$categoria/$materia/$contenedor/': {
+      id: '/dashboard/rutas/$categoria/$materia/$contenedor/'
+      path: '/$categoria/$materia/$contenedor'
+      fullPath: '/dashboard/rutas/$categoria/$materia/$contenedor/'
+      preLoaderRoute: typeof DashboardRutasCategoriaMateriaContenedorIndexRouteImport
+      parentRoute: typeof DashboardRutasRoute
+    }
+    '/dashboard/rutas/$categoria/$materia/$contenedor/$lp': {
+      id: '/dashboard/rutas/$categoria/$materia/$contenedor/$lp'
+      path: '/$categoria/$materia/$contenedor/$lp'
+      fullPath: '/dashboard/rutas/$categoria/$materia/$contenedor/$lp'
+      preLoaderRoute: typeof DashboardRutasCategoriaMateriaContenedorLpRouteImport
+      parentRoute: typeof DashboardRutasRoute
+    }
   }
 }
+
+interface DashboardRutasRouteChildren {
+  DashboardRutasIndexRoute: typeof DashboardRutasIndexRoute
+  DashboardRutasCategoriaIndexRoute: typeof DashboardRutasCategoriaIndexRoute
+  DashboardRutasCategoriaMateriaIndexRoute: typeof DashboardRutasCategoriaMateriaIndexRoute
+  DashboardRutasCategoriaMateriaContenedorLpRoute: typeof DashboardRutasCategoriaMateriaContenedorLpRoute
+  DashboardRutasCategoriaMateriaContenedorIndexRoute: typeof DashboardRutasCategoriaMateriaContenedorIndexRoute
+}
+
+const DashboardRutasRouteChildren: DashboardRutasRouteChildren = {
+  DashboardRutasIndexRoute: DashboardRutasIndexRoute,
+  DashboardRutasCategoriaIndexRoute: DashboardRutasCategoriaIndexRoute,
+  DashboardRutasCategoriaMateriaIndexRoute:
+    DashboardRutasCategoriaMateriaIndexRoute,
+  DashboardRutasCategoriaMateriaContenedorLpRoute:
+    DashboardRutasCategoriaMateriaContenedorLpRoute,
+  DashboardRutasCategoriaMateriaContenedorIndexRoute:
+    DashboardRutasCategoriaMateriaContenedorIndexRoute,
+}
+
+const DashboardRutasRouteWithChildren = DashboardRutasRoute._addFileChildren(
+  DashboardRutasRouteChildren,
+)
 
 interface DashboardRouteChildren {
   DashboardAnalisisRoute: typeof DashboardAnalisisRoute
@@ -1696,6 +1835,7 @@ interface DashboardRouteChildren {
   DashboardPruebaRoute: typeof DashboardPruebaRoute
   DashboardRecordatoriosRoute: typeof DashboardRecordatoriosRoute
   DashboardRtariRoute: typeof DashboardRtariRoute
+  DashboardRutasRoute: typeof DashboardRutasRouteWithChildren
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardMateriasSubjectIdRoute: typeof DashboardMateriasSubjectIdRoute
   DashboardMateriasIndexRoute: typeof DashboardMateriasIndexRoute
@@ -1719,6 +1859,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardPruebaRoute: DashboardPruebaRoute,
   DashboardRecordatoriosRoute: DashboardRecordatoriosRoute,
   DashboardRtariRoute: DashboardRtariRoute,
+  DashboardRutasRoute: DashboardRutasRouteWithChildren,
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardMateriasSubjectIdRoute: DashboardMateriasSubjectIdRoute,
   DashboardMateriasIndexRoute: DashboardMateriasIndexRoute,
