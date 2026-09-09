@@ -3,7 +3,7 @@ import type {} from "@tanstack/react-start";
 import { MATERIAS_DEF } from "@/lib/store/materias";
 import { FUENTES_SEO } from "@/lib/seo/fuentes-seo";
 import { RESPUESTAS_PUBLICADO, RESPUESTAS_SEO } from "@/lib/seo/respuestas-seo";
-import { BLOG_POSTS } from "@/lib/seo/blog-posts";
+import { listBlogPosts } from "@/lib/blog.functions";
 import { MODULOS_LANDING } from "@/lib/seo/modulos-landing";
 
 const BASE_URL = "https://flightpath.mx";
