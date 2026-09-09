@@ -1,6 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { getBlogPost } from "@/lib/blog.functions";
-import { BlogProse } from "@/components/blog/prose";
+import { BlogProse, extractHeadings } from "@/components/blog/prose";
 import { fechaCorta } from "@/routes/blog";
 import { AeroBackdrop, Btn, Coord, Footer, Icon, Nav, Pill } from "@/components/landing/shared";
 
@@ -83,6 +83,7 @@ export const Route = createFileRoute("/blog_/$slug")({
 
 function BlogPostPage() {
   const { post, related } = Route.useLoaderData();
+  const indice = extractHeadings(post.content);
   const actualizado =
     post.published_at && post.updated_at.slice(0, 10) !== post.published_at.slice(0, 10)
       ? fechaCorta(post.updated_at)
@@ -150,6 +151,31 @@ function BlogPostPage() {
         {/* Contenido */}
         <section className="relative pb-8">
           <div className="mx-auto max-w-[720px] px-6 lg:px-8">
+            {indice.length >= 3 && (
+              <nav
+                aria-label="Contenido del artículo"
+                className="mt-8 rounded-2xl border border-ink/8 bg-white/70 p-6"
+              >
+                <div className="text-[10.5px] uppercase tracking-[0.18em] font-bold text-haze-500">
+                  En este artículo
+                </div>
+                <ol className="mt-3 space-y-2">
+                  {indice.map((h, i) => (
+                    <li key={h.id} className="flex items-start gap-3">
+                      <span className="mt-[3px] text-[11px] font-bold text-ink/30 tabular-nums">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <a
+                        href={`#${h.id}`}
+                        className="text-[14.5px] leading-snug text-ink/70 hover:text-coral-700 transition-colors"
+                      >
+                        {h.text}
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            )}
             <BlogProse content={post.content} />
           </div>
         </section>
