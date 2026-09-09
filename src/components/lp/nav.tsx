@@ -4,7 +4,7 @@
  * Estética: tarjetas amables, acentos por categoría y estados legibles.
  */
 import { Link } from "@tanstack/react-router";
-import { Icon } from "@/components/ui/fp-icon";
+import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import type { CSSProperties, ReactNode } from "react";
 
 const DISPLAY = "'Bricolage Grotesque', sans-serif";
@@ -334,7 +334,7 @@ export function LpCategoryCard({
   title,
   meta,
   descripcion,
-  icon = "book",
+  icon = "book" as FPIconName,
   accent = "var(--primary)",
   percent,
 }: {
@@ -343,7 +343,7 @@ export function LpCategoryCard({
   title: string;
   meta?: string;
   descripcion?: string;
-  icon?: string;
+  icon?: FPIconName;
   accent?: string;
   percent?: number;
 }) {
@@ -433,7 +433,7 @@ export function LpCard({
   percent?: number;
   disabled?: boolean;
   onClick?: () => void;
-  icon?: string;
+  icon?: FPIconName;
   accent?: string;
   status?: LpStatus;
   lockReason?: string;
@@ -625,12 +625,12 @@ export function LpContinueCard({
 
 /** Estado vacío amable (contenido en preparación, bloqueos). */
 export function LpEmptyState({
-  icon = "spark",
+  icon = "spark" as FPIconName,
   title,
   description,
   action,
 }: {
-  icon?: string;
+  icon?: FPIconName;
   title: string;
   description?: string;
   action?: ReactNode;
