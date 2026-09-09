@@ -40,6 +40,8 @@ const USER_ARRAY_KEYS = [
   "compass_sessions",
   "lp737_state",
   "lp_started",
+  "logros",
+  "logros_destacados",
 ] as const;
 
 /** Colecciones administrativas guardadas como llave/valor. */
