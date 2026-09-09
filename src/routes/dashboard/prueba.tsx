@@ -87,15 +87,17 @@ function PonmeAPruebaPage() {
 
   return (
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "24px 16px 56px", fontFamily: FONT }}>
-      <Link
-        to="/dashboard"
-        style={{
-          display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 14,
-          color: "#3D5D91", fontWeight: 700, fontSize: "0.82rem", textDecoration: "none",
-        }}
-      >
-        ← Volver al dashboard
-      </Link>
+      {abierto === null && (
+        <Link
+          to="/dashboard"
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 14,
+            color: "#3D5D91", fontWeight: 700, fontSize: "0.82rem", textDecoration: "none",
+          }}
+        >
+          ← Volver al dashboard
+        </Link>
+      )}
 
       {abierto === "explica" ? (
         <ExplicaleAYaris onSalir={() => setAbierto(null)} />
