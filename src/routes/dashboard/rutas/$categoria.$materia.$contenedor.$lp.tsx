@@ -80,43 +80,29 @@ function LearningPathPage() {
             { label: item.titulo },
           ]}
         />
-        <div
-          style={{
-            padding: 28,
-            borderRadius: 18,
-            border: "1px solid hsl(var(--border))",
-            background: "hsl(var(--card))",
-            textAlign: "center",
-          }}
-        >
-          <Icon n="lock" size={26} />
-          <h1 style={{ fontSize: 20, margin: "12px 0 6px" }}>{item.titulo}</h1>
-          <p style={{ color: "hsl(var(--muted-foreground))", fontSize: 14.5, margin: "0 0 18px" }}>
-            {acceso.lock === "plan"
+        <LpEmptyState
+          icon="lock"
+          title={item.titulo}
+          description={
+            acceso.lock === "plan"
               ? "Este learning path está incluido en FlightPath Pro."
-              : "Completa el learning path anterior de la secuencia para abrir este."}
-          </p>
-          <Link
-            to={
-              acceso.lock === "plan"
-                ? "/dashboard/planes"
-                : "/dashboard/rutas/$categoria/$materia/$contenedor"
-            }
-            params={acceso.lock === "plan" ? undefined : { categoria, materia, contenedor }}
-            style={{
-              display: "inline-block",
-              padding: "10px 18px",
-              borderRadius: 12,
-              background: "hsl(var(--primary))",
-              color: "hsl(var(--primary-foreground))",
-              textDecoration: "none",
-              fontWeight: 700,
-              fontSize: 14,
-            }}
-          >
-            {acceso.lock === "plan" ? "Ver planes" : "Volver al listado"}
-          </Link>
-        </div>
+              : "Completa el learning path anterior de la secuencia para abrir este."
+          }
+          action={
+            <Link
+              to={
+                acceso.lock === "plan"
+                  ? "/dashboard/planes"
+                  : "/dashboard/rutas/$categoria/$materia/$contenedor"
+              }
+              params={acceso.lock === "plan" ? undefined : { categoria, materia, contenedor }}
+              style={{ ...lpButtonStyle("primary"), textDecoration: "none" }}
+            >
+              {acceso.lock === "plan" ? "Ver planes" : "Volver al listado"}
+            </Link>
+          }
+        />
+
       </>
     );
   }
