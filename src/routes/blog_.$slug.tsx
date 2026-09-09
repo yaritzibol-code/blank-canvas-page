@@ -96,7 +96,7 @@ function BlogPostPage() {
       <main>
         {/* Encabezado */}
         <section className="relative">
-          <div className="mx-auto max-w-[760px] px-6 lg:px-8 pt-12 lg:pt-16 pb-6">
+          <div className="mx-auto max-w-[860px] px-6 lg:px-8 pt-10 lg:pt-14">
             <nav
               aria-label="Breadcrumb"
               className="text-[12.5px] text-ink/45 flex items-center gap-1.5 flex-wrap"
@@ -112,41 +112,35 @@ function BlogPostPage() {
               <span className="text-ink/70 font-semibold">{post.category}</span>
             </nav>
 
-            <div className="mt-6">
-              <Pill tone="coral">{post.category}</Pill>
-            </div>
-            <h1 className="font-display mt-4 text-[30px] sm:text-[40px] lg:text-[46px] leading-[1.05] tracking-tight text-ink">
-              {post.title}
-            </h1>
-            <p className="mt-4 text-[17px] leading-relaxed text-ink/60">{post.excerpt}</p>
-            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-[12.5px] text-ink/40">
-              <span>Publicado el {fechaCorta(post.published_at)}</span>
-              {actualizado && <span>Actualizado el {actualizado}</span>}
-              <span>{post.reading_time} min de lectura</span>
+            <div className="relative mt-6 overflow-hidden rounded-[28px] bg-ink px-7 py-10 lg:px-12 lg:py-14 shadow-card">
+              <span
+                aria-hidden
+                className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-coral-500 to-haze-400"
+              />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -right-20 -bottom-24 h-64 w-64 rounded-full bg-gradient-to-br from-coral-500/25 to-transparent blur-2xl"
+              />
+              <div className="relative">
+                <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white/80">
+                  {post.category}
+                </span>
+                <h1 className="font-display mt-5 text-[30px] sm:text-[40px] lg:text-[48px] leading-[1.05] tracking-tight text-white">
+                  {post.title}
+                </h1>
+                <p className="mt-4 max-w-2xl text-[16.5px] leading-relaxed text-white/60">
+                  {post.excerpt}
+                </p>
+                <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[11px] uppercase tracking-[0.14em] text-white/35">
+                  <span>Publicado el {fechaCorta(post.published_at)}</span>
+                  {actualizado && <span>Actualizado el {actualizado}</span>}
+                  <span>{post.reading_time} min de lectura</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Portada */}
-        <section className="relative pb-4">
-          <div className="mx-auto max-w-[860px] px-6 lg:px-8">
-            {post.cover_image ? (
-              <img
-                src={post.cover_image}
-                alt={post.title}
-                width={1200}
-                height={630}
-                className="w-full rounded-3xl border border-ink/8 object-cover"
-              />
-            ) : (
-              <div className="flex h-48 w-full items-center justify-center rounded-3xl border border-dashed border-ink/15 bg-white/60">
-                <span className="text-[10px] uppercase tracking-[0.18em] font-bold text-ink/25">
-                  Portada pendiente
-                </span>
-              </div>
-            )}
-          </div>
-        </section>
 
         {/* Contenido */}
         <section className="relative pb-8">
