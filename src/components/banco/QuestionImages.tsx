@@ -27,6 +27,7 @@ export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: s
   const key = (files ?? []).join(",");
   const [urls, setUrls] = useState<string[]>([]);
   const [failed, setFailed] = useState(false);
+  const [missing, setMissing] = useState<Record<string, boolean>>({});
   const [retry, setRetry] = useState(0);
 
   useEffect(() => {
