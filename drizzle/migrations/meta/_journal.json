@@ -8,6 +8,13 @@
       "when": 1788979865161,
       "tag": "0000_create_blog_posts",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789084456839,
+      "tag": "0001_admin_lamina_cobertura",
+      "breakpoints": true
     }
   ]
 }

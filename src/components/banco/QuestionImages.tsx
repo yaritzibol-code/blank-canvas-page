@@ -100,23 +100,40 @@ export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: s
           </button>
         </div>
       )}
-      {urls.map((u, i) => (
-        <a key={u} href={u} target="_blank" rel="noreferrer" style={{ display: "block" }}>
-          <img
-            src={u}
-            alt={`${fuente === "ATP" ? "Figura del suplemento FAA (AKTS)" : fuente === "LAOF" ? "Figura de la guía Embraer 190" : "Lámina del manual Jeppesen"} ${i + 1} de ${urls.length}`}
-            loading="lazy"
+      {urls.map((u, i) =>
+        missing[u] ? (
+          // El archivo no está en el manual todavía: reintentar no sirve de nada,
+          // así que se avisa con claridad en vez de invitar a un botón inútil.
+          <p
+            key={u}
             style={{
-              width: "100%",
-              maxHeight: 460,
-              objectFit: "contain",
-              borderRadius: 12,
-              border: "1px solid #F2DCDB",
-              background: "white",
+              fontSize: "0.8rem", color: "#8DA1BE", fontFamily: "'Manrope', sans-serif",
+              margin: 0, padding: "14px 16px", borderRadius: 12,
+              border: "1px dashed #D9E2F0", background: "#F8FAFD",
             }}
-          />
-        </a>
-      ))}
+          >
+            Esta figura todavía no está disponible. La pregunta se puede contestar con el texto.
+          </p>
+        ) : (
+          <a key={u} href={u} target="_blank" rel="noreferrer" style={{ display: "block" }}>
+            <img
+              src={u}
+              alt={`${fuente === "ATP" ? "Figura del suplemento FAA (AKTS)" : fuente === "LAOF" ? "Figura de la guía Embraer 190" : "Lámina del manual Jeppesen"} ${i + 1} de ${urls.length}`}
+              loading="lazy"
+              onError={() => setMissing((m) => ({ ...m, [u]: true }))}
+              style={{
+                width: "100%",
+                maxHeight: 460,
+                objectFit: "contain",
+                borderRadius: 12,
+                border: "1px solid #F2DCDB",
+                background: "white",
+              }}
+            />
+          </a>
+        ),
+      )}
+
     </div>
   );
 }
