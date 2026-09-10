@@ -15,6 +15,8 @@ export interface LineaAereaOficialQuestion extends SeedQuestion {
   fuente: string;
   /** Bloque temático del cuestionario oficial (LFT, JEPP, COMS…). */
   tema: string;
+  /** Figuras de la guía que acompañan al reactivo (bucket `e190-images`). */
+  imagenes?: string[];
 }
 
 export const LINEA_AEREA_OFICIAL: LineaAereaOficialQuestion[] = [

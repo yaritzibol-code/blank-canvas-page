@@ -10,12 +10,26 @@ import { supa } from "@/lib/store/cloud";
 
 const TTL = 60 * 60; // 1 hora
 
-/** Bucket por manual: Jeppesen, ATP (figuras del AKTS), E190 y 737 MAX. */
+/**
+ * Bucket de figuras por manual.
+ *
+ * Cada manual con láminas propias tiene su bucket; las fuentes sin bucket
+ * declarado (PHAK, LEG, ANX10…) caen a `jeppesen-images`, así que si alguna
+ * de ellas llega a traer figuras hay que darle su propia entrada aquí Y su
+ * política de lectura en `storage.objects` — sin las dos cosas la lámina no
+ * se firma y la pregunta se ve sin imagen.
+ */
+const BUCKETS: Record<string, string> = {
+  JEPP: "jeppesen-images",
+  ATP: "atp-images",
+  LAOF: "e190-images",
+  B737MAX: "737-images",
+};
+
+const BUCKET_POR_DEFECTO = "jeppesen-images";
+
 function bucketFor(fuente?: string): string {
-  if (fuente === "ATP") return "atp-images";
-  if (fuente === "LAOF") return "e190-images";
-  if (fuente === "B737MAX") return "737-images";
-  return "jeppesen-images";
+  return (fuente && BUCKETS[fuente]) || BUCKET_POR_DEFECTO;
 }
 
 
