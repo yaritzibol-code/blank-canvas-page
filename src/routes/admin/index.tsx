@@ -13,6 +13,7 @@ import {
   activityVisual,
 } from "@/components/admin/AdminShell";
 import { BackendAudit } from "@/components/admin/BackendAudit";
+import { LaminasAudit } from "@/components/admin/LaminasAudit";
 import { adminResumen, type AdminResumen } from "@/lib/admin.functions";
 import { MATERIAS_DEF } from "@/lib/store/materias";
 
@@ -117,6 +118,7 @@ function AdminResumenPage() {
         ))}
       </div>
       <BackendAudit localUsers={totalUsers} localReports={pending.length} />
+      <LaminasAudit />
 
 
       {/* Alertas */}

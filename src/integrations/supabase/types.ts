@@ -1035,6 +1035,17 @@ export type Database = {
         }[]
       }
       admin_ai_stats: { Args: { hours_back?: number }; Returns: Json }
+      admin_lamina_cobertura: {
+        Args: never
+        Returns: {
+          bucket: string
+          con_lamina: number
+          fuente: string
+          laminas_distintas: number
+          laminas_existentes: number
+          preguntas: number
+        }[]
+      }
       admin_mrr: { Args: { check_env?: string }; Returns: number }
       admin_mrr_daily: {
         Args: { check_env?: string; days_back?: number }
