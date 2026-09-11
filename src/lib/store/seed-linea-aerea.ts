@@ -15,6 +15,8 @@ export interface LineaAereaQuestion extends SeedQuestion {
   id: string;
   /** Capítulo dentro del manual, cuando la fuente se practica por capítulos. */
   capitulo?: number;
+  /** Láminas del manual que acompañan al reactivo (nombre de archivo). */
+  imagenes?: string[];
 }
 
 export type { LineaAereaQuiz } from "./linea-aerea-meta";
