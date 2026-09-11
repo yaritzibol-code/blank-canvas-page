@@ -401,6 +401,7 @@ function LogroCatalogoModal({
                         <Badge
                           key={l.id}
                           l={l}
+                          seleccionable
                           onClick={l.desbloqueado ? () => toggleDestacado(l.id) : undefined}
                         />
                       ))}
