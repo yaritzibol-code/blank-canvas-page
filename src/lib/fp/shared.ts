@@ -26,12 +26,60 @@ export const FP_PERIODOS: { id: FpPeriodo; label: string }[] = [
 /** Los cinco rankings de Comunidad (ni uno más). */
 export type FpRankingId = "general" | "ciaac" | "linea_aerea" | "racha" | "logros";
 
-export const FP_RANKINGS: { id: FpRankingId; label: string; ayuda: string }[] = [
-  { id: "general", label: "FlightPoints totales", ayuda: "Todos los FP ganados en la plataforma." },
-  { id: "ciaac", label: "FlightPoints CIAAC", ayuda: "Sólo actividad del programa CIAAC." },
-  { id: "linea_aerea", label: "FlightPoints Línea Aérea", ayuda: "Sólo actividad de Línea Aérea." },
-  { id: "racha", label: "Racha más larga", ayuda: "Días seguidos de estudio real." },
-  { id: "logros", label: "Logros desbloqueados", ayuda: "Logros conseguidos con actividad real." },
+export const FP_RANKINGS: {
+  id: FpRankingId;
+  label: string;
+  ayuda: string;
+  unidad: string;
+  icono: string;
+  acento: string;
+  usaFp: boolean;
+}[] = [
+  {
+    id: "general",
+    label: "Top General",
+    ayuda: "Desempeño global: CIAAC, Línea Aérea y actividades generales.",
+    unidad: "FP",
+    icono: "plane",
+    acento: "#3D5D91",
+    usaFp: true,
+  },
+  {
+    id: "ciaac",
+    label: "Top CIAAC",
+    ayuda: "Preparación para el CIAAC.",
+    unidad: "FP",
+    icono: "target",
+    acento: "#1F7A6B",
+    usaFp: true,
+  },
+  {
+    id: "linea_aerea",
+    label: "Top Línea Aérea",
+    ayuda: "Preparación para ingreso a aerolínea.",
+    unidad: "FP",
+    icono: "bolt",
+    acento: "#8A5A2B",
+    usaFp: true,
+  },
+  {
+    id: "racha",
+    label: "Racha más larga",
+    ayuda: "Constancia: días seguidos de estudio real.",
+    unidad: "días",
+    icono: "clock",
+    acento: "#A0453F",
+    usaFp: false,
+  },
+  {
+    id: "logros",
+    label: "Más logros",
+    ayuda: "Progreso dentro de FlightPath.",
+    unidad: "logros",
+    icono: "trophy",
+    acento: "#6C4FA3",
+    usaFp: false,
+  },
 ];
 
 export interface FpTx {
