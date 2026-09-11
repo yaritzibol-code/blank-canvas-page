@@ -573,9 +573,11 @@ export type Database = {
       }
       fp_community_profiles: {
         Row: {
+          callsign: string | null
           folio: string
           logros: number
           privacidad: string
+          privacidad_elegida: boolean
           racha_actual: number
           racha_max: number
           tutorial_oculto: boolean
@@ -584,9 +586,11 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          callsign?: string | null
           folio: string
           logros?: number
           privacidad?: string
+          privacidad_elegida?: boolean
           racha_actual?: number
           racha_max?: number
           tutorial_oculto?: boolean
@@ -595,9 +599,11 @@ export type Database = {
           user_id: string
         }
         Update: {
+          callsign?: string | null
           folio?: string
           logros?: number
           privacidad?: string
+          privacidad_elegida?: boolean
           racha_actual?: number
           racha_max?: number
           tutorial_oculto?: boolean
@@ -1298,6 +1304,7 @@ export type Database = {
         Returns: {
           actividades: number
           avatar: string
+          callsign: string
           folio: string
           nombre: string
           posicion: number
