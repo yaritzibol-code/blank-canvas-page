@@ -156,6 +156,28 @@ export function Maintenance({
           >
             Entendido
           </button>
+          {onAdminEnter && (
+            <div style={{ marginTop: 18 }}>
+              <button
+                type="button"
+                onClick={onAdminEnter}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 0,
+                  fontSize: "0.78rem",
+                  fontWeight: 600,
+                  color: "hsl(var(--muted-foreground))",
+                  textDecoration: "underline",
+                  textUnderlineOffset: 3,
+                  fontFamily: "'Manrope', sans-serif",
+                }}
+              >
+                Entrar de todos modos (admin)
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -163,8 +185,9 @@ export function Maintenance({
 }
 
 /**
- * Envuelve una pantalla: si el interruptor está activo, la estudiante ve el
- * aviso de mantenimiento. Las cuentas de administración pasan de largo.
+ * Envuelve una pantalla: si el interruptor está activo, todo el mundo ve el
+ * aviso de mantenimiento. Las cuentas de administración tienen debajo un
+ * enlace discreto para entrar igual y seguir trabajando dentro del módulo.
  */
 export function maintenanceGate<P extends object>(
   Component: FC<P>,
@@ -173,7 +196,24 @@ export function maintenanceGate<P extends object>(
 ): FC<P> {
   const Wrapped: FC<P> = (props) => {
     const user = useSessionUser();
-    if (activo && user?.role !== "admin") return <Maintenance {...textos} />;
+    const [bypass, setBypass] = useState(() => leerBypass(textos.titulo));
+
+    if (activo && !bypass) {
+      const esAdmin = user?.role === "admin";
+      return (
+        <Maintenance
+          {...textos}
+          {...(esAdmin
+            ? {
+                onAdminEnter: () => {
+                  guardarBypass(textos.titulo);
+                  setBypass(true);
+                },
+              }
+            : {})}
+        />
+      );
+    }
     return <Component {...props} />;
   };
   Wrapped.displayName = `Maintenance(${textos.titulo})`;
