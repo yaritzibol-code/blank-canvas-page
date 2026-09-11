@@ -94,6 +94,7 @@ import { Route as DashboardMateriasIndexRouteImport } from './routes/dashboard/m
 import { Route as DashboardMateriasSubjectIdRouteImport } from './routes/dashboard/materias/$subjectId'
 import { Route as DashboardRutasIndexRouteImport } from './routes/dashboard/rutas/index'
 import { Route as AdminOperacionesDiaDayRouteImport } from './routes/admin/operaciones/dia.$day'
+import { Route as ApiPublicHooksFpSyncRouteImport } from './routes/api/public/hooks/fp-sync'
 import { Route as ApiPublicHooksHealthCheckRouteImport } from './routes/api/public/hooks/health-check'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as DashboardRutasCategoriaIndexRouteImport } from './routes/dashboard/rutas/$categoria.index'
@@ -529,6 +530,11 @@ const AdminOperacionesDiaDayRoute = AdminOperacionesDiaDayRouteImport.update({
   path: '/admin/operaciones/dia/$day',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicHooksFpSyncRoute = ApiPublicHooksFpSyncRouteImport.update({
+  id: '/api/public/hooks/fp-sync',
+  path: '/api/public/hooks/fp-sync',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicHooksHealthCheckRoute =
   ApiPublicHooksHealthCheckRouteImport.update({
     id: '/api/public/hooks/health-check',
@@ -652,6 +658,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
   '/dashboard/rutas/': typeof DashboardRutasIndexRoute
   '/admin/operaciones/dia/$day': typeof AdminOperacionesDiaDayRoute
+  '/api/public/hooks/fp-sync': typeof ApiPublicHooksFpSyncRoute
   '/api/public/hooks/health-check': typeof ApiPublicHooksHealthCheckRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/dashboard/rutas/$categoria/': typeof DashboardRutasCategoriaIndexRoute
@@ -743,6 +750,7 @@ export interface FileRoutesByTo {
   '/dashboard/materias': typeof DashboardMateriasIndexRoute
   '/dashboard/rutas': typeof DashboardRutasIndexRoute
   '/admin/operaciones/dia/$day': typeof AdminOperacionesDiaDayRoute
+  '/api/public/hooks/fp-sync': typeof ApiPublicHooksFpSyncRoute
   '/api/public/hooks/health-check': typeof ApiPublicHooksHealthCheckRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/dashboard/rutas/$categoria': typeof DashboardRutasCategoriaIndexRoute
@@ -837,6 +845,7 @@ export interface FileRoutesById {
   '/dashboard/materias/': typeof DashboardMateriasIndexRoute
   '/dashboard/rutas/': typeof DashboardRutasIndexRoute
   '/admin/operaciones/dia/$day': typeof AdminOperacionesDiaDayRoute
+  '/api/public/hooks/fp-sync': typeof ApiPublicHooksFpSyncRoute
   '/api/public/hooks/health-check': typeof ApiPublicHooksHealthCheckRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/dashboard/rutas/$categoria/': typeof DashboardRutasCategoriaIndexRoute
@@ -932,6 +941,7 @@ export interface FileRouteTypes {
     | '/dashboard/materias/'
     | '/dashboard/rutas/'
     | '/admin/operaciones/dia/$day'
+    | '/api/public/hooks/fp-sync'
     | '/api/public/hooks/health-check'
     | '/api/public/payments/webhook'
     | '/dashboard/rutas/$categoria/'
@@ -1023,6 +1033,7 @@ export interface FileRouteTypes {
     | '/dashboard/materias'
     | '/dashboard/rutas'
     | '/admin/operaciones/dia/$day'
+    | '/api/public/hooks/fp-sync'
     | '/api/public/hooks/health-check'
     | '/api/public/payments/webhook'
     | '/dashboard/rutas/$categoria'
@@ -1116,6 +1127,7 @@ export interface FileRouteTypes {
     | '/dashboard/materias/'
     | '/dashboard/rutas/'
     | '/admin/operaciones/dia/$day'
+    | '/api/public/hooks/fp-sync'
     | '/api/public/hooks/health-check'
     | '/api/public/payments/webhook'
     | '/dashboard/rutas/$categoria/'
@@ -1187,6 +1199,7 @@ export interface RootRouteChildren {
   ApiYarisStreamRoute: typeof ApiYarisStreamRoute
   AdminOperacionesIndexRoute: typeof AdminOperacionesIndexRoute
   AdminOperacionesDiaDayRoute: typeof AdminOperacionesDiaDayRoute
+  ApiPublicHooksFpSyncRoute: typeof ApiPublicHooksFpSyncRoute
   ApiPublicHooksHealthCheckRoute: typeof ApiPublicHooksHealthCheckRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
@@ -1788,6 +1801,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminOperacionesDiaDayRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/fp-sync': {
+      id: '/api/public/hooks/fp-sync'
+      path: '/api/public/hooks/fp-sync'
+      fullPath: '/api/public/hooks/fp-sync'
+      preLoaderRoute: typeof ApiPublicHooksFpSyncRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/health-check': {
       id: '/api/public/hooks/health-check'
       path: '/api/public/hooks/health-check'
@@ -1974,6 +1994,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiYarisStreamRoute: ApiYarisStreamRoute,
   AdminOperacionesIndexRoute: AdminOperacionesIndexRoute,
   AdminOperacionesDiaDayRoute: AdminOperacionesDiaDayRoute,
+  ApiPublicHooksFpSyncRoute: ApiPublicHooksFpSyncRoute,
   ApiPublicHooksHealthCheckRoute: ApiPublicHooksHealthCheckRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }

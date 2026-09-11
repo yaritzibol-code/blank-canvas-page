@@ -22,6 +22,13 @@
       "when": 1789097352829,
       "tag": "0002_flightpoints_core",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1789099526806,
+      "tag": "0003_fp_comunidad_rls_basica",
+      "breakpoints": true
     }
   ]
 }
