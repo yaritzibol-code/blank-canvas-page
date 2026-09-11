@@ -15,6 +15,13 @@
       "when": 1789084456839,
       "tag": "0001_admin_lamina_cobertura",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789097352829,
+      "tag": "0002_flightpoints_core",
+      "breakpoints": true
     }
   ]
 }
