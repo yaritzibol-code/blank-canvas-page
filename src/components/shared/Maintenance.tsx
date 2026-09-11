@@ -5,7 +5,7 @@
  * del contenido cuando su interruptor en `@/lib/feature-flags` está activo.
  * No toca datos, progreso ni componentes del módulo.
  */
-import type { CSSProperties, FC, ReactNode } from "react";
+import type { CSSProperties, FC } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useSessionUser } from "@/lib/store";
 
