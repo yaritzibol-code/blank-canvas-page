@@ -29,10 +29,12 @@ export const Route = createFileRoute("/api/public/hooks/fp-sync")({
 
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const { procesarTodosFP } = await import("@/lib/fp/fp.functions");
-        // Sólo alumnos con actividad guardada en los últimos 7 días.
+        // Por defecto sólo alumnos con actividad de los últimos 7 días;
+        // con ?todo=1 se recorre a toda la plataforma.
+        const todo = new URL(request.url).searchParams.get("todo") === "1";
         const desde = new Date(Date.now() - 7 * 24 * 3600 * 1000).toISOString();
         const r = await procesarTodosFP(supabaseAdmin as unknown as { from: (t: string) => any }, {
-          desde,
+          ...(todo ? {} : { desde }),
         });
         return new Response(JSON.stringify({ ok: true, ...r }), {
           headers: { "Content-Type": "application/json" },
