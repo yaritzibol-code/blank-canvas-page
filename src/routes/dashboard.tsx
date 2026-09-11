@@ -229,6 +229,7 @@ const NAV_SECTIONS: {
     items: [
       { icon: "chart", label: "Análisis", path: "/dashboard/analisis" },
       { icon: "bell", label: "Recordatorios", path: "/dashboard/recordatorios" },
+      { icon: "trophy", label: "Comunidad", path: "/dashboard/comunidad", nuevo: true },
     ],
   },
   {
