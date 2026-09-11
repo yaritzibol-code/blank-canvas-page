@@ -5,7 +5,7 @@
  * del contenido cuando su interruptor en `@/lib/feature-flags` está activo.
  * No toca datos, progreso ni componentes del módulo.
  */
-import type { CSSProperties, FC } from "react";
+import { useEffect, useState, type CSSProperties, type FC } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useSessionUser } from "@/lib/store";
 
@@ -14,6 +14,29 @@ interface Props {
   intro: string;
   cuerpo: string;
   cierre: string;
+}
+
+/**
+ * Acceso de administración: se recuerda mientras dure la pestaña para no
+ * repetir el paso en cada pantalla del módulo. No afecta a las estudiantes.
+ */
+const BYPASS_KEY = "fp_maint_bypass";
+
+function leerBypass(clave: string): boolean {
+  if (typeof sessionStorage === "undefined") return false;
+  try {
+    return sessionStorage.getItem(`${BYPASS_KEY}:${clave}`) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function guardarBypass(clave: string) {
+  try {
+    sessionStorage?.setItem(`${BYPASS_KEY}:${clave}`, "1");
+  } catch {
+    /* noop */
+  }
 }
 
 const card: CSSProperties = {
@@ -64,7 +87,13 @@ function Insignia() {
   );
 }
 
-export function Maintenance({ titulo, intro, cuerpo, cierre }: Props) {
+export function Maintenance({
+  titulo,
+  intro,
+  cuerpo,
+  cierre,
+  onAdminEnter,
+}: Props & { onAdminEnter?: () => void }) {
   const navigate = useNavigate();
   return (
     <div style={{ minHeight: "70vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
@@ -127,6 +156,28 @@ export function Maintenance({ titulo, intro, cuerpo, cierre }: Props) {
           >
             Entendido
           </button>
+          {onAdminEnter && (
+            <div style={{ marginTop: 18 }}>
+              <button
+                type="button"
+                onClick={onAdminEnter}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 0,
+                  fontSize: "0.78rem",
+                  fontWeight: 600,
+                  color: "hsl(var(--muted-foreground))",
+                  textDecoration: "underline",
+                  textUnderlineOffset: 3,
+                  fontFamily: "'Manrope', sans-serif",
+                }}
+              >
+                Entrar de todos modos (admin)
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -134,8 +185,9 @@ export function Maintenance({ titulo, intro, cuerpo, cierre }: Props) {
 }
 
 /**
- * Envuelve una pantalla: si el interruptor está activo, la estudiante ve el
- * aviso de mantenimiento. Las cuentas de administración pasan de largo.
+ * Envuelve una pantalla: si el interruptor está activo, todo el mundo ve el
+ * aviso de mantenimiento. Las cuentas de administración tienen debajo un
+ * enlace discreto para entrar igual y seguir trabajando dentro del módulo.
  */
 export function maintenanceGate<P extends object>(
   Component: FC<P>,
@@ -144,7 +196,30 @@ export function maintenanceGate<P extends object>(
 ): FC<P> {
   const Wrapped: FC<P> = (props) => {
     const user = useSessionUser();
-    if (activo && user?.role !== "admin") return <Maintenance {...textos} />;
+    const [bypass, setBypass] = useState(false);
+
+    // Se lee tras hidratar: sessionStorage no existe durante el render del
+    // servidor y leerlo en el estado inicial provocaría un desajuste.
+    useEffect(() => {
+      if (leerBypass(textos.titulo)) setBypass(true);
+    }, []);
+
+    if (activo && !bypass) {
+      const esAdmin = user?.role === "admin";
+      return (
+        <Maintenance
+          {...textos}
+          {...(esAdmin
+            ? {
+                onAdminEnter: () => {
+                  guardarBypass(textos.titulo);
+                  setBypass(true);
+                },
+              }
+            : {})}
+        />
+      );
+    }
     return <Component {...props} />;
   };
   Wrapped.displayName = `Maintenance(${textos.titulo})`;
