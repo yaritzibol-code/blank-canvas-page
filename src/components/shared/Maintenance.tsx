@@ -5,7 +5,7 @@
  * del contenido cuando su interruptor en `@/lib/feature-flags` está activo.
  * No toca datos, progreso ni componentes del módulo.
  */
-import type { CSSProperties, FC } from "react";
+import { useState, type CSSProperties, type FC } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useSessionUser } from "@/lib/store";
 
@@ -14,6 +14,29 @@ interface Props {
   intro: string;
   cuerpo: string;
   cierre: string;
+}
+
+/**
+ * Acceso de administración: se recuerda mientras dure la pestaña para no
+ * repetir el paso en cada pantalla del módulo. No afecta a las estudiantes.
+ */
+const BYPASS_KEY = "fp_maint_bypass";
+
+function leerBypass(clave: string): boolean {
+  if (typeof sessionStorage === "undefined") return false;
+  try {
+    return sessionStorage.getItem(`${BYPASS_KEY}:${clave}`) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function guardarBypass(clave: string) {
+  try {
+    sessionStorage?.setItem(`${BYPASS_KEY}:${clave}`, "1");
+  } catch {
+    /* noop */
+  }
 }
 
 const card: CSSProperties = {
