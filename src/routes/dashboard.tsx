@@ -17,6 +17,7 @@ import { LiveIndicator } from "@/components/shared/LiveIndicator";
 import { TimerProvider } from "@/contexts/StudyTimerContext";
 import { StudySessionProvider } from "@/contexts/StudySessionContext";
 import { LogroWatcher } from "@/components/logros/LogroWatcher";
+import { FpWatcher } from "@/components/fp/FpWatcher";
 import { PathyCloud } from "@/components/estudiemos/PathyCloud";
 
 export const Route = createFileRoute("/dashboard")({
@@ -968,6 +969,7 @@ function DashboardLayout() {
         <YarisChatModal open={yarisOpen} onClose={() => setYarisOpen(false)} user={user} />
         <PathyCloud />
         <LogroWatcher />
+        <FpWatcher />
       </div>
       </StudySessionProvider>
     </TimerProvider>

@@ -6,6 +6,7 @@ import { PathyMark } from "@/components/shared/PathyMark";
 import { AvatarPicker } from "@/components/shared/AvatarPicker";
 import { CompassLogCard } from "@/components/compass/CompassLogCard";
 import { LogrosPanel } from "@/components/logros/LogrosPanel";
+import { FlightPointsPanel } from "@/components/fp/FlightPointsPanel";
 import {
   useSessionUser,
   useStore,
@@ -813,6 +814,8 @@ function PerfilPage() {
 
       {/* Logros */}
       <LogrosPanel userId={user.id} />
+
+      <FlightPointsPanel />
 
       {/* Progreso, separado por ruta */}
       <div
