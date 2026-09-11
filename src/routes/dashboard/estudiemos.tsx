@@ -24,7 +24,13 @@ import type { PlanActivity, StudyIntake, StudySessionState } from "@/lib/estudie
 import { isPaid, logActivity, logYarisUse, useSessionUser } from "@/lib/store";
 
 export const Route = createFileRoute("/dashboard/estudiemos")({
-  component: EstudiemosJuntosPage,
+  component: maintenanceGate(EstudiemosJuntosPage, studyTogetherMaintenance, {
+    titulo: "Estudiemos Juntos",
+    intro: "Estamos preparando tu próxima sesión de estudio.",
+    cuerpo:
+      "Estamos trabajando en algunos ajustes para que Estudiemos Juntos pueda acompañarte mejor durante tus sesiones.",
+    cierre: "Muy pronto podrás volver a estudiar con nosotros.",
+  }),
 });
 
 function VolverDashboard() {
