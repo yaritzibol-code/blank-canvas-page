@@ -1,8 +1,9 @@
 import type { ConceptExplanationBlockData, SvgDiagramSpec } from "../types";
+import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 
 const INLINE_HIGHLIGHT_CONFIG = {
   definicion: {
-    icon: "📘",
+    icon: "book",
     label: "Definición",
     borderColor: "#3D5D91",
     bg: "rgba(61,93,145,0.06)",
@@ -10,7 +11,7 @@ const INLINE_HIGHLIGHT_CONFIG = {
     textColor: "#1a1a2e",
   },
   advertencia: {
-    icon: "⚠️",
+    icon: "alert",
     label: "Atención",
     borderColor: "#6C0820",
     bg: "rgba(108,8,32,0.06)",
@@ -18,7 +19,7 @@ const INLINE_HIGHLIGHT_CONFIG = {
     textColor: "#1a1a2e",
   },
   dato_clave: {
-    icon: "⭐",
+    icon: "star",
     label: "Dato clave CIAAC",
     borderColor: "#c9930a",
     bg: "rgba(201,147,10,0.07)",
@@ -26,7 +27,7 @@ const INLINE_HIGHLIGHT_CONFIG = {
     textColor: "#1a1a2e",
   },
   yaris: {
-    icon: "🧠",
+    icon: "brain",
     label: "Nemotecnia de Yaris",
     borderColor: "#F2AEBC",
     bg: "linear-gradient(135deg, #FFF5F7, #FDE8EC)",
@@ -73,7 +74,7 @@ export function ConceptExplanationBlock({
           marginBottom: 14,
         }}
       >
-        📖 Explicación
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon n="book" size={14} /> Explicación</span>
       </div>
 
       {titulo && (
@@ -120,7 +121,7 @@ export function ConceptExplanationBlock({
             textAlign: "center",
           }}
         >
-          <span style={{ fontSize: "2rem", display: "block", marginBottom: 8 }}>📊</span>
+          <span style={{ display: "flex", justifyContent: "center", marginBottom: 8, color: "#5A86CB" }}><Icon n="chart" size={32} /></span>
           <p
             style={{
               fontSize: "0.82rem",
@@ -156,7 +157,7 @@ export function ConceptExplanationBlock({
                 marginBottom: 8,
               }}
             >
-              <span style={{ fontSize: "1rem" }}>{cfg.icon}</span>
+              <span style={{ display: "inline-flex" }}><Icon n={cfg.icon as FPIconName} size={16} /></span>
               <span
                 style={{
                   fontSize: "0.72rem",
@@ -212,7 +213,7 @@ export function ConceptExplanationBlock({
             lineHeight: 1.6,
           }}
         >
-          💡 {nota_adicional}
+          <span style={{ display: "inline-flex", alignItems: "flex-start", gap: 6 }}><Icon n="lightbulb" size={15} style={{ flexShrink: 0, marginTop: 2 }} /><span>{nota_adicional}</span></span>
         </div>
       )}
 

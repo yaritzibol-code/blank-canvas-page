@@ -37,10 +37,10 @@ export function UnderConstruction({ moduleName, description }: Props) {
             alignItems: "center",
             justifyContent: "center",
             margin: "0 auto 20px",
-            fontSize: 32,
+            color: "hsl(var(--primary))",
           }}
         >
-          🚧
+          <Icon n="wrench" size={30} />
         </div>
         <h1 style={{ fontSize: 24, fontWeight: 700, margin: "0 0 8px" }}>{moduleName}</h1>
         <p style={{ fontSize: 15, color: "hsl(var(--muted-foreground))", margin: "0 0 24px", lineHeight: 1.6 }}>

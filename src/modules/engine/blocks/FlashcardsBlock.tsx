@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { FlashcardsBlockData } from "../types";
+import { Icon } from "@/components/ui/fp-icon";
 
 export function FlashcardsBlock({ cards }: FlashcardsBlockData) {
   const [current, setCurrent] = useState(0);
@@ -48,7 +49,7 @@ export function FlashcardsBlock({ cards }: FlashcardsBlockData) {
           marginBottom: 6,
         }}
       >
-        🃏 Flashcards de repaso
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon n="cards" size={14} /> Flashcards de repaso</span>
       </div>
 
       <p style={{ fontSize: "0.83rem", color: "#999", marginBottom: 16 }}>
@@ -112,7 +113,7 @@ export function FlashcardsBlock({ cards }: FlashcardsBlockData) {
               {card.pregunta}
             </p>
             <span style={{ fontSize: "0.7rem", opacity: 0.55, marginTop: 16 }}>
-              👆 toca para voltear
+              toca para voltear
             </span>
           </div>
 

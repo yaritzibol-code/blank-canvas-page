@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { ThinkLikePilotBlockData } from "../types";
+import { Icon } from "@/components/ui/fp-icon";
 
 export function ThinkLikePilotBlock({ pregunta, pista, respuesta_sugerida }: ThinkLikePilotBlockData) {
   const [revealed, setRevealed] = useState(false);
@@ -32,7 +33,7 @@ export function ThinkLikePilotBlock({ pregunta, pista, respuesta_sugerida }: Thi
           marginBottom: 14,
         }}
       >
-        🧑‍✈️ Piensa Como Piloto
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon n="graduation" size={14} /> Piensa Como Piloto</span>
       </div>
 
       <p
@@ -81,7 +82,7 @@ export function ThinkLikePilotBlock({ pregunta, pista, respuesta_sugerida }: Thi
             marginBottom: 16,
           }}
         >
-          <span style={{ fontSize: "1rem", flexShrink: 0 }}>💭</span>
+          <span style={{ display: "flex", flexShrink: 0, color: "#6C0820", marginTop: 2 }}><Icon n="lightbulb" size={16} /></span>
           <p style={{ fontSize: "0.85rem", color: "#666", lineHeight: 1.5, margin: 0 }}>
             <strong style={{ color: "#6C0820" }}>Pista: </strong>
             {pista}
@@ -136,7 +137,7 @@ export function ThinkLikePilotBlock({ pregunta, pista, respuesta_sugerida }: Thi
               marginBottom: 10,
             }}
           >
-            ✈️ Razonamiento del piloto
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon n="plane" size={14} /> Razonamiento del piloto</span>
           </p>
           <p style={{ fontSize: "0.9rem", lineHeight: 1.65, margin: 0 }}>{respuesta_sugerida}</p>
         </div>

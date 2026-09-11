@@ -71,10 +71,10 @@ export function FpWatcher() {
       </ul>
       <Link
         to="/dashboard/comunidad"
-        style={{ display: "inline-block", marginTop: 10, fontSize: ".76rem", color: "#F2D27A", fontWeight: 700 }}
+        style={{ display: "inline-flex", alignItems: "center", gap: 5, marginTop: 10, fontSize: ".76rem", color: "#F2D27A", fontWeight: 700 }}
         onClick={() => setLote(null)}
       >
-        Ver Comunidad →
+        Ver Comunidad <Icon n="arrow" size={13} />
       </Link>
       <span style={{ display: "none" }}>{FP_ACTIVITY_LABEL["logro"]}</span>
     </div>

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getUserSyncStatus, type UserSyncStatus } from "@/lib/sync-status.functions";
 import { getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
 import { refreshCloudProfile } from "@/lib/store";
+import { Icon } from "@/components/ui/fp-icon";
 
 const DISMISS_KEY = "fp:sync-banner-dismissed";
 
@@ -63,7 +64,9 @@ export function DataSyncBanner() {
       flexWrap: "wrap",
       fontSize: ".88rem",
     }}>
-      <span>⚠️ {status.message}</span>
+      <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+        <Icon n="alert" size={16} /> {status.message}
+      </span>
       <div style={{ display: "flex", gap: 8 }}>
         {status.severity === "warning" && (
           <button

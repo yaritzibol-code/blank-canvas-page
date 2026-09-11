@@ -316,7 +316,7 @@ function AdminDisputasPage() {
                         <td style={{ padding: "7px 8px" }}>{c.riskLevel ?? "—"}{c.riskScore != null ? ` (${c.riskScore})` : ""}</td>
                         <td style={{ padding: "7px 8px" }}>{c.threeDSecure ?? "—"}</td>
                         <td style={{ padding: "7px 8px" }}>{c.cvcCheck ?? "—"}</td>
-                        <td style={{ padding: "7px 8px" }}>{c.disputed ? "⚠️ sí" : "no"}</td>
+                        <td style={{ padding: "7px 8px" }}>{c.disputed ? "sí" : "no"}</td>
                       </tr>
                     ))}
                   </tbody>

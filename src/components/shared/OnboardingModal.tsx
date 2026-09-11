@@ -43,7 +43,7 @@ export const YARIS_TONOS: { key: YarisTono; label: string; ejemplo: string }[] =
   {
     key: "amiga",
     label: "Amiga Yaris",
-    ejemplo: "“Ok, ese tema pega feo 😅 pero míralo así: la MEA es obstáculos + señal.”",
+    ejemplo: "“Ok, ese tema pega feo, pero míralo así: la MEA es obstáculos + señal.”",
   },
 ];
 
@@ -407,7 +407,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                 letterSpacing: "-0.02em",
               }}
             >
-              ¡Bienvenido a bordo! ✈️
+              ¡Bienvenido a bordo!
             </h2>
             <p
               style={{
@@ -470,7 +470,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                   fontWeight: 600,
                 }}
               >
-                <Icon n="spark" size={15} color={BRAND} /> Así te verás: “Hola, {firstName} ✈️”
+                <Icon n="spark" size={15} color={BRAND} /> Así te verás: “Hola, {firstName}”
               </div>
             )}
             <div style={{ marginTop: 20 }}>

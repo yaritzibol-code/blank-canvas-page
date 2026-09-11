@@ -1,4 +1,5 @@
 import type { FormulaBlockData } from "../types";
+import { Icon } from "@/components/ui/fp-icon";
 
 // Basic LaTeX symbol substitution for readability without a full renderer
 function renderLatex(latex: string): string {
@@ -52,7 +53,7 @@ export function FormulaBlock({ nombre, formula, formula_latex, variables, nota }
           marginBottom: 16,
         }}
       >
-        📐 Fórmula
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon n="gauge" size={14} /> Fórmula</span>
       </div>
 
       <h3
@@ -187,7 +188,7 @@ export function FormulaBlock({ nombre, formula, formula_latex, variables, nota }
             lineHeight: 1.5,
           }}
         >
-          💡 {nota}
+          <span style={{ display: "inline-flex", alignItems: "flex-start", gap: 6 }}><Icon n="lightbulb" size={15} style={{ flexShrink: 0, marginTop: 2 }} /><span>{nota}</span></span>
         </div>
       )}
     </div>

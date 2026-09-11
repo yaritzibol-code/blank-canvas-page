@@ -10,7 +10,7 @@ interface Props {
  * Aviso de tope del plan Básica.
  *
  * Existe porque estos casos se mostraban con `<UnderConstruction />`: el
- * usuario veía el cartel 🚧 de "módulo en construcción" cuando en realidad
+ * usuario veía el cartel de "módulo en construcción" cuando en realidad
  * había llegado al límite de su plan. Son cosas distintas y la salida también:
  * aquí el destino natural es la página de planes, no volver al dashboard.
  */

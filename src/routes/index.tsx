@@ -194,7 +194,7 @@ function HeroPathyCard() {
     </>,
     <>
       Llevas <span className="text-coral-700 font-semibold">racha de 14 días</span>. La constancia
-      es lo que te sube al avión. ✦
+      es lo que te sube al avión.
     </>,
     <>
       Subiste <span className="text-coral-700 font-semibold">8% en Aerodinámica</span> esta semana.
@@ -210,7 +210,7 @@ function HeroPathyCard() {
     </>,
     <>
       Nuevo récord en <span className="text-coral-700 font-semibold">Slalom nivel 3</span> — tus
-      aptitudes van subiendo. ✦
+      aptitudes van subiendo.
     </>,
     <>
       Cada sesión te acerca al <span className="text-coral-700 font-semibold">CIAAC</span>. Un paso
@@ -818,7 +818,7 @@ function PathyPhone() {
   const msgs: { ic: IconName; t: string; time: string }[] = [
     {
       ic: "book",
-      t: "Hora de estudiar ✦ Te dejé lista una sesión de 15 min de Meteorología. ¿Despegamos?",
+      t: "Hora de estudiar. Te dejé lista una sesión de 15 min de Meteorología. ¿Despegamos?",
       time: "7:00 p.m.",
     },
     {
@@ -1124,12 +1124,14 @@ function PathyEvolution() {
             <div className="relative animate-float-y">
               <Avatar src={s.img} size={300} ring={s.color} />
             </div>
-            <span className="absolute top-6 left-10 text-burgundy text-xl animate-twinkle">✦</span>
+            <span className="absolute top-6 left-10 text-burgundy animate-twinkle">
+              <Icon n="spark" className="w-5 h-5" />
+            </span>
             <span
-              className="absolute bottom-12 right-8 text-lapis text-lg animate-twinkle"
+              className="absolute bottom-12 right-8 text-lapis animate-twinkle"
               style={{ animationDelay: ".6s" }}
             >
-              ✦
+              <Icon n="spark" className="w-4 h-4" />
             </span>
           </div>
           <div>
@@ -1230,7 +1232,7 @@ function YarisChat() {
       header: "Nemotecnia · Antes de cada vuelo",
       title: "Chequea tu estado con I-M-SAFE",
       reply: {
-        title: "💡 Nemotecnia: I-M-SAFE",
+        title: "Nemotecnia: I-M-SAFE",
         body: "Illness · Medication · Stress · Alcohol · Fatigue · Emotion. Una palabra, seis chequeos antes de despegar.",
         tags: ["Checklist", "Factor humano"],
       },
@@ -1240,7 +1242,7 @@ function YarisChat() {
       header: "Ejemplo de la vida real",
       title: "Por qué los procedimientos no son opcionales",
       reply: {
-        title: "🎯 Piénsalo así:",
+        title: "Piénsalo así:",
         body: "Un procedimiento existe porque alguien aprendió algo por las malas. Seguirlo es respetar esa lección — es tu seguro de vida.",
         tags: ["Disciplina", "Criterio"],
       },
@@ -1250,7 +1252,7 @@ function YarisChat() {
       header: "Apoyo cuando lo necesitas",
       title: "¿Te sientes abrumada hoy?",
       reply: {
-        title: "💖 Respira. Tú puedes.",
+        title: "Respira. Tú puedes.",
         body: "Un mal día de estudio no define tu carrera. Toma 10 minutos, hidrátate y volvemos. Pathy y yo te esperamos aquí.",
         tags: ["Bienestar", "Pathy contigo"],
       },

@@ -3,12 +3,12 @@ import { getSessionUser, addStudySeconds, logActivity } from "@/lib/store";
 
 /* ── TECH DATA ── */
 export const TECH_DATA = [
-  { work: 25, brk: 5,  cycles: 4, name: "🍅 Pomodoro",       icon: "🍅", title: "Pomodoro",        desc: "25 min de enfoque + 5 de descanso. Clásico y comprobado para retención.",            badge: "25+5 min · 4 ciclos",  bg: "#e8eef7", fg: "#2a4068", accent: "#3D5D91" },
-  { work: 52, brk: 17, cycles: 3, name: "⚡ 52/17",           icon: "⚡", title: "52/17",            desc: "52 min de trabajo profundo + 17 de pausa activa. Para materias densas.",            badge: "52+17 min · 3 ciclos", bg: "#e8f0fb", fg: "#1a4a8a", accent: "#5A86CB" },
-  { work: 90, brk: 20, cycles: 2, name: "🎯 Ultradian",       icon: "🎯", title: "Bloque Ultradian", desc: "90 min siguiendo tu ritmo biológico. Para simulacros completos del CIAAC.",         badge: "90+20 min · 2 ciclos", bg: "#fceef0", fg: "#6C0820", accent: "#6C0820" },
-  { work: 15, brk: 5,  cycles: 6, name: "🃏 Flashcards",      icon: "🃏", title: "Sprint Flashcards",desc: "15 min de repaso rápido. Perfecto la noche antes del examen.",                      badge: "15 min · 6 rondas",    bg: "#fdf0f3", fg: "#8a2040", accent: "#F2AEBC" },
-  { work: 45, brk: 10, cycles: 3, name: "📖 Lectura Activa",  icon: "📖", title: "Lectura Activa",   desc: "45 min de lectura + pausa para resumir. Para reglamentos y manuales.",              badge: "45+10 min · 3 ciclos", bg: "#eafaf3", fg: "#145a3e", accent: "#22a06b" },
-  { work: 30, brk: 10, cycles: 4, name: "✍️ Escritura Libre", icon: "✍️", title: "Escritura Libre",  desc: "30 min escribiendo sin parar todo lo que sabes. Volcado mental.",                   badge: "30+10 min · 4 ciclos", bg: "#fdf3ea", fg: "#8a4a10", accent: "#e07b39" },
+  { work: 25, brk: 5,  cycles: 4, name: "Pomodoro",          icon: "timer", title: "Pomodoro",        desc: "25 min de enfoque + 5 de descanso. Clásico y comprobado para retención.",            badge: "25+5 min · 4 ciclos",  bg: "#e8eef7", fg: "#2a4068", accent: "#3D5D91" },
+  { work: 52, brk: 17, cycles: 3, name: "52/17",             icon: "bolt", title: "52/17",            desc: "52 min de trabajo profundo + 17 de pausa activa. Para materias densas.",            badge: "52+17 min · 3 ciclos", bg: "#e8f0fb", fg: "#1a4a8a", accent: "#5A86CB" },
+  { work: 90, brk: 20, cycles: 2, name: "Ultradian",         icon: "target", title: "Bloque Ultradian", desc: "90 min siguiendo tu ritmo biológico. Para simulacros completos del CIAAC.",         badge: "90+20 min · 2 ciclos", bg: "#fceef0", fg: "#6C0820", accent: "#6C0820" },
+  { work: 15, brk: 5,  cycles: 6, name: "Flashcards",        icon: "cards", title: "Sprint Flashcards",desc: "15 min de repaso rápido. Perfecto la noche antes del examen.",                      badge: "15 min · 6 rondas",    bg: "#fdf0f3", fg: "#8a2040", accent: "#F2AEBC" },
+  { work: 45, brk: 10, cycles: 3, name: "Lectura Activa",    icon: "book", title: "Lectura Activa",   desc: "45 min de lectura + pausa para resumir. Para reglamentos y manuales.",              badge: "45+10 min · 3 ciclos", bg: "#eafaf3", fg: "#145a3e", accent: "#22a06b" },
+  { work: 30, brk: 10, cycles: 4, name: "Escritura Libre",   icon: "pencil", title: "Escritura Libre",  desc: "30 min escribiendo sin parar todo lo que sabes. Volcado mental.",                   badge: "30+10 min · 4 ciclos", bg: "#fdf3ea", fg: "#8a4a10", accent: "#e07b39" },
 ];
 
 export function pad(n: number) { return String(n).padStart(2, "0"); }
@@ -60,7 +60,7 @@ const INIT: TimerState = {
   rem: 25 * 60, isWork: true, curCycle: 0, running: false,
   workSecs: 25 * 60, breakSecs: 5 * 60, totalCycles: 4, techIdx: 0,
   visible: false, smiling: true,
-  timerLabel: "🍅 Pomodoro seleccionado · ¡Dale play para arrancar!",
+  timerLabel: "Pomodoro seleccionado · Dale play para arrancar",
   floatLabel: "Meteorología · Pomodoro",
   activeSubject: "Meteorología",
   activeTopic: "Tema 5: Tipos de nubes",
@@ -101,12 +101,12 @@ export function TimerProvider({ children }: { children: ReactNode }) {
       clearInterval(ivRef.current!); ivRef.current = null;
       if (t.isWork) {
         t.isWork = false; t.rem = t.breakSecs;
-        setS(p => ({ ...p, isWork: false, rem: t.breakSecs, smiling: false, timerLabel: "💚 Descanso activo" }));
-        showToast("¡Buen trabajo! Descansa ☕");
+        setS(p => ({ ...p, isWork: false, rem: t.breakSecs, smiling: false, timerLabel: "Descanso activo" }));
+        showToast("¡Buen trabajo! Descansa.");
       } else {
         t.isWork = true; t.curCycle = Math.min(t.curCycle + 1, t.totalCycles - 1); t.rem = t.workSecs;
-        setS(p => ({ ...p, isWork: true, curCycle: t.curCycle, rem: t.workSecs, smiling: true, timerLabel: "🔴 Sesión activa" }));
-        showToast("¡De vuelta al trabajo! 💪");
+        setS(p => ({ ...p, isWork: true, curCycle: t.curCycle, rem: t.workSecs, smiling: true, timerLabel: "Sesión activa" }));
+        showToast("¡De vuelta al trabajo!");
       }
       if (t.running) startIv();
       return;
@@ -127,21 +127,21 @@ export function TimerProvider({ children }: { children: ReactNode }) {
     const upd = { running: false, isWork: true, curCycle: 0, workSecs: d.work * 60, breakSecs: d.brk * 60, totalCycles: d.cycles, techIdx: idx, rem: d.work * 60 };
     Object.assign(T.current, upd);
     setS(p => ({ ...p, ...upd, smiling: true, timerLabel: d.name + " seleccionado · ¡Dale play!" }));
-    showToast(d.name + " seleccionada ✓");
+    showToast(d.name + " seleccionada");
   }
 
   function startSession(floatLabel: string, subject = "Meteorología", topic = "Tema 5: Tipos de nubes", objective = "Repasar el material de hoy") {
     T.current.running = true; T.current.visible = true;
     T.current.rem = T.current.workSecs; T.current.isWork = true; T.current.curCycle = 0;
     T.current.activeSubject = subject; T.current.activeTopic = topic;
-    setS(p => ({ ...p, running: true, visible: true, rem: T.current.workSecs, isWork: true, curCycle: 0, smiling: true, timerLabel: "🔴 Sesión activa", floatLabel, activeSubject: subject, activeTopic: topic, sessionObjective: objective }));
+    setS(p => ({ ...p, running: true, visible: true, rem: T.current.workSecs, isWork: true, curCycle: 0, smiling: true, timerLabel: "Sesión activa", floatLabel, activeSubject: subject, activeTopic: topic, sessionObjective: objective }));
     startIv();
   }
 
   function toggleTimer() {
     T.current.running = !T.current.running;
     const r = T.current.running;
-    setS(p => ({ ...p, running: r, timerLabel: r ? "🔴 Sesión activa" : "⏸ En pausa" }));
+    setS(p => ({ ...p, running: r, timerLabel: r ? "Sesión activa" : "En pausa" }));
     if (r) startIv(); else { clearInterval(ivRef.current!); ivRef.current = null; flushStudySecs(); }
   }
 
@@ -157,12 +157,12 @@ export function TimerProvider({ children }: { children: ReactNode }) {
     clearInterval(ivRef.current!); ivRef.current = null;
     if (t.isWork) {
       t.isWork = false; t.rem = t.breakSecs;
-      setS(p => ({ ...p, isWork: false, rem: t.breakSecs, smiling: false, timerLabel: "💚 Descanso activo" }));
-      showToast("¡Buen trabajo! Descansa ☕");
+      setS(p => ({ ...p, isWork: false, rem: t.breakSecs, smiling: false, timerLabel: "Descanso activo" }));
+      showToast("¡Buen trabajo! Descansa.");
     } else {
       t.isWork = true; t.curCycle = Math.min(t.curCycle + 1, t.totalCycles - 1); t.rem = t.workSecs;
-      setS(p => ({ ...p, isWork: true, curCycle: t.curCycle, rem: t.workSecs, smiling: true, timerLabel: "🔴 Sesión activa" }));
-      showToast("¡De vuelta al trabajo! 💪");
+      setS(p => ({ ...p, isWork: true, curCycle: t.curCycle, rem: t.workSecs, smiling: true, timerLabel: "Sesión activa" }));
+      showToast("¡De vuelta al trabajo!");
     }
     if (t.running) startIv();
   }
@@ -170,7 +170,7 @@ export function TimerProvider({ children }: { children: ReactNode }) {
   function toggleFloat() {
     T.current.running = !T.current.running;
     const r = T.current.running;
-    setS(p => ({ ...p, running: r, timerLabel: r ? "🔴 Sesión activa" : "⏸ En pausa" }));
+    setS(p => ({ ...p, running: r, timerLabel: r ? "Sesión activa" : "En pausa" }));
     if (r) startIv(); else { clearInterval(ivRef.current!); ivRef.current = null; flushStudySecs(); }
   }
 
@@ -190,8 +190,8 @@ export function TimerProvider({ children }: { children: ReactNode }) {
       });
     }
     T.current.running = false; T.current.visible = false;
-    setS(p => ({ ...p, running: false, visible: false, timerLabel: "⏸ Sesión finalizada" }));
-    showToast("Sesión finalizada · Buen vuelo piloto ✈️");
+    setS(p => ({ ...p, running: false, visible: false, timerLabel: "Sesión finalizada" }));
+    showToast("Sesión finalizada · Buen vuelo, piloto");
   }
 
   useEffect(() => () => { clearInterval(ivRef.current!); flushStudySecs(); }, []);
@@ -233,7 +233,7 @@ export function TimerProvider({ children }: { children: ReactNode }) {
             <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
               <div style={{ width: 5, height: 5, borderRadius: "50%", background: s.running ? "#4ade80" : "#fbbf24", animation: s.running ? "fp-pulse 1.5s ease infinite" : "none" }} />
               <span style={{ fontSize: 10, color: "#5A86CB", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase" }}>
-                ✈ FlightPath Study
+                FlightPath Study
               </span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -289,10 +289,15 @@ export function TimerProvider({ children }: { children: ReactNode }) {
                 position: "absolute", top: "50%",
                 left: `calc(${Math.min(progressPct, 90)}% + 2px)`,
                 transform: "translateY(-50%)",
-                fontSize: 13, lineHeight: 1,
+                lineHeight: 1,
                 transition: "left 1s linear",
                 filter: "drop-shadow(0 0 6px rgba(90,134,203,.9))",
-              }}>✈</div>
+                display: "flex",
+              }}>
+                <svg viewBox="0 0 24 24" width={13} height={13} aria-hidden="true" style={{ transform: "rotate(90deg)" }}>
+                  <path fill="#5A86CB" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
+                </svg>
+              </div>
               {/* Phase labels */}
               <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5, fontSize: 8.5, color: "rgba(255,255,255,.2)", letterSpacing: ".05em" }}>
                 <span>DEP</span>

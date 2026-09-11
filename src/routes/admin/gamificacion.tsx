@@ -9,13 +9,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AdminShell } from "@/components/admin/AdminShell";
 import {
+  adminCommunityDirectory,
   adminFpAdjust,
   adminFpBackfill,
   adminFpPanel,
   adminFpRevert,
   adminSaveFpRule,
+  type AdminComunidadFila,
 } from "@/lib/fp/fp.functions";
 import { fpFormat } from "@/lib/fp/shared";
+import { Callsign, Insignia } from "@/components/comunidad/pieces";
 
 export const Route = createFileRoute("/admin/gamificacion")({
   component: GamificacionPage,
@@ -48,6 +51,7 @@ const CARD: React.CSSProperties = {
 
 function GamificacionPage() {
   const [panel, setPanel] = useState<Panel | null>(null);
+  const [directorio, setDirectorio] = useState<AdminComunidadFila[]>([]);
   const [tab, setTab] = useState<"reglas" | "economia" | "historial" | "ajustes" | "alertas">("reglas");
   const [msg, setMsg] = useState("");
   const [ajuste, setAjuste] = useState({ userId: "", amount: 0, motivo: "" });
@@ -57,6 +61,21 @@ function GamificacionPage() {
     void adminFpPanel()
       .then((p) => setPanel(p as unknown as Panel))
       .catch(() => setMsg("No se pudo cargar el panel."));
+    void adminCommunityDirectory()
+      .then(setDirectorio)
+      .catch(() => undefined);
+  };
+
+  /** Quién es: indicativo + nombre real, para no mostrar ids crudos. */
+  const quien = (userId: string) => directorio.find((f) => f.userId === userId) ?? null;
+
+  /** Acepta id, correo o indicativo del alumno y devuelve su id. */
+  const resolverUsuario = (texto: string): string => {
+    const t = texto.trim().toLowerCase();
+    const f = directorio.find(
+      (x) => x.userId === t || x.email.toLowerCase() === t || x.callsign.toLowerCase() === t,
+    );
+    return f?.userId ?? texto.trim();
   };
   useEffect(cargar, []);
 
@@ -170,12 +189,23 @@ function GamificacionPage() {
             </div>
             <div style={{ ...CARD, display: "grid", gap: 6 }}>
               <strong style={{ fontSize: ".85rem", color: "#22375C" }}>Top 20 saldos</strong>
-              {(panel?.top ?? []).map((t) => (
-                <div key={t.userId} style={{ display: "flex", justifyContent: "space-between", fontSize: ".78rem" }}>
-                  <code>{t.userId.slice(0, 8)}…</code>
-                  <span>{fpFormat(t.total)} FP</span>
-                </div>
-              ))}
+              {(panel?.top ?? []).map((t) => {
+                const q = quien(t.userId);
+                return (
+                  <div key={t.userId} className="cm-root" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: ".78rem" }}>
+                    {q ? <Insignia callsign={q.callsign} size={24} /> : null}
+                    <span style={{ flex: 1, minWidth: 0, display: "grid" }}>
+                      <strong style={{ color: "#22375C" }}>{q ? <Callsign texto={q.callsign} /> : <code>{t.userId.slice(0, 8)}…</code>}</strong>
+                      {q && (
+                        <small style={{ color: "#647DA0" }}>
+                          {q.nombre} · {q.email} · {q.privacidad === "nombre" ? "muestra su nombre" : "anónimo"}
+                        </small>
+                      )}
+                    </span>
+                    <span style={{ fontWeight: 700, color: "#3D5D91" }}>{fpFormat(t.total)} FP</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
@@ -196,12 +226,12 @@ function GamificacionPage() {
           <div style={{ display: "grid", gap: 12 }}>
             <div style={{ ...CARD, display: "grid", gap: 8 }}>
               <strong style={{ fontSize: ".9rem", color: "#22375C" }}>Ajuste manual</strong>
-              <input placeholder="ID del usuario" value={ajuste.userId} onChange={(e) => setAjuste({ ...ajuste, userId: e.target.value })} style={{ padding: "8px 10px", borderRadius: 8, border: "1px solid rgba(61,93,145,.25)" }} />
+              <input placeholder="ID, correo o indicativo del alumno" value={ajuste.userId} onChange={(e) => setAjuste({ ...ajuste, userId: e.target.value })} style={{ padding: "8px 10px", borderRadius: 8, border: "1px solid rgba(61,93,145,.25)" }} />
               <input type="number" placeholder="FP (puede ser negativo)" value={ajuste.amount} onChange={(e) => setAjuste({ ...ajuste, amount: Number(e.target.value) })} style={{ padding: "8px 10px", borderRadius: 8, border: "1px solid rgba(61,93,145,.25)" }} />
               <input placeholder="Motivo" value={ajuste.motivo} onChange={(e) => setAjuste({ ...ajuste, motivo: e.target.value })} style={{ padding: "8px 10px", borderRadius: 8, border: "1px solid rgba(61,93,145,.25)" }} />
               <button
                 onClick={() =>
-                  void adminFpAdjust({ data: ajuste }).then(() => {
+                  void adminFpAdjust({ data: { ...ajuste, userId: resolverUsuario(ajuste.userId) } }).then(() => {
                     setMsg("Ajuste aplicado.");
                     cargar();
                   })
@@ -235,7 +265,14 @@ function GamificacionPage() {
             {(panel?.alertas ?? []).length === 0 && <p style={{ margin: 0, fontSize: ".84rem" }}>Sin alertas.</p>}
             {(panel?.alertas ?? []).map((a) => (
               <div key={a.id} style={{ fontSize: ".8rem", color: "#41526b" }}>
-                <strong>{a.mensaje}</strong> · <code>{a.userId.slice(0, 8)}…</code>{" "}
+                <strong>{a.mensaje}</strong> ·{" "}
+                {quien(a.userId) ? (
+                  <span>
+                    {quien(a.userId)!.callsign} ({quien(a.userId)!.nombre || quien(a.userId)!.email})
+                  </span>
+                ) : (
+                  <code>{a.userId.slice(0, 8)}…</code>
+                )}{" "}
                 <small style={{ color: "#9aa8bb" }}>{new Date(a.createdAt).toLocaleString("es-MX")}</small>
               </div>
             ))}

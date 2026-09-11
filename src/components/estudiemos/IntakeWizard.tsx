@@ -1,6 +1,6 @@
 /** Cinco pasos, uno por pantalla: cómo llegas hoy. Pathy decide cómo estudiamos. */
 import { useState } from "react";
-import { Icon } from "@/components/ui/fp-icon";
+import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import { PathyMark } from "@/components/shared/PathyMark";
 import type { StudyIntake, StudyMood, StudyTrack, StudyUrgency } from "@/lib/estudiemos/types";
 
@@ -17,13 +17,16 @@ function Option({
   onClick,
   title,
   desc,
-  emoji,
+  icon,
+  dot,
 }: {
   selected: boolean;
   onClick: () => void;
   title: string;
   desc?: string;
-  emoji?: string;
+  icon?: FPIconName;
+  /** Punto de color (semáforo de urgencia). */
+  dot?: string;
 }) {
   return (
     <button
@@ -43,7 +46,17 @@ function Option({
         width: "100%",
       }}
     >
-      {emoji && <span style={{ fontSize: "1.3rem" }}>{emoji}</span>}
+      {icon && (
+        <span style={{ display: "flex", color: selected ? "#3D5D91" : "#647DA0", flexShrink: 0 }}>
+          <Icon n={icon} size={22} />
+        </span>
+      )}
+      {dot && (
+        <span
+          aria-hidden="true"
+          style={{ width: 12, height: 12, borderRadius: 99, background: dot, flexShrink: 0, boxShadow: `0 0 0 4px ${dot}22` }}
+        />
+      )}
       <span>
         <span style={{ display: "block", fontWeight: 800, color: "#22375C", fontSize: "0.92rem" }}>{title}</span>
         {desc && (
@@ -109,14 +122,14 @@ export function IntakeWizard({
             onClick={() => { setTrack("ciaac"); setStep(1); }}
             title="CIAAC"
             desc="Las 12 materias oficiales del examen."
-            emoji="🛫"
+            icon="plane"
           />
           <Option
             selected={track === "la"}
             onClick={() => { setTrack("la"); setStep(1); }}
             title="Línea Aérea"
             desc="Manuales del curso: ATP, Handbook, Jeppesen, Legislación y aeronaves."
-            emoji="🛩️"
+            icon="tower"
           />
         </div>
       )}
@@ -168,17 +181,17 @@ export function IntakeWizard({
       {step === 2 && (
         <div style={{ display: "grid", gap: 10 }}>
           {([
-            { id: "cero", emoji: "😫", label: "Cero ganas" },
-            { id: "normal", emoji: "😐", label: "Normal" },
-            { id: "ganas", emoji: "🙂", label: "Con ganas" },
-            { id: "atope", emoji: "🔥", label: "A tope" },
-          ] as { id: StudyMood; emoji: string; label: string }[]).map((o) => (
+            { id: "cero", icon: "moon", label: "Cero ganas" },
+            { id: "normal", icon: "cloud", label: "Normal" },
+            { id: "ganas", icon: "sun", label: "Con ganas" },
+            { id: "atope", icon: "flame", label: "A tope" },
+          ] as { id: StudyMood; icon: FPIconName; label: string }[]).map((o) => (
             <Option
               key={o.id}
               selected={mood === o.id}
               onClick={() => { setMood(o.id); setStep(3); }}
               title={o.label}
-              emoji={o.emoji}
+              icon={o.icon}
             />
           ))}
         </div>
@@ -187,18 +200,18 @@ export function IntakeWizard({
       {step === 3 && (
         <div style={{ display: "grid", gap: 10 }}>
           {([
-            { id: "verde", emoji: "🟢", label: "Nada urgente", desc: "Voy con calma." },
-            { id: "amarillo", emoji: "🟡", label: "Algo urgente", desc: "Quiero avanzar en serio." },
-            { id: "naranja", emoji: "🟠", label: "Bastante urgente", desc: "Ya se me viene encima." },
-            { id: "rojo", emoji: "🔴", label: "Urgentísimo", desc: "Necesito rendir ya." },
-          ] as { id: StudyUrgency; emoji: string; label: string; desc: string }[]).map((o) => (
+            { id: "verde", dot: "#22a06b", label: "Nada urgente", desc: "Voy con calma." },
+            { id: "amarillo", dot: "#e0b400", label: "Algo urgente", desc: "Quiero avanzar en serio." },
+            { id: "naranja", dot: "#e07b39", label: "Bastante urgente", desc: "Ya se me viene encima." },
+            { id: "rojo", dot: "#c0392b", label: "Urgentísimo", desc: "Necesito rendir ya." },
+          ] as { id: StudyUrgency; dot: string; label: string; desc: string }[]).map((o) => (
             <Option
               key={o.id}
               selected={urgency === o.id}
               onClick={() => { setUrgency(o.id); setStep(4); }}
               title={o.label}
               desc={o.desc}
-              emoji={o.emoji}
+              dot={o.dot}
             />
           ))}
         </div>

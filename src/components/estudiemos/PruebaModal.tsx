@@ -113,7 +113,7 @@ export function PruebaModal({ mode, onClose }: { mode: PruebaMode; onClose: (int
               {answered !== null && (
                 <div style={{ background: "#f8f9ff", borderRadius: 12, padding: "12px 14px", marginBottom: 14 }}>
                   <p style={{ fontSize: "0.82rem", fontWeight: 700, color: answered === question.correctIndex ? "#1a7a4a" : "#6C0820", marginBottom: 4 }}>
-                    {answered === question.correctIndex ? "¡Correcto! ✈️" : `Casi. La respuesta correcta es: "${question.options[question.correctIndex]}"`}
+                    {answered === question.correctIndex ? "¡Correcto!" : `Casi. La respuesta correcta es: "${question.options[question.correctIndex]}"`}
                   </p>
                   <p style={{ fontSize: "0.8rem", color: "#555", lineHeight: 1.6, margin: 0 }}>{question.explanation}</p>
                   {question.cite && <p style={{ fontSize: "0.72rem", color: "#8DA1BE", margin: "6px 0 0" }}>{question.cite}</p>}
