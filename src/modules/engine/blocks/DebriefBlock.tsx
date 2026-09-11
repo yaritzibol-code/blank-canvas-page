@@ -1,8 +1,8 @@
 import { useState } from "react";
 import type { DebriefBlockData } from "../types";
+import { Icon } from "@/components/ui/fp-icon";
 
 const DIFFICULTY_COLORS = ["#2ecc71", "#27ae60", "#f39c12", "#e67e22", "#e74c3c"];
-const DIFFICULTY_EMOJIS = ["😄", "🙂", "😐", "😕", "😰"];
 
 type Props = Omit<DebriefBlockData, "tema_id"> & {
   tema_id: string;
@@ -57,7 +57,7 @@ export function DebriefBlock({
           marginBottom: 16,
         }}
       >
-        🛬 Debrief del Tema
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon n="flag" size={14} /> Debrief del Tema</span>
       </div>
 
       {/* Key points */}
@@ -160,7 +160,19 @@ export function DebriefBlock({
                 transition: "all 0.15s",
               }}
             >
-              <span style={{ fontSize: "1.2rem" }}>{DIFFICULTY_EMOJIS[i]}</span>
+              <span style={{ display: "flex", gap: 3 }} aria-hidden="true">
+                {[0, 1, 2, 3, 4].map((j) => (
+                  <span
+                    key={j}
+                    style={{
+                      width: 7,
+                      height: 7,
+                      borderRadius: 99,
+                      background: j <= i ? DIFFICULTY_COLORS[i] : "#E3EAF5",
+                    }}
+                  />
+                ))}
+              </span>
               {label}
             </button>
           );
@@ -192,7 +204,7 @@ export function DebriefBlock({
             if (selected !== null) e.currentTarget.style.background = "#6C0820";
           }}
         >
-          ✅ Marcar tema como completado
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} /> Marcar tema como completado</span>
         </button>
       ) : (
         <div
@@ -207,7 +219,7 @@ export function DebriefBlock({
             color: "#1a7a4a",
           }}
         >
-          🎉 ¡Tema completado! Tu progreso quedó registrado.
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><Icon n="checkCircle" size={16} /> ¡Tema completado! Tu progreso quedó registrado.</span>
         </div>
       )}
     </div>

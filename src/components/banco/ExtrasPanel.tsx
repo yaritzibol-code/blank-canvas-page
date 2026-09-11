@@ -311,9 +311,9 @@ function AudioRepaso({ grupos, la, onClose }: { grupos: Grupo[]; la: boolean; on
         {script && speech.supported && (
           <>
             <button onClick={() => (speech.speaking ? speech.toggle() : speech.speak(script))} style={{ padding: "10px 16px", borderRadius: 10, border: `1px solid ${CARD_BORDER}`, background: "white", color: INK, fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.85rem" }}>
-              {speech.speaking ? (speech.paused ? "▶ Reanudar" : "⏸ Pausar") : "▶ Reproducir"}
+              {speech.speaking ? (speech.paused ? <><Icon n="play" size={14} /> Reanudar</> : <><Icon n="pause" size={14} /> Pausar</>) : <><Icon n="play" size={14} /> Reproducir</>}
             </button>
-            <button onClick={speech.stop} style={{ padding: "10px 16px", borderRadius: 10, border: `1px solid ${CARD_BORDER}`, background: "white", color: WINE, fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.85rem" }}>■ Detener</button>
+            <button onClick={speech.stop} style={{ padding: "10px 16px", borderRadius: 10, border: `1px solid ${CARD_BORDER}`, background: "white", color: WINE, fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.85rem" }}>Detener</button>
           </>
         )}
       </div>

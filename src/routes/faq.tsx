@@ -155,7 +155,7 @@ function FaqPage() {
             fontSize: 18,
           }}
         >
-          FlightPath ✈
+          FlightPath
         </Link>
         <BackLink />
       </header>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { PreflightCheckBlockData } from "../types";
+import { Icon } from "@/components/ui/fp-icon";
 
 export function PreflightCheckBlock({
   instruccion,
@@ -74,7 +75,9 @@ export function PreflightCheckBlock({
           marginBottom: 14,
         }}
       >
-        ✈️ Chequeo Pre-Vuelo
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+          <Icon n="plane" size={14} /> Chequeo Pre-Vuelo
+        </span>
       </div>
 
       {instruccion ? (
@@ -161,8 +164,8 @@ export function PreflightCheckBlock({
         >
           <strong style={{ display: "block", marginBottom: getFeedbackText() ? 6 : 0 }}>
             {correct
-              ? "✅ ¡Ya sabías esto! Refuerza el concepto."
-              : "💡 Perfecto, esto es lo que vas a aprender hoy."}
+              ? "¡Ya sabías esto! Refuerza el concepto."
+              : "Perfecto, esto es lo que vas a aprender hoy."}
           </strong>
           {getFeedbackText()}
         </div>

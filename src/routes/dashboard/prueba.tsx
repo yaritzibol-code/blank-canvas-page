@@ -38,7 +38,6 @@ const FONT = "'Manrope', sans-serif";
 const DISPLAY = "'Bricolage Grotesque', sans-serif";
 
 interface Ejercicio {
-  emoji: string;
   icon: FPIconName;
   titulo: string;
   descripcion: string;
@@ -47,7 +46,6 @@ interface Ejercicio {
 
 const EJERCICIOS: Ejercicio[] = [
   {
-    emoji: "🗣️",
     icon: "chat",
     titulo: "Explícale a Yaris",
     descripcion:
@@ -55,21 +53,18 @@ const EJERCICIOS: Ejercicio[] = [
     disponible: true,
   },
   {
-    emoji: "✈️",
     icon: "plane",
     titulo: "Patrones de espera",
     descripcion: "Practica entradas, procedimientos y situaciones de espera.",
     disponible: false,
   },
   {
-    emoji: "🧮",
     icon: "gauge",
     titulo: "Resuélvelo",
     descripcion: "Resuelve problemas y cálculos de aviación.",
     disponible: false,
   },
   {
-    emoji: "🌦️",
     icon: "cloud",
     titulo: "METAR & TAF",
     descripcion: "Interpreta reportes meteorológicos y condiciones de vuelo.",
@@ -105,7 +100,7 @@ function PonmeAPruebaPage() {
         <>
           <header style={{ marginBottom: 22 }}>
             <h1 style={{ fontFamily: DISPLAY, fontSize: "1.8rem", color: "#22375C", margin: "0 0 4px" }}>
-              🎯 Ponme a Prueba
+              Ponme a Prueba
             </h1>
             <p style={{ fontSize: "0.95rem", color: "#647DA0", margin: 0 }}>
               Demuestra que realmente entendiste.
@@ -176,7 +171,7 @@ function Tarjeta({ ejercicio, onComenzar }: { ejercicio: Ejercicio; onComenzar: 
             color: activo ? "#22375C" : "#7B8CA6",
           }}
         >
-          {ejercicio.emoji} {ejercicio.titulo}
+          {ejercicio.titulo}
         </h2>
       </div>
 

@@ -5,6 +5,7 @@ import { syncMyPlan } from "@/lib/payments.functions";
 import { getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
 import { refreshCloudProfile } from "@/lib/store/auth";
 import { invalidarPlanSync } from "@/lib/plan-sync";
+import { Icon } from "@/components/ui/fp-icon";
 
 
 export const Route = createFileRoute("/checkout/return")({
@@ -85,7 +86,9 @@ function CheckoutReturn() {
   return (
     <div style={{ minHeight: "100vh", background: "#F7F9FC", fontFamily: FONT, display: "grid", placeItems: "center", padding: 24 }}>
       <div style={{ background: "#fff", border: "1px solid #E3EAF5", borderRadius: 20, padding: "40px 32px", maxWidth: 480, textAlign: "center" }}>
-        <div style={{ fontSize: 48, marginBottom: 12 }}>{status === "active" ? "🎉" : status === "pending" ? "⏳" : session_id ? "✅" : "✈️"}</div>
+        <div style={{ width: 72, height: 72, borderRadius: "50%", margin: "0 auto 14px", display: "grid", placeItems: "center", background: "#FAEFEE", color: "#6C0820" }}>
+          <Icon n={status === "active" ? "checkCircle" : status === "pending" ? "clock" : session_id ? "check" : "plane"} size={34} />
+        </div>
         <h1 style={{ fontFamily: DISPLAY, color: INK, fontSize: "1.6rem", fontWeight: 800, margin: "0 0 12px" }}>{title}</h1>
         <p style={{ color: "#647DA0", fontSize: 15, lineHeight: 1.6, marginBottom: 28 }}>{body}</p>
         <Link to="/dashboard" style={{ display: "inline-block", background: "#6C0820", color: "#fff", textDecoration: "none", fontWeight: 700, padding: "12px 24px", borderRadius: 12 }}>

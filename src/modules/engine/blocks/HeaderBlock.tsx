@@ -1,4 +1,5 @@
 import type { HeaderBlockData } from "../types";
+import { Icon } from "@/components/ui/fp-icon";
 
 export function HeaderBlock({
   title,
@@ -73,7 +74,9 @@ export function HeaderBlock({
             fontWeight: 600,
           }}
         >
-          ⏱ {duracion_min} min
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
+            <Icon n="clock" size={13} /> {duracion_min} min
+          </span>
         </span>
         <span
           style={{
@@ -84,7 +87,9 @@ export function HeaderBlock({
             fontWeight: 600,
           }}
         >
-          📖 Bloque {bloque} · Tema {tema}
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
+            <Icon n="book" size={13} /> Bloque {bloque} · Tema {tema}
+          </span>
         </span>
       </div>
 

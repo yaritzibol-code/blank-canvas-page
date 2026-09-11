@@ -35,7 +35,7 @@ export function PathyCloud() {
         >
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
             <strong style={{ color: "#22375C", fontSize: "0.9rem" }}>
-              {enBreak ? "☕ Break" : "Sesión con Pathy"}
+              {enBreak ? "Break" : "Sesión con Pathy"}
             </strong>
             <button onClick={() => setOpen(false)} style={{ background: "none", border: "none", cursor: "pointer", color: "#647DA0" }}>
               <Icon n="close" size={16} />
@@ -119,7 +119,7 @@ export function PathyCloud() {
       >
         <PathyMark size={30} float />
         <span style={{ fontWeight: 800, color: enBreak ? "#856404" : "#22375C", fontSize: "0.84rem" }}>
-          {enBreak ? `☕ Break · ${mmss(remainingMs)}` : `quedan ${mmss(remainingMs)}`}
+          {enBreak ? `Break · ${mmss(remainingMs)}` : `quedan ${mmss(remainingMs)}`}
         </span>
       </button>
     </div>

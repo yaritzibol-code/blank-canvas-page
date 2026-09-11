@@ -16,6 +16,7 @@ import {
 } from "@/lib/flash-offer";
 import { isPaid, useSessionUser } from "@/lib/store";
 import { Confetti } from "@/components/shared/Confetti";
+import { Icon } from "@/components/ui/fp-icon";
 
 const BRAND = "#6C0820";
 const FONT = "'Manrope', sans-serif";
@@ -87,7 +88,9 @@ export function FlashOfferWatch() {
           boxShadow: "0 6px 20px rgba(108,8,32,0.35)",
         }}
       >
-        <span aria-hidden="true">⏳</span>
+        <span aria-hidden="true" style={{ display: "flex" }}>
+          <Icon n="timer" size={15} />
+        </span>
         <span>
           Oferta especial: inscripción ${FLASH_SETUP_PRICE.toLocaleString("es-MX")} MXN
         </span>

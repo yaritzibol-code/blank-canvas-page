@@ -8,7 +8,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { derivarEventos, rachasDe, type FpEstado, type FpRule, type RuleMap } from "./fp.server";
-import type { FpNuevo, FpRankingRow, FpResumen, FpTx } from "./shared";
+import { generarCallsign } from "./callsign";
+import { FP_TOP_N, type FpNuevo, type FpRankingRow, type FpReglaPublica, type FpResumen, type FpTx } from "./shared";
 
 type Row = Record<string, unknown>;
 
@@ -23,6 +24,53 @@ function folioDe(userId: string): string {
     n = Math.floor(n / abc.length) + 7;
   }
   return `FP-${s}`;
+}
+
+/**
+ * Garantiza que el alumno tenga su indicativo (callsign) y lo devuelve.
+ *
+ * Se genera una sola vez y nunca cambia: si ya existe se respeta tal cual. La
+ * unicidad la garantiza el índice de la base; si la combinación ya está tomada
+ * (violación 23505) se prueba otra derivada de la misma semilla.
+ */
+export async function asegurarCallsign(admin: { from: (t: string) => any }, userId: string): Promise<string> {
+  const { data: perfil } = await admin
+    .from("fp_community_profiles")
+    .select("user_id,callsign")
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (perfil?.callsign) return String(perfil.callsign);
+
+  for (let salt = 0; salt < 24; salt++) {
+    const callsign = generarCallsign(userId, salt);
+    const ahora = new Date().toISOString();
+    const res = perfil
+      ? await admin
+          .from("fp_community_profiles")
+          .update({ callsign, updated_at: ahora })
+          .eq("user_id", userId)
+          .is("callsign", null)
+          .select("callsign")
+      : await admin
+          .from("fp_community_profiles")
+          .insert({ user_id: userId, folio: folioDe(userId), callsign, updated_at: ahora })
+          .select("callsign");
+    if (!res.error) {
+      const fila = (res.data ?? [])[0] as { callsign?: string } | undefined;
+      if (fila?.callsign) return String(fila.callsign);
+      // Otra petición concurrente ya lo asignó: se lee y se respeta.
+      const { data: otra } = await admin
+        .from("fp_community_profiles")
+        .select("callsign")
+        .eq("user_id", userId)
+        .maybeSingle();
+      if (otra?.callsign) return String(otra.callsign);
+      continue;
+    }
+    const code = String((res.error as { code?: string }).code ?? "");
+    if (code !== "23505") throw new Error(String((res.error as { message?: string }).message ?? "callsign"));
+  }
+  throw new Error("No se pudo asignar un indicativo único");
 }
 
 async function cargarReglas(admin: { from: (t: string) => any }): Promise<RuleMap> {
@@ -154,6 +202,7 @@ export async function procesarUsuarioFP(
       },
       { onConflict: "user_id" },
     );
+    await asegurarCallsign(admin, userId).catch(() => undefined);
 
     return { nuevos, total };
   }
@@ -232,9 +281,17 @@ export const getFlightPoints = createServerFn({ method: "GET" })
 
     const { data: perfil } = await supabase
       .from("fp_community_profiles")
-      .select("folio,privacidad,tutorial_visto,tutorial_oculto,racha_actual,racha_max,logros")
+      .select("folio,callsign,privacidad,privacidad_elegida,tutorial_visto,tutorial_oculto,racha_actual,racha_max,logros")
       .eq("user_id", userId)
       .maybeSingle();
+
+    let callsign = (perfil?.callsign as string | null) ?? null;
+    if (!callsign) {
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      callsign = await asegurarCallsign(supabaseAdmin as unknown as { from: (t: string) => any }, userId).catch(
+        () => generarCallsign(userId),
+      );
+    }
 
     return {
       total: suma(() => true),
@@ -244,7 +301,9 @@ export const getFlightPoints = createServerFn({ method: "GET" })
       porPrograma: agrupar((t) => (t.program ?? "GENERAL")).map(([programa, v]) => ({ programa, ...v })),
       recientes: lista.slice(0, 10),
       folio: (perfil?.folio as string) ?? folioDe(userId),
+      callsign,
       privacidad: ((perfil?.privacidad as string) ?? "folio") === "nombre" ? "nombre" : "folio",
+      privacidadElegida: Boolean(perfil?.privacidad_elegida),
       tutorialVisto: Boolean(perfil?.tutorial_visto),
       tutorialOculto: Boolean(perfil?.tutorial_oculto),
       rachaActual: Number(perfil?.racha_actual ?? 0),
@@ -278,13 +337,35 @@ export const setCommunityPrefs = createServerFn({ method: "POST" })
       folio: folioDe(context.userId),
       updated_at: new Date().toISOString(),
     };
-    if (data.privacidad) patch["privacidad"] = data.privacidad;
+    if (data.privacidad) {
+      patch["privacidad"] = data.privacidad;
+      patch["privacidad_elegida"] = true;
+    }
     if (data.tutorialVisto !== undefined) patch["tutorial_visto"] = data.tutorialVisto;
     if (data.tutorialOculto !== undefined) patch["tutorial_oculto"] = data.tutorialOculto;
-    await (supabaseAdmin as unknown as { from: (t: string) => any })
-      .from("fp_community_profiles")
-      .upsert(patch, { onConflict: "user_id" });
-    return { ok: true };
+    const admin = supabaseAdmin as unknown as { from: (t: string) => any };
+    await admin.from("fp_community_profiles").upsert(patch, { onConflict: "user_id" });
+    const callsign = await asegurarCallsign(admin, context.userId).catch(() => generarCallsign(context.userId));
+    return { ok: true, callsign };
+  });
+
+/** Reglas vigentes de FlightPoints, tal como las explica el tutorial (sin montos inventados). */
+export const getFpRulesPublic = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<FpReglaPublica[]> => {
+    const { data } = await context.supabase
+      .from("fp_rules")
+      .select("key,label,categoria,value,enabled,orden")
+      .eq("enabled", true)
+      .order("orden");
+    return ((data ?? []) as Row[])
+      .map((r) => ({
+        key: String(r["key"]),
+        label: String(r["label"]),
+        categoria: String(r["categoria"]),
+        fp: Number((r["value"] as Record<string, number> | null)?.["fp"] ?? 0),
+      }))
+      .filter((r) => r.fp > 0);
   });
 
 /* ───────────────────────── Comunidad ───────────────────────── */
@@ -293,10 +374,52 @@ type LbRow = {
   user_id: string;
   nombre: string;
   folio: string;
+  callsign: string | null;
   privacidad: string;
+  avatar: string | null;
   valor: number;
   posicion: number;
 };
+
+/**
+ * Firma las fotos de quienes SÍ muestran su nombre. El bucket `avatars` es
+ * privado por carpeta, así que un alumno no podría leer la foto de otro; el
+ * servidor firma sólo las que la propia persona decidió publicar.
+ */
+async function firmarAvatares(rows: LbRow[]): Promise<Map<string, string>> {
+  const rutas = [...new Set(rows.filter((r) => r.privacidad === "nombre" && r.avatar).map((r) => r.avatar!))];
+  const firmadas = new Map<string, string>();
+  if (rutas.length === 0) return firmadas;
+  try {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data } = await (supabaseAdmin as unknown as {
+      storage: { from: (b: string) => { createSignedUrls: (p: string[], ttl: number) => Promise<{ data: { path: string | null; signedUrl: string }[] | null }> } };
+    }).storage
+      .from("avatars")
+      .createSignedUrls(rutas, 60 * 60);
+    (data ?? []).forEach((d) => {
+      if (d.path && d.signedUrl) firmadas.set(d.path, d.signedUrl);
+    });
+  } catch {
+    // Sin foto firmada la fila cae a iniciales: nunca se rompe el ranking.
+  }
+  return firmadas;
+}
+
+function filaPublica(r: LbRow, miId: string, fotos: Map<string, string>): FpRankingRow {
+  const anonimo = r.privacidad !== "nombre";
+  const callsign = r.callsign ?? r.folio;
+  return {
+    userId: r.user_id,
+    display: anonimo ? callsign : r.nombre,
+    callsign,
+    anonimo,
+    avatarUrl: !anonimo && r.avatar ? (fotos.get(r.avatar) ?? null) : null,
+    esYo: r.user_id === miId,
+    valor: Number(r.valor ?? 0),
+    posicion: Number(r.posicion ?? 0),
+  };
+}
 
 /** Lee el ranking completo desde la RPC (ya excluye cuentas admin). */
 async function leerRanking(
@@ -338,26 +461,18 @@ export const getComunidad = createServerFn({ method: "POST" })
         leerRanking(context.supabase as any, data.metric, data.periodo),
         esCuentaAdmin(context),
       ]);
-      const map = (r: LbRow): FpRankingRow => ({
-        userId: r.user_id,
-        display:
-          r.user_id === context.userId
-            ? `${r.privacidad === "nombre" ? r.nombre : r.folio} (tú)`
-            : r.privacidad === "nombre"
-              ? r.nombre
-              : r.folio,
-        esYo: r.user_id === context.userId,
-        valor: Number(r.valor ?? 0),
-        posicion: Number(r.posicion ?? 0),
-      });
       const idx = rows.findIndex((r) => r.user_id === context.userId);
       // Ventana privada: dos arriba y dos abajo de mi posición.
       const vecinos = idx >= 0 ? rows.slice(Math.max(0, idx - 2), idx + 3) : [];
       const arriba = idx > 0 ? rows[idx - 1] : null;
       const usaFp = data.metric !== "racha" && data.metric !== "logros";
+      const top = rows.slice(0, FP_TOP_N);
+      const yo = idx >= FP_TOP_N ? vecinos : [];
+      const fotos = await firmarAvatares([...top, ...yo]);
+      const map = (r: LbRow) => filaPublica(r, context.userId, fotos);
       return {
-        top: rows.slice(0, 5).map(map),
-        yo: idx >= 5 ? vecinos.map(map) : [],
+        top: top.map(map),
+        yo: yo.map(map),
         total: rows.length,
         miPosicion: idx >= 0 ? Number(rows[idx]!.posicion ?? idx + 1) : null,
         miValor: idx >= 0 ? Number(rows[idx]!.valor ?? 0) : null,
@@ -541,4 +656,68 @@ export const adminFpRevert = createServerFn({ method: "POST" })
     await admin.from("fp_transactions").update({ status: "revertida" }).eq("id", tx.id);
     await recalcularSaldo(admin, tx.user_id);
     return { ok: true };
+  });
+
+
+/**
+ * Directorio de Comunidad para el panel admin: liga cada indicativo con el
+ * alumno real (nombre y correo) y sus métricas publicadas. Sólo admin.
+ */
+export interface AdminComunidadFila {
+  userId: string;
+  nombre: string;
+  email: string;
+  callsign: string;
+  folio: string;
+  privacidad: "nombre" | "folio";
+  privacidadElegida: boolean;
+  tutorialVisto: boolean;
+  total: number;
+  rachaActual: number;
+  rachaMax: number;
+  logros: number;
+}
+
+export const adminCommunityDirectory = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<AdminComunidadFila[]> => {
+    await exigirAdmin(context as never);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const admin = supabaseAdmin as unknown as { from: (t: string) => any };
+    const [perfiles, cuentas, saldos] = await Promise.all([
+      admin
+        .from("fp_community_profiles")
+        .select("user_id,folio,callsign,privacidad,privacidad_elegida,tutorial_visto,racha_actual,racha_max,logros"),
+      admin.from("profiles").select("id,email,data"),
+      admin.from("fp_balances").select("user_id,total"),
+    ]);
+    const cuentaDe = new Map<string, { email: string; nombre: string }>();
+    ((cuentas.data ?? []) as Row[]).forEach((c) => {
+      const d = (c["data"] ?? {}) as Record<string, unknown>;
+      cuentaDe.set(String(c["id"]), {
+        email: String(c["email"] ?? ""),
+        nombre: String(d["nombre"] ?? "") || String(c["email"] ?? "").split("@")[0] || "",
+      });
+    });
+    const saldoDe = new Map<string, number>();
+    ((saldos.data ?? []) as Row[]).forEach((b) => saldoDe.set(String(b["user_id"]), Number(b["total"] ?? 0)));
+
+    return ((perfiles.data ?? []) as Row[]).map((p) => {
+      const id = String(p["user_id"]);
+      const cuenta = cuentaDe.get(id);
+      return {
+        userId: id,
+        nombre: cuenta?.nombre ?? "",
+        email: cuenta?.email ?? "",
+        callsign: String(p["callsign"] ?? "") || String(p["folio"] ?? ""),
+        folio: String(p["folio"] ?? ""),
+        privacidad: p["privacidad"] === "nombre" ? "nombre" : "folio",
+        privacidadElegida: Boolean(p["privacidad_elegida"]),
+        tutorialVisto: Boolean(p["tutorial_visto"]),
+        total: saldoDe.get(id) ?? 0,
+        rachaActual: Number(p["racha_actual"] ?? 0),
+        rachaMax: Number(p["racha_max"] ?? 0),
+        logros: Number(p["logros"] ?? 0),
+      };
+    });
   });

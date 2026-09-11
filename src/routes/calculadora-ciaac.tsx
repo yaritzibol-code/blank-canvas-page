@@ -293,7 +293,7 @@ function Calculadora() {
                   <p className="mt-6 text-white/60 text-[14px]">Cargando tu plan…</p>
                 ) : r.dias <= 0 ? (
                   <div className="mt-6">
-                    <div className="font-display text-3xl">Esa fecha ya pasó ✈</div>
+                    <div className="font-display text-3xl">Esa fecha ya pasó</div>
                     <p className="mt-3 text-white/65 text-[14.5px] leading-relaxed">
                       Elige la fecha de tu próximo examen para armar el plan. Si vas por la
                       siguiente convocatoria, este es el mejor día para empezar: hoy.

@@ -5,6 +5,7 @@
  */
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ModuleHeader } from "@/components/shared/ModuleHeader";
+import { Icon } from "@/components/ui/fp-icon";
 import { useEffect, useState } from "react";
 import { flashOfferActive, startFlashOffer as startFlashLocal } from "@/lib/flash-offer";
 import { trackAbandon, trackMilestone } from "@/lib/activity-tracker";
@@ -369,11 +370,11 @@ function PlanesPage() {
             <div style={{ fontFamily: DISPLAY, fontSize: "2.4rem", fontWeight: 800, color: INK, margin: "8px 0 4px" }}>$0 <span style={{ fontSize: 15, color: "#647DA0", fontWeight: 500 }}>MXN/mes</span></div>
             <div style={{ color: "#647DA0", fontSize: 13, marginBottom: 20 }}>Gratis para siempre</div>
             <ul style={{ padding: 0, listStyle: "none", color: "#4A5F80", fontSize: 14, lineHeight: 1.8, marginBottom: 20 }}>
-              <li>✅ 10 preguntas por materia</li>
-              <li>✅ Máximo 2 intentos totales</li>
-              <li>✅ Cuestionario y simulador limitados</li>
-              <li>❌ Sin Yaris IA</li>
-              <li>❌ Sin módulos avanzados</li>
+              <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> 10 preguntas por materia</li>
+              <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> Máximo 2 intentos totales</li>
+              <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> Cuestionario y simulador limitados</li>
+              <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="close" size={15} color="#c0392b" /> Sin Yaris IA</li>
+              <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="close" size={15} color="#c0392b" /> Sin módulos avanzados</li>
             </ul>
             <button disabled style={{ width: "100%", background: "#F3F4F6", color: "#647DA0", border: "none", padding: "12px 20px", borderRadius: 12, fontWeight: 700, fontSize: 14 }}>
               {isProActive ? "Plan gratuito" : "Plan actual"}
@@ -417,11 +418,11 @@ function PlanesPage() {
             </div>
             <div style={{ color: "#647DA0", fontSize: 13, marginBottom: 20 }}>Cancela cuando quieras</div>
             <ul style={{ padding: 0, listStyle: "none", color: "#4A5F80", fontSize: 14, lineHeight: 1.8, marginBottom: 20 }}>
-              <li>✅ Cuestionario y simulador ilimitados</li>
-              <li>✅ Todo el banco de preguntas</li>
-              <li>✅ Yaris con IA, con el contexto del curso</li>
-              <li>✅ Recordatorios por WhatsApp</li>
-              <li>✅ Análisis completo por materia</li>
+              <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> Cuestionario y simulador ilimitados</li>
+              <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> Todo el banco de preguntas</li>
+              <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> Yaris con IA, con el contexto del curso</li>
+              <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> Recordatorios por WhatsApp</li>
+              <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> Análisis completo por materia</li>
             </ul>
             {isProActive ? (
               <button onClick={handlePortal} disabled={loading} style={{ width: "100%", background: INK, color: "#fff", border: "none", padding: "12px 20px", borderRadius: 12, fontWeight: 700, fontSize: 14, cursor: "pointer" }}>

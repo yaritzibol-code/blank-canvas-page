@@ -142,7 +142,7 @@ function renderBlock(
             fontFamily: "'Manrope', sans-serif",
           }}
         >
-          ⚠️ Bloque desconocido:{" "}
+          Bloque desconocido:{" "}
           <code style={{ fontFamily: "monospace" }}>{block.type}</code> — verifica el JSON del
           tema.
         </div>

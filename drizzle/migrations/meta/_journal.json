@@ -36,6 +36,13 @@
       "when": 1789099647103,
       "tag": "0004_fp_sync_cron",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1789100803364,
+      "tag": "0005_fp_callsign",
+      "breakpoints": true
     }
   ]
 }

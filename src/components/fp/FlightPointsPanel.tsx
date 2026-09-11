@@ -1,10 +1,12 @@
 /**
- * Bloque de FlightPoints en Mi perfil: total, desglose, últimos movimientos e
- * historial completo con filtro. Todo viene del servidor.
+ * Bloque de FlightPoints en Mi perfil: indicativo de Comunidad, total,
+ * desglose, últimos movimientos e historial completo con filtro. Todo viene
+ * del servidor.
  */
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Icon } from "@/components/ui/fp-icon";
+import { Callsign, Insignia } from "@/components/comunidad/pieces";
 import { getFlightPoints, getFlightPointsHistory } from "@/lib/fp/fp.functions";
 import { sincronizarFP } from "@/lib/fp/client";
 import { FP_ACTIVITY_LABEL, fpFormat, type FpResumen, type FpTx } from "@/lib/fp/shared";
@@ -33,19 +35,67 @@ export function FlightPointsPanel() {
   useEffect(() => {
     if (historial === null) return;
     void getFlightPointsHistory({ data: { tipo: filtro } }).then(setHistorial);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtro]);
 
   const tipos = ["todos", ...new Set((resumen?.porActividad ?? []).map((a) => a.tipo))];
+  const anonimo = (resumen?.privacidad ?? "folio") !== "nombre";
 
   return (
-    <section style={{ ...CARD, display: "grid", gap: 14 }}>
+    <section style={{ ...CARD, display: "grid", gap: 14, marginBottom: 24 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-        <Icon n="star" size={22} color="#F2D27A" />
+        <Icon n="spark" size={20} color="#6C0820" />
         <h2 style={{ margin: 0, fontSize: "1.05rem", color: "#22375C", flex: 1 }}>FlightPoints</h2>
-        <Link to="/dashboard/comunidad" style={{ fontSize: ".8rem", fontWeight: 700, color: "#3D5D91" }}>
-          Ver Comunidad →
+        <Link
+          to="/dashboard/comunidad"
+          style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: ".8rem", fontWeight: 700, color: "#3D5D91" }}
+        >
+          Ver Comunidad <Icon n="arrow" size={13} />
         </Link>
       </div>
+
+      {/* Indicativo de Comunidad: es como aparece quien no publica su nombre. */}
+      {resumen?.callsign && (
+        <div
+          className="cm-root"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+            padding: "10px 12px",
+            borderRadius: 14,
+            background: "linear-gradient(135deg, rgba(61,93,145,.07), rgba(242,174,188,.12))",
+            border: "1px solid rgba(61,93,145,.12)",
+            flexWrap: "wrap",
+          }}
+        >
+          <Insignia callsign={resumen.callsign} size={40} />
+          <div style={{ flex: 1, minWidth: 180, display: "grid", gap: 2 }}>
+            <span style={{ fontSize: ".68rem", letterSpacing: ".14em", textTransform: "uppercase", color: "#647DA0", fontFamily: "'JetBrains Mono', monospace" }}>
+              Tu indicativo en Comunidad
+            </span>
+            <strong style={{ color: "#22375C", fontSize: ".98rem", fontFamily: "'Bricolage Grotesque', sans-serif" }}>
+              <Callsign texto={resumen.callsign} />
+            </strong>
+          </div>
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              padding: "5px 11px",
+              borderRadius: 999,
+              fontSize: ".72rem",
+              fontWeight: 700,
+              background: anonimo ? "rgba(61,93,145,.1)" : "rgba(108,8,32,.08)",
+              color: anonimo ? "#3D5D91" : "#6C0820",
+            }}
+          >
+            <Icon n={anonimo ? "eyeOff" : "eye"} size={13} />
+            {anonimo ? "Apareces anónimo" : "Apareces con tu nombre"}
+          </span>
+        </div>
+      )}
 
       <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
         {[
@@ -86,7 +136,7 @@ export function FlightPointsPanel() {
             <div key={t.id} style={{ display: "flex", justifyContent: "space-between", gap: 10, fontSize: ".82rem" }}>
               <span style={{ color: "#22375C" }}>
                 {t.activity_label}
-                {t.detail ? <small style={{ color: "#9aa8bb" }}> — {t.detail}</small> : null}
+                {t.detail ? <small style={{ color: "#9aa8bb" }}> · {t.detail}</small> : null}
               </span>
               <span style={{ whiteSpace: "nowrap", color: "#6b7a90" }}>
                 {fecha(t.occurred_at)} <strong style={{ color: "#3D5D91" }}>+{t.amount}</strong>
@@ -130,7 +180,7 @@ export function FlightPointsPanel() {
               <div key={t.id} style={{ display: "flex", justifyContent: "space-between", gap: 10, fontSize: ".8rem", opacity: t.status === "procesada" ? 1 : 0.5 }}>
                 <span style={{ color: "#22375C" }}>
                   {t.activity_label}
-                  {t.detail ? <small style={{ color: "#9aa8bb" }}> — {t.detail}</small> : null}
+                  {t.detail ? <small style={{ color: "#9aa8bb" }}> · {t.detail}</small> : null}
                 </span>
                 <span style={{ whiteSpace: "nowrap", color: "#6b7a90" }}>
                   {fecha(t.occurred_at)} <strong style={{ color: t.amount < 0 ? "#b03030" : "#3D5D91" }}>{t.amount > 0 ? "+" : ""}{t.amount}</strong>

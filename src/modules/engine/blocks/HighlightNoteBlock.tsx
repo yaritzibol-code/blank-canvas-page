@@ -1,11 +1,12 @@
 import type { HighlightNoteBlockData, HighlightType } from "../types";
+import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 
 const CONFIG: Record<
   HighlightType,
-  { icon: string; label: string; borderColor: string; bg: string; labelColor: string; textColor: string }
+  { icon: FPIconName; label: string; borderColor: string; bg: string; labelColor: string; textColor: string }
 > = {
   definicion: {
-    icon: "📘",
+    icon: "book",
     label: "Definición oficial",
     borderColor: "#3D5D91",
     bg: "rgba(61,93,145,0.06)",
@@ -13,7 +14,7 @@ const CONFIG: Record<
     textColor: "#1a1a2e",
   },
   advertencia: {
-    icon: "⚠️",
+    icon: "alert",
     label: "Atención",
     borderColor: "#6C0820",
     bg: "rgba(108,8,32,0.06)",
@@ -21,7 +22,7 @@ const CONFIG: Record<
     textColor: "#1a1a2e",
   },
   dato_clave: {
-    icon: "⭐",
+    icon: "star",
     label: "Dato clave CIAAC",
     borderColor: "#c9930a",
     bg: "rgba(201,147,10,0.07)",
@@ -29,7 +30,7 @@ const CONFIG: Record<
     textColor: "#1a1a2e",
   },
   yaris: {
-    icon: "🧠",
+    icon: "brain",
     label: "Nemotecnia de Yaris",
     borderColor: "#F2AEBC",
     bg: "linear-gradient(135deg, #FFF5F7, #FDE8EC)",
@@ -59,7 +60,7 @@ export function HighlightNoteBlock({ tipo, titulo, contenido, fuente }: Highligh
           marginBottom: 10,
         }}
       >
-        <span style={{ fontSize: "1.1rem" }}>{cfg.icon}</span>
+        <span style={{ display: "inline-flex" }}><Icon n={cfg.icon} size={17} /></span>
         <span
           style={{
             fontSize: "0.72rem",

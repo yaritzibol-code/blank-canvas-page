@@ -28,6 +28,9 @@ import {
   type User,
 } from "@/lib/store";
 import { PLANES, planById, planIdDe, type PlanId } from "@/lib/pricing";
+import { adminCommunityDirectory, type AdminComunidadFila } from "@/lib/fp/fp.functions";
+import { fpFormat } from "@/lib/fp/shared";
+import { Callsign, Insignia } from "@/components/comunidad/pieces";
 
 export const Route = createFileRoute("/admin/estudiantes")({
   component: AdminEstudiantesPage,
@@ -101,8 +104,27 @@ function AdminEstudiantesPage() {
   const [orden, setOrden] = useState("acceso");
   const [soloInactivos, setSoloInactivos] = useState(false);
   const [proxCiaac, setProxCiaac] = useState(false);
+  const [fVisibilidad, setFVisibilidad] = useState("todas");
   const [page, setPage] = useState(0);
   const scrollRef = useDragScroll<HTMLDivElement>();
+
+  /**
+   * Directorio de Comunidad: liga el indicativo (callsign) público de cada
+   * alumno con su cuenta real. Es lo que permite identificar a quien aparece
+   * anónimo en los rankings.
+   */
+  const [comunidad, setComunidad] = useState<Map<string, AdminComunidadFila>>(new Map());
+  useEffect(() => {
+    let vivo = true;
+    void adminCommunityDirectory()
+      .then((lista) => {
+        if (vivo) setComunidad(new Map(lista.map((f) => [f.userId, f])));
+      })
+      .catch(() => undefined);
+    return () => {
+      vivo = false;
+    };
+  }, []);
 
   const rows = useStore(() =>
     getUsers()
@@ -122,16 +144,21 @@ function AdminEstudiantesPage() {
       }),
   );
 
-  useEffect(() => { setPage(0); }, [query, fEstado, fPlan, fMateriaDebil, orden, soloInactivos, proxCiaac]);
+  useEffect(() => { setPage(0); }, [query, fEstado, fPlan, fMateriaDebil, orden, soloInactivos, proxCiaac, fVisibilidad]);
 
   const q = query.trim().toLowerCase();
   const filtered = rows
     .filter((r) => {
+      const com = comunidad.get(r.u.id);
       if (q && !(
         r.u.nombre.toLowerCase().includes(q) ||
         r.u.email.toLowerCase().includes(q) ||
-        r.u.escuela.toLowerCase().includes(q)
+        r.u.escuela.toLowerCase().includes(q) ||
+        (com?.callsign ?? "").toLowerCase().includes(q) ||
+        (com?.folio ?? "").toLowerCase().includes(q)
       )) return false;
+      if (fVisibilidad === "anonimos" && com?.privacidad === "nombre") return false;
+      if (fVisibilidad === "nombre" && com?.privacidad !== "nombre") return false;
       if (fEstado !== "todos" && r.u.accessStatus !== fEstado) return false;
       if (fPlan !== "todos" && r.u.plan !== fPlan) return false;
       if (fMateriaDebil !== "todas" && r.weakSlug !== fMateriaDebil) return false;
@@ -169,7 +196,7 @@ function AdminEstudiantesPage() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Buscar por nombre, correo o escuela..."
+            placeholder="Buscar por nombre, correo, escuela o indicativo..."
             style={{ ...inputStyle, paddingLeft: 34 }}
           />
         </div>
@@ -189,6 +216,11 @@ function AdminEstudiantesPage() {
           {MATERIAS_DEF.map((m) => (
             <option key={m.slug} value={m.slug}>{m.name}</option>
           ))}
+        </select>
+        <select value={fVisibilidad} onChange={(e) => setFVisibilidad(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 150 }}>
+          <option value="todas">Comunidad: todos</option>
+          <option value="anonimos">Anónimos (indicativo)</option>
+          <option value="nombre">Muestran su nombre</option>
         </select>
         <select value={orden} onChange={(e) => setOrden(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 150 }}>
           <option value="acceso">Orden: último acceso</option>
@@ -212,10 +244,11 @@ function AdminEstudiantesPage() {
 
       {/* Tabla */}
       <div ref={scrollRef} style={{ ...cardStyle, padding: 0, overflowX: "auto" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 1040, tableLayout: "auto" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 1260, tableLayout: "auto" }}>
           <thead>
             <tr>
               <th style={thStyle}>Estudiante</th>
+              <th style={thStyle}>Indicativo (Comunidad)</th>
               <th style={thStyle}>WhatsApp</th>
               <th style={thStyle}>Escuela</th>
               <th style={thStyle}>Fecha CIAAC</th>
@@ -232,7 +265,7 @@ function AdminEstudiantesPage() {
           <tbody>
             {visibles.length === 0 && (
               <tr>
-                <td colSpan={12} style={{ ...tdStyle, textAlign: "center", color: "#8DA1BE", padding: "26px 12px" }}>
+                <td colSpan={13} style={{ ...tdStyle, textAlign: "center", color: "#8DA1BE", padding: "26px 12px" }}>
                   No hay estudiantes que coincidan con los filtros.
                 </td>
               </tr>
@@ -242,6 +275,9 @@ function AdminEstudiantesPage() {
                 <td style={tdStyle}>
                   <div style={{ fontWeight: 700 }}>{r.u.nombre}</div>
                   <div style={{ fontSize: ".72rem", color: "#647DA0" }}>{r.u.email}</div>
+                </td>
+                <td style={tdStyle}>
+                  <IndicativoCelda fila={comunidad.get(r.u.id) ?? null} />
                 </td>
                 <td style={tdStyle}>{r.u.whatsapp || "—"}</td>
                 <td style={{ ...tdStyle, maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis" }}>{r.u.escuela || "—"}</td>
@@ -304,6 +340,29 @@ function AdminEstudiantesPage() {
         </div>
       )}
     </AdminShell>
+  );
+}
+
+/**
+ * Indicativo público del alumno + cómo aparece en los rankings. Aquí el equipo
+ * ve la relación indicativo ↔ alumno real, que para el resto es anónima.
+ */
+function IndicativoCelda({ fila }: { fila: AdminComunidadFila | null }) {
+  if (!fila) return <span style={{ color: "#8DA1BE" }}>Sin perfil de Comunidad</span>;
+  const anonimo = fila.privacidad !== "nombre";
+  return (
+    <div className="cm-root" style={{ display: "flex", alignItems: "center", gap: 9 }}>
+      <Insignia callsign={fila.callsign} size={28} />
+      <div style={{ display: "grid", lineHeight: 1.25 }}>
+        <span style={{ fontWeight: 700, color: "#22375C", fontSize: ".8rem" }}>
+          <Callsign texto={fila.callsign} />
+        </span>
+        <span style={{ fontSize: ".68rem", color: "#647DA0" }}>
+          {anonimo ? "Aparece anónimo" : "Muestra su nombre"} · {fpFormat(fila.total)} FP
+          {!fila.privacidadElegida ? " · sin elegir aún" : ""}
+        </span>
+      </div>
+    </div>
   );
 }
 

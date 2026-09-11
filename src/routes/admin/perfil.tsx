@@ -42,6 +42,9 @@ import { StudentAudit } from "@/components/admin/StudentAudit";
 import { CompassLogCard } from "@/components/compass/CompassLogCard";
 
 import { PLANES, planById, planIdDe, type PlanId } from "@/lib/pricing";
+import { adminCommunityDirectory, type AdminComunidadFila } from "@/lib/fp/fp.functions";
+import { fpFormat } from "@/lib/fp/shared";
+import { Callsign, Insignia } from "@/components/comunidad/pieces";
 
 export const Route = createFileRoute("/admin/perfil")({
   component: AdminPerfilPage,
@@ -83,6 +86,26 @@ function AdminPerfilPage() {
   const [editEnd, setEditEnd] = useState("");
 
   const firstName = student?.nombre.split(" ")[0] ?? "";
+
+  /**
+   * Ficha de Comunidad del alumno: su indicativo (callsign) público, cómo
+   * aparece en los rankings y sus FlightPoints. Es la única vista donde el
+   * indicativo anónimo queda ligado a la persona real.
+   */
+  const [comunidad, setComunidad] = useState<AdminComunidadFila | null>(null);
+  useEffect(() => {
+    if (!student) return;
+    let vivo = true;
+    void adminCommunityDirectory()
+      .then((lista) => {
+        if (vivo) setComunidad(lista.find((f) => f.userId === student.id) ?? null);
+      })
+      .catch(() => undefined);
+    return () => {
+      vivo = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [student?.id]);
 
   // Precarga los datos editables cuando cambia el estudiante.
   useEffect(() => {
@@ -268,6 +291,21 @@ function AdminPerfilPage() {
     { label: "Fecha examen", value: student.fechaCiaac ? fmtDate(student.fechaCiaac) : "—" },
     { label: "Miembro desde", value: fmtDate(student.createdAt) },
     { label: "Último acceso", value: timeAgo(student.lastAccess) },
+    { label: "Indicativo en Comunidad", value: comunidad?.callsign ?? "Sin perfil de Comunidad" },
+    {
+      label: "Visibilidad en rankings",
+      value: comunidad
+        ? comunidad.privacidad === "nombre"
+          ? "Muestra su nombre y foto"
+          : `Anónimo (aparece como ${comunidad.callsign})${comunidad.privacidadElegida ? "" : " · aún no ha elegido"}`
+        : "—",
+    },
+    {
+      label: "FlightPoints",
+      value: comunidad
+        ? `${fpFormat(comunidad.total)} FP · racha máx. ${comunidad.rachaMax} días · ${comunidad.logros} logros`
+        : "—",
+    },
   ];
 
   const barColor = (avg: number | null) => {
@@ -724,10 +762,46 @@ function AdminPerfilPage() {
                 fontWeight: 700,
                 background: `${accessColor}33`,
                 color: "white",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
               }}
             >
-              ● {accessLabel}
+              <span
+                aria-hidden="true"
+                style={{
+                  width: 7,
+                  height: 7,
+                  borderRadius: 99,
+                  background: accessColor,
+                  display: "inline-block",
+                }}
+              />
+              {accessLabel}
             </span>
+            {comunidad && (
+              <span
+                className="cm-root"
+                title="Indicativo con el que aparece en Comunidad"
+                style={{
+                  padding: "3px 10px 3px 4px",
+                  borderRadius: 20,
+                  fontSize: ".7rem",
+                  fontWeight: 700,
+                  background: "rgba(255,255,255,.1)",
+                  color: "rgba(255,255,255,.9)",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                }}
+              >
+                <Insignia callsign={comunidad.callsign} size={18} />
+                <Callsign texto={comunidad.callsign} />
+                <span style={{ opacity: 0.6 }}>
+                  · {comunidad.privacidad === "nombre" ? "público" : "anónimo"}
+                </span>
+              </span>
+            )}
           </div>
         </div>
         <div style={{ display: "flex", gap: 20, zIndex: 1, flexShrink: 0 }}>

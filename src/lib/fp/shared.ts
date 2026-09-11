@@ -29,6 +29,7 @@ export type FpRankingId = "general" | "ciaac" | "linea_aerea" | "racha" | "logro
 export const FP_RANKINGS: {
   id: FpRankingId;
   label: string;
+  corto: string;
   ayuda: string;
   unidad: string;
   icono: string;
@@ -38,7 +39,8 @@ export const FP_RANKINGS: {
   {
     id: "general",
     label: "Top General",
-    ayuda: "Desempeño global: CIAAC, Línea Aérea y actividades generales.",
+    corto: "General",
+    ayuda: "Todo lo que sumas en FlightPath: CIAAC, Línea Aérea y actividades generales.",
     unidad: "FP",
     icono: "plane",
     acento: "#3D5D91",
@@ -47,7 +49,8 @@ export const FP_RANKINGS: {
   {
     id: "ciaac",
     label: "Top CIAAC",
-    ayuda: "Preparación para el CIAAC.",
+    corto: "CIAAC",
+    ayuda: "Sólo la preparación para el examen CIAAC.",
     unidad: "FP",
     icono: "target",
     acento: "#1F7A6B",
@@ -56,25 +59,28 @@ export const FP_RANKINGS: {
   {
     id: "linea_aerea",
     label: "Top Línea Aérea",
-    ayuda: "Preparación para ingreso a aerolínea.",
+    corto: "Línea Aérea",
+    ayuda: "Sólo la preparación para ingresar a aerolínea.",
     unidad: "FP",
     icono: "bolt",
-    acento: "#8A5A2B",
+    acento: "#6C0820",
     usaFp: true,
   },
   {
     id: "racha",
     label: "Racha más larga",
-    ayuda: "Constancia: días seguidos de estudio real.",
+    corto: "Racha",
+    ayuda: "Constancia: la mayor cantidad de días seguidos con estudio real.",
     unidad: "días",
-    icono: "clock",
-    acento: "#A0453F",
+    icono: "flame",
+    acento: "#C2410C",
     usaFp: false,
   },
   {
     id: "logros",
     label: "Más logros",
-    ayuda: "Progreso dentro de FlightPath.",
+    corto: "Logros",
+    ayuda: "Logros desbloqueados dentro de la plataforma.",
     unidad: "logros",
     icono: "trophy",
     acento: "#6C4FA3",
@@ -104,7 +110,11 @@ export interface FpResumen {
   porPrograma: { programa: string; fp: number; n: number }[];
   recientes: FpTx[];
   folio: string;
+  /** Indicativo tipo gamertag con el que aparece quien no publica su nombre. */
+  callsign: string;
   privacidad: "nombre" | "folio";
+  /** true cuando el alumno ya respondió cómo quiere aparecer. */
+  privacidadElegida: boolean;
   tutorialVisto: boolean;
   tutorialOculto: boolean;
   rachaActual: number;
@@ -121,11 +131,29 @@ export interface FpNuevo {
 
 export interface FpRankingRow {
   userId: string;
+  /** Nombre público o indicativo, según la privacidad elegida por esa persona. */
   display: string;
+  /** Indicativo de la persona (siempre viaja: es lo que el admin puede ligar). */
+  callsign: string;
+  /** true si la persona eligió aparecer sólo con su indicativo. */
+  anonimo: boolean;
+  /** URL firmada de la foto; sólo cuando la persona muestra su nombre. */
+  avatarUrl: string | null;
   esYo: boolean;
   valor: number;
   posicion: number;
 }
+
+/** Regla pública de FlightPoints (sin ids internos), para explicar cómo se ganan. */
+export interface FpReglaPublica {
+  key: string;
+  label: string;
+  categoria: string;
+  fp: number;
+}
+
+/** Cuántas posiciones se publican en cada ranking. */
+export const FP_TOP_N = 10;
 
 /** Etiquetas legibles de los tipos de actividad que otorgan FP. */
 export const FP_ACTIVITY_LABEL: Record<string, string> = {

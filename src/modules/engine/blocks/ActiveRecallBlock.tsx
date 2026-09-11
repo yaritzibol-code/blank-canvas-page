@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Icon } from "@/components/ui/fp-icon";
 import type {
   ActiveRecallBlockData,
   ActiveRecallMatchData,
@@ -90,7 +91,13 @@ function MatchActivity({ items }: { items: MatchItem[] }) {
                 }}
               >
                 {checked && (
-                  <span style={{ marginRight: 6 }}>{isCorrect(item.id) ? "✅" : "❌"}</span>
+                  <span style={{ marginRight: 6, display: "inline-flex" }}>
+                    <Icon
+                      n={isCorrect(item.id) ? "checkCircle" : "close"}
+                      size={15}
+                      color={isCorrect(item.id) ? "#1a7a4a" : "#c0392b"}
+                    />
+                  </span>
                 )}
                 {item.left}
               </button>
@@ -180,7 +187,7 @@ function MatchActivity({ items }: { items: MatchItem[] }) {
               fontFamily: "'Manrope', sans-serif",
             }}
           >
-            🔄 Intentar de nuevo
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon n="refresh" size={14} /> Intentar de nuevo</span>
           </button>
         )}
       </div>
@@ -356,7 +363,7 @@ function CompletarActivity({ template, banco, respuestas }: ActiveRecallCompleta
         >
           <strong>
             {score === blanksCount
-              ? "✅ ¡Perfecto! Todos los espacios correctos."
+              ? "¡Perfecto! Todos los espacios correctos."
               : `Acertaste ${score} de ${blanksCount}. Las respuestas correctas están marcadas.`}
           </strong>
           {score < blanksCount && (
@@ -403,7 +410,7 @@ function CompletarActivity({ template, banco, respuestas }: ActiveRecallCompleta
               fontFamily: "'Manrope', sans-serif",
             }}
           >
-            🔄 Intentar de nuevo
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon n="refresh" size={14} /> Intentar de nuevo</span>
           </button>
         )}
       </div>
@@ -536,8 +543,8 @@ function OrdenarActivity({ items }: { items: OrdenarItem[] }) {
               )}
 
               {checked && (
-                <span style={{ fontSize: "1rem", flexShrink: 0 }}>
-                  {isCorrect ? "✅" : "❌"}
+                <span style={{ display: "inline-flex", flexShrink: 0 }}>
+                  <Icon n={isCorrect ? "checkCircle" : "close"} size={16} color={isCorrect ? "#1a7a4a" : "#c0392b"} />
                 </span>
               )}
             </div>
@@ -562,7 +569,7 @@ function OrdenarActivity({ items }: { items: OrdenarItem[] }) {
         >
           <strong>
             {correctCount === items.length
-              ? "✅ ¡Orden perfecto!"
+              ? "¡Orden perfecto!"
               : `${correctCount} de ${items.length} en el lugar correcto.`}
           </strong>
         </div>
@@ -603,7 +610,7 @@ function OrdenarActivity({ items }: { items: OrdenarItem[] }) {
               fontFamily: "'Manrope', sans-serif",
             }}
           >
-            🔄 Intentar de nuevo
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon n="refresh" size={14} /> Intentar de nuevo</span>
           </button>
         )}
       </div>
@@ -641,7 +648,7 @@ export function ActiveRecallBlock(props: ActiveRecallBlockData) {
           marginBottom: 14,
         }}
       >
-        ✏️ Actividad: Recuerdo Activo
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon n="pencil" size={14} /> Actividad: Recuerdo Activo</span>
       </div>
 
       <p

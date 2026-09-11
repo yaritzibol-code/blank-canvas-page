@@ -220,7 +220,7 @@ function OperacionesPage() {
 
           {/* Gráficos de 30 días — click en un punto abre el drill-down del día */}
           <div style={{ fontSize: ".8rem", color: "#647DA0", marginBottom: 8 }}>
-            💡 Haz clic en un punto de cualquier gráfico para ver el detalle de ese día.
+            Haz clic en un punto de cualquier gráfico para ver el detalle de ese día.
           </div>
           <section style={{ display: "grid", gap: 14, gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", marginBottom: 20 }}>
             <div style={cardStyle}>

@@ -187,7 +187,7 @@ export function ExplicaleAYaris({ onSalir }: { onSalir: () => void }) {
               disabled={pensando}
               style={btnGhost}
             >
-              🎲 Sorpréndeme
+              <Icon n="spark" size={15} /> Sorpréndeme
             </button>
           </div>
           {pensando && <p style={{ fontSize: "0.82rem", color: "#647DA0", marginTop: 14 }}>Yaris está preparando tu reto…</p>}
@@ -263,11 +263,11 @@ export function ExplicaleAYaris({ onSalir }: { onSalir: () => void }) {
             />
             <div style={{ display: "flex", gap: 10, marginTop: 10, flexWrap: "wrap" }}>
               <button onClick={responder} disabled={!input.trim() || pensando} style={{ ...btnPrimary, opacity: input.trim() && !pensando ? 1 : 0.5 }}>
-                ⌨️ Enviar respuesta
+                <Icon n="send" size={15} /> Enviar respuesta
               </button>
               {puedeVoz && (
                 <button onClick={dictar} style={{ ...btnGhost, borderColor: escuchando ? "#e74c3c" : "#F2DCDB", color: escuchando ? "#6C0820" : "#3D5D91" }}>
-                  🎙️ {escuchando ? "Escuchando… toca para parar" : "Responder con voz"}
+                  <Icon n="audio" size={15} /> {escuchando ? "Escuchando… toca para parar" : "Responder con voz"}
                 </button>
               )}
             </div>
@@ -280,9 +280,9 @@ export function ExplicaleAYaris({ onSalir }: { onSalir: () => void }) {
 
 function ResumenCard({ resumen, onOtro }: { resumen: PruebaResumen; onOtro: () => void }) {
   const titulo =
-    resumen.veredicto === "entendido" ? "✅ Lo entendiste"
-      : resumen.veredicto === "parcial" ? "🟡 Vas por buen camino"
-        : "🔁 Conviene reforzarlo";
+    resumen.veredicto === "entendido" ? "Lo entendiste"
+      : resumen.veredicto === "parcial" ? "Vas por buen camino"
+        : "Conviene reforzarlo";
   return (
     <div style={{ marginTop: 18, background: "#f8f9ff", borderRadius: 16, padding: 18 }}>
       <p style={{ fontFamily: DISPLAY, fontSize: "1.05rem", color: "#22375C", margin: "0 0 10px" }}>{titulo}</p>
@@ -315,11 +315,13 @@ const card: CSSProperties = {
 };
 
 const btnPrimary: CSSProperties = {
+  display: "inline-flex", alignItems: "center", gap: 7,
   background: "#3D5D91", color: "white", border: "none", borderRadius: 12,
   padding: "12px 20px", fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: FONT,
 };
 
 const btnGhost: CSSProperties = {
+  display: "inline-flex", alignItems: "center", gap: 7,
   background: "white", color: "#3D5D91", border: "2px solid #F2DCDB", borderRadius: 12,
   padding: "10px 18px", fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: FONT,
 };

@@ -56,7 +56,7 @@ function LegalPage() {
         }}
       >
         <Link to="/" style={{ fontFamily: DISPLAY, fontWeight: 800, color: INK, textDecoration: "none", fontSize: 18 }}>
-          FlightPath ✈
+          FlightPath
         </Link>
         <BackLink />
       </header>
