@@ -375,7 +375,7 @@ function LogroCatalogoModal({
                         gap: 7,
                       }}
                     >
-                      <Icon n={isOpen ? "chevronDown" : "chevronRight"} size={14} />
+                      <Icon n={isOpen ? "chevD" : "chevR"} size={14} />
                       {cat}
                     </span>
                     <span
