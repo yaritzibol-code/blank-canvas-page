@@ -68,7 +68,7 @@ function GamificacionPage() {
   const eco = panel?.economia ?? {};
 
   return (
-    <AdminShell title="Gamificación" subtitle="FlightPoints: reglas, economía y auditoría">
+    <AdminShell title="Gamificación — FlightPoints" active="gamificacion">
       <div style={{ display: "grid", gap: 16 }}>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {(["reglas", "economia", "historial", "ajustes", "alertas"] as const).map((t) => (
