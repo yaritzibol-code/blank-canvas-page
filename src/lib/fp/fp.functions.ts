@@ -418,6 +418,15 @@ async function exigirAdmin(context: { supabase: any; userId: string }) {
   if (data?.role !== "admin") throw new Error("No autorizado");
 }
 
+/** Recalcula FlightPoints de todos los alumnos desde su actividad real. */
+export const adminFpBackfill = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<{ usuarios: number; fpNuevo: number }> => {
+    await exigirAdmin(context as never);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    return procesarTodosFP(supabaseAdmin as unknown as { from: (t: string) => any });
+  });
+
 export const adminFpPanel = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
