@@ -46,6 +46,7 @@ import { Route as AdminBancoRouteImport } from './routes/admin/banco'
 import { Route as AdminConfiguracionRouteImport } from './routes/admin/configuracion'
 import { Route as AdminContenidoRouteImport } from './routes/admin/contenido'
 import { Route as AdminEstudiantesRouteImport } from './routes/admin/estudiantes'
+import { Route as AdminGamificacionRouteImport } from './routes/admin/gamificacion'
 import { Route as AdminPerfilRouteImport } from './routes/admin/perfil'
 import { Route as AdminSoporteRouteImport } from './routes/admin/soporte'
 import { Route as AdminUsuariosActivosRouteImport } from './routes/admin/usuarios-activos'
@@ -61,6 +62,7 @@ import { Route as DashboardBibliotecaRouteImport } from './routes/dashboard/bibl
 import { Route as DashboardBitacoraRouteImport } from './routes/dashboard/bitacora'
 import { Route as DashboardClasesRouteImport } from './routes/dashboard/clases'
 import { Route as DashboardCompassRouteImport } from './routes/dashboard/compass'
+import { Route as DashboardComunidadRouteImport } from './routes/dashboard/comunidad'
 import { Route as DashboardConfiguracionRouteImport } from './routes/dashboard/configuracion'
 import { Route as DashboardEstudiemosRouteImport } from './routes/dashboard/estudiemos'
 import { Route as DashboardFacturacionRouteImport } from './routes/dashboard/facturacion'
@@ -285,6 +287,11 @@ const AdminEstudiantesRoute = AdminEstudiantesRouteImport.update({
   path: '/admin/estudiantes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminGamificacionRoute = AdminGamificacionRouteImport.update({
+  id: '/admin/gamificacion',
+  path: '/admin/gamificacion',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminPerfilRoute = AdminPerfilRouteImport.update({
   id: '/admin/perfil',
   path: '/admin/perfil',
@@ -358,6 +365,11 @@ const DashboardClasesRoute = DashboardClasesRouteImport.update({
 const DashboardCompassRoute = DashboardCompassRouteImport.update({
   id: '/compass',
   path: '/compass',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardComunidadRoute = DashboardComunidadRouteImport.update({
+  id: '/comunidad',
+  path: '/comunidad',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardConfiguracionRoute = DashboardConfiguracionRouteImport.update({
@@ -591,6 +603,7 @@ export interface FileRoutesByFullPath {
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
   '/admin/estudiantes': typeof AdminEstudiantesRoute
+  '/admin/gamificacion': typeof AdminGamificacionRoute
   '/admin/perfil': typeof AdminPerfilRoute
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
@@ -605,6 +618,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/bitacora': typeof DashboardBitacoraRoute
   '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/compass': typeof DashboardCompassRoute
+  '/dashboard/comunidad': typeof DashboardComunidadRoute
   '/dashboard/configuracion': typeof DashboardConfiguracionRoute
   '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
   '/dashboard/facturacion': typeof DashboardFacturacionRoute
@@ -681,6 +695,7 @@ export interface FileRoutesByTo {
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
   '/admin/estudiantes': typeof AdminEstudiantesRoute
+  '/admin/gamificacion': typeof AdminGamificacionRoute
   '/admin/perfil': typeof AdminPerfilRoute
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
@@ -695,6 +710,7 @@ export interface FileRoutesByTo {
   '/dashboard/bitacora': typeof DashboardBitacoraRoute
   '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/compass': typeof DashboardCompassRoute
+  '/dashboard/comunidad': typeof DashboardComunidadRoute
   '/dashboard/configuracion': typeof DashboardConfiguracionRoute
   '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
   '/dashboard/facturacion': typeof DashboardFacturacionRoute
@@ -772,6 +788,7 @@ export interface FileRoutesById {
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
   '/admin/estudiantes': typeof AdminEstudiantesRoute
+  '/admin/gamificacion': typeof AdminGamificacionRoute
   '/admin/perfil': typeof AdminPerfilRoute
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
@@ -786,6 +803,7 @@ export interface FileRoutesById {
   '/dashboard/bitacora': typeof DashboardBitacoraRoute
   '/dashboard/clases': typeof DashboardClasesRoute
   '/dashboard/compass': typeof DashboardCompassRoute
+  '/dashboard/comunidad': typeof DashboardComunidadRoute
   '/dashboard/configuracion': typeof DashboardConfiguracionRoute
   '/dashboard/estudiemos': typeof DashboardEstudiemosRoute
   '/dashboard/facturacion': typeof DashboardFacturacionRoute
@@ -865,6 +883,7 @@ export interface FileRouteTypes {
     | '/admin/configuracion'
     | '/admin/contenido'
     | '/admin/estudiantes'
+    | '/admin/gamificacion'
     | '/admin/perfil'
     | '/admin/soporte'
     | '/admin/usuarios-activos'
@@ -879,6 +898,7 @@ export interface FileRouteTypes {
     | '/dashboard/bitacora'
     | '/dashboard/clases'
     | '/dashboard/compass'
+    | '/dashboard/comunidad'
     | '/dashboard/configuracion'
     | '/dashboard/estudiemos'
     | '/dashboard/facturacion'
@@ -955,6 +975,7 @@ export interface FileRouteTypes {
     | '/admin/configuracion'
     | '/admin/contenido'
     | '/admin/estudiantes'
+    | '/admin/gamificacion'
     | '/admin/perfil'
     | '/admin/soporte'
     | '/admin/usuarios-activos'
@@ -969,6 +990,7 @@ export interface FileRouteTypes {
     | '/dashboard/bitacora'
     | '/dashboard/clases'
     | '/dashboard/compass'
+    | '/dashboard/comunidad'
     | '/dashboard/configuracion'
     | '/dashboard/estudiemos'
     | '/dashboard/facturacion'
@@ -1045,6 +1067,7 @@ export interface FileRouteTypes {
     | '/admin/configuracion'
     | '/admin/contenido'
     | '/admin/estudiantes'
+    | '/admin/gamificacion'
     | '/admin/perfil'
     | '/admin/soporte'
     | '/admin/usuarios-activos'
@@ -1059,6 +1082,7 @@ export interface FileRouteTypes {
     | '/dashboard/bitacora'
     | '/dashboard/clases'
     | '/dashboard/compass'
+    | '/dashboard/comunidad'
     | '/dashboard/configuracion'
     | '/dashboard/estudiemos'
     | '/dashboard/facturacion'
@@ -1137,6 +1161,7 @@ export interface RootRouteChildren {
   AdminConfiguracionRoute: typeof AdminConfiguracionRoute
   AdminContenidoRoute: typeof AdminContenidoRoute
   AdminEstudiantesRoute: typeof AdminEstudiantesRoute
+  AdminGamificacionRoute: typeof AdminGamificacionRoute
   AdminPerfilRoute: typeof AdminPerfilRoute
   AdminSoporteRoute: typeof AdminSoporteRoute
   AdminUsuariosActivosRoute: typeof AdminUsuariosActivosRoute
@@ -1427,6 +1452,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEstudiantesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/gamificacion': {
+      id: '/admin/gamificacion'
+      path: '/admin/gamificacion'
+      fullPath: '/admin/gamificacion'
+      preLoaderRoute: typeof AdminGamificacionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/perfil': {
       id: '/admin/perfil'
       path: '/admin/perfil'
@@ -1530,6 +1562,13 @@ declare module '@tanstack/react-router' {
       path: '/compass'
       fullPath: '/dashboard/compass'
       preLoaderRoute: typeof DashboardCompassRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/comunidad': {
+      id: '/dashboard/comunidad'
+      path: '/comunidad'
+      fullPath: '/dashboard/comunidad'
+      preLoaderRoute: typeof DashboardComunidadRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/dashboard/configuracion': {
@@ -1824,6 +1863,7 @@ interface DashboardRouteChildren {
   DashboardBitacoraRoute: typeof DashboardBitacoraRoute
   DashboardClasesRoute: typeof DashboardClasesRoute
   DashboardCompassRoute: typeof DashboardCompassRoute
+  DashboardComunidadRoute: typeof DashboardComunidadRoute
   DashboardConfiguracionRoute: typeof DashboardConfiguracionRoute
   DashboardEstudiemosRoute: typeof DashboardEstudiemosRoute
   DashboardFacturacionRoute: typeof DashboardFacturacionRoute
@@ -1848,6 +1888,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardBitacoraRoute: DashboardBitacoraRoute,
   DashboardClasesRoute: DashboardClasesRoute,
   DashboardCompassRoute: DashboardCompassRoute,
+  DashboardComunidadRoute: DashboardComunidadRoute,
   DashboardConfiguracionRoute: DashboardConfiguracionRoute,
   DashboardEstudiemosRoute: DashboardEstudiemosRoute,
   DashboardFacturacionRoute: DashboardFacturacionRoute,
@@ -1907,6 +1948,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminConfiguracionRoute: AdminConfiguracionRoute,
   AdminContenidoRoute: AdminContenidoRoute,
   AdminEstudiantesRoute: AdminEstudiantesRoute,
+  AdminGamificacionRoute: AdminGamificacionRoute,
   AdminPerfilRoute: AdminPerfilRoute,
   AdminSoporteRoute: AdminSoporteRoute,
   AdminUsuariosActivosRoute: AdminUsuariosActivosRoute,

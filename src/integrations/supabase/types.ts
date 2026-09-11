@@ -523,6 +523,213 @@ export type Database = {
         }
         Relationships: []
       }
+      fp_alerts: {
+        Row: {
+          created_at: string
+          detalle: Json
+          id: string
+          mensaje: string
+          revisada: boolean
+          tipo: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          detalle?: Json
+          id?: string
+          mensaje: string
+          revisada?: boolean
+          tipo: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          detalle?: Json
+          id?: string
+          mensaje?: string
+          revisada?: boolean
+          tipo?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      fp_balances: {
+        Row: {
+          total: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          total?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          total?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      fp_community_profiles: {
+        Row: {
+          folio: string
+          logros: number
+          privacidad: string
+          racha_actual: number
+          racha_max: number
+          tutorial_oculto: boolean
+          tutorial_visto: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          folio: string
+          logros?: number
+          privacidad?: string
+          racha_actual?: number
+          racha_max?: number
+          tutorial_oculto?: boolean
+          tutorial_visto?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          folio?: string
+          logros?: number
+          privacidad?: string
+          racha_actual?: number
+          racha_max?: number
+          tutorial_oculto?: boolean
+          tutorial_visto?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      fp_rules: {
+        Row: {
+          categoria: string
+          enabled: boolean
+          key: string
+          label: string
+          orden: number
+          updated_at: string
+          updated_by: string | null
+          value: Json
+        }
+        Insert: {
+          categoria: string
+          enabled?: boolean
+          key: string
+          label: string
+          orden?: number
+          updated_at?: string
+          updated_by?: string | null
+          value?: Json
+        }
+        Update: {
+          categoria?: string
+          enabled?: boolean
+          key?: string
+          label?: string
+          orden?: number
+          updated_at?: string
+          updated_by?: string | null
+          value?: Json
+        }
+        Relationships: []
+      }
+      fp_rules_history: {
+        Row: {
+          created_at: string
+          id: string
+          key: string
+          new_value: Json
+          old_value: Json
+          updated_by: string | null
+          updated_by_email: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key: string
+          new_value?: Json
+          old_value?: Json
+          updated_by?: string | null
+          updated_by_email?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key?: string
+          new_value?: Json
+          old_value?: Json
+          updated_by?: string | null
+          updated_by_email?: string | null
+        }
+        Relationships: []
+      }
+      fp_transactions: {
+        Row: {
+          activity_id: string | null
+          activity_label: string
+          activity_type: string
+          amount: number
+          created_at: string
+          detail: string | null
+          event_key: string
+          id: string
+          kind: string
+          metadata: Json
+          occurred_at: string
+          program: string | null
+          reverses_id: string | null
+          rule_key: string
+          rule_snapshot: Json
+          status: string
+          user_id: string
+        }
+        Insert: {
+          activity_id?: string | null
+          activity_label?: string
+          activity_type: string
+          amount?: number
+          created_at?: string
+          detail?: string | null
+          event_key: string
+          id?: string
+          kind?: string
+          metadata?: Json
+          occurred_at?: string
+          program?: string | null
+          reverses_id?: string | null
+          rule_key: string
+          rule_snapshot?: Json
+          status?: string
+          user_id: string
+        }
+        Update: {
+          activity_id?: string | null
+          activity_label?: string
+          activity_type?: string
+          amount?: number
+          created_at?: string
+          detail?: string | null
+          event_key?: string
+          id?: string
+          kind?: string
+          metadata?: Json
+          occurred_at?: string
+          program?: string | null
+          reverses_id?: string | null
+          rule_key?: string
+          rule_snapshot?: Json
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       health_checks: {
         Row: {
           check_key: string
@@ -1085,6 +1292,21 @@ export type Database = {
       admin_resumen: { Args: never; Returns: Json }
       admin_rtari_stats: { Args: { days_back?: number }; Returns: Json }
       admin_stripe_event_stats: { Args: { hours_back?: number }; Returns: Json }
+      fp_economy: { Args: never; Returns: Json }
+      fp_leaderboard: {
+        Args: { p_metric: string; p_period: string }
+        Returns: {
+          actividades: number
+          avatar: string
+          folio: string
+          nombre: string
+          posicion: number
+          primer_at: string
+          privacidad: string
+          user_id: string
+          valor: number
+        }[]
+      }
       get_bank_counts: {
         Args: never
         Returns: {

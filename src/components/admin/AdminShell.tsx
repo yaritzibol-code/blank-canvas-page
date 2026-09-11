@@ -27,7 +27,8 @@ export type AdminNavKey =
   | "usuarios_activos"
   | "auditoria"
   | "yaris_chats"
-  | "activity_ratio";
+  | "activity_ratio"
+  | "gamificacion";
 
 interface NavItem {
   icon: FPIconName;
@@ -92,6 +93,12 @@ const ADMIN_NAV: { label: string; items: NavItem[] }[] = [
         label: "Conversaciones con Yaris",
         key: "yaris_chats",
         path: "/admin/yaris-chats",
+      },
+      {
+        icon: "trophy",
+        label: "Gamificación",
+        key: "gamificacion",
+        path: "/admin/gamificacion",
       },
     ],
   },

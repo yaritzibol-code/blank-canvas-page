@@ -17,6 +17,7 @@ import { LiveIndicator } from "@/components/shared/LiveIndicator";
 import { TimerProvider } from "@/contexts/StudyTimerContext";
 import { StudySessionProvider } from "@/contexts/StudySessionContext";
 import { LogroWatcher } from "@/components/logros/LogroWatcher";
+import { FpWatcher } from "@/components/fp/FpWatcher";
 import { PathyCloud } from "@/components/estudiemos/PathyCloud";
 
 export const Route = createFileRoute("/dashboard")({
@@ -56,7 +57,8 @@ type IconName =
   | "exit"
   | "radio"
   | "compass"
-  | "target";
+  | "target"
+  | "trophy";
 
 function Icon({ n, size = 18, sw = 1.6 }: { n: IconName; size?: number; sw?: number }) {
   const p = {
@@ -103,6 +105,7 @@ function Icon({ n, size = 18, sw = 1.6 }: { n: IconName; size?: number; sw?: num
     ),
     doc: <path d="M7 3h7l5 5v13H7zM14 3v5h5" {...p} />,
     chart: <path d="M4 19V5M4 19h16M8 16v-4M12 16V9M16 16v-2" {...p} />,
+    trophy: <path d="M7 4h10v4a5 5 0 0 1-10 0V4zM5 5H3v2a3 3 0 0 0 3 3M19 5h2v2a3 3 0 0 1-3 3M9 16h6M8 20h8M12 16v4" {...p} />,
     bell: <path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6M10 20a2 2 0 0 0 4 0" {...p} />,
     user: (
       <>
@@ -229,6 +232,7 @@ const NAV_SECTIONS: {
     items: [
       { icon: "chart", label: "Análisis", path: "/dashboard/analisis" },
       { icon: "bell", label: "Recordatorios", path: "/dashboard/recordatorios" },
+      { icon: "trophy", label: "Comunidad", path: "/dashboard/comunidad", nuevo: true },
     ],
   },
   {
@@ -967,6 +971,7 @@ function DashboardLayout() {
         <YarisChatModal open={yarisOpen} onClose={() => setYarisOpen(false)} user={user} />
         <PathyCloud />
         <LogroWatcher />
+        <FpWatcher />
       </div>
       </StudySessionProvider>
     </TimerProvider>
