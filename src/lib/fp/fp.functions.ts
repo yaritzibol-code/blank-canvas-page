@@ -313,12 +313,34 @@ export const adminFpPanel = createServerFn({ method: "GET" })
       context.supabase.rpc("fp_economy"),
       admin.from("fp_balances").select("user_id,total").order("total", { ascending: false }).limit(20),
     ]);
+    // Se devuelve JSON plano: el canal de las funciones de servidor sólo
+    // acepta datos serializables, no filas con campos de tipo desconocido.
     return {
-      reglas: (reglas.data ?? []) as FpRule[],
-      historial: (historial.data ?? []) as Row[],
-      alertas: (alertas.data ?? []) as Row[],
-      economia: (economia.data ?? {}) as Record<string, unknown>,
-      top: (top.data ?? []) as { user_id: string; total: number }[],
+      reglas: ((reglas.data ?? []) as FpRule[]).map((r) => ({
+        key: String(r.key),
+        label: String(r.label),
+        categoria: String(r.categoria),
+        fp: Number((r.value as Record<string, number>)?.["fp"] ?? 0),
+        enabled: Boolean(r.enabled),
+      })),
+      historial: ((historial.data ?? []) as Row[]).map((h) => ({
+        id: String(h["id"]),
+        key: String(h["key"]),
+        antes: JSON.stringify(h["old_value"] ?? {}),
+        despues: JSON.stringify(h["new_value"] ?? {}),
+        createdAt: String(h["created_at"]),
+      })),
+      alertas: ((alertas.data ?? []) as Row[]).map((a) => ({
+        id: String(a["id"]),
+        userId: String(a["user_id"] ?? ""),
+        mensaje: String(a["mensaje"] ?? ""),
+        createdAt: String(a["created_at"]),
+      })),
+      economia: JSON.stringify(economia.data ?? {}),
+      top: ((top.data ?? []) as { user_id: string; total: number }[]).map((t) => ({
+        userId: String(t.user_id),
+        total: Number(t.total ?? 0),
+      })),
     };
   });
 
