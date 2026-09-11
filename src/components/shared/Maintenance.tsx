@@ -144,7 +144,7 @@ export function maintenanceGate<P extends object>(
 ): FC<P> {
   const Wrapped: FC<P> = (props) => {
     const user = useSessionUser();
-    if (activo && user?.role !== "admin") return <Maintenance {...textos} /> as ReactNode as never;
+    if (activo && user?.role !== "admin") return <Maintenance {...textos} />;
     return <Component {...props} />;
   };
   Wrapped.displayName = `Maintenance(${textos.titulo})`;
