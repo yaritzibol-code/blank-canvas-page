@@ -46,6 +46,7 @@ import { Route as AdminBancoRouteImport } from './routes/admin/banco'
 import { Route as AdminConfiguracionRouteImport } from './routes/admin/configuracion'
 import { Route as AdminContenidoRouteImport } from './routes/admin/contenido'
 import { Route as AdminEstudiantesRouteImport } from './routes/admin/estudiantes'
+import { Route as AdminGamificacionRouteImport } from './routes/admin/gamificacion'
 import { Route as AdminPerfilRouteImport } from './routes/admin/perfil'
 import { Route as AdminSoporteRouteImport } from './routes/admin/soporte'
 import { Route as AdminUsuariosActivosRouteImport } from './routes/admin/usuarios-activos'
@@ -284,6 +285,11 @@ const AdminContenidoRoute = AdminContenidoRouteImport.update({
 const AdminEstudiantesRoute = AdminEstudiantesRouteImport.update({
   id: '/admin/estudiantes',
   path: '/admin/estudiantes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminGamificacionRoute = AdminGamificacionRouteImport.update({
+  id: '/admin/gamificacion',
+  path: '/admin/gamificacion',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminPerfilRoute = AdminPerfilRouteImport.update({
@@ -597,6 +603,7 @@ export interface FileRoutesByFullPath {
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
   '/admin/estudiantes': typeof AdminEstudiantesRoute
+  '/admin/gamificacion': typeof AdminGamificacionRoute
   '/admin/perfil': typeof AdminPerfilRoute
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
@@ -688,6 +695,7 @@ export interface FileRoutesByTo {
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
   '/admin/estudiantes': typeof AdminEstudiantesRoute
+  '/admin/gamificacion': typeof AdminGamificacionRoute
   '/admin/perfil': typeof AdminPerfilRoute
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
@@ -780,6 +788,7 @@ export interface FileRoutesById {
   '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/contenido': typeof AdminContenidoRoute
   '/admin/estudiantes': typeof AdminEstudiantesRoute
+  '/admin/gamificacion': typeof AdminGamificacionRoute
   '/admin/perfil': typeof AdminPerfilRoute
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
@@ -874,6 +883,7 @@ export interface FileRouteTypes {
     | '/admin/configuracion'
     | '/admin/contenido'
     | '/admin/estudiantes'
+    | '/admin/gamificacion'
     | '/admin/perfil'
     | '/admin/soporte'
     | '/admin/usuarios-activos'
@@ -965,6 +975,7 @@ export interface FileRouteTypes {
     | '/admin/configuracion'
     | '/admin/contenido'
     | '/admin/estudiantes'
+    | '/admin/gamificacion'
     | '/admin/perfil'
     | '/admin/soporte'
     | '/admin/usuarios-activos'
@@ -1056,6 +1067,7 @@ export interface FileRouteTypes {
     | '/admin/configuracion'
     | '/admin/contenido'
     | '/admin/estudiantes'
+    | '/admin/gamificacion'
     | '/admin/perfil'
     | '/admin/soporte'
     | '/admin/usuarios-activos'
@@ -1149,6 +1161,7 @@ export interface RootRouteChildren {
   AdminConfiguracionRoute: typeof AdminConfiguracionRoute
   AdminContenidoRoute: typeof AdminContenidoRoute
   AdminEstudiantesRoute: typeof AdminEstudiantesRoute
+  AdminGamificacionRoute: typeof AdminGamificacionRoute
   AdminPerfilRoute: typeof AdminPerfilRoute
   AdminSoporteRoute: typeof AdminSoporteRoute
   AdminUsuariosActivosRoute: typeof AdminUsuariosActivosRoute
@@ -1437,6 +1450,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/estudiantes'
       fullPath: '/admin/estudiantes'
       preLoaderRoute: typeof AdminEstudiantesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/gamificacion': {
+      id: '/admin/gamificacion'
+      path: '/admin/gamificacion'
+      fullPath: '/admin/gamificacion'
+      preLoaderRoute: typeof AdminGamificacionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/perfil': {
@@ -1928,6 +1948,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminConfiguracionRoute: AdminConfiguracionRoute,
   AdminContenidoRoute: AdminContenidoRoute,
   AdminEstudiantesRoute: AdminEstudiantesRoute,
+  AdminGamificacionRoute: AdminGamificacionRoute,
   AdminPerfilRoute: AdminPerfilRoute,
   AdminSoporteRoute: AdminSoporteRoute,
   AdminUsuariosActivosRoute: AdminUsuariosActivosRoute,
