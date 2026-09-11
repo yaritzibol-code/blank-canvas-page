@@ -1,10 +1,3 @@
--- ══════════════════ Comunidad: indicativo (callsign) único por alumno ══════════════════
---
--- Quien prefiere no mostrar su nombre aparece en los rankings con un indicativo
--- estable tipo gamertag ("Cirro Vega #4821"): nubes o aeronaves + estrella +
--- cuatro dígitos. Lo genera el servidor una sola vez y nunca cambia. El panel
--- admin lo puede ligar con el alumno real (fp_community_profiles.user_id).
-
 ALTER TABLE public.fp_community_profiles
   ADD COLUMN IF NOT EXISTS callsign text,
   ADD COLUMN IF NOT EXISTS privacidad_elegida boolean NOT NULL DEFAULT false;
@@ -13,9 +6,6 @@ CREATE UNIQUE INDEX IF NOT EXISTS fp_community_callsign_unico
   ON public.fp_community_profiles (callsign)
   WHERE callsign IS NOT NULL;
 
--- ── Rankings ──
--- Misma lógica que antes; ahora también expone el indicativo. El tipo de
--- retorno cambia, así que hay que recrear la función.
 DROP FUNCTION IF EXISTS public.fp_leaderboard(text, text);
 
 CREATE OR REPLACE FUNCTION public.fp_leaderboard(p_metric text, p_period text)
@@ -79,4 +69,5 @@ AS $$
   FROM base b
   WHERE b.valor > 0;
 $$;
+
 GRANT EXECUTE ON FUNCTION public.fp_leaderboard(text, text) TO authenticated;
