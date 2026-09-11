@@ -196,7 +196,13 @@ export function maintenanceGate<P extends object>(
 ): FC<P> {
   const Wrapped: FC<P> = (props) => {
     const user = useSessionUser();
-    const [bypass, setBypass] = useState(() => leerBypass(textos.titulo));
+    const [bypass, setBypass] = useState(false);
+
+    // Se lee tras hidratar: sessionStorage no existe durante el render del
+    // servidor y leerlo en el estado inicial provocaría un desajuste.
+    useEffect(() => {
+      if (leerBypass(textos.titulo)) setBypass(true);
+    }, []);
 
     if (activo && !bypass) {
       const esAdmin = user?.role === "admin";
