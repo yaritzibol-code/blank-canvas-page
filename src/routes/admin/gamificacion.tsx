@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { AdminShell } from "@/components/admin/AdminShell";
 import {
   adminFpAdjust,
+  adminFpBackfill,
   adminFpPanel,
   adminFpRevert,
   adminSaveFpRule,
@@ -90,6 +91,31 @@ function GamificacionPage() {
               {t}
             </button>
           ))}
+        </div>
+        <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+          <button
+            onClick={() => {
+              setMsg("Recalculando FlightPoints de todos los alumnos…");
+              void adminFpBackfill()
+                .then((r) => setMsg(`Listo: ${r.usuarios} alumnos revisados, ${fpFormat(r.fpNuevo)} FP nuevos.`))
+                .catch(() => setMsg("No se pudo recalcular."));
+            }}
+            style={{
+              padding: "8px 14px",
+              borderRadius: 10,
+              border: "1px solid rgba(61,93,145,.25)",
+              background: "white",
+              color: "#3D5D91",
+              cursor: "pointer",
+              fontWeight: 700,
+              fontSize: ".82rem",
+            }}
+          >
+            Recalcular desde actividad real
+          </button>
+          <span style={{ fontSize: ".76rem", color: "#6b7a90" }}>
+            La sincronización también corre sola cada hora.
+          </span>
         </div>
         {msg && <p style={{ margin: 0, fontSize: ".82rem", color: "#3D5D91" }}>{msg}</p>}
 

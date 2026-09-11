@@ -73,17 +73,17 @@ async function recalcularSaldo(admin: { from: (t: string) => any }, userId: stri
 /* ───────────────────────── Otorgar / backfill ───────────────────────── */
 
 /**
- * Revisa la actividad real del usuario y crea las transacciones que falten.
- * Es idempotente: sirve igual al terminar un cuestionario que como backfill.
+ * Procesa la actividad real de UN usuario y crea las transacciones que falten.
+ * Es idempotente: sirve igual al terminar un cuestionario que como backfill
+ * masivo de toda la plataforma.
  */
-export const claimFlightPoints = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .handler(async ({ context }): Promise<{ nuevos: FpNuevo[]; total: number }> => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const admin = supabaseAdmin as unknown as { from: (t: string) => any };
-    const userId = context.userId;
-
-    const [rules, estado] = await Promise.all([cargarReglas(admin), cargarEstado(admin, userId)]);
+export async function procesarUsuarioFP(
+  admin: { from: (t: string) => any },
+  rules: RuleMap,
+  userId: string,
+): Promise<{ nuevos: FpNuevo[]; total: number }> {
+  {
+    const estado = await cargarEstado(admin, userId);
     const eventos = derivarEventos(estado, rules);
 
     const { data: previas } = await admin
@@ -156,7 +156,45 @@ export const claimFlightPoints = createServerFn({ method: "POST" })
     );
 
     return { nuevos, total };
+  }
+}
+
+/** El propio alumno pide "revisa mi actividad". */
+export const claimFlightPoints = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<{ nuevos: FpNuevo[]; total: number }> => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const admin = supabaseAdmin as unknown as { from: (t: string) => any };
+    const rules = await cargarReglas(admin);
+    return procesarUsuarioFP(admin, rules, context.userId);
   });
+
+/**
+ * Procesa a todos los alumnos con actividad guardada. Lo usa el backfill del
+ * panel admin y la tarea programada, para que los rankings reflejen la
+ * actividad real de la plataforma aunque el alumno no haya abierto Comunidad.
+ */
+export async function procesarTodosFP(
+  admin: { from: (t: string) => any },
+  opciones: { desde?: string; limite?: number } = {},
+): Promise<{ usuarios: number; fpNuevo: number }> {
+  const rules = await cargarReglas(admin);
+  let q = admin.from("user_state").select("user_id,updated_at").limit(opciones.limite ?? 5000);
+  if (opciones.desde) q = q.gte("updated_at", opciones.desde);
+  const { data } = await q;
+  const ids = [...new Set(((data ?? []) as { user_id: string }[]).map((r) => r.user_id).filter(Boolean))];
+
+  let fpNuevo = 0;
+  for (const id of ids) {
+    try {
+      const r = await procesarUsuarioFP(admin, rules, id);
+      fpNuevo += r.nuevos.reduce((s, n) => s + n.amount, 0);
+    } catch {
+      // Un alumno con estado corrupto no debe detener el resto del backfill.
+    }
+  }
+  return { usuarios: ids.length, fpNuevo };
+}
 
 /* ───────────────────────── Consulta del usuario ───────────────────────── */
 
@@ -379,6 +417,15 @@ async function exigirAdmin(context: { supabase: any; userId: string }) {
     .maybeSingle();
   if (data?.role !== "admin") throw new Error("No autorizado");
 }
+
+/** Recalcula FlightPoints de todos los alumnos desde su actividad real. */
+export const adminFpBackfill = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<{ usuarios: number; fpNuevo: number }> => {
+    await exigirAdmin(context as never);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    return procesarTodosFP(supabaseAdmin as unknown as { from: (t: string) => any });
+  });
 
 export const adminFpPanel = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
