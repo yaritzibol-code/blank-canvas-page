@@ -129,12 +129,12 @@ export interface FpRankingRow {
 
 /** Etiquetas legibles de los tipos de actividad que otorgan FP. */
 export const FP_ACTIVITY_LABEL: Record<string, string> = {
-  material: "Materiales",
+  material: "Material",
   learning_path: "Learning Paths",
   materia: "Materias completas",
   cuestionario: "Cuestionarios",
   flashcards: "Flashcards",
-  pathy: "Estudio con Pathy",
+  pathy: "Estudia con Pathy",
   racha: "Rachas",
   logro: "Logros",
   ajuste: "Ajustes manuales",
