@@ -156,7 +156,45 @@ export async function procesarUsuarioFP(
     );
 
     return { nuevos, total };
+  }
+}
+
+/** El propio alumno pide "revisa mi actividad". */
+export const claimFlightPoints = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<{ nuevos: FpNuevo[]; total: number }> => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const admin = supabaseAdmin as unknown as { from: (t: string) => any };
+    const rules = await cargarReglas(admin);
+    return procesarUsuarioFP(admin, rules, context.userId);
   });
+
+/**
+ * Procesa a todos los alumnos con actividad guardada. Lo usa el backfill del
+ * panel admin y la tarea programada, para que los rankings reflejen la
+ * actividad real de la plataforma aunque el alumno no haya abierto Comunidad.
+ */
+export async function procesarTodosFP(
+  admin: { from: (t: string) => any },
+  opciones: { desde?: string; limite?: number } = {},
+): Promise<{ usuarios: number; fpNuevo: number }> {
+  const rules = await cargarReglas(admin);
+  let q = admin.from("user_state").select("user_id,updated_at").limit(opciones.limite ?? 5000);
+  if (opciones.desde) q = q.gte("updated_at", opciones.desde);
+  const { data } = await q;
+  const ids = [...new Set(((data ?? []) as { user_id: string }[]).map((r) => r.user_id).filter(Boolean))];
+
+  let fpNuevo = 0;
+  for (const id of ids) {
+    try {
+      const r = await procesarUsuarioFP(admin, rules, id);
+      fpNuevo += r.nuevos.reduce((s, n) => s + n.amount, 0);
+    } catch {
+      // Un alumno con estado corrupto no debe detener el resto del backfill.
+    }
+  }
+  return { usuarios: ids.length, fpNuevo };
+}
 
 /* ───────────────────────── Consulta del usuario ───────────────────────── */
 
