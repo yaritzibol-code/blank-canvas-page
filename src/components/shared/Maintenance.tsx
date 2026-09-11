@@ -87,7 +87,13 @@ function Insignia() {
   );
 }
 
-export function Maintenance({ titulo, intro, cuerpo, cierre }: Props) {
+export function Maintenance({
+  titulo,
+  intro,
+  cuerpo,
+  cierre,
+  onAdminEnter,
+}: Props & { onAdminEnter?: () => void }) {
   const navigate = useNavigate();
   return (
     <div style={{ minHeight: "70vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
