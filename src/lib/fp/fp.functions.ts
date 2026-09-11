@@ -251,43 +251,123 @@ export const setCommunityPrefs = createServerFn({ method: "POST" })
 
 /* ───────────────────────── Comunidad ───────────────────────── */
 
+type LbRow = {
+  user_id: string;
+  nombre: string;
+  folio: string;
+  privacidad: string;
+  valor: number;
+  posicion: number;
+};
+
+/** Lee el ranking completo desde la RPC (ya excluye cuentas admin). */
+async function leerRanking(
+  supabase: { rpc: (n: string, a: Record<string, string>) => Promise<{ data: unknown; error: unknown }> },
+  metric: string,
+  periodo: string,
+): Promise<LbRow[]> {
+  const { data: filas, error } = await supabase.rpc("fp_leaderboard", {
+    p_metric: metric,
+    p_period: metric === "racha" || metric === "logros" ? "historico" : periodo,
+  });
+  if (error) return [];
+  return (filas ?? []) as LbRow[];
+}
+
+async function esCuentaAdmin(context: { supabase: any; userId: string }): Promise<boolean> {
+  const { data } = await context.supabase.from("profiles").select("role").eq("id", context.userId).maybeSingle();
+  return data?.role === "admin";
+}
+
 export const getComunidad = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: { metric: string; periodo: string }) => d)
-  .handler(async ({ data, context }): Promise<{ top: FpRankingRow[]; yo: FpRankingRow[]; total: number }> => {
-    const { data: filas, error } = await context.supabase.rpc("fp_leaderboard", {
-      p_metric: data.metric,
-      p_period: data.metric === "racha" || data.metric === "logros" ? "historico" : data.periodo,
-    });
-    if (error) return { top: [], yo: [], total: 0 };
-    const rows = (filas ?? []) as unknown as {
-      user_id: string;
-      nombre: string;
-      folio: string;
-      privacidad: string;
-      valor: number;
-      posicion: number;
-    }[];
-    const map = (r: (typeof rows)[number]): FpRankingRow => ({
-      userId: r.user_id,
-      display:
-        r.user_id === context.userId
-          ? `${r.privacidad === "nombre" ? r.nombre : r.folio} (tú)`
-          : r.privacidad === "nombre"
-            ? r.nombre
-            : r.folio,
-      esYo: r.user_id === context.userId,
-      valor: Number(r.valor ?? 0),
-      posicion: Number(r.posicion ?? 0),
-    });
-    const idx = rows.findIndex((r) => r.user_id === context.userId);
-    const vecinos = idx >= 0 ? rows.slice(Math.max(0, idx - 1), idx + 2) : [];
-    return {
-      top: rows.slice(0, 5).map(map),
-      yo: idx >= 5 ? vecinos.map(map) : [],
-      total: rows.length,
-    };
-  });
+  .handler(
+    async ({
+      data,
+      context,
+    }): Promise<{
+      top: FpRankingRow[];
+      yo: FpRankingRow[];
+      total: number;
+      miPosicion: number | null;
+      miValor: number | null;
+      faltan: number | null;
+      posicionArriba: number | null;
+      esAdmin: boolean;
+    }> => {
+      const [rows, esAdmin] = await Promise.all([
+        leerRanking(context.supabase as any, data.metric, data.periodo),
+        esCuentaAdmin(context),
+      ]);
+      const map = (r: LbRow): FpRankingRow => ({
+        userId: r.user_id,
+        display:
+          r.user_id === context.userId
+            ? `${r.privacidad === "nombre" ? r.nombre : r.folio} (tú)`
+            : r.privacidad === "nombre"
+              ? r.nombre
+              : r.folio,
+        esYo: r.user_id === context.userId,
+        valor: Number(r.valor ?? 0),
+        posicion: Number(r.posicion ?? 0),
+      });
+      const idx = rows.findIndex((r) => r.user_id === context.userId);
+      // Ventana privada: dos arriba y dos abajo de mi posición.
+      const vecinos = idx >= 0 ? rows.slice(Math.max(0, idx - 2), idx + 3) : [];
+      const arriba = idx > 0 ? rows[idx - 1] : null;
+      const usaFp = data.metric !== "racha" && data.metric !== "logros";
+      return {
+        top: rows.slice(0, 5).map(map),
+        yo: idx >= 5 ? vecinos.map(map) : [],
+        total: rows.length,
+        miPosicion: idx >= 0 ? Number(rows[idx]!.posicion ?? idx + 1) : null,
+        miValor: idx >= 0 ? Number(rows[idx]!.valor ?? 0) : null,
+        faltan:
+          usaFp && idx > 0 && arriba
+            ? Math.max(0, Number(arriba.valor ?? 0) - Number(rows[idx]!.valor ?? 0))
+            : null,
+        posicionArriba: idx > 0 && arriba ? Number(arriba.posicion ?? idx) : null,
+      esAdmin,
+      };
+    },
+  );
+
+/** Mi posición en los cinco rankings, para la pestaña "Yo". */
+export const getMisPosiciones = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { periodo: string }) => d ?? { periodo: "semana" })
+  .handler(
+    async ({
+      data,
+      context,
+    }): Promise<{
+      esAdmin: boolean;
+      posiciones: { metric: string; posicion: number | null; valor: number; total: number; faltan: number | null }[];
+    }> => {
+      const metrics = ["general", "ciaac", "linea_aerea", "racha", "logros"];
+      const esAdmin = await esCuentaAdmin(context);
+      const resultados = await Promise.all(
+        metrics.map(async (m) => {
+          const rows = await leerRanking(context.supabase as any, m, data.periodo);
+          const idx = rows.findIndex((r) => r.user_id === context.userId);
+          const arriba = idx > 0 ? rows[idx - 1] : null;
+          const usaFp = m !== "racha" && m !== "logros";
+          return {
+            metric: m,
+            posicion: idx >= 0 ? Number(rows[idx]!.posicion ?? idx + 1) : null,
+            valor: idx >= 0 ? Number(rows[idx]!.valor ?? 0) : 0,
+            total: rows.length,
+            faltan:
+              usaFp && idx > 0 && arriba
+                ? Math.max(0, Number(arriba.valor ?? 0) - Number(rows[idx]!.valor ?? 0))
+                : null,
+          };
+        }),
+      );
+      return { esAdmin, posiciones: resultados };
+    },
+  );
 
 /* ───────────────────────── Admin ───────────────────────── */
 
