@@ -73,17 +73,17 @@ async function recalcularSaldo(admin: { from: (t: string) => any }, userId: stri
 /* ───────────────────────── Otorgar / backfill ───────────────────────── */
 
 /**
- * Revisa la actividad real del usuario y crea las transacciones que falten.
- * Es idempotente: sirve igual al terminar un cuestionario que como backfill.
+ * Procesa la actividad real de UN usuario y crea las transacciones que falten.
+ * Es idempotente: sirve igual al terminar un cuestionario que como backfill
+ * masivo de toda la plataforma.
  */
-export const claimFlightPoints = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .handler(async ({ context }): Promise<{ nuevos: FpNuevo[]; total: number }> => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const admin = supabaseAdmin as unknown as { from: (t: string) => any };
-    const userId = context.userId;
-
-    const [rules, estado] = await Promise.all([cargarReglas(admin), cargarEstado(admin, userId)]);
+export async function procesarUsuarioFP(
+  admin: { from: (t: string) => any },
+  rules: RuleMap,
+  userId: string,
+): Promise<{ nuevos: FpNuevo[]; total: number }> {
+  {
+    const estado = await cargarEstado(admin, userId);
     const eventos = derivarEventos(estado, rules);
 
     const { data: previas } = await admin
