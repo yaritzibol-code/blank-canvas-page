@@ -31,11 +31,11 @@ export const Route = createFileRoute("/admin/gamificacion")({
 });
 
 interface Panel {
-  reglas: { key: string; label: string; categoria: string; value: Record<string, number>; enabled: boolean }[];
-  historial: Record<string, unknown>[];
-  alertas: Record<string, unknown>[];
-  economia: Record<string, unknown>;
-  top: { user_id: string; total: number }[];
+  reglas: { key: string; label: string; categoria: string; fp: number; enabled: boolean }[];
+  historial: { id: string; key: string; antes: string; despues: string; createdAt: string }[];
+  alertas: { id: string; userId: string; mensaje: string; createdAt: string }[];
+  economia: string;
+  top: { userId: string; total: number }[];
 }
 
 const CARD: React.CSSProperties = {
@@ -65,7 +65,7 @@ function GamificacionPage() {
     cargar();
   };
 
-  const eco = panel?.economia ?? {};
+  const eco: Record<string, unknown> = panel ? JSON.parse(panel.economia) : {};
 
   return (
     <AdminShell title="Gamificación — FlightPoints" active="gamificacion">
@@ -102,12 +102,12 @@ function GamificacionPage() {
                 </span>
                 <input
                   type="number"
-                  defaultValue={Number(r.value?.["fp"] ?? 0)}
+                  defaultValue={r.fp}
                   onBlur={(e) => void guardarRegla(r.key, Number(e.target.value), r.enabled)}
                   style={{ width: 90, padding: "6px 8px", borderRadius: 8, border: "1px solid rgba(61,93,145,.25)" }}
                 />
                 <button
-                  onClick={() => void guardarRegla(r.key, Number(r.value?.["fp"] ?? 0), !r.enabled)}
+                  onClick={() => void guardarRegla(r.key, r.fp, !r.enabled)}
                   style={{ padding: "6px 12px", borderRadius: 8, border: "none", cursor: "pointer", fontWeight: 700, fontSize: ".76rem", background: r.enabled ? "rgba(46,204,113,.16)" : "rgba(176,48,48,.12)", color: r.enabled ? "#1e7b47" : "#b03030" }}
                 >
                   {r.enabled ? "Activa" : "Apagada"}
@@ -145,8 +145,8 @@ function GamificacionPage() {
             <div style={{ ...CARD, display: "grid", gap: 6 }}>
               <strong style={{ fontSize: ".85rem", color: "#22375C" }}>Top 20 saldos</strong>
               {(panel?.top ?? []).map((t) => (
-                <div key={t.user_id} style={{ display: "flex", justifyContent: "space-between", fontSize: ".78rem" }}>
-                  <code>{t.user_id.slice(0, 8)}…</code>
+                <div key={t.userId} style={{ display: "flex", justifyContent: "space-between", fontSize: ".78rem" }}>
+                  <code>{t.userId.slice(0, 8)}…</code>
                   <span>{fpFormat(t.total)} FP</span>
                 </div>
               ))}
@@ -158,9 +158,9 @@ function GamificacionPage() {
           <div style={{ ...CARD, display: "grid", gap: 6 }}>
             {(panel?.historial ?? []).length === 0 && <p style={{ margin: 0, fontSize: ".84rem" }}>Sin cambios registrados.</p>}
             {(panel?.historial ?? []).map((h) => (
-              <div key={String(h["id"])} style={{ fontSize: ".78rem", color: "#41526b" }}>
-                <strong>{String(h["key"])}</strong> · {JSON.stringify(h["old_value"])} → {JSON.stringify(h["new_value"])}{" "}
-                <small style={{ color: "#9aa8bb" }}>{new Date(String(h["created_at"])).toLocaleString("es-MX")}</small>
+              <div key={h.id} style={{ fontSize: ".78rem", color: "#41526b" }}>
+                <strong>{h.key}</strong> · {h.antes} → {h.despues}{" "}
+                <small style={{ color: "#9aa8bb" }}>{new Date(h.createdAt).toLocaleString("es-MX")}</small>
               </div>
             ))}
           </div>
@@ -208,9 +208,9 @@ function GamificacionPage() {
           <div style={{ ...CARD, display: "grid", gap: 6 }}>
             {(panel?.alertas ?? []).length === 0 && <p style={{ margin: 0, fontSize: ".84rem" }}>Sin alertas.</p>}
             {(panel?.alertas ?? []).map((a) => (
-              <div key={String(a["id"])} style={{ fontSize: ".8rem", color: "#41526b" }}>
-                <strong>{String(a["mensaje"])}</strong> · <code>{String(a["user_id"] ?? "").slice(0, 8)}…</code>{" "}
-                <small style={{ color: "#9aa8bb" }}>{new Date(String(a["created_at"])).toLocaleString("es-MX")}</small>
+              <div key={a.id} style={{ fontSize: ".8rem", color: "#41526b" }}>
+                <strong>{a.mensaje}</strong> · <code>{a.userId.slice(0, 8)}…</code>{" "}
+                <small style={{ color: "#9aa8bb" }}>{new Date(a.createdAt).toLocaleString("es-MX")}</small>
               </div>
             ))}
           </div>
