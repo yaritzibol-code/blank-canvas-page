@@ -212,10 +212,23 @@ export async function procesarUsuarioFP(
 export const claimFlightPoints = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<{ nuevos: FpNuevo[]; total: number }> => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const admin = supabaseAdmin as unknown as { from: (t: string) => any };
-    const rules = await cargarReglas(admin);
-    return procesarUsuarioFP(admin, rules, context.userId);
+    try {
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      const admin = supabaseAdmin as unknown as { from: (t: string) => any };
+      const rules = await cargarReglas(admin);
+      return await procesarUsuarioFP(admin, rules, context.userId);
+    } catch (error) {
+      // FlightPoints is supplemental: a temporarily unavailable privileged
+      // client must never turn the authenticated dashboard into a 500 page.
+      // The scheduled sync will process the same idempotent events later.
+      console.error("[FlightPoints] No se pudo procesar la actividad", error);
+      const { data } = await context.supabase
+        .from("fp_balances")
+        .select("total")
+        .eq("user_id", context.userId)
+        .maybeSingle();
+      return { nuevos: [], total: Number(data?.total ?? 0) };
+    }
   });
 
 /**

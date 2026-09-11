@@ -18,22 +18,28 @@ export interface ActivityBatch {
 
 export const trackActivity = createServerFn({ method: "POST" })
   .inputValidator((data: ActivityBatch) => {
-    if (!data || typeof data.sessionKey !== "string" || data.sessionKey.length < 6) {
-      throw new Error("sessionKey inválida");
-    }
+    const valid = Boolean(data && typeof data.sessionKey === "string" && data.sessionKey.length >= 6);
     return {
-      sessionKey: data.sessionKey.slice(0, 64),
-      session: data.session ?? {},
-      events: Array.isArray(data.events) ? data.events.slice(0, 60) : [],
+      valid,
+      sessionKey: valid ? data.sessionKey.slice(0, 64) : "",
+      session: data?.session ?? {},
+      events: Array.isArray(data?.events) ? data.events.slice(0, 60) : [],
     };
   })
   .handler(async ({ data }) => {
-    const { bearerFrom, persistActivity } = await import("@/lib/activity.server");
-    const request = getRequest();
-    const token = bearerFrom(request?.headers?.get("authorization"));
+    if (!data.valid) return { ok: false };
     try {
-      return await persistActivity({ ...data, token });
-    } catch {
+      const { bearerFrom, persistActivity } = await import("@/lib/activity.server");
+      const request = getRequest();
+      const token = bearerFrom(request?.headers?.get("authorization"));
+      return await persistActivity({
+        sessionKey: data.sessionKey,
+        session: data.session,
+        events: data.events,
+        token,
+      });
+    } catch (error) {
+      console.error("[Activity] No se pudo guardar el lote", error);
       return { ok: false };
     }
   });
