@@ -3,6 +3,8 @@
  * Vive aparte del banco de preguntas para que el módulo pueda listarlos
  * sin descargar ~340 KB de reactivos al abrir la página.
  */
+import type { BankQuestion } from "./types";
+
 export interface LineaAereaQuiz {
   code: string;
   /** Nombre de la tarjeta (corto, como los modos del CIAAC). */
@@ -103,6 +105,58 @@ export const ATP_CHAPTERS: AtpChapter[] = [
 ];
 
 export const ATP_TOTAL = ATP_CHAPTERS.reduce((s, c) => s + c.total, 0);
+
+/* ─── Reactivos de helicóptero (banco ATP) ───────────────────────
+ * El ATP de ASA mezcla helicóptero dentro de capítulos de avión: la sección
+ * "Helicopter Regulations" del Cap. 1, "Helicopter Aerodynamics" del Cap. 3 y
+ * reactivos sueltos de Part 135 para rotorcraft. La convocatoria de Primer
+ * Oficial es de ala fija, así que el selector de capítulos ofrece dejarlos
+ * fuera. No hay marca en el banco: se detectan por la sección y por el texto.
+ */
+
+/** Señales inequívocas: cuentan en cualquier campo, incluida la explicación. */
+const HELI_FUERTE = /helic[oó]pter|rotorcraft|autor+otaci[oó]n|autorotation|heliport|helipuerto/i;
+
+/**
+ * Señales de contexto (rotor de cola, vuelo estacionario, cíclico…): solo
+ * cuentan en la pregunta, sus opciones y la sección. Un "rotor" suelto NO
+ * vale: el Cap. 8 habla de nubes rotor (turbulencia de onda de montaña).
+ */
+const HELI_CONTEXTO = new RegExp(
+  [
+    "(main|tail|anti-?torque)\\s+rotor",
+    "rotor\\s+(principal|de\\s+cola|blades?|disc|disk|rpm|system|wash)",
+    "\\bhover(ing|s)?\\b",
+    "vuelo\\s+estacionario",
+    "translational\\s+lift",
+    "dissymmetry\\s+of\\s+lift",
+    "retreating\\s+blade",
+    "pala\\s+en\\s+retroceso",
+    "settling\\s+with\\s+power",
+    "vortex\\s+ring",
+    "ground\\s+resonance",
+    "resonancia\\s+con\\s+el\\s+suelo",
+    "dynamic\\s+rollover",
+    "\\bcyclic\\b",
+    "\\bcollective\\b",
+    "\\bc[ií]clic[oa]\\b",
+    "\\bcolectivo\\b",
+    "gyroplane",
+    "autogiro",
+  ].join("|"),
+  "i",
+);
+
+/** true cuando el reactivo trata de helicópteros (se quita con "sin helicópteros"). */
+export function esPreguntaHelicoptero(
+  q: Pick<BankQuestion, "text" | "options" | "explanation" | "cite" | "seccion" | "capituloTitulo">,
+): boolean {
+  const cabecera = [q.seccion, q.capituloTitulo, q.text, ...(q.options ?? []), q.cite]
+    .filter(Boolean)
+    .join("\n");
+  if (HELI_FUERTE.test(cabecera) || HELI_CONTEXTO.test(cabecera)) return true;
+  return !!q.explanation && HELI_FUERTE.test(q.explanation);
+}
 
 /** Capítulos del Jeppesen General Airway Manual (misma lógica que ATP). */
 export const JEPP_CHAPTERS: AtpChapter[] = [

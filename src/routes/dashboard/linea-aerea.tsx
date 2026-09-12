@@ -394,6 +394,12 @@ export function ChapterPicker({
   const [sel, setSel] = useState<Set<number>>(new Set());
   const [qty, setQty] = useState<string>("50");
   const [customQty, setCustomQty] = useState("");
+  /**
+   * Solo el ATP mezcla helicóptero en capítulos de avión (Cap. 1 y 3): la
+   * casilla deja esos reactivos fuera de la sesión. Desmarcada por defecto.
+   */
+  const ofreceSinHeli = code === "ATP";
+  const [sinHeli, setSinHeli] = useState(false);
   const all = sel.size === 0;
   const disponibles = all
     ? totalBanco
@@ -419,8 +425,9 @@ export function ChapterPicker({
 
   function start() {
     const caps = [...sel].sort((a, b) => a - b).join(",");
-    const search: Record<string, string | number> = { fuente: code };
+    const search: Record<string, string | number | boolean> = { fuente: code };
     if (caps) search.caps = caps;
+    if (ofreceSinHeli && sinHeli) search.sinHeli = true;
     if (qtyNum > 0 && qtyNum < disponibles) search.qty = qtyNum;
     void navigate({ to: "/cuestionario", search: search as never });
   }
@@ -532,13 +539,53 @@ export function ChapterPicker({
           })}
         </div>
 
+        {/* Solo ATP: dejar fuera los reactivos de helicóptero */}
+        {ofreceSinHeli && (
+          <label
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 10,
+              marginTop: 14,
+              padding: "12px 14px",
+              borderRadius: 12,
+              cursor: "pointer",
+              border: sinHeli ? "2px solid #3D5D91" : "2px solid #F2DCDB",
+              background: sinHeli ? "rgba(61,93,145,0.08)" : "white",
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={sinHeli}
+              onChange={(e) => setSinHeli(e.target.checked)}
+              style={{ marginTop: 2, accentColor: "#3D5D91", width: 18, height: 18, flexShrink: 0 }}
+            />
+            <span style={{ fontSize: "0.85rem", fontWeight: 700 }}>
+              Quitar las preguntas de helicópteros
+              <span
+                style={{
+                  display: "block",
+                  fontWeight: 500,
+                  color: "#647DA0",
+                  fontSize: "0.76rem",
+                  lineHeight: 1.45,
+                }}
+              >
+                Deja fuera Helicopter Regulations, Helicopter Aerodynamics y cualquier reactivo que
+                hable de helicópteros. La convocatoria es de ala fija.
+              </span>
+            </span>
+          </label>
+        )}
+
         {/* ¿Cuántas preguntas? — mismo criterio que el CIAAC */}
         <div style={{ marginTop: 20 }}>
           <div style={{ fontSize: "0.85rem", fontWeight: 700, marginBottom: 4 }}>
             ¿Cuántas preguntas?
           </div>
           <div style={{ fontSize: "0.78rem", color: "#647DA0", marginBottom: 10 }}>
-            Hay {disponibles} disponibles con tu selección.
+            Hay {disponibles} disponibles con tu selección
+            {ofreceSinHeli && sinHeli ? " (menos las de helicópteros)" : ""}.
           </div>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             {["10", "25", "50", "100", "todas", "custom"].map((v) => {
