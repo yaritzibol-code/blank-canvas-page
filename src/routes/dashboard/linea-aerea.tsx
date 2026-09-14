@@ -612,8 +612,8 @@ export function ChapterPicker({
             {ofreceSinHeli && sinHeli ? " (menos las de helicópteros)" : ""}.
           </div>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            {["10", "25", "50", "100", "todas", "custom"].map((v) => {
-              const on = qty === v;
+            {opciones.map((v) => {
+              const on = qtyActiva === v;
               const label = v === "todas" ? "Todas" : v === "custom" ? "Personalizar" : v;
               return (
                 <button
@@ -639,7 +639,8 @@ export function ChapterPicker({
               );
             })}
           </div>
-          {qty === "custom" && (
+          {qtyActiva === "custom" && (
+
             <input
               type="number"
               min={1}
