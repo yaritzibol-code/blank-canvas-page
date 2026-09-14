@@ -382,18 +382,23 @@ export function ChapterPicker({
   nombre,
   chapters,
   totalBanco,
+  searchBase,
   onClose,
 }: {
   code: string;
   nombre: string;
   chapters: AtpChapter[];
   totalBanco: number;
+  /** Parámetros base de navegación (la guía oficial no usa `fuente`). */
+  searchBase?: Record<string, string | number | boolean>;
   onClose: () => void;
 }) {
   const navigate = useNavigate();
   const [sel, setSel] = useState<Set<number>>(new Set());
   const [qty, setQty] = useState<string>("50");
   const [customQty, setCustomQty] = useState("");
+  /** Sin capítulos (guía oficial) solo se elige la cantidad de preguntas. */
+  const conCapitulos = chapters.length > 0;
   /**
    * Solo el ATP mezcla helicóptero en capítulos de avión (Cap. 1 y 3): la
    * casilla deja esos reactivos fuera de la sesión. Desmarcada por defecto.
@@ -405,13 +410,18 @@ export function ChapterPicker({
     ? totalBanco
     : chapters.filter((c) => sel.has(c.num)).reduce((s, c) => s + c.total, 0);
 
+  /** Presets que caben en la selección actual (no ofrecer 50/100 si no hay). */
+  const presets = ["10", "25", "50", "100"].filter((v) => parseInt(v, 10) <= disponibles);
+  const opciones = [...presets, "todas", "custom"];
+  const qtyActiva = opciones.includes(qty) ? qty : "todas";
+
   const qtyNum = (() => {
-    if (qty === "todas") return disponibles;
-    if (qty === "custom") {
+    if (qtyActiva === "todas") return disponibles;
+    if (qtyActiva === "custom") {
       const n = parseInt(customQty, 10);
-      return Number.isFinite(n) && n > 0 ? Math.min(n, disponibles) : 0;
+      return Number.isInteger(n) && n > 0 ? Math.min(n, disponibles) : 0;
     }
-    return Math.min(parseInt(qty, 10), disponibles);
+    return Math.min(parseInt(qtyActiva, 10), disponibles);
   })();
 
   function toggle(num: number) {
@@ -425,10 +435,12 @@ export function ChapterPicker({
 
   function start() {
     const caps = [...sel].sort((a, b) => a - b).join(",");
-    const search: Record<string, string | number | boolean> = { fuente: code };
+    const search: Record<string, string | number | boolean> = searchBase
+      ? { ...searchBase }
+      : { fuente: code };
     if (caps) search.caps = caps;
     if (ofreceSinHeli && sinHeli) search.sinHeli = true;
-    if (qtyNum > 0 && qtyNum < disponibles) search.qty = qtyNum;
+    if (qtyNum > 0 && (qtyNum < disponibles || searchBase)) search.qty = qtyNum;
     void navigate({ to: "/cuestionario", search: search as never });
   }
 
@@ -436,12 +448,13 @@ export function ChapterPicker({
     <div
       role="dialog"
       aria-modal="true"
-      aria-label={`Elegir capítulos de ${nombre}`}
+      aria-label={`Elegir preguntas de ${nombre}`}
       onClick={onClose}
       style={{
         position: "fixed",
         inset: 0,
-        zIndex: 60,
+        /* Por encima del sidebar fijo (z-index 200) para no quedar tapado. */
+        zIndex: 300,
         background: "rgba(26,26,46,0.55)",
         display: "flex",
         alignItems: "center",
@@ -454,16 +467,19 @@ export function ChapterPicker({
         style={{
           background: "white",
           borderRadius: 20,
-          padding: "26px 24px",
-          maxWidth: 560,
-          width: "100%",
-          maxHeight: "85vh",
-          overflowY: "auto",
+          width: "min(560px, calc(100vw - 32px))",
+          maxWidth: "100%",
+          maxHeight: "calc(100dvh - 32px)",
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden",
           fontFamily: FONT,
           color: INK,
           boxShadow: "0 30px 80px rgba(26,26,46,0.35)",
         }}
       >
+        <div style={{ overflowY: "auto", padding: "26px 24px 8px", minHeight: 0 }}>
+
         <h3 style={{ fontFamily: DISPLAY, fontSize: "1.3rem", marginBottom: 6 }}>
           {nombre} — elige capítulos
         </h3>
