@@ -766,12 +766,13 @@ function QuizCards() {
         <Icon n="book" size={18} color="#6C0820" /> Cuestionarios
       </h2>
 
-      {picker && pickerBank && (
+      {picker && (pickerBank || picker === "OFICIAL") && (
         <ChapterPicker
-          code={picker}
-          nombre={pickerQuiz?.titulo ?? picker}
-          chapters={pickerBank.chapters}
-          totalBanco={pickerBank.total}
+          code={picker === "OFICIAL" ? "OFICIAL" : picker}
+          nombre={picker === "OFICIAL" ? LINEA_AEREA_OFICIAL.titulo : (pickerQuiz?.titulo ?? picker)}
+          chapters={pickerBank ? pickerBank.chapters : []}
+          totalBanco={pickerBank ? pickerBank.total : LINEA_AEREA_OFICIAL_TOTAL}
+          searchBase={picker === "OFICIAL" ? { banco: "la", modo: "oficial" } : undefined}
           onClose={() => setPicker(null)}
         />
       )}
@@ -786,13 +787,14 @@ function QuizCards() {
           descripcion={LINEA_AEREA_OFICIAL.descripcion}
           features={[
             `${LINEA_AEREA_OFICIAL_TOTAL} preguntas de la guía oficial`,
+            "Elige cuántas preguntas quieres contestar",
             "Feedback inmediato por respuesta",
             'Botón "Explícamelo Yaris" siempre visible',
-            "Sin límite de tiempo",
           ]}
-          to="/cuestionario"
-          search={{ banco: "la", modo: "oficial", qty: LINEA_AEREA_OFICIAL_TOTAL }}
+          onStart={() => setPicker("OFICIAL")}
+          ctaLabel="Elegir preguntas →"
         />
+
 
         {/* Un cuestionario por manual del curso */}
         {LINEA_AEREA_QUIZZES.map((q) => {
