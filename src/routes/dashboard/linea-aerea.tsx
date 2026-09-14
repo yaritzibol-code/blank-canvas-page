@@ -717,7 +717,7 @@ export function ChapterPicker({
             onClick={start}
             disabled={qtyNum < 1}
             style={{
-              flex: 1,
+              flex: "1 1 190px",
               padding: "12px 18px",
               borderRadius: 12,
               cursor: qtyNum < 1 ? "not-allowed" : "pointer",
