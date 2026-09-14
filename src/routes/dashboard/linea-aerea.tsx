@@ -480,15 +480,19 @@ export function ChapterPicker({
       >
         <div style={{ overflowY: "auto", padding: "26px 24px 8px", minHeight: 0 }}>
 
-        <h3 style={{ fontFamily: DISPLAY, fontSize: "1.3rem", marginBottom: 6 }}>
-          {nombre} — elige capítulos
+        <h3 style={{ fontFamily: DISPLAY, fontSize: "1.25rem", marginBottom: 6, lineHeight: 1.25 }}>
+          {conCapitulos ? `${nombre} — elige capítulos` : nombre}
         </h3>
         <p style={{ fontSize: "0.85rem", color: "#647DA0", marginBottom: 18, lineHeight: 1.5 }}>
-          Sin selección, el cuestionario mezcla todo el banco {nombre}. Marca uno o varios capítulos
-          para enfocarte.
+          {conCapitulos
+            ? `Sin selección, el cuestionario mezcla todo el banco ${nombre}. Marca uno o varios capítulos para enfocarte.`
+            : "Elige cuántas preguntas quieres contestar en esta sesión."}
         </p>
 
+        {conCapitulos && (
+          <>
         <button
+
           type="button"
           onClick={() => setSel(new Set())}
           style={{
