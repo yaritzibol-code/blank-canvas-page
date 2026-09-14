@@ -558,6 +558,10 @@ export function ChapterPicker({
             );
           })}
         </div>
+          </>
+        )}
+
+
 
         {/* Solo ATP: dejar fuera los reactivos de helicóptero */}
         {ofreceSinHeli && (
