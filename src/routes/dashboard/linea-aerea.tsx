@@ -680,8 +680,20 @@ export function ChapterPicker({
         >
           Al terminar, Pathy analizará tu rendimiento personalmente: mira lo que tiene que decir.
         </div>
+        </div>
 
-        <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
+        <div
+          style={{
+            display: "flex",
+            gap: 10,
+            flexWrap: "wrap",
+            padding: "14px 24px 20px",
+            borderTop: "1px solid #F2DCDB",
+            background: "white",
+            flexShrink: 0,
+          }}
+        >
+
           <button
             type="button"
             onClick={onClose}
