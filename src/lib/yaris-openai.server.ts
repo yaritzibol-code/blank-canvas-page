@@ -61,16 +61,26 @@ export interface RateVerdict {
 
 /** Verifica los tres límites por usuario contra `ai_usage`. */
 export async function checkUserRateLimit(userId: string): Promise<RateVerdict> {
-  const since = new Date(Date.now() - 86_400_000).toISOString();
-  const { data, error } = await supabaseAdmin
-    .from("ai_usage")
-    .select("created_at")
-    .eq("user_id", userId)
-    .gte("created_at", since)
-    .order("created_at", { ascending: false })
-    .limit(200);
+  // En desarrollo local Lovable Cloud puede no inyectar la llave privilegiada.
+  // El rate limit es de protección secundaria: una falla de lectura nunca debe
+  // interrumpir Pathy/Yaris ni convertir la server function en una pantalla 500.
+  if (!process.env['SUPABASE_SERVICE_ROLE_KEY']) return { allowed: true };
 
-  if (error) return { allowed: true }; // no bloqueamos por fallas de lectura
+  let data: Array<{ created_at: string }> | null = null;
+  try {
+    const result = await supabaseAdmin
+      .from("ai_usage")
+      .select("created_at")
+      .eq("user_id", userId)
+      .gte("created_at", new Date(Date.now() - 86_400_000).toISOString())
+      .order("created_at", { ascending: false })
+      .limit(200);
+    if (result.error) return { allowed: true };
+    data = result.data;
+  } catch {
+    return { allowed: true };
+  }
+
   const stamps = (data ?? []).map((r) => new Date(r.created_at as string).getTime());
   const now = Date.now();
 
@@ -113,6 +123,7 @@ export async function logAiUsage(row: {
   success: boolean;
   errorMessage?: string | null;
 }) {
+  if (!process.env['SUPABASE_SERVICE_ROLE_KEY']) return;
   try {
     await supabaseAdmin.from("ai_usage").insert({
       user_id: row.userId,
@@ -138,6 +149,9 @@ export interface YarisAdminPrompt {
 
 /** System prompt configurable desde el panel admin (`ai_config`). */
 export async function loadAdminPrompt(): Promise<YarisAdminPrompt> {
+  if (!process.env['SUPABASE_SERVICE_ROLE_KEY']) {
+    return { prompt: null, personas: {} };
+  }
   try {
     const { data } = await supabaseAdmin
       .from("ai_config")
