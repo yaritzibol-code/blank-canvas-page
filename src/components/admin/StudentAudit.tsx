@@ -20,7 +20,7 @@ import {
 } from "@/lib/audit.functions";
 import { cardStyle, inputStyle } from "@/components/admin/AdminShell";
 import { MATERIAS_DEF } from "@/lib/store";
-import { ALL_MANUAL_QUIZZES, isAeronaveFuente } from "@/lib/store/linea-aerea-meta";
+import { ALL_MANUAL_QUIZZES, capLabel, isAeronaveFuente } from "@/lib/store/linea-aerea-meta";
 import { adminRtariGrabaciones, type AdminRtariGrabacion } from "@/lib/admin.functions";
 import { sanitizeHtml, yarisToHtml } from "@/lib/yaris-format";
 
@@ -60,7 +60,7 @@ function agrupar(answers: AuditAnswer[], track: "ciaac" | "la" | "ac"): Bucket[]
     const key = conFuente ? `${a.fuente}·${a.capitulo ?? 0}` : (a.materia || "sin-materia");
     const label = conFuente ? fuenteName(a.fuente!) : materiaName(a.materia);
     const sub = conFuente
-      ? `Cap. ${a.capitulo ?? "—"}${a.capituloTitulo ? ` — ${a.capituloTitulo}` : ""}`
+      ? `${capLabel(a.fuente)} ${a.capitulo ?? "—"}${a.capituloTitulo ? ` — ${a.capituloTitulo}` : ""}`
       : undefined;
     const cur = map.get(key) ?? { key, label, ...(sub ? { sub } : {}), correct: 0, total: 0 };
     cur.total++;
@@ -154,7 +154,7 @@ function Detalle({ attempt }: { attempt: AuditAttempt }) {
                   </span>
                   <span style={{ fontSize: ".7rem", color: MUTED }}>
                     {a.fuente
-                      ? `${fuenteName(a.fuente)} · Cap. ${a.capitulo ?? "—"}${a.capituloTitulo ? ` — ${a.capituloTitulo}` : ""}`
+                      ? `${fuenteName(a.fuente)} · ${capLabel(a.fuente)} ${a.capitulo ?? "—"}${a.capituloTitulo ? ` — ${a.capituloTitulo}` : ""}`
                       : materiaName(a.materia)}
                   </span>
                   <span style={{ fontSize: ".68rem", color: "#A9B8CE", marginLeft: "auto" }}>{a.questionId}</span>

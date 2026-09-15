@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { supabase } from "@/integrations/supabase/client";
 import { inputStyle, labelStyle } from "@/components/admin/AdminShell";
+import { capLabel } from "@/lib/store/linea-aerea-meta";
 import type { ReportQuestionSnapshot } from "@/lib/store";
 
 interface CloudQuestion {
@@ -140,7 +141,7 @@ export function QuestionEditModal({
           ID: <strong style={{ color: "#22375C" }}>{questionId}</strong>
           {row?.materia ? ` · ${row.materia}` : ""}
           {row?.fuente ? ` · ${row.fuente}` : ""}
-          {row?.capitulo ? ` · Cap. ${row.capitulo}` : ""}
+          {row?.capitulo ? ` · ${capLabel(row.fuente)} ${row.capitulo}` : ""}
         </div>
 
         {cargando && <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>Cargando pregunta…</p>}

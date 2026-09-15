@@ -34,26 +34,8 @@ import {
   type QuestionStatus,
   useQuestionBank,
 } from "@/lib/store";
-import {
-  ATP_CHAPTERS,
-  JEPP_CHAPTERS,
-  PHAK_CHAPTERS,
-  LEG_CHAPTERS,
-  B737MAX_CHAPTERS,
-
-  ALL_MANUAL_QUIZZES,
-  type AtpChapter,
-} from "@/lib/store/linea-aerea-meta";
-
-/** Manuales de Línea Aérea con capítulos, para catalogar el banco en el panel. */
-const CHAPTERS_BY_FUENTE: Record<string, AtpChapter[]> = {
-  ATP: ATP_CHAPTERS,
-  JEPP: JEPP_CHAPTERS,
-  PHAK: PHAK_CHAPTERS,
-  LEG: LEG_CHAPTERS,
-  B737MAX: B737MAX_CHAPTERS,
-
-};
+import { ALL_MANUAL_QUIZZES, capLabel, capituloNombre, chaptersFor } from "@/lib/store/linea-aerea-meta";
+import { seccionesDe } from "@/lib/store/linea-aerea-temario";
 
 /** Nombre legible del manual ("ATP", "Jeppesen", "Handbook"...). */
 function fuenteLabel(code?: string): string {
@@ -62,12 +44,12 @@ function fuenteLabel(code?: string): string {
   return ALL_MANUAL_QUIZZES.find((q) => q.code === code)?.titulo ?? code;
 }
 
-/** Etiqueta de catálogo: "Jeppesen · Cap. 2 Leyenda de cartas" o la materia CIAAC. */
+/** Etiqueta de catálogo: "Jeppesen · Bloque 2 Simbología y Lectura de Cartas" o la materia CIAAC. */
 function catalogoLabel(x: BankQuestion): string {
   if (x.fuente) {
     const cap =
       x.capitulo !== undefined && x.capitulo !== null
-        ? ` · Cap. ${x.capitulo}${x.capituloTitulo ? ` ${x.capituloTitulo}` : ""}`
+        ? ` · ${capLabel(x.fuente)} ${x.capitulo}${x.capituloTitulo ? ` ${x.capituloTitulo}` : ""}`
         : "";
     return `${fuenteLabel(x.fuente)}${cap}`;
   }
@@ -90,6 +72,11 @@ interface QForm {
   explanation: string;
   cite: string;
   status: QuestionStatus;
+  /** Manual de Línea Aérea / Aeronave del reactivo (solo lectura en el formulario). */
+  fuente?: string;
+  /** Capítulo y sección del temario; solo aplican a reactivos con `fuente`. */
+  capitulo?: number;
+  seccion?: string;
 }
 
 const CSV_TEMPLATE =
@@ -151,18 +138,20 @@ function AdminBancoPage() {
     ...(fuentesEnBanco.includes("LAOF") ? [] : [{ value: "LAOF", label: "Guía oficial Línea Aérea (LAOF)" }]),
   ];
 
-  // Capítulos: los del catálogo del manual + cualquiera que exista en datos.
+  // Capítulos: los del catálogo del manual (temario) + cualquiera que exista en
+  // datos, para que un capítulo aún vacío o un número fuera de catálogo se vean.
   const capsEnFuente = [
-    ...new Set(
-      questions
+    ...new Set([
+      ...chaptersFor(fFuente).map((c) => c.num),
+      ...questions
         .filter((x) => (fFuente === "todos" ? true : x.fuente === fFuente))
         .map((x) => x.capitulo)
         .filter((c): c is number => c !== undefined && c !== null),
-    ),
+    ]),
   ].sort((a, b) => a - b);
   const capOpts = capsEnFuente.map((num) => ({
     num,
-    titulo: CHAPTERS_BY_FUENTE[fFuente]?.find((c) => c.num === num)?.titulo ?? "",
+    titulo: chaptersFor(fFuente).find((c) => c.num === num)?.titulo ?? "",
   }));
 
   const seccionesEnScope = [
@@ -226,7 +215,10 @@ function AdminBancoPage() {
 
   const openEdit = (x: BankQuestion) => {
     setEditId(x.id);
-    setForm({ text: x.text, materia: x.materia, options: [...x.options], correctIndex: x.correctIndex, explanation: x.explanation, cite: x.cite, status: x.status });
+    setForm({
+      text: x.text, materia: x.materia, options: [...x.options], correctIndex: x.correctIndex, explanation: x.explanation, cite: x.cite, status: x.status,
+      ...(x.fuente ? { fuente: x.fuente, capitulo: x.capitulo, seccion: x.seccion } : {}),
+    });
     setFormErr(null);
   };
 
@@ -244,7 +236,20 @@ function AdminBancoPage() {
     if (editId) {
       const orig = questions.find((x) => x.id === editId);
       if (orig) {
-        saveQuestion({ ...orig, text: form.text.trim(), materia: form.materia, options: kept, correctIndex, explanation: form.explanation.trim(), cite: form.cite.trim(), status: form.status });
+        // Capítulo y sección del temario: sólo para reactivos de un manual. La
+        // sección vacía se borra (no se guarda ""), y el título del capítulo se
+        // toma del catálogo para que no quede el del capítulo anterior.
+        const catalogo = orig.fuente
+          ? {
+              capitulo: form.capitulo,
+              capituloTitulo:
+                form.capitulo === undefined
+                  ? undefined
+                  : capituloNombre(orig.fuente, form.capitulo) || orig.capituloTitulo,
+              seccion: form.seccion?.trim() || undefined,
+            }
+          : {};
+        saveQuestion({ ...orig, text: form.text.trim(), materia: form.materia, options: kept, correctIndex, explanation: form.explanation.trim(), cite: form.cite.trim(), status: form.status, ...catalogo });
       }
       showFlash("Pregunta actualizada");
     } else {
@@ -364,7 +369,7 @@ function AdminBancoPage() {
           >
             <option value="todos">Capítulo: todos</option>
             {capOpts.map((c) => (
-              <option key={c.num} value={String(c.num)}>Cap. {c.num}{c.titulo ? ` · ${c.titulo}` : ""}</option>
+              <option key={c.num} value={String(c.num)}>{capLabel(fFuente)} {c.num}{c.titulo ? ` · ${c.titulo}` : ""}</option>
             ))}
           </select>
         )}
@@ -436,6 +441,42 @@ function AdminBancoPage() {
                 ))}
               </select>
             </div>
+
+            {form.fuente && chaptersFor(form.fuente).length > 0 && (
+              <div style={{ marginBottom: 14, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                <div>
+                  <label style={labelStyle}>{capLabel(form.fuente)} del temario · {form.fuente}</label>
+                  <select
+                    value={form.capitulo ?? ""}
+                    onChange={(e) => setForm({ ...form, capitulo: e.target.value === "" ? undefined : Number(e.target.value), seccion: undefined })}
+                    style={inputStyle}
+                  >
+                    <option value="">Sin capítulo</option>
+                    {chaptersFor(form.fuente).map((c) => (
+                      <option key={c.num} value={c.num}>{capLabel(form.fuente)} {c.num} · {c.titulo}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label style={labelStyle}>Sección</label>
+                  <select
+                    value={form.seccion ?? ""}
+                    onChange={(e) => setForm({ ...form, seccion: e.target.value || undefined })}
+                    disabled={seccionesDe(form.fuente, form.capitulo).length === 0 && !form.seccion}
+                    style={inputStyle}
+                  >
+                    <option value="">Sin sección</option>
+                    {/* La sección actual se conserva aunque ya no esté en el temario. */}
+                    {form.seccion && !seccionesDe(form.fuente, form.capitulo).includes(form.seccion) && (
+                      <option value={form.seccion}>{form.seccion} (fuera del temario)</option>
+                    )}
+                    {seccionesDe(form.fuente, form.capitulo).map((sec) => (
+                      <option key={sec} value={sec}>{sec}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            )}
 
             <div style={{ marginBottom: 14 }}>
               <label style={labelStyle}>Opciones (marca la correcta)</label>

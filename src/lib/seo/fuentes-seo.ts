@@ -8,7 +8,7 @@
  * publicado (uso informativo), nunca se reproduce material de examen ajeno.
  */
 
-import { ATP_CHAPTERS, JEPP_CHAPTERS, PHAK_CHAPTERS } from "@/lib/store/linea-aerea-meta";
+import { ANX10_CHAPTERS, ATP_CHAPTERS, JEPP_CHAPTERS, LEG_CHAPTERS, PHAK_CHAPTERS } from "@/lib/store/linea-aerea-meta";
 import type { PreguntaMuestra } from "./materias-seo";
 
 export interface FuenteSeo {
@@ -168,18 +168,18 @@ export const FUENTES_SEO: FuenteSeo[] = [
 
   {
     slug: "jeppesen",
-    nombre: "Jeppesen General Airway Manual — Introduction",
+    nombre: "Jeppesen General Airway Manual",
     corto: "Jeppesen",
     icon: "compass",
     intro:
-      "Cartas, simbología y procedimientos: la sección Introduction del manual de Jeppesen es el lenguaje visual con el que vuela una línea aérea. Aquí se aprende a leerlo.",
+      "Cartas, simbología, radioayudas y procedimientos: el General Airway Manual de Jeppesen es el lenguaje con el que vuela una línea aérea. Aquí se aprende a leerlo y a operar con él.",
     queEs:
-      "El General Airway Manual de Jeppesen es la referencia de cartas y procedimientos que usan las aerolíneas en buena parte del mundo. Su sección Introduction explica la simbología, las leyendas y el formato de las cartas Jeppesen: el diccionario para leer cualquier carta de la casa.",
+      "El General Airway Manual de Jeppesen es la referencia de cartas y procedimientos que usan las aerolíneas en buena parte del mundo. Explica la simbología, las leyendas y el formato de las cartas Jeppesen, y recoge los procedimientos de vuelo, el marco normativo de la OACI y las contingencias con las que se opera a diario.",
     enConvocatoria:
-      "Para el examen teórico de la convocatoria se evalúa la sección Introduction del manual: definiciones, leyendas de cartas, formatos, letreros y marcas de aeródromo.",
-    bloquesTitulo: "Bloques de la sección Introduction",
+      "Para el examen teórico de la convocatoria el manual se evalúa en ocho bloques: definiciones y abreviaturas, simbología y lectura de cartas, señales y marcas de aeródromo, radioayudas y radiocomunicación, procedimientos de vuelo, marco normativo OACI y gestión del tránsito aéreo, PBN y enlace de datos, y emergencias y contingencias.",
+    bloquesTitulo: "Los 8 bloques del temario",
     bloques: JEPP_CHAPTERS.map((c) => ({
-      titulo: c.titulo,
+      titulo: `Bloque ${c.num} — ${c.titulo}`,
       detalle: c.tituloEn,
     })),
     materias: [
@@ -187,7 +187,7 @@ export const FUENTES_SEO: FuenteSeo[] = [
       { name: "Navegación Aérea", slug: "navegacion" },
     ],
     comoPractica:
-      "En FlightPath la simbología se practica a punta de preguntas: leyenda por leyenda, con explicación en español de cada símbolo y formato. Es la fuente donde más rinde practicar poco y seguido.",
+      "En FlightPath el Jeppesen se practica bloque por bloque, a punta de preguntas: leyenda por leyenda y procedimiento por procedimiento, con explicación en español de cada símbolo, formato y regla. Es la fuente donde más rinde practicar poco y seguido.",
     muestra: [
       {
         q: "En una carta de aproximación, la MSA (Minimum Safe/Sector Altitude) proporciona:",
@@ -215,11 +215,11 @@ export const FUENTES_SEO: FuenteSeo[] = [
     faqs: [
       {
         q: "¿Qué es el Jeppesen General Airway Manual?",
-        a: "Es el manual de referencia de Jeppesen sobre cartas, procedimientos y navegación. Para la convocatoria se evalúa su sección Introduction, que enseña a leer la simbología y los formatos de las cartas Jeppesen.",
+        a: "Es el manual de referencia de Jeppesen sobre cartas, procedimientos y navegación. Para la convocatoria se evalúa en ocho bloques: de la simbología y los formatos de las cartas a los procedimientos de vuelo, el marco normativo OACI, la navegación PBN y las emergencias.",
       },
       {
         q: "¿El Jeppesen General Airway Manual está en español?",
-        a: "El manual original está en inglés. En FlightPath practicas la sección Introduction con preguntas propias y explicaciones en español, bloque por bloque (definiciones, leyendas, formatos, letreros y marcas).",
+        a: "El manual original está en inglés. En FlightPath lo practicas con preguntas propias y explicaciones en español, bloque por bloque (definiciones, cartas, señales y marcas, radioayudas, procedimientos, marco OACI, PBN y emergencias).",
       },
       {
         q: "¿Cómo se estudia la simbología de Jeppesen?",
@@ -230,30 +230,23 @@ export const FUENTES_SEO: FuenteSeo[] = [
 
   {
     slug: "cpam",
-    nombre: "CPAM — Compendio de legislación nacional",
-    corto: "CPAM",
+    nombre: "Legislación — CPAM y marco internacional",
+    corto: "Legislación",
     icon: "doc",
     intro:
-      "La parte mexicana del temario: el compendio de legislación nacional aplicable a las tripulaciones de vuelo. Leyes, reglamentos y circulares que rigen tu trabajo como piloto en México.",
+      "La parte jurídica del temario: la Constitución, los convenios internacionales y el compendio de legislación nacional (CPAM) aplicable a las tripulaciones de vuelo. Leyes, reglamentos y circulares que rigen tu trabajo como piloto en México.",
     queEs:
-      "El CPAM es el compendio de legislación nacional relacionada con las tripulaciones de vuelo: reúne las disposiciones de la normatividad mexicana que aplican al personal técnico aeronáutico, desde la Ley de Aviación Civil hasta las circulares obligatorias.",
+      "La fuente de Legislación reúne el artículo 32 constitucional, los convenios internacionales de aviación civil (Chicago y sus Anexos, Varsovia, Montreal, Tokio y La Haya) y el CPAM: las disposiciones de la normatividad mexicana que aplican al personal técnico aeronáutico, desde la Ley de Aviación Civil hasta las circulares obligatorias.",
     enConvocatoria:
-      "Para el examen teórico de la convocatoria entra el compendio completo, con énfasis en las disposiciones que aplican directamente a las tripulaciones de vuelo.",
-    bloquesTitulo: "Qué normatividad reúne",
-    bloques: [
-      { titulo: "Ley de Aviación Civil y su reglamento" },
-      { titulo: "Reglamento de la Ley de Aeropuertos" },
-      { titulo: "Reglamento de Medicina de Aviación Civil" },
-      { titulo: "Ley Federal del Trabajo", detalle: "Disposiciones aplicables a tripulaciones" },
-      {
-        titulo: "Ley y Reglamento Aduaneros",
-        detalle: "Disposiciones aplicables a la operación aérea",
-      },
-      { titulo: "Circulares obligatorias", detalle: "CO AV y CO SA vigentes" },
-    ],
+      "Para el examen teórico de la convocatoria entra un capítulo por ordenamiento, con los artículos que el temario señala de cada ley, reglamento y circular, y con énfasis en las disposiciones que aplican directamente a las tripulaciones de vuelo.",
+    bloquesTitulo: "Los ordenamientos del temario",
+    bloques: LEG_CHAPTERS.map((c) => ({
+      titulo: c.titulo,
+      detalle: c.detalle,
+    })),
     materias: [{ name: "Legislación Aeronáutica", slug: "legislacion" }],
     comoPractica:
-      "En FlightPath el CPAM se practica por ordenamiento, con preguntas propias que citan la disposición de la que salen. La repetición espaciada hace el trabajo que las lecturas maratónicas no logran.",
+      "En FlightPath la Legislación se practica por ordenamiento — un capítulo por ley, reglamento o convenio — con preguntas propias que citan la disposición de la que salen. La repetición espaciada hace el trabajo que las lecturas maratónicas no logran.",
     muestra: [
       {
         q: "¿Qué ordenamiento regula de manera general la aviación civil en México?",
@@ -281,14 +274,14 @@ export const FUENTES_SEO: FuenteSeo[] = [
     faqs: [
       {
         q: "¿Qué es el CPAM?",
-        a: "El Compendio de legislación nacional relacionada a tripulaciones de vuelo: la recopilación de leyes, reglamentos y circulares mexicanas que aplican al personal técnico aeronáutico. Es la fuente 'mexicana' del temario de la convocatoria.",
+        a: "El Compendio de legislación nacional relacionada a tripulaciones de vuelo: la recopilación de leyes, reglamentos y circulares mexicanas que aplican al personal técnico aeronáutico. Es la parte 'mexicana' de la fuente de Legislación del temario, que se completa con el artículo 32 constitucional y los convenios internacionales.",
       },
       {
-        q: "¿Qué leyes incluye el CPAM?",
-        a: "Entre otras: la Ley de Aviación Civil y su reglamento, el Reglamento de la Ley de Aeropuertos, el Reglamento de Medicina de Aviación Civil, disposiciones aplicables de la Ley Federal del Trabajo y de la legislación aduanera, y circulares obligatorias vigentes.",
+        q: "¿Qué leyes incluye la fuente de Legislación?",
+        a: "La Constitución (artículo 32), los convenios de Chicago con sus Anexos, Varsovia, Montreal, Tokio y La Haya, la Ley de Aviación Civil y su reglamento, el Reglamento de la Ley de Aeropuertos, el Reglamento de Medicina de Aviación Civil, la Ley Aduanera y su reglamento, el capítulo de tripulaciones de la Ley Federal del Trabajo y las circulares obligatorias CO AV-12.1/07 y CO SA-17.2/10.",
       },
       {
-        q: "¿Cómo se estudia el CPAM para el examen teórico?",
+        q: "¿Cómo se estudia la Legislación para el examen teórico?",
         a: "Por ordenamiento y con repetición espaciada: sesiones cortas de preguntas de una sola ley a la vez. Memorizar artículos de corrido no escala; responder preguntas que citan la disposición correcta, sí.",
       },
     ],
@@ -305,14 +298,11 @@ export const FUENTES_SEO: FuenteSeo[] = [
       "El Anexo 10 al Convenio de Chicago norma las telecomunicaciones aeronáuticas de la OACI. Su Volumen II contiene los procedimientos de comunicación: uso de frecuencias, fraseología, categorías de mensajes, y los procedimientos de socorro y urgencia.",
     enConvocatoria:
       "Para el examen teórico de la convocatoria entra el Volumen II: procedimientos de comunicación, incluidos los de socorro, urgencia y las prioridades de mensajes.",
-    bloquesTitulo: "Qué cubre el Volumen II",
-    bloques: [
-      { titulo: "Procedimientos generales de radiotelefonía" },
-      { titulo: "Categorías y prioridad de los mensajes" },
-      { titulo: "Fraseología y transmisión de números y letras" },
-      { titulo: "Procedimientos de socorro (MAYDAY) y urgencia (PAN PAN)" },
-      { titulo: "Fallas de comunicaciones y procedimientos asociados" },
-    ],
+    bloquesTitulo: "Los 8 capítulos del Volumen II",
+    bloques: ANX10_CHAPTERS.map((c) => ({
+      titulo: `Cap. ${c.num} — ${c.titulo}`,
+      detalle: c.tituloEn,
+    })),
     materias: [{ name: "Comunicaciones Aeronáuticas", slug: "comunicaciones" }],
     comoPractica:
       "En FlightPath el Anexo 10 se practica con preguntas propias de procedimiento y fraseología, explicadas en español. Es una fuente corta: dominarla completa es de las mejores inversiones de tiempo del temario.",

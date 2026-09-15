@@ -133,7 +133,7 @@ export type SimMode = "oficial" | "potenciado";
 /**
  * Banco base del simulador:
  * - `ciaac` (default): guía de estudio del examen de ingreso.
- * - `la`: cuestionarios oficiales del curso de Línea Aérea (ATP, PHAK, JEPP, ANX10, CPAM).
+ * - `la`: cuestionarios oficiales del curso de Línea Aérea (ATP, PHAK, JEPP, ANX10, LEG).
  */
 export type SimBank = "ciaac" | "la";
 
