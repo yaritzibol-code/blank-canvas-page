@@ -4,6 +4,7 @@
  * sin descargar ~340 KB de reactivos al abrir la página.
  */
 import type { BankQuestion } from "./types";
+import type { BankCount } from "./questions-cloud";
 
 export interface LineaAereaQuiz {
   code: string;
@@ -51,7 +52,8 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
   {
     code: "JEPP",
     titulo: "Jeppesen",
-    descripcion: "General Airway Manual — banco completo por capítulos del manual.",
+    descripcion:
+      "General Airway Manual — los 8 bloques del temario: definiciones, cartas, señales, radioayudas, procedimientos, marco OACI, PBN y emergencias.",
     materia: "navegacion",
     icon: "map",
     total: 644,
@@ -60,7 +62,8 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
   {
     code: "LEG",
     titulo: "Legislación",
-    descripcion: "Legislación aeronáutica nacional e internacional — Artículo 32, convenios, Chicago, Anexos OACI, Varsovia y Montreal.",
+    descripcion:
+      "Legislación nacional e internacional por ordenamiento: Constitución, convenios, Ley de Aviación Civil y sus reglamentos, aduanas, LFT y circulares obligatorias.",
     materia: "legislacion",
     icon: "scale",
     total: 80,
@@ -70,7 +73,7 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
   {
     code: "ANX10",
     titulo: "OACI Anexo 10",
-    descripcion: "Volumen II — procedimientos de comunicaciones aeronáuticas.",
+    descripcion: "Volumen II — procedimientos de comunicaciones aeronáuticas, por capítulos del Anexo.",
     materia: "comunicaciones",
     icon: "radio",
     total: 50,
@@ -92,7 +95,14 @@ export interface AtpChapter {
   num: number;
   titulo: string;
   tituloEn: string;
+  /**
+   * Reactivos del capítulo en el banco. Es el valor de referencia (se muestra
+   * cuando la nube no responde); `fetchBankCounts` lo actualiza en vivo. Un 0
+   * marca un capítulo del temario que todavía no tiene reactivos.
+   */
   total: number;
+  /** Texto secundario para la UI cuando dice más que la traducción (ej. artículos de una ley). */
+  detalle?: string;
 }
 
 export const ATP_CHAPTERS: AtpChapter[] = [
@@ -158,15 +168,22 @@ export function esPreguntaHelicoptero(
   return !!q.explanation && HELI_FUERTE.test(q.explanation);
 }
 
-/** Capítulos del Jeppesen General Airway Manual (misma lógica que ATP). */
+/**
+ * Bloques del Jeppesen General Airway Manual, según el temario de la
+ * convocatoria (8 bloques temáticos; el manual se estudia por bloque, no por
+ * capítulo del libro). Los totales parten del banco anterior (7 capítulos de la
+ * sección Introduction) reubicado en los bloques 1 a 3; los bloques 4 a 8 son
+ * temario nuevo y arrancan sin reactivos.
+ */
 export const JEPP_CHAPTERS: AtpChapter[] = [
-  { num: 0, titulo: "Introducción", tituloEn: "Introduction", total: 50 },
-  { num: 1, titulo: "Definiciones y abreviaturas", tituloEn: "Definitions and Abbreviations", total: 150 },
-  { num: 2, titulo: "Leyenda de cartas", tituloEn: "Chart Legend", total: 150 },
-  { num: 3, titulo: "Formato de carta", tituloEn: "Chart Format Description Information", total: 30 },
-  { num: 4, titulo: "Letreros y marcas", tituloEn: "Signs and Markings", total: 100 },
-  { num: 5, titulo: "Guía visual de atraque (VDGS)", tituloEn: "Visual Docking Guidance Systems", total: 150 },
-  { num: 6, titulo: "NOTAM estatales", tituloEn: "Application of State NOTAMs", total: 14 },
+  { num: 1, titulo: "Lenguaje Jeppesen: Definiciones y Abreviaturas", tituloEn: "Definitions and Abbreviations", total: 150 },
+  { num: 2, titulo: "Simbología y Lectura de Cartas", tituloEn: "NAVAID symbols, altitudes and speeds in the planview, Enroute / SID-STAR / Airport / Approach chart legends, EASA AIR OPS", total: 244 },
+  { num: 3, titulo: "Señales y Marcas de Aeródromo", tituloEn: "Signs and Markings — United States and ICAO", total: 250 },
+  { num: 4, titulo: "Radioayudas y Fundamentos de Radiocomunicación", tituloEn: "Frequency bands and allocation, airborne stations, ATC operations, range of radio transmission, Navigation Aids", total: 0 },
+  { num: 5, titulo: "Procedimientos de Vuelo", tituloEn: "Departure, en-route, arrival, approach and holding procedures; altimeter setting, SSR, noise abatement, Mach number technique", total: 0 },
+  { num: 6, titulo: "Marco Normativo ICAO y Gestión del Tránsito Aéreo", tituloEn: "Annex 2, Annex 11, Annex 10, Air Traffic Management (Doc 4444) and its appendices", total: 0 },
+  { num: 7, titulo: "PBN, Vigilancia y Enlace de Datos", tituloEn: "Performance-Based Navigation and RNAV, surveillance systems, PBCS (Doc 9869), CPDLC", total: 0 },
+  { num: 8, titulo: "Emergencias y Contingencias", tituloEn: "Distress and urgency, unlawful interference, emergency descent, communication failure, interception, SAR, fuel emergencies", total: 0 },
 ];
 
 export const JEPP_TOTAL = JEPP_CHAPTERS.reduce((s, c) => s + c.total, 0);
@@ -207,15 +224,78 @@ export const LEG_PDFS: readonly { label: string; url: string }[] = [
   { label: "Circular Obligatoria CO SA-17.2/10 R3", url: "https://www.aicm.com.mx/informacionalpasajero/archivos/cosa-17_2-10r3.pdf" },
 ];
 
+/**
+ * Capítulos de Legislación según el temario: un capítulo por ordenamiento, en
+ * el orden del documento. `detalle` recoge los artículos que entran. Los
+ * totales parten del banco anterior (Art. 32 y convenios internacionales,
+ * capítulos 1 a 5) reubicado en los capítulos 1 y 2; el resto arranca sin
+ * reactivos en la nube.
+ */
 export const LEG_CHAPTERS: AtpChapter[] = [
-  { num: 1, titulo: "Artículo 32 constitucional y leyes nacionales", tituloEn: "Article 32 and National Laws", total: 10 },
-  { num: 2, titulo: "Convenios internacionales y cronología", tituloEn: "International Conventions and Chronology", total: 10 },
-  { num: 3, titulo: "Convenio de Chicago de 1944", tituloEn: "Chicago Convention 1944", total: 15 },
-  { num: 4, titulo: "Anexos de la OACI", tituloEn: "ICAO Annexes", total: 15 },
-  { num: 5, titulo: "Convenio de Varsovia 1929 y Montreal 1999", tituloEn: "Warsaw 1929 and Montreal 1999", total: 30 },
+  { num: 1, titulo: "Constitución Política de los Estados Unidos Mexicanos", tituloEn: "Political Constitution of the United Mexican States", detalle: "Artículo 32", total: 10 },
+  { num: 2, titulo: "Convenios internacionales", tituloEn: "International Conventions", detalle: "Chicago y Anexos OACI, Varsovia, Montreal, Tokio, La Haya", total: 70 },
+  { num: 3, titulo: "Ley de Aviación Civil", tituloEn: "Civil Aviation Law", detalle: "Arts. 3, 7, 17 Bis, 32 a 38, 40 a 41, 70 a 71, 79 a 82, 88 a 90", total: 0 },
+  { num: 4, titulo: "Reglamento de la Ley de Aviación Civil", tituloEn: "Civil Aviation Law Regulations", detalle: "Arts. 43 a 47, 77 a 86, 103 a 105, 111 a 120, 131, 158 a 162, 168 a 187, 196 a 197", total: 0 },
+  { num: 5, titulo: "Reglamento de la Ley de Aeropuertos", tituloEn: "Airports Law Regulations", detalle: "Arts. 6, 104 a 115, 156, 169", total: 0 },
+  { num: 6, titulo: "Reglamento de Medicina de Aviación Civil", tituloEn: "Civil Aviation Medicine Regulations", detalle: "Arts. 13 a 17 — evaluación médica al personal técnico aeronáutico y aspirantes", total: 0 },
+  { num: 7, titulo: "Ley Aduanera", tituloEn: "Customs Law", detalle: "Arts. 20, 53, 61", total: 0 },
+  { num: 8, titulo: "Reglamento de la Ley Aduanera", tituloEn: "Customs Law Regulations", detalle: "Arts. 31 (tráfico aéreo) y 98 (equipajes y menajes)", total: 0 },
+  { num: 9, titulo: "Ley Federal del Trabajo", tituloEn: "Federal Labor Law", detalle: "Arts. 60 a 67 (jornada) y 215 a 245 (tripulaciones aeronáuticas)", total: 0 },
+  { num: 10, titulo: "Circulares Obligatorias", tituloEn: "Mandatory Circulars", detalle: "CO AV-12.1/07 R5 (revalidación de licencia) y CO SA-17.2/10 R3 (artículos prohibidos)", total: 0 },
 ];
 
 export const LEG_TOTAL = LEG_CHAPTERS.reduce((s, c) => s + c.total, 0);
+
+/**
+ * Capítulos del Anexo 10 de la OACI, Volumen II (procedimientos de
+ * comunicaciones). El temario los lista sin secciones. Los totales reflejan el
+ * banco actual reubicado por capítulo; los capítulos sin reactivos quedan en 0.
+ */
+export const ANX10_CHAPTERS: AtpChapter[] = [
+  { num: 1, titulo: "Definiciones", tituloEn: "Definitions", total: 0 },
+  { num: 2, titulo: "Disposiciones administrativas del servicio internacional de telecomunicaciones aeronáuticas", tituloEn: "Administrative Provisions Relating to the International Aeronautical Telecommunication Service", total: 1 },
+  { num: 3, titulo: "Procedimientos generales del servicio internacional de telecomunicaciones aeronáuticas", tituloEn: "General Procedures for the International Aeronautical Telecommunication Service", total: 1 },
+  { num: 4, titulo: "Servicio fijo aeronáutico (AFS)", tituloEn: "Aeronautical Fixed Service (AFS)", total: 5 },
+  { num: 5, titulo: "Servicio móvil aeronáutico — comunicaciones orales", tituloEn: "Aeronautical Mobile Service — Voice Communications", total: 43 },
+  { num: 6, titulo: "Servicio de radionavegación aeronáutica", tituloEn: "Aeronautical Radio Navigation Service", total: 0 },
+  { num: 7, titulo: "Servicio de radiodifusión aeronáutica", tituloEn: "Aeronautical Broadcasting Service", total: 0 },
+  { num: 8, titulo: "Servicio móvil aeronáutico — comunicaciones por enlace de datos", tituloEn: "Aeronautical Mobile Service — Data Link Communications", total: 0 },
+];
+
+export const ANX10_TOTAL = ANX10_CHAPTERS.reduce((s, c) => s + c.total, 0);
+
+/**
+ * Capítulos de cada manual de Línea Aérea que se estudia por capítulos. Es la
+ * única tabla: la usan el tablero, el cuestionario, "Estudiemos juntos", Pathy
+ * y el panel admin, así que un manual nuevo se da de alta solo aquí.
+ */
+export const LA_CHAPTERS_BY_FUENTE: Record<string, AtpChapter[]> = {
+  ATP: ATP_CHAPTERS,
+  PHAK: PHAK_CHAPTERS,
+  JEPP: JEPP_CHAPTERS,
+  LEG: LEG_CHAPTERS,
+  ANX10: ANX10_CHAPTERS,
+};
+
+/**
+ * Cómo llama el temario a la unidad de cada manual: el Jeppesen se organiza en
+ * "bloques"; el resto, en capítulos. Etiqueta corta para listas y badges.
+ */
+export function capLabel(fuente?: string | null): string {
+  return fuente === "JEPP" ? "Bloque" : "Cap.";
+}
+
+/** La misma unidad en palabra completa: "3 bloques" / "1 capítulo". */
+export function capPalabra(fuente: string | null | undefined, n: number): string {
+  const base = fuente === "JEPP" ? "bloque" : "capítulo";
+  return n === 1 ? base : `${base}s`;
+}
+
+/** Título del capítulo en el catálogo (vacío si el manual no va por capítulos). */
+export function capituloNombre(fuente: string | undefined, num: number | undefined): string {
+  if (!fuente || num === undefined || num === null) return "";
+  return chaptersFor(fuente).find((c) => c.num === num)?.titulo ?? "";
+}
 
 /* ─── Módulo "Manuales de Aeronave" ──────────────────────────────
  * Bancos por tipo de avión. Viven en su propio módulo del sidebar, pero
@@ -237,6 +317,38 @@ export const B737MAX_CHAPTERS: AtpChapter[] = [
 ];
 
 export const B737MAX_TOTAL = B737MAX_CHAPTERS.reduce((s, c) => s + c.total, 0);
+
+/** Capítulos de cualquier manual con capítulos (Línea Aérea o Aeronave). */
+export const CHAPTERS_BY_FUENTE: Record<string, AtpChapter[]> = {
+  ...LA_CHAPTERS_BY_FUENTE,
+  B737MAX: B737MAX_CHAPTERS,
+};
+
+/** Capítulos de un manual; lista vacía si no se estudia por capítulos. */
+export function chaptersFor(fuente?: string | null): AtpChapter[] {
+  return (fuente && CHAPTERS_BY_FUENTE[fuente]) || [];
+}
+
+/**
+ * Capítulos del catálogo con el total vivo de la nube (`get_bank_counts`)
+ * cuando lo hay. `total` es la suma de todo el manual (incluye reactivos con
+ * un capítulo fuera de catálogo); null cuando no hay conteo y rige el catálogo.
+ */
+export function chaptersConConteo(
+  code: string,
+  chapters: AtpChapter[],
+  counts: BankCount[] | undefined,
+): { chapters: AtpChapter[]; total: number | null } {
+  const vivos = counts?.filter((c) => c.fuente === code) ?? [];
+  if (vivos.length === 0) return { chapters, total: null };
+  return {
+    chapters: chapters.map((c) => ({
+      ...c,
+      total: vivos.filter((v) => v.capitulo === c.num).reduce((s, v) => s + v.total, 0),
+    })),
+    total: vivos.reduce((s, v) => s + v.total, 0),
+  };
+}
 
 /** Manuales de aeronave disponibles (una tarjeta por tipo de avión). */
 export const AERONAVE_QUIZZES: LineaAereaQuiz[] = [

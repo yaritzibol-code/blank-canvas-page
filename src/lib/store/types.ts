@@ -93,13 +93,13 @@ export type QuestionStatus = "borrador" | "publicada" | "oculta";
 export interface BankQuestion {
   id: string;
   materia: string; // slug de materia o "" (sin clasificar)
-  /** Código del manual de origen (cursos de línea aérea): ATP, PHAK, JEPP, ANX10, CPAM. */
+  /** Código del manual de origen (cursos de línea aérea): ATP, PHAK, JEPP, ANX10, LEG. */
   fuente?: string;
-  /** Capítulo del manual (ATP se organiza por capítulos). */
+  /** Capítulo del temario de la convocatoria (catálogo en `linea-aerea-meta.ts`). */
   capitulo?: number;
   /** Título del capítulo, para mostrarlo en la UI. */
   capituloTitulo?: string;
-  /** Sección del capítulo (subtema del libro). */
+  /** Sección del capítulo, con el nombre que le da el temario (`linea-aerea-temario.ts`). */
   seccion?: string;
   /**
    * Láminas del manual que acompañan al reactivo (bucket `jeppesen-images`).

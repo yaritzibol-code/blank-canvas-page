@@ -47,11 +47,11 @@ const FAQS: { q: string; a: string }[] = [
   ...COPY.faqs,
   {
     q: "¿Qué se estudia para el examen teórico del Embraer 190?",
-    a: "El temario oficial se compone del ATP — Airline Transport Pilot (excepto los capítulos de Performance y Weight & Balance), el Pilot's Handbook of Aeronautical Knowledge (excepto el capítulo 1), la sección Introduction del Jeppesen General Airway Manual, el CPAM (Compendio de legislación nacional relacionada a tripulaciones de vuelo) y el Anexo 10 de la OACI, Volumen II.",
+    a: "El temario oficial se compone del ATP — Airline Transport Pilot (excepto los capítulos de Performance y Weight & Balance), el Pilot's Handbook of Aeronautical Knowledge (excepto el capítulo 1), el Jeppesen General Airway Manual en ocho bloques (definiciones, cartas, señales y marcas, radioayudas, procedimientos de vuelo, marco OACI, PBN y emergencias), Legislación (artículo 32 constitucional, convenios internacionales y el CPAM, el compendio de legislación nacional relacionada a tripulaciones de vuelo) y el Anexo 10 de la OACI, Volumen II, por capítulos.",
   },
   {
     q: "¿Qué es el Jeppesen General Airway Manual?",
-    a: "Es el manual de referencia de Jeppesen sobre cartas, procedimientos y navegación aérea. Para esta convocatoria se evalúa la sección Introduction, que cubre la interpretación de cartas y simbología. En FlightPath la practicas con las materias de Manuales AIS y Navegación.",
+    a: "Es el manual de referencia de Jeppesen sobre cartas, procedimientos y navegación aérea. Para esta convocatoria se evalúa en ocho bloques: definiciones y abreviaturas, simbología y lectura de cartas, señales y marcas de aeródromo, radioayudas, procedimientos de vuelo, marco normativo OACI, PBN y emergencias. En FlightPath lo practicas bloque por bloque con las materias de Manuales AIS y Navegación.",
   },
   {
     q: "¿Cómo me ayuda el cuestionario de práctica de FlightPath?",
@@ -125,14 +125,14 @@ const TEMARIO: {
   {
     icon: "compass",
     title: "Jeppesen General Airway Manual",
-    detail: "Sección Introduction: cartas, simbología y procedimientos.",
+    detail: "Ocho bloques: definiciones, cartas, señales, radioayudas, procedimientos, marco OACI, PBN y emergencias.",
     materias: ["Manuales AIS", "Navegación"],
     href: "/linea-aerea/jeppesen",
   },
   {
     icon: "doc",
-    title: "CPAM — Legislación nacional",
-    detail: "Compendio de legislación nacional relacionada a tripulaciones de vuelo.",
+    title: "Legislación — CPAM y marco internacional",
+    detail: "Artículo 32 constitucional, convenios internacionales y el compendio de legislación nacional, por ordenamiento.",
     materias: ["Legislación Aeronáutica"],
     href: "/linea-aerea/cpam",
   },

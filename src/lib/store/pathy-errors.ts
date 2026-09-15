@@ -4,7 +4,7 @@
  * verificable. La IA solo interpreta este material.
  */
 import { MATERIAS_DEF } from "./materias";
-import { ATP_CHAPTERS, JEPP_CHAPTERS, PHAK_CHAPTERS, LEG_CHAPTERS, B737MAX_CHAPTERS } from "./linea-aerea-meta";
+import { capLabel, chaptersFor } from "./linea-aerea-meta";
 import type { AttemptAnswer, PathyWeakSpot } from "./types";
 
 /** Muestra mínima para declarar un punto débil sin advertencia. */
@@ -22,16 +22,6 @@ const MANUAL_NOMBRE: Record<string, string> = {
   B737MAX: "Boeing 737 MAX (FCOM)",
 
 };
-
-function chaptersFor(fuente: string) {
-  if (fuente === "ATP") return ATP_CHAPTERS;
-  if (fuente === "JEPP") return JEPP_CHAPTERS;
-  if (fuente === "PHAK") return PHAK_CHAPTERS;
-  if (fuente === "LEG") return LEG_CHAPTERS;
-  if (fuente === "B737MAX") return B737MAX_CHAPTERS;
-
-  return [];
-}
 
 function tituloCapitulo(fuente: string, cap: number, fallback?: string): string {
   if (fallback && fallback.trim()) return fallback.trim();
@@ -111,7 +101,7 @@ export function weakByCapitulo(answers: AttemptAnswer[]): PathyWeakSpot[] {
   return ordenar(
     [...map.values()].map((e) => {
       const manual = MANUAL_NOMBRE[e.fuente] ?? e.fuente;
-      const capTxt = e.cap > 0 ? ` · Cap. ${e.cap}` : "";
+      const capTxt = e.cap > 0 ? ` · ${capLabel(e.fuente)} ${e.cap}` : "";
       const tit = e.titulo ? ` — ${e.titulo}` : "";
       return {
         tipo: "capitulo" as const,

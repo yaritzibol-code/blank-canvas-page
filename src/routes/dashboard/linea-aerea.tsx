@@ -9,22 +9,19 @@
 import { useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
-import { useRequireAuth } from "@/lib/store";
+import { useRequireAuth, type BankCount } from "@/lib/store";
 import {
   LINEA_AEREA_OFICIAL,
   LINEA_AEREA_OFICIAL_TOTAL,
   LINEA_AEREA_QUIZZES,
-  ATP_CHAPTERS,
-  ATP_TOTAL,
-  JEPP_CHAPTERS,
-  JEPP_TOTAL,
-  PHAK_CHAPTERS,
-  PHAK_TOTAL,
-  LEG_CHAPTERS,
+  LA_CHAPTERS_BY_FUENTE,
   LEG_PDFS,
-  LEG_TOTAL,
+  capLabel,
+  capPalabra,
+  chaptersConConteo,
   type AtpChapter,
 } from "@/lib/store/linea-aerea-meta";
+import { useBankCounts } from "@/hooks/use-bank-counts";
 import { LA_CONVOCATORIA_COPY as CONVOCATORIA } from "@/lib/convocatoria";
 import { BancoScreen } from "@/components/banco/BancoScreen";
 
@@ -375,13 +372,19 @@ export function QuizCard({
   );
 }
 
-/* ─── Selector de capítulos (bancos ATP y Jeppesen) ────────────── */
+/* ─── Selector de capítulos (manuales que se estudian por capítulo) ── */
 
+/**
+ * Los capítulos del temario que aún no tienen reactivos aparecen, pero no se
+ * pueden elegir: así la alumna ve la estructura completa del examen sin
+ * arrancar una sesión vacía. El conteo real viene de `useBankCounts`.
+ */
 export function ChapterPicker({
   code,
   nombre,
-  chapters,
-  totalBanco,
+  chapters: catalogo,
+  totalBanco: totalCatalogo,
+  counts,
   searchBase,
   onClose,
 }: {
@@ -389,6 +392,8 @@ export function ChapterPicker({
   nombre: string;
   chapters: AtpChapter[];
   totalBanco: number;
+  /** Conteo vivo (`useBankCounts`); sin él se usan los totales del catálogo. */
+  counts?: BankCount[];
   /** Parámetros base de navegación (la guía oficial no usa `fuente`). */
   searchBase?: Record<string, string | number | boolean>;
   onClose: () => void;
@@ -398,7 +403,11 @@ export function ChapterPicker({
   const [qty, setQty] = useState<string>("50");
   const [customQty, setCustomQty] = useState("");
   /** Sin capítulos (guía oficial) solo se elige la cantidad de preguntas. */
-  const conCapitulos = chapters.length > 0;
+  const conCapitulos = catalogo.length > 0;
+  const vivo = conCapitulos ? chaptersConConteo(code, catalogo, counts) : null;
+  const chapters = vivo?.chapters ?? catalogo;
+  const totalBanco = vivo?.total ?? totalCatalogo;
+  const unidad = capLabel(code);
   /**
    * Solo el ATP mezcla helicóptero en capítulos de avión (Cap. 1 y 3): la
    * casilla deja esos reactivos fuera de la sesión. Desmarcada por defecto.
@@ -481,11 +490,11 @@ export function ChapterPicker({
         <div style={{ overflowY: "auto", padding: "26px 24px 8px", minHeight: 0 }}>
 
         <h3 style={{ fontFamily: DISPLAY, fontSize: "1.25rem", marginBottom: 6, lineHeight: 1.25 }}>
-          {conCapitulos ? `${nombre} — elige capítulos` : nombre}
+          {conCapitulos ? `${nombre} — elige ${capPalabra(code, 2)}` : nombre}
         </h3>
         <p style={{ fontSize: "0.85rem", color: "#647DA0", marginBottom: 18, lineHeight: 1.5 }}>
           {conCapitulos
-            ? `Sin selección, el cuestionario mezcla todo el banco ${nombre}. Marca uno o varios capítulos para enfocarte.`
+            ? `Sin selección, el cuestionario mezcla todo el banco ${nombre}. Marca uno o varios ${capPalabra(code, 2)} para enfocarte.`
             : "Elige cuántas preguntas quieres contestar en esta sesión."}
         </p>
 
@@ -516,11 +525,14 @@ export function ChapterPicker({
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {chapters.map((c) => {
             const on = sel.has(c.num);
+            /* Capítulo del temario sin reactivos todavía: se ve, no se elige. */
+            const vacio = c.total === 0;
             return (
               <button
                 key={c.num}
                 type="button"
                 aria-pressed={on}
+                disabled={vacio}
                 onClick={() => toggle(c.num)}
                 style={{
                   display: "flex",
@@ -528,7 +540,8 @@ export function ChapterPicker({
                   justifyContent: "space-between",
                   gap: 12,
                   textAlign: "left",
-                  cursor: "pointer",
+                  cursor: vacio ? "not-allowed" : "pointer",
+                  opacity: vacio ? 0.55 : 1,
                   padding: "12px 14px",
                   borderRadius: 12,
                   fontFamily: FONT,
@@ -539,7 +552,7 @@ export function ChapterPicker({
                 }}
               >
                 <span style={{ fontWeight: 700 }}>
-                  Cap. {c.num} · {c.titulo}
+                  {unidad} {c.num} · {c.titulo}
                   <span
                     style={{
                       display: "block",
@@ -548,11 +561,11 @@ export function ChapterPicker({
                       fontSize: "0.76rem",
                     }}
                   >
-                    {c.tituloEn}
+                    {c.detalle ?? c.tituloEn}
                   </span>
                 </span>
                 <span style={{ color: "#647DA0", fontSize: "0.78rem", whiteSpace: "nowrap" }}>
-                  {c.total} preg.
+                  {vacio ? "Sin preguntas aún" : `${c.total} preg.`}
                 </span>
               </button>
             );
@@ -737,16 +750,21 @@ export function ChapterPicker({
   );
 }
 
-/** Bancos que se estudian por capítulos (mismo flujo para ATP y Jeppesen). */
-const CHAPTER_BANKS: Record<string, { chapters: AtpChapter[]; total: number }> = {
-  ATP: { chapters: ATP_CHAPTERS, total: ATP_TOTAL },
-  JEPP: { chapters: JEPP_CHAPTERS, total: JEPP_TOTAL },
-  PHAK: { chapters: PHAK_CHAPTERS, total: PHAK_TOTAL },
-  LEG: { chapters: LEG_CHAPTERS, total: LEG_TOTAL },
-};
+/**
+ * Bancos que se estudian por capítulos: todos los manuales del temario
+ * (ATP, Handbook, Jeppesen, Legislación y Anexo 10), con la misma tabla que
+ * usan el cuestionario, Pathy y el panel admin.
+ */
+const CHAPTER_BANKS: Record<string, { chapters: AtpChapter[]; total: number }> = Object.fromEntries(
+  Object.entries(LA_CHAPTERS_BY_FUENTE).map(([code, chapters]) => [
+    code,
+    { chapters, total: chapters.reduce((s, c) => s + c.total, 0) },
+  ]),
+);
 
 function QuizCards() {
   const [picker, setPicker] = useState<string | null>(null);
+  const counts = useBankCounts();
   const pickerQuiz = picker ? LINEA_AEREA_QUIZZES.find((q) => q.code === picker) : null;
   const pickerBank = picker ? CHAPTER_BANKS[picker] : null;
   return (
@@ -772,6 +790,7 @@ function QuizCards() {
           nombre={picker === "OFICIAL" ? LINEA_AEREA_OFICIAL.titulo : (pickerQuiz?.titulo ?? picker)}
           chapters={pickerBank ? pickerBank.chapters : []}
           totalBanco={pickerBank ? pickerBank.total : LINEA_AEREA_OFICIAL_TOTAL}
+          counts={counts}
           searchBase={picker === "OFICIAL" ? { banco: "la", modo: "oficial" } : undefined}
           onClose={() => setPicker(null)}
         />
@@ -799,6 +818,8 @@ function QuizCards() {
         {/* Un cuestionario por manual del curso */}
         {LINEA_AEREA_QUIZZES.map((q) => {
           const bank = CHAPTER_BANKS[q.code];
+          const vivo = bank ? chaptersConConteo(q.code, bank.chapters, counts) : null;
+          const total = vivo?.total ?? bank?.total ?? q.total;
           return bank ? (
             <QuizCard
               key={q.code}
@@ -807,13 +828,13 @@ function QuizCards() {
               titulo={q.titulo}
               descripcion={q.descripcion}
               features={[
-                `${bank.total} preguntas en ${bank.chapters.length} capítulos`,
-                "Elige uno, varios o todos los capítulos",
+                `${total} preguntas en ${bank.chapters.length} ${capPalabra(q.code, bank.chapters.length)}`,
+                `Elige uno, varios o todos los ${capPalabra(q.code, 2)}`,
                 "Feedback inmediato por respuesta",
                 'Botón "Explícamelo Yaris" siempre visible',
               ]}
               onStart={() => setPicker(q.code)}
-              ctaLabel="Elegir capítulos →"
+              ctaLabel={`Elegir ${capPalabra(q.code, 2)} →`}
               pdfUrl={q.fileUrl}
               pdfs={q.code === "LEG" ? LEG_PDFS : undefined}
             />

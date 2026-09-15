@@ -422,8 +422,8 @@ export const MODULOS_LANDING: ModuloLanding[] = [
           k: "FUENTE 03",
         },
         {
-          t: "CPAM — Legislación nacional",
-          d: "El compendio de legislación aeronáutica mexicana que sí o sí cae.",
+          t: "Legislación — CPAM y marco internacional",
+          d: "Constitución, convenios internacionales y el compendio de legislación aeronáutica mexicana, un capítulo por ordenamiento.",
           k: "FUENTE 04",
         },
         {

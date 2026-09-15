@@ -4,25 +4,9 @@
  * (Learning Path, cuestionario con sus filtros, banco, simulador, flashcards).
  */
 import { MATERIAS_DEF } from "@/lib/store/materias";
-import {
-  ALL_MANUAL_QUIZZES,
-  ATP_CHAPTERS,
-  JEPP_CHAPTERS,
-  PHAK_CHAPTERS,
-  LEG_CHAPTERS,
-  B737MAX_CHAPTERS,
-  type AtpChapter,
-} from "@/lib/store/linea-aerea-meta";
+import { ALL_MANUAL_QUIZZES, capLabel, chaptersFor } from "@/lib/store/linea-aerea-meta";
 import { SUBJECT_TEMAS } from "@/modules/data/registry";
 import type { ResourceCandidate, StudyTrack } from "./types";
-
-const CHAPTERS_BY_CODE: Record<string, AtpChapter[]> = {
-  ATP: ATP_CHAPTERS,
-  JEPP: JEPP_CHAPTERS,
-  PHAK: PHAK_CHAPTERS,
-  LEG: LEG_CHAPTERS,
-  B737MAX: B737MAX_CHAPTERS,
-};
 
 export interface CatalogOptions {
   track: StudyTrack;
@@ -93,14 +77,15 @@ export function buildCatalog({ track, allowLocked }: CatalogOptions): ResourceCa
     );
   } else {
     ALL_MANUAL_QUIZZES.forEach((q) => {
-      const caps = CHAPTERS_BY_CODE[q.code] ?? [];
+      const caps = chaptersFor(q.code);
       if (caps.length > 0) {
-        caps.forEach((c) => {
+        // Un capítulo del temario sin reactivos no puede ser una sesión.
+        caps.filter((c) => c.total > 0).forEach((c) => {
           out.push(
             base({
               id: `quiz:${q.code}:${c.num}`,
               kind: "cuestionario",
-              titulo: `${q.titulo} · Cap. ${c.num}`,
+              titulo: `${q.titulo} · ${capLabel(q.code)} ${c.num}`,
               detalle: c.titulo,
               icon: q.icon as ResourceCandidate["icon"],
               minutes: 12,
