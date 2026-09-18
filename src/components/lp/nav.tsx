@@ -337,6 +337,8 @@ export function LpCategoryCard({
   icon = "book" as FPIconName,
   accent = "var(--primary)",
   percent,
+  disabled = false,
+  actionLabel,
 }: {
   to: string;
   params?: Record<string, string>;
@@ -346,12 +348,22 @@ export function LpCategoryCard({
   icon?: FPIconName;
   accent?: string;
   percent?: number;
+  disabled?: boolean;
+  actionLabel?: string;
 }) {
   return (
     <Interactive
-      to={to}
+      to={disabled ? undefined : to}
       params={params}
-      style={{ ...cardBase, padding: 22, overflow: "hidden" }}
+      disabled={disabled}
+      label={disabled ? `${title}, próximamente` : title}
+      style={{
+        ...cardBase,
+        padding: 22,
+        overflow: "hidden",
+        opacity: disabled ? 0.68 : 1,
+        background: disabled ? mix("var(--muted-foreground)", 7, "var(--card)") : "var(--card)",
+      }}
     >
       <div
         aria-hidden
@@ -371,13 +383,13 @@ export function LpCategoryCard({
               borderRadius: 14,
               display: "grid",
               placeItems: "center",
-              background: mix(accent, 16, "var(--card)"),
-              color: accent,
+              background: mix(disabled ? "var(--muted-foreground)" : accent, 16, "var(--card)"),
+              color: disabled ? "var(--muted-foreground)" : accent,
             }}
           >
             <Icon n={icon} size={22} />
           </div>
-          {typeof percent === "number" && <LpProgressRing percent={percent} accent={accent} />}
+          {typeof percent === "number" && !disabled && <LpProgressRing percent={percent} accent={accent} />}
         </div>
         <div>
           <div style={{ fontFamily: DISPLAY, fontSize: 19, fontWeight: 700, lineHeight: 1.2 }}>
@@ -401,8 +413,16 @@ export function LpCategoryCard({
           }}
         >
           <span>{meta}</span>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 4, color: accent }}>
-            Entrar <Icon n="chevR" size={14} />
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 4,
+              color: disabled ? "var(--muted-foreground)" : accent,
+            }}
+          >
+            {actionLabel ?? (disabled ? "Próximamente" : "Entrar")}
+            {!disabled && <Icon n="chevR" size={14} />}
           </span>
         </div>
       </div>
