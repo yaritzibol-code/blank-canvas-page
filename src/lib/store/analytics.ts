@@ -4,7 +4,7 @@
  * Cuestionarios y Simulador). No garantizan aprobación.
  */
 import { MATERIAS_DEF } from "./materias";
-import { LINEA_AEREA_OFICIAL, ALL_MANUAL_QUIZZES, AERONAVE_QUIZZES } from "./linea-aerea-meta";
+import { LINEA_AEREA_OFICIAL, LINEA_AEREA_QUIZZES } from "./linea-aerea-meta";
 import { SUBJECT_TEMAS } from "@/modules/data/registry";
 import {
   getActivity,
@@ -98,13 +98,12 @@ export interface RutaPerf {
 
 /** Título del cuestionario oficial del proceso, para reconocer sus intentos. */
 const LA_TITULOS = new Map<string, { name: string; icon: string }>([
-  ...ALL_MANUAL_QUIZZES.map(
+  ...LINEA_AEREA_QUIZZES.map(
     (q) => [q.titulo, { name: q.titulo, icon: q.icon }] as [string, { name: string; icon: string }],
   ),
   [LINEA_AEREA_OFICIAL.titulo, { name: "Guía oficial Embraer 190", icon: "target" }],
 ]);
 
-const AERONAVE_TITULOS = new Set(AERONAVE_QUIZZES.map((q) => q.titulo));
 
 /**
  * Progreso separado por ruta.
@@ -117,7 +116,7 @@ const AERONAVE_TITULOS = new Set(AERONAVE_QUIZZES.map((q) => q.titulo));
  */
 export function progresoPorRuta(
   userId: string,
-): { ciaac: RutaPerf[]; lineaAerea: RutaPerf[]; aeronave: RutaPerf[] } {
+): { ciaac: RutaPerf[]; lineaAerea: RutaPerf[] } {
   const attempts = getQuizAttempts(userId);
   const laAcc = new Map<string, { c: number; t: number }>();
   const ciaacAcc: Record<string, { c: number; t: number }> = {};
@@ -152,7 +151,6 @@ export function progresoPorRuta(
       answered: ciaacAcc[m.slug]?.t ?? 0,
     })),
     lineaAerea: [...LA_TITULOS.entries()]
-      .filter(([titulo]) => !AERONAVE_TITULOS.has(titulo))
       .map(([titulo, meta]) => ({
         key: titulo,
         name: meta.name,
@@ -160,13 +158,6 @@ export function progresoPorRuta(
         avg: pct(laAcc.get(titulo)),
         answered: laAcc.get(titulo)?.t ?? 0,
       })),
-    aeronave: AERONAVE_QUIZZES.map((q) => ({
-      key: q.titulo,
-      name: q.titulo,
-      icon: q.icon,
-      avg: pct(laAcc.get(q.titulo)),
-      answered: laAcc.get(q.titulo)?.t ?? 0,
-    })),
   };
 }
 

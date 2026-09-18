@@ -63,10 +63,9 @@ export const Route = createFileRoute("/sitemap.xml")({
             lastmod: V2,
           },
           { path: "/simulador-ciaac", changefreq: "monthly", priority: "0.8", lastmod: V2 },
-          // Verticales long-tail: inglés RTARI, aptitudes tipo COMPASS y 737 MAX.
+          // Verticales long-tail: inglés RTARI y aptitudes tipo COMPASS.
           { path: "/examen-rtari", changefreq: "monthly", priority: "0.9", lastmod: V2 },
           { path: "/examen-compass", changefreq: "monthly", priority: "0.9", lastmod: V2 },
-          { path: "/estudiar-737-max", changefreq: "monthly", priority: "0.9", lastmod: V2 },
           // Landings de producto: cómo se ve cada módulo.
           ...MODULOS_LANDING.map((m) => ({
             path: `/modulos/${m.slug}`,

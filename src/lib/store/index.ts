@@ -21,7 +21,7 @@ export {
 export * from "./yaris";
 export * from "./rtari";
 export * from "./compass";
-export * from "./lp737";
+export * from "./learning-course";
 export * from "./lp-nav";
 export {
   ensureSeededAsync,

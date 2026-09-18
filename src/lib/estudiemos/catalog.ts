@@ -4,7 +4,7 @@
  * (Learning Path, cuestionario con sus filtros, banco, simulador, flashcards).
  */
 import { MATERIAS_DEF } from "@/lib/store/materias";
-import { ALL_MANUAL_QUIZZES, capLabel, chaptersFor } from "@/lib/store/linea-aerea-meta";
+import { LINEA_AEREA_QUIZZES, capLabel, chaptersFor } from "@/lib/store/linea-aerea-meta";
 import { SUBJECT_TEMAS } from "@/modules/data/registry";
 import type { ResourceCandidate, StudyTrack } from "./types";
 
@@ -76,7 +76,7 @@ export function buildCatalog({ track, allowLocked }: CatalogOptions): ResourceCa
       }),
     );
   } else {
-    ALL_MANUAL_QUIZZES.forEach((q) => {
+    LINEA_AEREA_QUIZZES.forEach((q) => {
       const caps = chaptersFor(q.code);
       if (caps.length > 0) {
         // Un capítulo del temario sin reactivos no puede ser una sesión.

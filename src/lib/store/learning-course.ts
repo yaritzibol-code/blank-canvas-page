@@ -1,50 +1,47 @@
 /**
- * Progreso de los Learning Paths (737 MAX, Jeppesen, …).
+ * Progreso de los Learning Paths (Jeppesen y rutas futuras).
  *
  * Réplica del modelo de los paquetes originales (completedLessons / answers /
  * consolidation) pero por usuario y por curso:
- * - Respuestas y consolidaciones viven en la colección `lp737_state`
- *   (nombre histórico: hoy guarda TODAS las rutas; una fila por usuario y
- *   curso, sincronizada a la nube en sync.ts). Las filas antiguas sin
- *   `courseId` pertenecen a la ruta 737.
+ * - Respuestas y consolidaciones viven en una colección compartida por curso,
+ *   sincronizada a la nube.
  * - Las lecciones completadas usan el sistema existente de Learning Paths
- *   (`tema_progress` con el prefijo de cada curso, p. ej. "lp737:"), así que
+ *   (`tema_progress` con el prefijo de cada curso), así que
  *   el avance alimenta gratis las estadísticas del perfil, del admin y la
  *   actividad reciente.
  */
 import { read, update, nowISO } from "./db";
 import { completeTema, getTemaProgress } from "./domain";
 import type {
-  Lp737Consolidation,
-  Lp737ConsolidationSentence,
-  Lp737ConsolidationTable,
-} from "@/lib/lp737/types";
+  LpConsolidation,
+  LpConsolidationSentence,
+  LpConsolidationTable,
+} from "@/lib/lp/course-types";
 
-const KEY = "lp737_state";
-const LEGACY_COURSE = "737-max";
+const KEY = "learning_course_state";
 
-export interface Lp737ConsolidationResult {
+export interface LpConsolidationResult {
   /** true_false guarda `value`; sentence/table guardan `values`. */
   value?: boolean;
   values?: string[];
   correct: boolean;
 }
 
-export interface Lp737StateRow {
+export interface LpCourseStateRow {
   id: string;
   userId: string;
-  /** Slug del curso; ausente en filas creadas antes del multi-curso (= 737). */
+  /** Slug del curso. */
   courseId?: string;
   answers: Record<string, number>;
-  consolidation: Record<string, Lp737ConsolidationResult>;
+  consolidation: Record<string, LpConsolidationResult>;
   updatedAt: string;
 }
 
-function rowCourse(row: Lp737StateRow): string {
-  return row.courseId ?? LEGACY_COURSE;
+function rowCourse(row: LpCourseStateRow): string {
+  return row.courseId ?? "";
 }
 
-function emptyRow(userId: string, courseId: string): Lp737StateRow {
+function emptyRow(userId: string, courseId: string): LpCourseStateRow {
   return {
     id: `lp_${courseId}_${userId}`,
     userId,
@@ -55,9 +52,9 @@ function emptyRow(userId: string, courseId: string): Lp737StateRow {
   };
 }
 
-export function getLpState(userId: string, courseId: string): Lp737StateRow {
+export function getLpState(userId: string, courseId: string): LpCourseStateRow {
   return (
-    read<Lp737StateRow[]>(KEY, []).find((r) => r.userId === userId && rowCourse(r) === courseId) ??
+    read<LpCourseStateRow[]>(KEY, []).find((r) => r.userId === userId && rowCourse(r) === courseId) ??
     emptyRow(userId, courseId)
   );
 }
@@ -65,9 +62,9 @@ export function getLpState(userId: string, courseId: string): Lp737StateRow {
 function patchState(
   userId: string,
   courseId: string,
-  patch: (row: Lp737StateRow) => Lp737StateRow,
+  patch: (row: LpCourseStateRow) => LpCourseStateRow,
 ) {
-  update<Lp737StateRow[]>(KEY, [], (all) => {
+  update<LpCourseStateRow[]>(KEY, [], (all) => {
     const current =
       all.find((r) => r.userId === userId && rowCourse(r) === courseId) ??
       emptyRow(userId, courseId);
@@ -97,20 +94,20 @@ export function answerLpQuestion(
 export function saveLpConsolidation(
   userId: string,
   courseId: string,
-  activity: Lp737Consolidation,
+  activity: LpConsolidation,
   input: boolean | string[],
-): Lp737ConsolidationResult {
-  let result: Lp737ConsolidationResult;
+): LpConsolidationResult {
+  let result: LpConsolidationResult;
   if (activity.type === "true_false") {
     const value = input === true;
     result = { value, correct: value === activity.answer };
   } else if (activity.type === "complete_sentence") {
     const values = input as string[];
-    const a = activity as Lp737ConsolidationSentence;
+    const a = activity as LpConsolidationSentence;
     result = { values, correct: a.answers.every((ans, i) => values[i] === ans) };
   } else {
     const values = input as string[];
-    const a = activity as Lp737ConsolidationTable;
+    const a = activity as LpConsolidationTable;
     result = { values, correct: a.rows.every((row, i) => values[i] === row.answer) };
   }
   patchState(userId, courseId, (row) => ({
@@ -120,7 +117,7 @@ export function saveLpConsolidation(
   return result;
 }
 
-/** IDs de lecciones completadas de la ruta con el prefijo dado ("lp737:"…). */
+/** IDs de lecciones completadas de la ruta con el prefijo dado. */
 export function lpCompletedLessons(userId: string, temaPrefix: string): string[] {
   return getTemaProgress(userId)
     .filter((t) => t.completado && t.temaId.startsWith(temaPrefix))

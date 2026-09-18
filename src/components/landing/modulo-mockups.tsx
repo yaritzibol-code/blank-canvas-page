@@ -251,48 +251,6 @@ export function MockLineaAerea() {
   );
 }
 
-export function MockManuales() {
-  return (
-    <Ventana titulo="AERONAVE · 737 MAX">
-      <div className="grid grid-cols-3 gap-1.5 mb-4">
-        {["Limitaciones", "Suplement.", "Desp.", "Vuelo", "Sistemas", "Motores"].map((c, i) => (
-          <span
-            key={c}
-            className={`rounded-lg px-2 py-1.5 text-center text-[10px] font-bold ${i === 0 ? "bg-coral-600 text-white" : "bg-white/[0.06] text-white/50 border border-white/10"}`}
-          >
-            {c}
-          </span>
-        ))}
-      </div>
-      <p className="text-[14px] text-white leading-snug">
-        Máxima altitud de operación certificada:
-      </p>
-      <div className="mt-3 space-y-2">
-        {[
-          ["A", "37,000 ft", false],
-          ["B", "41,000 ft", true],
-        ].map(([l, txt, sel], i) => (
-          <div
-            key={i}
-            className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl border ${sel ? "bg-coral-600/15 border-coral-400/60" : "bg-white/[0.03] border-white/10"}`}
-          >
-            <span
-              className={`w-6 h-6 rounded-lg grid place-items-center text-[11px] font-bold font-mono shrink-0 ${sel ? "bg-coral-600 text-white" : "border border-white/20 text-white/55"}`}
-            >
-              {l as string}
-            </span>
-            <span className="text-[12.5px] text-white/85 font-mono">{txt as string}</span>
-          </div>
-        ))}
-      </div>
-      <div className="mt-4 flex items-center justify-between text-[11px] font-mono text-white/40">
-        <span>CAP. 01 · 34/250</span>
-        <span className="text-coral-400 animate-pulse-dot">racha de limitaciones: 12 ✓</span>
-      </div>
-    </Ventana>
-  );
-}
-
 export function MockBiblioteca() {
   return (
     <Ventana titulo="ANÁLISIS · ESTA SEMANA">
@@ -338,6 +296,5 @@ export const MOCKUPS: Record<string, () => React.ReactNode> = {
   rtari: MockRtari,
   compass: MockCompass,
   "linea-aerea": MockLineaAerea,
-  manuales: MockManuales,
   biblioteca: MockBiblioteca,
 };

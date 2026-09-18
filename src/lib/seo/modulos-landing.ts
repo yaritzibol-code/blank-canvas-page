@@ -3,7 +3,7 @@
  *
  * Son páginas de PRODUCTO ("cómo se ve y qué incluye el módulo"), no de
  * examen: la búsqueda de examen la capturan /ciaac, /examen-rtari,
- * /examen-compass, /linea-aerea y /estudiar-737-max — cada módulo enlaza a su
+ * /examen-compass y /linea-aerea — cada módulo enlaza a su
  * guía hermana en `guiaHref`. Reglas de COMPLIANCE.md: cifras propias
  * verificables, menciones nominativas con aviso donde aplique y ninguna
  * promesa de resultado.
@@ -12,10 +12,7 @@
  * las constantes del producto para que la landing nunca se desvíe de la app.
  */
 import { MATERIAS_DEF } from "@/lib/store/materias";
-import { B737MAX_CHAPTERS, B737MAX_TOTAL } from "@/lib/store/linea-aerea-meta";
 import { COMPASS_MODULES } from "@/modules/compass/config";
-
-const FMT_737 = B737MAX_TOTAL.toLocaleString("es-MX");
 
 export interface DetalleItem {
   /** Nombre de la pieza (materia, capítulo, ejercicio, fuente…). */
@@ -459,94 +456,6 @@ export const MODULOS_LANDING: ModuloLanding[] = [
     guiaLabel: "Ver las guías del temario",
     aviso:
       "FlightPath no está afiliada a ASPA, Aeroméxico ni ninguna aerolínea; los manuales citados pertenecen a sus titulares y se mencionan para describir el temario publicado.",
-  },
-  {
-    slug: "manuales",
-    pill: "Aeronaves",
-    nombre: "Manuales de Aeronave",
-    titulo: "El avión que vas a volar,",
-    tituloCoral: "a base de preguntas.",
-    descripcion: `El Boeing 737 MAX por los 9 capítulos del FCOM: limitaciones, procedimientos, rendimiento y sistemas en ${FMT_737} reactivos con explicación — para type rating, entrevista técnica o recurrent.`,
-    keywords:
-      "modulo manuales aeronave flightpath, banco 737 max fcom, preguntas type rating 737, estudiar sistemas boeing",
-    stats: [
-      { n: "9", label: "capítulos, en el orden del FCOM" },
-      { n: FMT_737, label: "reactivos con explicación" },
-      { n: "3", label: "momentos: type rating, entrevista, recurrent" },
-    ],
-    pasos: [
-      {
-        t: "Abre el capítulo que toca",
-        d: "La estructura es la del manual: limitaciones primero, sistemas por bloques, rendimiento al final.",
-      },
-      {
-        t: "Practica hasta que salga solo",
-        d: "Velocidades, pesos y altitudes a base de repetición medida — fallar aquí es barato.",
-      },
-      {
-        t: "Revisa tu historial",
-        d: "El porcentaje por capítulo te dice exactamente qué reabrir antes del examen o la entrevista.",
-      },
-    ],
-    features: [
-      {
-        icon: "doc",
-        t: "La estructura del FCOM",
-        d: "9 capítulos en el orden del manual: limitaciones primero, sistemas por bloques, rendimiento al final. Estudias como se estudia un avión.",
-      },
-      {
-        icon: "shield",
-        t: "Limitaciones que salen solas",
-        d: "Velocidades, pesos y altitudes a base de repetición medida — la recuperación instantánea que exigen exámenes y entrevistas.",
-      },
-      {
-        icon: "cards",
-        t: "Explicación por reactivo",
-        d: "En español, conservando la terminología en inglés del manual. Fallar aquí es barato; el historial te dice qué capítulo reabrir.",
-      },
-      {
-        icon: "bolt",
-        t: "Abierto para empezar gratis",
-        d: "El banco del 737 MAX es de los abiertos al plan gratuito: auditas la calidad de las preguntas antes de pagar un peso.",
-      },
-    ],
-    detalle: {
-      eyebrow: "El banco",
-      titulo: "Los 9 capítulos,",
-      tituloCoral: "como en el FCOM.",
-      sub: `${FMT_737} reactivos organizados con la estructura del manual del 737 MAX, para estudiar bloque por bloque.`,
-      items: B737MAX_CHAPTERS.map((c) => ({
-        t: c.titulo,
-        d: c.tituloEn,
-        k: `CAP. ${String(c.num).padStart(2, "0")} · ${c.total.toLocaleString("es-MX")}`,
-      })),
-      nota: `FCOM · ${FMT_737} REACTIVOS · MISMA ESTRUCTURA QUE EL MANUAL`,
-    },
-    incluye: [
-      "737 MAX · 9 capítulos FCOM",
-      `${FMT_737} reactivos`,
-      "Explicaciones en español",
-      "Historial por capítulo",
-      "Muestra gratis",
-    ],
-    faqs: [
-      {
-        q: "¿Qué aeronaves cubre el módulo?",
-        a: "Hoy, el Boeing 737 MAX completo por los 9 capítulos de su FCOM. La arquitectura del módulo está hecha para sumar más equipos — el catálogo crece con la plataforma.",
-      },
-      {
-        q: "¿Para qué momento de la carrera sirve?",
-        a: "Tres momentos: preparar el curso teórico del type rating, entrenar la recuperación rápida que piden las entrevistas técnicas, y el repaso recurrente de quien ya vuela la línea.",
-      },
-      {
-        q: "¿Sustituye al FCOM oficial?",
-        a: "No, y desconfía de lo que lo prometa: entrena la retención de lo que estudias, pero la única fuente normativa para operar es la documentación vigente de tu operador.",
-      },
-    ],
-    guiaHref: "/estudiar-737-max",
-    guiaLabel: "Leer la guía para estudiar el 737 MAX",
-    aviso:
-      "Boeing, 737 y 737 MAX son marcas de The Boeing Company, que no patrocina este material. Los reactivos son propios y no reproducen el FCOM.",
   },
   {
     slug: "biblioteca",

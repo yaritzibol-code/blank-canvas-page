@@ -8,12 +8,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import type {
-  Lp737Consolidation,
-  Lp737Lesson,
-  Lp737Module,
-  Lp737Question,
-} from "@/lib/lp737/types";
-import type { Lp737ConsolidationResult } from "@/lib/store";
+  LpConsolidation,
+  LpLesson,
+  LpModule,
+  LpQuestion,
+} from "@/lib/lp/course-types";
+import type { LpConsolidationResult } from "@/lib/store";
 import type { LpCourseDef } from "@/lib/lp/registry";
 
 const LETTERS = "ABCDEFGHIJ";
@@ -38,7 +38,7 @@ export function QuestionCard({
   selected,
   onAnswer,
 }: {
-  question: Lp737Question;
+  question: LpQuestion;
   index: number;
   selected: number | undefined;
   onAnswer: (option: number) => void;
@@ -137,9 +137,9 @@ export function ConsolidationCard({
   result,
   onSubmit,
 }: {
-  activity: Lp737Consolidation;
+  activity: LpConsolidation;
   index: number;
-  result: Lp737ConsolidationResult | undefined;
+  result: LpConsolidationResult | undefined;
   onSubmit: (input: boolean | string[]) => void;
 }) {
   const answered = Boolean(result);
@@ -310,14 +310,14 @@ export function LessonStage({
   onGoDashboard,
 }: {
   def: LpCourseDef;
-  module: Lp737Module;
-  lesson: Lp737Lesson;
+  module: LpModule;
+  lesson: LpLesson;
   lessonIndex: number;
   answers: Record<string, number>;
-  consolidation: Record<string, Lp737ConsolidationResult>;
+  consolidation: Record<string, LpConsolidationResult>;
   isComplete: boolean;
   onAnswer: (questionId: string, option: number) => void;
-  onConsolidate: (activity: Lp737Consolidation, input: boolean | string[]) => void;
+  onConsolidate: (activity: LpConsolidation, input: boolean | string[]) => void;
   onComplete: () => void;
   onSelectLesson: (lessonId: string) => void;
   onGoEvaluacion: () => void;
@@ -599,7 +599,7 @@ export function LessonStage({
 /* ─────────── Secciones exclusivas de rutas con evidencia (Jeppesen) ─────────── */
 
 /** "Evidencia y jurisdicción": afirmación auditada, cátedra, alcance y fuentes. */
-function EvidenceSection({ lesson }: { lesson: Lp737Lesson }) {
+function EvidenceSection({ lesson }: { lesson: LpLesson }) {
   const note = lesson.academic_note;
   const claim = lesson.claim_evidence;
   if (!note) return null;
@@ -682,7 +682,7 @@ function EvidenceSection({ lesson }: { lesson: Lp737Lesson }) {
 }
 
 /** "Lectura visual guiada": recorte real del manual con lightbox y laboratorio. */
-function VisualSection({ lesson }: { lesson: Lp737Lesson }) {
+function VisualSection({ lesson }: { lesson: LpLesson }) {
   const visual = lesson.visual;
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState(false);

@@ -7,7 +7,7 @@
 -- `data->'imagenes'` una lista de NOMBRES DE ARCHIVO, y el cliente los firma
 -- contra el bucket que le toca a su `fuente`:
 --   JEPP → jeppesen-images · ATP → atp-images
---   LAOF → e190-images     · B737MAX → 737-images
+--   LAOF → e190-images    
 -- Si falta el nombre en la pregunta, o el archivo en el bucket, o la política
 -- de lectura del bucket, la pregunta se muestra sin figura.
 
@@ -51,7 +51,6 @@ WITH declaradas AS (
     CASE data->>'fuente'
       WHEN 'ATP'     THEN 'atp-images'
       WHEN 'LAOF'    THEN 'e190-images'
-      WHEN 'B737MAX' THEN '737-images'
       ELSE 'jeppesen-images'
     END            AS bucket,
     archivo
@@ -75,7 +74,6 @@ WITH usadas AS (
     CASE data->>'fuente'
       WHEN 'ATP'     THEN 'atp-images'
       WHEN 'LAOF'    THEN 'e190-images'
-      WHEN 'B737MAX' THEN '737-images'
       ELSE 'jeppesen-images'
     END AS bucket,
     archivo
@@ -86,7 +84,7 @@ WITH usadas AS (
 SELECT o.bucket_id, count(*) AS archivos_sin_usar
 FROM storage.objects o
 LEFT JOIN usadas u ON u.bucket = o.bucket_id AND u.archivo = o.name
-WHERE o.bucket_id IN ('jeppesen-images', 'atp-images', 'e190-images', '737-images')
+WHERE o.bucket_id IN ('jeppesen-images', 'atp-images', 'e190-images')
   AND u.archivo IS NULL
 GROUP BY 1
 ORDER BY 1;
@@ -96,6 +94,6 @@ ORDER BY 1;
 --    por más que la pregunta y el archivo estén bien.
 SELECT bucket_id, count(*) AS objetos
 FROM storage.objects
-WHERE bucket_id IN ('jeppesen-images', 'atp-images', 'e190-images', '737-images')
+WHERE bucket_id IN ('jeppesen-images', 'atp-images', 'e190-images')
 GROUP BY 1
 ORDER BY 1;

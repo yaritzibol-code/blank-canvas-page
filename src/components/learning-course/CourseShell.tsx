@@ -1,5 +1,5 @@
 /**
- * Shell 1:1 de la Ruta de aprendizaje 737 MAX (paquete FlightPath737MAXLearningPath):
+ * Shell 1:1 de la ruta de aprendizaje (paquete FlightPath737MAXLearningPath):
  * sidebar ink de 248 px con los 21 módulos, herramientas (Evaluación /
  * Cobertura) y bloque de avance; barra móvil con drawer. El contenido de cada
  * vista se renderiza en el main crema.
@@ -7,7 +7,7 @@
 import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { Icon } from "@/components/ui/fp-icon";
-import type { Lp737Course } from "@/lib/lp737/types";
+import type { LpCourse } from "@/lib/lp/course-types";
 import { LP_COURSES, type LpCourseDef } from "@/lib/lp/registry";
 
 export type CourseVista =
@@ -156,7 +156,7 @@ export function CourseShell({
   children,
 }: {
   def: LpCourseDef;
-  course: Lp737Course;
+  course: LpCourse;
   vista: CourseVista;
   percent: number;
   complete: number;

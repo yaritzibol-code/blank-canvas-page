@@ -1,5 +1,5 @@
 /**
- * Vistas de la Ruta 737 MAX (1:1 con el paquete): tablero con buscador y grid
+ * Vistas de la ruta de aprendizaje (1:1 con el paquete): tablero con buscador y grid
  * de módulos, vista de módulo (rail de lecciones + escenario), evaluación
  * derivada de las lecciones y cobertura del manual.
  */
@@ -7,8 +7,8 @@ import { useMemo, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { CourseHero, ProgressTrack, fmtNum } from "./CourseShell";
 import { LessonStage } from "./LessonStage";
-import type { Lp737Consolidation, Lp737Course, Lp737Lesson, Lp737Module } from "@/lib/lp737/types";
-import type { Lp737ConsolidationResult } from "@/lib/store";
+import type { LpConsolidation, LpCourse, LpLesson, LpModule } from "@/lib/lp/course-types";
+import type { LpConsolidationResult } from "@/lib/store";
 import type { LpCourseDef } from "@/lib/lp/registry";
 
 export interface ModuleStats {
@@ -17,7 +17,7 @@ export interface ModuleStats {
   questions: number;
 }
 
-export function moduleStats(module: Lp737Module, completedLessons: string[]): ModuleStats {
+export function moduleStats(module: LpModule, completedLessons: string[]): ModuleStats {
   const completed = module.lessons.filter((l) => completedLessons.includes(l.id)).length;
   return {
     completed,
@@ -37,7 +37,7 @@ export function CourseDashboard({
   onOpenModule,
 }: {
   def: LpCourseDef;
-  course: Lp737Course;
+  course: LpCourse;
   completedLessons: string[];
   percent: number;
   complete: number;
@@ -199,14 +199,14 @@ export function ModuleView({
   onGoDashboard,
 }: {
   def: LpCourseDef;
-  module: Lp737Module;
-  lesson: Lp737Lesson;
+  module: LpModule;
+  lesson: LpLesson;
   completedLessons: string[];
   answers: Record<string, number>;
-  consolidation: Record<string, Lp737ConsolidationResult>;
+  consolidation: Record<string, LpConsolidationResult>;
   onSelectLesson: (id: string) => void;
   onAnswer: (questionId: string, option: number) => void;
-  onConsolidate: (activity: Lp737Consolidation, input: boolean | string[]) => void;
+  onConsolidate: (activity: LpConsolidation, input: boolean | string[]) => void;
   onComplete: () => void;
   onGoEvaluacion: () => void;
   onGoDashboard: () => void;
@@ -329,9 +329,9 @@ export function ModuleView({
 /* ───────────────────────── Evaluación ───────────────────────── */
 
 interface SimQuestionItem {
-  module: Lp737Module;
-  lesson: Lp737Lesson;
-  question: Lp737Lesson["questions"][number];
+  module: LpModule;
+  lesson: LpLesson;
+  question: LpLesson["questions"][number];
 }
 
 interface SimSession {
@@ -342,7 +342,7 @@ interface SimSession {
   selected: number | null;
 }
 
-export function CourseSimulator({ course }: { course: Lp737Course }) {
+export function CourseSimulator({ course }: { course: LpCourse }) {
   const [moduleId, setModuleId] = useState("all");
   const [count, setCount] = useState(10);
   const [sim, setSim] = useState<SimSession | null>(null);
@@ -607,7 +607,7 @@ export function CourseCoverage({
   onOpenModule,
 }: {
   def: LpCourseDef;
-  course: Lp737Course;
+  course: LpCourse;
   completedLessons: string[];
   onOpenModule: (id: string) => void;
 }) {

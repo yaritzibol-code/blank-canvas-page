@@ -619,9 +619,6 @@ function ComoFunciona() {
             aptitudes tipo COMPASS
           </a>{" "}
           para selecciones y estudias{" "}
-          <a href="/estudiar-737-max" className="font-semibold text-coral-700 hover:text-coral-600">
-            el 737 MAX por capítulos
-          </a>
           .
         </p>
       </div>

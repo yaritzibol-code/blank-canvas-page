@@ -828,11 +828,6 @@ function PerfilPage() {
       >
         <ProgresoCard titulo="Progreso — CIAAC" icon="help" filas={progreso.ciaac} />
         <ProgresoCard titulo="Progreso — Línea Aérea" icon="plane" filas={progreso.lineaAerea} />
-        <ProgresoCard
-          titulo="Progreso — Manuales de Aeronave"
-          icon="doc"
-          filas={progreso.aeronave}
-        />
       </div>
 
       {/* Bitácora del Pilot Aptitude Trainer */}

@@ -60,21 +60,11 @@ const CIAAC_SLUGS = new Set(
   (LP_CATEGORIES.find((c) => c.id === "ciaac")?.subjects ?? []).map((s) => s.id.split("/")[1]),
 );
 
-/** Fuentes del módulo Aeronaves (B737): quedan fuera del sistema de FP. */
-const FUENTES_EXCLUIDAS = new Set(["B737MAX", "B737", "737"]);
-
-function esB737(texto: string | undefined | null): boolean {
-  if (!texto) return false;
-  return /737/i.test(texto);
-}
-
 function programaDeQuiz(a: Row): FpProgram | null {
   const answers = (a["answers"] as Row[] | undefined) ?? [];
   const fuentes = new Set(
     answers.map((r) => String(r["fuente"] ?? "").toUpperCase()).filter(Boolean),
   );
-  if ([...fuentes].some((f) => FUENTES_EXCLUIDAS.has(f))) return null;
-  if (esB737(a["titulo"] as string)) return null;
   if (fuentes.size > 0) return "LINEA_AEREA";
   const materias = (a["materias"] as string[] | undefined) ?? [];
   if (materias.some((m) => CIAAC_SLUGS.has(m))) return "CIAAC";
@@ -114,7 +104,7 @@ export function derivarEventos(estado: Estado, rules: RuleMap): FpEvento[] {
       completadosLp.push({ id: temaId.slice(3), fecha });
       return;
     }
-    if (!fpMaterial || esB737(temaId)) return;
+    if (!fpMaterial) return;
     out.push({
       eventKey: `material:${temaId}`,
       ruleKey: "material_completado",
@@ -280,7 +270,7 @@ export function derivarEventos(estado: Estado, rules: RuleMap): FpEvento[] {
     const id = String(s["id"] ?? "");
     const fecha = String(s["date"] ?? new Date().toISOString());
     const materia = String(s["materia"] ?? "");
-    if (!id || esB737(materia)) return;
+    if (!id) return;
     const programa: FpProgram = CIAAC_SLUGS.has(materia) ? "CIAAC" : "GENERAL";
     if (fpFlash && total >= minCards) {
       out.push({

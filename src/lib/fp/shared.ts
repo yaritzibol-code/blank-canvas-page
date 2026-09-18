@@ -6,7 +6,7 @@
  * resuelve en el servidor (`fp.server.ts`); el navegador nunca propone montos.
  */
 
-/** Programas que participan en los rankings. B737 queda fuera del sistema. */
+/** Programas que participan en los rankings. */
 export type FpProgram = "CIAAC" | "LINEA_AEREA" | "GENERAL";
 
 export const FP_PROGRAM_LABEL: Record<FpProgram, string> = {

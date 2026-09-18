@@ -41,15 +41,6 @@ export interface LpCategory {
 
 export const LP_CATEGORIES: LpCategory[] = (raw as { categories: LpCategory[] }).categories;
 
-/** Categoría B737: no se reconstruye, se enlaza a la ruta existente. */
-export const B737_CATEGORY = {
-  id: "b737",
-  titulo: "B737",
-  descripcion: "Ruta técnica existente del 737 MAX (FCOM).",
-  to: "/ruta/$curso" as const,
-  curso: "737-max",
-};
-
 export function lpCategory(id: string): LpCategory | undefined {
   return LP_CATEGORIES.find((c) => c.id === id);
 }
