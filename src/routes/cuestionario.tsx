@@ -639,6 +639,7 @@ function CuestionarioPage() {
     setCurrentIdx(0);
     setSelectedIdx(null);
     setAnswered(false);
+    setOpenInput("");
     setShowResult(false);
     setStartTime(Date.now());
     setElapsedMin(0);
