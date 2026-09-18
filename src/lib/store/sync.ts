@@ -39,6 +39,7 @@ const USER_ARRAY_KEYS = [
   "rtari_sessions",
   "compass_sessions",
   "lp_started",
+  "lp_journey_state",
   "logros",
   "logros_destacados",
 ] as const;

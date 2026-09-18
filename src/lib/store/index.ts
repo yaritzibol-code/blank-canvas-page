@@ -23,6 +23,7 @@ export * from "./rtari";
 export * from "./compass";
 export * from "./learning-course";
 export * from "./lp-nav";
+export * from "./lp-journey";
 export {
   ensureSeededAsync,
   DEMO_STUDENT_ID,
