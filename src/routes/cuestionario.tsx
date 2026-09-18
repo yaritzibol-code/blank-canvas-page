@@ -1260,6 +1260,7 @@ function CuestionarioPage() {
                 </button>
               ))}
             </div>
+            )}
 
 
             {/* Feedback card */}
