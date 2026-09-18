@@ -41,8 +41,7 @@ import {
 import {
   LA_OFICIAL_FUENTE,
   LINEA_AEREA_OFICIAL,
-  ALL_MANUAL_QUIZZES,
-  isAeronaveFuente,
+  LINEA_AEREA_QUIZZES,
   esPreguntaHelicoptero,
 } from "@/lib/store/linea-aerea-meta";
 
@@ -277,15 +276,11 @@ function CuestionarioPage() {
    * caía en CIAAC, así que quien entraba desde Línea Aérea acababa en otro
    * módulo al cerrar.
    */
-  const exitTo: "/dashboard/banco" | "/dashboard/linea-aerea" | "/dashboard/manuales" =
-    isAeronaveFuente(search.fuente)
-      ? "/dashboard/manuales"
-      : search.banco === "la" || search.fuente
-        ? "/dashboard/linea-aerea"
-        : "/dashboard/banco";
+  const exitTo: "/dashboard/banco" | "/dashboard/linea-aerea" =
+    search.banco === "la" || search.fuente ? "/dashboard/linea-aerea" : "/dashboard/banco";
   /** Nombre para el historial cuando la sesión es de Línea Aérea. */
   const quizTitulo = search.fuente
-    ? ALL_MANUAL_QUIZZES.find((q) => q.code === search.fuente)?.titulo
+    ? LINEA_AEREA_QUIZZES.find((q) => q.code === search.fuente)?.titulo
     : search.banco === "la" && search.modo === "oficial"
       ? LINEA_AEREA_OFICIAL.titulo
       : undefined;

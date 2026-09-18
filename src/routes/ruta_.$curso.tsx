@@ -1,10 +1,10 @@
 /**
- * Learning path — /ruta/$curso (737-max, jeppesen, …)
+ * Learning path — /ruta/$curso (jeppesen y rutas futuras)
  *
  * Réplica 1:1 de los paquetes de cursos dentro de la app: shell propio con
  * selector de ruta, tablero, lección con capa pedagógica (y evidencia visual
  * cuando el curso la trae), evaluación derivada y cobertura. Requiere sesión;
- * el progreso vive en el store (lp737_state + tema_progress por prefijo) y se
+ * el progreso vive en el estado de rutas y tema_progress por prefijo y se
  * sincroniza a la nube.
  *
  * El contenido de cada curso se carga con import() dinámico al entrar
@@ -21,16 +21,16 @@ import {
   useRequireAuth,
   useStore,
 } from "@/lib/store";
-import type { Lp737Consolidation, Lp737Course } from "@/lib/lp737/types";
+import type { LpConsolidation, LpCourse } from "@/lib/lp/course-types";
 import { LP_PROXIMAMENTE, lpCourseBySlug } from "@/lib/lp/registry";
 import { adminOnly } from "@/components/shared/UnderConstruction";
-import { CourseShell, type CourseVista } from "@/components/lp737/CourseShell";
+import { CourseShell, type CourseVista } from "@/components/learning-course/CourseShell";
 import {
   CourseCoverage,
   CourseDashboard,
   CourseSimulator,
   ModuleView,
-} from "@/components/lp737/CourseViews";
+} from "@/components/learning-course/CourseViews";
 
 interface RutaSearch {
   m?: string;
@@ -57,7 +57,7 @@ function RutaCursoPage() {
   const { user, ready } = useRequireAuth();
   const navigate = useNavigate();
   const search = Route.useSearch();
-  const [course, setCourse] = useState<Lp737Course | null>(null);
+  const [course, setCourse] = useState<LpCourse | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Contenido bajo demanda: chunk propio por curso, solo para quien entra.
@@ -180,7 +180,7 @@ function RutaCursoPage() {
           consolidation={state.consolidation}
           onSelectLesson={(id) => irA({ tipo: "modulo", moduleId: module.id }, id)}
           onAnswer={(qid, option) => answerLpQuestion(userId, def.slug, qid, option)}
-          onConsolidate={(activity: Lp737Consolidation, input) =>
+          onConsolidate={(activity: LpConsolidation, input) =>
             saveLpConsolidation(userId, def.slug, activity, input)
           }
           onComplete={() => {

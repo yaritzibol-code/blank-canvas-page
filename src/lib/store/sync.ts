@@ -38,7 +38,6 @@ const USER_ARRAY_KEYS = [
   "pathy_reports",
   "rtari_sessions",
   "compass_sessions",
-  "lp737_state",
   "lp_started",
   "logros",
   "logros_destacados",

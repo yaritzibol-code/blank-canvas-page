@@ -51,7 +51,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "La plataforma de México para estudiar aviación: banco CIAAC de 2,800+ preguntas con explicación, simulador de 310, entrevista RTARI en inglés por voz, aptitudes tipo COMPASS y manuales de aeronave. Empieza gratis.",
+          "La plataforma de México para estudiar aviación: banco CIAAC de 2,800+ preguntas con explicación, simulador de 310, entrevista RTARI en inglés por voz y aptitudes tipo COMPASS. Empieza gratis.",
       },
       {
         property: "og:title",
@@ -97,7 +97,7 @@ function Hero() {
             </h1>
             <p className="mt-7 text-lg lg:text-xl text-ink/55 max-w-xl leading-relaxed">
               Banco CIAAC, fuentes de línea aérea (ATP, PHAK, Jeppesen), aptitudes tipo COMPASS,
-              entrevista RTARI en inglés y manuales de aeronave — con un copiloto IA que aprende
+              entrevista RTARI en inglés — con un copiloto IA que aprende
               cómo estudias y construye tu ruta.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
@@ -263,7 +263,6 @@ function ModulosTicker() {
     "ENTREVISTA RTARI",
     "PILOT APTITUDE TRAINER",
     "LÍNEA AÉREA · 5 FUENTES",
-    "MANUALES · 737 MAX",
     "BIBLIOTECA + ANÁLISIS",
   ];
   const pista = [...items, ...items];

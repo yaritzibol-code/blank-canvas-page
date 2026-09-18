@@ -20,7 +20,7 @@ import {
 } from "@/lib/audit.functions";
 import { cardStyle, inputStyle } from "@/components/admin/AdminShell";
 import { MATERIAS_DEF } from "@/lib/store";
-import { ALL_MANUAL_QUIZZES, capLabel, isAeronaveFuente } from "@/lib/store/linea-aerea-meta";
+import { LINEA_AEREA_QUIZZES, capLabel } from "@/lib/store/linea-aerea-meta";
 import { adminRtariGrabaciones, type AdminRtariGrabacion } from "@/lib/admin.functions";
 import { sanitizeHtml, yarisToHtml } from "@/lib/yaris-format";
 
@@ -33,7 +33,7 @@ const TONOS: Record<string, string> = { formal: "Formal", normal: "Normal", amig
 const materiaName = (slug: string | null | undefined) =>
   !slug ? "Sin materia" : (MATERIAS_DEF.find((m) => m.slug === slug)?.name ?? slug);
 const fuenteName = (code: string) =>
-  ALL_MANUAL_QUIZZES.find((q) => q.code === code)?.titulo ?? code;
+  LINEA_AEREA_QUIZZES.find((q) => q.code === code)?.titulo ?? code;
 
 function fecha(iso: string): string {
   return new Date(iso).toLocaleString("es-MX", {
@@ -49,14 +49,13 @@ function pctColor(p: number): string {
 
 interface Bucket { key: string; label: string; sub?: string; correct: number; total: number }
 
-function agrupar(answers: AuditAnswer[], track: "ciaac" | "la" | "ac"): Bucket[] {
+function agrupar(answers: AuditAnswer[], track: "ciaac" | "la"): Bucket[] {
   const map = new Map<string, Bucket>();
   for (const a of answers) {
-    const esAC = isAeronaveFuente(a.fuente);
-    const esLA = Boolean(a.fuente) && !esAC;
-    const suTrack = esAC ? "ac" : esLA ? "la" : "ciaac";
+    const esLA = Boolean(a.fuente);
+    const suTrack = esLA ? "la" : "ciaac";
     if (suTrack !== track) continue;
-    const conFuente = esLA || esAC;
+    const conFuente = esLA;
     const key = conFuente ? `${a.fuente}·${a.capitulo ?? 0}` : (a.materia || "sin-materia");
     const label = conFuente ? fuenteName(a.fuente!) : materiaName(a.materia);
     const sub = conFuente
@@ -112,7 +111,6 @@ function Detalle({ attempt }: { attempt: AuditAttempt }) {
 
   const ciaac = agrupar(attempt.answers, "ciaac");
   const la = agrupar(attempt.answers, "la");
-  const ac = agrupar(attempt.answers, "ac");
 
   return (
     <div style={{ background: "#F7F9FC", borderRadius: 12, padding: 14, marginTop: 10, display: "grid", gap: 14 }}>
@@ -126,12 +124,6 @@ function Detalle({ attempt }: { attempt: AuditAttempt }) {
         <section>
           <h4 style={{ fontFamily: DISPLAY, fontSize: ".8rem", color: INK, marginBottom: 7 }}>Línea Aérea — por manual y capítulo</h4>
           <BucketList buckets={la} />
-        </section>
-      )}
-      {ac.length > 0 && (
-        <section>
-          <h4 style={{ fontFamily: DISPLAY, fontSize: ".8rem", color: INK, marginBottom: 7 }}>Manuales de Aeronave — por manual y capítulo</h4>
-          <BucketList buckets={ac} />
         </section>
       )}
 

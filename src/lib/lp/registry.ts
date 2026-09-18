@@ -9,14 +9,14 @@
  * Para agregar una ruta nueva: generar su content.ts (ver lpjepp),
  * añadir su def aquí y listo — el hub /ruta y el selector la muestran solos.
  */
-import type { Lp737Course, Lp737Lesson, Lp737Meta, Lp737Module } from "@/lib/lp737/types";
+import type { LpCourse, LpLesson, LpMeta, LpModule } from "@/lib/lp/course-types";
 
 export interface LpHeroCopy {
   eyebrow: string;
   title: string;
   accent: string;
   description: string;
-  meta: (m: Lp737Meta) => string[];
+  meta: (m: LpMeta) => string[];
 }
 
 export interface LpStatCard {
@@ -43,19 +43,19 @@ export interface LpCourseDef {
   /** Prefijo del label de actividad ("Ruta 737 · <lección>"). */
   actividadLabel: string;
   hero: LpHeroCopy;
-  dashboardStats: (m: Lp737Meta, percent: number, complete: number) => LpStatCard[];
+  dashboardStats: (m: LpMeta, percent: number, complete: number) => LpStatCard[];
   yaris: { strong: string; p: string };
-  moduloEyebrow: (mod: Lp737Module) => string;
+  moduloEyebrow: (mod: LpModule) => string;
   /** Línea de fuente al pie de cada lección. */
-  fuenteFooter: (lesson: Lp737Lesson) => string;
+  fuenteFooter: (lesson: LpLesson) => string;
   coverage: {
     hero: LpHeroCopy;
-    resumen: (m: Lp737Meta) => { label: string; value: string }[];
+    resumen: (m: LpMeta) => { label: string; value: string }[];
     quality: { eyebrow: string; title: string; p: string };
     /** true: columna extra de Visuales y rangos de fuente en vez de PDF. */
     conVisuales: boolean;
   };
-  load: () => Promise<Lp737Course>;
+  load: () => Promise<LpCourse>;
 }
 
 export function fmtNum(value: number): string {

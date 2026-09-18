@@ -1,5 +1,5 @@
 /**
- * Tipos de la Ruta de aprendizaje 737 MAX (FCOM Rev. 16).
+ * Tipos compartidos de las rutas de aprendizaje.
  *
  * El contenido (content.ts, generado) replica 1:1 el paquete
  * `FlightPath737MAXLearningPath` de Daniel: 21 módulos, 265 lecciones y 530
@@ -8,7 +8,7 @@
  * lección). No editar el contenido a mano: proviene del build del curso.
  */
 
-export interface Lp737Question {
+export interface LpQuestion {
   id: string;
   prompt: string;
   options: string[];
@@ -18,23 +18,23 @@ export interface Lp737Question {
   level?: string;
 }
 
-export interface Lp737Activation {
+export interface LpActivation {
   eyebrow: string;
   prompt: string;
   instruction: string;
 }
 
-export type Lp737ReinforcementType = "mnemonic" | "example" | "tip";
+export type LpReinforcementType = "mnemonic" | "example" | "tip";
 
-export interface Lp737Reinforcement {
-  type: Lp737ReinforcementType;
+export interface LpReinforcement {
+  type: LpReinforcementType;
   title: string;
   content: string;
   /** Cómo transferir el refuerzo a otras operaciones. */
   transfer: string;
 }
 
-export interface Lp737ConsolidationTrueFalse {
+export interface LpConsolidationTrueFalse {
   id: string;
   type: "true_false";
   title: string;
@@ -43,7 +43,7 @@ export interface Lp737ConsolidationTrueFalse {
   explanation: string;
 }
 
-export interface Lp737ConsolidationSentence {
+export interface LpConsolidationSentence {
   id: string;
   type: "complete_sentence";
   title: string;
@@ -55,7 +55,7 @@ export interface Lp737ConsolidationSentence {
   explanation: string;
 }
 
-export interface Lp737ConsolidationTable {
+export interface LpConsolidationTable {
   id: string;
   type: "complete_table";
   title: string;
@@ -65,10 +65,10 @@ export interface Lp737ConsolidationTable {
   explanation: string;
 }
 
-export type Lp737Consolidation =
-  Lp737ConsolidationTrueFalse | Lp737ConsolidationSentence | Lp737ConsolidationTable;
+export type LpConsolidation =
+  LpConsolidationTrueFalse | LpConsolidationSentence | LpConsolidationTable;
 
-export interface Lp737Lesson {
+export interface LpLesson {
   id: string;
   title: string;
   source_pages: number[];
@@ -80,10 +80,10 @@ export interface Lp737Lesson {
   operational_flow: string[];
   common_error: string;
   mnemonic?: string;
-  questions: Lp737Question[];
-  activation: Lp737Activation;
-  yaris_reinforcement: Lp737Reinforcement;
-  consolidation: Lp737Consolidation[];
+  questions: LpQuestion[];
+  activation: LpActivation;
+  yaris_reinforcement: LpReinforcement;
+  consolidation: LpConsolidation[];
   /* Campos presentes solo en rutas con evidencia visual (Jeppesen). */
   source_refs?: LpSourceRef[];
   claim_evidence?: LpClaimEvidence;
@@ -95,18 +95,18 @@ export interface Lp737Lesson {
   visual_task?: LpVisualTask;
 }
 
-export interface Lp737Module {
+export interface LpModule {
   id: string;
   title: string;
   chapter_code: string;
   source_pages: number[];
   summary: string;
-  lessons: Lp737Lesson[];
+  lessons: LpLesson[];
   /** Nombre de archivo del paquete original (no se usa en la app). */
   file?: string;
 }
 
-export interface Lp737Meta {
+export interface LpMeta {
   course: string;
   source_pages: number;
   module_count: number;
@@ -123,9 +123,9 @@ export interface Lp737Meta {
   applied_question_count?: number;
 }
 
-export interface Lp737Course {
-  meta: Lp737Meta;
-  modules: Lp737Module[];
+export interface LpCourse {
+  meta: LpMeta;
+  modules: LpModule[];
 }
 
 /* ───────── Campos extendidos (rutas con evidencia visual, p. ej. Jeppesen) ───────── */
