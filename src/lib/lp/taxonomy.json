@@ -4993,34 +4993,49 @@
        "tipo": "documento",
        "learningPaths": [
         {
-         "id": "linea-aerea/legislacion/convenios-internacionales/convenio-de-chicago-1",
-         "titulo": "Convenio de Chicago",
+         "id": "linea-aerea/legislacion/convenios-internacionales/introduccion-a-los-tratados-internacionales-1",
+         "titulo": "Introducción a los tratados internacionales",
          "orden": 1
         },
         {
-         "id": "linea-aerea/legislacion/convenios-internacionales/anexos-oaci-2",
-         "titulo": "Anexos OACI",
+         "id": "linea-aerea/legislacion/convenios-internacionales/convenio-de-chicago-2",
+         "titulo": "Convenio de Chicago",
          "orden": 2
         },
         {
-         "id": "linea-aerea/legislacion/convenios-internacionales/convenio-de-varsovia-3",
-         "titulo": "Convenio de Varsovia",
+         "id": "linea-aerea/legislacion/convenios-internacionales/anexos-oaci-3",
+         "titulo": "Anexos OACI",
          "orden": 3
         },
         {
-         "id": "linea-aerea/legislacion/convenios-internacionales/convenio-de-montreal-4",
-         "titulo": "Convenio de Montreal",
+         "id": "linea-aerea/legislacion/convenios-internacionales/convenio-de-varsovia-4",
+         "titulo": "Convenio de Varsovia",
          "orden": 4
         },
         {
-         "id": "linea-aerea/legislacion/convenios-internacionales/convenio-de-tokio-5",
-         "titulo": "Convenio de Tokio",
+         "id": "linea-aerea/legislacion/convenios-internacionales/convenio-de-montreal-1999-5",
+         "titulo": "Convenio de Montreal 1999",
          "orden": 5
         },
         {
-         "id": "linea-aerea/legislacion/convenios-internacionales/convenio-de-la-haya-6",
-         "titulo": "Convenio de La Haya",
+         "id": "linea-aerea/legislacion/convenios-internacionales/convenio-de-tokio-1963-6",
+         "titulo": "Convenio de Tokio",
          "orden": 6
+        },
+        {
+         "id": "linea-aerea/legislacion/convenios-internacionales/convenio-de-la-haya-1970-7",
+         "titulo": "Convenio de La Haya",
+         "orden": 7
+        },
+        {
+         "id": "linea-aerea/legislacion/convenios-internacionales/convenio-de-montreal-1971-8",
+         "titulo": "Convenio de Montreal 1971",
+         "orden": 8
+        },
+        {
+         "id": "linea-aerea/legislacion/convenios-internacionales/repaso-final-de-convenios-9",
+         "titulo": "Repaso final de convenios",
+         "orden": 9
         }
        ]
       },
@@ -5166,9 +5181,24 @@
        "tipo": "documento",
        "learningPaths": [
         {
-         "id": "linea-aerea/legislacion/reglamento-de-medicina-de-aviacion-civil/evaluacion-medica-al-personal-tecnico-aeronautico-y-aspirantes-arts-13-1",
-         "titulo": "Evaluación médica al personal técnico-aeronáutico y aspirantes (arts. 13 a 17)",
+         "id": "linea-aerea/legislacion/reglamento-de-medicina-de-aviacion-civil/requisitos-generales-de-aptitud-psicofisica-art-13-1",
+         "titulo": "Requisitos generales de aptitud psicofísica (art. 13)",
          "orden": 1
+        },
+        {
+         "id": "linea-aerea/legislacion/reglamento-de-medicina-de-aviacion-civil/evaluacion-medica-art-14-2",
+         "titulo": "Cómo se realiza la evaluación médica (art. 14)",
+         "orden": 2
+        },
+        {
+         "id": "linea-aerea/legislacion/reglamento-de-medicina-de-aviacion-civil/certificado-y-casos-de-evaluacion-arts-15-a-16-3",
+         "titulo": "Certificado y casos de evaluación (arts. 15 a 16)",
+         "orden": 3
+        },
+        {
+         "id": "linea-aerea/legislacion/reglamento-de-medicina-de-aviacion-civil/disminucion-de-aptitud-psicofisica-art-17-4",
+         "titulo": "Disminución de aptitud psicofísica (art. 17)",
+         "orden": 4
         }
        ]
       },
