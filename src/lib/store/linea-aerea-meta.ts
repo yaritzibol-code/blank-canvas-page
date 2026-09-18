@@ -103,6 +103,13 @@ export interface AtpChapter {
   total: number;
   /** Texto secundario para la UI cuando dice más que la traducción (ej. artículos de una ley). */
   detalle?: string;
+  /** Subdivisiones seleccionables dentro del capítulo (p. ej. Bloque 1 de Jeppesen). */
+  subsections?: readonly {
+    key: string;
+    titulo: string;
+    tituloEn: string;
+    total: number;
+  }[];
 }
 
 export const ATP_CHAPTERS: AtpChapter[] = [
@@ -176,7 +183,16 @@ export function esPreguntaHelicoptero(
  * temario nuevo y arrancan sin reactivos.
  */
 export const JEPP_CHAPTERS: AtpChapter[] = [
-  { num: 1, titulo: "Lenguaje Jeppesen: Definiciones y Abreviaturas", tituloEn: "Definitions and Abbreviations", total: 731 },
+  {
+    num: 1,
+    titulo: "Lenguaje Jeppesen",
+    tituloEn: "Jeppesen Language",
+    total: 731,
+    subsections: [
+      { key: "Definitions", titulo: "Definiciones", tituloEn: "Definitions", total: 306 },
+      { key: "Abbreviations", titulo: "Abreviaturas", tituloEn: "Abbreviations", total: 425 },
+    ],
+  },
   { num: 2, titulo: "Simbología y Lectura de Cartas", tituloEn: "NAVAID symbols, altitudes and speeds in the planview, Enroute / SID-STAR / Airport / Approach chart legends, EASA AIR OPS", total: 93 },
   { num: 3, titulo: "Señales y Marcas de Aeródromo", tituloEn: "Signs and Markings — United States and ICAO", total: 140 },
   { num: 4, titulo: "Radioayudas y Fundamentos de Radiocomunicación", tituloEn: "Frequency bands and allocation, airborne stations, ATC operations, range of radio transmission, Navigation Aids", total: 137 },

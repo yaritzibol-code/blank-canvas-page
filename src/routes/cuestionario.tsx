@@ -50,8 +50,8 @@ export const Route = createFileRoute("/cuestionario")({
   component: CuestionarioPage,
   validateSearch: (
     search: Record<string, unknown>,
-  ): { materias?: string; qty?: number; fuente?: string; banco?: "la"; fuentes?: string; modo?: "oficial" | "potenciado"; caps?: string; sinHeli?: boolean } => {
-    const out: { materias?: string; qty?: number; fuente?: string; banco?: "la"; fuentes?: string; modo?: "oficial" | "potenciado"; caps?: string; sinHeli?: boolean } = {};
+  ): { materias?: string; qty?: number; fuente?: string; banco?: "la"; fuentes?: string; modo?: "oficial" | "potenciado"; caps?: string; parts?: string; sinHeli?: boolean } => {
+    const out: { materias?: string; qty?: number; fuente?: string; banco?: "la"; fuentes?: string; modo?: "oficial" | "potenciado"; caps?: string; parts?: string; sinHeli?: boolean } = {};
     if (typeof search.materias === "string" && search.materias) out.materias = search.materias;
     // `fuente` acota el pool a un manual del curso de Línea Aérea (ATP, PHAK…).
     if (typeof search.fuente === "string" && search.fuente) out.fuente = search.fuente.toUpperCase();
@@ -62,6 +62,7 @@ export const Route = createFileRoute("/cuestionario")({
     // Puede llegar como número ("caps=1") si el navegador lo interpreta así.
     if (typeof search.caps === "string" && search.caps) out.caps = search.caps;
     else if (typeof search.caps === "number" && Number.isFinite(search.caps)) out.caps = String(search.caps);
+    if (typeof search.parts === "string" && search.parts) out.parts = search.parts;
     // `sinHeli` (ATP) deja fuera los reactivos de helicóptero; se acepta 1/"1"/"true".
     if (
       search.sinHeli === true ||
@@ -389,11 +390,17 @@ function CuestionarioPage() {
       const caps = search.caps
         ? search.caps.split(",").map((c: string) => Number(c.trim())).filter((n: number) => Number.isFinite(n))
         : [];
+      const parts = search.parts ? search.parts.split("|").filter(Boolean) : [];
       // `sinHeli` (casilla del selector ATP): fuera los reactivos de helicóptero.
       const all = getPublishedQuestions().filter(
         (q) =>
           q.fuente === search.fuente &&
-          (caps.length === 0 || caps.includes(Number(q.capitulo))) &&
+          (parts.length > 0
+            ? parts.some((part) => {
+                const [cap, section] = part.split(":");
+                return Number(cap) === Number(q.capitulo) && (!section || section === q.seccion);
+              })
+            : caps.length === 0 || caps.includes(Number(q.capitulo))) &&
           !(search.sinHeli && esPreguntaHelicoptero(q)),
       );
       fullPool = paid

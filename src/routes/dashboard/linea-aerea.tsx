@@ -409,7 +409,8 @@ export function ChapterPicker({
   onClose: () => void;
 }) {
   const navigate = useNavigate();
-  const [sel, setSel] = useState<Set<number>>(new Set());
+  /** `capítulo:sección` permite separar subdivisiones que comparten capítulo. */
+  const [sel, setSel] = useState<Set<string>>(new Set());
   const [qty, setQty] = useState<string>("50");
   const [customQty, setCustomQty] = useState("");
   /** Sin capítulos (guía oficial) solo se elige la cantidad de preguntas. */
@@ -427,7 +428,14 @@ export function ChapterPicker({
   const all = sel.size === 0;
   const disponibles = all
     ? totalBanco
-    : chapters.filter((c) => sel.has(c.num)).reduce((s, c) => s + c.total, 0);
+    : chapters.reduce((s, c) => {
+        if (c.subsections?.length) {
+          return s + c.subsections
+            .filter((sub) => sel.has(`${c.num}:${sub.key}`))
+            .reduce((subtotal, sub) => subtotal + sub.total, 0);
+        }
+        return s + (sel.has(String(c.num)) ? c.total : 0);
+      }, 0);
 
   /** Presets que caben en la selección actual (no ofrecer 50/100 si no hay). */
   const presets = ["10", "25", "50", "100"].filter((v) => parseInt(v, 10) <= disponibles);
@@ -443,21 +451,27 @@ export function ChapterPicker({
     return Math.min(parseInt(qtyActiva, 10), disponibles);
   })();
 
-  function toggle(num: number) {
+  function toggle(key: string) {
     setSel((prev) => {
       const next = new Set(prev);
-      if (next.has(num)) next.delete(num);
-      else next.add(num);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
       return next;
     });
   }
 
   function start() {
-    const caps = [...sel].sort((a, b) => a - b).join(",");
+    const selected = [...sel];
+    const caps = selected
+      .map((key) => Number(key.split(":")[0]))
+      .filter((num, index, nums) => Number.isFinite(num) && nums.indexOf(num) === index)
+      .sort((a, b) => a - b)
+      .join(",");
     const search: Record<string, string | number | boolean> = searchBase
       ? { ...searchBase }
       : { fuente: code };
     if (caps) search.caps = caps;
+    if (selected.some((key) => key.includes(":"))) search.parts = selected.sort().join("|");
     if (ofreceSinHeli && sinHeli) search.sinHeli = true;
     if (qtyNum > 0 && (qtyNum < disponibles || searchBase)) search.qty = qtyNum;
     void navigate({ to: "/cuestionario", search: search as never });
@@ -537,18 +551,32 @@ export function ChapterPicker({
         </button>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          {chapters.map((c) => {
-            const on = sel.has(c.num);
+          {chapters.flatMap((c) => {
+            const rows = c.subsections?.length
+              ? c.subsections.map((sub, index) => ({
+                  key: `${c.num}:${sub.key}`,
+                  label: `${unidad} ${c.num}${String.fromCharCode(65 + index)} · ${sub.titulo}`,
+                  detail: sub.tituloEn,
+                  total: sub.total,
+                }))
+              : [{
+                  key: String(c.num),
+                  label: `${unidad} ${c.num} · ${c.titulo}`,
+                  detail: c.detalle ?? c.tituloEn,
+                  total: c.total,
+                }];
+            return rows.map((row) => {
+            const on = sel.has(row.key);
             /* Capítulo del temario sin reactivos todavía: se ve, no se elige. */
-            const vacio = c.total === 0;
+            const vacio = row.total === 0;
             return (
               <button
                 className="fp-question-picker-option"
-                key={c.num}
+                key={row.key}
                 type="button"
                 aria-pressed={on}
                 disabled={vacio}
-                onClick={() => toggle(c.num)}
+                onClick={() => toggle(row.key)}
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -567,7 +595,7 @@ export function ChapterPicker({
                 }}
               >
                 <span style={{ fontWeight: 700 }}>
-                  {unidad} {c.num} · {c.titulo}
+                   {row.label}
                   <span
                     style={{
                       display: "block",
@@ -576,14 +604,15 @@ export function ChapterPicker({
                       fontSize: "0.76rem",
                     }}
                   >
-                    {c.detalle ?? c.tituloEn}
+                     {row.detail}
                   </span>
                 </span>
                 <span style={{ color: "#647DA0", fontSize: "0.78rem", whiteSpace: "nowrap" }}>
-                  {vacio ? "Sin preguntas aún" : `${c.total} preg.`}
+                   {vacio ? "Sin preguntas aún" : `${row.total} preg.`}
                 </span>
               </button>
             );
+          });
           })}
         </div>
           </>
