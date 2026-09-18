@@ -93,6 +93,21 @@ interface Question {
   capitulo?: number;
   capituloTitulo?: string;
   seccion?: string;
+  /** La estudiante escribe la respuesta (abreviaturas Jeppesen). */
+  abierta?: boolean;
+  /** Variantes que se dan por buenas en una pregunta escrita. */
+  aceptadas?: string[];
+}
+
+/** Normaliza una respuesta escrita: sin acentos, signos ni espacios de más. */
+function normalizar(s: string): string {
+  return s
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 interface YarisMsg {
