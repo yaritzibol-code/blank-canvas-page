@@ -1465,6 +1465,7 @@ export function BancoScreen({
   footer?: ReactNode;
 }) {
   const user = useSessionUser();
+  const userId = user?.id;
   const navigate = useNavigate();
   const [modal, setModal] = useState<"examen" | "aprendiendo" | null>(initialModal);
   const [upgrade, setUpgrade] = useState<{ feature: string; benefit?: string } | null>(null);
@@ -1477,9 +1478,9 @@ export function BancoScreen({
   // desincronizar el HTML del servidor.
   const [resumables, setResumables] = useState<ResumeEntry[]>([]);
   useEffect(() => {
-    if (!user) return;
-    setResumables(buildResumables(user.id, ac ? "ac" : la ? "la" : "ciaac"));
-  }, [user, la, ac]);
+    if (!userId) return;
+    setResumables(buildResumables(userId, ac ? "ac" : la ? "la" : "ciaac"));
+  }, [userId, la, ac]);
 
   const history: HistEntry[] = user
     ? [
