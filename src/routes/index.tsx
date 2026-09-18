@@ -325,13 +325,6 @@ function RutaCompleta() {
       href: "/modulos/linea-aerea",
     },
     {
-      icon: "doc",
-      t: "Manuales de aeronave",
-      d: "El avión que vas a volar, a base de preguntas: el 737 MAX por los 9 capítulos del FCOM, para type rating y entrevista técnica.",
-      chips: ["737 MAX", "9 capítulos FCOM", "Empieza gratis"],
-      href: "/modulos/manuales",
-    },
-    {
       icon: "chart",
       t: "Biblioteca y análisis",
       d: "100+ manuales de consulta y el análisis que conecta todo: tu avance por materia, tu radar de aptitudes y lo que te toca hoy.",

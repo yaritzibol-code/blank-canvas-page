@@ -1093,7 +1093,7 @@ export const RESPUESTAS_SEO: RespuestaSeo[] = [
     publicado: "2026-08-09",
   },
 
-  /* ─── Selección y aptitudes (spokes de /examen-compass y /estudiar-737-max) ─── */
+  /* ─── Selección y aptitudes (spokes de /examen-compass) ─── */
   {
     slug: "que-es-el-examen-compass-de-seleccion",
     pregunta: "¿Qué es el examen COMPASS de selección de pilotos?",
@@ -1219,7 +1219,7 @@ export const RESPUESTAS_SEO: RespuestaSeo[] = [
         h2: "El método: preguntas, no relectura",
         parrafos: [
           "Releer el FCOM completo es el plan que se siente productivo y rinde poco. Lo que la entrevista exige es recuperación rápida: que el límite, el flujo o el sistema salgan al primer intento. Eso se construye respondiendo cientos de reactivos con explicación, capítulo por capítulo, y reabriendo justo donde fallas.",
-          "Si tu convocatoria es de equipo Boeing, el banco del 737 MAX por capítulos del FCOM de FlightPath sigue exactamente esa lógica; para el conocimiento general, el banco CIAAC y las fuentes de línea aérea (ATP, PHAK, Jeppesen) cubren la base.",
+          "Para el conocimiento general, el banco CIAAC y las fuentes de línea aérea (ATP, PHAK y Jeppesen) permiten aplicar esa práctica de recuperación por temas.",
         ],
       },
       {
@@ -1241,7 +1241,6 @@ export const RESPUESTAS_SEO: RespuestaSeo[] = [
     ],
     relacionadas: ["que-es-el-examen-compass-de-seleccion", "requisitos-convocatoria-aeromexico"],
     paginas: [
-      { label: "Estudiar el 737 MAX por capítulos del FCOM", href: "/estudiar-737-max" },
       { label: "Fuentes del temario de línea aérea", href: "/linea-aerea" },
     ],
     categoria: "Selección y aptitudes",

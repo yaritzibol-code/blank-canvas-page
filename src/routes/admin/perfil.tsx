@@ -1336,7 +1336,6 @@ function AdminPerfilPage() {
           [
             { titulo: "CIAAC · materias", items: rutas.ciaac },
             { titulo: "Línea Aérea · manuales", items: rutas.lineaAerea },
-            { titulo: "Manuales de Aeronave", items: rutas.aeronave },
           ] as { titulo: string; items: RutaPerf[] }[]
         ).map((grupo) => (
           <div key={grupo.titulo} style={{ marginBottom: 14 }}>

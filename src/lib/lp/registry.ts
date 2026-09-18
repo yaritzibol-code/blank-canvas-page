@@ -6,7 +6,7 @@
  * import() dinámico de su contenido. El shell, la lección, la evaluación y la
  * cobertura son los mismos componentes para todas las rutas.
  *
- * Para agregar una ruta nueva: generar su content.ts (ver lp737/lpjepp),
+ * Para agregar una ruta nueva: generar su content.ts (ver lpjepp),
  * añadir su def aquí y listo — el hub /ruta y el selector la muestran solos.
  */
 import type { Lp737Course, Lp737Lesson, Lp737Meta, Lp737Module } from "@/lib/lp737/types";
@@ -68,77 +68,9 @@ export function fmtNum(value: number): string {
  * lecciones y su evaluación.
  */
 export const LP_PROXIMAMENTE =
-  "Las rutas de aprendizaje están en preparación. Estamos terminando de validar las lecciones y su evaluación antes de abrirlas; mientras tanto, tu banco CIAAC, Línea Aérea y Aeronaves siguen disponibles.";
+  "Las rutas de aprendizaje están en preparación. Estamos terminando de validar las lecciones y su evaluación antes de abrirlas; mientras tanto, tu banco CIAAC y Línea Aérea siguen disponibles.";
 
 export const LP_COURSES: LpCourseDef[] = [
-  {
-    slug: "737-max",
-    nombre: "737 MAX · FCOM Rev. 16",
-    sidebarLabel: "737 MAX · FCOM Rev. 16",
-    descripcion:
-      "El FCOM completo como ruta técnica: limitaciones, procedimientos, performance y sistemas, con preguntas creadas únicamente a partir de lo que acabas de estudiar.",
-    lessonCount: 265,
-    questionCount: 530,
-    moduleCount: 21,
-    temaPrefix: "lp737:",
-    actividadLabel: "Ruta 737",
-    hero: {
-      eyebrow: "FCOM Rev. 16 · Ruta completa",
-      title: "Comprende el 737 MAX",
-      accent: "sistema por sistema",
-      description:
-        "Una ruta técnica y digerible. Lees, conectas la lógica operacional y después respondes preguntas creadas únicamente a partir de lo que acabas de estudiar.",
-      meta: (m) => [
-        `${fmtNum(m.source_pages)} páginas`,
-        `${m.lesson_count} lecciones`,
-        `${m.question_count} preguntas derivadas`,
-      ],
-    },
-    dashboardStats: (m, percent, complete) => [
-      {
-        label: "Temas del manual",
-        value: fmtNum(m.topics_traced ?? 1915),
-        small: "Todos trazados",
-      },
-      { label: "Lecciones técnicas", value: String(m.lesson_count), small: "De principio a fin" },
-      { label: "Evaluaciones", value: String(m.question_count), small: "Desde las lecciones" },
-      { label: "Tu avance", value: `${percent}%`, small: `${complete} completadas` },
-    ],
-    yaris: {
-      strong: "No es suerte. Es preparación.",
-      p: "Primero entiende qué hace el sistema y por qué. Al final de cada lección compruebas el razonamiento; no memorizas preguntas sueltas.",
-    },
-    moduloEyebrow: (mod) => `Módulo ${mod.id} · Capítulo ${mod.chapter_code}`,
-    fuenteFooter: (lesson) =>
-      `FCOM ref. ${lesson.reference} · PDF ${lesson.source_pages[0]}–${lesson.source_pages[1]}`,
-    coverage: {
-      hero: {
-        eyebrow: "Trazabilidad completa",
-        title: "Cobertura del manual",
-        accent: "sin atajos",
-        description:
-          "Cada página del FCOM pertenece a una lección; cada lección declara su referencia y evalúa sólo lo que explica.",
-        meta: (m) => [
-          `${m.module_count} módulos`,
-          `${m.lesson_count} lecciones`,
-          `${fmtNum(m.topics_traced ?? 1915)} temas trazados`,
-        ],
-      },
-      resumen: (m) => [
-        { label: "Primera página", value: "1" },
-        { label: "Última página", value: fmtNum(m.source_pages) },
-        { label: "Huecos", value: "0" },
-        { label: "Preguntas externas", value: "0" },
-      ],
-      quality: {
-        eyebrow: "Regla de calidad",
-        title: "La evaluación nace después de explicar.",
-        p: "El contenido de esta ruta se compila exclusivamente desde los 21 módulos de lecciones validados. No existe conexión con ningún banco externo.",
-      },
-      conVisuales: false,
-    },
-    load: () => import("@/lib/lp737/content").then((m) => m.LP737_COURSE),
-  },
   {
     slug: "jeppesen",
     nombre: "Jeppesen · Interpretación de cartas",

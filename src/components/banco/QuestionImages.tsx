@@ -23,7 +23,6 @@ const BUCKETS: Record<string, string> = {
   JEPP: "jeppesen-images",
   ATP: "atp-images",
   LAOF: "e190-images",
-  B737MAX: "737-images",
 };
 
 const BUCKET_POR_DEFECTO = "jeppesen-images";

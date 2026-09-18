@@ -11,14 +11,13 @@ import {
   LpHeader,
 } from "@/components/lp/nav";
 import type { FPIconName } from "@/components/ui/fp-icon";
-import { LP_CATEGORIES, B737_CATEGORY, subjectLpCount } from "@/lib/lp/taxonomy";
+import { LP_CATEGORIES, subjectLpCount } from "@/lib/lp/taxonomy";
 import { useSessionUser, useStore } from "@/lib/store";
 import { getLpCompleted, subjectContinue } from "@/lib/store/lp-nav";
 
 export const CATEGORY_STYLE: Record<string, { icon: FPIconName; accent: string }> = {
   ciaac: { icon: "graduation", accent: "var(--primary)" },
   "linea-aerea": { icon: "plane", accent: "var(--fp-silver)" },
-  b737: { icon: "gauge", accent: "var(--fp-burgundy)" },
 };
 
 export const Route = createFileRoute("/dashboard/rutas/")({
@@ -119,15 +118,6 @@ function RutasIndex() {
             />
           );
         })}
-        <LpCategoryCard
-          to="/ruta/$curso"
-          params={{ curso: B737_CATEGORY.curso }}
-          title={B737_CATEGORY.titulo}
-          icon={CATEGORY_STYLE.b737.icon}
-          accent={CATEGORY_STYLE.b737.accent}
-          descripcion={B737_CATEGORY.descripcion}
-          meta="Ruta técnica"
-        />
       </LpGrid>
     </>
   );

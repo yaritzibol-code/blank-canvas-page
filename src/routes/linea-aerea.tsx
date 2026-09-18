@@ -171,9 +171,6 @@ function Fuentes() {
           En FlightPath practicas las cinco fuentes con un banco propio de más de 2,800 preguntas
           con explicación, mapeado al temario publicado, y simulacros cronometrados. ¿Tu meta
           incluye equipo Boeing? También puedes{" "}
-          <a href="/estudiar-737-max" className="font-semibold text-coral-700 hover:text-coral-600">
-            estudiar el 737 MAX por capítulos del FCOM
-          </a>
           .
         </p>
       </div>

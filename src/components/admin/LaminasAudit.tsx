@@ -25,7 +25,6 @@ const NOMBRE: Record<string, string> = {
   JEPP: "Jeppesen",
   PHAK: "PHAK",
   LAOF: "Embraer 190",
-  B737MAX: "Boeing 737 MAX",
   LEG: "Legislación",
   ANX10: "Anexo 10",
 };

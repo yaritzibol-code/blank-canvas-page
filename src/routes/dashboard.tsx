@@ -211,7 +211,6 @@ const NAV_SECTIONS: {
       // sección (tarjeta "Simulador CIAAC" dentro de CIAAC).
       { icon: "help", label: "CIAAC", path: "/dashboard/banco" },
       { icon: "plane", label: "Línea Aérea", path: "/dashboard/linea-aerea", nuevo: true },
-      { icon: "plane", label: "Aeronaves", path: "/dashboard/manuales", nuevo: true },
       { icon: "radio", label: "Inglés", path: "/dashboard/rtari", nuevo: true },
       { icon: "compass", label: "Aptitudes", path: "/dashboard/compass", nuevo: true },
       { icon: "clock", label: "Estudiemos Juntos", path: "/dashboard/estudiemos", locked: true },

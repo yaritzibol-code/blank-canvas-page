@@ -86,7 +86,7 @@ const CRITERIOS: { icon: IconName; titulo: string; detalle: string }[] = [
     icon: "compass",
     titulo: "La preparación completa en un lugar",
     detalle:
-      "La selección no es solo aptitud: en la misma cuenta practicas la entrevista en inglés (RTARI), el conocimiento técnico (banco CIAAC y fuentes de línea aérea) y los manuales de aeronave.",
+      "La selección no es solo aptitud: en la misma cuenta practicas la entrevista en inglés (RTARI), el conocimiento técnico (banco CIAAC y fuentes de línea aérea).",
   },
   {
     icon: "bolt",
