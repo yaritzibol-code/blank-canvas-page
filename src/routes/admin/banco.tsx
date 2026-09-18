@@ -34,14 +34,14 @@ import {
   type QuestionStatus,
   useQuestionBank,
 } from "@/lib/store";
-import { ALL_MANUAL_QUIZZES, capLabel, capituloNombre, chaptersFor } from "@/lib/store/linea-aerea-meta";
+import { LINEA_AEREA_QUIZZES, capLabel, capituloNombre, chaptersFor } from "@/lib/store/linea-aerea-meta";
 import { seccionesDe } from "@/lib/store/linea-aerea-temario";
 
 /** Nombre legible del manual ("ATP", "Jeppesen", "Handbook"...). */
 function fuenteLabel(code?: string): string {
   if (!code) return "";
   if (code === "LAOF") return "Guía oficial Línea Aérea";
-  return ALL_MANUAL_QUIZZES.find((q) => q.code === code)?.titulo ?? code;
+  return LINEA_AEREA_QUIZZES.find((q) => q.code === code)?.titulo ?? code;
 }
 
 /** Etiqueta de catálogo: "Jeppesen · Bloque 2 Simbología y Lectura de Cartas" o la materia CIAAC. */
@@ -134,7 +134,7 @@ function AdminBancoPage() {
   const fuentesEnBanco = [...new Set(questions.map((x) => x.fuente).filter(Boolean) as string[])].sort();
   const fuenteOpts = [
     ...fuentesEnBanco.map((code) => ({ value: code, label: `${fuenteLabel(code)} (${code})` })),
-    ...ALL_MANUAL_QUIZZES.filter((q) => !fuentesEnBanco.includes(q.code)).map((q) => ({ value: q.code, label: `${q.titulo} (${q.code})` })),
+    ...LINEA_AEREA_QUIZZES.filter((q) => !fuentesEnBanco.includes(q.code)).map((q) => ({ value: q.code, label: `${q.titulo} (${q.code})` })),
     ...(fuentesEnBanco.includes("LAOF") ? [] : [{ value: "LAOF", label: "Guía oficial Línea Aérea (LAOF)" }]),
   ];
 

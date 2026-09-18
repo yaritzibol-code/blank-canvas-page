@@ -3,12 +3,10 @@
  *
  * Réplica del modelo de los paquetes originales (completedLessons / answers /
  * consolidation) pero por usuario y por curso:
- * - Respuestas y consolidaciones viven en la colección `lp737_state`
- *   (nombre histórico: hoy guarda TODAS las rutas; una fila por usuario y
- *   curso, sincronizada a la nube en sync.ts). Las filas antiguas sin
- *   `courseId` pertenecen a la ruta 737.
+ * - Respuestas y consolidaciones viven en una colección compartida por curso,
+ *   sincronizada a la nube.
  * - Las lecciones completadas usan el sistema existente de Learning Paths
- *   (`tema_progress` con el prefijo de cada curso, p. ej. "lp737:"), así que
+ *   (`tema_progress` con el prefijo de cada curso), así que
  *   el avance alimenta gratis las estadísticas del perfil, del admin y la
  *   actividad reciente.
  */
@@ -20,7 +18,7 @@ import type {
   LpConsolidationTable,
 } from "@/lib/lp/course-types";
 
-const KEY = "lp737_state";
+const KEY = "learning_course_state";
 
 export interface LpConsolidationResult {
   /** true_false guarda `value`; sentence/table guardan `values`. */

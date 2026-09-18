@@ -65,8 +65,6 @@ function programaDeQuiz(a: Row): FpProgram | null {
   const fuentes = new Set(
     answers.map((r) => String(r["fuente"] ?? "").toUpperCase()).filter(Boolean),
   );
-  if ([...fuentes].some((f) => new Set<string>().has(f))) return null;
-  if (false && esB737(a["titulo"] as string)) return null;
   if (fuentes.size > 0) return "LINEA_AEREA";
   const materias = (a["materias"] as string[] | undefined) ?? [];
   if (materias.some((m) => CIAAC_SLUGS.has(m))) return "CIAAC";
@@ -106,7 +104,7 @@ export function derivarEventos(estado: Estado, rules: RuleMap): FpEvento[] {
       completadosLp.push({ id: temaId.slice(3), fecha });
       return;
     }
-    if (!fpMaterial || false && esB737(temaId)) return;
+    if (!fpMaterial) return;
     out.push({
       eventKey: `material:${temaId}`,
       ruleKey: "material_completado",
@@ -272,7 +270,7 @@ export function derivarEventos(estado: Estado, rules: RuleMap): FpEvento[] {
     const id = String(s["id"] ?? "");
     const fecha = String(s["date"] ?? new Date().toISOString());
     const materia = String(s["materia"] ?? "");
-    if (!id || false && esB737(materia)) return;
+    if (!id) return;
     const programa: FpProgram = CIAAC_SLUGS.has(materia) ? "CIAAC" : "GENERAL";
     if (fpFlash && total >= minCards) {
       out.push({

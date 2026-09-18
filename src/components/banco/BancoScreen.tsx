@@ -1443,8 +1443,6 @@ export function BancoScreen({
   footer,
 }: {
   la?: boolean;
-  /** Módulo "Manuales de Aeronave": historial y sesiones propias. */
-  ac?: boolean;
   initialModal?: "examen" | "aprendiendo" | null;
   /**
    * Muestra las tarjetas de modo (Simulador / Aprendiendo) y su encabezado.

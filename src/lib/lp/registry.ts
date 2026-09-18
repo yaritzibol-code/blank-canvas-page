@@ -38,9 +38,9 @@ export interface LpCourseDef {
   lessonCount: number;
   questionCount: number;
   moduleCount: number;
-  /** Prefijo en tema_progress ("lp737:") y courseId del estado de respuestas. */
+  /** Prefijo en tema_progress y courseId del estado de respuestas. */
   temaPrefix: string;
-  /** Prefijo del label de actividad ("Ruta 737 · <lección>"). */
+  /** Prefijo del label de actividad. */
   actividadLabel: string;
   hero: LpHeroCopy;
   dashboardStats: (m: LpMeta, percent: number, complete: number) => LpStatCard[];

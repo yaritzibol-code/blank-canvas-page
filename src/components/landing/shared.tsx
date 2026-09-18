@@ -822,7 +822,6 @@ export function Footer() {
                 { t: "Fuentes del temario — Línea Aérea", href: "/linea-aerea" },
                 { t: "Examen RTARI — entrevista en inglés", href: "/examen-rtari" },
                 { t: "Examen COMPASS — aptitudes de piloto", href: "/examen-compass" },
-                { t: "Estudiar el Boeing 737 MAX", href: "/estudiar-737-max" },
                 { t: "¿Cómo elegir plataforma?", href: "/mejor-plataforma-ciaac" },
                 { t: "AFAC (sitio oficial)", href: "https://www.gob.mx/afac", ext: true },
               ],

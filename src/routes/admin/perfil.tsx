@@ -1155,7 +1155,7 @@ function AdminPerfilPage() {
           ))}
         </div>
         {(() => {
-          const conDatos = [...rutas.ciaac, ...rutas.lineaAerea, ...rutas.aeronave].filter(
+          const conDatos = [...rutas.ciaac, ...rutas.lineaAerea].filter(
             (m) => m.avg !== null,
           );
           if (conDatos.length === 0) return null;
