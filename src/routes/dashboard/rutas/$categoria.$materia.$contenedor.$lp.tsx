@@ -1,6 +1,5 @@
 /**
- * Learning Path individual: contenedor navegable. El contenido educativo se
- * cargará después; aquí viven la posición en la secuencia, el estado y el
+ * Learning Path individual: contenido, posición en la secuencia, estado y
  * avance anterior/siguiente. La progresión se valida también aquí: si el
  * Learning Path todavía está bloqueado, la URL no lo abre.
  */
@@ -11,6 +10,7 @@ import {
   APPLICABLE_REGULATIONS_LP_ID,
   ApplicableRegulationsPath,
 } from "@/components/lp/ApplicableRegulationsPath";
+import { AtpLearningPath } from "@/components/lp/AtpLearningPath";
 import {
   LpActionBar,
   LpBreadcrumbs,
@@ -21,6 +21,7 @@ import {
   lpButtonStyle,
 } from "@/components/lp/nav";
 import { lpCategory, lpContainer, lpSubject } from "@/lib/lp/taxonomy";
+import { ATP_LEARNING_PATHS } from "@/lib/lp/atp-content.generated";
 import { useSessionUser, useStore } from "@/lib/store";
 import { completeLp, lpAccess, lpNeighbors, startLp, subjectProgress } from "@/lib/store/lp-nav";
 
@@ -111,6 +112,8 @@ function LearningPathPage() {
 
   const vecinos = estado?.vecinos;
   const completado = acceso?.status === "completado";
+  const atpDocument = ATP_LEARNING_PATHS[item.id];
+  const hasNativeContent = item.id === APPLICABLE_REGULATIONS_LP_ID || Boolean(atpDocument);
 
   const irA = (id: string) => {
     const [, mat, conte, slug] = id.split("/");
@@ -168,6 +171,14 @@ function LearningPathPage() {
             completed={completado}
             onComplete={() => completeLp(user.id, item, subject.titulo)}
           />
+        ) : atpDocument && user ? (
+          <AtpLearningPath
+            document={atpDocument}
+            userId={user.id}
+            lpId={item.id}
+            completed={completado}
+            onComplete={() => completeLp(user.id, item, subject.titulo)}
+          />
         ) : (
           <LpEmptyState
             icon="spark"
@@ -192,7 +203,7 @@ function LearningPathPage() {
         </div>
 
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
-          {item.id !== APPLICABLE_REGULATIONS_LP_ID && !completado && user && (
+          {!hasNativeContent && !completado && user && (
             <button
               type="button"
               onClick={() => completeLp(user.id, item, subject.titulo)}

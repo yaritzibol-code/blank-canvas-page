@@ -3605,11 +3605,6 @@
          "id": "linea-aerea/atp/chapter-1-regulations/part-135-regulations-16",
          "titulo": "Part 135 Regulations",
          "orden": 16
-        },
-        {
-         "id": "linea-aerea/atp/chapter-1-regulations/helicopter-regulations-17",
-         "titulo": "Helicopter Regulations",
-         "orden": 17
         }
        ]
       },
@@ -3724,11 +3719,6 @@
          "id": "linea-aerea/atp/chapter-3-aerodynamics/high-lift-devices-8",
          "titulo": "High-Lift Devices",
          "orden": 8
-        },
-        {
-         "id": "linea-aerea/atp/chapter-3-aerodynamics/helicopter-aerodynamics-9",
-         "titulo": "Helicopter Aerodynamics",
-         "orden": 9
         }
        ]
       },
