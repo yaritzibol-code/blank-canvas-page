@@ -166,7 +166,6 @@ export function QuizCard({
 }) {
   return (
     <div
-      className="fp-question-picker-backdrop"
       className={`fp-la-card${dark ? " fp-la-dark" : ""}`}
       style={{
         borderRadius: 20,
@@ -466,6 +465,7 @@ export function ChapterPicker({
 
   return (
     <div
+      className="fp-question-picker-backdrop"
       role="dialog"
       aria-modal="true"
       aria-label={`Elegir preguntas de ${nombre}`}
@@ -695,7 +695,6 @@ export function ChapterPicker({
 
         {/* Leyenda de Pathy */}
         <div
-          className="fp-question-picker-footer"
           style={{
             marginTop: 16,
             padding: "12px 14px",
@@ -713,6 +712,7 @@ export function ChapterPicker({
         </div>
 
         <div
+          className="fp-question-picker-footer"
           style={{
             display: "flex",
             gap: 10,
