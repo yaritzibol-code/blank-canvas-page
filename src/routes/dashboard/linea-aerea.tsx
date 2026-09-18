@@ -114,11 +114,21 @@ function LineaAereaHero() {
 
 const quizCardsCss = `
   .fp-la-card { transition: transform .25s cubic-bezier(.3,1,.4,1), box-shadow .25s ease; }
+  .fp-question-picker-backdrop { backdrop-filter: blur(6px); }
+  .fp-question-picker-option, .fp-question-picker-qty { transition: border-color .18s ease, background-color .18s ease, box-shadow .18s ease, transform .18s ease; }
+  .fp-question-picker-option:not(:disabled):hover, .fp-question-picker-qty:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(34,55,92,.08); }
+  .fp-question-picker-option:focus-visible, .fp-question-picker-qty:focus-visible, .fp-question-picker-action:focus-visible { outline: 3px solid rgba(90,134,203,.32); outline-offset: 2px; }
   @media (hover: hover) {
     .fp-la-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(26,26,46,0.18); }
     .fp-la-card.fp-la-dark:hover { box-shadow: 0 20px 48px rgba(26,26,46,0.4); }
   }
   .fp-la-card:active { transform: scale(.99); }
+  @media (max-width: 540px) {
+    .fp-question-picker-backdrop { padding: 10px !important; align-items: flex-end !important; }
+    .fp-question-picker-panel { width: 100% !important; max-height: calc(100dvh - 20px) !important; border-radius: 18px 18px 10px 10px !important; }
+    .fp-question-picker-scroll { padding: 22px 18px 10px !important; }
+    .fp-question-picker-footer { padding: 12px 18px max(16px, env(safe-area-inset-bottom)) !important; }
+  }
 `;
 
 /**
@@ -156,6 +166,7 @@ export function QuizCard({
 }) {
   return (
     <div
+      className="fp-question-picker-backdrop"
       className={`fp-la-card${dark ? " fp-la-dark" : ""}`}
       style={{
         borderRadius: 20,
@@ -464,7 +475,7 @@ export function ChapterPicker({
         inset: 0,
         /* Por encima del sidebar fijo (z-index 200) para no quedar tapado. */
         zIndex: 300,
-        background: "rgba(26,26,46,0.55)",
+        background: "rgba(26,26,46,0.62)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -472,6 +483,7 @@ export function ChapterPicker({
       }}
     >
       <div
+        className="fp-question-picker-panel"
         onClick={(e) => e.stopPropagation()}
         style={{
           background: "white",
@@ -484,10 +496,11 @@ export function ChapterPicker({
           overflow: "hidden",
           fontFamily: FONT,
           color: INK,
-          boxShadow: "0 30px 80px rgba(26,26,46,0.35)",
+          border: "1px solid rgba(242,220,219,0.92)",
+          boxShadow: "0 30px 80px rgba(26,26,46,0.38), 0 2px 8px rgba(34,55,92,0.08)",
         }}
       >
-        <div style={{ overflowY: "auto", padding: "26px 24px 8px", minHeight: 0 }}>
+        <div className="fp-question-picker-scroll" style={{ overflowY: "auto", padding: "26px 24px 8px", minHeight: 0 }}>
 
         <h3 style={{ fontFamily: DISPLAY, fontSize: "1.25rem", marginBottom: 6, lineHeight: 1.25 }}>
           {conCapitulos ? `${nombre} — elige ${capPalabra(code, 2)}` : nombre}
@@ -501,6 +514,7 @@ export function ChapterPicker({
         {conCapitulos && (
           <>
         <button
+          className="fp-question-picker-option"
 
           type="button"
           onClick={() => setSel(new Set())}
@@ -529,6 +543,7 @@ export function ChapterPicker({
             const vacio = c.total === 0;
             return (
               <button
+                className="fp-question-picker-option"
                 key={c.num}
                 type="button"
                 aria-pressed={on}
@@ -630,6 +645,7 @@ export function ChapterPicker({
               const label = v === "todas" ? "Todas" : v === "custom" ? "Personalizar" : v;
               return (
                 <button
+                  className="fp-question-picker-qty"
                   key={v}
                   type="button"
                   aria-pressed={on}
@@ -679,6 +695,7 @@ export function ChapterPicker({
 
         {/* Leyenda de Pathy */}
         <div
+          className="fp-question-picker-footer"
           style={{
             marginTop: 16,
             padding: "12px 14px",
@@ -708,6 +725,7 @@ export function ChapterPicker({
         >
 
           <button
+            className="fp-question-picker-action"
             type="button"
             onClick={onClose}
             style={{
@@ -726,6 +744,7 @@ export function ChapterPicker({
             Cancelar
           </button>
           <button
+            className="fp-question-picker-action"
             type="button"
             onClick={start}
             disabled={qtyNum < 1}

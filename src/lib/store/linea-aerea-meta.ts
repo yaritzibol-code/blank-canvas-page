@@ -76,7 +76,7 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
     descripcion: "Volumen II — procedimientos de comunicaciones aeronáuticas, por capítulos del Anexo.",
     materia: "comunicaciones",
     icon: "radio",
-    total: 50,
+    total: 352,
     fileUrl: "https://drive.google.com/file/d/1-m3KPCzA6lX7u4zO6_6TCAsJf_-VHyIB/preview",
   },
 ];
@@ -252,14 +252,14 @@ export const LEG_TOTAL = LEG_CHAPTERS.reduce((s, c) => s + c.total, 0);
  * banco actual reubicado por capítulo; los capítulos sin reactivos quedan en 0.
  */
 export const ANX10_CHAPTERS: AtpChapter[] = [
-  { num: 1, titulo: "Definiciones", tituloEn: "Definitions", total: 0 },
-  { num: 2, titulo: "Disposiciones administrativas del servicio internacional de telecomunicaciones aeronáuticas", tituloEn: "Administrative Provisions Relating to the International Aeronautical Telecommunication Service", total: 1 },
-  { num: 3, titulo: "Procedimientos generales del servicio internacional de telecomunicaciones aeronáuticas", tituloEn: "General Procedures for the International Aeronautical Telecommunication Service", total: 1 },
-  { num: 4, titulo: "Servicio fijo aeronáutico (AFS)", tituloEn: "Aeronautical Fixed Service (AFS)", total: 5 },
-  { num: 5, titulo: "Servicio móvil aeronáutico — comunicaciones orales", tituloEn: "Aeronautical Mobile Service — Voice Communications", total: 43 },
-  { num: 6, titulo: "Servicio de radionavegación aeronáutica", tituloEn: "Aeronautical Radio Navigation Service", total: 0 },
-  { num: 7, titulo: "Servicio de radiodifusión aeronáutica", tituloEn: "Aeronautical Broadcasting Service", total: 0 },
-  { num: 8, titulo: "Servicio móvil aeronáutico — comunicaciones por enlace de datos", tituloEn: "Aeronautical Mobile Service — Data Link Communications", total: 0 },
+  { num: 1, titulo: "Definiciones", tituloEn: "Definitions", total: 37 },
+  { num: 2, titulo: "Disposiciones administrativas del servicio internacional de telecomunicaciones aeronáuticas", tituloEn: "Administrative Provisions Relating to the International Aeronautical Telecommunication Service", total: 12 },
+  { num: 3, titulo: "Procedimientos generales del servicio internacional de telecomunicaciones aeronáuticas", tituloEn: "General Procedures for the International Aeronautical Telecommunication Service", total: 30 },
+  { num: 4, titulo: "Servicio fijo aeronáutico (AFS)", tituloEn: "Aeronautical Fixed Service (AFS)", total: 79 },
+  { num: 5, titulo: "Servicio móvil aeronáutico — comunicaciones orales", tituloEn: "Aeronautical Mobile Service — Voice Communications", total: 104 },
+  { num: 6, titulo: "Servicio de radionavegación aeronáutica", tituloEn: "Aeronautical Radio Navigation Service", total: 20 },
+  { num: 7, titulo: "Servicio de radiodifusión aeronáutica", tituloEn: "Aeronautical Broadcasting Service", total: 13 },
+  { num: 8, titulo: "Servicio móvil aeronáutico — comunicaciones por enlace de datos", tituloEn: "Aeronautical Mobile Service — Data Link Communications", total: 57 },
 ];
 
 export const ANX10_TOTAL = ANX10_CHAPTERS.reduce((s, c) => s + c.total, 0);
