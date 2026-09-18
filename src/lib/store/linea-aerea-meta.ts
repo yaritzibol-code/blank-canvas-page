@@ -66,7 +66,7 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
       "Legislación nacional e internacional por ordenamiento: Constitución, convenios, Ley de Aviación Civil y sus reglamentos, aduanas, LFT y circulares obligatorias.",
     materia: "legislacion",
     icon: "scale",
-    total: 80,
+    total: 371,
     fileUrl: "https://drive.google.com/file/d/1Eq5EDfzqnKDrGDjBQtZDK26QFKp6Gfj0/preview",
   },
 
