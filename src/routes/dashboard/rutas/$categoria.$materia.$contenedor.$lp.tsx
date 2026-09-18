@@ -25,6 +25,7 @@ import {
 } from "@/components/lp/nav";
 import { lpCategory, lpContainer, lpSubject } from "@/lib/lp/taxonomy";
 import { ATP_LEARNING_PATHS } from "@/lib/lp/atp-content.generated";
+import { ANNEX10_LEARNING_PATHS } from "@/lib/lp/annex10-content.generated";
 import { HANDBOOK_LEARNING_PATHS } from "@/lib/lp/handbook-content.generated";
 import { JEPPESEN_LEARNING_PATHS } from "@/lib/lp/jeppesen-content.generated";
 import { LEGISLATION_LEARNING_PATHS } from "@/lib/lp/legislation-content.generated";
@@ -122,16 +123,19 @@ function LearningPathPage() {
   const handbookDocument = HANDBOOK_LEARNING_PATHS[item.id];
   const jeppesenDocument = JEPPESEN_LEARNING_PATHS[item.id];
   const legislationDocument = LEGISLATION_LEARNING_PATHS[item.id];
+  const annex10Document = ANNEX10_LEARNING_PATHS[item.id];
   const isHandbook = subject.id === "linea-aerea/handbook";
   const isJeppesen = subject.id === "linea-aerea/jeppesen";
   const isLegislation = subject.id === "linea-aerea/legislacion";
-  const isNativeSubject = isHandbook || isJeppesen || isLegislation;
+  const isAnnex10 = subject.id === "linea-aerea/anexo-10-volumen-ii";
+  const isNativeSubject = isHandbook || isJeppesen || isLegislation || isAnnex10;
   const hasNativeContent =
     item.id === APPLICABLE_REGULATIONS_LP_ID ||
     Boolean(atpDocument) ||
     Boolean(handbookDocument) ||
     Boolean(jeppesenDocument) ||
-    Boolean(legislationDocument);
+    Boolean(legislationDocument) ||
+    Boolean(annex10Document);
 
   const irA = (id: string) => {
     const [, mat, conte, slug] = id.split("/");
@@ -216,6 +220,14 @@ function LearningPathPage() {
         ) : legislationDocument && user ? (
           <LegislationLearningPath
             document={legislationDocument}
+            userId={user.id}
+            lpId={item.id}
+            completed={completado}
+            onComplete={() => completeLp(user.id, item, subject.titulo)}
+          />
+        ) : annex10Document && user ? (
+          <LegislationLearningPath
+            document={annex10Document}
             userId={user.id}
             lpId={item.id}
             completed={completado}

@@ -24,6 +24,7 @@ export interface LegislationStep {
   timeline?: boolean;
   annex?: number[];
   challenge?: number;
+  figure?: { src: string; alt: string };
 }
 
 export interface LegislationCourse {
