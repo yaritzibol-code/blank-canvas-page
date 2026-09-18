@@ -11,6 +11,8 @@ import {
   ApplicableRegulationsPath,
 } from "@/components/lp/ApplicableRegulationsPath";
 import { AtpLearningPath } from "@/components/lp/AtpLearningPath";
+import { HandbookLearningPath } from "@/components/lp/HandbookLearningPath";
+import { JeppesenLearningPath } from "@/components/lp/JeppesenLearningPath";
 import {
   LpActionBar,
   LpBreadcrumbs,
@@ -22,6 +24,8 @@ import {
 } from "@/components/lp/nav";
 import { lpCategory, lpContainer, lpSubject } from "@/lib/lp/taxonomy";
 import { ATP_LEARNING_PATHS } from "@/lib/lp/atp-content.generated";
+import { HANDBOOK_LEARNING_PATHS } from "@/lib/lp/handbook-content.generated";
+import { JEPPESEN_LEARNING_PATHS } from "@/lib/lp/jeppesen-content.generated";
 import { useSessionUser, useStore } from "@/lib/store";
 import { completeLp, lpAccess, lpNeighbors, startLp, subjectProgress } from "@/lib/store/lp-nav";
 
@@ -113,7 +117,16 @@ function LearningPathPage() {
   const vecinos = estado?.vecinos;
   const completado = acceso?.status === "completado";
   const atpDocument = ATP_LEARNING_PATHS[item.id];
-  const hasNativeContent = item.id === APPLICABLE_REGULATIONS_LP_ID || Boolean(atpDocument);
+  const handbookDocument = HANDBOOK_LEARNING_PATHS[item.id];
+  const jeppesenDocument = JEPPESEN_LEARNING_PATHS[item.id];
+  const isHandbook = subject.id === "linea-aerea/handbook";
+  const isJeppesen = subject.id === "linea-aerea/jeppesen";
+  const isNativeSubject = isHandbook || isJeppesen;
+  const hasNativeContent =
+    item.id === APPLICABLE_REGULATIONS_LP_ID ||
+    Boolean(atpDocument) ||
+    Boolean(handbookDocument) ||
+    Boolean(jeppesenDocument);
 
   const irA = (id: string) => {
     const [, mat, conte, slug] = id.split("/");
@@ -179,11 +192,31 @@ function LearningPathPage() {
             completed={completado}
             onComplete={() => completeLp(user.id, item, subject.titulo)}
           />
+        ) : handbookDocument && user ? (
+          <HandbookLearningPath
+            document={handbookDocument}
+            userId={user.id}
+            lpId={item.id}
+            completed={completado}
+            onComplete={() => completeLp(user.id, item, subject.titulo)}
+          />
+        ) : jeppesenDocument && user ? (
+          <JeppesenLearningPath
+            document={jeppesenDocument}
+            userId={user.id}
+            lpId={item.id}
+            completed={completado}
+            onComplete={() => completeLp(user.id, item, subject.titulo)}
+          />
         ) : (
           <LpEmptyState
             icon="spark"
             title="Contenido en preparación"
-            description={`Este learning path ya está creado dentro de la secuencia de ${cont.titulo}. Su material de estudio se cargará aquí.`}
+            description={
+              isNativeSubject
+                ? `Falta el HTML fuente de “${item.titulo}”. Este tema permanece bloqueado dentro de la secuencia hasta integrar su recorrido nativo.`
+                : `Este learning path ya está creado dentro de la secuencia de ${cont.titulo}. Su material de estudio se cargará aquí.`
+            }
           />
         )}
       </div>
@@ -203,7 +236,7 @@ function LearningPathPage() {
         </div>
 
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
-          {!hasNativeContent && !completado && user && (
+          {!hasNativeContent && !isNativeSubject && !completado && user && (
             <button
               type="button"
               onClick={() => completeLp(user.id, item, subject.titulo)}
