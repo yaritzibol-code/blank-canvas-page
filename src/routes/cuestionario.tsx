@@ -59,7 +59,9 @@ export const Route = createFileRoute("/cuestionario")({
     if (search.banco === "la") out.banco = "la";
     if (typeof search.fuentes === "string" && search.fuentes) out.fuentes = search.fuentes.toUpperCase();
     // `caps` acota el banco ATP a ciertos capítulos ("1,3,8"); vacío = todos.
+    // Puede llegar como número ("caps=1") si el navegador lo interpreta así.
     if (typeof search.caps === "string" && search.caps) out.caps = search.caps;
+    else if (typeof search.caps === "number" && Number.isFinite(search.caps)) out.caps = String(search.caps);
     // `sinHeli` (ATP) deja fuera los reactivos de helicóptero; se acepta 1/"1"/"true".
     if (
       search.sinHeli === true ||
