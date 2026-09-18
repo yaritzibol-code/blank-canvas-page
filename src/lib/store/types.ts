@@ -107,6 +107,14 @@ export interface BankQuestion {
    */
   imagenes?: string[];
   text: string;
+  /**
+   * `abierta` = la estudiante escribe la respuesta (glosario de abreviaturas
+   * Jeppesen). En ese caso `options` trae solo la respuesta modelo y
+   * `aceptadas` las variantes que se dan por buenas.
+   */
+  tipo?: "abierta";
+  /** Variantes válidas de una pregunta de respuesta escrita. */
+  aceptadas?: string[];
   options: string[];
   correctIndex: number;
   explanation: string;

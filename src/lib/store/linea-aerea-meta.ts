@@ -56,7 +56,7 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
       "General Airway Manual — los 8 bloques del temario: definiciones, cartas, señales, radioayudas, procedimientos, marco OACI, PBN y emergencias.",
     materia: "navegacion",
     icon: "map",
-    total: 644,
+    total: 1543,
     fileUrl: "https://drive.google.com/file/d/1NdiWKEH7vqMqW5Zst_UDyAHnu5IxJMGx/preview",
   },
   {
@@ -176,14 +176,14 @@ export function esPreguntaHelicoptero(
  * temario nuevo y arrancan sin reactivos.
  */
 export const JEPP_CHAPTERS: AtpChapter[] = [
-  { num: 1, titulo: "Lenguaje Jeppesen: Definiciones y Abreviaturas", tituloEn: "Definitions and Abbreviations", total: 150 },
-  { num: 2, titulo: "Simbología y Lectura de Cartas", tituloEn: "NAVAID symbols, altitudes and speeds in the planview, Enroute / SID-STAR / Airport / Approach chart legends, EASA AIR OPS", total: 244 },
-  { num: 3, titulo: "Señales y Marcas de Aeródromo", tituloEn: "Signs and Markings — United States and ICAO", total: 250 },
-  { num: 4, titulo: "Radioayudas y Fundamentos de Radiocomunicación", tituloEn: "Frequency bands and allocation, airborne stations, ATC operations, range of radio transmission, Navigation Aids", total: 0 },
-  { num: 5, titulo: "Procedimientos de Vuelo", tituloEn: "Departure, en-route, arrival, approach and holding procedures; altimeter setting, SSR, noise abatement, Mach number technique", total: 0 },
-  { num: 6, titulo: "Marco Normativo ICAO y Gestión del Tránsito Aéreo", tituloEn: "Annex 2, Annex 11, Annex 10, Air Traffic Management (Doc 4444) and its appendices", total: 0 },
-  { num: 7, titulo: "PBN, Vigilancia y Enlace de Datos", tituloEn: "Performance-Based Navigation and RNAV, surveillance systems, PBCS (Doc 9869), CPDLC", total: 0 },
-  { num: 8, titulo: "Emergencias y Contingencias", tituloEn: "Distress and urgency, unlawful interference, emergency descent, communication failure, interception, SAR, fuel emergencies", total: 0 },
+  { num: 1, titulo: "Lenguaje Jeppesen: Definiciones y Abreviaturas", tituloEn: "Definitions and Abbreviations", total: 731 },
+  { num: 2, titulo: "Simbología y Lectura de Cartas", tituloEn: "NAVAID symbols, altitudes and speeds in the planview, Enroute / SID-STAR / Airport / Approach chart legends, EASA AIR OPS", total: 93 },
+  { num: 3, titulo: "Señales y Marcas de Aeródromo", tituloEn: "Signs and Markings — United States and ICAO", total: 140 },
+  { num: 4, titulo: "Radioayudas y Fundamentos de Radiocomunicación", tituloEn: "Frequency bands and allocation, airborne stations, ATC operations, range of radio transmission, Navigation Aids", total: 137 },
+  { num: 5, titulo: "Procedimientos de Vuelo", tituloEn: "Departure, en-route, arrival, approach and holding procedures; altimeter setting, SSR, noise abatement, Mach number technique", total: 203 },
+  { num: 6, titulo: "Marco Normativo ICAO y Gestión del Tránsito Aéreo", tituloEn: "Annex 2, Annex 11, Annex 10, Air Traffic Management (Doc 4444) and its appendices", total: 101 },
+  { num: 7, titulo: "PBN, Vigilancia y Enlace de Datos", tituloEn: "Performance-Based Navigation and RNAV, surveillance systems, PBCS (Doc 9869), CPDLC", total: 73 },
+  { num: 8, titulo: "Emergencias y Contingencias", tituloEn: "Distress and urgency, unlawful interference, emergency descent, communication failure, interception, SAR, fuel emergencies", total: 65 },
 ];
 
 export const JEPP_TOTAL = JEPP_CHAPTERS.reduce((s, c) => s + c.total, 0);

@@ -59,7 +59,9 @@ export const Route = createFileRoute("/cuestionario")({
     if (search.banco === "la") out.banco = "la";
     if (typeof search.fuentes === "string" && search.fuentes) out.fuentes = search.fuentes.toUpperCase();
     // `caps` acota el banco ATP a ciertos capítulos ("1,3,8"); vacío = todos.
+    // Puede llegar como número ("caps=1") si el navegador lo interpreta así.
     if (typeof search.caps === "string" && search.caps) out.caps = search.caps;
+    else if (typeof search.caps === "number" && Number.isFinite(search.caps)) out.caps = String(search.caps);
     // `sinHeli` (ATP) deja fuera los reactivos de helicóptero; se acepta 1/"1"/"true".
     if (
       search.sinHeli === true ||
@@ -93,6 +95,21 @@ interface Question {
   capitulo?: number;
   capituloTitulo?: string;
   seccion?: string;
+  /** La estudiante escribe la respuesta (abreviaturas Jeppesen). */
+  abierta?: boolean;
+  /** Variantes que se dan por buenas en una pregunta escrita. */
+  aceptadas?: string[];
+}
+
+/** Normaliza una respuesta escrita: sin acentos, signos ni espacios de más. */
+function normalizar(s: string): string {
+  return s
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 interface YarisMsg {
@@ -164,6 +181,8 @@ function toLocalQ(q: BankQuestion): Question {
     capitulo: q.capitulo,
     capituloTitulo: q.capituloTitulo,
     seccion: q.seccion,
+    abierta: q.tipo === "abierta",
+    aceptadas: q.aceptadas,
     options: q.options.map((text, i) => ({ text, correct: i === q.correctIndex })),
     feedback: {
       correct: `¡Correcto! ${q.explanation}`,
@@ -276,6 +295,8 @@ function CuestionarioPage() {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [answered, setAnswered] = useState(false);
+  /** Texto escrito en las preguntas de respuesta abierta. */
+  const [openInput, setOpenInput] = useState("");
   const [results, setResults] = useState<(boolean | null)[]>([]);
   /** Opción elegida por pregunta (para el informe real de Pathy). */
   const [picks, setPicks] = useState<(number | null)[]>([]);
@@ -569,6 +590,38 @@ function CuestionarioPage() {
     });
   }
 
+  /**
+   * Respuesta escrita (abreviaturas Jeppesen): se compara sin acentos ni
+   * signos contra la respuesta modelo y sus variantes aceptadas.
+   */
+  function handleOpenSubmit() {
+    if (answered) return;
+    const q = questions[currentIdx];
+    const escrito = normalizar(openInput);
+    if (!escrito) return;
+    if (fuenteGratis && user && !isPaid(user)) {
+      if (!hasFreeLeft(user, "preguntas")) {
+        setUpgradeFeature("preguntas");
+        setUpgradeOpen(true);
+        return;
+      }
+      consumeFree(user, "preguntas");
+    }
+    const validas = [...(q.aceptadas ?? []), ...q.options.map((o) => o.text)].map(normalizar);
+    const isCorrect = validas.some((v) => v === escrito);
+    setSelectedIdx(isCorrect ? q.correctIndex : -1);
+    setAnswered(true);
+    lastAnsweredRef.current = currentIdx;
+    const newResults = [...results];
+    newResults[currentIdx] = isCorrect;
+    setResults(newResults);
+    setPicks((prev) => {
+      const next = [...prev];
+      next[currentIdx] = isCorrect ? q.correctIndex : -1;
+      return next;
+    });
+  }
+
   function handleNext() {
     if (currentIdx + 1 >= total) {
       setShowResult(true);
@@ -577,6 +630,7 @@ function CuestionarioPage() {
     setCurrentIdx(currentIdx + 1);
     setSelectedIdx(null);
     setAnswered(false);
+    setOpenInput("");
   }
 
   function handleRestart() {
@@ -587,6 +641,7 @@ function CuestionarioPage() {
     setCurrentIdx(0);
     setSelectedIdx(null);
     setAnswered(false);
+    setOpenInput("");
     setShowResult(false);
     setStartTime(Date.now());
     setElapsedMin(0);
@@ -879,7 +934,9 @@ function CuestionarioPage() {
   }
 
   const currentQ = questions[currentIdx];
-  const answeredCorrectly = answered && selectedIdx !== null && currentQ.options[selectedIdx].correct;
+  const answeredCorrectly = currentQ.abierta
+    ? answered && results[currentIdx] === true
+    : answered && selectedIdx !== null && !!currentQ.options[selectedIdx]?.correct;
   /** Yaris guía sin revelar mientras no haya respuesta elegida. */
   const thinkMode = !answered;
   const scorePercent = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
@@ -1105,7 +1162,51 @@ function CuestionarioPage() {
 
 
 
-            {/* Options — botones reales: foco por teclado y toque ≥48px */}
+            {currentQ.abierta ? (
+              /* Respuesta escrita: el glosario de abreviaturas se contesta a mano. */
+              <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
+                <label htmlFor="respuesta-abierta" style={{ fontSize: "0.82rem", color: "#647DA0", fontWeight: 600 }}>
+                  Escribe tu respuesta
+                </label>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                  <input
+                    id="respuesta-abierta"
+                    type="text"
+                    value={openInput}
+                    disabled={answered}
+                    autoComplete="off"
+                    onChange={(e) => setOpenInput(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === "Enter") handleOpenSubmit(); }}
+                    placeholder="Tu respuesta…"
+                    style={{
+                      flex: "1 1 240px", minHeight: 56, padding: "14px 18px",
+                      borderRadius: 12, border: "2px solid #F2DCDB", background: "#f8f9ff",
+                      font: "inherit", fontSize: "0.95rem", color: "#22375C",
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleOpenSubmit}
+                    disabled={answered || openInput.trim().length === 0}
+                    style={{
+                      minHeight: 56, padding: "14px 22px", borderRadius: 12, border: "none",
+                      background: answered || openInput.trim().length === 0 ? "#B9C6DA" : "#6C0820",
+                      color: "white", fontWeight: 700, fontSize: "0.9rem",
+                      cursor: answered || openInput.trim().length === 0 ? "default" : "pointer",
+                      fontFamily: "'Manrope', sans-serif",
+                    }}
+                  >
+                    Revisar
+                  </button>
+                </div>
+                {answered && (
+                  <p style={{ fontSize: "0.88rem", color: "#22375C", margin: 0 }}>
+                    Respuesta correcta: <strong>{currentQ.options[currentQ.correctIndex]?.text}</strong>
+                  </p>
+                )}
+              </div>
+            ) : (
+            /* Options — botones reales: foco por teclado y toque ≥48px */
             <div role="group" aria-label="Opciones de respuesta" style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
               {currentQ.options.map((opt, i) => (
                 <button
@@ -1161,6 +1262,7 @@ function CuestionarioPage() {
                 </button>
               ))}
             </div>
+            )}
 
 
             {/* Feedback card */}
