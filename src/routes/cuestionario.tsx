@@ -932,7 +932,9 @@ function CuestionarioPage() {
   }
 
   const currentQ = questions[currentIdx];
-  const answeredCorrectly = answered && selectedIdx !== null && currentQ.options[selectedIdx].correct;
+  const answeredCorrectly = currentQ.abierta
+    ? answered && results[currentIdx] === true
+    : answered && selectedIdx !== null && !!currentQ.options[selectedIdx]?.correct;
   /** Yaris guía sin revelar mientras no haya respuesta elegida. */
   const thinkMode = !answered;
   const scorePercent = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
