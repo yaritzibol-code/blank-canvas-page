@@ -6294,6 +6294,3282 @@ export const LEGISLATION_LEARNING_PATHS: Record<string, LegislationCourse> = {
         },
       ],
     },
+  "linea-aerea/legislacion/ley-federal-del-trabajo/jornada-de-trabajo-arts-60-a-67-1": {
+    id: "lft-01",
+    folder: "01_Jornada_de_Trabajo",
+    name: "Jornada de trabajo",
+    subtitle: "Artículos 60 a 67",
+    year: "Ley Federal del Trabajo",
+    word: "Artículos 60 a 67",
+    sources: ["ART. 60", "ART. 61", "ART. 62", "ART. 63–64", "ART. 65 y 67", "ART. 66"],
+    steps: [
+      {
+        label: "01 · DESPEGUE",
+        title: "Jornada de trabajoTipos, duración, descansos y prolongaciones",
+        body: "Distinguir las jornadas y aplicar correctamente sus límites, descansos y formas de pago.",
+        guide: "Hola, soy Mini Yaris. Toca las tres cajas para conocer tu plan de vuelo.",
+        cards: [
+          ["Alcance", "Paso 1AlcanceSolo artículos 60–67.Tócame para descubrir"],
+          ["Fuente", "Paso 2FuenteLFT vigente al 14-05-2026.Tócame para descubrir"],
+          [
+            "Meta",
+            "Paso 3MetaDistinguir las jornadas y aplicar correctamente sus límites, descansos y formas de pago.Tócame para descubrir",
+          ],
+        ],
+        hero: true,
+      },
+      {
+        label: "02 · ENTIENDE",
+        title: "Primero la ley.Después, en palabras simples.",
+        body: "Cada tarjeta separa el contenido normativo de la explicación para estudiar.",
+        guide: "Marca cada tarjeta después de leer la ley y su explicación.",
+        cards: [
+          [
+            "ART. 60",
+            "ART. 60LO QUE DICE LA LEY“Jornada diurna” comprende de las 06:00 a las 20:00; la nocturna, de las 20:00 a las 06:00. La mixta combina ambas y solo conserva esa clasificación si el periodo nocturno es menor de 3½ horas.En palabras simplesSi la parte nocturna llega a tres horas y media o más, la jornada completa se considera nocturna.",
+          ],
+          [
+            "ART. 61",
+            "ART. 61LO QUE DICE LA LEYLa duración diaria es de 8 horas para la diurna, 7 horas para la nocturna y 7½ horas para la mixta.En palabras simplesEl límite depende de la clasificación de la jornada. Estos valores corresponden al texto reformado el 1 de mayo de 2026.",
+          ],
+          [
+            "ART. 62",
+            "ART. 62LO QUE DICE LA LEYPara fijar la jornada debe observarse una remisión al artículo 5o., fracción III.En palabras simplesLa remisión existe, pero su contenido externo no se desarrolla ni se evalúa en este Learning Path.",
+          ],
+          [
+            "ART. 63–64",
+            "ART. 63–64LO QUE DICE LA LEYEn jornada continua debe existir un descanso de media hora por lo menos. Si la persona no puede salir del lugar de trabajo durante reposo o comida, ese lapso se computa como tiempo efectivo.En palabras simplesUna regla concede el descanso; la otra determina cuándo ese tiempo cuenta dentro de la jornada. No son el mismo concepto.",
+          ],
+          [
+            "ART. 65 y 67",
+            "ART. 65 y 67LO QUE DICE LA LEYAnte siniestro o riesgo inminente, la jornada puede prolongarse solo por el tiempo estrictamente indispensable. Esas horas se pagan con una cantidad igual a la hora ordinaria.En palabras simplesEs una respuesta a un peligro concreto, no tiempo extraordinario por una necesidad ordinaria del servicio.",
+          ],
+          [
+            "ART. 66",
+            "ART. 66LO QUE DICE LA LEYPor circunstancias extraordinarias puede prolongarse la jornada. Se paga 100% más que la hora ordinaria y no puede exceder 12 horas semanales, distribuidas hasta en 4 horas diarias durante un máximo de 4 días.En palabras simplesUna hora extraordinaria de este supuesto equivale al salario ordinario más otro 100%.",
+          ],
+        ],
+      },
+      {
+        label: "03 · RELACIONA",
+        title: "Mira cómo encajanlas reglas entre sí.",
+        body: "03 · RELACIONAMira cómo encajanlas reglas entre sí.El visual conserva el significado legal sin añadir límites ni criterios externos. 00:0006:0020:0024:00 NOCTURNADIURNANOC. DIURNA8 h06:00–20:00 NOCTURNA7 h20:00–06:00 MIXTA7½ hNocturno menor de 3½ h SINIESTRO / RIESGOSolo lo indispensableSe paga igual que una hora ordinaria.CIRCUNSTANCIAS EXTRAORDINARIAS12 h por semanaHasta 4 h diarias, máximo 4 días; se paga 100% más.",
+        guide: "Activa las tres claves bajo el visual para completar la relación.",
+        cards: [
+          ["CLAVE 01", "CLAVE 01Diurna, nocturna y mixta"],
+          ["CLAVE 02", "CLAVE 02Duración diaria"],
+          ["CLAVE 03", "CLAVE 03Pago de la prolongación del artículo 65"],
+        ],
+      },
+      {
+        label: "04 · SÍ DICE / NO DICE",
+        title: "Separa la reglade la afirmación engañosa.",
+        body: "Piensa tu respuesta antes de revelar el fundamento.",
+        guide: "Decide primero; luego revela cada veredicto.",
+        cards: [
+          [
+            "Una jornada con 3 horas y 30 minutos nocturnos sigue siendo mixta.",
+            "NO DICE · Art. 60Con tres horas y media o más de periodo nocturno se reputa jornada nocturna.",
+          ],
+          [
+            "En una jornada continua debe concederse por lo menos media hora de descanso.",
+            "SÍ DICE · Art. 63Ese es el mínimo literal establecido.",
+          ],
+          [
+            "Si el trabajador no puede salir durante la comida, ese tiempo no cuenta.",
+            "NO DICE · Art. 64En ese supuesto sí se computa como tiempo efectivo.",
+          ],
+          [
+            "Las horas por siniestro se pagan igual que cada hora ordinaria.",
+            "SÍ DICE · Arts. 65 y 67El artículo 67 fija esa retribución para el supuesto del 65.",
+          ],
+        ],
+      },
+      {
+        label: "05 · RECUERDA",
+        title: "Una imagen mentalpara recuperar la regla.",
+        body: "La nemotecnia nunca cambia una cifra, sujeto o condición.",
+        guide: "Toca las tres anclas para fijar la regla en memoria.",
+        cards: [
+          [
+            "Artículos 60–67",
+            "RANGOArtículos 60–67Este es el perímetro completo y evaluable del Learning Path.",
+          ],
+          [
+            "Ayuda de memoria",
+            "CLAVEAyuda de memoria6–20 / 20–6 ubica el día y la noche. Después recuerda 8–7–7½ para las duraciones. Para la mixta, la frontera es 3½: al alcanzarla, ya es nocturna.",
+          ],
+          [
+            "Art. 60",
+            "NO CONFUNDIRArt. 60Con tres horas y media o más de periodo nocturno se reputa jornada nocturna.",
+          ],
+        ],
+      },
+      {
+        label: "06 · PRACTICA",
+        title: "Recupera la reglasin volver a leer.",
+        body: "Responde primero. Comprueba después.",
+        guide: "Responde en voz alta antes de comprobar.",
+        recall: [
+          [
+            "Reconstruye de memoria los rangos de jornada diurna y nocturna.",
+            "Respuesta esperada: Diurna: 06:00–20:00. Nocturna: 20:00–06:00. Artículo 60.",
+          ],
+          [
+            "Explica sin ver la pantalla cuándo una jornada deja de ser mixta.",
+            "Respuesta esperada: Cuando el periodo nocturno comprende tres horas y media o más; entonces se reputa nocturna. Artículo 60.",
+          ],
+          [
+            "Compara pago y límite entre riesgo inminente y circunstancias extraordinarias.",
+            "Respuesta esperada: Riesgo: solo tiempo indispensable y pago igual a la hora ordinaria (65 y 67). Extraordinarias: 100% más, máximo 12 h semanales, hasta 4 h diarias en máximo 4 días (66).",
+          ],
+        ],
+      },
+      {
+        label: "07 · PONLO A PRUEBA",
+        title: "Decide conla ley vigente.",
+        body: "Cada escenario tiene tres opciones, una respuesta correcta y fundamento.",
+        guide: "Contesta todos los escenarios. La explicación aparece al elegir.",
+        questions: [
+          {
+            q: "Una jornada va de 18:00 a 01:00. ¿Cómo se clasifica? — Decide con la regla vigente y después revisa el fundamento.",
+            options: ["ADiurna", "BMixta", "CNocturna"],
+            answer: 2,
+            why: "Incluye cinco horas nocturnas; al ser 3½ o más, se reputa nocturna. Art. 60",
+            wrong: "Incluye cinco horas nocturnas; al ser 3½ o más, se reputa nocturna. Art. 60",
+            feedbacks: [
+              "Incluye cinco horas nocturnas; al ser 3½ o más, se reputa nocturna. Art. 60",
+              "Incluye cinco horas nocturnas; al ser 3½ o más, se reputa nocturna. Art. 60",
+              "Incluye cinco horas nocturnas; al ser 3½ o más, se reputa nocturna. Art. 60",
+            ],
+          },
+          {
+            q: "¿Cuál es la duración diaria máxima de la jornada mixta? — Decide con la regla vigente y después revisa el fundamento.",
+            options: ["A7 horas", "B7½ horas", "C8 horas"],
+            answer: 1,
+            why: "La jornada mixta tiene una duración diaria de siete horas y media. Art. 61",
+            wrong: "La jornada mixta tiene una duración diaria de siete horas y media. Art. 61",
+            feedbacks: [
+              "La jornada mixta tiene una duración diaria de siete horas y media. Art. 61",
+              "La jornada mixta tiene una duración diaria de siete horas y media. Art. 61",
+              "La jornada mixta tiene una duración diaria de siete horas y media. Art. 61",
+            ],
+          },
+          {
+            q: "Durante la comida, una persona no puede salir del centro de trabajo. ¿Qué ocurre con ese tiempo? — Decide con la regla vigente y después revisa el fundamento.",
+            options: [
+              "ACuenta como tiempo efectivo",
+              "BSe descuenta siempre",
+              "CSolo cuenta la mitad",
+            ],
+            answer: 0,
+            why: "La imposibilidad de salir hace que el lapso se compute como tiempo efectivo. Art. 64",
+            wrong:
+              "La imposibilidad de salir hace que el lapso se compute como tiempo efectivo. Art. 64",
+            feedbacks: [
+              "La imposibilidad de salir hace que el lapso se compute como tiempo efectivo. Art. 64",
+              "La imposibilidad de salir hace que el lapso se compute como tiempo efectivo. Art. 64",
+              "La imposibilidad de salir hace que el lapso se compute como tiempo efectivo. Art. 64",
+            ],
+          },
+          {
+            q: "Hay un riesgo inminente para la vida de compañeros. ¿Cuánto puede prolongarse la jornada? — Decide con la regla vigente y después revisa el fundamento.",
+            options: ["AHasta 4 horas", "BLo estrictamente indispensable", "CHasta 12 horas"],
+            answer: 1,
+            why: "El artículo no fija una cuota; limita la prolongación a lo indispensable para evitar el mal. Art. 65",
+            wrong:
+              "El artículo no fija una cuota; limita la prolongación a lo indispensable para evitar el mal. Art. 65",
+            feedbacks: [
+              "El artículo no fija una cuota; limita la prolongación a lo indispensable para evitar el mal. Art. 65",
+              "El artículo no fija una cuota; limita la prolongación a lo indispensable para evitar el mal. Art. 65",
+              "El artículo no fija una cuota; limita la prolongación a lo indispensable para evitar el mal. Art. 65",
+            ],
+          },
+          {
+            q: "En circunstancias extraordinarias, ¿cómo se paga cada hora? — Decide con la regla vigente y después revisa el fundamento.",
+            options: ["AIgual que la ordinaria", "B50% más", "C100% más"],
+            answer: 2,
+            why: "Se abona un cien por ciento más de lo fijado para las horas ordinarias. Art. 66",
+            wrong:
+              "Se abona un cien por ciento más de lo fijado para las horas ordinarias. Art. 66",
+            feedbacks: [
+              "Se abona un cien por ciento más de lo fijado para las horas ordinarias. Art. 66",
+              "Se abona un cien por ciento más de lo fijado para las horas ordinarias. Art. 66",
+              "Se abona un cien por ciento más de lo fijado para las horas ordinarias. Art. 66",
+            ],
+          },
+        ],
+      },
+      {
+        label: "08 · ATERRIZAJE",
+        title: "Si puedes explicarlo,ya puedes aplicarlo.",
+        body: "Cierra el recorrido con una comprobación honesta.",
+        guide: "Marca tres ideas que ya puedas explicar sin mirar.",
+        cards: [
+          ["Chequeo final", "Puedo explicar la regla central sin leer."],
+          ["Chequeo final", "Puedo distinguir el supuesto correcto de uno parecido."],
+          ["Chequeo final", "Puedo citar el artículo o fracción aplicable."],
+        ],
+        final: true,
+      },
+    ],
+  },
+  "linea-aerea/legislacion/ley-federal-del-trabajo/tripulaciones-ambito-y-organizacion-arts-215-a-219-2":
+    {
+      id: "lft-02",
+      folder: "02_Tripulaciones_Ambito_y_Organizacion",
+      name: "Tripulaciones: ámbito y organización",
+      subtitle: "Artículos 215 a 219",
+      year: "Ley Federal del Trabajo",
+      word: "Artículos 215 a 219",
+      sources: ["ART. 215", "ART. 216", "ART. 217", "ART. 218", "ART. 219"],
+      steps: [
+        {
+          label: "01 · DESPEGUE",
+          title:
+            "Tripulaciones: ámbito y organizaciónA quién aplica, qué ley rige y quién integra la tripulación",
+          body: "Identificar el ámbito laboral especial y separar miembros de tripulación de representantes del patrón.",
+          guide: "Hola, soy Mini Yaris. Toca las tres cajas para conocer tu plan de vuelo.",
+          cards: [
+            ["Alcance", "Paso 1AlcanceSolo artículos 215–219.Tócame para descubrir"],
+            ["Fuente", "Paso 2FuenteLFT vigente al 14-05-2026.Tócame para descubrir"],
+            [
+              "Meta",
+              "Paso 3MetaIdentificar el ámbito laboral especial y separar miembros de tripulación de representantes del patrón.Tócame para descubrir",
+            ],
+          ],
+          hero: true,
+        },
+        {
+          label: "02 · ENTIENDE",
+          title: "Primero la ley.Después, en palabras simples.",
+          body: "Cada tarjeta separa el contenido normativo de la explicación para estudiar.",
+          guide: "Marca cada tarjeta después de leer la ley y su explicación.",
+          cards: [
+            [
+              "ART. 215",
+              "ART. 215LO QUE DICE LA LEYEl capítulo aplica al trabajo de tripulaciones de aeronaves civiles con matrícula mexicana. Busca garantizar la seguridad de las operaciones y sus normas son irrenunciables en la medida correspondiente a ese propósito.En palabras simplesLa matrícula mexicana y el carácter civil de la aeronave delimitan este capítulo.",
+            ],
+            [
+              "ART. 216",
+              "ART. 216LO QUE DICE LA LEYLos tripulantes deben ser mexicanos por nacimiento que no adquieran otra nacionalidad y estar en pleno goce y ejercicio de sus derechos civiles y políticos.En palabras simplesNo se sustituye ni suaviza el requisito: se conserva exactamente la formulación vigente.",
+            ],
+            [
+              "ART. 217",
+              "ART. 217LO QUE DICE LA LEYEstas relaciones de trabajo se rigen por las leyes mexicanas, independientemente del lugar donde se presten los servicios.En palabras simplesPrestar servicios fuera de México no cambia la ley laboral indicada por este artículo.",
+            ],
+            [
+              "ART. 218",
+              "ART. 218LO QUE DICE LA LEYSon miembros: I. piloto al mando; II. oficiales con labores análogas; III. navegante; y IV. sobrecargos.En palabras simplesLa lista legal contiene cuatro categorías y no autoriza añadir otras por analogía pedagógica.",
+            ],
+            [
+              "ART. 219",
+              "ART. 219LO QUE DICE LA LEYSon representantes del patrón quienes desempeñen funciones de gerencia o superintendencia de vuelos, jefatura de adiestramiento o pilotos, instrucción, asesoría o funciones análogas.En palabras simplesEl criterio principal es la naturaleza de las funciones. Pueden figurar como pilotos al mando si reúnen los requisitos externos mencionados, que aquí no se desarrollan.",
+            ],
+          ],
+        },
+        {
+          label: "03 · RELACIONA",
+          title: "Mira cómo encajanlas reglas entre sí.",
+          body: "03 · RELACIONAMira cómo encajanlas reglas entre sí.El visual conserva el significado legal sin añadir límites ni criterios externos. TRIPULACIÓNaeronáuticaAeronave civilMatrícula mexicanaLeyes mexicanas IPiloto al mandoIIOficiales análogosIIINaveganteIVSobrecargos MIEMBRO DE TRIPULACIÓNArt. 218Integra la tripulación en una de las cuatro categorías legales.REPRESENTANTE DEL PATRÓNArt. 219Realiza funciones de operación, adiestramiento, jefatura, instrucción o asesoría.",
+          guide: "Activa las tres claves bajo el visual para completar la relación.",
+          cards: [
+            ["CLAVE 01", "CLAVE 01Ámbito, finalidad e irrenunciabilidad"],
+            ["CLAVE 02", "CLAVE 02Nacionalidad y derechos"],
+            ["CLAVE 03", "CLAVE 03Representantes del patrón"],
+          ],
+        },
+        {
+          label: "04 · SÍ DICE / NO DICE",
+          title: "Separa la reglade la afirmación engañosa.",
+          body: "Piensa tu respuesta antes de revelar el fundamento.",
+          guide: "Decide primero; luego revela cada veredicto.",
+          cards: [
+            [
+              "El capítulo se aplica expresamente a cualquier aeronave civil, sin importar su matrícula.",
+              "NO DICE · Art. 215El texto exige que ostente matrícula mexicana.",
+            ],
+            [
+              "Los servicios prestados fuera de México siguen regidos por leyes mexicanas.",
+              "SÍ DICE · Art. 217La ubicación del servicio no altera la ley indicada.",
+            ],
+            [
+              "El navegante está incluido entre los miembros de la tripulación.",
+              "SÍ DICE · Art. 218, fr. IIIEs una de las cuatro categorías enumeradas.",
+            ],
+            [
+              "Todo miembro de tripulación es automáticamente representante del patrón.",
+              "NO DICE · Arts. 218–219Son categorías distintas; la representación depende de las funciones listadas o análogas.",
+            ],
+          ],
+        },
+        {
+          label: "05 · RECUERDA",
+          title: "Una imagen mentalpara recuperar la regla.",
+          body: "La nemotecnia nunca cambia una cifra, sujeto o condición.",
+          guide: "Toca las tres anclas para fijar la regla en memoria.",
+          cards: [
+            [
+              "Artículos 215–219",
+              "RANGOArtículos 215–219Este es el perímetro completo y evaluable del Learning Path.",
+            ],
+            [
+              "Ayuda de memoria",
+              "CLAVEAyuda de memoria215–219 se lee como una secuencia: aplica → exige → rige → integra → representa.",
+            ],
+            ["Art. 215", "NO CONFUNDIRArt. 215El texto exige que ostente matrícula mexicana."],
+          ],
+        },
+        {
+          label: "06 · PRACTICA",
+          title: "Recupera la reglasin volver a leer.",
+          body: "Responde primero. Comprueba después.",
+          guide: "Responde en voz alta antes de comprobar.",
+          recall: [
+            [
+              "Enumera las dos condiciones del ámbito del artículo 215.",
+              "Respuesta esperada: Trabajo de tripulaciones de aeronaves civiles y que ostenten matrícula mexicana.",
+            ],
+            [
+              "Reconstruye las cuatro categorías del artículo 218.",
+              "Respuesta esperada: Piloto al mando; oficiales con labores análogas; navegante; sobrecargos.",
+            ],
+            [
+              "Explica la diferencia entre miembro de tripulación y representante del patrón.",
+              "Respuesta esperada: El artículo 218 enumera quién integra la tripulación; el 219 identifica representación patronal por la naturaleza de funciones de operación, jefatura, instrucción, asesoría o análogas.",
+            ],
+          ],
+        },
+        {
+          label: "07 · PONLO A PRUEBA",
+          title: "Decide conla ley vigente.",
+          body: "Cada escenario tiene tres opciones, una respuesta correcta y fundamento.",
+          guide: "Contesta todos los escenarios. La explicación aparece al elegir.",
+          questions: [
+            {
+              q: "¿A qué trabajo aplica el capítulo especial? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "ATripulaciones de aeronaves civiles con matrícula mexicana",
+                "BToda aeronave extranjera que llegue a México",
+                "CSolo aeronaves militares mexicanas",
+              ],
+              answer: 0,
+              why: "El ámbito literal combina aeronave civil y matrícula mexicana. Art. 215",
+              wrong: "El ámbito literal combina aeronave civil y matrícula mexicana. Art. 215",
+              feedbacks: [
+                "El ámbito literal combina aeronave civil y matrícula mexicana. Art. 215",
+                "El ámbito literal combina aeronave civil y matrícula mexicana. Art. 215",
+                "El ámbito literal combina aeronave civil y matrícula mexicana. Art. 215",
+              ],
+            },
+            {
+              q: "Una tripulación presta servicios fuera del país. ¿Qué leyes rigen la relación indicada? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "ALas del país de destino",
+                "BLas mexicanas",
+                "CLas que elija el comandante",
+              ],
+              answer: 1,
+              why: "Las leyes mexicanas rigen independientemente del lugar de prestación. Art. 217",
+              wrong:
+                "Las leyes mexicanas rigen independientemente del lugar de prestación. Art. 217",
+              feedbacks: [
+                "Las leyes mexicanas rigen independientemente del lugar de prestación. Art. 217",
+                "Las leyes mexicanas rigen independientemente del lugar de prestación. Art. 217",
+                "Las leyes mexicanas rigen independientemente del lugar de prestación. Art. 217",
+              ],
+            },
+            {
+              q: "¿Cuál aparece expresamente como miembro de la tripulación? — Decide con la regla vigente y después revisa el fundamento.",
+              options: ["AJefe de adiestramiento", "BSobrecargo", "CGerente de operación"],
+              answer: 1,
+              why: "El sobrecargo integra la lista; los otros cargos aparecen entre representantes del patrón. Art. 218, fr. IV",
+              wrong:
+                "El sobrecargo integra la lista; los otros cargos aparecen entre representantes del patrón. Art. 218, fr. IV",
+              feedbacks: [
+                "El sobrecargo integra la lista; los otros cargos aparecen entre representantes del patrón. Art. 218, fr. IV",
+                "El sobrecargo integra la lista; los otros cargos aparecen entre representantes del patrón. Art. 218, fr. IV",
+                "El sobrecargo integra la lista; los otros cargos aparecen entre representantes del patrón. Art. 218, fr. IV",
+              ],
+            },
+            {
+              q: "¿Qué criterio usa el artículo 219 para considerar representantes del patrón? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "ALa antigüedad",
+                "BLa naturaleza de sus funciones",
+                "CEl número de vuelos",
+              ],
+              answer: 1,
+              why: "La representación deriva de las funciones desempeñadas. Art. 219",
+              wrong: "La representación deriva de las funciones desempeñadas. Art. 219",
+              feedbacks: [
+                "La representación deriva de las funciones desempeñadas. Art. 219",
+                "La representación deriva de las funciones desempeñadas. Art. 219",
+                "La representación deriva de las funciones desempeñadas. Art. 219",
+              ],
+            },
+            {
+              q: "¿Qué finalidad especial menciona el artículo 215? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "ARegular tarifas",
+                "BGarantizar la seguridad de las operaciones",
+                "CAutorizar rutas internacionales",
+              ],
+              answer: 1,
+              why: "Esa es la finalidad laboral especial expresamente señalada. Art. 215",
+              wrong: "Esa es la finalidad laboral especial expresamente señalada. Art. 215",
+              feedbacks: [
+                "Esa es la finalidad laboral especial expresamente señalada. Art. 215",
+                "Esa es la finalidad laboral especial expresamente señalada. Art. 215",
+                "Esa es la finalidad laboral especial expresamente señalada. Art. 215",
+              ],
+            },
+          ],
+        },
+        {
+          label: "08 · ATERRIZAJE",
+          title: "Si puedes explicarlo,ya puedes aplicarlo.",
+          body: "Cierra el recorrido con una comprobación honesta.",
+          guide: "Marca tres ideas que ya puedas explicar sin mirar.",
+          cards: [
+            ["Chequeo final", "Puedo explicar la regla central sin leer."],
+            ["Chequeo final", "Puedo distinguir el supuesto correcto de uno parecido."],
+            ["Chequeo final", "Puedo citar el artículo o fracción aplicable."],
+          ],
+          final: true,
+        },
+      ],
+    },
+  "linea-aerea/legislacion/ley-federal-del-trabajo/comandante-y-miembros-de-tripulacion-art-220-3":
+    {
+      id: "lft-03",
+      folder: "03_Comandante_y_Miembros_de_Tripulacion",
+      name: "Comandante y miembros de tripulación",
+      subtitle: "Artículo 220",
+      year: "Ley Federal del Trabajo",
+      word: "Artículo 220",
+      sources: ["ART. 220, párr. 1", "ART. 220, párr. 2"],
+      steps: [
+        {
+          label: "01 · DESPEGUE",
+          title: "Comandante y miembros de tripulaciónResponsabilidad del piloto al mando",
+          body: "Delimitar la responsabilidad laboral del comandante durante el tiempo efectivo de vuelo.",
+          guide: "Hola, soy Mini Yaris. Toca las tres cajas para conocer tu plan de vuelo.",
+          cards: [
+            ["Alcance", "Paso 1AlcanceSolo artículos 220.Tócame para descubrir"],
+            ["Fuente", "Paso 2FuenteLFT vigente al 14-05-2026.Tócame para descubrir"],
+            [
+              "Meta",
+              "Paso 3MetaDelimitar la responsabilidad laboral del comandante durante el tiempo efectivo de vuelo.Tócame para descubrir",
+            ],
+          ],
+          hero: true,
+        },
+        {
+          label: "02 · ENTIENDE",
+          title: "Primero la ley.Después, en palabras simples.",
+          body: "Cada tarjeta separa el contenido normativo de la explicación para estudiar.",
+          guide: "Marca cada tarjeta después de leer la ley y su explicación.",
+          cards: [
+            [
+              "ART. 220, párr. 1",
+              "ART. 220, párr. 1LO QUE DICE LA LEYEl piloto al mando es responsable de la conducción y seguridad de la aeronave durante el tiempo efectivo de vuelo.En palabras simplesEl artículo identifica al comandante como responsable de la aeronave dentro de ese periodo.",
+            ],
+            [
+              "ART. 220, párr. 1",
+              "ART. 220, párr. 1LO QUE DICE LA LEYTiene a su cargo la dirección, el cuidado, el orden y la seguridad de tripulación, pasajeros, equipaje, carga y correo.En palabras simplesLa responsabilidad cubre tanto a las personas como a los bienes que transporta la aeronave.",
+            ],
+            [
+              "ART. 220, párr. 2",
+              "ART. 220, párr. 2LO QUE DICE LA LEYLas responsabilidades y atribuciones conferidas a los comandantes por la legislación externa mencionada no pueden ser reducidas ni modificadas por el ejercicio de derechos y obligaciones laborales.En palabras simplesLa LFT reconoce esa remisión, pero este Learning Path no desarrolla la legislación externa.",
+            ],
+          ],
+        },
+        {
+          label: "03 · RELACIONA",
+          title: "Mira cómo encajanlas reglas entre sí.",
+          body: "03 · RELACIONAMira cómo encajanlas reglas entre sí.El visual conserva el significado legal sin añadir límites ni criterios externos. COMANDANTEdurante el tiempo efectivo de vueloConducciónAeronaveTripulaciónPasajerosEquipajeCarga y correo RESPONSABILIDADConducción y seguridadLa responsabilidad se ubica durante el tiempo efectivo de vuelo.DIRECCIÓNCuidado, orden y seguridadComprende a personas y bienes que transporta la aeronave.",
+          guide: "Activa las tres claves bajo el visual para completar la relación.",
+          cards: [
+            ["CLAVE 01", "CLAVE 01Conducción, dirección, cuidado, orden y seguridad"],
+            ["CLAVE 02", "CLAVE 02Conducción, dirección, cuidado, orden y seguridad"],
+            ["CLAVE 03", "CLAVE 03Conducción, dirección, cuidado, orden y seguridad"],
+          ],
+        },
+        {
+          label: "04 · SÍ DICE / NO DICE",
+          title: "Separa la reglade la afirmación engañosa.",
+          body: "Piensa tu respuesta antes de revelar el fundamento.",
+          guide: "Decide primero; luego revela cada veredicto.",
+          cards: [
+            [
+              "La responsabilidad descrita se ubica durante el tiempo efectivo de vuelo.",
+              "SÍ DICE · Art. 220Esa es la referencia temporal literal del artículo.",
+            ],
+            [
+              "El artículo limita la responsabilidad a la tripulación y excluye pasajeros.",
+              "NO DICE · Art. 220Incluye expresamente pasajeros, además de tripulación y bienes.",
+            ],
+            [
+              "Carga y correo aparecen dentro de lo que queda a cargo del comandante.",
+              "SÍ DICE · Art. 220Ambos están enumerados en el primer párrafo.",
+            ],
+            [
+              "Los derechos laborales pueden reducir las atribuciones externas del comandante.",
+              "NO DICE · Art. 220, párr. 2El artículo dice que no podrán ser reducidas ni modificadas por ese ejercicio.",
+            ],
+          ],
+        },
+        {
+          label: "05 · RECUERDA",
+          title: "Una imagen mentalpara recuperar la regla.",
+          body: "La nemotecnia nunca cambia una cifra, sujeto o condición.",
+          guide: "Toca las tres anclas para fijar la regla en memoria.",
+          cards: [
+            [
+              "Artículos 220",
+              "RANGOArtículos 220Este es el perímetro completo y evaluable del Learning Path.",
+            ],
+            [
+              "Ayuda de memoria",
+              "CLAVEAyuda de memoriaVisualiza al comandante en el centro. Hacia la aeronave: conducción y seguridad. Hacia lo transportado: dirección, cuidado, orden y seguridad.",
+            ],
+            [
+              "Art. 220",
+              "NO CONFUNDIRArt. 220Incluye expresamente pasajeros, además de tripulación y bienes.",
+            ],
+          ],
+        },
+        {
+          label: "06 · PRACTICA",
+          title: "Recupera la reglasin volver a leer.",
+          body: "Responde primero. Comprueba después.",
+          guide: "Responde en voz alta antes de comprobar.",
+          recall: [
+            [
+              "Completa: el piloto al mando responde por la ______ y ______ de la aeronave.",
+              "Respuesta esperada: Conducción y seguridad. Artículo 220.",
+            ],
+            [
+              "Enumera las cuatro acciones a cargo del comandante respecto de personas y bienes.",
+              "Respuesta esperada: Dirección, cuidado, orden y seguridad.",
+            ],
+            [
+              "Nombra todos los sujetos y bienes mencionados.",
+              "Respuesta esperada: Tripulación, pasajeros, equipaje, carga y correo.",
+            ],
+          ],
+        },
+        {
+          label: "07 · PONLO A PRUEBA",
+          title: "Decide conla ley vigente.",
+          body: "Cada escenario tiene tres opciones, una respuesta correcta y fundamento.",
+          guide: "Contesta todos los escenarios. La explicación aparece al elegir.",
+          questions: [
+            {
+              q: "¿Quién responde por la conducción y seguridad de la aeronave en el periodo señalado? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "AEl jefe de adiestramiento",
+                "BEl piloto al mando",
+                "CEl sobrecargo con mayor antigüedad",
+              ],
+              answer: 1,
+              why: "El artículo asigna esa responsabilidad al piloto al mando. Art. 220",
+              wrong: "El artículo asigna esa responsabilidad al piloto al mando. Art. 220",
+              feedbacks: [
+                "El artículo asigna esa responsabilidad al piloto al mando. Art. 220",
+                "El artículo asigna esa responsabilidad al piloto al mando. Art. 220",
+                "El artículo asigna esa responsabilidad al piloto al mando. Art. 220",
+              ],
+            },
+            {
+              q: "¿Cuándo ubica el artículo esta responsabilidad? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "ADurante el tiempo efectivo de vuelo",
+                "BSolo después del aterrizaje",
+                "CDurante cualquier descanso",
+              ],
+              answer: 0,
+              why: "La referencia temporal es el tiempo efectivo de vuelo. Art. 220",
+              wrong: "La referencia temporal es el tiempo efectivo de vuelo. Art. 220",
+              feedbacks: [
+                "La referencia temporal es el tiempo efectivo de vuelo. Art. 220",
+                "La referencia temporal es el tiempo efectivo de vuelo. Art. 220",
+                "La referencia temporal es el tiempo efectivo de vuelo. Art. 220",
+              ],
+            },
+            {
+              q: "¿Cuál conjunto está incluido expresamente? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "APasajeros, equipaje, carga y correo",
+                "BTarifas, rutas y permisos",
+                "CContratos, nómina y sindicato",
+              ],
+              answer: 0,
+              why: "Esos cuatro elementos aparecen en la enumeración del artículo. Art. 220",
+              wrong: "Esos cuatro elementos aparecen en la enumeración del artículo. Art. 220",
+              feedbacks: [
+                "Esos cuatro elementos aparecen en la enumeración del artículo. Art. 220",
+                "Esos cuatro elementos aparecen en la enumeración del artículo. Art. 220",
+                "Esos cuatro elementos aparecen en la enumeración del artículo. Art. 220",
+              ],
+            },
+            {
+              q: "¿Qué tiene a su cargo respecto de la tripulación? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "ASolo el pago",
+                "BDirección, cuidado, orden y seguridad",
+                "CÚnicamente la capacitación",
+              ],
+              answer: 1,
+              why: "Son las cuatro funciones expresamente señaladas. Art. 220",
+              wrong: "Son las cuatro funciones expresamente señaladas. Art. 220",
+              feedbacks: [
+                "Son las cuatro funciones expresamente señaladas. Art. 220",
+                "Son las cuatro funciones expresamente señaladas. Art. 220",
+                "Son las cuatro funciones expresamente señaladas. Art. 220",
+              ],
+            },
+            {
+              q: "¿Qué efecto tienen las normas laborales sobre las atribuciones externas mencionadas? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "ALas eliminan",
+                "BLas reducen a la seguridad",
+                "CNo pueden reducirlas ni modificarlas",
+              ],
+              answer: 2,
+              why: "El segundo párrafo conserva dichas responsabilidades y atribuciones. Art. 220, párr. 2",
+              wrong:
+                "El segundo párrafo conserva dichas responsabilidades y atribuciones. Art. 220, párr. 2",
+              feedbacks: [
+                "El segundo párrafo conserva dichas responsabilidades y atribuciones. Art. 220, párr. 2",
+                "El segundo párrafo conserva dichas responsabilidades y atribuciones. Art. 220, párr. 2",
+                "El segundo párrafo conserva dichas responsabilidades y atribuciones. Art. 220, párr. 2",
+              ],
+            },
+          ],
+        },
+        {
+          label: "08 · ATERRIZAJE",
+          title: "Si puedes explicarlo,ya puedes aplicarlo.",
+          body: "Cierra el recorrido con una comprobación honesta.",
+          guide: "Marca tres ideas que ya puedas explicar sin mirar.",
+          cards: [
+            ["Chequeo final", "Puedo explicar la regla central sin leer."],
+            ["Chequeo final", "Puedo distinguir el supuesto correcto de uno parecido."],
+            ["Chequeo final", "Puedo citar el artículo o fracción aplicable."],
+          ],
+          final: true,
+        },
+      ],
+    },
+  "linea-aerea/legislacion/ley-federal-del-trabajo/jornadas-tiempos-y-descansos-de-tripulacion-arts-221-a-232-4":
+    {
+      id: "lft-04",
+      folder: "04_Jornadas_Tiempos_y_Descansos_de_Tripulacion",
+      name: "Jornadas, tiempos y descansos",
+      subtitle: "Artículos 221 a 232",
+      year: "Ley Federal del Trabajo",
+      word: "Artículos 221 a 232",
+      sources: [
+        "ART. 221–222",
+        "ART. 223–224",
+        "ART. 225",
+        "ART. 226–229",
+        "ART. 230–231",
+        "ART. 232",
+      ],
+      steps: [
+        {
+          label: "01 · DESPEGUE",
+          title: "Jornadas, tiempos y descansosLímites laborales de las tripulaciones",
+          body: "Aplicar las definiciones, límites, prolongaciones y descansos previstos específicamente para tripulaciones.",
+          guide: "Hola, soy Mini Yaris. Toca las tres cajas para conocer tu plan de vuelo.",
+          cards: [
+            ["Alcance", "Paso 1AlcanceSolo artículos 221–232.Tócame para descubrir"],
+            ["Fuente", "Paso 2FuenteLFT vigente al 14-05-2026.Tócame para descubrir"],
+            [
+              "Meta",
+              "Paso 3MetaAplicar las definiciones, límites, prolongaciones y descansos previstos específicamente para tripulaciones.Tócame para descubrir",
+            ],
+          ],
+          hero: true,
+        },
+        {
+          label: "02 · ENTIENDE",
+          title: "Primero la ley.Después, en palabras simples.",
+          body: "Cada tarjeta separa el contenido normativo de la explicación para estudiar.",
+          guide: "Marca cada tarjeta después de leer la ley y su explicación.",
+          cards: [
+            [
+              "ART. 221–222",
+              "ART. 221–222LO QUE DICE LA LEYLa jornada se determina con tablas de salida y puesta del sol del lugar más cercano a la aeronave. El vuelo efectivo corre desde que se mueve por impulso propio o es remolcada para despegar hasta que se detiene al terminar el vuelo.En palabras simplesAquí día y noche no se sustituyen por el horario general del artículo 60. El artículo 222 fija un inicio y un final operativos concretos.",
+            ],
+            [
+              "ART. 223–224",
+              "ART. 223–224LO QUE DICE LA LEYEl tiempo total de servicios comprende solo vuelo efectivo, ruta y reserva, con máximo de 180 horas mensuales. El vuelo efectivo mensual no puede exceder 90 horas.En palabras simplesServicio total y vuelo efectivo son magnitudes distintas; ambas se fijan contractualmente dentro de sus topes legales.",
+            ],
+            [
+              "ART. 225",
+              "ART. 225LO QUE DICE LA LEYVuelo efectivo diario: 8 h diurnas, 7 h nocturnas y 7½ h mixtas. Puede operar la excepción si se concede descanso horizontal igual al tiempo volado antes o al cumplir el límite; el excedente es extraordinario.En palabras simplesEl descanso exigido debe ser horizontal, oportuno e igual al tiempo volado.",
+            ],
+            [
+              "ART. 226–229",
+              "ART. 226–229LO QUE DICE LA LEYLa jornada puede comenzar a cualquier hora; el servicio puede distribuirse convencionalmente. Si el límite vence en trayecto, se termina cuando falten hasta 3 horas; si falta más, procede relevo o suspensión en el aeropuerto más próximo. Con equipo a reacción puede reducirse el total de servicios.En palabras simplesLa continuidad no autoriza ignorar el umbral de tres horas ni inventar un límite externo.",
+            ],
+            [
+              "ART. 230–231",
+              "ART. 230–231LO QUE DICE LA LEYEl exceso del tiempo total de servicios se paga por hora con 100% más y no se paga de nuevo. En auxilio, búsqueda o salvamento debe prolongarse la jornada; el excedente se retribuye como indica el primer párrafo del artículo 67.En palabras simplesSon dos reglas de prolongación distintas. La remisión al 67 implica pago igual a la hora ordinaria para el supuesto del 231.",
+            ],
+            [
+              "ART. 232",
+              "ART. 232LO QUE DICE LA LEYEl servicio en descanso obligatorio remite a la retribución del artículo 75. Si solo se termina un servicio dentro de la primera hora y media del día, se paga un día de salario adicional. El día corre de 00:00 a 24:00 en la base.En palabras simplesNo se desarrolla el artículo 75 por estar fuera del temario; sí se enseña la excepción y la definición temporal contenidas en el 232.",
+            ],
+          ],
+        },
+        {
+          label: "03 · RELACIONA",
+          title: "Mira cómo encajanlas reglas entre sí.",
+          body: "03 · RELACIONAMira cómo encajanlas reglas entre sí.El visual conserva el significado legal sin añadir límites ni criterios externos. INICIOSe mueve por impulso propio o es remolcada para despegarFINSe detiene al terminar el vuelo SERVICIO MENSUAL≤ 180 hVuelo + ruta + reservaVUELO MENSUAL≤ 90 hDIURNA≤ 8 hNOCTURNA / MIXTA≤ 7 / 7½ h Límite alcanzado durante el trayecto¿Faltan 3 horas o menos?SÍ → terminar el servicioNO → relevo o suspensión en el aeropuerto más próximo",
+          guide: "Activa las tres claves bajo el visual para completar la relación.",
+          cards: [
+            ["CLAVE 01", "CLAVE 01Salida y puesta del sol"],
+            ["CLAVE 02", "CLAVE 02Tiempo efectivo de vuelo"],
+            ["CLAVE 03", "CLAVE 03Descanso obligatorio"],
+          ],
+        },
+        {
+          label: "04 · SÍ DICE / NO DICE",
+          title: "Separa la reglade la afirmación engañosa.",
+          body: "Piensa tu respuesta antes de revelar el fundamento.",
+          guide: "Decide primero; luego revela cada veredicto.",
+          cards: [
+            [
+              "La LFT usa aquí las tablas de salida y puesta del sol del lugar más cercano a la aeronave.",
+              "SÍ DICE · Art. 221Ese criterio específico determina las jornadas de tripulación.",
+            ],
+            [
+              "El tiempo total de servicios solo comprende vuelo efectivo.",
+              "NO DICE · Art. 223También comprende tiempo de ruta y servicios de reserva.",
+            ],
+            [
+              "El máximo mensual de vuelo efectivo es de 90 horas.",
+              "SÍ DICE · Art. 224Es distinto del tope de 180 horas de servicio total.",
+            ],
+            [
+              "Al faltar cuatro horas para destino, la tripulación siempre debe terminar el trayecto.",
+              "NO DICE · Art. 228Si requiere más de tres horas, debe ser relevada o suspender el vuelo en el aeropuerto más próximo.",
+            ],
+          ],
+        },
+        {
+          label: "05 · RECUERDA",
+          title: "Una imagen mentalpara recuperar la regla.",
+          body: "La nemotecnia nunca cambia una cifra, sujeto o condición.",
+          guide: "Toca las tres anclas para fijar la regla en memoria.",
+          cards: [
+            [
+              "Artículos 221–232",
+              "RANGOArtículos 221–232Este es el perímetro completo y evaluable del Learning Path.",
+            ],
+            [
+              "Ayuda de memoria",
+              "CLAVEAyuda de memoria180 / 90 / 8–7–7½ / 3 / 1½: servicio mensual, vuelo mensual, vuelo diario, umbral para terminar trayecto y excepción al inicio del descanso obligatorio.",
+            ],
+            [
+              "Art. 223",
+              "NO CONFUNDIRArt. 223También comprende tiempo de ruta y servicios de reserva.",
+            ],
+          ],
+        },
+        {
+          label: "06 · PRACTICA",
+          title: "Recupera la reglasin volver a leer.",
+          body: "Responde primero. Comprueba después.",
+          guide: "Responde en voz alta antes de comprobar.",
+          recall: [
+            [
+              "Define tiempo efectivo de vuelo con su inicio y final.",
+              "Respuesta esperada: Desde que la aeronave se mueve por impulso propio o es remolcada para tomar posición de despegue hasta que se detiene al terminar el vuelo. Artículo 222.",
+            ],
+            [
+              "Separa los dos topes mensuales.",
+              "Respuesta esperada: Tiempo total de servicios: 180 h (223). Tiempo efectivo de vuelo: 90 h (224).",
+            ],
+            [
+              "Explica la decisión de continuidad con el umbral de tres horas.",
+              "Respuesta esperada: Si terminar requiere hasta tres horas, se concluye; si requiere más, hay relevo o suspensión en el aeropuerto más próximo. Artículo 228.",
+            ],
+          ],
+        },
+        {
+          label: "07 · PONLO A PRUEBA",
+          title: "Decide conla ley vigente.",
+          body: "Cada escenario tiene tres opciones, una respuesta correcta y fundamento.",
+          guide: "Contesta todos los escenarios. La explicación aparece al elegir.",
+          questions: [
+            {
+              q: "¿Cuándo inicia el tiempo efectivo de vuelo? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "AAl cerrar puertas",
+                "BAl moverse por impulso propio o ser remolcada para despegar",
+                "CAl despegar",
+              ],
+              answer: 1,
+              why: "El inicio legal ocurre con el movimiento descrito, incluso antes del despegue. Art. 222",
+              wrong:
+                "El inicio legal ocurre con el movimiento descrito, incluso antes del despegue. Art. 222",
+              feedbacks: [
+                "El inicio legal ocurre con el movimiento descrito, incluso antes del despegue. Art. 222",
+                "El inicio legal ocurre con el movimiento descrito, incluso antes del despegue. Art. 222",
+                "El inicio legal ocurre con el movimiento descrito, incluso antes del despegue. Art. 222",
+              ],
+            },
+            {
+              q: "¿Cuál es el máximo mensual del tiempo total de servicios? — Decide con la regla vigente y después revisa el fundamento.",
+              options: ["A90 horas", "B180 horas", "C200 horas"],
+              answer: 1,
+              why: "El total de vuelo, ruta y reserva no puede exceder 180 horas mensuales. Art. 223",
+              wrong:
+                "El total de vuelo, ruta y reserva no puede exceder 180 horas mensuales. Art. 223",
+              feedbacks: [
+                "El total de vuelo, ruta y reserva no puede exceder 180 horas mensuales. Art. 223",
+                "El total de vuelo, ruta y reserva no puede exceder 180 horas mensuales. Art. 223",
+                "El total de vuelo, ruta y reserva no puede exceder 180 horas mensuales. Art. 223",
+              ],
+            },
+            {
+              q: "¿Cuál es el máximo mensual de vuelo efectivo? — Decide con la regla vigente y después revisa el fundamento.",
+              options: ["A90 horas", "B120 horas", "C180 horas"],
+              answer: 0,
+              why: "El límite de vuelo efectivo mensual es 90 horas. Art. 224",
+              wrong: "El límite de vuelo efectivo mensual es 90 horas. Art. 224",
+              feedbacks: [
+                "El límite de vuelo efectivo mensual es 90 horas. Art. 224",
+                "El límite de vuelo efectivo mensual es 90 horas. Art. 224",
+                "El límite de vuelo efectivo mensual es 90 horas. Art. 224",
+              ],
+            },
+            {
+              q: "Se alcanza el límite en un aeropuerto intermedio y faltan 2 h 45 min. ¿Qué ordena la regla? — Decide con la regla vigente y después revisa el fundamento.",
+              options: ["ATerminar el servicio", "BSuspender siempre", "CEsperar 24 horas"],
+              answer: 0,
+              why: "Si terminar no requiere más de tres horas, existe obligación de concluirlo. Art. 228",
+              wrong:
+                "Si terminar no requiere más de tres horas, existe obligación de concluirlo. Art. 228",
+              feedbacks: [
+                "Si terminar no requiere más de tres horas, existe obligación de concluirlo. Art. 228",
+                "Si terminar no requiere más de tres horas, existe obligación de concluirlo. Art. 228",
+                "Si terminar no requiere más de tres horas, existe obligación de concluirlo. Art. 228",
+              ],
+            },
+            {
+              q: "¿Cómo se paga cada hora que excede el tiempo total de servicios por necesidad del servicio? — Decide con la regla vigente y después revisa el fundamento.",
+              options: ["AIgual que la ordinaria", "B100% más", "CCon medio día adicional"],
+              answer: 1,
+              why: "Cada hora extra recibe cien por ciento más y no es objeto de nuevo pago. Art. 230",
+              wrong:
+                "Cada hora extra recibe cien por ciento más y no es objeto de nuevo pago. Art. 230",
+              feedbacks: [
+                "Cada hora extra recibe cien por ciento más y no es objeto de nuevo pago. Art. 230",
+                "Cada hora extra recibe cien por ciento más y no es objeto de nuevo pago. Art. 230",
+                "Cada hora extra recibe cien por ciento más y no es objeto de nuevo pago. Art. 230",
+              ],
+            },
+            {
+              q: "Para el artículo 232, ¿cómo se delimita el día? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "ADe salida a puesta del sol",
+                "BDe 06:00 a 20:00",
+                "CDe 00:00 a 24:00 en la base",
+              ],
+              answer: 2,
+              why: "Se usa el tiempo oficial del lugar de la base de residencia. Art. 232",
+              wrong: "Se usa el tiempo oficial del lugar de la base de residencia. Art. 232",
+              feedbacks: [
+                "Se usa el tiempo oficial del lugar de la base de residencia. Art. 232",
+                "Se usa el tiempo oficial del lugar de la base de residencia. Art. 232",
+                "Se usa el tiempo oficial del lugar de la base de residencia. Art. 232",
+              ],
+            },
+          ],
+        },
+        {
+          label: "08 · ATERRIZAJE",
+          title: "Si puedes explicarlo,ya puedes aplicarlo.",
+          body: "Cierra el recorrido con una comprobación honesta.",
+          guide: "Marca tres ideas que ya puedas explicar sin mirar.",
+          cards: [
+            ["Chequeo final", "Puedo explicar la regla central sin leer."],
+            ["Chequeo final", "Puedo distinguir el supuesto correcto de uno parecido."],
+            ["Chequeo final", "Puedo citar el artículo o fracción aplicable."],
+          ],
+          final: true,
+        },
+      ],
+    },
+  "linea-aerea/legislacion/ley-federal-del-trabajo/salarios-viaticos-y-condiciones-de-trabajo-arts-233-a-236-5":
+    {
+      id: "lft-05",
+      folder: "05_Salarios_Viaticos_y_Condiciones_de_Trabajo",
+      name: "Salarios, viáticos y condiciones",
+      subtitle: "Artículos 233 a 236",
+      year: "Ley Federal del Trabajo",
+      word: "Artículos 233 a 236",
+      sources: [
+        "ART. 233",
+        "ART. 234",
+        "ART. 235",
+        "ART. 236, fr. I",
+        "ART. 236, frs. II–III",
+        "ART. 236, fr. IV",
+      ],
+      steps: [
+        {
+          label: "01 · DESPEGUE",
+          title: "Salarios, viáticos y condicionesVacaciones, pagos y protección fuera de base",
+          body: "Distinguir cuándo, dónde y bajo qué condiciones se cubren vacaciones, salarios, traslados y estancias.",
+          guide: "Hola, soy Mini Yaris. Toca las tres cajas para conocer tu plan de vuelo.",
+          cards: [
+            ["Alcance", "Paso 1AlcanceSolo artículos 233–236.Tócame para descubrir"],
+            ["Fuente", "Paso 2FuenteLFT vigente al 14-05-2026.Tócame para descubrir"],
+            [
+              "Meta",
+              "Paso 3MetaDistinguir cuándo, dónde y bajo qué condiciones se cubren vacaciones, salarios, traslados y estancias.Tócame para descubrir",
+            ],
+          ],
+          hero: true,
+        },
+        {
+          label: "02 · ENTIENDE",
+          title: "Primero la ley.Después, en palabras simples.",
+          body: "Cada tarjeta separa el contenido normativo de la explicación para estudiar.",
+          guide: "Marca cada tarjeta después de leer la ley y su explicación.",
+          cards: [
+            [
+              "ART. 233",
+              "ART. 233LO QUE DICE LA LEYVacaciones anuales de 30 días de calendario, no acumulables; pueden disfrutarse semestralmente en forma proporcional y aumentan un día por año de servicio hasta 60 días.En palabras simplesEl periodo base, la no acumulación, la opción semestral y el tope forman una sola regla.",
+            ],
+            [
+              "ART. 234",
+              "ART. 234LO QUE DICE LA LEYNo viola la igualdad salarial pactar salarios distintos para trabajo igual en aeronaves de diversa categoría o rutas diferentes, ni establecer primas de antigüedad.En palabras simplesLa excepción legal está limitada a esas diferencias; no es autorización general para pagar distinto.",
+            ],
+            [
+              "ART. 235",
+              "ART. 235LO QUE DICE LA LEYSalario y asignaciones: días 15 y último. Vuelo nocturno y tiempo extraordinario: primera quincena del mes siguiente. Descanso obligatorio: quincena inmediata. Pago en moneda nacional y residencia, salvo pacto.En palabras simplesCada concepto tiene un momento de pago; no deben mezclarse.",
+            ],
+            [
+              "ART. 236, fr. I",
+              "ART. 236, fr. ILO QUE DICE LA LEYFuera de base por servicio, el patrón proporciona alimentación, alojamiento y transportación. En estaciones o pernoctación extraordinaria, el alojamiento se cubre directamente y hay transporte aeropuerto–alojamiento; si no se come a bordo, existe asignación en efectivo acordada.En palabras simplesLa obligación depende de permanecer fuera de base por razones del servicio.",
+            ],
+            [
+              "ART. 236, frs. II–III",
+              "ART. 236, frs. II–IIILO QUE DICE LA LEYEn cambio de base se pagan gastos de traslado previstos, incluso para dependientes de primer grado, menaje y efectos. Si la aeronave se destruye o inutiliza fuera del lugar de contratación, procede repatriación o traslado con salarios y viaje.En palabras simplesSon escenarios distintos: mudanza de base y pérdida o inutilización de aeronave.",
+            ],
+            [
+              "ART. 236, fr. IV",
+              "ART. 236, fr. IVLO QUE DICE LA LEYDeben concederse los permisos a los que remite el artículo, siempre que no peligre la seguridad de la aeronave ni se imposibilite su salida programada.En palabras simplesLa condición sí se enseña; el contenido del artículo 132 referido no se desarrolla porque queda fuera del temario.",
+            ],
+          ],
+        },
+        {
+          label: "03 · RELACIONA",
+          title: "Mira cómo encajanlas reglas entre sí.",
+          body: "03 · RELACIONAMira cómo encajanlas reglas entre sí.El visual conserva el significado legal sin añadir límites ni criterios externos. VACACIONES30 díasCalendario, no acumulablesTOPE60 días+1 por año de servicioSALARIO15 y últimode cada mesPAGOSMoneda nacionalResidencia, salvo pacto FUERA DE BASE→ALIMENTACIÓN→ALOJAMIENTO→TRANSPORTACIÓN CAMBIO DE BASETraslado protegidoIncluye gastos previstos para dependientes de primer grado, menaje y efectos personales.AERONAVE INUTILIZADARepatriar o trasladarAl lugar de contratación, con salarios y gastos de viaje.",
+          guide: "Activa las tres claves bajo el visual para completar la relación.",
+          cards: [
+            ["CLAVE 01", "CLAVE 01Vacaciones"],
+            ["CLAVE 02", "CLAVE 02Diferencias salariales permitidas"],
+            ["CLAVE 03", "CLAVE 03Obligaciones patronales especiales"],
+          ],
+        },
+        {
+          label: "04 · SÍ DICE / NO DICE",
+          title: "Separa la reglade la afirmación engañosa.",
+          body: "Piensa tu respuesta antes de revelar el fundamento.",
+          guide: "Decide primero; luego revela cada veredicto.",
+          cards: [
+            [
+              "Las vacaciones de tripulantes son acumulables sin límite.",
+              "NO DICE · Art. 233El periodo es no acumulable y su máximo es 60 días de calendario.",
+            ],
+            [
+              "La diversa categoría de aeronave puede justificar salarios distintos para trabajo igual.",
+              "SÍ DICE · Art. 234Es uno de los supuestos expresos del artículo.",
+            ],
+            [
+              "El vuelo nocturno se paga necesariamente el mismo día que el salario ordinario.",
+              "NO DICE · Art. 235Se cubre en la primera quincena del mes siguiente a aquel en que se realizó.",
+            ],
+            [
+              "Fuera de base por servicio, el patrón debe proporcionar alimentación, alojamiento y transportación.",
+              "SÍ DICE · Art. 236, fr. ILa obligación dura todo el tiempo de permanencia fuera de base por esa razón.",
+            ],
+          ],
+        },
+        {
+          label: "05 · RECUERDA",
+          title: "Una imagen mentalpara recuperar la regla.",
+          body: "La nemotecnia nunca cambia una cifra, sujeto o condición.",
+          guide: "Toca las tres anclas para fijar la regla en memoria.",
+          cards: [
+            [
+              "Artículos 233–236",
+              "RANGOArtículos 233–236Este es el perímetro completo y evaluable del Learning Path.",
+            ],
+            [
+              "Ayuda de memoria",
+              "CLAVEAyuda de memoria30 → 60 para vacaciones. 15 y último para salario. Fuera de base piensa en AAT: alimentación, alojamiento y transportación.",
+            ],
+            [
+              "Art. 233",
+              "NO CONFUNDIRArt. 233El periodo es no acumulable y su máximo es 60 días de calendario.",
+            ],
+          ],
+        },
+        {
+          label: "06 · PRACTICA",
+          title: "Recupera la reglasin volver a leer.",
+          body: "Responde primero. Comprueba después.",
+          guide: "Responde en voz alta antes de comprobar.",
+          recall: [
+            [
+              "Reconstruye la regla completa de vacaciones.",
+              "Respuesta esperada: 30 días de calendario, no acumulables; disfrute semestral proporcional; +1 día por año hasta 60. Artículo 233.",
+            ],
+            [
+              "Ordena los tres momentos de pago del artículo 235.",
+              "Respuesta esperada: Salario/asignaciones: 15 y último; nocturno/extraordinario: primera quincena siguiente; descanso obligatorio: quincena inmediata.",
+            ],
+            [
+              "Enumera AAT y explica cuándo aplica.",
+              "Respuesta esperada: Alimentación, alojamiento y transportación durante todo el tiempo fuera de base por razones del servicio. Artículo 236, fracción I.",
+            ],
+          ],
+        },
+        {
+          label: "07 · PONLO A PRUEBA",
+          title: "Decide conla ley vigente.",
+          body: "Cada escenario tiene tres opciones, una respuesta correcta y fundamento.",
+          guide: "Contesta todos los escenarios. La explicación aparece al elegir.",
+          questions: [
+            {
+              q: "¿Cuál es el periodo anual base de vacaciones? — Decide con la regla vigente y después revisa el fundamento.",
+              options: ["A15 días naturales", "B30 días de calendario", "C60 días hábiles"],
+              answer: 1,
+              why: "La base es de 30 días de calendario, no acumulables. Art. 233",
+              wrong: "La base es de 30 días de calendario, no acumulables. Art. 233",
+              feedbacks: [
+                "La base es de 30 días de calendario, no acumulables. Art. 233",
+                "La base es de 30 días de calendario, no acumulables. Art. 233",
+                "La base es de 30 días de calendario, no acumulables. Art. 233",
+              ],
+            },
+            {
+              q: "¿Hasta qué máximo pueden aumentar las vacaciones? — Decide con la regla vigente y después revisa el fundamento.",
+              options: ["A45 días", "B60 días", "C90 días"],
+              answer: 1,
+              why: "Aumentan un día por año de servicio sin exceder 60 días. Art. 233",
+              wrong: "Aumentan un día por año de servicio sin exceder 60 días. Art. 233",
+              feedbacks: [
+                "Aumentan un día por año de servicio sin exceder 60 días. Art. 233",
+                "Aumentan un día por año de servicio sin exceder 60 días. Art. 233",
+                "Aumentan un día por año de servicio sin exceder 60 días. Art. 233",
+              ],
+            },
+            {
+              q: "¿Cuándo se pagan salario y asignaciones adicionales ordinarias? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "ACada viernes",
+                "BDías 15 y último de cada mes",
+                "CPrimera semana del mes siguiente",
+              ],
+              answer: 1,
+              why: "Esas son las dos fechas expresas. Art. 235",
+              wrong: "Esas son las dos fechas expresas. Art. 235",
+              feedbacks: [
+                "Esas son las dos fechas expresas. Art. 235",
+                "Esas son las dos fechas expresas. Art. 235",
+                "Esas son las dos fechas expresas. Art. 235",
+              ],
+            },
+            {
+              q: "Si los alimentos no pueden tomarse a bordo, ¿qué prevé la ley? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "AAsignación en efectivo acordada",
+                "BNingún pago",
+                "CUn día de salario fijo",
+              ],
+              answer: 0,
+              why: "La asignación se fija según comidas y por común acuerdo. Art. 236, fr. I, inc. b",
+              wrong:
+                "La asignación se fija según comidas y por común acuerdo. Art. 236, fr. I, inc. b",
+              feedbacks: [
+                "La asignación se fija según comidas y por común acuerdo. Art. 236, fr. I, inc. b",
+                "La asignación se fija según comidas y por común acuerdo. Art. 236, fr. I, inc. b",
+                "La asignación se fija según comidas y por común acuerdo. Art. 236, fr. I, inc. b",
+              ],
+            },
+            {
+              q: "Una aeronave queda inutilizada fuera del lugar de contratación. ¿Qué obligación aparece? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "ADejar al tripulante en la base más cercana",
+                "BRepatriar o trasladar pagando salarios y viaje",
+                "CPagar solo el equipaje",
+              ],
+              answer: 1,
+              why: "La fracción protege el retorno o traslado y cubre salarios y gastos de viaje. Art. 236, fr. III",
+              wrong:
+                "La fracción protege el retorno o traslado y cubre salarios y gastos de viaje. Art. 236, fr. III",
+              feedbacks: [
+                "La fracción protege el retorno o traslado y cubre salarios y gastos de viaje. Art. 236, fr. III",
+                "La fracción protege el retorno o traslado y cubre salarios y gastos de viaje. Art. 236, fr. III",
+                "La fracción protege el retorno o traslado y cubre salarios y gastos de viaje. Art. 236, fr. III",
+              ],
+            },
+          ],
+        },
+        {
+          label: "08 · ATERRIZAJE",
+          title: "Si puedes explicarlo,ya puedes aplicarlo.",
+          body: "Cierra el recorrido con una comprobación honesta.",
+          guide: "Marca tres ideas que ya puedas explicar sin mirar.",
+          cards: [
+            ["Chequeo final", "Puedo explicar la regla central sin leer."],
+            ["Chequeo final", "Puedo distinguir el supuesto correcto de uno parecido."],
+            ["Chequeo final", "Puedo citar el artículo o fracción aplicable."],
+          ],
+          final: true,
+        },
+      ],
+    },
+  "linea-aerea/legislacion/ley-federal-del-trabajo/obligaciones-y-prohibiciones-de-tripulantes-arts-237-a-242-6":
+    {
+      id: "lft-06",
+      folder: "06_Obligaciones_y_Prohibiciones_de_Tripulantes",
+      name: "Obligaciones y prohibiciones",
+      subtitle: "Artículos 237 a 242",
+      year: "Ley Federal del Trabajo",
+      word: "Artículos 237 a 242",
+      sources: [
+        "ART. 237, frs. I–III",
+        "ART. 237, frs. IV–VI",
+        "ART. 237, frs. VII–IX",
+        "ART. 237, frs. X–XIII",
+        "ART. 242, fr. I",
+        "ART. 242, frs. II–III",
+      ],
+      steps: [
+        {
+          label: "01 · DESPEGUE",
+          title: "Obligaciones y prohibicionesConducta, documentación, seguridad y aptitud",
+          body: "Clasificar conductas exigidas y prohibidas sin confundir deberes operativos externos con el contenido laboral de la LFT.",
+          guide: "Hola, soy Mini Yaris. Toca las tres cajas para conocer tu plan de vuelo.",
+          cards: [
+            ["Alcance", "Paso 1AlcanceSolo artículos 237 y 242.Tócame para descubrir"],
+            ["Fuente", "Paso 2FuenteLFT vigente al 14-05-2026.Tócame para descubrir"],
+            [
+              "Meta",
+              "Paso 3MetaClasificar conductas exigidas y prohibidas sin confundir deberes operativos externos con el contenido laboral de la LFT.Tócame para descubrir",
+            ],
+          ],
+          hero: true,
+        },
+        {
+          label: "02 · ENTIENDE",
+          title: "Primero la ley.Después, en palabras simples.",
+          body: "Cada tarjeta separa el contenido normativo de la explicación para estudiar.",
+          guide: "Marca cada tarjeta después de leer la ley y su explicación.",
+          cards: [
+            [
+              "ART. 237, frs. I–III",
+              "ART. 237, frs. I–IIILO QUE DICE LA LEYCuidar pasajeros y efectos transportados conforme a requisitos; conservar licencias, pasaportes, visas y documentos; presentarse al servicio con anticipación y forma exigidas, salvo causa justificada.En palabras simplesEl primer bloque une control de lo transportado, documentos vigentes y puntualidad disciplinaria.",
+            ],
+            [
+              "ART. 237, frs. IV–VI",
+              "ART. 237, frs. IV–VILO QUE DICE LA LEYSometerse al menos dos veces al año a exámenes médicos; realizar adiestramientos del patrón; planear, preparar y realizar el vuelo con apego a las disposiciones aplicables.En palabras simplesLa aptitud médica, el entrenamiento y la preparación del vuelo son obligaciones diferentes.",
+            ],
+            [
+              "ART. 237, frs. VII–IX",
+              "ART. 237, frs. VII–IXLO QUE DICE LA LEYVerificar requisitos y seguridad de la aeronave; observar indicaciones técnicas de seguridad; avisar rápidamente emergencias en vuelo o accidentes.En palabras simplesAntes, durante y ante un evento: comprobar, observar y comunicar.",
+            ],
+            [
+              "ART. 237, frs. X–XIII",
+              "ART. 237, frs. X–XIIILO QUE DICE LA LEYEfectuar vuelos de auxilio, búsqueda o salvamento; llevar la bitácora cuando se sea piloto al mando; rendir informes y firmar documentación; informar defectos mecánicos o técnicos al terminar.En palabras simplesEste bloque reúne auxilio, trazabilidad documental y reporte técnico.",
+            ],
+            [
+              "ART. 242, fr. I",
+              "ART. 242, fr. ILO QUE DICE LA LEYEstá prohibido ingerir bebidas alcohólicas durante el servicio y en las 24 horas anteriores al inicio de los vuelos asignados.En palabras simplesLa prohibición abarca dos ventanas: servicio y periodo previo.",
+            ],
+            [
+              "ART. 242, frs. II–III",
+              "ART. 242, frs. II–IIILO QUE DICE LA LEYSe prohíben narcóticos o drogas enervantes sin prescripción de especialista en medicina de aviación; antes del servicio debe avisarse y exhibirse la prescripción. También se prohíbe ejecutar un vuelo que disminuya posibilidades físicas y legales de volar para el patrón.En palabras simplesLa prescripción no basta por sí sola: hay deber de informar y presentarla antes del servicio.",
+            ],
+          ],
+        },
+        {
+          label: "03 · RELACIONA",
+          title: "Mira cómo encajanlas reglas entre sí.",
+          body: "03 · RELACIONAMira cómo encajanlas reglas entre sí.El visual conserva el significado legal sin añadir límites ni criterios externos. SEGURIDADI, VI, VII, VIII, XIIIDOCUMENTACIÓNII, IX, XI, XIIDISCIPLINA Y APTITUDIII, IV, VAUXILIOX OBLIGACIONES · ART. 237Hacer y comprobarDocumentos, preparación, seguridad, avisos, auxilio, bitácora e informes.PROHIBICIONES · ART. 242No poner en riesgo la aptitudAlcohol, narcóticos sin la prescripción exigida y vuelos que reduzcan posibilidades físicas o legales. 24 HORASProhibición de ingerir bebidas alcohólicas antes del inicio del vuelo asignado, además de durante el servicio.",
+          guide: "Activa las tres claves bajo el visual para completar la relación.",
+          cards: [
+            ["CLAVE 01", "CLAVE 01Obligaciones especiales"],
+            ["CLAVE 02", "CLAVE 02Prohibiciones especiales"],
+            ["CLAVE 03", "CLAVE 03Prohibiciones especiales"],
+          ],
+        },
+        {
+          label: "04 · SÍ DICE / NO DICE",
+          title: "Separa la reglade la afirmación engañosa.",
+          body: "Piensa tu respuesta antes de revelar el fundamento.",
+          guide: "Decide primero; luego revela cada veredicto.",
+          cards: [
+            [
+              "Las licencias, pasaportes y visas deben conservarse en vigor.",
+              "SÍ DICE · Art. 237, fr. IILa obligación cubre esos documentos y los demás legalmente requeridos.",
+            ],
+            [
+              "Los exámenes médicos periódicos se exigen una sola vez al año.",
+              "NO DICE · Art. 237, fr. IVLa ley dice cuando menos dos veces al año.",
+            ],
+            [
+              "La prohibición de alcohol solo rige durante el vuelo.",
+              "NO DICE · Art. 242, fr. ITambién rige durante el servicio y en las 24 horas anteriores al vuelo asignado.",
+            ],
+            [
+              "Con prescripción de especialista, debe avisarse al patrón y presentarla antes del servicio.",
+              "SÍ DICE · Art. 242, fr. IIAmbas acciones forman parte de la excepción regulada.",
+            ],
+          ],
+        },
+        {
+          label: "05 · RECUERDA",
+          title: "Una imagen mentalpara recuperar la regla.",
+          body: "La nemotecnia nunca cambia una cifra, sujeto o condición.",
+          guide: "Toca las tres anclas para fijar la regla en memoria.",
+          cards: [
+            [
+              "Artículos 237 y 242",
+              "RANGOArtículos 237 y 242Este es el perímetro completo y evaluable del Learning Path.",
+            ],
+            [
+              "Ayuda de memoria",
+              "CLAVEAyuda de memoriaPara el artículo 237 piensa: preparar → comprobar → volar → comunicar. Para el 242: alcohol 24 h, sustancias con control médico, aptitud física y legal.",
+            ],
+            [
+              "Art. 237, fr. IV",
+              "NO CONFUNDIRArt. 237, fr. IVLa ley dice cuando menos dos veces al año.",
+            ],
+          ],
+        },
+        {
+          label: "06 · PRACTICA",
+          title: "Recupera la reglasin volver a leer.",
+          body: "Responde primero. Comprueba después.",
+          guide: "Responde en voz alta antes de comprobar.",
+          recall: [
+            [
+              "Clasifica las trece fracciones del 237 en cuatro familias.",
+              "Respuesta esperada: Seguridad; documentación/comunicación; disciplina y aptitud; auxilio. La agrupación ayuda a estudiar sin modificar las fracciones.",
+            ],
+            [
+              "Reconstruye la regla de alcohol del artículo 242.",
+              "Respuesta esperada: Prohibido durante el servicio y durante las 24 horas anteriores al inicio de los vuelos asignados. Fracción I.",
+            ],
+            [
+              "Explica la excepción controlada para narcóticos o drogas enervantes.",
+              "Respuesta esperada: Prescripción de especialista en medicina de aviación; antes del servicio, aviso al patrón y presentación de la prescripción. Artículo 242, fracción II.",
+            ],
+          ],
+        },
+        {
+          label: "07 · PONLO A PRUEBA",
+          title: "Decide conla ley vigente.",
+          body: "Cada escenario tiene tres opciones, una respuesta correcta y fundamento.",
+          guide: "Contesta todos los escenarios. La explicación aparece al elegir.",
+          questions: [
+            {
+              q: "¿Con qué frecuencia mínima se exigen los exámenes médicos periódicos? — Decide con la regla vigente y después revisa el fundamento.",
+              options: ["AUna vez al año", "BDos veces al año", "CCada mes"],
+              answer: 1,
+              why: "La obligación es someterse cuando menos dos veces al año. Art. 237, fr. IV",
+              wrong: "La obligación es someterse cuando menos dos veces al año. Art. 237, fr. IV",
+              feedbacks: [
+                "La obligación es someterse cuando menos dos veces al año. Art. 237, fr. IV",
+                "La obligación es someterse cuando menos dos veces al año. Art. 237, fr. IV",
+                "La obligación es someterse cuando menos dos veces al año. Art. 237, fr. IV",
+              ],
+            },
+            {
+              q: "Al terminar el vuelo se presume un defecto mecánico. ¿Qué corresponde? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "AEsperar al siguiente servicio",
+                "BInformarlo al patrón",
+                "CAnotarlo solo si hubo accidente",
+              ],
+              answer: 1,
+              why: "Debe ponerse en conocimiento del patrón al terminar el vuelo. Art. 237, fr. XIII",
+              wrong:
+                "Debe ponerse en conocimiento del patrón al terminar el vuelo. Art. 237, fr. XIII",
+              feedbacks: [
+                "Debe ponerse en conocimiento del patrón al terminar el vuelo. Art. 237, fr. XIII",
+                "Debe ponerse en conocimiento del patrón al terminar el vuelo. Art. 237, fr. XIII",
+                "Debe ponerse en conocimiento del patrón al terminar el vuelo. Art. 237, fr. XIII",
+              ],
+            },
+            {
+              q: "¿Qué debe hacer el piloto al mando con la bitácora? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "AAnotar con exactitud y bajo su responsabilidad los datos exigidos",
+                "BDelegarla siempre",
+                "CRegistrar solo pasajeros",
+              ],
+              answer: 0,
+              why: "La fracción exige exactitud y responsabilidad del piloto al mando. Art. 237, fr. XI",
+              wrong:
+                "La fracción exige exactitud y responsabilidad del piloto al mando. Art. 237, fr. XI",
+              feedbacks: [
+                "La fracción exige exactitud y responsabilidad del piloto al mando. Art. 237, fr. XI",
+                "La fracción exige exactitud y responsabilidad del piloto al mando. Art. 237, fr. XI",
+                "La fracción exige exactitud y responsabilidad del piloto al mando. Art. 237, fr. XI",
+              ],
+            },
+            {
+              q: "¿Cuándo comienza la ventana de prohibición de alcohol previa al vuelo? — Decide con la regla vigente y después revisa el fundamento.",
+              options: ["A6 horas antes", "B12 horas antes", "C24 horas antes"],
+              answer: 2,
+              why: "La ley fija veinticuatro horas anteriores al inicio del vuelo asignado. Art. 242, fr. I",
+              wrong:
+                "La ley fija veinticuatro horas anteriores al inicio del vuelo asignado. Art. 242, fr. I",
+              feedbacks: [
+                "La ley fija veinticuatro horas anteriores al inicio del vuelo asignado. Art. 242, fr. I",
+                "La ley fija veinticuatro horas anteriores al inicio del vuelo asignado. Art. 242, fr. I",
+                "La ley fija veinticuatro horas anteriores al inicio del vuelo asignado. Art. 242, fr. I",
+              ],
+            },
+            {
+              q: "Hay prescripción de un especialista en medicina de aviación. ¿Qué falta antes del servicio? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "ANada",
+                "BAvisar al patrón y presentar la prescripción",
+                "CEsperar 48 horas",
+              ],
+              answer: 1,
+              why: "La excepción exige comunicar el hecho y exhibir la prescripción. Art. 242, fr. II",
+              wrong:
+                "La excepción exige comunicar el hecho y exhibir la prescripción. Art. 242, fr. II",
+              feedbacks: [
+                "La excepción exige comunicar el hecho y exhibir la prescripción. Art. 242, fr. II",
+                "La excepción exige comunicar el hecho y exhibir la prescripción. Art. 242, fr. II",
+                "La excepción exige comunicar el hecho y exhibir la prescripción. Art. 242, fr. II",
+              ],
+            },
+          ],
+        },
+        {
+          label: "08 · ATERRIZAJE",
+          title: "Si puedes explicarlo,ya puedes aplicarlo.",
+          body: "Cierra el recorrido con una comprobación honesta.",
+          guide: "Marca tres ideas que ya puedas explicar sin mirar.",
+          cards: [
+            ["Chequeo final", "Puedo explicar la regla central sin leer."],
+            ["Chequeo final", "Puedo distinguir el supuesto correcto de uno parecido."],
+            ["Chequeo final", "Puedo citar el artículo o fracción aplicable."],
+          ],
+          final: true,
+        },
+      ],
+    },
+  "linea-aerea/legislacion/ley-federal-del-trabajo/suspension-terminacion-y-reglas-especiales-arts-238-a-245-7":
+    {
+      id: "lft-07",
+      folder: "07_Suspension_Terminacion_y_Reglas_Especiales",
+      name: "Suspensión, terminación y reglas especiales",
+      subtitle: "Artículos 238 a 245",
+      year: "Ley Federal del Trabajo",
+      word: "Artículos 238 a 245",
+      sources: [
+        "ART. 238",
+        "ART. 239–240",
+        "ART. 241",
+        "ART. 243",
+        "ART. 244, frs. I–IV",
+        "ART. 244, frs. V–VIII",
+        "ART. 245",
+      ],
+      steps: [
+        {
+          label: "01 · DESPEGUE",
+          title:
+            "Suspensión, terminación y reglas especialesReadiestramiento, escalafón, documentos y causas especiales",
+          body: "Separar reglas de desarrollo profesional, suspensión temporal y terminación o rescisión.",
+          guide: "Hola, soy Mini Yaris. Toca las tres cajas para conocer tu plan de vuelo.",
+          cards: [
+            ["Alcance", "Paso 1AlcanceSolo artículos 238–241 y 243–245.Tócame para descubrir"],
+            ["Fuente", "Paso 2FuenteLFT vigente al 14-05-2026.Tócame para descubrir"],
+            [
+              "Meta",
+              "Paso 3MetaSeparar reglas de desarrollo profesional, suspensión temporal y terminación o rescisión.Tócame para descubrir",
+            ],
+          ],
+          hero: true,
+        },
+        {
+          label: "02 · ENTIENDE",
+          title: "Primero la ley.Después, en palabras simples.",
+          body: "Cada tarjeta separa el contenido normativo de la explicación para estudiar.",
+          guide: "Marca cada tarjeta después de leer la ley y su explicación.",
+          cards: [
+            [
+              "ART. 238",
+              "ART. 238LO QUE DICE LA LEYQuien deja de volar 21 días o más debe someterse al adiestramiento de la categoría que tenía y comprobar capacidad técnica y práctica antes de reanudar.En palabras simplesEl disparador es el tiempo sin volar; el objetivo es recuperar y acreditar capacidad.",
+            ],
+            [
+              "ART. 239–240",
+              "ART. 239–240LO QUE DICE LA LEYEl escalafón considera capacidad técnica, física y mental; experiencia previa; y antigüedad en igualdad de condiciones. Para promoción se exige aprobar el programa de adiestramiento y obtener la licencia requerida.En palabras simplesEscalafón y promoción se relacionan, pero no son idénticos: uno pondera factores y el otro exige requisitos.",
+            ],
+            [
+              "ART. 241",
+              "ART. 241LO QUE DICE LA LEYCon equipo de características técnicas distintas, tripulante y patrón fijarán las condiciones de trabajo.En palabras simplesLa regla se limita a establecer quiénes fijan esas condiciones; no prescribe parámetros técnicos externos.",
+            ],
+            [
+              "ART. 243",
+              "ART. 243LO QUE DICE LA LEYEs causa especial de suspensión, sin responsabilidad para el patrón, la suspensión transitoria de licencias, pasaportes, visas u otros documentos cuando sea imputable al tripulante.En palabras simplesLas claves son transitoria, imputable y suspensión de la relación.",
+            ],
+            [
+              "ART. 244, frs. I–IV",
+              "ART. 244, frs. I–IVLO QUE DICE LA LEYSon causas especiales: cancelación o revocación definitiva de documentos; embriaguez en las 24 h previas o durante el vuelo; influencia de narcóticos salvo la excepción del 242-II; y violaciones de importación o exportación en servicio.En palabras simplesEste bloque agrupa documentos, sustancias y mercancías.",
+            ],
+            [
+              "ART. 244, frs. V–VIII",
+              "ART. 244, frs. V–VIIILO QUE DICE LA LEYTambién: negativa injustificada a auxilio o al servicio; negativa a adiestramiento indispensable; actos u omisiones intencionales o negligentes que pongan en peligro o dañen; incumplir el 237 o violar el 242-III.En palabras simplesEste bloque agrupa negativa, adiestramiento, seguridad e incumplimientos.",
+            ],
+            [
+              "ART. 245",
+              "ART. 245LO QUE DICE LA LEYAntes de aprobar el reglamento interior, la Autoridad Registral recaba la opinión de la Secretaría de Comunicaciones y Transportes para que se observen las disposiciones externas mencionadas.En palabras simplesSe enseña el papel de la Autoridad Registral y la consulta previa; no se desarrolla la normativa externa.",
+            ],
+          ],
+        },
+        {
+          label: "03 · RELACIONA",
+          title: "Mira cómo encajanlas reglas entre sí.",
+          body: "03 · RELACIONAMira cómo encajanlas reglas entre sí.El visual conserva el significado legal sin añadir límites ni criterios externos. 21 días o más sin volarReadiestramiento→PromociónPrograma + licencia→Equipo distintoCondiciones acordadas SUSPENSIÓN · ART. 243Documento suspendido transitoriamenteDebe ser imputable al tripulante; no genera responsabilidad para el patrón.TERMINACIÓN O RESCISIÓN · ART. 244Causas definitivas o gravesOcho fracciones: documentos, sustancias, mercancías, negativas, seguridad e incumplimientos. CapacidadTécnica, física y mentalExperienciaHoras o instrucción y prácticaAntigüedadEn igualdad de condiciones",
+          guide: "Activa las tres claves bajo el visual para completar la relación.",
+          cards: [
+            ["CLAVE 01", "CLAVE 01Readiestramiento tras 21 días"],
+            ["CLAVE 02", "CLAVE 02Factores del escalafón"],
+            ["CLAVE 03", "CLAVE 03Aprobación del reglamento interior"],
+          ],
+        },
+        {
+          label: "04 · SÍ DICE / NO DICE",
+          title: "Separa la reglade la afirmación engañosa.",
+          body: "Piensa tu respuesta antes de revelar el fundamento.",
+          guide: "Decide primero; luego revela cada veredicto.",
+          cards: [
+            [
+              "Dejar de volar exactamente 21 días activa el readiestramiento.",
+              "SÍ DICE · Art. 238La regla dice 21 días o más.",
+            ],
+            [
+              "La antigüedad siempre prevalece sobre capacidad y experiencia.",
+              "NO DICE · Art. 239La antigüedad se considera en igualdad de condiciones.",
+            ],
+            [
+              "La suspensión transitoria imputable de documentos puede suspender la relación sin responsabilidad patronal.",
+              "SÍ DICE · Art. 243Es la causa especial definida por el artículo.",
+            ],
+            [
+              "El artículo 244 trata la suspensión transitoria y el 243 la cancelación definitiva.",
+              "NO DICE · Arts. 243–244Es al revés: 243 regula suspensión transitoria; 244-I, cancelación o revocación definitiva como causa de terminación o rescisión.",
+            ],
+          ],
+        },
+        {
+          label: "05 · RECUERDA",
+          title: "Una imagen mentalpara recuperar la regla.",
+          body: "La nemotecnia nunca cambia una cifra, sujeto o condición.",
+          guide: "Toca las tres anclas para fijar la regla en memoria.",
+          cards: [
+            [
+              "Artículos 238–241 y 243–245",
+              "RANGOArtículos 238–241 y 243–245Este es el perímetro completo y evaluable del Learning Path.",
+            ],
+            [
+              "Ayuda de memoria",
+              "CLAVEAyuda de memoria21 días activa readiestramiento. Para escalafón: capacidad–experiencia–antigüedad. Para documentos: transitorio suspende; definitivo puede terminar o rescindir.",
+            ],
+            [
+              "Art. 239",
+              "NO CONFUNDIRArt. 239La antigüedad se considera en igualdad de condiciones.",
+            ],
+          ],
+        },
+        {
+          label: "06 · PRACTICA",
+          title: "Recupera la reglasin volver a leer.",
+          body: "Responde primero. Comprueba después.",
+          guide: "Responde en voz alta antes de comprobar.",
+          recall: [
+            [
+              "Ordena los tres factores del escalafón.",
+              "Respuesta esperada: Capacidad técnica, física y mental; experiencia previa; antigüedad en igualdad de condiciones. Artículo 239.",
+            ],
+            [
+              "Distingue suspensión de terminación por documentos.",
+              "Respuesta esperada: Suspensión transitoria imputable: artículo 243. Cancelación o revocación definitiva: artículo 244, fracción I.",
+            ],
+            [
+              "Agrupa las ocho causas del artículo 244 por familias.",
+              "Respuesta esperada: Documentos; sustancias/estado; mercancías; negativa a servicio o auxilio; adiestramiento; seguridad; incumplimiento de obligaciones o prohibiciones.",
+            ],
+          ],
+        },
+        {
+          label: "07 · PONLO A PRUEBA",
+          title: "Decide conla ley vigente.",
+          body: "Cada escenario tiene tres opciones, una respuesta correcta y fundamento.",
+          guide: "Contesta todos los escenarios. La explicación aparece al elegir.",
+          questions: [
+            {
+              q: "Un tripulante técnico dejó de volar 21 días. ¿Qué procede? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "AReanudar sin requisito",
+                "BReadiestramiento y comprobación de capacidad",
+                "CSolo examen escrito",
+              ],
+              answer: 1,
+              why: "Debe adiestrarse en su categoría y comprobar capacidad técnica y práctica. Art. 238",
+              wrong:
+                "Debe adiestrarse en su categoría y comprobar capacidad técnica y práctica. Art. 238",
+              feedbacks: [
+                "Debe adiestrarse en su categoría y comprobar capacidad técnica y práctica. Art. 238",
+                "Debe adiestrarse en su categoría y comprobar capacidad técnica y práctica. Art. 238",
+                "Debe adiestrarse en su categoría y comprobar capacidad técnica y práctica. Art. 238",
+              ],
+            },
+            {
+              q: "En igualdad de condiciones, ¿qué factor considera el escalafón? — Decide con la regla vigente y después revisa el fundamento.",
+              options: ["AAntigüedad", "BRuta preferida", "CLugar de residencia"],
+              answer: 0,
+              why: "La antigüedad opera en igualdad de condiciones. Art. 239, fr. III",
+              wrong: "La antigüedad opera en igualdad de condiciones. Art. 239, fr. III",
+              feedbacks: [
+                "La antigüedad opera en igualdad de condiciones. Art. 239, fr. III",
+                "La antigüedad opera en igualdad de condiciones. Art. 239, fr. III",
+                "La antigüedad opera en igualdad de condiciones. Art. 239, fr. III",
+              ],
+            },
+            {
+              q: "¿Qué exige la promoción de especialidad? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "ASolo antigüedad",
+                "BAprobar adiestramiento y obtener licencia",
+                "CÚnicamente horas de ruta",
+              ],
+              answer: 1,
+              why: "La promoción requiere ambas condiciones. Art. 240",
+              wrong: "La promoción requiere ambas condiciones. Art. 240",
+              feedbacks: [
+                "La promoción requiere ambas condiciones. Art. 240",
+                "La promoción requiere ambas condiciones. Art. 240",
+                "La promoción requiere ambas condiciones. Art. 240",
+              ],
+            },
+            {
+              q: "Una licencia queda suspendida transitoriamente por causa imputable al tripulante. ¿Cómo se clasifica? — Decide con la regla vigente y después revisa el fundamento.",
+              options: ["ASuspensión especial", "BVacaciones", "CPago extraordinario"],
+              answer: 0,
+              why: "Es causa especial de suspensión sin responsabilidad para el patrón. Art. 243",
+              wrong: "Es causa especial de suspensión sin responsabilidad para el patrón. Art. 243",
+              feedbacks: [
+                "Es causa especial de suspensión sin responsabilidad para el patrón. Art. 243",
+                "Es causa especial de suspensión sin responsabilidad para el patrón. Art. 243",
+                "Es causa especial de suspensión sin responsabilidad para el patrón. Art. 243",
+              ],
+            },
+            {
+              q: "La licencia se cancela definitivamente. ¿En qué bloque entra? — Decide con la regla vigente y después revisa el fundamento.",
+              options: ["AReadiestramiento", "BTerminación o rescisión", "CPago fuera de base"],
+              answer: 1,
+              why: "La cancelación o revocación definitiva es causa especial de terminación o rescisión. Art. 244, fr. I",
+              wrong:
+                "La cancelación o revocación definitiva es causa especial de terminación o rescisión. Art. 244, fr. I",
+              feedbacks: [
+                "La cancelación o revocación definitiva es causa especial de terminación o rescisión. Art. 244, fr. I",
+                "La cancelación o revocación definitiva es causa especial de terminación o rescisión. Art. 244, fr. I",
+                "La cancelación o revocación definitiva es causa especial de terminación o rescisión. Art. 244, fr. I",
+              ],
+            },
+            {
+              q: "Antes de aprobar el reglamento interior, ¿qué hace la Autoridad Registral? — Decide con la regla vigente y después revisa el fundamento.",
+              options: [
+                "AFija salarios",
+                "BRecaba la opinión de la Secretaría de Comunicaciones y Transportes",
+                "CExpide licencias",
+              ],
+              answer: 1,
+              why: "La consulta previa es la función descrita por el artículo. Art. 245",
+              wrong: "La consulta previa es la función descrita por el artículo. Art. 245",
+              feedbacks: [
+                "La consulta previa es la función descrita por el artículo. Art. 245",
+                "La consulta previa es la función descrita por el artículo. Art. 245",
+                "La consulta previa es la función descrita por el artículo. Art. 245",
+              ],
+            },
+          ],
+        },
+        {
+          label: "08 · ATERRIZAJE",
+          title: "Si puedes explicarlo,ya puedes aplicarlo.",
+          body: "Cierra el recorrido con una comprobación honesta.",
+          guide: "Marca tres ideas que ya puedas explicar sin mirar.",
+          cards: [
+            ["Chequeo final", "Puedo explicar la regla central sin leer."],
+            ["Chequeo final", "Puedo distinguir el supuesto correcto de uno parecido."],
+            ["Chequeo final", "Puedo citar el artículo o fracción aplicable."],
+          ],
+          final: true,
+        },
+      ],
+    },
+  "linea-aerea/legislacion/ley-aduanera/control-de-aduana-en-el-despacho-art-20-1": {
+    id: "ley-aduanera-01",
+    folder: "01_Control_de_Aduana_en_el_Despacho",
+    name: "Control de Aduana en el Despacho",
+    subtitle: "Línea Aérea · Aeroméxico Connect · Artículo 20",
+    year: "Ley Aduanera",
+    word: "Artículo 20",
+    sources: ["Artículo 20"],
+    steps: [
+      {
+        label: "Despegue · Mapa del artículo",
+        title: "Control de Aduanaen el Despacho.",
+        body: "01 · DespegueControl de Aduanaen el Despacho.El artículo 20 asigna obligaciones a quienes transportan mercancías que entran o salen del territorio nacional.El recorrido sigue una sola pregunta: ¿quién debe hacer qué, cuándo, ante quién y bajo qué condición?FuenteArtículo 20Ruta8 misionesSecuenciaEntiende → aplica Misión · ExploraAbre el mapa del artículo 200 / 3 descubiertas",
+        guide:
+          "Toca las tres cajas para ubicar sujetos, control y trazabilidad antes de memorizar obligaciones.",
+        refs: ["Artículo 20"],
+        cards: [
+          [
+            "Sujetos",
+            "¿Quién?SujetosPorteadoras, representantes, capitanes, pilotos, conductores y propietarios de los medios de transporte.",
+          ],
+          [
+            "Control",
+            "¿Qué?ControlPoner a disposición, aplicar medidas, exhibir documentos y cumplir obligaciones específicas.",
+          ],
+          [
+            "Trazabilidad",
+            "¿Cuándo?TrazabilidadAntes del arribo o salida, al arribar, cuando la autoridad requiera y antes de zarpar, según el caso.",
+          ],
+        ],
+        hero: true,
+      },
+      {
+        label: "¿Quién está obligado?",
+        title: "Los sujetos del artículo 20.",
+        body: "02 · ¿Quién?Los sujetos del artículo 20.El encabezado delimita a quiénes alcanza la lista general de obligaciones. Lo que dice la ley“Las empresas porteadoras y sus representantes en territorio nacional, los capitanes, pilotos, conductores y propietarios... están obligados a:”Artículo 20, párrafo primero En palabras simplesLa lista principal recae en quienes operan, representan o son propietarios de los medios que transportan mercancías de entrada o salida.Explicación pedagógica; no es cita literal. Grupo 1Empresas porteadorasTambién aparecen sus representantes en territorio nacional.Grupo 2Quienes conducenCapitanes, pilotos y conductores de los medios de transporte.Grupo 3PropietariosPropietarios de los medios de transporte de las mercancías de entrada o salida.Misión · Aplica¿Quién es responsable?Resuelve todos los casos",
+        guide:
+          "Identifica primero al sujeto. El artículo no impone todas las obligaciones a cualquier persona.",
+        refs: ["Artículo 20"],
+        questions: [
+          {
+            q: "Una aeronave transporta mercancías de salida. ¿Qué conjunto aparece expresamente en el encabezado del artículo?",
+            options: [
+              "Porteadora, piloto y propietario",
+              "Únicamente el pasajero",
+              "Cualquier persona dentro del aeropuerto",
+            ],
+            answer: 0,
+            why: "Los tres aparecen en el encabezado, junto con otros sujetos. Fundamento: Artículo 20, párrafo primero.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "Los tres aparecen en el encabezado, junto con otros sujetos. Fundamento: Artículo 20, párrafo primero.",
+              "El pasajero no integra la lista general del encabezado. Fundamento: Artículo 20, párrafo primero.",
+              "El artículo identifica sujetos concretos vinculados con el medio de transporte. Fundamento: Artículo 20, párrafo primero.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "Control e inspección",
+        title: "Tres funciones de control aduanero.",
+        body: "03 · Fracciones I a IIITres funciones de control aduanero.No son una secuencia automática: cada obligación tiene su propio detonante o condición.Fracción IPoner a disposiciónMedios de transporte y mercancías para inspección o verificación, en el lugar señalado para ello.Fracción IIAplicar medidasLas medidas que señalen las autoridades aduaneras para prevenir y asegurar el cumplimiento en los vehículos.Fracción IIIExhibir documentosLos documentos que amparen medios y mercancías, cuando las autoridades aduaneras los requieran. Lo que dice la ley“Exhibir, cuando las autoridades aduaneras lo requieran, los documentos...”Artículo 20, fracción III En palabras simplesLa exhibición documental no se presenta aquí como obligación permanente: se activa cuando la autoridad la requiere.Explicación pedagógica; no es cita literal. Misión · Aplica¿Qué obligación aplica?Resuelve todos los casos",
+        guide:
+          "Relaciona cada obligación con su condición: lugar señalado, medida indicada o requerimiento de la autoridad.",
+        refs: ["Artículo 20"],
+        questions: [
+          {
+            q: "“La documentación debe exhibirse siempre, aun sin requerimiento de la autoridad.”",
+            options: ["Sí dice", "No dice", "El artículo no habla de documentos"],
+            answer: 1,
+            why: "La obligación se activa cuando las autoridades aduaneras requieren los documentos. Fundamento: Artículo 20, fracción III.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "La fracción III incluye expresamente la condición “cuando... lo requieran”. Fundamento: Artículo 20, fracción III.",
+              "La obligación se activa cuando las autoridades aduaneras requieren los documentos. Fundamento: Artículo 20, fracción III.",
+              "Sí habla de ellos en la fracción III. Fundamento: Artículo 20, fracción III.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "Mercancías y venta",
+        title: "Condiciones especiales durante el transporte.",
+        body: "04 · Fracciones IV a VICondiciones especiales durante el transporte.La fracción IV está derogada. Las fracciones V y VI contienen reglas distintas. Lo que dice la ley“Colocar en los bultos... las marcas o símbolos que son obligatorios internacionalmente, cuando el documento... señale que se trata de este tipo de mercancías.”Artículo 20, fracción V En palabras simplesSi el documento de transporte identifica mercancías explosivas, inflamables, contaminantes, radiactivas o radioactivas, o corrosivas, los bultos deben llevar las marcas internacionales obligatorias.Explicación pedagógica; no es cita literal. Fracción IVDerogadaEl PDF oficial muestra la fracción como derogada; no se reconstruye su contenido.Fracción VMarcar bultosLa condición es que el documento de transporte señale el tipo de mercancía especial.Fracción VIEvitar la ventaDe mercancías de procedencia extranjera en embarcaciones o aeronaves una vez en territorio nacional.Misión · AplicaClasifica el escenarioResuelve todos los casos",
+        guide:
+          "Distingue la condición documental de las marcas y la prohibición de venta una vez dentro del territorio nacional.",
+        refs: ["Artículo 20"],
+        questions: [
+          {
+            q: "El documento de transporte indica que un bulto contiene mercancía corrosiva. ¿Qué exige el artículo?",
+            options: [
+              "Colocar las marcas internacionales obligatorias",
+              "Venderla a bordo al entrar al país",
+              "No hacer nada porque el bulto está cerrado",
+            ],
+            answer: 0,
+            why: "La condición documental activa la obligación de marcado. Fundamento: Artículo 20, fracciones V y VI.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "La condición documental activa la obligación de marcado. Fundamento: Artículo 20, fracciones V y VI.",
+              "La fracción VI ordena evitar esa venta de mercancía extranjera. Fundamento: Artículo 20, fracciones V y VI.",
+              "La fracción V se refiere precisamente a los bultos transportados. Fundamento: Artículo 20, fracciones V y VI.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "Transmitir y comunicar",
+        title: "Antes del arribo y al arribar.",
+        body: "05 · Fracciones VII y VIIIAntes del arribo y al arribar.El artículo distingue dos obligaciones de información relacionadas, pero no idénticas. Lo que dice la ley“Transmitir en documento electrónico... antes de su arribo al territorio nacional o la salida del mismo...”Artículo 20, fracción VII En palabras simplesLa información sobre mercancía y transportación se transmite electrónicamente antes del arribo o de la salida. Se tiene por transmitida cuando se genera el acuse.Explicación pedagógica; no es cita literal. Fracción VII · elementos completosDestinatariosAutoridades aduaneras y titulares de los recintos fiscalizados.MomentoAntes del arribo al territorio nacional o de la salida del mismo.ConfirmaciónLa transmisión se entiende realizada cuando se genera el acuse respectivo.Conducto autorizadoPuede efectuarse por personas autorizadas por los obligados.AcuseDebe declararse en el pedimento para los efectos de la remisión mencionada por la propia fracción.Fracción VIIIComunicar el arriboA las autoridades aduaneras y a los recintos fiscalizados, en los términos que establezca el SAT mediante reglas. RemisiónLa fracción VII remite al artículo 36 y a otras disposiciones; las fracciones VII y VIII remiten a reglas del SAT. Este Learning Path no desarrolla esas normas.",
+        guide:
+          "No confundas transmitir información antes del arribo con comunicar el arribo de las mercancías.",
+        refs: ["Artículo 20"],
+        order: [
+          "Transmitir antes del arribo o salida",
+          "Generar acuse",
+          "Declarar el acuse en el pedimento",
+        ],
+      },
+      {
+        label: "Obligaciones específicas",
+        title: "Reglas por función y tipo de operación.",
+        body: "06 · Fracciones IX y X · Párrafos finalesReglas por función y tipo de operación.Después de la lista general, el artículo añade deberes para sujetos y operaciones concretos.Fracción IXPasajeros internacionalesLas empresas de transporte internacional de pasajeros deben proporcionar la forma oficial de declaración señalada en el artículo 50.Fracción XRegistro de porteadorasLas empresas porteadoras deben inscribirse en el registro que establezca el SAT mediante reglas.Tráfico marítimoCréditos fiscalesLos capitanes deben además pagar los créditos fiscales causados por la embarcación.Antes de zarparRelación de equipo especialEl capitán o agente naviero consignatario general o de buques la presenta a la autoridad; puede corregirse antes de zarpar.RepresentaciónDesignar representanteLas empresas porteadoras deben designarlo ante el SAT en territorio nacional para las responsabilidades de la Ley.Límite del cursoRemisiones no desarrolladasLos artículos 31 y 50, y las reglas del SAT, se identifican como remisiones sin explicarlas.Misión · Aplica¿A quién corresponde?Resuelve todos los casos",
+        guide: "Separa las obligaciones de empresas de pasajeros, porteadoras y tráfico marítimo.",
+        refs: ["Artículo 20"],
+        questions: [
+          {
+            q: "¿Quién debe proporcionar a los pasajeros la forma oficial de declaración mencionada por la ley?",
+            options: [
+              "La empresa de transporte internacional de pasajeros",
+              "Cualquier propietario de mercancías",
+              "El pasajero a otro pasajero",
+            ],
+            answer: 0,
+            why: "Es la obligación específica de la fracción IX. Fundamento: Artículo 20, fracción IX.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "Es la obligación específica de la fracción IX. Fundamento: Artículo 20, fracción IX.",
+              "La fracción IX identifica a una empresa de servicio internacional de pasajeros. Fundamento: Artículo 20, fracción IX.",
+              "El sujeto obligado es la empresa que presta el servicio. Fundamento: Artículo 20, fracción IX.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "Sí dice / No dice",
+        title: "Lo que está escrito y lo que no.",
+        body: "07 · VerificaciónLo que está escrito y lo que no.Responde sin completar la ley con práctica operativa o conocimiento externo.Misión · AplicaSí dice / No diceTres afirmaciones",
+        guide: "Estas afirmaciones suenan plausibles. Decide solo con el texto del artículo 20.",
+        refs: ["Artículo 20"],
+        questions: [
+          {
+            q: "El acuse confirma la transmisión electrónica prevista en la fracción VII.",
+            options: ["Sí dice", "No dice", "Solo para tráfico marítimo"],
+            answer: 0,
+            why: "La transmisión se entiende realizada una vez generado el acuse. Fundamento: Artículo 20, fracción VII.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "La transmisión se entiende realizada una vez generado el acuse. Fundamento: Artículo 20, fracción VII.",
+              "La relación entre transmisión y acuse sí aparece expresamente. Fundamento: Artículo 20, fracción VII.",
+              "La fracción VII forma parte de la lista general. Fundamento: Artículo 20, fracción VII.",
+            ],
+          },
+          {
+            q: "La fracción V obliga a marcar cualquier bulto, aunque el documento no identifique mercancía especial.",
+            options: ["Sí dice", "No dice", "La fracción está derogada"],
+            answer: 1,
+            why: "El deber se vincula a que el documento señale uno de los tipos de mercancía enumerados. Fundamento: Artículo 20, fracciones IV y V.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "La fracción contiene una condición documental expresa. Fundamento: Artículo 20, fracciones IV y V.",
+              "El deber se vincula a que el documento señale uno de los tipos de mercancía enumerados. Fundamento: Artículo 20, fracciones IV y V.",
+              "La derogada es la IV, no la V. Fundamento: Artículo 20, fracciones IV y V.",
+            ],
+          },
+          {
+            q: "Una persona autorizada por el obligado puede efectuar la transmisión de la fracción VII.",
+            options: ["Sí dice", "No dice", "Solo puede hacerlo el SAT"],
+            answer: 0,
+            why: "La propia fracción permite ese conducto autorizado. Fundamento: Artículo 20, fracción VII.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "La propia fracción permite ese conducto autorizado. Fundamento: Artículo 20, fracción VII.",
+              "La posibilidad aparece expresamente. Fundamento: Artículo 20, fracción VII.",
+              "El SAT establece términos y condiciones mediante reglas; no es el único transmisor indicado. Fundamento: Artículo 20, fracción VII.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "Aterrizaje · Recupera",
+        title: "Reconstruye el artículo 20.",
+        body: "08 · Active recallReconstruye el artículo 20.La meta no es repetir diez fracciones de memoria, sino recuperar sujeto, acción, momento, destinatario y condición.Misión · AplicaExplica sin mirarRecuperación activa En tus palabras: explica la diferencia entre transmitir información, comunicar el arribo y exhibir documentos.Marca cada afirmación solo si puedes explicarla sin volver arriba.Puedo identificar a los sujetos del encabezado sin agregar otros.Puedo explicar la condición de las marcas para mercancías especiales.Puedo distinguir las obligaciones generales de las específicas para pasajeros, porteadoras y tráfico marítimo.Versión consultada: PDF con última reforma DOF 19-11-2025. El artículo muestra reformas y adiciones específicas: párrafo primero, fracciones I y III, VII y VIII (reformadas en 2013); fracción IV derogada en 2013; fracción V reformada en 2018; IX y X adicionadas en 2013; y párrafos marítimo/representación con sus notas del PDF.Ruta lista para aterrizarAl tocar Terminar quedará registrada la finalización de este Learning Path. Todo el contenido proviene únicamente del artículo 20 del PDF proporcionado.",
+        guide:
+          "Reconstruye la regla sin copiarla. Después marca únicamente lo que ya puedes explicar.",
+        refs: ["Artículo 20"],
+        cards: [
+          ["Chequeo final", "Puedo identificar a los sujetos del encabezado sin agregar otros."],
+          [
+            "Chequeo final",
+            "Puedo explicar la condición de las marcas para mercancías especiales.",
+          ],
+          [
+            "Chequeo final",
+            "Puedo distinguir las obligaciones generales de las específicas para pasajeros, porteadoras y tráfico marítimo.",
+          ],
+        ],
+        recall: [
+          [
+            "En tus palabras: explica la diferencia entre transmitir información, comunicar el arribo y exhibir documentos.",
+            "Elementos que debiste recuperar: Transmitir: información electrónica antes del arribo o salida y confirmada por acuse (VII). Comunicar: el arribo de las mercancías (VIII). Exhibir: documentos cuando la autoridad los requiera (III).",
+          ],
+        ],
+        final: true,
+      },
+    ],
+  },
+  "linea-aerea/legislacion/ley-aduanera/contribuciones-cuotas-compensatorias-y-demas-regulaciones-al-comercio--2":
+    {
+      id: "ley-aduanera-02",
+      folder: "02_Contribuciones_Cuotas_y_Regulaciones",
+      name: "Contribuciones, Cuotas Compensatorias y Demás Regulaciones al Comercio Exterior",
+      subtitle: "Línea Aérea · Aeroméxico Connect · Artículo 53",
+      year: "Ley Aduanera",
+      word: "Artículo 53",
+      sources: ["Artículo 53"],
+      steps: [
+        {
+          label: "Despegue · Alcance real",
+          title: "Contribuciones, Cuotas Compensatoriasy Demás Regulaciones al Comercio Exterior.",
+          body: "01 · DespegueContribuciones, Cuotas Compensatoriasy Demás Regulaciones al Comercio Exterior.Dentro del título de Connect, este Learning Path enseña únicamente la responsabilidad solidaria regulada por el artículo 53.La pregunta guía es: ¿qué sujetos responden, por qué conceptos, bajo qué condición y con qué alcance?FuenteArtículo 53FraccionesI a XNotaVIII derogada Misión · ExploraDelimita el artículo 530 / 3 descubiertas",
+          guide:
+            "Abre las tres cajas para ver qué sí cubre el artículo 53 y qué queda fuera del recorrido.",
+          refs: ["Artículo 53"],
+          cards: [
+            [
+              "Responsabilidad solidaria",
+              "MateriaResponsabilidad solidariaEl artículo identifica sujetos que responden por pagos causados por la entrada o salida de mercancías.",
+            ],
+            [
+              "Impuestos, contribuciones y cuotas",
+              "ConceptosImpuestos, contribuciones y cuotasSon los conceptos de pago expresamente señalados por el párrafo inicial.",
+            ],
+            [
+              "No desarrolla regulaciones",
+              "LímiteNo desarrolla regulacionesLas remisiones a otras leyes, reglamentos o artículos se señalan, pero no se explican aquí.",
+            ],
+          ],
+          hero: true,
+        },
+        {
+          label: "Regla central y alcance",
+          title: "¿De qué pago se responde?",
+          body: "02 · Regla central¿De qué pago se responde?El primer párrafo y el párrafo final enmarcan todas las fracciones. Lo que dice la ley“Son responsables solidarios del pago de los impuestos al comercio exterior y de las demás contribuciones, así como de las cuotas compensatorias...”Artículo 53, párrafo primero En palabras simplesLos sujetos enumerados pueden quedar vinculados al pago causado por introducir mercancías al territorio nacional o extraerlas de él, según el supuesto que les corresponda.Explicación pedagógica; no es cita literal. Concepto 1Impuestos al comercio exteriorEl artículo los incluye expresamente; no explica cómo se calculan.Concepto 2Demás contribucionesLa responsabilidad se extiende a las demás contribuciones mencionadas en el párrafo.Concepto 3Cuotas compensatoriasTambién quedan incluidas cuando se causen por la introducción o extracción. Lo que dice la ley“La responsabilidad solidaria comprenderá los accesorios, con excepción de las multas.”Artículo 53, párrafo final En palabras simplesIncluye accesorios, pero no multas. Aun así, cada responsable puede ser sancionado por sus propios actos u omisiones.Explicación pedagógica; no es cita literal. Misión · AplicaCompleta el alcanceResuelve todos los casos",
+          guide:
+            "Antes de estudiar sujetos, fija los conceptos cubiertos y el alcance final de la responsabilidad.",
+          refs: ["Artículo 53"],
+          questions: [
+            {
+              q: "“La responsabilidad solidaria del artículo 53 incluye las multas.”",
+              options: ["Sí dice", "No dice", "Solo las multas marítimas"],
+              answer: 1,
+              why: "Comprende accesorios, con excepción de las multas. Fundamento: Artículo 53, párrafo final.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "El párrafo final establece expresamente una excepción. Fundamento: Artículo 53, párrafo final.",
+                "Comprende accesorios, con excepción de las multas. Fundamento: Artículo 53, párrafo final.",
+                "El artículo no formula esa distinción. Fundamento: Artículo 53, párrafo final.",
+              ],
+            },
+          ],
+        },
+        {
+          label: "Mandatarios y agencias",
+          title: "Representación y operación aduanera.",
+          body: "03 · Fracciones I y IIRepresentación y operación aduanera.La responsabilidad se conecta con actos realizados o con operaciones en las que se interviene.Fracción IMandatariosResponden por los actos que personalmente realicen conforme al mandato.Fracción IIAgentes y agencias aduanalesTambién sus mandatarios autorizados, por lo originado en operaciones donde intervengan personalmente o mediante mandatarios o empleados autorizados.Párrafo de la IIAgentes sociosLos agentes aduanales socios responden por impuestos, demás contribuciones y cuotas de las operaciones realizadas por la agencia.Socios de la agencia aduanalCuándoRespecto de contribuciones causadas por las actividades de la agencia.Qué parteLa del interés fiscal que no alcance a garantizarse con bienes de la agencia.TopeNo excede la participación del socio en el capital social durante el periodo o a la fecha de que se trate.Cálculo expresado por la leyPorcentaje de participación en el capital social suscrito al momento de la causación, multiplicado por la contribución omitida.Misión · Aplica¿A quién corresponde?Resuelve todos los casos",
+          guide:
+            "Distingue al mandatario, a quienes intervienen en operaciones aduaneras y a los socios de la agencia.",
+          refs: ["Artículo 53"],
+          questions: [
+            {
+              q: "Un mandatario realiza personalmente un acto conforme al mandato. ¿Qué fracción lo identifica?",
+              options: ["Fracción I", "Fracción VI", "Fracción IX"],
+              answer: 0,
+              why: "La fracción I formula exactamente ese supuesto. Fundamento: Artículo 53, fracción I.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "La fracción I formula exactamente ese supuesto. Fundamento: Artículo 53, fracción I.",
+                "La VI se refiere a almacenes o locales de exposiciones. Fundamento: Artículo 53, fracción I.",
+                "La IX se refiere a poseedores y tenedores de mercancías temporales. Fundamento: Artículo 53, fracción I.",
+              ],
+            },
+          ],
+        },
+        {
+          label: "Transporte",
+          title: "Quienes operan medios de transporte.",
+          body: "04 · Fracción IIIQuienes operan medios de transporte.Aquí aparecen propietarios, empresarios, pilotos, capitanes y conductores. Lo que dice la ley“...cuando dichas personas no cumplan las obligaciones que les imponen las leyes a que se refiere el artículo 1o. de esta Ley, o sus reglamentos.”Artículo 53, fracción III En palabras simplesPara el supuesto general de transporte, la responsabilidad se vincula al incumplimiento de las obligaciones indicadas por la propia fracción.Explicación pedagógica; no es cita literal. Tránsito de mercancíasSujetosPropietarios y empresarios de medios de transporte público.Condición específicaÚnicamente son responsables cuando no cuenten con documentación que acredite la legal estancia en el país de las mercancías transportadas.ConceptoPor los conceptos que causen las mercancías que transporten, conforme al alcance del artículo.Misión · AplicaAplica la condiciónResuelve todos los casos RemisiónLa fracción III remite al artículo 1o. de la Ley y a reglamentos. Este Learning Path no desarrolla esas disposiciones.",
+          guide:
+            "La fracción III contiene una regla general y una condición especial para el tránsito de mercancías.",
+          refs: ["Artículo 53"],
+          questions: [
+            {
+              q: "En tránsito, un medio de transporte público sí cuenta con documentación que acredita la legal estancia. ¿La condición específica de responsabilidad de la fracción III se cumple?",
+              options: ["Sí", "No", "Siempre, sin excepción"],
+              answer: 1,
+              why: "Al existir la documentación, no se actualiza la condición específica descrita para ese tránsito. Fundamento: Artículo 53, fracción III.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "La fracción señala responsabilidad únicamente cuando no cuenten con esa documentación. Fundamento: Artículo 53, fracción III.",
+                "Al existir la documentación, no se actualiza la condición específica descrita para ese tránsito. Fundamento: Artículo 53, fracción III.",
+                "La palabra “únicamente” introduce una condición expresa. Fundamento: Artículo 53, fracción III.",
+              ],
+            },
+          ],
+        },
+        {
+          label: "Remitentes, venta y depósito",
+          title: "Tres vínculos con las mercancías.",
+          body: "05 · Fracciones IV a VITres vínculos con las mercancías.Cada fracción responde a una relación distinta con la operación o con las mercancías.Fracción IVRemitentes desde fronteraResponden por diferencias de contribuciones al enviar mercancías de la franja o región fronteriza al resto del país.Fracción VQuienes enajenanEn casos de subrogación establecidos por la Ley, por lo causado por las mercancías de importación o exportación.Fracción VIAlmacenes o local de exposicionesPor mercancías no arribadas o faltantes; y por sobrantes cuando no presenten los avisos mencionados por la fracción.Excepción de la fracción VINo arribo o faltanteNo genera este supuesto cuando se origine por caso fortuito o fuerza mayor.SobrantesLa fracción vincula la responsabilidad a no presentar los avisos a que remite el artículo 119.Misión · AplicaCondición o excepciónResuelve todos los casos RemisiónLa fracción VI remite al artículo 119 para los avisos de mercancías sobrantes. Aquí solo se conserva la remisión.",
+          guide:
+            "Compara los supuestos: envío desde frontera, enajenación con subrogación y mercancías faltantes o sobrantes.",
+          refs: ["Artículo 53"],
+          questions: [
+            {
+              q: "Un faltante en un almacén general de depósito se originó por fuerza mayor. ¿Qué indica la fracción VI?",
+              options: [
+                "Opera la excepción",
+                "Siempre hay responsabilidad",
+                "La fracción VI está derogada",
+              ],
+              answer: 0,
+              why: "La fracción exceptúa faltantes originados por caso fortuito o fuerza mayor. Fundamento: Artículo 53, fracción VI.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "La fracción exceptúa faltantes originados por caso fortuito o fuerza mayor. Fundamento: Artículo 53, fracción VI.",
+                "Eso eliminaría la excepción escrita. Fundamento: Artículo 53, fracción VI.",
+                "La derogada es la VIII. Fundamento: Artículo 53, fracción VI.",
+              ],
+            },
+          ],
+        },
+        {
+          label: "Custodia y temporales",
+          title: "Servicios, posesión y transferencias.",
+          body: "06 · Fracciones VII a XServicios, posesión y transferencias.El tramo final agrega sujetos vinculados con custodia y mercancías importadas temporalmente.Fracción VIIConcesionarios o autorizadosQuienes prestan manejo, almacenaje y custodia, cuando incumplen las obligaciones de las fracciones VII y VIII del artículo 26.Fracción VIIIDerogadaEl PDF oficial la muestra derogada. No se reconstruye ni sustituye.Fracción IXPoseedores y tenedoresDe mercancías importadas temporalmente por residentes en el extranjero. Lo que dice la ley“Los que transfieran mercancías importadas temporalmente... sin importar que éstas se transfieran una o más veces.”Artículo 53, fracción X En palabras simplesQuienes transfieren esas mercancías responden por lo causado por ellas, aunque la transferencia ocurra una o varias veces.Explicación pedagógica; no es cita literal. Misión · Aplica¿A quién corresponde?Resuelve todos los casos RemisiónLa fracción VII remite al artículo 26; la X remite a esta Ley y demás disposiciones jurídicas aplicables. No se desarrollan esas fuentes externas.",
+          guide: "Recorre VII, VIII, IX y X sin llenar el espacio de la fracción derogada.",
+          refs: ["Artículo 53"],
+          questions: [
+            {
+              q: "Una mercancía importada temporalmente se transfiere por segunda vez. ¿La frase final de la fracción X excluye esa segunda transferencia?",
+              options: [
+                "Sí, la excluye",
+                "No, no la excluye",
+                "Solo aplica a mercancía definitiva",
+              ],
+              answer: 1,
+              why: "El número de transferencias no elimina el supuesto descrito. Fundamento: Artículo 53, fracción X.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "La fracción dice “sin importar” que se transfieran una o más veces. Fundamento: Artículo 53, fracción X.",
+                "El número de transferencias no elimina el supuesto descrito. Fundamento: Artículo 53, fracción X.",
+                "La fracción se refiere expresamente a mercancías importadas temporalmente. Fundamento: Artículo 53, fracción X.",
+              ],
+            },
+          ],
+        },
+        {
+          label: "Sí dice / No dice",
+          title: "Responsabilidad con condiciones reales.",
+          body: "07 · VerificaciónResponsabilidad con condiciones reales.Usa únicamente el texto del artículo 53.Misión · AplicaSí dice / No diceTres afirmaciones",
+          guide:
+            "Detecta afirmaciones que suenan razonables, pero cambian una condición o una excepción.",
+          refs: ["Artículo 53"],
+          questions: [
+            {
+              q: "Los socios de la agencia responden sin límite, aunque su participación en el capital sea menor.",
+              options: ["Sí dice", "No dice", "La ley no menciona socios"],
+              answer: 1,
+              why: "La responsabilidad no debe exceder esa participación en el periodo o fecha aplicable. Fundamento: Artículo 53, fracción II.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "El artículo fija un límite vinculado con la participación en el capital social. Fundamento: Artículo 53, fracción II.",
+                "La responsabilidad no debe exceder esa participación en el periodo o fecha aplicable. Fundamento: Artículo 53, fracción II.",
+                "Sí los regula dentro de la fracción II. Fundamento: Artículo 53, fracción II.",
+              ],
+            },
+            {
+              q: "La fracción VIII contiene actualmente un sujeto responsable específico.",
+              options: ["Sí dice", "No dice", "Solo si hay tránsito"],
+              answer: 1,
+              why: "No debe reconstruirse contenido donde la fracción está derogada. Fundamento: Artículo 53, fracción VIII.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "El PDF señala “Derogada”. Fundamento: Artículo 53, fracción VIII.",
+                "No debe reconstruirse contenido donde la fracción está derogada. Fundamento: Artículo 53, fracción VIII.",
+                "El estado de la fracción no depende del tránsito. Fundamento: Artículo 53, fracción VIII.",
+              ],
+            },
+            {
+              q: "La exclusión de multas impide sancionar actos u omisiones propios.",
+              options: ["Sí dice", "No dice", "Solo aplica a mandatarios"],
+              answer: 1,
+              why: "Los responsables pueden ser sancionados por actos u omisiones propios. Fundamento: Artículo 53, párrafo final.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "El párrafo final aclara expresamente lo contrario. Fundamento: Artículo 53, párrafo final.",
+                "Los responsables pueden ser sancionados por actos u omisiones propios. Fundamento: Artículo 53, párrafo final.",
+                "El párrafo final formula el alcance general. Fundamento: Artículo 53, párrafo final.",
+              ],
+            },
+          ],
+        },
+        {
+          label: "Aterrizaje · Recupera",
+          title: "Reconstruye la responsabilidad solidaria.",
+          body: "08 · Active recallReconstruye la responsabilidad solidaria.Explica la estructura del artículo, no definiciones fiscales externas.Misión · AplicaExplica sin mirarRecuperación activa Elige tres sujetos distintos y reconstruye para cada uno: quién es, qué condición activa el supuesto y por qué conceptos responde.Marca cada afirmación solo si puedes explicarla sin volver arriba.Puedo enumerar los conceptos de pago sin explicar cálculos que el artículo no contiene.Puedo distinguir la excepción de tránsito de la fracción III y la excepción de fuerza mayor de la VI.Puedo explicar que los accesorios se incluyen, las multas se excluyen y los actos propios aún pueden sancionarse.Versión consultada: PDF con última reforma DOF 19-11-2025. El artículo 53 muestra reformas de 2025 en la fracción II, la fracción VI, la fracción X y el párrafo final; conserva además las notas históricas visibles en el PDF para las restantes fracciones.Responsabilidad delimitadaAl tocar Terminar quedará registrada la finalización. El contenido se limita al artículo 53 y no desarrolla las normas a las que remite.",
+          guide:
+            "Reconstruye sujeto, condición y alcance. Evita convertir el título amplio del temario en contenido que el artículo no contiene.",
+          refs: ["Artículo 53"],
+          cards: [
+            [
+              "Chequeo final",
+              "Puedo enumerar los conceptos de pago sin explicar cálculos que el artículo no contiene.",
+            ],
+            [
+              "Chequeo final",
+              "Puedo distinguir la excepción de tránsito de la fracción III y la excepción de fuerza mayor de la VI.",
+            ],
+            [
+              "Chequeo final",
+              "Puedo explicar que los accesorios se incluyen, las multas se excluyen y los actos propios aún pueden sancionarse.",
+            ],
+          ],
+          recall: [
+            [
+              "Elige tres sujetos distintos y reconstruye para cada uno: quién es, qué condición activa el supuesto y por qué conceptos responde.",
+              "Elementos que debiste recuperar: Ejemplos válidos: mandatario por actos personales conforme al mandato (I); transportista bajo la condición de incumplimiento y la regla especial de tránsito (III); almacén por no arribadas/faltantes con excepción de caso fortuito o fuerza mayor, o sobrantes sin avisos (VI).",
+            ],
+          ],
+          final: true,
+        },
+      ],
+    },
+  "linea-aerea/legislacion/ley-aduanera/afectacion-de-mercancias-y-exenciones-art-61-3": {
+    id: "ley-aduanera-03",
+    folder: "03_Afectacion_de_Mercancias_y_Exenciones",
+    name: "Afectación de Mercancías y Exenciones",
+    subtitle: "Línea Aérea · Aeroméxico Connect · Artículo 61",
+    year: "Ley Aduanera",
+    word: "Artículo 61",
+    sources: ["Artículo 61"],
+    steps: [
+      {
+        label: "Despegue · Mapa de exenciones",
+        title: "Afectación de Mercancíasy Exenciones.",
+        body: "01 · DespegueAfectación de Mercancíasy Exenciones.Dentro del título de Connect, este Learning Path enseña únicamente los supuestos de exención del artículo 61.La regla base es sencilla; lo difícil está en las condiciones, sujetos, límites y exclusiones de sus diecisiete fracciones.FuenteArtículo 61FraccionesI a XVIIActividad¿Está exenta o no? Lo que dice la ley“No se pagarán los impuestos al comercio exterior por la entrada al territorio nacional o la salida del mismo de las siguientes mercancías:”Artículo 61, párrafo inicial En palabras simplesLa exención se aplica a las mercancías y situaciones enumeradas. Una etiqueta general como “donación”, “vehículo” o “equipo” no basta: hay que comprobar todas las condiciones de la fracción.Explicación pedagógica; no es cita literal. Misión · ExploraAbre los cuatro grupos pedagógicos0 / 4 descubiertas",
+        guide:
+          "Toca los grupos. Primero ubica el mapa completo; después estudiarás condiciones y límites.",
+        refs: ["Artículo 61"],
+        cards: [
+          [
+            "Estado, dinero y transporte",
+            "I a VIEstado, dinero y transporteExenciones por otras fuentes, emisión monetaria, servicios internacionales, abastecimiento, mantenimiento aeronáutico y equipaje.",
+          ],
+          [
+            "Personas y situaciones específicas",
+            "VII a XIIPersonas y situaciones específicasMenajes, frontera, donaciones, material didáctico, envíos oficiales y artículos personales de fallecidos.",
+          ],
+          [
+            "Arte, salud y discapacidad",
+            "XIII a XVArte, salud y discapacidadSupuestos con destino, autorización, uso exclusivo, acreditación y límites temporales.",
+          ],
+          [
+            "Donaciones y reutilización",
+            "XVI y XVIIDonaciones y reutilizaciónMaquinaria o desperdicios donados y donaciones al Fisco para destinos sociales determinados.",
+          ],
+        ],
+        hero: true,
+      },
+      {
+        label: "Estado y transporte",
+        title: "Operación pública y transporte internacional.",
+        body: "02 · Fracciones I a VIOperación pública y transporte internacional.Estas fracciones van de exenciones reconocidas por otras fuentes a supuestos directamente vinculados con medios de transporte y pasajeros.Fracción IOtras fuentes y defensaMercancías exentas conforme a la Ley de los Impuestos Generales de Importación y de Exportación y tratados; también importadas para defensa nacional o seguridad pública.Fracción IIEmisión monetariaMetales, aleaciones, monedas y materias primas requeridas por autoridades competentes para sus facultades constitucionales de emitir monedas y billetes.Fracción IIIVehículos de servicio internacionalVehículos para transporte internacional de carga o personas y sus equipos propios e indispensables, sujetos a exclusiones y requisitos remitidos al Reglamento.Fracción III · no quedan comprendidosExplotación en MéxicoVehículos objeto de explotación comercial en el propio territorio nacional.Uso o consumo en el paísVehículos adquiridos para usarse o consumirse en México.Uso o consumo en el extranjeroVehículos destinados a consumo o uso en el extranjero.RemisiónEl Reglamento establece requisitos, periodo y distancia máxima de internación en franja o región fronteriza.Fracción IVAbastecimientoMercancías nacionales indispensables, a juicio de autoridades aduaneras, para medios de transporte internacionales, y rancho de tripulantes/pasajeros; excluye combustible tomado por embarcaciones extranjeras.Fracción VMantenimiento aeronáuticoMercancías destinadas al mantenimiento de aeronaves de empresas nacionales de aviación con servicios internacionales y constituidas conforme a las leyes respectivas.Fracción VIEquipajeEquipajes de pasajeros en viajes internacionales.Misión · Aplica¿Qué condición decide?Resuelve todos los casos RemisiónLas fuentes externas mencionadas en la fracción I y los requisitos del Reglamento en la III no se desarrollan. El artículo remite a ellas.",
+        guide:
+          "Recorre I a VI. Observa que varias exenciones dependen del destino, del servicio internacional o del carácter nacional de la empresa.",
+        refs: ["Artículo 61"],
+        questions: [
+          {
+            q: "Mercancías para mantenimiento de aeronaves de una empresa nacional que presta servicios internacionales. ¿Qué fracción describe el supuesto?",
+            options: ["Fracción V", "Fracción VI", "Fracción X"],
+            answer: 0,
+            why: "Coinciden destino, carácter nacional y servicio internacional. Fundamento: Artículo 61, fracción V.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "Coinciden destino, carácter nacional y servicio internacional. Fundamento: Artículo 61, fracción V.",
+              "La VI se refiere a equipaje de pasajeros. Fundamento: Artículo 61, fracción V.",
+              "La X regula material didáctico de estudiantes en el extranjero. Fundamento: Artículo 61, fracción V.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "Personas y situaciones",
+        title: "Personas, frontera, donaciones y situaciones concretas.",
+        body: "03 · Fracciones VII a XIIPersonas, frontera, donaciones y situaciones concretas.Cada supuesto conserva sus propias condiciones.Fracción VIIMenajes e instrumentosMenajes usados de residentes permanentes y nacionales repatriados o deportados; instrumentos científicos y herramientas de profesionales, obreros y artesanos, con plazos y formalidades del Reglamento.Fracción VIIIHabitantes de fronteraMercancías importadas para su consumo, de la clase, valor y cantidad que establezca el SAT mediante reglas.Fracción IXDonaciones con fines determinadosPara cultura, enseñanza, investigación, salud pública o servicio social, importadas por organismos públicos o donatarias autorizadas, con cuatro requisitos acumulativos.Fracción VII · exclusionesNo comprendeMercancías mantenidas en el extranjero para actividades comerciales o industriales.No comprendeVehículos.Sí exigeQue los bienes señalados hayan sido usados durante la residencia en el extranjero y se cumplan plazos y formalidades remitidos al Reglamento.Fracción IX · cuatro requisitosPatrimonioQue las mercancías formen parte del patrimonio del importador beneficiario.DonanteQue sea extranjero.AutorizaciónQue cuenten con autorización del SAT.Otras obligacionesEn su caso, cumplir regulaciones y restricciones no arancelarias.Fracción XMaterial didácticoRecibido por estudiantes inscritos en planteles del extranjero; excluye aparatos y equipos de cualquier clase, armados o desarmados.Fracción XIEnvíos oficialesRemitidos por Jefes de Estado o gobiernos extranjeros a Federación, estados, municipios, beneficencia o educación.Fracción XIIArtículos personalesDe extranjeros fallecidos en México y de mexicanos cuyo deceso ocurrió en el extranjero.Misión · AplicaEncuentra la exclusiónResuelve todos los casos",
+        guide:
+          "En VII a XII, evita memorizar solo el objeto: revisa quién, para qué, qué se excluye y qué autorización hace falta.",
+        refs: ["Artículo 61"],
+        questions: [
+          {
+            q: "Un estudiante inscrito en un plantel extranjero recibe un equipo electrónico desarmado como material didáctico. ¿La fracción X lo incluye?",
+            options: [
+              "Sí, por ser didáctico",
+              "No bajo la fracción X",
+              "Solo si el estudiante viaja",
+            ],
+            answer: 1,
+            why: "El equipo queda fuera de este supuesto aunque llegue desarmado. Fundamento: Artículo 61, fracción X.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "La fracción excluye aparatos y equipos incluso desarmados. Fundamento: Artículo 61, fracción X.",
+              "El equipo queda fuera de este supuesto aunque llegue desarmado. Fundamento: Artículo 61, fracción X.",
+              "La fracción no establece esa condición; la exclusión del equipo es directa. Fundamento: Artículo 61, fracción X.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "Arte y salud",
+        title: "Colecciones públicas e instituciones de salud.",
+        body: "04 · Fracciones XIII y XIVColecciones públicas e instituciones de salud.La autorización, el destino permanente y el uso exclusivo cambian el resultado. Lo que dice la ley“Las obras de arte destinadas a formar parte de las colecciones permanentes de los museos abiertos al público...”Artículo 61, fracción XIII En palabras simplesLa obra debe integrarse a una colección permanente de un museo abierto al público y contar con autorización del SAT.Explicación pedagógica; no es cita literal. Fracción XIV · dos destinosInstituciones de salud públicaMercancías —excepto vehículos— que únicamente puedan usarse para ese fin.Donatarias autorizadasMercancías destinadas a personas morales no contribuyentes autorizadas para recibir donativos deducibles.PatrimonioEn estos casos deben formar parte de su patrimonio.Cumplimiento adicionalDeben cumplirse las demás obligaciones en materia de regulaciones y restricciones no arancelarias.DeterminaciónEl SAT, previa opinión de la Secretaría de Economía, señalará las fracciones arancelarias que reúnan los requisitos.Misión · Aplica¿Está cubierta por la fracción?Resuelve todos los casos",
+        guide:
+          "Compara XIII y XIV: ambas exigen destino específico, pero no comparten exactamente los mismos sujetos ni requisitos.",
+        refs: ["Artículo 61"],
+        questions: [
+          {
+            q: "Una obra se destina a una colección privada temporal y no tiene autorización del SAT. ¿Queda amparada por la fracción XIII?",
+            options: ["Sí", "No", "Depende solo de su valor"],
+            answer: 1,
+            why: "No reúne los elementos expresos de la fracción XIII. Fundamento: Artículo 61, fracción XIII.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "Faltan colección permanente, museo abierto al público y autorización. Fundamento: Artículo 61, fracción XIII.",
+              "No reúne los elementos expresos de la fracción XIII. Fundamento: Artículo 61, fracción XIII.",
+              "El valor no es la condición formulada por esta fracción. Fundamento: Artículo 61, fracción XIII.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "Discapacidad",
+        title: "Uso personal, accesibilidad y límites de cuatro años.",
+        body: "05 · Fracción XVUso personal, accesibilidad y límites de cuatro años.Reducir esta fracción a “vehículos adaptados están exentos” la volvería incorrecta. Lo que dice la ley“Los vehículos especiales o adaptados y las demás mercancías que importen las personas con discapacidad que sean para su uso personal...”Artículo 61, fracción XV En palabras simplesEl supuesto beneficia a la persona con discapacidad para uso personal y también a determinadas donatarias cuya actividad sea atender a esas personas, siempre que se cumplan todas las condiciones.Explicación pedagógica; no es cita literal. Condiciones de las mercancíasFunciónPor sus características deben suplir o disminuir la discapacidad.DesarrolloDeben permitir desarrollo físico, educativo, profesional o social.UsoExclusiva y permanentemente por las personas con discapacidad para esos fines.AutorizaciónDeben contar con autorización de la Secretaría.AcreditaciónLa discapacidad se acredita con constancia expedida por institución de salud con autorización oficial, conforme a la definición del propio artículo.Límites para vehículosPersona con discapacidadSolo un vehículo para uso personal cada cuatro años.Persona moral señaladaHasta tres vehículos cada cuatro años.EnajenaciónEn ambos casos, no pueden enajenarse sino después de cuatro años de importados.Entrada al paísEl párrafo final del artículo exige además cumplir las reglas de carácter general emitidas por el SAT.Misión · AplicaEncuentra el límiteResuelve todos los casos",
+        guide:
+          "La fracción XV combina sujeto, finalidad, uso, autorización, acreditación y límites para vehículos.",
+        refs: ["Artículo 61"],
+        questions: [
+          {
+            q: "Una persona con discapacidad importó un vehículo adaptado hace dos años y pretende importar otro para uso personal bajo la misma fracción. ¿Qué límite aplica?",
+            options: [
+              "Puede importar uno cada año",
+              "Solo uno cada cuatro años",
+              "Puede importar hasta tres",
+            ],
+            answer: 1,
+            why: "Aún no ha transcurrido el periodo indicado. Fundamento: Artículo 61, fracción XV.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "La fracción fija un periodo de cuatro años. Fundamento: Artículo 61, fracción XV.",
+              "Aún no ha transcurrido el periodo indicado. Fundamento: Artículo 61, fracción XV.",
+              "Ese máximo corresponde a las personas morales señaladas, no a la persona física. Fundamento: Artículo 61, fracción XV.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "Donaciones y reutilización",
+        title: "Donar no basta: importa quién, qué y para qué.",
+        body: "06 · Fracciones XVI y XVIIDonar no basta: importa quién, qué y para qué.Las dos fracciones regulan rutas distintas con requisitos propios.Fracción XVI · maquinaria y desperdiciosBienesMaquinaria y equipo obsoleto con antigüedad mínima de tres años desde la importación temporal, así como desperdicios.DonantesEmpresas maquiladoras o con programas de exportación autorizados por la Secretaría de Economía.BeneficiariosOrganismos públicos o personas morales no contribuyentes autorizadas para recibir donativos deducibles.Autorización y cumplimientoLa donataria debe contar con autorización del SAT y, en su caso, cumplir regulaciones y restricciones no arancelarias.Fracción XVII · donación al Fisco FederalAutorizaciónMercancías autorizadas para ser donadas al Fisco Federal.Destinatarios finalesFederación, entidades federativas, municipios, demarcaciones territoriales de la Ciudad de México o donatarias no lucrativas autorizadas, en su caso señaladas por el donante.FinalidadesRequerimientos básicos de alimentación, vestido y salud; también vivienda, educación y protección civil para personas, sectores o regiones de escasos recursos.Reglas SATEl párrafo final exige cumplir las reglas de carácter general que emita el SAT para introducir estas mercancías. Lo que dice la ley“...resolver respecto de su cumplimiento en un plazo no mayor a diez días... emergencias, desastres naturales o condiciones de extrema pobreza... no mayor a tres días.”Artículo 61, fracción XVII En palabras simplesSi hacen falta regulaciones no arancelarias, el SAT lo comunica de inmediato a la dependencia competente: plazo general de diez días; tres días en los casos urgentes enumerados. Sin resolución comunicada en plazo, se entiende positiva y el SAT puede autorizar.Explicación pedagógica; no es cita literal. Misión · AplicaRecuerda el plazoResuelve todos los casos",
+        guide:
+          "Separa la donación de maquinaria o desperdicios de la donación al Fisco para destinos sociales.",
+        refs: ["Artículo 61"],
+        questions: [
+          {
+            q: "Para mercancías donadas destinadas a atender un desastre natural, ¿qué plazo máximo señala la fracción para que resuelva la autoridad competente?",
+            options: ["Tres días", "Diez días", "Treinta días"],
+            answer: 0,
+            why: "Es el plazo especial para emergencias, desastres naturales o extrema pobreza. Fundamento: Artículo 61, fracción XVII.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "Es el plazo especial para emergencias, desastres naturales o extrema pobreza. Fundamento: Artículo 61, fracción XVII.",
+              "Ese es el plazo general; el desastre activa el plazo especial. Fundamento: Artículo 61, fracción XVII.",
+              "Ese plazo no aparece en la fracción XVII. Fundamento: Artículo 61, fracción XVII.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "¿Está exenta o no?",
+        title: "¿Está exenta o no?",
+        body: "07 · Actividad principal¿Está exenta o no?Elige entre EXENTA, NO EXENTA o DEPENDE DE UNA CONDICIÓN. Después revisa la fracción y la condición relevante.Misión · AplicaClasifica cada escenarioCinco escenarios",
+        guide:
+          "Responde bajo el supuesto específico del artículo 61. “No exenta” significa que la fracción indicada no ampara el caso descrito.",
+        refs: ["Artículo 61"],
+        questions: [
+          {
+            q: "Equipaje de un pasajero en viaje internacional.",
+            options: ["EXENTA", "NO EXENTA", "DEPENDE DE UNA CONDICIÓN"],
+            answer: 0,
+            why: "La fracción VI incluye los equipajes de pasajeros en viajes internacionales. Fundamento: Artículo 61, fracción VI.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "La fracción VI incluye los equipajes de pasajeros en viajes internacionales. Fundamento: Artículo 61, fracción VI.",
+              "El supuesto aparece expresamente. Fundamento: Artículo 61, fracción VI.",
+              "La condición “viaje internacional” ya está satisfecha en el escenario. Fundamento: Artículo 61, fracción VI.",
+            ],
+          },
+          {
+            q: "Donación para enseñanza importada por un organismo público; el donante es extranjero, formará parte de su patrimonio, pero aún no tiene autorización del SAT.",
+            options: ["EXENTA", "NO EXENTA", "DEPENDE DE UNA CONDICIÓN"],
+            answer: 2,
+            why: "Debe obtener la autorización del SAT y cumplir, en su caso, las demás obligaciones no arancelarias. Fundamento: Artículo 61, fracción IX, incisos a) a d).",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "Falta uno de los requisitos acumulativos. Fundamento: Artículo 61, fracción IX, incisos a) a d).",
+              "El supuesto puede quedar amparado si cumple la condición pendiente. Fundamento: Artículo 61, fracción IX, incisos a) a d).",
+              "Debe obtener la autorización del SAT y cumplir, en su caso, las demás obligaciones no arancelarias. Fundamento: Artículo 61, fracción IX, incisos a) a d).",
+            ],
+          },
+          {
+            q: "Material didáctico para estudiante inscrito en el extranjero, consistente en un aparato desarmado.",
+            options: ["EXENTA", "NO EXENTA", "DEPENDE DE SU VALOR"],
+            answer: 1,
+            why: "No queda amparado por el supuesto específico de la fracción X. Fundamento: Artículo 61, fracción X.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "La fracción X excluye aparatos y equipos, incluso desarmados. Fundamento: Artículo 61, fracción X.",
+              "No queda amparado por el supuesto específico de la fracción X. Fundamento: Artículo 61, fracción X.",
+              "El valor no elimina la exclusión expresa. Fundamento: Artículo 61, fracción X.",
+            ],
+          },
+          {
+            q: "Obra de arte para la colección permanente de un museo abierto al público, todavía sin autorización del SAT.",
+            options: ["EXENTA", "NO EXENTA", "DEPENDE DE UNA CONDICIÓN"],
+            answer: 2,
+            why: "La autorización del SAT es condición expresa. Fundamento: Artículo 61, fracción XIII.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "Falta la autorización exigida. Fundamento: Artículo 61, fracción XIII.",
+              "El supuesto puede quedar amparado al cumplirse la condición. Fundamento: Artículo 61, fracción XIII.",
+              "La autorización del SAT es condición expresa. Fundamento: Artículo 61, fracción XIII.",
+            ],
+          },
+          {
+            q: "Combustible tomado por una embarcación de matrícula extranjera como abastecimiento.",
+            options: ["EXENTA", "NO EXENTA", "DEPENDE DEL CAPITÁN"],
+            answer: 1,
+            why: "No queda comprendido en la exención de la fracción IV. Fundamento: Artículo 61, fracción IV.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "La fracción IV excluye expresamente ese combustible. Fundamento: Artículo 61, fracción IV.",
+              "No queda comprendido en la exención de la fracción IV. Fundamento: Artículo 61, fracción IV.",
+              "La fracción formula una exclusión por tipo de bien y matrícula, no por decisión del capitán. Fundamento: Artículo 61, fracción IV.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "Aterrizaje · Condiciones",
+        title: "No memorices solo “X está exenta”.",
+        body: "08 · Encuentra la condiciónNo memorices solo “X está exenta”.Recuerda quién puede beneficiarse, para qué, con qué autorización, qué límite y qué exclusión aplica.Misión · AplicaRecuperación activaCondición, límite y excepción Elige una fracción entre VII, IX, XIV, XV, XVI o XVII. Sin mirar, reconstruye: mercancía o situación, beneficiario, condición, límite y exclusión. Marca cada afirmación solo si puedes explicarla sin volver arriba.Puedo explicar por qué “vehículo”, “donación” o “equipo” por sí solos no bastan para afirmar una exención.Puedo distinguir las condiciones de las fracciones IX, XIII, XIV y XV.Puedo recordar los plazos de diez y tres días de la fracción XVII y el efecto de no comunicar resolución en plazo.Versión consultada: PDF con última reforma DOF 19-11-2025. La fracción I aparece reformada en 2025; el PDF conserva notas de reforma para VII, VIII, IX, XIII, XIV, XVI, XVII y el párrafo final, las cuales se respetan sin incorporar texto externo.Exenciones con condiciones completasAl tocar Terminar quedará registrada la finalización. El recorrido cubre las fracciones I a XVII del artículo 61 sin desarrollar las normas externas a las que remite.",
+        guide:
+          "Recupera las condiciones que impiden convertir una exención condicionada en una afirmación absoluta.",
+        refs: ["Artículo 61"],
+        cards: [
+          [
+            "Chequeo final",
+            "Puedo explicar por qué “vehículo”, “donación” o “equipo” por sí solos no bastan para afirmar una exención.",
+          ],
+          [
+            "Chequeo final",
+            "Puedo distinguir las condiciones de las fracciones IX, XIII, XIV y XV.",
+          ],
+          [
+            "Chequeo final",
+            "Puedo recordar los plazos de diez y tres días de la fracción XVII y el efecto de no comunicar resolución en plazo.",
+          ],
+        ],
+        questions: [
+          {
+            q: "Para importar maquinaria obsoleta bajo la fracción XVI, ¿qué antigüedad mínima cuenta desde la importación temporal?",
+            options: ["Un año", "Tres años", "Cuatro años"],
+            answer: 1,
+            why: "Es el mínimo expreso de la fracción XVI. Fundamento: Artículo 61, fracción XVI.",
+            wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+            feedbacks: [
+              "La fracción exige una antigüedad mayor. Fundamento: Artículo 61, fracción XVI.",
+              "Es el mínimo expreso de la fracción XVI. Fundamento: Artículo 61, fracción XVI.",
+              "El periodo de cuatro años aparece en los límites de vehículos de la fracción XV. Fundamento: Artículo 61, fracción XVI.",
+            ],
+          },
+        ],
+        recall: [
+          [
+            "Elige una fracción entre VII, IX, XIV, XV, XVI o XVII. Sin mirar, reconstruye: mercancía o situación, beneficiario, condición, límite y exclusión.",
+            "Elementos que debiste recuperar: Compara tu respuesta con la tarjeta de la fracción elegida. Deben aparecer todos los elementos que el artículo exige; si falta autorización, destino, patrimonio, uso, plazo o sujeto, la regla queda incompleta.",
+          ],
+        ],
+        final: true,
+      },
+    ],
+  },
+  "linea-aerea/legislacion/reglamento-de-la-ley-aduanera/trafico-aereo-art-31-1": {
+    id: "reglamento-ley-aduanera-01",
+    folder: "01_Trafico_Aereo",
+    name: "Tráfico aéreo",
+    subtitle: "Reglamento de la Ley Aduanera · Artículo 31",
+    year: "Reglamento de la Ley Aduanera",
+    word: "Artículo 31",
+    sources: ["Artículo 31"],
+    steps: [
+      {
+        label: "Despegue",
+        title: "Tráficoaéreo.",
+        body: "01 · DespegueTráficoaéreo.Una regla breve, una condición decisiva. Aprende exactamente cuándo puede efectuarse tráfico aéreo internacional durante horas inhábiles.FuenteArtículo 31Etapas6 misionesAlcanceSolo este artículoMisión 1 · Descubre el alcancePrimero, ubica el supuesto.0 / 3Fuente jurídica de esta etapaFuente única: Reglamento de la Ley Aduanera, Artículo 31, PDF oficial adjunto.",
+        guide: "Descubre los tres elementos que delimitan el artículo.",
+        refs: ["Reglamento de la Ley Aduanera · Artículo 31"],
+        cards: [
+          [
+            "Pasajeros + equipajes",
+            "¿Qué aeronaves? — El artículo delimita el supuesto a aeronaves que transporten ambos: pasajeros y equipajes.",
+          ],
+          [
+            "Aéreo internacional",
+            "¿Qué tráfico? — La posibilidad regulada se refiere expresamente al tráfico aéreo internacional.",
+          ],
+          [
+            "Horas inhábiles",
+            "¿Cuándo? — El artículo permite que se efectúe durante horas inhábiles, sujeto a una condición.",
+          ],
+        ],
+        hero: true,
+      },
+      {
+        label: "La regla",
+        title: "Una posibilidad.Sujeta a condición.",
+        body: "01 · Lo que dice el ReglamentoUna posibilidad.Sujeta a condición.Lee el artículo completo y después compáralo con la explicación en lenguaje sencillo.Lo que dice el Reglamento“En el caso de aeronaves que transporten pasajeros y equipajes, podrá efectuarse el tráfico aéreo internacional durante horas inhábiles, cuando oportunamente las autoridades competentes notifiquen a la Autoridad Aduanera la hora en que se efectuará el aterrizaje o despegue correspondiente.”En palabras simplesEl horario inhábil no basta por sí solo.La posibilidad depende de que las autoridades competentes avisen oportunamente a la Autoridad Aduanera la hora del aterrizaje o despegue.AeronavePasajerosEquipajesHoras inhábilesPrecisión: el artículo no fija una cantidad de horas de anticipación, no menciona un formulario y no atribuye esta notificación a la empresa aérea.Fuente jurídica de esta etapaFuente única: Reglamento de la Ley Aduanera, Artículo 31, PDF oficial adjunto.",
+        guide: "Distingue el texto literal de la explicación y confirma la regla.",
+        refs: ["Reglamento de la Ley Aduanera · Artículo 31"],
+      },
+      {
+        label: "Ordena el proceso",
+        title: "Del supuestoal efecto.",
+        body: "01 · Ordena el procesoDel supuestoal efecto.Selecciona cada elemento en el orden lógico de la regla. No agregues pasos que el artículo no contiene.Misión 3 · Ordena el proceso31Ayuda de memoria: P-E-H-N-H: pasajeros y equipajes → horas inhábiles → notificación → hora → habilitación de la posibilidad.Fuente jurídica de esta etapaFuente única: Reglamento de la Ley Aduanera, Artículo 31, PDF oficial adjunto.",
+        guide: "Selecciona los elementos en el orden en que funciona la regla.",
+        refs: ["Reglamento de la Ley Aduanera · Artículo 31"],
+        order: [
+          "Aeronave que transporta pasajeros y equipajes.",
+          "Se prevé efectuar tráfico aéreo internacional durante horas inhábiles.",
+          "Las autoridades competentes notifican oportunamente a la Autoridad Aduanera.",
+          "La notificación indica la hora del aterrizaje o despegue correspondiente.",
+          "Puede efectuarse el tráfico aéreo internacional en esas horas.",
+        ],
+      },
+      {
+        label: "Sí dice / No dice",
+        title: "Lee con precisión.Evita completar de memoria.",
+        body: "01 · Sí dice / No diceLee con precisión.Evita completar de memoria.Clasifica cada afirmación. El feedback indica el elemento literal que controla la respuesta.El artículo 31 se refiere a aeronaves que transportan pasajeros y equipajes.Fundamento: Artículo 31.El artículo fija un número exacto de horas de anticipación para notificar.Fundamento: Artículo 31.Las autoridades competentes notifican a la Autoridad Aduanera.Fundamento: Artículo 31.La empresa aérea es identificada como responsable de esa notificación.Fundamento: Artículo 31.La notificación debe indicar la hora del aterrizaje o despegue correspondiente.Fundamento: Artículo 31.Fuente jurídica de esta etapaFuente única: Reglamento de la Ley Aduanera, Artículo 31, PDF oficial adjunto.",
+        guide: "Decide en cada afirmación si aparece o no en el artículo.",
+        refs: ["Reglamento de la Ley Aduanera · Artículo 31"],
+        questions: [
+          {
+            q: "El artículo 31 se refiere a aeronaves que transportan pasajeros y equipajes.",
+            options: ["SÍ DICE", "NO DICE"],
+            answer: 0,
+            why: "Es el supuesto expreso con el que inicia el artículo.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "Es el supuesto expreso con el que inicia el artículo.",
+              "Sí lo dice expresamente al delimitar el tipo de aeronave.",
+            ],
+          },
+          {
+            q: "El artículo fija un número exacto de horas de anticipación para notificar.",
+            options: ["SÍ DICE", "NO DICE"],
+            answer: 1,
+            why: "Correcto. Exige oportunidad, pero no fija una cantidad de horas.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "No establece una cifra; utiliza la palabra “oportunamente”.",
+              "Correcto. Exige oportunidad, pero no fija una cantidad de horas.",
+            ],
+          },
+          {
+            q: "Las autoridades competentes notifican a la Autoridad Aduanera.",
+            options: ["SÍ DICE", "NO DICE"],
+            answer: 0,
+            why: "Correcto. Esos son los sujetos expresamente identificados en la notificación.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "Correcto. Esos son los sujetos expresamente identificados en la notificación.",
+              "El artículo sí asigna la notificación a las autoridades competentes.",
+            ],
+          },
+          {
+            q: "La empresa aérea es identificada como responsable de esa notificación.",
+            options: ["SÍ DICE", "NO DICE"],
+            answer: 1,
+            why: "Correcto. El sujeto que aparece es “las autoridades competentes”.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "El artículo no atribuye esta notificación a la empresa aérea.",
+              "Correcto. El sujeto que aparece es “las autoridades competentes”.",
+            ],
+          },
+          {
+            q: "La notificación debe indicar la hora del aterrizaje o despegue correspondiente.",
+            options: ["SÍ DICE", "NO DICE"],
+            answer: 0,
+            why: "Correcto. Ese es el dato que el artículo exige notificar.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "Correcto. Ese es el dato que el artículo exige notificar.",
+              "Sí aparece expresamente como contenido de la notificación.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "¿Qué procede?",
+        title: "Aplica la condición.Nada más.",
+        body: "01 · ¿Qué procede?Aplica la condición.Nada más.Tres escenarios resolubles únicamente con el artículo 31. Cada pregunta tiene una sola respuesta correcta.Una aeronave transporta pasajeros y equipajes en tráfico internacional durante horas inhábiles. Las autoridades competentes notificaron oportunamente a la Autoridad Aduanera la hora del aterrizaje. ¿Qué procede conforme al artículo 31?Fundamento: Artículo 31.El vuelo cumple el supuesto, pero no hubo notificación a la Autoridad Aduanera. ¿Qué puede afirmarse usando solo el artículo 31?Fundamento: Artículo 31.Se pregunta qué formulario debe emplearse para la notificación. ¿Qué responde este Learning Path?Fundamento: Artículo 31.Fuente jurídica de esta etapaFuente única: Reglamento de la Ley Aduanera, Artículo 31, PDF oficial adjunto.",
+        guide: "Resuelve los tres casos únicamente con el artículo 31.",
+        refs: ["Reglamento de la Ley Aduanera · Artículo 31"],
+        questions: [
+          {
+            q: "Una aeronave transporta pasajeros y equipajes en tráfico internacional durante horas inhábiles. Las autoridades competentes notificaron oportunamente a la Autoridad Aduanera la hora del aterrizaje. ¿Qué procede conforme al artículo 31?",
+            options: [
+              "Puede efectuarse el tráfico aéreo internacional.",
+              "Debe cancelarse siempre por ser hora inhábil.",
+              "El artículo exige autorización escrita de la empresa aérea.",
+            ],
+            answer: 0,
+            why: "Correcto. Se reúnen el supuesto y la condición expresos.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "Correcto. Se reúnen el supuesto y la condición expresos.",
+              "Las horas inhábiles no producen una prohibición absoluta cuando se cumple la condición.",
+              "El artículo no asigna esa autorización a la empresa aérea.",
+            ],
+          },
+          {
+            q: "El vuelo cumple el supuesto, pero no hubo notificación a la Autoridad Aduanera. ¿Qué puede afirmarse usando solo el artículo 31?",
+            options: [
+              "La condición expresa no está satisfecha.",
+              "La notificación puede omitirse si hay equipaje.",
+              "La tripulación sustituye automáticamente la notificación.",
+            ],
+            answer: 0,
+            why: "Correcto. El artículo condiciona la posibilidad a la notificación oportuna.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "Correcto. El artículo condiciona la posibilidad a la notificación oportuna.",
+              "El equipaje forma parte del supuesto, no elimina la condición.",
+              "El artículo no establece esa sustitución.",
+            ],
+          },
+          {
+            q: "Se pregunta qué formulario debe emplearse para la notificación. ¿Qué responde este Learning Path?",
+            options: [
+              "El artículo 31 no identifica un formulario.",
+              "Debe usarse necesariamente un pedimento.",
+              "La aerolínea elige cualquier formato.",
+            ],
+            answer: 0,
+            why: "Correcto. No se desarrolla un formato porque no aparece en el artículo.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "Correcto. No se desarrolla un formato porque no aparece en el artículo.",
+              "El artículo 31 no menciona pedimento.",
+              "Tampoco atribuye esa decisión a la aerolínea.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "Recuperación activa",
+        title: "Reconstruyela regla.",
+        body: "01 · Recuperación activaReconstruyela regla.Completa los cuatro elementos sin volver al texto literal. La actividad valida las condiciones esenciales, no la redacción exacta.Misión 6 · Active recallÚltima comprobación.Cuando las cuatro respuestas estén completas, podrás finalizar.Fuente jurídica de esta etapaFuente única: Reglamento de la Ley Aduanera, Artículo 31, PDF oficial adjunto.",
+        guide: "Reconstruye los elementos esenciales sin copiar.",
+        refs: ["Reglamento de la Ley Aduanera · Artículo 31"],
+        recall: [
+          ["¿Qué transporta la aeronave contemplada?", "pasajeros; equipajes"],
+          ["¿Durante qué tipo de horas puede efectuarse el tráfico?", "inhabiles"],
+          ["¿Quién notifica y a qué autoridad?", "autoridades competentes; autoridad aduanera"],
+          ["¿Qué hora debe comunicarse?", "aterrizaje; despegue"],
+        ],
+        final: true,
+      },
+    ],
+  },
+  "linea-aerea/legislacion/reglamento-de-la-ley-aduanera/equipajes-y-menajes-art-98-2": {
+    id: "reglamento-ley-aduanera-02",
+    folder: "02_Equipajes_y_Menajes",
+    name: "Equipajes y menajes",
+    subtitle: "Reglamento de la Ley Aduanera · Artículo 98",
+    year: "Reglamento de la Ley Aduanera",
+    word: "Artículo 98",
+    sources: ["Artículo 98"],
+    steps: [
+      {
+        label: "Despegue",
+        title: "Equipajesy menajes.",
+        body: "01 · DespegueEquipajesy menajes.Conservamos el nombre Connect, pero enseñamos solo el contenido real del artículo 98.Nota de alcance: el artículo 98 regula equipaje y ciertos efectos personales. No desarrolla menajes; por eso este Learning Path no añade definiciones, bienes ni requisitos de menaje.FuenteArtículo 98Etapas6 misionesPárrafos3 reglasMisión 1 · Delimita el alcanceTres párrafos y un límite.0 / 4Fuente jurídica de esta etapaFuente única: Reglamento de la Ley Aduanera, Artículo 98, PDF oficial adjunto. Las remisiones a la Ley y a Reglas del SAT se identifican, pero no se desarrollan.",
+        guide: "Descubre los tres párrafos y la nota de alcance.",
+        refs: ["Reglamento de la Ley Aduanera · Artículo 98"],
+        cards: [
+          [
+            "Equipaje de pasajeros",
+            "Párrafo 1 — El SAT señalará mediante Reglas las mercancías que integran el equipaje de pasajeros en viajes internacionales.",
+          ],
+          [
+            "Ropa y efectos usados",
+            "Párrafo 2 — Determinado personal de medios en tráfico internacional de mercancías puede traer o llevar su ropa y efectos personales usados, libres de impuestos al comercio exterior, según Reglas.",
+          ],
+          [
+            "Propietarios que conducen",
+            "Párrafo 3 — Ciertos capitanes o pilotos propietarios son considerados pasajeros internacionales para su equipaje personal y franquicia.",
+          ],
+          [
+            "Menaje no desarrollado",
+            "Nota de alcance — El artículo 98 no define, clasifica ni establece condiciones para menajes. Este Learning Path no completa ese vacío con otros artículos.",
+          ],
+        ],
+        hero: true,
+      },
+      {
+        label: "Tres reglas",
+        title: "Tres párrafos.Tres efectos distintos.",
+        body: "01 · Lo que dice el ReglamentoTres párrafos.Tres efectos distintos.Lee el texto literal completo y abre después cada explicación.Lo que dice el Reglamento“Para efectos del artículo 61, fracción VI de la Ley, el SAT señalará mediante Reglas, las Mercancías que integran el equipaje de los pasajeros en viajes internacionales.”“Los capitanes, pilotos, conductores y tripulantes de los medios de transporte que efectúen el tráfico internacional de Mercancías, podrán traer del extranjero o llevar del territorio nacional, libres del pago de Impuestos al Comercio Exterior, sus ropas y efectos usados personales que señale el SAT mediante Reglas.”“Los capitanes o pilotos que acrediten ser propietarios del medio de transporte aéreo o marítimo que conduzcan, que efectúen el transporte internacional, serán considerados pasajeros internacionales para efecto de su equipaje personal y franquicia que corresponda.”Misión 2 · En palabras simplesAbre las tres reglas.0 / 3Remisiones: el primer párrafo remite a la Ley y dos párrafos remiten a Reglas del SAT. Este Learning Path señala esas remisiones, pero no desarrolla su contenido.Fuente jurídica de esta etapaFuente única: Reglamento de la Ley Aduanera, Artículo 98, PDF oficial adjunto. Texto dividido únicamente para facilitar la lectura; no se altera su contenido.",
+        guide: "Abre las tres reglas para relacionar sujetos, bienes y condiciones.",
+        refs: ["Reglamento de la Ley Aduanera · Artículo 98"],
+        cards: [
+          [
+            "Mercancías del equipaje",
+            "Regla 1 — La determinación corresponde al SAT mediante Reglas. El artículo no contiene la lista.",
+          ],
+          [
+            "Sujetos y bienes usados",
+            "Regla 2 — Capitanes, pilotos, conductores y tripulantes; ropas y efectos personales usados; tráfico internacional de mercancías.",
+          ],
+          [
+            "Pasajero internacional",
+            "Regla 3 — Capitán o piloto que acredita propiedad del medio aéreo o marítimo que conduce y efectúa transporte internacional.",
+          ],
+        ],
+      },
+      {
+        label: "Clasifica el alcance",
+        title: "Distingue sinrellenar vacíos.",
+        body: "01 · Clasifica el alcanceDistingue sinrellenar vacíos.Decide si el artículo habla de equipaje, regula otro supuesto sin llamarlo equipaje o deja el contenido fuera de su alcance.Mercancías que integran el equipaje de un pasajero en viaje internacional.Fundamento: Artículo 98, primer párrafo.Ropas y efectos personales usados de una persona tripulante de un medio que efectúa tráfico internacional de mercancías.Fundamento: Artículo 98, segundo párrafo.Muebles y objetos destinados a instalar una vivienda.Fundamento: Artículo 98; no contiene regulación de menaje.Equipaje personal de un capitán que acredita ser propietario de la aeronave que conduce y efectúa transporte internacional.Fundamento: Artículo 98, tercer párrafo.Fuente jurídica de esta etapaFuente única: Reglamento de la Ley Aduanera, Artículo 98, PDF oficial adjunto. “Otro supuesto” evita llamar equipaje a bienes que el artículo no clasifica así; el menaje no se desarrolla porque no aparece en el artículo 98.",
+        guide: "Clasifica cada supuesto sin inventar una regulación de menaje.",
+        refs: ["Reglamento de la Ley Aduanera · Artículo 98"],
+        questions: [
+          {
+            q: "Mercancías que integran el equipaje de un pasajero en viaje internacional.",
+            options: ["EQUIPAJE", "OTRO SUPUESTO DEL ART. 98", "NO REGULADO"],
+            answer: 0,
+            why: "Correcto. El primer párrafo se refiere a ese equipaje y remite a Reglas del SAT para determinar las mercancías.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "Correcto. El primer párrafo se refiere a ese equipaje y remite a Reglas del SAT para determinar las mercancías.",
+              "El artículo sí las vincula expresamente con el equipaje.",
+              "El supuesto aparece, aunque la lista de mercancías se remite a Reglas.",
+            ],
+          },
+          {
+            q: "Ropas y efectos personales usados de una persona tripulante de un medio que efectúa tráfico internacional de mercancías.",
+            options: ["EQUIPAJE", "OTRO SUPUESTO DEL ART. 98", "NO REGULADO"],
+            answer: 1,
+            why: "Correcto. El artículo regula expresamente este supuesto sin clasificarlo como equipaje o menaje.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "El segundo párrafo no denomina equipaje a estos bienes.",
+              "Correcto. El artículo regula expresamente este supuesto sin clasificarlo como equipaje o menaje.",
+              "El supuesto sí aparece con sus condiciones.",
+            ],
+          },
+          {
+            q: "Muebles y objetos destinados a instalar una vivienda.",
+            options: ["EQUIPAJE", "OTRO SUPUESTO DEL ART. 98", "NO REGULADO"],
+            answer: 2,
+            why: "Correcto. El artículo 98 no desarrolla bienes ni condiciones de menaje.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "El artículo 98 no califica esos bienes como equipaje.",
+              "El artículo no contiene este supuesto.",
+              "Correcto. El artículo 98 no desarrolla bienes ni condiciones de menaje.",
+            ],
+          },
+          {
+            q: "Equipaje personal de un capitán que acredita ser propietario de la aeronave que conduce y efectúa transporte internacional.",
+            options: ["EQUIPAJE", "OTRO SUPUESTO DEL ART. 98", "NO REGULADO"],
+            answer: 0,
+            why: "Correcto. El tercer párrafo lo considera pasajero internacional para su equipaje personal y la franquicia correspondiente.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "Correcto. El tercer párrafo lo considera pasajero internacional para su equipaje personal y la franquicia correspondiente.",
+              "El efecto expreso se refiere a su equipaje personal y franquicia.",
+              "Sí existe un tratamiento expreso para ese capitán.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "¿Cumple las condiciones?",
+        title: "SÍ, NOo DEPENDE.",
+        body: "01 · ¿Cumple las condiciones?SÍ, NOo DEPENDE.Cada respuesta depende de una palabra o condición expresa del artículo, o de una remisión que no podemos completar.Un piloto de un medio que efectúa tráfico internacional de mercancías trae efectos personales nuevos. ¿Cumple el supuesto de exención descrito en el segundo párrafo?Fundamento: Artículo 98, segundo párrafo.Una persona conductora realiza únicamente transporte nacional y lleva ropa usada personal. ¿Cumple el supuesto del segundo párrafo?Fundamento: Artículo 98, segundo párrafo.Un capitán conduce una aeronave en transporte internacional, pero no acredita ser su propietario. ¿Se activa la consideración del tercer párrafo?Fundamento: Artículo 98, tercer párrafo.Un pasajero pregunta si una mercancía específica integra su equipaje en viaje internacional. Con la información del artículo 98, ¿qué respuesta corresponde?Fundamento: Artículo 98, primer párrafo.Una piloto acredita ser propietaria de la aeronave que conduce y efectúa transporte internacional. ¿Será considerada pasajera internacional para su equipaje personal y franquicia?Fundamento: Artículo 98, tercer párrafo.Fuente jurídica de esta etapaFuente única: Reglamento de la Ley Aduanera, Artículo 98, PDF oficial adjunto. “DEPENDE” se usa únicamente cuando la respuesta requiere las Reglas a las que remite el propio artículo.",
+        guide: "Resuelve cada condición con SÍ, NO o DEPENDE.",
+        refs: ["Reglamento de la Ley Aduanera · Artículo 98"],
+        questions: [
+          {
+            q: "Un piloto de un medio que efectúa tráfico internacional de mercancías trae efectos personales nuevos. ¿Cumple el supuesto de exención descrito en el segundo párrafo?",
+            options: ["SÍ", "NO", "DEPENDE"],
+            answer: 1,
+            why: "Correcto. Falta la condición de que sean efectos personales usados.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "El párrafo exige que sean usados.",
+              "Correcto. Falta la condición de que sean efectos personales usados.",
+              "La ausencia de la condición “usados” permite responder que no cumple el supuesto descrito.",
+            ],
+          },
+          {
+            q: "Una persona conductora realiza únicamente transporte nacional y lleva ropa usada personal. ¿Cumple el supuesto del segundo párrafo?",
+            options: ["SÍ", "NO", "DEPENDE"],
+            answer: 1,
+            why: "Correcto. El tráfico internacional de mercancías es una condición expresa.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "Falta el tráfico internacional de mercancías.",
+              "Correcto. El tráfico internacional de mercancías es una condición expresa.",
+              "El artículo permite resolverlo: el supuesto planteado es nacional.",
+            ],
+          },
+          {
+            q: "Un capitán conduce una aeronave en transporte internacional, pero no acredita ser su propietario. ¿Se activa la consideración del tercer párrafo?",
+            options: ["SÍ", "NO", "DEPENDE"],
+            answer: 1,
+            why: "Correcto. Falta una condición expresa.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "El tercer párrafo exige acreditar la propiedad.",
+              "Correcto. Falta una condición expresa.",
+              "El artículo permite resolverlo porque la acreditación fue expresamente negada.",
+            ],
+          },
+          {
+            q: "Un pasajero pregunta si una mercancía específica integra su equipaje en viaje internacional. Con la información del artículo 98, ¿qué respuesta corresponde?",
+            options: ["SÍ", "NO", "DEPENDE"],
+            answer: 2,
+            why: "Correcto. Depende de las Reglas del SAT, que este Learning Path no desarrolla.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "El artículo no incluye la lista para responder afirmativamente.",
+              "El artículo tampoco permite negarlo: remite la determinación a Reglas del SAT.",
+              "Correcto. Depende de las Reglas del SAT, que este Learning Path no desarrolla.",
+            ],
+          },
+          {
+            q: "Una piloto acredita ser propietaria de la aeronave que conduce y efectúa transporte internacional. ¿Será considerada pasajera internacional para su equipaje personal y franquicia?",
+            options: ["SÍ", "NO", "DEPENDE"],
+            answer: 0,
+            why: "Correcto. Reúne las condiciones del tercer párrafo.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "Correcto. Reúne las condiciones del tercer párrafo.",
+              "El tercer párrafo incluye a capitanes o pilotos.",
+              "No depende de una condición adicional dentro del texto planteado.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "Sí dice / No dice",
+        title: "Distingue el texto.Evita extenderlo.",
+        body: "01 · Sí dice / No diceDistingue el texto.Evita extenderlo.Decide si la afirmación aparece en el artículo 98. El fundamento indica el párrafo correspondiente.El SAT señalará mediante Reglas las mercancías que integran el equipaje de pasajeros en viajes internacionales.Fundamento: Artículo 98, primer párrafo.El artículo 98 contiene una lista completa de los bienes permitidos como equipaje.Fundamento: Artículo 98, primer párrafo.Las ropas y efectos personales contemplados para tripulación deben ser usados.Fundamento: Artículo 98, segundo párrafo.Todo capitán o piloto es automáticamente considerado pasajero internacional.Fundamento: Artículo 98, tercer párrafo.El artículo 98 establece qué bienes integran un menaje de casa.Fundamento: Artículo 98.98Ayuda de memoria: E-U-P. Equipaje definido por Reglas · Usados para tripulación · Propietario acreditado para ser considerado pasajero internacional.Fuente jurídica de esta etapaFuente única: Reglamento de la Ley Aduanera, Artículo 98, PDF oficial adjunto.",
+        guide: "Decide qué aparece literalmente en el artículo.",
+        refs: ["Reglamento de la Ley Aduanera · Artículo 98"],
+        questions: [
+          {
+            q: "El SAT señalará mediante Reglas las mercancías que integran el equipaje de pasajeros en viajes internacionales.",
+            options: ["SÍ DICE", "NO DICE"],
+            answer: 0,
+            why: "Correcto. Es el contenido del primer párrafo.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "Correcto. Es el contenido del primer párrafo.",
+              "Sí lo dice expresamente.",
+            ],
+          },
+          {
+            q: "El artículo 98 contiene una lista completa de los bienes permitidos como equipaje.",
+            options: ["SÍ DICE", "NO DICE"],
+            answer: 1,
+            why: "Correcto. El artículo no enumera esas mercancías.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "La lista no aparece; se remite a Reglas del SAT.",
+              "Correcto. El artículo no enumera esas mercancías.",
+            ],
+          },
+          {
+            q: "Las ropas y efectos personales contemplados para tripulación deben ser usados.",
+            options: ["SÍ DICE", "NO DICE"],
+            answer: 0,
+            why: "Correcto. La palabra “usados” es una condición expresa.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "Correcto. La palabra “usados” es una condición expresa.",
+              "Sí aparece expresamente.",
+            ],
+          },
+          {
+            q: "Todo capitán o piloto es automáticamente considerado pasajero internacional.",
+            options: ["SÍ DICE", "NO DICE"],
+            answer: 1,
+            why: "Correcto. No es automático.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "Se requieren propiedad acreditada, conducción del medio y transporte internacional.",
+              "Correcto. No es automático.",
+            ],
+          },
+          {
+            q: "El artículo 98 establece qué bienes integran un menaje de casa.",
+            options: ["SÍ DICE", "NO DICE"],
+            answer: 1,
+            why: "Correcto. El título Connect es más amplio que el contenido real del artículo.",
+            wrong: "Revisa la condición y el fundamento indicados.",
+            feedbacks: [
+              "El artículo no contiene esa regulación.",
+              "Correcto. El título Connect es más amplio que el contenido real del artículo.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "Recuperación activa",
+        title: "Reconstruyelas condiciones.",
+        body: "01 · Recuperación activaReconstruyelas condiciones.Completa los cuatro elementos sin copiar el texto literal. No se evalúa contenido de menaje porque el artículo 98 no lo regula.Misión 6 · Active recallÚltima comprobación.Recupera las condiciones y después finaliza.Fuente jurídica de esta etapaFuente única: Reglamento de la Ley Aduanera, Artículo 98, PDF oficial adjunto. El título Connect se conserva; el contenido permanece limitado al artículo 98.",
+        guide: "Reconstruye las condiciones esenciales sin copiar.",
+        refs: ["Reglamento de la Ley Aduanera · Artículo 98"],
+        recall: [
+          ["¿Quién determina mediante qué instrumento las mercancías del equipaje?", "sat; reglas"],
+          [
+            "¿Qué dos características deben reunir los bienes personales del segundo párrafo?",
+            "usados; internacional; mercancias",
+          ],
+          [
+            "¿Qué debe acreditar el capitán o piloto respecto del medio que conduce?",
+            "propietario",
+          ],
+          [
+            "¿Para qué dos efectos se considera pasajero internacional?",
+            "equipaje personal; franquicia",
+          ],
+        ],
+        final: true,
+      },
+    ],
+  },
+  "linea-aerea/legislacion/circulares-obligatorias/circular-obligatoria-de-revalidacion-de-licencia-co-av-12-1-07-r5-1":
+    {
+      id: "circular-01",
+      folder: "01_Revalidacion_de_Licencia_CO_AV_12_1_07_R5",
+      name: "Revalidación de licencia · CO AV-12.1/07 R5",
+      subtitle:
+        "Learning Path standalone sobre los numerales 7.2.6.1 a 7.2.6.4 de la CO AV-12.1/07 R5.",
+      year: "Circulares Obligatorias",
+      word: "CO AV-12.1/07 R5",
+      sources: ["CO AV-12.1/07 R5"],
+      steps: [
+        {
+          label: "Despegue",
+          title: "Una ruta estricta hacia la revalidación",
+          body: "Descubre la tarjeta después de revisar la etapa.",
+          refs: ["CO AV-12.1/07 R5"],
+          cards: [
+            [
+              "Una ruta estricta hacia la revalidación",
+              "Etapa 01 · DespegueUna ruta estricta hacia la revalidaciónSolo trabajaremos con los numerales 7.2.6.1 a 7.2.6.4: evaluación de competencia, evidencia documental, simulación y combinación de requisitos. Alcance aprobadoLo que sí entraQué competencia debe comprobarse.Con qué periodicidad.Qué debe presentar el piloto para revalidar.Cuándo pueden usarse simuladores.Quién decide la combinación entre variantes o tipos.Lo que no convertiremos en contenido centralVigencia general de licencias, experiencia reciente, atribuciones TPI y restricciones ajenas a 7.2.6.1–7.2.6.4.En palabras simplesEste Learning Path no intenta enseñar todo sobre licencias. Enseña únicamente la cadena que la circular vincula con su revalidación. Fuente de verdad: CO AV-12.1/07 R5, numerales 7.2.6.1 a 7.2.6.4. Las referencias externas mencionadas por la circular no se desarrollan.",
+            ],
+          ],
+          hero: true,
+        },
+        {
+          label: "Qué se comprueba",
+          title: "¿Qué debe comprobarse?",
+          body: "Etapa 02 · Competencia¿Qué debe comprobarse?La evaluación no se limita a “saber volar”. La circular enumera capacidades concretas y exige demostrar competencia por tipo o variante. 01Técnica de pilotajeDebe comprobarse la técnica de pilotaje del piloto.7.2.6.102ProcedimientosDebe demostrarse la capacidad de ejecutar procedimientos normales, anormales y de emergencia.7.2.6.103Tipo o varianteLa competencia se demuestra en cada tipo o variante de un tipo de aeronave.7.2.6.104Reglas de vuelo por instrumentosCuando las operaciones puedan efectuarse conforme a esas reglas, también debe demostrarse la competencia para cumplirlas.7.2.6.1 Lo que dice la circularLa demostración puede realizarse ante un Evaluador Designado aprobado por la Autoridad de Aviación Civil o ante un IVA-OV, según aplique.",
+          refs: ["CO AV-12.1/07 R5"],
+          questions: [
+            {
+              q: "Completa el requisito",
+              options: [
+                "Solo la técnica de pilotaje.",
+                "Técnica, procedimientos normales/anormales/de emergencia y competencia aplicable.",
+                "Únicamente conocimiento teórico del manual.",
+              ],
+              answer: 1,
+              why: "Esa es la estructura de 7.2.6.1.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "El numeral también exige procedimientos y competencia por tipo o variante.",
+                "Esa es la estructura de 7.2.6.1.",
+                "Eso no es lo que establece 7.2.6.1.",
+              ],
+            },
+          ],
+        },
+        {
+          label: "Periodicidad",
+          title: "Dos esquemas. Una condición común.",
+          body: "Etapa 03 · PeriodicidadDos esquemas. Una condición común.La frecuencia cambia según el tipo de operación y el peso certificado máximo de despegue de la aeronave. Esquema ADos veces al añoAla fija: más de 5,700 kg y uno o más motores de turbina. Ala rotativa: más de 3,180 kg.Dos verificaciones al año.Una incluida en el adiestramiento anual recurrente.No dos verificaciones similares con intervalos menores a cuatro meses consecutivos.7.2.6.1(a)→Esquema BUna vez al añoAla fija: 5,700 kg o menos. Ala rotativa: 3,180 kg o menos.Una verificación de competencia al año.Debe estar incluida en el adiestramiento anual recurrente.7.2.6.1(b) Memoria rápida“Más peso, dos comprobaciones; menor o igual, una anual”. La mnemotecnia no sustituye las condiciones completas de motor, tipo de ala e intervalos.",
+          refs: ["CO AV-12.1/07 R5"],
+          questions: [
+            {
+              q: "¿Cuál sí cumple?",
+              options: [
+                "Una verificación anual fuera del adiestramiento recurrente.",
+                "Dos verificaciones similares separadas por tres meses.",
+                "Dos al año; una en el recurrente y sin intervalo menor de cuatro meses entre similares.",
+              ],
+              answer: 2,
+              why: "Conserva todas las condiciones del inciso (a).",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "El inciso (a) exige dos al año y una dentro del recurrente.",
+                "El intervalo no puede ser menor a cuatro meses consecutivos.",
+                "Conserva todas las condiciones del inciso (a).",
+              ],
+            },
+          ],
+        },
+        {
+          label: "Cómo se evalúa",
+          title: "La circular fija el marco; no desarrolla el manual externo",
+          body: "Descubre la tarjeta después de revisar la etapa.",
+          refs: ["CO AV-12.1/07 R5"],
+          cards: [
+            [
+              "La circular fija el marco; no desarrolla el manual externo",
+              "Etapa 04 · Forma de evaluaciónLa circular fija el marco; no desarrolla el manual externoLas evaluaciones en simulador o vuelo remiten al Manual del Inspector de Operaciones y a documentos autorizados del operador. Quién debe cerciorarseEl concesionario, permisionario u operador aéreo debe cerciorarse de que se compruebe la competencia y se realicen las verificaciones correspondientes.7.2.6.1Cómo se realizanLas evaluaciones de competencia en simulador y/o vuelo deben realizarse conforme a lo especificado en el MIO de la Autoridad de Aviación Civil.7.2.6.1(c)Dónde deben aparecer las maniobrasEn los Manuales de Operaciones de Vuelo y en el Programa de Capacitación y/o Adiestramiento autorizado del concesionario, permisionario u operador.7.2.6.1(c)Límite de este cursoLa circular remite al MIO y a documentos autorizados, pero este Learning Path no desarrolla su contenido.",
+            ],
+          ],
+        },
+        {
+          label: "Revalidar la licencia",
+          title: "La evidencia documental conecta la evaluación con la licencia",
+          body: "Etapa 05 · RevalidaciónLa evidencia documental conecta la evaluación con la licenciaEste es el vínculo explícito del documento con la revalidación. Cadena oficialEvaluación → acreditación → revalidaciónEl piloto evaluado debe presentar documentos que acrediten satisfactoriamente las evaluaciones señaladas en 7.2.6.1 para poder revalidar su licencia.7.2.6.2Lo que dice la circular“El piloto evaluado deberá presentar los documentos donde acredite de forma satisfactoria las evaluaciones [...] para poder revalidar su licencia.”En palabras simplesNo basta afirmar que la evaluación se realizó: el numeral exige presentar evidencia documental satisfactoria.",
+          refs: ["CO AV-12.1/07 R5"],
+          questions: [
+            {
+              q: "¿Cumple o no cumple?",
+              options: [
+                "Cumple, porque la evaluación ocurrió.",
+                "No cumple el requisito documental para revalidar.",
+                "La circular permite sustituirlos por una declaración verbal.",
+              ],
+              answer: 1,
+              why: "La presentación de documentos es expresa.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "7.2.6.2 exige presentar los documentos para revalidar.",
+                "La presentación de documentos es expresa.",
+                "El numeral no establece esa sustitución.",
+              ],
+            },
+          ],
+        },
+        {
+          label: "Variantes y simulación",
+          title: "Simulación y combinación de requisitos",
+          body: "Etapa 06 · CondicionesSimulación y combinación de requisitosDos reglas evitan asumir que cualquier dispositivo o cualquier combinación son válidos. Dispositivos de simulaciónDeben utilizarse dispositivos aprobados por la Autoridad de Aviación Civil para las partes de las verificaciones respecto de las cuales hayan sido expresamente aprobados.7.2.6.3Variantes o tipos similaresCuando se asignen tripulaciones a variantes del mismo tipo o a tipos diferentes con características similares, la Autoridad de Aviación Civil decide en qué condiciones pueden combinarse los requisitos de 7.2.6.1.7.2.6.4",
+          refs: ["CO AV-12.1/07 R5"],
+          questions: [
+            {
+              q: "Verdadero o falso",
+              options: ["Verdadero.", "Falso.", "Solo depende del piloto."],
+              answer: 1,
+              why: "La aprobación debe ser expresa y aplicable a esas partes.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "Debe estar aprobado por la Autoridad para las partes correspondientes.",
+                "La aprobación debe ser expresa y aplicable a esas partes.",
+                "La condición se refiere a aprobación de la Autoridad.",
+              ],
+            },
+            {
+              q: "¿Quién decide?",
+              options: [
+                "El piloto evaluado.",
+                "La Autoridad de Aviación Civil.",
+                "El fabricante, automáticamente.",
+              ],
+              answer: 1,
+              why: "Es la autoridad indicada en 7.2.6.4.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "El numeral no le asigna esa decisión.",
+                "Es la autoridad indicada en 7.2.6.4.",
+                "Eso no es lo que dice el numeral.",
+              ],
+            },
+          ],
+        },
+        {
+          label: "¿Cumple o no cumple?",
+          title: "¿Cumple o no cumple?",
+          body: "Etapa 07 · Aplicación¿Cumple o no cumple?Lee cada caso, conserva todas las condiciones y decide.",
+          refs: ["CO AV-12.1/07 R5"],
+          questions: [
+            {
+              q: "Caso 1 · Intervalo",
+              options: ["Cumple.", "No cumple.", "La circular no fija intervalo."],
+              answer: 1,
+              why: "El intervalo es menor al mínimo indicado.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "No pueden tener intervalos menores a cuatro meses consecutivos.",
+                "El intervalo es menor al mínimo indicado.",
+                "Sí lo fija en 7.2.6.1(a).",
+              ],
+            },
+            {
+              q: "Caso 2 · Peso igual al límite",
+              options: [
+                "Corresponde al esquema de una verificación anual.",
+                "Corresponde obligatoriamente al esquema de dos verificaciones.",
+                "No está contemplada.",
+              ],
+              answer: 0,
+              why: "El inciso (b) incluye peso igual o menor a 5,700 kg.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "El inciso (b) incluye peso igual o menor a 5,700 kg.",
+                "El inciso (a) habla de peso superior a 5,700 kg y motor de turbina.",
+                "Sí está contemplada en el inciso (b).",
+              ],
+            },
+            {
+              q: "Caso 3 · Dispositivo",
+              options: [
+                "Cumple porque el dispositivo está aprobado en general.",
+                "No cumple la condición del numeral.",
+                "La aprobación nunca es necesaria.",
+              ],
+              answer: 1,
+              why: "La aprobación debe cubrir esa parte de la verificación.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "Debe estar expresamente aprobado para la parte correspondiente.",
+                "La aprobación debe cubrir esa parte de la verificación.",
+                "7.2.6.3 la exige.",
+              ],
+            },
+            {
+              q: "Caso 4 · Combinación",
+              options: ["Cumple por la similitud.", "No cumple.", "Depende solo del instructor."],
+              answer: 1,
+              why: "La Autoridad decide las condiciones de combinación.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "La similitud no sustituye la decisión de la Autoridad.",
+                "La Autoridad decide las condiciones de combinación.",
+                "Eso no aparece en 7.2.6.4.",
+              ],
+            },
+          ],
+        },
+        {
+          label: "Aterrizaje",
+          title: "Aterrizaje: reconstruye la cadena completa",
+          body: "Etapa 08 · Recuperación activaAterrizaje: reconstruye la cadena completaResponde mentalmente antes de mostrar cada respuesta. Después termina el recorrido. Recorrido completadoYa puedes reconstruir la relación entre competencia, periodicidad, evidencia documental y revalidación según 7.2.6.1–7.2.6.4.",
+          refs: ["CO AV-12.1/07 R5"],
+          recall: [
+            [
+              "Reconstruye¿Qué cuatro bloques principales se comprueban en 7.2.6.1?",
+              "Técnica de pilotaje; procedimientos normales, anormales y de emergencia; competencia por tipo o variante; y, cuando aplique, competencia bajo reglas de vuelo por instrumentos.",
+            ],
+            [
+              "Periodicidad¿Qué diferencia esencial hay entre los incisos (a) y (b)?",
+              "El inciso (a) exige dos verificaciones al año con condiciones de recurrente e intervalo; el inciso (b), una verificación anual incluida en el recurrente.",
+            ],
+            [
+              "Revalidación¿Qué debe presentar el piloto para poder revalidar?",
+              "Documentos que acrediten satisfactoriamente las evaluaciones de 7.2.6.1.",
+            ],
+            [
+              "Autoridad¿Qué dos decisiones dependen expresamente de la Autoridad?",
+              "La aprobación del dispositivo para partes específicas de la verificación y las condiciones para combinar requisitos entre variantes o tipos similares.",
+            ],
+          ],
+          final: true,
+        },
+      ],
+    },
+  "linea-aerea/legislacion/circulares-obligatorias/circular-obligatoria-de-articulos-prohibidos-co-sa-17-2-r3-10-2":
+    {
+      id: "circular-02",
+      folder: "02_Articulos_Prohibidos_CO_SA_17_2_10_R3",
+      name: "Artículos prohibidos · CO SA-17.2/10 R3",
+      subtitle:
+        "Learning Path standalone sobre artículos prohibidos, condiciones y excepciones de la CO SA-17.2/10 R3.",
+      year: "Circulares Obligatorias",
+      word: "CO SA-17.2/10 R3",
+      sources: ["CO SA-17.2/10 R3"],
+      steps: [
+        {
+          label: "Despegue",
+          title: "No es solo “sí” o “no”",
+          body: "Descubre la tarjeta después de revisar la etapa.",
+          refs: ["CO SA-17.2/10 R3"],
+          cards: [
+            [
+              "No es solo “sí” o “no”",
+              "Etapa 01 · DespegueNo es solo “sí” o “no”La CO SA-17.2/10 R3 combina prohibiciones, ubicaciones, cantidades, excepciones y procedimientos según la persona y el contexto. Alcance aprobadoCuatro preguntas antes de decidir¿Qué artículo es?¿Quién lo porta?¿Dónde pretende llevarlo?¿Existe una condición o excepción expresa?Personas diferenciadasLa circular contempla pasajeros, tripulaciones, autoridades, dependencias gubernamentales, empleados, prestadores de servicios y usuarios en general.Regla de lecturaUna excepción para una autoridad o un empleado no se convierte automáticamente en permiso para un pasajero. Fuente única: CO SA-17.2/10 R3. No se incorporan reglas internacionales genéricas ni manuales de aerolínea; cuando la circular remite a ellos, solo se señala la remisión.",
+            ],
+          ],
+          hero: true,
+        },
+        {
+          label: "El mapa de ubicación",
+          title: "Primero decide dónde se pretende llevar",
+          body: "Etapa 02 · UbicaciónPrimero decide dónde se pretende llevarLa respuesta puede cambiar entre equipaje de mano, equipaje facturado, zona estéril o un procedimiento condicionado. Equipaje de manoPertenencias que el pasajero lleva desde la entrada a la zona estéril y durante el vuelo.GlosarioEquipaje facturadoPertenencias registradas para transportarse en el compartimiento de carga.GlosarioZona estérilEspacio entre el punto de inspección y las aeronaves, con acceso estrictamente controlado.GlosarioRegla generalPasajeros, personal de vuelo y empleados no pueden transportar artículos prohibidos consigo ni en equipaje de mano o facturado, salvo autorización expresa en tipo y cantidad.1.7 Lo que dice la circularCuando se detecte un artículo cuya portación esté prohibida en zona estéril o aeronave, se orientará al pasajero para llevarlo como equipaje facturado o dejarlo fuera; nunca consigo más allá del punto de inspección.",
+          refs: ["CO SA-17.2/10 R3"],
+          questions: [
+            {
+              q: "Sí dice / No dice",
+              options: ["Sí dice.", "No dice.", "Dice que siempre debe destruirse."],
+              answer: 1,
+              why: "La clasificación final depende del artículo y de los numerales 8 a 10.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "El numeral orienta a facturarlo o dejarlo fuera, pero otros numerales fijan prohibiciones y condiciones.",
+                "La clasificación final depende del artículo y de los numerales 8 a 10.",
+                "Eso tampoco aparece en 5.3.",
+              ],
+            },
+          ],
+        },
+        {
+          label: "Equipaje facturado",
+          title: "Lo que está prohibido en la carga registrada",
+          body: "Etapa 03 · Equipaje facturadoLo que está prohibido en la carga registradaEl numeral 8.1 prohíbe materiales, sustancias o artefactos explosivos o incendiarios capaces de causar lesiones graves o amenazar la aeronave. Lista del numeral 8.1Municiones.Detonadores y mechas.Minas, granadas y artículos militares explosivos.Material pirotécnico, incluidos fuegos artificiales.Cartuchos o envases fumígenos.Dinamita, pólvora y explosivos plásticos.8.1Ojo con el procedimiento especialEl numeral 10.1 prevé que, al detectar un arma, parte, cartuchos o proyectiles, intervenga la autoridad para verificar la portación y, si lo considera pertinente, autorizar que la aerolínea documente y transporte el artículo en carga.En palabras simplesNo es un permiso ordinario de equipaje facturado. Es una ruta condicionada a verificación y autorización.",
+          refs: ["CO SA-17.2/10 R3"],
+          questions: [
+            {
+              q: "¿Prohibido o condicionado?",
+              options: [
+                "Permitido como equipaje facturado común.",
+                "No permitido de esa forma; requiere el procedimiento especial aplicable.",
+                "Permitido en equipaje de mano.",
+              ],
+              answer: 1,
+              why: "Conserva la prohibición y la condición de 10.1.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "8.1 incluye municiones y 10.1 exige verificación/autorización para el procedimiento especial.",
+                "Conserva la prohibición y la condición de 10.1.",
+                "Eso contradice los numerales 9.1 y 10.1.",
+              ],
+            },
+          ],
+        },
+        {
+          label: "A bordo y zona estéril",
+          title: "Artículos prohibidos a bordo y en zona estéril",
+          body: "Etapa 04 · CategoríasArtículos prohibidos a bordo y en zona estérilEl numeral 9 organiza los artículos por su capacidad de causar lesiones o comprometer la seguridad. 9.1 · Armas y proyectilesArmas de fuego reales, réplicas, piezas, armas de aire o CO₂, pistolas de bengalas, arcos, ballestas, flechas, arpones, hondas y catapultas.9.2 · ParalizantesElectrochoque, dispositivos contra animales y sustancias incapacitantes como pimienta, gases lacrimógenos o aerosoles de ácidos.9.3 · Punzantes o cortantesHachas, picahielos, estiletes, hojas mayores de 6 cm, tijeras mayores de 6 cm desde el eje, artes marciales, espadas y sables.9.4 · HerramientasPalancas, taladros, herramientas con hoja o mango mayor de 6 cm utilizables como armas, sierras, sopletes y pistolas de pernos o clavos.9.5 · ContundentesBates, porras, palos, cachiporras, clavas y equipo de artes marciales.9.6–9.7 · Explosivos y sustanciasExplosivos o incendiarios; ácidos, corrosivos, incapacitantes, radiactivos, venenos, infecciosos, combustibles espontáneos y LAG. Condición especial de 9.3Se prohíben todas las navajas y objetos con punta o filo, de cualquier tamaño, cuando se transporten simulados dentro de otros objetos o se oculten intencionalmente.",
+          refs: ["CO SA-17.2/10 R3"],
+          questions: [
+            {
+              q: "Sí dice / No dice",
+              options: [
+                "Sí dice.",
+                "No dice; eso no equivale por sí solo a declararla permitida.",
+                "Dice que toda tijera está permitida.",
+              ],
+              answer: 1,
+              why: "La lectura fiel evita convertir silencio en autorización.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "El límite indicado es más de 6 cm.",
+                "La lectura fiel evita convertir silencio en autorización.",
+                "La circular no formula esa autorización general.",
+              ],
+            },
+          ],
+        },
+        {
+          label: "Líquidos, aerosoles y geles",
+          title: "100 ml, una bolsa y excepciones expresas",
+          body: "Etapa 05 · LAG100 ml, una bolsa y excepciones expresasLAG significa líquidos, aerosoles o geles e incluye bebidas, cremas, cosméticos, aerosoles, geles, pastas y artículos de consistencia similar. 100 mlCapacidad por envaseCada envase individual no debe superar 100 ml o su equivalente.9.81 litroBolsa resellableTodos los envases deben caber sin dificultad en una bolsa completamente cerrada de hasta un litro, aproximadamente 20 × 20 cm.9.81Bolsa por pasajeroSolo se permite una bolsa por pasajero, salvo lo indicado para comercialización en 7.3.9.8 Excepciones de cantidadNecesidades dietéticas especiales.Alimentos y bebidas para bebés.Personas bajo tratamiento médico.Tripulación de vuelo o cabina uniformada y con identificación vigente de la empresa.9.8Envases vacíosLos envases vacíos de cualquier capacidad sí pueden transportarse en la cabina de pasajeros.10.7ImportanteLa capacidad del envase se evalúa por el recipiente, no por el volumen de líquido que queda dentro.",
+          refs: ["CO SA-17.2/10 R3"],
+          questions: [
+            {
+              q: "¿Dónde puede ir?",
+              options: [
+                "Equipaje de mano porque contiene menos de 100 ml.",
+                "No puede ir en mano; la aerolínea determinará si puede facturarse o si se prohíbe.",
+                "Siempre permitido por ser líquido.",
+              ],
+              answer: 1,
+              why: "Ese es el procedimiento de 10.7, sin desarrollar el manual externo.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "La regla usa la capacidad del envase: 150 ml supera el máximo.",
+                "Ese es el procedimiento de 10.7, sin desarrollar el manual externo.",
+                "9.8 y 10.7 establecen límites.",
+              ],
+            },
+          ],
+        },
+        {
+          label: "Excepciones y personas",
+          title: "La excepción pertenece a una persona y a un contexto",
+          body: "Etapa 06 · ExcepcionesLa excepción pertenece a una persona y a un contextoNo traslades permisos entre pasajeros, autoridades, tripulación, empleados o prestadores de servicios. Autoridades con armasPueden ingresarlas a zona estéril únicamente en circunstancias motivadas por incidente, ilícito, evento específico o amenaza, en cumplimiento de su deber y coordinadas con el Comandante del Aeródromo. Para abordar aeronaves comerciales rigen las condiciones de 6.2.6.1–6.2Trabajo técnico o de servicioLos artículos de 8 y 9 pueden introducirse con propósitos técnicos o de servicio bajo responsabilidad y deben retirarse al concluir los trabajos.1.5Prestadores de serviciosDeben coordinar horario y procedimiento para introducir artículos peligrosos, manteniéndolos fuera del alcance de pasajeros. En aeronaves, la coordinación corresponde con el transportista.7.1 y 7.5Comercio y alimentosEn zona estéril no se comercializan los artículos listados, excepto LAG mayores de 100 ml inspeccionados antes de ingresar. Los utensilios para consumo no deben ser puntiagudos ni filosos.7.3–7.4",
+          refs: ["CO SA-17.2/10 R3"],
+          questions: [
+            {
+              q: "Caso de empleado",
+              options: [
+                "Puede hacer ambas cosas.",
+                "Puede introducirlas a la zona estéril para consumo propio, no a la aeronave.",
+                "No puede introducirlas a ninguna zona bajo ninguna condición.",
+              ],
+              answer: 1,
+              why: "Esa diferencia aparece en la continuación de 9.8.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "La excepción permite consumo propio en zona estéril, pero no introducirlas a las aeronaves.",
+                "Esa diferencia aparece en la continuación de 9.8.",
+                "La circular sí contempla la excepción limitada.",
+              ],
+            },
+          ],
+        },
+        {
+          label: "¿Dónde puede ir?",
+          title: "¿Dónde puede ir?",
+          body: "Descubre la tarjeta después de revisar la etapa.",
+          refs: ["CO SA-17.2/10 R3"],
+          cards: [
+            [
+              "¿Dónde puede ir?",
+              "Etapa 07 · Actividad principal¿Dónde puede ir?Elige la mejor respuesta y lee la condición completa. No memorices solo una etiqueta. Fuegos artificialesPasajero intenta pasar el punto de inspección con ellos. Destornillador con mango de más de 6 cmPasajero lo lleva consigo. Dispositivo paralizanteNo se considera arma ni requiere permiso especial. Envase vacío de 750 mlPasajero quiere llevarlo en cabina. Alimento para bebé en cantidad superior a 100 mlViaja con el bebé y lo presenta en el punto de inspección. Bate de béisbolPasajero lo lleva como artículo personal.",
+            ],
+          ],
+        },
+        {
+          label: "Aterrizaje",
+          title: "Aterrizaje: clasifica sin mirar",
+          body: "Etapa 08 · Recuperación activaAterrizaje: clasifica sin mirarRecuerda primero la regla; después revela la respuesta y verifica tu precisión. Recorrido completadoYa puedes clasificar artículos conservando ubicación, persona, cantidad, excepción y procedimiento.",
+          refs: ["CO SA-17.2/10 R3"],
+          questions: [
+            {
+              q: "Evaluación 1",
+              options: [
+                "Cumple porque el contenido es menor a 100 ml.",
+                "No cumple como equipaje de mano ordinario.",
+                "Siempre puede pasar si está cerrado.",
+              ],
+              answer: 1,
+              why: "La capacidad supera 100 ml.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "La regla se refiere a la capacidad del envase.",
+                "La capacidad supera 100 ml.",
+                "El cierre no sustituye el límite.",
+              ],
+            },
+            {
+              q: "Evaluación 2",
+              options: [
+                "Pueden llevar cantidades extraordinarias de alimentos y bebidas LAG a ambos lugares.",
+                "Pueden introducirlas para consumo propio en zona estéril, no a la aeronave.",
+                "La circular no distingue ubicaciones.",
+              ],
+              answer: 1,
+              why: "Esa es la limitación expresa.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "La excepción excluye las aeronaves.",
+                "Esa es la limitación expresa.",
+                "Sí las distingue.",
+              ],
+            },
+            {
+              q: "Evaluación 3",
+              options: [
+                "No está prohibida si mide menos de 6 cm.",
+                "Está prohibida por la condición de simulación u ocultamiento.",
+                "Solo está prohibida en equipaje facturado.",
+              ],
+              answer: 1,
+              why: "9.3 lo establece expresamente.",
+              wrong: "Revisa la condición exacta y vuelve a intentarlo.",
+              feedbacks: [
+                "La regla especial de ocultamiento aplica a cualquier tamaño.",
+                "9.3 lo establece expresamente.",
+                "La regla se refiere a su ingreso a bordo y zona estéril.",
+              ],
+            },
+          ],
+          recall: [
+            [
+              "LAGReconstruye la regla ordinaria de líquidos.",
+              "Envases de hasta 100 ml; todos caben sin dificultad en una bolsa resellable cerrada de hasta un litro; una bolsa por pasajero.",
+            ],
+            [
+              "Ubicaciones¿Qué diferencia esencial hay entre 8 y 9?",
+              "El numeral 8 trata artículos prohibidos en equipaje facturado; el 9 clasifica artículos prohibidos a bordo y en zona estéril.",
+            ],
+            [
+              "ExcepcionesNombra tres excepciones de LAG mayores de 100 ml.",
+              "Necesidades dietéticas especiales, alimentos o bebidas para bebés y personas bajo tratamiento médico; también hay reglas diferenciadas para tripulación y empleados.",
+            ],
+            [
+              "Silencio normativo¿Qué significa “NO DICE”?",
+              "Que no debe inventarse una autorización o prohibición. Se conserva únicamente lo expresamente establecido por la circular.",
+            ],
+          ],
+          final: true,
+        },
+      ],
+    },
 };
 
 export const LEGISLATION_ANNEXES: LegislationAnnex[] = [

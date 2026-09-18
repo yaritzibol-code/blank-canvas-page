@@ -344,7 +344,8 @@ function Questions({
             {selected !== undefined && (
               <p>
                 {selected === question.answer ? "Correcto. " : "Todavía no. "}
-                {selected === question.answer ? question.why : (question.wrong ?? question.why)}
+                {question.feedbacks?.[selected] ??
+                  (selected === question.answer ? question.why : (question.wrong ?? question.why))}
               </p>
             )}
           </section>
