@@ -1211,7 +1211,7 @@ export const RESPUESTAS_SEO: RespuestaSeo[] = [
     slug: "que-estudiar-para-la-entrevista-tecnica-de-una-aerolinea",
     pregunta: "¿Qué estudiar para la entrevista técnica de una aerolínea?",
     keywords:
-      "entrevista tecnica aerolinea que estudiar, preguntas entrevista tecnica piloto, entrevista tecnica 737 airbus",
+      "entrevista tecnica aerolinea que estudiar, preguntas entrevista tecnica piloto, sistemas de aeronave entrevista",
     respuestaCorta:
       "Las entrevistas técnicas de aerolínea giran alrededor de tres bloques: limitaciones y memory items del equipo al que aplicas (o del que has volado), sistemas del avión explicados con claridad, y conocimiento aeronáutico general — rendimiento, meteorología, normativa. Se preparan con reactivos de práctica hasta que la recuperación sea inmediata: en la mesa no hay tiempo de 'déjame pensarlo'.",
     secciones: [
