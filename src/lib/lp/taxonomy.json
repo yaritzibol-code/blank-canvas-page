@@ -5252,9 +5252,34 @@
          "orden": 1
         },
         {
-         "id": "linea-aerea/legislacion/ley-federal-del-trabajo/trabajo-de-las-tripulaciones-aeronauticas-arts-215-a-245-2",
-         "titulo": "Trabajo de las tripulaciones aeronáuticas (arts. 215 a 245)",
+         "id": "linea-aerea/legislacion/ley-federal-del-trabajo/tripulaciones-ambito-y-organizacion-arts-215-a-219-2",
+         "titulo": "Tripulaciones: ámbito y organización (arts. 215 a 219)",
          "orden": 2
+        },
+        {
+         "id": "linea-aerea/legislacion/ley-federal-del-trabajo/comandante-y-miembros-de-tripulacion-art-220-3",
+         "titulo": "Comandante y miembros de tripulación (art. 220)",
+         "orden": 3
+        },
+        {
+         "id": "linea-aerea/legislacion/ley-federal-del-trabajo/jornadas-tiempos-y-descansos-de-tripulacion-arts-221-a-232-4",
+         "titulo": "Jornadas, tiempos y descansos de tripulación (arts. 221 a 232)",
+         "orden": 4
+        },
+        {
+         "id": "linea-aerea/legislacion/ley-federal-del-trabajo/salarios-viaticos-y-condiciones-de-trabajo-arts-233-a-236-5",
+         "titulo": "Salarios, viáticos y condiciones de trabajo (arts. 233 a 236)",
+         "orden": 5
+        },
+        {
+         "id": "linea-aerea/legislacion/ley-federal-del-trabajo/obligaciones-y-prohibiciones-de-tripulantes-arts-237-a-242-6",
+         "titulo": "Obligaciones y prohibiciones de tripulantes (arts. 237 a 242)",
+         "orden": 6
+        },
+        {
+         "id": "linea-aerea/legislacion/ley-federal-del-trabajo/suspension-terminacion-y-reglas-especiales-arts-238-a-245-7",
+         "titulo": "Suspensión, terminación y reglas especiales (arts. 238 a 245)",
+         "orden": 7
         }
        ]
       },

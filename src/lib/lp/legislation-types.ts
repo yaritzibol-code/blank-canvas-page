@@ -4,6 +4,7 @@ export interface LegislationQuestion {
   answer: number;
   why: string;
   wrong?: string;
+  feedbacks?: string[];
 }
 
 export interface LegislationStep {
