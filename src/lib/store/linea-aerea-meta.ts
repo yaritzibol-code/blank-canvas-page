@@ -66,7 +66,7 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
       "Legislación nacional e internacional por ordenamiento: Constitución, convenios, Ley de Aviación Civil y sus reglamentos, aduanas, LFT y circulares obligatorias.",
     materia: "legislacion",
     icon: "scale",
-    total: 80,
+    total: 371,
     fileUrl: "https://drive.google.com/file/d/1Eq5EDfzqnKDrGDjBQtZDK26QFKp6Gfj0/preview",
   },
 
@@ -232,16 +232,16 @@ export const LEG_PDFS: readonly { label: string; url: string }[] = [
  * reactivos en la nube.
  */
 export const LEG_CHAPTERS: AtpChapter[] = [
-  { num: 1, titulo: "Constitución Política de los Estados Unidos Mexicanos", tituloEn: "Political Constitution of the United Mexican States", detalle: "Artículo 32", total: 10 },
-  { num: 2, titulo: "Convenios internacionales", tituloEn: "International Conventions", detalle: "Chicago y Anexos OACI, Varsovia, Montreal, Tokio, La Haya", total: 70 },
-  { num: 3, titulo: "Ley de Aviación Civil", tituloEn: "Civil Aviation Law", detalle: "Arts. 3, 7, 17 Bis, 32 a 38, 40 a 41, 70 a 71, 79 a 82, 88 a 90", total: 0 },
-  { num: 4, titulo: "Reglamento de la Ley de Aviación Civil", tituloEn: "Civil Aviation Law Regulations", detalle: "Arts. 43 a 47, 77 a 86, 103 a 105, 111 a 120, 131, 158 a 162, 168 a 187, 196 a 197", total: 0 },
-  { num: 5, titulo: "Reglamento de la Ley de Aeropuertos", tituloEn: "Airports Law Regulations", detalle: "Arts. 6, 104 a 115, 156, 169", total: 0 },
-  { num: 6, titulo: "Reglamento de Medicina de Aviación Civil", tituloEn: "Civil Aviation Medicine Regulations", detalle: "Arts. 13 a 17 — evaluación médica al personal técnico aeronáutico y aspirantes", total: 0 },
-  { num: 7, titulo: "Ley Aduanera", tituloEn: "Customs Law", detalle: "Arts. 20, 53, 61", total: 0 },
-  { num: 8, titulo: "Reglamento de la Ley Aduanera", tituloEn: "Customs Law Regulations", detalle: "Arts. 31 (tráfico aéreo) y 98 (equipajes y menajes)", total: 0 },
-  { num: 9, titulo: "Ley Federal del Trabajo", tituloEn: "Federal Labor Law", detalle: "Arts. 60 a 67 (jornada) y 215 a 245 (tripulaciones aeronáuticas)", total: 0 },
-  { num: 10, titulo: "Circulares Obligatorias", tituloEn: "Mandatory Circulars", detalle: "CO AV-12.1/07 R5 (revalidación de licencia) y CO SA-17.2/10 R3 (artículos prohibidos)", total: 0 },
+  { num: 1, titulo: "Constitución Política de los Estados Unidos Mexicanos", tituloEn: "Political Constitution of the United Mexican States", detalle: "Artículo 32", total: 5 },
+  { num: 2, titulo: "Convenios internacionales", tituloEn: "International Conventions", detalle: "Chicago y Anexos OACI, Varsovia, Montreal, Tokio, La Haya", total: 93 },
+  { num: 3, titulo: "Ley de Aviación Civil", tituloEn: "Civil Aviation Law", detalle: "Arts. 3, 7, 17 Bis, 32 a 38, 40 a 41, 70 a 71, 79 a 82, 88 a 90", total: 38 },
+  { num: 4, titulo: "Reglamento de la Ley de Aviación Civil", tituloEn: "Civil Aviation Law Regulations", detalle: "Arts. 43 a 47, 77 a 86, 103 a 105, 111 a 120, 131, 158 a 162, 168 a 187, 196 a 197", total: 67 },
+  { num: 5, titulo: "Reglamento de la Ley de Aeropuertos", tituloEn: "Airports Law Regulations", detalle: "Arts. 6, 104 a 115, 156, 169", total: 23 },
+  { num: 6, titulo: "Reglamento de Medicina de Aviación Civil", tituloEn: "Civil Aviation Medicine Regulations", detalle: "Arts. 13 a 17 — evaluación médica al personal técnico aeronáutico y aspirantes", total: 12 },
+  { num: 7, titulo: "Ley Aduanera", tituloEn: "Customs Law", detalle: "Arts. 20, 53, 61", total: 23 },
+  { num: 8, titulo: "Reglamento de la Ley Aduanera", tituloEn: "Customs Law Regulations", detalle: "Arts. 31 (tráfico aéreo) y 98 (equipajes y menajes)", total: 5 },
+  { num: 9, titulo: "Ley Federal del Trabajo", tituloEn: "Federal Labor Law", detalle: "Arts. 60 a 67 (jornada) y 215 a 245 (tripulaciones aeronáuticas)", total: 48 },
+  { num: 10, titulo: "Circulares Obligatorias", tituloEn: "Mandatory Circulars", detalle: "CO AV-12.1/07 R5 (revalidación de licencia) y CO SA-17.2/10 R3 (artículos prohibidos)", total: 57 },
 ];
 
 export const LEG_TOTAL = LEG_CHAPTERS.reduce((s, c) => s + c.total, 0);
