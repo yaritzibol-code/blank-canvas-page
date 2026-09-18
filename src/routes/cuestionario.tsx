@@ -293,6 +293,8 @@ function CuestionarioPage() {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [answered, setAnswered] = useState(false);
+  /** Texto escrito en las preguntas de respuesta abierta. */
+  const [openInput, setOpenInput] = useState("");
   const [results, setResults] = useState<(boolean | null)[]>([]);
   /** Opción elegida por pregunta (para el informe real de Pathy). */
   const [picks, setPicks] = useState<(number | null)[]>([]);
