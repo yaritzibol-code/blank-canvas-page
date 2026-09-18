@@ -588,6 +588,38 @@ function CuestionarioPage() {
     });
   }
 
+  /**
+   * Respuesta escrita (abreviaturas Jeppesen): se compara sin acentos ni
+   * signos contra la respuesta modelo y sus variantes aceptadas.
+   */
+  function handleOpenSubmit() {
+    if (answered) return;
+    const q = questions[currentIdx];
+    const escrito = normalizar(openInput);
+    if (!escrito) return;
+    if (fuenteGratis && user && !isPaid(user)) {
+      if (!hasFreeLeft(user, "preguntas")) {
+        setUpgradeFeature("preguntas");
+        setUpgradeOpen(true);
+        return;
+      }
+      consumeFree(user, "preguntas");
+    }
+    const validas = [...(q.aceptadas ?? []), ...q.options.map((o) => o.text)].map(normalizar);
+    const isCorrect = validas.some((v) => v === escrito);
+    setSelectedIdx(isCorrect ? q.correctIndex : -1);
+    setAnswered(true);
+    lastAnsweredRef.current = currentIdx;
+    const newResults = [...results];
+    newResults[currentIdx] = isCorrect;
+    setResults(newResults);
+    setPicks((prev) => {
+      const next = [...prev];
+      next[currentIdx] = isCorrect ? q.correctIndex : -1;
+      return next;
+    });
+  }
+
   function handleNext() {
     if (currentIdx + 1 >= total) {
       setShowResult(true);
@@ -596,6 +628,7 @@ function CuestionarioPage() {
     setCurrentIdx(currentIdx + 1);
     setSelectedIdx(null);
     setAnswered(false);
+    setOpenInput("");
   }
 
   function handleRestart() {
