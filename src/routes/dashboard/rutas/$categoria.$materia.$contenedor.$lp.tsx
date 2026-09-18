@@ -8,6 +8,10 @@ import { useEffect } from "react";
 import { createFileRoute, Link, Navigate, useNavigate } from "@tanstack/react-router";
 import { Icon } from "@/components/ui/fp-icon";
 import {
+  APPLICABLE_REGULATIONS_LP_ID,
+  ApplicableRegulationsPath,
+} from "@/components/lp/ApplicableRegulationsPath";
+import {
   LpActionBar,
   LpBreadcrumbs,
   LpEmptyState,
@@ -19,7 +23,6 @@ import {
 import { lpCategory, lpContainer, lpSubject } from "@/lib/lp/taxonomy";
 import { useSessionUser, useStore } from "@/lib/store";
 import { completeLp, lpAccess, lpNeighbors, startLp, subjectProgress } from "@/lib/store/lp-nav";
-
 
 export const Route = createFileRoute("/dashboard/rutas/$categoria/$materia/$contenedor/$lp")({
   head: () => ({
@@ -102,7 +105,6 @@ function LearningPathPage() {
             </Link>
           }
         />
-
       </>
     );
   }
@@ -159,11 +161,20 @@ function LearningPathPage() {
       </div>
 
       <div style={{ marginBottom: 22 }}>
-        <LpEmptyState
-          icon="spark"
-          title="Contenido en preparación"
-          description={`Este learning path ya está creado dentro de la secuencia de ${cont.titulo}. Su material de estudio se cargará aquí.`}
-        />
+        {item.id === APPLICABLE_REGULATIONS_LP_ID && user ? (
+          <ApplicableRegulationsPath
+            userId={user.id}
+            lpId={item.id}
+            completed={completado}
+            onComplete={() => completeLp(user.id, item, subject.titulo)}
+          />
+        ) : (
+          <LpEmptyState
+            icon="spark"
+            title="Contenido en preparación"
+            description={`Este learning path ya está creado dentro de la secuencia de ${cont.titulo}. Su material de estudio se cargará aquí.`}
+          />
+        )}
       </div>
 
       <LpActionBar>
@@ -181,7 +192,7 @@ function LearningPathPage() {
         </div>
 
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
-          {!completado && user && (
+          {item.id !== APPLICABLE_REGULATIONS_LP_ID && !completado && user && (
             <button
               type="button"
               onClick={() => completeLp(user.id, item, subject.titulo)}
@@ -211,4 +222,3 @@ function LearningPathPage() {
     </>
   );
 }
-
