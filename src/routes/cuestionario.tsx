@@ -179,6 +179,8 @@ function toLocalQ(q: BankQuestion): Question {
     capitulo: q.capitulo,
     capituloTitulo: q.capituloTitulo,
     seccion: q.seccion,
+    abierta: q.tipo === "abierta",
+    aceptadas: q.aceptadas,
     options: q.options.map((text, i) => ({ text, correct: i === q.correctIndex })),
     feedback: {
       correct: `¡Correcto! ${q.explanation}`,
