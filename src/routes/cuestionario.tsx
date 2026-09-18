@@ -1160,7 +1160,51 @@ function CuestionarioPage() {
 
 
 
-            {/* Options — botones reales: foco por teclado y toque ≥48px */}
+            {currentQ.abierta ? (
+              /* Respuesta escrita: el glosario de abreviaturas se contesta a mano. */
+              <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
+                <label htmlFor="respuesta-abierta" style={{ fontSize: "0.82rem", color: "#647DA0", fontWeight: 600 }}>
+                  Escribe tu respuesta
+                </label>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                  <input
+                    id="respuesta-abierta"
+                    type="text"
+                    value={openInput}
+                    disabled={answered}
+                    autoComplete="off"
+                    onChange={(e) => setOpenInput(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === "Enter") handleOpenSubmit(); }}
+                    placeholder="Tu respuesta…"
+                    style={{
+                      flex: "1 1 240px", minHeight: 56, padding: "14px 18px",
+                      borderRadius: 12, border: "2px solid #F2DCDB", background: "#f8f9ff",
+                      font: "inherit", fontSize: "0.95rem", color: "#22375C",
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleOpenSubmit}
+                    disabled={answered || openInput.trim().length === 0}
+                    style={{
+                      minHeight: 56, padding: "14px 22px", borderRadius: 12, border: "none",
+                      background: answered || openInput.trim().length === 0 ? "#B9C6DA" : "#6C0820",
+                      color: "white", fontWeight: 700, fontSize: "0.9rem",
+                      cursor: answered || openInput.trim().length === 0 ? "default" : "pointer",
+                      fontFamily: "'Manrope', sans-serif",
+                    }}
+                  >
+                    Revisar
+                  </button>
+                </div>
+                {answered && (
+                  <p style={{ fontSize: "0.88rem", color: "#22375C", margin: 0 }}>
+                    Respuesta correcta: <strong>{currentQ.options[currentQ.correctIndex]?.text}</strong>
+                  </p>
+                )}
+              </div>
+            ) : (
+            /* Options — botones reales: foco por teclado y toque ≥48px */
             <div role="group" aria-label="Opciones de respuesta" style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
               {currentQ.options.map((opt, i) => (
                 <button
