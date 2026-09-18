@@ -7,5 +7,5 @@
  * Las cuentas de administración siguen entrando para poder seguir trabajando
  * dentro del módulo mientras está en mantenimiento.
  */
-export const learningPathsMaintenance = true;
+export const learningPathsMaintenance = false;
 export const studyTogetherMaintenance = true;

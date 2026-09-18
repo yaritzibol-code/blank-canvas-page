@@ -55,7 +55,7 @@ function RutasIndex() {
         total += paths.length;
         const sDone = paths.filter((l) => completed.has(l.id)).length;
         done += sDone;
-        if (!continuar && sDone > 0) {
+        if (cat.id === "linea-aerea" && !continuar && sDone > 0) {
           const item = subjectContinue(userId, subject);
           if (item) {
             const [, materia, contenedor, lp] = item.id.split("/");
@@ -102,6 +102,7 @@ function RutasIndex() {
       <LpGrid>
         {LP_CATEGORIES.map((cat) => {
           const s = CATEGORY_STYLE[cat.id] ?? { icon: "book", accent: "var(--primary)" };
+          const proximamente = cat.id === "ciaac";
           return (
             <LpCategoryCard
               key={cat.id}
@@ -111,6 +112,8 @@ function RutasIndex() {
               icon={s.icon}
               accent={s.accent}
               percent={estado?.percent[cat.id] ?? 0}
+              disabled={proximamente}
+              actionLabel={proximamente ? "Próximamente" : "Entrar"}
               meta={`${cat.subjects.length} ${cat.subjectLabel.toLowerCase()} · ${cat.subjects.reduce(
                 (n, sub) => n + subjectLpCount(sub),
                 0,
