@@ -154,5 +154,5 @@ export function yarisToHtml(text: string): string {
  */
 export function sanitizeHtml(html: string): string {
   if (!html) return "";
-  return DOMPurify.sanitize(html, { ALLOWED_TAGS, ALLOWED_ATTR: ["class"] });
+  return sanitizeWith(html, ALLOWED_TAGS, ["class"]);
 }
