@@ -6,7 +6,46 @@
  * → HTML simple y sanitizamos el resultado con una lista blanca de etiquetas.
  * Es idempotente: si Yaris ya mandó <b>/<ul>, el texto pasa intacto.
  */
-import DOMPurify from "isomorphic-dompurify";
+/**
+ * DOMPurify sólo existe en el navegador: `isomorphic-dompurify` arrastra jsdom
+ * y truena al renderizar en el servidor (Worker), tirando el SSR de cualquier
+ * página que importe este módulo. Cargamos DOMPurify de forma perezosa en el
+ * cliente y, mientras tanto (y siempre en el servidor), usamos un saneador
+ * propio de lista blanca que quita etiquetas y atributos no permitidos.
+ */
+let purify: { sanitize: (html: string, cfg: unknown) => string } | null = null;
+
+if (typeof window !== "undefined") {
+  void import("dompurify").then((mod) => {
+    purify = (mod.default ?? mod) as typeof purify;
+  });
+}
+
+/** Saneador de respaldo: conserva sólo las etiquetas permitidas, sin atributos. */
+function fallbackSanitize(html: string, allowed: string[]): string {
+  return html
+    // fuera scripts/estilos con todo y contenido
+    .replace(/<\s*(script|style|iframe|object|embed)[\s\S]*?<\s*\/\s*\1\s*>/gi, "")
+    .replace(/<\/?\s*([a-zA-Z0-9-]+)([^>]*)>/g, (_m, tag: string, attrs: string) => {
+      const name = tag.toLowerCase();
+      if (!allowed.includes(name)) return "";
+      const cls = /\bclass\s*=\s*("[^"]*"|'[^']*')/i.exec(attrs);
+      const closing = /^<\s*\//.test(_m);
+      if (closing) return `</${name}>`;
+      return cls ? `<${name} class=${cls[1]}>` : `<${name}>`;
+    });
+}
+
+/** Sanea con DOMPurify si está disponible; si no, con la lista blanca propia. */
+function sanitizeWith(html: string, allowedTags: string[], allowedAttr: string[]): string {
+  if (purify) {
+    return purify.sanitize(html, { ALLOWED_TAGS: allowedTags, ALLOWED_ATTR: allowedAttr });
+  }
+  const kept = allowedAttr.includes("class")
+    ? fallbackSanitize(html, allowedTags)
+    : fallbackSanitize(html, allowedTags).replace(/<([a-zA-Z0-9-]+)[^>]*>/g, "<$1>");
+  return kept;
+}
 
 const ALLOWED_TAGS = [
   "div",
@@ -100,10 +139,7 @@ function escapeHtml(s: string): string {
 /** Markdown de Yaris → HTML sanitizado listo para renderizar. */
 export function yarisToHtml(text: string): string {
   if (!text) return "";
-  const html = DOMPurify.sanitize(markdownToHtml(text), {
-    ALLOWED_TAGS,
-    ALLOWED_ATTR: [],
-  });
+  const html = sanitizeWith(markdownToHtml(text), ALLOWED_TAGS, []);
   return `<div class="yaris-md">${html}</div>`;
 }
 
@@ -118,5 +154,5 @@ export function yarisToHtml(text: string): string {
  */
 export function sanitizeHtml(html: string): string {
   if (!html) return "";
-  return DOMPurify.sanitize(html, { ALLOWED_TAGS, ALLOWED_ATTR: ["class"] });
+  return sanitizeWith(html, ALLOWED_TAGS, ["class"]);
 }
