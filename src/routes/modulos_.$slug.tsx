@@ -259,7 +259,7 @@ function ModuloPage() {
                   className="absolute -top-24 -right-24 w-[340px] h-[340px] rounded-full animate-breathe"
                   style={{
                     background:
-                      "radial-gradient(closest-side, rgba(242,174,188,0.14), transparent)",
+                      "radial-gradient(closest-side, rgba(199,160,82,0.14), transparent)",
                   }}
                 />
                 <div className="relative z-10">

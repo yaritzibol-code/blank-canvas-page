@@ -34,16 +34,16 @@ export const Route = createFileRoute("/dashboard/facturacion")({
   component: FacturacionPage,
 });
 
-const INK = "#22375C";
-const HAZE = "#647DA0";
-const MIST = "#8DA1BE";
-const WINE = "#6C0820";
-const DISPLAY = "'Bricolage Grotesque', sans-serif";
+const INK = "#081A35";
+const HAZE = "#4A5872";
+const MIST = "#7E90AD";
+const WINE = "#7A5C1E";
+const DISPLAY = "'Instrument Serif', serif";
 const MONO = "'JetBrains Mono', monospace";
 
 const card: React.CSSProperties = {
   background: "white",
-  border: "1px solid #E8EEF6",
+  border: "1px solid #E8ECF2",
   borderRadius: 16,
   padding: 20,
 };
@@ -76,7 +76,7 @@ function estadoVisible(b: BillingState | null, pro: boolean): EstadoVisible {
   const verde = { fondo: "#EAF6EE", borde: "#BFE7CE", color: "#1A7A4A" };
   const ambar = { fondo: "#FDF3D6", borde: "#F0DFAE", color: "#856404" };
   const rojo = { fondo: "#FEE2E2", borde: "#F3C7C2", color: "#B3261E" };
-  const gris = { fondo: "#F2F6FB", borde: "#E3EAF5", color: "#647DA0" };
+  const gris = { fondo: "#F2F6FB", borde: "#E3EAF5", color: "#4A5872" };
   const s = b?.status;
   if (b?.cancelAtPeriodEnd && b.active) return { texto: "Cancelada (activa hasta el corte)", ...ambar };
   if (s === "past_due" || s === "unpaid") return { texto: "Pago pendiente", ...ambar };
@@ -401,10 +401,10 @@ function FacturacionPage() {
               <li>Bitácora y recordatorios básicos</li>
             </ul>
           </div>
-          <div style={{ ...card, borderColor: "#F2AEBC", borderWidth: 2 }}>
+          <div style={{ ...card, borderColor: "#C7A052", borderWidth: 2 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
               <span style={{ fontSize: ".95rem", fontWeight: 800, color: INK }}>Pro</span>
-              <span style={{ padding: "2px 9px", borderRadius: 20, background: "#F2AEBC", color: WINE, fontSize: ".64rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
+              <span style={{ padding: "2px 9px", borderRadius: 20, background: "#C7A052", color: WINE, fontSize: ".64rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
                 Recomendado
               </span>
             </div>
@@ -446,7 +446,7 @@ function FacturacionPage() {
               disabled={busy || !configured || !billing?.status}
               style={{
                 padding: "11px 18px", borderRadius: 10, cursor: busy ? "wait" : "pointer",
-                background: "white", color: INK, border: "2px solid #E8EEF6",
+                background: "white", color: INK, border: "2px solid #E8ECF2",
                 fontSize: ".86rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif",
                 opacity: !configured || !billing?.status ? 0.5 : 1,
               }}
@@ -506,7 +506,7 @@ function FacturacionPage() {
             <div style={{ display: "flex", gap: 10 }}>
               <button
                 onClick={() => setConfirmOpen(false)}
-                style={{ flex: 1, padding: 11, borderRadius: 10, background: "white", color: HAZE, border: "2px solid #E8EEF6", fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                style={{ flex: 1, padding: 11, borderRadius: 10, background: "white", color: HAZE, border: "2px solid #E8ECF2", fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
               >
                 Mejor no
               </button>
@@ -543,7 +543,7 @@ function FacturacionPage() {
             <div style={{ display: "flex", gap: 10 }}>
               <button
                 onClick={() => setSwitchTo(null)}
-                style={{ flex: 1, padding: 11, borderRadius: 10, background: "white", color: HAZE, border: "2px solid #E8EEF6", fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                style={{ flex: 1, padding: 11, borderRadius: 10, background: "white", color: HAZE, border: "2px solid #E8ECF2", fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
               >
                 Mejor no
               </button>
@@ -589,7 +589,7 @@ function PlanesGratis() {
     fontFamily: "'Manrope', sans-serif",
     fontSize: ".82rem",
     fontWeight: 800,
-    boxShadow: activo ? "0 1px 4px rgba(34,55,92,.14)" : "none",
+    boxShadow: activo ? "0 1px 4px rgba(8,26,53,.14)" : "none",
     minHeight: 44,
   });
 
@@ -606,7 +606,7 @@ function PlanesGratis() {
             padding: 4,
             borderRadius: 999,
             background: "#EEF3F9",
-            border: "1px solid #E8EEF6",
+            border: "1px solid #E8ECF2",
             width: "100%",
             maxWidth: 360,
           }}
@@ -646,12 +646,12 @@ function PlanesGratis() {
         </div>
 
         {/* Pro */}
-        <div style={{ ...card, borderColor: "#F2AEBC", borderWidth: 2, position: "relative" }}>
+        <div style={{ ...card, borderColor: "#C7A052", borderWidth: 2, position: "relative" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, flexWrap: "wrap" }}>
             <span style={{ fontSize: ".95rem", fontWeight: 800, color: INK }}>
               Pro {anual ? "Anual" : "Mensual"}
             </span>
-            <span style={{ padding: "2px 9px", borderRadius: 20, background: "#F2AEBC", color: WINE, fontSize: ".64rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
+            <span style={{ padding: "2px 9px", borderRadius: 20, background: "#C7A052", color: WINE, fontSize: ".64rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
               Recomendado
             </span>
           </div>

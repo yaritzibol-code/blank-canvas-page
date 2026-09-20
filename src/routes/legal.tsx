@@ -19,7 +19,7 @@ export const Route = createFileRoute("/legal")({
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
-const INK = "#22375C";
+const INK = "#081A35";
 const CONTACT = "contacto@flightpath.mx";
 
 function Section({ id, title, children }: { id?: string; title: string; children: React.ReactNode }) {
@@ -65,7 +65,7 @@ function LegalPage() {
         <h1 style={{ fontFamily: DISPLAY, fontSize: "clamp(1.6rem, 5vw, 2.2rem)", color: INK, fontWeight: 800, margin: "0 0 8px" }}>
           Términos, privacidad y avisos
         </h1>
-        <p style={{ color: "#647DA0", fontSize: 14, marginBottom: 26 }}>
+        <p style={{ color: "#4A5872", fontSize: 14, marginBottom: 26 }}>
           FlightPath — Aprende, Domina y Vuela · Última actualización: 4 de agosto de 2026 · Versión {TERMS_VERSION}
         </p>
 
@@ -73,13 +73,13 @@ function LegalPage() {
         <nav style={{ background: "#fff", border: "1px solid #E3EAF5", borderRadius: 14, padding: "16px 20px", marginBottom: 36, fontSize: 13.5 }}>
           <strong style={{ color: INK, display: "block", marginBottom: 8 }}>Contenido</strong>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 4 }}>
-            <a href="#terminos" style={{ color: "#3D5D91", textDecoration: "none" }}>1. Términos y condiciones</a>
-            <a href="#pagos" style={{ color: "#3D5D91", textDecoration: "none" }}>2. Suscripción, pagos y renovación</a>
-            <a href="#cancelacion" style={{ color: "#3D5D91", textDecoration: "none" }}>3. Cancelación y reembolsos</a>
-            <a href="#uso-aceptable" style={{ color: "#3D5D91", textDecoration: "none" }}>4. Uso aceptable y propiedad intelectual</a>
-            <a href="#responsabilidad" style={{ color: "#3D5D91", textDecoration: "none" }}>5. Garantías y responsabilidad</a>
-            <a href="#privacidad" style={{ color: "#3D5D91", textDecoration: "none" }}>6. Aviso de privacidad</a>
-            <a href="#avisos" style={{ color: "#3D5D91", textDecoration: "none" }}>7. Avisos de la plataforma</a>
+            <a href="#terminos" style={{ color: "#163D70", textDecoration: "none" }}>1. Términos y condiciones</a>
+            <a href="#pagos" style={{ color: "#163D70", textDecoration: "none" }}>2. Suscripción, pagos y renovación</a>
+            <a href="#cancelacion" style={{ color: "#163D70", textDecoration: "none" }}>3. Cancelación y reembolsos</a>
+            <a href="#uso-aceptable" style={{ color: "#163D70", textDecoration: "none" }}>4. Uso aceptable y propiedad intelectual</a>
+            <a href="#responsabilidad" style={{ color: "#163D70", textDecoration: "none" }}>5. Garantías y responsabilidad</a>
+            <a href="#privacidad" style={{ color: "#163D70", textDecoration: "none" }}>6. Aviso de privacidad</a>
+            <a href="#avisos" style={{ color: "#163D70", textDecoration: "none" }}>7. Avisos de la plataforma</a>
           </div>
         </nav>
 

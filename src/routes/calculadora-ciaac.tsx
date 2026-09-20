@@ -284,7 +284,7 @@ function Calculadora() {
               <div
                 className="absolute -top-16 -right-16 w-64 h-64 rounded-full pointer-events-none"
                 style={{
-                  background: "radial-gradient(closest-side, rgba(242,174,188,0.18), transparent)",
+                  background: "radial-gradient(closest-side, rgba(199,160,82,0.18), transparent)",
                 }}
               />
               <div className="relative">

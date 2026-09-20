@@ -39,7 +39,7 @@ export function ProgressTrack({
         className="h-full rounded-full transition-[width] duration-500"
         style={{
           width: `${percent}%`,
-          background: "linear-gradient(90deg, #6C0820, #E0879A)",
+          background: "linear-gradient(90deg, #7A5C1E, #B18B40)",
         }}
       />
     </div>
@@ -76,7 +76,7 @@ export function CourseHero({
     <section
       className="relative overflow-hidden"
       style={{
-        background: "radial-gradient(120% 160% at 85% -20%, #33527F 0%, #22375C 45%, #1B2B4A 100%)",
+        background: "radial-gradient(120% 160% at 85% -20%, #123360 0%, #081A35 45%, #1B2B4A 100%)",
       }}
     >
       <div
@@ -110,7 +110,7 @@ export function CourseHero({
                     fontFamily: "'Instrument Serif', serif",
                     fontStyle: "italic",
                     fontWeight: 400,
-                    backgroundImage: "linear-gradient(92deg, #F2AEBC 10%, #7CA0D8 90%)",
+                    backgroundImage: "linear-gradient(92deg, #C7A052 10%, #7CA0D8 90%)",
                   }}
                 >
                   {accent}
@@ -265,7 +265,7 @@ export function CourseShell({
             className="h-full rounded-full"
             style={{
               width: `${percent}%`,
-              background: "linear-gradient(90deg, #F2AEBC, #E0879A)",
+              background: "linear-gradient(90deg, #C7A052, #B18B40)",
             }}
           />
         </div>
@@ -286,7 +286,7 @@ export function CourseShell({
   );
 
   return (
-    <div className="min-h-screen bg-bone text-ink-950" style={{ background: "#FBFAF7" }}>
+    <div className="min-h-screen bg-bone text-ink-950" style={{ background: "#F5F5F7" }}>
       {/* Barra móvil */}
       <div className="flex items-center justify-between bg-ink-950 px-4 py-3 lg:hidden">
         <button

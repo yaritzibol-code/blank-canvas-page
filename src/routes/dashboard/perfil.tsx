@@ -28,7 +28,7 @@ export const Route = createFileRoute("/dashboard/perfil")({
 /* Los logros viven ahora en `@/lib/logros` (catálogo oficial de 100). */
 
 const colorFor = (avg: number | null) =>
-  avg === null ? "#3D5D91" : avg >= 70 ? "#2ecc71" : avg >= 50 ? "#f39c12" : "#e74c3c";
+  avg === null ? "#163D70" : avg >= 70 ? "#2ecc71" : avg >= 50 ? "#f39c12" : "#e74c3c";
 
 const fmtFechaCiaac = (iso: string | null) =>
   iso
@@ -174,7 +174,7 @@ function PerfilPage() {
 
   const fieldStyle: React.CSSProperties = {
     fontSize: ".88rem",
-    color: "#22375C",
+    color: "#081A35",
     fontWeight: 500,
     padding: "9px 12px",
     borderRadius: 8,
@@ -184,12 +184,12 @@ function PerfilPage() {
   const displayStyle: React.CSSProperties = {
     ...fieldStyle,
     background: "#f8f9ff",
-    border: "2px solid #F2DCDB",
+    border: "2px solid #EEE1C5",
   };
   const inputStyle: React.CSSProperties = {
     ...fieldStyle,
     background: "white",
-    border: "2px solid #3D5D91",
+    border: "2px solid #163D70",
     outline: "none",
   };
 
@@ -199,7 +199,7 @@ function PerfilPage() {
         style={{
           fontSize: ".75rem",
           fontWeight: 700,
-          color: "#647DA0",
+          color: "#4A5872",
           marginBottom: 5,
           display: "block",
         }}
@@ -250,7 +250,7 @@ function PerfilPage() {
             fontFamily: "'JetBrains Mono', monospace",
             fontSize: "0.68rem",
             letterSpacing: "0.22em",
-            color: "#647DA0",
+            color: "#4A5872",
             textTransform: "uppercase",
             marginBottom: 10,
           }}
@@ -264,18 +264,18 @@ function PerfilPage() {
             fontWeight: 400,
             fontSize: "clamp(2rem, 5vw, 3rem)",
             lineHeight: 1.05,
-            color: "#22375C",
+            color: "#081A35",
             margin: 0,
           }}
         >
-          Tu perfil, <em style={{ color: "#6C0820" }}>{info.nombre.split(" ")[0] || "piloto"}</em>.
+          Tu perfil, <em style={{ color: "#7A5C1E" }}>{info.nombre.split(" ")[0] || "piloto"}</em>.
         </h1>
         <div
           style={{
             marginTop: 10,
             maxWidth: 520,
             fontSize: "0.92rem",
-            color: "#647DA0",
+            color: "#4A5872",
             lineHeight: 1.55,
           }}
         >
@@ -288,7 +288,7 @@ function PerfilPage() {
           style={{
             marginTop: 14,
             height: 1,
-            background: "linear-gradient(90deg, #22375C 0%, transparent 70%)",
+            background: "linear-gradient(90deg, #081A35 0%, transparent 70%)",
           }}
         />
       </header>
@@ -320,7 +320,7 @@ function PerfilPage() {
       {/* Profile hero */}
       <div
         style={{
-          background: "linear-gradient(135deg,#22375C,#2a2a4e)",
+          background: "linear-gradient(135deg,#081A35,#2a2a4e)",
           borderRadius: 20,
           padding: "clamp(18px,4vw,28px)",
           display: "flex",
@@ -358,7 +358,7 @@ function PerfilPage() {
         <div style={{ flex: "1 1 200px", zIndex: 1, minWidth: 0 }}>
           <div
             style={{
-              fontFamily: "'Bricolage Grotesque', sans-serif",
+              fontFamily: "'Instrument Serif', serif",
               fontSize: "clamp(1.25rem,4.5vw,1.6rem)",
               color: "white",
               fontWeight: 900,
@@ -386,8 +386,8 @@ function PerfilPage() {
                 borderRadius: 20,
                 fontSize: ".72rem",
                 fontWeight: 700,
-                background: "#F2AEBC",
-                color: "#6C0820",
+                background: "#C7A052",
+                color: "#7A5C1E",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 5,
@@ -437,7 +437,7 @@ function PerfilPage() {
           background: "white",
           borderRadius: 16,
           padding: 20,
-          boxShadow: "0 2px 10px rgba(61,93,145,.06)",
+          boxShadow: "0 2px 10px rgba(22,61,112,.06)",
           marginBottom: 18,
         }}
       >
@@ -455,7 +455,7 @@ function PerfilPage() {
             style={{
               fontSize: ".78rem",
               fontWeight: 700,
-              color: "#647DA0",
+              color: "#4A5872",
               textTransform: "uppercase",
               letterSpacing: ".5px",
               display: "inline-flex",
@@ -477,8 +477,8 @@ function PerfilPage() {
                   cursor: "pointer",
                   fontFamily: "'Manrope', sans-serif",
                   background: "white",
-                  color: "#647DA0",
-                  border: "2px solid #F2DCDB",
+                  color: "#4A5872",
+                  border: "2px solid #EEE1C5",
                 }}
               >
                 Cancelar
@@ -496,9 +496,9 @@ function PerfilPage() {
                 display: "flex",
                 alignItems: "center",
                 gap: 6,
-                background: editing ? "#3D5D91" : "white",
-                color: editing ? "white" : "#3D5D91",
-                border: "2px solid #3D5D91",
+                background: editing ? "#163D70" : "white",
+                color: editing ? "white" : "#163D70",
+                border: "2px solid #163D70",
                 transition: "all .2s",
               }}
             >
@@ -543,7 +543,7 @@ function PerfilPage() {
           background: "white",
           borderRadius: 16,
           padding: 20,
-          boxShadow: "0 2px 10px rgba(61,93,145,.06)",
+          boxShadow: "0 2px 10px rgba(22,61,112,.06)",
           marginBottom: 24,
         }}
       >
@@ -551,7 +551,7 @@ function PerfilPage() {
           style={{
             fontSize: ".78rem",
             fontWeight: 700,
-            color: "#647DA0",
+            color: "#4A5872",
             textTransform: "uppercase",
             letterSpacing: ".5px",
             marginBottom: 6,
@@ -562,7 +562,7 @@ function PerfilPage() {
         >
           <Icon n="target" size={15} /> Materia en la que te enfocas
         </div>
-        <div style={{ fontSize: ".82rem", color: "#647DA0", marginBottom: 14, lineHeight: 1.5 }}>
+        <div style={{ fontSize: ".82rem", color: "#4A5872", marginBottom: 14, lineHeight: 1.5 }}>
           Define qué te muestra el inicio de tu dashboard y los atajos de estudio.
         </div>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
@@ -591,8 +591,8 @@ function PerfilPage() {
                   textAlign: "left",
                   padding: "12px 14px",
                   borderRadius: 12,
-                  border: `2px solid ${sel ? "#3D5D91" : "#F2DCDB"}`,
-                  background: sel ? "rgba(61,93,145,.06)" : "white",
+                  border: `2px solid ${sel ? "#163D70" : "#EEE1C5"}`,
+                  background: sel ? "rgba(22,61,112,.06)" : "white",
                   cursor: "pointer",
                   fontFamily: "'Manrope', sans-serif",
                   transition: "all .2s",
@@ -604,7 +604,7 @@ function PerfilPage() {
                     alignItems: "center",
                     gap: 8,
                     marginBottom: 3,
-                    color: sel ? "#3D5D91" : "#22375C",
+                    color: sel ? "#163D70" : "#081A35",
                   }}
                 >
                   <Icon n={r.icon as never} size={16} />
@@ -615,14 +615,14 @@ function PerfilPage() {
                         marginLeft: "auto",
                         fontSize: ".68rem",
                         fontWeight: 700,
-                        color: "#3D5D91",
+                        color: "#163D70",
                       }}
                     >
                       Activo
                     </span>
                   )}
                 </div>
-                <div style={{ fontSize: ".76rem", color: "#647DA0" }}>{r.desc}</div>
+                <div style={{ fontSize: ".76rem", color: "#4A5872" }}>{r.desc}</div>
               </button>
             );
           })}
@@ -633,7 +633,7 @@ function PerfilPage() {
               style={{
                 fontSize: ".75rem",
                 fontWeight: 700,
-                color: "#647DA0",
+                color: "#4A5872",
                 marginBottom: 5,
                 display: "block",
               }}
@@ -677,13 +677,13 @@ function PerfilPage() {
               fontSize: ".86rem",
               color: "white",
               cursor: !focoSucio || guardandoFoco ? "not-allowed" : "pointer",
-              background: !focoSucio || guardandoFoco ? "#C9D6E8" : "#3D5D91",
+              background: !focoSucio || guardandoFoco ? "#C9D6E8" : "#163D70",
             }}
           >
             {guardandoFoco ? "Guardando…" : "Guardar enfoque"}
           </button>
           {focoSucio && !guardandoFoco && (
-            <span style={{ fontSize: ".76rem", color: "#6C0820", fontWeight: 600 }}>
+            <span style={{ fontSize: ".76rem", color: "#7A5C1E", fontWeight: 600 }}>
               Tienes cambios sin guardar
             </span>
           )}
@@ -711,7 +711,7 @@ function PerfilPage() {
               background: "white",
               borderRadius: 14,
               padding: "16px 18px",
-              boxShadow: "0 2px 10px rgba(61,93,145,.06)",
+              boxShadow: "0 2px 10px rgba(22,61,112,.06)",
               textAlign: "center",
             }}
           >
@@ -720,24 +720,24 @@ function PerfilPage() {
                 marginBottom: 6,
                 display: "flex",
                 justifyContent: "center",
-                color: "#3D5D91",
+                color: "#163D70",
               }}
             >
               <Icon n={s.icon as never} size={22} />
             </div>
             <div
               style={{
-                fontFamily: "'Bricolage Grotesque', sans-serif",
+                fontFamily: "'Instrument Serif', serif",
                 fontSize: "1.6rem",
                 fontWeight: 900,
-                color: "#22375C",
+                color: "#081A35",
                 lineHeight: 1,
                 marginBottom: 4,
               }}
             >
               {s.val}
             </div>
-            <div style={{ fontSize: ".72rem", color: "#647DA0" }}>{s.label}</div>
+            <div style={{ fontSize: ".72rem", color: "#4A5872" }}>{s.label}</div>
           </div>
         ))}
       </div>
@@ -745,7 +745,7 @@ function PerfilPage() {
       {/* Plan card */}
       <div
         style={{
-          background: "linear-gradient(135deg,#3D5D91,#5A86CB)",
+          background: "linear-gradient(135deg,#163D70,#5A86CB)",
           borderRadius: 14,
           padding: "18px 20px",
           marginBottom: 24,
@@ -782,7 +782,7 @@ function PerfilPage() {
             style={{
               padding: "9px 18px",
               background: "white",
-              color: "#3D5D91",
+              color: "#163D70",
               border: "none",
               borderRadius: 8,
               fontSize: ".82rem",
@@ -853,14 +853,14 @@ function ProgresoCard({
         background: "white",
         borderRadius: 16,
         padding: 20,
-        boxShadow: "0 2px 10px rgba(61,93,145,.06)",
+        boxShadow: "0 2px 10px rgba(22,61,112,.06)",
       }}
     >
       <div
         style={{
           fontSize: ".78rem",
           fontWeight: 700,
-          color: "#647DA0",
+          color: "#4A5872",
           textTransform: "uppercase",
           letterSpacing: ".5px",
           marginBottom: 14,
@@ -872,7 +872,7 @@ function ProgresoCard({
         <Icon n={icon as never} size={15} /> {titulo}
       </div>
       {conDatos === 0 && (
-        <div style={{ fontSize: ".82rem", color: "#8DA1BE", marginBottom: 12 }}>
+        <div style={{ fontSize: ".82rem", color: "#7E90AD", marginBottom: 12 }}>
           Aún no tienes cuestionarios de esta ruta. En cuanto hagas el primero verás aquí tu
           porcentaje de aciertos.
         </div>
@@ -886,7 +886,7 @@ function ProgresoCard({
                 title={m.name}
                 style={{
                   fontSize: ".78rem",
-                  color: "#22375C",
+                  color: "#081A35",
                   flex: "1 1 auto",
                   minWidth: 0,
                   display: "inline-flex",
@@ -906,7 +906,7 @@ function ProgresoCard({
                   width: 100,
                   flexShrink: 0,
                   height: 8,
-                  background: "#F2DCDB",
+                  background: "#EEE1C5",
                   borderRadius: 10,
                   overflow: "hidden",
                 }}

@@ -23,7 +23,7 @@ export const Route = createFileRoute("/dashboard/materias/$subjectId")({
 });
 
 const FONT = "'Manrope', sans-serif";
-const DISPLAY = "'Bricolage Grotesque', sans-serif";
+const DISPLAY = "'Instrument Serif', serif";
 const MONO = "'JetBrains Mono', monospace";
 
 const SUBJECT_META: Record<string, { icon: FPIconName; name: string }> = {
@@ -77,22 +77,22 @@ function Sidebar({
       <div
         style={{
           padding: "16px 20px",
-          borderBottom: "1px solid #E8EEF6",
-          background: "#F4F7FB",
+          borderBottom: "1px solid #E8ECF2",
+          background: "#F5F5F7",
           flexShrink: 0,
         }}
       >
-        <p style={{ fontSize: "0.62rem", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.16em", color: "#647DA0", fontWeight: 700, marginBottom: 4 }}>
+        <p style={{ fontSize: "0.62rem", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.16em", color: "#4A5872", fontWeight: 700, marginBottom: 4 }}>
           Temas disponibles
         </p>
-        <p style={{ fontSize: "0.75rem", color: "#647DA0" }}>
-          <span style={{ color: "#22375C", fontWeight: 700, fontFamily: DISPLAY }}>{temas.length}</span> temas cargados
+        <p style={{ fontSize: "0.75rem", color: "#4A5872" }}>
+          <span style={{ color: "#081A35", fontWeight: 700, fontFamily: DISPLAY }}>{temas.length}</span> temas cargados
         </p>
       </div>
 
       <div style={{ flex: 1, overflowY: "auto", padding: "8px 0" }}>
         {bloqueNums.length === 0 && (
-          <p style={{ padding: "16px 20px", fontSize: "0.82rem", color: "#8DA1BE" }}>
+          <p style={{ padding: "16px 20px", fontSize: "0.82rem", color: "#7E90AD" }}>
             Contenido próximamente
           </p>
         )}
@@ -108,7 +108,7 @@ function Sidebar({
                   fontFamily: MONO,
                   textTransform: "uppercase",
                   letterSpacing: "0.16em",
-                  color: "#647DA0",
+                  color: "#4A5872",
                 }}
               >
                 Bloque {bNum} · {bloque.titulo}
@@ -132,12 +132,12 @@ function Sidebar({
                       border: "none",
                       cursor: "pointer",
                       transition: "all 0.15s",
-                      background: isSelected ? "#FAEFEE" : "transparent",
+                      background: isSelected ? "#FBF7EC" : "transparent",
                       textAlign: "left",
                       fontFamily: FONT,
                       opacity: isLockedItem ? 0.55 : 1,
                     }}
-                    onMouseEnter={(e) => { if (!isSelected) e.currentTarget.style.background = "#F4F7FB"; }}
+                    onMouseEnter={(e) => { if (!isSelected) e.currentTarget.style.background = "#F5F5F7"; }}
                     onMouseLeave={(e) => { if (!isSelected) e.currentTarget.style.background = "transparent"; }}
                   >
                     <div
@@ -153,8 +153,8 @@ function Sidebar({
                         fontSize: "0.68rem",
                         fontWeight: 700,
                         fontFamily: DISPLAY,
-                        background: isSelected ? "#6C0820" : "#E8EEF6",
-                        color: isSelected ? "white" : "#8DA1BE",
+                        background: isSelected ? "#7A5C1E" : "#E8ECF2",
+                        color: isSelected ? "white" : "#7E90AD",
                       }}
                     >
                       {t.tema}
@@ -164,13 +164,13 @@ function Sidebar({
                         style={{
                           fontSize: "0.82rem",
                           fontWeight: isSelected ? 700 : 500,
-                          color: isSelected ? "#6C0820" : "#33527F",
+                          color: isSelected ? "#7A5C1E" : "#123360",
                           lineHeight: 1.3,
                         }}
                       >
                         {t.title}
                       </div>
-                      <div style={{ fontSize: "0.68rem", color: "#8DA1BE", marginTop: 3, display: "flex", alignItems: "center", gap: 4, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                      <div style={{ fontSize: "0.68rem", color: "#7E90AD", marginTop: 3, display: "flex", alignItems: "center", gap: 4, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em" }}>
                         <Icon n="timer" size={11} />
                         {t.duracion_min} min
                       </div>
@@ -192,14 +192,14 @@ function Sidebar({
         })}
       </div>
 
-      <div style={{ padding: "12px 20px", borderTop: "1px solid #E8EEF6", flexShrink: 0 }}>
+      <div style={{ padding: "12px 20px", borderTop: "1px solid #E8ECF2", flexShrink: 0 }}>
         <Link
           to="/dashboard/materias"
           style={{
             display: "inline-flex",
             alignItems: "center",
             gap: 6,
-            color: "#647DA0",
+            color: "#4A5872",
             fontSize: "0.78rem",
             textDecoration: "none",
             fontWeight: 500,
@@ -235,16 +235,16 @@ function EmptyState({
           justifyContent: "center",
           height: "100%",
           gap: 16,
-          color: "#647DA0",
+          color: "#4A5872",
           textAlign: "center",
           padding: 40,
         }}
       >
-        <span style={{ width: 72, height: 72, borderRadius: 18, background: "#FAEFEE", border: "1px solid #F2AEBC", color: "#6C0820", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+        <span style={{ width: 72, height: 72, borderRadius: 18, background: "#FBF7EC", border: "1px solid #C7A052", color: "#7A5C1E", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
           <Icon n={meta.icon} size={36} />
         </span>
-        <h2 style={{ fontFamily: DISPLAY, fontSize: "1.4rem", color: "#22375C", letterSpacing: "-0.02em" }}>{meta.name}</h2>
-        <p style={{ fontSize: "0.9rem", maxWidth: 340, color: "#647DA0" }}>
+        <h2 style={{ fontFamily: DISPLAY, fontSize: "1.4rem", color: "#081A35", letterSpacing: "-0.02em" }}>{meta.name}</h2>
+        <p style={{ fontSize: "0.9rem", maxWidth: 340, color: "#4A5872" }}>
           Los temas de esta materia están en preparación. ¡Pronto estarán disponibles!
         </p>
       </div>
@@ -264,7 +264,7 @@ function EmptyState({
         padding: 40,
       }}
     >
-      <span style={{ width: 86, height: 86, borderRadius: 22, background: "#FAEFEE", border: "1px solid #F2AEBC", color: "#6C0820", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+      <span style={{ width: 86, height: 86, borderRadius: 22, background: "#FBF7EC", border: "1px solid #C7A052", color: "#7A5C1E", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
         <Icon n={meta.icon} size={44} />
       </span>
       <div>
@@ -272,7 +272,7 @@ function EmptyState({
           style={{
             fontFamily: DISPLAY,
             fontSize: "1.8rem",
-            color: "#22375C",
+            color: "#081A35",
             marginBottom: 6,
             letterSpacing: "-0.02em",
             lineHeight: 1.05,
@@ -280,7 +280,7 @@ function EmptyState({
         >
           {meta.name}
         </h2>
-        <p style={{ fontSize: "0.92rem", color: "#647DA0", maxWidth: 380 }}>
+        <p style={{ fontSize: "0.92rem", color: "#4A5872", maxWidth: 380 }}>
           Selecciona un tema del panel izquierdo para comenzar a estudiar.
         </p>
       </div>
@@ -302,7 +302,7 @@ function EmptyState({
             style={{
               padding: "14px 16px",
               background: "white",
-              border: "1px solid #E8EEF6",
+              border: "1px solid #E8ECF2",
               borderRadius: 14,
               cursor: "pointer",
               textAlign: "left",
@@ -311,12 +311,12 @@ function EmptyState({
               boxShadow: "0 1px 2px rgba(15,26,51,0.04), 0 8px 24px -12px rgba(15,26,51,0.12)",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "#F2AEBC";
+              e.currentTarget.style.borderColor = "#C7A052";
               e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow = "0 2px 4px rgba(15,26,51,0.04), 0 14px 30px -14px rgba(108,8,32,0.25)";
+              e.currentTarget.style.boxShadow = "0 2px 4px rgba(15,26,51,0.04), 0 14px 30px -14px rgba(122,92,30,0.25)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "#E8EEF6";
+              e.currentTarget.style.borderColor = "#E8ECF2";
               e.currentTarget.style.transform = "none";
               e.currentTarget.style.boxShadow = "0 1px 2px rgba(15,26,51,0.04), 0 8px 24px -12px rgba(15,26,51,0.12)";
             }}
@@ -326,7 +326,7 @@ function EmptyState({
                 fontSize: "0.62rem",
                 fontWeight: 700,
                 fontFamily: MONO,
-                color: "#647DA0",
+                color: "#4A5872",
                 textTransform: "uppercase",
                 letterSpacing: "0.16em",
                 marginBottom: 6,
@@ -334,10 +334,10 @@ function EmptyState({
             >
               Bloque {t.bloque} · Tema {t.tema}
             </div>
-            <div style={{ fontSize: "0.92rem", fontFamily: DISPLAY, color: "#22375C", lineHeight: 1.25, letterSpacing: "-0.01em" }}>
+            <div style={{ fontSize: "0.92rem", fontFamily: DISPLAY, color: "#081A35", lineHeight: 1.25, letterSpacing: "-0.01em" }}>
               {t.title}
             </div>
-            <div style={{ fontSize: "0.68rem", color: "#8DA1BE", marginTop: 8, display: "flex", alignItems: "center", gap: 4, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+            <div style={{ fontSize: "0.68rem", color: "#7E90AD", marginTop: 8, display: "flex", alignItems: "center", gap: 4, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>
               <Icon n="timer" size={12} />
               {t.duracion_min} min
             </div>
@@ -436,7 +436,7 @@ function SubjectDetail() {
       <div
         style={{
           background: "white",
-          borderBottom: "1px solid #E8EEF6",
+          borderBottom: "1px solid #E8ECF2",
           padding: "0 24px",
           height: 64,
           display: "flex",
@@ -452,17 +452,17 @@ function SubjectDetail() {
           <span
             style={{
               display: "inline-flex", alignItems: "center", gap: 8,
-              background: "#FAEFEE",
-              color: "#6C0820",
+              background: "#FBF7EC",
+              color: "#7A5C1E",
               padding: "5px 12px 5px 8px",
               borderRadius: 20,
-              border: "1px solid rgba(108,8,32,0.12)",
+              border: "1px solid rgba(122,92,30,0.12)",
               fontSize: "0.78rem",
               fontWeight: 600,
               whiteSpace: "nowrap",
             }}
           >
-            <span style={{ width: 22, height: 22, borderRadius: "50%", background: "#6C0820", color: "#F2AEBC", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ width: 22, height: 22, borderRadius: "50%", background: "#7A5C1E", color: "#C7A052", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
               <Icon n={meta.icon} size={13} />
             </span>
             {meta.name}
@@ -472,7 +472,7 @@ function SubjectDetail() {
               style={{
                 fontFamily: DISPLAY,
                 fontSize: "1rem",
-                color: "#22375C",
+                color: "#081A35",
                 fontWeight: 600,
                 letterSpacing: "-0.01em",
               }}
@@ -495,12 +495,12 @@ function SubjectDetail() {
               padding: "6px 10px",
               fontSize: "0.78rem",
               fontWeight: 600,
-              color: "#647DA0",
+              color: "#4A5872",
               cursor: "pointer",
               fontFamily: FONT,
               transition: "background 0.15s",
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "#F4F7FB"; }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "#F5F5F7"; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
           >
             <Icon n="alert" size={14} /> Reportar
@@ -513,12 +513,12 @@ function SubjectDetail() {
             style={{
               display: "inline-flex", alignItems: "center", gap: 6,
               background: "white",
-              border: "1px solid #E8EEF6",
+              border: "1px solid #E8ECF2",
               borderRadius: 10,
               padding: "6px 12px",
               fontSize: "0.8rem",
               fontWeight: 600,
-              color: "#3D5D91",
+              color: "#163D70",
               cursor: "pointer",
               fontFamily: FONT,
             }}
@@ -546,7 +546,7 @@ function SubjectDetail() {
               overflowY: "auto",
               display: "flex",
               flexDirection: "column",
-              borderBottom: "1px solid #E8EEF6",
+              borderBottom: "1px solid #E8ECF2",
               boxShadow: "0 24px 48px -20px rgba(15,26,51,0.22)",
             }}
           >
@@ -567,7 +567,7 @@ function SubjectDetail() {
           style={{
             width: 280,
             background: "white",
-            borderRight: "1px solid #E8EEF6",
+            borderRight: "1px solid #E8ECF2",
             flexDirection: "column",
             overflow: "hidden",
             flexShrink: 0,
@@ -588,7 +588,7 @@ function SubjectDetail() {
           style={{
             flex: 1,
             overflowY: "auto",
-            background: "#FBFAF7",
+            background: "#F5F5F7",
           }}
         >
           {selectedTema ? (
@@ -630,7 +630,7 @@ function SubjectDetail() {
             transform: "translateX(-50%)",
             zIndex: 200,
             background: "white",
-            border: "1px solid #E8EEF6",
+            border: "1px solid #E8ECF2",
             borderRadius: 12,
             padding: "10px 16px",
             boxShadow: "0 12px 30px -10px rgba(15,26,51,0.25)",
@@ -639,7 +639,7 @@ function SubjectDetail() {
             gap: 8,
             fontSize: "0.82rem",
             fontWeight: 600,
-            color: "#33527F",
+            color: "#123360",
             fontFamily: FONT,
           }}
         >

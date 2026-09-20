@@ -15,7 +15,7 @@ export function SessionAgenda({
 }) {
   return (
     <div>
-      <p style={{ fontSize: "0.75rem", fontWeight: 800, color: "#647DA0", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 10 }}>
+      <p style={{ fontSize: "0.75rem", fontWeight: 800, color: "#4A5872", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 10 }}>
         Tu sesión de hoy
       </p>
 
@@ -27,11 +27,11 @@ export function SessionAgenda({
           <div
             key={a.id}
             style={{
-              background: esBreak ? "rgba(61,93,145,.05)" : "white",
+              background: esBreak ? "rgba(22,61,112,.05)" : "white",
               borderRadius: 14,
               padding: "14px 16px",
               marginBottom: 10,
-              border: actual ? "2px solid #3D5D91" : "1.5px solid #F2DCDB",
+              border: actual ? "2px solid #163D70" : "1.5px solid #EEE1C5",
               display: "flex",
               alignItems: "center",
               gap: 12,
@@ -42,15 +42,15 @@ export function SessionAgenda({
             <span
               style={{
                 width: 36, height: 36, borderRadius: 12, flexShrink: 0,
-                background: actual ? "linear-gradient(135deg,#3D5D91,#5A86CB)" : "rgba(61,93,145,.1)",
-                color: actual ? "white" : "#22375C",
+                background: actual ? "linear-gradient(135deg,#163D70,#5A86CB)" : "rgba(22,61,112,.1)",
+                color: actual ? "white" : "#081A35",
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}
             >
               <Icon n={hecha ? "check" : a.icon} size={18} color={actual ? "#fff" : "currentColor"} />
             </span>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontWeight: 800, color: "#22375C", fontSize: "0.9rem" }}>
+              <div style={{ fontWeight: 800, color: "#081A35", fontSize: "0.9rem" }}>
                 {a.titulo}
                 {actual && (
                   <span style={{ marginLeft: 8, fontSize: "0.62rem", fontWeight: 800, letterSpacing: ".05em", textTransform: "uppercase", background: "#FDF3D6", color: "#856404", borderRadius: 20, padding: "2px 8px" }}>
@@ -58,7 +58,7 @@ export function SessionAgenda({
                   </span>
                 )}
               </div>
-              <div style={{ fontSize: "0.78rem", color: "#647DA0" }}>
+              <div style={{ fontSize: "0.78rem", color: "#4A5872" }}>
                 {a.detalle} · ~{a.minutes} min
               </div>
             </div>
@@ -67,9 +67,9 @@ export function SessionAgenda({
                 onClick={() => onOpen(i)}
                 style={{
                   flexShrink: 0, minHeight: 40, padding: "8px 14px", borderRadius: 10,
-                  border: actual ? "none" : "1.5px solid #3D5D91",
-                  background: actual ? "#22375C" : "white",
-                  color: actual ? "white" : "#3D5D91",
+                  border: actual ? "none" : "1.5px solid #163D70",
+                  background: actual ? "#081A35" : "white",
+                  color: actual ? "white" : "#163D70",
                   fontWeight: 700, fontSize: "0.8rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif",
                 }}
               >
@@ -80,7 +80,7 @@ export function SessionAgenda({
         );
       })}
 
-      <p style={{ fontSize: "0.76rem", color: "#647DA0", marginTop: 6 }}>
+      <p style={{ fontSize: "0.76rem", color: "#4A5872", marginTop: 6 }}>
         Los tiempos son aproximados. Estudia a tu ritmo.
       </p>
     </div>

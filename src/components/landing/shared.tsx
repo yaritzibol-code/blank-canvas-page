@@ -293,7 +293,7 @@ export function FMark({ size = 30, light = false }: { size?: number; light?: boo
   return (
     <span
       className="inline-flex items-center justify-center rounded-xl shrink-0"
-      style={{ width: size, height: size, background: light ? "rgba(255,255,255,0.1)" : "#3D5D91" }}
+      style={{ width: size, height: size, background: light ? "rgba(255,255,255,0.1)" : "#163D70" }}
     >
       <svg viewBox="0 0 24 24" width={size * 0.62} height={size * 0.62} aria-hidden="true">
         <path
@@ -308,7 +308,7 @@ export function FMark({ size = 30, light = false }: { size?: number; light?: boo
         <path
           d="M15.5 4.5l3.5 1-1 3.5"
           fill="none"
-          stroke="#F2AEBC"
+          stroke="#C7A052"
           strokeWidth="2.2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -367,14 +367,14 @@ export function Btn({
   onClick?: () => void;
 }) {
   const base =
-    "inline-flex items-center justify-center gap-2 font-semibold rounded-full transition-all duration-200 whitespace-nowrap";
+    "fp-button inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-200 whitespace-nowrap";
   const sizes = {
     sm: "h-9 px-4 text-[13px]",
     md: "h-11 px-5 text-[14px]",
     lg: "h-[52px] px-7 text-[15px]",
   };
   const kinds: Record<BtnKind, string> = {
-    primary: "bg-coral-600 text-white hover:bg-coral-700 shadow-coral hover:-translate-y-0.5",
+    primary: "fp-button-primary bg-coral-600 text-white hover:bg-coral-700 shadow-coral hover:-translate-y-0.5",
     navy: "bg-ink text-white hover:bg-ink-800 shadow-navy hover:-translate-y-0.5",
     light: "bg-white text-ink border border-ink/10 hover:border-ink/25 hover:shadow-card",
     ghost: "text-ink/70 hover:text-ink hover:bg-ink/5",
@@ -500,7 +500,7 @@ export function PathyBubble({
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: "radial-gradient(closest-side, rgba(242,174,188,0.30), transparent 70%)",
+            background: "radial-gradient(closest-side, rgba(199,160,82,0.30), transparent 70%)",
             transform: "scale(1.2)",
             filter: "blur(10px)",
           }}
@@ -632,11 +632,11 @@ export function Nav() {
   }, [open]);
   return (
     <header
-      className={`sticky top-0 z-40 transition-all duration-300 ${scrolled || open ? "glass border-b border-ink/8" : "bg-transparent"}`}
+      className={`fp-public-nav sticky top-0 z-40 transition-all duration-300 ${scrolled || open ? "glass border-b border-ink/8" : "bg-transparent"}`}
     >
-      <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8 h-[64px] sm:h-[68px] grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
+      <div className="mx-auto max-w-[1248px] px-5 sm:px-6 h-[72px] lg:h-[84px] grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
         <div className="min-w-0 flex items-center gap-6 lg:gap-8">
-          <Logo />
+          <Logo light />
           <nav className="hidden lg:flex items-center gap-8 text-[14px] font-medium text-ink/65">
             {NAV_LINKS.map((x) => (
               <a key={x.label} href={x.href} className="hover:text-ink transition-colors">
@@ -698,9 +698,9 @@ export function Nav() {
             role="dialog"
             aria-modal="true"
             aria-label="Menú de navegación"
-            className="lg:hidden fixed inset-0 z-[120] overflow-y-auto overscroll-contain bg-[#FAF8F4]"
+            className="lg:hidden fixed inset-0 z-[120] overflow-y-auto overscroll-contain bg-[#FFFFFF]"
           >
-            <div className="sticky top-0 z-10 flex items-center justify-between gap-3 bg-[#FAF8F4] border-b border-ink/8 px-4 sm:px-6 h-[64px]">
+            <div className="sticky top-0 z-10 flex items-center justify-between gap-3 bg-[#FFFFFF] border-b border-ink/8 px-4 sm:px-6 h-[64px]">
               <span className="font-display text-[17px] font-bold text-ink">FlightPath</span>
               <button
                 type="button"
@@ -754,7 +754,7 @@ export function Nav() {
                   href={sesion ? "/dashboard" : "/register"}
                   onClick={() => setOpen(false)}
                   className="py-3.5 text-center text-[15px] font-bold text-white rounded-xl shadow-navy"
-                  style={{ background: "#6C0820" }}
+                  style={{ background: "#7A5C1E" }}
                 >
                   {sesion ? "Ir a mi dashboard" : "Comenzar gratis"}
                 </a>

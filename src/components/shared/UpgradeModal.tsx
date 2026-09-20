@@ -9,7 +9,7 @@ import { getConfig, logUpgradeClick, logUpgradePrompt } from "@/lib/store";
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
-const INK = "#22375C";
+const INK = "#081A35";
 
 const FLOATING = [
   { icon: "book", label: "Learning Paths" },
@@ -74,7 +74,7 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
         position: "fixed",
         inset: 0,
         zIndex: 4000,
-        background: "rgba(34,55,92,.35)",
+        background: "rgba(8,26,53,.35)",
         backdropFilter: "blur(8px)",
         WebkitBackdropFilter: "blur(8px)",
         display: "flex",
@@ -93,7 +93,7 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
           borderRadius: 24,
           padding: "clamp(24px, 5vw, 40px)",
           textAlign: "center",
-          boxShadow: "0 30px 80px rgba(34,55,92,.35)",
+          boxShadow: "0 30px 80px rgba(8,26,53,.35)",
           transform: visible ? "translateY(0) scale(1)" : "translateY(16px) scale(.97)",
           opacity: visible ? 1 : 0,
           transition: "all .35s cubic-bezier(.2,.9,.3,1.2)",
@@ -114,7 +114,7 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
                 border: "1px solid #E3EAF5",
                 fontSize: 12,
                 fontWeight: 700,
-                color: "#3D5D91",
+                color: "#163D70",
                 animation: `fpFloat ${2.6 + i * 0.3}s ease-in-out ${i * 0.2}s infinite alternate`,
               }}
             >
@@ -131,11 +131,11 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
             height: 76,
             margin: "0 auto 16px",
             borderRadius: "50%",
-            background: "linear-gradient(135deg,#3D5D91,#5A86CB)",
+            background: "linear-gradient(135deg,#163D70,#5A86CB)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            boxShadow: "0 12px 30px rgba(61,93,145,.35)",
+            boxShadow: "0 12px 30px rgba(22,61,112,.35)",
           }}
         >
           <Icon n="lock" size={34} color="#fff" />
@@ -144,11 +144,11 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
         <h2 style={{ fontFamily: DISPLAY, fontSize: "clamp(1.3rem, 4vw, 1.6rem)", color: INK, margin: "0 0 10px", fontWeight: 800 }}>
           ¿Listo para el siguiente nivel?
         </h2>
-        <p style={{ color: "#647DA0", fontSize: 14.5, lineHeight: 1.6, margin: "0 0 6px" }}>
+        <p style={{ color: "#4A5872", fontSize: 14.5, lineHeight: 1.6, margin: "0 0 6px" }}>
           <b style={{ color: INK }}>{feature}</b> es parte de la experiencia completa de FlightPath.
           {benefit ? ` ${benefit}` : ""}
         </p>
-        <p style={{ color: "#647DA0", fontSize: 14.5, lineHeight: 1.6, margin: "0 0 22px" }}>
+        <p style={{ color: "#4A5872", fontSize: 14.5, lineHeight: 1.6, margin: "0 0 22px" }}>
           {config.mensajeConversion}
         </p>
 
@@ -159,7 +159,7 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
               padding: "13px 20px",
               borderRadius: 12,
               border: "none",
-              background: "#6C0820",
+              background: "#7A5C1E",
               color: "#fff",
               fontWeight: 800,
               fontSize: 15,
@@ -176,9 +176,9 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
             style={{
               padding: "12px 20px",
               borderRadius: 12,
-              border: "1.5px solid #3D5D91",
+              border: "1.5px solid #163D70",
               background: "#fff",
-              color: "#3D5D91",
+              color: "#163D70",
               fontWeight: 700,
               fontSize: 14.5,
               cursor: "pointer",
@@ -195,7 +195,7 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
               borderRadius: 12,
               border: "none",
               background: "transparent",
-              color: "#647DA0",
+              color: "#4A5872",
               fontWeight: 600,
               fontSize: 14,
               cursor: "pointer",

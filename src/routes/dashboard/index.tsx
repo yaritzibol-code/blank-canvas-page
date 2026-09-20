@@ -1,3 +1,4 @@
+import { FlightTrails } from "@/components/shared/FlightTrails";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { Icon } from "@/components/ui/fp-icon";
@@ -23,18 +24,18 @@ export const Route = createFileRoute("/dashboard/")({
 });
 
 /* ── Palette (existing tokens, unchanged) ── */
-const NAVY = "#22375C";
+const NAVY = "#081A35";
 const INK = "#1E2A4A"; // slightly deeper navy, same family
-const LAPIS = "#3D5D91";
-const CREAM = "#FBFAF7";
-const CORAL = "#6C0820";
-const ROSE = "#F2AEBC";
-const SALMON = "#F2DCDB";
-const HAZE = "#647DA0";
+const LAPIS = "#163D70";
+const CREAM = "#F5F5F7";
+const CORAL = "#7A5C1E";
+const ROSE = "#C7A052";
+const SALMON = "#EEE1C5";
+const HAZE = "#4A5872";
 
 const SERIF = "'Instrument Serif', serif";
 const SANS = "'Manrope', sans-serif";
-const DISPLAY = "'Bricolage Grotesque', sans-serif";
+const DISPLAY = "'Instrument Serif', serif";
 const MONO = "'JetBrains Mono', monospace";
 
 interface MateriaItem {
@@ -106,7 +107,7 @@ function CountdownCard({ fecha, lineaAerea }: { fecha: string | null; lineaAerea
         position: "relative",
         overflow: "hidden",
         width: "100%",
-        boxShadow: "0 1px 0 rgba(34,55,92,0.03)",
+        boxShadow: "0 1px 0 rgba(8,26,53,0.03)",
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 14 }}>
@@ -141,7 +142,7 @@ function CountdownCard({ fecha, lineaAerea }: { fecha: string | null; lineaAerea
 
       {fecha ? (
         <>
-          <div style={{ display: "flex", alignItems: "baseline", gap: 4, color: NAVY, flexWrap: "wrap" }}>
+          <div className="fp-countdown-values" style={{ display: "flex", alignItems: "baseline", gap: 4, color: NAVY, flexWrap: "wrap" }}>
             <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "3.2rem", lineHeight: 1 }}>{cd.d}</span>
             <span style={{ fontFamily: SANS, fontSize: "0.85rem", opacity: 0.4, marginRight: 6 }}>d</span>
             <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "3.2rem", lineHeight: 1 }}>{pad(cd.h)}</span>
@@ -278,7 +279,7 @@ function StreakCard({ streak, studyDays, todayIdx }: { streak: number; studyDays
                 title={studied ? `${Math.round((studyDays[key] ?? 0) / 60)} min` : "Sin actividad"}
                 style={{
                   width: 22, height: 22, borderRadius: "50%",
-                  background: isToday ? ROSE : studied ? "rgba(242,174,188,0.45)" : "rgba(255,255,255,0.08)",
+                  background: isToday ? ROSE : studied ? "rgba(199,160,82,0.45)" : "rgba(255,255,255,0.08)",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   fontSize: "0.58rem", fontWeight: 800,
                   color: isToday ? CORAL : "white",
@@ -423,7 +424,7 @@ function MateriaCard({
         flexDirection: "column",
         transition: "transform 0.15s, box-shadow 0.15s",
         transform: hov ? "translateY(-2px)" : "none",
-        boxShadow: hov ? "0 12px 30px rgba(34,55,92,0.08)" : "0 1px 0 rgba(34,55,92,0.03)",
+        boxShadow: hov ? "0 12px 30px rgba(8,26,53,0.08)" : "0 1px 0 rgba(8,26,53,0.03)",
       }}
     >
       <div
@@ -549,7 +550,7 @@ function ManualCard({ m, variant }: { m: ManualItem; variant: "dark" | "rose" | 
         flexDirection: "column",
         transition: "transform 0.15s, box-shadow 0.15s",
         transform: hov ? "translateY(-2px)" : "none",
-        boxShadow: hov ? "0 12px 30px rgba(34,55,92,0.08)" : "0 1px 0 rgba(34,55,92,0.03)",
+        boxShadow: hov ? "0 12px 30px rgba(8,26,53,0.08)" : "0 1px 0 rgba(8,26,53,0.03)",
       }}
     >
       <div
@@ -807,8 +808,9 @@ function DashboardHome() {
             alignItems: "flex-end",
             marginBottom: 40,
           }}
-          className="fp-hero-grid"
+          className="fp-hero-grid fp-dashboard-hero fp-flight-panel"
         >
+          <FlightTrails />
           <div>
             <div
               style={{

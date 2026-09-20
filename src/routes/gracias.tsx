@@ -39,8 +39,8 @@ export const Route = createFileRoute("/gracias")({
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
-const INK = "#22375C";
-const BRAND = "#6C0820";
+const INK = "#081A35";
+const BRAND = "#7A5C1E";
 
 const PASOS = [
   {
@@ -162,7 +162,7 @@ function GraciasPage() {
                 style={{
                   fontSize: 12,
                   fontWeight: 800,
-                  color: "#8DA1BE",
+                  color: "#7E90AD",
                   letterSpacing: ".08em",
                   marginTop: 8,
                   textTransform: "uppercase",
@@ -188,7 +188,7 @@ function GraciasPage() {
                 textDecoration: "none",
                 fontWeight: 800,
                 fontSize: 15,
-                boxShadow: "0 12px 28px rgba(108,8,32,.22)",
+                boxShadow: "0 12px 28px rgba(122,92,30,.22)",
               }}
             >
               Entrar a mi dashboard →
@@ -226,7 +226,7 @@ function GraciasPage() {
             display: "grid",
             gap: 18,
             gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))",
-            boxShadow: "0 18px 46px rgba(34,55,92,.06)",
+            boxShadow: "0 18px 46px rgba(8,26,53,.06)",
           }}
         >
           <Dato etiqueta="Plan" valor={`Pro ${anual ? "anual" : "mensual"}`} />
@@ -255,7 +255,7 @@ function GraciasPage() {
           >
             Tus primeros tres movimientos
           </h2>
-          <p style={{ textAlign: "center", color: "#8DA1BE", fontSize: 14, margin: "0 0 24px" }}>
+          <p style={{ textAlign: "center", color: "#7E90AD", fontSize: 14, margin: "0 0 24px" }}>
             Checklist previo al despegue.
           </p>
 
@@ -317,7 +317,7 @@ function GraciasPage() {
           </div>
         </section>
 
-        <p style={{ marginTop: 36, textAlign: "center", color: "#8DA1BE", fontSize: 13 }}>
+        <p style={{ marginTop: 36, textAlign: "center", color: "#7E90AD", fontSize: 13 }}>
           Recibirás tu comprobante por correo. Puedes ver y descargar tus facturas en{" "}
           <Link to="/dashboard/facturacion" style={{ color: INK, fontWeight: 700 }}>
             Facturación
@@ -338,7 +338,7 @@ function Dato({ etiqueta, valor, tono = INK }: { etiqueta: string; valor: string
           fontWeight: 800,
           letterSpacing: ".12em",
           textTransform: "uppercase",
-          color: "#8DA1BE",
+          color: "#7E90AD",
           marginBottom: 6,
         }}
       >

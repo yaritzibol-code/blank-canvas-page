@@ -33,7 +33,7 @@ export function ModuleHeader({
   planes?: number;
 }) {
   return (
-    <div style={{ position: "relative", isolation: "isolate", marginBottom: 26 }}>
+    <div className="fp-module-header" style={{ position: "relative", isolation: "isolate", marginBottom: 26 }}>
       {planes > 0 && (
         <div
           aria-hidden="true"
@@ -49,7 +49,7 @@ export function ModuleHeader({
               fontFamily: "'JetBrains Mono', monospace",
               fontSize: "0.68rem",
               letterSpacing: "0.22em",
-              color: "#647DA0",
+              color: "#4A5872",
               textTransform: "uppercase",
               marginBottom: 10,
             }}
@@ -59,20 +59,20 @@ export function ModuleHeader({
           <h1
             style={{
               fontFamily: "'Instrument Serif', serif",
-              fontStyle: "italic",
+              fontStyle: "normal",
               fontWeight: 400,
               fontSize: "clamp(2rem, 5vw, 3rem)",
               lineHeight: 1.05,
-              color: "#22375C",
+              color: "#081A35",
               margin: 0,
             }}
           >
             {title}
-            {accent && <em style={{ color: "#6C0820" }}> {accent}</em>}
+            {accent && <em style={{ color: "#7A5C1E" }}> {accent}</em>}
             {tail}
           </h1>
           {subtitle && (
-            <div style={{ marginTop: 10, maxWidth: 560, fontSize: "0.92rem", color: "#647DA0", lineHeight: 1.55 }}>
+            <div style={{ marginTop: 10, maxWidth: 560, fontSize: "0.92rem", color: "#4A5872", lineHeight: 1.55 }}>
               {subtitle}
             </div>
           )}
@@ -81,7 +81,7 @@ export function ModuleHeader({
       </header>
       <div
         aria-hidden="true"
-        style={{ position: "relative", zIndex: 1, marginTop: 14, height: 1, background: "linear-gradient(90deg, #22375C 0%, transparent 70%)" }}
+        style={{ position: "relative", zIndex: 1, marginTop: 14, height: 1, background: "linear-gradient(90deg, #081A35 0%, transparent 70%)" }}
       />
     </div>
   );

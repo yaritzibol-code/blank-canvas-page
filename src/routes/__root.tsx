@@ -18,6 +18,8 @@ import { FlashOfferWatch } from "@/components/shared/FlashOfferWatch";
 
 import appCss from "../styles.css?url";
 import fontsCss from "../fonts.css?url";
+import referenceFonts from "../reference-fonts.css?url";
+import redesignCss from "../redesign.css?url";
 
 function NotFoundComponent() {
   return (
@@ -53,7 +55,7 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: { error: unknown; reset: () => void }) {
   console.error(error);
   const router = useRouter();
 
@@ -138,12 +140,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // Fuentes self-hosteadas (src/fonts.css + public/fonts): sin CSS externo
       // de Google Fonts en el camino crítico. DM Sans se eliminó: no se usaba.
       { rel: "stylesheet", href: fontsCss },
+      { rel: "stylesheet", href: referenceFonts },
+      { rel: "stylesheet", href: redesignCss },
       // Preload de las dos caras que pintan el above-the-fold de toda página.
       {
         rel: "preload",
         as: "font",
         type: "font/woff2",
-        href: "/fonts/bricolage-grotesque-latin-600-normal.woff2",
+        href: "/redesign/5eb09b5ac0e28b67.woff2",
         crossOrigin: "anonymous",
       },
       {

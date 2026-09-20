@@ -18,7 +18,7 @@ import { isPaid, useSessionUser } from "@/lib/store";
 import { Confetti } from "@/components/shared/Confetti";
 import { Icon } from "@/components/ui/fp-icon";
 
-const BRAND = "#6C0820";
+const BRAND = "#7A5C1E";
 const FONT = "'Manrope', sans-serif";
 const DISPLAY = "'Playfair Display', serif";
 const SETUP_LIST = 3000;
@@ -85,7 +85,7 @@ export function FlashOfferWatch() {
           fontSize: "0.82rem",
           fontWeight: 800,
           letterSpacing: "0.2px",
-          boxShadow: "0 6px 20px rgba(108,8,32,0.35)",
+          boxShadow: "0 6px 20px rgba(122,92,30,0.35)",
         }}
       >
         <span aria-hidden="true" style={{ display: "flex" }}>
@@ -141,7 +141,7 @@ export function FlashOfferWatch() {
               }}
             >
               <div style={{ textAlign: "center" }}>
-                <div style={{ fontSize: "0.7rem", fontWeight: 800, letterSpacing: "1.4px", color: "#F2AEBC", textTransform: "uppercase" }}>
+                <div style={{ fontSize: "0.7rem", fontWeight: 800, letterSpacing: "1.4px", color: "#C7A052", textTransform: "uppercase" }}>
                   Oferta Especial solo para ti
                 </div>
                 <h2 style={{ fontFamily: DISPLAY, fontSize: "1.7rem", margin: "10px 0 6px", lineHeight: 1.15 }}>
@@ -189,7 +189,7 @@ export function FlashOfferWatch() {
                 <ul style={{ listStyle: "none", padding: 0, margin: "14px 0 0", display: "grid", gap: 9 }}>
                   {BENEFICIOS.map((b) => (
                     <li key={b} style={{ display: "flex", gap: 9, alignItems: "flex-start" }}>
-                      <span aria-hidden="true" style={{ color: "#F2AEBC", fontWeight: 900, lineHeight: 1.35 }}>✓</span>
+                      <span aria-hidden="true" style={{ color: "#C7A052", fontWeight: 900, lineHeight: 1.35 }}>✓</span>
                       <span style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.78)", lineHeight: 1.35 }}>{b}</span>
                     </li>
                   ))}
@@ -203,7 +203,7 @@ export function FlashOfferWatch() {
                   fontFamily: DISPLAY,
                   fontSize: "2.2rem",
                   fontWeight: 700,
-                  color: "#F2AEBC",
+                  color: "#C7A052",
                   fontVariantNumeric: "tabular-nums",
                   margin: "16px 0 4px",
                 }}

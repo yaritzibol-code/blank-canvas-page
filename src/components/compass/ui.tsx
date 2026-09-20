@@ -6,12 +6,12 @@
 import { useEffect, useState, type ReactNode } from "react";
 import type { CompassMetric } from "@/modules/compass/types";
 
-export const NAVY = "#22375C";
-export const CORAL = "#6C0820";
-export const CREAM = "#FBFAF7";
-export const HAZE = "#647DA0";
-export const ROSE = "#F2AEBC";
-export const SALMON = "#F2DCDB";
+export const NAVY = "#081A35";
+export const CORAL = "#7A5C1E";
+export const CREAM = "#F5F5F7";
+export const HAZE = "#4A5872";
+export const ROSE = "#C7A052";
+export const SALMON = "#EEE1C5";
 export const SERIF = "'Instrument Serif', serif";
 export const SANS = "'Manrope', sans-serif";
 export const MONO = "'JetBrains Mono', monospace";
@@ -204,7 +204,7 @@ export function CButton({
         ...style,
       }}
       onMouseEnter={(e) => {
-        if (!disabled && primary) e.currentTarget.style.background = "#4A0517";
+        if (!disabled && primary) e.currentTarget.style.background = "#614919";
       }}
       onMouseLeave={(e) => {
         if (primary) e.currentTarget.style.background = CORAL;
@@ -236,7 +236,7 @@ export function CountdownIntro({ onDone }: { onDone: () => void }) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "rgba(34,55,92,0.88)",
+        background: "rgba(8,26,53,0.88)",
         borderRadius: 18,
         zIndex: 5,
       }}
@@ -269,7 +269,7 @@ export function PauseOverlay({ onResume, texto }: { onResume: () => void; texto?
         gap: 16,
         alignItems: "center",
         justifyContent: "center",
-        background: "rgba(34,55,92,0.92)",
+        background: "rgba(8,26,53,0.92)",
         borderRadius: 18,
         zIndex: 6,
         padding: 20,

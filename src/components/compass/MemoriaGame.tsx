@@ -247,7 +247,7 @@ export function MemoriaGame({ cfg, onFinish, onQuit }: Props) {
                     fontFamily: MONO,
                     fontSize: "0.6rem",
                     letterSpacing: "0.18em",
-                    color: "#F2AEBC",
+                    color: "#C7A052",
                     fontWeight: 700,
                     marginBottom: 6,
                   }}

@@ -88,7 +88,7 @@ function DirectionIndicator({ heading, size = 150 }: { heading: number; size?: n
       </g>
       {/* Índice fijo (lubber line) y silueta propia */}
       <polygon points={`${c - 6},6 ${c + 6},6 ${c},18`} fill={CORAL} />
-      <g stroke="#F2AEBC" strokeWidth={2.4} strokeLinecap="round">
+      <g stroke="#C7A052" strokeWidth={2.4} strokeLinecap="round">
         <line x1={c} y1={c - 14} x2={c} y2={c + 12} />
         <line x1={c - 11} y1={c - 2} x2={c + 11} y2={c - 2} />
         <line x1={c - 6} y1={c + 9} x2={c + 6} y2={c + 9} />

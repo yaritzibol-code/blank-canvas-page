@@ -690,7 +690,7 @@ function ModuleCard({
         flexDirection: "column",
         transition: "transform 0.15s, box-shadow 0.15s",
         transform: hov ? "translateY(-2px)" : "none",
-        boxShadow: hov ? "0 12px 30px rgba(34,55,92,0.08)" : "0 1px 0 rgba(34,55,92,0.03)",
+        boxShadow: hov ? "0 12px 30px rgba(8,26,53,0.08)" : "0 1px 0 rgba(8,26,53,0.03)",
       }}
     >
       <div

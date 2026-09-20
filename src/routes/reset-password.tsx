@@ -31,7 +31,7 @@ type Mode = "checking" | "form" | "request" | "invalid" | "done";
 
 const inputStyle: React.CSSProperties = {
   padding: "12px 16px",
-  border: "1.5px solid #E8EEF6",
+  border: "1.5px solid #E8ECF2",
   borderRadius: 12,
   fontSize: ".9rem",
   width: "100%",
@@ -40,7 +40,7 @@ const inputStyle: React.CSSProperties = {
 const buttonStyle = (disabled: boolean): React.CSSProperties => ({
   width: "100%",
   padding: "12px 16px",
-  background: disabled ? "#8DA1BE" : "#3D5D91",
+  background: disabled ? "#7E90AD" : "#163D70",
   color: "white",
   border: "none",
   borderRadius: 12,
@@ -102,12 +102,12 @@ function ResetPasswordPage() {
   }, []);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#F4F7FB", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "'Manrope', sans-serif" }}>
-      <div style={{ width: "100%", maxWidth: 420, background: "white", borderRadius: 20, padding: 32, boxShadow: "0 20px 60px rgba(34,55,92,.08)" }}>
-        <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.5rem", color: "#22375C", marginBottom: 8 }}>Restablecer contraseña</h1>
+    <div style={{ minHeight: "100vh", background: "#F5F5F7", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "'Manrope', sans-serif" }}>
+      <div style={{ width: "100%", maxWidth: 420, background: "white", borderRadius: 20, padding: 32, boxShadow: "0 20px 60px rgba(8,26,53,.08)" }}>
+        <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.5rem", color: "#081A35", marginBottom: 8 }}>Restablecer contraseña</h1>
 
         {mode === "checking" && (
-          <p style={{ fontSize: ".85rem", color: "#647DA0" }}>Verificando tu enlace…</p>
+          <p style={{ fontSize: ".85rem", color: "#4A5872" }}>Verificando tu enlace…</p>
         )}
 
         {mode === "invalid" && (
@@ -115,7 +115,7 @@ function ResetPasswordPage() {
             <p style={{ fontSize: ".85rem", color: "#e74c3c", fontWeight: 600 }}>
               {linkError ?? "El enlace no es válido o expiró."}
             </p>
-            <p style={{ fontSize: ".82rem", color: "#647DA0", marginTop: 8 }}>
+            <p style={{ fontSize: ".82rem", color: "#4A5872", marginTop: 8 }}>
               Solicita un enlace nuevo aquí abajo y revisa tu correo.
             </p>
             <button onClick={() => setMode("request")} style={{ ...buttonStyle(false), marginTop: 16 }}>
@@ -158,7 +158,7 @@ function RequestLinkForm() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-      <p style={{ fontSize: ".85rem", color: "#647DA0" }}>
+      <p style={{ fontSize: ".85rem", color: "#4A5872" }}>
         {cloud
           ? "Escribe tu correo y te enviaremos un enlace para crear una contraseña nueva."
           : "Escribe tu correo y tu nueva contraseña."}
@@ -172,7 +172,7 @@ function RequestLinkForm() {
       <button onClick={handleSubmit} disabled={loading} style={buttonStyle(loading)}>
         {loading ? "Enviando…" : cloud ? "Enviar enlace" : "Actualizar contraseña"}
       </button>
-      <a href="/login" style={{ fontSize: ".8rem", color: "#3D5D91", fontWeight: 600, textAlign: "center", textDecoration: "none" }}>
+      <a href="/login" style={{ fontSize: ".8rem", color: "#163D70", fontWeight: 600, textAlign: "center", textDecoration: "none" }}>
         ← Volver a iniciar sesión
       </a>
     </div>
@@ -203,7 +203,7 @@ function NewPasswordForm({ onDone }: { onDone: () => void }) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-      <p style={{ fontSize: ".85rem", color: "#647DA0" }}>Escribe una nueva contraseña para tu cuenta.</p>
+      <p style={{ fontSize: ".85rem", color: "#4A5872" }}>Escribe una nueva contraseña para tu cuenta.</p>
       <input type="password" placeholder="Nueva contraseña" value={pw} onChange={(e) => setPw(e.target.value)} style={inputStyle} />
       <input
         type="password"

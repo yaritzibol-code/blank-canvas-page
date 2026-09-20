@@ -9,7 +9,7 @@ import type { ReportQuestionSnapshot, User } from "@/lib/store";
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
-const INK = "#22375C";
+const INK = "#081A35";
 
 export const REPORT_TYPES = [
   "Error técnico",
@@ -96,7 +96,7 @@ export function ReportProblemModal({
         position: "fixed",
         inset: 0,
         zIndex: 4000,
-        background: "rgba(34,55,92,.35)",
+        background: "rgba(8,26,53,.35)",
         backdropFilter: "blur(6px)",
         display: "flex",
         alignItems: "center",
@@ -112,7 +112,7 @@ export function ReportProblemModal({
           background: "#fff",
           borderRadius: 20,
           padding: "clamp(22px, 5vw, 32px)",
-          boxShadow: "0 30px 80px rgba(34,55,92,.35)",
+          boxShadow: "0 30px 80px rgba(8,26,53,.35)",
         }}
       >
         {sent ? (
@@ -134,19 +134,19 @@ export function ReportProblemModal({
             <h3 style={{ fontFamily: DISPLAY, color: INK, margin: "0 0 6px", fontSize: "1.2rem" }}>
               ¡Reporte enviado!
             </h3>
-            <p style={{ color: "#647DA0", fontSize: 14, margin: 0 }}>
+            <p style={{ color: "#4A5872", fontSize: 14, margin: 0 }}>
               Gracias por avisarnos. Lo revisaremos y daremos seguimiento desde el equipo FlightPath.
             </p>
           </div>
         ) : (
           <>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-              <Icon n="alert" size={20} color="#6C0820" />
+              <Icon n="alert" size={20} color="#7A5C1E" />
               <h3 style={{ fontFamily: DISPLAY, color: INK, margin: 0, fontSize: "1.25rem", fontWeight: 800 }}>
                 Reportar problema
               </h3>
             </div>
-            <p style={{ color: "#647DA0", fontSize: 13.5, margin: "0 0 18px" }}>
+            <p style={{ color: "#4A5872", fontSize: 13.5, margin: "0 0 18px" }}>
               Sección: <b style={{ color: INK }}>{seccion}</b>
               {recurso ? (
                 <>
@@ -165,7 +165,7 @@ export function ReportProblemModal({
                   margin: "0 0 16px",
                 }}
               >
-                <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: ".06em", color: "#647DA0" }}>
+                <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: ".06em", color: "#4A5872" }}>
                   PREGUNTA REPORTADA
                 </div>
                 <p style={{ margin: "6px 0 0", color: INK, fontSize: 13.5, lineHeight: 1.5 }}>
@@ -206,7 +206,7 @@ export function ReportProblemModal({
                   borderRadius: 10,
                   border: "1.5px solid #E3EAF5",
                   background: "#fff",
-                  color: "#647DA0",
+                  color: "#4A5872",
                   fontWeight: 700,
                   fontSize: 14,
                   cursor: "pointer",
@@ -222,7 +222,7 @@ export function ReportProblemModal({
                   padding: "10px 18px",
                   borderRadius: 10,
                   border: "none",
-                  background: mensaje.trim() ? "#6C0820" : "#C9D4E5",
+                  background: mensaje.trim() ? "#7A5C1E" : "#C9D4E5",
                   color: "#fff",
                   fontWeight: 800,
                   fontSize: 14,

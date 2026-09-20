@@ -166,8 +166,8 @@ export function MockCompass() {
           ))}
           <polygon
             points={pts}
-            fill="rgba(242,174,188,0.25)"
-            stroke="#F2AEBC"
+            fill="rgba(199,160,82,0.25)"
+            stroke="#C7A052"
             strokeWidth="1.4"
             strokeLinejoin="round"
           />

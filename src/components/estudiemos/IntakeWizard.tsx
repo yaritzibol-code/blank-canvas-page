@@ -8,7 +8,7 @@ const CARD: React.CSSProperties = {
   background: "white",
   borderRadius: 18,
   padding: "24px 22px",
-  boxShadow: "0 2px 16px rgba(61,93,145,0.08)",
+  boxShadow: "0 2px 16px rgba(22,61,112,0.08)",
   fontFamily: "'Manrope', sans-serif",
 };
 
@@ -37,8 +37,8 @@ function Option({
         minHeight: 56,
         borderRadius: 14,
         cursor: "pointer",
-        border: `1.5px solid ${selected ? "#3D5D91" : "#F2DCDB"}`,
-        background: selected ? "rgba(61,93,145,0.07)" : "white",
+        border: `1.5px solid ${selected ? "#163D70" : "#EEE1C5"}`,
+        background: selected ? "rgba(22,61,112,0.07)" : "white",
         fontFamily: "'Manrope', sans-serif",
         display: "flex",
         gap: 12,
@@ -47,7 +47,7 @@ function Option({
       }}
     >
       {icon && (
-        <span style={{ display: "flex", color: selected ? "#3D5D91" : "#647DA0", flexShrink: 0 }}>
+        <span style={{ display: "flex", color: selected ? "#163D70" : "#4A5872", flexShrink: 0 }}>
           <Icon n={icon} size={22} />
         </span>
       )}
@@ -58,9 +58,9 @@ function Option({
         />
       )}
       <span>
-        <span style={{ display: "block", fontWeight: 800, color: "#22375C", fontSize: "0.92rem" }}>{title}</span>
+        <span style={{ display: "block", fontWeight: 800, color: "#081A35", fontSize: "0.92rem" }}>{title}</span>
         {desc && (
-          <span style={{ display: "block", fontSize: "0.78rem", color: "#647DA0", lineHeight: 1.45 }}>{desc}</span>
+          <span style={{ display: "block", fontSize: "0.78rem", color: "#4A5872", lineHeight: 1.45 }}>{desc}</span>
         )}
       </span>
     </button>
@@ -102,17 +102,17 @@ export function IntakeWizard({
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
         <PathyMark size={34} float />
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: "0.7rem", fontWeight: 800, letterSpacing: ".06em", color: "#647DA0", textTransform: "uppercase" }}>
+          <div style={{ fontSize: "0.7rem", fontWeight: 800, letterSpacing: ".06em", color: "#4A5872", textTransform: "uppercase" }}>
             Paso {step + 1} de 5
           </div>
-          <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.15rem", color: "#22375C", margin: 0 }}>
+          <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.15rem", color: "#081A35", margin: 0 }}>
             {titles[step]}
           </h2>
         </div>
       </div>
 
-      <div style={{ height: 5, borderRadius: 4, background: "rgba(61,93,145,.1)", overflow: "hidden", marginBottom: 18 }}>
-        <div style={{ width: `${((step + 1) / 5) * 100}%`, height: "100%", background: "#3D5D91", transition: "width .25s" }} />
+      <div style={{ height: 5, borderRadius: 4, background: "rgba(22,61,112,.1)", overflow: "hidden", marginBottom: 18 }}>
+        <div style={{ width: `${((step + 1) / 5) * 100}%`, height: "100%", background: "#163D70", transition: "width .25s" }} />
       </div>
 
       {step === 0 && (
@@ -144,7 +144,7 @@ export function IntakeWizard({
               width: "100%",
               padding: "13px 15px",
               borderRadius: 12,
-              border: "1.5px solid #F2DCDB",
+              border: "1.5px solid #EEE1C5",
               fontSize: "0.92rem",
               fontFamily: "'Manrope', sans-serif",
               outline: "none",
@@ -157,7 +157,7 @@ export function IntakeWizard({
               disabled={!tema.trim()}
               style={{
                 flex: "1 1 160px", minHeight: 46, borderRadius: 12, border: "none",
-                background: tema.trim() ? "#22375C" : "rgba(34,55,92,.25)",
+                background: tema.trim() ? "#081A35" : "rgba(8,26,53,.25)",
                 color: "white", fontWeight: 700, fontSize: "0.86rem",
                 cursor: tema.trim() ? "pointer" : "not-allowed", fontFamily: "'Manrope', sans-serif",
               }}
@@ -168,7 +168,7 @@ export function IntakeWizard({
               onClick={() => { setTema(""); setStep(2); }}
               style={{
                 flex: "1 1 160px", minHeight: 46, borderRadius: 12,
-                border: "1.5px solid #3D5D91", background: "white", color: "#3D5D91",
+                border: "1.5px solid #163D70", background: "white", color: "#163D70",
                 fontWeight: 700, fontSize: "0.86rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif",
               }}
             >
@@ -227,11 +227,11 @@ export function IntakeWizard({
               value={minutos}
               onChange={(e) => setMinutos(e.target.value)}
               style={{
-                width: 96, padding: "12px 14px", borderRadius: 12, border: "1.5px solid #F2DCDB",
+                width: 96, padding: "12px 14px", borderRadius: 12, border: "1.5px solid #EEE1C5",
                 fontSize: "1rem", textAlign: "center", fontFamily: "'Manrope', sans-serif", outline: "none",
               }}
             />
-            <span style={{ fontSize: "0.88rem", color: "#647DA0", fontWeight: 600 }}>minutos</span>
+            <span style={{ fontSize: "0.88rem", color: "#4A5872", fontWeight: 600 }}>minutos</span>
           </div>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
             {[15, 25, 45, 60, 120].map((m) => (
@@ -240,9 +240,9 @@ export function IntakeWizard({
                 onClick={() => setMinutos(String(m))}
                 style={{
                   padding: "8px 15px", minHeight: 40, borderRadius: 20, cursor: "pointer",
-                  border: `1.5px solid ${Number(minutos) === m ? "#3D5D91" : "#F2DCDB"}`,
-                  background: Number(minutos) === m ? "rgba(61,93,145,.08)" : "white",
-                  color: Number(minutos) === m ? "#3D5D91" : "#647DA0",
+                  border: `1.5px solid ${Number(minutos) === m ? "#163D70" : "#EEE1C5"}`,
+                  background: Number(minutos) === m ? "rgba(22,61,112,.08)" : "white",
+                  color: Number(minutos) === m ? "#163D70" : "#4A5872",
                   fontWeight: 700, fontSize: "0.82rem", fontFamily: "'Manrope', sans-serif",
                 }}
               >
@@ -255,7 +255,7 @@ export function IntakeWizard({
             disabled={loading}
             style={{
               width: "100%", minHeight: 50, borderRadius: 12, border: "none",
-              background: loading ? "rgba(108,8,32,.5)" : "#6C0820", color: "white",
+              background: loading ? "rgba(122,92,30,.5)" : "#7A5C1E", color: "white",
               fontWeight: 800, fontSize: "0.92rem", cursor: loading ? "wait" : "pointer",
               fontFamily: "'Manrope', sans-serif", display: "inline-flex",
               alignItems: "center", justifyContent: "center", gap: 8,
@@ -270,7 +270,7 @@ export function IntakeWizard({
         <button
           onClick={() => (step === 0 ? onCancel() : setStep((s) => s - 1))}
           style={{
-            background: "none", border: "none", color: "#647DA0", fontWeight: 700,
+            background: "none", border: "none", color: "#4A5872", fontWeight: 700,
             fontSize: "0.8rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif", padding: 6,
           }}
         >

@@ -35,7 +35,7 @@ export const Route = createFileRoute("/dashboard/prueba")({
 });
 
 const FONT = "'Manrope', sans-serif";
-const DISPLAY = "'Bricolage Grotesque', sans-serif";
+const DISPLAY = "'Instrument Serif', serif";
 
 interface Ejercicio {
   icon: FPIconName;
@@ -87,7 +87,7 @@ function PonmeAPruebaPage() {
           to="/dashboard"
           style={{
             display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 14,
-            color: "#3D5D91", fontWeight: 700, fontSize: "0.82rem", textDecoration: "none",
+            color: "#163D70", fontWeight: 700, fontSize: "0.82rem", textDecoration: "none",
           }}
         >
           ← Volver al dashboard
@@ -99,10 +99,10 @@ function PonmeAPruebaPage() {
       ) : (
         <>
           <header style={{ marginBottom: 22 }}>
-            <h1 style={{ fontFamily: DISPLAY, fontSize: "1.8rem", color: "#22375C", margin: "0 0 4px" }}>
+            <h1 style={{ fontFamily: DISPLAY, fontSize: "1.8rem", color: "#081A35", margin: "0 0 4px" }}>
               Ponme a Prueba
             </h1>
-            <p style={{ fontSize: "0.95rem", color: "#647DA0", margin: 0 }}>
+            <p style={{ fontSize: "0.95rem", color: "#4A5872", margin: 0 }}>
               Demuestra que realmente entendiste.
             </p>
           </header>
@@ -140,13 +140,13 @@ function Tarjeta({ ejercicio, onComenzar }: { ejercicio: Ejercicio; onComenzar: 
   const activo = ejercicio.disponible;
   const base: CSSProperties = {
     background: activo ? "white" : "#F5F6F9",
-    border: activo ? "2px solid #3D5D91" : "1px solid #E3E7EF",
+    border: activo ? "2px solid #163D70" : "1px solid #E3E7EF",
     borderRadius: 18,
     padding: 20,
     display: "flex",
     flexDirection: "column",
     gap: 10,
-    boxShadow: activo ? "0 12px 30px rgba(34,55,92,.10)" : "none",
+    boxShadow: activo ? "0 12px 30px rgba(8,26,53,.10)" : "none",
     opacity: activo ? 1 : 0.72,
   };
 
@@ -162,20 +162,20 @@ function Tarjeta({ ejercicio, onComenzar }: { ejercicio: Ejercicio; onComenzar: 
               display: "flex", alignItems: "center", justifyContent: "center",
             }}
           >
-            <Icon n={ejercicio.icon} size={18} color="#8DA1BE" />
+            <Icon n={ejercicio.icon} size={18} color="#7E90AD" />
           </div>
         )}
         <h2
           style={{
             fontFamily: DISPLAY, fontSize: "1.05rem", margin: 0,
-            color: activo ? "#22375C" : "#7B8CA6",
+            color: activo ? "#081A35" : "#7B8CA6",
           }}
         >
           {ejercicio.titulo}
         </h2>
       </div>
 
-      <p style={{ fontSize: "0.86rem", lineHeight: 1.6, color: activo ? "#4A5C77" : "#8DA1BE", margin: 0, flex: 1 }}>
+      <p style={{ fontSize: "0.86rem", lineHeight: 1.6, color: activo ? "#4A5C77" : "#7E90AD", margin: 0, flex: 1 }}>
         {ejercicio.descripcion}
       </p>
 
@@ -183,7 +183,7 @@ function Tarjeta({ ejercicio, onComenzar }: { ejercicio: Ejercicio; onComenzar: 
         <button
           onClick={onComenzar}
           style={{
-            minHeight: 46, borderRadius: 12, border: "none", background: "#3D5D91",
+            minHeight: 46, borderRadius: 12, border: "none", background: "#163D70",
             color: "white", fontWeight: 800, fontSize: "0.9rem", cursor: "pointer", fontFamily: FONT,
           }}
         >

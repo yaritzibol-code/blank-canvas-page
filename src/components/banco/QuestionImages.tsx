@@ -98,7 +98,7 @@ export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: s
     <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 22 }}>
       {failed && (
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
-          <p style={{ fontSize: "0.8rem", color: "#8DA1BE", fontFamily: "'Manrope', sans-serif", margin: 0 }}>
+          <p style={{ fontSize: "0.8rem", color: "#7E90AD", fontFamily: "'Manrope', sans-serif", margin: 0 }}>
             No se pudo cargar la lámina de esta pregunta.
           </p>
           <button
@@ -106,7 +106,7 @@ export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: s
             onClick={() => { setFailed(false); setRetry((n) => n + 1); }}
             style={{
               minHeight: 44, padding: "8px 14px", borderRadius: 10, cursor: "pointer",
-              border: "1px solid #3D5D91", background: "white", color: "#22375C",
+              border: "1px solid #163D70", background: "white", color: "#081A35",
               fontWeight: 700, fontSize: "0.8rem", fontFamily: "'Manrope', sans-serif",
             }}
           >
@@ -121,7 +121,7 @@ export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: s
           <p
             key={u}
             style={{
-              fontSize: "0.8rem", color: "#8DA1BE", fontFamily: "'Manrope', sans-serif",
+              fontSize: "0.8rem", color: "#7E90AD", fontFamily: "'Manrope', sans-serif",
               margin: 0, padding: "14px 16px", borderRadius: 12,
               border: "1px dashed #D9E2F0", background: "#F8FAFD",
             }}
@@ -140,7 +140,7 @@ export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: s
                 maxHeight: 460,
                 objectFit: "contain",
                 borderRadius: 12,
-                border: "1px solid #F2DCDB",
+                border: "1px solid #EEE1C5",
                 background: "white",
               }}
             />

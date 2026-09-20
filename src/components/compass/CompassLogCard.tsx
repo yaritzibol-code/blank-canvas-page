@@ -27,8 +27,8 @@ const MODE_LABEL: Record<CompassMode, string> = {
 };
 
 const MODE_STYLE: Record<CompassMode, { bg: string; color: string }> = {
-  practica: { bg: "rgba(61,93,145,.09)", color: "#3D5D91" },
-  examen: { bg: "rgba(108,8,32,.09)", color: "#6C0820" },
+  practica: { bg: "rgba(22,61,112,.09)", color: "#163D70" },
+  examen: { bg: "rgba(122,92,30,.09)", color: "#7A5C1E" },
   simulacro: { bg: "rgba(243,156,18,.12)", color: "#8a6000" },
 };
 
@@ -71,7 +71,7 @@ export function CompassLogCard({
         background: "white",
         borderRadius: 16,
         padding: 20,
-        boxShadow: "0 2px 10px rgba(61,93,145,.06)",
+        boxShadow: "0 2px 10px rgba(22,61,112,.06)",
         ...style,
       }}
     >
@@ -89,7 +89,7 @@ export function CompassLogCard({
           style={{
             fontSize: ".78rem",
             fontWeight: 700,
-            color: "#647DA0",
+            color: "#4A5872",
             textTransform: "uppercase",
             letterSpacing: ".5px",
             display: "inline-flex",
@@ -112,7 +112,7 @@ export function CompassLogCard({
                 borderRadius: 20,
                 fontSize: ".72rem",
                 fontWeight: 700,
-                background: "#3D5D91",
+                background: "#163D70",
                 color: "white",
                 textDecoration: "none",
                 display: "inline-flex",
@@ -127,7 +127,7 @@ export function CompassLogCard({
       </div>
 
       {perfil.sesionesTotales === 0 ? (
-        <p style={{ fontSize: ".82rem", color: "#8DA1BE", marginTop: 10, lineHeight: 1.55 }}>
+        <p style={{ fontSize: ".82rem", color: "#7E90AD", marginTop: 10, lineHeight: 1.55 }}>
           Sin sesiones del Pilot Aptitude Trainer todavía. Cada práctica, examen o simulacro queda
           registrado aquí con su score, nivel y duración.
         </p>
@@ -155,7 +155,7 @@ export function CompassLogCard({
                     <span
                       style={{
                         fontSize: ".78rem",
-                        color: "#22375C",
+                        color: "#081A35",
                         width: 108,
                         flexShrink: 0,
                         display: "inline-flex",
@@ -166,13 +166,13 @@ export function CompassLogCard({
                         textOverflow: "ellipsis",
                       }}
                     >
-                      <Icon n={def.icon} size={14} color="#647DA0" /> {def.nombre}
+                      <Icon n={def.icon} size={14} color="#4A5872" /> {def.nombre}
                     </span>
                     <div
                       style={{
                         flex: 1,
                         height: 7,
-                        background: "#F2DCDB",
+                        background: "#EEE1C5",
                         borderRadius: 10,
                         overflow: "hidden",
                       }}
@@ -194,7 +194,7 @@ export function CompassLogCard({
                         width: 30,
                         textAlign: "right",
                         flexShrink: 0,
-                        color: score === null ? "#8DA1BE" : scoreColor(score),
+                        color: score === null ? "#7E90AD" : scoreColor(score),
                       }}
                     >
                       {score === null ? "—" : score}
@@ -224,9 +224,9 @@ export function CompassLogCard({
                 );
               })}
               {perfil.debil && (
-                <div style={{ fontSize: ".74rem", color: "#647DA0", marginTop: 2 }}>
+                <div style={{ fontSize: ".74rem", color: "#4A5872", marginTop: 2 }}>
                   Punto débil actual:{" "}
-                  <strong style={{ color: "#6C0820" }}>
+                  <strong style={{ color: "#7A5C1E" }}>
                     {COMPASS_MODULE_MAP[perfil.debil].nombre}
                   </strong>{" "}
                   — nivel sugerido{" "}
@@ -244,7 +244,7 @@ export function CompassLogCard({
                 fontWeight: 800,
                 letterSpacing: ".06em",
                 textTransform: "uppercase",
-                color: "#8DA1BE",
+                color: "#7E90AD",
                 marginBottom: 8,
               }}
             >
@@ -261,11 +261,11 @@ export function CompassLogCard({
                           padding: "6px 8px",
                           fontSize: ".64rem",
                           fontWeight: 700,
-                          color: "#8DA1BE",
+                          color: "#7E90AD",
                           textTransform: "uppercase",
                           letterSpacing: ".5px",
                           textAlign: h === "Score" || h === "Duración" ? "right" : "left",
-                          borderBottom: "1px solid rgba(61,93,145,.1)",
+                          borderBottom: "1px solid rgba(22,61,112,.1)",
                           whiteSpace: "nowrap",
                         }}
                       >
@@ -288,8 +288,8 @@ export function CompassLogCard({
                   marginTop: 10,
                   padding: "7px 14px",
                   background: "white",
-                  color: "#3D5D91",
-                  border: "2px solid #F2DCDB",
+                  color: "#163D70",
+                  border: "2px solid #EEE1C5",
                   borderRadius: 8,
                   fontSize: ".74rem",
                   fontWeight: 700,
@@ -314,8 +314,8 @@ const pillStyle: CSSProperties = {
   borderRadius: 20,
   fontSize: ".72rem",
   fontWeight: 700,
-  background: "rgba(61,93,145,.07)",
-  color: "#3D5D91",
+  background: "rgba(22,61,112,.07)",
+  color: "#163D70",
 };
 
 function SessionRow({ s }: { s: CompassSessionRecord }) {
@@ -324,16 +324,16 @@ function SessionRow({ s }: { s: CompassSessionRecord }) {
   const td: CSSProperties = {
     padding: "8px 8px",
     fontSize: ".78rem",
-    color: "#22375C",
-    borderBottom: "1px solid rgba(61,93,145,.05)",
+    color: "#081A35",
+    borderBottom: "1px solid rgba(22,61,112,.05)",
     whiteSpace: "nowrap",
   };
   return (
     <tr>
-      <td style={{ ...td, color: "#647DA0", fontSize: ".72rem" }}>{fmtFecha(s.date)}</td>
+      <td style={{ ...td, color: "#4A5872", fontSize: ".72rem" }}>{fmtFecha(s.date)}</td>
       <td style={td}>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontWeight: 600 }}>
-          <Icon n={def.icon} size={14} color="#647DA0" /> {def.nombre}
+          <Icon n={def.icon} size={14} color="#4A5872" /> {def.nombre}
         </span>
       </td>
       <td style={td}>
@@ -354,7 +354,7 @@ function SessionRow({ s }: { s: CompassSessionRecord }) {
       <td style={{ ...td, textAlign: "right" }}>
         <span
           style={{
-            fontFamily: "'Bricolage Grotesque', sans-serif",
+            fontFamily: "'Instrument Serif', serif",
             fontWeight: 900,
             color: scoreColor(s.score),
           }}
@@ -362,7 +362,7 @@ function SessionRow({ s }: { s: CompassSessionRecord }) {
           {s.score}
         </span>
       </td>
-      <td style={{ ...td, textAlign: "right", color: "#647DA0", fontSize: ".74rem" }}>
+      <td style={{ ...td, textAlign: "right", color: "#4A5872", fontSize: ".74rem" }}>
         {fmtDur(s.durationSec)}
       </td>
     </tr>

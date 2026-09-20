@@ -20,11 +20,11 @@ import { settleSession } from "@/lib/rtari-client";
 import { RTARI_MAX_MINUTOS, type RtariNivel, type RtariVoice } from "@/modules/rtari/config";
 import type { RtariQuestion } from "@/modules/rtari/questions";
 
-const NAVY = "#22375C";
-const CORAL = "#6C0820";
-const CREAM = "#FBFAF7";
-const HAZE = "#647DA0";
-const ROSE = "#F2AEBC";
+const NAVY = "#081A35";
+const CORAL = "#7A5C1E";
+const CREAM = "#F5F5F7";
+const HAZE = "#4A5872";
+const ROSE = "#C7A052";
 const SERIF = "'Instrument Serif', serif";
 const MONO = "'JetBrains Mono', monospace";
 

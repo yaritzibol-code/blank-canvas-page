@@ -16,7 +16,7 @@ interface Pieza {
   color: string;
 }
 
-const COLORES = ["#6C0820", "#A31637", "#F2AEBC", "#E8C97A", "#FFFFFF", "#3D5A80"];
+const COLORES = ["#7A5C1E", "#A31637", "#C7A052", "#E8C97A", "#FFFFFF", "#3D5A80"];
 
 export function Confetti({ count = 140, duration = 4200 }: { count?: number; duration?: number }) {
   const ref = useRef<HTMLCanvasElement | null>(null);

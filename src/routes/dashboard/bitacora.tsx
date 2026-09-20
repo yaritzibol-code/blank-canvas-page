@@ -79,14 +79,14 @@ const EMOTION_BORDER: Record<string, string> = {
   minus: "#f39c12",
   alert: "#e74c3c",
   moon: "#888",
-  cloud: "#647DA0",
+  cloud: "#4A5872",
 };
 const EMOTION_BAR: Record<string, string> = {
   sun: "#2ecc71",
   checkCircle: "#5A86CB",
   minus: "#f39c12",
   alert: "#e74c3c",
-  moon: "#647DA0",
+  moon: "#4A5872",
   cloud: "#e74c3c",
 };
 const EMOTION_VAL: Record<string, number> = {
@@ -137,7 +137,7 @@ function buildMoodData(entries: BitacoraEntry[]) {
       day: DAY_LETTERS[d.getDay()],
       emoji: e?.emotionIcon ?? "",
       val: val * 20,
-      color: e ? (EMOTION_BAR[e.emotionIcon] ?? "#5A86CB") : "#F2DCDB",
+      color: e ? (EMOTION_BAR[e.emotionIcon] ?? "#5A86CB") : "#EEE1C5",
     });
   }
   return out;
@@ -191,9 +191,9 @@ function ScaleDots({ value, onChange }: { value: number; onChange: (v: number) =
             width: 28,
             height: 28,
             borderRadius: "50%",
-            border: `2px solid ${n <= value ? "#3D5D91" : "#F2DCDB"}`,
-            background: n <= value ? "#3D5D91" : "white",
-            color: n <= value ? "white" : "#8DA1BE",
+            border: `2px solid ${n <= value ? "#163D70" : "#EEE1C5"}`,
+            background: n <= value ? "#163D70" : "white",
+            color: n <= value ? "white" : "#7E90AD",
             fontSize: ".72rem",
             fontWeight: 700,
             cursor: "pointer",
@@ -364,9 +364,9 @@ function BitacoraPage() {
     <div style={{ fontFamily: "'Manrope', sans-serif", minHeight: "100vh", background: "#f5f7fc" }}>
       <style>{`
         @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-        .emo-btn:hover{border-color:#3D5D91!important;transform:translateY(-2px);}
-        .save-btn:hover{background:#8a0a28!important;transform:translateY(-2px);box-shadow:0 8px 20px rgba(108,8,32,.3)!important;}
-        .ec-card:hover{transform:translateX(3px);box-shadow:0 4px 16px rgba(61,93,145,.1)!important;}
+        .emo-btn:hover{border-color:#163D70!important;transform:translateY(-2px);}
+        .save-btn:hover{background:#977431!important;transform:translateY(-2px);box-shadow:0 8px 20px rgba(122,92,30,.3)!important;}
+        .ec-card:hover{transform:translateX(3px);box-shadow:0 4px 16px rgba(22,61,112,.1)!important;}
       `}</style>
 
       <div style={{ padding: "0 32px" }}>
@@ -385,7 +385,7 @@ function BitacoraPage() {
         style={{
           padding: "16px 32px 0",
           background: "white",
-          borderBottom: "1px solid rgba(61,93,145,.08)",
+          borderBottom: "1px solid rgba(22,61,112,.08)",
         }}
       >
         <div style={{ display: "flex", gap: 8, marginBottom: 0 }}>
@@ -398,13 +398,13 @@ function BitacoraPage() {
               onClick={() => setScreen(t.id)}
               style={{
                 padding: "8px 20px",
-                border: `2px solid ${screen === t.id ? "#3D5D91" : "#F2DCDB"}`,
+                border: `2px solid ${screen === t.id ? "#163D70" : "#EEE1C5"}`,
                 borderRadius: 20,
                 fontSize: ".82rem",
                 fontWeight: 600,
                 cursor: "pointer",
-                background: screen === t.id ? "#3D5D91" : "white",
-                color: screen === t.id ? "white" : "#647DA0",
+                background: screen === t.id ? "#163D70" : "white",
+                color: screen === t.id ? "white" : "#4A5872",
                 transition: "all .2s",
                 fontFamily: "'Manrope', sans-serif",
                 display: "flex",
@@ -424,7 +424,7 @@ function BitacoraPage() {
           {/* Pathy question */}
           <div
             style={{
-              background: "linear-gradient(135deg, #22375C, #2a2a4e)",
+              background: "linear-gradient(135deg, #081A35, #2a2a4e)",
               borderRadius: 18,
               padding: "24px 28px",
               display: "flex",
@@ -442,7 +442,7 @@ function BitacoraPage() {
                 right: -40,
                 width: 160,
                 height: 160,
-                background: "radial-gradient(circle, rgba(242,174,188,.12) 0%, transparent 70%)",
+                background: "radial-gradient(circle, rgba(199,160,82,.12) 0%, transparent 70%)",
                 borderRadius: "50%",
               }}
             />
@@ -453,7 +453,7 @@ function BitacoraPage() {
               <div
                 style={{
                   fontSize: ".7rem",
-                  color: "#F2AEBC",
+                  color: "#C7A052",
                   fontWeight: 700,
                   textTransform: "uppercase",
                   letterSpacing: ".5px",
@@ -467,7 +467,7 @@ function BitacoraPage() {
               </div>
               <div
                 style={{
-                  fontFamily: "'Bricolage Grotesque', sans-serif",
+                  fontFamily: "'Instrument Serif', serif",
                   fontSize: "1.1rem",
                   color: "white",
                   marginBottom: 4,
@@ -487,7 +487,7 @@ function BitacoraPage() {
               background: "white",
               borderRadius: 16,
               padding: 22,
-              boxShadow: "0 2px 10px rgba(61,93,145,.06)",
+              boxShadow: "0 2px 10px rgba(22,61,112,.06)",
               marginBottom: 18,
             }}
           >
@@ -495,7 +495,7 @@ function BitacoraPage() {
               style={{
                 fontSize: ".78rem",
                 fontWeight: 700,
-                color: "#647DA0",
+                color: "#4A5872",
                 textTransform: "uppercase",
                 letterSpacing: ".5px",
                 marginBottom: 14,
@@ -518,10 +518,10 @@ function BitacoraPage() {
                     alignItems: "center",
                     gap: 5,
                     padding: "12px 16px",
-                    border: `2px solid ${selectedEmotion === e.icon ? "#3D5D91" : "#F2DCDB"}`,
+                    border: `2px solid ${selectedEmotion === e.icon ? "#163D70" : "#EEE1C5"}`,
                     borderRadius: 14,
                     cursor: "pointer",
-                    background: selectedEmotion === e.icon ? "rgba(61,93,145,.06)" : "white",
+                    background: selectedEmotion === e.icon ? "rgba(22,61,112,.06)" : "white",
                     flex: 1,
                     minWidth: 70,
                     transition: "all .2s",
@@ -531,7 +531,7 @@ function BitacoraPage() {
                   <span
                     style={{
                       display: "flex",
-                      color: selectedEmotion === e.icon ? "#3D5D91" : "#647DA0",
+                      color: selectedEmotion === e.icon ? "#163D70" : "#4A5872",
                     }}
                   >
                     <Icon n={e.icon as never} size={26} />
@@ -540,7 +540,7 @@ function BitacoraPage() {
                     style={{
                       fontSize: ".72rem",
                       fontWeight: 600,
-                      color: selectedEmotion === e.icon ? "#3D5D91" : "#647DA0",
+                      color: selectedEmotion === e.icon ? "#163D70" : "#4A5872",
                       textAlign: "center",
                     }}
                   >
@@ -557,7 +557,7 @@ function BitacoraPage() {
               background: "white",
               borderRadius: 16,
               padding: 22,
-              boxShadow: "0 2px 10px rgba(61,93,145,.06)",
+              boxShadow: "0 2px 10px rgba(22,61,112,.06)",
               marginBottom: 18,
             }}
           >
@@ -565,7 +565,7 @@ function BitacoraPage() {
               style={{
                 fontSize: ".78rem",
                 fontWeight: 700,
-                color: "#647DA0",
+                color: "#4A5872",
                 textTransform: "uppercase",
                 letterSpacing: ".5px",
                 marginBottom: 14,
@@ -590,7 +590,7 @@ function BitacoraPage() {
                 <span
                   style={{
                     fontSize: ".82rem",
-                    color: "#22375C",
+                    color: "#081A35",
                     fontWeight: 500,
                     width: 200,
                     flexShrink: 0,
@@ -612,7 +612,7 @@ function BitacoraPage() {
               background: "white",
               borderRadius: 16,
               padding: 22,
-              boxShadow: "0 2px 10px rgba(61,93,145,.06)",
+              boxShadow: "0 2px 10px rgba(22,61,112,.06)",
               marginBottom: 18,
             }}
           >
@@ -620,7 +620,7 @@ function BitacoraPage() {
               style={{
                 fontSize: ".78rem",
                 fontWeight: 700,
-                color: "#647DA0",
+                color: "#4A5872",
                 textTransform: "uppercase",
                 letterSpacing: ".5px",
                 marginBottom: 14,
@@ -637,20 +637,20 @@ function BitacoraPage() {
               placeholder="Escríbelo con tus palabras: virajes coordinados, cartas Jeppesen, NOTAM…"
               style={{
                 width: "100%",
-                border: "2px solid #F2DCDB",
+                border: "2px solid #EEE1C5",
                 borderRadius: 12,
                 padding: "12px 14px",
                 fontSize: ".88rem",
                 fontFamily: "'Manrope', sans-serif",
-                color: "#22375C",
+                color: "#081A35",
                 outline: "none",
                 background: "#fafbff",
                 transition: "border-color .2s",
               }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = "#3D5D91")}
-              onBlur={(e) => (e.currentTarget.style.borderColor = "#F2DCDB")}
+              onFocus={(e) => (e.currentTarget.style.borderColor = "#163D70")}
+              onBlur={(e) => (e.currentTarget.style.borderColor = "#EEE1C5")}
             />
-            <div style={{ fontSize: ".72rem", color: "#8DA1BE", marginTop: 6 }}>
+            <div style={{ fontSize: ".72rem", color: "#7E90AD", marginTop: 6 }}>
               Déjalo vacío si hoy todo estuvo bien.
             </div>
           </div>
@@ -661,7 +661,7 @@ function BitacoraPage() {
               background: "white",
               borderRadius: 16,
               padding: 22,
-              boxShadow: "0 2px 10px rgba(61,93,145,.06)",
+              boxShadow: "0 2px 10px rgba(22,61,112,.06)",
               marginBottom: 18,
             }}
           >
@@ -669,7 +669,7 @@ function BitacoraPage() {
               style={{
                 fontSize: ".78rem",
                 fontWeight: 700,
-                color: "#647DA0",
+                color: "#4A5872",
                 textTransform: "uppercase",
                 letterSpacing: ".5px",
                 marginBottom: 14,
@@ -687,20 +687,20 @@ function BitacoraPage() {
               style={{
                 width: "100%",
                 minHeight: 120,
-                border: "2px solid #F2DCDB",
+                border: "2px solid #EEE1C5",
                 borderRadius: 12,
                 padding: "14px 16px",
                 fontSize: ".88rem",
                 fontFamily: "'Manrope', sans-serif",
-                color: "#22375C",
+                color: "#081A35",
                 outline: "none",
                 resize: "vertical" as const,
                 lineHeight: 1.7,
                 background: "#fafbff",
                 transition: "border-color .2s",
               }}
-              onFocus={(e) => (e.target.style.borderColor = "#3D5D91")}
-              onBlur={(e) => (e.target.style.borderColor = "#F2DCDB")}
+              onFocus={(e) => (e.target.style.borderColor = "#163D70")}
+              onBlur={(e) => (e.target.style.borderColor = "#EEE1C5")}
             />
             <div
               style={{
@@ -721,7 +721,7 @@ function BitacoraPage() {
             style={{
               width: "100%",
               padding: 14,
-              background: "#6C0820",
+              background: "#7A5C1E",
               color: "white",
               border: "none",
               borderRadius: 12,
@@ -744,7 +744,7 @@ function BitacoraPage() {
           <p
             style={{
               fontSize: ".72rem",
-              color: "#8DA1BE",
+              color: "#7E90AD",
               textAlign: "center" as const,
               marginTop: -10,
               marginBottom: 24,
@@ -766,9 +766,9 @@ function BitacoraPage() {
             </div>
             <h2
               style={{
-                fontFamily: "'Bricolage Grotesque', sans-serif",
+                fontFamily: "'Instrument Serif', serif",
                 fontSize: "1.5rem",
-                color: "#22375C",
+                color: "#081A35",
                 marginBottom: 6,
               }}
             >
@@ -779,7 +779,7 @@ function BitacoraPage() {
           {/* Mensaje Pathy */}
           <div
             style={{
-              background: "linear-gradient(135deg, #F2DCDB, #fce4ec)",
+              background: "linear-gradient(135deg, #EEE1C5, #fce4ec)",
               borderRadius: 18,
               padding: "22px 24px",
               marginBottom: 20,
@@ -794,7 +794,7 @@ function BitacoraPage() {
                 right: -30,
                 width: 120,
                 height: 120,
-                background: "radial-gradient(circle, rgba(242,174,188,.3) 0%, transparent 70%)",
+                background: "radial-gradient(circle, rgba(199,160,82,.3) 0%, transparent 70%)",
                 borderRadius: "50%",
               }}
             />
@@ -802,7 +802,7 @@ function BitacoraPage() {
               style={{
                 fontSize: ".72rem",
                 fontWeight: 700,
-                color: "#6C0820",
+                color: "#7A5C1E",
                 textTransform: "uppercase" as const,
                 letterSpacing: ".5px",
                 marginBottom: 8,
@@ -841,7 +841,7 @@ function BitacoraPage() {
               background: "white",
               borderRadius: 14,
               padding: "18px 20px",
-              boxShadow: "0 2px 10px rgba(61,93,145,.06)",
+              boxShadow: "0 2px 10px rgba(22,61,112,.06)",
               marginBottom: 20,
             }}
           >
@@ -849,7 +849,7 @@ function BitacoraPage() {
               style={{
                 fontSize: ".74rem",
                 fontWeight: 700,
-                color: "#647DA0",
+                color: "#4A5872",
                 textTransform: "uppercase" as const,
                 letterSpacing: ".5px",
                 marginBottom: 12,
@@ -862,14 +862,14 @@ function BitacoraPage() {
             </div>
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 10 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ display: "flex", color: "#3D5D91" }}>
+                <span style={{ display: "flex", color: "#163D70" }}>
                   <Icon n={result.emoji as never} size={22} />
                 </span>
                 <div>
-                  <div style={{ fontSize: ".82rem", fontWeight: 700, color: "#22375C" }}>
+                  <div style={{ fontSize: ".82rem", fontWeight: 700, color: "#081A35" }}>
                     {result.moodLabel}
                   </div>
-                  <div style={{ fontSize: ".74rem", color: "#647DA0" }}>Cómo te sentiste</div>
+                  <div style={{ fontSize: ".74rem", color: "#4A5872" }}>Cómo te sentiste</div>
                 </div>
               </div>
               <div style={{ display: "flex", gap: 20, flexWrap: "wrap" as const }}>
@@ -880,28 +880,28 @@ function BitacoraPage() {
                   <div key={s.label} style={{ textAlign: "center" as const }}>
                     <div
                       style={{
-                        fontFamily: "'Bricolage Grotesque', sans-serif",
+                        fontFamily: "'Instrument Serif', serif",
                         fontSize: "1.2rem",
                         fontWeight: 900,
-                        color: "#3D5D91",
+                        color: "#163D70",
                       }}
                     >
                       {s.val > 0 ? `${s.val}/5` : "—"}
                     </div>
-                    <div style={{ fontSize: ".68rem", color: "#8DA1BE" }}>{s.label}</div>
+                    <div style={{ fontSize: ".68rem", color: "#7E90AD" }}>{s.label}</div>
                   </div>
                 ))}
               </div>
               {result.tema && (
                 <div>
-                  <div style={{ fontSize: ".74rem", color: "#647DA0", marginBottom: 4 }}>
+                  <div style={{ fontSize: ".74rem", color: "#4A5872", marginBottom: 4 }}>
                     Lo que te costó hoy:
                   </div>
                   <span
                     style={{
                       padding: "3px 12px",
-                      background: "#F2DCDB",
-                      color: "#6C0820",
+                      background: "#EEE1C5",
+                      color: "#7A5C1E",
                       borderRadius: 20,
                       fontSize: ".76rem",
                       fontWeight: 700,
@@ -913,7 +913,7 @@ function BitacoraPage() {
               )}
               {result.text && (
                 <div>
-                  <div style={{ fontSize: ".74rem", color: "#647DA0", marginBottom: 4 }}>
+                  <div style={{ fontSize: ".74rem", color: "#4A5872", marginBottom: 4 }}>
                     Lo que escribiste:
                   </div>
                   <div
@@ -938,7 +938,7 @@ function BitacoraPage() {
           {result.bad && (
             <div
               style={{
-                background: "linear-gradient(135deg, #3D5D91, #5A86CB)",
+                background: "linear-gradient(135deg, #163D70, #5A86CB)",
                 borderRadius: 14,
                 padding: "18px 20px",
                 marginBottom: 20,
@@ -955,7 +955,7 @@ function BitacoraPage() {
                     alignItems: "center",
                     justifyContent: "center",
                     flexShrink: 0,
-                    color: "#3D5D91",
+                    color: "#163D70",
                   }}
                 >
                   <YarisAvatar size={38} />
@@ -975,7 +975,7 @@ function BitacoraPage() {
                   width: "100%",
                   padding: 11,
                   background: "white",
-                  color: "#3D5D91",
+                  color: "#163D70",
                   border: "none",
                   borderRadius: 9,
                   fontSize: ".88rem",
@@ -1001,8 +1001,8 @@ function BitacoraPage() {
                 flex: 1,
                 padding: 12,
                 background: "white",
-                color: "#3D5D91",
-                border: "2px solid #3D5D91",
+                color: "#163D70",
+                border: "2px solid #163D70",
                 borderRadius: 11,
                 fontSize: ".88rem",
                 fontWeight: 700,
@@ -1021,7 +1021,7 @@ function BitacoraPage() {
               style={{
                 flex: 1,
                 padding: 12,
-                background: "#6C0820",
+                background: "#7A5C1E",
                 color: "white",
                 border: "none",
                 borderRadius: 11,
@@ -1046,13 +1046,13 @@ function BitacoraPage() {
                 background: "white",
                 borderRadius: 16,
                 overflow: "hidden",
-                boxShadow: "0 4px 20px rgba(61,93,145,.1)",
+                boxShadow: "0 4px 20px rgba(22,61,112,.1)",
               }}
             >
               <div
                 style={{
                   padding: "14px 18px",
-                  background: "linear-gradient(135deg, #3D5D91, #5A86CB)",
+                  background: "linear-gradient(135deg, #163D70, #5A86CB)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
@@ -1068,7 +1068,7 @@ function BitacoraPage() {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      color: "#3D5D91",
+                      color: "#163D70",
                     }}
                   >
                     <YarisAvatar size={28} />
@@ -1125,13 +1125,13 @@ function BitacoraPage() {
                         width: 24,
                         height: 24,
                         borderRadius: "50%",
-                        background: msg.isUser ? "#3D5D91" : "#F2DCDB",
+                        background: msg.isUser ? "#163D70" : "#EEE1C5",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         fontSize: ".6rem",
                         fontWeight: 700,
-                        color: msg.isUser ? "white" : "#22375C",
+                        color: msg.isUser ? "white" : "#081A35",
                         flexShrink: 0,
                       }}
                     >
@@ -1142,8 +1142,8 @@ function BitacoraPage() {
                         maxWidth: "82%",
                         padding: "8px 12px",
                         borderRadius: msg.isUser ? "12px 4px 12px 12px" : "4px 12px 12px 12px",
-                        background: msg.isUser ? "#3D5D91" : "#f0f4ff",
-                        color: msg.isUser ? "white" : "#22375C",
+                        background: msg.isUser ? "#163D70" : "#f0f4ff",
+                        color: msg.isUser ? "white" : "#081A35",
                         fontSize: ".81rem",
                         lineHeight: 1.55,
                       }}
@@ -1160,7 +1160,7 @@ function BitacoraPage() {
               <div
                 style={{
                   padding: "10px 14px",
-                  borderTop: "1px solid #F2DCDB",
+                  borderTop: "1px solid #EEE1C5",
                   display: "flex",
                   gap: 7,
                 }}
@@ -1172,7 +1172,7 @@ function BitacoraPage() {
                   placeholder="Cuéntame cómo te sientes..."
                   style={{
                     flex: 1,
-                    border: "2px solid #F2DCDB",
+                    border: "2px solid #EEE1C5",
                     borderRadius: 18,
                     padding: "7px 12px",
                     fontSize: ".82rem",
@@ -1185,7 +1185,7 @@ function BitacoraPage() {
                   style={{
                     width: 32,
                     height: 32,
-                    background: "#3D5D91",
+                    background: "#163D70",
                     border: "none",
                     borderRadius: "50%",
                     color: "white",
@@ -1210,7 +1210,7 @@ function BitacoraPage() {
           {/* Pathy insight */}
           <div
             style={{
-              background: "linear-gradient(135deg, #F2DCDB, #fce4ec)",
+              background: "linear-gradient(135deg, #EEE1C5, #fce4ec)",
               borderRadius: 14,
               padding: "16px 18px",
               marginBottom: 20,
@@ -1224,7 +1224,7 @@ function BitacoraPage() {
             </div>
             <div>
               <h4
-                style={{ fontSize: ".88rem", fontWeight: 700, color: "#6C0820", marginBottom: 4 }}
+                style={{ fontSize: ".88rem", fontWeight: 700, color: "#7A5C1E", marginBottom: 4 }}
               >
                 Pathy analizó tu bitácora
               </h4>
@@ -1238,7 +1238,7 @@ function BitacoraPage() {
               background: "white",
               borderRadius: 16,
               padding: 20,
-              boxShadow: "0 2px 10px rgba(61,93,145,.06)",
+              boxShadow: "0 2px 10px rgba(22,61,112,.06)",
               marginBottom: 20,
             }}
           >
@@ -1246,7 +1246,7 @@ function BitacoraPage() {
               style={{
                 fontSize: ".78rem",
                 fontWeight: 700,
-                color: "#647DA0",
+                color: "#4A5872",
                 textTransform: "uppercase" as const,
                 letterSpacing: ".5px",
                 marginBottom: 12,
@@ -1277,7 +1277,7 @@ function BitacoraPage() {
                       alignItems: "center",
                       justifyContent: "center",
                       height: 16,
-                      color: "#647DA0",
+                      color: "#4A5872",
                     }}
                   >
                     {m.val > 0 ? <Icon n={m.emoji as never} size={16} /> : null}
@@ -1292,7 +1292,7 @@ function BitacoraPage() {
                       transition: "height .4s",
                     }}
                   />
-                  <span style={{ fontSize: ".62rem", color: "#8DA1BE" }}>{m.day}</span>
+                  <span style={{ fontSize: ".62rem", color: "#7E90AD" }}>{m.day}</span>
                 </div>
               ))}
             </div>
@@ -1303,7 +1303,7 @@ function BitacoraPage() {
             style={{
               fontSize: ".78rem",
               fontWeight: 700,
-              color: "#647DA0",
+              color: "#4A5872",
               textTransform: "uppercase" as const,
               letterSpacing: ".5px",
               marginBottom: 14,
@@ -1321,9 +1321,9 @@ function BitacoraPage() {
                   background: "white",
                   borderRadius: 14,
                   padding: "18px 20px",
-                  boxShadow: "0 2px 8px rgba(61,93,145,.05)",
+                  boxShadow: "0 2px 8px rgba(22,61,112,.05)",
                   fontSize: ".85rem",
-                  color: "#647DA0",
+                  color: "#4A5872",
                 }}
               >
                 Aún no tienes entradas. Escribe tu primera hoy.
@@ -1338,7 +1338,7 @@ function BitacoraPage() {
                   background: "white",
                   borderRadius: 14,
                   padding: "18px 20px",
-                  boxShadow: "0 2px 8px rgba(61,93,145,.05)",
+                  boxShadow: "0 2px 8px rgba(22,61,112,.05)",
                   cursor: "pointer",
                   transition: "all .2s",
                   borderLeft: `4px solid ${entry.borderColor}`,
@@ -1353,7 +1353,7 @@ function BitacoraPage() {
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <span style={{ display: "flex", color: "#3D5D91" }}>
+                    <span style={{ display: "flex", color: "#163D70" }}>
                       <Icon n={entry.emotion as never} size={24} />
                     </span>
                     <div>
@@ -1361,19 +1361,19 @@ function BitacoraPage() {
                         style={{
                           fontSize: ".88rem",
                           fontWeight: 700,
-                          color: "#22375C",
+                          color: "#081A35",
                           marginBottom: 2,
                         }}
                       >
                         {entry.mood}
                       </h4>
-                      <p style={{ fontSize: ".74rem", color: "#647DA0" }}>
+                      <p style={{ fontSize: ".74rem", color: "#4A5872" }}>
                         Motivación {entry.motiv}/5 · Concentración {entry.conc}/5
                       </p>
                     </div>
                   </div>
                   <div
-                    style={{ fontSize: ".74rem", color: "#8DA1BE", textAlign: "right" as const }}
+                    style={{ fontSize: ".74rem", color: "#7E90AD", textAlign: "right" as const }}
                   >
                     {entry.date}
                     <br />
@@ -1391,8 +1391,8 @@ function BitacoraPage() {
                         borderRadius: 10,
                         fontSize: ".68rem",
                         fontWeight: 600,
-                        background: "#F2DCDB",
-                        color: "#6C0820",
+                        background: "#EEE1C5",
+                        color: "#7A5C1E",
                       }}
                     >
                       {tag}
@@ -1418,7 +1418,7 @@ function BitacoraPage() {
                     gap: 16,
                     marginTop: 10,
                     paddingTop: 10,
-                    borderTop: "1px solid rgba(61,93,145,.05)",
+                    borderTop: "1px solid rgba(22,61,112,.05)",
                   }}
                 >
                   {[
@@ -1432,7 +1432,7 @@ function BitacoraPage() {
                         alignItems: "center",
                         gap: 5,
                         fontSize: ".74rem",
-                        color: "#647DA0",
+                        color: "#4A5872",
                       }}
                     >
                       {sc.label}
@@ -1444,7 +1444,7 @@ function BitacoraPage() {
                               width: 8,
                               height: 8,
                               borderRadius: "50%",
-                              background: n <= sc.val ? "#3D5D91" : "#F2DCDB",
+                              background: n <= sc.val ? "#163D70" : "#EEE1C5",
                             }}
                           />
                         ))}

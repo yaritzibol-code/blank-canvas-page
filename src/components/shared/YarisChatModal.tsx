@@ -19,7 +19,7 @@ import type { User } from "@/lib/store";
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
-const INK = "#22375C";
+const INK = "#081A35";
 
 interface Msg {
   from: "yaris" | "user";
@@ -147,7 +147,7 @@ export function YarisChatModal({
   return (
     <div
       onClick={onClose}
-      style={{ position: "fixed", inset: 0, zIndex: 4000, background: "rgba(34,55,92,.25)", fontFamily: FONT }}
+      style={{ position: "fixed", inset: 0, zIndex: 4000, background: "rgba(8,26,53,.25)", fontFamily: FONT }}
     >
       <div
         onClick={(e) => e.stopPropagation()}
@@ -158,7 +158,7 @@ export function YarisChatModal({
           bottom: 0,
           width: "min(400px, 100vw)",
           background: "white",
-          boxShadow: "-16px 0 48px rgba(34,55,92,.28)",
+          boxShadow: "-16px 0 48px rgba(8,26,53,.28)",
           display: "flex",
           flexDirection: "column",
           transform: visible ? "translateX(0)" : "translateX(100%)",
@@ -167,7 +167,7 @@ export function YarisChatModal({
       >
         {/* Header */}
         <div style={{ background: INK, color: "white", padding: "16px 18px", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
-          <span style={{ width: 38, height: 38, borderRadius: 10, background: "rgba(242,174,188,.18)", color: "#F2AEBC", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <span style={{ width: 38, height: 38, borderRadius: 10, background: "rgba(199,160,82,.18)", color: "#C7A052", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             <YarisAvatar size={34} />
           </span>
           <div style={{ flex: 1 }}>
@@ -194,10 +194,10 @@ export function YarisChatModal({
                 key={i}
                 style={{
                   maxWidth: "88%", alignSelf: "flex-start",
-                  background: "white", border: "1px solid #E8EEF6",
+                  background: "white", border: "1px solid #E8ECF2",
                   borderRadius: "12px 12px 12px 4px", padding: "10px 14px",
                   fontSize: ".85rem", color: INK, lineHeight: 1.5,
-                  boxShadow: "0 2px 8px rgba(61,93,145,.05)",
+                  boxShadow: "0 2px 8px rgba(22,61,112,.05)",
                 }}
               >
                 {/* `m.text` ya viene como HTML saneado (de `useYarisStream`
@@ -205,7 +205,7 @@ export function YarisChatModal({
                 <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(m.text) }} />
                 {m.streaming && <span className="yaris-caret" aria-hidden="true" />}
                 {m.cite && (
-                  <div style={{ marginTop: 6, fontSize: ".72rem", color: "#8DA1BE" }}>Fuente: {m.cite}</div>
+                  <div style={{ marginTop: 6, fontSize: ".72rem", color: "#7E90AD" }}>Fuente: {m.cite}</div>
                 )}
               </div>
             ) : (
@@ -213,7 +213,7 @@ export function YarisChatModal({
                 key={i}
                 style={{
                   maxWidth: "88%", alignSelf: "flex-end",
-                  background: "#6C0820", color: "white",
+                  background: "#7A5C1E", color: "white",
                   borderRadius: "12px 12px 4px 12px", padding: "10px 14px",
                   fontSize: ".85rem", lineHeight: 1.5,
                 }}
@@ -223,14 +223,14 @@ export function YarisChatModal({
             ),
           )}
           {typing && (
-            <div style={{ alignSelf: "flex-start", fontSize: ".78rem", color: "#8DA1BE", fontStyle: "italic", padding: "2px 6px" }}>
+            <div style={{ alignSelf: "flex-start", fontSize: ".78rem", color: "#7E90AD", fontStyle: "italic", padding: "2px 6px" }}>
               Yaris está escribiendo...
             </div>
           )}
         </div>
 
         {/* Input */}
-        <div style={{ padding: 14, borderTop: "1px solid #E8EEF6", display: "flex", gap: 8, flexShrink: 0, background: "white" }}>
+        <div style={{ padding: 14, borderTop: "1px solid #E8ECF2", display: "flex", gap: 8, flexShrink: 0, background: "white" }}>
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -238,19 +238,19 @@ export function YarisChatModal({
             placeholder="Escribe tu duda académica..."
             style={{
               flex: 1, padding: "10px 14px",
-              border: "1.5px solid #E8EEF6", borderRadius: 10,
+              border: "1.5px solid #E8ECF2", borderRadius: 10,
               fontSize: ".85rem", fontFamily: FONT, color: INK,
-              outline: "none", background: "#FBFAF7",
+              outline: "none", background: "#F5F5F7",
             }}
-            onFocus={(e) => (e.target.style.borderColor = "#3D5D91")}
-            onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")}
+            onFocus={(e) => (e.target.style.borderColor = "#163D70")}
+            onBlur={(e) => (e.target.style.borderColor = "#E8ECF2")}
           />
           <button
             onClick={() => void send()}
             disabled={!input.trim() || typing}
             style={{
               padding: "0 16px",
-              background: input.trim() && !typing ? "#6C0820" : "#C9D4E5",
+              background: input.trim() && !typing ? "#7A5C1E" : "#C9D4E5",
               color: "white", border: "none", borderRadius: 10,
               cursor: input.trim() && !typing ? "pointer" : "not-allowed",
               display: "flex", alignItems: "center", gap: 6,

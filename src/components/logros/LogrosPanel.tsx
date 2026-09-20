@@ -25,14 +25,14 @@ const card = {
   background: "white",
   borderRadius: 16,
   padding: 20,
-  boxShadow: "0 2px 10px rgba(61,93,145,.06)",
+  boxShadow: "0 2px 10px rgba(22,61,112,.06)",
   marginBottom: 24,
 } as const;
 
 const titulo = {
   fontSize: ".78rem",
   fontWeight: 700,
-  color: "#647DA0",
+  color: "#4A5872",
   textTransform: "uppercase",
   letterSpacing: ".5px",
   display: "inline-flex",
@@ -71,14 +71,14 @@ function Badge({
         cursor: onClick ? "pointer" : "default",
         background:
           esMax && l.desbloqueado
-            ? "linear-gradient(150deg,#22375C,#3D5D91 60%,#B08A34)"
+            ? "linear-gradient(150deg,#081A35,#163D70 60%,#B08A34)"
             : bloqueado
               ? "#f5f7fc"
               : "#f8f9ff",
         border:
           l.destacado && seleccionable !== false
-            ? "2px solid #3D5D91"
-            : "1px solid rgba(61,93,145,.10)",
+            ? "2px solid #163D70"
+            : "1px solid rgba(22,61,112,.10)",
         opacity: bloqueado ? 0.5 : 1,
         filter: bloqueado && !esMax ? "grayscale(1)" : undefined,
         color: esMax && l.desbloqueado ? "white" : undefined,
@@ -89,7 +89,7 @@ function Badge({
           marginBottom: 6,
           display: "flex",
           justifyContent: "center",
-          color: esMax && l.desbloqueado ? "#F2D27A" : "#3D5D91",
+          color: esMax && l.desbloqueado ? "#F2D27A" : "#163D70",
         }}
       >
         <Icon n={(oculto ? "help" : l.icon) as never} size={26} />
@@ -98,7 +98,7 @@ function Badge({
         style={{
           fontSize: ".72rem",
           fontWeight: 700,
-          color: esMax && l.desbloqueado ? "white" : "#22375C",
+          color: esMax && l.desbloqueado ? "white" : "#081A35",
           lineHeight: 1.2,
           marginBottom: 3,
         }}
@@ -108,7 +108,7 @@ function Badge({
       <div
         style={{
           fontSize: ".62rem",
-          color: esMax && l.desbloqueado ? "rgba(255,255,255,.8)" : "#8DA1BE",
+          color: esMax && l.desbloqueado ? "rgba(255,255,255,.8)" : "#7E90AD",
           lineHeight: 1.3,
         }}
       >
@@ -205,7 +205,7 @@ function LogroCatalogoModal({
         position: "fixed",
         inset: 0,
         zIndex: 300,
-        background: "rgba(34,55,92,.55)",
+        background: "rgba(8,26,53,.55)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -224,7 +224,7 @@ function LogroCatalogoModal({
           maxHeight: "90vh",
           display: "flex",
           flexDirection: "column",
-          boxShadow: "0 20px 60px rgba(34,55,92,.25)",
+          boxShadow: "0 20px 60px rgba(8,26,53,.25)",
         }}
       >
         {/* Header */}
@@ -243,7 +243,7 @@ function LogroCatalogoModal({
             <div id="logros-titulo" style={titulo}>
               <Icon n="trophy" size={15} /> Catálogo de logros
             </div>
-            <div style={{ fontSize: ".82rem", color: "#647DA0", marginTop: 4 }}>
+            <div style={{ fontSize: ".82rem", color: "#4A5872", marginTop: 4 }}>
               {desbloqueados} / {total} desbloqueados · {pct}% completado
             </div>
           </div>
@@ -254,13 +254,13 @@ function LogroCatalogoModal({
               width: 34,
               height: 34,
               borderRadius: 999,
-              border: "1px solid #F2DCDB",
+              border: "1px solid #EEE1C5",
               background: "white",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "#647DA0",
+              color: "#4A5872",
             }}
           >
             <Icon n="close" size={16} />
@@ -282,7 +282,7 @@ function LogroCatalogoModal({
               style={{
                 width: `${pct}%`,
                 height: "100%",
-                background: "linear-gradient(90deg,#3D5D91,#6B8FD1)",
+                background: "linear-gradient(90deg,#163D70,#6B8FD1)",
                 transition: "width .4s ease",
               }}
             />
@@ -293,12 +293,12 @@ function LogroCatalogoModal({
               alignItems: "center",
               gap: 8,
               background: "#f8f9ff",
-              border: "1px solid #F2DCDB",
+              border: "1px solid #EEE1C5",
               borderRadius: 10,
               padding: "8px 12px",
             }}
           >
-            <Icon n="search" size={16} color="#8DA1BE" />
+            <Icon n="search" size={16} color="#7E90AD" />
             <input
               type="text"
               value={query}
@@ -309,7 +309,7 @@ function LogroCatalogoModal({
                 border: "none",
                 background: "transparent",
                 fontSize: ".88rem",
-                color: "#22375C",
+                color: "#081A35",
                 outline: "none",
                 fontFamily: "'Manrope', sans-serif",
               }}
@@ -319,7 +319,7 @@ function LogroCatalogoModal({
                 onClick={() => setQuery("")}
                 style={{
                   fontSize: ".7rem",
-                  color: "#647DA0",
+                  color: "#4A5872",
                   background: "transparent",
                   border: "none",
                   cursor: "pointer",
@@ -341,7 +341,7 @@ function LogroCatalogoModal({
           }}
         >
           {porCategoria.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "30px 0", color: "#8DA1BE", fontSize: ".9rem" }}>
+            <div style={{ textAlign: "center", padding: "30px 0", color: "#7E90AD", fontSize: ".9rem" }}>
               No encontramos logros que coincidan con tu búsqueda.
             </div>
           ) : (
@@ -359,8 +359,8 @@ function LogroCatalogoModal({
                       justifyContent: "space-between",
                       padding: "12px 14px",
                       borderRadius: 12,
-                      border: "1px solid #F2DCDB",
-                      background: isOpen ? "rgba(61,93,145,.06)" : "white",
+                      border: "1px solid #EEE1C5",
+                      background: isOpen ? "rgba(22,61,112,.06)" : "white",
                       cursor: "pointer",
                       fontFamily: "'Manrope', sans-serif",
                     }}
@@ -369,7 +369,7 @@ function LogroCatalogoModal({
                       style={{
                         fontSize: ".78rem",
                         fontWeight: 800,
-                        color: "#22375C",
+                        color: "#081A35",
                         display: "flex",
                         alignItems: "center",
                         gap: 7,
@@ -382,7 +382,7 @@ function LogroCatalogoModal({
                       style={{
                         fontSize: ".72rem",
                         fontWeight: 700,
-                        color: hechos === items.length ? "#2ecc71" : "#8DA1BE",
+                        color: hechos === items.length ? "#2ecc71" : "#7E90AD",
                       }}
                     >
                       {hechos}/{items.length}
@@ -419,7 +419,7 @@ function LogroCatalogoModal({
             padding: "12px 20px",
             borderTop: "1px solid #eef2fa",
             fontSize: ".72rem",
-            color: "#647DA0",
+            color: "#4A5872",
             textAlign: "center",
           }}
         >
@@ -474,8 +474,8 @@ export function LogrosPanel({ userId }: { userId: string }) {
             onClick={() => setModalAbierto(true)}
             style={{
               background: "transparent",
-              color: "#3D5D91",
-              border: "1px solid #3D5D91",
+              color: "#163D70",
+              border: "1px solid #163D70",
               borderRadius: 8,
               padding: "6px 12px",
               fontSize: ".74rem",
@@ -488,7 +488,7 @@ export function LogrosPanel({ userId }: { userId: string }) {
           </button>
         </div>
         {destacadosItems.length === 0 ? (
-          <div style={{ fontSize: ".8rem", color: "#8DA1BE" }}>
+          <div style={{ fontSize: ".8rem", color: "#7E90AD" }}>
             Todavía no eliges destacados. Puedes mostrar hasta {MAX_DESTACADOS} de tus logros.
           </div>
         ) : (
@@ -521,7 +521,7 @@ export function LogrosPanel({ userId }: { userId: string }) {
           <div style={titulo}>
             <Icon n="trophy" size={15} /> Logros
           </div>
-          <div style={{ fontSize: ".82rem", fontWeight: 800, color: "#22375C" }}>
+          <div style={{ fontSize: ".82rem", fontWeight: 800, color: "#081A35" }}>
             {desbloqueados} / {total} desbloqueados
           </div>
         </div>
@@ -538,7 +538,7 @@ export function LogrosPanel({ userId }: { userId: string }) {
             style={{
               width: `${pct}%`,
               height: "100%",
-              background: "linear-gradient(90deg,#3D5D91,#6B8FD1)",
+              background: "linear-gradient(90deg,#163D70,#6B8FD1)",
               transition: "width .4s ease",
             }}
           />
@@ -550,7 +550,7 @@ export function LogrosPanel({ userId }: { userId: string }) {
               style={{
                 fontSize: ".74rem",
                 fontWeight: 800,
-                color: "#22375C",
+                color: "#081A35",
                 marginBottom: 10,
               }}
             >
@@ -578,7 +578,7 @@ export function LogrosPanel({ userId }: { userId: string }) {
             padding: "12px 16px",
             borderRadius: 10,
             border: "none",
-            background: "#3D5D91",
+            background: "#163D70",
             color: "white",
             fontSize: ".86rem",
             fontWeight: 700,

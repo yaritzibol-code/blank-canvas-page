@@ -21,11 +21,11 @@ import { sanitizeHtml } from "@/lib/yaris-format";
 
 type ExtraKind = "flashcards" | "audio" | "slides" | "ia";
 
-const CARD_BORDER = "#F2DCDB";
-const INK = "#22375C";
-const MUTED = "#647DA0";
-const BLUE = "#3D5D91";
-const WINE = "#6C0820";
+const CARD_BORDER = "#EEE1C5";
+const INK = "#081A35";
+const MUTED = "#4A5872";
+const BLUE = "#163D70";
+const WINE = "#7A5C1E";
 
 /* ─── Datos del material curado ──────────────────────── */
 
@@ -124,7 +124,7 @@ function Modal({ title, subtitle, onClose, children, wide }: { title: string; su
       <div style={{ background: "white", borderRadius: 20, width: "100%", maxWidth: wide ? 860 : 640, maxHeight: "92vh", display: "flex", flexDirection: "column", overflow: "hidden", boxShadow: "0 24px 60px rgba(0,0,0,0.3)" }}>
         <div style={{ padding: "18px 22px", borderBottom: `1px solid ${CARD_BORDER}`, display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
           <div>
-            <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.15rem", color: INK, margin: 0 }}>{title}</h3>
+            <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.15rem", color: INK, margin: 0 }}>{title}</h3>
             {subtitle && <p style={{ fontSize: "0.8rem", color: MUTED, margin: "4px 0 0" }}>{subtitle}</p>}
           </div>
           <button onClick={onClose} aria-label="Cerrar" style={{ background: "transparent", border: "none", color: MUTED, fontSize: "1.4rem", cursor: "pointer", lineHeight: 1 }}>×</button>
@@ -191,7 +191,7 @@ function Flashcards({ grupos, onClose }: { grupos: Grupo[]; onClose: () => void 
             style={{
               minHeight: 210, borderRadius: 18, padding: 24, cursor: "pointer",
               border: `2px solid ${flip ? BLUE : CARD_BORDER}`,
-              background: flip ? "rgba(61,93,145,0.05)" : "white",
+              background: flip ? "rgba(22,61,112,0.05)" : "white",
               display: "flex", flexDirection: "column", justifyContent: "center", gap: 10,
               transition: "all 0.2s",
             }}
@@ -300,7 +300,7 @@ function AudioRepaso({ grupos, la, onClose }: { grupos: Grupo[]; la: boolean; on
     <Modal title="Audio-repaso y podcast" subtitle="Yaris escribe el episodio con el material curado y tu dispositivo lo narra." onClose={() => { speech.stop(); onClose(); }} wide>
       <GrupoPicker grupos={grupos} value={key} onChange={(k) => { setKey(k); setScript(""); speech.stop(); }} />
       {!paid && (
-        <p style={{ fontSize: "0.85rem", color: WINE, background: "rgba(108,8,32,0.06)", padding: 12, borderRadius: 10, marginBottom: 14 }}>
+        <p style={{ fontSize: "0.85rem", color: WINE, background: "rgba(122,92,30,0.06)", padding: 12, borderRadius: 10, marginBottom: 14 }}>
           El guion con IA es parte del acceso completo. Con el plan básico puedes leer el material en Flashcards y Presentaciones.
         </p>
       )}
@@ -379,7 +379,7 @@ function Presentaciones({ grupos, onClose }: { grupos: Grupo[]; onClose: () => v
       ) : (
         <>
           <div style={{ borderRadius: 18, border: `2px solid ${CARD_BORDER}`, background: "linear-gradient(160deg,#ffffff,#f5f7fc)", padding: 26, minHeight: 260 }}>
-            <h4 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.25rem", color: INK, margin: "0 0 16px" }}>{slide.titulo}</h4>
+            <h4 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.25rem", color: INK, margin: "0 0 16px" }}>{slide.titulo}</h4>
             <ul style={{ margin: 0, paddingLeft: 18, display: "flex", flexDirection: "column", gap: 10 }}>
               {slide.puntos.map((p, n) => (
                 <li key={n} style={{ fontSize: "0.9rem", color: INK, lineHeight: 1.55 }}>{p}</li>
@@ -513,7 +513,7 @@ export function ExtrasPanel({ la = false }: { la?: boolean }) {
 
   return (
     <div style={{ maxWidth: 820, width: "100%", marginBottom: 48 }}>
-      <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", marginBottom: 6, color: INK }}>
+      <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.1rem", marginBottom: 6, color: INK }}>
         Extras del cuestionario
       </h3>
       <p style={{ fontSize: "0.85rem", color: MUTED, marginBottom: 16 }}>
@@ -528,7 +528,7 @@ export function ExtrasPanel({ la = false }: { la?: boolean }) {
               textAlign: "left", background: "white", border: `1px solid ${CARD_BORDER}`,
               borderRadius: 16, padding: 18, cursor: "pointer", fontFamily: "'Manrope', sans-serif",
               display: "flex", gap: 12, alignItems: "flex-start",
-              boxShadow: "0 2px 10px rgba(61,93,145,0.05)",
+              boxShadow: "0 2px 10px rgba(22,61,112,0.05)",
             }}
           >
             <span style={{ display: "flex", color: BLUE, marginTop: 2 }}><Icon n={it.icon} size={22} /></span>

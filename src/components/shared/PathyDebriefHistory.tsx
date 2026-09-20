@@ -22,7 +22,7 @@ function Puntos({ r }: { r: PathyReportEntry }) {
           style={{
             display: "flex", gap: 10, alignItems: "center", justifyContent: "space-between",
             padding: "8px 12px", borderRadius: 10, background: "rgba(255,255,255,.7)",
-            marginBottom: 6, fontSize: ".82rem", color: "#22375C", minHeight: 44,
+            marginBottom: 6, fontSize: ".82rem", color: "#081A35", minHeight: 44,
           }}
         >
           <span>
@@ -47,7 +47,7 @@ export function PathyDebriefHistory({ reports }: { reports: PathyReportEntry[] }
   return (
     <div
       style={{
-        background: "linear-gradient(135deg,#F2DCDB,#fce4ec)",
+        background: "linear-gradient(135deg,#EEE1C5,#fce4ec)",
         borderRadius: 16, padding: "18px 20px", marginBottom: 14,
         fontSize: ".88rem", color: "#4a4a4a", lineHeight: 1.65,
       }}
@@ -55,7 +55,7 @@ export function PathyDebriefHistory({ reports }: { reports: PathyReportEntry[] }
       <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: 6 }}>
         <PathyMark size={30} />
         <div style={{ flex: 1 }}>
-          <strong style={{ color: "#6C0820" }}>Lectura de Pathy</strong>
+          <strong style={{ color: "#7A5C1E" }}>Lectura de Pathy</strong>
           <div style={{ fontSize: ".75rem", color: "#8a6a70" }}>
             {last.titulo} · {fecha(last.date)} · {last.scorePct}% ({last.wrong} errores)
           </div>
@@ -82,7 +82,7 @@ export function PathyDebriefHistory({ reports }: { reports: PathyReportEntry[] }
         <p style={{ margin: 0, color: "#7a6a70" }}>
           Aquí está tu marcador real de la última sesión.{" "}
           {last.motivo === "sin_pro" && (
-            <Link to="/precios" style={{ color: "#6C0820", fontWeight: 700 }}>Desbloquea el análisis con IA</Link>
+            <Link to="/precios" style={{ color: "#7A5C1E", fontWeight: 700 }}>Desbloquea el análisis con IA</Link>
           )}
         </p>
       )}
@@ -95,7 +95,7 @@ export function PathyDebriefHistory({ reports }: { reports: PathyReportEntry[] }
             onClick={() => setOpen((v) => !v)}
             style={{
               marginTop: 10, background: "transparent", border: "none", cursor: "pointer",
-              color: "#6C0820", fontWeight: 700, fontSize: ".8rem", padding: "10px 0",
+              color: "#7A5C1E", fontWeight: 700, fontSize: ".8rem", padding: "10px 0",
               fontFamily: "'Manrope', sans-serif", minHeight: 44,
             }}
             aria-expanded={open}
@@ -104,7 +104,7 @@ export function PathyDebriefHistory({ reports }: { reports: PathyReportEntry[] }
           </button>
           {open &&
             rest.map((r) => (
-              <div key={r.id} style={{ borderTop: "1px solid rgba(108,8,32,.12)", paddingTop: 10, marginTop: 6 }}>
+              <div key={r.id} style={{ borderTop: "1px solid rgba(122,92,30,.12)", paddingTop: 10, marginTop: 6 }}>
                 <div style={{ fontSize: ".75rem", color: "#8a6a70", marginBottom: 4 }}>
                   {r.titulo} · {fecha(r.date)} · {r.scorePct}%
                 </div>

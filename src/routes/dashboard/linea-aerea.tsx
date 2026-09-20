@@ -30,8 +30,8 @@ export const Route = createFileRoute("/dashboard/linea-aerea")({
 });
 
 const FONT = "'Manrope', sans-serif";
-const DISPLAY = "'Bricolage Grotesque', sans-serif";
-const INK = "#22375C";
+const DISPLAY = "'Instrument Serif', serif";
+const INK = "#081A35";
 
 function LineaAereaPage() {
   const { ready } = useRequireAuth();
@@ -58,7 +58,7 @@ function LineaAereaHero() {
   return (
     <div
       style={{
-        background: "linear-gradient(145deg, #22375C, #2a2a4e)",
+        background: "linear-gradient(145deg, #081A35, #2a2a4e)",
         borderRadius: 20,
         padding: "30px 28px",
         marginBottom: 32,
@@ -72,8 +72,8 @@ function LineaAereaHero() {
           display: "inline-flex",
           alignItems: "center",
           gap: 6,
-          background: "rgba(242,174,188,0.2)",
-          color: "#F2AEBC",
+          background: "rgba(199,160,82,0.2)",
+          color: "#C7A052",
           padding: "5px 12px",
           borderRadius: 20,
           fontSize: "0.72rem",
@@ -116,7 +116,7 @@ const quizCardsCss = `
   .fp-la-card { transition: transform .25s cubic-bezier(.3,1,.4,1), box-shadow .25s ease; }
   .fp-question-picker-backdrop { backdrop-filter: blur(6px); }
   .fp-question-picker-option, .fp-question-picker-qty { transition: border-color .18s ease, background-color .18s ease, box-shadow .18s ease, transform .18s ease; }
-  .fp-question-picker-option:not(:disabled):hover, .fp-question-picker-qty:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(34,55,92,.08); }
+  .fp-question-picker-option:not(:disabled):hover, .fp-question-picker-qty:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(8,26,53,.08); }
   .fp-question-picker-option:focus-visible, .fp-question-picker-qty:focus-visible, .fp-question-picker-action:focus-visible { outline: 3px solid rgba(90,134,203,.32); outline-offset: 2px; }
   @media (hover: hover) {
     .fp-la-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(26,26,46,0.18); }
@@ -175,9 +175,9 @@ export function QuizCard({
         position: "relative",
         overflow: "hidden",
         fontFamily: FONT,
-        background: dark ? "linear-gradient(145deg, #22375C, #2a2a4e)" : "white",
-        border: dark ? "3px solid transparent" : "3px solid #F2DCDB",
-        boxShadow: dark ? "none" : "0 2px 16px rgba(61,93,145,0.07)",
+        background: dark ? "linear-gradient(145deg, #081A35, #2a2a4e)" : "white",
+        border: dark ? "3px solid transparent" : "3px solid #EEE1C5",
+        boxShadow: dark ? "none" : "0 2px 16px rgba(22,61,112,0.07)",
       }}
     >
       {/* Distintivo (opcional) */}
@@ -188,8 +188,8 @@ export function QuizCard({
             alignItems: "center",
             gap: 6,
             alignSelf: "flex-start",
-            background: dark ? "rgba(242,174,188,0.16)" : "rgba(61,93,145,0.08)",
-            color: dark ? "#F2AEBC" : "#3D5D91",
+            background: dark ? "rgba(199,160,82,0.16)" : "rgba(22,61,112,0.08)",
+            color: dark ? "#C7A052" : "#163D70",
             padding: "5px 12px",
             borderRadius: 20,
             marginBottom: 18,
@@ -203,7 +203,7 @@ export function QuizCard({
         </div>
       ) : null}
 
-      <div style={{ color: dark ? "#F2AEBC" : "#6C0820", marginBottom: 12, display: "flex" }}>
+      <div style={{ color: dark ? "#C7A052" : "#7A5C1E", marginBottom: 12, display: "flex" }}>
         <Icon n={icon} size={26} />
       </div>
 
@@ -222,7 +222,7 @@ export function QuizCard({
         style={{
           fontSize: "0.85rem",
           lineHeight: 1.55,
-          color: dark ? "rgba(255,255,255,0.72)" : "#647DA0",
+          color: dark ? "rgba(255,255,255,0.72)" : "#4A5872",
           marginBottom: 16,
         }}
       >
@@ -239,7 +239,7 @@ export function QuizCard({
               gap: 9,
               fontSize: "0.8rem",
               lineHeight: 1.45,
-              color: dark ? "rgba(255,255,255,0.85)" : "#33527F",
+              color: dark ? "rgba(255,255,255,0.85)" : "#123360",
             }}
           >
             <span
@@ -249,7 +249,7 @@ export function QuizCard({
                 borderRadius: "50%",
                 flexShrink: 0,
                 marginTop: 7,
-                background: dark ? "#F2AEBC" : "#6C0820",
+                background: dark ? "#C7A052" : "#7A5C1E",
               }}
             />
             {f}
@@ -273,8 +273,8 @@ export function QuizCard({
               alignItems: "center",
               justifyContent: "center",
               gap: 8,
-              background: dark ? "#F2AEBC" : "#3D5D91",
-              color: dark ? "#6C0820" : "white",
+              background: dark ? "#C7A052" : "#163D70",
+              color: dark ? "#7A5C1E" : "white",
             }}
           >
             {ctaLabel}
@@ -294,8 +294,8 @@ export function QuizCard({
               alignItems: "center",
               justifyContent: "center",
               gap: 8,
-              background: dark ? "#F2AEBC" : "#3D5D91",
-              color: dark ? "#6C0820" : "white",
+              background: dark ? "#C7A052" : "#163D70",
+              color: dark ? "#7A5C1E" : "white",
             }}
           >
             {ctaLabel}
@@ -317,8 +317,8 @@ export function QuizCard({
                 alignItems: "center",
                 justifyContent: "center",
                 gap: 7,
-                background: "rgba(61,93,145,0.08)",
-                color: "#3D5D91",
+                background: "rgba(22,61,112,0.08)",
+                color: "#163D70",
                 minHeight: 44,
               }}
             >
@@ -342,12 +342,12 @@ export function QuizCard({
                     fontSize: "0.8rem",
                     fontWeight: 600,
                     lineHeight: 1.35,
-                    color: "#33527F",
+                    color: "#123360",
                     background: "#F7FAFF",
                     border: "1px solid #E4ECF7",
                   }}
                 >
-                  <Icon n="book" size={13} color="#6C0820" /> {d.label}
+                  <Icon n="book" size={13} color="#7A5C1E" /> {d.label}
                 </a>
               ))}
             </div>
@@ -370,8 +370,8 @@ export function QuizCard({
               alignItems: "center",
               justifyContent: "center",
               gap: 7,
-              background: "rgba(61,93,145,0.08)",
-              color: "#3D5D91",
+              background: "rgba(22,61,112,0.08)",
+              color: "#163D70",
             }}
           >
             <Icon n="book" size={14} /> Ver PDF
@@ -511,7 +511,7 @@ export function ChapterPicker({
           fontFamily: FONT,
           color: INK,
           border: "1px solid rgba(242,220,219,0.92)",
-          boxShadow: "0 30px 80px rgba(26,26,46,0.38), 0 2px 8px rgba(34,55,92,0.08)",
+          boxShadow: "0 30px 80px rgba(26,26,46,0.38), 0 2px 8px rgba(8,26,53,0.08)",
         }}
       >
         <div className="fp-question-picker-scroll" style={{ overflowY: "auto", padding: "26px 24px 8px", minHeight: 0 }}>
@@ -519,7 +519,7 @@ export function ChapterPicker({
         <h3 style={{ fontFamily: DISPLAY, fontSize: "1.25rem", marginBottom: 6, lineHeight: 1.25 }}>
           {conCapitulos ? `${nombre} — elige ${capPalabra(code, 2)}` : nombre}
         </h3>
-        <p style={{ fontSize: "0.85rem", color: "#647DA0", marginBottom: 18, lineHeight: 1.5 }}>
+        <p style={{ fontSize: "0.85rem", color: "#4A5872", marginBottom: 18, lineHeight: 1.5 }}>
           {conCapitulos
             ? `Sin selección, el cuestionario mezcla todo el banco ${nombre}. Marca uno o varios ${capPalabra(code, 2)} para enfocarte.`
             : "Elige cuántas preguntas quieres contestar en esta sesión."}
@@ -542,8 +542,8 @@ export function ChapterPicker({
             fontFamily: FONT,
             fontSize: "0.88rem",
             fontWeight: 700,
-            border: all ? "2px solid #3D5D91" : "2px solid #F2DCDB",
-            background: all ? "rgba(61,93,145,0.08)" : "white",
+            border: all ? "2px solid #163D70" : "2px solid #EEE1C5",
+            background: all ? "rgba(22,61,112,0.08)" : "white",
             color: INK,
           }}
         >
@@ -590,8 +590,8 @@ export function ChapterPicker({
                   fontFamily: FONT,
                   fontSize: "0.85rem",
                   color: INK,
-                  border: on ? "2px solid #6C0820" : "2px solid #F2DCDB",
-                  background: on ? "rgba(108,8,32,0.06)" : "white",
+                  border: on ? "2px solid #7A5C1E" : "2px solid #EEE1C5",
+                  background: on ? "rgba(122,92,30,0.06)" : "white",
                 }}
               >
                 <span style={{ fontWeight: 700 }}>
@@ -600,14 +600,14 @@ export function ChapterPicker({
                     style={{
                       display: "block",
                       fontWeight: 500,
-                      color: "#647DA0",
+                      color: "#4A5872",
                       fontSize: "0.76rem",
                     }}
                   >
                      {row.detail}
                   </span>
                 </span>
-                <span style={{ color: "#647DA0", fontSize: "0.78rem", whiteSpace: "nowrap" }}>
+                <span style={{ color: "#4A5872", fontSize: "0.78rem", whiteSpace: "nowrap" }}>
                    {vacio ? "Sin preguntas aún" : `${row.total} preg.`}
                 </span>
               </button>
@@ -631,15 +631,15 @@ export function ChapterPicker({
               padding: "12px 14px",
               borderRadius: 12,
               cursor: "pointer",
-              border: sinHeli ? "2px solid #3D5D91" : "2px solid #F2DCDB",
-              background: sinHeli ? "rgba(61,93,145,0.08)" : "white",
+              border: sinHeli ? "2px solid #163D70" : "2px solid #EEE1C5",
+              background: sinHeli ? "rgba(22,61,112,0.08)" : "white",
             }}
           >
             <input
               type="checkbox"
               checked={sinHeli}
               onChange={(e) => setSinHeli(e.target.checked)}
-              style={{ marginTop: 2, accentColor: "#3D5D91", width: 18, height: 18, flexShrink: 0 }}
+              style={{ marginTop: 2, accentColor: "#163D70", width: 18, height: 18, flexShrink: 0 }}
             />
             <span style={{ fontSize: "0.85rem", fontWeight: 700 }}>
               Quitar las preguntas de helicópteros
@@ -647,7 +647,7 @@ export function ChapterPicker({
                 style={{
                   display: "block",
                   fontWeight: 500,
-                  color: "#647DA0",
+                  color: "#4A5872",
                   fontSize: "0.76rem",
                   lineHeight: 1.45,
                 }}
@@ -664,7 +664,7 @@ export function ChapterPicker({
           <div style={{ fontSize: "0.85rem", fontWeight: 700, marginBottom: 4 }}>
             ¿Cuántas preguntas?
           </div>
-          <div style={{ fontSize: "0.78rem", color: "#647DA0", marginBottom: 10 }}>
+          <div style={{ fontSize: "0.78rem", color: "#4A5872", marginBottom: 10 }}>
             Hay {disponibles} disponibles con tu selección
             {ofreceSinHeli && sinHeli ? " (menos las de helicópteros)" : ""}.
           </div>
@@ -687,9 +687,9 @@ export function ChapterPicker({
                     fontFamily: FONT,
                     fontWeight: 700,
                     fontSize: "0.84rem",
-                    border: `2px solid ${on ? "#3D5D91" : "#F2DCDB"}`,
-                    background: on ? "rgba(61,93,145,0.08)" : "#f8f9ff",
-                    color: on ? "#3D5D91" : INK,
+                    border: `2px solid ${on ? "#163D70" : "#EEE1C5"}`,
+                    background: on ? "rgba(22,61,112,0.08)" : "#f8f9ff",
+                    color: on ? "#163D70" : INK,
                   }}
                 >
                   {label}
@@ -712,7 +712,7 @@ export function ChapterPicker({
                 width: "100%",
                 padding: "12px 14px",
                 borderRadius: 10,
-                border: "2px solid #F2DCDB",
+                border: "2px solid #EEE1C5",
                 fontFamily: FONT,
                 fontSize: "0.9rem",
                 color: INK,
@@ -728,10 +728,10 @@ export function ChapterPicker({
             marginTop: 16,
             padding: "12px 14px",
             borderRadius: 12,
-            background: "rgba(108,8,32,0.05)",
-            border: "1px solid rgba(108,8,32,0.12)",
+            background: "rgba(122,92,30,0.05)",
+            border: "1px solid rgba(122,92,30,0.12)",
             fontSize: "0.8rem",
-            color: "#6C0820",
+            color: "#7A5C1E",
             lineHeight: 1.5,
             fontWeight: 600,
           }}
@@ -747,7 +747,7 @@ export function ChapterPicker({
             gap: 10,
             flexWrap: "wrap",
             padding: "14px 24px 20px",
-            borderTop: "1px solid #F2DCDB",
+            borderTop: "1px solid #EEE1C5",
             background: "white",
             flexShrink: 0,
           }}
@@ -762,7 +762,7 @@ export function ChapterPicker({
               padding: "12px 18px",
               borderRadius: 12,
               cursor: "pointer",
-              border: "2px solid #F2DCDB",
+              border: "2px solid #EEE1C5",
               background: "white",
               color: INK,
               fontFamily: FONT,
@@ -783,7 +783,7 @@ export function ChapterPicker({
               borderRadius: 12,
               cursor: qtyNum < 1 ? "not-allowed" : "pointer",
               border: "none",
-              background: qtyNum < 1 ? "#C9D6E8" : "#3D5D91",
+              background: qtyNum < 1 ? "#C9D6E8" : "#163D70",
               color: "white",
               fontFamily: FONT,
               fontWeight: 700,
@@ -829,7 +829,7 @@ function QuizCards() {
           marginBottom: 18,
         }}
       >
-        <Icon n="book" size={18} color="#6C0820" /> Cuestionarios
+        <Icon n="book" size={18} color="#7A5C1E" /> Cuestionarios
       </h2>
 
       {picker && (pickerBank || picker === "OFICIAL") && (

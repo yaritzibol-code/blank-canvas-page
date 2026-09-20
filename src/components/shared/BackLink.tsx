@@ -10,7 +10,7 @@ export function BackLink({ style }: { style?: React.CSSProperties }) {
     <Link
       to={to}
       style={{
-        color: "#3D5D91",
+        color: "#163D70",
         fontWeight: 700,
         fontSize: 14,
         textDecoration: "none",

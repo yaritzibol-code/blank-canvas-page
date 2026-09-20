@@ -13,7 +13,7 @@ import { FP_ACTIVITY_LABEL, fpFormat, type FpResumen, type FpTx } from "@/lib/fp
 
 const CARD: React.CSSProperties = {
   background: "white",
-  border: "1px solid rgba(61,93,145,.14)",
+  border: "1px solid rgba(22,61,112,.14)",
   borderRadius: 16,
   padding: 18,
   boxShadow: "0 6px 18px rgba(15,30,60,.06)",
@@ -44,11 +44,11 @@ export function FlightPointsPanel() {
   return (
     <section style={{ ...CARD, display: "grid", gap: 14, marginBottom: 24 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-        <Icon n="spark" size={20} color="#6C0820" />
-        <h2 style={{ margin: 0, fontSize: "1.05rem", color: "#22375C", flex: 1 }}>FlightPoints</h2>
+        <Icon n="spark" size={20} color="#7A5C1E" />
+        <h2 style={{ margin: 0, fontSize: "1.05rem", color: "#081A35", flex: 1 }}>FlightPoints</h2>
         <Link
           to="/dashboard/comunidad"
-          style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: ".8rem", fontWeight: 700, color: "#3D5D91" }}
+          style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: ".8rem", fontWeight: 700, color: "#163D70" }}
         >
           Ver Comunidad <Icon n="arrow" size={13} />
         </Link>
@@ -64,17 +64,17 @@ export function FlightPointsPanel() {
             gap: 12,
             padding: "10px 12px",
             borderRadius: 14,
-            background: "linear-gradient(135deg, rgba(61,93,145,.07), rgba(242,174,188,.12))",
-            border: "1px solid rgba(61,93,145,.12)",
+            background: "linear-gradient(135deg, rgba(22,61,112,.07), rgba(199,160,82,.12))",
+            border: "1px solid rgba(22,61,112,.12)",
             flexWrap: "wrap",
           }}
         >
           <Insignia callsign={resumen.callsign} size={40} />
           <div style={{ flex: 1, minWidth: 180, display: "grid", gap: 2 }}>
-            <span style={{ fontSize: ".68rem", letterSpacing: ".14em", textTransform: "uppercase", color: "#647DA0", fontFamily: "'JetBrains Mono', monospace" }}>
+            <span style={{ fontSize: ".68rem", letterSpacing: ".14em", textTransform: "uppercase", color: "#4A5872", fontFamily: "'JetBrains Mono', monospace" }}>
               Tu indicativo en Comunidad
             </span>
-            <strong style={{ color: "#22375C", fontSize: ".98rem", fontFamily: "'Bricolage Grotesque', sans-serif" }}>
+            <strong style={{ color: "#081A35", fontSize: ".98rem", fontFamily: "'Instrument Serif', serif" }}>
               <Callsign texto={resumen.callsign} />
             </strong>
           </div>
@@ -87,8 +87,8 @@ export function FlightPointsPanel() {
               borderRadius: 999,
               fontSize: ".72rem",
               fontWeight: 700,
-              background: anonimo ? "rgba(61,93,145,.1)" : "rgba(108,8,32,.08)",
-              color: anonimo ? "#3D5D91" : "#6C0820",
+              background: anonimo ? "rgba(22,61,112,.1)" : "rgba(122,92,30,.08)",
+              color: anonimo ? "#163D70" : "#7A5C1E",
             }}
           >
             <Icon n={anonimo ? "eyeOff" : "eye"} size={13} />
@@ -104,7 +104,7 @@ export function FlightPointsPanel() {
           { l: "Esta semana", v: resumen?.semana ?? 0 },
         ].map((k) => (
           <div key={k.l}>
-            <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#3D5D91" }}>{fpFormat(k.v)}</div>
+            <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#163D70" }}>{fpFormat(k.v)}</div>
             <div style={{ fontSize: ".72rem", color: "#6b7a90" }}>{k.l}</div>
           </div>
         ))}
@@ -114,10 +114,10 @@ export function FlightPointsPanel() {
         <div style={{ display: "grid", gap: 6 }}>
           {(resumen?.porActividad ?? []).map((a) => (
             <div key={a.tipo} style={{ display: "flex", justifyContent: "space-between", fontSize: ".84rem" }}>
-              <span style={{ color: "#22375C" }}>
+              <span style={{ color: "#081A35" }}>
                 {FP_ACTIVITY_LABEL[a.tipo] ?? a.tipo} <small style={{ color: "#9aa8bb" }}>({a.n})</small>
               </span>
-              <strong style={{ color: "#3D5D91" }}>{fpFormat(a.fp)} FP</strong>
+              <strong style={{ color: "#163D70" }}>{fpFormat(a.fp)} FP</strong>
             </div>
           ))}
         </div>
@@ -134,12 +134,12 @@ export function FlightPointsPanel() {
         ) : (
           (resumen?.recientes ?? []).map((t) => (
             <div key={t.id} style={{ display: "flex", justifyContent: "space-between", gap: 10, fontSize: ".82rem" }}>
-              <span style={{ color: "#22375C" }}>
+              <span style={{ color: "#081A35" }}>
                 {t.activity_label}
                 {t.detail ? <small style={{ color: "#9aa8bb" }}> · {t.detail}</small> : null}
               </span>
               <span style={{ whiteSpace: "nowrap", color: "#6b7a90" }}>
-                {fecha(t.occurred_at)} <strong style={{ color: "#3D5D91" }}>+{t.amount}</strong>
+                {fecha(t.occurred_at)} <strong style={{ color: "#163D70" }}>+{t.amount}</strong>
               </span>
             </div>
           ))
@@ -149,7 +149,7 @@ export function FlightPointsPanel() {
       {historial === null ? (
         <button
           onClick={() => void getFlightPointsHistory({ data: { tipo: "todos" } }).then(setHistorial)}
-          style={{ justifySelf: "start", padding: "9px 16px", borderRadius: 10, border: "1px solid rgba(61,93,145,.25)", background: "white", color: "#3D5D91", fontWeight: 700, fontSize: ".82rem", cursor: "pointer" }}
+          style={{ justifySelf: "start", padding: "9px 16px", borderRadius: 10, border: "1px solid rgba(22,61,112,.25)", background: "white", color: "#163D70", fontWeight: 700, fontSize: ".82rem", cursor: "pointer" }}
         >
           Ver historial completo
         </button>
@@ -163,12 +163,12 @@ export function FlightPointsPanel() {
                 style={{
                   padding: "5px 11px",
                   borderRadius: 999,
-                  border: "1px solid rgba(61,93,145,.2)",
+                  border: "1px solid rgba(22,61,112,.2)",
                   cursor: "pointer",
                   fontSize: ".74rem",
                   fontWeight: 700,
-                  background: filtro === t ? "#3D5D91" : "white",
-                  color: filtro === t ? "white" : "#3D5D91",
+                  background: filtro === t ? "#163D70" : "white",
+                  color: filtro === t ? "white" : "#163D70",
                 }}
               >
                 {t === "todos" ? "Todo" : (FP_ACTIVITY_LABEL[t] ?? t)}
@@ -178,12 +178,12 @@ export function FlightPointsPanel() {
           <div style={{ maxHeight: 320, overflowY: "auto", display: "grid", gap: 6 }}>
             {historial.map((t) => (
               <div key={t.id} style={{ display: "flex", justifyContent: "space-between", gap: 10, fontSize: ".8rem", opacity: t.status === "procesada" ? 1 : 0.5 }}>
-                <span style={{ color: "#22375C" }}>
+                <span style={{ color: "#081A35" }}>
                   {t.activity_label}
                   {t.detail ? <small style={{ color: "#9aa8bb" }}> · {t.detail}</small> : null}
                 </span>
                 <span style={{ whiteSpace: "nowrap", color: "#6b7a90" }}>
-                  {fecha(t.occurred_at)} <strong style={{ color: t.amount < 0 ? "#b03030" : "#3D5D91" }}>{t.amount > 0 ? "+" : ""}{t.amount}</strong>
+                  {fecha(t.occurred_at)} <strong style={{ color: t.amount < 0 ? "#b03030" : "#163D70" }}>{t.amount > 0 ? "+" : ""}{t.amount}</strong>
                 </span>
               </div>
             ))}

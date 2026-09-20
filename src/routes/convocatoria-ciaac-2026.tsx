@@ -215,7 +215,7 @@ function ConvocatoriaCiaac2026Page() {
               <div
                 className="absolute -top-14 -right-14 w-52 h-52 rounded-full pointer-events-none"
                 style={{
-                  background: "radial-gradient(closest-side, rgba(242,174,188,0.20), transparent)",
+                  background: "radial-gradient(closest-side, rgba(199,160,82,0.20), transparent)",
                 }}
               />
               <div className="relative">
