@@ -115,6 +115,22 @@
   bottom: 0;
   height: 492px;
 }
+.flightpath-redesign .rd-globe-poster {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  width: min(78vw, 620px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  background-image:
+    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.2), transparent 28%),
+    url("/redesign/earth-night.png");
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 72px rgba(72, 121, 178, 0.48);
+  opacity: 0.72;
+}
 .flightpath-redesign .rd-14 {
   position: absolute;
   inset: 0;
@@ -153,9 +169,7 @@
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  @media (min-width: 640px) { grid-template-columns: repeat(3, 1fr); }
-  @media (min-width: 1024px) { grid-template-columns: repeat(6, 1fr); }
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   width: min(1200px, calc(100% - 48px));
   max-width: 100%;
   max-width: 100%;
@@ -178,6 +192,7 @@
   font-size: 13px;
   line-height: 1.4;
   color: #d5deec;
+  overflow-wrap: anywhere;
 }
 .flightpath-redesign .rd-21 {
   padding: 16px 24px;
@@ -1591,9 +1606,13 @@
     width: calc(100% - 40px);
   }
   .flightpath-redesign .rd-17 {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
     width: calc(100% - 40px);
+  }
+  .flightpath-redesign .rd-globe-poster {
+    top: 10px;
+    width: min(112vw, 500px);
   }
   .flightpath-redesign .rd-23 {
     gap: 28px;

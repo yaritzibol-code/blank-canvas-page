@@ -566,8 +566,7 @@ export const adminResumen = createServerFn({ method: "POST" })
   .handler(async ({ context }): Promise<Res<AdminResumen>> => {
     const guard = await assertAdmin(context.supabase, context.userId);
     if (guard) return { error: guard };
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { data, error } = await supabaseAdmin.rpc("admin_resumen");
+    const { data, error } = await context.supabase.rpc("admin_resumen");
     if (error) return { error: error.message };
     const r = (data as any) ?? {};
     return {

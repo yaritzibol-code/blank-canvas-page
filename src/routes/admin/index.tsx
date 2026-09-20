@@ -29,6 +29,16 @@ import {
 
 export const Route = createFileRoute("/admin/")({
   component: AdminResumenPage,
+  head: () => ({
+    meta: [
+      { title: "Panel administrativo | FlightPath" },
+      { name: "description", content: "Resumen operativo y académico de FlightPath." },
+      { property: "og:title", content: "Panel administrativo | FlightPath" },
+      { property: "og:description", content: "Resumen operativo y académico de FlightPath." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
 });
 
 const materiaNombre = (slug: string) =>
@@ -76,14 +86,14 @@ function AdminResumenPage() {
   const activeStudents = real ? real.active_students : summary.activeStudents;
 
   const stats: { icon: FPIconName; num: string; lab: string; color: string }[] = [
-    { icon: "users", num: String(totalStudents), lab: "Estudiantes totales", color: "#3D5D91" },
+    { icon: "users", num: String(totalStudents), lab: "Estudiantes totales", color: "#163D70" },
     { icon: "check", num: String(activeStudents), lab: "Activos (7 días)", color: "#2ecc71" },
     { icon: "clock", num: String(Math.max(totalStudents - activeStudents, 0)), lab: "Inactivos", color: "#f39c12" },
-    { icon: "spark", num: String(real ? real.new_last7 : summary.newLast7), lab: "Nuevos (7 días)", color: "#6C0820" },
-    { icon: "chart", num: real ? `${real.answered}` : String(summary.avgCourseProgress), lab: "Reactivos respondidos", color: "#3D5D91" },
-    { icon: "target", num: real ? `${real.avg_score}%` : (summary.avgReadiness !== null ? `${summary.avgReadiness}%` : "—"), lab: "Acierto promedio", color: "#6C0820" },
-    { icon: "sim", num: String(real ? real.sim_count : summary.simCount), lab: "Simuladores", color: "#3D5D91" },
-    { icon: "help", num: String(real ? real.quiz_count : summary.quizCount), lab: "Cuestionarios", color: "#3D5D91" },
+    { icon: "spark", num: String(real ? real.new_last7 : summary.newLast7), lab: "Nuevos (7 días)", color: "#9B792E" },
+    { icon: "chart", num: real ? `${real.answered}` : String(summary.avgCourseProgress), lab: "Reactivos respondidos", color: "#163D70" },
+    { icon: "target", num: real ? `${real.avg_score}%` : (summary.avgReadiness !== null ? `${summary.avgReadiness}%` : "—"), lab: "Acierto promedio", color: "#9B792E" },
+    { icon: "sim", num: String(real ? real.sim_count : summary.simCount), lab: "Simuladores", color: "#163D70" },
+    { icon: "help", num: String(real ? real.quiz_count : summary.quizCount), lab: "Cuestionarios", color: "#163D70" },
   ];
 
   const weakest = real
@@ -111,7 +121,7 @@ function AdminResumenPage() {
               <Icon n={s.icon} size={17} color={s.color} />
             </div>
             <div>
-              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", fontWeight: 900, color: "#22375C", lineHeight: 1.1 }}>{s.num}</div>
+              <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.7rem", fontWeight: 400, color: "#081A35", lineHeight: 1.1 }}>{s.num}</div>
               <div style={{ fontSize: ".7rem", color: "#647DA0", marginTop: 2 }}>{s.lab}</div>
             </div>
           </div>
