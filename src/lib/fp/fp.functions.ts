@@ -299,8 +299,8 @@ export const getFlightPoints = createServerFn({ method: "GET" })
 
     let callsign = (perfil?.callsign as string | null) ?? null;
     if (!callsign) {
-      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-      callsign = await asegurarCallsign(supabaseAdmin as unknown as { from: (t: string) => any }, userId).catch(
+      const cli = await clienteAdmin({ supabase });
+      callsign = await asegurarCallsign(cli as unknown as { from: (t: string) => any }, userId).catch(
         () => generarCallsign(userId),
       );
     }
@@ -343,7 +343,7 @@ export const setCommunityPrefs = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: { privacidad?: "nombre" | "folio"; tutorialVisto?: boolean; tutorialOculto?: boolean }) => d ?? {})
   .handler(async ({ data, context }) => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const supabaseAdmin = await clienteAdmin(context as never);
     const patch: Record<string, unknown> = {
       user_id: context.userId,
       folio: folioDe(context.userId),
@@ -566,8 +566,8 @@ export const adminFpBackfill = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<{ usuarios: number; fpNuevo: number }> => {
     await exigirAdmin(context as never);
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    return procesarTodosFP(supabaseAdmin as unknown as { from: (t: string) => any });
+    const admin = await clienteAdmin(context as never);
+    return procesarTodosFP(admin as unknown as { from: (t: string) => any });
   });
 
 export const adminFpPanel = createServerFn({ method: "GET" })
