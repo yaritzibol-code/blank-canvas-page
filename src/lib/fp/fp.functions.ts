@@ -546,6 +546,22 @@ async function exigirAdmin(context: { supabase: any; userId: string }) {
   if (data?.role !== "admin") throw new Error("No autorizado");
 }
 
+/**
+ * Cliente de servidor para tareas administrativas. Si la llave privilegiada no
+ * está disponible en el entorno, se usa la sesión autenticada del admin en vez
+ * de reventar la petición (antes provocaba pantalla en blanco).
+ */
+async function clienteAdmin(context: { supabase: any }): Promise<any> {
+  try {
+    const mod = await import("@/integrations/supabase/client.server");
+    const admin = mod.supabaseAdmin;
+    if (admin) return admin;
+  } catch {
+    /* sin llave de servicio: se continúa con la sesión del admin */
+  }
+  return context.supabase;
+}
+
 /** Recalcula FlightPoints de todos los alumnos desde su actividad real. */
 export const adminFpBackfill = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
