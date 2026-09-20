@@ -492,7 +492,7 @@ export function ReferenceHome({
             <img
               className="rd-28"
               data-depth="0.5"
-              loading="lazy"
+              loading="eager" fetchPriority="high"
               decoding="async"
               src="/redesign/e262e5c0cc1ebd63.jpg"
               alt=""
@@ -501,7 +501,7 @@ export function ReferenceHome({
             <img
               className="rd-30"
               data-depth="0.34"
-              loading="lazy"
+              loading="eager" fetchPriority="high"
               decoding="async"
               src="/redesign/d570a146527c74e6.webp"
               alt=""
@@ -520,7 +520,7 @@ export function ReferenceHome({
             <img
               className="rd-33"
               data-depth="0.06"
-              loading="lazy"
+              loading="eager" fetchPriority="high"
               decoding="async"
               src="/redesign/6d490e09a9343478.webp"
               alt=""
@@ -544,7 +544,7 @@ export function ReferenceHome({
                 <img
                   className="rd-40"
                   data-stage-img="0"
-                  loading="lazy"
+                  loading="eager"
                   decoding="async"
                   src="/redesign/64b895fbc7418153.jpg"
                   alt="Estudiante de piloto estudiando con cartas aeronáuticas y un computador de vuelo"

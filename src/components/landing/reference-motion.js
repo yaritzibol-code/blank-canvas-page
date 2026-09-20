@@ -216,7 +216,7 @@ class ReferenceMotion {
       fx = this._fxCv,
       self = this;
     if (!cv || !fx || !cv.isConnected || !fx.isConnected) return null;
-    if (this._globe && this._globe.cv === cv) return this._globe;
+    if (this._globe && this._globe.cv === cv && this._globe.gl && !this._globe.gl.isContextLost()) return this._globe;
     var opts = { premultipliedAlpha: true, antialias: false, alpha: true };
     var gl = cv.getContext("webgl", opts),
       v2 = false;
@@ -343,6 +343,7 @@ class ReferenceMotion {
     cv.addEventListener("pointerup", g.onUp);
     cv.addEventListener("pointercancel", g.onUp);
     cv.addEventListener("pointerleave", g.onUp);
+    cv.addEventListener("webglcontextlost", (e) => { e.preventDefault(); this._globe = null; }, false);
     return g;
   }
 
