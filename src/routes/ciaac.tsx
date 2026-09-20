@@ -417,7 +417,7 @@ function Countdown() {
                     left: `calc(${prog}% + 14px)`,
                     right: 0,
                     backgroundImage:
-                      "repeating-linear-gradient(to right, rgba(61,93,145,0.45) 0 5px, transparent 5px 14px)",
+                      "repeating-linear-gradient(to right, rgba(22,61,112,0.45) 0 5px, transparent 5px 14px)",
                   }}
                 />
                 <div className="absolute top-1/2 left-0 -translate-y-1/2 w-3 h-3 rounded-full bg-white border-2 border-burgundy" />
@@ -428,8 +428,8 @@ function Countdown() {
                     className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
                     style={{
                       left: `${pos}%`,
-                      background: pos <= prog ? "#6C0820" : "transparent",
-                      border: pos <= prog ? "none" : "1.5px solid rgba(61,93,145,0.4)",
+                      background: pos <= prog ? "#7A5C1E" : "transparent",
+                      border: pos <= prog ? "none" : "1.5px solid rgba(22,61,112,0.4)",
                     }}
                   />
                 ))}
@@ -453,7 +453,7 @@ function Countdown() {
                   <div className="relative animate-float-y-sm">
                     <div className="absolute inset-0 -m-2 rounded-full bg-burgundy/25 blur-md animate-breathe" />
                     <div className="relative w-10 h-10 rounded-full bg-white shadow-card ring-1 ring-burgundy/10 grid place-items-center">
-                      <PlaneGlyph className="w-5 h-5 rotate-90 animate-blink" fill="#6C0820" />
+                      <PlaneGlyph className="w-5 h-5 rotate-90 animate-blink" fill="#7A5C1E" />
                     </div>
                     <span
                       className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-burgundy ring-2 ring-white animate-blink"
@@ -635,7 +635,7 @@ function Incluye() {
             aria-hidden
             className="absolute -top-24 -right-24 w-72 h-72 rounded-full"
             style={{
-              background: "radial-gradient(circle, rgba(242,174,188,.16) 0%, transparent 70%)",
+              background: "radial-gradient(circle, rgba(199,160,82,.16) 0%, transparent 70%)",
             }}
           />
           <div className="relative z-10 grid lg:grid-cols-[1fr_1fr] gap-10 items-center">

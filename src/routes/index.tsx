@@ -1,3 +1,4 @@
+import { ReferenceHome } from "@/components/landing/ReferenceHome";
 import { useSessionUser } from "@/lib/store";
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
@@ -133,7 +134,7 @@ function Hero() {
                       cy="18"
                       r="15.5"
                       fill="none"
-                      stroke="#F2AEBC"
+                      stroke="#C7A052"
                       strokeWidth="3.4"
                       strokeLinecap="round"
                       strokeDasharray="97.4"
@@ -359,7 +360,7 @@ function RutaCompleta() {
                   className="absolute -top-12 -right-12 w-40 h-40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                   style={{
                     background:
-                      "radial-gradient(closest-side, rgba(242,174,188,0.25), transparent)",
+                      "radial-gradient(closest-side, rgba(199,160,82,0.25), transparent)",
                   }}
                 />
                 <div className="relative">
@@ -601,7 +602,7 @@ function Showcase() {
                         cy="18"
                         r="15.5"
                         fill="none"
-                        stroke="#F2AEBC"
+                        stroke="#C7A052"
                         strokeWidth="2.8"
                         strokeLinecap="round"
                         strokeDasharray={C}
@@ -850,7 +851,7 @@ function PathyPhone() {
       <div className="relative rounded-[2.4rem] bg-ink p-2.5 shadow-navy ring-1 ring-white/10">
         <div
           className="relative rounded-[1.9rem] overflow-hidden h-[486px] flex flex-col"
-          style={{ background: "linear-gradient(180deg,#F2DCDB 0%, #FAEFEE 40%, #EAF0FA 100%)" }}
+          style={{ background: "linear-gradient(180deg,#EEE1C5 0%, #FBF7EC 40%, #EAF0FA 100%)" }}
         >
           <div className="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-5 rounded-full bg-ink z-20" />
           <div className="relative z-10 bg-lapis text-white px-3.5 pt-7 pb-3 flex items-center gap-2.5 shadow-md">
@@ -945,7 +946,7 @@ function Companion() {
           <div
             className="absolute -top-20 -right-16 w-96 h-96 rounded-full"
             style={{
-              background: "radial-gradient(closest-side, rgba(242,174,188,0.18), transparent)",
+              background: "radial-gradient(closest-side, rgba(199,160,82,0.18), transparent)",
             }}
           />
           <div
@@ -1022,7 +1023,7 @@ function PathyEvolution() {
       name: "Despegando",
       days: "1–3 días",
       token: "MISTY ROSE",
-      color: "#F2DCDB",
+      color: "#EEE1C5",
       img: "/img/pathy-1-misty.png",
       copy: "Todo gran vuelo comienza con un pequeño paso.",
     },
@@ -1030,7 +1031,7 @@ function PathyEvolution() {
       name: "En progreso",
       days: "4–6 días",
       token: "CHERRY BLOSSOM",
-      color: "#F2AEBC",
+      color: "#C7A052",
       img: "/img/pathy-2-pink.png",
       copy: "¡Vas por buen camino! Sigue así.",
     },
@@ -1046,7 +1047,7 @@ function PathyEvolution() {
       name: "Modo piloto",
       days: "14–30 días",
       token: "LAPIS LAZULI",
-      color: "#3D5D91",
+      color: "#163D70",
       img: "/img/pathy-4-pilot.png",
       copy: "¡Eres imparable! Sigue volando alto.",
     },
@@ -1054,7 +1055,7 @@ function PathyEvolution() {
       name: "Piloto élite",
       days: "30+ días",
       token: "BURGUNDY",
-      color: "#6C0820",
+      color: "#7A5C1E",
       img: "/img/pathy-5-elite.png",
       copy: "Disciplina, enfoque y pasión. Nivel élite.",
     },
@@ -1670,7 +1671,7 @@ function Pricing() {
             <div
               className="absolute -top-12 -right-12 w-52 h-52 rounded-full"
               style={{
-                background: "radial-gradient(closest-side, rgba(242,174,188,0.20), transparent)",
+                background: "radial-gradient(closest-side, rgba(199,160,82,0.20), transparent)",
               }}
             />
             <div className="relative">
@@ -1915,7 +1916,7 @@ function ThemeSwitcher({
                         ? "linear-gradient(180deg,#FBE7EC,#F6D9E1)"
                         : s === "azul"
                           ? "linear-gradient(180deg,#E7EFFB,#DAE6F6)"
-                          : "linear-gradient(180deg,#FBFAF7,#F8F7F3)",
+                          : "linear-gradient(180deg,#F5F5F7,#F8F7F3)",
                   }}
                 />
                 <span className="text-[10.5px] font-semibold">{s}</span>
@@ -1949,35 +1950,5 @@ function ThemeSwitcher({
    ═══════════════════════════════════════════════════════════════════ */
 
 function LandingPage() {
-  const sky: Sky = "hueso";
-
-  useEffect(() => {
-    document.body.classList.remove("theme-hueso", "theme-cherry", "theme-azul");
-    document.body.classList.add("theme-" + sky);
-    return () => {
-      document.body.classList.remove("theme-hueso", "theme-cherry", "theme-azul");
-    };
-  }, [sky]);
-
-  return (
-    <>
-      <AeroBackdrop theme={sky} />
-      <Nav />
-      <main>
-        <Hero />
-        <ModulosTicker />
-        <RutaCompleta />
-        <Showcase />
-        <Features />
-        <PathyEvolution />
-        <Companion />
-        <YarisChat />
-        <Simulator />
-        <Pricing />
-        <Historias />
-        <FinalCta />
-      </main>
-      <Footer />
-    </>
-  );
+  return <ReferenceHome showcase={<Showcase />} pathy={<PathyPhone />} yaris={<YarisChat />} pricing={<Pricing />} />;
 }

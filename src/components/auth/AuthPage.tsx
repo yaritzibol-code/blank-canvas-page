@@ -33,9 +33,9 @@ async function signInWithGoogle(setError: (m: string) => void, redirectTo?: stri
 type Tab = "register" | "login";
 
 const FONT = "'Manrope', sans-serif";
-const DISPLAY = "'Bricolage Grotesque', sans-serif";
+const DISPLAY = "'Instrument Serif', serif";
 const MONO = "'JetBrains Mono', monospace";
-const INK = "#22375C";
+const INK = "#081A35";
 
 /* ── Clean single-stroke line icons ── */
 type IconName = "gift" | "library" | "help" | "spark" | "cloud" | "check" | "arrow" | "back";
@@ -153,7 +153,7 @@ const errorTextStyle: React.CSSProperties = {
 
 const googleMsgStyle: React.CSSProperties = {
   fontSize: "0.75rem",
-  color: "#647DA0",
+  color: "#4A5872",
   textAlign: "center",
   lineHeight: 1.4,
 };
@@ -218,8 +218,8 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
             width: 40,
             height: 40,
             borderRadius: 10,
-            background: "rgba(242,174,188,0.18)",
-            color: "#F2AEBC",
+            background: "rgba(199,160,82,0.18)",
+            color: "#C7A052",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -254,8 +254,8 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
           style={inputStyle}
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
-          onFocus={(e) => (e.target.style.borderColor = "#3D5D91")}
-          onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")}
+          onFocus={(e) => (e.target.style.borderColor = "#163D70")}
+          onBlur={(e) => (e.target.style.borderColor = "#E8ECF2")}
         />
       </Field>
 
@@ -267,8 +267,8 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
           style={inputStyle}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          onFocus={(e) => (e.target.style.borderColor = "#3D5D91")}
-          onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")}
+          onFocus={(e) => (e.target.style.borderColor = "#163D70")}
+          onBlur={(e) => (e.target.style.borderColor = "#E8ECF2")}
         />
       </Field>
 
@@ -281,8 +281,8 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
             style={{ ...inputStyle, paddingRight: 44 }}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onFocus={(e) => (e.target.style.borderColor = "#3D5D91")}
-            onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")}
+            onFocus={(e) => (e.target.style.borderColor = "#163D70")}
+            onBlur={(e) => (e.target.style.borderColor = "#E8ECF2")}
           />
           <button
             type="button"
@@ -295,7 +295,7 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
               background: "none",
               border: "none",
               cursor: "pointer",
-              color: "#8DA1BE",
+              color: "#7E90AD",
               display: "flex",
             }}
           >
@@ -309,9 +309,9 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
           type="checkbox"
           checked={marketing}
           onChange={(e) => setMarketing(e.target.checked)}
-          style={{ width: 18, height: 18, marginTop: 2, accentColor: "#6C0820", flexShrink: 0 }}
+          style={{ width: 18, height: 18, marginTop: 2, accentColor: "#7A5C1E", flexShrink: 0 }}
         />
-        <span style={{ fontSize: "0.82rem", color: "#647DA0", lineHeight: 1.4 }}>
+        <span style={{ fontSize: "0.82rem", color: "#4A5872", lineHeight: 1.4 }}>
           Quiero recibir promociones, tips de estudio y novedades de FlightPath por correo.
         </span>
       </label>
@@ -321,15 +321,15 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
           type="checkbox"
           checked={terms}
           onChange={(e) => setTerms(e.target.checked)}
-          style={{ width: 18, height: 18, marginTop: 2, accentColor: "#6C0820", flexShrink: 0 }}
+          style={{ width: 18, height: 18, marginTop: 2, accentColor: "#7A5C1E", flexShrink: 0 }}
         />
-        <span style={{ fontSize: "0.82rem", color: "#647DA0", lineHeight: 1.4 }}>
+        <span style={{ fontSize: "0.82rem", color: "#4A5872", lineHeight: 1.4 }}>
           Acepto los{" "}
-          <Link to="/legal" style={{ color: "#3D5D91", fontWeight: 600, textDecoration: "none" }}>
+          <Link to="/legal" style={{ color: "#163D70", fontWeight: 600, textDecoration: "none" }}>
             Términos y condiciones
           </Link>{" "}
           y el{" "}
-          <Link to="/legal" style={{ color: "#3D5D91", fontWeight: 600, textDecoration: "none" }}>
+          <Link to="/legal" style={{ color: "#163D70", fontWeight: 600, textDecoration: "none" }}>
             Aviso de privacidad
           </Link>
           .
@@ -343,13 +343,13 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
         Crear cuenta gratis
       </SubmitButton>
 
-      <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#8DA1BE", marginTop: 4 }}>
+      <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#7E90AD", marginTop: 4 }}>
         ¿Ya tienes cuenta?{" "}
         <button
           type="button"
           onClick={onSwitch}
           style={{
-            color: "#3D5D91",
+            color: "#163D70",
             fontWeight: 600,
             background: "none",
             border: "none",
@@ -415,7 +415,7 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
   if (showReset) {
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-        <p style={{ fontSize: ".85rem", color: "#647DA0", lineHeight: 1.5 }}>
+        <p style={{ fontSize: ".85rem", color: "#4A5872", lineHeight: 1.5 }}>
           Escribe tu correo y te enviaremos un enlace para crear una contraseña nueva.
         </p>
         <Field label="Correo electrónico">
@@ -425,8 +425,8 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
             style={inputStyle}
             value={resetEmail}
             onChange={(e) => setResetEmail(e.target.value)}
-            onFocus={(e) => (e.target.style.borderColor = "#3D5D91")}
-            onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")}
+            onFocus={(e) => (e.target.style.borderColor = "#163D70")}
+            onBlur={(e) => (e.target.style.borderColor = "#E8ECF2")}
           />
         </Field>
 
@@ -440,12 +440,12 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
           Enviar enlace
         </SubmitButton>
 
-        <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#8DA1BE", marginTop: 4 }}>
+        <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#7E90AD", marginTop: 4 }}>
           <button
             type="button"
             onClick={() => setShowReset(false)}
             style={{
-              color: "#3D5D91",
+              color: "#163D70",
               fontWeight: 600,
               background: "none",
               border: "none",
@@ -469,8 +469,8 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
           style={inputStyle}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          onFocus={(e) => (e.target.style.borderColor = "#3D5D91")}
-          onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")}
+          onFocus={(e) => (e.target.style.borderColor = "#163D70")}
+          onBlur={(e) => (e.target.style.borderColor = "#E8ECF2")}
         />
       </Field>
 
@@ -485,8 +485,8 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
             onKeyDown={(e) => {
               if (e.key === "Enter") handleLogin();
             }}
-            onFocus={(e) => (e.target.style.borderColor = "#3D5D91")}
-            onBlur={(e) => (e.target.style.borderColor = "#E8EEF6")}
+            onFocus={(e) => (e.target.style.borderColor = "#163D70")}
+            onBlur={(e) => (e.target.style.borderColor = "#E8ECF2")}
           />
           <button
             type="button"
@@ -499,7 +499,7 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
               background: "none",
               border: "none",
               cursor: "pointer",
-              color: "#8DA1BE",
+              color: "#7E90AD",
               display: "flex",
             }}
           >
@@ -519,7 +519,7 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
           }}
           style={{
             fontSize: "0.8rem",
-            color: "#3D5D91",
+            color: "#163D70",
             fontWeight: 600,
             background: "none",
             border: "none",
@@ -539,13 +539,13 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
       <Divider />
       <GoogleButton onClick={() => signInWithGoogle((m) => setError(m), redirectTo)} />
 
-      <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#8DA1BE", marginTop: 4 }}>
+      <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#7E90AD", marginTop: 4 }}>
         ¿No tienes cuenta?{" "}
         <button
           type="button"
           onClick={onSwitch}
           style={{
-            color: "#3D5D91",
+            color: "#163D70",
             fontWeight: 600,
             background: "none",
             border: "none",
@@ -564,7 +564,7 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
 
 const inputStyle: React.CSSProperties = {
   padding: "12px 16px",
-  border: "1.5px solid #E8EEF6",
+  border: "1.5px solid #E8ECF2",
   borderRadius: 12,
   fontSize: "0.9rem",
   fontFamily: FONT,
@@ -572,7 +572,7 @@ const inputStyle: React.CSSProperties = {
   outline: "none",
   transition: "border-color 0.2s",
   width: "100%",
-  background: "#FBFAF7",
+  background: "#F5F5F7",
 };
 
 function Field({
@@ -590,7 +590,7 @@ function Field({
         style={{
           fontSize: "0.78rem",
           fontWeight: 700,
-          color: "#647DA0",
+          color: "#4A5872",
           fontFamily: MONO,
           textTransform: "uppercase",
           letterSpacing: "0.1em",
@@ -599,7 +599,7 @@ function Field({
         {label}
       </label>
       {children}
-      {hint && <span style={{ fontSize: "0.75rem", color: "#8DA1BE" }}>{hint}</span>}
+      {hint && <span style={{ fontSize: "0.75rem", color: "#7E90AD" }}>{hint}</span>}
     </div>
   );
 }
@@ -611,16 +611,16 @@ function Divider() {
         display: "flex",
         alignItems: "center",
         gap: 12,
-        color: "#B9C8DD",
+        color: "#B8C5DA",
         fontSize: "0.78rem",
         fontFamily: MONO,
         textTransform: "uppercase",
         letterSpacing: "0.1em",
       }}
     >
-      <span style={{ flex: 1, height: 1, background: "#E8EEF6", display: "block" }} />
+      <span style={{ flex: 1, height: 1, background: "#E8ECF2", display: "block" }} />
       o
-      <span style={{ flex: 1, height: 1, background: "#E8EEF6", display: "block" }} />
+      <span style={{ flex: 1, height: 1, background: "#E8ECF2", display: "block" }} />
     </div>
   );
 }
@@ -639,9 +639,9 @@ function GoogleButton({ onClick }: { onClick?: () => void }) {
         justifyContent: "center",
         gap: 10,
         padding: 12,
-        border: `1.5px solid ${hovered ? "#B9C8DD" : "#E8EEF6"}`,
+        border: `1.5px solid ${hovered ? "#B8C5DA" : "#E8ECF2"}`,
         borderRadius: 12,
-        background: hovered ? "#F4F7FB" : "white",
+        background: hovered ? "#F5F5F7" : "white",
         fontSize: "0.9rem",
         fontWeight: 600,
         color: INK,
@@ -676,7 +676,7 @@ function SubmitButton({
       onMouseLeave={() => setHovered(false)}
       style={{
         padding: 14,
-        background: loading ? "#8DA1BE" : hovered ? "#4A0517" : "#6C0820",
+        background: loading ? "#7E90AD" : hovered ? "#614919" : "#7A5C1E",
         color: "white",
         border: "none",
         borderRadius: 12,
@@ -690,7 +690,7 @@ function SubmitButton({
         justifyContent: "center",
         gap: 8,
         transform: hovered && !loading ? "translateY(-2px)" : "none",
-        boxShadow: hovered && !loading ? "0 14px 30px -14px rgba(108,8,32,0.45)" : "none",
+        boxShadow: hovered && !loading ? "0 14px 30px -14px rgba(122,92,30,0.45)" : "none",
       }}
     >
       {loading ? (
@@ -734,7 +734,7 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
     <div
       style={{
         fontFamily: FONT,
-        background: "linear-gradient(180deg, #FBFAF7 0%, #F4F7FB 55%, #FCFBF8 100%)",
+        background: "linear-gradient(180deg, #F5F5F7 0%, #F5F5F7 55%, #FCFBF8 100%)",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
@@ -746,7 +746,7 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
           background: "rgba(250,248,244,0.72)",
           backdropFilter: "blur(16px) saturate(140%)",
           WebkitBackdropFilter: "blur(16px) saturate(140%)",
-          borderBottom: "1px solid rgba(61,93,145,0.1)",
+          borderBottom: "1px solid rgba(22,61,112,0.1)",
           padding: "0 5%",
           height: 70,
           display: "flex",
@@ -770,13 +770,13 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
           }}
         >
           <PlaneMark size={36} />
-          Flight<span style={{ color: "#6C0820" }}>Path</span>
+          Flight<span style={{ color: "#7A5C1E" }}>Path</span>
         </Link>
         <Link
           to="/"
           style={{
             fontSize: "0.82rem",
-            color: "#647DA0",
+            color: "#4A5872",
             textDecoration: "none",
             display: "flex",
             alignItems: "center",
@@ -818,7 +818,7 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
                 position: "absolute",
                 inset: 0,
                 borderRadius: "50%",
-                background: "radial-gradient(closest-side, rgba(242,174,188,0.3), transparent 70%)",
+                background: "radial-gradient(closest-side, rgba(199,160,82,0.3), transparent 70%)",
                 transform: "scale(1.3)",
                 filter: "blur(8px)",
               }}
@@ -847,9 +847,9 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
             }}
           >
             ¡Bienvenido a<br />
-            <span style={{ color: "#6C0820" }}>FlightPath!</span>
+            <span style={{ color: "#7A5C1E" }}>FlightPath!</span>
           </h2>
-          <p style={{ color: "#647DA0", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: 28 }}>
+          <p style={{ color: "#4A5872", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: 28 }}>
             Tu copiloto Pathy ya está listo para acompañarte en cada paso hacia el CIAAC.
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 10, textAlign: "left" }}>
@@ -864,15 +864,15 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
                   borderRadius: 14,
                   padding: "12px 16px",
                   boxShadow: "0 1px 2px rgba(15,26,51,0.04), 0 8px 24px -12px rgba(15,26,51,0.12)",
-                  border: "1px solid #E8EEF6",
+                  border: "1px solid #E8ECF2",
                 }}
               >
                 <div
                   style={{
                     width: 36,
                     height: 36,
-                    background: "#FAEFEE",
-                    color: "#6C0820",
+                    background: "#FBF7EC",
+                    color: "#7A5C1E",
                     borderRadius: 9,
                     display: "flex",
                     alignItems: "center",
@@ -882,7 +882,7 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
                 >
                   <Icon n={perk.icon} size={18} />
                 </div>
-                <span style={{ fontSize: "0.85rem", color: "#33527F", fontWeight: 500 }}>
+                <span style={{ fontSize: "0.85rem", color: "#123360", fontWeight: 500 }}>
                   {perk.text}
                 </span>
               </div>
@@ -899,18 +899,18 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
             width: "100%",
             maxWidth: 440,
             boxShadow: "0 2px 4px rgba(15,26,51,0.04), 0 24px 48px -20px rgba(15,26,51,0.22)",
-            border: "1px solid #E8EEF6",
+            border: "1px solid #E8ECF2",
           }}
         >
           {/* TABS */}
           <div
             style={{
               display: "flex",
-              background: "#F4F7FB",
+              background: "#F5F5F7",
               borderRadius: 12,
               padding: 4,
               marginBottom: 32,
-              border: "1px solid #E8EEF6",
+              border: "1px solid #E8ECF2",
             }}
           >
             {(["register", "login"] as Tab[]).map((t, i) => (
@@ -927,10 +927,10 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
                   cursor: "pointer",
                   borderRadius: 9,
                   transition: "all 0.2s",
-                  color: tab === t ? "#22375C" : "#8DA1BE",
+                  color: tab === t ? "#081A35" : "#7E90AD",
                   border: "none",
                   background: tab === t ? "white" : "transparent",
-                  boxShadow: tab === t ? "0 2px 8px rgba(61,93,145,0.15)" : "none",
+                  boxShadow: tab === t ? "0 2px 8px rgba(22,61,112,0.15)" : "none",
                   fontFamily: FONT,
                 }}
               >

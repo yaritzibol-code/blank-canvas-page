@@ -11,11 +11,11 @@ import { ICAO_NIVEL_OPERACIONAL, ICAO_SKILLS, icaoLevel, icaoOverall } from "@/m
 import type { RtariDebrief } from "@/modules/rtari/debrief";
 import type { RtariTurnRecord } from "@/lib/store/rtari";
 
-const NAVY = "#22375C";
-const CORAL = "#6C0820";
-const CREAM = "#FBFAF7";
-const HAZE = "#647DA0";
-const SALMON = "#F2DCDB";
+const NAVY = "#081A35";
+const CORAL = "#7A5C1E";
+const CREAM = "#F5F5F7";
+const HAZE = "#4A5872";
+const SALMON = "#EEE1C5";
 const SERIF = "'Instrument Serif', serif";
 const MONO = "'JetBrains Mono', monospace";
 
@@ -177,7 +177,7 @@ export function DebriefPanel({
               fontStyle: "italic",
               fontSize: "4.2rem",
               lineHeight: 1,
-              color: aprueba ? "#8FE3B0" : "#F2AEBC",
+              color: aprueba ? "#8FE3B0" : "#C7A052",
             }}
           >
             {global ?? "—"}
@@ -204,8 +204,8 @@ export function DebriefPanel({
               gap: 6,
               padding: "4px 12px",
               borderRadius: 999,
-              background: aprueba ? "rgba(143,227,176,0.16)" : "rgba(242,174,188,0.16)",
-              color: aprueba ? "#8FE3B0" : "#F2AEBC",
+              background: aprueba ? "rgba(143,227,176,0.16)" : "rgba(199,160,82,0.16)",
+              color: aprueba ? "#8FE3B0" : "#C7A052",
               fontFamily: MONO,
               fontSize: "0.6rem",
               fontWeight: 800,

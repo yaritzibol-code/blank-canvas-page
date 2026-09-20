@@ -48,7 +48,7 @@ export function LogroWatcher() {
             alignItems: "center",
             padding: "12px 14px",
             borderRadius: 14,
-            background: "#22375C",
+            background: "#081A35",
             color: "white",
             boxShadow: "0 12px 30px rgba(15,30,60,.3)",
           }}
@@ -93,7 +93,7 @@ export function LogroWatcher() {
               padding: "34px 26px",
               textAlign: "center",
               color: "white",
-              background: "linear-gradient(155deg,#22375C,#3D5D91 55%,#B08A34)",
+              background: "linear-gradient(155deg,#081A35,#163D70 55%,#B08A34)",
               boxShadow: "0 30px 70px rgba(0,0,0,.45)",
             }}
           >
@@ -135,7 +135,7 @@ export function LogroWatcher() {
                 onClick={() => setMaximo(false)}
                 style={{
                   background: "white",
-                  color: "#22375C",
+                  color: "#081A35",
                   padding: "10px 18px",
                   borderRadius: 10,
                   fontWeight: 800,

@@ -470,7 +470,7 @@ export function Tutorial({
               type="checkbox"
               checked={noMostrar}
               onChange={(e) => setNoMostrar(e.target.checked)}
-              style={{ accentColor: "#6C0820", width: 15, height: 15 }}
+              style={{ accentColor: "#7A5C1E", width: 15, height: 15 }}
             />
             No volver a mostrar este recorrido al entrar
           </label>
@@ -618,7 +618,7 @@ function Reglas({ reglas }: { reglas: FpReglaPublica[] | null }) {
               <span className="cm-ink truncate font-semibold">{r.label}</span>
               <span
                 className="cm-display whitespace-nowrap"
-                style={{ color: "#6C0820", fontWeight: 700 }}
+                style={{ color: "#7A5C1E", fontWeight: 700 }}
               >
                 +{fpFormat(r.fp)} FP
               </span>
@@ -679,7 +679,7 @@ function ElegirPrivacidad({
           <span className="cm-ink truncate text-[14px] font-bold">
             {yo.nombre || iniciales(yo.nombre)}
           </span>
-          <span className="cm-you-tag" style={{ background: "#6C0820" }}>
+          <span className="cm-you-tag" style={{ background: "#7A5C1E" }}>
             Tú
           </span>
         </span>
@@ -703,7 +703,7 @@ function ElegirPrivacidad({
               </span>
             )}
           </span>
-          <span className="cm-you-tag" style={{ background: "#6C0820" }}>
+          <span className="cm-you-tag" style={{ background: "#7A5C1E" }}>
             Tú
           </span>
         </span>

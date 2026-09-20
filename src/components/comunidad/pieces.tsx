@@ -408,7 +408,7 @@ export function HudTile({
   return (
     <div className="cm-hud-tile" style={{ ["--i" as string]: i }}>
       <div className="mb-2 flex items-center gap-2">
-        <span className={flama ? "cm-flame" : ""} style={{ color: "#F2AEBC", display: "flex" }}>
+        <span className={flama ? "cm-flame" : ""} style={{ color: "#C7A052", display: "flex" }}>
           <Icon n={icono} size={15} sw={1.8} />
         </span>
         <span className="cm-hud-label truncate">{label}</span>

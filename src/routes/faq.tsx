@@ -41,7 +41,7 @@ export const Route = createFileRoute("/faq")({
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
-const INK = "#22375C";
+const INK = "#081A35";
 
 const FAQS: { q: string; a: string }[] = [
   {
@@ -122,7 +122,7 @@ function FaqItem({ q, a, open }: { q: string; a: string; open: boolean }) {
         }}
       >
         <h3 style={{ margin: 0, font: "inherit" }}>{q}</h3>
-        <span style={{ color: "#6C0820", fontSize: 18, flexShrink: 0 }}>+</span>
+        <span style={{ color: "#7A5C1E", fontSize: 18, flexShrink: 0 }}>+</span>
       </summary>
       <div style={{ padding: "0 20px 18px", color: "#4A5F80", fontSize: 14.5, lineHeight: 1.75 }}>
         {a}
@@ -174,9 +174,9 @@ function FaqPage() {
         >
           Preguntas frecuentes
         </h1>
-        <p style={{ color: "#647DA0", fontSize: 14, marginBottom: 36 }}>
+        <p style={{ color: "#4A5872", fontSize: 14, marginBottom: 36 }}>
           Todo lo que necesitas saber sobre FlightPath. ¿No encuentras tu respuesta? Escríbenos a{" "}
-          <a href="mailto:contacto@flightpath.mx" style={{ color: "#3D5D91", fontWeight: 700 }}>
+          <a href="mailto:contacto@flightpath.mx" style={{ color: "#163D70", fontWeight: 700 }}>
             contacto@flightpath.mx
           </a>
           .
@@ -193,7 +193,7 @@ function FaqPage() {
             to="/register"
             style={{
               display: "inline-block",
-              background: "#6C0820",
+              background: "#7A5C1E",
               color: "#fff",
               textDecoration: "none",
               fontWeight: 700,

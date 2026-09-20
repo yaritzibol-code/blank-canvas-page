@@ -142,7 +142,7 @@ export function ComunidadView(props: ComunidadDatos & ComunidadAcciones) {
         <div className="cm-hero-grid" aria-hidden="true" />
         <span
           className="cm-hero-glow"
-          style={{ right: -120, top: -160, background: "#F2AEBC" }}
+          style={{ right: -120, top: -160, background: "#C7A052" }}
           aria-hidden="true"
         />
         <span
@@ -155,7 +155,7 @@ export function ComunidadView(props: ComunidadDatos & ComunidadAcciones) {
             <Eyebrow light>Mi progreso · Comunidad</Eyebrow>
             <h1 className="cm-display mt-4 text-[34px] leading-[1.02] text-white sm:text-[44px] lg:text-[50px]">
               Los que van al frente
-              <span className="block" style={{ color: "#F2AEBC" }}>
+              <span className="block" style={{ color: "#C7A052" }}>
                 {PERIODO_TITULO[periodoEfectivo]}.
               </span>
             </h1>

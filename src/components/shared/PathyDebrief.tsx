@@ -29,7 +29,7 @@ const MOTIVO_TXT: Record<string, string> = {
 };
 
 const card: React.CSSProperties = {
-  background: "linear-gradient(135deg,#F2DCDB,#fce4ec)",
+  background: "linear-gradient(135deg,#EEE1C5,#fce4ec)",
   borderRadius: 16,
   padding: "18px 20px",
   width: "100%",
@@ -64,7 +64,7 @@ function SpotRow({ s }: { s: PathyWeakSpot }) {
     background: "rgba(255,255,255,0.7)",
     marginBottom: 6,
     fontSize: "0.83rem",
-    color: "#22375C",
+    color: "#081A35",
     textDecoration: "none",
     minHeight: 44,
   };
@@ -167,7 +167,7 @@ export function PathyDebrief({ userId, origen, titulo, scorePct, answers }: Prop
       <div style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 10 }}>
         <PathyMark size={30} />
         <div style={{ flex: 1 }}>
-          <strong style={{ color: "#6C0820" }}>Lectura de Pathy</strong>
+          <strong style={{ color: "#7A5C1E" }}>Lectura de Pathy</strong>
           <div style={{ fontSize: "0.75rem", color: "#8a6a70" }}>
             Basada en las {wrong.length} preguntas que fallaste en esta sesión
           </div>
@@ -182,7 +182,7 @@ export function PathyDebrief({ userId, origen, titulo, scorePct, answers }: Prop
               fontWeight: 800,
               letterSpacing: "0.4px",
               textTransform: "uppercase",
-              color: "#6C0820",
+              color: "#7A5C1E",
               marginBottom: 6,
             }}
           >
@@ -205,7 +205,7 @@ export function PathyDebrief({ userId, origen, titulo, scorePct, answers }: Prop
             padding: "12px 14px",
             borderRadius: 12,
             background: "rgba(255,255,255,0.75)",
-            color: "#6C0820",
+            color: "#7A5C1E",
             fontWeight: 700,
             fontSize: "0.83rem",
           }}
@@ -217,8 +217,8 @@ export function PathyDebrief({ userId, origen, titulo, scorePct, answers }: Prop
               width: 18,
               height: 18,
               borderRadius: "50%",
-              border: "2.5px solid rgba(108,8,32,0.2)",
-              borderTopColor: "#6C0820",
+              border: "2.5px solid rgba(122,92,30,0.2)",
+              borderTopColor: "#7A5C1E",
               animation: "pathySpin .8s linear infinite",
               flexShrink: 0,
             }}
@@ -252,7 +252,7 @@ export function PathyDebrief({ userId, origen, titulo, scorePct, answers }: Prop
                   fontWeight: 800,
                   letterSpacing: "0.4px",
                   textTransform: "uppercase",
-                  color: "#6C0820",
+                  color: "#7A5C1E",
                   marginBottom: 4,
                 }}
               >
@@ -281,7 +281,7 @@ export function PathyDebrief({ userId, origen, titulo, scorePct, answers }: Prop
         <p style={{ margin: 0, color: "#7a6a70" }}>
           {MOTIVO_TXT[motivo] ?? MOTIVO_TXT['error']}{" "}
           {motivo === "sin_pro" && (
-            <Link to="/precios" style={{ color: "#6C0820", fontWeight: 700 }}>
+            <Link to="/precios" style={{ color: "#7A5C1E", fontWeight: 700 }}>
               Ver planes
             </Link>
           )}

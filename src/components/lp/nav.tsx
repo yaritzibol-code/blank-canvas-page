@@ -7,7 +7,7 @@ import { Link } from "@tanstack/react-router";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
 import type { CSSProperties, ReactNode } from "react";
 
-const DISPLAY = "'Bricolage Grotesque', sans-serif";
+const DISPLAY = "'Instrument Serif', serif";
 
 const mix = (color: string, pct: number, base = "transparent") =>
   `color-mix(in oklab, ${color} ${pct}%, ${base})`;

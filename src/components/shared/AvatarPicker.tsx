@@ -74,7 +74,7 @@ interface Props {
 
 export function AvatarPicker({ userId, path, initials, size = 88, tone = "dark", onChange }: Props) {
   const claro = tone === "light";
-  const txt = claro ? "#22375C" : "white";
+  const txt = claro ? "#081A35" : "white";
   const sutil = claro ? "#5B7099" : "rgba(255,255,255,.7)";
   const borde = claro ? "1px solid #C9D6E8" : "1px solid rgba(255,255,255,.35)";
   const fondoBtn = claro ? "white" : "rgba(255,255,255,.12)";
@@ -117,11 +117,11 @@ export function AvatarPicker({ userId, path, initials, size = 88, tone = "dark",
           height: size,
           borderRadius: "50%",
           overflow: "hidden",
-          background: "linear-gradient(135deg,#3D5D91,#5A86CB)",
+          background: "linear-gradient(135deg,#163D70,#5A86CB)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontFamily: "'Bricolage Grotesque', sans-serif",
+          fontFamily: "'Instrument Serif', serif",
           fontSize: size / 2.75,
           fontWeight: 900,
           color: "white",

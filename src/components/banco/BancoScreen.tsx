@@ -1,3 +1,4 @@
+import { FlightTrails } from "@/components/shared/FlightTrails";
 /**
  * Pantalla de banco de preguntas (Simulador + Aprendiendo + historial).
  * La usan `/dashboard/banco` (CIAAC) y `/dashboard/linea-aerea` (banco LA),
@@ -297,7 +298,7 @@ function ResumeItem({ entry }: { entry: ResumeEntry }) {
         background: "white",
         borderRadius: 12,
         borderLeft: `4px solid ${AMBAR}`,
-        boxShadow: "0 2px 8px rgba(61,93,145,0.05)",
+        boxShadow: "0 2px 8px rgba(22,61,112,0.05)",
         overflow: "hidden",
         fontFamily: "'Manrope', sans-serif",
         padding: "14px 18px",
@@ -320,7 +321,7 @@ function ResumeItem({ entry }: { entry: ResumeEntry }) {
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 3 }}>
-            <h4 style={{ fontSize: "0.85rem", fontWeight: 700, color: "#22375C" }}>{entry.title}</h4>
+            <h4 style={{ fontSize: "0.85rem", fontWeight: 700, color: "#081A35" }}>{entry.title}</h4>
             <span
               style={{
                 padding: "2px 9px", borderRadius: 20, fontSize: "0.68rem", fontWeight: 800,
@@ -331,7 +332,7 @@ function ResumeItem({ entry }: { entry: ResumeEntry }) {
               Incompleto
             </span>
           </div>
-          <p style={{ fontSize: "0.75rem", color: "#647DA0", marginBottom: 7 }}>
+          <p style={{ fontSize: "0.75rem", color: "#4A5872", marginBottom: 7 }}>
             {entry.done} de {entry.total} respondidas · {entry.when}
           </p>
           <div style={{ height: 5, borderRadius: 4, background: "rgba(224,168,0,0.16)", overflow: "hidden", maxWidth: 260 }}>
@@ -367,7 +368,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
         background: "white",
         borderRadius: 12,
         borderLeft: `4px solid ${VERDE}`,
-        boxShadow: "0 2px 8px rgba(61,93,145,0.05)",
+        boxShadow: "0 2px 8px rgba(22,61,112,0.05)",
         overflow: "hidden",
         cursor: "pointer",
         transition: "box-shadow 0.2s",
@@ -375,10 +376,10 @@ function HistItem({ entry }: { entry: HistEntry }) {
       }}
       onClick={() => setOpen(!open)}
       onMouseEnter={(e) =>
-        (e.currentTarget.style.boxShadow = "0 4px 16px rgba(61,93,145,0.1)")
+        (e.currentTarget.style.boxShadow = "0 4px 16px rgba(22,61,112,0.1)")
       }
       onMouseLeave={(e) =>
-        (e.currentTarget.style.boxShadow = "0 2px 8px rgba(61,93,145,0.05)")
+        (e.currentTarget.style.boxShadow = "0 2px 8px rgba(22,61,112,0.05)")
       }
     >
       {/* Top row */}
@@ -403,11 +404,11 @@ function HistItem({ entry }: { entry: HistEntry }) {
               justifyContent: "center",
               fontSize: "1rem",
               flexShrink: 0,
-              color: entry.type === "exam" ? "#22375C" : "#3D5D91",
+              color: entry.type === "exam" ? "#081A35" : "#163D70",
               background:
                 entry.type === "exam"
                   ? "rgba(26,26,46,0.08)"
-                  : "rgba(61,93,145,0.08)",
+                  : "rgba(22,61,112,0.08)",
             }}
           >
             {entry.type === "exam" ? <Icon n="sim" size={18} /> : <Icon n="book" size={18} />}
@@ -417,20 +418,20 @@ function HistItem({ entry }: { entry: HistEntry }) {
               style={{
                 fontSize: "0.85rem",
                 fontWeight: 700,
-                color: "#22375C",
+                color: "#081A35",
                 marginBottom: 2,
               }}
             >
               {entry.title}
             </h4>
-            <p style={{ fontSize: "0.75rem", color: "#647DA0" }}>{entry.meta}</p>
+            <p style={{ fontSize: "0.75rem", color: "#4A5872" }}>{entry.meta}</p>
           </div>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <span
             style={{
-              fontFamily: "'Bricolage Grotesque', sans-serif",
+              fontFamily: "'Instrument Serif', serif",
               fontSize: "1.2rem",
               fontWeight: 900,
               color,
@@ -447,8 +448,8 @@ function HistItem({ entry }: { entry: HistEntry }) {
               background:
                 entry.type === "exam"
                   ? "rgba(26,26,46,0.06)"
-                  : "rgba(61,93,145,0.08)",
-              color: entry.type === "exam" ? "#22375C" : "#3D5D91",
+                  : "rgba(22,61,112,0.08)",
+              color: entry.type === "exam" ? "#081A35" : "#163D70",
             }}
           >
             {entry.tag}
@@ -485,7 +486,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
       {open && (
         <div
           style={{
-            borderTop: "1px solid #F2DCDB",
+            borderTop: "1px solid #EEE1C5",
             padding: "16px 18px 18px",
           }}
           onClick={(e) => e.stopPropagation()}
@@ -496,7 +497,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
               style={{
                 fontSize: "0.78rem",
                 fontWeight: 700,
-                color: "#647DA0",
+                color: "#4A5872",
                 textTransform: "uppercase",
                 letterSpacing: "0.4px",
                 marginBottom: 10,
@@ -520,7 +521,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                 style={{
                   flex: 1,
                   height: 8,
-                  background: "#F2DCDB",
+                  background: "#EEE1C5",
                   borderRadius: 10,
                   overflow: "hidden",
                 }}
@@ -547,7 +548,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                 style={{
                   fontSize: "0.78rem",
                   fontWeight: 700,
-                  color: "#647DA0",
+                  color: "#4A5872",
                   textTransform: "uppercase",
                   letterSpacing: "0.4px",
                   marginBottom: 10,
@@ -603,7 +604,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                             style={{
                               fontSize: "0.83rem",
                               fontWeight: 700,
-                              color: "#22375C",
+                              color: "#081A35",
                               marginBottom: 2,
                             }}
                           >
@@ -612,7 +613,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                           <div
                             style={{
                               fontSize: "0.76rem",
-                              color: "#647DA0",
+                              color: "#4A5872",
                               lineHeight: 1.4,
                             }}
                           >
@@ -622,7 +623,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                       </div>
                       <span
                         style={{
-                          fontFamily: "'Bricolage Grotesque', sans-serif",
+                          fontFamily: "'Instrument Serif', serif",
                           fontSize: "1rem",
                           fontWeight: 900,
                           flexShrink: 0,
@@ -645,7 +646,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                 style={{
                   fontSize: "0.78rem",
                   fontWeight: 700,
-                  color: "#647DA0",
+                  color: "#4A5872",
                   textTransform: "uppercase",
                   letterSpacing: "0.4px",
                   marginBottom: 10,
@@ -670,13 +671,13 @@ function HistItem({ entry }: { entry: HistEntry }) {
                       borderRadius: 8,
                       fontSize: "0.83rem",
                       fontWeight: 600,
-                      color: "#22375C",
+                      color: "#081A35",
                     }}
                   >
                     <span>{s.name}</span>
                     <span
                       style={{
-                        fontFamily: "'Bricolage Grotesque', sans-serif",
+                        fontFamily: "'Instrument Serif', serif",
                         fontSize: "1rem",
                         fontWeight: 900,
                         color: "#2ecc71",
@@ -696,7 +697,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
               display: "flex",
               alignItems: "flex-start",
               gap: 10,
-              background: "linear-gradient(135deg, #F2DCDB, #fce4ec)",
+              background: "linear-gradient(135deg, #EEE1C5, #fce4ec)",
               borderRadius: 10,
               padding: "12px 14px",
               marginTop: 14,
@@ -707,7 +708,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
           >
             <PathyMark size={28} />
             <div>
-              <strong style={{ color: "#6C0820" }}>{entry.pathyPrefix}</strong>{" "}
+              <strong style={{ color: "#7A5C1E" }}>{entry.pathyPrefix}</strong>{" "}
               {entry.pathyTip}
             </div>
           </div>
@@ -733,12 +734,12 @@ function ModalExamen({
     ? [
         {
           icon: "help",
-          bg: "rgba(61,93,145,0.1)",
+          bg: "rgba(22,61,112,0.1)",
           html: "<strong>Preguntas oficiales</strong> — reactivos del proceso de Línea Aérea",
         },
         {
           icon: "timer",
-          bg: "rgba(108,8,32,0.08)",
+          bg: "rgba(122,92,30,0.08)",
           html: "<strong>Tiempo límite</strong> — el reloj corre desde que aceptas",
         },
         {
@@ -755,12 +756,12 @@ function ModalExamen({
     : [
     {
       icon: "help",
-      bg: "rgba(61,93,145,0.1)",
+      bg: "rgba(22,61,112,0.1)",
       html: "<strong>310 preguntas</strong> — igual que el examen real del CIAAC",
     },
     {
       icon: "timer",
-      bg: "rgba(108,8,32,0.08)",
+      bg: "rgba(122,92,30,0.08)",
       html: "<strong>5 horas límite</strong> — el tiempo corre desde que aceptas",
     },
     {
@@ -803,9 +804,9 @@ function ModalExamen({
       >
         <h2
           style={{
-            fontFamily: "'Bricolage Grotesque', sans-serif",
+            fontFamily: "'Instrument Serif', serif",
             fontSize: "1.5rem",
-            color: "#22375C",
+            color: "#081A35",
             marginBottom: 6,
             display: "flex",
             alignItems: "center",
@@ -814,7 +815,7 @@ function ModalExamen({
         >
           <Icon n="target" size={26} /> {la ? "Simulador Línea Aérea" : "Simulador CIAAC"}
         </h2>
-        <p style={{ fontSize: "0.85rem", color: "#647DA0", marginBottom: 24 }}>
+        <p style={{ fontSize: "0.85rem", color: "#4A5872", marginBottom: 24 }}>
           Lee las instrucciones antes de comenzar
         </p>
 
@@ -838,7 +839,7 @@ function ModalExamen({
                 alignItems: "center",
                 gap: 10,
                 fontSize: "0.88rem",
-                color: "#22375C",
+                color: "#081A35",
               }}
             >
               <div
@@ -852,7 +853,7 @@ function ModalExamen({
                   fontSize: "1rem",
                   flexShrink: 0,
                   background: row.bg,
-                  color: "#22375C",
+                  color: "#081A35",
                 }}
               >
                 <Icon n={row.icon as never} size={18} />
@@ -889,7 +890,7 @@ function ModalExamen({
         {/* Selector de tipo de simulador (Línea Aérea) */}
         {la && (
           <div style={{ marginBottom: 24 }}>
-            <h4 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#22375C", marginBottom: 10 }}>
+            <h4 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#081A35", marginBottom: 10 }}>
               ¿Qué tipo de simulador?
             </h4>
             <div style={{ display: "grid", gap: 8 }}>
@@ -916,12 +917,12 @@ function ModalExamen({
                       borderRadius: 12,
                       cursor: "pointer",
                       fontFamily: "'Manrope', sans-serif",
-                      border: `2px solid ${active ? "#3D5D91" : "#F2DCDB"}`,
-                      background: active ? "rgba(61,93,145,0.08)" : "#f8f9ff",
+                      border: `2px solid ${active ? "#163D70" : "#EEE1C5"}`,
+                      background: active ? "rgba(22,61,112,0.08)" : "#f8f9ff",
                     }}
                   >
-                    <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#22375C" }}>{o.title}</div>
-                    <div style={{ fontSize: "0.78rem", color: "#647DA0" }}>{o.desc}</div>
+                    <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#081A35" }}>{o.title}</div>
+                    <div style={{ fontSize: "0.78rem", color: "#4A5872" }}>{o.desc}</div>
                   </button>
                 );
               })}
@@ -937,8 +938,8 @@ function ModalExamen({
               flex: 1,
               padding: 12,
               background: "white",
-              color: "#647DA0",
-              border: "2px solid #F2DCDB",
+              color: "#4A5872",
+              border: "2px solid #EEE1C5",
               borderRadius: 10,
               fontSize: "0.88rem",
               fontWeight: 700,
@@ -953,7 +954,7 @@ function ModalExamen({
             style={{
               flex: 2,
               padding: 12,
-              background: "#6C0820",
+              background: "#7A5C1E",
               color: "white",
               border: "none",
               borderRadius: 10,
@@ -968,10 +969,10 @@ function ModalExamen({
               transition: "all 0.2s",
             }}
             onMouseEnter={(e) =>
-              (e.currentTarget.style.background = "#8a0a28")
+              (e.currentTarget.style.background = "#977431")
             }
             onMouseLeave={(e) =>
-              (e.currentTarget.style.background = "#6C0820")
+              (e.currentTarget.style.background = "#7A5C1E")
             }
           >
             <Icon n="target" size={18} /> Aceptar y comenzar
@@ -1121,9 +1122,9 @@ function ModalAprendiendo({
       >
         <h2
           style={{
-            fontFamily: "'Bricolage Grotesque', sans-serif",
+            fontFamily: "'Instrument Serif', serif",
             fontSize: "1.5rem",
-            color: "#22375C",
+            color: "#081A35",
             marginBottom: 6,
             display: "flex",
             alignItems: "center",
@@ -1132,7 +1133,7 @@ function ModalAprendiendo({
         >
           <Icon n="lightbulb" size={26} /> Configura tu sesión
         </h2>
-        <p style={{ fontSize: "0.85rem", color: "#647DA0", marginBottom: 24 }}>
+        <p style={{ fontSize: "0.85rem", color: "#4A5872", marginBottom: 24 }}>
           {la
             ? "Elige los manuales del curso y cuántas preguntas quieres practicar"
             : "Elige las materias y cuántas preguntas quieres practicar"}
@@ -1141,7 +1142,7 @@ function ModalAprendiendo({
         {/* Tipo de banco (Línea Aérea) */}
         {la && (
           <div style={{ marginBottom: 20 }}>
-            <h4 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#22375C", marginBottom: 10 }}>
+            <h4 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#081A35", marginBottom: 10 }}>
               ¿Qué preguntas?
             </h4>
             <div style={{ display: "grid", gap: 8 }}>
@@ -1168,12 +1169,12 @@ function ModalAprendiendo({
                       borderRadius: 12,
                       cursor: "pointer",
                       fontFamily: "'Manrope', sans-serif",
-                      border: `2px solid ${active ? "#3D5D91" : "#F2DCDB"}`,
-                      background: active ? "rgba(61,93,145,0.08)" : "#f8f9ff",
+                      border: `2px solid ${active ? "#163D70" : "#EEE1C5"}`,
+                      background: active ? "rgba(22,61,112,0.08)" : "#f8f9ff",
                     }}
                   >
-                    <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#22375C" }}>{o.title}</div>
-                    <div style={{ fontSize: "0.78rem", color: "#647DA0" }}>{o.desc}</div>
+                    <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#081A35" }}>{o.title}</div>
+                    <div style={{ fontSize: "0.78rem", color: "#4A5872" }}>{o.desc}</div>
                   </button>
                 );
               })}
@@ -1188,7 +1189,7 @@ function ModalAprendiendo({
             style={{
               fontSize: "0.82rem",
               fontWeight: 700,
-              color: "#22375C",
+              color: "#081A35",
               marginBottom: 10,
             }}
           >
@@ -1199,9 +1200,9 @@ function ModalAprendiendo({
               onClick={handleAllClick}
               style={{
                 ...chipBase,
-                border: `2px solid ${allSelected ? "#3D5D91" : "#F2DCDB"}`,
-                background: allSelected ? "#3D5D91" : "#f8f9ff",
-                color: allSelected ? "white" : "#22375C",
+                border: `2px solid ${allSelected ? "#163D70" : "#EEE1C5"}`,
+                background: allSelected ? "#163D70" : "#f8f9ff",
+                color: allSelected ? "white" : "#081A35",
               }}
             >
               {la ? "Todos los manuales" : "Todas las materias"}
@@ -1216,9 +1217,9 @@ function ModalAprendiendo({
                       title={q.titulo}
                       style={{
                         ...chipBase,
-                        border: `2px solid ${sel ? "#3D5D91" : "#F2DCDB"}`,
-                        background: sel ? "rgba(61,93,145,0.08)" : "#f8f9ff",
-                        color: sel ? "#3D5D91" : "#22375C",
+                        border: `2px solid ${sel ? "#163D70" : "#EEE1C5"}`,
+                        background: sel ? "rgba(22,61,112,0.08)" : "#f8f9ff",
+                        color: sel ? "#163D70" : "#081A35",
                       }}
                     >
                       {q.code}
@@ -1233,9 +1234,9 @@ function ModalAprendiendo({
                       onClick={() => handleMateriaClick(m.label)}
                       style={{
                         ...chipBase,
-                        border: `2px solid ${sel ? "#3D5D91" : "#F2DCDB"}`,
-                        background: sel ? "rgba(61,93,145,0.08)" : "#f8f9ff",
-                        color: sel ? "#3D5D91" : "#22375C",
+                        border: `2px solid ${sel ? "#163D70" : "#EEE1C5"}`,
+                        background: sel ? "rgba(22,61,112,0.08)" : "#f8f9ff",
+                        color: sel ? "#163D70" : "#081A35",
                       }}
                     >
                       {m.label}
@@ -1252,7 +1253,7 @@ function ModalAprendiendo({
             style={{
               fontSize: "0.82rem",
               fontWeight: 700,
-              color: "#22375C",
+              color: "#081A35",
               marginBottom: 10,
             }}
           >
@@ -1262,21 +1263,21 @@ function ModalAprendiendo({
             <div
               style={{
                 background: "#f8f9ff",
-                border: "1px solid #E8EEF6",
+                border: "1px solid #E8ECF2",
                 borderRadius: 10,
                 padding: "10px 14px",
                 fontSize: "0.8rem",
-                color: "#647DA0",
+                color: "#4A5872",
                 lineHeight: 1.5,
                 marginBottom: 10,
               }}
             >
-              Tu plan gratis incluye <strong style={{ color: "#22375C" }}>2 preguntas de cada materia</strong>{" "}
+              Tu plan gratis incluye <strong style={{ color: "#081A35" }}>2 preguntas de cada materia</strong>{" "}
               que elijas, de su pool de 10.{" "}
               <button
                 onClick={onLocked}
                 style={{
-                  color: "#3D5D91", fontWeight: 700, background: "none", border: "none",
+                  color: "#163D70", fontWeight: 700, background: "none", border: "none",
                   cursor: "pointer", padding: 0, fontSize: "inherit", fontFamily: "'Manrope', sans-serif",
                 }}
               >
@@ -1292,10 +1293,10 @@ function ModalAprendiendo({
                 onClick={() => handleQtyClick(v)}
                 style={{
                   ...qtyBase,
-                  border: `2px solid ${qty === v ? "#3D5D91" : "#F2DCDB"}`,
+                  border: `2px solid ${qty === v ? "#163D70" : "#EEE1C5"}`,
                   background:
-                    qty === v ? "rgba(61,93,145,0.08)" : "#f8f9ff",
-                  color: qty === v ? "#3D5D91" : "#22375C",
+                    qty === v ? "rgba(22,61,112,0.08)" : "#f8f9ff",
+                  color: qty === v ? "#163D70" : "#081A35",
                 }}
               >
                 {v}
@@ -1306,11 +1307,11 @@ function ModalAprendiendo({
               style={{
                 ...qtyBase,
                 border: `2px solid ${
-                  qty === "custom" ? "#3D5D91" : "#F2DCDB"
+                  qty === "custom" ? "#163D70" : "#EEE1C5"
                 }`,
                 background:
-                  qty === "custom" ? "rgba(61,93,145,0.08)" : "#f8f9ff",
-                color: qty === "custom" ? "#3D5D91" : "#22375C",
+                  qty === "custom" ? "rgba(22,61,112,0.08)" : "#f8f9ff",
+                color: qty === "custom" ? "#163D70" : "#081A35",
               }}
             >
               <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon n="pencil" size={15} /> Personalizar</span>
@@ -1342,7 +1343,7 @@ function ModalAprendiendo({
                         ? "#f39c12"
                         : customValue
                         ? "#2ecc71"
-                        : "#F2DCDB"
+                        : "#EEE1C5"
                     }`,
                     borderRadius: 8,
                     fontSize: "0.88rem",
@@ -1351,7 +1352,7 @@ function ModalAprendiendo({
                     outline: "none",
                   }}
                 />
-                <span style={{ fontSize: "0.8rem", color: "#647DA0" }}>
+                <span style={{ fontSize: "0.8rem", color: "#4A5872" }}>
                   preguntas
                 </span>
               </div>
@@ -1387,8 +1388,8 @@ function ModalAprendiendo({
               flex: 1,
               padding: 12,
               background: "white",
-              color: "#647DA0",
-              border: "2px solid #F2DCDB",
+              color: "#4A5872",
+              border: "2px solid #EEE1C5",
               borderRadius: 10,
               fontSize: "0.88rem",
               fontWeight: 700,
@@ -1403,7 +1404,7 @@ function ModalAprendiendo({
             style={{
               flex: 2,
               padding: 12,
-              background: "#6C0820",
+              background: "#7A5C1E",
               color: "white",
               border: "none",
               borderRadius: 10,
@@ -1418,10 +1419,10 @@ function ModalAprendiendo({
               transition: "all 0.2s",
             }}
             onMouseEnter={(e) =>
-              (e.currentTarget.style.background = "#8a0a28")
+              (e.currentTarget.style.background = "#977431")
             }
             onMouseLeave={(e) =>
-              (e.currentTarget.style.background = "#6C0820")
+              (e.currentTarget.style.background = "#7A5C1E")
             }
           >
             <Icon n="lightbulb" size={18} /> Comenzar sesión
@@ -1569,25 +1570,25 @@ export function BancoScreen({
 
         {/* Page header */}
         {modes && (
-        <div style={{ textAlign: "center", marginBottom: 48 }}>
+        <div className="fp-bank-heading" style={{ textAlign: "left", marginBottom: 28 }}>
           <h1
             style={{
-              fontFamily: "'Bricolage Grotesque', sans-serif",
+              fontFamily: "'Instrument Serif', serif",
               fontSize: "2rem",
-              color: "#22375C",
+              color: "#081A35",
               marginBottom: 8,
               lineHeight: 1.2,
             }}
           >
             ¿Cómo quieres{" "}
-            <span style={{ color: "#6C0820" }}>
+            <span style={{ color: "#7A5C1E" }}>
               {la ? "estudiar Línea Aérea?" : "estudiar hoy?"}
             </span>
           </h1>
           <p
             style={{
               fontSize: "0.95rem",
-              color: "#647DA0",
+              color: "#4A5872",
               maxWidth: 480,
               margin: "0 auto",
             }}
@@ -1600,7 +1601,7 @@ export function BancoScreen({
 
         {/* Stats row */}
         <div
-          className="grid w-full grid-cols-1 sm:flex sm:flex-wrap sm:justify-center"
+          className="fp-bank-stats grid w-full grid-cols-1 sm:flex sm:flex-wrap sm:justify-center"
           style={{
             gap: 12,
             marginBottom: 48,
@@ -1630,14 +1631,14 @@ export function BancoScreen({
                 background: "white",
                 borderRadius: 12,
                 padding: "10px 18px",
-                boxShadow: "0 2px 10px rgba(61,93,145,0.06)",
+                boxShadow: "0 2px 10px rgba(22,61,112,0.06)",
                 fontSize: "0.85rem",
               }}
             >
-              <span style={{ fontSize: "1.1rem", display: "flex", color: "#3D5D91" }}><Icon n={s.icon as never} size={18} /></span>
+              <span style={{ fontSize: "1.1rem", display: "flex", color: "#163D70" }}><Icon n={s.icon as never} size={18} /></span>
               <span>
                 {s.label}{" "}
-                <strong style={{ color: "#3D5D91" }}>{s.value}</strong>
+                <strong style={{ color: "#163D70" }}>{s.value}</strong>
               </span>
             </div>
           ))}
@@ -1646,11 +1647,12 @@ export function BancoScreen({
         {/* Mode cards */}
         {modes && (
         <div
-          className="grid grid-cols-1 sm:grid-cols-2"
+          className="fp-bank-modes grid grid-cols-1 sm:grid-cols-2"
           style={{ gap: 24, maxWidth: 820, width: "100%", marginBottom: 48 }}
         >
           {/* Simulador CIAAC card */}
           <div
+            className="fp-flight-panel"
             onClick={() => setModal("examen")}
             onMouseEnter={() => setExamHover(true)}
             onMouseLeave={() => setExamHover(false)}
@@ -1663,7 +1665,7 @@ export function BancoScreen({
               flexDirection: "column",
               position: "relative",
               overflow: "hidden",
-              background: "linear-gradient(145deg, #22375C, #2a2a4e)",
+              background: "linear-gradient(145deg, #081A35, #2a2a4e)",
               border: "3px solid transparent",
               transform: examHover ? "translateY(-6px)" : "none",
               boxShadow: examHover
@@ -1671,14 +1673,15 @@ export function BancoScreen({
                 : "none",
             }}
           >
+            <FlightTrails />
             {/* Recomendado badge */}
             <div
               style={{
                 position: "absolute",
                 top: 16,
                 right: 16,
-                background: "#F2AEBC",
-                color: "#6C0820",
+                background: "#C7A052",
+                color: "#7A5C1E",
                 fontSize: "0.65rem",
                 fontWeight: 700,
                 padding: "3px 9px",
@@ -1706,18 +1709,18 @@ export function BancoScreen({
                 letterSpacing: "0.5px",
                 marginBottom: 20,
                 width: "fit-content",
-                background: "rgba(242,174,188,0.2)",
-                color: "#F2AEBC",
+                background: "rgba(199,160,82,0.2)",
+                color: "#C7A052",
               }}
             >
               <Icon n="sim" size={14} /> {la ? "Simulador Línea Aérea" : "Simulador CIAAC"}
             </div>
 
-            <div style={{ fontSize: "3rem", marginBottom: 16, display: "flex", color: "#F2AEBC" }}><Icon n="target" size={42} /></div>
+            <div style={{ fontSize: "3rem", marginBottom: 16, display: "flex", color: "#C7A052" }}><Icon n="target" size={42} /></div>
 
             <h2
               style={{
-                fontFamily: "'Bricolage Grotesque', sans-serif",
+                fontFamily: "'Instrument Serif', serif",
                 fontSize: "1.5rem",
                 color: "white",
                 marginBottom: 6,
@@ -1763,7 +1766,7 @@ export function BancoScreen({
                       width: 6,
                       height: 6,
                       borderRadius: "50%",
-                      background: "#F2AEBC",
+                      background: "#C7A052",
                       flexShrink: 0,
                     }}
                   />
@@ -1787,8 +1790,8 @@ export function BancoScreen({
                 justifyContent: "center",
                 gap: 8,
                 marginTop: "auto",
-                background: "#F2AEBC",
-                color: "#6C0820",
+                background: "#C7A052",
+                color: "#7A5C1E",
                 transition: "all 0.2s",
               }}
             >
@@ -1811,10 +1814,10 @@ export function BancoScreen({
               position: "relative",
               overflow: "hidden",
               background: "white",
-              border: `3px solid ${learnHover ? "#3D5D91" : "#F2DCDB"}`,
+              border: `3px solid ${learnHover ? "#163D70" : "#EEE1C5"}`,
               transform: learnHover ? "translateY(-6px)" : "none",
               boxShadow: learnHover
-                ? "0 20px 48px rgba(61,93,145,0.12)"
+                ? "0 20px 48px rgba(22,61,112,0.12)"
                 : "none",
             }}
           >
@@ -1831,20 +1834,20 @@ export function BancoScreen({
                 letterSpacing: "0.5px",
                 marginBottom: 20,
                 width: "fit-content",
-                background: "rgba(61,93,145,0.08)",
-                color: "#3D5D91",
+                background: "rgba(22,61,112,0.08)",
+                color: "#163D70",
               }}
             >
               <Icon n="book" size={14} /> Modo estudio
             </div>
 
-            <div style={{ fontSize: "3rem", marginBottom: 16, display: "flex", color: "#3D5D91" }}><Icon n="lightbulb" size={42} /></div>
+            <div style={{ fontSize: "3rem", marginBottom: 16, display: "flex", color: "#163D70" }}><Icon n="lightbulb" size={42} /></div>
 
             <h2
               style={{
-                fontFamily: "'Bricolage Grotesque', sans-serif",
+                fontFamily: "'Instrument Serif', serif",
                 fontSize: "1.5rem",
-                color: "#22375C",
+                color: "#081A35",
                 marginBottom: 6,
               }}
             >
@@ -1885,7 +1888,7 @@ export function BancoScreen({
                       width: 6,
                       height: 6,
                       borderRadius: "50%",
-                      background: "#3D5D91",
+                      background: "#163D70",
                       flexShrink: 0,
                     }}
                   />
@@ -1909,7 +1912,7 @@ export function BancoScreen({
                 justifyContent: "center",
                 gap: 8,
                 marginTop: "auto",
-                background: "#3D5D91",
+                background: "#163D70",
                 color: "white",
                 transition: "all 0.2s",
               }}
@@ -1927,10 +1930,10 @@ export function BancoScreen({
         <div style={{ maxWidth: 820, width: "100%" }}>
           <h3
             style={{
-              fontFamily: "'Bricolage Grotesque', sans-serif",
+              fontFamily: "'Instrument Serif', serif",
               fontSize: "1.1rem",
               marginBottom: 16,
-              color: "#22375C",
+              color: "#081A35",
             }}
           >
             Historial y análisis de sesiones
@@ -1945,11 +1948,11 @@ export function BancoScreen({
                 style={{
                   background: "white",
                   borderRadius: 12,
-                  boxShadow: "0 2px 8px rgba(61,93,145,0.05)",
+                  boxShadow: "0 2px 8px rgba(22,61,112,0.05)",
                   padding: "22px 18px",
                   textAlign: "center",
                   fontSize: "0.85rem",
-                  color: "#647DA0",
+                  color: "#4A5872",
                   fontFamily: "'Manrope', sans-serif",
                 }}
               >

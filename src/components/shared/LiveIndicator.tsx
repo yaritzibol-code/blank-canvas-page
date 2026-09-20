@@ -19,11 +19,11 @@ export function LiveIndicator({ state, compact = false }: { state: LiveDataState
         padding: compact ? "5px 9px" : "6px 11px",
         borderRadius: 20,
         cursor: "pointer",
-        border: "1px solid #E8EEF6",
+        border: "1px solid #E8ECF2",
         background: "white",
         fontSize: compact ? ".68rem" : ".72rem",
         fontWeight: 700,
-        color: "#647DA0",
+        color: "#4A5872",
         fontFamily: "'Manrope', sans-serif",
         whiteSpace: "nowrap",
       }}

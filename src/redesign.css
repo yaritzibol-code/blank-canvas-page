@@ -1,0 +1,483 @@
+/* FlightPath — navy / gold editorial system from the supplied HTML.
+   Presentation only: application state, access rules and actions remain in their original components. */
+:root {
+  --fp-navy: #081a35;
+  --fp-gold: #c7a052;
+  --fp-surface: #f5f5f7;
+  --fp-line: #e1e5ed;
+  --background: oklch(0.972 0.003 270);
+  --foreground: oklch(0.22 0.06 258);
+  --primary: oklch(0.22 0.06 258);
+  --secondary: oklch(0.96 0.023 87);
+  --accent: oklch(0.73 0.108 82);
+  --border: oklch(0.92 0.013 255);
+}
+html {
+  scroll-padding-top: 100px;
+}
+body {
+  color: var(--fp-navy);
+  background: var(--fp-surface);
+}
+.font-display {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+:focus-visible {
+  outline: 3px solid #4879b2;
+  outline-offset: 4px;
+}
+::selection {
+  background: #eee1c5;
+  color: #081a35;
+}
+.fp-public-nav {
+  background: rgba(8, 26, 53, 0.97) !important;
+  color: #fff;
+  border-bottom: 1px solid rgba(199, 160, 82, 0.3);
+  backdrop-filter: blur(14px);
+}
+.fp-public-nav nav,
+.fp-public-nav nav a,
+.fp-public-nav a[href="/login"] {
+  color: #d5deec;
+}
+.fp-public-nav nav a:hover,
+.fp-public-nav a[href="/login"]:hover {
+  color: #c7a052;
+}
+.fp-public-nav .font-display {
+  font-family: "Manrope", sans-serif;
+  font-size: 19px;
+  font-weight: 600;
+}
+.fp-public-nav #nav-mobile a {
+  color: #081a35;
+}
+.fp-public-nav #nav-mobile a:hover {
+  color: #7a5c1e;
+}
+.fp-button {
+  border-radius: 12px;
+}
+.fp-button-primary {
+  background: #c7a052;
+  color: #081a35;
+  box-shadow: 0 12px 28px -18px #c7a052;
+}
+.fp-button-primary:hover {
+  background: #d9b66d;
+  color: #081a35;
+}
+
+/* Use the actual existing interactive demos inside the new landing composition. */
+.flightpath-redesign .fp-public-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  margin: 0;
+}
+.flightpath-redesign .rd-stats {
+  margin-left: 0;
+  transform: translateX(-50%);
+}
+.flightpath-redesign .rd-hero-copy > div:first-child {
+  max-width: 100%;
+}
+.flightpath-redesign :is(#como-funciona, #yaris, #precios) {
+  padding-top: 64px;
+  padding-bottom: 64px;
+  background: #fff;
+}
+.flightpath-redesign #como-funciona {
+  background: #f5f5f7;
+}
+.flightpath-redesign :is(#como-funciona, #yaris, #precios) h2 {
+  font-size: clamp(36px, 4.2vw, 60px);
+  font-weight: 400;
+}
+.flightpath-redesign :is(#como-funciona, #yaris, #precios) h2 span {
+  color: #163d70;
+  font-style: italic;
+}
+.flightpath-redesign .bg-ink {
+  background-color: #081a35;
+}
+.flightpath-redesign .text-ink {
+  color: #081a35;
+}
+.flightpath-redesign #precios .bg-ink {
+  background: linear-gradient(165deg, #081a35, #0c2447 55%, #163d70);
+  border: 1px solid #c7a052;
+}
+.flightpath-redesign #precios .bg-ink .text-coral-400 {
+  color: #c7a052;
+}
+.flightpath-redesign #precios > div > .text-center {
+  max-width: 1040px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 64px;
+  text-align: left;
+}
+.flightpath-redesign #precios > div > .text-center > span {
+  grid-column: 1/-1;
+}
+.flightpath-redesign #precios > div > .text-center p {
+  align-self: end;
+}
+.flightpath-redesign [data-motion="stages"] {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 88px);
+}
+.flightpath-redesign [data-stack-card] {
+  transform-origin: center top;
+}
+.flightpath-redesign [data-stack-card] img {
+  max-width: 100%;
+}
+.flightpath-redesign [data-motion="globe"] {
+  touch-action: pan-y;
+}
+.flightpath-redesign .rd-globe-wrap {
+  background: radial-gradient(ellipse at 50% 100%, rgba(72, 121, 178, 0.38), transparent 65%);
+}
+.flightpath-redesign .marquee:hover {
+  animation-play-state: paused;
+}
+.flightpath-redesign main > footer {
+  position: relative;
+}
+
+/* Shared student shell and module headers, including the original responsive drawer. */
+.fp-app-shell {
+  color: #081a35;
+  background: #f5f5f7;
+}
+.fp-app-content {
+  min-width: 0;
+  overflow-x: clip;
+}
+.fp-app-content > div {
+  animation: fp-page-enter 0.45s ease both;
+}
+.fp-app-shell aside nav a:hover {
+  transform: translateX(2px);
+}
+.fp-app-shell aside nav a {
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+.fp-app-shell aside nav a[aria-current="page"] {
+  background: rgba(199, 160, 82, 0.14);
+  color: #fff;
+}
+.fp-app-shell aside .fp-badge-nuevo,
+.fp-app-shell aside [title="En construcción — disponible próximamente"] {
+  background: rgba(199, 160, 82, 0.12) !important;
+  color: #e2c990 !important;
+  border: 1px solid rgba(199, 160, 82, 0.25);
+  box-shadow: none !important;
+  font-size: 8px !important;
+  padding: 3px 6px !important;
+}
+.fp-app-shell aside .fp-badge-nuevo > span {
+  background: #c7a052 !important;
+  box-shadow: none !important;
+}
+.fp-book-card {
+  border-radius: 20px !important;
+  border: 1px solid #e1e5ed !important;
+}
+.fp-book-card:hover {
+  border-color: #c7a052 !important;
+}
+#nav-mobile a {
+  color: #081a35;
+}
+.fp-module-header {
+  padding: 12px 0 4px;
+}
+.fp-module-header h1 {
+  font-size: clamp(36px, 4.5vw, 54px) !important;
+  font-style: normal;
+  letter-spacing: -0.015em;
+}
+.fp-module-header h1 em {
+  color: #163d70 !important;
+}
+.fp-module-header > div:last-child {
+  background: #e1e5ed !important;
+}
+.fp-dashboard-hero {
+  padding: 30px 34px;
+  border-radius: 24px;
+  background: linear-gradient(150deg, #081a35, #0c2447 50%, #163d70);
+  color: #fff;
+  box-shadow: 0 24px 48px -36px #081a35;
+  overflow: hidden;
+}
+.fp-dashboard-hero h1 {
+  color: #fff !important;
+  font-size: clamp(36px, 4vw, 54px) !important;
+  font-style: normal !important;
+}
+.fp-dashboard-hero h1 span {
+  color: #c7a052 !important;
+  font-style: italic;
+}
+.fp-dashboard-hero > div:first-of-type > p {
+  color: #d5deec !important;
+}
+.fp-dashboard-hero > div:first-of-type > div:first-child {
+  color: #c7a052 !important;
+}
+.fp-dashboard-hero > div:first-of-type > div:last-child {
+  color: #d5deec !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+}
+.fp-dashboard-hero > div:last-child {
+  background: rgba(255, 255, 255, 0.96) !important;
+}
+.fp-bank-heading {
+  width: 100%;
+  max-width: 1120px;
+  padding-top: 10px;
+}
+.fp-bank-heading h1 {
+  font-size: clamp(36px, 4vw, 54px) !important;
+  font-weight: 400;
+}
+.fp-bank-heading h1 span {
+  color: #163d70 !important;
+  font-style: italic;
+}
+.fp-bank-heading p {
+  margin-left: 0 !important;
+  max-width: 650px !important;
+}
+.fp-bank-stats {
+  max-width: 1120px !important;
+  justify-content: flex-start;
+  margin-bottom: 28px !important;
+}
+.fp-bank-modes {
+  width: 100%;
+  max-width: 1120px !important;
+  gap: 24px !important;
+}
+.fp-bank-modes > div {
+  border-radius: 20px !important;
+}
+.fp-bank-modes h2 {
+  font-size: 36px !important;
+  font-weight: 400;
+}
+.fp-app-content :is(input, select, textarea) {
+  border-radius: 10px;
+}
+@keyframes fp-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  .flightpath-redesign .rd-stats > div {
+    padding: 16px;
+  }
+  .flightpath-redesign [data-motion="stages"] {
+    gap: 32px;
+  }
+}
+@media (max-width: 900px) {
+  .flightpath-redesign .fp-public-nav {
+    margin: 0;
+  }
+  .flightpath-redesign .rd-hero {
+    height: auto;
+    min-height: 1080px;
+    padding-bottom: 490px;
+  }
+  .flightpath-redesign .rd-hero-copy {
+    padding-top: 36px;
+  }
+  .flightpath-redesign .rd-hero-copy > div:first-child {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+  .flightpath-redesign .rd-hero-copy p {
+    font-size: 17px;
+  }
+  .flightpath-redesign .rd-hero-copy > div:last-child {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .flightpath-redesign .rd-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    bottom: 24px;
+  }
+  .flightpath-redesign .rd-stats > div {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 12px;
+  }
+  .flightpath-redesign .rd-stats > div > span:first-child {
+    font-size: 28px;
+  }
+  .flightpath-redesign .rd-stats > div > span:last-child {
+    font-size: 11px;
+  }
+  .flightpath-redesign .rd-globe-wrap {
+    bottom: 150px;
+    height: 340px;
+  }
+  .flightpath-redesign [data-motion="parallax"] {
+    height: 480px;
+  }
+  .flightpath-redesign [data-motion="parallax"] h2 {
+    font-size: clamp(44px, 8vw, 72px);
+    padding: 0 20px;
+  }
+  .flightpath-redesign [data-motion="parallax"] + canvas {
+    display: none;
+  }
+  .flightpath-redesign [data-motion="stages"] {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .flightpath-redesign [data-stage-panel] {
+    width: 100%;
+    height: 380px;
+    transform: none !important;
+  }
+  .flightpath-redesign [data-stage-panel] + div {
+    padding: 0;
+    gap: 40px;
+  }
+  .flightpath-redesign [data-stage-item] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .flightpath-redesign [data-motion="stack"] > div {
+    height: auto !important;
+    margin-bottom: 24px;
+  }
+  .flightpath-redesign [data-stack-card] {
+    height: auto !important;
+    min-height: 0;
+    transform: none !important;
+  }
+  .flightpath-redesign [data-stack-card] > div {
+    min-width: 0;
+  }
+  .flightpath-redesign [data-stack-card] img {
+    height: 260px;
+    width: 100%;
+  }
+  .flightpath-redesign #precios > div > .text-center {
+    display: block;
+  }
+  .fp-dashboard-hero {
+    padding: 24px;
+    gap: 24px !important;
+  }
+}
+@media (max-width: 540px) {
+  .flightpath-redesign .rd-hero {
+    min-height: 1130px;
+  }
+  .flightpath-redesign .rd-hero-copy {
+    width: calc(100% - 36px);
+  }
+  .flightpath-redesign .rd-hero-copy h1 {
+    font-size: 50px;
+  }
+  .flightpath-redesign .rd-hero-copy > div:first-child > span:not(:nth-child(2)) {
+    display: none;
+  }
+  .flightpath-redesign [data-stage-panel] {
+    height: 300px;
+  }
+  .flightpath-redesign [data-stack-card] {
+    padding: 24px;
+  }
+  .flightpath-redesign main > footer > div > div:last-child {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .fp-bank-modes > div {
+    padding: 24px !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .flightpath-redesign [data-stage-item] {
+    opacity: 1 !important;
+  }
+}
+
+.fp-bank-modes > div:first-child {
+  background: linear-gradient(160deg, #081a35, #0c2447 55%, #163d70) !important;
+  border: 1px solid transparent !important;
+}
+.fp-bank-modes > div:last-child {
+  border: 1px solid #e1e5ed !important;
+}
+.fp-bank-modes > div:first-child > button {
+  color: #081a35 !important;
+}
+.fp-bank-modes > div > p {
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+.fp-bank-modes > div > div:nth-of-type(2) {
+  display: none !important;
+}
+.fp-flight-panel {
+  isolation: isolate;
+  position: relative;
+}
+
+@media (max-width: 540px) {
+  .fp-countdown-values {
+    flex-wrap: nowrap !important;
+    gap: 2px !important;
+  }
+  .fp-countdown-values > span:nth-child(odd) {
+    font-size: clamp(1.7rem, 8vw, 2.2rem) !important;
+  }
+  .fp-countdown-values > span:nth-child(even) {
+    font-size: 0.65rem !important;
+    margin-right: 3px !important;
+  }
+}

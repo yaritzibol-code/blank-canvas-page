@@ -25,7 +25,7 @@ export const Route = createFileRoute("/dashboard")({
 });
 
 const FONT = "'Manrope', sans-serif";
-const DISPLAY = "'Bricolage Grotesque', sans-serif";
+const DISPLAY = "'Instrument Serif', serif";
 const MONO = "'JetBrains Mono', monospace";
 
 /** Iniciales = primeras letras de nombre y primer apellido. */
@@ -264,7 +264,7 @@ function Sidebar({
         display: "flex",
         flexDirection: "column",
         height: "100%",
-        background: "#22375C",
+        background: "#081A35",
       }}
     >
       {/* Logo */}
@@ -286,14 +286,14 @@ function Sidebar({
           <PlaneMark size={34} />
           <span
             style={{
-              fontFamily: DISPLAY,
+              fontFamily: FONT,
               fontSize: "1.2rem",
               color: "white",
               fontWeight: 600,
               letterSpacing: "-0.02em",
             }}
           >
-            Flight<span style={{ color: "#F2AEBC" }}>Path</span>
+            Flight<span style={{ color: "#C7A052" }}>Path</span>
           </span>
         </Link>
         {onClose && (
@@ -361,12 +361,13 @@ function Sidebar({
                     margin: "1px 12px",
                     padding: "10px 12px",
                     borderRadius: 10,
-                    color: isActive ? "#ffffff" : "rgba(255,255,255,0.9)",
+                    color: isActive ? "#FFFFFF" : "#C9D3E3",
                     textDecoration: "none",
                     fontSize: "0.875rem",
                     fontWeight: isActive ? 600 : 500,
                     transition: "all 0.2s",
-                    background: isActive ? "rgba(108,8,32,0.55)" : "transparent",
+                    background: isActive ? "rgba(199,160,82,0.14)" : "transparent",
+                    boxShadow: isActive ? "inset 2px 0 0 #C7A052" : "none",
                   }}
                   onMouseEnter={(e) => {
                     if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,0.06)";
@@ -380,7 +381,7 @@ function Sidebar({
                       width: 20,
                       display: "flex",
                       justifyContent: "center",
-                      color: isActive ? "#ffffff" : "rgba(255,255,255,0.75)",
+                      color: isActive ? "#C7A052" : "rgba(255,255,255,0.75)",
                     }}
                   >
                     <Icon n={item.icon} size={18} />
@@ -396,7 +397,7 @@ function Sidebar({
                         gap: 4,
                         padding: "3px 9px",
                         borderRadius: 20,
-                        background: "linear-gradient(135deg, #F2AEBC, #E4708C)",
+                        background: "linear-gradient(135deg, #C7A052, #E4708C)",
                         color: "#4A0616",
                         fontSize: "0.58rem",
                         fontWeight: 800,
@@ -458,7 +459,7 @@ function Sidebar({
                 fontFamily: MONO,
                 textTransform: "uppercase",
                 letterSpacing: "0.18em",
-                color: "rgba(242,174,188,0.55)",
+                color: "rgba(199,160,82,0.55)",
                 marginTop: 6,
               }}
             >
@@ -478,12 +479,12 @@ function Sidebar({
                 textDecoration: "none",
                 fontSize: "0.875rem",
                 fontWeight: 600,
-                background: "rgba(242,174,188,0.15)",
-                border: "1px solid rgba(242,174,188,0.3)",
+                background: "rgba(199,160,82,0.15)",
+                border: "1px solid rgba(199,160,82,0.3)",
               }}
             >
               <span
-                style={{ width: 20, display: "flex", justifyContent: "center", color: "#F2AEBC" }}
+                style={{ width: 20, display: "flex", justifyContent: "center", color: "#C7A052" }}
               >
                 <Icon n="settings" size={18} />
               </span>
@@ -505,7 +506,7 @@ function Sidebar({
             style={{
               width: 36,
               height: 36,
-              background: "#3D5D91",
+              background: "#163D70",
               borderRadius: "50%",
               display: "flex",
               alignItems: "center",
@@ -526,7 +527,7 @@ function Sidebar({
             <div
               style={{
                 fontSize: "0.66rem",
-                color: "#F2AEBC",
+                color: "#C7A052",
                 fontWeight: 600,
                 fontFamily: MONO,
                 textTransform: "uppercase",
@@ -542,7 +543,7 @@ function Sidebar({
           style={{
             width: "100%",
             padding: "11px 12px",
-            background: "#6C0820",
+            background: "#7A5C1E",
             color: "white",
             border: "none",
             borderRadius: 10,
@@ -557,11 +558,11 @@ function Sidebar({
             fontFamily: FONT,
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#4A0517";
+            e.currentTarget.style.background = "#614919";
             e.currentTarget.style.transform = "translateY(-1px)";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = "#6C0820";
+            e.currentTarget.style.background = "#7A5C1E";
             e.currentTarget.style.transform = "none";
           }}
         >
@@ -679,10 +680,10 @@ function DashboardLayout() {
   return (
     <TimerProvider>
       <StudySessionProvider>
-      <div
+      <div className="fp-app-shell"
         style={{
           fontFamily: "'Manrope', sans-serif",
-          background: "#FBFAF7",
+          background: "#F5F5F7",
           minHeight: "100vh",
           display: "flex",
         }}
@@ -691,7 +692,7 @@ function DashboardLayout() {
         <aside
           style={{
             width: 260,
-            background: "#22375C",
+            background: "#081A35",
             position: "fixed",
             top: 0,
             left: 0,
@@ -727,7 +728,7 @@ function DashboardLayout() {
           aria-hidden={!sidebarOpen}
           style={{
             width: 260,
-            background: "#22375C",
+            background: "#081A35",
             position: "fixed",
             top: 0,
             left: 0,
@@ -761,7 +762,7 @@ function DashboardLayout() {
               <div
                 style={{
                   background: "white",
-                  borderBottom: "1px solid rgba(61,93,145,0.08)",
+                  borderBottom: "1px solid rgba(22,61,112,0.08)",
                   position: "sticky",
                   top: 0,
                   zIndex: 50,
@@ -793,7 +794,7 @@ function DashboardLayout() {
                       display: "block",
                       width: 22,
                       height: 2,
-                      background: "#22375C",
+                      background: "#081A35",
                       borderRadius: 2,
                     }}
                   />
@@ -803,7 +804,7 @@ function DashboardLayout() {
                       display: "block",
                       width: 22,
                       height: 2,
-                      background: "#22375C",
+                      background: "#081A35",
                       borderRadius: 2,
                     }}
                   />
@@ -813,7 +814,7 @@ function DashboardLayout() {
                       display: "block",
                       width: 22,
                       height: 2,
-                      background: "#22375C",
+                      background: "#081A35",
                       borderRadius: 2,
                     }}
                   />
@@ -821,8 +822,8 @@ function DashboardLayout() {
                 <div className="min-w-0 md:col-start-2">
                   <h1
                     style={{
-                      fontFamily: DISPLAY,
-                      color: "#22375C",
+                      fontFamily: FONT,
+                      color: "#081A35",
                       lineHeight: 1.2,
                       letterSpacing: "-0.02em",
                     }}
@@ -832,7 +833,7 @@ function DashboardLayout() {
                   </h1>
                   <p
                     style={{
-                      color: "#8DA1BE",
+                      color: "#7E90AD",
                       fontFamily: MONO,
                       textTransform: "uppercase",
                       letterSpacing: "0.08em",
@@ -849,17 +850,17 @@ function DashboardLayout() {
                   </span>
                   <div
                     style={{
-                      background: "#FAEFEE",
-                      border: "1px solid rgba(108,8,32,0.12)",
+                      background: "#FBF7EC",
+                      border: "1px solid rgba(122,92,30,0.12)",
                       borderRadius: 20,
                       fontWeight: 600,
-                      color: "#6C0820",
+                      color: "#7A5C1E",
                       whiteSpace: "nowrap",
                     }}
                     className="flex items-center gap-1.5 px-2.5 py-1.5 text-[0.75rem] sm:text-[0.8rem]"
                     title={`${streak} días de racha`}
                   >
-                    <span style={{ display: "flex", color: "#6C0820" }}>
+                    <span style={{ display: "flex", color: "#7A5C1E" }}>
                       <Icon n="flame" size={14} />
                     </span>
                     {streak}
@@ -867,7 +868,7 @@ function DashboardLayout() {
                   </div>
                   <div
                     style={{
-                      background: "#3D5D91",
+                      background: "#163D70",
                       borderRadius: "50%",
                       color: "white",
                       fontWeight: 700,
@@ -889,9 +890,9 @@ function DashboardLayout() {
                     style={{
                       borderRadius: "50%",
                       background: "white",
-                      border: "1px solid rgba(61,93,145,0.15)",
+                      border: "1px solid rgba(22,61,112,0.15)",
                       cursor: "pointer",
-                      color: "#22375C",
+                      color: "#081A35",
                       flexShrink: 0,
                     }}
                     className="flex items-center justify-center w-10 h-10 sm:w-9 sm:h-9"
@@ -915,7 +916,7 @@ function DashboardLayout() {
               {/* Radar Bar — global across all dashboard pages */}
               <div
                 style={{
-                  background: "#22375C",
+                  background: "#081A35",
                   color: "white",
                   fontFamily: FONT,
                 }}
@@ -932,7 +933,7 @@ function DashboardLayout() {
                     }}
                   />
                   <span
-                    style={{ fontFamily: DISPLAY, fontSize: 15, fontWeight: 700, color: "#F2AEBC" }}
+                    style={{ fontFamily: DISPLAY, fontSize: 15, fontWeight: 700, color: "#C7A052" }}
                   >
                     {streak}
                   </span>
@@ -960,7 +961,7 @@ function DashboardLayout() {
               </div>
 
               {/* Content */}
-              <div style={{ flex: 1 }} className="p-4 sm:p-6 md:p-8">
+              <div style={{ flex: 1 }} className="fp-app-content p-4 sm:p-6 md:p-8">
                 <Outlet />
               </div>
             </>

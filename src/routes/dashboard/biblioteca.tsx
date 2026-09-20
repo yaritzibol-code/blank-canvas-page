@@ -292,14 +292,14 @@ function BibliotecaPage() {
         {/* Search + filters */}
         <div style={{ display: "flex", gap: 12, marginBottom: 28, flexWrap: "wrap" }}>
           <div style={{ flex: 1, position: "relative", minWidth: 200 }}>
-            <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", fontSize: "1rem", color: "#8DA1BE", display: "flex" }}><Icon n="search" size={18} /></span>
+            <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", fontSize: "1rem", color: "#7E90AD", display: "flex" }}><Icon n="search" size={18} /></span>
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Buscar libro, autor o materia..."
-              style={{ width: "100%", padding: "11px 16px 11px 42px", border: "2px solid #F2DCDB", borderRadius: 12, fontSize: "0.9rem", fontFamily: "'Manrope', sans-serif", outline: "none", background: "white", transition: "border-color 0.2s" }}
-              onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }}
-              onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }}
+              style={{ width: "100%", padding: "11px 16px 11px 42px", border: "2px solid #EEE1C5", borderRadius: 12, fontSize: "0.9rem", fontFamily: "'Manrope', sans-serif", outline: "none", background: "white", transition: "border-color 0.2s" }}
+              onFocus={(e) => { e.currentTarget.style.borderColor = "#163D70"; }}
+              onBlur={(e) => { e.currentTarget.style.borderColor = "#EEE1C5"; }}
             />
           </div>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -307,7 +307,7 @@ function BibliotecaPage() {
               <button
                 key={t.key}
                 onClick={() => setFilter(t.key)}
-                style={{ padding: "8px 16px", border: `2px solid ${filter === t.key ? "#3D5D91" : "#F2DCDB"}`, borderRadius: 20, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", background: filter === t.key ? "#3D5D91" : "white", color: filter === t.key ? "white" : "#647DA0", transition: "all 0.2s", fontFamily: "'Manrope', sans-serif" }}
+                style={{ padding: "8px 16px", border: `2px solid ${filter === t.key ? "#163D70" : "#EEE1C5"}`, borderRadius: 20, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", background: filter === t.key ? "#163D70" : "white", color: filter === t.key ? "white" : "#4A5872", transition: "all 0.2s", fontFamily: "'Manrope', sans-serif" }}
               >
                 {t.label}
               </button>
@@ -317,12 +317,12 @@ function BibliotecaPage() {
 
         {/* Segunda fila de filtros: materia, orden y resultado */}
         <div style={{ display: "flex", gap: 12, marginBottom: 24, flexWrap: "wrap", alignItems: "center" }}>
-          <label style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: "0.78rem", fontWeight: 700, color: "#647DA0" }}>
+          <label style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: "0.78rem", fontWeight: 700, color: "#4A5872" }}>
             <Icon n="book" size={15} /> Materia
             <select
               value={materiaFilter}
               onChange={(e) => setMateriaFilter(e.target.value)}
-              style={{ border: "2px solid #F2DCDB", borderRadius: 10, padding: "7px 10px", fontSize: "0.8rem", fontFamily: "'Manrope', sans-serif", color: "#22375C", background: "white", outline: "none", cursor: "pointer", fontWeight: 600 }}
+              style={{ border: "2px solid #EEE1C5", borderRadius: 10, padding: "7px 10px", fontSize: "0.8rem", fontFamily: "'Manrope', sans-serif", color: "#081A35", background: "white", outline: "none", cursor: "pointer", fontWeight: 600 }}
             >
               <option value="todas">Todas ({books.length})</option>
               {materiaOptions.map(([name, n]) => (
@@ -331,12 +331,12 @@ function BibliotecaPage() {
             </select>
           </label>
 
-          <label style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: "0.78rem", fontWeight: 700, color: "#647DA0" }}>
+          <label style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: "0.78rem", fontWeight: 700, color: "#4A5872" }}>
             <Icon n="chart" size={15} /> Orden
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value as SortKey)}
-              style={{ border: "2px solid #F2DCDB", borderRadius: 10, padding: "7px 10px", fontSize: "0.8rem", fontFamily: "'Manrope', sans-serif", color: "#22375C", background: "white", outline: "none", cursor: "pointer", fontWeight: 600 }}
+              style={{ border: "2px solid #EEE1C5", borderRadius: 10, padding: "7px 10px", fontSize: "0.8rem", fontFamily: "'Manrope', sans-serif", color: "#081A35", background: "white", outline: "none", cursor: "pointer", fontWeight: 600 }}
             >
               {SORTS.map((s) => (
                 <option key={s.key} value={s.key}>{s.label}</option>
@@ -344,14 +344,14 @@ function BibliotecaPage() {
             </select>
           </label>
 
-          <span style={{ fontSize: "0.78rem", color: "#8DA1BE", fontWeight: 600 }}>
+          <span style={{ fontSize: "0.78rem", color: "#7E90AD", fontWeight: 600 }}>
             {filteredBooks.length} {filteredBooks.length === 1 ? "material" : "materiales"}
           </span>
 
           {(filter !== "todos" || materiaFilter !== "todas" || search.trim() !== "") && (
             <button
               onClick={() => { setFilter("todos"); setMateriaFilter("todas"); setSearch(""); }}
-              style={{ marginLeft: "auto", padding: "7px 14px", border: "2px solid #F2DCDB", background: "white", color: "#6C0820", borderRadius: 20, fontSize: "0.78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
+              style={{ marginLeft: "auto", padding: "7px 14px", border: "2px solid #EEE1C5", background: "white", color: "#7A5C1E", borderRadius: 20, fontSize: "0.78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
             >
               <Icon n="close" size={13} /> Limpiar filtros
             </button>
@@ -365,20 +365,20 @@ function BibliotecaPage() {
               onClick={() => openBook(featured)}
               onMouseEnter={() => setFeatHover(true)}
               onMouseLeave={() => setFeatHover(false)}
-              style={{ background: "linear-gradient(135deg,#22375C,#2a2a4e)", borderRadius: 18, padding: 28, display: "flex", alignItems: "center", gap: 24, color: "white", cursor: "pointer", transition: "all 0.2s", position: "relative", overflow: "hidden", transform: featHover ? "translateY(-3px)" : "none", boxShadow: featHover ? "0 12px 40px rgba(26,26,46,0.4)" : "none", flexWrap: "wrap" }}
+              style={{ background: "linear-gradient(135deg,#081A35,#2a2a4e)", borderRadius: 18, padding: 28, display: "flex", alignItems: "center", gap: 24, color: "white", cursor: "pointer", transition: "all 0.2s", position: "relative", overflow: "hidden", transform: featHover ? "translateY(-3px)" : "none", boxShadow: featHover ? "0 12px 40px rgba(26,26,46,0.4)" : "none", flexWrap: "wrap" }}
             >
               <div style={{ position: "absolute", top: -60, right: -60, width: 200, height: 200, background: "radial-gradient(circle,rgba(90,134,203,0.3) 0%,transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
               <FeaturedCover book={featured} />
               <div style={{ flex: 1, zIndex: 1 }}>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: 5, background: "#F2AEBC", color: "#6C0820", padding: "3px 10px", borderRadius: 20, fontSize: "0.7rem", fontWeight: 700, marginBottom: 8 }}><Icon n="star" size={14} /> Más consultado</div>
-                <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", marginBottom: 6 }}>{featured.title}</h3>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 5, background: "#C7A052", color: "#7A5C1E", padding: "3px 10px", borderRadius: 20, fontSize: "0.7rem", fontWeight: 700, marginBottom: 8 }}><Icon n="star" size={14} /> Más consultado</div>
+                <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.3rem", marginBottom: 6 }}>{featured.title}</h3>
                 <p style={{ fontSize: "0.84rem", opacity: 0.75, lineHeight: 1.5, marginBottom: 14 }}>Un buen punto de partida de la biblioteca. Ábrelo en el visor y estudia con Yaris a tu lado para resolver tus dudas al instante.</p>
                 <div style={{ display: "flex", gap: 16, fontSize: "0.78rem", opacity: 0.65, flexWrap: "wrap" }}>
                   <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="doc" size={14} /> {featured.author}</span>
                   <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="plane" size={14} /> {featured.materiaTag || "Todas las materias"}</span>
                 </div>
               </div>
-              <button style={{ padding: "10px 20px", background: "#F2AEBC", color: "#6C0820", border: "none", borderRadius: 8, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", flexShrink: 0 }}>
+              <button style={{ padding: "10px 20px", background: "#C7A052", color: "#7A5C1E", border: "none", borderRadius: 8, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", flexShrink: 0 }}>
                 Leer ahora →
               </button>
             </div>
@@ -387,7 +387,7 @@ function BibliotecaPage() {
 
         {/* Section header */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
-          <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", color: "#22375C", display: "flex", alignItems: "center", gap: 8 }}>
+          <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.1rem", color: "#081A35", display: "flex", alignItems: "center", gap: 8 }}>
             <Icon n="doc" size={20} />{" "}
             {materiaFilter !== "todas"
               ? materiaFilter
@@ -406,14 +406,14 @@ function BibliotecaPage() {
             <div style={{ gridColumn: "1/-1", display: "flex", justifyContent: "center", padding: "8px 0" }}>
               <button
                 onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
-                style={{ padding: "10px 22px", border: "2px solid #F2DCDB", background: "white", color: "#3D5D91", borderRadius: 22, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                style={{ padding: "10px 22px", border: "2px solid #EEE1C5", background: "white", color: "#163D70", borderRadius: 22, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
               >
                 Ver más manuales ({filteredBooks.length - visibleCount} restantes)
               </button>
             </div>
           )}
           {filteredBooks.length === 0 && (
-            <div style={{ gridColumn: "1/-1", textAlign: "center", padding: 40, color: "#647DA0", fontSize: "0.9rem" }}>
+            <div style={{ gridColumn: "1/-1", textAlign: "center", padding: 40, color: "#4A5872", fontSize: "0.9rem" }}>
               No se encontraron libros con esa búsqueda.
             </div>
           )}
@@ -422,7 +422,7 @@ function BibliotecaPage() {
 
       {/* ── READER MODAL ── */}
       {readerBook && (
-        <div style={{ position: "fixed", inset: 0, zIndex: 300, background: "#22375C", display: "flex", flexDirection: "column", fontFamily: "'Manrope', sans-serif" }}>
+        <div style={{ position: "fixed", inset: 0, zIndex: 300, background: "#081A35", display: "flex", flexDirection: "column", fontFamily: "'Manrope', sans-serif" }}>
 
           {/* Reader topbar */}
           <div style={{ height: 56, background: "rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px", flexShrink: 0 }}>
@@ -443,7 +443,7 @@ function BibliotecaPage() {
                   <YarisAvatar size={20} /> Mostrar Yaris
                 </button>
               )}
-              <button onClick={() => setYarisOpen(true)} style={{ padding: "6px 14px", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", color: "white", border: "none", borderRadius: 8, fontSize: "0.8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
+              <button onClick={() => setYarisOpen(true)} style={{ padding: "6px 14px", background: "linear-gradient(135deg,#163D70,#5A86CB)", color: "white", border: "none", borderRadius: 8, fontSize: "0.8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
                 <YarisAvatar size={20} /> Explícamelo Yaris
               </button>
             </div>
@@ -503,13 +503,13 @@ function BibliotecaPage() {
               ) : (
                 <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: 32, background: "#F7F9FC" }}>
                   <div style={{ maxWidth: 380, textAlign: "center" }}>
-                    <div style={{ display: "flex", justifyContent: "center", marginBottom: 12, color: "#8DA1BE" }}>
+                    <div style={{ display: "flex", justifyContent: "center", marginBottom: 12, color: "#7E90AD" }}>
                       <Icon n="book" size={40} />
                     </div>
-                    <div style={{ fontSize: "0.92rem", fontWeight: 700, color: "#22375C", marginBottom: 6 }}>
+                    <div style={{ fontSize: "0.92rem", fontWeight: 700, color: "#081A35", marginBottom: 6 }}>
                       Este material aún no tiene archivo
                     </div>
-                    <div style={{ fontSize: "0.82rem", color: "#647DA0", lineHeight: 1.55 }}>
+                    <div style={{ fontSize: "0.82rem", color: "#4A5872", lineHeight: 1.55 }}>
                       En cuanto se cargue el PDF podrás leerlo aquí. Mientras tanto puedes
                       preguntarle a Yaris sobre el tema.
                     </div>
@@ -523,10 +523,10 @@ function BibliotecaPage() {
               style={
                 isMobile && yarisOpen
                   ? { position: "absolute", top: 0, right: 0, bottom: 0, zIndex: 50, width: "100%", background: "white", display: "flex", flexDirection: "column" }
-                  : { width: yarisOpen ? 320 : 0, overflow: "hidden", flexShrink: 0, background: "white", borderLeft: yarisOpen ? "1px solid rgba(61,93,145,0.1)" : "none", display: "flex", flexDirection: "column", transition: "width 0.35s ease" }
+                  : { width: yarisOpen ? 320 : 0, overflow: "hidden", flexShrink: 0, background: "white", borderLeft: yarisOpen ? "1px solid rgba(22,61,112,0.1)" : "none", display: "flex", flexDirection: "column", transition: "width 0.35s ease" }
               }
             >
-              <div style={{ padding: "14px 16px", background: "linear-gradient(135deg,#3D5D91,#5A86CB)", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
+              <div style={{ padding: "14px 16px", background: "linear-gradient(135deg,#163D70,#5A86CB)", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <div style={{ width: 30, height: 30, background: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.9rem" }}><YarisAvatar size={28} /></div>
                   <div>
@@ -540,18 +540,18 @@ function BibliotecaPage() {
               <div style={{ flex: 1, overflowY: "auto", padding: 12, display: "flex", flexDirection: "column", gap: 10 }}>
                 {yarisMsgs.map((msg, i) => (
                   <div key={i} style={{ display: "flex", gap: 7, alignItems: "flex-start", flexDirection: msg.role === "user" ? "row-reverse" : "row" }}>
-                    <div style={{ width: 24, height: 24, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: msg.role === "bot" ? "0.75rem" : "0.58rem", fontWeight: msg.role === "user" ? 700 : undefined, background: msg.role === "bot" ? "#F2DCDB" : "#3D5D91", color: msg.role === "user" ? "white" : "#6C0820", flexShrink: 0 }}>
+                    <div style={{ width: 24, height: 24, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: msg.role === "bot" ? "0.75rem" : "0.58rem", fontWeight: msg.role === "user" ? 700 : undefined, background: msg.role === "bot" ? "#EEE1C5" : "#163D70", color: msg.role === "user" ? "white" : "#7A5C1E", flexShrink: 0 }}>
                       {msg.role === "bot" ? <YarisAvatar size={22} /> : userInitials}
                     </div>
-                    <div style={{ maxWidth: "84%", padding: "8px 11px", borderRadius: msg.role === "bot" ? "4px 12px 12px 12px" : "12px 4px 12px 12px", fontSize: "0.8rem", lineHeight: 1.5, background: msg.role === "bot" ? "#f0f4ff" : "#3D5D91", color: msg.role === "bot" ? "#22375C" : "white" }}>
+                    <div style={{ maxWidth: "84%", padding: "8px 11px", borderRadius: msg.role === "bot" ? "4px 12px 12px 12px" : "12px 4px 12px 12px", fontSize: "0.8rem", lineHeight: 1.5, background: msg.role === "bot" ? "#f0f4ff" : "#163D70", color: msg.role === "bot" ? "#081A35" : "white" }}>
                       <span dangerouslySetInnerHTML={{ __html: sanitizeHtml(msg.text) }} />
-                      {msg.cite && <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 5, padding: "3px 8px", background: "rgba(61,93,145,0.08)", borderLeft: "3px solid #3D5D91", borderRadius: 3, fontSize: "0.68rem", color: "#3D5D91", fontWeight: 600 }}><Icon n="book" size={12} /> {msg.cite}</div>}
+                      {msg.cite && <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 5, padding: "3px 8px", background: "rgba(22,61,112,0.08)", borderLeft: "3px solid #163D70", borderRadius: 3, fontSize: "0.68rem", color: "#163D70", fontWeight: 600 }}><Icon n="book" size={12} /> {msg.cite}</div>}
                     </div>
                   </div>
                 ))}
                 {yarisTyping && (
                   <div style={{ display: "flex", gap: 7, alignItems: "flex-start" }}>
-                    <div style={{ width: 24, height: 24, borderRadius: "50%", background: "#F2DCDB", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", flexShrink: 0, color: "#6C0820" }}><YarisAvatar size={22} /></div>
+                    <div style={{ width: 24, height: 24, borderRadius: "50%", background: "#EEE1C5", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", flexShrink: 0, color: "#7A5C1E" }}><YarisAvatar size={22} /></div>
                     <div style={{ padding: "8px 11px", background: "#f0f4ff", borderRadius: "4px 12px 12px 12px", display: "flex", alignItems: "center", gap: 3 }}>
                       <div className="yds2" /><div className="yds2" /><div className="yds2" />
                     </div>
@@ -566,11 +566,11 @@ function BibliotecaPage() {
                   onChange={(e) => setYarisInput(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter") sendYaris(); }}
                   placeholder="Pregúntame sobre lo que lees..."
-                  style={{ flex: 1, border: "2px solid #F2DCDB", borderRadius: 16, padding: "6px 11px", fontSize: "0.8rem", fontFamily: "'Manrope', sans-serif", outline: "none", transition: "border-color 0.2s" }}
-                  onFocus={(e) => { e.currentTarget.style.borderColor = "#3D5D91"; }}
-                  onBlur={(e) => { e.currentTarget.style.borderColor = "#F2DCDB"; }}
+                  style={{ flex: 1, border: "2px solid #EEE1C5", borderRadius: 16, padding: "6px 11px", fontSize: "0.8rem", fontFamily: "'Manrope', sans-serif", outline: "none", transition: "border-color 0.2s" }}
+                  onFocus={(e) => { e.currentTarget.style.borderColor = "#163D70"; }}
+                  onBlur={(e) => { e.currentTarget.style.borderColor = "#EEE1C5"; }}
                 />
-                <button onClick={sendYaris} style={{ width: 30, height: 30, background: "#3D5D91", border: "none", borderRadius: "50%", color: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", flexShrink: 0 }}><Icon n="send" size={15} /></button>
+                <button onClick={sendYaris} style={{ width: 30, height: 30, background: "#163D70", border: "none", borderRadius: "50%", color: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", flexShrink: 0 }}><Icon n="send" size={15} /></button>
               </div>
             </div>
           </div>
@@ -585,7 +585,7 @@ function BibliotecaPage() {
                 transform: "translateX(-50%)",
                 zIndex: 60,
                 background: "white",
-                border: "1px solid #E8EEF6",
+                border: "1px solid #E8ECF2",
                 borderRadius: 12,
                 padding: "10px 16px",
                 boxShadow: "0 12px 30px -10px rgba(15,26,51,0.35)",
@@ -594,10 +594,10 @@ function BibliotecaPage() {
                 gap: 8,
                 fontSize: "0.82rem",
                 fontWeight: 600,
-                color: "#33527F",
+                color: "#123360",
               }}
             >
-              <Icon n="info" size={14} color="#3D5D91" /> {viewerNotice}
+              <Icon n="info" size={14} color="#163D70" /> {viewerNotice}
             </div>
           )}
         </div>
@@ -667,9 +667,10 @@ function BookCard({ book, locked = false, onOpen }: { book: Book; locked?: boole
   return (
     <div
       onClick={onOpen}
+      className="fp-book-card"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      style={{ background: "white", borderRadius: 14, overflow: "hidden", cursor: "pointer", transition: "all 0.2s", boxShadow: hover ? "0 8px 24px rgba(61,93,145,0.12)" : "0 2px 10px rgba(61,93,145,0.06)", border: hover ? "2px solid #5A86CB" : "2px solid transparent", transform: hover ? "translateY(-3px)" : "none" }}
+      style={{ background: "white", borderRadius: 14, overflow: "hidden", cursor: "pointer", transition: "all 0.2s", boxShadow: hover ? "0 8px 24px rgba(22,61,112,0.12)" : "0 2px 10px rgba(22,61,112,0.06)", border: hover ? "2px solid #5A86CB" : "2px solid transparent", transform: hover ? "translateY(-3px)" : "none" }}
     >
       <div style={{ height: 190, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "3.5rem", position: "relative", background: book.gradient, color: "white" }}>
         {coverOk ? (
@@ -687,24 +688,24 @@ function BookCard({ book, locked = false, onOpen }: { book: Book; locked?: boole
           {book.badge}
         </span>
         {locked && (
-          <span style={{ position: "absolute", inset: 0, background: "rgba(34,55,92,0.35)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ width: 34, height: 34, borderRadius: "50%", background: "rgba(255,255,255,0.92)", display: "flex", alignItems: "center", justifyContent: "center", color: "#3D5D91" }}>
+          <span style={{ position: "absolute", inset: 0, background: "rgba(8,26,53,0.35)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ width: 34, height: 34, borderRadius: "50%", background: "rgba(255,255,255,0.92)", display: "flex", alignItems: "center", justifyContent: "center", color: "#163D70" }}>
               <Icon n="lock" size={16} />
             </span>
           </span>
         )}
       </div>
       <div style={{ padding: 14 }}>
-        <div style={{ fontSize: "0.84rem", fontWeight: 700, color: "#22375C", marginBottom: 4, lineHeight: 1.3 }}>{book.title}</div>
-        <div style={{ fontSize: "0.74rem", color: "#647DA0", marginBottom: 8 }}>{book.author}</div>
+        <div style={{ fontSize: "0.84rem", fontWeight: 700, color: "#081A35", marginBottom: 4, lineHeight: 1.3 }}>{book.title}</div>
+        <div style={{ fontSize: "0.74rem", color: "#4A5872", marginBottom: 8 }}>{book.author}</div>
         <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginBottom: 10 }}>
-          <span style={{ padding: "2px 8px", background: "#F2DCDB", color: "#6C0820", borderRadius: 10, fontSize: "0.65rem", fontWeight: 600 }}>{book.materiaTag || "General"}</span>
+          <span style={{ padding: "2px 8px", background: "#EEE1C5", color: "#7A5C1E", borderRadius: 10, fontSize: "0.65rem", fontWeight: 600 }}>{book.materiaTag || "General"}</span>
         </div>
         <button
           onClick={(e) => { e.stopPropagation(); onOpen(); }}
-          style={{ width: "100%", padding: "7px 0", background: "#3D5D91", color: "white", border: "none", borderRadius: 8, fontSize: "0.78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "background 0.2s" }}
+          style={{ width: "100%", padding: "7px 0", background: "#163D70", color: "white", border: "none", borderRadius: 8, fontSize: "0.78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "background 0.2s" }}
           onMouseEnter={(e) => { e.currentTarget.style.background = "#2d4a7a"; }}
-          onMouseLeave={(e) => { e.currentTarget.style.background = "#3D5D91"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = "#163D70"; }}
         >
           <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>{locked ? <Icon n="lock" size={14} /> : <Icon n="book" size={14} />} Leer</span>
         </button>

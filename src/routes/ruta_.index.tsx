@@ -29,10 +29,10 @@ function RutaHubPage() {
     })),
   );
 
-  if (!ready || !user) return <div className="min-h-screen" style={{ background: "#FBFAF7" }} />;
+  if (!ready || !user) return <div className="min-h-screen" style={{ background: "#F5F5F7" }} />;
 
   return (
-    <div className="min-h-screen" style={{ background: "#FBFAF7" }}>
+    <div className="min-h-screen" style={{ background: "#F5F5F7" }}>
       {/* Barra superior */}
       <div className="bg-ink-950">
         <div className="mx-auto flex max-w-[1080px] items-center justify-between px-5 py-3.5 sm:px-8">
@@ -66,7 +66,7 @@ function RutaHubPage() {
         className="relative overflow-hidden"
         style={{
           background:
-            "radial-gradient(120% 160% at 85% -20%, #33527F 0%, #22375C 45%, #1B2B4A 100%)",
+            "radial-gradient(120% 160% at 85% -20%, #123360 0%, #081A35 45%, #1B2B4A 100%)",
         }}
       >
         <div
@@ -93,7 +93,7 @@ function RutaHubPage() {
                   fontFamily: "'Instrument Serif', serif",
                   fontStyle: "italic",
                   fontWeight: 400,
-                  backgroundImage: "linear-gradient(92deg, #F2AEBC 10%, #7CA0D8 90%)",
+                  backgroundImage: "linear-gradient(92deg, #C7A052 10%, #7CA0D8 90%)",
                 }}
               >
                 ruta de aprendizaje
@@ -156,7 +156,7 @@ function RutaHubPage() {
                       className="h-full rounded-full"
                       style={{
                         width: `${percent}%`,
-                        background: "linear-gradient(90deg, #6C0820, #E0879A)",
+                        background: "linear-gradient(90deg, #7A5C1E, #B18B40)",
                       }}
                     />
                   </div>

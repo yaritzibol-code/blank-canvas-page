@@ -50,8 +50,8 @@ export const Route = createFileRoute("/dashboard/planes")({
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
-const INK = "#22375C";
-const BRAND = "#6C0820";
+const INK = "#081A35";
+const BRAND = "#7A5C1E";
 
 interface SubRow {
   status: string;
@@ -268,7 +268,7 @@ function PlanesPage() {
         <div style={{ padding: "16px clamp(16px,4vw,32px)" }}>
           <button
             onClick={abandonarCheckout}
-            style={{ background: "none", border: "none", color: "#3D5D91", fontWeight: 700, cursor: "pointer", fontSize: 14 }}
+            style={{ background: "none", border: "none", color: "#163D70", fontWeight: 700, cursor: "pointer", fontSize: 14 }}
           >
             ← Cancelar y volver
           </button>
@@ -288,7 +288,7 @@ function PlanesPage() {
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "clamp(24px,5vw,48px) 20px 80px" }}>
         <button
           onClick={() => navigate({ to: "/dashboard" })}
-          style={{ background: "none", border: "none", color: "#3D5D91", fontWeight: 700, cursor: "pointer", fontSize: 14, marginBottom: 20 }}
+          style={{ background: "none", border: "none", color: "#163D70", fontWeight: 700, cursor: "pointer", fontSize: 14, marginBottom: 20 }}
         >
           ← Volver al dashboard
         </button>
@@ -329,14 +329,14 @@ function PlanesPage() {
                   ${PRO_SETUP_LIST_PRICE.toLocaleString("es-MX")}
                 </span>
               )}
-              <span style={{ fontSize: 13, color: "#647DA0" }}>{setupPrice.currency}</span>
+              <span style={{ fontSize: 13, color: "#4A5872" }}>{setupPrice.currency}</span>
             </div>
             {setupPrice.amount < PRO_SETUP_LIST_PRICE && (
-              <div style={{ fontSize: 12, color: "#6C0820", fontWeight: 700, marginTop: 4 }}>
+              <div style={{ fontSize: 12, color: "#7A5C1E", fontWeight: 700, marginTop: 4 }}>
                 Promoción por la convocatoria
               </div>
             )}
-            <div style={{ fontSize: 12.5, color: "#647DA0", marginTop: 4 }}>
+            <div style={{ fontSize: 12.5, color: "#4A5872", marginTop: 4 }}>
               Se cobra una sola vez, junto con tu primer periodo.
             </div>
           </div>
@@ -366,9 +366,9 @@ function PlanesPage() {
 
         <div style={{ display: "grid", gap: 20, gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
           <div style={{ background: "#fff", border: "1px solid #E3EAF5", borderRadius: 20, padding: 28 }}>
-            <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.14em", color: "#647DA0", textTransform: "uppercase" }}>Básica</div>
-            <div style={{ fontFamily: DISPLAY, fontSize: "2.4rem", fontWeight: 800, color: INK, margin: "8px 0 4px" }}>$0 <span style={{ fontSize: 15, color: "#647DA0", fontWeight: 500 }}>MXN/mes</span></div>
-            <div style={{ color: "#647DA0", fontSize: 13, marginBottom: 20 }}>Gratis para siempre</div>
+            <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.14em", color: "#4A5872", textTransform: "uppercase" }}>Básica</div>
+            <div style={{ fontFamily: DISPLAY, fontSize: "2.4rem", fontWeight: 800, color: INK, margin: "8px 0 4px" }}>$0 <span style={{ fontSize: 15, color: "#4A5872", fontWeight: 500 }}>MXN/mes</span></div>
+            <div style={{ color: "#4A5872", fontSize: 13, marginBottom: 20 }}>Gratis para siempre</div>
             <ul style={{ padding: 0, listStyle: "none", color: "#4A5F80", fontSize: 14, lineHeight: 1.8, marginBottom: 20 }}>
               <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> 10 preguntas por materia</li>
               <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> Máximo 2 intentos totales</li>
@@ -376,7 +376,7 @@ function PlanesPage() {
               <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="close" size={15} color="#c0392b" /> Sin Yaris IA</li>
               <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="close" size={15} color="#c0392b" /> Sin módulos avanzados</li>
             </ul>
-            <button disabled style={{ width: "100%", background: "#F3F4F6", color: "#647DA0", border: "none", padding: "12px 20px", borderRadius: 12, fontWeight: 700, fontSize: 14 }}>
+            <button disabled style={{ width: "100%", background: "#F3F4F6", color: "#4A5872", border: "none", padding: "12px 20px", borderRadius: 12, fontWeight: 700, fontSize: 14 }}>
               {isProActive ? "Plan gratuito" : "Plan actual"}
             </button>
           </div>
@@ -386,7 +386,7 @@ function PlanesPage() {
             <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.14em", color: BRAND, textTransform: "uppercase" }}>Pro</div>
 
             {/* Mensual o anual */}
-            <div style={{ display: "flex", gap: 6, background: "#F4F7FB", borderRadius: 12, padding: 4, margin: "12px 0 14px", border: "1px solid #E3EAF5" }}>
+            <div style={{ display: "flex", gap: 6, background: "#F5F5F7", borderRadius: 12, padding: 4, margin: "12px 0 14px", border: "1px solid #E3EAF5" }}>
               {([
                 { key: "mensual" as const, label: "Mensual" },
                 { key: "anual" as const, label: ahorro > 0 ? `Anual · −${ahorro} meses` : "Anual" },
@@ -398,8 +398,8 @@ function PlanesPage() {
                     flex: 1, padding: "9px 8px", borderRadius: 9, border: "none", cursor: "pointer",
                     fontSize: 12.5, fontWeight: 700, fontFamily: FONT,
                     background: ciclo === opt.key ? "#fff" : "transparent",
-                    color: ciclo === opt.key ? INK : "#8DA1BE",
-                    boxShadow: ciclo === opt.key ? "0 2px 8px rgba(61,93,145,0.15)" : "none",
+                    color: ciclo === opt.key ? INK : "#7E90AD",
+                    boxShadow: ciclo === opt.key ? "0 2px 8px rgba(22,61,112,0.15)" : "none",
                   }}
                 >
                   {opt.label}
@@ -409,14 +409,14 @@ function PlanesPage() {
 
             <div style={{ fontFamily: DISPLAY, fontSize: "2.4rem", fontWeight: 800, color: INK, margin: "0 0 4px" }}>
               ${(ciclo === "anual" ? annualPrice : proPrice).amount.toLocaleString("es-MX")}{" "}
-              <span style={{ fontSize: 15, color: "#647DA0", fontWeight: 500 }}>
+              <span style={{ fontSize: 15, color: "#4A5872", fontWeight: 500 }}>
                 {(ciclo === "anual" ? annualPrice : proPrice).currency}{ciclo === "anual" ? "/año" : "/mes"}
               </span>
             </div>
-            <div style={{ color: "#647DA0", fontSize: 13, marginBottom: 4 }}>
+            <div style={{ color: "#4A5872", fontSize: 13, marginBottom: 4 }}>
               + ${setupPrice.amount.toLocaleString("es-MX")} {setupPrice.currency} de inscripción (pago único, sólo la primera vez)
             </div>
-            <div style={{ color: "#647DA0", fontSize: 13, marginBottom: 20 }}>Cancela cuando quieras</div>
+            <div style={{ color: "#4A5872", fontSize: 13, marginBottom: 20 }}>Cancela cuando quieras</div>
             <ul style={{ padding: 0, listStyle: "none", color: "#4A5F80", fontSize: 14, lineHeight: 1.8, marginBottom: 20 }}>
               <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> Cuestionario y simulador ilimitados</li>
               <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> Todo el banco de preguntas</li>
@@ -433,7 +433,7 @@ function PlanesPage() {
               {/* Cupón: si se escribe, se aplica al abrir el checkout; si se
                   deja vacío, el propio checkout permite capturarlo. */}
               <label style={{ display: "block", marginBottom: 12 }}>
-                <span style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#647DA0", marginBottom: 5 }}>
+                <span style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#4A5872", marginBottom: 5 }}>
                   ¿Tienes un cupón?
                 </span>
                 <input
@@ -456,7 +456,7 @@ function PlanesPage() {
           </div>
         </div>
 
-        <p style={{ marginTop: 32, textAlign: "center", color: "#647DA0", fontSize: 13 }}>
+        <p style={{ marginTop: 32, textAlign: "center", color: "#4A5872", fontSize: 13 }}>
           Pago procesado por Stripe · Los admins tienen acceso completo sin pago
         </p>
       </div>
