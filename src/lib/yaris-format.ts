@@ -139,10 +139,7 @@ function escapeHtml(s: string): string {
 /** Markdown de Yaris → HTML sanitizado listo para renderizar. */
 export function yarisToHtml(text: string): string {
   if (!text) return "";
-  const html = DOMPurify.sanitize(markdownToHtml(text), {
-    ALLOWED_TAGS,
-    ALLOWED_ATTR: [],
-  });
+  const html = sanitizeWith(markdownToHtml(text), ALLOWED_TAGS, []);
   return `<div class="yaris-md">${html}</div>`;
 }
 
