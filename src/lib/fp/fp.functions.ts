@@ -213,8 +213,7 @@ export const claimFlightPoints = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<{ nuevos: FpNuevo[]; total: number }> => {
     try {
-      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-      const admin = supabaseAdmin as unknown as { from: (t: string) => any };
+      const admin = (await clienteAdmin(context as never)) as unknown as { from: (t: string) => any };
       const rules = await cargarReglas(admin);
       return await procesarUsuarioFP(admin, rules, context.userId);
     } catch (error) {
@@ -300,8 +299,8 @@ export const getFlightPoints = createServerFn({ method: "GET" })
 
     let callsign = (perfil?.callsign as string | null) ?? null;
     if (!callsign) {
-      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-      callsign = await asegurarCallsign(supabaseAdmin as unknown as { from: (t: string) => any }, userId).catch(
+      const cli = await clienteAdmin({ supabase });
+      callsign = await asegurarCallsign(cli as unknown as { from: (t: string) => any }, userId).catch(
         () => generarCallsign(userId),
       );
     }
@@ -344,7 +343,7 @@ export const setCommunityPrefs = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: { privacidad?: "nombre" | "folio"; tutorialVisto?: boolean; tutorialOculto?: boolean }) => d ?? {})
   .handler(async ({ data, context }) => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const supabaseAdmin = await clienteAdmin(context as never);
     const patch: Record<string, unknown> = {
       user_id: context.userId,
       folio: folioDe(context.userId),
@@ -546,21 +545,36 @@ async function exigirAdmin(context: { supabase: any; userId: string }) {
   if (data?.role !== "admin") throw new Error("No autorizado");
 }
 
+/**
+ * Cliente de servidor para tareas administrativas. Si la llave privilegiada no
+ * está disponible en el entorno, se usa la sesión autenticada del admin en vez
+ * de reventar la petición (antes provocaba pantalla en blanco).
+ */
+async function clienteAdmin(context: { supabase: any }): Promise<any> {
+  try {
+    const mod = await import("@/integrations/supabase/client.server");
+    const admin = mod.supabaseAdmin;
+    if (admin) return admin;
+  } catch {
+    /* sin llave de servicio: se continúa con la sesión del admin */
+  }
+  return context.supabase;
+}
+
 /** Recalcula FlightPoints de todos los alumnos desde su actividad real. */
 export const adminFpBackfill = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<{ usuarios: number; fpNuevo: number }> => {
     await exigirAdmin(context as never);
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    return procesarTodosFP(supabaseAdmin as unknown as { from: (t: string) => any });
+    const admin = await clienteAdmin(context as never);
+    return procesarTodosFP(admin as unknown as { from: (t: string) => any });
   });
 
 export const adminFpPanel = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     await exigirAdmin(context as never);
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const admin = supabaseAdmin as unknown as { from: (t: string) => any; rpc: (n: string) => any };
+    const admin = (await clienteAdmin(context as never)) as unknown as { from: (t: string) => any; rpc: (n: string) => any };
     const [reglas, historial, alertas, economia, top] = await Promise.all([
       admin.from("fp_rules").select("*").order("orden"),
       admin.from("fp_rules_history").select("*").order("created_at", { ascending: false }).limit(50),
@@ -604,8 +618,7 @@ export const adminSaveFpRule = createServerFn({ method: "POST" })
   .inputValidator((d: { key: string; fp: number; enabled: boolean }) => d)
   .handler(async ({ data, context }) => {
     await exigirAdmin(context as never);
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const admin = supabaseAdmin as unknown as { from: (t: string) => any };
+    const admin = (await clienteAdmin(context as never)) as unknown as { from: (t: string) => any };
     const { data: actual } = await admin.from("fp_rules").select("value,enabled").eq("key", data.key).maybeSingle();
     const nuevo = { ...((actual?.value ?? {}) as Record<string, number>), fp: Math.max(0, Math.round(data.fp)) };
     await admin
@@ -626,8 +639,7 @@ export const adminFpAdjust = createServerFn({ method: "POST" })
   .inputValidator((d: { userId: string; amount: number; motivo: string }) => d)
   .handler(async ({ data, context }) => {
     await exigirAdmin(context as never);
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const admin = supabaseAdmin as unknown as { from: (t: string) => any };
+    const admin = (await clienteAdmin(context as never)) as unknown as { from: (t: string) => any };
     await admin.from("fp_transactions").insert({
       user_id: data.userId,
       event_key: `ajuste:${Date.now()}:${Math.random().toString(36).slice(2, 8)}`,
@@ -649,8 +661,7 @@ export const adminFpRevert = createServerFn({ method: "POST" })
   .inputValidator((d: { txId: string; motivo: string }) => d)
   .handler(async ({ data, context }) => {
     await exigirAdmin(context as never);
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const admin = supabaseAdmin as unknown as { from: (t: string) => any };
+    const admin = (await clienteAdmin(context as never)) as unknown as { from: (t: string) => any };
     const { data: tx } = await admin.from("fp_transactions").select("*").eq("id", data.txId).maybeSingle();
     if (!tx) throw new Error("Transacción no encontrada");
     await admin.from("fp_transactions").insert({
@@ -695,8 +706,7 @@ export const adminCommunityDirectory = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<AdminComunidadFila[]> => {
     await exigirAdmin(context as never);
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const admin = supabaseAdmin as unknown as { from: (t: string) => any };
+    const admin = (await clienteAdmin(context as never)) as unknown as { from: (t: string) => any };
     const [perfiles, cuentas, saldos] = await Promise.all([
       admin
         .from("fp_community_profiles")
