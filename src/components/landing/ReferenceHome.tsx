@@ -27,6 +27,27 @@ export function ReferenceHome({
   useEffect(() => {
     if (root.current) return mountReferenceMotion(root.current);
   }, []);
+  useEffect(() => {
+    const routeImages = [
+      "/redesign/cc77eeb602c602dd.jpg",
+      "/redesign/d683ed79d8eb51eb.jpg",
+      "/redesign/a79f863e1813a98f.jpg",
+      "/redesign/4bbe0ae2e413c22b.jpg",
+    ];
+    const preload = () => {
+      routeImages.forEach((src) => {
+        const image = new Image();
+        image.decoding = "async";
+        image.src = src;
+      });
+    };
+    const idle = window.requestIdleCallback?.(preload, { timeout: 1200 });
+    const timeout = idle === undefined ? window.setTimeout(preload, 250) : undefined;
+    return () => {
+      if (idle !== undefined) window.cancelIdleCallback?.(idle);
+      if (timeout !== undefined) window.clearTimeout(timeout);
+    };
+  }, []);
   return (
     <div ref={root} className="flightpath-redesign">
       <Nav />
@@ -70,6 +91,7 @@ export function ReferenceHome({
             </div>
           </div>
           <div className="rd-globe-wrap rd-13">
+            <div className="rd-globe-poster" aria-hidden="true"></div>
             <canvas className="rd-14" aria-hidden="true" data-motion="globe"></canvas>
             <canvas className="rd-15" aria-hidden="true" data-motion="globe-fx"></canvas>
             <div className="rd-16"></div>
@@ -492,7 +514,7 @@ export function ReferenceHome({
             <img
               className="rd-28"
               data-depth="0.5"
-              loading="lazy"
+              loading="eager" fetchPriority="high"
               decoding="async"
               src="/redesign/e262e5c0cc1ebd63.jpg"
               alt=""
@@ -501,7 +523,7 @@ export function ReferenceHome({
             <img
               className="rd-30"
               data-depth="0.34"
-              loading="lazy"
+              loading="eager" fetchPriority="high"
               decoding="async"
               src="/redesign/d570a146527c74e6.webp"
               alt=""
@@ -520,7 +542,7 @@ export function ReferenceHome({
             <img
               className="rd-33"
               data-depth="0.06"
-              loading="lazy"
+              loading="eager" fetchPriority="high"
               decoding="async"
               src="/redesign/6d490e09a9343478.webp"
               alt=""
@@ -544,7 +566,7 @@ export function ReferenceHome({
                 <img
                   className="rd-40"
                   data-stage-img="0"
-                  loading="lazy"
+                  loading="eager"
                   decoding="async"
                   src="/redesign/64b895fbc7418153.jpg"
                   alt="Estudiante de piloto estudiando con cartas aeronáuticas y un computador de vuelo"
@@ -552,7 +574,7 @@ export function ReferenceHome({
                 <img
                   className="rd-41"
                   data-stage-img="1"
-                  loading="lazy"
+                  loading="eager"
                   decoding="async"
                   src="/redesign/cc77eeb602c602dd.jpg"
                   alt="Piloto con auriculares de aviación hablando por radio en cabina"
@@ -560,7 +582,7 @@ export function ReferenceHome({
                 <img
                   className="rd-41"
                   data-stage-img="2"
-                  loading="lazy"
+                  loading="eager"
                   decoding="async"
                   src="/redesign/d683ed79d8eb51eb.jpg"
                   alt="Aspirante resolviendo una prueba de aptitud con joystick y acelerador"
@@ -568,7 +590,7 @@ export function ReferenceHome({
                 <img
                   className="rd-41"
                   data-stage-img="3"
-                  loading="lazy"
+                  loading="eager"
                   decoding="async"
                   src="/redesign/a79f863e1813a98f.jpg"
                   alt="Jet regional despegando al anochecer con las luces de pista encendidas"
@@ -576,7 +598,7 @@ export function ReferenceHome({
                 <img
                   className="rd-41"
                   data-stage-img="4"
-                  loading="lazy"
+                  loading="eager"
                   decoding="async"
                   src="/redesign/4bbe0ae2e413c22b.jpg"
                   alt="Manuales de aviación apilados junto a una tableta con análisis de avance"

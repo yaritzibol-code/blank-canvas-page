@@ -115,6 +115,22 @@
   bottom: 0;
   height: 492px;
 }
+.flightpath-redesign .rd-globe-poster {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  width: min(78vw, 620px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  background-image:
+    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.2), transparent 28%),
+    url("/redesign/earth-night.png");
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 72px rgba(72, 121, 178, 0.48);
+  opacity: 0.72;
+}
 .flightpath-redesign .rd-14 {
   position: absolute;
   inset: 0;
@@ -143,8 +159,8 @@
   position: absolute;
   z-index: 3;
   left: 50%;
-  margin-left: -600px;
-  bottom: 40px;
+  left: 0; margin-left: 0;
+  bottom: 40px; left: 50%; transform: translateX(-50%);
   width: 1200px;
   box-sizing: border-box;
   border: 1px solid rgba(255, 255, 255, 0.18);
@@ -163,7 +179,8 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-right: 1px solid rgba(255, 255, 255, 0.12); border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  @media (min-width: 1024px) { border-bottom: none; }
 }
 .flightpath-redesign .rd-19 {
   font-family: "Instrument Serif", serif;
@@ -175,6 +192,7 @@
   font-size: 13px;
   line-height: 1.4;
   color: #d5deec;
+  overflow-wrap: anywhere;
 }
 .flightpath-redesign .rd-21 {
   padding: 16px 24px;
@@ -960,6 +978,7 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  @media (min-width: 1024px) { border-bottom: none; }
   font-family: "Geist Mono", monospace;
   font-size: 12px;
   letter-spacing: 0.1em;
@@ -1587,9 +1606,13 @@
     width: calc(100% - 40px);
   }
   .flightpath-redesign .rd-17 {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
     width: calc(100% - 40px);
+  }
+  .flightpath-redesign .rd-globe-poster {
+    top: 10px;
+    width: min(112vw, 500px);
   }
   .flightpath-redesign .rd-23 {
     gap: 28px;

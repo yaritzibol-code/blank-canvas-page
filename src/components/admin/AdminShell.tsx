@@ -151,7 +151,7 @@ export function AdminShell({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const live = useLiveData(ready);
 
-  if (!ready) return <div style={{ minHeight: "100vh", background: "#f5f7fc" }} />;
+  if (!ready) return <div style={{ minHeight: "100vh", background: "#f5f5f7" }} />;
 
   const adminName = user?.nombre?.trim() || "Administradora";
   const firstName = adminName.split(" ")[0];
@@ -167,12 +167,12 @@ export function AdminShell({
     alignItems: "center",
     gap: 9,
     padding: "9px 16px",
-    color: isActive ? "white" : "rgba(255,255,255,.6)",
+    color: isActive ? "#FFFFFF" : "rgba(213,222,236,.72)",
     textDecoration: "none",
     fontSize: ".82rem",
     fontWeight: 500,
-    borderLeft: `3px solid ${isActive ? "#F2AEBC" : "transparent"}`,
-    background: isActive ? "rgba(61,93,145,.3)" : "transparent",
+    borderLeft: `3px solid ${isActive ? "#C7A052" : "transparent"}`,
+    background: isActive ? "rgba(199,160,82,.14)" : "transparent",
     transition: "all .2s",
   });
 
@@ -182,7 +182,7 @@ export function AdminShell({
         fontFamily: "'Manrope', sans-serif",
         display: "flex",
         minHeight: "100vh",
-        background: "#f5f7fc",
+        background: "#f5f5f7",
       }}
     >
       {/* Mobile overlay */}
@@ -197,7 +197,7 @@ export function AdminShell({
       <aside
         style={{
           width: 220,
-          background: "#22375C",
+          background: "#081A35",
           position: "fixed",
           top: 0,
           left: 0,
@@ -234,22 +234,23 @@ export function AdminShell({
           />
           <span
             style={{
-              fontFamily: "'Bricolage Grotesque', sans-serif",
+              fontFamily: "'Instrument Serif', serif",
               fontSize: "1.1rem",
               color: "white",
               fontWeight: 700,
             }}
           >
-            Flight<span style={{ color: "#F2AEBC" }}>Path</span>
+            Flight<span style={{ color: "#C7A052" }}>Path</span>
           </span>
           <span
             style={{
-              background: "#6C0820",
-              color: "white",
+              background: "rgba(199,160,82,.14)",
+              color: "#E2C990",
               fontSize: ".6rem",
               fontWeight: 700,
               padding: "2px 7px",
-              borderRadius: 10,
+              borderRadius: 6,
+              border: "1px solid rgba(199,160,82,.28)",
               textTransform: "uppercase",
               letterSpacing: ".5px",
               marginLeft: "auto",
@@ -287,7 +288,8 @@ export function AdminShell({
                       border: "none",
                       borderLeft: "3px solid transparent",
                       cursor: "pointer",
-                      fontFamily: "'Manrope', sans-serif",
+                       fontFamily: "'Manrope', sans-serif",
+                       background: "transparent",
                       textAlign: "left",
                     }}
                   >
@@ -341,12 +343,12 @@ export function AdminShell({
             style={{
               width: 32,
               height: 32,
-              background: "#6C0820",
+              background: "#C7A052",
               borderRadius: "50%",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "white",
+              color: "#081A35",
               fontSize: ".75rem",
               fontWeight: 700,
               flexShrink: 0,
@@ -356,7 +358,7 @@ export function AdminShell({
           </div>
           <div>
             <div style={{ fontSize: ".8rem", fontWeight: 700, color: "white" }}>{firstName}</div>
-            <div style={{ fontSize: ".66rem", color: "#F2AEBC" }}>Administradora</div>
+            <div style={{ fontSize: ".66rem", color: "#C7A052" }}>Administradora</div>
           </div>
         </div>
       </aside>
@@ -376,8 +378,8 @@ export function AdminShell({
         <div
           style={{
             height: 58,
-            background: "white",
-            borderBottom: "1px solid rgba(61,93,145,.08)",
+            background: "rgba(255,255,255,.94)",
+            borderBottom: "1px solid #E1E5ED",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -407,7 +409,7 @@ export function AdminShell({
                   display: "block",
                   width: 20,
                   height: 2,
-                  background: "#22375C",
+                 background: "#081A35",
                   borderRadius: 2,
                 }}
               />
@@ -416,7 +418,7 @@ export function AdminShell({
                   display: "block",
                   width: 20,
                   height: 2,
-                  background: "#22375C",
+                 background: "#081A35",
                   borderRadius: 2,
                 }}
               />
@@ -425,7 +427,7 @@ export function AdminShell({
                   display: "block",
                   width: 20,
                   height: 2,
-                  background: "#22375C",
+                 background: "#081A35",
                   borderRadius: 2,
                 }}
               />
@@ -437,12 +439,12 @@ export function AdminShell({
                   display: "flex",
                   alignItems: "center",
                   gap: 5,
-                  color: "#647DA0",
+                  color: "#4A5872",
                   fontSize: ".8rem",
                   textDecoration: "none",
                   padding: "5px 10px",
                   borderRadius: 6,
-                  border: "1px solid #F2DCDB",
+                  border: "1px solid #E1E5ED",
                   transition: "all .2s",
                   whiteSpace: "nowrap",
                 }}
@@ -452,10 +454,10 @@ export function AdminShell({
             )}
             <span
               style={{
-                fontFamily: "'Bricolage Grotesque', sans-serif",
-                fontSize: "1.05rem",
-                fontWeight: 700,
-                color: "#22375C",
+                fontFamily: "'Instrument Serif', serif",
+                fontSize: "1.45rem",
+                fontWeight: 400,
+                color: "#081A35",
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
@@ -471,7 +473,7 @@ export function AdminShell({
         </div>
 
         {/* Content */}
-        <div style={{ padding: "24px 28px", maxWidth, width: "100%" }}>{children}</div>
+        <div style={{ padding: "clamp(18px, 2.2vw, 32px)", maxWidth, width: "100%", margin: "0 auto" }}>{children}</div>
       </div>
     </div>
   );
@@ -482,19 +484,19 @@ export function AdminShell({
 export const inputStyle: CSSProperties = {
   width: "100%",
   padding: "9px 13px",
-  border: "2px solid #F2DCDB",
+  border: "1px solid #E1E5ED",
   borderRadius: 8,
   fontSize: ".86rem",
   fontFamily: "'Manrope', sans-serif",
   outline: "none",
-  color: "#22375C",
+  color: "#081A35",
   background: "white",
 };
 
 export const labelStyle: CSSProperties = {
   fontSize: ".75rem",
   fontWeight: 700,
-  color: "#22375C",
+  color: "#081A35",
   marginBottom: 5,
   display: "block",
 };
@@ -515,8 +517,8 @@ export const cancelBtnStyle: CSSProperties = {
 export const confirmBtnStyle: CSSProperties = {
   flex: 2,
   padding: 10,
-  background: "#3D5D91",
-  color: "white",
+  background: "#C7A052",
+  color: "#081A35",
   border: "none",
   borderRadius: 8,
   fontSize: ".84rem",
@@ -527,8 +529,8 @@ export const confirmBtnStyle: CSSProperties = {
 
 export const primaryBtnStyle: CSSProperties = {
   padding: "8px 16px",
-  background: "#3D5D91",
-  color: "white",
+  background: "#C7A052",
+  color: "#081A35",
   border: "none",
   borderRadius: 8,
   fontSize: ".8rem",
@@ -557,15 +559,16 @@ export const secondaryBtnStyle: CSSProperties = {
 
 export const cardStyle: CSSProperties = {
   background: "white",
-  borderRadius: 14,
+  borderRadius: 8,
   padding: "18px 20px",
-  boxShadow: "0 2px 10px rgba(61,93,145,.06)",
+  border: "1px solid #E1E5ED",
+  boxShadow: "0 12px 32px -28px rgba(8,26,53,.45)",
 };
 
 export const cardHeadStyle: CSSProperties = {
   fontSize: ".74rem",
   fontWeight: 700,
-  color: "#647DA0",
+  color: "#4A5872",
   textTransform: "uppercase",
   letterSpacing: ".5px",
   marginBottom: 14,
