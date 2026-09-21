@@ -125,10 +125,6 @@ export function LearningPathExperience({
           <div className="lp-study-topline">
             <span className="lp-study-brand">Flight<span>Path</span></span>
             <button type="button" className="lp-study-back" onClick={onBack}>← Regresar a Learning Paths</button>
-            <div className="lp-study-actions">
-              <button type="button" onClick={() => setReportOpen(true)}>Reportar contenido</button>
-              <button type="button" onClick={() => onYaris(studyContext)}>Pregúntale a Yaris</button>
-            </div>
           </div>
           <div className="lp-study-context" aria-label="Ubicación en Learning Paths">
             {[identity.category, identity.subject, identity.chapter, identity.title].map((part, index) =>
@@ -136,6 +132,10 @@ export function LearningPathExperience({
             {subjectProgress && <span className="lp-study-subject-progress" title="Progreso de la materia">
               · {subjectProgress.done} de {subjectProgress.total} Learning Paths · {subjectProgress.percent}%
             </span>}
+          </div>
+          <div className="lp-study-actions">
+            <button type="button" onClick={() => setReportOpen(true)}>Reportar contenido</button>
+            <button type="button" onClick={() => onYaris(studyContext)}>Pregúntale a Yaris</button>
           </div>
           {view && (
             <div className="lp-study-progress">
