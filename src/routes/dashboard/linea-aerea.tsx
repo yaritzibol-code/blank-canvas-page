@@ -24,6 +24,7 @@ import {
 import { useBankCounts } from "@/hooks/use-bank-counts";
 import { LA_CONVOCATORIA_COPY as CONVOCATORIA } from "@/lib/convocatoria";
 import { BancoScreen } from "@/components/banco/BancoScreen";
+import { ModalPortal } from "@/components/shared/ModalPortal";
 
 export const Route = createFileRoute("/dashboard/linea-aerea")({
   component: LineaAereaPage,
@@ -477,7 +478,7 @@ export function ChapterPicker({
     void navigate({ to: "/cuestionario", search: search as never });
   }
 
-  return (
+  const overlay = (
     <div
       className="fp-question-picker-backdrop"
       role="dialog"
@@ -796,6 +797,8 @@ export function ChapterPicker({
       </div>
     </div>
   );
+
+  return <ModalPortal onClose={onClose}>{overlay}</ModalPortal>;
 }
 
 /**

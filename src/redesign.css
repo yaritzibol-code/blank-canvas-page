@@ -168,8 +168,18 @@ textarea {
   min-width: 0;
   overflow-x: clip;
 }
+/*
+ * Entrada de página. El fill-mode es `backwards` a propósito, nunca `both`:
+ * al terminar con `both`, el fotograma final (`transform: none`) se queda
+ * aplicado como matriz identidad, y un `transform` distinto de `none`
+ * convierte al elemento en bloque contenedor de sus hijos `position: fixed`.
+ * Con `both`, cada modal montado dentro de una página del dashboard se
+ * anclaba al alto completo de la página en vez de a la ventana, y había que
+ * hacer scroll para encontrarlo. Con `backwards` el transform desaparece al
+ * acabar la animación y los overlays vuelven a ser fijos respecto al viewport.
+ */
 .fp-app-content > div {
-  animation: fp-page-enter 0.45s ease both;
+  animation: fp-page-enter 0.45s ease backwards;
 }
 .fp-app-shell aside nav a:hover {
   transform: translateX(2px);
@@ -286,7 +296,8 @@ textarea {
   font-size: 36px !important;
   font-weight: 400;
 }
-.fp-app-content :is(input, select, textarea) {
+.fp-app-content :is(input, select, textarea),
+[data-fp-modal] :is(input, select, textarea) {
   border-radius: 10px;
 }
 @keyframes fp-page-enter {
@@ -479,5 +490,141 @@ textarea {
   .fp-countdown-values > span:nth-child(even) {
     font-size: 0.65rem !important;
     margin-right: 3px !important;
+  }
+}
+
+/* ── Learning path a pantalla completa ──────────────────────────────────
+ * El recorrido ocupa todo el viewport en lugar de vivir dentro de una
+ * tarjeta con borde, sombra y alto fijo (se veía como un HTML embebido en
+ * una ventana). La barra queda arriba y el recorrido llena el resto.
+ */
+.lp-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #f5f5f7;
+  color: #081a35;
+  font-family: "Manrope", sans-serif;
+}
+.lp-screen-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px clamp(12px, 2vw, 22px);
+  background: #fff;
+  border-bottom: 1px solid rgba(22, 61, 112, 0.1);
+}
+.lp-screen-exit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 8px 14px 8px 10px;
+  border: 1px solid rgba(22, 61, 112, 0.15);
+  border-radius: 999px;
+  background: #fff;
+  color: #081a35;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+.lp-screen-exit:hover {
+  background: #f5f5f7;
+}
+.lp-screen-title {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.lp-screen-title span {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7a5c1e;
+}
+.lp-screen-title strong {
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.25;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.lp-screen-progress {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 190px;
+  flex-shrink: 0;
+}
+.lp-screen-progress > div {
+  flex: 1;
+}
+.lp-screen-progress > b {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #4a5872;
+}
+.lp-screen-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.lp-screen-stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow: auto;
+}
+.lp-screen-stage > * {
+  flex: 1;
+  min-width: 0;
+}
+/* Estados vacíos (bloqueado, contenido en preparación) centrados en pantalla. */
+.lp-screen-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(20px, 5vw, 48px);
+}
+.lp-screen-empty > * {
+  width: min(560px, 100%);
+}
+/* Los recorridos pierden el marco de "ventana" y llenan la pantalla. */
+.lp-screen-stage :is(.atp-shell, .hb-shell, .jp-shell, .law-shell, .ar-shell) {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  min-height: 100%;
+}
+/* ATP y Handbook tienen scroll propio: ocupan exactamente el alto disponible. */
+@media (min-width: 981px) {
+  .lp-screen-stage :is(.atp-shell, .hb-shell) {
+    height: 100%;
+    min-height: 0;
+  }
+}
+@media (max-width: 860px) {
+  .lp-screen-bar {
+    gap: 10px;
+  }
+  .lp-screen-exit {
+    padding: 8px 10px;
+  }
+  .lp-screen-exit span {
+    display: none;
+  }
+  .lp-screen-progress,
+  .lp-screen-pill {
+    display: none;
   }
 }

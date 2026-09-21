@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { submitReport } from "@/lib/store";
 import type { ReportQuestionSnapshot, User } from "@/lib/store";
+import { ModalPortal } from "@/components/shared/ModalPortal";
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
@@ -89,7 +90,7 @@ export function ReportProblemModal({
     background: "#fff",
   } as const;
 
-  return (
+  const overlay = (
     <div
       onClick={onClose}
       style={{
@@ -238,4 +239,6 @@ export function ReportProblemModal({
       </div>
     </div>
   );
+
+  return <ModalPortal onClose={onClose}>{overlay}</ModalPortal>;
 }

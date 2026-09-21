@@ -21,6 +21,7 @@ import {
 } from "@/lib/store";
 import type { QuizAttempt, SimAttempt } from "@/lib/store";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
+import { ModalPortal } from "@/components/shared/ModalPortal";
 import {
   LINEA_AEREA_OFICIAL,
   LINEA_AEREA_QUIZZES as LINEA_AEREA_QUIZZES_LA,
@@ -776,7 +777,7 @@ function ModalExamen({
     },
   ];
 
-  return (
+  const overlay = (
     <div
       style={{
         position: "fixed",
@@ -981,6 +982,8 @@ function ModalExamen({
       </div>
     </div>
   );
+
+  return <ModalPortal onClose={onClose}>{overlay}</ModalPortal>;
 }
 
 /* ─── Modal: Aprendiendo ─────────────────────────────── */
@@ -1091,7 +1094,7 @@ function ModalAprendiendo({
     fontFamily: "'Manrope', sans-serif",
   } as const;
 
-  return (
+  const overlay = (
     <div
       style={{
         position: "fixed",
@@ -1431,6 +1434,8 @@ function ModalAprendiendo({
       </div>
     </div>
   );
+
+  return <ModalPortal onClose={onClose}>{overlay}</ModalPortal>;
 }
 
 /* ─── Main page ──────────────────────────────────────── */
