@@ -4,6 +4,7 @@ import { PathyMark } from "@/components/shared/PathyMark";
 import { LEGISLATION_ANNEXES } from "@/lib/lp/legislation-content.generated";
 import type { LegislationCourse, LegislationStep } from "@/lib/lp/legislation-types";
 import { getLpJourney, resetLpJourney, saveLpJourney } from "@/lib/store/lp-journey";
+import { useLearningPathStageView } from "@/components/lp/LearningPathExperience";
 
 interface JourneyState {
   stage: number;
@@ -114,6 +115,18 @@ export function LegislationLearningPath({
     const next = state.stage + 1;
     patch({ stage: next, maxStage: Math.max(state.maxStage, next) });
   };
+
+  const goTo = (index: number) => {
+    if (index < 0 || index > state.maxStage || index >= document.steps.length) return;
+    patch({ stage: index });
+  };
+
+  useLearningPathStageView({
+    labels: document.steps.map((item) => item.label), current: state.stage,
+    highest: state.maxStage,
+    done: document.steps.map((_, index) => index < state.maxStage || state.complete),
+    percent, onNavigate: goTo,
+  });
 
   return (
     <section className="law-shell">

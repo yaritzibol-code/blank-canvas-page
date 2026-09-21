@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
 import { getLpJourney, resetLpJourney, saveLpJourney } from "@/lib/store/lp-journey";
+import { useLearningPathStageView } from "@/components/lp/LearningPathExperience";
 
 export const APPLICABLE_REGULATIONS_LP_ID =
   "linea-aerea/atp/chapter-1-regulations/applicable-regulations-1";
@@ -219,6 +220,11 @@ export function ApplicableRegulationsPath({
     resetLpJourney(userId, lpId);
     setState(freshJourney());
   };
+
+  useLearningPathStageView({
+    labels: [...STEPS], current: state.step, highest: openThrough,
+    done: state.done, percent, onNavigate: goTo, onReset: reset,
+  });
 
   const correct121 = Object.entries(ANSWERS_121).filter(
     ([key, value]) => state.a121[key] === value,

@@ -6,6 +6,7 @@ import type {
   JeppesenSection,
 } from "@/lib/lp/jeppesen-types";
 import { getLpJourney, resetLpJourney, saveLpJourney } from "@/lib/store/lp-journey";
+import { useLearningPathStageView } from "@/components/lp/LearningPathExperience";
 
 interface JeppesenJourneyState {
   stage: number;
@@ -127,6 +128,13 @@ export function JeppesenLearningPath({
   };
 
   const stageTitle = isIntro ? "Briefing" : isFinish ? "Cierre del recorrido" : section.title;
+
+  useLearningPathStageView({
+    labels: ["Briefing", ...document.sections.map((item) => item.title), "Cierre"],
+    current: state.stage, highest: state.maxStage,
+    done: Array.from({ length: totalStages }, (_, index) => index < state.maxStage || state.complete),
+    percent, onNavigate: goTo, onReset: reset,
+  });
 
   return (
     <section className={`jp-shell ${menuOpen ? "is-menu-open" : ""}`}>

@@ -9,6 +9,7 @@ import type {
   HandbookQuestion,
 } from "@/lib/lp/handbook-types";
 import { getLpJourney, resetLpJourney, saveLpJourney } from "@/lib/store/lp-journey";
+import { useLearningPathStageView } from "@/components/lp/LearningPathExperience";
 
 interface ExerciseProgress {
   pairs: Record<string, number>;
@@ -130,6 +131,13 @@ export function HandbookLearningPath({
     resetLpJourney(userId, lpId);
     setState(freshState());
   };
+
+  useLearningPathStageView({
+    labels: stages.map((stage) => stage.nav), current: state.stage,
+    highest: state.maxStage,
+    done: stages.map((_, index) => index < state.maxStage || state.complete),
+    percent, onNavigate: goTo, onReset: reset,
+  });
 
   const guide = state.complete
     ? "Recorrido completo. Puedes repasar cualquier etapa cuando quieras."
