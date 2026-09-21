@@ -697,6 +697,75 @@ export function LpEmptyState({
   );
 }
 
+/**
+ * Marco a pantalla completa de un learning path abierto.
+ *
+ * El recorrido ya no vive dentro de una tarjeta con borde y sombra — que lo
+ * hacía parecer un HTML incrustado en una ventana de la plataforma — sino que
+ * ocupa toda la pantalla: una barra compacta arriba (salir, título, avance y
+ * navegación) y el contenido llenando el alto restante. Los estilos viven en
+ * `redesign.css` (`.lp-screen*`) porque necesitan media queries.
+ */
+export function LpFullscreen({
+  eyebrow,
+  titulo,
+  status,
+  percent,
+  progreso,
+  salir,
+  acciones,
+  children,
+}: {
+  eyebrow?: string;
+  titulo: string;
+  status?: LpStatus;
+  percent?: number;
+  /** Texto de apoyo del avance ("4 de 12 completados"). */
+  progreso?: string;
+  /** A dónde vuelve el botón "Salir". */
+  salir: { to: string; params?: Record<string, string> };
+  acciones?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <div className="lp-screen">
+      <header className="lp-screen-bar">
+        <Link
+          to={salir.to}
+          params={salir.params}
+          className="lp-screen-exit"
+          aria-label="Salir del learning path"
+        >
+          <Icon n="chevL" size={15} />
+          <span>Salir</span>
+        </Link>
+
+        <div className="lp-screen-title">
+          {eyebrow && <span>{eyebrow}</span>}
+          <strong title={titulo}>{titulo}</strong>
+        </div>
+
+        {typeof percent === "number" && (
+          <div className="lp-screen-progress" title={progreso}>
+            <LpProgressBar percent={percent} />
+            <b>{percent}%</b>
+          </div>
+        )}
+
+        {status && (
+          <span className="lp-screen-pill">
+            <LpStatusPill status={status} />
+          </span>
+        )}
+
+        {acciones && <div className="lp-screen-actions">{acciones}</div>}
+      </header>
+
+      <div className="lp-screen-stage">{children}</div>
+    </div>
+  );
+}
+
 /** Barra de acciones anterior / completar / siguiente. */
 export function LpActionBar({ children }: { children: ReactNode }) {
   return (

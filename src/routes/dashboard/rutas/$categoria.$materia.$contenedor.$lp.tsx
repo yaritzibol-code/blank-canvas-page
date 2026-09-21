@@ -2,6 +2,10 @@
  * Learning Path individual: contenido, posición en la secuencia, estado y
  * avance anterior/siguiente. La progresión se valida también aquí: si el
  * Learning Path todavía está bloqueado, la URL no lo abre.
+ *
+ * El recorrido se abre a pantalla completa (`LpFullscreen`): el dashboard
+ * oculta su barra lateral y su topbar en esta ruta para que el learning path
+ * no se vea como un HTML metido en una ventana dentro de la plataforma.
  */
 import { useEffect } from "react";
 import { createFileRoute, Link, Navigate, useNavigate } from "@tanstack/react-router";
@@ -14,15 +18,7 @@ import { AtpLearningPath } from "@/components/lp/AtpLearningPath";
 import { HandbookLearningPath } from "@/components/lp/HandbookLearningPath";
 import { JeppesenLearningPath } from "@/components/lp/JeppesenLearningPath";
 import { LegislationLearningPath } from "@/components/lp/LegislationLearningPath";
-import {
-  LpActionBar,
-  LpBreadcrumbs,
-  LpEmptyState,
-  LpHeader,
-  LpProgressBar,
-  LpStatusPill,
-  lpButtonStyle,
-} from "@/components/lp/nav";
+import { LpEmptyState, LpFullscreen, lpButtonStyle } from "@/components/lp/nav";
 import { lpCategory, lpContainer, lpSubject } from "@/lib/lp/taxonomy";
 import { ATP_LEARNING_PATHS } from "@/lib/lp/atp-content.generated";
 import { ANNEX10_LEARNING_PATHS } from "@/lib/lp/annex10-content.generated";
@@ -70,50 +66,45 @@ function LearningPathPage() {
 
   const acceso = estado?.acceso;
 
+  /** "Salir" devuelve al temario del contenedor, no al learning path previo. */
+  const salir = {
+    to: "/dashboard/rutas/$categoria/$materia/$contenedor",
+    params: { categoria, materia, contenedor },
+  };
+
   // Guard de progresión: bloqueado también por URL directa.
   if (acceso && !acceso.allowed) {
     return (
-      <>
-        <LpBreadcrumbs
-          items={[
-            { label: "Learning Paths", to: "/dashboard/rutas" },
-            { label: cat.titulo, to: "/dashboard/rutas/$categoria", params: { categoria } },
-            {
-              label: subject.titulo,
-              to: "/dashboard/rutas/$categoria/$materia",
-              params: { categoria, materia },
-            },
-            {
-              label: cont.titulo,
-              to: "/dashboard/rutas/$categoria/$materia/$contenedor",
-              params: { categoria, materia, contenedor },
-            },
-            { label: item.titulo },
-          ]}
-        />
-        <LpEmptyState
-          icon="lock"
-          title={item.titulo}
-          description={
-            acceso.lock === "plan"
-              ? "Este learning path está incluido en FlightPath Pro."
-              : "Completa el learning path anterior de la secuencia para abrir este."
-          }
-          action={
-            <Link
-              to={
-                acceso.lock === "plan"
-                  ? "/dashboard/planes"
-                  : "/dashboard/rutas/$categoria/$materia/$contenedor"
-              }
-              params={acceso.lock === "plan" ? undefined : { categoria, materia, contenedor }}
-              style={{ ...lpButtonStyle("primary"), textDecoration: "none" }}
-            >
-              {acceso.lock === "plan" ? "Ver planes" : "Volver al listado"}
-            </Link>
-          }
-        />
-      </>
+      <LpFullscreen
+        eyebrow={`${cat.titulo} · ${subject.titulo}`}
+        titulo={item.titulo}
+        salir={salir}
+      >
+        <div className="lp-screen-empty">
+          <LpEmptyState
+            icon="lock"
+            title={item.titulo}
+            description={
+              acceso.lock === "plan"
+                ? "Este learning path está incluido en FlightPath Pro."
+                : "Completa el learning path anterior de la secuencia para abrir este."
+            }
+            action={
+              <Link
+                to={
+                  acceso.lock === "plan"
+                    ? "/dashboard/planes"
+                    : "/dashboard/rutas/$categoria/$materia/$contenedor"
+                }
+                params={acceso.lock === "plan" ? undefined : { categoria, materia, contenedor }}
+                style={{ ...lpButtonStyle("primary"), textDecoration: "none" }}
+              >
+                {acceso.lock === "plan" ? "Ver planes" : "Volver al listado"}
+              </Link>
+            }
+          />
+        </div>
+      </LpFullscreen>
     );
   }
 
@@ -146,108 +137,15 @@ function LearningPathPage() {
   };
 
   return (
-    <>
-      <LpBreadcrumbs
-        items={[
-          { label: "Learning Paths", to: "/dashboard/rutas" },
-          { label: cat.titulo, to: "/dashboard/rutas/$categoria", params: { categoria } },
-          {
-            label: subject.titulo,
-            to: "/dashboard/rutas/$categoria/$materia",
-            params: { categoria, materia },
-          },
-          {
-            label: cont.titulo,
-            to: "/dashboard/rutas/$categoria/$materia/$contenedor",
-            params: { categoria, materia, contenedor },
-          },
-          { label: item.titulo },
-        ]}
-      />
-      <LpHeader
-        eyebrow={`Paso ${acceso?.posicion} de ${acceso?.total} · ${subject.titulo}`}
-        title={item.titulo}
-        right={<LpStatusPill status={acceso?.status ?? "en_progreso"} />}
-      />
-
-      <div
-        style={{
-          marginBottom: 22,
-          padding: 16,
-          borderRadius: 18,
-          border: "1px solid var(--border)",
-          background: "var(--card)",
-        }}
-      >
-        <LpProgressBar percent={estado?.progreso.percent ?? 0} />
-        <div style={{ fontSize: 12.5, color: "var(--muted-foreground)", marginTop: 8 }}>
-          {estado?.progreso.done} de {estado?.progreso.total} completados en {subject.titulo}
-        </div>
-      </div>
-
-      <div style={{ marginBottom: 22 }}>
-        {item.id === APPLICABLE_REGULATIONS_LP_ID && user ? (
-          <ApplicableRegulationsPath
-            userId={user.id}
-            lpId={item.id}
-            completed={completado}
-            onComplete={() => completeLp(user.id, item, subject.titulo)}
-          />
-        ) : atpDocument && user ? (
-          <AtpLearningPath
-            document={atpDocument}
-            userId={user.id}
-            lpId={item.id}
-            completed={completado}
-            onComplete={() => completeLp(user.id, item, subject.titulo)}
-          />
-        ) : handbookDocument && user ? (
-          <HandbookLearningPath
-            document={handbookDocument}
-            userId={user.id}
-            lpId={item.id}
-            completed={completado}
-            onComplete={() => completeLp(user.id, item, subject.titulo)}
-          />
-        ) : jeppesenDocument && user ? (
-          <JeppesenLearningPath
-            document={jeppesenDocument}
-            userId={user.id}
-            lpId={item.id}
-            completed={completado}
-            onComplete={() => completeLp(user.id, item, subject.titulo)}
-          />
-        ) : legislationDocument && user ? (
-          <LegislationLearningPath
-            document={legislationDocument}
-            userId={user.id}
-            lpId={item.id}
-            completed={completado}
-            onComplete={() => completeLp(user.id, item, subject.titulo)}
-          />
-        ) : annex10Document && user ? (
-          <LegislationLearningPath
-            document={annex10Document}
-            userId={user.id}
-            lpId={item.id}
-            completed={completado}
-            onComplete={() => completeLp(user.id, item, subject.titulo)}
-          />
-        ) : (
-          <LpEmptyState
-            icon="spark"
-            title="Contenido en preparación"
-            description={
-              isNativeSubject
-                ? `Falta el HTML fuente de “${item.titulo}”. Este tema permanece bloqueado dentro de la secuencia hasta integrar su recorrido nativo.`
-                : `Este learning path ya está creado dentro de la secuencia de ${cont.titulo}. Su material de estudio se cargará aquí.`
-            }
-          />
-        )}
-      </div>
-
-      <LpActionBar>
-        <div>
+    <LpFullscreen
+      eyebrow={`Paso ${acceso?.posicion} de ${acceso?.total} · ${subject.titulo}`}
+      titulo={item.titulo}
+      status={acceso?.status ?? "en_progreso"}
+      percent={estado?.progreso.percent ?? 0}
+      progreso={`${estado?.progreso.done} de ${estado?.progreso.total} completados en ${subject.titulo}`}
+      salir={salir}
+      acciones={
+        <>
           {vecinos?.prev && (
             <button
               type="button"
@@ -255,19 +153,19 @@ function LearningPathPage() {
               style={lpButtonStyle("ghost")}
               aria-label={`Anterior: ${vecinos.prev.titulo}`}
             >
-              <Icon n="chevL" size={15} /> Anterior
+              <Icon n="chevL" size={15} />
+              <span className="hidden sm:inline">Anterior</span>
             </button>
           )}
-        </div>
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
           {!hasNativeContent && !isNativeSubject && !completado && user && (
             <button
               type="button"
               onClick={() => completeLp(user.id, item, subject.titulo)}
               style={lpButtonStyle("primary")}
             >
-              <Icon n="check" size={15} /> Marcar como completado
+              <Icon n="check" size={15} />
+              <span className="hidden sm:inline">Marcar como completado</span>
             </button>
           )}
 
@@ -284,10 +182,72 @@ function LearningPathPage() {
                 : "Completa este learning path para avanzar"
             }
           >
-            Siguiente <Icon n="chevR" size={15} />
+            <span className="hidden sm:inline">Siguiente</span>
+            <Icon n="chevR" size={15} />
           </button>
+        </>
+      }
+    >
+      {item.id === APPLICABLE_REGULATIONS_LP_ID && user ? (
+        <ApplicableRegulationsPath
+          userId={user.id}
+          lpId={item.id}
+          completed={completado}
+          onComplete={() => completeLp(user.id, item, subject.titulo)}
+        />
+      ) : atpDocument && user ? (
+        <AtpLearningPath
+          document={atpDocument}
+          userId={user.id}
+          lpId={item.id}
+          completed={completado}
+          onComplete={() => completeLp(user.id, item, subject.titulo)}
+        />
+      ) : handbookDocument && user ? (
+        <HandbookLearningPath
+          document={handbookDocument}
+          userId={user.id}
+          lpId={item.id}
+          completed={completado}
+          onComplete={() => completeLp(user.id, item, subject.titulo)}
+        />
+      ) : jeppesenDocument && user ? (
+        <JeppesenLearningPath
+          document={jeppesenDocument}
+          userId={user.id}
+          lpId={item.id}
+          completed={completado}
+          onComplete={() => completeLp(user.id, item, subject.titulo)}
+        />
+      ) : legislationDocument && user ? (
+        <LegislationLearningPath
+          document={legislationDocument}
+          userId={user.id}
+          lpId={item.id}
+          completed={completado}
+          onComplete={() => completeLp(user.id, item, subject.titulo)}
+        />
+      ) : annex10Document && user ? (
+        <LegislationLearningPath
+          document={annex10Document}
+          userId={user.id}
+          lpId={item.id}
+          completed={completado}
+          onComplete={() => completeLp(user.id, item, subject.titulo)}
+        />
+      ) : (
+        <div className="lp-screen-empty">
+          <LpEmptyState
+            icon="spark"
+            title="Contenido en preparación"
+            description={
+              isNativeSubject
+                ? `Falta el HTML fuente de “${item.titulo}”. Este tema permanece bloqueado dentro de la secuencia hasta integrar su recorrido nativo.`
+                : `Este learning path ya está creado dentro de la secuencia de ${cont.titulo}. Su material de estudio se cargará aquí.`
+            }
+          />
         </div>
-      </LpActionBar>
-    </>
+      )}
+    </LpFullscreen>
   );
 }
