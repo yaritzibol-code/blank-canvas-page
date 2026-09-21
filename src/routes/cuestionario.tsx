@@ -27,6 +27,7 @@ import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
 import { PathyMark } from "@/components/shared/PathyMark";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { QuestionImages } from "@/components/banco/QuestionImages";
+import { QuizQuestionNavigator } from "@/components/banco/QuizQuestionNavigator";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import {
@@ -1045,24 +1046,14 @@ function CuestionarioPage() {
         .fp-quiz-primary { min-width: 0; width: 100%; max-width: 900px; }
         .fp-quiz-card { width: 100%; padding: 20px; }
         .fp-quiz-nav { width: 100%; }
-        .fp-quiz-map { width: 100%; padding: 14px; background: white; border: 1px solid rgba(22,61,112,0.06); border-radius: 16px; box-shadow: 0 1px 8px rgba(22,61,112,0.045); }
-        .fp-quiz-dots { display: grid; grid-template-columns: repeat(auto-fill, minmax(17px, 1fr)); gap: 4px; }
-        .fp-quiz-dot { width: 14px; height: 14px; padding: 0; border: 1px solid transparent; border-radius: 50%; justify-self: center; cursor: pointer; }
-        .fp-quiz-dot:disabled { cursor: default; opacity: 0.82; }
-        .fp-quiz-dot:focus-visible { outline: 2px solid #163D70 !important; outline-offset: 3px !important; }
         @media (min-width: 768px) {
           .fp-quiz-area { padding: 20px 24px; }
           .fp-quiz-card { padding: 24px 28px; }
-          .fp-quiz-dots { grid-template-columns: repeat(auto-fill, minmax(19px, 1fr)); gap: 4px 5px; }
-          .fp-quiz-dot { width: 15px; height: 15px; }
         }
         @media (min-width: 1200px) {
           .fp-quiz-area { gap: 12px; padding: 16px clamp(24px, 3vw, 56px); }
           .fp-quiz-primary { max-width: 1120px; align-self: center; }
           .fp-quiz-card { padding: 24px 32px; }
-          .fp-quiz-map { order: -1; padding: 12px 16px; }
-          .fp-quiz-dots { grid-template-columns: repeat(auto-fill, minmax(17px, 1fr)); gap: 3px 5px; }
-          .fp-quiz-dot { width: 14px; height: 14px; }
         }
       `}</style>
       {/* ── TOPBAR ── */}
@@ -1108,16 +1099,6 @@ function CuestionarioPage() {
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
-          <div
-            className="hidden sm:block"
-            style={{
-              background: "#EEE1C5", color: "#7A5C1E",
-              padding: "6px 14px", borderRadius: 20,
-              fontSize: "0.82rem", fontWeight: 700, whiteSpace: "nowrap",
-            }}
-          >
-            Pregunta {currentIdx + 1} de {total}
-          </div>
           <button
             onClick={openYaris}
             aria-label={thinkMode ? "Abrir Yaris en modo te ayudo a pensar" : "Abrir Yaris para que explique la pregunta"}
@@ -1208,10 +1189,14 @@ function CuestionarioPage() {
             }}
           >
             {/* Sin etiqueta de materia: la pregunta no debe adelantar el tema. */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", marginBottom: 20 }}>
-              <span style={{ fontSize: "0.78rem", color: "#7E90AD", fontWeight: 600 }}>
-                {currentIdx + 1} / {total}
-              </span>
+            <div style={{ marginBottom: 8 }}>
+              <QuizQuestionNavigator
+                total={total}
+                currentIdx={currentIdx}
+                highestVisitedIdx={highestVisitedIdx}
+                results={results}
+                onSelect={showVisitedQuestion}
+              />
             </div>
 
             <p
@@ -1447,52 +1432,6 @@ function CuestionarioPage() {
             </button>
           </div>
           </div>
-
-          {/* Mapa completo: permite consultar sólo las preguntas alcanzadas. */}
-          <nav className="fp-quiz-map" aria-label="Mapa de preguntas">
-            <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", marginBottom: 10, color: "#53647A", fontSize: "0.73rem", fontWeight: 600 }}>
-              <span>Viendo {currentIdx + 1} de {total}</span>
-              <span>Avance máximo: {highestVisitedIdx + 1}</span>
-            </div>
-            <div className="fp-quiz-dots">
-            {questions.map((_, i) => {
-              const res = results[i];
-              const isCurrent = i === currentIdx;
-              const isFrontier = i === highestVisitedIdx;
-              let bg = "#E8DFCE";
-              if (res === true) {
-                bg = "#5F987A";
-              } else if (res === false) {
-                bg = "#C8796A";
-              } else if (i <= highestVisitedIdx) {
-                bg = "#70839A";
-              }
-              return (
-                <button
-                  key={i}
-                  type="button"
-                  className="fp-quiz-dot"
-                  disabled={i > highestVisitedIdx}
-                  onClick={() => showVisitedQuestion(i)}
-                  aria-current={isCurrent ? "step" : undefined}
-                  aria-label={`Pregunta ${i + 1}: ${i > highestVisitedIdx ? "bloqueada" : res === true ? "correcta" : res === false ? "incorrecta" : "sin responder"}${isFrontier ? ", frontera de avance" : ""}`}
-                  title={`Pregunta ${i + 1}${isFrontier ? " · avance máximo" : ""}${isCurrent ? " · visualizando" : ""}`}
-                  style={{
-                    background: bg,
-                    borderColor: i > highestVisitedIdx ? "#D7CAB7" : "transparent",
-                    boxShadow: isFrontier ? "0 0 0 1px white, 0 0 0 2px #B69559" : "none",
-                    outline: isCurrent ? "1.5px solid #6D819A" : undefined,
-                    outlineOffset: isCurrent ? (isFrontier ? 4 : 2) : undefined,
-                    transition: "background-color 0.2s, border-color 0.2s, box-shadow 0.2s, outline-color 0.2s",
-                  }}
-                />
-              );
-            })}
-            </div>
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 12, fontSize: "0.68rem", color: "#7A8491" }}>
-              <span style={{ color: "#6D819A" }}>◉ Vista actual</span><span style={{ color: "#B69559" }}>◉ Avance máximo</span><span style={{ color: "#A99D8C" }}>● Pendientes bloqueadas</span>
-            </div>
-          </nav>
 
         </div>
 
