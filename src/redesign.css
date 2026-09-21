@@ -296,8 +296,7 @@ textarea {
   font-size: 36px !important;
   font-weight: 400;
 }
-.fp-app-content :is(input, select, textarea),
-[data-fp-modal] :is(input, select, textarea) {
+.fp-app-content :is(input, select, textarea) {
   border-radius: 10px;
 }
 @keyframes fp-page-enter {

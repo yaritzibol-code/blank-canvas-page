@@ -24,7 +24,7 @@ import {
 import { useBankCounts } from "@/hooks/use-bank-counts";
 import { LA_CONVOCATORIA_COPY as CONVOCATORIA } from "@/lib/convocatoria";
 import { BancoScreen } from "@/components/banco/BancoScreen";
-import { ModalPortal } from "@/components/shared/ModalPortal";
+import { QuizModalPortal } from "@/components/shared/QuizModalPortal";
 
 export const Route = createFileRoute("/dashboard/linea-aerea")({
   component: LineaAereaPage,
@@ -125,8 +125,8 @@ const quizCardsCss = `
   }
   .fp-la-card:active { transform: scale(.99); }
   @media (max-width: 540px) {
-    .fp-question-picker-backdrop { padding: 10px !important; align-items: flex-end !important; }
-    .fp-question-picker-panel { width: 100% !important; max-height: calc(100dvh - 20px) !important; border-radius: 18px 18px 10px 10px !important; }
+    .fp-question-picker-backdrop { padding: 10px !important; align-items: center !important; }
+    .fp-question-picker-panel { width: 100% !important; max-height: calc(100dvh - 20px) !important; border-radius: 18px !important; }
     .fp-question-picker-scroll { padding: 22px 18px 10px !important; }
     .fp-question-picker-footer { padding: 12px 18px max(16px, env(safe-area-inset-bottom)) !important; }
   }
@@ -478,7 +478,8 @@ export function ChapterPicker({
     void navigate({ to: "/cuestionario", search: search as never });
   }
 
-  const overlay = (
+  return (
+    <QuizModalPortal onClose={onClose}>
     <div
       className="fp-question-picker-backdrop"
       role="dialog"
@@ -495,6 +496,7 @@ export function ChapterPicker({
         alignItems: "center",
         justifyContent: "center",
         padding: 16,
+        overflow: "hidden",
       }}
     >
       <div
@@ -796,9 +798,8 @@ export function ChapterPicker({
         </div>
       </div>
     </div>
+    </QuizModalPortal>
   );
-
-  return <ModalPortal onClose={onClose}>{overlay}</ModalPortal>;
 }
 
 /**

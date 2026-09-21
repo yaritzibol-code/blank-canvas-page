@@ -21,7 +21,7 @@ import {
 } from "@/lib/store";
 import type { QuizAttempt, SimAttempt } from "@/lib/store";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
-import { ModalPortal } from "@/components/shared/ModalPortal";
+import { QuizModalPortal } from "@/components/shared/QuizModalPortal";
 import {
   LINEA_AEREA_OFICIAL,
   LINEA_AEREA_QUIZZES as LINEA_AEREA_QUIZZES_LA,
@@ -777,8 +777,12 @@ function ModalExamen({
     },
   ];
 
-  const overlay = (
+  return (
+    <QuizModalPortal onClose={onClose}>
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={la ? "Configurar simulador Línea Aérea" : "Configurar simulador CIAAC"}
       style={{
         position: "fixed",
         inset: 0,
@@ -789,6 +793,7 @@ function ModalExamen({
         justifyContent: "center",
         padding: 20,
         fontFamily: "'Manrope', sans-serif",
+        overflow: "hidden",
       }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
@@ -801,6 +806,8 @@ function ModalExamen({
           padding: 36,
           maxWidth: 520,
           width: "100%",
+          maxHeight: "calc(100dvh - 40px)",
+          overflowY: "auto",
         }}
       >
         <h2
@@ -981,9 +988,8 @@ function ModalExamen({
         </div>
       </div>
     </div>
+    </QuizModalPortal>
   );
-
-  return <ModalPortal onClose={onClose}>{overlay}</ModalPortal>;
 }
 
 /* ─── Modal: Aprendiendo ─────────────────────────────── */
@@ -1094,8 +1100,12 @@ function ModalAprendiendo({
     fontFamily: "'Manrope', sans-serif",
   } as const;
 
-  const overlay = (
+  return (
+    <QuizModalPortal onClose={onClose}>
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Configurar cuestionario"
       style={{
         position: "fixed",
         inset: 0,
@@ -1106,7 +1116,7 @@ function ModalAprendiendo({
         justifyContent: "center",
         padding: 20,
         fontFamily: "'Manrope', sans-serif",
-        overflowY: "auto",
+        overflow: "hidden",
       }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
@@ -1119,7 +1129,7 @@ function ModalAprendiendo({
           padding: 36,
           maxWidth: 520,
           width: "100%",
-          maxHeight: "90vh",
+          maxHeight: "calc(100dvh - 40px)",
           overflowY: "auto",
         }}
       >
@@ -1433,9 +1443,8 @@ function ModalAprendiendo({
         </div>
       </div>
     </div>
+    </QuizModalPortal>
   );
-
-  return <ModalPortal onClose={onClose}>{overlay}</ModalPortal>;
 }
 
 /* ─── Main page ──────────────────────────────────────── */

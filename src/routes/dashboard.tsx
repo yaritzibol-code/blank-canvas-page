@@ -698,66 +698,66 @@ function DashboardLayout() {
       >
         {!isLearningPath && (
           <>
-          {/* Desktop sidebar */}
-          <aside
-            style={{
-              width: 260,
-              background: "#081A35",
-              position: "fixed",
-              top: 0,
-              left: 0,
-              bottom: 0,
-              flexDirection: "column",
-              zIndex: 100,
-            }}
-            className="hidden md:flex"
-          >
-            <Sidebar onYaris={() => setYarisOpen(true)} onLogout={cerrarSesion} />
-          </aside>
-
-          {/* Mobile overlay */}
-          {sidebarOpen && (
-            <div
-              aria-hidden="true"
+            {/* Desktop sidebar */}
+            <aside
               style={{
+                width: 260,
+                background: "#081A35",
                 position: "fixed",
-                inset: 0,
-                background: "rgba(0,0,0,0.5)",
-                zIndex: 99,
+                top: 0,
+                left: 0,
+                bottom: 0,
+                flexDirection: "column",
+                zIndex: 100,
               }}
-              onClick={() => setSidebarOpen(false)}
-            />
-          )}
+              className="hidden md:flex"
+            >
+              <Sidebar onYaris={() => setYarisOpen(true)} onLogout={cerrarSesion} />
+            </aside>
 
-          {/* Mobile sidebar */}
-          <aside
-            id="mobile-sidebar"
-            role="dialog"
-            aria-modal={sidebarOpen ? true : undefined}
-            aria-label="Menú de navegación"
-            aria-hidden={!sidebarOpen}
-            style={{
-              width: 260,
-              background: "#081A35",
-              position: "fixed",
-              top: 0,
-              left: 0,
-              bottom: 0,
-              zIndex: 200,
-              transform: sidebarOpen ? "translateX(0)" : "translateX(-100%)",
-              transition: "transform 0.3s",
-            }}
-            className="md:hidden flex flex-col"
-          >
-            <Sidebar
-              onClose={() => setSidebarOpen(false)}
-              onYaris={() => {
-                setSidebarOpen(false);
-                setYarisOpen(true);
+            {/* Mobile overlay */}
+            {sidebarOpen && (
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "fixed",
+                  inset: 0,
+                  background: "rgba(0,0,0,0.5)",
+                  zIndex: 99,
+                }}
+                onClick={() => setSidebarOpen(false)}
+              />
+            )}
+
+            {/* Mobile sidebar */}
+            <aside
+              id="mobile-sidebar"
+              role="dialog"
+              aria-modal={sidebarOpen ? true : undefined}
+              aria-label="Menú de navegación"
+              aria-hidden={!sidebarOpen}
+              style={{
+                width: 260,
+                background: "#081A35",
+                position: "fixed",
+                top: 0,
+                left: 0,
+                bottom: 0,
+                zIndex: 200,
+                transform: sidebarOpen ? "translateX(0)" : "translateX(-100%)",
+                transition: "transform 0.3s",
               }}
-              onLogout={cerrarSesion}
-            />
-          </aside>
+              className="md:hidden flex flex-col"
+            >
+              <Sidebar
+                onClose={() => setSidebarOpen(false)}
+                onYaris={() => {
+                  setSidebarOpen(false);
+                  setYarisOpen(true);
+                }}
+                onLogout={cerrarSesion}
+              />
+            </aside>
           </>
         )}
 

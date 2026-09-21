@@ -197,6 +197,9 @@ interface AprendiendoSnapshot {
   qIds: string[];
   results: (boolean | null)[];
   currentIdx: number;
+  highestVisitedIdx?: number;
+  picks?: (number | null)[];
+  openResponses?: string[];
   selectedIdx: number | null;
   answered: boolean;
   startTime: number;
@@ -288,7 +291,10 @@ function CuestionarioPage() {
   const [pool, setPool] = useState<BankQuestion[]>([]);
   const [sessionSlugs, setSessionSlugs] = useState<string[]>([]);
   const [loaded, setLoaded] = useState(false);
+  /** Pregunta visible; puede estar detrás de la frontera sin reducir el avance. */
   const [currentIdx, setCurrentIdx] = useState(0);
+  /** Índice máximo alcanzado mediante el avance normal de la sesión. */
+  const [highestVisitedIdx, setHighestVisitedIdx] = useState(0);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [answered, setAnswered] = useState(false);
   /** Texto escrito en las preguntas de respuesta abierta. */
@@ -296,6 +302,7 @@ function CuestionarioPage() {
   const [results, setResults] = useState<(boolean | null)[]>([]);
   /** Opción elegida por pregunta (para el informe real de Pathy). */
   const [picks, setPicks] = useState<(number | null)[]>([]);
+  const [openResponses, setOpenResponses] = useState<string[]>([]);
   const [showResult, setShowResult] = useState(false);
   const [yarisOpen, setYarisOpen] = useState(false);
   const [yarisMsgs, setYarisMsgs] = useState<YarisMsg[]>([]);
@@ -321,7 +328,6 @@ function CuestionarioPage() {
   /** Caja de mensajes de Yaris: se desplaza sola, sin mover la página. */
   const msgsBoxRef = useRef<HTMLDivElement>(null);
   const savedRef = useRef(false);
-  const lastAnsweredRef = useRef<number | null>(null);
 
   useEffect(() => {
     // <1024px (móvil + iPad vertical) usa hoja inferior: con el panel lateral
@@ -432,10 +438,25 @@ function CuestionarioPage() {
         setPool(fullPool);
         setSessionSlugs(snap.sessionSlugs.length > 0 ? snap.sessionSlugs : slugs);
         setQuestions(restored.map(toLocalQ));
-        setResults(snap.results);
-        setCurrentIdx(Math.min(snap.currentIdx, restored.length - 1));
-        setSelectedIdx(snap.selectedIdx);
-        setAnswered(snap.answered);
+        const restoredResults = restored.map((_, i) => snap.results[i] ?? null);
+        const savedIdx = Number.isInteger(snap.currentIdx) ? snap.currentIdx : 0;
+        const restoredPicks = restored.map((_, i) =>
+          snap.picks?.[i] ?? (i === savedIdx ? snap.selectedIdx : null));
+        const firstUnanswered = restoredResults.findIndex((result) => result === null);
+        const completedPrefix = firstUnanswered === -1 ? restored.length - 1 : firstUnanswered;
+        const savedFrontier = Number.isInteger(snap.highestVisitedIdx)
+          ? snap.highestVisitedIdx! : savedIdx;
+        const frontier = Math.min(
+          Math.max(0, savedFrontier), completedPrefix, restored.length - 1);
+        const displayed = Math.min(Math.max(0, savedIdx), frontier);
+        setResults(restoredResults);
+        setPicks(restoredPicks);
+        setOpenResponses(restored.map((_, i) => snap.openResponses?.[i] ?? ""));
+        setHighestVisitedIdx(frontier);
+        setCurrentIdx(displayed);
+        setSelectedIdx(restoredPicks[displayed]);
+        setAnswered(restoredResults[displayed] !== null);
+        setOpenInput(snap.openResponses?.[displayed] ?? "");
         setStartTime(snap.startTime);
         setLoaded(true);
         return;
@@ -449,6 +470,13 @@ function CuestionarioPage() {
     setSessionSlugs(slugs);
     setQuestions(picked);
     setResults(new Array(picked.length).fill(null));
+    setPicks(new Array(picked.length).fill(null));
+    setOpenResponses(new Array(picked.length).fill(""));
+    setHighestVisitedIdx(0);
+    setCurrentIdx(0);
+    setSelectedIdx(null);
+    setAnswered(false);
+    setOpenInput("");
     setLoaded(true);
     })();
     return () => {
@@ -473,12 +501,15 @@ function CuestionarioPage() {
       qIds: questions.map((q) => q.questionId),
       results,
       currentIdx,
+      highestVisitedIdx,
+      picks,
+      openResponses,
       selectedIdx,
       answered,
       startTime,
       sessionSlugs,
     });
-  }, [loaded, storeKey, questions, results, currentIdx, selectedIdx, answered, startTime, sessionSlugs, showResult]);
+  }, [loaded, storeKey, questions, results, currentIdx, highestVisitedIdx, picks, openResponses, selectedIdx, answered, startTime, sessionSlugs, showResult]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -568,7 +599,7 @@ function CuestionarioPage() {
   }, [showResult, user]);
 
   function handleOptionClick(optIdx: number) {
-    if (answered) return;
+    if (answered || results[currentIdx] != null || currentIdx > highestVisitedIdx) return;
     // Cada pregunta respondida descuenta de las 50 gratis de ATP / Handbook.
     if (fuenteGratis && user && !isPaid(user)) {
       if (!hasFreeLeft(user, "preguntas")) {
@@ -581,7 +612,6 @@ function CuestionarioPage() {
     const isCorrect = questions[currentIdx].options[optIdx].correct;
     setSelectedIdx(optIdx);
     setAnswered(true);
-    lastAnsweredRef.current = currentIdx;
     const newResults = [...results];
     newResults[currentIdx] = isCorrect;
     setResults(newResults);
@@ -597,7 +627,7 @@ function CuestionarioPage() {
    * signos contra la respuesta modelo y sus variantes aceptadas.
    */
   function handleOpenSubmit() {
-    if (answered) return;
+    if (answered || results[currentIdx] != null || currentIdx > highestVisitedIdx) return;
     const q = questions[currentIdx];
     const escrito = normalizar(openInput);
     if (!escrito) return;
@@ -613,10 +643,14 @@ function CuestionarioPage() {
     const isCorrect = validas.some((v) => v === escrito);
     setSelectedIdx(isCorrect ? q.correctIndex : -1);
     setAnswered(true);
-    lastAnsweredRef.current = currentIdx;
     const newResults = [...results];
     newResults[currentIdx] = isCorrect;
     setResults(newResults);
+    setOpenResponses((prev) => {
+      const next = [...prev];
+      next[currentIdx] = openInput;
+      return next;
+    });
     setPicks((prev) => {
       const next = [...prev];
       next[currentIdx] = isCorrect ? q.correctIndex : -1;
@@ -624,15 +658,30 @@ function CuestionarioPage() {
     });
   }
 
+  function showVisitedQuestion(idx: number) {
+    if (!Number.isInteger(idx) || idx < 0 || idx > highestVisitedIdx || idx >= total) return;
+    setCurrentIdx(idx);
+    setSelectedIdx(picks[idx] ?? null);
+    setAnswered(results[idx] != null);
+    setOpenInput(openResponses[idx] ?? "");
+  }
+
   function handleNext() {
+    if (currentIdx < highestVisitedIdx) {
+      showVisitedQuestion(currentIdx + 1);
+      return;
+    }
+    if (currentIdx !== highestVisitedIdx || results[currentIdx] == null) return;
     if (currentIdx + 1 >= total) {
       setShowResult(true);
       return;
     }
-    setCurrentIdx(currentIdx + 1);
+    const nextIdx = currentIdx + 1;
+    setHighestVisitedIdx(nextIdx);
+    setCurrentIdx(nextIdx);
     setSelectedIdx(null);
     setAnswered(false);
-    setOpenInput("");
+    setOpenInput(openResponses[nextIdx] ?? "");
   }
 
   function handleRestart() {
@@ -640,6 +689,9 @@ function CuestionarioPage() {
     const fresh = pickSession(pool, isPaid(user)).map(toLocalQ);
     setQuestions(fresh);
     setResults(new Array(fresh.length).fill(null));
+    setPicks(new Array(fresh.length).fill(null));
+    setOpenResponses(new Array(fresh.length).fill(""));
+    setHighestVisitedIdx(0);
     setCurrentIdx(0);
     setSelectedIdx(null);
     setAnswered(false);
@@ -648,16 +700,11 @@ function CuestionarioPage() {
     setStartTime(Date.now());
     setElapsedMin(0);
     savedRef.current = false;
-    lastAnsweredRef.current = null;
   }
 
-  /**
-   * Índice de la pregunta sobre la que trabaja Yaris: siempre la que está en
-   * pantalla. Sólo se usa la última respondida cuando ya se contestó, para
-   * conservar el contexto tras el feedback.
-   */
+  /** Yaris siempre usa la pregunta visible, incluso al consultar una anterior. */
   function yarisIdx(): number {
-    return answered ? (lastAnsweredRef.current ?? currentIdx) : currentIdx;
+    return currentIdx;
   }
 
   /** Contexto de Yaris: la pregunta en pantalla. */
@@ -941,6 +988,7 @@ function CuestionarioPage() {
     : answered && selectedIdx !== null && !!currentQ.options[selectedIdx]?.correct;
   /** Yaris guía sin revelar mientras no haya respuesta elegida. */
   const thinkMode = !answered;
+  const canGoNext = currentIdx < highestVisitedIdx || answered;
   const scorePercent = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
   const scoreColor = scorePercent >= 70 ? "#2ecc71" : scorePercent >= 50 ? "#f39c12" : "#e74c3c";
 
@@ -992,6 +1040,31 @@ function CuestionarioPage() {
 
       }}
     >
+      <style>{`
+        .fp-quiz-area { padding: 16px; display: flex; flex-direction: column; align-items: stretch; gap: 16px; }
+        .fp-quiz-primary { min-width: 0; width: 100%; max-width: 900px; }
+        .fp-quiz-card { width: 100%; padding: 20px; }
+        .fp-quiz-nav { width: 100%; }
+        .fp-quiz-map { width: 100%; padding: 16px; background: white; border-radius: 18px; box-shadow: 0 2px 16px rgba(22,61,112,0.07); }
+        .fp-quiz-dots { display: grid; grid-template-columns: repeat(auto-fill, minmax(17px, 1fr)); gap: 3px; }
+        .fp-quiz-dot { width: 17px; height: 17px; padding: 0; border: 0; border-radius: 50%; justify-self: center; cursor: pointer; }
+        .fp-quiz-dot:disabled { cursor: default; }
+        .fp-quiz-dot:focus-visible { outline: 2px solid #163D70; outline-offset: 3px; }
+        @media (min-width: 768px) {
+          .fp-quiz-area { padding: 20px 24px; }
+          .fp-quiz-card { padding: 24px 28px; }
+          .fp-quiz-dots { grid-template-columns: repeat(auto-fill, minmax(19px, 1fr)); gap: 4px; }
+          .fp-quiz-dot { width: 19px; height: 19px; }
+        }
+        @media (min-width: 1200px) {
+          .fp-quiz-area { gap: 12px; padding: 16px clamp(24px, 3vw, 56px); }
+          .fp-quiz-primary { max-width: 1120px; align-self: center; }
+          .fp-quiz-card { padding: 24px 32px; }
+          .fp-quiz-map { order: -1; padding: 12px 16px; }
+          .fp-quiz-dots { grid-template-columns: repeat(auto-fill, minmax(17px, 1fr)); gap: 3px; }
+          .fp-quiz-dot { width: 17px; height: 17px; }
+        }
+      `}</style>
       {/* ── TOPBAR ── */}
       <div
         className="px-3 sm:px-6"
@@ -1121,25 +1194,18 @@ function CuestionarioPage() {
 
         {/* ── QUESTION AREA ── */}
         <div
-          style={{
-            flex: 1,
-            padding: "32px",
-            display: showResult ? "none" : "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            overflowY: "auto",
-          }}
-          className="sm:p-8 p-4"
+          className="fp-quiz-area"
+          style={{ flex: 1, minWidth: 0, display: showResult ? "none" : undefined, overflowY: "auto" }}
         >
+          <div className="fp-quiz-primary">
           {/* Question card */}
           <div
+            className="fp-quiz-card"
             style={{
-              background: "white", borderRadius: 18, padding: 32,
-              maxWidth: 680, width: "100%",
+              background: "white", borderRadius: 18,
               boxShadow: "0 2px 16px rgba(22,61,112,0.07)",
               marginBottom: 16,
             }}
-            className="sm:p-8 p-5"
           >
             {/* Sin etiqueta de materia: la pregunta no debe adelantar el tema. */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", marginBottom: 20 }}>
@@ -1177,7 +1243,14 @@ function CuestionarioPage() {
                     value={openInput}
                     disabled={answered}
                     autoComplete="off"
-                    onChange={(e) => setOpenInput(e.target.value)}
+                    onChange={(e) => {
+                      setOpenInput(e.target.value);
+                      setOpenResponses((prev) => {
+                        const next = [...prev];
+                        next[currentIdx] = e.target.value;
+                        return next;
+                      });
+                    }}
                     onKeyDown={(e) => { if (e.key === "Enter") handleOpenSubmit(); }}
                     placeholder="Tu respuesta…"
                     style={{
@@ -1338,68 +1411,87 @@ function CuestionarioPage() {
           </div>
 
           {/* Nav button */}
-          <div style={{ maxWidth: 680, width: "100%", marginBottom: 16 }}>
+          <div className="fp-quiz-nav">
             <button
               onClick={handleNext}
-              disabled={!answered}
+              disabled={!canGoNext}
               style={{
                 width: "100%", padding: 13,
-                background: answered ? "#7A5C1E" : "#ddd",
-                color: answered ? "white" : "#7E90AD",
+                background: canGoNext ? "#7A5C1E" : "#ddd",
+                color: canGoNext ? "white" : "#7E90AD",
                 border: "none", borderRadius: 11,
                 fontSize: "0.92rem", fontWeight: 700,
-                cursor: answered ? "pointer" : "not-allowed",
+                cursor: canGoNext ? "pointer" : "not-allowed",
                 fontFamily: "'Manrope', sans-serif",
                 transition: "all 0.2s",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
               }}
               onMouseEnter={(e) => {
-                if (answered) {
+                if (canGoNext) {
                   e.currentTarget.style.background = "#977431";
                   e.currentTarget.style.transform = "translateY(-2px)";
                   e.currentTarget.style.boxShadow = "0 7px 20px rgba(122,92,30,0.3)";
                 }
               }}
               onMouseLeave={(e) => {
-                if (answered) {
+                if (canGoNext) {
                   e.currentTarget.style.background = "#7A5C1E";
                   e.currentTarget.style.transform = "none";
                   e.currentTarget.style.boxShadow = "none";
                 }
               }}
             >
-              {currentIdx + 1 >= total ? "Ver resultados →" : "Siguiente pregunta →"}
+              {currentIdx < highestVisitedIdx
+                ? "Siguiente pregunta consultada →"
+                : currentIdx + 1 >= total ? "Ver resultados →" : "Siguiente pregunta →"}
             </button>
           </div>
+          </div>
 
-          {/* Mini tracker — decorativo: el conteo real ya se anuncia arriba */}
-          <div aria-hidden="true" style={{ maxWidth: 680, width: "100%", display: "flex", gap: 4, flexWrap: "wrap" }}>
+          {/* Mapa completo: permite consultar sólo las preguntas alcanzadas. */}
+          <nav className="fp-quiz-map" aria-label="Mapa de preguntas">
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", marginBottom: 12, color: "#163D70", fontSize: "0.78rem", fontWeight: 700 }}>
+              <span>Viendo {currentIdx + 1} de {total}</span>
+              <span>Avance máximo: {highestVisitedIdx + 1}</span>
+            </div>
+            <div className="fp-quiz-dots">
             {questions.map((_, i) => {
               const res = results[i];
-              const isCurrent = i === currentIdx && !showResult;
+              const isCurrent = i === currentIdx;
+              const isFrontier = i === highestVisitedIdx;
               let bg = "#E2C9C8";
-              let boxShadow = "none";
-              if (isCurrent) {
-                bg = "#163D70";
-                boxShadow = "0 0 0 2px white, 0 0 0 4px #163D70";
-              } else if (res === true) {
+              if (res === true) {
                 bg = "#1a7a4a";
               } else if (res === false) {
                 bg = "#c0392b";
-              } else if (res === null && i < currentIdx) {
+              } else if (i <= highestVisitedIdx) {
                 bg = "#163D70";
               }
               return (
-                <div
+                <button
                   key={i}
+                  type="button"
+                  className="fp-quiz-dot"
+                  disabled={i > highestVisitedIdx}
+                  onClick={() => showVisitedQuestion(i)}
+                  aria-current={isCurrent ? "step" : undefined}
+                  aria-label={`Pregunta ${i + 1}: ${i > highestVisitedIdx ? "bloqueada" : res === true ? "correcta" : res === false ? "incorrecta" : "sin responder"}${isFrontier ? ", frontera de avance" : ""}`}
+                  title={`Pregunta ${i + 1}${isFrontier ? " · avance máximo" : ""}${isCurrent ? " · visualizando" : ""}`}
                   style={{
-                    width: 10, height: 10, borderRadius: "50%",
-                    background: bg, boxShadow, transition: "all 0.2s",
+                    background: bg,
+                    boxShadow: isFrontier ? "0 0 0 2px white, 0 0 0 4px #7A5C1E" : "none",
+                    outline: isCurrent ? "2px solid #163D70" : undefined,
+                    outlineOffset: isCurrent ? 3 : undefined,
+                    transition: "all 0.2s",
                   }}
                 />
               );
             })}
-          </div>
+            </div>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 14, fontSize: "0.72rem", color: "#4A5872" }}>
+              <span>◉ Vista actual</span><span style={{ color: "#7A5C1E" }}>◉ Avance máximo</span><span>● Pendientes bloqueadas</span>
+            </div>
+          </nav>
 
         </div>
 

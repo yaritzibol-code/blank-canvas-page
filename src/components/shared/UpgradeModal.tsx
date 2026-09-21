@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Icon } from "@/components/ui/fp-icon";
 import { getConfig, logUpgradeClick, logUpgradePrompt } from "@/lib/store";
-import { ModalPortal } from "@/components/shared/ModalPortal";
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
@@ -35,19 +34,13 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
   const [paying, setPaying] = useState(false);
 
   useEffect(() => {
-    if (!open) {
+    if (open) {
+      setVisible(true);
+      if (userId) logUpgradePrompt(userId, feature);
+    } else {
       setVisible(false);
       setPaying(false);
-      return;
     }
-    if (userId) logUpgradePrompt(userId, feature);
-    /**
-     * El overlay vive en un portal que se monta justo después del primer
-     * render. Esperar un frame asegura que la tarjeta ya se pintó en su estado
-     * inicial (opaca y desplazada) y la transición de entrada se ve.
-     */
-    const frame = requestAnimationFrame(() => setVisible(true));
-    return () => cancelAnimationFrame(frame);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
@@ -74,7 +67,7 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
 
 
 
-  const overlay = (
+  return (
     <div
       onClick={onClose}
       style={{
@@ -217,6 +210,4 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
       </div>
     </div>
   );
-
-  return <ModalPortal onClose={onClose}>{overlay}</ModalPortal>;
 }
