@@ -7,7 +7,7 @@
  * oculta su barra lateral y su topbar en esta ruta para que el learning path
  * no se vea como un HTML metido en una ventana dentro de la plataforma.
  */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createFileRoute, Link, Navigate, useNavigate } from "@tanstack/react-router";
 import { Icon } from "@/components/ui/fp-icon";
 import {
@@ -18,6 +18,8 @@ import { AtpLearningPath } from "@/components/lp/AtpLearningPath";
 import { HandbookLearningPath } from "@/components/lp/HandbookLearningPath";
 import { JeppesenLearningPath } from "@/components/lp/JeppesenLearningPath";
 import { LegislationLearningPath } from "@/components/lp/LegislationLearningPath";
+import { LearningPathExperience } from "@/components/lp/LearningPathExperience";
+import { YarisChatModal } from "@/components/shared/YarisChatModal";
 import { LpEmptyState, LpFullscreen, lpButtonStyle } from "@/components/lp/nav";
 import { lpCategory, lpContainer, lpSubject } from "@/lib/lp/taxonomy";
 import { ATP_LEARNING_PATHS } from "@/lib/lp/atp-content.generated";
@@ -25,8 +27,9 @@ import { ANNEX10_LEARNING_PATHS } from "@/lib/lp/annex10-content.generated";
 import { HANDBOOK_LEARNING_PATHS } from "@/lib/lp/handbook-content.generated";
 import { JEPPESEN_LEARNING_PATHS } from "@/lib/lp/jeppesen-content.generated";
 import { LEGISLATION_LEARNING_PATHS } from "@/lib/lp/legislation-content.generated";
-import { useSessionUser, useStore } from "@/lib/store";
+import { useSessionUser, useStore, type YarisContext } from "@/lib/store";
 import { completeLp, lpAccess, lpNeighbors, startLp, subjectProgress } from "@/lib/store/lp-nav";
+import { leaveLearningPath, learningPathOrigin, rememberLearningPathOrigin } from "@/lib/lp/contextual-return";
 
 export const Route = createFileRoute("/dashboard/rutas/$categoria/$materia/$contenedor/$lp")({
   head: () => ({
@@ -38,6 +41,8 @@ export const Route = createFileRoute("/dashboard/rutas/$categoria/$materia/$cont
 function LearningPathPage() {
   const { categoria, materia, contenedor, lp } = Route.useParams();
   const navigate = useNavigate();
+  const [yarisOpen, setYarisOpen] = useState(false);
+  const [yarisContext, setYarisContext] = useState<YarisContext>({});
   const user = useSessionUser();
   const cat = lpCategory(categoria);
   const subject = lpSubject(categoria, materia);
@@ -130,6 +135,9 @@ function LearningPathPage() {
 
   const irA = (id: string) => {
     const [, mat, conte, slug] = id.split("/");
+    const target = `/dashboard/rutas/${categoria}/${mat}/${conte}/${slug}`;
+    const fallback = `/dashboard/rutas/${categoria}/${materia}/${contenedor}`;
+    rememberLearningPathOrigin(target, learningPathOrigin(window.location.pathname) ?? { href: fallback, scrollY: 0 });
     void navigate({
       to: "/dashboard/rutas/$categoria/$materia/$contenedor/$lp",
       params: { categoria, materia: mat, contenedor: conte, lp: slug },
@@ -137,14 +145,17 @@ function LearningPathPage() {
   };
 
   return (
-    <LpFullscreen
-      eyebrow={`Paso ${acceso?.posicion} de ${acceso?.total} · ${subject.titulo}`}
-      titulo={item.titulo}
-      status={acceso?.status ?? "en_progreso"}
-      percent={estado?.progreso.percent ?? 0}
-      progreso={`${estado?.progreso.done} de ${estado?.progreso.total} completados en ${subject.titulo}`}
-      salir={salir}
-      acciones={
+    <>
+    <LearningPathExperience
+      identity={{
+        category: cat.titulo, subject: subject.titulo, chapter: cont.titulo, title: item.titulo,
+        id: item.id, categoryId: categoria, subjectId: materia, chapterId: contenedor,
+      }}
+      user={user}
+      onBack={() => leaveLearningPath(`/dashboard/rutas/${categoria}/${materia}/${contenedor}`)}
+      onYaris={(context) => { setYarisContext(context); setYarisOpen(true); }}
+      subjectProgress={estado?.progreso ?? undefined}
+      actions={
         <>
           {vecinos?.prev && (
             <button
@@ -248,6 +259,9 @@ function LearningPathPage() {
           />
         </div>
       )}
-    </LpFullscreen>
+    </LearningPathExperience>
+    <YarisChatModal open={yarisOpen} onClose={() => setYarisOpen(false)} user={user}
+      seccion={`Learning Path · ${item.titulo}`} context={yarisContext} />
+    </>
   );
 }

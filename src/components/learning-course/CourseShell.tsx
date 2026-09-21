@@ -88,7 +88,7 @@ export function CourseHero({
         }}
       />
       <div
-        className={`relative mx-auto max-w-[1080px] px-5 sm:px-8 ${compact ? "py-10 lg:py-12" : "py-12 lg:py-16"} flex items-center gap-6`}
+        className={`relative mx-auto max-w-[1400px] px-5 sm:px-8 ${compact ? "py-10 lg:py-12" : "py-12 lg:py-16"} flex items-center gap-6`}
       >
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-3">

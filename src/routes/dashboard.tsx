@@ -19,6 +19,7 @@ import { StudySessionProvider } from "@/contexts/StudySessionContext";
 import { LogroWatcher } from "@/components/logros/LogroWatcher";
 import { FpWatcher } from "@/components/fp/FpWatcher";
 import { PathyCloud } from "@/components/estudiemos/PathyCloud";
+import { rememberLearningPathOrigin, restoreLearningPathScroll } from "@/lib/lp/contextual-return";
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardLayout,
@@ -654,8 +655,12 @@ function DashboardLayout() {
    * ventana dentro de la plataforma. La propia página trae su barra con
    * "Salir", avance y navegación entre learning paths.
    */
-  const isLearningPath = /^\/dashboard\/rutas\/[^/]+\/[^/]+\/[^/]+\/[^/]+/.test(location.pathname);
+  const isLearningPath = /^\/dashboard\/rutas\/[^/]+\/[^/]+\/[^/]+\/[^/]+\/?$/.test(location.pathname);
   const fullBleed = isSubjectDetail || isLearningPath;
+
+  useEffect(() => {
+    if (ready && !isLearningPath) restoreLearningPathScroll();
+  }, [ready, isLearningPath, location.pathname]);
 
   const currentLabel =
     NAV_SECTIONS.flatMap((s) => s.items).find((i) =>
@@ -689,6 +694,11 @@ function DashboardLayout() {
     <TimerProvider>
       <StudySessionProvider>
       <div className="fp-app-shell"
+        onClickCapture={(event) => {
+          if (isLearningPath) return;
+          const anchor = (event.target as HTMLElement).closest<HTMLAnchorElement>("a[href]");
+          if (anchor) rememberLearningPathOrigin(anchor.href);
+        }}
         style={{
           fontFamily: "'Manrope', sans-serif",
           background: "#F5F5F7",
@@ -764,7 +774,7 @@ function DashboardLayout() {
         {/* Main */}
         <div
           style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: "100vh" }}
-          className={isLearningPath ? undefined : "md:ml-[260px]"}
+          className={isLearningPath ? "min-w-0" : "md:ml-[260px]"}
         >
           {fullBleed ? (
             <Outlet />

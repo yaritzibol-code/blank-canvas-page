@@ -29,6 +29,13 @@ const schema = z.object({
       explanation: z.string().optional(),
       cite: z.string().optional(),
       resourceTitle: z.string().max(300).optional(),
+      studyContext: z.string().max(600).optional(),
+      learningPathContext: z.object({
+        category: z.string().max(180), course: z.string().max(180),
+        chapter: z.string().max(180), learningPath: z.string().max(180),
+        stage: z.string().max(180), section: z.string().max(180).optional(),
+        contentId: z.string().max(300), url: z.string().max(500),
+      }).optional(),
     })
     .optional(),
 });

@@ -24,7 +24,8 @@ import {
 import type { LpConsolidation, LpCourse } from "@/lib/lp/course-types";
 import { LP_PROXIMAMENTE, lpCourseBySlug } from "@/lib/lp/registry";
 import { adminOnly } from "@/components/shared/UnderConstruction";
-import { CourseShell, type CourseVista } from "@/components/learning-course/CourseShell";
+import type { CourseVista } from "@/components/learning-course/CourseShell";
+import { LearningCourseExperience } from "@/components/learning-course/LearningCourseExperience";
 import {
   CourseCoverage,
   CourseDashboard,
@@ -58,7 +59,6 @@ function RutaCursoPage() {
   const navigate = useNavigate();
   const search = Route.useSearch();
   const [course, setCourse] = useState<LpCourse | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   // Contenido bajo demanda: chunk propio por curso, solo para quien entra.
   useEffect(() => {
@@ -126,7 +126,6 @@ function RutaCursoPage() {
           : { tipo: "dashboard" };
 
   const irA = (v: CourseVista, lessonId?: string) => {
-    setMenuOpen(false);
     const s: RutaSearch =
       v.tipo === "modulo"
         ? { m: v.moduleId, l: lessonId }
@@ -141,7 +140,6 @@ function RutaCursoPage() {
 
   const cambiarCurso = (slug: string) => {
     if (slug === def.slug) return;
-    setMenuOpen(false);
     void navigate({ to: "/ruta/$curso", params: { curso: slug }, search: {} as never });
     window.scrollTo({ top: 0 });
   };
@@ -220,18 +218,16 @@ function RutaCursoPage() {
   }
 
   return (
-    <CourseShell
+    <LearningCourseExperience
       def={def}
       course={course}
       vista={vista}
       percent={percent}
-      complete={completed.length}
-      menuOpen={menuOpen}
-      onMenuToggle={() => setMenuOpen((v) => !v)}
+      completedLessons={completed}
       onNavigate={(v) => irA(v)}
       onSwitchCourse={cambiarCurso}
     >
       {contenido}
-    </CourseShell>
+    </LearningCourseExperience>
   );
 }

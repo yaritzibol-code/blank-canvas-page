@@ -13,7 +13,7 @@ import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
 import { useYarisStream, toHistory } from "@/lib/yaris-ask";
 import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
-import type { User } from "@/lib/store";
+import type { User, YarisContext } from "@/lib/store";
 
 
 
@@ -34,11 +34,13 @@ export function YarisChatModal({
   onClose,
   user,
   seccion = "Global",
+  context,
 }: {
   open: boolean;
   onClose: () => void;
   user: User | null;
   seccion?: string;
+  context?: YarisContext;
 }) {
   const [visible, setVisible] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
@@ -123,7 +125,7 @@ export function YarisChatModal({
       let plain = "";
       const answer = await streamYaris({
         history,
-        ctx: { materiaName: seccion },
+        ctx: { materiaName: seccion, ...context },
         onDelta: (chunk) => {
           plain += chunk;
           const html = yarisToHtml(plain);

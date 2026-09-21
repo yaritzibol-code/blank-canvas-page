@@ -100,6 +100,8 @@ export function useYarisAsk() {
           context: {
             ...(ctx.materiaName && { materia: ctx.materiaName }),
             ...(ctx.resourceTitle && { resourceTitle: ctx.resourceTitle }),
+            ...(ctx.studyContext && { studyContext: ctx.studyContext }),
+            ...(ctx.learningPathContext && { learningPathContext: ctx.learningPathContext }),
             ...(q && {
               questionText: q.text,
               options: q.options,
@@ -126,6 +128,8 @@ function serverContext(ctx: YarisContext): Record<string, unknown> {
   return {
     ...(ctx.materiaName && { materia: ctx.materiaName }),
     ...(ctx.resourceTitle && { resourceTitle: ctx.resourceTitle }),
+    ...(ctx.studyContext && { studyContext: ctx.studyContext }),
+    ...(ctx.learningPathContext && { learningPathContext: ctx.learningPathContext }),
     ...(q && {
       questionText: q.text,
       options: q.options,

@@ -6,10 +6,12 @@
  * con CTA "Empezar" / "Continuar". El nav del dashboard apunta aquí.
  */
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { lpCompletedLessons, useRequireAuth, useStore } from "@/lib/store";
 import { LP_COURSES, LP_PROXIMAMENTE } from "@/lib/lp/registry";
 import { adminOnly } from "@/components/shared/UnderConstruction";
+import { rememberLearningPathOrigin, restoreLearningPathScroll } from "@/lib/lp/contextual-return";
 
 export const Route = createFileRoute("/ruta_/")({
   head: () => ({
@@ -20,6 +22,7 @@ export const Route = createFileRoute("/ruta_/")({
 
 function RutaHubPage() {
   const { user, ready } = useRequireAuth();
+  useEffect(() => { if (ready && user) restoreLearningPathScroll(); }, [ready, user]);
   const navigate = useNavigate();
   const userId = user?.id ?? "";
   const progreso = useStore(() =>
@@ -32,7 +35,11 @@ function RutaHubPage() {
   if (!ready || !user) return <div className="min-h-screen" style={{ background: "#F5F5F7" }} />;
 
   return (
-    <div className="min-h-screen" style={{ background: "#F5F5F7" }}>
+    <div className="min-h-screen" style={{ background: "#F5F5F7" }}
+      onClickCapture={(event) => {
+        const anchor = (event.target as HTMLElement).closest<HTMLAnchorElement>("a[href]");
+        if (anchor) rememberLearningPathOrigin(anchor.href);
+      }}>
       {/* Barra superior */}
       <div className="bg-ink-950">
         <div className="mx-auto flex max-w-[1080px] items-center justify-between px-5 py-3.5 sm:px-8">

@@ -245,6 +245,11 @@ export interface YarisPromptContext {
   explanation?: string;
   cite?: string;
   resourceTitle?: string;
+  studyContext?: string;
+  learningPathContext?: {
+    category: string; course: string; chapter: string; learningPath: string;
+    stage: string; section?: string; contentId: string; url: string;
+  };
 }
 
 /** Base del carácter de Yaris cuando la administradora no configuró uno propio. */
@@ -329,6 +334,14 @@ export function buildYarisSystemPrompt(
 
   if (ctx.resourceTitle) {
     system += `\n\nEl estudiante está leyendo "${ctx.resourceTitle}" en la biblioteca del curso. Si la duda se refiere a ese material, respóndela con tu conocimiento de aeronáutica y aclara que no puedes citar páginas concretas del PDF.`;
+  }
+
+  if (ctx.learningPathContext || ctx.studyContext) {
+    const lp = ctx.learningPathContext;
+    const detail = lp
+      ? `Categoría: ${lp.category}; curso: ${lp.course}; capítulo: ${lp.chapter}; Learning Path: ${lp.learningPath}; etapa: ${lp.stage}; sección: ${lp.section ?? "no especificada"}; ID: ${lp.contentId}; URL: ${lp.url}`
+      : ctx.studyContext;
+    system += `\n\nCONTEXTO EDUCATIVO ACTUAL DEL ALUMNO: ${detail}. Si pregunta "esto" o "aquí", se refiere a esa etapa y sección del Learning Path. Usa este contexto para orientar la explicación; no inventes detalles del contenido que no se te proporcionaron.`;
   }
 
   if (ctx.questionText) {

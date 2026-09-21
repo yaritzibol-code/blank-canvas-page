@@ -29,6 +29,18 @@ export interface YarisContext {
   /** Recurso de biblioteca o tema activo. */
   resourceTitle?: string;
   materiaName?: string;
+  /** Ruta educativa visible, etapa y sección del Learning Path. */
+  studyContext?: string;
+  learningPathContext?: {
+    category: string;
+    course: string;
+    chapter: string;
+    learningPath: string;
+    stage: string;
+    section?: string;
+    contentId: string;
+    url: string;
+  };
 }
 
 /** Registra el uso de Yaris para métricas (PRD §13.5). */

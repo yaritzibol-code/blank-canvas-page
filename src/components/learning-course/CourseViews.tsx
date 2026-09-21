@@ -60,7 +60,7 @@ export function CourseDashboard({
         description={def.hero.description}
         meta={def.hero.meta(course.meta)}
       />
-      <div className="mx-auto max-w-[1080px] px-5 sm:px-8 py-8">
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 py-8">
         {/* Cifras */}
         <section
           aria-label="Cifras del curso"
@@ -228,7 +228,7 @@ export function ModuleView({
           `${stats.questions} preguntas derivadas`,
         ]}
       />
-      <div className="mx-auto max-w-[1080px] px-5 sm:px-8 py-8">
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 py-8">
         {/* Overview */}
         <section className="relative z-10 -mt-16 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
           <article className="rounded-3xl border border-ink/8 bg-white p-6 shadow-card">
@@ -257,11 +257,11 @@ export function ModuleView({
           </article>
         </section>
 
-        {/* Rail + lección */}
-        <div className="mt-8 grid items-start gap-5 lg:grid-cols-[290px_1fr]">
+        {/* Recorrido horizontal de lecciones y contenido */}
+        <div className="mt-8 flex flex-col gap-5">
           <aside
             aria-label="Lecciones del módulo"
-            className="rounded-3xl border border-ink/8 bg-white p-4 shadow-card lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto"
+            className="min-w-0 rounded-3xl border border-ink/8 bg-white p-4 shadow-card"
           >
             <div className="px-2 pb-3">
               <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-haze-500">
@@ -271,7 +271,7 @@ export function ModuleView({
                 {module.title}
               </strong>
             </div>
-            <div className="space-y-1">
+            <div className="flex gap-2 overflow-x-auto pb-2">
               {module.lessons.map((item, index) => {
                 const done = completedLessons.includes(item.id);
                 const active = item.id === lesson.id;
@@ -280,7 +280,7 @@ export function ModuleView({
                     key={item.id}
                     type="button"
                     onClick={() => onSelectLesson(item.id)}
-                    className={`flex w-full items-start gap-2.5 rounded-xl px-3 py-2.5 text-left text-[12.5px] leading-snug transition-colors ${
+                    className={`flex min-w-[155px] max-w-[220px] shrink-0 items-start gap-2.5 rounded-xl px-3 py-2.5 text-left text-[12.5px] leading-snug transition-colors ${
                       active
                         ? "bg-ink-950 text-white"
                         : done
@@ -623,7 +623,7 @@ export function CourseCoverage({
         description={def.coverage.hero.description}
         meta={def.coverage.hero.meta(course.meta)}
       />
-      <div className="mx-auto max-w-[1080px] px-5 sm:px-8 py-8">
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 py-8">
         <section className="relative z-10 -mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {resumen.map((r) => (
             <article

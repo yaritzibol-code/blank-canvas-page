@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
 import { getLpJourney, resetLpJourney, saveLpJourney } from "@/lib/store/lp-journey";
+import { useLearningPathStageView } from "@/components/lp/LearningPathExperience";
 import type { AtpLearningPathDocument, AtpLessonStep, AtpQuestion } from "@/lib/lp/atp-types";
 
 interface AtpJourneyState {
@@ -171,6 +172,11 @@ export function AtpLearningPath({
     resetLpJourney(userId, lpId);
     setState(freshState(labels.length));
   };
+
+  useLearningPathStageView({
+    labels, current: state.step, highest: openThrough,
+    done: state.done, percent, onNavigate: goTo, onReset: reset,
+  });
 
   const guide = state.finished
     ? "Recorrido completo. Puedes volver a cualquier etapa para repasar."
