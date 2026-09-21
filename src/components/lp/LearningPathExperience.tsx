@@ -29,7 +29,7 @@ export function useLearningPathStageView(view: LearningPathStageView) {
     publish({
       ...view,
       onNavigate: (index) => navigate.current(index),
-      onReset: () => reset.current?.(),
+      onReset: view.onReset ? () => reset.current?.() : undefined,
     });
     return () => publish(null);
     // The callback refs keep navigation fresh without republishing on each render.
