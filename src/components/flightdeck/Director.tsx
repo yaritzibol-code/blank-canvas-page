@@ -24,6 +24,9 @@ function metric(index: number, stats: StudentStats | null) {
     index
   ];
 }
+function routeStatus(index: number) {
+  return ["A TIEMPO", "EMBARCANDO", "EMBARCANDO", "ABIERTO", "A TIEMPO"][index];
+}
 function Arrival({
   destination,
   onClose,
@@ -86,10 +89,16 @@ function Arrival({
         />
       )}
       {!landed && (
-        <div
-          className="fd-dive-clouds"
-          style={{ backgroundImage: `url("${ASSETS}picada-inicio-nubes.jpg")` }}
-        />
+        <>
+          <div className="fd-dive-clouds fd-cloud-one" style={{ backgroundImage: `url("${ASSETS}picada-inicio-nubes.jpg")` }} />
+          <div className="fd-dive-clouds fd-cloud-two" style={{ backgroundImage: `url("${ASSETS}nube-1.png")` }} />
+          <div className="fd-dive-clouds fd-cloud-three" style={{ backgroundImage: `url("${ASSETS}nube-2.png")` }} />
+          <div className="fd-descent-hud">
+            <div><p>DESCENSO · {destination.code}</p><strong>{destination.name}</strong></div>
+            <div><small>ALTITUD</small><strong>{Math.max(0, Math.round((100 - progress) * 358))}<em> km</em></strong></div>
+            <span><i style={{ width: `${progress}%` }} /></span>
+          </div>
+        </>
       )}
       <button
         className="fd-arrival-close fd-icon-button"
@@ -100,8 +109,8 @@ function Arrival({
       </button>
       {landed && (
         <div className="fd-arrival-card fd-arrival-selector">
-          <p className="fd-eyebrow">ATERRIZAJE COMPLETADO · {destination.code}</p>
-          <h2 id="arrival-title">{destination.city}</h2>
+          <p className="fd-eyebrow">ATERRIZAJE · {destination.code} · {destination.city}</p>
+          <div className="fd-arrival-title"><h2 id="arrival-title">{destination.name}</h2><strong>{metric(DESTINATIONS.indexOf(destination), null)}</strong></div>
           <p>¿A qué submódulo entras?</p>
           <div className="fd-submodules">
             {destination.sections.map((s) => (
@@ -229,6 +238,7 @@ export function Director() {
           <div>
             <small>{selected === 1 ? "ÚLTIMO SIMULACRO" : "TU PROGRESO"}</small>
             <strong>
+              <span className="fd-stat-diamond">◆</span>
               {selected === 1
                 ? lastSim
                   ? Math.round(lastSim.scorePct)
@@ -240,6 +250,7 @@ export function Director() {
           <div>
             <small>{selected === 1 ? "CORTE CIAAC" : "RACHA DE ESTUDIO"}</small>
             <strong>
+              <span className="fd-stat-diamond">◆</span>
               {selected === 1 ? "80" : (stats?.streak ?? 0)}
               <span>{selected === 1 ? "" : " días"}</span>
             </strong>
@@ -261,14 +272,19 @@ export function Director() {
           ))}
         </div>
         <button className="fd-takeoff" onClick={() => setFlying(true)}>
+          <i className="fd-takeoff-ring" aria-hidden="true" /><i className="fd-takeoff-ring is-second" aria-hidden="true" />
+          <i className="fd-takeoff-corner is-tl" aria-hidden="true" /><i className="fd-takeoff-corner is-tr" aria-hidden="true" />
+          <i className="fd-takeoff-corner is-bl" aria-hidden="true" /><i className="fd-takeoff-corner is-br" aria-hidden="true" />
+          <i className="fd-takeoff-sheen" aria-hidden="true" /><i className="fd-takeoff-runway" aria-hidden="true" />
           <span className="fd-takeoff-plane">
+            <i className="fd-plane-trail" aria-hidden="true" /><i className="fd-plane-status" aria-hidden="true" />
             <AirplaneTakeoff size={29} weight="duotone" />
           </span>
           <span>
             <strong>Despegar</strong>
             <small>RUMBO A {destination.code}</small>
           </span>
-          <ArrowRight size={23} />
+          <span className="fd-takeoff-chevrons" aria-hidden="true"><i>›</i><i>›</i><i>›</i></span>
         </button>
         <button
           className="fd-mobile-details"
@@ -283,12 +299,12 @@ export function Director() {
           <div className="fd-contract-heading">
             <img src={ASSETS + "pathy.png"} alt="Pathy" />
             <div>
-              <p className="fd-eyebrow">TU PLAN CON PATHY</p>
-              <small>Cada vuelo empieza con un paso</small>
+              <p className="fd-eyebrow">CONTRATOS DE PATHY</p>
+              <small>Se renuevan cada día</small>
             </div>
           </div>
           <Link to="/dashboard/banco">
-            <strong>{weak ? `Refuerza ${weak.name}` : "Tu primera misión"}</strong>
+            <strong>{weak ? `Refuerza ${weak.name}` : "Tu primera misión"}</strong><em>+60 FP</em>
             <p>
               {weak
                 ? `Tu precisión es de ${weak.avg}%. Una práctica corta te ayuda a seguir avanzando.`
@@ -296,16 +312,16 @@ export function Director() {
             </p>
           </Link>
           <Link to="/dashboard/rutas">
-            <strong>Continúa tu aprendizaje</strong>
+            <strong>Estrena Seguridad Aérea</strong><em>+40 FP</em>
             <p>{stats?.temasDone ?? 0} temas completados. Tu ruta te espera.</p>
           </Link>
           <Link to="/dashboard/bitacora">
-            <strong>Escribe tu bitácora</strong>
+            <strong>Escribe tu bitácora</strong><em>+20 FP</em>
             <p>Registra lo que aprendiste y cómo te sentiste hoy.</p>
           </Link>
         </section>
         <section className="fd-panel fd-countdown">
-          <p className="fd-eyebrow">TU OBJETIVO · CIAAC</p>
+          <p className="fd-eyebrow">TEMPORADA CIAAC 2026</p>
           <h2>
             {days === null ? (
               "Elige tu fecha de vuelo"
@@ -357,7 +373,7 @@ export function Director() {
           }}
         >
           <span className={"fd-switch " + (live ? "is-on" : "")} />
-          <small>{live ? "EN VIVO" : "AMANECER"}</small>
+          <small>EN VIVO</small>
         </button>
         {live ? <Moon size={14} /> : <Sun size={14} />}
         <span>
@@ -377,10 +393,10 @@ export function Director() {
           >
             <small>{d.code}</small>
             <span>
-              <strong>{d.name}</strong>
-              <small>{metric(i, stats)}</small>
+              <span><small>MEX → {d.code}</small><strong>{d.name}</strong><em><b>●</b> {routeStatus(i)}</em></span>
+              <span className="fd-ticket-stub"><small>P0{i + 1}</small><strong>{metric(i, stats)}</strong></span>
             </span>
-            <span className="fd-chip-rule" />
+            <i className="fd-ticket-notch is-top" /><i className="fd-ticket-notch is-bottom" />
           </button>
         ))}
       </nav>
