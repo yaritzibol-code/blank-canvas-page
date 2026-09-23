@@ -12,7 +12,11 @@ class ReferenceMotion {
     );
     this._fields = [];
     this._tick = 0;
+    this._lastLoopAt = 0;
     this._dead = false;
+    this._globeAttempts = 0;
+    this._globeRetryAt = 0;
+    this._globeUnsupported = false;
     this._media = window.matchMedia("(prefers-reduced-motion: reduce)");
     this._reduced = this._media.matches;
     this._onMotion = () => {
@@ -25,7 +29,12 @@ class ReferenceMotion {
     this._media.addEventListener("change", this._onMotion);
     this._loop = () => {
       if (this._dead) return;
-      if (!document.hidden) this._frame();
+      const now = performance.now();
+      const frameInterval = window.innerWidth <= 900 ? 32 : 16;
+      if (!document.hidden && now - this._lastLoopAt >= frameInterval) {
+        this._lastLoopAt = now;
+        this._frame();
+      }
       this._raf = requestAnimationFrame(this._loop);
     };
     this._loop();
@@ -34,30 +43,34 @@ class ReferenceMotion {
     this._dead = true;
     cancelAnimationFrame(this._raf);
     this._media.removeEventListener("change", this._onMotion);
-    const g = this._globe;
-    if (g) {
-      if (g.onDown) {
-        g.cv.removeEventListener("pointerdown", g.onDown);
-        g.cv.removeEventListener("pointermove", g.onMove);
-        ["pointerup", "pointercancel", "pointerleave"].forEach((e) =>
-          g.cv.removeEventListener(e, g.onUp),
-        );
-      }
-      if (g.gl) {
-        Object.values(g.tex).forEach((t) => g.gl.deleteTexture(t));
-        if (g.buffer) g.gl.deleteBuffer(g.buffer);
-        if (g.program) {
-          (g.gl.getAttachedShaders(g.program) || []).forEach((s) => g.gl.deleteShader(s));
-          g.gl.deleteProgram(g.program);
-        }
-      }
-    }
+    this._disposeGlobe(this._globe);
     this._fields.forEach((f) => {
       f.host.removeEventListener("mousemove", f.move);
       f.host.removeEventListener("mouseleave", f.leave);
       f.host.removeEventListener("touchmove", f.move);
       f.host.removeEventListener("touchend", f.leave);
     });
+  }
+  _disposeGlobe(g) {
+    if (!g) return;
+    if (g.onDown) {
+      g.cv.removeEventListener("pointerdown", g.onDown);
+      g.cv.removeEventListener("pointermove", g.onMove);
+      ["pointerup", "pointercancel", "pointerleave"].forEach((e) =>
+        g.cv.removeEventListener(e, g.onUp),
+      );
+    }
+    if (g.onContextLost) g.cv.removeEventListener("webglcontextlost", g.onContextLost);
+    if (g.onContextRestored)
+      g.cv.removeEventListener("webglcontextrestored", g.onContextRestored);
+    if (g.gl && !g.gl.isContextLost()) {
+      Object.values(g.tex).forEach((t) => g.gl.deleteTexture(t));
+      if (g.buffer) g.gl.deleteBuffer(g.buffer);
+      if (g.program) {
+        (g.gl.getAttachedShaders(g.program) || []).forEach((s) => g.gl.deleteShader(s));
+        g.gl.deleteProgram(g.program);
+      }
+    }
   }
   _rand(a, b) {
     return a + Math.random() * (b - a);
@@ -215,13 +228,18 @@ class ReferenceMotion {
     var cv = this._glCv,
       fx = this._fxCv,
       self = this;
-    if (!cv || !fx || !cv.isConnected || !fx.isConnected) return null;
+    if (!cv || !fx || !cv.isConnected || !fx.isConnected || this._globeUnsupported) return null;
     if (this._globe && this._globe.cv === cv && this._globe.gl && !this._globe.gl.isContextLost()) return this._globe;
+    if (performance.now() < this._globeRetryAt) return null;
+    if (this._globe && this._globe.cv !== cv) this._disposeGlobe(this._globe);
+    cv.parentElement?.classList.remove("is-globe-ready");
+    var compact = window.innerWidth <= 900,
+      constrained = compact || (navigator.deviceMemory && navigator.deviceMemory <= 4);
     var opts = {
       premultipliedAlpha: true,
-      antialias: true,
+      antialias: !constrained,
       alpha: true,
-      powerPreference: "high-performance",
+      powerPreference: constrained ? "low-power" : "high-performance",
     };
     var gl = cv.getContext("webgl", opts),
       v2 = false;
@@ -245,7 +263,13 @@ class ReferenceMotion {
       t0: performance.now(),
     };
     this._globe = g;
-    if (!gl) return g;
+    if (!gl) {
+      this._globeAttempts += 1;
+      this._globeRetryAt = performance.now() + 1500 * this._globeAttempts;
+      if (this._globeAttempts >= 3) this._globeUnsupported = true;
+      return null;
+    }
+    this._globeAttempts = 0;
     var vs = "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
     var fs = [
       "precision highp float;",
@@ -296,8 +320,10 @@ class ReferenceMotion {
     gl.attachShader(pr, mk(gl.FRAGMENT_SHADER, fs));
     gl.linkProgram(pr);
     if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) {
+      this._disposeGlobe(g);
       g.gl = null;
-      return g;
+      this._globeRetryAt = performance.now() + 1500;
+      return null;
     }
     gl.useProgram(pr);
     var buf = gl.createBuffer();
@@ -314,8 +340,9 @@ class ReferenceMotion {
     });
     gl.uniform1i(g.u.uDay, 0);
     gl.uniform1i(g.u.uNight, 1);
-    this._globeTex(g, "day", "/flightdeck/tierra-dia-nasa.webp", 0);
-    this._globeTex(g, "night", "/flightdeck/tierra-noche-nasa.webp", 1);
+    var textureSize = compact ? "1024" : window.devicePixelRatio > 1.25 ? "2048" : "nasa";
+    this._globeTex(g, "day", "/flightdeck/tierra-dia-" + textureSize + ".webp", 0);
+    this._globeTex(g, "night", "/flightdeck/tierra-noche-" + textureSize + ".webp", 1);
 
     g.onDown = function (e) {
       g.down = { x: e.clientX, y: e.clientY, lon: g.dragLon, lat: g.dragLat };
@@ -349,7 +376,18 @@ class ReferenceMotion {
     cv.addEventListener("pointerup", g.onUp);
     cv.addEventListener("pointercancel", g.onUp);
     cv.addEventListener("pointerleave", g.onUp);
-    cv.addEventListener("webglcontextlost", (e) => { e.preventDefault(); this._globe = null; }, false);
+    g.onContextLost = function (e) {
+      e.preventDefault();
+      cv.parentElement?.classList.remove("is-globe-ready");
+      self._globeRetryAt = Number.POSITIVE_INFINITY;
+    };
+    g.onContextRestored = function () {
+      self._disposeGlobe(self._globe);
+      self._globe = null;
+      self._globeRetryAt = performance.now() + 250;
+    };
+    cv.addEventListener("webglcontextlost", g.onContextLost, false);
+    cv.addEventListener("webglcontextrestored", g.onContextRestored, false);
     return g;
   }
 
@@ -357,7 +395,7 @@ class ReferenceMotion {
     var gl = g.gl;
     var self = this;
     var done = function (src) {
-      if (self._dead) {
+      if (self._dead || self._globe !== g || !g.gl || g.gl.isContextLost()) {
         if (src.close) src.close();
         return;
       }
@@ -486,9 +524,10 @@ class ReferenceMotion {
       h = cv.clientHeight;
     if (!w || !h) return;
     var nativeDpr = window.devicePixelRatio || 1,
-      maxPixels = 8000000,
+      deviceMemory = navigator.deviceMemory || 8,
+      maxPixels = deviceMemory <= 4 || w <= 900 ? 4000000 : 8000000,
       pixelBudgetDpr = Math.sqrt(maxPixels / Math.max(1, w * h)),
-      dpr = Math.min(nativeDpr, 3, pixelBudgetDpr);
+      dpr = Math.max(1, Math.min(nativeDpr, deviceMemory <= 4 ? 2 : 3, pixelBudgetDpr));
     if (w !== g.w || h !== g.h || Math.abs(dpr - g.dpr) > 0.01) {
       g.w = w;
       g.h = h;
@@ -509,12 +548,9 @@ class ReferenceMotion {
         g.vel *= 0.94;
       }
       if (!this._reduced) {
-        if (false) g.spin += 0.06;
-        else {
-          g.dragLon *= 0.997;
-          g.dragLat *= 0.997;
-          g.spin *= 0.99;
-        }
+        g.dragLon *= 0.997;
+        g.dragLat *= 0.997;
+        g.spin *= 0.99;
       }
     }
     var sway = this._reduced || false ? 0 : Math.sin(t * 0.13) * 20;
@@ -800,6 +836,8 @@ class ReferenceMotion {
     for (var c = 0; c < list.length; c++) {
       var cv = list[c];
       if (!cv.isConnected || !cv.parentElement) continue;
+      var r = cv.getBoundingClientRect();
+      if (!this._reduced && (r.bottom < -120 || r.top > (window.innerHeight || 0) + 120)) continue;
       var f = this._field(cv);
       if (!f.ctx) continue;
       var w = f.host.clientWidth,
@@ -824,8 +862,6 @@ class ReferenceMotion {
         continue;
       }
       if (this._reduced && f.drawnStatic) continue;
-      var r = cv.getBoundingClientRect();
-      if (!this._reduced && (r.bottom < -120 || r.top > (window.innerHeight || 0) + 120)) continue;
       var dark = cv.getAttribute("data-tone") === "dark";
       var rgb = dark ? "255,255,255" : "22,61,112";
       var ringRgb = "199,160,82";
