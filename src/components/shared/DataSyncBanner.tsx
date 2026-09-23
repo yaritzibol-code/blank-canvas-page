@@ -56,8 +56,9 @@ export function DataSyncBanner() {
       color: tone.fg,
       border: `1px solid ${tone.border}`,
       padding: "10px 16px",
-      borderRadius: 12,
+      borderRadius: 6,
       marginBottom: 16,
+      fontFamily: "'Manrope', sans-serif",
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
@@ -72,14 +73,14 @@ export function DataSyncBanner() {
         {status.severity === "warning" && (
           <button
             onClick={handleSync}
-            style={{ background: tone.fg, color: "white", border: "none", padding: "6px 12px", borderRadius: 8, fontWeight: 700, cursor: "pointer" }}
+            style={{ background: tone.btn, color: "#0B1220", border: "none", padding: "6px 12px", borderRadius: 6, fontWeight: 800, cursor: "pointer", fontFamily: "inherit" }}
           >
             Sincronizar ahora
           </button>
         )}
         <button
           onClick={handleDismiss}
-          style={{ background: "transparent", color: tone.fg, border: `1px solid ${tone.fg}`, padding: "6px 12px", borderRadius: 8, cursor: "pointer" }}
+          style={{ background: "transparent", color: tone.fg, border: `1px solid ${tone.border}`, padding: "6px 12px", borderRadius: 6, cursor: "pointer", fontFamily: "inherit" }}
         >
           Cerrar
         </button>
