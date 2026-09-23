@@ -1266,7 +1266,7 @@ function CuestionarioPage() {
 
             {!!currentQ.imagenes?.length && (
               <figure className="fp-question-featured-figure">
-                <QuestionImages files={currentQ.imagenes} fuente={currentQ.fuente} />
+                <QuestionImages files={currentQ.imagenes} fuente={currentQ.fuente} fallbackSrc={knowledgeQuestionImage} />
                 <figcaption>FIGURA 1 · MATERIAL DE ESTUDIO</figcaption>
               </figure>
             )}
