@@ -334,9 +334,9 @@ export function ControlGame({ cfg, onFinish, onQuit }: Props) {
             height: side,
             display: "block",
             margin: "0 auto",
-            background: "white",
+            background: "var(--fd-panel, white)",
             border: `1px solid ${NAVY}14`,
-            borderRadius: 18,
+            borderRadius: "var(--fd-radius, 18px)",
             touchAction: "none",
             cursor: "crosshair",
           }}
@@ -361,10 +361,10 @@ export function ControlGame({ cfg, onFinish, onQuit }: Props) {
           fontSize: "0.66rem",
           letterSpacing: "0.1em",
           textTransform: "uppercase",
-          color: HAZE,
-          background: CREAM,
+          color: "var(--fd-muted, #4A5872)",
+          background: "var(--fd-panel, #F5F5F7)",
           border: `1px solid ${NAVY}0F`,
-          borderRadius: 10,
+          borderRadius: "var(--fd-radius, 10px)",
           padding: "8px 12px",
         }}
       >

@@ -29,35 +29,35 @@ export function PathyCloud() {
       {open && (
         <div
           style={{
-            width: 288, background: "white", borderRadius: 18, padding: 16, marginBottom: 10,
+            width: 288, background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 18px)", padding: 16, marginBottom: 10,
             boxShadow: "0 18px 40px rgba(8,26,53,.22)", border: "1.5px solid #EEE1C5",
           }}
         >
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-            <strong style={{ color: "#081A35", fontSize: "0.9rem" }}>
+            <strong style={{ color: "var(--fd-text, #081A35)", fontSize: "0.9rem" }}>
               {enBreak ? "Break" : "Sesión con Pathy"}
             </strong>
-            <button onClick={() => setOpen(false)} style={{ background: "none", border: "none", cursor: "pointer", color: "#4A5872" }}>
+            <button onClick={() => setOpen(false)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--fd-muted, #4A5872)" }}>
               <Icon n="close" size={16} />
             </button>
           </div>
 
-          <div style={{ fontSize: "1.6rem", fontWeight: 800, color: "#163D70", lineHeight: 1 }}>{mmss(remainingMs)}</div>
-          <div style={{ fontSize: "0.78rem", color: "#4A5872", marginBottom: 12 }}>
+          <div style={{ fontSize: "1.6rem", fontWeight: 800, color: "var(--fd-text, #163D70)", lineHeight: 1 }}>{mmss(remainingMs)}</div>
+          <div style={{ fontSize: "0.78rem", color: "var(--fd-muted, #4A5872)", marginBottom: 12 }}>
             {elapsedMin} / {totalMin} min
           </div>
 
           {current && (
-            <div style={{ background: "rgba(22,61,112,.06)", borderRadius: 12, padding: "10px 12px", marginBottom: 8 }}>
-              <div style={{ fontSize: "0.68rem", fontWeight: 800, color: "#4A5872", textTransform: "uppercase", letterSpacing: ".05em" }}>
+            <div style={{ background: "rgba(22,61,112,.06)", borderRadius: "var(--fd-radius, 12px)", padding: "10px 12px", marginBottom: 8 }}>
+              <div style={{ fontSize: "0.68rem", fontWeight: 800, color: "var(--fd-muted, #4A5872)", textTransform: "uppercase", letterSpacing: ".05em" }}>
                 Ahora
               </div>
-              <div style={{ fontWeight: 700, color: "#081A35", fontSize: "0.86rem" }}>{current.titulo}</div>
+              <div style={{ fontWeight: 700, color: "var(--fd-text, #081A35)", fontSize: "0.86rem" }}>{current.titulo}</div>
             </div>
           )}
           {next && (
-            <div style={{ fontSize: "0.78rem", color: "#4A5872", marginBottom: 12 }}>
-              Sigue: <strong style={{ color: "#081A35" }}>{next.titulo}</strong>
+            <div style={{ fontSize: "0.78rem", color: "var(--fd-muted, #4A5872)", marginBottom: 12 }}>
+              Sigue: <strong style={{ color: "var(--fd-text, #081A35)" }}>{next.titulo}</strong>
             </div>
           )}
 
@@ -65,7 +65,7 @@ export function PathyCloud() {
             <button
               onClick={completeCurrent}
               style={{
-                minHeight: 42, borderRadius: 10, border: "none", background: "#163D70", color: "white",
+                minHeight: 42, borderRadius: "var(--fd-radius, 10px)", border: "none", background: "#163D70", color: "white",
                 fontWeight: 700, fontSize: "0.82rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif",
               }}
             >
@@ -74,8 +74,8 @@ export function PathyCloud() {
             <button
               onClick={() => navigate({ to: "/dashboard/estudiemos" })}
               style={{
-                minHeight: 42, borderRadius: 10, border: "1.5px solid #EEE1C5", background: "white",
-                color: "#163D70", fontWeight: 700, fontSize: "0.82rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif",
+                minHeight: 42, borderRadius: "var(--fd-radius, 10px)", border: "1.5px solid #EEE1C5", background: "var(--fd-panel, white)",
+                color: "var(--fd-text, #163D70)", fontWeight: 700, fontSize: "0.82rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif",
               }}
             >
               Ver mi sesión
@@ -84,13 +84,13 @@ export function PathyCloud() {
               <div style={{ display: "flex", gap: 8 }}>
                 <button
                   onClick={() => { end(); setOpen(false); setConfirm(false); navigate({ to: "/dashboard/estudiemos" }); }}
-                  style={{ flex: 1, minHeight: 42, borderRadius: 10, border: "none", background: "#7A5C1E", color: "white", fontWeight: 700, fontSize: "0.8rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                  style={{ flex: 1, minHeight: 42, borderRadius: "var(--fd-radius, 10px)", border: "none", background: "#7A5C1E", color: "white", fontWeight: 700, fontSize: "0.8rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
                 >
                   Sí, terminar
                 </button>
                 <button
                   onClick={() => setConfirm(false)}
-                  style={{ flex: 1, minHeight: 42, borderRadius: 10, border: "1.5px solid #EEE1C5", background: "white", color: "#4A5872", fontWeight: 700, fontSize: "0.8rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                  style={{ flex: 1, minHeight: 42, borderRadius: "var(--fd-radius, 10px)", border: "1.5px solid #EEE1C5", background: "var(--fd-panel, white)", color: "var(--fd-muted, #4A5872)", fontWeight: 700, fontSize: "0.8rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
                 >
                   Seguir
                 </button>
@@ -98,7 +98,7 @@ export function PathyCloud() {
             ) : (
               <button
                 onClick={() => setConfirm(true)}
-                style={{ minHeight: 42, borderRadius: 10, border: "none", background: "transparent", color: "#7A5C1E", fontWeight: 700, fontSize: "0.8rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                style={{ minHeight: 42, borderRadius: "var(--fd-radius, 10px)", border: "none", background: "transparent", color: "var(--fd-gold, #7A5C1E)", fontWeight: 700, fontSize: "0.8rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
               >
                 Terminar sesión
               </button>
@@ -113,12 +113,12 @@ export function PathyCloud() {
         style={{
           display: "inline-flex", alignItems: "center", gap: 9, padding: "10px 16px 10px 10px",
           borderRadius: 999, border: "none", cursor: "pointer",
-          background: enBreak ? "#FDF3D6" : "white",
+          background: enBreak ? "#FDF3D6" : "var(--fd-panel, white)",
           boxShadow: "0 12px 28px rgba(8,26,53,.22)", fontFamily: "'Manrope', sans-serif",
         }}
       >
         <PathyMark size={30} float />
-        <span style={{ fontWeight: 800, color: enBreak ? "#856404" : "#081A35", fontSize: "0.84rem" }}>
+        <span style={{ fontWeight: 800, color: enBreak ? "#856404" : "var(--fd-text, #081A35)", fontSize: "0.84rem" }}>
           {enBreak ? `Break · ${mmss(remainingMs)}` : `quedan ${mmss(remainingMs)}`}
         </span>
       </button>

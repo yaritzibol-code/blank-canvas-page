@@ -6,8 +6,8 @@ export function LockedState({ onUpgrade }: { onUpgrade: () => void }) {
   return (
     <div
       style={{
-        background: "white",
-        borderRadius: 18,
+        background: "var(--fd-panel, white)",
+        borderRadius: "var(--fd-radius, 18px)",
         padding: "30px 24px",
         textAlign: "center",
         boxShadow: "0 2px 16px rgba(22,61,112,0.08)",
@@ -26,17 +26,17 @@ export function LockedState({ onUpgrade }: { onUpgrade: () => void }) {
       >
         <Icon n="lock" size={20} color="#fff" />
       </div>
-      <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.2rem", color: "#081A35", margin: "0 0 8px" }}>
+      <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.2rem", color: "var(--fd-text, #081A35)", margin: "0 0 8px" }}>
         Estudiemos Juntos es de FlightPath Pro
       </h2>
-      <p style={{ fontSize: "0.88rem", color: "#4A5872", margin: "0 auto 18px", maxWidth: 420, lineHeight: 1.6 }}>
+      <p style={{ fontSize: "0.88rem", color: "var(--fd-muted, #4A5872)", margin: "0 auto 18px", maxWidth: 420, lineHeight: 1.6 }}>
         Tú eliges cómo llegas: Pathy revisa tu progreso real y arma la sesión de hoy con los
         recursos que más te sirven, con tiempos y breaks incluidos.
       </p>
       <button
         onClick={onUpgrade}
         style={{
-          minHeight: 48, padding: "12px 22px", borderRadius: 12, border: "none",
+          minHeight: 48, padding: "12px 22px", borderRadius: "var(--fd-radius, 12px)", border: "none",
           background: "#7A5C1E", color: "white", fontWeight: 800, fontSize: "0.9rem",
           cursor: "pointer", fontFamily: "'Manrope', sans-serif",
         }}

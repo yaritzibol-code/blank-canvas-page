@@ -166,13 +166,13 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
   const inputStyle: React.CSSProperties = {
     width: "100%",
     padding: "14px 16px",
-    borderRadius: 12,
+    borderRadius: "var(--fd-radius, 12px)",
     border: "1.5px solid #E3EAF5",
     fontSize: 16, // ≥16px evita el zoom automático de iOS al enfocar
     fontFamily: FONT,
-    color: INK,
+    color: "var(--fd-text, #081A35)",
     outline: "none",
-    background: "#F5F5F7",
+    background: "var(--fd-panel, #F5F5F7)",
     boxSizing: "border-box",
     transition: "border-color .2s, box-shadow .2s",
   };
@@ -181,7 +181,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
     display: "block",
     fontSize: 12.5,
     fontWeight: 700,
-    color: INK,
+    color: "var(--fd-text, #081A35)",
     margin: "16px 0 7px",
   };
 
@@ -263,7 +263,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
               fontSize: 10.5,
               fontWeight: 800,
               letterSpacing: ".14em",
-              color: "#7E90AD",
+              color: "var(--fd-muted, #7E90AD)",
               whiteSpace: "nowrap",
             }}
           >
@@ -306,7 +306,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                   height: 7,
                   borderRadius: "50%",
                   transform: "translate(-50%,-50%)",
-                  background: i <= step ? BRAND : "#fff",
+                  background: i <= step ? BRAND : "var(--fd-panel, #fff)",
                   border: i <= step ? "none" : "1.5px solid rgba(22,61,112,.35)",
                   transition: "background .3s",
                 }}
@@ -327,7 +327,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                   width: 26,
                   height: 26,
                   borderRadius: "50%",
-                  background: "#fff",
+                  background: "var(--fd-panel, #fff)",
                   boxShadow: "0 4px 14px rgba(15,26,51,.22)",
                   display: "flex",
                   alignItems: "center",
@@ -346,7 +346,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
             style={{
               background: "none",
               border: "none",
-              color: "#7E90AD",
+              color: "var(--fd-muted, #7E90AD)",
               fontSize: 12,
               fontWeight: 700,
               cursor: "pointer",
@@ -401,7 +401,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
               style={{
                 fontFamily: DISPLAY,
                 fontSize: "clamp(1.5rem,5.5vw,1.9rem)",
-                color: INK,
+                color: "var(--fd-text, #081A35)",
                 fontWeight: 800,
                 margin: "0 0 8px",
                 letterSpacing: "-0.02em",
@@ -411,14 +411,14 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
             </h2>
             <p
               style={{
-                color: "#4A5872",
+                color: "var(--fd-muted, #4A5872)",
                 fontSize: 14.5,
                 lineHeight: 1.65,
                 margin: "0 auto",
                 maxWidth: 400,
               }}
             >
-              Soy <strong style={{ color: BRAND }}>Pathy</strong>, tu copiloto de estudio. Antes de
+              Soy <strong style={{ color: "var(--fd-gold, #7A5C1E)" }}>Pathy</strong>, tu copiloto de estudio. Antes de
               despegar, preparemos tu cabina — te toma menos de un minuto.
             </p>
             <button onClick={advance} className="fp-ob-btn fp-ob-btn-primary" style={primaryBtn}>
@@ -466,7 +466,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                   borderRadius: 999,
                   padding: "8px 16px",
                   fontSize: 13.5,
-                  color: "#123360",
+                  color: "var(--fd-text, #123360)",
                   fontWeight: 600,
                 }}
               >
@@ -509,10 +509,10 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                       gap: 12,
                       textAlign: "left",
                       padding: "14px 16px",
-                      borderRadius: 14,
+                      borderRadius: "var(--fd-radius, 14px)",
                       cursor: "pointer",
                       width: "100%",
-                      background: activo ? "rgba(122,92,30,0.05)" : "#fff",
+                      background: activo ? "rgba(122,92,30,0.05)" : "var(--fd-panel, #fff)",
                       border: `1.5px solid ${activo ? BRAND : "#E3EAF5"}`,
                       fontFamily: FONT,
                     }}
@@ -537,12 +537,12 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                     </span>
                     <span>
                       <span
-                        style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: INK }}
+                        style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: "var(--fd-text, #081A35)" }}
                       >
                         {g.label}
                       </span>
                       <span
-                        style={{ display: "block", fontSize: 12.5, color: "#4A5872", marginTop: 2 }}
+                        style={{ display: "block", fontSize: 12.5, color: "var(--fd-muted, #4A5872)", marginTop: 2 }}
                       >
                         {g.ejemplo}
                       </span>
@@ -554,10 +554,10 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
 
             {/* Personalidad de Yaris IA */}
             <div style={{ marginTop: 22, paddingTop: 18, borderTop: "1px solid #E3EAF5" }}>
-              <div style={{ fontSize: 14.5, fontWeight: 800, color: INK, marginBottom: 2 }}>
+              <div style={{ fontSize: 14.5, fontWeight: 800, color: "var(--fd-text, #081A35)", marginBottom: 2 }}>
                 ¿Cómo quieres que te hable Yaris?
               </div>
-              <div style={{ fontSize: 12.5, color: "#4A5872", marginBottom: 12 }}>
+              <div style={{ fontSize: 12.5, color: "var(--fd-muted, #4A5872)", marginBottom: 12 }}>
                 Tu tutora IA. Cambia su forma de hablar, nunca su rigor técnico. Puedes cambiarlo en
                 Configuración.
               </div>
@@ -574,10 +574,10 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                         gap: 12,
                         textAlign: "left",
                         padding: "14px 16px",
-                        borderRadius: 14,
+                        borderRadius: "var(--fd-radius, 14px)",
                         cursor: "pointer",
                         width: "100%",
-                        background: activo ? "rgba(122,92,30,0.05)" : "#fff",
+                        background: activo ? "rgba(122,92,30,0.05)" : "var(--fd-panel, #fff)",
                         border: `1.5px solid ${activo ? BRAND : "#E3EAF5"}`,
                         fontFamily: FONT,
                       }}
@@ -607,7 +607,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                       </span>
                       <span>
                         <span
-                          style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: INK }}
+                          style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: "var(--fd-text, #081A35)" }}
                         >
                           {t.label}
                         </span>
@@ -615,7 +615,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                           style={{
                             display: "block",
                             fontSize: 12.5,
-                            color: "#4A5872",
+                            color: "var(--fd-muted, #4A5872)",
                             marginTop: 2,
                           }}
                         >
@@ -665,10 +665,10 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                       gap: 12,
                       textAlign: "left",
                       padding: "14px 16px",
-                      borderRadius: 14,
+                      borderRadius: "var(--fd-radius, 14px)",
                       cursor: "pointer",
                       width: "100%",
-                      background: activo ? "rgba(122,92,30,0.05)" : "#fff",
+                      background: activo ? "rgba(122,92,30,0.05)" : "var(--fd-panel, #fff)",
                       border: `1.5px solid ${activo ? BRAND : "#E3EAF5"}`,
                       fontFamily: FONT,
                     }}
@@ -677,10 +677,10 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                       style={{
                         width: 38,
                         height: 38,
-                        borderRadius: 11,
+                        borderRadius: "var(--fd-radius, 11px)",
                         flexShrink: 0,
-                        background: activo ? BRAND : "rgba(22,61,112,0.08)",
-                        color: activo ? CORAL : "#163D70",
+                        background: activo ? BRAND : "var(--fd-panel-alt, rgba(22,61,112,0.08))",
+                        color: activo ? CORAL : "var(--fd-text, #163D70)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -690,12 +690,12 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                     </span>
                     <span>
                       <span
-                        style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: INK }}
+                        style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: "var(--fd-text, #081A35)" }}
                       >
                         {r.label}
                       </span>
                       <span
-                        style={{ display: "block", fontSize: 12.5, color: "#4A5872", marginTop: 2 }}
+                        style={{ display: "block", fontSize: 12.5, color: "var(--fd-muted, #4A5872)", marginTop: 2 }}
                       >
                         {r.sub}
                       </span>
@@ -802,7 +802,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
               style={{
                 background: "none",
                 border: "none",
-                color: "#163D70",
+                color: "var(--fd-text, #163D70)",
                 fontSize: 13,
                 fontWeight: 700,
                 cursor: "pointer",
@@ -841,9 +841,9 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                     display: "flex",
                     alignItems: "flex-start",
                     gap: 12,
-                    background: "#fff",
+                    background: "var(--fd-panel, #fff)",
                     border: "1px solid #E8ECF2",
-                    borderRadius: 14,
+                    borderRadius: "var(--fd-radius, 14px)",
                     padding: "13px 15px",
                     boxShadow: "0 1px 2px rgba(15,26,51,.04), 0 10px 26px -18px rgba(15,26,51,.18)",
                   }}
@@ -852,9 +852,9 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                     style={{
                       width: 38,
                       height: 38,
-                      borderRadius: 10,
-                      background: "#FBF7EC",
-                      color: BRAND,
+                      borderRadius: "var(--fd-radius, 10px)",
+                      background: "var(--fd-panel, #FBF7EC)",
+                      color: "var(--fd-gold, #7A5C1E)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -869,7 +869,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                         display: "block",
                         fontSize: 14,
                         fontWeight: 800,
-                        color: INK,
+                        color: "var(--fd-text, #081A35)",
                         fontFamily: DISPLAY,
                         letterSpacing: "-0.01em",
                       }}
@@ -880,7 +880,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                       style={{
                         display: "block",
                         fontSize: 12.5,
-                        color: "#4A5872",
+                        color: "var(--fd-muted, #4A5872)",
                         lineHeight: 1.45,
                         marginTop: 2,
                       }}
@@ -913,7 +913,7 @@ const primaryBtn: React.CSSProperties = {
   marginTop: 24,
   padding: "15px 20px",
   minHeight: 52,
-  borderRadius: 14,
+  borderRadius: "var(--fd-radius, 14px)",
   border: "none",
   background: BRAND,
   color: "#fff",
@@ -932,10 +932,10 @@ const ghostBtn: React.CSSProperties = {
   width: "100%",
   padding: "12px 20px",
   marginTop: 8,
-  borderRadius: 12,
+  borderRadius: "var(--fd-radius, 12px)",
   border: "none",
   background: "transparent",
-  color: "#4A5872",
+  color: "var(--fd-muted, #4A5872)",
   fontWeight: 700,
   fontSize: 13.5,
   cursor: "pointer",
@@ -949,7 +949,7 @@ function StepHead({ icon, title, sub }: { icon: FPIconName; title: string; sub: 
         style={{
           width: 52,
           height: 52,
-          borderRadius: 15,
+          borderRadius: "var(--fd-radius, 15px)",
           background: `linear-gradient(135deg, ${INK}, #163D70)`,
           display: "flex",
           alignItems: "center",
@@ -964,7 +964,7 @@ function StepHead({ icon, title, sub }: { icon: FPIconName; title: string; sub: 
         style={{
           fontFamily: DISPLAY,
           fontSize: "clamp(1.3rem,4.6vw,1.55rem)",
-          color: INK,
+          color: "var(--fd-text, #081A35)",
           fontWeight: 800,
           margin: "0 0 6px",
           letterSpacing: "-0.02em",
@@ -973,7 +973,7 @@ function StepHead({ icon, title, sub }: { icon: FPIconName; title: string; sub: 
       >
         {title}
       </h2>
-      <p style={{ color: "#4A5872", fontSize: 14, lineHeight: 1.6, margin: 0 }}>{sub}</p>
+      <p style={{ color: "var(--fd-muted, #4A5872)", fontSize: 14, lineHeight: 1.6, margin: 0 }}>{sub}</p>
     </>
   );
 }

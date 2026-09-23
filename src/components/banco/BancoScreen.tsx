@@ -1,4 +1,6 @@
-import { FlightTrails } from "@/components/shared/FlightTrails";
+import { ASSETS } from "@/components/flightdeck/destinations";
+import { LaunchButton, isTyping } from "@/components/flightdeck/FlightDeck";
+import { CheckCircle, AirplaneTakeoff, BookOpen } from "@phosphor-icons/react";
 /**
  * Pantalla de banco de preguntas (Simulador + Aprendiendo + historial).
  * La usan `/dashboard/banco` (CIAAC) y `/dashboard/linea-aerea` (banco LA),
@@ -10,6 +12,8 @@ import { Icon } from "@/components/ui/fp-icon";
 import { PathyMark } from "@/components/shared/PathyMark";
 import {
   useSessionUser,
+  useStore,
+  materiaPerformance,
   studentStats,
   getSimAttempts,
   getQuizAttempts,
@@ -29,7 +33,6 @@ import {
 import { ExtrasPanel } from "@/components/banco/ExtrasPanel";
 
 /* ─── Types ─────────────────────────────────────────── */
-
 
 interface WeaknessItem {
   icon: string;
@@ -60,6 +63,20 @@ interface HistEntry {
 /* ─── Static data ────────────────────────────────────── */
 
 /** Derivado de MATERIAS_DEF: el registro canónico es la única fuente. */
+const SECTOR_CODES: Record<string, string> = {
+  aerodinamica: "AER",
+  "aeronaves-motores": "MOT",
+  legislacion: "LEG",
+  medicina: "MED",
+  meteorologia: "MET",
+  navegacion: "NAV",
+  "servicios-transito": "ATS",
+  comunicaciones: "COM",
+  "manuales-ais": "AIP",
+  "factores-humanos": "FH",
+  "seguridad-aerea": "SEG",
+  operaciones: "OPS",
+};
 const MATERIAS: { label: string; slug: string }[] = MATERIAS_DEF.map((m) => ({
   label: m.name,
   slug: m.slug,
@@ -75,8 +92,7 @@ function scoreColor(score: number): string {
 
 function fmtFecha(iso: string): string {
   const d = new Date(iso);
-  const startOfDay = (x: Date) =>
-    new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+  const startOfDay = (x: Date) => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
   const diffDays = Math.round((startOfDay(new Date()) - startOfDay(d)) / 86400000);
   if (diffDays <= 0) return "hoy";
   if (diffDays === 1) return "ayer";
@@ -117,7 +133,12 @@ function materiaBreakdown(
 }
 
 function toWeakness(m: MateriaBreak): WeaknessItem {
-  return { icon: m.icon, name: m.name, detail: `${m.correct} de ${m.total} correctas`, score: m.pct };
+  return {
+    icon: m.icon,
+    name: m.name,
+    detail: `${m.correct} de ${m.total} correctas`,
+    score: m.pct,
+  };
 }
 
 function simToEntry(a: SimAttempt): HistEntry {
@@ -153,7 +174,7 @@ function quizToEntry(a: QuizAttempt): HistEntry {
   const materiaTitle =
     a.titulo ??
     (a.materias.length === 1
-      ? materiaBySlug(a.materias[0])?.name ?? a.materias[0]
+      ? (materiaBySlug(a.materias[0])?.name ?? a.materias[0])
       : "Varias materias");
   const items = materiaBreakdown(a.porMateria);
   const asc = [...items].sort((x, y) => x.pct - y.pct);
@@ -276,7 +297,6 @@ function buildResumables(userId: string, track: BancoTrack): ResumeEntry[] {
       if (caps) search.caps = caps;
       if (qty && Number.isFinite(Number(qty))) search.qty = Number(qty);
 
-
       return {
         key: `apr|${s.variant}`,
         title,
@@ -296,8 +316,8 @@ function ResumeItem({ entry }: { entry: ResumeEntry }) {
   return (
     <div
       style={{
-        background: "white",
-        borderRadius: 12,
+        background: "var(--fd-panel, white)",
+        borderRadius: "var(--fd-radius, 12px)",
         borderLeft: `4px solid ${AMBAR}`,
         boxShadow: "0 2px 8px rgba(22,61,112,0.05)",
         overflow: "hidden",
@@ -313,30 +333,59 @@ function ResumeItem({ entry }: { entry: ResumeEntry }) {
       <div style={{ display: "flex", alignItems: "center", gap: 12, flex: 1, minWidth: 220 }}>
         <div
           style={{
-            width: 36, height: 36, borderRadius: 10, flexShrink: 0,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            background: "rgba(224,168,0,0.12)", color: AMBAR,
+            width: 36,
+            height: 36,
+            borderRadius: "var(--fd-radius, 10px)",
+            flexShrink: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(224,168,0,0.12)",
+            color: AMBAR,
           }}
         >
           <Icon n="clock" size={18} />
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 3 }}>
-            <h4 style={{ fontSize: "0.85rem", fontWeight: 700, color: "#081A35" }}>{entry.title}</h4>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              flexWrap: "wrap",
+              marginBottom: 3,
+            }}
+          >
+            <h4 style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--fd-text, #081A35)" }}>
+              {entry.title}
+            </h4>
             <span
               style={{
-                padding: "2px 9px", borderRadius: 20, fontSize: "0.68rem", fontWeight: 800,
-                background: "rgba(224,168,0,0.14)", color: "#8a6000",
-                textTransform: "uppercase", letterSpacing: "0.04em",
+                padding: "2px 9px",
+                borderRadius: "var(--fd-radius, 20px)",
+                fontSize: "0.68rem",
+                fontWeight: 800,
+                background: "rgba(224,168,0,0.14)",
+                color: "#8a6000",
+                textTransform: "uppercase",
+                letterSpacing: "0.04em",
               }}
             >
               Incompleto
             </span>
           </div>
-          <p style={{ fontSize: "0.75rem", color: "#4A5872", marginBottom: 7 }}>
+          <p style={{ fontSize: "0.75rem", color: "var(--fd-muted, #4A5872)", marginBottom: 7 }}>
             {entry.done} de {entry.total} respondidas · {entry.when}
           </p>
-          <div style={{ height: 5, borderRadius: 4, background: "rgba(224,168,0,0.16)", overflow: "hidden", maxWidth: 260 }}>
+          <div
+            style={{
+              height: 5,
+              borderRadius: 4,
+              background: "rgba(224,168,0,0.16)",
+              overflow: "hidden",
+              maxWidth: 260,
+            }}
+          >
             <div style={{ width: `${pct}%`, height: "100%", background: AMBAR, borderRadius: 4 }} />
           </div>
         </div>
@@ -346,9 +395,17 @@ function ResumeItem({ entry }: { entry: ResumeEntry }) {
         to={entry.to}
         search={entry.search as never}
         style={{
-          padding: "10px 18px", borderRadius: 11, background: AMBAR, color: "#3d2c00",
-          fontSize: "0.82rem", fontWeight: 800, textDecoration: "none",
-          display: "inline-flex", alignItems: "center", gap: 7, whiteSpace: "nowrap",
+          padding: "10px 18px",
+          borderRadius: "var(--fd-radius, 11px)",
+          background: AMBAR,
+          color: "#3d2c00",
+          fontSize: "0.82rem",
+          fontWeight: 800,
+          textDecoration: "none",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 7,
+          whiteSpace: "nowrap",
         }}
       >
         <Icon n="play" size={14} /> Reanudar
@@ -366,8 +423,8 @@ function HistItem({ entry }: { entry: HistEntry }) {
   return (
     <div
       style={{
-        background: "white",
-        borderRadius: 12,
+        background: "var(--fd-panel, white)",
+        borderRadius: "var(--fd-radius, 12px)",
         borderLeft: `4px solid ${VERDE}`,
         boxShadow: "0 2px 8px rgba(22,61,112,0.05)",
         overflow: "hidden",
@@ -376,12 +433,8 @@ function HistItem({ entry }: { entry: HistEntry }) {
         fontFamily: "'Manrope', sans-serif",
       }}
       onClick={() => setOpen(!open)}
-      onMouseEnter={(e) =>
-        (e.currentTarget.style.boxShadow = "0 4px 16px rgba(22,61,112,0.1)")
-      }
-      onMouseLeave={(e) =>
-        (e.currentTarget.style.boxShadow = "0 2px 8px rgba(22,61,112,0.05)")
-      }
+      onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 4px 16px rgba(22,61,112,0.1)")}
+      onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "0 2px 8px rgba(22,61,112,0.05)")}
     >
       {/* Top row */}
       <div
@@ -399,17 +452,17 @@ function HistItem({ entry }: { entry: HistEntry }) {
             style={{
               width: 36,
               height: 36,
-              borderRadius: 10,
+              borderRadius: "var(--fd-radius, 10px)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               fontSize: "1rem",
               flexShrink: 0,
-              color: entry.type === "exam" ? "#081A35" : "#163D70",
+              color: entry.type === "exam" ? "var(--fd-text, #081A35)" : "var(--fd-text, #163D70)",
               background:
                 entry.type === "exam"
-                  ? "rgba(26,26,46,0.08)"
-                  : "rgba(22,61,112,0.08)",
+                  ? "var(--fd-panel-alt, rgba(26,26,46,0.08))"
+                  : "var(--fd-panel-alt, rgba(22,61,112,0.08))",
             }}
           >
             {entry.type === "exam" ? <Icon n="sim" size={18} /> : <Icon n="book" size={18} />}
@@ -419,13 +472,13 @@ function HistItem({ entry }: { entry: HistEntry }) {
               style={{
                 fontSize: "0.85rem",
                 fontWeight: 700,
-                color: "#081A35",
+                color: "var(--fd-text, #081A35)",
                 marginBottom: 2,
               }}
             >
               {entry.title}
             </h4>
-            <p style={{ fontSize: "0.75rem", color: "#4A5872" }}>{entry.meta}</p>
+            <p style={{ fontSize: "0.75rem", color: "var(--fd-muted, #4A5872)" }}>{entry.meta}</p>
           </div>
         </div>
 
@@ -443,14 +496,14 @@ function HistItem({ entry }: { entry: HistEntry }) {
           <span
             style={{
               padding: "3px 10px",
-              borderRadius: 20,
+              borderRadius: "var(--fd-radius, 20px)",
               fontSize: "0.72rem",
               fontWeight: 700,
               background:
                 entry.type === "exam"
-                  ? "rgba(26,26,46,0.06)"
-                  : "rgba(22,61,112,0.08)",
-              color: entry.type === "exam" ? "#081A35" : "#163D70",
+                  ? "var(--fd-panel-alt, rgba(26,26,46,0.06))"
+                  : "var(--fd-panel-alt, rgba(22,61,112,0.08))",
+              color: entry.type === "exam" ? "var(--fd-text, #081A35)" : "var(--fd-text, #163D70)",
             }}
           >
             {entry.tag}
@@ -458,7 +511,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
           <span
             style={{
               padding: "3px 10px",
-              borderRadius: 20,
+              borderRadius: "var(--fd-radius, 20px)",
               fontSize: "0.68rem",
               fontWeight: 800,
               textTransform: "uppercase",
@@ -487,7 +540,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
       {open && (
         <div
           style={{
-            borderTop: "1px solid #EEE1C5",
+            borderTop: "1px solid var(--fd-border, #EEE1C5)",
             padding: "16px 18px 18px",
           }}
           onClick={(e) => e.stopPropagation()}
@@ -498,7 +551,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
               style={{
                 fontSize: "0.78rem",
                 fontWeight: 700,
-                color: "#4A5872",
+                color: "var(--fd-muted, #4A5872)",
                 textTransform: "uppercase",
                 letterSpacing: "0.4px",
                 marginBottom: 10,
@@ -515,22 +568,22 @@ function HistItem({ entry }: { entry: HistEntry }) {
                 alignItems: "center",
                 gap: 12,
                 fontSize: "0.82rem",
-                color: "#666",
+                color: "var(--fd-muted, #666)",
               }}
             >
               <div
                 style={{
                   flex: 1,
                   height: 8,
-                  background: "#EEE1C5",
-                  borderRadius: 10,
+                  background: "var(--fd-panel, #EEE1C5)",
+                  borderRadius: "var(--fd-radius, 10px)",
                   overflow: "hidden",
                 }}
               >
                 <div
                   style={{
                     height: "100%",
-                    borderRadius: 10,
+                    borderRadius: "var(--fd-radius, 10px)",
                     background: color,
                     width: `${entry.score}%`,
                   }}
@@ -549,7 +602,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                 style={{
                   fontSize: "0.78rem",
                   fontWeight: 700,
-                  color: "#4A5872",
+                  color: "var(--fd-muted, #4A5872)",
                   textTransform: "uppercase",
                   letterSpacing: "0.4px",
                   marginBottom: 10,
@@ -571,11 +624,9 @@ function HistItem({ entry }: { entry: HistEntry }) {
                         alignItems: "center",
                         justifyContent: "space-between",
                         padding: "10px 14px",
-                        borderRadius: 10,
+                        borderRadius: "var(--fd-radius, 10px)",
                         gap: 10,
-                        background: isBad
-                          ? "rgba(231,76,60,0.05)"
-                          : "rgba(243,156,18,0.05)",
+                        background: isBad ? "rgba(231,76,60,0.05)" : "rgba(243,156,18,0.05)",
                         border: isBad
                           ? "1px solid rgba(231,76,60,0.15)"
                           : "1px solid rgba(243,156,18,0.15)",
@@ -605,7 +656,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                             style={{
                               fontSize: "0.83rem",
                               fontWeight: 700,
-                              color: "#081A35",
+                              color: "var(--fd-text, #081A35)",
                               marginBottom: 2,
                             }}
                           >
@@ -614,7 +665,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                           <div
                             style={{
                               fontSize: "0.76rem",
-                              color: "#4A5872",
+                              color: "var(--fd-muted, #4A5872)",
                               lineHeight: 1.4,
                             }}
                           >
@@ -647,7 +698,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                 style={{
                   fontSize: "0.78rem",
                   fontWeight: 700,
-                  color: "#4A5872",
+                  color: "var(--fd-muted, #4A5872)",
                   textTransform: "uppercase",
                   letterSpacing: "0.4px",
                   marginBottom: 10,
@@ -672,7 +723,7 @@ function HistItem({ entry }: { entry: HistEntry }) {
                       borderRadius: 8,
                       fontSize: "0.83rem",
                       fontWeight: 600,
-                      color: "#081A35",
+                      color: "var(--fd-text, #081A35)",
                     }}
                   >
                     <span>{s.name}</span>
@@ -699,17 +750,17 @@ function HistItem({ entry }: { entry: HistEntry }) {
               alignItems: "flex-start",
               gap: 10,
               background: "linear-gradient(135deg, #EEE1C5, #fce4ec)",
-              borderRadius: 10,
+              borderRadius: "var(--fd-radius, 10px)",
               padding: "12px 14px",
               marginTop: 14,
               fontSize: "0.82rem",
-              color: "#555",
+              color: "var(--fd-muted, #555)",
               lineHeight: 1.5,
             }}
           >
             <PathyMark size={28} />
             <div>
-              <strong style={{ color: "#7A5C1E" }}>{entry.pathyPrefix}</strong>{" "}
+              <strong style={{ color: "var(--fd-gold, #7A5C1E)" }}>{entry.pathyPrefix}</strong>{" "}
               {entry.pathyTip}
             </div>
           </div>
@@ -735,7 +786,7 @@ function ModalExamen({
     ? [
         {
           icon: "help",
-          bg: "rgba(22,61,112,0.1)",
+          bg: "var(--fd-panel-alt, rgba(22,61,112,0.1))",
           html: "<strong>Preguntas oficiales</strong> — reactivos del proceso de Línea Aérea",
         },
         {
@@ -755,239 +806,255 @@ function ModalExamen({
         },
       ]
     : [
-    {
-      icon: "help",
-      bg: "rgba(22,61,112,0.1)",
-      html: "<strong>310 preguntas</strong> — igual que el examen real del CIAAC",
-    },
-    {
-      icon: "timer",
-      bg: "rgba(122,92,30,0.08)",
-      html: "<strong>5 horas límite</strong> — el tiempo corre desde que aceptas",
-    },
-    {
-      icon: "refresh",
-      bg: "rgba(243,156,18,0.1)",
-      html: "<strong>Preguntas aleatorias</strong> — de las 12 materias del CIAAC",
-    },
-    {
-      icon: "chart",
-      bg: "rgba(46,204,113,0.1)",
-      html: "<strong>Análisis al terminar</strong> — calificación y áreas de oportunidad con Pathy",
-    },
-  ];
+        {
+          icon: "help",
+          bg: "var(--fd-panel-alt, rgba(22,61,112,0.1))",
+          html: "<strong>310 preguntas</strong> — igual que el examen real del CIAAC",
+        },
+        {
+          icon: "timer",
+          bg: "rgba(122,92,30,0.08)",
+          html: "<strong>5 horas límite</strong> — el tiempo corre desde que aceptas",
+        },
+        {
+          icon: "refresh",
+          bg: "rgba(243,156,18,0.1)",
+          html: "<strong>Preguntas aleatorias</strong> — de las 12 materias del CIAAC",
+        },
+        {
+          icon: "chart",
+          bg: "rgba(46,204,113,0.1)",
+          html: "<strong>Análisis al terminar</strong> — calificación y áreas de oportunidad con Pathy",
+        },
+      ];
 
   return (
     <QuizModalPortal onClose={onClose}>
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label={la ? "Configurar simulador Línea Aérea" : "Configurar simulador CIAAC"}
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.5)",
-        zIndex: 300,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 20,
-        fontFamily: "'Manrope', sans-serif",
-        overflow: "hidden",
-      }}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={la ? "Configurar simulador Línea Aérea" : "Configurar simulador CIAAC"}
         style={{
-          background: "white",
-          borderRadius: 20,
-          padding: 36,
-          maxWidth: 520,
-          width: "100%",
-          maxHeight: "calc(100dvh - 40px)",
-          overflowY: "auto",
+          position: "fixed",
+          inset: 0,
+          background: "rgba(0,0,0,0.5)",
+          zIndex: 300,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 20,
+          fontFamily: "'Manrope', sans-serif",
+          overflow: "hidden",
+        }}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) onClose();
         }}
       >
-        <h2
-          style={{
-            fontFamily: "'Instrument Serif', serif",
-            fontSize: "1.5rem",
-            color: "#081A35",
-            marginBottom: 6,
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-          }}
-        >
-          <Icon n="target" size={26} /> {la ? "Simulador Línea Aérea" : "Simulador CIAAC"}
-        </h2>
-        <p style={{ fontSize: "0.85rem", color: "#4A5872", marginBottom: 24 }}>
-          Lee las instrucciones antes de comenzar
-        </p>
-
-        {/* Info */}
         <div
           style={{
-            background: "#f8f9ff",
-            borderRadius: 12,
-            padding: 18,
-            marginBottom: 20,
-            display: "flex",
-            flexDirection: "column",
-            gap: 10,
+            background: "var(--fd-panel, white)",
+            borderRadius: "var(--fd-radius, 20px)",
+            padding: 36,
+            maxWidth: 520,
+            width: "100%",
+            maxHeight: "calc(100dvh - 40px)",
+            overflowY: "auto",
           }}
         >
-          {infoRows.map((row, i) => (
-            <div
-              key={i}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                fontSize: "0.88rem",
-                color: "#081A35",
-              }}
-            >
-              <div
-                style={{
-                  width: 32,
-                  height: 32,
-                  borderRadius: 8,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "1rem",
-                  flexShrink: 0,
-                  background: row.bg,
-                  color: "#081A35",
-                }}
-              >
-                <Icon n={row.icon as never} size={18} />
-              </div>
-              <span dangerouslySetInnerHTML={{ __html: row.html }} />
-            </div>
-          ))}
-        </div>
-
-        {/* Warning */}
-        <div
-          style={{
-            background: "rgba(243,156,18,0.1)",
-            border: "1px solid #f39c12",
-            borderRadius: 10,
-            padding: "12px 16px",
-            fontSize: "0.83rem",
-            color: "#8a6000",
-            marginBottom: 24,
-            display: "flex",
-            alignItems: "flex-start",
-            gap: 8,
-            lineHeight: 1.5,
-          }}
-        >
-          <span style={{ display: "flex", flexShrink: 0 }}><Icon n="alert" size={16} /></span>
-          <span>
-            Si sales de la página durante el examen{" "}
-            <strong>perderás tu progreso</strong>. Asegúrate de tener tiempo
-            suficiente y buena conexión antes de comenzar.
-          </span>
-        </div>
-
-        {/* Selector de tipo de simulador (Línea Aérea) */}
-        {la && (
-          <div style={{ marginBottom: 24 }}>
-            <h4 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#081A35", marginBottom: 10 }}>
-              ¿Qué tipo de simulador?
-            </h4>
-            <div style={{ display: "grid", gap: 8 }}>
-              {([
-                {
-                  id: "oficial" as const,
-                  title: "Preguntas oficiales",
-                  desc: "Solo el examen oficial del proceso de Línea Aérea.",
-                },
-                {
-                  id: "potenciado" as const,
-                  title: "Simulador potenciado",
-                  desc: "Oficiales + las demás preguntas del banco, intercaladas.",
-                },
-              ]).map((o) => {
-                const active = modo === o.id;
-                return (
-                  <button
-                    key={o.id}
-                    onClick={() => setModo(o.id)}
-                    style={{
-                      textAlign: "left",
-                      padding: "12px 14px",
-                      borderRadius: 12,
-                      cursor: "pointer",
-                      fontFamily: "'Manrope', sans-serif",
-                      border: `2px solid ${active ? "#163D70" : "#EEE1C5"}`,
-                      background: active ? "rgba(22,61,112,0.08)" : "#f8f9ff",
-                    }}
-                  >
-                    <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#081A35" }}>{o.title}</div>
-                    <div style={{ fontSize: "0.78rem", color: "#4A5872" }}>{o.desc}</div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* Buttons */}
-        <div style={{ display: "flex", gap: 10 }}>
-          <button
-            onClick={onClose}
+          <h2
             style={{
-              flex: 1,
-              padding: 12,
-              background: "white",
-              color: "#4A5872",
-              border: "2px solid #EEE1C5",
-              borderRadius: 10,
-              fontSize: "0.88rem",
-              fontWeight: 700,
-              cursor: "pointer",
-              fontFamily: "'Manrope', sans-serif",
-            }}
-          >
-            Cancelar
-          </button>
-          <button
-            onClick={() => onStart(modo)}
-            style={{
-              flex: 2,
-              padding: 12,
-              background: "#7A5C1E",
-              color: "white",
-              border: "none",
-              borderRadius: 10,
-              fontSize: "0.88rem",
-              fontWeight: 700,
-              cursor: "pointer",
-              fontFamily: "'Manrope', sans-serif",
+              fontFamily: "'Instrument Serif', serif",
+              fontSize: "1.5rem",
+              color: "var(--fd-text, #081A35)",
+              marginBottom: 6,
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
-              gap: 7,
-              transition: "all 0.2s",
+              gap: 10,
             }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.background = "#977431")
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.background = "#7A5C1E")
-            }
           >
-            <Icon n="target" size={18} /> Aceptar y comenzar
-          </button>
+            <Icon n="target" size={26} /> {la ? "Simulador Línea Aérea" : "Simulador CIAAC"}
+          </h2>
+          <p style={{ fontSize: "0.85rem", color: "var(--fd-muted, #4A5872)", marginBottom: 24 }}>
+            Lee las instrucciones antes de comenzar
+          </p>
+
+          {/* Info */}
+          <div
+            style={{
+              background: "var(--fd-panel, #f8f9ff)",
+              borderRadius: "var(--fd-radius, 12px)",
+              padding: 18,
+              marginBottom: 20,
+              display: "flex",
+              flexDirection: "column",
+              gap: 10,
+            }}
+          >
+            {infoRows.map((row, i) => (
+              <div
+                key={i}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  fontSize: "0.88rem",
+                  color: "var(--fd-text, #081A35)",
+                }}
+              >
+                <div
+                  style={{
+                    width: 32,
+                    height: 32,
+                    borderRadius: 8,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "1rem",
+                    flexShrink: 0,
+                    background: row.bg,
+                    color: "var(--fd-text, #081A35)",
+                  }}
+                >
+                  <Icon n={row.icon as never} size={18} />
+                </div>
+                <span dangerouslySetInnerHTML={{ __html: row.html }} />
+              </div>
+            ))}
+          </div>
+
+          {/* Warning */}
+          <div
+            style={{
+              background: "rgba(243,156,18,0.1)",
+              border: "1px solid #f39c12",
+              borderRadius: "var(--fd-radius, 10px)",
+              padding: "12px 16px",
+              fontSize: "0.83rem",
+              color: "#8a6000",
+              marginBottom: 24,
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 8,
+              lineHeight: 1.5,
+            }}
+          >
+            <span style={{ display: "flex", flexShrink: 0 }}>
+              <Icon n="alert" size={16} />
+            </span>
+            <span>
+              Si sales de la página durante el examen <strong>perderás tu progreso</strong>.
+              Asegúrate de tener tiempo suficiente y buena conexión antes de comenzar.
+            </span>
+          </div>
+
+          {/* Selector de tipo de simulador (Línea Aérea) */}
+          {la && (
+            <div style={{ marginBottom: 24 }}>
+              <h4
+                style={{
+                  fontSize: "0.82rem",
+                  fontWeight: 700,
+                  color: "var(--fd-text, #081A35)",
+                  marginBottom: 10,
+                }}
+              >
+                ¿Qué tipo de simulador?
+              </h4>
+              <div style={{ display: "grid", gap: 8 }}>
+                {[
+                  {
+                    id: "oficial" as const,
+                    title: "Preguntas oficiales",
+                    desc: "Solo el examen oficial del proceso de Línea Aérea.",
+                  },
+                  {
+                    id: "potenciado" as const,
+                    title: "Simulador potenciado",
+                    desc: "Oficiales + las demás preguntas del banco, intercaladas.",
+                  },
+                ].map((o) => {
+                  const active = modo === o.id;
+                  return (
+                    <button
+                      key={o.id}
+                      onClick={() => setModo(o.id)}
+                      style={{
+                        textAlign: "left",
+                        padding: "12px 14px",
+                        borderRadius: "var(--fd-radius, 12px)",
+                        cursor: "pointer",
+                        fontFamily: "'Manrope', sans-serif",
+                        border: `2px solid ${active ? "#163D70" : "#EEE1C5"}`,
+                        background: active
+                          ? "var(--fd-panel-alt, rgba(22,61,112,0.08))"
+                          : "var(--fd-panel, #f8f9ff)",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontWeight: 700,
+                          fontSize: "0.9rem",
+                          color: "var(--fd-text, #081A35)",
+                        }}
+                      >
+                        {o.title}
+                      </div>
+                      <div style={{ fontSize: "0.78rem", color: "var(--fd-muted, #4A5872)" }}>
+                        {o.desc}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Buttons */}
+          <div style={{ display: "flex", gap: 10 }}>
+            <button
+              onClick={onClose}
+              style={{
+                flex: 1,
+                padding: 12,
+                background: "var(--fd-panel, white)",
+                color: "var(--fd-muted, #4A5872)",
+                border: "1px solid var(--fd-border, #EEE1C5)",
+                borderRadius: "var(--fd-radius, 10px)",
+                fontSize: "0.88rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+              }}
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={() => onStart(modo)}
+              style={{
+                flex: 2,
+                padding: 12,
+                background: "#7A5C1E",
+                color: "white",
+                border: "none",
+                borderRadius: "var(--fd-radius, 10px)",
+                fontSize: "0.88rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 7,
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#977431")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#7A5C1E")}
+            >
+              <Icon n="target" size={18} /> Aceptar y comenzar
+            </button>
+          </div>
         </div>
       </div>
-    </div>
     </QuizModalPortal>
   );
 }
@@ -1000,17 +1067,19 @@ function ModalAprendiendo({
   paid,
   onLocked,
   la = false,
+  initialMateria,
 }: {
   onClose: () => void;
   onStart: (keys: string[], qty: number, modo: "oficial" | "potenciado") => void;
   paid: boolean;
   onLocked: () => void;
   la?: boolean;
+  initialMateria?: string;
 }) {
   const [modo, setModo] = useState<"oficial" | "potenciado">("oficial");
-  const [allSelected, setAllSelected] = useState(true);
+  const [allSelected, setAllSelected] = useState(!initialMateria);
   const [selectedMaterias, setSelectedMaterias] = useState<Set<string>>(
-    new Set()
+    new Set(initialMateria ? [initialMateria] : []),
   );
   const [qty, setQty] = useState(paid ? "50" : "10");
   const [showCustom, setShowCustom] = useState(false);
@@ -1082,7 +1151,7 @@ function ModalAprendiendo({
 
   const chipBase = {
     padding: "6px 13px",
-    borderRadius: 20,
+    borderRadius: "var(--fd-radius, 20px)",
     fontSize: "0.78rem",
     fontWeight: 600,
     cursor: "pointer",
@@ -1092,7 +1161,7 @@ function ModalAprendiendo({
 
   const qtyBase = {
     padding: "7px 18px",
-    borderRadius: 10,
+    borderRadius: "var(--fd-radius, 10px)",
     fontSize: "0.85rem",
     fontWeight: 700,
     cursor: "pointer",
@@ -1102,347 +1171,381 @@ function ModalAprendiendo({
 
   return (
     <QuizModalPortal onClose={onClose}>
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label="Configurar cuestionario"
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.5)",
-        zIndex: 300,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 20,
-        fontFamily: "'Manrope', sans-serif",
-        overflow: "hidden",
-      }}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Configurar cuestionario"
         style={{
-          background: "white",
-          borderRadius: 20,
-          padding: 36,
-          maxWidth: 520,
-          width: "100%",
-          maxHeight: "calc(100dvh - 40px)",
-          overflowY: "auto",
+          position: "fixed",
+          inset: 0,
+          background: "rgba(0,0,0,0.5)",
+          zIndex: 300,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 20,
+          fontFamily: "'Manrope', sans-serif",
+          overflow: "hidden",
+        }}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) onClose();
         }}
       >
-        <h2
+        <div
           style={{
-            fontFamily: "'Instrument Serif', serif",
-            fontSize: "1.5rem",
-            color: "#081A35",
-            marginBottom: 6,
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
+            background: "var(--fd-panel, white)",
+            borderRadius: "var(--fd-radius, 20px)",
+            padding: 36,
+            maxWidth: 520,
+            width: "100%",
+            maxHeight: "calc(100dvh - 40px)",
+            overflowY: "auto",
           }}
         >
-          <Icon n="lightbulb" size={26} /> Configura tu sesión
-        </h2>
-        <p style={{ fontSize: "0.85rem", color: "#4A5872", marginBottom: 24 }}>
-          {la
-            ? "Elige los manuales del curso y cuántas preguntas quieres practicar"
-            : "Elige las materias y cuántas preguntas quieres practicar"}
-        </p>
-
-        {/* Tipo de banco (Línea Aérea) */}
-        {la && (
-          <div style={{ marginBottom: 20 }}>
-            <h4 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#081A35", marginBottom: 10 }}>
-              ¿Qué preguntas?
-            </h4>
-            <div style={{ display: "grid", gap: 8 }}>
-              {([
-                {
-                  id: "oficial" as const,
-                  title: "Preguntas oficiales",
-                  desc: "Solo el cuestionario oficial del proceso de Línea Aérea.",
-                },
-                {
-                  id: "potenciado" as const,
-                  title: "Oficiales + potenciadas",
-                  desc: "El oficial más las preguntas de los manuales del curso en FlightPath.",
-                },
-              ]).map((o) => {
-                const active = modo === o.id;
-                return (
-                  <button
-                    key={o.id}
-                    onClick={() => setModo(o.id)}
-                    style={{
-                      textAlign: "left",
-                      padding: "12px 14px",
-                      borderRadius: 12,
-                      cursor: "pointer",
-                      fontFamily: "'Manrope', sans-serif",
-                      border: `2px solid ${active ? "#163D70" : "#EEE1C5"}`,
-                      background: active ? "rgba(22,61,112,0.08)" : "#f8f9ff",
-                    }}
-                  >
-                    <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#081A35" }}>{o.title}</div>
-                    <div style={{ fontSize: "0.78rem", color: "#4A5872" }}>{o.desc}</div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* Materias / Manuales */}
-        {!(la && modo === "oficial") && (
-        <div style={{ marginBottom: 20 }}>
-          <h4
+          <h2
             style={{
-              fontSize: "0.82rem",
-              fontWeight: 700,
-              color: "#081A35",
-              marginBottom: 10,
+              fontFamily: "'Instrument Serif', serif",
+              fontSize: "1.5rem",
+              color: "var(--fd-text, #081A35)",
+              marginBottom: 6,
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
             }}
           >
-            {la ? "¿Qué manuales?" : "¿Qué materias?"}
-          </h4>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
-            <button
-              onClick={handleAllClick}
-              style={{
-                ...chipBase,
-                border: `2px solid ${allSelected ? "#163D70" : "#EEE1C5"}`,
-                background: allSelected ? "#163D70" : "#f8f9ff",
-                color: allSelected ? "white" : "#081A35",
-              }}
-            >
-              {la ? "Todos los manuales" : "Todas las materias"}
-            </button>
+            <Icon n="lightbulb" size={26} /> Configura tu sesión
+          </h2>
+          <p style={{ fontSize: "0.85rem", color: "var(--fd-muted, #4A5872)", marginBottom: 24 }}>
             {la
-              ? LINEA_AEREA_QUIZZES_LA.map((q) => {
-                  const sel = selectedMaterias.has(q.code);
+              ? "Elige los manuales del curso y cuántas preguntas quieres practicar"
+              : "Elige las materias y cuántas preguntas quieres practicar"}
+          </p>
+
+          {/* Tipo de banco (Línea Aérea) */}
+          {la && (
+            <div style={{ marginBottom: 20 }}>
+              <h4
+                style={{
+                  fontSize: "0.82rem",
+                  fontWeight: 700,
+                  color: "var(--fd-text, #081A35)",
+                  marginBottom: 10,
+                }}
+              >
+                ¿Qué preguntas?
+              </h4>
+              <div style={{ display: "grid", gap: 8 }}>
+                {[
+                  {
+                    id: "oficial" as const,
+                    title: "Preguntas oficiales",
+                    desc: "Solo el cuestionario oficial del proceso de Línea Aérea.",
+                  },
+                  {
+                    id: "potenciado" as const,
+                    title: "Oficiales + potenciadas",
+                    desc: "El oficial más las preguntas de los manuales del curso en FlightPath.",
+                  },
+                ].map((o) => {
+                  const active = modo === o.id;
                   return (
                     <button
-                      key={q.code}
-                      onClick={() => handleMateriaClick(q.code)}
-                      title={q.titulo}
+                      key={o.id}
+                      onClick={() => setModo(o.id)}
                       style={{
-                        ...chipBase,
-                        border: `2px solid ${sel ? "#163D70" : "#EEE1C5"}`,
-                        background: sel ? "rgba(22,61,112,0.08)" : "#f8f9ff",
-                        color: sel ? "#163D70" : "#081A35",
+                        textAlign: "left",
+                        padding: "12px 14px",
+                        borderRadius: "var(--fd-radius, 12px)",
+                        cursor: "pointer",
+                        fontFamily: "'Manrope', sans-serif",
+                        border: `2px solid ${active ? "#163D70" : "#EEE1C5"}`,
+                        background: active
+                          ? "var(--fd-panel-alt, rgba(22,61,112,0.08))"
+                          : "var(--fd-panel, #f8f9ff)",
                       }}
                     >
-                      {q.code}
-                    </button>
-                  );
-                })
-              : MATERIAS.map((m) => {
-                  const sel = selectedMaterias.has(m.label);
-                  return (
-                    <button
-                      key={m.slug}
-                      onClick={() => handleMateriaClick(m.label)}
-                      style={{
-                        ...chipBase,
-                        border: `2px solid ${sel ? "#163D70" : "#EEE1C5"}`,
-                        background: sel ? "rgba(22,61,112,0.08)" : "#f8f9ff",
-                        color: sel ? "#163D70" : "#081A35",
-                      }}
-                    >
-                      {m.label}
+                      <div
+                        style={{
+                          fontWeight: 700,
+                          fontSize: "0.9rem",
+                          color: "var(--fd-text, #081A35)",
+                        }}
+                      >
+                        {o.title}
+                      </div>
+                      <div style={{ fontSize: "0.78rem", color: "var(--fd-muted, #4A5872)" }}>
+                        {o.desc}
+                      </div>
                     </button>
                   );
                 })}
-          </div>
-        </div>
-        )}
+              </div>
+            </div>
+          )}
 
-        {/* Quantity */}
-        <div style={{ marginBottom: 24 }}>
-          <h4
-            style={{
-              fontSize: "0.82rem",
-              fontWeight: 700,
-              color: "#081A35",
-              marginBottom: 10,
-            }}
-          >
-            ¿Cuántas preguntas?
-          </h4>
-          {!paid && (
-            <div
+          {/* Materias / Manuales */}
+          {!(la && modo === "oficial") && (
+            <div style={{ marginBottom: 20 }}>
+              <h4
+                style={{
+                  fontSize: "0.82rem",
+                  fontWeight: 700,
+                  color: "var(--fd-text, #081A35)",
+                  marginBottom: 10,
+                }}
+              >
+                {la ? "¿Qué manuales?" : "¿Qué materias?"}
+              </h4>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
+                <button
+                  onClick={handleAllClick}
+                  aria-pressed={allSelected}
+                  style={{
+                    ...chipBase,
+                    border: `2px solid ${allSelected ? "#163D70" : "#EEE1C5"}`,
+                    background: allSelected ? "#163D70" : "var(--fd-panel, #f8f9ff)",
+                    color: allSelected ? "white" : "var(--fd-text, #081A35)",
+                  }}
+                >
+                  {la ? "Todos los manuales" : "Todas las materias"}
+                </button>
+                {la
+                  ? LINEA_AEREA_QUIZZES_LA.map((q) => {
+                      const sel = selectedMaterias.has(q.code);
+                      return (
+                        <button
+                          key={q.code}
+                          onClick={() => handleMateriaClick(q.code)}
+                          aria-pressed={sel}
+                          title={q.titulo}
+                          style={{
+                            ...chipBase,
+                            border: `2px solid ${sel ? "#163D70" : "#EEE1C5"}`,
+                            background: sel
+                              ? "var(--fd-panel-alt, rgba(22,61,112,0.08))"
+                              : "var(--fd-panel, #f8f9ff)",
+                            color: sel ? "var(--fd-text, #163D70)" : "var(--fd-text, #081A35)",
+                          }}
+                        >
+                          {q.code}
+                        </button>
+                      );
+                    })
+                  : MATERIAS.map((m) => {
+                      const sel = selectedMaterias.has(m.label);
+                      return (
+                        <button
+                          key={m.slug}
+                          onClick={() => handleMateriaClick(m.label)}
+                          aria-pressed={sel}
+                          style={{
+                            ...chipBase,
+                            border: `2px solid ${sel ? "#163D70" : "#EEE1C5"}`,
+                            background: sel
+                              ? "var(--fd-panel-alt, rgba(22,61,112,0.08))"
+                              : "var(--fd-panel, #f8f9ff)",
+                            color: sel ? "var(--fd-text, #163D70)" : "var(--fd-text, #081A35)",
+                          }}
+                        >
+                          {m.label}
+                        </button>
+                      );
+                    })}
+              </div>
+            </div>
+          )}
+
+          {/* Quantity */}
+          <div style={{ marginBottom: 24 }}>
+            <h4
               style={{
-                background: "#f8f9ff",
-                border: "1px solid #E8ECF2",
-                borderRadius: 10,
-                padding: "10px 14px",
-                fontSize: "0.8rem",
-                color: "#4A5872",
-                lineHeight: 1.5,
+                fontSize: "0.82rem",
+                fontWeight: 700,
+                color: "var(--fd-text, #081A35)",
                 marginBottom: 10,
               }}
             >
-              Tu plan gratis incluye <strong style={{ color: "#081A35" }}>2 preguntas de cada materia</strong>{" "}
-              que elijas, de su pool de 10.{" "}
-              <button
-                onClick={onLocked}
-                style={{
-                  color: "#163D70", fontWeight: 700, background: "none", border: "none",
-                  cursor: "pointer", padding: 0, fontSize: "inherit", fontFamily: "'Manrope', sans-serif",
-                }}
-              >
-                Hazte Pro para elegir cuántas
-              </button>
-            </div>
-          )}
-          {paid && (
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            {(["10", "50", "100"] as const).map((v) => (
-              <button
-                key={v}
-                onClick={() => handleQtyClick(v)}
-                style={{
-                  ...qtyBase,
-                  border: `2px solid ${qty === v ? "#163D70" : "#EEE1C5"}`,
-                  background:
-                    qty === v ? "rgba(22,61,112,0.08)" : "#f8f9ff",
-                  color: qty === v ? "#163D70" : "#081A35",
-                }}
-              >
-                {v}
-              </button>
-            ))}
-            <button
-              onClick={handleCustomClick}
-              style={{
-                ...qtyBase,
-                border: `2px solid ${
-                  qty === "custom" ? "#163D70" : "#EEE1C5"
-                }`,
-                background:
-                  qty === "custom" ? "rgba(22,61,112,0.08)" : "#f8f9ff",
-                color: qty === "custom" ? "#163D70" : "#081A35",
-              }}
-            >
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Icon n="pencil" size={15} /> Personalizar</span>
-            </button>
-          </div>
-          )}
-
-          {showCustom && (
-            <div style={{ marginTop: 12 }}>
+              ¿Cuántas preguntas?
+            </h4>
+            {!paid && (
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 10,
-                  flexWrap: "wrap",
+                  background: "var(--fd-panel, #f8f9ff)",
+                  border: "1px solid #E8ECF2",
+                  borderRadius: "var(--fd-radius, 10px)",
+                  padding: "10px 14px",
+                  fontSize: "0.8rem",
+                  color: "var(--fd-muted, #4A5872)",
+                  lineHeight: 1.5,
+                  marginBottom: 10,
                 }}
               >
-                <input
-                  type="number"
-                  value={customValue}
-                  onChange={(e) => handleCustomInput(e.target.value)}
-                  min={1}
-                  placeholder="Ej. 75"
-                  autoFocus
+                Tu plan gratis incluye{" "}
+                <strong style={{ color: "var(--fd-text, #081A35)" }}>
+                  2 preguntas de cada materia
+                </strong>{" "}
+                que elijas, de su pool de 10.{" "}
+                <button
+                  onClick={onLocked}
                   style={{
-                    padding: "8px 14px",
-                    border: `2px solid ${
-                      showWarning
-                        ? "#f39c12"
-                        : customValue
-                        ? "#2ecc71"
-                        : "#EEE1C5"
-                    }`,
-                    borderRadius: 8,
-                    fontSize: "0.88rem",
+                    color: "var(--fd-text, #163D70)",
+                    fontWeight: 700,
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 0,
+                    fontSize: "inherit",
                     fontFamily: "'Manrope', sans-serif",
-                    width: 120,
-                    outline: "none",
-                  }}
-                />
-                <span style={{ fontSize: "0.8rem", color: "#4A5872" }}>
-                  preguntas
-                </span>
-              </div>
-              {showWarning && (
-                <div
-                  style={{
-                    marginTop: 8,
-                    padding: "8px 12px",
-                    background: "rgba(243,156,18,0.1)",
-                    border: "1px solid #f39c12",
-                    borderRadius: 8,
-                    fontSize: "0.78rem",
-                    color: "#8a6000",
-                    display: "flex",
-                    alignItems: "flex-start",
-                    gap: 6,
                   }}
                 >
-                  <Icon n="alert" size={15} style={{ flexShrink: 0, marginTop: 1 }} />
-                  <span>El máximo disponible es <strong>500</strong> preguntas
-                  para las materias seleccionadas.</span>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+                  Hazte Pro para elegir cuántas
+                </button>
+              </div>
+            )}
+            {paid && (
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                {(["10", "50", "100"] as const).map((v) => (
+                  <button
+                    key={v}
+                    onClick={() => handleQtyClick(v)}
+                    aria-pressed={qty === v}
+                    style={{
+                      ...qtyBase,
+                      border: `2px solid ${qty === v ? "#163D70" : "#EEE1C5"}`,
+                      background:
+                        qty === v
+                          ? "var(--fd-panel-alt, rgba(22,61,112,0.08))"
+                          : "var(--fd-panel, #f8f9ff)",
+                      color: qty === v ? "var(--fd-text, #163D70)" : "var(--fd-text, #081A35)",
+                    }}
+                  >
+                    {v}
+                  </button>
+                ))}
+                <button
+                  onClick={handleCustomClick}
+                  style={{
+                    ...qtyBase,
+                    border: `2px solid ${qty === "custom" ? "#163D70" : "#EEE1C5"}`,
+                    background:
+                      qty === "custom"
+                        ? "var(--fd-panel-alt, rgba(22,61,112,0.08))"
+                        : "var(--fd-panel, #f8f9ff)",
+                    color: qty === "custom" ? "var(--fd-text, #163D70)" : "var(--fd-text, #081A35)",
+                  }}
+                >
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                    <Icon n="pencil" size={15} /> Personalizar
+                  </span>
+                </button>
+              </div>
+            )}
 
-        {/* Buttons */}
-        <div style={{ display: "flex", gap: 10 }}>
-          <button
-            onClick={onClose}
-            style={{
-              flex: 1,
-              padding: 12,
-              background: "white",
-              color: "#4A5872",
-              border: "2px solid #EEE1C5",
-              borderRadius: 10,
-              fontSize: "0.88rem",
-              fontWeight: 700,
-              cursor: "pointer",
-              fontFamily: "'Manrope', sans-serif",
-            }}
-          >
-            Cancelar
-          </button>
-          <button
-            onClick={handleStart}
-            style={{
-              flex: 2,
-              padding: 12,
-              background: "#7A5C1E",
-              color: "white",
-              border: "none",
-              borderRadius: 10,
-              fontSize: "0.88rem",
-              fontWeight: 700,
-              cursor: "pointer",
-              fontFamily: "'Manrope', sans-serif",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 7,
-              transition: "all 0.2s",
-            }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.background = "#977431")
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.background = "#7A5C1E")
-            }
-          >
-            <Icon n="lightbulb" size={18} /> Comenzar sesión
-          </button>
+            {showCustom && (
+              <div style={{ marginTop: 12 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <input
+                    type="number"
+                    value={customValue}
+                    onChange={(e) => handleCustomInput(e.target.value)}
+                    min={1}
+                    placeholder="Ej. 75"
+                    autoFocus
+                    style={{
+                      padding: "8px 14px",
+                      border: `2px solid ${
+                        showWarning ? "#f39c12" : customValue ? "#2ecc71" : "#EEE1C5"
+                      }`,
+                      borderRadius: 8,
+                      fontSize: "0.88rem",
+                      fontFamily: "'Manrope', sans-serif",
+                      width: 120,
+                      outline: "none",
+                    }}
+                  />
+                  <span style={{ fontSize: "0.8rem", color: "var(--fd-muted, #4A5872)" }}>
+                    preguntas
+                  </span>
+                </div>
+                {showWarning && (
+                  <div
+                    style={{
+                      marginTop: 8,
+                      padding: "8px 12px",
+                      background: "rgba(243,156,18,0.1)",
+                      border: "1px solid #f39c12",
+                      borderRadius: 8,
+                      fontSize: "0.78rem",
+                      color: "#8a6000",
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: 6,
+                    }}
+                  >
+                    <Icon n="alert" size={15} style={{ flexShrink: 0, marginTop: 1 }} />
+                    <span>
+                      El máximo disponible es <strong>500</strong> preguntas para las materias
+                      seleccionadas.
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Buttons */}
+          <div style={{ display: "flex", gap: 10 }}>
+            <button
+              onClick={onClose}
+              style={{
+                flex: 1,
+                padding: 12,
+                background: "var(--fd-panel, white)",
+                color: "var(--fd-muted, #4A5872)",
+                border: "1px solid var(--fd-border, #EEE1C5)",
+                borderRadius: "var(--fd-radius, 10px)",
+                fontSize: "0.88rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+              }}
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={handleStart}
+              style={{
+                flex: 2,
+                padding: 12,
+                background: "#7A5C1E",
+                color: "white",
+                border: "none",
+                borderRadius: "var(--fd-radius, 10px)",
+                fontSize: "0.88rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 7,
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#977431")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#7A5C1E")}
+            >
+              <Icon n="lightbulb" size={18} /> Comenzar sesión
+            </button>
+          </div>
         </div>
       </div>
-    </div>
     </QuizModalPortal>
   );
 }
@@ -1475,8 +1578,9 @@ export function BancoScreen({
   const navigate = useNavigate();
   const [modal, setModal] = useState<"examen" | "aprendiendo" | null>(initialModal);
   const [upgrade, setUpgrade] = useState<{ feature: string; benefit?: string } | null>(null);
-  const [examHover, setExamHover] = useState(false);
-  const [learnHover, setLearnHover] = useState(false);
+  const [selectedMode, setSelectedMode] = useState<"examen" | "aprendiendo">("examen");
+  const [initialMateria, setInitialMateria] = useState<string>();
+  const sectors = useStore(() => (user ? materiaPerformance(user.id, "todo") : []));
 
   const stats = user ? studentStats(user.id) : null;
 
@@ -1514,7 +1618,11 @@ export function BancoScreen({
     }
   }
 
-  function handleStartLearn(keys: string[], qty: number, modo: "oficial" | "potenciado" = "oficial") {
+  function handleStartLearn(
+    keys: string[],
+    qty: number,
+    modo: "oficial" | "potenciado" = "oficial",
+  ) {
     setModal(null);
     if (la) {
       navigate({
@@ -1572,414 +1680,190 @@ export function BancoScreen({
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          fontFamily: "'Manrope', sans-serif",
-        }}
-      >
-        {header}
-
-        {/* Page header */}
-        {modes && (
-        <div className="fp-bank-heading" style={{ textAlign: "left", marginBottom: 28 }}>
-          <h1
-            style={{
-              fontFamily: "'Instrument Serif', serif",
-              fontSize: "2rem",
-              color: "#081A35",
-              marginBottom: 8,
-              lineHeight: 1.2,
-            }}
-          >
-            ¿Cómo quieres{" "}
-            <span style={{ color: "#7A5C1E" }}>
-              {la ? "estudiar Línea Aérea?" : "estudiar hoy?"}
-            </span>
-          </h1>
-          <p
-            style={{
-              fontSize: "0.95rem",
-              color: "#4A5872",
-              maxWidth: 480,
-              margin: "0 auto",
-            }}
-          >
-            Elige el modo que mejor se adapte a tu momento. Puedes cambiar
-            cuando quieras.
-          </p>
-        </div>
-        )}
-
-        {/* Stats row */}
+      {header}
+      {modes ? (
         <div
-          className="fp-bank-stats grid w-full grid-cols-1 sm:flex sm:flex-wrap sm:justify-center"
-          style={{
-            gap: 12,
-            marginBottom: 48,
-            maxWidth: 820,
+          className="fd-bank-layout"
+          tabIndex={0}
+          aria-label="Preparar una sesión"
+          onKeyDown={(event) => {
+            if (isTyping(event.target) || event.ctrlKey || event.metaKey || modal) return;
+            if (event.key === "1") setSelectedMode("aprendiendo");
+            if (event.key === "2") setSelectedMode("examen");
+            if (event.key === "Enter" && event.target === event.currentTarget) {
+              event.preventDefault();
+              setModal(selectedMode);
+            }
           }}
         >
-
-          {[
-            {
-              icon: "help",
-              label: "Preguntas respondidas:",
-              value: (stats?.answered ?? 0).toLocaleString(),
-            },
-            {
-              icon: "check",
-              label: "Aciertos promedio:",
-              value: stats && stats.avgScore !== null ? `${stats.avgScore}%` : "—",
-            },
-            { icon: "sim", label: "Simulacros hechos:", value: String(stats?.simCount ?? 0) },
-          ].map((s) => (
-            <div
-              key={s.label}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                background: "white",
-                borderRadius: 12,
-                padding: "10px 18px",
-                boxShadow: "0 2px 10px rgba(22,61,112,0.06)",
-                fontSize: "0.85rem",
-              }}
-            >
-              <span style={{ fontSize: "1.1rem", display: "flex", color: "#163D70" }}><Icon n={s.icon as never} size={18} /></span>
-              <span>
-                {s.label}{" "}
-                <strong style={{ color: "#163D70" }}>{s.value}</strong>
-              </span>
-            </div>
-          ))}
-        </div>
-
-        {/* Mode cards */}
-        {modes && (
-        <div
-          className="fp-bank-modes grid grid-cols-1 sm:grid-cols-2"
-          style={{ gap: 24, maxWidth: 820, width: "100%", marginBottom: 48 }}
-        >
-          {/* Simulador CIAAC card */}
-          <div
-            className="fp-flight-panel"
-            onClick={() => setModal("examen")}
-            onMouseEnter={() => setExamHover(true)}
-            onMouseLeave={() => setExamHover(false)}
-            style={{
-              borderRadius: 20,
-              padding: "32px 28px",
-              cursor: "pointer",
-              transition: "all 0.25s",
-              display: "flex",
-              flexDirection: "column",
-              position: "relative",
-              overflow: "hidden",
-              background: "linear-gradient(145deg, #081A35, #2a2a4e)",
-              border: "3px solid transparent",
-              transform: examHover ? "translateY(-6px)" : "none",
-              boxShadow: examHover
-                ? "0 20px 48px rgba(26,26,46,0.4)"
-                : "none",
-            }}
-          >
-            <FlightTrails />
-            {/* Recomendado badge */}
-            <div
-              style={{
-                position: "absolute",
-                top: 16,
-                right: 16,
-                background: "#C7A052",
-                color: "#7A5C1E",
-                fontSize: "0.65rem",
-                fontWeight: 700,
-                padding: "3px 9px",
-                borderRadius: 20,
-                textTransform: "uppercase",
-                letterSpacing: "0.5px",
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-              }}
-            >
-              <Icon n="star" size={12} /> Recomendado
-            </div>
-
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
-                padding: "5px 12px",
-                borderRadius: 20,
-                fontSize: "0.72rem",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.5px",
-                marginBottom: 20,
-                width: "fit-content",
-                background: "rgba(199,160,82,0.2)",
-                color: "#C7A052",
-              }}
-            >
-              <Icon n="sim" size={14} /> {la ? "Simulador Línea Aérea" : "Simulador CIAAC"}
-            </div>
-
-            <div style={{ fontSize: "3rem", marginBottom: 16, display: "flex", color: "#C7A052" }}><Icon n="target" size={42} /></div>
-
-            <h2
-              style={{
-                fontFamily: "'Instrument Serif', serif",
-                fontSize: "1.5rem",
-                color: "white",
-                marginBottom: 6,
-              }}
-            >
-              {la ? "Simulador Línea Aérea" : "Simulador CIAAC"}
-            </h2>
-            <p
-              style={{
-                fontSize: "0.82rem",
-                marginBottom: 20,
-                opacity: 0.75,
-                lineHeight: 1.5,
-                color: "white",
-              }}
-            >
+          <section className="fd-bank-intro">
+            <p className="fd-eyebrow">EXAMEN TEÓRICO · {la ? "LÍNEA AÉREA" : "LICENCIA"}</p>
+            <h1>{la ? "Línea Aérea" : "CIAAC"}</h1>
+            <p>
+              El filtro de tu {la ? "próximo vuelo" : "licencia comercial"}:{" "}
               {la
-                ? "Examen completo del proceso de Línea Aérea: elige preguntas oficiales o el simulador potenciado."
-                : "Pon a prueba todo lo que has aprendido en un examen completo con las condiciones reales del CIAAC."}
+                ? "los manuales del curso, preguntas explicadas y práctica"
+                : "12 materias, banco explicado y un simulacro en formato real"}
+              .
             </p>
-
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 8,
-                marginBottom: 24,
-              }}
-            >
-              {EXAM_FEATURES.map((f) => (
-                <div
-                  key={f}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 8,
-                    fontSize: "0.82rem",
-                    color: "rgba(255,255,255,0.85)",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 6,
-                      height: 6,
-                      borderRadius: "50%",
-                      background: "#C7A052",
-                      flexShrink: 0,
-                    }}
-                  />
-                  {f}
-                </div>
-              ))}
-            </div>
-
-            <button
-              style={{
-                width: "100%",
-                padding: 13,
-                border: "none",
-                borderRadius: 12,
-                fontSize: "0.92rem",
-                fontWeight: 700,
-                cursor: "pointer",
-                fontFamily: "'Manrope', sans-serif",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 8,
-                marginTop: "auto",
-                background: "#C7A052",
-                color: "#7A5C1E",
-                transition: "all 0.2s",
-              }}
-            >
-              Iniciar simulador →
-            </button>
-          </div>
-
-          {/* Aprendiendo card */}
-          <div
-            onClick={() => setModal("aprendiendo")}
-            onMouseEnter={() => setLearnHover(true)}
-            onMouseLeave={() => setLearnHover(false)}
-            style={{
-              borderRadius: 20,
-              padding: "32px 28px",
-              cursor: "pointer",
-              transition: "all 0.25s",
-              display: "flex",
-              flexDirection: "column",
-              position: "relative",
-              overflow: "hidden",
-              background: "white",
-              border: `3px solid ${learnHover ? "#163D70" : "#EEE1C5"}`,
-              transform: learnHover ? "translateY(-6px)" : "none",
-              boxShadow: learnHover
-                ? "0 20px 48px rgba(22,61,112,0.12)"
-                : "none",
-            }}
-          >
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
-                padding: "5px 12px",
-                borderRadius: 20,
-                fontSize: "0.72rem",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.5px",
-                marginBottom: 20,
-                width: "fit-content",
-                background: "rgba(22,61,112,0.08)",
-                color: "#163D70",
-              }}
-            >
-              <Icon n="book" size={14} /> Modo estudio
-            </div>
-
-            <div style={{ fontSize: "3rem", marginBottom: 16, display: "flex", color: "#163D70" }}><Icon n="lightbulb" size={42} /></div>
-
-            <h2
-              style={{
-                fontFamily: "'Instrument Serif', serif",
-                fontSize: "1.5rem",
-                color: "#081A35",
-                marginBottom: 6,
-              }}
-            >
-              Aprendiendo
-            </h2>
-            <p
-              style={{
-                fontSize: "0.82rem",
-                marginBottom: 20,
-                color: "#666",
-                lineHeight: 1.5,
-              }}
-            >
-              Practica a tu ritmo con feedback inmediato en cada pregunta.
-            </p>
-
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 8,
-                marginBottom: 24,
-              }}
-            >
-              {LEARN_FEATURES.map((f) => (
-                <div
-                  key={f}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 8,
-                    fontSize: "0.82rem",
-                    color: "#555",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 6,
-                      height: 6,
-                      borderRadius: "50%",
-                      background: "#163D70",
-                      flexShrink: 0,
-                    }}
-                  />
-                  {f}
-                </div>
-              ))}
-            </div>
-
-            <button
-              style={{
-                width: "100%",
-                padding: 13,
-                border: "none",
-                borderRadius: 12,
-                fontSize: "0.92rem",
-                fontWeight: 700,
-                cursor: "pointer",
-                fontFamily: "'Manrope', sans-serif",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 8,
-                marginTop: "auto",
-                background: "#163D70",
-                color: "white",
-                transition: "all 0.2s",
-              }}
-            >
-              Configurar sesión →
-            </button>
-          </div>
-        </div>
-        )}
-
-        {/* Extras: flashcards, audio/podcast, presentaciones y Yaris con el material */}
-        {extras && <ExtrasPanel la={la} />}
-
-        {/* Historial */}
-        <div style={{ maxWidth: 820, width: "100%" }}>
-          <h3
-            style={{
-              fontFamily: "'Instrument Serif', serif",
-              fontSize: "1.1rem",
-              marginBottom: 16,
-              color: "#081A35",
-            }}
-          >
-            Historial y análisis de sesiones
-          </h3>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {/* Primero lo que quedó a medias: ámbar y con botón de reanudar. */}
-            {resumables.map((r) => (
-              <ResumeItem key={r.key} entry={r} />
-            ))}
-            {history.length === 0 && resumables.length === 0 ? (
+            <div className="fd-bank-score">
               <div
-                style={{
-                  background: "white",
-                  borderRadius: 12,
-                  boxShadow: "0 2px 8px rgba(22,61,112,0.05)",
-                  padding: "22px 18px",
-                  textAlign: "center",
-                  fontSize: "0.85rem",
-                  color: "#4A5872",
-                  fontFamily: "'Manrope', sans-serif",
-                }}
+                className="fd-score-ring"
+                style={{ "--score": (stats?.readiness ?? 0) + "%" } as React.CSSProperties}
               >
-                Aún no tienes sesiones. ¡Haz tu primer cuestionario!
+                <strong>{stats?.readiness ?? "—"}</strong>
+                <small>DE 80</small>
               </div>
-            ) : (
-              history.map((entry) => <HistItem key={entry.id} entry={entry} />)
+              <div>
+                <small className="fd-eyebrow">PREPARACIÓN ESTIMADA</small>
+                <h2>
+                  {stats?.readiness === null || !stats
+                    ? "Tu primer vuelo"
+                    : stats.readiness >= 80
+                      ? "Listo para seguir"
+                      : "A " + (80 - stats.readiness) + " pts del corte"}
+                </h2>
+              </div>
+            </div>
+            <div className="fd-bank-resume">
+              {resumables.length ? (
+                resumables.map((r) => <ResumeItem key={r.key} entry={r} />)
+              ) : (
+                <div className="fd-panel">
+                  <p className="fd-eyebrow">TU BITÁCORA</p>
+                  <strong>{stats?.answered ?? 0} preguntas respondidas</strong>
+                  <p>
+                    {stats?.quizCount ?? 0} cuestionarios · {stats?.simCount ?? 0} simulacros
+                  </p>
+                </div>
+              )}
+            </div>
+          </section>
+          <section className="fd-bank-center" aria-label="Modos de estudio">
+            <div className="fd-mode-cards" role="group" aria-label="Seleccionar modo">
+              {(["aprendiendo", "examen"] as const).map((mode, index) => (
+                <button
+                  key={mode}
+                  className={"fd-mode-card" + (selectedMode === mode ? " is-selected" : "")}
+                  aria-pressed={selectedMode === mode}
+                  onClick={() => setSelectedMode(mode)}
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(180deg,rgba(2,7,15,.12),rgba(2,7,15,.96) 63%),url(" +
+                      ASSETS +
+                      (mode === "examen"
+                        ? "foto-simulador-laptop.jpg"
+                        : "foto-ruta-aprendizaje.jpg") +
+                      ")",
+                  }}
+                >
+                  <span className="fd-mode-number">
+                    <kbd>{index + 1}</kbd>
+                    {mode === "examen" ? "INCURSIÓN" : "PATRULLA"}
+                  </span>
+                  <span className="fd-mode-copy">
+                    <small className="fd-eyebrow">MODO</small>
+                    <strong>{mode === "examen" ? "Simulador" : "Aprendiendo"}</strong>
+                    <span>
+                      {mode === "examen"
+                        ? "El examen completo con las condiciones reales."
+                        : "Practica por materia, sin reloj, con cada respuesta explicada."}
+                    </span>
+                    <span className="fd-mode-features">
+                      {(mode === "examen" ? EXAM_FEATURES : LEARN_FEATURES).slice(0, 3).map((f) => (
+                        <span key={f}>
+                          <CheckCircle size={14} weight="duotone" />
+                          {f}
+                        </span>
+                      ))}
+                    </span>
+                    <span className="fd-mode-bottom">
+                      {mode === "examen" ? <AirplaneTakeoff size={17} /> : <BookOpen size={17} />}{" "}
+                      {mode === "examen" ? "PREPARACIÓN INTENSIVA" : "A TU RITMO"}
+                    </span>
+                  </span>
+                </button>
+              ))}
+            </div>
+            {!la && (
+              <div className="fd-sectors">
+                <p className="fd-eyebrow">SECTORES · 12 MATERIAS</p>
+                <div>
+                  {sectors.map((m) => (
+                    <button
+                      key={m.slug}
+                      title={m.name}
+                      aria-label={"Practicar " + m.name}
+                      onClick={() => {
+                        setInitialMateria(m.name);
+                        setModal("aprendiendo");
+                      }}
+                    >
+                      <small>{SECTOR_CODES[m.slug] ?? m.name.slice(0, 3).toUpperCase()}</small>
+                      <strong
+                        style={{
+                          color:
+                            m.avg === null
+                              ? "#8fa3c2"
+                              : m.avg < 60
+                                ? "#f0a08c"
+                                : m.avg >= 80
+                                  ? "#7fd6a4"
+                                  : "#e3c98a",
+                        }}
+                      >
+                        {m.avg ?? "—"}
+                      </strong>
+                    </button>
+                  ))}
+                </div>
+              </div>
             )}
-          </div>
+          </section>
+          <aside className="fd-bank-log">
+            <section className="fd-panel">
+              <p className="fd-eyebrow">BITÁCORA DE VUELOS</p>
+              {history.length ? (
+                history.slice(0, 3).map((entry) => (
+                  <div className="fd-log-summary" key={entry.id}>
+                    <div>
+                      <strong>{entry.title}</strong>
+                      <small>{entry.meta}</small>
+                    </div>
+                    <span>{entry.score}%</span>
+                  </div>
+                ))
+              ) : (
+                <p>Tu historial aparecerá al completar tu primera sesión.</p>
+              )}
+            </section>
+            <LaunchButton
+              onClick={() => {
+                setInitialMateria(undefined);
+                setModal(selectedMode);
+              }}
+              subtitle={
+                selectedMode === "examen" ? "INCURSIÓN · EXAMEN COMPLETO" : "PATRULLA · A TU RITMO"
+              }
+            >
+              {selectedMode === "examen" ? "Lanzar simulador" : "Iniciar práctica"}
+            </LaunchButton>
+          </aside>
         </div>
-
-        {footer}
-      </div>
+      ) : null}
+      {extras && <ExtrasPanel la={la} />}
+      {history.length > 0 && (
+        <details className="fd-history">
+          <summary>Historial y análisis de sesiones · {history.length}</summary>
+          <div>
+            {history.map((entry) => (
+              <HistItem key={entry.id} entry={entry} />
+            ))}
+          </div>
+        </details>
+      )}
+      {!modes && resumables.map((r) => <ResumeItem key={r.key} entry={r} />)}
+      {footer}
 
       {/* Modals */}
       {modal === "examen" && (
@@ -1992,6 +1876,7 @@ export function BancoScreen({
           paid={isPaid(user)}
           onLocked={handleLearnLocked}
           la={la}
+          initialMateria={initialMateria}
         />
       )}
       {upgrade && (

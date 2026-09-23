@@ -152,16 +152,16 @@ export function ExplicaleAYaris({ onSalir }: { onSalir: () => void }) {
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
             <YarisAvatar size={44} />
             <div>
-              <h2 style={{ fontFamily: DISPLAY, fontSize: "1.35rem", color: "#081A35", margin: 0 }}>
+              <h2 style={{ fontFamily: DISPLAY, fontSize: "1.35rem", color: "var(--fd-text, #081A35)", margin: 0 }}>
                 Explícale a Yaris
               </h2>
-              <p style={{ margin: 0, fontSize: "0.85rem", color: "#4A5872" }}>
+              <p style={{ margin: 0, fontSize: "0.85rem", color: "var(--fd-muted, #4A5872)" }}>
                 A ver, cuéntame qué tanto lo entendiste.
               </p>
             </div>
           </div>
 
-          <p style={{ fontSize: "0.95rem", fontWeight: 700, color: "#081A35", margin: "22px 0 10px" }}>
+          <p style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--fd-text, #081A35)", margin: "22px 0 10px" }}>
             ¿Qué quieres explicarle a Yaris?
           </p>
           <input
@@ -170,8 +170,8 @@ export function ExplicaleAYaris({ onSalir }: { onSalir: () => void }) {
             onKeyDown={(e) => e.key === "Enter" && comenzar(tema)}
             placeholder="Escribe un tema..."
             style={{
-              width: "100%", border: "2px solid #EEE1C5", borderRadius: 14, padding: "13px 16px",
-              fontSize: "0.95rem", fontFamily: FONT, outline: "none", color: "#081A35",
+              width: "100%", border: "1px solid var(--fd-border, #EEE1C5)", borderRadius: "var(--fd-radius, 14px)", padding: "13px 16px",
+              fontSize: "0.95rem", fontFamily: FONT, outline: "none", color: "var(--fd-text, #081A35)",
             }}
           />
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
@@ -190,8 +190,8 @@ export function ExplicaleAYaris({ onSalir }: { onSalir: () => void }) {
               <Icon n="spark" size={15} /> Sorpréndeme
             </button>
           </div>
-          {pensando && <p style={{ fontSize: "0.82rem", color: "#4A5872", marginTop: 14 }}>Yaris está preparando tu reto…</p>}
-          {error && <p style={{ fontSize: "0.82rem", color: "#7A5C1E", marginTop: 14 }}>{error}</p>}
+          {pensando && <p style={{ fontSize: "0.82rem", color: "var(--fd-muted, #4A5872)", marginTop: 14 }}>Yaris está preparando tu reto…</p>}
+          {error && <p style={{ fontSize: "0.82rem", color: "var(--fd-gold, #7A5C1E)", marginTop: 14 }}>{error}</p>}
         </div>
       </div>
     );
@@ -205,10 +205,10 @@ export function ExplicaleAYaris({ onSalir }: { onSalir: () => void }) {
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
           <YarisAvatar size={36} />
           <div style={{ minWidth: 0 }}>
-            <p style={{ margin: 0, fontFamily: DISPLAY, fontSize: "1.05rem", color: "#081A35" }}>
+            <p style={{ margin: 0, fontFamily: DISPLAY, fontSize: "1.05rem", color: "var(--fd-text, #081A35)" }}>
               Explícale a Yaris
             </p>
-            <p style={{ margin: 0, fontSize: "0.78rem", color: "#4A5872" }}>Tema: {activo}</p>
+            <p style={{ margin: 0, fontSize: "0.78rem", color: "var(--fd-muted, #4A5872)" }}>Tema: {activo}</p>
           </div>
         </div>
 
@@ -228,8 +228,8 @@ export function ExplicaleAYaris({ onSalir }: { onSalir: () => void }) {
                 style={{
                   maxWidth: "84%", padding: "10px 14px", fontSize: "0.88rem", lineHeight: 1.6,
                   borderRadius: t.role === "user" ? "14px 4px 14px 14px" : "4px 14px 14px 14px",
-                  background: t.role === "user" ? "#163D70" : "#f0f4ff",
-                  color: t.role === "user" ? "white" : "#081A35",
+                  background: t.role === "user" ? "#163D70" : "var(--fd-panel, #f0f4ff)",
+                  color: t.role === "user" ? "white" : "var(--fd-text, #081A35)",
                 }}
               >
                 {t.role === "user" ? t.content : (
@@ -239,12 +239,12 @@ export function ExplicaleAYaris({ onSalir }: { onSalir: () => void }) {
             </div>
           ))}
           {pensando && (
-            <p style={{ fontSize: "0.8rem", color: "#4A5872", margin: 0 }}>Yaris está revisando tu explicación…</p>
+            <p style={{ fontSize: "0.8rem", color: "var(--fd-muted, #4A5872)", margin: 0 }}>Yaris está revisando tu explicación…</p>
           )}
           <div ref={finRef} />
         </div>
 
-        {error && <p style={{ fontSize: "0.82rem", color: "#7A5C1E", marginTop: 12 }}>{error}</p>}
+        {error && <p style={{ fontSize: "0.82rem", color: "var(--fd-gold, #7A5C1E)", marginTop: 12 }}>{error}</p>}
 
         {resumen ? (
           <ResumenCard resumen={resumen} onOtro={() => { setActivo(null); setTema(""); setTurnos([]); setResumen(null); }} />
@@ -257,8 +257,8 @@ export function ExplicaleAYaris({ onSalir }: { onSalir: () => void }) {
               placeholder="Explícalo con tus propias palabras…"
               rows={3}
               style={{
-                width: "100%", border: "2px solid #EEE1C5", borderRadius: 14, padding: "12px 14px",
-                fontSize: "0.9rem", fontFamily: FONT, outline: "none", resize: "vertical", color: "#081A35",
+                width: "100%", border: "1px solid var(--fd-border, #EEE1C5)", borderRadius: "var(--fd-radius, 14px)", padding: "12px 14px",
+                fontSize: "0.9rem", fontFamily: FONT, outline: "none", resize: "vertical", color: "var(--fd-text, #081A35)",
               }}
             />
             <div style={{ display: "flex", gap: 10, marginTop: 10, flexWrap: "wrap" }}>
@@ -266,7 +266,7 @@ export function ExplicaleAYaris({ onSalir }: { onSalir: () => void }) {
                 <Icon n="send" size={15} /> Enviar respuesta
               </button>
               {puedeVoz && (
-                <button onClick={dictar} style={{ ...btnGhost, borderColor: escuchando ? "#e74c3c" : "#EEE1C5", color: escuchando ? "#7A5C1E" : "#163D70" }}>
+                <button onClick={dictar} style={{ ...btnGhost, borderColor: escuchando ? "#e74c3c" : "var(--fd-border, #EEE1C5)", color: escuchando ? "var(--fd-gold, #7A5C1E)" : "var(--fd-text, #163D70)" }}>
                   <Icon n="audio" size={15} /> {escuchando ? "Escuchando… toca para parar" : "Responder con voz"}
                 </button>
               )}
@@ -284,12 +284,12 @@ function ResumenCard({ resumen, onOtro }: { resumen: PruebaResumen; onOtro: () =
       : resumen.veredicto === "parcial" ? "Vas por buen camino"
         : "Conviene reforzarlo";
   return (
-    <div style={{ marginTop: 18, background: "#f8f9ff", borderRadius: 16, padding: 18 }}>
-      <p style={{ fontFamily: DISPLAY, fontSize: "1.05rem", color: "#081A35", margin: "0 0 10px" }}>{titulo}</p>
+    <div style={{ marginTop: 18, background: "var(--fd-panel, #f8f9ff)", borderRadius: "var(--fd-radius, 16px)", padding: 18 }}>
+      <p style={{ fontFamily: DISPLAY, fontSize: "1.05rem", color: "var(--fd-text, #081A35)", margin: "0 0 10px" }}>{titulo}</p>
       {resumen.entendiste && <Bloque label="Lo que dominas" texto={resumen.entendiste} />}
       {resumen.reforzar && <Bloque label="Para reforzar" texto={resumen.reforzar} />}
       {resumen.recomienda && <Bloque label="Yaris recomienda" texto={resumen.recomienda} />}
-      <p style={{ fontSize: "0.72rem", color: "#7E90AD", margin: "10px 0 14px" }}>
+      <p style={{ fontSize: "0.72rem", color: "var(--fd-muted, #7E90AD)", margin: "10px 0 14px" }}>
         Dominio estimado: {resumen.dominio}%
       </p>
       <button onClick={onOtro} style={btnPrimary}>Explicar otro tema</button>
@@ -300,15 +300,15 @@ function ResumenCard({ resumen, onOtro }: { resumen: PruebaResumen; onOtro: () =
 function Bloque({ label, texto }: { label: string; texto: string }) {
   return (
     <div style={{ marginBottom: 10 }}>
-      <p style={{ fontSize: "0.74rem", fontWeight: 800, color: "#163D70", textTransform: "uppercase", letterSpacing: ".04em", margin: "0 0 2px" }}>{label}</p>
-      <p style={{ fontSize: "0.86rem", color: "#081A35", lineHeight: 1.6, margin: 0 }}>{texto}</p>
+      <p style={{ fontSize: "0.74rem", fontWeight: 800, color: "var(--fd-text, #163D70)", textTransform: "uppercase", letterSpacing: ".04em", margin: "0 0 2px" }}>{label}</p>
+      <p style={{ fontSize: "0.86rem", color: "var(--fd-text, #081A35)", lineHeight: 1.6, margin: 0 }}>{texto}</p>
     </div>
   );
 }
 
 const card: CSSProperties = {
-  background: "white",
-  borderRadius: 20,
+  background: "var(--fd-panel, white)",
+  borderRadius: "var(--fd-radius, 20px)",
   padding: 24,
   border: "1px solid #EEF1F7",
   boxShadow: "0 10px 30px rgba(8,26,53,.06)",
@@ -316,17 +316,17 @@ const card: CSSProperties = {
 
 const btnPrimary: CSSProperties = {
   display: "inline-flex", alignItems: "center", gap: 7,
-  background: "#163D70", color: "white", border: "none", borderRadius: 12,
+  background: "#163D70", color: "white", border: "none", borderRadius: "var(--fd-radius, 12px)",
   padding: "12px 20px", fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: FONT,
 };
 
 const btnGhost: CSSProperties = {
   display: "inline-flex", alignItems: "center", gap: 7,
-  background: "white", color: "#163D70", border: "2px solid #EEE1C5", borderRadius: 12,
+  background: "var(--fd-panel, white)", color: "var(--fd-text, #163D70)", border: "1px solid var(--fd-border, #EEE1C5)", borderRadius: "var(--fd-radius, 12px)",
   padding: "10px 18px", fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: FONT,
 };
 
 const linkBack: CSSProperties = {
-  background: "none", border: "none", color: "#163D70", fontWeight: 700, fontSize: "0.82rem",
+  background: "none", border: "none", color: "var(--fd-text, #163D70)", fontWeight: 700, fontSize: "0.82rem",
   cursor: "pointer", padding: 0, marginBottom: 14, fontFamily: FONT,
 };

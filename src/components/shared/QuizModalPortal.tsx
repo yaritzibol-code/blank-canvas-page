@@ -13,6 +13,7 @@ export function QuizModalPortal({
   onClose: () => void;
 }) {
   const [mounted, setMounted] = useState(false);
+  const portalRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef(onClose);
   closeRef.current = onClose;
 
@@ -53,8 +54,32 @@ export function QuizModalPortal({
         window.scrollTo(scrollX, scrollY);
       };
     }
+    const focusable = () =>
+      Array.from(
+        portalRef.current?.querySelectorAll<HTMLElement>(
+          'button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex="0"]',
+        ) ?? [],
+      ).filter((el) => el.getClientRects().length);
+    focusable()[0]?.focus({ preventScroll: true });
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeRef.current();
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeRef.current();
+      }
+      if (event.key !== "Tab") return;
+      const items = focusable(),
+        first = items[0],
+        last = items.at(-1);
+      if (
+        event.shiftKey &&
+        (document.activeElement === first || !portalRef.current?.contains(document.activeElement))
+      ) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
     };
     document.addEventListener("keydown", onKeyDown);
     return () => {
@@ -68,5 +93,12 @@ export function QuizModalPortal({
     };
   }, [mounted]);
 
-  return mounted ? createPortal(children, document.body) : null;
+  return mounted
+    ? createPortal(
+        <div ref={portalRef} className="fd-modal-theme">
+          {children}
+        </div>,
+        document.body,
+      )
+    : null;
 }

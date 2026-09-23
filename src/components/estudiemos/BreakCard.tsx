@@ -6,7 +6,7 @@ export function BreakCard({ minutes, onDone }: { minutes: number; onDone: () => 
     <div
       style={{
         background: "linear-gradient(135deg,#EEE1C5,#fce4ec)",
-        borderRadius: 18,
+        borderRadius: "var(--fd-radius, 18px)",
         padding: "20px 22px",
         marginBottom: 16,
         display: "flex",
@@ -17,7 +17,7 @@ export function BreakCard({ minutes, onDone }: { minutes: number; onDone: () => 
     >
       <PathyMark size={44} float />
       <div style={{ flex: 1 }}>
-        <strong style={{ color: "#7A5C1E", display: "block", marginBottom: 3 }}>
+        <strong style={{ color: "var(--fd-gold, #7A5C1E)", display: "block", marginBottom: 3 }}>
           Break de {minutes} minutos
         </strong>
         <span style={{ fontSize: "0.85rem", color: "#4a4a4a", lineHeight: 1.5 }}>
@@ -27,7 +27,7 @@ export function BreakCard({ minutes, onDone }: { minutes: number; onDone: () => 
       <button
         onClick={onDone}
         style={{
-          minHeight: 44, padding: "10px 16px", borderRadius: 10, border: "none",
+          minHeight: 44, padding: "10px 16px", borderRadius: "var(--fd-radius, 10px)", border: "none",
           background: "#7A5C1E", color: "white", fontWeight: 700, fontSize: "0.82rem",
           cursor: "pointer", fontFamily: "'Manrope', sans-serif", flexShrink: 0,
         }}

@@ -47,7 +47,7 @@ export function LogroWatcher() {
             gap: 12,
             alignItems: "center",
             padding: "12px 14px",
-            borderRadius: 14,
+            borderRadius: "var(--fd-radius, 14px)",
             background: "#081A35",
             color: "white",
             boxShadow: "0 12px 30px rgba(15,30,60,.3)",
@@ -89,7 +89,7 @@ export function LogroWatcher() {
             style={{
               maxWidth: 480,
               width: "100%",
-              borderRadius: 22,
+              borderRadius: "var(--fd-radius, 22px)",
               padding: "34px 26px",
               textAlign: "center",
               color: "white",
@@ -134,10 +134,10 @@ export function LogroWatcher() {
                 to="/dashboard/perfil"
                 onClick={() => setMaximo(false)}
                 style={{
-                  background: "white",
-                  color: "#081A35",
+                  background: "var(--fd-panel, white)",
+                  color: "var(--fd-text, #081A35)",
                   padding: "10px 18px",
-                  borderRadius: 10,
+                  borderRadius: "var(--fd-radius, 10px)",
                   fontWeight: 800,
                   fontSize: ".84rem",
                   textDecoration: "none",
@@ -152,7 +152,7 @@ export function LogroWatcher() {
                   color: "white",
                   border: "1px solid rgba(255,255,255,.5)",
                   padding: "10px 18px",
-                  borderRadius: 10,
+                  borderRadius: "var(--fd-radius, 10px)",
                   fontWeight: 700,
                   fontSize: ".84rem",
                   cursor: "pointer",

@@ -79,7 +79,7 @@ function computeCountdown(dateStr: string) {
 function LockOverlay({ onUnlock }: { onUnlock: () => void }) {
   return (
     <div style={{
-      position: "absolute", inset: 0, zIndex: 50, borderRadius: 16,
+      position: "absolute", inset: 0, zIndex: 50, borderRadius: "var(--fd-radius, 16px)",
       background: "rgba(245,247,252,.55)", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
       display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
       gap: 10, textAlign: "center", padding: 20,
@@ -89,7 +89,7 @@ function LockOverlay({ onUnlock }: { onUnlock: () => void }) {
       </div>
       <button
         onClick={onUnlock}
-        style={{ padding: "10px 18px", borderRadius: 10, border: "none", background: "#7A5C1E", color: "white", fontSize: ".84rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+        style={{ padding: "10px 18px", borderRadius: "var(--fd-radius, 10px)", border: "none", background: "#7A5C1E", color: "white", fontSize: ".84rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
       >
         Desbloquear recordatorios
       </button>
@@ -213,9 +213,9 @@ function RecordatoriosPage() {
   const closeModals = () => { setShowReminderModal(false); setShowDateModal(false); setShowWhatsModal(false); setEditingId(null); };
 
   const inputStyle: React.CSSProperties = {
-    width: "100%", padding: "10px 14px", border: "2px solid #EEE1C5",
+    width: "100%", padding: "10px 14px", border: "1px solid var(--fd-border, #EEE1C5)",
     borderRadius: 9, fontSize: ".88rem", fontFamily: "'Manrope', sans-serif", outline: "none",
-    color: "#081A35", background: "white",
+    color: "var(--fd-text, #081A35)", background: "var(--fd-panel, white)",
   };
 
   if (!user) return <div style={{ fontFamily: "'Manrope', sans-serif", maxWidth: 720 }} />;
@@ -231,16 +231,16 @@ function RecordatoriosPage() {
         >
           {/* ── Reminder modal ── */}
           {showReminderModal && (
-            <div onClick={(e) => e.stopPropagation()} style={{ background: "white", borderRadius: 18, padding: 28, maxWidth: 460, width: "100%" }}>
-              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.3rem", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}><Icon n="bell" size={22} color="#081A35" /> {editingId ? "Editar recordatorio" : "Nuevo recordatorio"}</h2>
-              <p style={{ fontSize: ".84rem", color: "#4A5872", marginBottom: 22 }}>Configura cuándo quieres que te avisemos por WhatsApp</p>
+            <div onClick={(e) => e.stopPropagation()} style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 18px)", padding: 28, maxWidth: 460, width: "100%" }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.3rem", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}><Icon n="bell" size={22} color="var(--fd-text, #081A35)" /> {editingId ? "Editar recordatorio" : "Nuevo recordatorio"}</h2>
+              <p style={{ fontSize: ".84rem", color: "var(--fd-muted, #4A5872)", marginBottom: 22 }}>Configura cuándo quieres que te avisemos por WhatsApp</p>
 
-              <div style={{ background: "#f0fdf4", border: "1px solid #86efac", borderRadius: 10, padding: "10px 14px", marginBottom: 16, display: "flex", alignItems: "center", gap: 8, fontSize: ".8rem", color: "#166534" }}>
+              <div style={{ background: "var(--fd-panel, #f0fdf4)", border: "1px solid #86efac", borderRadius: "var(--fd-radius, 10px)", padding: "10px 14px", marginBottom: 16, display: "flex", alignItems: "center", gap: 8, fontSize: ".8rem", color: "#166534" }}>
                 <Icon n="chat" size={16} color="#166534" /> <span>Este recordatorio llegará a tu WhatsApp al <strong>{masked}</strong></span>
               </div>
 
               <div style={{ marginBottom: 16 }}>
-                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "#081A35", marginBottom: 6, display: "block" }}>¿Para qué quieres el recordatorio?</label>
+                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 6, display: "block" }}>¿Para qué quieres el recordatorio?</label>
                 <select value={reminderType} onChange={(e) => setReminderType(e.target.value)} style={inputStyle}>
                   {!REMINDER_TYPES.includes(reminderType) && <option>{reminderType}</option>}
                   {REMINDER_TYPES.map((t) => (
@@ -250,12 +250,12 @@ function RecordatoriosPage() {
               </div>
 
               <div style={{ marginBottom: 16 }}>
-                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "#081A35", marginBottom: 6, display: "block" }}>Hora</label>
+                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 6, display: "block" }}>Hora</label>
                 <input type="time" value={reminderTime} onChange={(e) => setReminderTime(e.target.value)} style={inputStyle} />
               </div>
 
               <div style={{ marginBottom: 20 }}>
-                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "#081A35", marginBottom: 6, display: "block" }}>¿Qué días?</label>
+                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 6, display: "block" }}>¿Qué días?</label>
                 <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
                   {WEEK_DAYS.map((d, i) => (
                     <button
@@ -264,8 +264,8 @@ function RecordatoriosPage() {
                       style={{
                         width: 38, height: 38, borderRadius: "50%",
                         border: `2px solid ${selectedDays[i] ? "#163D70" : "#EEE1C5"}`,
-                        background: selectedDays[i] ? "#163D70" : "white",
-                        color: selectedDays[i] ? "white" : "#4A5872",
+                        background: selectedDays[i] ? "#163D70" : "var(--fd-panel, white)",
+                        color: selectedDays[i] ? "white" : "var(--fd-muted, #4A5872)",
                         fontSize: ".78rem", fontWeight: 700, cursor: "pointer",
                         display: "flex", alignItems: "center", justifyContent: "center",
                         transition: "all .2s", fontFamily: "'Manrope', sans-serif",
@@ -276,7 +276,7 @@ function RecordatoriosPage() {
               </div>
 
               <div style={{ display: "flex", gap: 10 }}>
-                <button onClick={closeModals} style={{ flex: 1, padding: 11, background: "white", color: "#4A5872", border: "2px solid #EEE1C5", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                <button onClick={closeModals} style={{ flex: 1, padding: 11, background: "var(--fd-panel, white)", color: "var(--fd-muted, #4A5872)", border: "1px solid var(--fd-border, #EEE1C5)", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
                 <button onClick={saveReminder} style={{ flex: 2, padding: 11, background: "#163D70", color: "white", border: "none", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>Guardar recordatorio <Icon n="bell" size={16} /></button>
               </div>
             </div>
@@ -284,15 +284,15 @@ function RecordatoriosPage() {
 
           {/* ── Date modal ── */}
           {showDateModal && (
-            <div onClick={(e) => e.stopPropagation()} style={{ background: "white", borderRadius: 18, padding: 28, maxWidth: 460, width: "100%" }}>
-              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.3rem", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}><Icon n="plane" size={22} color="#081A35" /> Fecha del examen CIAAC</h2>
-              <p style={{ fontSize: ".84rem", color: "#4A5872", marginBottom: 22 }}>¿Cuándo tienes programado tu examen?</p>
+            <div onClick={(e) => e.stopPropagation()} style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 18px)", padding: 28, maxWidth: 460, width: "100%" }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.3rem", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}><Icon n="plane" size={22} color="var(--fd-text, #081A35)" /> Fecha del examen CIAAC</h2>
+              <p style={{ fontSize: ".84rem", color: "var(--fd-muted, #4A5872)", marginBottom: 22 }}>¿Cuándo tienes programado tu examen?</p>
               <div style={{ marginBottom: 16 }}>
-                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "#081A35", marginBottom: 6, display: "block" }}>Fecha del examen</label>
+                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 6, display: "block" }}>Fecha del examen</label>
                 <input type="date" value={examDate} onChange={(e) => setExamDate(e.target.value)} style={inputStyle} />
               </div>
               <div style={{ display: "flex", gap: 10 }}>
-                <button onClick={() => setShowDateModal(false)} style={{ flex: 1, padding: 11, background: "white", color: "#4A5872", border: "2px solid #EEE1C5", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                <button onClick={() => setShowDateModal(false)} style={{ flex: 1, padding: 11, background: "var(--fd-panel, white)", color: "var(--fd-muted, #4A5872)", border: "1px solid var(--fd-border, #EEE1C5)", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
                 <button onClick={saveExamDate} style={{ flex: 2, padding: 11, background: "#163D70", color: "white", border: "none", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>Guardar fecha <Icon n="plane" size={16} /></button>
               </div>
             </div>
@@ -300,15 +300,15 @@ function RecordatoriosPage() {
 
           {/* ── WhatsApp modal ── */}
           {showWhatsModal && (
-            <div onClick={(e) => e.stopPropagation()} style={{ background: "white", borderRadius: 18, padding: 28, maxWidth: 460, width: "100%" }}>
-              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.3rem", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}><Icon n="chat" size={22} color="#081A35" /> Cambiar número de WhatsApp</h2>
-              <p style={{ fontSize: ".84rem", color: "#4A5872", marginBottom: 22 }}>A este número te enviaremos tus recordatorios de estudio.</p>
+            <div onClick={(e) => e.stopPropagation()} style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 18px)", padding: 28, maxWidth: 460, width: "100%" }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.3rem", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}><Icon n="chat" size={22} color="var(--fd-text, #081A35)" /> Cambiar número de WhatsApp</h2>
+              <p style={{ fontSize: ".84rem", color: "var(--fd-muted, #4A5872)", marginBottom: 22 }}>A este número te enviaremos tus recordatorios de estudio.</p>
               <div style={{ marginBottom: 16 }}>
-                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "#081A35", marginBottom: 6, display: "block" }}>Número de WhatsApp</label>
+                <label style={{ fontSize: ".78rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 6, display: "block" }}>Número de WhatsApp</label>
                 <input type="tel" value={whatsInput} onChange={(e) => setWhatsInput(e.target.value)} placeholder="+52 55 1234 5678" style={inputStyle} />
               </div>
               <div style={{ display: "flex", gap: 10 }}>
-                <button onClick={() => setShowWhatsModal(false)} style={{ flex: 1, padding: 11, background: "white", color: "#4A5872", border: "2px solid #EEE1C5", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
+                <button onClick={() => setShowWhatsModal(false)} style={{ flex: 1, padding: 11, background: "var(--fd-panel, white)", color: "var(--fd-muted, #4A5872)", border: "1px solid var(--fd-border, #EEE1C5)", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Cancelar</button>
                 <button onClick={saveWhats} style={{ flex: 2, padding: 11, background: "#163D70", color: "white", border: "none", borderRadius: 9, fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>Guardar número <Icon n="chat" size={16} /></button>
               </div>
             </div>
@@ -318,7 +318,7 @@ function RecordatoriosPage() {
 
       {/* Save flash */}
       {saveFlash && (
-        <div style={{ position: "fixed", top: 80, right: 24, background: "#2ecc71", color: "white", padding: "10px 18px", borderRadius: 10, fontWeight: 700, fontSize: ".85rem", zIndex: 200, boxShadow: "0 4px 16px rgba(46,204,113,.4)", display: "flex", alignItems: "center", gap: 6 }}>
+        <div style={{ position: "fixed", top: 80, right: 24, background: "#2ecc71", color: "white", padding: "10px 18px", borderRadius: "var(--fd-radius, 10px)", fontWeight: 700, fontSize: ".85rem", zIndex: 200, boxShadow: "0 4px 16px rgba(46,204,113,.4)", display: "flex", alignItems: "center", gap: 6 }}>
           <Icon n="check" size={16} /> ¡Recordatorio guardado!
         </div>
       )}
@@ -345,7 +345,7 @@ function RecordatoriosPage() {
       <div style={{ position: "relative" }}>
 
         {/* Countdown card */}
-        <div style={{ background: "linear-gradient(135deg,#081A35,#2a2a4e)", borderRadius: 18, padding: "24px 28px", display: "flex", alignItems: "center", gap: 20, marginBottom: 24, position: "relative", overflow: "hidden", flexWrap: "wrap" }}>
+        <div style={{ background: "linear-gradient(135deg,#081A35,#2a2a4e)", borderRadius: "var(--fd-radius, 18px)", padding: "24px 28px", display: "flex", alignItems: "center", gap: 20, marginBottom: 24, position: "relative", overflow: "hidden", flexWrap: "wrap" }}>
           <div style={{ position: "absolute", top: -40, right: -40, width: 160, height: 160, background: "radial-gradient(circle, rgba(199,160,82,.15) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
           <div style={{ flexShrink: 0, zIndex: 1, color: "white" }}><Icon n="plane" size={42} /></div>
           <div style={{ flex: 1, zIndex: 1, minWidth: 200 }}>
@@ -374,13 +374,13 @@ function RecordatoriosPage() {
         </div>
 
         {/* WhatsApp banner */}
-        <div style={{ background: "linear-gradient(135deg,#25D366,#128C7E)", borderRadius: 14, padding: "16px 20px", display: "flex", alignItems: "center", gap: 14, marginBottom: 28, flexWrap: "wrap" }}>
+        <div style={{ background: "linear-gradient(135deg,#25D366,#128C7E)", borderRadius: "var(--fd-radius, 14px)", padding: "16px 20px", display: "flex", alignItems: "center", gap: 14, marginBottom: 28, flexWrap: "wrap" }}>
           <div style={{ flexShrink: 0, color: "white" }}><Icon n="chat" size={30} /></div>
           <div style={{ flex: 1, minWidth: 180 }}>
             <div style={{ fontSize: ".88rem", fontWeight: 700, color: "white", marginBottom: 3 }}>Recordatorios por WhatsApp</div>
             <div style={{ fontSize: ".78rem", color: "rgba(255,255,255,.85)", lineHeight: 1.5 }}>Te mandaremos tus recordatorios directo a WhatsApp para que no se te pase ninguna sesión de estudio. ¡Sin descargar apps extra!</div>
           </div>
-          <div style={{ flexShrink: 0, background: "rgba(255,255,255,.15)", borderRadius: 10, padding: "8px 14px", textAlign: "center" }}>
+          <div style={{ flexShrink: 0, background: "rgba(255,255,255,.15)", borderRadius: "var(--fd-radius, 10px)", padding: "8px 14px", textAlign: "center" }}>
             <div style={{ fontSize: ".7rem", color: "rgba(255,255,255,.7)", marginBottom: 2 }}>Número registrado</div>
             <div style={{ fontSize: ".88rem", fontWeight: 700, color: "white" }}>{masked}</div>
             <div onClick={() => requirePaid(openWhatsModal)} style={{ fontSize: ".68rem", color: "rgba(255,255,255,.7)", marginTop: 2, cursor: "pointer", textDecoration: "underline" }}>Cambiar número</div>
@@ -388,13 +388,13 @@ function RecordatoriosPage() {
         </div>
 
         {/* Reminders list */}
-        <div style={{ fontSize: ".78rem", fontWeight: 700, color: "#4A5872", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="bell" size={15} /> Mis recordatorios</div>
+        <div style={{ fontSize: ".78rem", fontWeight: 700, color: "var(--fd-muted, #4A5872)", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="bell" size={15} /> Mis recordatorios</div>
         <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
           {reminders.map((r) => (
             <div
               key={r.id}
               style={{
-                background: "white", borderRadius: 14, padding: "16px 18px",
+                background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 14px)", padding: "16px 18px",
                 display: "flex", alignItems: "center", gap: 14,
                 boxShadow: "0 2px 8px rgba(22,61,112,.05)",
                 border: "2px solid transparent",
@@ -406,26 +406,26 @@ function RecordatoriosPage() {
                   guardado: los recordatorios antiguos traen tintes opacos
                   mezclados contra blanco que en tema oscuro quedaban como
                   manchas claras sobre la tarjeta. */}
-              <div style={{ width: 40, height: 40, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: (TYPE_META[r.tipo] ?? DEFAULT_META).bg, color: "#081A35" }}><Icon n={r.icon as never} size={20} /></div>
+              <div style={{ width: 40, height: 40, borderRadius: "var(--fd-radius, 12px)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: (TYPE_META[r.tipo] ?? DEFAULT_META).bg, color: "var(--fd-text, #081A35)" }}><Icon n={r.icon as never} size={20} /></div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: ".88rem", fontWeight: 700, color: "#081A35", marginBottom: 2 }}>{r.titulo}</div>
-                <div style={{ fontSize: ".75rem", color: "#4A5872" }}>{r.sub}</div>
+                <div style={{ fontSize: ".88rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 2 }}>{r.titulo}</div>
+                <div style={{ fontSize: ".75rem", color: "var(--fd-muted, #4A5872)" }}>{r.sub}</div>
                 <div style={{ display: "flex", gap: 6, marginTop: 5, flexWrap: "wrap" }}>
                   {r.tags.map((tag) => (
-                    <span key={tag} style={{ padding: "2px 9px", borderRadius: 10, fontSize: ".68rem", fontWeight: 600, background: "#EEE1C5", color: "#7A5C1E" }}>{tag}</span>
+                    <span key={tag} style={{ padding: "2px 9px", borderRadius: "var(--fd-radius, 10px)", fontSize: ".68rem", fontWeight: 600, background: "var(--fd-panel, #EEE1C5)", color: "var(--fd-gold, #7A5C1E)" }}>{tag}</span>
                   ))}
                 </div>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
                 <button
                   onClick={() => openEditReminder(r)}
-                  style={{ background: "none", border: "1px solid #EEE1C5", borderRadius: 7, padding: "5px 8px", fontSize: ".75rem", color: "#4A5872", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all .2s", display: "inline-flex", alignItems: "center" }}
+                  style={{ background: "none", border: "1px solid var(--fd-border, #EEE1C5)", borderRadius: 7, padding: "5px 8px", fontSize: ".75rem", color: "var(--fd-muted, #4A5872)", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all .2s", display: "inline-flex", alignItems: "center" }}
                   onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#163D70"; e.currentTarget.style.color = "#163D70"; }}
                   onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#EEE1C5"; e.currentTarget.style.color = "#4A5872"; }}
                 ><Icon n="edit" size={15} /></button>
                 <button
                   onClick={() => removeReminder(r.id)}
-                  style={{ background: "none", border: "1px solid #EEE1C5", borderRadius: 7, padding: "5px 8px", fontSize: ".75rem", color: "#4A5872", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all .2s", display: "inline-flex", alignItems: "center" }}
+                  style={{ background: "none", border: "1px solid var(--fd-border, #EEE1C5)", borderRadius: 7, padding: "5px 8px", fontSize: ".75rem", color: "var(--fd-muted, #4A5872)", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all .2s", display: "inline-flex", alignItems: "center" }}
                   onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#7A5C1E"; e.currentTarget.style.color = "#7A5C1E"; }}
                   onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#EEE1C5"; e.currentTarget.style.color = "#4A5872"; }}
                 ><Icon n="trash" size={15} /></button>
@@ -433,13 +433,13 @@ function RecordatoriosPage() {
                 <div
                   onClick={() => toggleReminder(r)}
                   style={{
-                    width: 44, height: 24, borderRadius: 12, cursor: "pointer", position: "relative",
+                    width: 44, height: 24, borderRadius: "var(--fd-radius, 12px)", cursor: "pointer", position: "relative",
                     background: r.enabled ? "#163D70" : "#ddd",
                     transition: "background .2s", flexShrink: 0,
                   }}
                 >
                   <div style={{
-                    position: "absolute", width: 18, height: 18, background: "white", borderRadius: "50%",
+                    position: "absolute", width: 18, height: 18, background: "var(--fd-panel, white)", borderRadius: "50%",
                     top: 3, left: r.enabled ? 23 : 3, transition: "left .2s",
                     boxShadow: "0 1px 4px rgba(0,0,0,.2)",
                   }} />
@@ -451,11 +451,11 @@ function RecordatoriosPage() {
           {/* Add card */}
           <div
             onClick={openNewReminder}
-            style={{ background: "white", borderRadius: 14, padding: "16px 18px", display: "flex", alignItems: "center", gap: 14, boxShadow: "0 2px 8px rgba(22,61,112,.05)", border: "2px dashed #EEE1C5", cursor: "pointer", color: "#7E90AD", fontSize: ".88rem", fontWeight: 600, transition: "all .2s" }}
+            style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 14px)", padding: "16px 18px", display: "flex", alignItems: "center", gap: 14, boxShadow: "0 2px 8px rgba(22,61,112,.05)", border: "2px dashed #EEE1C5", cursor: "pointer", color: "var(--fd-muted, #7E90AD)", fontSize: ".88rem", fontWeight: 600, transition: "all .2s" }}
             onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#163D70"; (e.currentTarget as HTMLElement).style.color = "#163D70"; }}
             onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#EEE1C5"; (e.currentTarget as HTMLElement).style.color = "#7E90AD"; }}
           >
-            <div style={{ width: 40, height: 40, borderRadius: 12, background: "#EEE1C5", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "#7A5C1E" }}><Icon n="plus" size={20} /></div>
+            <div style={{ width: 40, height: 40, borderRadius: "var(--fd-radius, 12px)", background: "var(--fd-panel, #EEE1C5)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "var(--fd-gold, #7A5C1E)" }}><Icon n="plus" size={20} /></div>
             <span>Agregar nuevo recordatorio</span>
           </div>
 
@@ -463,7 +463,7 @@ function RecordatoriosPage() {
           {reminders.some((r) => r.enabled) && (
             <button
               onClick={pauseAll}
-              style={{ background: "none", border: "none", color: "#7E90AD", fontSize: ".76rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "underline", alignSelf: "flex-start", padding: 0 }}
+              style={{ background: "none", border: "none", color: "var(--fd-muted, #7E90AD)", fontSize: ".76rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "underline", alignSelf: "flex-start", padding: 0 }}
             >
               Pausar todos
             </button>
@@ -471,8 +471,8 @@ function RecordatoriosPage() {
         </div>
 
         {/* Pathy tips */}
-        <div style={{ background: "linear-gradient(135deg,#EEE1C5,#fce4ec)", borderRadius: 14, padding: 18, marginBottom: 24 }}>
-          <h3 style={{ fontSize: ".88rem", fontWeight: 700, color: "#7A5C1E", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}><PathyMark size={22} /> Consejos de Pathy para mantener tu racha</h3>
+        <div style={{ background: "linear-gradient(135deg,#EEE1C5,#fce4ec)", borderRadius: "var(--fd-radius, 14px)", padding: 18, marginBottom: 24 }}>
+          <h3 style={{ fontSize: ".88rem", fontWeight: 700, color: "var(--fd-gold, #7A5C1E)", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}><PathyMark size={22} /> Consejos de Pathy para mantener tu racha</h3>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {[
               "Estudia siempre a la misma hora — tu cerebro lo convertirá en hábito automático en 21 días.",
@@ -480,7 +480,7 @@ function RecordatoriosPage() {
               "Pon tu teléfono donde lo veas cuando llegues del trabajo/escuela — ese será tu recordatorio visual.",
               "Si un día no puedes estudiar mucho, haz aunque sea 5 flashcards — lo importante es no romper la racha.",
             ].map((tip, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: ".82rem", color: "#555", lineHeight: 1.5 }}>
+              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: ".82rem", color: "var(--fd-muted, #555)", lineHeight: 1.5 }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#7A5C1E", flexShrink: 0, marginTop: 6 }} />
                 {tip}
               </div>

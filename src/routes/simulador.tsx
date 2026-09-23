@@ -1,3 +1,4 @@
+import { QuestionFrame } from "@/components/flightdeck/QuestionFrame";
 import { setPresenceActivity } from "@/lib/presence";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
@@ -28,7 +29,7 @@ import { PathyDebrief } from "@/components/shared/PathyDebrief";
 import { QuestionImages } from "@/components/banco/QuestionImages";
 
 export const Route = createFileRoute("/simulador")({
-  component: SimuladorPage,
+  component: () => <QuestionFrame><SimuladorPage/></QuestionFrame>,
   validateSearch: (s: Record<string, unknown>): { modo?: SimMode; banco?: SimBank } => {
     const out: { modo?: SimMode; banco?: SimBank } = {};
     if (s["modo"] === "potenciado" || s["modo"] === "oficial") out.modo = s["modo"];
@@ -793,19 +794,19 @@ function SimuladorPage() {
 
 
   if (!ready) {
-    return <div style={{ position: "fixed", inset: 0, background: "#f5f7fc" }} />;
+    return <div style={{ position: "fixed", inset: 0, background: "var(--fd-panel, #f5f7fc)" }} />;
   }
 
   /* ─── PHASE: WARNING ─── */
   if (phase === "warning") {
     return (
       <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.7)", zIndex: 999, display: "flex", alignItems: "flex-start", justifyContent: "center", padding: 20, overflowY: "auto", fontFamily: "'Manrope', sans-serif" }}>
-        <div style={{ background: "white", borderRadius: 20, padding: 28, maxWidth: 560, width: "100%", boxShadow: "0 24px 60px rgba(0,0,0,0.3)", margin: "auto" }}>
+        <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 20px)", padding: 28, maxWidth: 560, width: "100%", boxShadow: "0 24px 60px rgba(0,0,0,0.3)", margin: "auto" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-            <span style={{ display: "flex", alignItems: "center" }}><Icon n="target" size={40} color="#7A5C1E" /></span>
+            <span style={{ display: "flex", alignItems: "center" }}><Icon n="target" size={40} color="var(--fd-gold, #7A5C1E)" /></span>
             <div>
-              <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.4rem", color: "#081A35", margin: 0 }}>Simulador del examen CIAAC</h1>
-              <p style={{ fontSize: "0.8rem", color: "#4A5872" }}>Lee esto antes de comenzar</p>
+              <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.4rem", color: "var(--fd-text, #081A35)", margin: 0 }}>Simulador del examen CIAAC</h1>
+              <p style={{ fontSize: "0.8rem", color: "var(--fd-muted, #4A5872)" }}>Lee esto antes de comenzar</p>
             </div>
           </div>
 
@@ -820,10 +821,10 @@ function SimuladorPage() {
               const styles: Record<string, React.CSSProperties> = {
                 red: { background: "rgba(231,76,60,0.06)", border: "1px solid rgba(231,76,60,0.15)", color: "#c0392b" },
                 yellow: { background: "rgba(243,156,18,0.06)", border: "1px solid rgba(243,156,18,0.2)", color: "#8a6000" },
-                blue: { background: "rgba(22,61,112,0.06)", border: "1px solid rgba(22,61,112,0.12)", color: "#163D70" },
+                blue: { background: "var(--fd-panel-alt, rgba(22,61,112,0.06))", border: "1px solid var(--fd-border, rgba(22,61,112,0.12))", color: "var(--fd-text, #163D70)" },
               };
               return (
-                <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "12px 14px", borderRadius: 10, fontSize: "0.85rem", lineHeight: 1.5, ...styles[item.color] }}>
+                <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "12px 14px", borderRadius: "var(--fd-radius, 10px)", fontSize: "0.85rem", lineHeight: 1.5, ...styles[item.color] }}>
                   <span style={{ flexShrink: 0, marginTop: 1, display: "flex", alignItems: "center" }}><Icon n={item.icon as FPIconName} size={17} /></span>
                   <span dangerouslySetInnerHTML={{ __html: item.text }} />
                 </div>
@@ -833,7 +834,7 @@ function SimuladorPage() {
 
           {/* Selector de tipo de simulador */}
           <div style={{ marginBottom: 20 }}>
-            <div style={{ fontSize: "0.78rem", fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "#4A5872", marginBottom: 10 }}>Tipo de simulador</div>
+            <div style={{ fontSize: "0.78rem", fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--fd-muted, #4A5872)", marginBottom: 10 }}>Tipo de simulador</div>
             <div style={{ display: "grid", gap: 10 }}>
               {([
                 {
@@ -864,16 +865,16 @@ function SimuladorPage() {
                     aria-pressed={active}
                     style={{
                       textAlign: "left", display: "flex", gap: 12, alignItems: "flex-start",
-                      padding: "13px 15px", borderRadius: 12, cursor: "pointer",
-                      background: active ? "rgba(122,92,30,0.05)" : "white",
+                      padding: "13px 15px", borderRadius: "var(--fd-radius, 12px)", cursor: "pointer",
+                      background: active ? "rgba(122,92,30,0.05)" : "var(--fd-panel, white)",
                       border: active ? "2px solid #7A5C1E" : "2px solid #e6e9f5",
                       fontFamily: "'Manrope', sans-serif",
                     }}
                   >
                     <span style={{ flexShrink: 0, marginTop: 2, display: "flex" }}><Icon n={opt.icon} size={18} color={active ? "#7A5C1E" : "#4A5872"} /></span>
                     <span style={{ display: "block" }}>
-                      <span style={{ display: "block", fontWeight: 800, fontSize: "0.92rem", color: "#081A35" }}>{opt.title}</span>
-                      <span style={{ display: "block", fontSize: "0.8rem", color: "#4A5872", lineHeight: 1.45, marginTop: 2 }}>{opt.desc}</span>
+                      <span style={{ display: "block", fontWeight: 800, fontSize: "0.92rem", color: "var(--fd-text, #081A35)" }}>{opt.title}</span>
+                      <span style={{ display: "block", fontSize: "0.8rem", color: "var(--fd-muted, #4A5872)", lineHeight: 1.45, marginTop: 2 }}>{opt.desc}</span>
                       <span style={{ display: "block", fontSize: "0.74rem", color: "#8a94ab", marginTop: 4 }}>{opt.count.toLocaleString("es-MX")} preguntas disponibles</span>
                     </span>
                   </button>
@@ -883,7 +884,7 @@ function SimuladorPage() {
           </div>
 
 
-          <div style={{ background: "#f8f9ff", borderRadius: 12, padding: 16, marginBottom: 24, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          <div style={{ background: "var(--fd-panel, #f8f9ff)", borderRadius: "var(--fd-radius, 12px)", padding: 16, marginBottom: 24, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
             {[
               { label: "310 preguntas totales" },
               { label: "5 horas límite" },
@@ -898,25 +899,25 @@ function SimuladorPage() {
           </div>
 
           {bankEmpty && (
-            <div style={{ background: "rgba(243,156,18,0.1)", border: "1px solid #f39c12", borderRadius: 10, padding: "12px 16px", fontSize: "0.83rem", color: "#8a6000", marginBottom: 16, display: "flex", alignItems: "flex-start", gap: 8, lineHeight: 1.5 }}>
+            <div style={{ background: "rgba(243,156,18,0.1)", border: "1px solid #f39c12", borderRadius: "var(--fd-radius, 10px)", padding: "12px 16px", fontSize: "0.83rem", color: "#8a6000", marginBottom: 16, display: "flex", alignItems: "flex-start", gap: 8, lineHeight: 1.5 }}>
               <span style={{ display: "flex", flexShrink: 0 }}><Icon n="alert" size={16} /></span>
               <span>El banco de preguntas aún no tiene contenido publicado. Vuelve más tarde para hacer tu simulador.</span>
             </div>
           )}
 
-          <label style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 16, cursor: "pointer", fontSize: "0.84rem", color: "#555", lineHeight: 1.5 }}>
+          <label style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 16, cursor: "pointer", fontSize: "0.84rem", color: "var(--fd-muted, #555)", lineHeight: 1.5 }}>
             <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} style={{ marginTop: 3, accentColor: "#163D70", width: 16, height: 16, flexShrink: 0 }} />
             Entiendo las condiciones y estoy listo para comenzar el simulador.
           </label>
 
           <div style={{ display: "flex", gap: 10 }}>
-            <Link to={exitTo} style={{ flex: 1, padding: 12, background: "white", color: "#4A5872", border: "2px solid #EEE1C5", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Link to={exitTo} style={{ flex: 1, padding: 12, background: "var(--fd-panel, white)", color: "var(--fd-muted, #4A5872)", border: "1px solid var(--fd-border, #EEE1C5)", borderRadius: "var(--fd-radius, 10px)", fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center" }}>
               ← Volver
             </Link>
             <button
               disabled={!agreed || !gate.allowed || bankEmpty}
               onClick={startExam}
-              style={{ flex: 2, padding: 12, background: agreed && gate.allowed && !bankEmpty ? "#7A5C1E" : "#ccc", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: agreed && gate.allowed && !bankEmpty ? "pointer" : "not-allowed", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}
+              style={{ flex: 2, padding: 12, background: agreed && gate.allowed && !bankEmpty ? "#7A5C1E" : "#ccc", color: "white", border: "none", borderRadius: "var(--fd-radius, 10px)", fontSize: "0.88rem", fontWeight: 700, cursor: agreed && gate.allowed && !bankEmpty ? "pointer" : "not-allowed", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}
             >
               <Icon n="target" size={16} /> Comenzar simulador
             </button>
@@ -940,35 +941,35 @@ function SimuladorPage() {
   /* ─── PHASE: RESULT ─── */
   if (phase === "result") {
     return (
-      <div style={{ position: "fixed", inset: 0, background: "#f5f7fc", zIndex: 700, overflowY: "auto", padding: "28px 20px", fontFamily: "'Manrope', sans-serif" }}>
+      <div style={{ position: "fixed", inset: 0, background: "var(--fd-panel, #f5f7fc)", zIndex: 700, overflowY: "auto", padding: "28px 20px", fontFamily: "'Manrope', sans-serif" }}>
         <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}`}</style>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
 
           {/* Header */}
           <div style={{ textAlign: "center", marginBottom: 28 }}>
             <div style={{ display: "inline-block" }}><PathyMark size={84} float /></div>
-            <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.8rem", color: "#081A35", margin: "8px 0 4px" }}>
-              Examen <span style={{ color: passed ? "#2ecc71" : "#7A5C1E" }}>{passed ? "¡Aprobado!" : "entregado"}</span>
+            <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.8rem", color: "var(--fd-text, #081A35)", margin: "8px 0 4px" }}>
+              Examen <span style={{ color: passed ? "#2ecc71" : "var(--fd-gold, #7A5C1E)" }}>{passed ? "¡Aprobado!" : "entregado"}</span>
             </h1>
-            <p style={{ fontSize: "0.9rem", color: "#4A5872" }}>Aquí está tu análisis completo de Pathy</p>
+            <p style={{ fontSize: "0.9rem", color: "var(--fd-muted, #4A5872)" }}>Aquí está tu análisis completo de Pathy</p>
           </div>
 
           {/* Score card */}
-          <div style={{ background: "white", borderRadius: 18, padding: 24, boxShadow: "0 2px 14px rgba(22,61,112,0.08)", marginBottom: 18, textAlign: "center" }}>
+          <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 18px)", padding: 24, boxShadow: "0 2px 14px rgba(22,61,112,0.08)", marginBottom: 18, textAlign: "center" }}>
             <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "3.5rem", fontWeight: 900, lineHeight: 1, marginBottom: 4, color: passed ? "#2ecc71" : "#e74c3c" }}>
               {scorePct}%
             </div>
-            <div style={{ fontSize: "0.85rem", color: "#4A5872", marginBottom: 20 }}>Calificación total del simulador</div>
+            <div style={{ fontSize: "0.85rem", color: "var(--fd-muted, #4A5872)", marginBottom: 20 }}>Calificación total del simulador</div>
             <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
               {[
                 { num: totalCorrect, label: "Correctas", color: "#2ecc71" },
                 { num: TOTAL_QS - totalCorrect, label: "Incorrectas", color: "#e74c3c" },
-                { num: TOTAL_QS, label: "Total", color: "#081A35" },
-                { num: secToHM(timeUsed), label: "Tiempo usado", color: "#163D70" },
+                { num: TOTAL_QS, label: "Total", color: "var(--fd-text, #081A35)" },
+                { num: secToHM(timeUsed), label: "Tiempo usado", color: "var(--fd-text, #163D70)" },
               ].map((s) => (
                 <div key={s.label} style={{ textAlign: "center" }}>
                   <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.5rem", fontWeight: 900, color: s.color }}>{s.num}</div>
-                  <div style={{ fontSize: "0.72rem", color: "#7E90AD" }}>{s.label}</div>
+                  <div style={{ fontSize: "0.72rem", color: "var(--fd-muted, #7E90AD)" }}>{s.label}</div>
                 </div>
               ))}
             </div>
@@ -986,8 +987,8 @@ function SimuladorPage() {
           )}
 
           {/* Por materia */}
-          <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(22,61,112,0.06)", marginBottom: 18 }}>
-            <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#4A5872", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="chart" size={15} /> Resultado por materia</div>
+          <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", padding: 20, boxShadow: "0 2px 10px rgba(22,61,112,0.06)", marginBottom: 18 }}>
+            <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--fd-muted, #4A5872)", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="chart" size={15} /> Resultado por materia</div>
             {MATERIAS.map((m, i) => {
               const pm = result?.porMateria[m.slug];
               const p = pm && pm.total > 0 ? Math.round((pm.correct / pm.total) * 100) : 0;
@@ -995,14 +996,14 @@ function SimuladorPage() {
               const bg = p >= 80 ? "rgba(46,204,113,0.06)" : p >= 70 ? "rgba(243,156,18,0.06)" : "rgba(231,76,60,0.06)";
               const border = p >= 80 ? "rgba(46,204,113,0.2)" : p >= 70 ? "rgba(243,156,18,0.2)" : "rgba(231,76,60,0.2)";
               return (
-                <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", background: bg, border: `1px solid ${border}`, borderRadius: 10, marginBottom: 7, gap: 10, flexWrap: "wrap" }}>
+                <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", background: bg, border: `1px solid ${border}`, borderRadius: "var(--fd-radius, 10px)", marginBottom: 7, gap: 10, flexWrap: "wrap" }}>
                   <div>
-                    <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#081A35", display: "flex", alignItems: "center", gap: 7 }}><Icon n={m.icon} size={15} color="#4A5872" /> {m.name}</div>
-                    <div style={{ fontSize: "0.72rem", color: "#7E90AD" }}>{m.total} preguntas</div>
+                    <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--fd-text, #081A35)", display: "flex", alignItems: "center", gap: 7 }}><Icon n={m.icon} size={15} color="var(--fd-muted, #4A5872)" /> {m.name}</div>
+                    <div style={{ fontSize: "0.72rem", color: "var(--fd-muted, #7E90AD)" }}>{m.total} preguntas</div>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                    <div style={{ width: 100, height: 6, background: "#EEE1C5", borderRadius: 10, overflow: "hidden" }}>
-                      <div style={{ height: "100%", width: `${p}%`, background: color, borderRadius: 10 }} />
+                    <div style={{ width: 100, height: 6, background: "var(--fd-panel, #EEE1C5)", borderRadius: "var(--fd-radius, 10px)", overflow: "hidden" }}>
+                      <div style={{ height: "100%", width: `${p}%`, background: color, borderRadius: "var(--fd-radius, 10px)" }} />
                     </div>
                     <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.1rem", fontWeight: 900, color }}>{p}%</span>
                   </div>
@@ -1012,23 +1013,23 @@ function SimuladorPage() {
           </div>
 
           {/* Review Q sample */}
-          <div style={{ background: "white", borderRadius: 16, padding: 20, boxShadow: "0 2px 10px rgba(22,61,112,0.06)", marginBottom: 24 }}>
-            <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#4A5872", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="sim" size={15} /> Preguntas corregidas</div>
+          <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", padding: 20, boxShadow: "0 2px 10px rgba(22,61,112,0.06)", marginBottom: 24 }}>
+            <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--fd-muted, #4A5872)", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="sim" size={15} /> Preguntas corregidas</div>
             {bankQs.slice(0, 3).map((q, i) => {
               const userAns = questions[i]?.selectedOpt ?? -1;
               const isCorrect = userAns === q.correctIndex;
               return (
-                <div key={i} style={{ background: isCorrect ? "rgba(46,204,113,0.06)" : "rgba(231,76,60,0.05)", border: `1px solid ${isCorrect ? "rgba(46,204,113,0.2)" : "rgba(231,76,60,0.15)"}`, borderRadius: 12, padding: 16, marginBottom: 10 }}>
+                <div key={i} style={{ background: isCorrect ? "rgba(46,204,113,0.06)" : "rgba(231,76,60,0.05)", border: `1px solid ${isCorrect ? "rgba(46,204,113,0.2)" : "rgba(231,76,60,0.15)"}`, borderRadius: "var(--fd-radius, 12px)", padding: 16, marginBottom: 10 }}>
                   <div style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 10 }}>
                     <span style={{ flexShrink: 0, display: "flex", alignItems: "center", marginTop: 1 }}>{isCorrect ? <Icon n="checkCircle" size={17} color="#2ecc71" /> : <Icon n="close" size={17} color="#e74c3c" />}</span>
-                    <span style={{ fontSize: "0.88rem", fontWeight: 600, color: "#081A35", lineHeight: 1.5 }}>{i + 1}. {q.text}</span>
+                    <span style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--fd-text, #081A35)", lineHeight: 1.5 }}>{i + 1}. {q.text}</span>
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 10, paddingLeft: 24 }}>
                     {q.options.map((o, oi) => {
                       const isRight = oi === q.correctIndex;
                       const isUser = oi === userAns;
                       return (
-                        <div key={oi} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 12px", background: isRight ? "rgba(46,204,113,0.1)" : isUser && !isRight ? "rgba(231,76,60,0.08)" : "transparent", border: `1px solid ${isRight ? "#2ecc71" : isUser && !isRight ? "#e74c3c" : "#EEE1C5"}`, borderRadius: 8, fontSize: "0.82rem", color: "#081A35" }}>
+                        <div key={oi} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 12px", background: isRight ? "rgba(46,204,113,0.1)" : isUser && !isRight ? "rgba(231,76,60,0.08)" : "transparent", border: `1px solid ${isRight ? "#2ecc71" : isUser && !isRight ? "#e74c3c" : "#EEE1C5"}`, borderRadius: 8, fontSize: "0.82rem", color: "var(--fd-text, #081A35)" }}>
                           <span>{LETTERS[oi]}</span>
                           <span style={{ flex: 1 }}>{o}</span>
                           {isUser && <span style={{ fontSize: "0.66rem", fontWeight: 700, color: isRight ? "#2ecc71" : "#e74c3c", whiteSpace: "nowrap" }}>Tu respuesta</span>}
@@ -1037,9 +1038,9 @@ function SimuladorPage() {
                       );
                     })}
                   </div>
-                  <div style={{ padding: "10px 12px", background: "rgba(22,61,112,0.06)", borderLeft: "3px solid #163D70", borderRadius: "0 7px 7px 0", fontSize: "0.8rem", color: "#555", lineHeight: 1.5 }}>
+                  <div style={{ padding: "10px 12px", background: "var(--fd-panel-alt, rgba(22,61,112,0.06))", borderLeft: "3px solid #163D70", borderRadius: "0 7px 7px 0", fontSize: "0.8rem", color: "var(--fd-muted, #555)", lineHeight: 1.5 }}>
                     <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="lightbulb" size={14} color="#f39c12" /> {q.explanation}</span>
-                    {q.cite && <div style={{ marginTop: 5, fontSize: "0.72rem", color: "#163D70", fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><Icon n="book" size={13} /> {q.cite}</div>}
+                    {q.cite && <div style={{ marginTop: 5, fontSize: "0.72rem", color: "var(--fd-text, #163D70)", fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><Icon n="book" size={13} /> {q.cite}</div>}
                   </div>
                 </div>
               );
@@ -1047,16 +1048,16 @@ function SimuladorPage() {
           </div>
 
           <div style={{ marginBottom: 18 }}>
-            <button onClick={() => setPhase("review")} style={{ width: "100%", padding: 14, background: "#163D70", color: "white", border: "none", borderRadius: 12, fontSize: "0.95rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
+            <button onClick={() => setPhase("review")} style={{ width: "100%", padding: 14, background: "#163D70", color: "white", border: "none", borderRadius: "var(--fd-radius, 12px)", fontSize: "0.95rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
               <Icon n="doc" size={17} /> Revisar examen completo
             </button>
           </div>
 
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", paddingBottom: 40 }}>
-            <button onClick={resetSimulator} style={{ flex: 1, padding: 13, background: "white", color: "#163D70", border: "2px solid #163D70", borderRadius: 11, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
+            <button onClick={resetSimulator} style={{ flex: 1, padding: 13, background: "var(--fd-panel, white)", color: "var(--fd-text, #163D70)", border: "2px solid #163D70", borderRadius: "var(--fd-radius, 11px)", fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
               <Icon n="refresh" size={16} /> Repetir simulador
             </button>
-            <Link to="/dashboard" style={{ flex: 1, padding: 13, background: "#7A5C1E", color: "white", border: "none", borderRadius: 11, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
+            <Link to="/dashboard" style={{ flex: 1, padding: 13, background: "#7A5C1E", color: "white", border: "none", borderRadius: "var(--fd-radius, 11px)", fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
               <Icon n="home" size={16} /> Ir al inicio
             </Link>
           </div>
@@ -1074,7 +1075,7 @@ function SimuladorPage() {
     const mi = questions[reviewCurrent]?.materia ?? 0;
 
     return (
-      <div style={{ position: "fixed", inset: 0, zIndex: 800, background: "#f5f7fc", display: "flex", flexDirection: "column", fontFamily: "'Manrope', sans-serif" }}>
+      <div style={{ position: "fixed", inset: 0, zIndex: 800, background: "var(--fd-panel, #f5f7fc)", display: "flex", flexDirection: "column", fontFamily: "'Manrope', sans-serif" }}>
         {/* Review topbar */}
         <div style={{ height: 56, background: "#081A35", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px", flexShrink: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -1083,18 +1084,18 @@ function SimuladorPage() {
             </button>
             <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1rem", color: "white", fontWeight: 700 }}>Revisión del examen</span>
           </div>
-          <span style={{ background: "#C7A052", color: "#7A5C1E", padding: "4px 12px", borderRadius: 20, fontSize: "0.75rem", fontWeight: 700, display: "flex", alignItems: "center", gap: 5 }}><Icon n="doc" size={14} /> Modo revisión</span>
+          <span style={{ background: "#C7A052", color: "var(--fd-gold, #7A5C1E)", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.75rem", fontWeight: 700, display: "flex", alignItems: "center", gap: 5 }}><Icon n="doc" size={14} /> Modo revisión</span>
         </div>
 
         {/* Review body */}
         <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
           {/* Left list */}
-          <div style={{ width: 200, flexShrink: 0, background: "white", borderRight: "1px solid rgba(22,61,112,0.08)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
-            <div style={{ padding: "10px 14px", borderBottom: "1px solid #EEE1C5", background: "#f8f9ff" }}>
-              <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#081A35", marginBottom: 4 }}>Preguntas del examen</div>
+          <div style={{ width: 200, flexShrink: 0, background: "var(--fd-panel, white)", borderRight: "1px solid rgba(22,61,112,0.08)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <div style={{ padding: "10px 14px", borderBottom: "1px solid var(--fd-border, #EEE1C5)", background: "var(--fd-panel, #f8f9ff)" }}>
+              <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 4 }}>Preguntas del examen</div>
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.62rem", color: "#4A5872" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#2ecc71" }} />Correcta</div>
-                <div style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.62rem", color: "#4A5872" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#e74c3c" }} />Incorrecta</div>
+                <div style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.62rem", color: "var(--fd-muted, #4A5872)" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#2ecc71" }} />Correcta</div>
+                <div style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.62rem", color: "var(--fd-muted, #4A5872)" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#e74c3c" }} />Incorrecta</div>
               </div>
             </div>
             <div style={{ flex: 1, overflowY: "auto" }}>
@@ -1102,7 +1103,7 @@ function SimuladorPage() {
                 const offset = materiaOffset(mi);
                 return (
                   <div key={mi}>
-                    <div style={{ padding: "6px 12px", background: "#f8f9ff", borderBottom: "1px solid rgba(22,61,112,0.06)", fontSize: "0.68rem", fontWeight: 700, color: "#163D70", textTransform: "uppercase", letterSpacing: "0.4px", display: "flex", alignItems: "center", gap: 5 }}>
+                    <div style={{ padding: "6px 12px", background: "var(--fd-panel, #f8f9ff)", borderBottom: "1px solid var(--fd-border, rgba(22,61,112,0.06))", fontSize: "0.68rem", fontWeight: 700, color: "var(--fd-text, #163D70)", textTransform: "uppercase", letterSpacing: "0.4px", display: "flex", alignItems: "center", gap: 5 }}>
                       <Icon n={m.icon} size={12} /> {m.name}
                     </div>
                     {Array.from({ length: m.total }, (_, i) => {
@@ -1114,12 +1115,12 @@ function SimuladorPage() {
                         <div
                           key={idx}
                           onClick={() => setReviewCurrent(idx)}
-                          style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 12px 5px 16px", cursor: "pointer", background: active ? "rgba(22,61,112,0.06)" : "transparent", borderLeft: `3px solid ${correct ? "#2ecc71" : "#e74c3c"}`, transition: "background 0.2s" }}
+                          style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 12px 5px 16px", cursor: "pointer", background: active ? "var(--fd-panel-alt, rgba(22,61,112,0.06))" : "transparent", borderLeft: `3px solid ${correct ? "#2ecc71" : "#e74c3c"}`, transition: "background 0.2s" }}
                         >
                           <div style={{ width: 17, height: 17, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: correct ? "#2ecc71" : "#e74c3c", color: "white" }}>
                             {correct ? <Icon n="check" size={11} sw={2.4} /> : <Icon n="close" size={11} sw={2.4} />}
                           </div>
-                          <span style={{ fontSize: "0.73rem", color: "#555" }}>Pregunta {i + 1}</span>
+                          <span style={{ fontSize: "0.73rem", color: "var(--fd-muted, #555)" }}>Pregunta {i + 1}</span>
                         </div>
                       );
                     })}
@@ -1132,75 +1133,75 @@ function SimuladorPage() {
           {/* Review content */}
           <div style={{ flex: 1, overflowY: "auto", padding: "20px 16px", display: "flex", flexDirection: "column", alignItems: "center" }}>
             <div style={{ maxWidth: 680, width: "100%" }}>
-              <div style={{ background: "white", borderRadius: 16, padding: 24, boxShadow: "0 2px 14px rgba(22,61,112,0.07)", marginBottom: 16 }}>
+              <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", padding: 24, boxShadow: "0 2px 14px rgba(22,61,112,0.07)", marginBottom: 16 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                     <span style={{ display: "flex", alignItems: "center" }}>{isCorrect ? <Icon n="checkCircle" size={20} color="#2ecc71" /> : <Icon n="close" size={20} color="#e74c3c" />}</span>
-                    <span style={{ background: "rgba(22,61,112,0.07)", color: "#163D70", padding: "4px 12px", borderRadius: 20, fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n={MATERIAS[mi].icon} size={13} /> {MATERIAS[mi].name}</span>
+                    <span style={{ background: "var(--fd-panel-alt, rgba(22,61,112,0.07))", color: "var(--fd-text, #163D70)", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n={MATERIAS[mi].icon} size={13} /> {MATERIAS[mi].name}</span>
                     {userAns === -1 && (
-                      <span style={{ background: "rgba(243,156,18,0.1)", color: "#8a6000", padding: "4px 12px", borderRadius: 20, fontSize: "0.72rem", fontWeight: 700 }}>Sin responder</span>
+                      <span style={{ background: "rgba(243,156,18,0.1)", color: "#8a6000", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.72rem", fontWeight: 700 }}>Sin responder</span>
                     )}
                   </div>
-                  <span style={{ fontSize: "0.76rem", color: "#7E90AD" }}>Pregunta {reviewCurrent + 1} / {TOTAL_QS}</span>
+                  <span style={{ fontSize: "0.76rem", color: "var(--fd-muted, #7E90AD)" }}>Pregunta {reviewCurrent + 1} / {TOTAL_QS}</span>
                 </div>
 
                 {/* Veredicto de la pregunta */}
                 {userAns === -1 ? (
-                  <div style={{ display: "flex", alignItems: "flex-start", gap: 9, padding: "11px 14px", background: "rgba(243,156,18,0.08)", border: "1px solid rgba(243,156,18,0.35)", borderRadius: 10, marginBottom: 16, fontSize: "0.84rem", color: "#555", lineHeight: 1.5 }}>
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: 9, padding: "11px 14px", background: "rgba(243,156,18,0.08)", border: "1px solid rgba(243,156,18,0.35)", borderRadius: "var(--fd-radius, 10px)", marginBottom: 16, fontSize: "0.84rem", color: "var(--fd-muted, #555)", lineHeight: 1.5 }}>
                     <span style={{ display: "flex", flexShrink: 0, marginTop: 1 }}><Icon n="alert" size={17} color="#f39c12" /></span>
                     <span><b style={{ color: "#8a6000" }}>Sin responder.</b> No marcaste ninguna opción; la respuesta correcta está resaltada en <b style={{ color: "#2ecc71" }}>verde</b>.</span>
                   </div>
                 ) : isCorrect ? (
-                  <div style={{ display: "flex", alignItems: "flex-start", gap: 9, padding: "11px 14px", background: "rgba(46,204,113,0.1)", border: "1px solid rgba(46,204,113,0.4)", borderRadius: 10, marginBottom: 16, fontSize: "0.84rem", color: "#555", lineHeight: 1.5 }}>
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: 9, padding: "11px 14px", background: "rgba(46,204,113,0.1)", border: "1px solid rgba(46,204,113,0.4)", borderRadius: "var(--fd-radius, 10px)", marginBottom: 16, fontSize: "0.84rem", color: "var(--fd-muted, #555)", lineHeight: 1.5 }}>
                     <span style={{ display: "flex", flexShrink: 0, marginTop: 1 }}><Icon n="checkCircle" size={17} color="#2ecc71" /></span>
                     <span><b style={{ color: "#2ecc71" }}>¡Correcto!</b> Seleccionaste la respuesta correcta. ¡Sigue así, aviador!</span>
                   </div>
                 ) : (
-                  <div style={{ display: "flex", alignItems: "flex-start", gap: 9, padding: "11px 14px", background: "rgba(231,76,60,0.07)", border: "1px solid rgba(231,76,60,0.35)", borderRadius: 10, marginBottom: 16, fontSize: "0.84rem", color: "#555", lineHeight: 1.5 }}>
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: 9, padding: "11px 14px", background: "rgba(231,76,60,0.07)", border: "1px solid rgba(231,76,60,0.35)", borderRadius: "var(--fd-radius, 10px)", marginBottom: 16, fontSize: "0.84rem", color: "var(--fd-muted, #555)", lineHeight: 1.5 }}>
                     <span style={{ display: "flex", flexShrink: 0, marginTop: 1 }}><Icon n="close" size={17} color="#e74c3c" /></span>
                     <span><b style={{ color: "#e74c3c" }}>Incorrecto.</b> Tu respuesta está marcada en <b style={{ color: "#e74c3c" }}>rojo</b> y la correcta en <b style={{ color: "#2ecc71" }}>verde</b>.</span>
                   </div>
                 )}
 
-                <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: "0.95rem", color: "#081A35", lineHeight: 1.5, marginBottom: 18 }}>{reviewQ.text}</p>
+                <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: "0.95rem", color: "var(--fd-text, #081A35)", lineHeight: 1.5, marginBottom: 18 }}>{reviewQ.text}</p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 9, marginBottom: 18 }}>
                   {reviewQ.options.map((o, oi) => {
                     const isRight = oi === reviewQ.correctIndex;
                     const isUser = oi === userAns;
                     return (
-                      <div key={oi} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", background: isRight ? "rgba(46,204,113,0.08)" : isUser ? "rgba(231,76,60,0.06)" : "#f8f9ff", border: `2px solid ${isRight ? "#2ecc71" : isUser ? "#e74c3c" : "#EEE1C5"}`, borderRadius: 11, boxShadow: isUser && isRight ? "0 4px 14px rgba(46,204,113,0.22)" : "none", flexWrap: "wrap" }}>
-                        <div style={{ width: 28, height: 28, borderRadius: "50%", background: isRight ? "#2ecc71" : isUser ? "#e74c3c" : "#EEE1C5", color: isRight || isUser ? "white" : "#4A5872", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, flexShrink: 0, boxShadow: isUser ? `0 0 0 2px white, 0 0 0 4px ${isRight ? "#2ecc71" : "#e74c3c"}` : "none" }}>
+                      <div key={oi} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", background: isRight ? "rgba(46,204,113,0.08)" : isUser ? "rgba(231,76,60,0.06)" : "var(--fd-panel, #f8f9ff)", border: `2px solid ${isRight ? "#2ecc71" : isUser ? "#e74c3c" : "#EEE1C5"}`, borderRadius: "var(--fd-radius, 11px)", boxShadow: isUser && isRight ? "0 4px 14px rgba(46,204,113,0.22)" : "none", flexWrap: "wrap" }}>
+                        <div style={{ width: 28, height: 28, borderRadius: "50%", background: isRight ? "#2ecc71" : isUser ? "#e74c3c" : "var(--fd-panel, #EEE1C5)", color: isRight || isUser ? "white" : "var(--fd-muted, #4A5872)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, flexShrink: 0, boxShadow: isUser ? `0 0 0 2px white, 0 0 0 4px ${isRight ? "#2ecc71" : "#e74c3c"}` : "none" }}>
                           {LETTERS[oi]}
                         </div>
-                        <span style={{ fontSize: "0.88rem", color: "#081A35", flex: 1, minWidth: 160 }}>{o}</span>
-                        {isUser && isRight && <span style={{ fontSize: "0.72rem", color: "white", background: "#2ecc71", padding: "3px 10px", borderRadius: 20, fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="checkCircle" size={13} /> Tu respuesta · ¡Correcta!</span>}
+                        <span style={{ fontSize: "0.88rem", color: "var(--fd-text, #081A35)", flex: 1, minWidth: 160 }}>{o}</span>
+                        {isUser && isRight && <span style={{ fontSize: "0.72rem", color: "white", background: "#2ecc71", padding: "3px 10px", borderRadius: "var(--fd-radius, 20px)", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="checkCircle" size={13} /> Tu respuesta · ¡Correcta!</span>}
                         {isRight && !isUser && <span style={{ fontSize: "0.72rem", color: "#2ecc71", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="check" size={13} /> Respuesta correcta</span>}
-                        {isUser && !isRight && <span style={{ fontSize: "0.72rem", color: "white", background: "#e74c3c", padding: "3px 10px", borderRadius: 20, fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="close" size={13} /> Tu respuesta</span>}
+                        {isUser && !isRight && <span style={{ fontSize: "0.72rem", color: "white", background: "#e74c3c", padding: "3px 10px", borderRadius: "var(--fd-radius, 20px)", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="close" size={13} /> Tu respuesta</span>}
                       </div>
                     );
                   })}
                 </div>
 
-                <div style={{ padding: "14px 16px", background: "rgba(22,61,112,0.06)", borderLeft: "4px solid #163D70", borderRadius: "0 10px 10px 0", fontSize: "0.85rem", color: "#555", lineHeight: 1.6, marginBottom: 14 }}>
+                <div style={{ padding: "14px 16px", background: "var(--fd-panel-alt, rgba(22,61,112,0.06))", borderLeft: "4px solid #163D70", borderRadius: "0 10px 10px 0", fontSize: "0.85rem", color: "var(--fd-muted, #555)", lineHeight: 1.6, marginBottom: 14 }}>
                   <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="lightbulb" size={15} color="#f39c12" /> {reviewQ.explanation}</span>
-                  {reviewQ.cite && <div style={{ marginTop: 6, fontSize: "0.74rem", color: "#163D70", fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><Icon n="book" size={13} /> {reviewQ.cite}</div>}
+                  {reviewQ.cite && <div style={{ marginTop: 6, fontSize: "0.74rem", color: "var(--fd-text, #163D70)", fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><Icon n="book" size={13} /> {reviewQ.cite}</div>}
                 </div>
 
-                <button onClick={openYaris} style={{ width: "100%", padding: 11, background: "linear-gradient(135deg,#163D70,#5A86CB)", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
+                <button onClick={openYaris} style={{ width: "100%", padding: 11, background: "linear-gradient(135deg,#163D70,#5A86CB)", color: "white", border: "none", borderRadius: "var(--fd-radius, 10px)", fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
                   <YarisAvatar size={20} /> Explícamelo Yaris
                 </button>
               </div>
 
               <div style={{ display: "flex", gap: 10 }}>
-                <button onClick={() => setReviewCurrent((r) => Math.max(0, r - 1))} style={{ flex: 1, padding: 11, background: "white", color: "#4A5872", border: "2px solid #EEE1C5", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>← Anterior</button>
-                <button onClick={() => setReviewCurrent((r) => Math.min(TOTAL_QS - 1, r + 1))} style={{ flex: 1, padding: 11, background: "#163D70", color: "white", border: "none", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Siguiente →</button>
+                <button onClick={() => setReviewCurrent((r) => Math.max(0, r - 1))} style={{ flex: 1, padding: 11, background: "var(--fd-panel, white)", color: "var(--fd-muted, #4A5872)", border: "1px solid var(--fd-border, #EEE1C5)", borderRadius: "var(--fd-radius, 10px)", fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>← Anterior</button>
+                <button onClick={() => setReviewCurrent((r) => Math.min(TOTAL_QS - 1, r + 1))} style={{ flex: 1, padding: 11, background: "#163D70", color: "white", border: "none", borderRadius: "var(--fd-radius, 10px)", fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>Siguiente →</button>
               </div>
             </div>
           </div>
 
           {/* Yaris panel */}
-          <div style={isMobile && yarisOpen ? { position: "fixed", inset: 0, zIndex: 200, width: "100%", display: "flex", flexDirection: "column", background: "white" } : { width: yarisOpen ? 340 : 0, overflow: "hidden", flexShrink: 0, background: "white", borderLeft: yarisOpen ? "1px solid rgba(22,61,112,0.1)" : "none", display: "flex", flexDirection: "column", transition: "width 0.35s ease" }}>
+          <div style={isMobile && yarisOpen ? { position: "fixed", inset: 0, zIndex: 200, width: "100%", display: "flex", flexDirection: "column", background: "var(--fd-panel, white)" } : { width: yarisOpen ? 340 : 0, overflow: "hidden", flexShrink: 0, background: "var(--fd-panel, white)", borderLeft: yarisOpen ? "1px solid rgba(22,61,112,0.1)" : "none", display: "flex", flexDirection: "column", transition: "width 0.35s ease" }}>
             <YarisPanel
               msgs={yarisMsgs}
               typing={yarisTyping}
@@ -1220,7 +1221,7 @@ function SimuladorPage() {
 
   /* ─── PHASE: EXAM ─── */
   return (
-    <div style={{ fontFamily: "'Manrope', sans-serif", background: "#f5f7fc", color: "#081A35", height: "100vh", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif", background: "var(--fd-panel, #f5f7fc)", color: "var(--fd-text, #081A35)", height: "100vh", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <style>{`
         @keyframes sim-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         @keyframes sim-pop { 0% { transform: scale(0.85); } 60% { transform: scale(1.08); } 100% { transform: scale(1); } }
@@ -1252,7 +1253,7 @@ function SimuladorPage() {
           <button onClick={() => setLeftPanelOpen((o) => !o)} aria-label="Ver lista de preguntas" className="md:hidden" style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "6px 10px", borderRadius: 7, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", minHeight: 40 }}>
             <Icon n="list" size={15} /> Preguntas
           </button>
-          <span style={{ background: "#7A5C1E", color: "white", padding: "4px 12px", borderRadius: 20, fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", display: "inline-flex", alignItems: "center", gap: 5, flexShrink: 0 }}><Icon n="target" size={13} /> Simulador</span>
+          <span style={{ background: "#7A5C1E", color: "white", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", display: "inline-flex", alignItems: "center", gap: 5, flexShrink: 0 }}><Icon n="target" size={13} /> Simulador</span>
           <span className="hidden md:block" style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1rem", color: "white", fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Examen General de Egreso — Piloto Comercial</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
@@ -1264,7 +1265,7 @@ function SimuladorPage() {
               display: "flex", alignItems: "center", gap: 10,
               background: timerDanger ? "rgba(231,76,60,0.18)" : timerWarning ? "rgba(243,156,18,0.15)" : "rgba(255,255,255,0.1)",
               border: `1px solid ${timerDanger ? "rgba(231,76,60,0.5)" : timerWarning ? "rgba(243,156,18,0.4)" : "rgba(255,255,255,0.15)"}`,
-              borderRadius: 12, padding: "5px 12px 5px 8px", transition: "background 0.3s, border 0.3s",
+              borderRadius: "var(--fd-radius, 12px)", padding: "5px 12px 5px 8px", transition: "background 0.3s, border 0.3s",
             }}
           >
             <svg width={30} height={30} viewBox="0 0 36 36" aria-hidden="true" style={{ flexShrink: 0 }}>
@@ -1294,7 +1295,7 @@ function SimuladorPage() {
             aria-label="Abrir calculadora"
             aria-expanded={calcOpen}
             title="Calculadora (C)"
-            style={{ background: calcOpen ? "#C7A052" : "rgba(255,255,255,0.1)", border: `1px solid ${calcOpen ? "#C7A052" : "rgba(255,255,255,0.2)"}`, color: calcOpen ? "#081A35" : "white", padding: "8px 12px", borderRadius: 8, fontSize: "0.8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5, minHeight: 40, transition: "all 0.2s" }}
+            style={{ background: calcOpen ? "#C7A052" : "rgba(255,255,255,0.1)", border: `1px solid ${calcOpen ? "#C7A052" : "rgba(255,255,255,0.2)"}`, color: calcOpen ? "var(--fd-text, #081A35)" : "white", padding: "8px 12px", borderRadius: 8, fontSize: "0.8rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 5, minHeight: 40, transition: "all 0.2s" }}
           >
             <Icon n="gauge" size={15} /> <span className="hidden sm:inline">Calculadora</span>
           </button>
@@ -1320,7 +1321,7 @@ function SimuladorPage() {
       </div>
 
       {/* Progress bar */}
-      <div className="sim-progress-shimmer" style={{ background: "rgba(8,26,53,0.08)", height: 5, flexShrink: 0, position: "relative" }} role="progressbar" aria-valuenow={Math.round(progressPct)} aria-valuemin={0} aria-valuemax={100} aria-label="Progreso del examen">
+      <div className="sim-progress-shimmer" style={{ background: "var(--fd-panel-alt, rgba(8,26,53,0.08))", height: 5, flexShrink: 0, position: "relative" }} role="progressbar" aria-valuenow={Math.round(progressPct)} aria-valuemin={0} aria-valuemax={100} aria-label="Progreso del examen">
         <div style={{ height: "100%", background: "linear-gradient(90deg, #C7A052, #EEE1C5)", width: `${progressPct}%`, transition: "width 0.5s ease" }} />
         <div className="sim-shimmer-bar" />
       </div>
@@ -1332,14 +1333,14 @@ function SimuladorPage() {
         {/* Left panel (desktop) */}
         <div
           className="hidden md:flex flex-col"
-          style={{ width: 260, flexShrink: 0, background: "white", borderRight: "1px solid rgba(22,61,112,0.08)", overflow: "hidden" }}
+          style={{ width: 260, flexShrink: 0, background: "var(--fd-panel, white)", borderRight: "1px solid rgba(22,61,112,0.08)", overflow: "hidden" }}
         >
           <LeftPanel questions={questions} current={current} expandedMaterias={expandedMaterias} onToggleMateria={(mi) => setExpandedMaterias((s) => { const n = new Set(s); if (n.has(mi)) { n.delete(mi); } else { n.add(mi); } return n; })} onSelectQ={setCurrent} answeredCount={answeredCount} />
         </div>
 
         {/* Left panel (mobile overlay) */}
         {leftPanelOpen && (
-          <div className="md:hidden" style={{ position: "fixed", top: 60, left: 0, bottom: 0, zIndex: 80, width: 260, background: "white", boxShadow: "4px 0 20px rgba(0,0,0,0.2)", display: "flex", flexDirection: "column" }}>
+          <div className="md:hidden" style={{ position: "fixed", top: 60, left: 0, bottom: 0, zIndex: 80, width: 260, background: "var(--fd-panel, white)", boxShadow: "4px 0 20px rgba(0,0,0,0.2)", display: "flex", flexDirection: "column" }}>
             <LeftPanel questions={questions} current={current} expandedMaterias={expandedMaterias} onToggleMateria={(mi) => setExpandedMaterias((s) => { const n = new Set(s); if (n.has(mi)) { n.delete(mi); } else { n.add(mi); } return n; })} onSelectQ={(i) => { setCurrent(i); setLeftPanelOpen(false); }} answeredCount={answeredCount} />
           </div>
         )}
@@ -1349,9 +1350,9 @@ function SimuladorPage() {
         <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
           <div style={{ flex: 1, overflowY: "auto", padding: 28, display: "flex", flexDirection: "column", alignItems: "center" }} className="sm:p-7 p-4">
 
-            <div key={current} className="sim-q-card" style={{ background: "white", borderRadius: 16, padding: 28, maxWidth: 700, width: "100%", boxShadow: "0 2px 14px rgba(22,61,112,0.07)" }}>
+            <div key={current} className="sim-q-card" style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", padding: 28, maxWidth: 700, width: "100%", boxShadow: "0 2px 14px rgba(22,61,112,0.07)" }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 18, gap: 10, flexWrap: "wrap" }}>
-                <div style={{ background: "rgba(22,61,112,0.07)", color: "#163D70", padding: "4px 12px", borderRadius: 20, fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 5 }}>
+                <div style={{ background: "var(--fd-panel-alt, rgba(22,61,112,0.07))", color: "var(--fd-text, #163D70)", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 5 }}>
                   <Icon n={MATERIAS[currentQ.materia].icon} size={14} /> {MATERIAS[currentQ.materia].name}
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -1359,15 +1360,15 @@ function SimuladorPage() {
                     onClick={toggleFlag}
                     aria-pressed={currentQ.flagged}
                     title="Marcar (F)"
-                    style={{ display: "flex", alignItems: "center", gap: 5, padding: "6px 12px", border: `1px solid ${currentQ.flagged ? "#f39c12" : "#EEE1C5"}`, borderRadius: 7, background: currentQ.flagged ? "rgba(243,156,18,0.08)" : "white", fontSize: "0.76rem", fontWeight: 600, color: currentQ.flagged ? "#f39c12" : "#4A5872", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s", minHeight: 36 }}
+                    style={{ display: "flex", alignItems: "center", gap: 5, padding: "6px 12px", border: `1px solid ${currentQ.flagged ? "#f39c12" : "#EEE1C5"}`, borderRadius: 7, background: currentQ.flagged ? "rgba(243,156,18,0.08)" : "var(--fd-panel, white)", fontSize: "0.76rem", fontWeight: 600, color: currentQ.flagged ? "#f39c12" : "var(--fd-muted, #4A5872)", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s", minHeight: 36 }}
                   >
                     <Icon n="flag" size={14} /> {currentQ.flagged ? "Marcada" : "Marcar para revisar"}
                   </button>
-                  <span style={{ fontSize: "0.76rem", color: "#7E90AD", fontFamily: "'JetBrains Mono', ui-monospace, monospace" }}>{current + 1} / {TOTAL_QS}</span>
+                  <span style={{ fontSize: "0.76rem", color: "var(--fd-muted, #7E90AD)", fontFamily: "'JetBrains Mono', ui-monospace, monospace" }}>{current + 1} / {TOTAL_QS}</span>
                 </div>
               </div>
 
-              <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.2rem", color: "#081A35", lineHeight: 1.5, marginBottom: 24 }}>
+              <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.2rem", color: "var(--fd-text, #081A35)", lineHeight: 1.5, marginBottom: 24 }}>
                 {examQ?.text ?? ""}
               </p>
 
@@ -1388,9 +1389,9 @@ function SimuladorPage() {
                       className="sim-opt"
                       style={{
                         display: "flex", alignItems: "center", gap: 14, padding: "14px 18px",
-                        background: selected ? "rgba(22,61,112,0.09)" : "#f8f9ff",
+                        background: selected ? "var(--fd-panel-alt, rgba(22,61,112,0.09))" : "var(--fd-panel, #f8f9ff)",
                         border: `2px solid ${selected ? "#163D70" : "#EEE1C5"}`,
-                        borderRadius: 12, cursor: "pointer",
+                        borderRadius: "var(--fd-radius, 12px)", cursor: "pointer",
                         transition: "background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s",
                         userSelect: "none", fontFamily: "'Manrope', sans-serif", minHeight: 56, width: "100%",
                       }}
@@ -1402,37 +1403,37 @@ function SimuladorPage() {
                           width: 30, height: 30, borderRadius: "50%",
                           display: "flex", alignItems: "center", justifyContent: "center",
                           fontSize: "0.8rem", fontWeight: 700, flexShrink: 0,
-                          background: selected ? "#163D70" : "#EEE1C5",
-                          color: selected ? "white" : "#4A5872",
+                          background: selected ? "#163D70" : "var(--fd-panel, #EEE1C5)",
+                          color: selected ? "white" : "var(--fd-muted, #4A5872)",
                         }}
                       >
                         {selected ? <Icon n="check" size={16} /> : LETTERS[oi]}
                       </div>
-                      <div style={{ fontSize: "0.9rem", color: "#081A35", lineHeight: 1.4, flex: 1, textAlign: "left" }}>{opt}</div>
+                      <div style={{ fontSize: "0.9rem", color: "var(--fd-text, #081A35)", lineHeight: 1.4, flex: 1, textAlign: "left" }}>{opt}</div>
                     </button>
                   );
                 })}
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 14, fontSize: "0.72rem", color: "#7E90AD", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 14, fontSize: "0.72rem", color: "var(--fd-muted, #7E90AD)", flexWrap: "wrap" }}>
                 <span style={{ display: "flex", alignItems: "center" }}><Icon n="lightbulb" size={14} /></span>
-                <span>Atajos: <kbd style={{ background: "#f2f4fa", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>1-4</kbd> respuesta · <kbd style={{ background: "#f2f4fa", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>←/→</kbd> navegar · <kbd style={{ background: "#f2f4fa", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>F</kbd> marcar</span>
+                <span>Atajos: <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>1-4</kbd> respuesta · <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>←/→</kbd> navegar · <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>F</kbd> marcar</span>
               </div>
             </div>
 
 
             {/* Nav */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 700, width: "100%", marginTop: 16, gap: 10 }}>
-              <button onClick={() => setCurrent((c) => Math.max(0, c - 1))} disabled={current === 0} style={{ padding: "11px 20px", background: "white", color: current === 0 ? "#ccc" : "#4A5872", border: "2px solid #EEE1C5", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: current === 0 ? "not-allowed" : "pointer", fontFamily: "'Manrope', sans-serif", opacity: current === 0 ? 0.4 : 1 }}>
+              <button onClick={() => setCurrent((c) => Math.max(0, c - 1))} disabled={current === 0} style={{ padding: "11px 20px", background: "var(--fd-panel, white)", color: current === 0 ? "#ccc" : "var(--fd-muted, #4A5872)", border: "1px solid var(--fd-border, #EEE1C5)", borderRadius: "var(--fd-radius, 10px)", fontSize: "0.85rem", fontWeight: 700, cursor: current === 0 ? "not-allowed" : "pointer", fontFamily: "'Manrope', sans-serif", opacity: current === 0 ? 0.4 : 1 }}>
                 ← Anterior
               </button>
-              <div style={{ fontSize: "0.8rem", color: "#7E90AD", textAlign: "center" }}>Pregunta {current + 1} de {TOTAL_QS}</div>
+              <div style={{ fontSize: "0.8rem", color: "var(--fd-muted, #7E90AD)", textAlign: "center" }}>Pregunta {current + 1} de {TOTAL_QS}</div>
               {!isLast ? (
-                <button onClick={() => setCurrent((c) => Math.min(TOTAL_QS - 1, c + 1))} style={{ padding: "11px 20px", background: "#163D70", color: "white", border: "none", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
+                <button onClick={() => setCurrent((c) => Math.min(TOTAL_QS - 1, c + 1))} style={{ padding: "11px 20px", background: "#163D70", color: "white", border: "none", borderRadius: "var(--fd-radius, 10px)", fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
                   Siguiente →
                 </button>
               ) : (
-                <button onClick={() => setConfirmOpen(true)} style={{ padding: "11px 24px", background: "#7A5C1E", color: "white", border: "none", borderRadius: 10, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 6 }}>
+                <button onClick={() => setConfirmOpen(true)} style={{ padding: "11px 24px", background: "#7A5C1E", color: "white", border: "none", borderRadius: "var(--fd-radius, 10px)", fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", gap: 6 }}>
                   Entregar examen <Icon n="check" size={15} />
                 </button>
               )}
@@ -1450,7 +1451,7 @@ function SimuladorPage() {
           style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 500, display: "flex", alignItems: "flex-end", justifyContent: "flex-end", padding: "80px 20px 20px", animation: "sim-fade-in 0.2s ease-out" }}
           onClick={(e) => { if (e.target === e.currentTarget) setCalcOpen(false); }}
         >
-          <div style={{ background: "linear-gradient(160deg, #081A35, #1a2b48)", borderRadius: 16, padding: 14, width: 240, boxShadow: "0 20px 40px rgba(0,0,0,0.4)", animation: "sim-pop 0.25s ease-out" }}>
+          <div style={{ background: "linear-gradient(160deg, #081A35, #1a2b48)", borderRadius: "var(--fd-radius, 16px)", padding: 14, width: 240, boxShadow: "0 20px 40px rgba(0,0,0,0.4)", animation: "sim-pop 0.25s ease-out" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
               <div style={{ fontSize: "0.65rem", fontWeight: 700, color: "rgba(255,255,255,0.55)", textTransform: "uppercase", letterSpacing: "1px", display: "inline-flex", alignItems: "center", gap: 5 }}>
                 <Icon n="gauge" size={12} /> Calculadora
@@ -1459,7 +1460,7 @@ function SimuladorPage() {
                 <Icon n="close" size={13} />
               </button>
             </div>
-            <div style={{ background: "rgba(0,0,0,0.25)", borderRadius: 10, padding: "10px 14px", marginBottom: 12, textAlign: "right" }}>
+            <div style={{ background: "rgba(0,0,0,0.25)", borderRadius: "var(--fd-radius, 10px)", padding: "10px 14px", marginBottom: 12, textAlign: "right" }}>
               <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", minHeight: 16, marginBottom: 2, fontFamily: "'JetBrains Mono', ui-monospace, monospace" }}>{calc.expr || "\u00A0"}</div>
               <div style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "1.75rem", fontWeight: 800, color: "white", wordBreak: "break-all", lineHeight: 1.1 }}>{calc.display}</div>
             </div>
@@ -1506,24 +1507,24 @@ function SimuladorPage() {
       {/* Confirm finish modal */}
       {confirmOpen && (
         <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 600, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
-          <div style={{ background: "white", borderRadius: 18, padding: 32, maxWidth: 440, width: "100%" }}>
+          <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 18px)", padding: 32, maxWidth: 440, width: "100%" }}>
             <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.3rem", marginBottom: 8 }}>¿Entregar el examen?</h3>
-            <p style={{ fontSize: "0.88rem", color: "#666", lineHeight: 1.6, marginBottom: 20 }}>Una vez que entregues no podrás modificar tus respuestas. Revisa que hayas respondido todas las preguntas que puedas.</p>
+            <p style={{ fontSize: "0.88rem", color: "var(--fd-muted, #666)", lineHeight: 1.6, marginBottom: 20 }}>Una vez que entregues no podrás modificar tus respuestas. Revisa que hayas respondido todas las preguntas que puedas.</p>
             <div style={{ display: "flex", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
               {[
                 { num: answeredCount, label: "Respondidas" },
                 { num: TOTAL_QS - answeredCount, label: "Sin responder" },
                 { num: flaggedCount, label: "Marcadas" },
               ].map((s) => (
-                <div key={s.label} style={{ flex: 1, background: "#f8f9ff", borderRadius: 10, padding: 12, textAlign: "center", minWidth: 80 }}>
-                  <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.4rem", fontWeight: 900, color: "#163D70" }}>{s.num}</div>
-                  <div style={{ fontSize: "0.7rem", color: "#7E90AD" }}>{s.label}</div>
+                <div key={s.label} style={{ flex: 1, background: "var(--fd-panel, #f8f9ff)", borderRadius: "var(--fd-radius, 10px)", padding: 12, textAlign: "center", minWidth: 80 }}>
+                  <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.4rem", fontWeight: 900, color: "var(--fd-text, #163D70)" }}>{s.num}</div>
+                  <div style={{ fontSize: "0.7rem", color: "var(--fd-muted, #7E90AD)" }}>{s.label}</div>
                 </div>
               ))}
             </div>
             <div style={{ display: "flex", gap: 10 }}>
-              <button onClick={() => setConfirmOpen(false)} style={{ flex: 1, padding: 12, background: "white", color: "#163D70", border: "2px solid #163D70", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>← Seguir revisando</button>
-              <button onClick={submitExam} style={{ flex: 2, padding: 12, background: "#7A5C1E", color: "white", border: "none", borderRadius: 10, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>Entregar examen <Icon n="check" size={15} /></button>
+              <button onClick={() => setConfirmOpen(false)} style={{ flex: 1, padding: 12, background: "var(--fd-panel, white)", color: "var(--fd-text, #163D70)", border: "2px solid #163D70", borderRadius: "var(--fd-radius, 10px)", fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>← Seguir revisando</button>
+              <button onClick={submitExam} style={{ flex: 2, padding: 12, background: "#7A5C1E", color: "white", border: "none", borderRadius: "var(--fd-radius, 10px)", fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>Entregar examen <Icon n="check" size={15} /></button>
             </div>
           </div>
         </div>
@@ -1548,18 +1549,18 @@ function LeftPanel({ questions, current, expandedMaterias, onToggleMateria, onSe
 
   return (
     <>
-      <div style={{ padding: "12px 16px", borderBottom: "1px solid #EEE1C5", background: "#f8f9ff" }}>
-        <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "#081A35", marginBottom: 2 }}>Preguntas del examen</div>
-        <div style={{ fontSize: "0.7rem", color: "#4A5872" }}>{answeredCount} / {TOTAL_QS} respondidas</div>
+      <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--fd-border, #EEE1C5)", background: "var(--fd-panel, #f8f9ff)" }}>
+        <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 2 }}>Preguntas del examen</div>
+        <div style={{ fontSize: "0.7rem", color: "var(--fd-muted, #4A5872)" }}>{answeredCount} / {TOTAL_QS} respondidas</div>
       </div>
-      <div style={{ display: "flex", gap: 8, padding: "8px 16px", borderBottom: "1px solid #EEE1C5", flexWrap: "wrap" }}>
+      <div style={{ display: "flex", gap: 8, padding: "8px 16px", borderBottom: "1px solid var(--fd-border, #EEE1C5)", flexWrap: "wrap" }}>
         {[
           { dot: "#EEE1C5", label: "Sin responder" },
           { dot: "#163D70", label: "Respondida" },
           { dot: "#f39c12", label: "Marcada" },
           { dot: "#5A86CB", label: "Actual" },
         ].map((l) => (
-          <div key={l.label} style={{ display: "flex", alignItems: "center", gap: 4, fontSize: "0.65rem", color: "#4A5872" }}>
+          <div key={l.label} style={{ display: "flex", alignItems: "center", gap: 4, fontSize: "0.65rem", color: "var(--fd-muted, #4A5872)" }}>
             <div style={{ width: 8, height: 8, borderRadius: "50%", background: l.dot, flexShrink: 0 }} />
             {l.label}
           </div>
@@ -1571,10 +1572,10 @@ function LeftPanel({ questions, current, expandedMaterias, onToggleMateria, onSe
           const open = expandedMaterias.has(mi);
           const answeredInM = questions.slice(offset, offset + m.total).filter((q) => q.answered).length;
           return (
-            <div key={mi} style={{ borderBottom: "1px solid rgba(22,61,112,0.06)" }}>
-              <div onClick={() => onToggleMateria(mi)} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "9px 16px", cursor: "pointer", background: "#f8f9ff" }}>
-                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#163D70", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n={m.icon} size={13} /> {m.name}</span>
-                <span style={{ fontSize: "0.65rem", color: "#7E90AD", display: "inline-flex", alignItems: "center", gap: 3 }}>{answeredInM}/{m.total} <span style={{ color: "#bbb", display: "inline-flex", alignItems: "center", transform: open ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}><Icon n="chevD" size={11} /></span></span>
+            <div key={mi} style={{ borderBottom: "1px solid var(--fd-border, rgba(22,61,112,0.06))" }}>
+              <div onClick={() => onToggleMateria(mi)} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "9px 16px", cursor: "pointer", background: "var(--fd-panel, #f8f9ff)" }}>
+                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--fd-text, #163D70)", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n={m.icon} size={13} /> {m.name}</span>
+                <span style={{ fontSize: "0.65rem", color: "var(--fd-muted, #7E90AD)", display: "inline-flex", alignItems: "center", gap: 3 }}>{answeredInM}/{m.total} <span style={{ color: "#bbb", display: "inline-flex", alignItems: "center", transform: open ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}><Icon n="chevD" size={11} /></span></span>
               </div>
               {open && (
                 <div>
@@ -1589,12 +1590,12 @@ function LeftPanel({ questions, current, expandedMaterias, onToggleMateria, onSe
                         key={idx}
                         id={`qi-${idx}`}
                         onClick={() => onSelectQ(idx)}
-                        style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 16px 6px 24px", cursor: "pointer", background: isActive ? "rgba(22,61,112,0.08)" : "transparent", transition: "background 0.2s", fontSize: "0.76rem" }}
+                        style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 16px 6px 24px", cursor: "pointer", background: isActive ? "var(--fd-panel-alt, rgba(22,61,112,0.08))" : "transparent", transition: "background 0.2s", fontSize: "0.76rem" }}
                       >
                         <div style={{ width: 20, height: 20, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", fontWeight: 700, flexShrink: 0, background: dotBg, color: dotColor, boxShadow: isActive ? "0 0 0 2px white, 0 0 0 4px #5A86CB" : "none", transition: "all 0.2s" }}>
                           {i + 1}
                         </div>
-                        <span style={{ color: isActive ? "#163D70" : "#666", fontWeight: isActive ? 700 : undefined }}>Pregunta {i + 1}</span>
+                        <span style={{ color: isActive ? "var(--fd-text, #163D70)" : "var(--fd-muted, #666)", fontWeight: isActive ? 700 : undefined }}>Pregunta {i + 1}</span>
                         {q.flagged && <span style={{ marginLeft: "auto", display: "flex", alignItems: "center", color: "#f39c12" }}><Icon n="flag" size={13} /></span>}
                       </div>
                     );
@@ -1627,7 +1628,7 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef,
       <style>{`@keyframes yb{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}.yds{width:5px;height:5px;background:#5A86CB;border-radius:50%;animation:yb .8s infinite}.yds:nth-child(2){animation-delay:.15s}.yds:nth-child(3){animation-delay:.3s}`}</style>
       <div style={{ padding: "14px 18px", flexShrink: 0, background: "linear-gradient(135deg,#163D70,#5A86CB)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
-          <div style={{ width: 32, height: 32, background: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem" }}><YarisAvatar size={30} /></div>
+          <div style={{ width: 32, height: 32, background: "var(--fd-panel, white)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem" }}><YarisAvatar size={30} /></div>
           <div>
             <div style={{ fontSize: "0.86rem", fontWeight: 700, color: "white" }}>Yaris IA</div>
             <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.8)" }}>Tutora de aviación 24/7</div>
@@ -1639,19 +1640,19 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef,
         {msgs.map((msg, i) => (
           <div key={i} data-msg-role={msg.role} style={{ display: "flex", gap: 7, alignItems: "flex-start", flexDirection: msg.role === "user" ? "row-reverse" : "row" }}>
 
-            <div style={{ width: 26, height: 26, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: msg.role === "bot" ? "0.78rem" : "0.6rem", fontWeight: msg.role === "user" ? 700 : undefined, background: msg.role === "bot" ? "#EEE1C5" : "#163D70", color: msg.role === "user" ? "white" : undefined, flexShrink: 0 }}>
+            <div style={{ width: 26, height: 26, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: msg.role === "bot" ? "0.78rem" : "0.6rem", fontWeight: msg.role === "user" ? 700 : undefined, background: msg.role === "bot" ? "var(--fd-panel, #EEE1C5)" : "#163D70", color: msg.role === "user" ? "white" : undefined, flexShrink: 0 }}>
               {msg.role === "bot" ? <YarisAvatar size={24} /> : "MG"}
             </div>
-            <div style={{ maxWidth: "84%", padding: "9px 12px", borderRadius: msg.role === "bot" ? "4px 12px 12px 12px" : "12px 4px 12px 12px", fontSize: "0.81rem", lineHeight: 1.55, background: msg.role === "bot" ? "#f0f4ff" : "#163D70", color: msg.role === "bot" ? "#081A35" : "white" }}>
+            <div style={{ maxWidth: "84%", padding: "9px 12px", borderRadius: msg.role === "bot" ? "4px 12px 12px 12px" : "12px 4px 12px 12px", fontSize: "0.81rem", lineHeight: 1.55, background: msg.role === "bot" ? "var(--fd-panel, #f0f4ff)" : "#163D70", color: msg.role === "bot" ? "var(--fd-text, #081A35)" : "white" }}>
               <span dangerouslySetInnerHTML={{ __html: sanitizeHtml(msg.text) }} />
-              {msg.cite && <div style={{ marginTop: 6, padding: "4px 8px", background: "rgba(22,61,112,0.08)", borderLeft: "3px solid #163D70", borderRadius: 3, fontSize: "0.7rem", color: "#163D70", fontWeight: 600, display: "flex", alignItems: "center", gap: 4 }}><Icon n="book" size={12} /> {msg.cite}</div>}
+              {msg.cite && <div style={{ marginTop: 6, padding: "4px 8px", background: "var(--fd-panel-alt, rgba(22,61,112,0.08))", borderLeft: "3px solid #163D70", borderRadius: 3, fontSize: "0.7rem", color: "var(--fd-text, #163D70)", fontWeight: 600, display: "flex", alignItems: "center", gap: 4 }}><Icon n="book" size={12} /> {msg.cite}</div>}
             </div>
           </div>
         ))}
         {typing && (
           <div style={{ display: "flex", gap: 7, alignItems: "flex-start" }}>
-            <div style={{ width: 26, height: 26, borderRadius: "50%", background: "#EEE1C5", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.78rem", flexShrink: 0 }}><YarisAvatar size={24} /></div>
-            <div style={{ padding: "9px 12px", background: "#f0f4ff", borderRadius: "4px 12px 12px 12px", display: "flex", alignItems: "center", gap: 4 }}>
+            <div style={{ width: 26, height: 26, borderRadius: "50%", background: "var(--fd-panel, #EEE1C5)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.78rem", flexShrink: 0 }}><YarisAvatar size={24} /></div>
+            <div style={{ padding: "9px 12px", background: "var(--fd-panel, #f0f4ff)", borderRadius: "4px 12px 12px 12px", display: "flex", alignItems: "center", gap: 4 }}>
               <div className="yds" /><div className="yds" /><div className="yds" />
             </div>
           </div>
@@ -1660,8 +1661,8 @@ function YarisPanel({ msgs, typing, input, onInput, onSend, onClose, msgsEndRef,
         <div ref={msgsEndRef} />
 
       </div>
-      <div style={{ padding: "10px 14px", borderTop: "1px solid #EEE1C5", display: "flex", gap: 7, flexShrink: 0 }}>
-        <input value={input} onChange={(e) => onInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") onSend(); }} placeholder="Escribe tu duda..." style={{ flex: 1, border: "2px solid #EEE1C5", borderRadius: 18, padding: "7px 12px", fontSize: "0.81rem", fontFamily: "'Manrope', sans-serif", outline: "none" }} onFocus={(e) => { e.currentTarget.style.borderColor = "#163D70"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "#EEE1C5"; }} />
+      <div style={{ padding: "10px 14px", borderTop: "1px solid var(--fd-border, #EEE1C5)", display: "flex", gap: 7, flexShrink: 0 }}>
+        <input value={input} onChange={(e) => onInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") onSend(); }} placeholder="Escribe tu duda..." style={{ flex: 1, border: "1px solid var(--fd-border, #EEE1C5)", borderRadius: "var(--fd-radius, 18px)", padding: "7px 12px", fontSize: "0.81rem", fontFamily: "'Manrope', sans-serif", outline: "none" }} onFocus={(e) => { e.currentTarget.style.borderColor = "#163D70"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "#EEE1C5"; }} />
         <button onClick={onSend} style={{ width: 32, height: 32, background: "#163D70", border: "none", borderRadius: "50%", color: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.82rem", flexShrink: 0 }}><Icon n="send" size={15} /></button>
       </div>
     </>

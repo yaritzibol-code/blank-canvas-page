@@ -81,7 +81,7 @@ const SHAPE_LABEL: Record<LogicShape, string> = {
 
 /** Fila de figuras para el debrief ("en su fila ya están: ▲ ◆"). */
 function ShapeRow({ shapes }: { shapes: LogicShape[] }) {
-  if (shapes.length === 0) return <span style={{ color: HAZE }}>ninguna todavía</span>;
+  if (shapes.length === 0) return <span style={{ color: "var(--fd-muted, #4A5872)" }}>ninguna todavía</span>;
   return (
     <span style={{ display: "inline-flex", alignItems: "center", gap: 6, verticalAlign: "middle" }}>
       {shapes.map((s) => (
@@ -281,11 +281,11 @@ export function LogicaGame({ cfg, onFinish, onQuit }: Props) {
                   key={`${r}-${c}`}
                   style={{
                     height: celda,
-                    borderRadius: 10,
+                    borderRadius: "var(--fd-radius, 10px)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: esHueco ? SALMON : v !== null ? "white" : CREAM,
+                    background: esHueco ? "var(--fd-panel, #EEE1C5)" : v !== null ? "var(--fd-panel, white)" : "var(--fd-panel, #F5F5F7)",
                     border: esHueco ? `2px solid ${CORAL}` : `1px solid ${NAVY}14`,
                   }}
                 >
@@ -295,7 +295,7 @@ export function LogicaGame({ cfg, onFinish, onQuit }: Props) {
                         fontFamily: SERIF,
                         fontStyle: "italic",
                         fontSize: "1.5rem",
-                        color: CORAL,
+                        color: "var(--fd-gold, #7A5C1E)",
                       }}
                     >
                       {picked !== null ? (
@@ -332,9 +332,9 @@ export function LogicaGame({ cfg, onFinish, onQuit }: Props) {
                 aria-label={SHAPE_LABEL[o.shape]}
                 style={{
                   padding: "12px 6px 8px",
-                  borderRadius: 12,
+                  borderRadius: "var(--fd-radius, 12px)",
                   border: `1px solid ${esCorrecta ? "#12B26B" : esFallo ? "#C24545" : `${NAVY}22`}`,
-                  background: esCorrecta ? "#EAF7F0" : esFallo ? "#FBEDED" : "white",
+                  background: esCorrecta ? "var(--fd-panel, #EAF7F0)" : esFallo ? "var(--fd-panel, #FBEDED)" : "var(--fd-panel, white)",
                   cursor: picked === null ? "pointer" : "default",
                   minHeight: 62,
                   display: "flex",
@@ -344,7 +344,7 @@ export function LogicaGame({ cfg, onFinish, onQuit }: Props) {
                 }}
               >
                 <Shape n={o.shape} size={28} />
-                <span style={{ fontFamily: MONO, fontSize: "0.6rem", color: HAZE }}>{i + 1}</span>
+                <span style={{ fontFamily: MONO, fontSize: "0.6rem", color: "var(--fd-muted, #4A5872)" }}>{i + 1}</span>
               </button>
             );
           })}
@@ -354,9 +354,9 @@ export function LogicaGame({ cfg, onFinish, onQuit }: Props) {
           <div
             style={{
               marginTop: 18,
-              background: CREAM,
+              background: "var(--fd-panel, #F5F5F7)",
               border: `1px solid ${NAVY}12`,
-              borderRadius: 14,
+              borderRadius: "var(--fd-radius, 14px)",
               padding: "14px 16px",
             }}
           >
@@ -367,7 +367,7 @@ export function LogicaGame({ cfg, onFinish, onQuit }: Props) {
                 letterSpacing: "0.16em",
                 textTransform: "uppercase",
                 fontWeight: 700,
-                color: HAZE,
+                color: "var(--fd-muted, #4A5872)",
                 marginBottom: 8,
               }}
             >
@@ -378,7 +378,7 @@ export function LogicaGame({ cfg, onFinish, onQuit }: Props) {
                   : "Así se descartaba"}
             </div>
 
-            <div style={{ fontSize: "0.88rem", color: NAVY, lineHeight: 1.9 }}>
+            <div style={{ fontSize: "0.88rem", color: "var(--fd-text, #081A35)", lineHeight: 1.9 }}>
               <div>
                 En su fila ya estaban: <ShapeRow shapes={item.explain.enFila} />
               </div>
@@ -392,7 +392,7 @@ export function LogicaGame({ cfg, onFinish, onQuit }: Props) {
                 </span>
               </div>
               {item.explain.requiereCadena && (
-                <div style={{ color: HAZE, fontSize: "0.83rem", lineHeight: 1.5, marginTop: 6 }}>
+                <div style={{ color: "var(--fd-muted, #4A5872)", fontSize: "0.83rem", lineHeight: 1.5, marginTop: 6 }}>
                   Fila y columna por sí solas no bastaban: había que deducir antes otra casilla y
                   usar ese resultado. Empieza siempre por la línea más llena del tablero.
                 </div>
@@ -406,7 +406,7 @@ export function LogicaGame({ cfg, onFinish, onQuit }: Props) {
                   paddingTop: 10,
                   borderTop: `1px solid ${NAVY}12`,
                   fontSize: "0.85rem",
-                  color: CORAL,
+                  color: "var(--fd-gold, #7A5C1E)",
                   lineHeight: 1.5,
                   fontWeight: 600,
                 }}

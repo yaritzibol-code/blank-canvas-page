@@ -177,8 +177,8 @@ function MiniMap({
       disabled={!onClick}
       style={{
         border: `2px solid ${border}`,
-        borderRadius: 16,
-        background: state === "dim" ? "#F4F3F0" : "white",
+        borderRadius: "var(--fd-radius, 16px)",
+        background: state === "dim" ? "var(--fd-panel, #F4F3F0)" : "var(--fd-panel, white)",
         opacity: state === "dim" ? 0.55 : 1,
         cursor: onClick ? "pointer" : "default",
         padding: 6,
@@ -194,7 +194,7 @@ function MiniMap({
           fontFamily: MONO,
           fontSize: "0.62rem",
           fontWeight: 700,
-          color: HAZE,
+          color: "var(--fd-muted, #4A5872)",
           lineHeight: 1,
         }}
       >
@@ -425,13 +425,13 @@ export function OrientacionGame({ cfg, onFinish, onQuit }: Props) {
                 fontFamily: SERIF,
                 fontStyle: "italic",
                 fontSize: "1.25rem",
-                color: NAVY,
+                color: "var(--fd-text, #081A35)",
                 lineHeight: 1.35,
               }}
             >
               ¿Qué mapa muestra tu posición respecto a la estación?
             </div>
-            <div style={{ marginTop: 8, fontSize: "0.78rem", color: HAZE, lineHeight: 1.5 }}>
+            <div style={{ marginTop: 8, fontSize: "0.78rem", color: "var(--fd-muted, #4A5872)", lineHeight: 1.5 }}>
               El mapa tiene el norte arriba. La estación es el punto del centro; el avión conserva
               su rumbo real.
             </div>
@@ -470,9 +470,9 @@ export function OrientacionGame({ cfg, onFinish, onQuit }: Props) {
           <div
             style={{
               marginTop: 18,
-              background: CREAM,
+              background: "var(--fd-panel, #F5F5F7)",
               border: `1px solid ${NAVY}12`,
-              borderRadius: 14,
+              borderRadius: "var(--fd-radius, 14px)",
               padding: "14px 16px",
             }}
           >
@@ -483,13 +483,13 @@ export function OrientacionGame({ cfg, onFinish, onQuit }: Props) {
                 letterSpacing: "0.16em",
                 textTransform: "uppercase",
                 fontWeight: 700,
-                color: HAZE,
+                color: "var(--fd-muted, #4A5872)",
                 marginBottom: 6,
               }}
             >
               {pickedOpt?.confusion === null ? "Correcto" : "La lectura correcta"}
             </div>
-            <div style={{ fontSize: "0.9rem", color: NAVY, lineHeight: 1.55 }}>
+            <div style={{ fontSize: "0.9rem", color: "var(--fd-text, #081A35)", lineHeight: 1.55 }}>
               HDG{" "}
               <strong style={{ fontFamily: MONO }}>{String(item.heading).padStart(3, "0")}</strong>{" "}
               + marcación{" "}

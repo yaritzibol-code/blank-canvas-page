@@ -251,15 +251,15 @@ function CompassPage() {
               fontFamily: SERIF,
               fontStyle: "italic",
               fontSize: "2rem",
-              color: NAVY,
+              color: "var(--fd-text, #081A35)",
               marginBottom: 8,
             }}
           >
-            Siguiente: <em style={{ color: CORAL }}>{def.nombre}</em>
+            Siguiente: <em style={{ color: "var(--fd-gold, #7A5C1E)" }}>{def.nombre}</em>
           </div>
           <p
             style={{
-              color: HAZE,
+              color: "var(--fd-muted, #4A5872)",
               fontSize: "0.92rem",
               maxWidth: 460,
               margin: "0 auto 8px",
@@ -271,7 +271,7 @@ function CompassPage() {
           </p>
           <p
             style={{
-              color: HAZE,
+              color: "var(--fd-muted, #4A5872)",
               fontSize: "0.8rem",
               maxWidth: 460,
               margin: "0 auto 20px",
@@ -321,7 +321,7 @@ function CompassPage() {
               letterSpacing: "0.14em",
               textTransform: "uppercase",
               fontWeight: 700,
-              color: CORAL,
+              color: "var(--fd-gold, #7A5C1E)",
               background: `${ROSE}33`,
               border: `1px solid ${ROSE}`,
               padding: "6px 12px",
@@ -345,28 +345,26 @@ function CompassPage() {
         }}
       >
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-              gap: 12,
-            }}
-          >
-            <KpiMini label="Sesiones" value={String(profile.sesionesTotales)} />
-            <KpiMini label="Minutos entrenados" value={String(profile.minutosTotales)} />
-            <KpiMini
-              label="Tu punto débil"
-              value={debilDef?.nombre ?? "—"}
-              sub={debilDef ? "Con tus datos actuales" : "Aún sin datos"}
-            />
+          <div className="fd-compass-quick">
+            <Eyebrow>Pruebas · práctica por niveles</Eyebrow>
+            {COMPASS_MODULES.map((def) => (
+              <button key={def.id} type="button" onClick={() => abrirBriefing(def.id, "practica")}>
+                <span>
+                  {def.nombre}
+                  <small>Nivel {statsByModule[def.id].nivelSugerido} · Practicar</small>
+                </span>
+                <strong>{profile.porModulo[def.id] ?? "—"} ›</strong>
+              </button>
+            ))}
           </div>
 
           {/* Simulacro compacto */}
           <div
+            className="fd-compass-sim"
             style={{
               background: NAVY,
               color: "white",
-              borderRadius: 22,
+              borderRadius: "var(--fd-radius, 22px)",
               padding: "24px 26px",
               position: "relative",
               overflow: "hidden",
@@ -439,11 +437,35 @@ function CompassPage() {
         >
           <Eyebrow style={{ alignSelf: "flex-start" }}>Perfil de aptitudes</Eyebrow>
           <RadarChart scores={profile.porModulo} />
-          <div style={{ fontSize: "0.72rem", color: HAZE, textAlign: "center", lineHeight: 1.45 }}>
+          <div
+            style={{
+              fontSize: "0.72rem",
+              color: "var(--fd-muted, #4A5872)",
+              textAlign: "center",
+              lineHeight: 1.45,
+            }}
+          >
             Mediana de tus últimas 3 sesiones por módulo. Compara contra ti, no contra un corte
             oficial.
           </div>
         </CCard>
+      </div>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+          gap: 12,
+          marginBottom: 28,
+        }}
+      >
+        <KpiMini label="Sesiones" value={String(profile.sesionesTotales)} />
+        <KpiMini label="Minutos entrenados" value={String(profile.minutosTotales)} />
+        <KpiMini
+          label="Tu punto débil"
+          value={debilDef?.nombre ?? "—"}
+          sub={debilDef ? "Con tus datos actuales" : "Aún sin datos"}
+        />
       </div>
 
       {/* Módulos */}
@@ -518,7 +540,7 @@ function CompassPage() {
                   style={{
                     fontFamily: MONO,
                     fontSize: "0.68rem",
-                    color: HAZE,
+                    color: "var(--fd-muted, #4A5872)",
                     width: 52,
                     flexShrink: 0,
                   }}
@@ -526,7 +548,12 @@ function CompassPage() {
                   {fmtFecha(s.date)}
                 </span>
                 <span
-                  style={{ fontWeight: 700, color: NAVY, fontSize: "0.85rem", flex: "1 1 120px" }}
+                  style={{
+                    fontWeight: 700,
+                    color: "var(--fd-text, #081A35)",
+                    fontSize: "0.85rem",
+                    flex: "1 1 120px",
+                  }}
                 >
                   {COMPASS_MODULE_MAP[s.moduleId].nombre}
                 </span>
@@ -541,7 +568,12 @@ function CompassPage() {
                     fontFamily: SERIF,
                     fontStyle: "italic",
                     fontSize: "1.2rem",
-                    color: s.score >= 75 ? "#0B7A49" : s.score >= 45 ? NAVY : "#A13333",
+                    color:
+                      s.score >= 75
+                        ? "#0B7A49"
+                        : s.score >= 45
+                          ? "var(--fd-text, #081A35)"
+                          : "#A13333",
                     marginLeft: "auto",
                   }}
                 >
@@ -556,24 +588,25 @@ function CompassPage() {
       {/* Disclaimer de no afiliación (compliance) */}
       <div
         style={{
-          background: CREAM,
+          background: "var(--fd-panel, #F5F5F7)",
           border: `1px solid ${NAVY}14`,
-          borderRadius: 14,
+          borderRadius: "var(--fd-radius, 14px)",
           padding: "14px 18px",
           fontSize: "0.74rem",
-          color: HAZE,
+          color: "var(--fd-muted, #4A5872)",
           lineHeight: 1.55,
           marginBottom: 10,
         }}
       >
-        <strong style={{ color: NAVY }}>Entrenamiento independiente.</strong> Los ejercicios de este
-        módulo son originales de FlightPath, se generan proceduralmente y entrenan familias de
-        habilidades presentes en distintos procesos de selección de pilotos. Ninguno proviene ni
-        reproduce las pruebas de esas baterías: los nombres de CUT-E/AON, COMPASS y de las empresas
-        que las aplican se citan sólo para describir el panorama de evaluación. FlightPath no está
-        afiliada, autorizada ni respaldada por AON/cut-e, EPST/COMPASS, ninguna aerolínea ni
-        autoridad aeronáutica. Los scores son métricas de entrenamiento sobre tu propio historial:
-        no equivalen a una calificación oficial ni garantizan resultados en ningún proceso.
+        <strong style={{ color: "var(--fd-text, #081A35)" }}>Entrenamiento independiente.</strong>{" "}
+        Los ejercicios de este módulo son originales de FlightPath, se generan proceduralmente y
+        entrenan familias de habilidades presentes en distintos procesos de selección de pilotos.
+        Ninguno proviene ni reproduce las pruebas de esas baterías: los nombres de CUT-E/AON,
+        COMPASS y de las empresas que las aplican se citan sólo para describir el panorama de
+        evaluación. FlightPath no está afiliada, autorizada ni respaldada por AON/cut-e,
+        EPST/COMPASS, ninguna aerolínea ni autoridad aeronáutica. Los scores son métricas de
+        entrenamiento sobre tu propio historial: no equivalen a una calificación oficial ni
+        garantizan resultados en ningún proceso.
       </div>
 
       <style>{`
@@ -597,7 +630,7 @@ function KpiMini({ label, value, sub }: { label: string; value: string; sub?: st
           letterSpacing: "0.18em",
           textTransform: "uppercase",
           fontWeight: 700,
-          color: `${NAVY}80`,
+          color: "var(--fd-muted, #081A3580)",
           marginBottom: 6,
         }}
       >
@@ -609,12 +642,16 @@ function KpiMini({ label, value, sub }: { label: string; value: string; sub?: st
           fontStyle: "italic",
           fontSize: "1.9rem",
           lineHeight: 1,
-          color: NAVY,
+          color: "var(--fd-text, #081A35)",
         }}
       >
         {value}
       </div>
-      {sub && <div style={{ fontSize: "0.7rem", color: HAZE, marginTop: 4 }}>{sub}</div>}
+      {sub && (
+        <div style={{ fontSize: "0.7rem", color: "var(--fd-muted, #4A5872)", marginTop: 4 }}>
+          {sub}
+        </div>
+      )}
     </CCard>
   );
 }
@@ -628,8 +665,8 @@ function ChipMini({ children, tono }: { children: React.ReactNode; tono?: "alert
         letterSpacing: "0.08em",
         textTransform: "uppercase",
         fontWeight: 700,
-        color: tono === "alerta" ? "#8A6100" : HAZE,
-        background: tono === "alerta" ? "#FFF6E0" : CREAM,
+        color: tono === "alerta" ? "#8A6100" : "var(--fd-muted, #4A5872)",
+        background: tono === "alerta" ? "var(--fd-panel, #FFF6E0)" : "var(--fd-panel, #F5F5F7)",
         border: `1px solid ${NAVY}12`,
         padding: "3px 8px",
         borderRadius: 999,
@@ -654,7 +691,7 @@ function TendenciaChip({ delta }: { delta: number | null }) {
         fontFamily: MONO,
         fontSize: "0.66rem",
         fontWeight: 800,
-        color: flat ? HAZE : up ? "#0B7A49" : "#A13333",
+        color: flat ? "var(--fd-muted, #4A5872)" : up ? "#0B7A49" : "#A13333",
       }}
       title="Contra la mediana de tus 3 sesiones previas comparables"
     >
@@ -682,9 +719,9 @@ function ModuleCard({
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        background: "white",
+        background: "var(--fd-panel, white)",
         border: `1px solid ${debil ? ROSE : `${NAVY}14`}`,
-        borderRadius: 22,
+        borderRadius: "var(--fd-radius, 22px)",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
@@ -715,9 +752,9 @@ function ModuleCard({
               style={{
                 width: 38,
                 height: 38,
-                borderRadius: 10,
-                background: CREAM,
-                color: NAVY,
+                borderRadius: "var(--fd-radius, 10px)",
+                background: "var(--fd-panel, #F5F5F7)",
+                color: "var(--fd-text, #081A35)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -733,7 +770,7 @@ function ModuleCard({
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
                   fontWeight: 800,
-                  color: CORAL,
+                  color: "var(--fd-gold, #7A5C1E)",
                   background: `${ROSE}44`,
                   padding: "3px 8px",
                   borderRadius: 999,
@@ -751,7 +788,7 @@ function ModuleCard({
                     fontFamily: SERIF,
                     fontStyle: "italic",
                     fontSize: "1.6rem",
-                    color: NAVY,
+                    color: "var(--fd-text, #081A35)",
                   }}
                 >
                   {stats.ultimoScore}
@@ -767,7 +804,7 @@ function ModuleCard({
               fontFamily: SERIF,
               fontStyle: "italic",
               fontSize: "1.3rem",
-              color: NAVY,
+              color: "var(--fd-text, #081A35)",
               lineHeight: 1.1,
             }}
           >
@@ -780,14 +817,21 @@ function ModuleCard({
               letterSpacing: "0.14em",
               textTransform: "uppercase",
               fontWeight: 700,
-              color: HAZE,
+              color: "var(--fd-muted, #4A5872)",
               marginTop: 4,
             }}
           >
             {def.aptitud}
           </div>
         </div>
-        <p style={{ fontSize: "0.8rem", color: `${NAVY}99`, lineHeight: 1.5, margin: 0 }}>
+        <p
+          style={{
+            fontSize: "0.8rem",
+            color: "var(--fd-muted, #081A3599)",
+            lineHeight: 1.5,
+            margin: 0,
+          }}
+        >
           {def.descripcion}
         </p>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: "auto" }}>
@@ -817,10 +861,10 @@ function cardBtn(primary: boolean): React.CSSProperties {
   return {
     flex: 1,
     padding: "10px 0",
-    borderRadius: 10,
+    borderRadius: "var(--fd-radius, 10px)",
     border: primary ? "none" : `1px solid ${NAVY}1F`,
     background: primary ? NAVY : "transparent",
-    color: primary ? "white" : NAVY,
+    color: primary ? "white" : "var(--fd-text, #081A35)",
     fontFamily: MONO,
     fontSize: "0.62rem",
     fontWeight: 700,
@@ -845,9 +889,9 @@ function CrossLink({
   const inner = (
     <div
       style={{
-        background: "white",
+        background: "var(--fd-panel, white)",
         border: `1px solid ${NAVY}12`,
-        borderRadius: 14,
+        borderRadius: "var(--fd-radius, 14px)",
         padding: "13px 15px",
         display: "flex",
         alignItems: "center",
@@ -860,9 +904,9 @@ function CrossLink({
         style={{
           width: 38,
           height: 38,
-          borderRadius: 10,
-          background: CREAM,
-          color: NAVY,
+          borderRadius: "var(--fd-radius, 10px)",
+          background: "var(--fd-panel, #F5F5F7)",
+          color: "var(--fd-text, #081A35)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -872,7 +916,14 @@ function CrossLink({
         <Icon n={icon} size={17} />
       </span>
       <span style={{ minWidth: 0 }}>
-        <span style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: NAVY }}>
+        <span
+          style={{
+            display: "block",
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            color: "var(--fd-text, #081A35)",
+          }}
+        >
           {titulo}
         </span>
         <span
@@ -881,7 +932,7 @@ function CrossLink({
             fontFamily: SERIF,
             fontStyle: "italic",
             fontSize: "0.78rem",
-            color: HAZE,
+            color: "var(--fd-muted, #4A5872)",
             marginTop: 1,
           }}
         >
@@ -889,7 +940,14 @@ function CrossLink({
         </span>
       </span>
       {to && (
-        <span style={{ marginLeft: "auto", color: `${NAVY}44`, display: "flex", flexShrink: 0 }}>
+        <span
+          style={{
+            marginLeft: "auto",
+            color: "var(--fd-muted, #081A3544)",
+            display: "flex",
+            flexShrink: 0,
+          }}
+        >
           <Icon n="chevR" size={16} />
         </span>
       )}
@@ -928,7 +986,7 @@ function BriefingView({
         style={{
           background: "none",
           border: "none",
-          color: HAZE,
+          color: "var(--fd-muted, #4A5872)",
           fontFamily: MONO,
           fontSize: "0.68rem",
           letterSpacing: "0.12em",
@@ -954,14 +1012,21 @@ function BriefingView({
             fontStyle: "italic",
             fontWeight: 400,
             fontSize: "2rem",
-            color: NAVY,
+            color: "var(--fd-text, #081A35)",
             margin: "0 0 10px",
             lineHeight: 1.1,
           }}
         >
           {def.aptitud}
         </h2>
-        <p style={{ color: `${NAVY}99`, fontSize: "0.94rem", lineHeight: 1.6, maxWidth: 560 }}>
+        <p
+          style={{
+            color: "var(--fd-muted, #081A3599)",
+            fontSize: "0.94rem",
+            lineHeight: 1.6,
+            maxWidth: 560,
+          }}
+        >
           {def.descripcion}
         </p>
 
@@ -975,8 +1040,8 @@ function BriefingView({
         >
           <div
             style={{
-              background: CREAM,
-              borderRadius: 14,
+              background: "var(--fd-panel, #F5F5F7)",
+              borderRadius: "var(--fd-radius, 14px)",
               padding: "14px 16px",
               border: `1px solid ${NAVY}0F`,
             }}
@@ -988,20 +1053,20 @@ function BriefingView({
                 letterSpacing: "0.16em",
                 textTransform: "uppercase",
                 fontWeight: 700,
-                color: HAZE,
+                color: "var(--fd-muted, #4A5872)",
                 marginBottom: 6,
               }}
             >
               En computadora
             </div>
-            <div style={{ fontSize: "0.82rem", color: NAVY, lineHeight: 1.5 }}>
+            <div style={{ fontSize: "0.82rem", color: "var(--fd-text, #081A35)", lineHeight: 1.5 }}>
               {def.controlesDesktop}
             </div>
           </div>
           <div
             style={{
-              background: CREAM,
-              borderRadius: 14,
+              background: "var(--fd-panel, #F5F5F7)",
+              borderRadius: "var(--fd-radius, 14px)",
               padding: "14px 16px",
               border: `1px solid ${NAVY}0F`,
             }}
@@ -1013,13 +1078,13 @@ function BriefingView({
                 letterSpacing: "0.16em",
                 textTransform: "uppercase",
                 fontWeight: 700,
-                color: HAZE,
+                color: "var(--fd-muted, #4A5872)",
                 marginBottom: 6,
               }}
             >
               En móvil
             </div>
-            <div style={{ fontSize: "0.82rem", color: NAVY, lineHeight: 1.5 }}>
+            <div style={{ fontSize: "0.82rem", color: "var(--fd-text, #081A35)", lineHeight: 1.5 }}>
               {def.controlesMovil}
             </div>
           </div>
@@ -1029,7 +1094,7 @@ function BriefingView({
           style={{
             background: `${ROSE}22`,
             border: `1px solid ${ROSE}`,
-            borderRadius: 14,
+            borderRadius: "var(--fd-radius, 14px)",
             padding: "14px 16px",
             marginBottom: 18,
           }}
@@ -1041,7 +1106,7 @@ function BriefingView({
               letterSpacing: "0.16em",
               textTransform: "uppercase",
               fontWeight: 700,
-              color: CORAL,
+              color: "var(--fd-gold, #7A5C1E)",
               marginBottom: 8,
             }}
           >
@@ -1051,7 +1116,10 @@ function BriefingView({
             style={{ margin: 0, paddingLeft: 18, display: "flex", flexDirection: "column", gap: 5 }}
           >
             {def.erroresComunes.map((e) => (
-              <li key={e} style={{ fontSize: "0.82rem", color: NAVY, lineHeight: 1.5 }}>
+              <li
+                key={e}
+                style={{ fontSize: "0.82rem", color: "var(--fd-text, #081A35)", lineHeight: 1.5 }}
+              >
                 {e}
               </li>
             ))}
@@ -1069,10 +1137,10 @@ function BriefingView({
                   style={{
                     width: 46,
                     height: 46,
-                    borderRadius: 12,
+                    borderRadius: "var(--fd-radius, 12px)",
                     border: `1px solid ${n === nivel ? "transparent" : `${NAVY}1F`}`,
                     background: n === nivel ? NAVY : "transparent",
-                    color: n === nivel ? "white" : NAVY,
+                    color: n === nivel ? "white" : "var(--fd-text, #081A35)",
                     fontFamily: MONO,
                     fontSize: "0.95rem",
                     fontWeight: 700,
@@ -1083,7 +1151,7 @@ function BriefingView({
                 </button>
               ))}
             </div>
-            <div style={{ fontSize: "0.74rem", color: HAZE, marginTop: 8 }}>
+            <div style={{ fontSize: "0.74rem", color: "var(--fd-muted, #4A5872)", marginTop: 8 }}>
               {def.practicaItems > 0
                 ? `Bloque de ${def.practicaItems} reactivos con feedback inmediato.`
                 : `Bloque continuo de ${fmtDur(def.practicaSec)} con feedback al final.`}
@@ -1094,9 +1162,9 @@ function BriefingView({
             style={{
               marginBottom: 20,
               fontSize: "0.82rem",
-              color: NAVY,
-              background: CREAM,
-              borderRadius: 14,
+              color: "var(--fd-text, #081A35)",
+              background: "var(--fd-panel, #F5F5F7)",
+              borderRadius: "var(--fd-radius, 14px)",
               padding: "12px 16px",
               border: `1px solid ${NAVY}0F`,
               lineHeight: 1.55,
@@ -1152,7 +1220,7 @@ function DebriefView({
                 fontFamily: SERIF,
                 fontStyle: "italic",
                 fontSize: "1.7rem",
-                color: NAVY,
+                color: "var(--fd-text, #081A35)",
                 lineHeight: 1.15,
                 marginBottom: 8,
               }}
@@ -1169,7 +1237,9 @@ function DebriefView({
               {tendencia !== null && (
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
                   <TendenciaChip delta={tendencia} />
-                  <span style={{ fontSize: "0.7rem", color: HAZE }}>vs tus 3 sesiones previas</span>
+                  <span style={{ fontSize: "0.7rem", color: "var(--fd-muted, #4A5872)" }}>
+                    vs tus 3 sesiones previas
+                  </span>
                 </span>
               )}
               {record.interruptions > 0 && (
@@ -1199,8 +1269,15 @@ function DebriefView({
       </CCard>
 
       <CCard style={{ padding: "22px 26px", marginBottom: 18, borderLeft: `3px solid ${CORAL}` }}>
-        <Eyebrow style={{ color: CORAL }}>Siguiente paso</Eyebrow>
-        <p style={{ margin: 0, fontSize: "0.94rem", color: NAVY, lineHeight: 1.6 }}>
+        <Eyebrow style={{ color: "var(--fd-gold, #7A5C1E)" }}>Siguiente paso</Eyebrow>
+        <p
+          style={{
+            margin: 0,
+            fontSize: "0.94rem",
+            color: "var(--fd-text, #081A35)",
+            lineHeight: 1.6,
+          }}
+        >
           {record.advice}
         </p>
       </CCard>
@@ -1225,7 +1302,7 @@ function SimIntroView({ onBack, onStart }: { onBack: () => void; onStart: () => 
         style={{
           background: "none",
           border: "none",
-          color: HAZE,
+          color: "var(--fd-muted, #4A5872)",
           fontFamily: MONO,
           fontSize: "0.68rem",
           letterSpacing: "0.12em",
@@ -1249,14 +1326,21 @@ function SimIntroView({ onBack, onStart }: { onBack: () => void; onStart: () => 
             fontStyle: "italic",
             fontWeight: 400,
             fontSize: "2rem",
-            color: NAVY,
+            color: "var(--fd-text, #081A35)",
             margin: "0 0 10px",
             lineHeight: 1.1,
           }}
         >
-          Los siete módulos, <em style={{ color: CORAL }}>sin descanso</em>
+          Los siete módulos, <em style={{ color: "var(--fd-gold, #7A5C1E)" }}>sin descanso</em>
         </h2>
-        <p style={{ color: `${NAVY}99`, fontSize: "0.92rem", lineHeight: 1.6, maxWidth: 560 }}>
+        <p
+          style={{
+            color: "var(--fd-muted, #081A3599)",
+            fontSize: "0.92rem",
+            lineHeight: 1.6,
+            maxWidth: 560,
+          }}
+        >
           La secuencia corre completa y el debrief llega hasta el final, como en un proceso real.
           Cada módulo guarda su sesión y actualiza tu perfil. Si sales a la mitad, el simulacro se
           cancela.
@@ -1271,8 +1355,8 @@ function SimIntroView({ onBack, onStart }: { onBack: () => void; onStart: () => 
                   display: "flex",
                   alignItems: "center",
                   gap: 12,
-                  background: CREAM,
-                  borderRadius: 12,
+                  background: "var(--fd-panel, #F5F5F7)",
+                  borderRadius: "var(--fd-radius, 12px)",
                   padding: "10px 14px",
                   border: `1px solid ${NAVY}0C`,
                 }}
@@ -1282,19 +1366,32 @@ function SimIntroView({ onBack, onStart }: { onBack: () => void; onStart: () => 
                     fontFamily: MONO,
                     fontSize: "0.66rem",
                     fontWeight: 700,
-                    color: HAZE,
+                    color: "var(--fd-muted, #4A5872)",
                     width: 18,
                   }}
                 >
                   {i + 1}
                 </span>
-                <span style={{ display: "flex", color: NAVY }}>
+                <span style={{ display: "flex", color: "var(--fd-text, #081A35)" }}>
                   <Icon n={def.icon} size={16} />
                 </span>
-                <span style={{ fontWeight: 700, color: NAVY, fontSize: "0.85rem", flex: 1 }}>
+                <span
+                  style={{
+                    fontWeight: 700,
+                    color: "var(--fd-text, #081A35)",
+                    fontSize: "0.85rem",
+                    flex: 1,
+                  }}
+                >
                   {def.nombre}
                 </span>
-                <span style={{ fontFamily: MONO, fontSize: "0.64rem", color: HAZE }}>
+                <span
+                  style={{
+                    fontFamily: MONO,
+                    fontSize: "0.64rem",
+                    color: "var(--fd-muted, #4A5872)",
+                  }}
+                >
                   {b.items > 0 ? `${b.items} reactivos` : fmtDur(b.durationSec)}
                 </span>
               </div>
@@ -1340,7 +1437,7 @@ function SimFinalView({ records, onHub }: { records: CompassSessionRecord[]; onH
                 fontFamily: SERIF,
                 fontStyle: "italic",
                 fontSize: "1.9rem",
-                color: NAVY,
+                color: "var(--fd-text, #081A35)",
                 lineHeight: 1.12,
                 marginBottom: 10,
               }}
@@ -1355,7 +1452,7 @@ function SimFinalView({ records, onHub }: { records: CompassSessionRecord[]; onH
                       fontFamily: MONO,
                       fontSize: "0.64rem",
                       fontWeight: 700,
-                      color: HAZE,
+                      color: "var(--fd-muted, #4A5872)",
                       width: 92,
                       textTransform: "uppercase",
                       letterSpacing: "0.08em",
@@ -1363,7 +1460,14 @@ function SimFinalView({ records, onHub }: { records: CompassSessionRecord[]; onH
                   >
                     {COMPASS_MODULE_MAP[r.moduleId].nombre}
                   </span>
-                  <div style={{ flex: 1, height: 4, background: SALMON, borderRadius: 999 }}>
+                  <div
+                    style={{
+                      flex: 1,
+                      height: 4,
+                      background: "var(--fd-panel, #EEE1C5)",
+                      borderRadius: 999,
+                    }}
+                  >
                     <div
                       style={{
                         width: `${r.score}%`,
@@ -1378,7 +1482,7 @@ function SimFinalView({ records, onHub }: { records: CompassSessionRecord[]; onH
                       fontFamily: SERIF,
                       fontStyle: "italic",
                       fontSize: "1rem",
-                      color: NAVY,
+                      color: "var(--fd-text, #081A35)",
                       width: 30,
                       textAlign: "right",
                     }}
@@ -1397,8 +1501,15 @@ function SimFinalView({ records, onHub }: { records: CompassSessionRecord[]; onH
 
       {peor && (
         <CCard style={{ padding: "22px 26px", marginBottom: 18, borderLeft: `3px solid ${CORAL}` }}>
-          <Eyebrow style={{ color: CORAL }}>Tu siguiente sesión</Eyebrow>
-          <p style={{ margin: 0, fontSize: "0.94rem", color: NAVY, lineHeight: 1.6 }}>
+          <Eyebrow style={{ color: "var(--fd-gold, #7A5C1E)" }}>Tu siguiente sesión</Eyebrow>
+          <p
+            style={{
+              margin: 0,
+              fontSize: "0.94rem",
+              color: "var(--fd-text, #081A35)",
+              lineHeight: 1.6,
+            }}
+          >
             El módulo que más te costó fue{" "}
             <strong>{COMPASS_MODULE_MAP[peor.moduleId].nombre}</strong> ({peor.score}).{" "}
             {peor.advice}

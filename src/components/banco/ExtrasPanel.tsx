@@ -121,13 +121,13 @@ function Modal({ title, subtitle, onClose, children, wide }: { title: string; su
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
       style={{ position: "fixed", inset: 0, background: "rgba(26,26,46,0.72)", zIndex: 1200, display: "flex", alignItems: "center", justifyContent: "center", padding: 16, overflowY: "auto", fontFamily: "'Manrope', sans-serif" }}
     >
-      <div style={{ background: "white", borderRadius: 20, width: "100%", maxWidth: wide ? 860 : 640, maxHeight: "92vh", display: "flex", flexDirection: "column", overflow: "hidden", boxShadow: "0 24px 60px rgba(0,0,0,0.3)" }}>
-        <div style={{ padding: "18px 22px", borderBottom: `1px solid ${CARD_BORDER}`, display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
+      <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 20px)", width: "100%", maxWidth: wide ? 860 : 640, maxHeight: "92vh", display: "flex", flexDirection: "column", overflow: "hidden", boxShadow: "0 24px 60px rgba(0,0,0,0.3)" }}>
+        <div style={{ padding: "18px 22px", borderBottom: "1px solid var(--fd-border, #EEE1C5)", display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
           <div>
-            <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.15rem", color: INK, margin: 0 }}>{title}</h3>
-            {subtitle && <p style={{ fontSize: "0.8rem", color: MUTED, margin: "4px 0 0" }}>{subtitle}</p>}
+            <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.15rem", color: "var(--fd-text, #081A35)", margin: 0 }}>{title}</h3>
+            {subtitle && <p style={{ fontSize: "0.8rem", color: "var(--fd-muted, #4A5872)", margin: "4px 0 0" }}>{subtitle}</p>}
           </div>
-          <button onClick={onClose} aria-label="Cerrar" style={{ background: "transparent", border: "none", color: MUTED, fontSize: "1.4rem", cursor: "pointer", lineHeight: 1 }}>×</button>
+          <button onClick={onClose} aria-label="Cerrar" style={{ background: "transparent", border: "none", color: "var(--fd-muted, #4A5872)", fontSize: "1.4rem", cursor: "pointer", lineHeight: 1 }}>×</button>
         </div>
         <div style={{ padding: 22, overflowY: "auto" }}>{children}</div>
       </div>
@@ -144,11 +144,11 @@ function GrupoPicker({ grupos, value, onChange }: { grupos: Grupo[]; value: stri
           onClick={() => onChange(g.key)}
           style={{
             display: "flex", alignItems: "center", gap: 6,
-            padding: "7px 12px", borderRadius: 20, cursor: "pointer",
+            padding: "7px 12px", borderRadius: "var(--fd-radius, 20px)", cursor: "pointer",
             fontSize: "0.78rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif",
             border: `1px solid ${value === g.key ? BLUE : CARD_BORDER}`,
-            background: value === g.key ? BLUE : "white",
-            color: value === g.key ? "white" : INK,
+            background: value === g.key ? BLUE : "var(--fd-panel, white)",
+            color: value === g.key ? "white" : "var(--fd-text, #081A35)",
           }}
         >
           <Icon n={g.icon} size={14} /> {g.label.length > 34 ? `${g.label.slice(0, 34)}…` : g.label}
@@ -180,7 +180,7 @@ function Flashcards({ grupos, onClose }: { grupos: Grupo[]; onClose: () => void 
     <Modal title="Flashcards del material" subtitle="Generadas con las preguntas y explicaciones oficiales del banco." onClose={onClose}>
       <GrupoPicker grupos={grupos} value={key} onChange={(k) => { setKey(k); setI(0); setFlip(false); setKnown(0); }} />
       {!card ? (
-        <p style={{ color: MUTED, fontSize: "0.9rem" }}>Todavía no hay material publicado para este bloque.</p>
+        <p style={{ color: "var(--fd-muted, #4A5872)", fontSize: "0.9rem" }}>Todavía no hay material publicado para este bloque.</p>
       ) : (
         <>
           <div
@@ -189,34 +189,34 @@ function Flashcards({ grupos, onClose }: { grupos: Grupo[]; onClose: () => void 
             tabIndex={0}
             onKeyDown={(e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setFlip((f) => !f); } }}
             style={{
-              minHeight: 210, borderRadius: 18, padding: 24, cursor: "pointer",
+              minHeight: 210, borderRadius: "var(--fd-radius, 18px)", padding: 24, cursor: "pointer",
               border: `2px solid ${flip ? BLUE : CARD_BORDER}`,
-              background: flip ? "rgba(22,61,112,0.05)" : "white",
+              background: flip ? "var(--fd-panel-alt, rgba(22,61,112,0.05))" : "var(--fd-panel, white)",
               display: "flex", flexDirection: "column", justifyContent: "center", gap: 10,
               transition: "all 0.2s",
             }}
           >
-            <span style={{ fontSize: "0.7rem", fontWeight: 800, letterSpacing: 0.6, textTransform: "uppercase", color: flip ? BLUE : WINE }}>
+            <span style={{ fontSize: "0.7rem", fontWeight: 800, letterSpacing: 0.6, textTransform: "uppercase", color: flip ? "var(--fd-text, #163D70)" : "var(--fd-gold, #7A5C1E)" }}>
               {flip ? "Respuesta" : "Pregunta"}
             </span>
             {flip ? (
               <div>
-                <p style={{ fontSize: "1rem", fontWeight: 700, color: INK, margin: "0 0 8px" }}>{card.options[card.correctIndex]}</p>
-                <p style={{ fontSize: "0.88rem", color: MUTED, margin: 0 }}>{card.explanation}</p>
-                {card.cite && <p style={{ fontSize: "0.75rem", color: BLUE, marginTop: 8 }}>Fuente: {card.cite}</p>}
+                <p style={{ fontSize: "1rem", fontWeight: 700, color: "var(--fd-text, #081A35)", margin: "0 0 8px" }}>{card.options[card.correctIndex]}</p>
+                <p style={{ fontSize: "0.88rem", color: "var(--fd-muted, #4A5872)", margin: 0 }}>{card.explanation}</p>
+                {card.cite && <p style={{ fontSize: "0.75rem", color: "var(--fd-text, #163D70)", marginTop: 8 }}>Fuente: {card.cite}</p>}
               </div>
             ) : (
-              <p style={{ fontSize: "1.02rem", color: INK, margin: 0 }}>{card.text}</p>
+              <p style={{ fontSize: "1.02rem", color: "var(--fd-text, #081A35)", margin: 0 }}>{card.text}</p>
             )}
-            <span style={{ fontSize: "0.72rem", color: MUTED }}>Toca la tarjeta para girarla</span>
+            <span style={{ fontSize: "0.72rem", color: "var(--fd-muted, #4A5872)" }}>Toca la tarjeta para girarla</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 16, gap: 10, flexWrap: "wrap" }}>
-            <span style={{ fontSize: "0.78rem", color: MUTED }}>
-              Tarjeta {i + 1} de {cards.length} · dominadas: <strong style={{ color: BLUE }}>{known}</strong>
+            <span style={{ fontSize: "0.78rem", color: "var(--fd-muted, #4A5872)" }}>
+              Tarjeta {i + 1} de {cards.length} · dominadas: <strong style={{ color: "var(--fd-text, #163D70)" }}>{known}</strong>
             </span>
             <div style={{ display: "flex", gap: 8 }}>
-              <button onClick={() => advance(false)} style={{ padding: "9px 16px", borderRadius: 10, border: `1px solid ${CARD_BORDER}`, background: "white", color: WINE, fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.82rem" }}>Repasar después</button>
-              <button onClick={() => advance(true)} style={{ padding: "9px 16px", borderRadius: 10, border: "none", background: BLUE, color: "white", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.82rem" }}>Ya la sé →</button>
+              <button onClick={() => advance(false)} style={{ padding: "9px 16px", borderRadius: "var(--fd-radius, 10px)", border: "1px solid var(--fd-border, #EEE1C5)", background: "var(--fd-panel, white)", color: "var(--fd-gold, #7A5C1E)", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.82rem" }}>Repasar después</button>
+              <button onClick={() => advance(true)} style={{ padding: "9px 16px", borderRadius: "var(--fd-radius, 10px)", border: "none", background: BLUE, color: "white", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.82rem" }}>Ya la sé →</button>
             </div>
           </div>
         </>
@@ -300,30 +300,30 @@ function AudioRepaso({ grupos, la, onClose }: { grupos: Grupo[]; la: boolean; on
     <Modal title="Audio-repaso y podcast" subtitle="Yaris escribe el episodio con el material curado y tu dispositivo lo narra." onClose={() => { speech.stop(); onClose(); }} wide>
       <GrupoPicker grupos={grupos} value={key} onChange={(k) => { setKey(k); setScript(""); speech.stop(); }} />
       {!paid && (
-        <p style={{ fontSize: "0.85rem", color: WINE, background: "rgba(122,92,30,0.06)", padding: 12, borderRadius: 10, marginBottom: 14 }}>
+        <p style={{ fontSize: "0.85rem", color: "var(--fd-gold, #7A5C1E)", background: "rgba(122,92,30,0.06)", padding: 12, borderRadius: "var(--fd-radius, 10px)", marginBottom: 14 }}>
           El guion con IA es parte del acceso completo. Con el plan básico puedes leer el material en Flashcards y Presentaciones.
         </p>
       )}
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
-        <button onClick={generar} disabled={loading} style={{ padding: "10px 16px", borderRadius: 10, border: "none", background: loading ? "#9fb3d4" : BLUE, color: "white", fontWeight: 700, cursor: loading ? "wait" : "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: 6 }}>
+        <button onClick={generar} disabled={loading} style={{ padding: "10px 16px", borderRadius: "var(--fd-radius, 10px)", border: "none", background: loading ? "#9fb3d4" : BLUE, color: "white", fontWeight: 700, cursor: loading ? "wait" : "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: 6 }}>
           <Icon n="spark" size={16} /> {loading ? "Escribiendo el episodio…" : script ? "Generar otro episodio" : "Generar episodio"}
         </button>
         {script && speech.supported && (
           <>
-            <button onClick={() => (speech.speaking ? speech.toggle() : speech.speak(script))} style={{ padding: "10px 16px", borderRadius: 10, border: `1px solid ${CARD_BORDER}`, background: "white", color: INK, fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.85rem" }}>
+            <button onClick={() => (speech.speaking ? speech.toggle() : speech.speak(script))} style={{ padding: "10px 16px", borderRadius: "var(--fd-radius, 10px)", border: "1px solid var(--fd-border, #EEE1C5)", background: "var(--fd-panel, white)", color: "var(--fd-text, #081A35)", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.85rem" }}>
               {speech.speaking ? (speech.paused ? <><Icon n="play" size={14} /> Reanudar</> : <><Icon n="pause" size={14} /> Pausar</>) : <><Icon n="play" size={14} /> Reproducir</>}
             </button>
-            <button onClick={speech.stop} style={{ padding: "10px 16px", borderRadius: 10, border: `1px solid ${CARD_BORDER}`, background: "white", color: WINE, fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.85rem" }}>Detener</button>
+            <button onClick={speech.stop} style={{ padding: "10px 16px", borderRadius: "var(--fd-radius, 10px)", border: "1px solid var(--fd-border, #EEE1C5)", background: "var(--fd-panel, white)", color: "var(--fd-gold, #7A5C1E)", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.85rem" }}>Detener</button>
           </>
         )}
       </div>
       {script && !speech.supported && (
-        <p style={{ fontSize: "0.8rem", color: MUTED, marginBottom: 10 }}>Tu navegador no puede narrar el episodio; abajo tienes el guion completo para leerlo.</p>
+        <p style={{ fontSize: "0.8rem", color: "var(--fd-muted, #4A5872)", marginBottom: 10 }}>Tu navegador no puede narrar el episodio; abajo tienes el guion completo para leerlo.</p>
       )}
       {script ? (
-        <div style={{ background: "#f5f7fc", borderRadius: 14, padding: 18, fontSize: "0.9rem", lineHeight: 1.65, color: INK, whiteSpace: "pre-wrap" }}>{script}</div>
+        <div style={{ background: "var(--fd-panel, #f5f7fc)", borderRadius: "var(--fd-radius, 14px)", padding: 18, fontSize: "0.9rem", lineHeight: 1.65, color: "var(--fd-text, #081A35)", whiteSpace: "pre-wrap" }}>{script}</div>
       ) : (
-        <p style={{ fontSize: "0.86rem", color: MUTED }}>Elige un bloque y genera el episodio: Yaris arma el guion con las preguntas y explicaciones oficiales de ese material.</p>
+        <p style={{ fontSize: "0.86rem", color: "var(--fd-muted, #4A5872)" }}>Elige un bloque y genera el episodio: Yaris arma el guion con las preguntas y explicaciones oficiales de ese material.</p>
       )}
     </Modal>
   );
@@ -375,22 +375,22 @@ function Presentaciones({ grupos, onClose }: { grupos: Grupo[]; onClose: () => v
     <Modal title="Presentaciones del material" subtitle="Mazo de láminas armado con el contenido oficial de cada bloque." onClose={onClose} wide>
       <GrupoPicker grupos={grupos} value={key} onChange={(k) => { setKey(k); setI(0); }} />
       {!slide ? (
-        <p style={{ color: MUTED, fontSize: "0.9rem" }}>Sin material publicado para este bloque.</p>
+        <p style={{ color: "var(--fd-muted, #4A5872)", fontSize: "0.9rem" }}>Sin material publicado para este bloque.</p>
       ) : (
         <>
-          <div style={{ borderRadius: 18, border: `2px solid ${CARD_BORDER}`, background: "linear-gradient(160deg,#ffffff,#f5f7fc)", padding: 26, minHeight: 260 }}>
-            <h4 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.25rem", color: INK, margin: "0 0 16px" }}>{slide.titulo}</h4>
+          <div style={{ borderRadius: "var(--fd-radius, 18px)", border: "1px solid var(--fd-border, #EEE1C5)", background: "linear-gradient(160deg,#ffffff,#f5f7fc)", padding: 26, minHeight: 260 }}>
+            <h4 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.25rem", color: "var(--fd-text, #081A35)", margin: "0 0 16px" }}>{slide.titulo}</h4>
             <ul style={{ margin: 0, paddingLeft: 18, display: "flex", flexDirection: "column", gap: 10 }}>
               {slide.puntos.map((p, n) => (
-                <li key={n} style={{ fontSize: "0.9rem", color: INK, lineHeight: 1.55 }}>{p}</li>
+                <li key={n} style={{ fontSize: "0.9rem", color: "var(--fd-text, #081A35)", lineHeight: 1.55 }}>{p}</li>
               ))}
             </ul>
-            {slide.fuente && <p style={{ fontSize: "0.74rem", color: BLUE, marginTop: 16 }}>Fuente: {slide.fuente}</p>}
+            {slide.fuente && <p style={{ fontSize: "0.74rem", color: "var(--fd-text, #163D70)", marginTop: 16 }}>Fuente: {slide.fuente}</p>}
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 14 }}>
-            <button onClick={() => setI((n) => Math.max(0, n - 1))} disabled={i === 0} style={{ padding: "9px 14px", borderRadius: 10, border: `1px solid ${CARD_BORDER}`, background: "white", color: i === 0 ? MUTED : INK, fontWeight: 700, cursor: i === 0 ? "default" : "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.82rem" }}>← Anterior</button>
-            <span style={{ fontSize: "0.78rem", color: MUTED }}>Lámina {i + 1} de {deck.length}</span>
-            <button onClick={() => setI((n) => Math.min(deck.length - 1, n + 1))} disabled={i === deck.length - 1} style={{ padding: "9px 14px", borderRadius: 10, border: "none", background: i === deck.length - 1 ? "#c9d4e6" : BLUE, color: "white", fontWeight: 700, cursor: i === deck.length - 1 ? "default" : "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.82rem" }}>Siguiente →</button>
+            <button onClick={() => setI((n) => Math.max(0, n - 1))} disabled={i === 0} style={{ padding: "9px 14px", borderRadius: "var(--fd-radius, 10px)", border: "1px solid var(--fd-border, #EEE1C5)", background: "var(--fd-panel, white)", color: i === 0 ? "var(--fd-muted, #4A5872)" : "var(--fd-text, #081A35)", fontWeight: 700, cursor: i === 0 ? "default" : "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.82rem" }}>← Anterior</button>
+            <span style={{ fontSize: "0.78rem", color: "var(--fd-muted, #4A5872)" }}>Lámina {i + 1} de {deck.length}</span>
+            <button onClick={() => setI((n) => Math.min(deck.length - 1, n + 1))} disabled={i === deck.length - 1} style={{ padding: "9px 14px", borderRadius: "var(--fd-radius, 10px)", border: "none", background: i === deck.length - 1 ? "#c9d4e6" : BLUE, color: "white", fontWeight: 700, cursor: i === deck.length - 1 ? "default" : "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.82rem" }}>Siguiente →</button>
           </div>
         </>
       )}
@@ -459,19 +459,19 @@ function IaMateriales({ bank, la, onClose }: { bank: BankQuestion[]; la: boolean
           <div key={n} style={{ alignSelf: m.user ? "flex-end" : "flex-start", maxWidth: "88%" }}>
             <div
               style={{
-                padding: "11px 14px", borderRadius: 14,
-                background: m.user ? BLUE : "#f5f7fc",
-                color: m.user ? "white" : INK,
+                padding: "11px 14px", borderRadius: "var(--fd-radius, 14px)",
+                background: m.user ? BLUE : "var(--fd-panel, #f5f7fc)",
+                color: m.user ? "white" : "var(--fd-text, #081A35)",
                 fontSize: "0.88rem", lineHeight: 1.6,
               }}
               dangerouslySetInnerHTML={{ __html: sanitizeHtml(m.html) }}
             />
             {m.fuentes && m.fuentes.length > 0 && (
-              <p style={{ fontSize: "0.72rem", color: BLUE, margin: "6px 2px 0" }}>Material consultado: {m.fuentes.join(" · ")}</p>
+              <p style={{ fontSize: "0.72rem", color: "var(--fd-text, #163D70)", margin: "6px 2px 0" }}>Material consultado: {m.fuentes.join(" · ")}</p>
             )}
           </div>
         ))}
-        {typing && <span style={{ fontSize: "0.82rem", color: MUTED }}>Yaris está revisando el material…</span>}
+        {typing && <span style={{ fontSize: "0.82rem", color: "var(--fd-muted, #4A5872)" }}>Yaris está revisando el material…</span>}
         <div ref={endRef} />
       </div>
       <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
@@ -481,9 +481,9 @@ function IaMateriales({ bank, la, onClose }: { bank: BankQuestion[]; la: boolean
           onKeyDown={(e) => { if (e.key === "Enter") void send(); }}
           placeholder="Ej. ¿Cómo se calcula la altitud de densidad?"
           aria-label="Pregunta sobre el material"
-          style={{ flex: 1, padding: "11px 14px", borderRadius: 10, border: `1px solid ${CARD_BORDER}`, fontSize: "0.88rem", fontFamily: "'Manrope', sans-serif", color: INK }}
+          style={{ flex: 1, padding: "11px 14px", borderRadius: "var(--fd-radius, 10px)", border: "1px solid var(--fd-border, #EEE1C5)", fontSize: "0.88rem", fontFamily: "'Manrope', sans-serif", color: "var(--fd-text, #081A35)" }}
         />
-        <button onClick={() => void send()} disabled={typing} style={{ padding: "11px 18px", borderRadius: 10, border: "none", background: typing ? "#9fb3d4" : BLUE, color: "white", fontWeight: 700, cursor: typing ? "wait" : "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.85rem" }}>Preguntar</button>
+        <button onClick={() => void send()} disabled={typing} style={{ padding: "11px 18px", borderRadius: "var(--fd-radius, 10px)", border: "none", background: typing ? "#9fb3d4" : BLUE, color: "white", fontWeight: 700, cursor: typing ? "wait" : "pointer", fontFamily: "'Manrope', sans-serif", fontSize: "0.85rem" }}>Preguntar</button>
       </div>
     </Modal>
   );
@@ -513,10 +513,10 @@ export function ExtrasPanel({ la = false }: { la?: boolean }) {
 
   return (
     <div style={{ maxWidth: 820, width: "100%", marginBottom: 48 }}>
-      <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.1rem", marginBottom: 6, color: INK }}>
+      <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.1rem", marginBottom: 6, color: "var(--fd-text, #081A35)" }}>
         Extras del cuestionario
       </h3>
-      <p style={{ fontSize: "0.85rem", color: MUTED, marginBottom: 16 }}>
+      <p style={{ fontSize: "0.85rem", color: "var(--fd-muted, #4A5872)", marginBottom: 16 }}>
         Todo se arma con el mismo material curado del banco: {bank.length.toLocaleString()} preguntas con explicación y fuente.
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 14 }}>
@@ -525,16 +525,16 @@ export function ExtrasPanel({ la = false }: { la?: boolean }) {
             key={it.kind}
             onClick={() => setOpen(it.kind)}
             style={{
-              textAlign: "left", background: "white", border: `1px solid ${CARD_BORDER}`,
-              borderRadius: 16, padding: 18, cursor: "pointer", fontFamily: "'Manrope', sans-serif",
+              textAlign: "left", background: "var(--fd-panel, white)", border: "1px solid var(--fd-border, #EEE1C5)",
+              borderRadius: "var(--fd-radius, 16px)", padding: 18, cursor: "pointer", fontFamily: "'Manrope', sans-serif",
               display: "flex", gap: 12, alignItems: "flex-start",
               boxShadow: "0 2px 10px rgba(22,61,112,0.05)",
             }}
           >
-            <span style={{ display: "flex", color: BLUE, marginTop: 2 }}><Icon n={it.icon} size={22} /></span>
+            <span style={{ display: "flex", color: "var(--fd-text, #163D70)", marginTop: 2 }}><Icon n={it.icon} size={22} /></span>
             <span>
-              <span style={{ display: "block", fontWeight: 800, color: INK, fontSize: "0.95rem", marginBottom: 4 }}>{it.title}</span>
-              <span style={{ display: "block", fontSize: "0.82rem", color: MUTED, lineHeight: 1.5 }}>{it.desc}</span>
+              <span style={{ display: "block", fontWeight: 800, color: "var(--fd-text, #081A35)", fontSize: "0.95rem", marginBottom: 4 }}>{it.title}</span>
+              <span style={{ display: "block", fontSize: "0.82rem", color: "var(--fd-muted, #4A5872)", lineHeight: 1.5 }}>{it.desc}</span>
             </span>
           </button>
         ))}

@@ -186,7 +186,7 @@ export function CalculoGame({ cfg, onFinish, onQuit }: Props) {
             fontFamily: SERIF,
             fontStyle: "italic",
             fontSize: "clamp(1.3rem, 3vw, 1.7rem)",
-            color: NAVY,
+            color: "var(--fd-text, #081A35)",
             lineHeight: 1.3,
             marginBottom: 22,
           }}
@@ -211,10 +211,10 @@ export function CalculoGame({ cfg, onFinish, onQuit }: Props) {
                 style={{
                   textAlign: "left",
                   padding: "13px 16px",
-                  borderRadius: 12,
+                  borderRadius: "var(--fd-radius, 12px)",
                   border: `1px solid ${isCorrect ? "#12B26B" : isWrongPick ? "#C24545" : `${NAVY}22`}`,
-                  background: isCorrect ? "#EAF7F0" : isWrongPick ? "#FBEDED" : "white",
-                  color: NAVY,
+                  background: isCorrect ? "var(--fd-panel, #EAF7F0)" : isWrongPick ? "var(--fd-panel, #FBEDED)" : "var(--fd-panel, white)",
+                  color: "var(--fd-text, #081A35)",
                   fontFamily: MONO,
                   fontSize: "0.95rem",
                   fontWeight: 700,
@@ -228,7 +228,7 @@ export function CalculoGame({ cfg, onFinish, onQuit }: Props) {
                 <span
                   style={{
                     fontSize: "0.62rem",
-                    color: HAZE,
+                    color: "var(--fd-muted, #4A5872)",
                     border: `1px solid ${NAVY}1F`,
                     borderRadius: 6,
                     padding: "2px 6px",
@@ -247,9 +247,9 @@ export function CalculoGame({ cfg, onFinish, onQuit }: Props) {
           <div
             style={{
               marginTop: 18,
-              background: CREAM,
+              background: "var(--fd-panel, #F5F5F7)",
               border: `1px solid ${NAVY}12`,
-              borderRadius: 14,
+              borderRadius: "var(--fd-radius, 14px)",
               padding: "14px 16px",
             }}
           >
@@ -260,7 +260,7 @@ export function CalculoGame({ cfg, onFinish, onQuit }: Props) {
                 letterSpacing: "0.16em",
                 textTransform: "uppercase",
                 fontWeight: 700,
-                color: HAZE,
+                color: "var(--fd-muted, #4A5872)",
                 marginBottom: 6,
               }}
             >
@@ -270,7 +270,7 @@ export function CalculoGame({ cfg, onFinish, onQuit }: Props) {
                   ? "Saltada — así se resolvía"
                   : "Así se resolvía"}
             </div>
-            <div style={{ fontSize: "0.9rem", color: NAVY, lineHeight: 1.5 }}>{item.rationale}</div>
+            <div style={{ fontSize: "0.9rem", color: "var(--fd-text, #081A35)", lineHeight: 1.5 }}>{item.rationale}</div>
             <div style={{ marginTop: 12, display: "flex", justifyContent: "flex-end" }}>
               <CButton onClick={advance}>
                 {tally.current.total >= cfg.items ? "Ver debrief" : "Siguiente (Enter)"}

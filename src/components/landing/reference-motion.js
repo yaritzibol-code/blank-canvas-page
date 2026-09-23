@@ -308,8 +308,8 @@ class ReferenceMotion {
     });
     gl.uniform1i(g.u.uDay, 0);
     gl.uniform1i(g.u.uNight, 1);
-    this._globeTex(g, "day", "/redesign/earth-day.jpg", 0);
-    this._globeTex(g, "night", "/redesign/earth-night.png", 1);
+    this._globeTex(g, "day", "/flightdeck/tierra-dia-nasa.jpg", 0);
+    this._globeTex(g, "night", "/flightdeck/tierra-noche-nasa.jpg", 1);
 
     g.onDown = function (e) {
       g.down = { x: e.clientX, y: e.clientY, lon: g.dragLon, lat: g.dragLat };

@@ -237,7 +237,7 @@ export function MemoriaGame({ cfg, onFinish, onQuit }: Props) {
                 style={{
                   background: NAVY,
                   color: "white",
-                  borderRadius: 14,
+                  borderRadius: "var(--fd-radius, 14px)",
                   padding: "16px 20px",
                   minWidth: 120,
                 }}
@@ -271,7 +271,7 @@ export function MemoriaGame({ cfg, onFinish, onQuit }: Props) {
             style={{
               marginTop: 22,
               height: 4,
-              background: SALMON,
+              background: "var(--fd-panel, #EEE1C5)",
               borderRadius: 999,
               overflow: "hidden",
             }}
@@ -296,7 +296,7 @@ export function MemoriaGame({ cfg, onFinish, onQuit }: Props) {
               fontFamily: SERIF,
               fontStyle: "italic",
               fontSize: "2.2rem",
-              color: NAVY,
+              color: "var(--fd-text, #081A35)",
               margin: "10px 0 18px",
             }}
           >
@@ -309,10 +309,10 @@ export function MemoriaGame({ cfg, onFinish, onQuit }: Props) {
                 onClick={() => setFase("recall")}
                 style={{
                   padding: "12px 22px",
-                  borderRadius: 12,
+                  borderRadius: "var(--fd-radius, 12px)",
                   border: `1px solid ${NAVY}22`,
-                  background: "white",
-                  color: NAVY,
+                  background: "var(--fd-panel, white)",
+                  color: "var(--fd-text, #081A35)",
                   fontFamily: MONO,
                   fontSize: "1rem",
                   fontWeight: 700,
@@ -341,7 +341,7 @@ export function MemoriaGame({ cfg, onFinish, onQuit }: Props) {
                     fontSize: "0.62rem",
                     letterSpacing: "0.16em",
                     fontWeight: 700,
-                    color: HAZE,
+                    color: "var(--fd-muted, #4A5872)",
                     marginBottom: 6,
                   }}
                 >
@@ -369,13 +369,13 @@ export function MemoriaGame({ cfg, onFinish, onQuit }: Props) {
                   style={{
                     width: "100%",
                     padding: "12px 14px",
-                    borderRadius: 12,
+                    borderRadius: "var(--fd-radius, 12px)",
                     border: `1px solid ${NAVY}26`,
                     fontFamily: MONO,
                     fontSize: "1.15rem",
                     fontWeight: 700,
-                    color: NAVY,
-                    background: CREAM,
+                    color: "var(--fd-text, #081A35)",
+                    background: "var(--fd-panel, #F5F5F7)",
                     outline: "none",
                   }}
                 />
@@ -400,9 +400,9 @@ export function MemoriaGame({ cfg, onFinish, onQuit }: Props) {
                   key={f.kind}
                   style={{
                     flex: "1 1 130px",
-                    borderRadius: 14,
+                    borderRadius: "var(--fd-radius, 14px)",
                     padding: "14px 16px",
-                    background: ok ? "#EAF7F0" : "#FBEDED",
+                    background: ok ? "var(--fd-panel, #EAF7F0)" : "var(--fd-panel, #FBEDED)",
                     border: `1px solid ${ok ? "#12B26B33" : "#C2454533"}`,
                   }}
                 >
@@ -412,7 +412,7 @@ export function MemoriaGame({ cfg, onFinish, onQuit }: Props) {
                       fontSize: "0.6rem",
                       letterSpacing: "0.16em",
                       fontWeight: 700,
-                      color: HAZE,
+                      color: "var(--fd-muted, #4A5872)",
                     }}
                   >
                     {f.kind}
@@ -429,7 +429,7 @@ export function MemoriaGame({ cfg, onFinish, onQuit }: Props) {
                     {got || "—"}
                   </div>
                   {!ok && (
-                    <div style={{ fontSize: "0.72rem", color: HAZE, marginTop: 3 }}>
+                    <div style={{ fontSize: "0.72rem", color: "var(--fd-muted, #4A5872)", marginTop: 3 }}>
                       Era <strong style={{ fontFamily: MONO }}>{f.answer}</strong>
                     </div>
                   )}
