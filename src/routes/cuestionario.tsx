@@ -316,6 +316,7 @@ function CuestionarioPage() {
   const yarisExplainedRef = useRef<Set<string>>(new Set());
   const yarisBusyRef = useRef(false);
   const [reportOpen, setReportOpen] = useState(false);
+  const [markedQuestions, setMarkedQuestions] = useState<Set<string>>(() => new Set());
   /** Popup de suscripción cuando el plan Básica toca una función Pro. */
   const [upgradeOpen, setUpgradeOpen] = useState(false);
   const [upgradeFeature, setUpgradeFeature] = useState<"yaris" | "preguntas">("yaris");
@@ -993,6 +994,23 @@ function CuestionarioPage() {
   const canGoNext = currentIdx < highestVisitedIdx || answered;
   const scorePercent = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
   const scoreColor = scorePercent >= 70 ? "#2ecc71" : scorePercent >= 50 ? "#f39c12" : "#e74c3c";
+  const consecutiveCorrect = (() => {
+    let count = 0;
+    for (let i = currentIdx - 1; i >= 0 && results[i] === true; i -= 1) count += 1;
+    return count;
+  })();
+  const elapsedSeconds = Math.max(0, Math.floor((Date.now() - startTime) / 1000));
+  const elapsedLabel = `${String(Math.floor(elapsedSeconds / 60)).padStart(2, "0")}:${String(elapsedSeconds % 60).padStart(2, "0")}`;
+  const currentMarked = markedQuestions.has(currentQ.questionId);
+
+  function toggleMarked() {
+    setMarkedQuestions((previous) => {
+      const next = new Set(previous);
+      if (next.has(currentQ.questionId)) next.delete(currentQ.questionId);
+      else next.add(currentQ.questionId);
+      return next;
+    });
+  }
 
   // Materias reales de ESTA sesión (para la pantalla de resultados).
   const sessionMaterias = Object.entries(computePorMateria()).map(([slug, v]) => {
@@ -1059,7 +1077,7 @@ function CuestionarioPage() {
       `}</style>
       {/* ── TOPBAR ── */}
       <div
-        className="px-3 sm:px-6"
+        className="fp-question-topbar px-3 sm:px-6"
         style={{
           background: "var(--fd-panel, white)",
           borderBottom: "1px solid var(--fd-border, rgba(22,61,112,0.08))",
@@ -1090,17 +1108,18 @@ function CuestionarioPage() {
           >
             <span aria-hidden="true">←</span> Salir
           </Link>
-          <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
+          <div className="fp-question-module" style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
             <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "var(--fd-text, #081A35)", display: "flex", alignItems: "center", gap: 6 }}>
-              <Icon n="spark" size={15} color="var(--fd-text, #163D70)" /> <span className="truncate">Modo Aprendiendo</span>
+              <Icon n="spark" size={15} color="var(--fd-text, #163D70)" /> <span className="truncate">Cuestionarios</span>
             </span>
             <span style={{ fontSize: "0.74rem", color: "var(--fd-muted, #5A6F92)" }} className="hidden md:block truncate">
-              {materiaLabel} · {total} preguntas
+              MEX · CIUDAD DE MÉXICO
             </span>
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
           <button
+            className="fp-question-yaris-top"
             onClick={openYaris}
             aria-label={thinkMode ? "Abrir Yaris en modo te ayudo a pensar" : "Abrir Yaris para que explique la pregunta"}
             style={{
@@ -1116,6 +1135,7 @@ function CuestionarioPage() {
             <span className="hidden lg:inline">{thinkMode ? "Ayúdame a pensar" : "Explícamelo Yaris"}</span>
           </button>
           <button
+            className="fp-question-finish"
             onClick={() => {
               if (answeredCount === 0 || window.confirm("¿Finalizar la sesión? Se guardará tu resultado y no podrás retomarla.")) {
                 setShowResult(true);
@@ -1139,7 +1159,7 @@ function CuestionarioPage() {
 
       {/* ── PROGRESS BAR ── */}
       <div
-        className="px-3 sm:px-6"
+        className="fp-question-progress px-3 sm:px-6"
         style={{
           background: "var(--fd-panel, white)",
           paddingBottom: 12,
@@ -1154,11 +1174,33 @@ function CuestionarioPage() {
             fontSize: "0.76rem", color: "var(--fd-muted, #5A6F92)", marginBottom: 6,
           }}
         >
-          <span>Progreso de la sesión</span>
-          <strong style={{ color: "var(--fd-text, #081A35)", whiteSpace: "nowrap" }}>{answeredCount}/{total} respondidas</strong>
+          <span className="fp-progress-title">APRENDIENDO · {materiaLabel.toUpperCase()}</span>
+          <span className="fp-progress-segments" aria-label={`${answeredCount} de ${total} respondidas`}>
+            {questions.map((question, index) => (
+              <button
+                key={question.questionId}
+                type="button"
+                aria-label={`Pregunta ${index + 1}`}
+                disabled={index > highestVisitedIdx}
+                className={
+                  index === currentIdx
+                    ? "is-current"
+                    : results[index] === true
+                      ? "is-correct"
+                      : results[index] === false
+                        ? "is-wrong"
+                        : ""
+                }
+                onClick={() => showVisitedQuestion(index)}
+              />
+            ))}
+          </span>
+          <strong className="fp-progress-count">{currentIdx + 1} / {total}</strong>
+          <span className="fp-progress-chip">◷ {elapsedLabel}</span>
+          <span className="fp-progress-chip is-combo">◆ COMBO x{Math.max(1, consecutiveCorrect)}</span>
         </div>
 
-        <div style={{ height: 6, background: "var(--fd-panel, #EEE1C5)", borderRadius: "var(--fd-radius, 10px)", overflow: "hidden" }}>
+        <div className="fp-progress-legacy" style={{ height: 6, background: "var(--fd-panel, #EEE1C5)", borderRadius: "var(--fd-radius, 10px)", overflow: "hidden" }}>
           <div
             style={{
               height: "100%",
@@ -1180,6 +1222,21 @@ function CuestionarioPage() {
           style={{ flex: 1, minWidth: 0, display: showResult ? "none" : undefined, overflowY: "auto" }}
         >
           <div className="fp-quiz-primary">
+          <aside className="fp-question-rail">
+            <div className="fp-question-figure">
+              <QuestionImages files={currentQ.imagenes} fuente={currentQ.fuente} />
+              <small>{currentQ.imagenes?.length ? "FIGURA 1 · MATERIAL DE ESTUDIO" : "PREGUNTA DE CONOCIMIENTOS"}</small>
+            </div>
+            <button type="button" className={currentMarked ? "is-active" : ""} onClick={toggleMarked}>
+              <Icon n="bookmark" size={16} /><span>{currentMarked ? "Marcada para revisar" : "Marcar para revisar"}</span><kbd>M</kbd>
+            </button>
+            <button type="button" onClick={openYaris}>
+              <Icon n="lightbulb" size={16} /><span>Pista de Yaris</span><kbd>H</kbd>
+            </button>
+            <button type="button" onClick={() => setReportOpen(true)}>
+              <Icon n="alert" size={16} /><span>Reportar pregunta</span><kbd>R</kbd>
+            </button>
+          </aside>
           {/* Question card */}
           <div
             className="fp-quiz-card"
@@ -1190,7 +1247,7 @@ function CuestionarioPage() {
             }}
           >
             {/* Sin etiqueta de materia: la pregunta no debe adelantar el tema. */}
-            <div style={{ marginBottom: 8 }}>
+            <div className="fp-question-navigator" style={{ marginBottom: 8 }}>
               <QuizQuestionNavigator
                 total={total}
                 currentIdx={currentIdx}
@@ -1200,7 +1257,8 @@ function CuestionarioPage() {
               />
             </div>
 
-            <p
+            <div className="fp-question-eyebrow">PREGUNTA {currentIdx + 1} <span>·</span> {currentQ.capituloTitulo?.toUpperCase() || "CONOCIMIENTOS AERONÁUTICOS"}</div>
+            <h1
               style={{
                 fontFamily: "'Instrument Serif', serif",
                 fontSize: "clamp(1.5rem, 2.4vw, 2rem)",
@@ -1210,9 +1268,9 @@ function CuestionarioPage() {
               }}
             >
               {currentQ.text}
-            </p>
+            </h1>
 
-            <QuestionImages files={currentQ.imagenes} fuente={currentQ.fuente} />
+            <div className="fp-question-inline-image"><QuestionImages files={currentQ.imagenes} fuente={currentQ.fuente} /></div>
 
 
 
@@ -1273,7 +1331,7 @@ function CuestionarioPage() {
                 <button
                   key={i}
                   type="button"
-                  className="fp-quiz-option"
+                  className={`fp-quiz-option${answered && opt.correct ? " is-correct" : ""}${answered && i === selectedIdx && !opt.correct ? " is-wrong" : ""}`}
                   onClick={() => handleOptionClick(i)}
                   disabled={answered}
                   aria-pressed={selectedIdx === i}
@@ -1420,6 +1478,17 @@ function CuestionarioPage() {
             </button>
           </div>
           </div>
+          <aside className="fp-question-context">
+            <section className="fp-question-yaris-card">
+              <span><YarisAvatar size={52} /></span>
+              <h2>Yaris está contigo</h2>
+              <p>{answered ? "Revisa tu respuesta y pídeme otra explicación cuando la necesites." : "Responde y te explico por qué. Si dudas, pide una pista: te guío sin darte la respuesta."}</p>
+            </section>
+            <section className="fp-question-session-stats">
+              <p>ESTA SESIÓN</p>
+              <div><span><small>ACIERTOS</small><strong>{correctCount}<em>/{answeredCount || 0}</em></strong></span><span><small>PRECISIÓN</small><strong>{scorePercent}<em>%</em></strong></span></div>
+            </section>
+          </aside>
 
         </div>
 
@@ -1822,6 +1891,13 @@ function CuestionarioPage() {
           </div>
         </div>
       </div>
+
+      {!showResult && (
+        <footer className="fp-question-footer">
+          <span><kbd>1–4</kbd> Responder <kbd>H</kbd> Pista <kbd>M</kbd> Marcar <kbd>ENTER</kbd> Siguiente <kbd>ESC</kbd> Pausa</span>
+          <span className="fp-pathy-streak"><PathyMark size={25} /><b>PATHY</b> {consecutiveCorrect > 1 ? `Llevas ${consecutiveCorrect} seguidas. Sigue así.` : "Un paso a la vez. Tu próximo acierto empieza aquí."}</span>
+        </footer>
+      )}
 
 
       {/* Reportar problema */}

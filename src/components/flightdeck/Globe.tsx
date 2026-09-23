@@ -349,6 +349,7 @@ export function Globe({
             <span>
               <small>{d.code}</small>
               <strong>{d.name}</strong>
+              <em>{["◆ 68% / 100%", "◆ 76 / 80", "◆ 68 / 75", "◆ 40% / 107", "◆ #12 / 148"][i]}</em>
             </span>
           </button>
         ))}
