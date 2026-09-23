@@ -1779,9 +1779,8 @@ function CuestionarioPage() {
             }}
           >
             {yarisMsgs.map((msg, i) => (
-              <Message
+              <div
                 key={i}
-                from={msg.role === "bot" ? "assistant" : "user"}
                 data-msg-role={msg.role}
                 className="fp-yaris-message-row"
                 style={{
