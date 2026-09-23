@@ -84,14 +84,56 @@ function CheckoutReturn() {
           : "No encontramos la sesión de pago. Si crees que es un error, escríbenos.";
 
   return (
-    <div style={{ minHeight: "100vh", background: "#F7F9FC", fontFamily: FONT, display: "grid", placeItems: "center", padding: 24 }}>
-      <div style={{ background: "#fff", border: "1px solid #E3EAF5", borderRadius: 20, padding: "40px 32px", maxWidth: 480, textAlign: "center" }}>
-        <div style={{ width: 72, height: 72, borderRadius: "50%", margin: "0 auto 14px", display: "grid", placeItems: "center", background: "#FBF7EC", color: "#7A5C1E" }}>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "radial-gradient(1200px 700px at 50% -10%, #0C2murk 0%, transparent 60%), linear-gradient(180deg,#050F22 0%,#03080F 100%)",
+        fontFamily: FONT,
+        display: "grid",
+        placeItems: "center",
+        padding: 24,
+      }}
+    >
+      <div
+        style={{
+          background: "rgba(5,15,34,0.88)",
+          border: "1px solid rgba(199,160,82,0.35)",
+          borderRadius: 6,
+          padding: "40px 32px",
+          maxWidth: 480,
+          textAlign: "center",
+          boxShadow: "0 30px 80px rgba(0,0,0,0.55)",
+        }}
+      >
+        <div
+          style={{
+            width: 72,
+            height: 72,
+            borderRadius: "50%",
+            margin: "0 auto 14px",
+            display: "grid",
+            placeItems: "center",
+            background: "rgba(199,160,82,0.14)",
+            border: "1px solid rgba(199,160,82,0.35)",
+            color: "#C7A052",
+          }}
+        >
           <Icon n={status === "active" ? "checkCircle" : status === "pending" ? "clock" : session_id ? "check" : "plane"} size={34} />
         </div>
         <h1 style={{ fontFamily: DISPLAY, color: INK, fontSize: "1.6rem", fontWeight: 800, margin: "0 0 12px" }}>{title}</h1>
-        <p style={{ color: "#4A5872", fontSize: 15, lineHeight: 1.6, marginBottom: 28 }}>{body}</p>
-        <Link to="/dashboard" style={{ display: "inline-block", background: "#7A5C1E", color: "#fff", textDecoration: "none", fontWeight: 700, padding: "12px 24px", borderRadius: 12 }}>
+        <p style={{ color: "#B8C5DA", fontSize: 15, lineHeight: 1.6, marginBottom: 28 }}>{body}</p>
+        <Link
+          to="/dashboard"
+          style={{
+            display: "inline-block",
+            background: "linear-gradient(180deg,#C7A052,#8A6A25)",
+            color: "#0B1220",
+            textDecoration: "none",
+            fontWeight: 800,
+            padding: "12px 24px",
+            borderRadius: 6,
+          }}
+        >
           Ir al dashboard →
         </Link>
       </div>
