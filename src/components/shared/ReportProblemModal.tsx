@@ -80,13 +80,13 @@ export function ReportProblemModal({
   const inputStyle = {
     width: "100%",
     padding: "11px 14px",
-    borderRadius: "var(--fd-radius, 10px)",
-    border: "1.5px solid #E3EAF5",
+    borderRadius: 6,
+    border: "1.5px solid rgba(199,160,82,.22)",
     fontSize: 14,
     fontFamily: FONT,
-    color: "var(--fd-text, #081A35)",
+    color: "#FFFFFF",
     outline: "none",
-    background: "var(--fd-panel, #fff)",
+    background: "rgba(255,255,255,.04)",
   } as const;
 
   return (
@@ -96,7 +96,7 @@ export function ReportProblemModal({
         position: "fixed",
         inset: 0,
         zIndex: 4000,
-        background: "rgba(8,26,53,.35)",
+        background: "rgba(3,8,15,.72)",
         backdropFilter: "blur(6px)",
         display: "flex",
         alignItems: "center",
@@ -109,10 +109,10 @@ export function ReportProblemModal({
         onClick={(e) => e.stopPropagation()}
         style={{
           width: "min(480px, 100%)",
-          background: "var(--fd-panel, #fff)",
-          borderRadius: "var(--fd-radius, 20px)",
+          background: "rgba(255,255,255,.04)",
+          borderRadius: 8,
           padding: "clamp(22px, 5vw, 32px)",
-          boxShadow: "0 30px 80px rgba(8,26,53,.35)",
+          boxShadow: "0 30px 80px rgba(3,8,15,.72)",
         }}
       >
         {sent ? (
@@ -123,7 +123,7 @@ export function ReportProblemModal({
                 height: 60,
                 margin: "0 auto 14px",
                 borderRadius: "50%",
-                background: "var(--fd-panel, #EAF6EE)",
+                background: "rgba(46,204,113,.16)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -131,10 +131,10 @@ export function ReportProblemModal({
             >
               <Icon n="checkCircle" size={30} color="#2ecc71" />
             </div>
-            <h3 style={{ fontFamily: DISPLAY, color: "var(--fd-text, #081A35)", margin: "0 0 6px", fontSize: "1.2rem" }}>
+            <h3 style={{ fontFamily: DISPLAY, color: "#FFFFFF", margin: "0 0 6px", fontSize: "1.2rem" }}>
               ¡Reporte enviado!
             </h3>
-            <p style={{ color: "var(--fd-muted, #4A5872)", fontSize: 14, margin: 0 }}>
+            <p style={{ color: "#B8C5DA", fontSize: 14, margin: 0 }}>
               Gracias por avisarnos. Lo revisaremos y daremos seguimiento desde el equipo FlightPath.
             </p>
           </div>
@@ -142,15 +142,15 @@ export function ReportProblemModal({
           <>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
               <Icon n="alert" size={20} color="var(--fd-gold, #7A5C1E)" />
-              <h3 style={{ fontFamily: DISPLAY, color: "var(--fd-text, #081A35)", margin: 0, fontSize: "1.25rem", fontWeight: 800 }}>
+              <h3 style={{ fontFamily: DISPLAY, color: "#FFFFFF", margin: 0, fontSize: "1.25rem", fontWeight: 800 }}>
                 Reportar problema
               </h3>
             </div>
-            <p style={{ color: "var(--fd-muted, #4A5872)", fontSize: 13.5, margin: "0 0 18px" }}>
-              Sección: <b style={{ color: "var(--fd-text, #081A35)" }}>{seccion}</b>
+            <p style={{ color: "#B8C5DA", fontSize: 13.5, margin: "0 0 18px" }}>
+              Sección: <b style={{ color: "#FFFFFF" }}>{seccion}</b>
               {recurso ? (
                 <>
-                  {" · "}Recurso: <b style={{ color: "var(--fd-text, #081A35)" }}>{recurso}</b>
+                  {" · "}Recurso: <b style={{ color: "#FFFFFF" }}>{recurso}</b>
                 </>
               ) : null}
             </p>
@@ -158,17 +158,17 @@ export function ReportProblemModal({
             {pregunta ? (
               <div
                 style={{
-                  border: "1px solid #E3EAF4",
-                  background: "var(--fd-panel, #F7FAFF)",
-                  borderRadius: "var(--fd-radius, 14px)",
+                  border: "1px solid rgba(199,160,82,.18)",
+                  background: "rgba(255,255,255,.05)",
+                  borderRadius: 6,
                   padding: "12px 14px",
                   margin: "0 0 16px",
                 }}
               >
-                <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: ".06em", color: "var(--fd-muted, #4A5872)" }}>
+                <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: ".06em", color: "#B8C5DA" }}>
                   PREGUNTA REPORTADA
                 </div>
-                <p style={{ margin: "6px 0 0", color: "var(--fd-text, #081A35)", fontSize: 13.5, lineHeight: 1.5 }}>
+                <p style={{ margin: "6px 0 0", color: "#FFFFFF", fontSize: 13.5, lineHeight: 1.5 }}>
                   {pregunta.text.length > 240 ? `${pregunta.text.slice(0, 240)}…` : pregunta.text}
                 </p>
               </div>
@@ -176,7 +176,7 @@ export function ReportProblemModal({
 
 
 
-            <label style={{ display: "block", fontSize: 12.5, fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 6 }}>
+            <label style={{ display: "block", fontSize: 12.5, fontWeight: 700, color: "#FFFFFF", marginBottom: 6 }}>
               Tipo de reporte
             </label>
             <select value={tipo} onChange={(e) => setTipo(e.target.value)} style={{ ...inputStyle, marginBottom: 14 }}>
@@ -187,7 +187,7 @@ export function ReportProblemModal({
               ))}
             </select>
 
-            <label style={{ display: "block", fontSize: 12.5, fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 6 }}>
+            <label style={{ display: "block", fontSize: 12.5, fontWeight: 700, color: "#FFFFFF", marginBottom: 6 }}>
               Describe el problema
             </label>
             <textarea
@@ -203,10 +203,10 @@ export function ReportProblemModal({
                 onClick={onClose}
                 style={{
                   padding: "10px 18px",
-                  borderRadius: "var(--fd-radius, 10px)",
-                  border: "1.5px solid #E3EAF5",
-                  background: "var(--fd-panel, #fff)",
-                  color: "var(--fd-muted, #4A5872)",
+                  borderRadius: 6,
+                  border: "1.5px solid rgba(199,160,82,.22)",
+                  background: "rgba(255,255,255,.04)",
+                  color: "#B8C5DA",
                   fontWeight: 700,
                   fontSize: 14,
                   cursor: "pointer",
@@ -220,9 +220,9 @@ export function ReportProblemModal({
                 disabled={!mensaje.trim()}
                 style={{
                   padding: "10px 18px",
-                  borderRadius: "var(--fd-radius, 10px)",
+                  borderRadius: 6,
                   border: "none",
-                  background: mensaje.trim() ? "#7A5C1E" : "#C9D4E5",
+                  background: mensaje.trim() ? "linear-gradient(180deg,#C7A052,#8A6A25)" : "rgba(255,255,255,.12)",
                   color: "#fff",
                   fontWeight: 800,
                   fontSize: 14,
