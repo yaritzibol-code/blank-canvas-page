@@ -336,8 +336,9 @@ export function TimerProvider({ children }: { children: ReactNode }) {
 
       {/* TOAST */}
       {toast && (
-        <div style={{ position: "fixed", bottom: s.visible ? 124 : 30, left: "50%", transform: "translateX(-50%)", background: "#1a1a2e", color: "white", padding: "10px 22px", borderRadius: 8, fontSize: 13, fontWeight: 500, pointerEvents: "none", whiteSpace: "nowrap", zIndex: 400, transition: "bottom .3s", boxShadow: "0 4px 16px rgba(0,0,0,.35)" }}>
-          {toast}
+        <div role="status" style={{ position: "fixed", bottom: s.visible ? 124 : 30, left: "50%", transform: "translateX(-50%)", background: "#1a1a2e", color: "white", padding: "10px 10px 10px 22px", borderRadius: 8, fontSize: 13, fontWeight: 500, whiteSpace: "nowrap", zIndex: 400, transition: "bottom .3s", boxShadow: "0 4px 16px rgba(0,0,0,.35)", display: "flex", alignItems: "center", gap: 12 }}>
+          <span>{toast}</span>
+          <button type="button" onClick={() => setToast(null)} aria-label="Cerrar aviso" style={{ width: 32, height: 32, border: 0, borderRadius: 6, background: "rgba(255,255,255,.12)", color: "white", cursor: "pointer", display: "grid", placeItems: "center", fontSize: 18, lineHeight: 1 }}>×</button>
         </div>
       )}
     </TimerCtx.Provider>

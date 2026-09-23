@@ -2561,13 +2561,12 @@ html[data-motion="reduced"] .fd-shell *::after {
   border-radius: 10px 3px 10px 10px !important;
 }
 .fd-question-session .fp-yaris-composer {
-  padding: 12px 14px max(12px, env(safe-area-inset-bottom)) !important;
+  margin: 12px 14px max(12px, env(safe-area-inset-bottom));
   background: var(--fd-panel);
   border-color: var(--fd-border) !important;
 }
-.fd-question-session .fp-yaris-composer input {
+.fd-question-session .fp-yaris-composer textarea {
   border-radius: 4px !important;
-  border-color: var(--fd-border) !important;
   background: color-mix(in oklab, var(--fd-panel) 84%, var(--fd-text)) !important;
 }
 .fd-question-session .fp-yaris-composer button {
@@ -2815,14 +2814,15 @@ html[data-motion="reduced"] .fd-shell *::after {
 .fd-question-session .fp-quiz-option > span:first-child { width:46px!important; height:46px!important; border-radius:5px!important; border:1px solid #c7a05288!important; background:#c7a05210!important; color:#e3c98a!important; }
 .fd-question-session .fp-quiz-option > span:nth-child(2) { font-size:14px!important; font-weight:600; }
 .fd-question-session .fp-quiz-option.is-correct { background:#7fd6a41f!important; border-color:#7fd6a4!important; }
-.fd-question-session .fp-quiz-option.is-wrong { background:#f0a08c18!important; border-color:#f0a08c!important; opacity:.72; }
+.fd-question-session .fp-quiz-option.is-wrong { background:#f0a08c26!important; border-color:#f0a08c!important; opacity:.92; }
 .fd-question-session .fp-quiz-option.is-correct > span:first-child { background:#7fd6a4!important; border-color:#7fd6a4!important; color:#02070f!important; }
 .fd-question-session .fp-quiz-option.is-wrong > span:first-child { background:#f0a08c!important; border-color:#f0a08c!important; color:#02070f!important; }
 .fd-question-session .fp-quiz-nav { grid-column:2; grid-row:2; }
 .fd-question-session .fp-quiz-nav > button { min-height:54px; border-radius:5px!important; background:linear-gradient(135deg,#ebd6a2,#c7a052 46%,#9c7a35)!important; color:#081a35!important; }
 .fd-question-session .fp-question-context { grid-column:2; grid-row:1; display:flex; flex-direction:column; gap:14px; }
 .fd-question-session .fp-question-yaris-card,.fd-question-session .fp-question-session-stats { position:relative; border:1px solid #ffffff24; border-radius:5px; background:linear-gradient(180deg,#081a35e6,#050f22e6); }
-.fd-question-session .fp-question-yaris-card { min-height:260px; padding:28px 24px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+.fd-question-session .fp-question-yaris-card { min-height:330px; padding:34px 24px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; transition:min-height .3s ease,opacity .2s ease; }
+.fd-question-session .fp-question-context.is-chatting { visibility:hidden; }
 .fd-question-session .fp-question-yaris-card::before,.fd-question-session .fp-question-yaris-card::after { content:""; position:absolute; width:14px; height:14px; border-color:#c7a052; border-style:solid; }
 .fd-question-session .fp-question-yaris-card::before { left:-1px; top:-1px; border-width:2px 0 0 2px; }.fd-question-session .fp-question-yaris-card::after { right:-1px; bottom:-1px; border-width:0 2px 2px 0; }
 .fd-question-session .fp-question-yaris-card > span { width:74px; height:74px; display:grid; place-items:center; border:1px solid #c7a052; border-radius:50%; box-shadow:0 0 30px #4879b280; }
@@ -2849,11 +2849,11 @@ html[data-motion="reduced"] .fd-shell *::after {
 .fd-takeoff-corner { position:absolute; width:9px; height:9px; border-color:#e3c98a; border-style:solid; transition:.3s; }.fd-takeoff-corner.is-tl { left:-6px; top:-6px; border-width:2px 0 0 2px; }.fd-takeoff-corner.is-tr { right:-6px; top:-6px; border-width:2px 2px 0 0; }.fd-takeoff-corner.is-bl { left:-6px; bottom:-6px; border-width:0 0 2px 2px; }.fd-takeoff-corner.is-br { right:-6px; bottom:-6px; border-width:0 2px 2px 0; }
 .fd-takeoff-plane { position:relative; overflow:hidden; }.fd-plane-status { position:absolute; top:7px; right:7px; width:5px; height:5px; border-radius:50%; background:#7fd6a4; box-shadow:0 0 8px #7fd6a4; animation:fd-blink 1.2s steps(2) infinite; }.fd-plane-trail { position:absolute; left:2px; top:26px; height:2px; width:0; background:linear-gradient(90deg,transparent,#e3c98a); transform:rotate(-14deg); transition:.5s; }
 .fd-takeoff:hover .fd-plane-trail { width:22px; }.fd-takeoff-chevrons { display:flex; gap:1px; font-size:20px; font-weight:800; }.fd-takeoff-chevrons i { font-style:normal; opacity:.2; animation:fd-chevron 1.3s ease-in-out infinite; }.fd-takeoff-chevrons i:nth-child(2){animation-delay:.15s}.fd-takeoff-chevrons i:nth-child(3){animation-delay:.3s}
-.fd-destination-chip { height:80px; padding:0; display:flex; flex-direction:row; border-radius:12px; background-image:none!important; background:#050f22c7!important; overflow:visible; position:relative; }
+.fd-destination-chip { height:80px; padding:0; display:flex; flex-direction:row; border-radius:12px; background-color:#050f22c7!important; background-size:cover; background-position:center; overflow:visible; position:relative; }
 .fd-destination-chip > small { display:none; }.fd-destination-chip > span:not(.fd-chip-rule) { display:grid; grid-template-columns:minmax(0,1fr) 62px; width:100%; align-items:stretch; margin:0; gap:0; }.fd-destination-chip > span > span:first-child { padding:11px 12px; display:flex; flex-direction:column; justify-content:center; min-width:0; }.fd-destination-chip > span > span:first-child > small { display:block; color:#c7a052; font:8px "JetBrains Mono",monospace; letter-spacing:.12em; }.fd-destination-chip > span > span:first-child strong { margin:6px 0 3px; }.fd-destination-chip > span > span:first-child em { color:#7fd6a4; font:7px "JetBrains Mono",monospace; letter-spacing:.1em; font-style:normal; }.fd-destination-chip > span > span:first-child em b { color:#7fd6a4; }
 .fd-ticket-stub { position:relative; border-left:1px dashed #ffffff38; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; }.fd-ticket-stub small { display:block!important; color:#8fa3c2!important; font:7px "JetBrains Mono",monospace!important; }.fd-ticket-stub strong { color:#e3c98a; font:24px/1 "Instrument Serif",serif; }.fd-ticket-stub em { color:#8fa3c2; font:6px "JetBrains Mono",monospace; font-style:normal; }
 .fd-ticket-notch { position:absolute; right:55px; width:12px; height:12px; border-radius:50%; background:#02070f; z-index:2; }.fd-ticket-notch.is-top { top:-7px; }.fd-ticket-notch.is-bottom { bottom:-7px; }
-.fd-destination-chip.is-active { transform:translateY(-9px); background:#0c203eeb!important; }
+.fd-destination-chip.is-active { transform:translateY(-9px); box-shadow:inset 0 0 0 1px #c7a05288,0 14px 32px #0008; }
 .fd-marker em { display:block; color:#b8c5da; font:7px "JetBrains Mono",monospace; font-style:normal; margin-top:3px; }.fd-marker-icon { width:44px; height:44px; }
 .fd-descent-hud { position:absolute; z-index:4; inset:32px; display:grid; grid-template-columns:1fr auto; align-items:start; color:#fff; }.fd-descent-hud p { margin:0 0 8px; font:10px "JetBrains Mono",monospace; letter-spacing:.2em; color:#c7a052; }.fd-descent-hud > div:first-child strong { font:42px "Instrument Serif",serif; }.fd-descent-hud > div:nth-child(2) { text-align:right; }.fd-descent-hud small { display:block; font:9px "JetBrains Mono",monospace; letter-spacing:.16em; color:#8fa3c2; }.fd-descent-hud > div:nth-child(2) strong { font:36px "Instrument Serif",serif; }.fd-descent-hud em { font-size:15px; font-style:normal; }.fd-descent-hud > span { grid-column:1/-1; align-self:end; height:5px; background:#ffffff24; }.fd-descent-hud > span i { display:block; height:100%; background:linear-gradient(90deg,#4879b2,#c7a052); }
 .fd-cloud-two { animation-delay:.25s; mix-blend-mode:screen; }.fd-cloud-three { animation-delay:.5s; mix-blend-mode:screen; transform:scaleX(-1); }.fd-arrival-title { display:flex; align-items:end; justify-content:space-between; gap:16px; }.fd-arrival-title > strong { color:#e3c98a; font:22px "Instrument Serif",serif; }

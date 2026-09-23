@@ -29,7 +29,18 @@ import { PathyMark } from "@/components/shared/PathyMark";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { QuestionImages } from "@/components/banco/QuestionImages";
 import { QuizQuestionNavigator } from "@/components/banco/QuizQuestionNavigator";
+import {
+  Message,
+  MessageContent,
+} from "@/components/ai-elements/message";
+import {
+  PromptInput,
+  PromptInputFooter,
+  PromptInputSubmit,
+  PromptInputTextarea,
+} from "@/components/ai-elements/prompt-input";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
+import knowledgeQuestionImage from "@/assets/question-knowledge-default.jpg";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import {
   FREE_CIAAC_MAX,
@@ -840,8 +851,8 @@ function CuestionarioPage() {
     return answer;
   }
 
-  async function sendYarisMsg() {
-    const text = yarisInput.trim();
+  async function sendYarisMsg(submittedText?: string) {
+    const text = (submittedText ?? yarisInput).trim();
     if (!text || yarisTyping || yarisBusyRef.current) return;
     const next: YarisMsg[] = [...yarisMsgs, { role: "user", text }];
     setYarisMsgs(next);
@@ -870,7 +881,7 @@ function CuestionarioPage() {
     if (opt.correct) {
       return { border: "2px solid #2ecc71", background: "rgba(46,204,113,0.07)", cursor: "default" };
     }
-    return { border: "1px solid var(--fd-border, #EEE1C5)", background: "var(--fd-panel, #f8f9ff)", cursor: "default", opacity: 0.6 };
+    return { border: "1px solid var(--fd-border, #EEE1C5)", background: "var(--fd-panel, #f8f9ff)", cursor: "default", opacity: 0.88 };
   }
 
   function getLetterStyle(optIdx: number): React.CSSProperties {
@@ -1224,8 +1235,14 @@ function CuestionarioPage() {
           <div className="fp-quiz-primary">
           <aside className="fp-question-rail">
             <div className="fp-question-figure">
-              <QuestionImages files={currentQ.imagenes} fuente={currentQ.fuente} />
-              <small>{currentQ.imagenes?.length ? "FIGURA 1 · MATERIAL DE ESTUDIO" : "PREGUNTA DE CONOCIMIENTOS"}</small>
+              <img
+                src={knowledgeQuestionImage}
+                alt="Cabina de vuelo al amanecer"
+                loading="lazy"
+                width={1200}
+                height={912}
+              />
+              <small>PREGUNTA DE CONOCIMIENTOS</small>
             </div>
             <button type="button" className={currentMarked ? "is-active" : ""} onClick={toggleMarked}>
               <Icon n="bookmark" size={16} /><span>{currentMarked ? "Marcada para revisar" : "Marcar para revisar"}</span><kbd>M</kbd>
@@ -1257,6 +1274,12 @@ function CuestionarioPage() {
               />
             </div>
 
+            {!!currentQ.imagenes?.length && (
+              <figure className="fp-question-featured-figure">
+                <QuestionImages files={currentQ.imagenes} fuente={currentQ.fuente} />
+                <figcaption>FIGURA 1 · MATERIAL DE ESTUDIO</figcaption>
+              </figure>
+            )}
             <div className="fp-question-eyebrow">PREGUNTA {currentIdx + 1} <span>·</span> {currentQ.capituloTitulo?.toUpperCase() || "CONOCIMIENTOS AERONÁUTICOS"}</div>
             <h1
               style={{
@@ -1269,10 +1292,6 @@ function CuestionarioPage() {
             >
               {currentQ.text}
             </h1>
-
-            <div className="fp-question-inline-image"><QuestionImages files={currentQ.imagenes} fuente={currentQ.fuente} /></div>
-
-
 
             {currentQ.abierta ? (
               /* Respuesta escrita: el glosario de abreviaturas se contesta a mano. */
@@ -1478,8 +1497,8 @@ function CuestionarioPage() {
             </button>
           </div>
           </div>
-          <aside className="fp-question-context">
-            <section className="fp-question-yaris-card">
+          <aside className={"fp-question-context" + (yarisOpen ? " is-chatting" : "")}>
+            <section className="fp-question-yaris-card" aria-hidden={yarisOpen}>
               <span><YarisAvatar size={52} /></span>
               <h2>Yaris está contigo</h2>
               <p>{answered ? "Revisa tu respuesta y pídeme otra explicación cuando la necesites." : "Responde y te explico por qué. Si dudas, pide una pista: te guío sin darte la respuesta."}</p>
@@ -1770,9 +1789,11 @@ function CuestionarioPage() {
             }}
           >
             {yarisMsgs.map((msg, i) => (
-              <div
+              <Message
                 key={i}
+                from={msg.role === "bot" ? "assistant" : "user"}
                 data-msg-role={msg.role}
+                className="fp-yaris-message-row"
                 style={{
                   display: "flex", gap: 7, alignItems: "flex-start",
                   flexDirection: msg.role === "user" ? "row-reverse" : "row",
@@ -1793,7 +1814,8 @@ function CuestionarioPage() {
                 >
                   {msg.role === "bot" ? <YarisAvatar size={24} /> : initials}
                 </div>
-                <div
+                <MessageContent
+                  className="fp-yaris-message-content"
                   style={{
                     maxWidth: "84%", padding: "9px 12px",
                     borderRadius: msg.role === "bot" ? "4px 12px 12px 12px" : "12px 4px 12px 12px",
@@ -1816,8 +1838,8 @@ function CuestionarioPage() {
                       <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="book" size={12} /> {msg.cite}</span>
                     </span>
                   )}
-                </div>
-              </div>
+                </MessageContent>
+              </Message>
             ))}
             {yarisTyping && (
               <div style={{ display: "flex", gap: 7, alignItems: "flex-start" }}>
@@ -1851,44 +1873,32 @@ function CuestionarioPage() {
           </div>
 
           {/* Input */}
-          <div
+          <PromptInput
             className="fp-yaris-composer"
-            style={{
-              padding: "10px 14px calc(10px + env(safe-area-inset-bottom))",
-              borderTop: "1px solid var(--fd-border, #EEE1C5)",
-              display: "flex", gap: 8, alignItems: "center", flexShrink: 0,
-            }}
+            onSubmit={({ text }) => sendYarisMsg(text)}
           >
-            <input
+            <PromptInputTextarea
               value={yarisInput}
               onChange={(e) => setYarisInput(e.target.value)}
-              onKeyDown={(e) => { if (e.key === "Enter") sendYarisMsg(); }}
               aria-label="Escribe tu mensaje para Yaris"
               placeholder={thinkMode ? "Pregúntame conceptos, no la respuesta..." : "Escribe tu duda..."}
+              disabled={yarisTyping}
               style={{
-                flex: 1, border: "1px solid var(--fd-border, #C9D4E5)", borderRadius: "var(--fd-radius, 22px)",
                 // 16px evita el zoom automático de iOS al enfocar el campo.
-                padding: "11px 14px", fontSize: "16px", minHeight: 44,
+                padding: "11px 14px", fontSize: "16px", minHeight: 64,
                 color: "var(--fd-text, #081A35)",
                 fontFamily: "'Manrope', sans-serif", outline: "none",
                 transition: "border-color 0.2s",
               }}
-              onFocus={(e) => { e.currentTarget.style.borderColor = "#163D70"; }}
-              onBlur={(e) => { e.currentTarget.style.borderColor = "#C9D4E5"; }}
             />
-            <button
-              onClick={sendYarisMsg}
-              aria-label="Enviar mensaje a Yaris"
-              style={{
-                width: 44, height: 44, background: "#163D70", border: "none",
-                borderRadius: "50%", color: "white", cursor: "pointer",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "0.82rem", flexShrink: 0,
-              }}
-            >
-              <Icon n="send" size={17} />
-            </button>
-          </div>
+            <PromptInputFooter className="justify-end">
+              <PromptInputSubmit
+                status={yarisTyping ? "streaming" : "ready"}
+                disabled={!yarisInput.trim() || yarisTyping}
+                aria-label="Enviar mensaje a Yaris"
+              />
+            </PromptInputFooter>
+          </PromptInput>
         </div>
       </div>
 
