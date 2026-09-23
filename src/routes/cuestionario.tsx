@@ -1077,8 +1077,7 @@ function CuestionarioPage() {
       `}</style>
       {/* ── TOPBAR ── */}
       <div
-        className="fp-question-topbar"
-        className="px-3 sm:px-6"
+        className="fp-question-topbar px-3 sm:px-6"
         style={{
           background: "var(--fd-panel, white)",
           borderBottom: "1px solid var(--fd-border, rgba(22,61,112,0.08))",
@@ -1160,8 +1159,7 @@ function CuestionarioPage() {
 
       {/* ── PROGRESS BAR ── */}
       <div
-        className="fp-question-progress"
-        className="px-3 sm:px-6"
+        className="fp-question-progress px-3 sm:px-6"
         style={{
           background: "var(--fd-panel, white)",
           paddingBottom: 12,
@@ -1333,7 +1331,7 @@ function CuestionarioPage() {
                 <button
                   key={i}
                   type="button"
-                  className="fp-quiz-option"
+                  className={`fp-quiz-option${answered && opt.correct ? " is-correct" : ""}${answered && i === selectedIdx && !opt.correct ? " is-wrong" : ""}`}
                   onClick={() => handleOptionClick(i)}
                   disabled={answered}
                   aria-pressed={selectedIdx === i}

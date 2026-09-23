@@ -27,6 +27,9 @@ function metric(index: number, stats: StudentStats | null) {
 function routeStatus(index: number) {
   return ["A TIEMPO", "EMBARCANDO", "EMBARCANDO", "ABIERTO", "A TIEMPO"][index];
 }
+function sectionMetric(index: number) {
+  return ["68% del temario", "32 para hoy", "Racha de 3", "12 pendientes"][index] ?? "Abrir ruta";
+}
 function Arrival({
   destination,
   onClose,
@@ -91,8 +94,8 @@ function Arrival({
       {!landed && (
         <>
           <div className="fd-dive-clouds fd-cloud-one" style={{ backgroundImage: `url("${ASSETS}picada-inicio-nubes.jpg")` }} />
-          <div className="fd-dive-clouds fd-cloud-two" style={{ backgroundImage: `url("${ASSETS}nube-1.png")` }} />
-          <div className="fd-dive-clouds fd-cloud-three" style={{ backgroundImage: `url("${ASSETS}nube-2.png")` }} />
+          <div className="fd-dive-clouds fd-cloud-two" style={{ backgroundImage: `url("${ASSETS}picada-nubes-a.jpg")` }} />
+          <div className="fd-dive-clouds fd-cloud-three" style={{ backgroundImage: `url("${ASSETS}picada-nubes-b.jpg")` }} />
           <div className="fd-descent-hud">
             <div><p>DESCENSO · {destination.code}</p><strong>{destination.name}</strong></div>
             <div><small>ALTITUD</small><strong>{Math.max(0, Math.round((100 - progress) * 358))}<em> km</em></strong></div>
@@ -113,14 +116,14 @@ function Arrival({
           <div className="fd-arrival-title"><h2 id="arrival-title">{destination.name}</h2><strong>{metric(DESTINATIONS.indexOf(destination), null)}</strong></div>
           <p>¿A qué submódulo entras?</p>
           <div className="fd-submodules">
-            {destination.sections.map((s) => (
+            {destination.sections.map((s, index) => (
               <Link to={s.path as "/dashboard"} key={s.path}>
                 <s.icon size={23} weight="duotone" />
                 <span>
                   <strong>{s.label}</strong>
                   <small>{s.description}</small>
                 </span>
-                <ArrowRight size={19} />
+                <em>{sectionMetric(index)} ›</em>
               </Link>
             ))}
           </div>
@@ -258,7 +261,7 @@ export function Director() {
         </div>
         <p className="fd-eyebrow fd-submodule-label">SUBMÓDULOS · {destination.sections.length}</p>
         <div className="fd-submodules">
-          {destination.sections.map((s) => (
+          {destination.sections.map((s, index) => (
             <Link key={s.path} to={s.path as "/dashboard"}>
               <span className="fd-submodule-icon">
                 <s.icon size={23} weight="duotone" />
@@ -267,7 +270,7 @@ export function Director() {
                 <strong>{s.label}</strong>
                 <small>{s.description}</small>
               </span>
-              <CaretRight size={17} />
+              <em>{sectionMetric(index)} ›</em>
             </Link>
           ))}
         </div>
