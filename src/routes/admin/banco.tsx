@@ -323,25 +323,12 @@ function AdminBancoPage() {
           <span style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: "#93A4BF" }}><Icon n="search" size={15} /></span>
           <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Buscar por texto o ID de la pregunta..." style={{ ...inputStyle, paddingLeft: 34 }} />
         </div>
-        <select value={fMateria} onChange={(e) => setFMateria(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 170 }}>
-          <option value="todas">Materia: todas</option>
-          {materiaOpts.map((m) => (
-            <option key={m.value} value={m.value}>{m.label}</option>
-          ))}
-          <option value="sin">Sin clasificar</option>
-        </select>
-        <select value={fEstado} onChange={(e) => setFEstado(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 140 }}>
-          <option value="todos">Estado: todos</option>
-          <option value="publicada">Publicada</option>
-          <option value="borrador">Borrador</option>
-          <option value="oculta">Oculta</option>
-        </select>
         <select
           value={fFuente}
-          onChange={(e) => { setFFuente(e.target.value); setFCap("todos"); setFSeccion("todas"); }}
-          style={{ ...inputStyle, width: "auto", minWidth: 170 }}
+          onChange={(e) => { setFFuente(e.target.value); setFCap("todos"); }}
+          style={{ ...inputStyle, width: "auto", minWidth: 200 }}
         >
-          <option value="todos">Banco: todos</option>
+          <option value="todos">Cuestionario: todos</option>
           <option value="CIAAC">CIAAC (sin manual)</option>
           {fuenteOpts.map((f) => (
             <option key={f.value} value={f.value}>{f.label}</option>
@@ -350,23 +337,23 @@ function AdminBancoPage() {
         {capOpts.length > 0 && (
           <select
             value={fCap}
-            onChange={(e) => { setFCap(e.target.value); setFSeccion("todas"); }}
-            style={{ ...inputStyle, width: "auto", minWidth: 200 }}
+            onChange={(e) => setFCap(e.target.value)}
+            style={{ ...inputStyle, width: "auto", minWidth: 220 }}
           >
-            <option value="todos">Capítulo: todos</option>
+            <option value="todos">Bloque: todos</option>
             {capOpts.map((c) => (
               <option key={c.num} value={String(c.num)}>{capLabel(fFuente)} {c.num}{c.titulo ? ` · ${c.titulo}` : ""}</option>
             ))}
           </select>
         )}
-        {seccionesEnScope.length > 0 && (
-          <select value={fSeccion} onChange={(e) => setFSeccion(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 200 }}>
-            <option value="todas">Sección: todas</option>
-            {seccionesEnScope.map((s) => (
-              <option key={s} value={s}>{s}</option>
-            ))}
-          </select>
-        )}
+        <select value={fTipo} onChange={(e) => setFTipo(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 190 }}>
+          <option value="todas">Tipo: todas</option>
+          <option value="abiertas">Preguntas abiertas</option>
+          <option value="opcion">Opción múltiple</option>
+          <option value="con_imagen">Con imagen</option>
+          <option value="sin_imagen">Sin imagen</option>
+        </select>
+
 
       </div>
 
