@@ -155,7 +155,7 @@ export function QuestionEditModal({
         {!cargando && row && (
           <>
             {missing && (
-              <div style={{ background: "#FFF4DE", border: "1px solid #E9CFA0", borderRadius: 10, padding: "9px 12px", fontSize: ".76rem", color: "#7a5a12", marginBottom: 12 }}>
+              <div style={{ background: "rgba(243,156,18,.10)", border: "1px solid rgba(243,156,18,.35)", borderRadius: 10, padding: "9px 12px", fontSize: ".76rem", color: "#F0C27A", marginBottom: 12 }}>
                 La pregunta ya no está en el banco: se muestra la copia guardada con el reporte.
                 Al guardar se vuelve a publicar con este contenido.
               </div>
