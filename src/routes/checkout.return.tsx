@@ -17,7 +17,7 @@ export const Route = createFileRoute("/checkout/return")({
 
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
-const INK = "#081A35";
+const INK = "#FFFFFF";
 
 function CheckoutReturn() {
   const { session_id } = Route.useSearch();
