@@ -43,7 +43,7 @@ interface Panel {
 }
 
 const CARD: React.CSSProperties = {
-  background: "white",
+  background: "#0A1B33",
   border: "1px solid rgba(61,93,145,.14)",
   borderRadius: 14,
   padding: 16,
@@ -102,8 +102,8 @@ function GamificacionPage() {
                 cursor: "pointer",
                 fontWeight: 700,
                 fontSize: ".82rem",
-                background: tab === t ? "#22375C" : "rgba(61,93,145,.1)",
-                color: tab === t ? "white" : "#3D5D91",
+                background: tab === t ? "#C7A052" : "rgba(199,160,82,.14)",
+                color: tab === t ? "#0B1220" : "#C7A052",
                 textTransform: "capitalize",
               }}
             >
@@ -123,8 +123,8 @@ function GamificacionPage() {
               padding: "8px 14px",
               borderRadius: 10,
               border: "1px solid rgba(61,93,145,.25)",
-              background: "white",
-              color: "#3D5D91",
+              background: "#0A1B33",
+              color: "#B8C5DA",
               cursor: "pointer",
               fontWeight: 700,
               fontSize: ".82rem",
@@ -136,14 +136,14 @@ function GamificacionPage() {
             La sincronización también corre sola cada hora.
           </span>
         </div>
-        {msg && <p style={{ margin: 0, fontSize: ".82rem", color: "#3D5D91" }}>{msg}</p>}
+        {msg && <p style={{ margin: 0, fontSize: ".82rem", color: "#B8C5DA" }}>{msg}</p>}
 
         {tab === "reglas" && (
           <div style={{ ...CARD, display: "grid", gap: 10 }}>
             {(panel?.reglas ?? []).map((r) => (
               <div key={r.key} style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-                <span style={{ flex: 1, minWidth: 220, fontSize: ".86rem", color: "#22375C" }}>
-                  {r.label} <small style={{ color: "#9aa8bb" }}>· {r.categoria}</small>
+                <span style={{ flex: 1, minWidth: 220, fontSize: ".86rem", color: "#FFFFFF" }}>
+                  {r.label} <small style={{ color: "#93A4BF" }}>· {r.categoria}</small>
                 </span>
                 <input
                   type="number"
@@ -173,13 +173,13 @@ function GamificacionPage() {
                 { l: "Transacciones", v: eco["transacciones"] },
               ].map((k) => (
                 <div key={k.l}>
-                  <div style={{ fontSize: "1.3rem", fontWeight: 800, color: "#3D5D91" }}>{fpFormat(Number(k.v ?? 0))}</div>
+                  <div style={{ fontSize: "1.3rem", fontWeight: 800, color: "#B8C5DA" }}>{fpFormat(Number(k.v ?? 0))}</div>
                   <div style={{ fontSize: ".72rem", color: "#6b7a90" }}>{k.l}</div>
                 </div>
               ))}
             </div>
             <div style={{ ...CARD, display: "grid", gap: 6 }}>
-              <strong style={{ fontSize: ".85rem", color: "#22375C" }}>Por actividad</strong>
+              <strong style={{ fontSize: ".85rem", color: "#FFFFFF" }}>Por actividad</strong>
               {((eco["por_actividad"] as { tipo: string; fp: number; n: number }[]) ?? []).map((a) => (
                 <div key={a.tipo} style={{ display: "flex", justifyContent: "space-between", fontSize: ".82rem" }}>
                   <span>{a.tipo}</span>
@@ -188,21 +188,21 @@ function GamificacionPage() {
               ))}
             </div>
             <div style={{ ...CARD, display: "grid", gap: 6 }}>
-              <strong style={{ fontSize: ".85rem", color: "#22375C" }}>Top 20 saldos</strong>
+              <strong style={{ fontSize: ".85rem", color: "#FFFFFF" }}>Top 20 saldos</strong>
               {(panel?.top ?? []).map((t) => {
                 const q = quien(t.userId);
                 return (
                   <div key={t.userId} className="cm-root" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: ".78rem" }}>
                     {q ? <Insignia callsign={q.callsign} size={24} /> : null}
                     <span style={{ flex: 1, minWidth: 0, display: "grid" }}>
-                      <strong style={{ color: "#22375C" }}>{q ? <Callsign texto={q.callsign} /> : <code>{t.userId.slice(0, 8)}…</code>}</strong>
+                      <strong style={{ color: "#FFFFFF" }}>{q ? <Callsign texto={q.callsign} /> : <code>{t.userId.slice(0, 8)}…</code>}</strong>
                       {q && (
-                        <small style={{ color: "#647DA0" }}>
+                        <small style={{ color: "#93A4BF" }}>
                           {q.nombre} · {q.email} · {q.privacidad === "nombre" ? "muestra su nombre" : "anónimo"}
                         </small>
                       )}
                     </span>
-                    <span style={{ fontWeight: 700, color: "#3D5D91" }}>{fpFormat(t.total)} FP</span>
+                    <span style={{ fontWeight: 700, color: "#B8C5DA" }}>{fpFormat(t.total)} FP</span>
                   </div>
                 );
               })}
@@ -216,7 +216,7 @@ function GamificacionPage() {
             {(panel?.historial ?? []).map((h) => (
               <div key={h.id} style={{ fontSize: ".78rem", color: "#41526b" }}>
                 <strong>{h.key}</strong> · {h.antes} → {h.despues}{" "}
-                <small style={{ color: "#9aa8bb" }}>{new Date(h.createdAt).toLocaleString("es-MX")}</small>
+                <small style={{ color: "#93A4BF" }}>{new Date(h.createdAt).toLocaleString("es-MX")}</small>
               </div>
             ))}
           </div>
@@ -225,7 +225,7 @@ function GamificacionPage() {
         {tab === "ajustes" && (
           <div style={{ display: "grid", gap: 12 }}>
             <div style={{ ...CARD, display: "grid", gap: 8 }}>
-              <strong style={{ fontSize: ".9rem", color: "#22375C" }}>Ajuste manual</strong>
+              <strong style={{ fontSize: ".9rem", color: "#FFFFFF" }}>Ajuste manual</strong>
               <input placeholder="ID, correo o indicativo del alumno" value={ajuste.userId} onChange={(e) => setAjuste({ ...ajuste, userId: e.target.value })} style={{ padding: "8px 10px", borderRadius: 8, border: "1px solid rgba(61,93,145,.25)" }} />
               <input type="number" placeholder="FP (puede ser negativo)" value={ajuste.amount} onChange={(e) => setAjuste({ ...ajuste, amount: Number(e.target.value) })} style={{ padding: "8px 10px", borderRadius: 8, border: "1px solid rgba(61,93,145,.25)" }} />
               <input placeholder="Motivo" value={ajuste.motivo} onChange={(e) => setAjuste({ ...ajuste, motivo: e.target.value })} style={{ padding: "8px 10px", borderRadius: 8, border: "1px solid rgba(61,93,145,.25)" }} />
@@ -236,13 +236,13 @@ function GamificacionPage() {
                     cargar();
                   })
                 }
-                style={{ justifySelf: "start", padding: "8px 16px", borderRadius: 10, border: "none", background: "#22375C", color: "white", fontWeight: 700, cursor: "pointer", fontSize: ".82rem" }}
+                style={{ justifySelf: "start", padding: "8px 16px", borderRadius: 10, border: "none", background: "#C7A052", color: "#0B1220", fontWeight: 700, cursor: "pointer", fontSize: ".82rem" }}
               >
                 Aplicar ajuste
               </button>
             </div>
             <div style={{ ...CARD, display: "grid", gap: 8 }}>
-              <strong style={{ fontSize: ".9rem", color: "#22375C" }}>Revertir transacción</strong>
+              <strong style={{ fontSize: ".9rem", color: "#FFFFFF" }}>Revertir transacción</strong>
               <input placeholder="ID de la transacción" value={reversa.txId} onChange={(e) => setReversa({ ...reversa, txId: e.target.value })} style={{ padding: "8px 10px", borderRadius: 8, border: "1px solid rgba(61,93,145,.25)" }} />
               <input placeholder="Motivo" value={reversa.motivo} onChange={(e) => setReversa({ ...reversa, motivo: e.target.value })} style={{ padding: "8px 10px", borderRadius: 8, border: "1px solid rgba(61,93,145,.25)" }} />
               <button
@@ -273,7 +273,7 @@ function GamificacionPage() {
                 ) : (
                   <code>{a.userId.slice(0, 8)}…</code>
                 )}{" "}
-                <small style={{ color: "#9aa8bb" }}>{new Date(a.createdAt).toLocaleString("es-MX")}</small>
+                <small style={{ color: "#93A4BF" }}>{new Date(a.createdAt).toLocaleString("es-MX")}</small>
               </div>
             ))}
           </div>

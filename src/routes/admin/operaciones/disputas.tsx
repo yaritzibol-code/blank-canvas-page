@@ -35,7 +35,7 @@ export const Route = createFileRoute("/admin/operaciones/disputas")({
 });
 
 const MONO = "'JetBrains Mono', monospace";
-const INK = "#22375C";
+const INK = "#FFFFFF";
 
 const fmtDate = (iso: string | null | undefined) =>
   iso ? new Date(iso).toLocaleString("es-MX", { dateStyle: "medium", timeStyle: "short" }) : "—";
@@ -123,9 +123,9 @@ function AdminDisputasPage() {
       <div style={{ ...cardStyle, marginBottom: 18 }}>
         <div style={cardHeadStyle}><Icon n="shield" size={15} /> Disputas de Stripe</div>
         {disputesError ? (
-          <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>{disputesError}</p>
+          <p style={{ fontSize: ".82rem", color: "#93A4BF" }}>{disputesError}</p>
         ) : disputes.length === 0 ? (
-          <p style={{ fontSize: ".82rem", color: "#647DA0", lineHeight: 1.6 }}>
+          <p style={{ fontSize: ".82rem", color: "#93A4BF", lineHeight: 1.6 }}>
             Sin disputas registradas. Cuando Stripe envíe <code style={{ fontFamily: MONO, fontSize: ".76rem" }}>charge.dispute.created</code>,
             aparecerá aquí automáticamente con su expediente a un clic.
           </p>
@@ -133,7 +133,7 @@ function AdminDisputasPage() {
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: ".8rem" }}>
               <thead>
-                <tr style={{ textAlign: "left", color: "#8DA1BE", fontSize: ".7rem", textTransform: "uppercase", letterSpacing: ".08em" }}>
+                <tr style={{ textAlign: "left", color: "#93A4BF", fontSize: ".7rem", textTransform: "uppercase", letterSpacing: ".08em" }}>
                   <th style={{ padding: "6px 8px" }}>Fecha</th>
                   <th style={{ padding: "6px 8px" }}>Estudiante</th>
                   <th style={{ padding: "6px 8px" }}>Motivo</th>
@@ -145,7 +145,7 @@ function AdminDisputasPage() {
               </thead>
               <tbody>
                 {disputes.map((d) => (
-                  <tr key={d.id} style={{ borderTop: "1px solid #EDF2F9", color: "#33527F" }}>
+                  <tr key={d.id} style={{ borderTop: "1px solid rgba(255,255,255,.06)", color: "#33527F" }}>
                     <td style={{ padding: "8px" }}>{fmtDate(d.created_at)}</td>
                     <td style={{ padding: "8px" }}>{d.email ?? d.user_id ?? "—"}</td>
                     <td style={{ padding: "8px" }}>{REASON_ES[d.reason ?? ""] ?? d.reason ?? "—"}</td>
@@ -195,7 +195,7 @@ function AdminDisputasPage() {
             {loading ? "Generando…" : "Generar expediente"}
           </button>
         </div>
-        <p style={{ fontSize: ".72rem", color: "#8DA1BE", marginTop: 10, lineHeight: 1.5 }}>
+        <p style={{ fontSize: ".72rem", color: "#93A4BF", marginTop: 10, lineHeight: 1.5 }}>
           Reúne el ledger de evidencias (registro, términos aceptados, logins con IP, uso real), la bitácora de
           facturación, los eventos de Stripe con señal de riesgo (Radar, 3DS) y el historial de soporte, en orden
           cronológico y con score de ganabilidad.
@@ -208,20 +208,20 @@ function AdminDisputasPage() {
           <div style={{ ...cardStyle, marginBottom: 18 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
               <div>
-                <div style={{ fontSize: ".7rem", color: "#8DA1BE", textTransform: "uppercase", letterSpacing: ".1em", fontWeight: 700 }}>
+                <div style={{ fontSize: ".7rem", color: "#93A4BF", textTransform: "uppercase", letterSpacing: ".1em", fontWeight: 700 }}>
                   Expediente de defensa · {fmtDate(dossier.generatedAt)} · {dossier.environment}
                 </div>
                 <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", color: INK, margin: "6px 0 2px" }}>
                   {dossier.user.nombre ?? dossier.user.email}
                 </h2>
-                <div style={{ fontSize: ".8rem", color: "#647DA0", fontFamily: MONO }}>{dossier.user.email} · {dossier.user.id}</div>
-                <div style={{ fontSize: ".8rem", color: "#647DA0", marginTop: 4 }}>
+                <div style={{ fontSize: ".8rem", color: "#93A4BF", fontFamily: MONO }}>{dossier.user.email} · {dossier.user.id}</div>
+                <div style={{ fontSize: ".8rem", color: "#93A4BF", marginTop: 4 }}>
                   Plan: <strong>{dossier.user.plan ?? "—"}</strong>
                   {dossier.user.accessStart ? ` · acceso desde ${fmtDate(dossier.user.accessStart)}` : ""}
                 </div>
               </div>
               <div style={{ display: "flex", gap: 8 }} className="print:hidden">
-                <button onClick={downloadJson} style={{ ...primaryBtnStyle, padding: "9px 16px", background: "#3D5D91" }}>
+                <button onClick={downloadJson} style={{ ...primaryBtnStyle, padding: "9px 16px", background: "#C7A052" }}>
                   <Icon n="download" size={14} /> JSON
                 </button>
                 <button onClick={() => window.print()} style={{ ...primaryBtnStyle, padding: "9px 16px" }}>
@@ -232,17 +232,17 @@ function AdminDisputasPage() {
 
             {/* Score */}
             <div style={{ display: "grid", gridTemplateColumns: "minmax(140px, 200px) 1fr", gap: 18, marginTop: 18, alignItems: "start" }}>
-              <div style={{ textAlign: "center", background: "#F7F9FC", borderRadius: 14, padding: "18px 12px" }}>
+              <div style={{ textAlign: "center", background: "rgba(255,255,255,.05)", borderRadius: 14, padding: "18px 12px" }}>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "2.6rem", fontWeight: 800, color: dossier.score.pct >= 60 ? "#1d8a4c" : dossier.score.pct >= 35 ? "#b07d00" : "#c0392b" }}>
                   {dossier.score.pct}%
                 </div>
-                <div style={{ fontSize: ".72rem", color: "#647DA0", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em" }}>
+                <div style={{ fontSize: ".72rem", color: "#93A4BF", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em" }}>
                   Probabilidad de ganar
                 </div>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 6 }}>
                 {dossier.score.reasons.map((r) => (
-                  <div key={r.label} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: ".8rem", color: r.ok ? "#1d6f43" : "#98A8C0" }}>
+                  <div key={r.label} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: ".8rem", color: r.ok ? "#1d6f43" : "#93A4BF" }}>
                     <span style={{ marginTop: 2, flexShrink: 0 }}>
                       <Icon n={r.ok ? "checkCircle" : "minus"} size={14} />
                     </span>
@@ -264,7 +264,7 @@ function AdminDisputasPage() {
                   IP <span style={{ fontFamily: MONO }}>{dossier.terms.ip ?? "—"}</span>
                 </div>
               ) : (
-                <p style={{ fontSize: ".8rem", color: "#98A8C0" }}>Sin registro (cuenta previa al ledger).</p>
+                <p style={{ fontSize: ".8rem", color: "#93A4BF" }}>Sin registro (cuenta previa al ledger).</p>
               )}
             </div>
             <div style={cardStyle}>
@@ -292,12 +292,12 @@ function AdminDisputasPage() {
           <div style={{ ...cardStyle, marginBottom: 18 }}>
             <div style={cardHeadStyle}><Icon n="shield" size={15} /> Cobros y señal de riesgo (Stripe)</div>
             {dossier.charges.length === 0 ? (
-              <p style={{ fontSize: ".8rem", color: "#98A8C0" }}>Sin cobros consultables para este ambiente.</p>
+              <p style={{ fontSize: ".8rem", color: "#93A4BF" }}>Sin cobros consultables para este ambiente.</p>
             ) : (
               <div style={{ overflowX: "auto" }}>
                 <table style={{ width: "100%", borderCollapse: "collapse", fontSize: ".78rem" }}>
                   <thead>
-                    <tr style={{ textAlign: "left", color: "#8DA1BE", fontSize: ".68rem", textTransform: "uppercase", letterSpacing: ".08em" }}>
+                    <tr style={{ textAlign: "left", color: "#93A4BF", fontSize: ".68rem", textTransform: "uppercase", letterSpacing: ".08em" }}>
                       <th style={{ padding: "5px 8px" }}>Fecha</th>
                       <th style={{ padding: "5px 8px" }}>Monto</th>
                       <th style={{ padding: "5px 8px" }}>Estado</th>
@@ -309,7 +309,7 @@ function AdminDisputasPage() {
                   </thead>
                   <tbody>
                     {dossier.charges.map((c) => (
-                      <tr key={c.id} style={{ borderTop: "1px solid #EDF2F9", color: "#33527F" }}>
+                      <tr key={c.id} style={{ borderTop: "1px solid rgba(255,255,255,.06)", color: "#33527F" }}>
                         <td style={{ padding: "7px 8px" }}>{fmtDate(c.created)}</td>
                         <td style={{ padding: "7px 8px", fontFamily: MONO }}>${c.amount.toLocaleString("es-MX")} {c.currency}</td>
                         <td style={{ padding: "7px 8px" }}>{c.status}</td>
@@ -324,7 +324,7 @@ function AdminDisputasPage() {
               </div>
             )}
             {dossier.subscriptions.length > 0 && (
-              <p style={{ fontSize: ".76rem", color: "#647DA0", marginTop: 10 }}>
+              <p style={{ fontSize: ".76rem", color: "#93A4BF", marginTop: 10 }}>
                 Suscripciones: {dossier.subscriptions.map((s) => `${s.price_id} (${s.status}, hasta ${fmtDate(s.current_period_end)})`).join(" · ")}
               </p>
             )}
@@ -335,25 +335,25 @@ function AdminDisputasPage() {
             <div style={cardHeadStyle}><Icon n="clock" size={15} /> Línea de tiempo ({dossier.timeline.length} eventos)</div>
             <div style={{ maxHeight: 420, overflowY: "auto" }}>
               {dossier.timeline.map((t, i) => (
-                <div key={i} style={{ display: "flex", gap: 10, padding: "6px 0", borderTop: i ? "1px solid #F0F4FA" : "none", fontSize: ".78rem" }}>
-                  <span style={{ fontFamily: MONO, color: "#8DA1BE", whiteSpace: "nowrap", fontSize: ".72rem", minWidth: 128 }}>
+                <div key={i} style={{ display: "flex", gap: 10, padding: "6px 0", borderTop: i ? "1px solid rgba(255,255,255,.06)" : "none", fontSize: ".78rem" }}>
+                  <span style={{ fontFamily: MONO, color: "#93A4BF", whiteSpace: "nowrap", fontSize: ".72rem", minWidth: 128 }}>
                     {fmtDate(t.at)}
                   </span>
                   <span style={{
                     flexShrink: 0, fontSize: ".64rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".06em",
                     padding: "2px 8px", borderRadius: 10, height: "fit-content",
-                    background: t.source === "evidencia" ? "rgba(61,93,145,.1)" : t.source === "facturación" ? "rgba(108,8,32,.08)" : t.source === "stripe" ? "rgba(99,91,255,.1)" : "rgba(243,156,18,.12)",
-                    color: t.source === "evidencia" ? "#3D5D91" : t.source === "facturación" ? "#6C0820" : t.source === "stripe" ? "#5851c9" : "#8a6000",
+                    background: t.source === "evidencia" ? "rgba(199,160,82,.14)" : t.source === "facturación" ? "rgba(108,8,32,.08)" : t.source === "stripe" ? "rgba(99,91,255,.1)" : "rgba(243,156,18,.12)",
+                    color: t.source === "evidencia" ? "#C7A052" : t.source === "facturación" ? "#6C0820" : t.source === "stripe" ? "#5851c9" : "#8a6000",
                   }}>{t.source}</span>
                   <span style={{ color: "#33527F" }}>
                     <strong>{t.event}</strong>
-                    {t.ip ? <span style={{ fontFamily: MONO, color: "#8DA1BE" }}> · {t.ip}</span> : null}
-                    {t.detail ? <span style={{ color: "#647DA0" }}> — {t.detail}</span> : null}
+                    {t.ip ? <span style={{ fontFamily: MONO, color: "#93A4BF" }}> · {t.ip}</span> : null}
+                    {t.detail ? <span style={{ color: "#93A4BF" }}> — {t.detail}</span> : null}
                   </span>
                 </div>
               ))}
               {dossier.timeline.length === 0 && (
-                <p style={{ fontSize: ".8rem", color: "#98A8C0" }}>Aún no hay eventos registrados para este estudiante.</p>
+                <p style={{ fontSize: ".8rem", color: "#93A4BF" }}>Aún no hay eventos registrados para este estudiante.</p>
               )}
             </div>
           </div>
@@ -363,8 +363,8 @@ function AdminDisputasPage() {
             <div style={{ ...cardStyle, marginBottom: 18 }}>
               <div style={cardHeadStyle}><Icon n="headset" size={15} /> Historial de soporte</div>
               {dossier.support.map((s, i) => (
-                <div key={i} style={{ fontSize: ".8rem", color: "#33527F", padding: "5px 0", borderTop: i ? "1px solid #F0F4FA" : "none" }}>
-                  <span style={{ fontFamily: MONO, color: "#8DA1BE", fontSize: ".72rem" }}>{fmtDate(s.at)}</span> — {s.detail}
+                <div key={i} style={{ fontSize: ".8rem", color: "#33527F", padding: "5px 0", borderTop: i ? "1px solid rgba(255,255,255,.06)" : "none" }}>
+                  <span style={{ fontFamily: MONO, color: "#93A4BF", fontSize: ".72rem" }}>{fmtDate(s.at)}</span> — {s.detail}
                 </div>
               ))}
             </div>

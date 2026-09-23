@@ -36,8 +36,9 @@ export function DataSyncBanner() {
   if (dismissed || !status || !status.message) return null;
 
   const tone = status.severity === "warning"
-    ? { bg: "#FEF3C7", fg: "#92400E", border: "#F59E0B" }
-    : { bg: "#EFF6FF", fg: "#1E3A8A", border: "#93C5FD" };
+    ? { bg: "rgba(199,160,82,.12)", fg: "#F0DCAE", border: "rgba(199,160,82,.42)", btn: "linear-gradient(180deg,#C7A052,#8A6A25)" }
+    : { bg: "rgba(255,255,255,.05)", fg: "#B8C5DA", border: "rgba(255,255,255,.14)", btn: "rgba(255,255,255,.10)" };
+
 
   const handleDismiss = () => {
     setDismissed(true);
@@ -55,8 +56,9 @@ export function DataSyncBanner() {
       color: tone.fg,
       border: `1px solid ${tone.border}`,
       padding: "10px 16px",
-      borderRadius: 12,
+      borderRadius: 6,
       marginBottom: 16,
+      fontFamily: "'Manrope', sans-serif",
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
@@ -71,14 +73,14 @@ export function DataSyncBanner() {
         {status.severity === "warning" && (
           <button
             onClick={handleSync}
-            style={{ background: tone.fg, color: "white", border: "none", padding: "6px 12px", borderRadius: 8, fontWeight: 700, cursor: "pointer" }}
+            style={{ background: tone.btn, color: "#0B1220", border: "none", padding: "6px 12px", borderRadius: 6, fontWeight: 800, cursor: "pointer", fontFamily: "inherit" }}
           >
             Sincronizar ahora
           </button>
         )}
         <button
           onClick={handleDismiss}
-          style={{ background: "transparent", color: tone.fg, border: `1px solid ${tone.fg}`, padding: "6px 12px", borderRadius: 8, cursor: "pointer" }}
+          style={{ background: "transparent", color: tone.fg, border: `1px solid ${tone.border}`, padding: "6px 12px", borderRadius: 6, cursor: "pointer", fontFamily: "inherit" }}
         >
           Cerrar
         </button>

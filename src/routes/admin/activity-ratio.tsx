@@ -16,7 +16,7 @@ export const Route = createFileRoute("/admin/activity-ratio")({
   component: ActivityRatioPage,
 });
 
-const MUTED = "#647DA0";
+const MUTED = "#93A4BF";
 const DISPLAY = "'Bricolage Grotesque', sans-serif";
 
 const PASOS_LEGIBLES: Record<string, string> = {
@@ -61,7 +61,7 @@ function Metric({ label, value, hint, tone }: { label: string; value: string; hi
       <div style={{ fontSize: ".7rem", color: MUTED, textTransform: "uppercase", letterSpacing: ".8px", fontWeight: 700 }}>
         {label}
       </div>
-      <div style={{ fontFamily: DISPLAY, fontSize: "2rem", fontWeight: 900, color: tone ?? "#0A1F44", lineHeight: 1.1, marginTop: 6 }}>
+      <div style={{ fontFamily: DISPLAY, fontSize: "2rem", fontWeight: 900, color: tone ?? "#C7A052", lineHeight: 1.1, marginTop: 6 }}>
         {value}
       </div>
       {hint ? <div style={{ fontSize: ".74rem", color: MUTED, marginTop: 4 }}>{hint}</div> : null}
@@ -72,7 +72,7 @@ function Metric({ label, value, hint, tone }: { label: string; value: string; hi
 function Card({ title, subtitle, children }: { title: string; subtitle?: string; children: React.ReactNode }) {
   return (
     <div style={{ ...cardStyle, padding: 18, marginBottom: 16 }}>
-      <div style={{ fontFamily: DISPLAY, fontWeight: 800, color: "#0A1F44", fontSize: "1.02rem" }}>{title}</div>
+      <div style={{ fontFamily: DISPLAY, fontWeight: 800, color: "#FFFFFF", fontSize: "1.02rem" }}>{title}</div>
       {subtitle ? <div style={{ fontSize: ".78rem", color: MUTED, marginTop: 2, marginBottom: 10 }}>{subtitle}</div> : <div style={{ height: 10 }} />}
       {children}
     </div>
@@ -91,15 +91,15 @@ const th: React.CSSProperties = {
 };
 const td: React.CSSProperties = {
   padding: "10px",
-  borderTop: "1px solid #E6ECF6",
+  borderTop: "1px solid rgba(255,255,255,.10)",
   fontSize: ".84rem",
-  color: "#0A1F44",
+  color: "#FFFFFF",
   whiteSpace: "nowrap",
 };
 
 function Barra({ pct, tone }: { pct: number; tone: string }) {
   return (
-    <div style={{ background: "#E6ECF6", borderRadius: 999, height: 8, minWidth: 90, overflow: "hidden" }}>
+    <div style={{ background: "rgba(255,255,255,.10)", borderRadius: 999, height: 8, minWidth: 90, overflow: "hidden" }}>
       <div style={{ width: `${Math.min(100, Math.max(0, pct))}%`, height: "100%", background: tone, borderRadius: 999 }} />
     </div>
   );
@@ -172,9 +172,9 @@ function ActivityRatioPage() {
                 minHeight: 40,
                 padding: "8px 14px",
                 borderRadius: 10,
-                border: "1px solid " + (days === d ? "#0A1F44" : "#D5DEED"),
-                background: days === d ? "#0A1F44" : "#fff",
-                color: days === d ? "#fff" : "#0A1F44",
+                border: "1px solid " + (days === d ? "#C7A052" : "rgba(255,255,255,.10)"),
+                background: days === d ? "#C7A052" : "transparent",
+                color: days === d ? "#0B1220" : "#C7A052",
                 fontWeight: 700,
                 fontSize: ".8rem",
                 cursor: "pointer",
@@ -259,9 +259,9 @@ function ActivityRatioPage() {
           <div style={{ display: "grid", gap: 10 }}>
             {funnel.map((f) => (
               <div key={f.step} style={{ display: "grid", gridTemplateColumns: "minmax(140px, 1fr) 2fr auto", gap: 10, alignItems: "center" }}>
-                <div style={{ fontSize: ".84rem", color: "#0A1F44", fontWeight: 600 }}>{pasoLabel(f.step)}</div>
-                <Barra pct={(f.people / maxFunnel) * 100} tone={f.step.includes("abandon") ? "#A31637" : "#0A1F44"} />
-                <div style={{ fontSize: ".82rem", fontWeight: 800, color: "#0A1F44" }}>{f.people}</div>
+                <div style={{ fontSize: ".84rem", color: "#FFFFFF", fontWeight: 600 }}>{pasoLabel(f.step)}</div>
+                <Barra pct={(f.people / maxFunnel) * 100} tone={f.step.includes("abandon") ? "#A31637" : "#C7A052"} />
+                <div style={{ fontSize: ".82rem", fontWeight: 800, color: "#FFFFFF" }}>{f.people}</div>
               </div>
             ))}
           </div>
@@ -338,7 +338,7 @@ function ActivityRatioPage() {
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              background: "#fff",
+              background: "#0A1B33",
               borderRadius: 18,
               width: "min(640px, 100%)",
               maxHeight: "86vh",
@@ -348,14 +348,14 @@ function ActivityRatioPage() {
           >
             <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-start" }}>
               <div>
-                <div style={{ fontFamily: DISPLAY, fontWeight: 800, fontSize: "1.1rem", color: "#0A1F44" }}>
+                <div style={{ fontFamily: DISPLAY, fontWeight: 800, fontSize: "1.1rem", color: "#FFFFFF" }}>
                   {abierto.nombre || "Sin nombre"}
                 </div>
                 <div style={{ fontSize: ".78rem", color: MUTED }}>{abierto.email}</div>
               </div>
               <button
                 onClick={() => setAbierto(null)}
-                style={{ minHeight: 40, minWidth: 40, borderRadius: 10, border: "1px solid #D5DEED", background: "#fff", cursor: "pointer", color: "#0A1F44" }}
+                style={{ minHeight: 40, minWidth: 40, borderRadius: 10, border: "1px solid rgba(199,160,82,.22)", background: "#0A1B33", cursor: "pointer", color: "#FFFFFF" }}
                 aria-label="Cerrar"
               >
                 ✕
@@ -371,11 +371,11 @@ function ActivityRatioPage() {
                 <div
                   key={`${t.created_at}_${i}`}
                   style={{
-                    borderLeft: `3px solid ${t.type === "abandon" ? "#A31637" : t.type === "milestone" ? "#0A1F44" : "#D5DEED"}`,
+                    borderLeft: `3px solid ${t.type === "abandon" ? "#A31637" : t.type === "milestone" ? "#C7A052" : "rgba(255,255,255,.10)"}`,
                     padding: "6px 0 6px 10px",
                   }}
                 >
-                  <div style={{ fontSize: ".84rem", color: "#0A1F44", fontWeight: 600 }}>
+                  <div style={{ fontSize: ".84rem", color: "#FFFFFF", fontWeight: 600 }}>
                     {t.step ? pasoLabel(t.step) : t.label || t.path || "Vista"}
                   </div>
                   <div style={{ fontSize: ".72rem", color: MUTED }}>

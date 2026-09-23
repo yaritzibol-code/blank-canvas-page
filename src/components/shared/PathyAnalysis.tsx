@@ -23,7 +23,7 @@ const TONE: Record<SignalTone, { color: string; bg: string; icon: string; label:
   riesgo: { color: "#B3261E", bg: "rgba(179,38,30,.08)", icon: "alert", label: "Atiende esto" },
   ojo: { color: "#8A6000", bg: "rgba(243,156,18,.1)", icon: "eye", label: "Ojo" },
   bien: { color: "#1A7A4A", bg: "rgba(46,204,113,.1)", icon: "checkCircle", label: "Vas bien" },
-  neutro: { color: "#163D70", bg: "rgba(22,61,112,.08)", icon: "info", label: "Dato" },
+  neutro: { color: "#C7A052", bg: "rgba(22,61,112,.08)", icon: "info", label: "Dato" },
 };
 
 const scoreColor = (avg: number | null) =>
@@ -45,10 +45,10 @@ function Metric({
   return (
     <div
       style={{
-        background: "white",
+        background: "#0A1B33",
         borderRadius: 14,
         padding: "16px 18px",
-        border: "1px solid #E8ECF2",
+        border: "1px solid rgba(255,255,255,.12)",
         display: "flex",
         flexDirection: "column",
         gap: 4,
@@ -99,8 +99,8 @@ function SignalCard({ s }: { s: PathySignal }) {
   return (
     <div
       style={{
-        background: "white",
-        border: "1px solid #E8ECF2",
+        background: "#0A1B33",
+        border: "1px solid rgba(255,255,255,.12)",
         borderLeft: `4px solid ${t.color}`,
         borderRadius: 12,
         padding: "14px 16px",
@@ -208,7 +208,7 @@ function Bloque({
 }) {
   return (
     <div
-      style={{ background: "white", border: "1px solid #E8ECF2", borderRadius: 16, padding: 18 }}
+      style={{ background: "#0A1B33", border: "1px solid rgba(255,255,255,.12)", borderRadius: 16, padding: 18 }}
     >
       <div
         style={{
@@ -293,7 +293,7 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
               fontFamily: DISPLAY,
               fontSize: "1.35rem",
               fontWeight: 900,
-              color: "white",
+              color: "#0A1B33",
               lineHeight: 1.2,
               marginBottom: 8,
             }}
@@ -421,7 +421,7 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
                     color: MIST,
                     lineHeight: 1.5,
                     paddingTop: 4,
-                    borderTop: "1px dashed #E8ECF2",
+                    borderTop: "1px dashed rgba(255,255,255,.12)",
                   }}
                 >
                   Sin practicar todavía: {materias.sinPracticar.map((m) => m.name).join(", ")}.
@@ -494,7 +494,7 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
                     color: MIST,
                     lineHeight: 1.5,
                     paddingTop: 4,
-                    borderTop: "1px dashed #E8ECF2",
+                    borderTop: "1px dashed rgba(255,255,255,.12)",
                   }}
                 >
                   Sin practicar todavía:{" "}
@@ -565,7 +565,7 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
         <div
           style={{
             background: "#FAFBFF",
-            border: "1px solid #E8ECF2",
+            border: "1px solid rgba(255,255,255,.12)",
             borderRadius: 16,
             padding: 18,
           }}
@@ -599,8 +599,8 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
               <div
                 key={a.id}
                 style={{
-                  background: "white",
-                  border: "1px solid #E8ECF2",
+                  background: "#0A1B33",
+                  border: "1px solid rgba(255,255,255,.12)",
                   borderRadius: 12,
                   padding: 14,
                   display: "flex",
@@ -614,8 +614,8 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
                       width: 22,
                       height: 22,
                       borderRadius: "50%",
-                      background: "#081A35",
-                      color: "white",
+                      background: "#FFFFFF",
+                      color: "#0A1B33",
                       fontSize: ".68rem",
                       fontWeight: 800,
                       display: "inline-flex",
@@ -644,8 +644,8 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
                     gap: 6,
                     padding: "9px 14px",
                     borderRadius: 9,
-                    background: "#7A5C1E",
-                    color: "white",
+                    background: "#C7A052",
+                    color: "#0A1B33",
                     fontSize: ".82rem",
                     fontWeight: 700,
                     textDecoration: "none",

@@ -88,12 +88,12 @@ function YarisAdminPage() {
   return (
     <AdminShell title="Yaris & IA" active="operaciones_yaris" backTo={{ label: "Panel", to: "/admin/operaciones" }}>
       {msg && <div style={{ background: "#D1FAE5", color: "#065F46", padding: 10, borderRadius: 10, marginBottom: 14 }}>{msg}</div>}
-      {err && <div style={{ background: "#FEE2E2", color: "#991B1B", padding: 10, borderRadius: 10, marginBottom: 14 }}>{err}</div>}
+      {err && <div style={{ background: "rgba(231,76,60,.14)", color: "#991B1B", padding: 10, borderRadius: 10, marginBottom: 14 }}>{err}</div>}
 
       <section style={{ ...cardStyle, marginBottom: 18 }}>
         <div style={cardHeadStyle}>System prompt base de Yaris · versión {version}</div>
         <div style={{ padding: 16, display: "grid", gap: 12 }}>
-          <p style={{ fontSize: ".8rem", color: "#647DA0", margin: 0 }}>
+          <p style={{ fontSize: ".8rem", color: "#93A4BF", margin: 0 }}>
             Este es el prompt real que Yaris usa en producción. Al guardar, se aplica de inmediato a todas las respuestas
             (chat, cuestionarios y streaming). El bloque de personalidad y el de longitud se agregan debajo del base.
           </p>
@@ -134,7 +134,7 @@ function YarisAdminPage() {
                 </button>
               ))}
             </div>
-            <p style={{ fontSize: ".78rem", color: "#647DA0", margin: "0 0 6px" }}>
+            <p style={{ fontSize: ".78rem", color: "#93A4BF", margin: "0 0 6px" }}>
               {TONOS.find((t) => t.key === tab)!.help} Se añade al prompt base cuando la estudiante elige esta voz.
             </p>
             <textarea
@@ -155,7 +155,7 @@ function YarisAdminPage() {
           </div>
 
           {defaults && (
-            <details style={{ fontSize: ".8rem", color: "#647DA0" }}>
+            <details style={{ fontSize: ".8rem", color: "#93A4BF" }}>
               <summary style={{ cursor: "pointer", fontWeight: 700 }}>Ver bloques de longitud (no editables)</summary>
               <ul style={{ margin: "8px 0 0", paddingLeft: 18, display: "grid", gap: 6 }}>
                 {(["corta", "normal", "detallada"] as const).map((k) => (
@@ -175,7 +175,7 @@ function YarisAdminPage() {
             {busy ? "Guardando…" : "Guardar nueva versión"}
           </button>
           {history.length > 0 && (
-            <div style={{ marginTop: 8, fontSize: ".8rem", color: "#647DA0" }}>
+            <div style={{ marginTop: 8, fontSize: ".8rem", color: "#93A4BF" }}>
               Historial reciente:
               <ul style={{ margin: "6px 0 0", paddingLeft: 18 }}>
                 {history.map((h) => (
@@ -207,7 +207,7 @@ function YarisAdminPage() {
             </button>
           </div>
         </div>
-        <div style={{ padding: "0 16px 16px", fontSize: ".8rem", color: "#647DA0" }}>
+        <div style={{ padding: "0 16px 16px", fontSize: ".8rem", color: "#93A4BF" }}>
           Yaris corre sobre la API de OpenAI del proyecto (modelo <code>gpt-5.6-luna</code>, reasoning effort <code>low</code>) y bitacoriza cada llamada en <code>ai_usage</code>.
           Además del tope global, cada usuario tiene un límite fijo de 10 consultas por minuto, 100 por hora y 300 por día, con máximo 12,000 tokens de entrada y 1,200 de salida por solicitud.
         </div>

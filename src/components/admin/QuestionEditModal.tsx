@@ -114,7 +114,7 @@ export function QuestionEditModal({
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          background: "white",
+          background: "#0A1B33",
           borderRadius: 16,
           width: "min(720px, 100%)",
           maxHeight: "88vh",
@@ -124,8 +124,8 @@ export function QuestionEditModal({
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-          <Icon n="help" size={18} color="#3D5D91" />
-          <h3 style={{ margin: 0, fontSize: "1.05rem", fontWeight: 800, color: "#22375C", flex: 1 }}>
+          <Icon n="help" size={18} color="#C7A052" />
+          <h3 style={{ margin: 0, fontSize: "1.05rem", fontWeight: 800, color: "#FFFFFF", flex: 1 }}>
             Pregunta reportada
           </h3>
           <button
@@ -133,18 +133,18 @@ export function QuestionEditModal({
             aria-label="Cerrar"
             style={{ border: "none", background: "transparent", cursor: "pointer", padding: 6 }}
           >
-            <Icon n="close" size={18} color="#647DA0" />
+            <Icon n="close" size={18} color="#93A4BF" />
           </button>
         </div>
 
-        <div style={{ fontSize: ".72rem", color: "#647DA0", marginBottom: 12 }}>
-          ID: <strong style={{ color: "#22375C" }}>{questionId}</strong>
+        <div style={{ fontSize: ".72rem", color: "#93A4BF", marginBottom: 12 }}>
+          ID: <strong style={{ color: "#FFFFFF" }}>{questionId}</strong>
           {row?.materia ? ` · ${row.materia}` : ""}
           {row?.fuente ? ` · ${row.fuente}` : ""}
           {row?.capitulo ? ` · ${capLabel(row.fuente)} ${row.capitulo}` : ""}
         </div>
 
-        {cargando && <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>Cargando pregunta…</p>}
+        {cargando && <p style={{ fontSize: ".82rem", color: "#93A4BF" }}>Cargando pregunta…</p>}
 
         {!cargando && !row && (
           <p style={{ fontSize: ".82rem", color: "#c0392b" }}>
@@ -162,9 +162,9 @@ export function QuestionEditModal({
             )}
 
             {snapshot?.selectedIndex != null && snapshot.selectedIndex >= 0 && (
-              <div style={{ fontSize: ".74rem", color: "#647DA0", marginBottom: 12 }}>
+              <div style={{ fontSize: ".74rem", color: "#93A4BF", marginBottom: 12 }}>
                 Respuesta elegida al reportar:{" "}
-                <strong style={{ color: "#22375C" }}>
+                <strong style={{ color: "#FFFFFF" }}>
                   {String.fromCharCode(65 + snapshot.selectedIndex)}
                 </strong>
               </div>
@@ -188,9 +188,9 @@ export function QuestionEditModal({
                     checked={row.correctIndex === i}
                     onChange={() => setField({ correctIndex: i })}
                     aria-label={`Marcar opción ${String.fromCharCode(65 + i)} como correcta`}
-                    style={{ width: 18, height: 18, accentColor: "#3D5D91" }}
+                    style={{ width: 18, height: 18, accentColor: "#C7A052" }}
                   />
-                  <span style={{ fontSize: ".78rem", fontWeight: 800, color: "#647DA0", width: 16 }}>
+                  <span style={{ fontSize: ".78rem", fontWeight: 800, color: "#93A4BF", width: 16 }}>
                     {String.fromCharCode(65 + i)}
                   </span>
                   <input
@@ -235,14 +235,14 @@ export function QuestionEditModal({
             <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>
               <button
                 onClick={onClose}
-                style={{ padding: "9px 16px", background: "white", color: "#647DA0", border: "2px solid #E3EAF4", borderRadius: 9, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                style={{ padding: "9px 16px", background: "#0A1B33", color: "#93A4BF", border: "2px solid rgba(255,255,255,.10)", borderRadius: 9, fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
               >
                 Cancelar
               </button>
               <button
                 onClick={() => void guardar()}
                 disabled={guardando}
-                style={{ padding: "9px 18px", background: "#3D5D91", color: "white", border: "none", borderRadius: 9, fontSize: ".78rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
+                style={{ padding: "9px 18px", background: "#C7A052", color: "#0B1220", border: "none", borderRadius: 9, fontSize: ".78rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
               >
                 <Icon n="check" size={14} /> {guardando ? "Guardando…" : "Guardar cambios"}
               </button>

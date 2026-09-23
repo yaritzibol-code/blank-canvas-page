@@ -66,9 +66,9 @@ interface MaterialForm {
 
 const rowBtn = (color: string): React.CSSProperties => ({
   padding: "6px 10px",
-  background: "white",
+  background: "#0A1B33",
   color,
-  border: "2px solid #F2DCDB",
+  border: "2px solid rgba(199,160,82,.28)",
   borderRadius: 8,
   fontSize: ".72rem",
   fontWeight: 700,
@@ -178,7 +178,7 @@ function AdminContenidoPage() {
       materia: matForm.materia,
       tags: orig?.tags ?? [],
       badge: matForm.badge.trim(),
-      badgeColor: orig?.badgeColor ?? "#3D5D91",
+      badgeColor: orig?.badgeColor ?? "#C7A052",
       emoji: orig?.emoji ?? "doc",
       gradient: orig?.gradient ?? "linear-gradient(135deg,#667eea,#764ba2)",
       pages: Math.max(0, parseInt(matForm.pages, 10) || 0),
@@ -214,8 +214,8 @@ function AdminContenidoPage() {
 
       {/* Nota informativa */}
       <div style={{ background: "rgba(61,93,145,.05)", border: "1px solid rgba(61,93,145,.15)", borderRadius: 10, padding: "10px 14px", marginBottom: 18, display: "flex", alignItems: "center", gap: 8 }}>
-        <Icon n="info" size={16} color="#3D5D91" />
-        <span style={{ fontSize: ".76rem", color: "#647DA0", lineHeight: 1.5 }}>
+        <Icon n="info" size={16} color="#C7A052" />
+        <span style={{ fontSize: ".76rem", color: "#93A4BF", lineHeight: 1.5 }}>
           Las clases publicadas aparecen a los estudiantes con desbloqueo progresivo; el estudiante básico solo ve la primera de cada materia.
         </span>
       </div>
@@ -236,23 +236,23 @@ function AdminContenidoPage() {
         </div>
 
         {orderedClases.length === 0 ? (
-          <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>No hay clases {fMateriaClases !== "todas" ? "en esta materia" : "registradas"} todavía.</p>
+          <p style={{ fontSize: ".82rem", color: "#93A4BF" }}>No hay clases {fMateriaClases !== "todas" ? "en esta materia" : "registradas"} todavía.</p>
         ) : (
           orderedClases.map((c, i) => (
             <div key={c.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 0", borderBottom: i < orderedClases.length - 1 ? "1px solid rgba(61,93,145,.06)" : undefined, flexWrap: "wrap" }}>
-              <div style={{ width: 30, height: 30, borderRadius: 8, background: c.videoUrl ? "rgba(61,93,145,.1)" : "rgba(141,161,190,.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }} title={c.videoUrl ? "Con video" : "Sin video"}>
-                <Icon n="play" size={15} color={c.videoUrl ? "#3D5D91" : "#8DA1BE"} />
+              <div style={{ width: 30, height: 30, borderRadius: 8, background: c.videoUrl ? "rgba(199,160,82,.14)" : "rgba(141,161,190,.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }} title={c.videoUrl ? "Con video" : "Sin video"}>
+                <Icon n="play" size={15} color={c.videoUrl ? "#C7A052" : "#93A4BF"} />
               </div>
               <div style={{ flex: "1 1 240px", minWidth: 0 }}>
-                <div style={{ fontSize: ".84rem", fontWeight: 700, color: "#22375C", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.titulo}</div>
-                <div style={{ fontSize: ".7rem", color: "#647DA0" }}>
+                <div style={{ fontSize: ".84rem", fontWeight: 700, color: "#FFFFFF", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.titulo}</div>
+                <div style={{ fontSize: ".7rem", color: "#93A4BF" }}>
                   {materiaBySlug(c.materia)?.name ?? c.materia} · {c.duracionMin} min · Orden {c.orden}{c.videoUrl ? "" : " · Sin video"}
                 </div>
               </div>
-              <Badge text={CONTENT_STATUS_LABEL[c.status] ?? c.status} color={CONTENT_STATUS_COLOR[c.status] ?? "#3D5D91"} />
+              <Badge text={CONTENT_STATUS_LABEL[c.status] ?? c.status} color={CONTENT_STATUS_COLOR[c.status] ?? "#C7A052"} />
               <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
-                <button onClick={() => openEditClase(c)} style={rowBtn("#3D5D91")}><Icon n="pencil" size={13} /> Editar</button>
-                <button onClick={() => toggleClase(c)} style={rowBtn(c.status === "publicada" ? "#8DA1BE" : "#2ecc71")}>
+                <button onClick={() => openEditClase(c)} style={rowBtn("#C7A052")}><Icon n="pencil" size={13} /> Editar</button>
+                <button onClick={() => toggleClase(c)} style={rowBtn(c.status === "publicada" ? "#93A4BF" : "#2ecc71")}>
                   <Icon n={c.status === "publicada" ? "eyeOff" : "eye"} size={13} /> {c.status === "publicada" ? "Ocultar" : "Publicar"}
                 </button>
                 <button onClick={() => removeClase(c)} style={rowBtn("#e74c3c")}><Icon n="trash" size={13} /></button>
@@ -270,29 +270,29 @@ function AdminContenidoPage() {
         </div>
 
         {materiales.length === 0 ? (
-          <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>No hay materiales registrados todavía.</p>
+          <p style={{ fontSize: ".82rem", color: "#93A4BF" }}>No hay materiales registrados todavía.</p>
         ) : (
           materiales.map((m, i) => (
             <div key={m.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 0", borderBottom: i < materiales.length - 1 ? "1px solid rgba(61,93,145,.06)" : undefined, flexWrap: "wrap" }}>
-              <div style={{ width: 30, height: 30, borderRadius: 8, background: m.gradient || "rgba(61,93,145,.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <div style={{ width: 30, height: 30, borderRadius: 8, background: m.gradient || "rgba(199,160,82,.14)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                 <Icon n="doc" size={15} color="white" />
               </div>
               <div style={{ flex: "1 1 240px", minWidth: 0 }}>
-                <div style={{ fontSize: ".84rem", fontWeight: 700, color: "#22375C", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{m.titulo}</div>
-                <div style={{ fontSize: ".7rem", color: "#647DA0" }}>
+                <div style={{ fontSize: ".84rem", fontWeight: 700, color: "#FFFFFF", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{m.titulo}</div>
+                <div style={{ fontSize: ".7rem", color: "#93A4BF" }}>
                   {m.autor || "Sin autor"} · {m.materia ? (materiaBySlug(m.materia)?.name ?? m.materia) : "General"}{m.pages > 0 ? ` · ${m.pages} págs.` : ""}
                 </div>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }} title={`${m.descargable ? "Descargable" : "No descargable"} · ${m.imprimible ? "Imprimible" : "No imprimible"}`}>
-                <Icon n="download" size={14} color={m.descargable ? "#2ecc71" : "#D9E1EC"} />
-                <Icon n="doc" size={14} color={m.imprimible ? "#2ecc71" : "#D9E1EC"} />
+                <Icon n="download" size={14} color={m.descargable ? "#2ecc71" : "rgba(255,255,255,.10)"} />
+                <Icon n="doc" size={14} color={m.imprimible ? "#2ecc71" : "rgba(255,255,255,.10)"} />
               </div>
-              {m.badge && <Badge text={m.badge} color={m.badgeColor || "#3D5D91"} />}
+              {m.badge && <Badge text={m.badge} color={m.badgeColor || "#C7A052"} />}
               {m.muestraGratis && <Badge text="Muestra" color="#6C0820" />}
-              <Badge text={CONTENT_STATUS_LABEL[m.status] ?? m.status} color={CONTENT_STATUS_COLOR[m.status] ?? "#3D5D91"} />
+              <Badge text={CONTENT_STATUS_LABEL[m.status] ?? m.status} color={CONTENT_STATUS_COLOR[m.status] ?? "#C7A052"} />
               <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
-                <button onClick={() => openEditMat(m)} style={rowBtn("#3D5D91")}><Icon n="pencil" size={13} /> Editar</button>
-                <button onClick={() => toggleMat(m)} style={rowBtn(m.status === "publicada" ? "#8DA1BE" : "#2ecc71")}>
+                <button onClick={() => openEditMat(m)} style={rowBtn("#C7A052")}><Icon n="pencil" size={13} /> Editar</button>
+                <button onClick={() => toggleMat(m)} style={rowBtn(m.status === "publicada" ? "#93A4BF" : "#2ecc71")}>
                   <Icon n={m.status === "publicada" ? "eyeOff" : "eye"} size={13} /> {m.status === "publicada" ? "Ocultar" : "Publicar"}
                 </button>
                 <button onClick={() => removeMat(m)} style={rowBtn("#e74c3c")}><Icon n="trash" size={13} /></button>
@@ -404,8 +404,8 @@ function AdminContenidoPage() {
                 ["imprimible", "Imprimible"],
                 ["muestraGratis", "Muestra gratis"],
               ] as const).map(([k, l]) => (
-                <label key={k} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: ".8rem", color: "#22375C", fontWeight: 600, cursor: "pointer" }}>
-                  <input type="checkbox" checked={matForm[k]} onChange={(e) => setMatForm({ ...matForm, [k]: e.target.checked })} style={{ accentColor: "#3D5D91", width: 15, height: 15 }} />
+                <label key={k} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: ".8rem", color: "#FFFFFF", fontWeight: 600, cursor: "pointer" }}>
+                  <input type="checkbox" checked={matForm[k]} onChange={(e) => setMatForm({ ...matForm, [k]: e.target.checked })} style={{ accentColor: "#C7A052", width: 15, height: 15 }} />
                   {l}
                 </label>
               ))}

@@ -137,8 +137,8 @@ function AdminConfiguracionPage() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 14 }}>
           <div>
             <label style={labelStyle}>Precio de FlightPath Pro</label>
-            <input value={proPriceLabel} readOnly disabled style={{ ...inputStyle, background: "#F4F7FB", color: "#647DA0" }} />
-            <div style={{ fontSize: ".72rem", color: "#8DA1BE", marginTop: 5, lineHeight: 1.5 }}>
+            <input value={proPriceLabel} readOnly disabled style={{ ...inputStyle, background: "#F4F7FB", color: "#93A4BF" }} />
+            <div style={{ fontSize: ".72rem", color: "#93A4BF", marginTop: 5, lineHeight: 1.5 }}>
               Se lee de Stripe (<code>{PRO_MONTHLY_LOOKUP_KEY}</code>), que es lo que realmente se
               cobra. Para cambiarlo, edita el precio en Stripe: la app lo toma de ahí.
             </div>
@@ -166,12 +166,12 @@ function AdminConfiguracionPage() {
       <div style={{ ...cardStyle, marginBottom: 18 }}>
         <div style={cardHeadStyle}><Icon n="spark" size={15} /> Configuración de IA</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 14, alignItems: "end" }}>
-          <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: ".84rem", color: "#22375C", fontWeight: 600, cursor: "pointer" }}>
-            <input type="checkbox" checked={cfg.iaYarisActiva} onChange={(e) => set("iaYarisActiva", e.target.checked)} style={{ accentColor: "#3D5D91", width: 16, height: 16 }} />
+          <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: ".84rem", color: "#FFFFFF", fontWeight: 600, cursor: "pointer" }}>
+            <input type="checkbox" checked={cfg.iaYarisActiva} onChange={(e) => set("iaYarisActiva", e.target.checked)} style={{ accentColor: "#C7A052", width: 16, height: 16 }} />
             Yaris (tutor IA) activa
           </label>
-          <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: ".84rem", color: "#22375C", fontWeight: 600, cursor: "pointer" }}>
-            <input type="checkbox" checked={cfg.iaPathyActiva} onChange={(e) => set("iaPathyActiva", e.target.checked)} style={{ accentColor: "#3D5D91", width: 16, height: 16 }} />
+          <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: ".84rem", color: "#FFFFFF", fontWeight: 600, cursor: "pointer" }}>
+            <input type="checkbox" checked={cfg.iaPathyActiva} onChange={(e) => set("iaPathyActiva", e.target.checked)} style={{ accentColor: "#C7A052", width: 16, height: 16 }} />
             Pathy (motivación) activa
           </label>
           <div>
@@ -179,7 +179,7 @@ function AdminConfiguracionPage() {
             <input type="number" min="0" value={cfg.limiteYarisBasico} onChange={(e) => set("limiteYarisBasico", Math.max(0, parseInt(e.target.value, 10) || 0))} style={inputStyle} />
           </div>
         </div>
-        <p style={{ fontSize: ".72rem", color: "#8DA1BE", marginTop: 10 }}>Yaris explica con el contenido oficial y nunca modifica el banco de preguntas.</p>
+        <p style={{ fontSize: ".72rem", color: "#93A4BF", marginTop: 10 }}>Yaris explica con el contenido oficial y nunca modifica el banco de preguntas.</p>
       </div>
 
       {/* Recordatorios y accesos (PRD 9.12) */}
@@ -217,10 +217,10 @@ function AdminConfiguracionPage() {
       {/* Documentos legales */}
       <div style={cardStyle}>
         <div style={cardHeadStyle}><Icon n="doc" size={15} /> Documentos legales</div>
-        <p style={{ fontSize: ".82rem", color: "#647DA0", marginBottom: 10, lineHeight: 1.5 }}>
+        <p style={{ fontSize: ".82rem", color: "#93A4BF", marginBottom: 10, lineHeight: 1.5 }}>
           Los avisos de privacidad, términos y condiciones publicados a los estudiantes viven en la sección legal pública.
         </p>
-        <Link to="/legal" style={{ fontSize: ".8rem", fontWeight: 700, color: "#3D5D91", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
+        <Link to="/legal" style={{ fontSize: ".8rem", fontWeight: 700, color: "#B8C5DA", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
           <Icon n="eye" size={15} /> Ver avisos publicados →
         </Link>
       </div>

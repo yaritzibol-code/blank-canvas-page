@@ -22,8 +22,8 @@ export const Route = createFileRoute("/admin/auditoria")({
   component: AuditoriaPage,
 });
 
-const MUTED = "#647DA0";
-const INK = "#22375C";
+const MUTED = "#93A4BF";
+const INK = "#FFFFFF";
 const DISPLAY = "'Bricolage Grotesque', sans-serif";
 
 const materiaName = (slug: string) =>
@@ -75,7 +75,7 @@ function BucketList({ buckets }: { buckets: Bucket[] }) {
               <strong>{b.label}</strong>
               {b.sub && <span style={{ color: MUTED }}> · {b.sub}</span>}
             </span>
-            <div style={{ width: 90, height: 6, background: "#EEF2F8", borderRadius: 10, overflow: "hidden" }}>
+            <div style={{ width: 90, height: 6, background: "rgba(255,255,255,.06)", borderRadius: 10, overflow: "hidden" }}>
               <div style={{ height: "100%", width: `${pct}%`, background: pctColor(pct), borderRadius: 10 }} />
             </div>
             <span style={{ width: 78, textAlign: "right", color: MUTED }}>
@@ -107,7 +107,7 @@ function Detalle({ attempt }: { attempt: AuditAttempt }) {
   const la = agrupar(attempt.answers, "la");
 
   return (
-    <div style={{ background: "#F7F9FC", borderRadius: 12, padding: 14, marginTop: 10, display: "grid", gap: 14 }}>
+    <div style={{ background: "rgba(255,255,255,.05)", borderRadius: 12, padding: 14, marginTop: 10, display: "grid", gap: 14 }}>
       {ciaac.length > 0 && (
         <section>
           <h4 style={{ fontFamily: DISPLAY, fontSize: ".8rem", color: INK, marginBottom: 7 }}>CIAAC — por materia</h4>
@@ -133,9 +133,9 @@ function Detalle({ attempt }: { attempt: AuditAttempt }) {
             const ok = a.selectedIndex === a.correctIndex;
             const blank = a.selectedIndex < 0;
             return (
-              <div key={`${a.questionId}-${i}`} style={{ background: "white", border: "1px solid #E8EEF6", borderRadius: 10, padding: "10px 12px" }}>
+              <div key={`${a.questionId}-${i}`} style={{ background: "#0A1B33", border: "1px solid rgba(199,160,82,.18)", borderRadius: 10, padding: "10px 12px" }}>
                 <div style={{ display: "flex", gap: 8, alignItems: "baseline", marginBottom: 4 }}>
-                  <span style={{ fontSize: ".7rem", fontWeight: 800, color: blank ? "#8DA1BE" : ok ? "#2ecc71" : "#c0392b" }}>
+                  <span style={{ fontSize: ".7rem", fontWeight: 800, color: blank ? "#93A4BF" : ok ? "#2ecc71" : "#c0392b" }}>
                     {blank ? "EN BLANCO" : ok ? "CORRECTA" : "INCORRECTA"}
                   </span>
                   <span style={{ fontSize: ".7rem", color: MUTED }}>
@@ -143,7 +143,7 @@ function Detalle({ attempt }: { attempt: AuditAttempt }) {
                       ? `${fuenteName(a.fuente)} · Cap. ${a.capitulo ?? "—"}${a.capituloTitulo ? ` — ${a.capituloTitulo}` : ""}`
                       : materiaName(a.materia)}
                   </span>
-                  <span style={{ fontSize: ".68rem", color: "#A9B8CE", marginLeft: "auto" }}>{a.questionId}</span>
+                  <span style={{ fontSize: ".68rem", color: "#93A4BF", marginLeft: "auto" }}>{a.questionId}</span>
                 </div>
                 <div style={{ fontSize: ".82rem", color: INK, marginBottom: 6 }}>{q?.text ?? "—"}</div>
                 {q && q.options.length > 0 && (
@@ -278,7 +278,7 @@ function AuditoriaPage() {
                     <div style={{ fontWeight: 800, color: INK, fontSize: ".86rem" }}>{r.nombre || r.email || r.userId.slice(0, 8)}</div>
                     <div style={{ fontSize: ".72rem", color: MUTED }}>{r.email}</div>
                   </div>
-                  <span style={{ fontSize: ".72rem", fontWeight: 800, padding: "3px 9px", borderRadius: 20, background: r.track === "la" ? "rgba(108,8,32,.1)" : "rgba(61,93,145,.1)", color: r.track === "la" ? "#6C0820" : "#3D5D91" }}>
+                  <span style={{ fontSize: ".72rem", fontWeight: 800, padding: "3px 9px", borderRadius: 20, background: r.track === "la" ? "rgba(108,8,32,.1)" : "rgba(199,160,82,.14)", color: r.track === "la" ? "#6C0820" : "#C7A052" }}>
                     {r.track === "la" ? "Línea Aérea" : r.track === "mixto" ? "Mixto" : "CIAAC"}
                   </span>
                   <span style={{ fontSize: ".76rem", color: INK, fontWeight: 700 }}>
@@ -290,7 +290,7 @@ function AuditoriaPage() {
                   </span>
                   <button
                     onClick={() => setAbierto(abierto === r.id ? null : r.id)}
-                    style={{ padding: "7px 13px", background: "white", color: "#3D5D91", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".74rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                    style={{ padding: "7px 13px", background: "#0A1B33", color: "#B8C5DA", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".74rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
                   >
                     {abierto === r.id ? "Ocultar detalle" : "Ver preguntas"}
                   </button>

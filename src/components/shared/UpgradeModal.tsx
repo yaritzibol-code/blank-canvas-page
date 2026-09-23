@@ -74,7 +74,7 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
         position: "fixed",
         inset: 0,
         zIndex: 4000,
-        background: "rgba(8,26,53,.35)",
+        background: "rgba(3,8,15,.72)",
         backdropFilter: "blur(8px)",
         WebkitBackdropFilter: "blur(8px)",
         display: "flex",
@@ -89,11 +89,11 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
         style={{
           position: "relative",
           width: "min(520px, 100%)",
-          background: "var(--fd-panel, #fff)",
-          borderRadius: "var(--fd-radius, 24px)",
+          background: "linear-gradient(180deg,#071326 0%,#050F22 100%)",
+          borderRadius: 8,
           padding: "clamp(24px, 5vw, 40px)",
           textAlign: "center",
-          boxShadow: "0 30px 80px rgba(8,26,53,.35)",
+          boxShadow: "0 30px 80px rgba(0,0,0,.55)",
           transform: visible ? "translateY(0) scale(1)" : "translateY(16px) scale(.97)",
           opacity: visible ? 1 : 0,
           transition: "all .35s cubic-bezier(.2,.9,.3,1.2)",
@@ -110,15 +110,15 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
                 gap: 6,
                 padding: "6px 12px",
                 borderRadius: 999,
-                background: "var(--fd-panel, #F4F7FC)",
-                border: "1px solid #E3EAF5",
+                background: "rgba(255,255,255,.05)",
+                border: "1px solid rgba(199,160,82,.22)",
                 fontSize: 12,
                 fontWeight: 700,
-                color: "var(--fd-text, #163D70)",
+                color: "#FFFFFF",
                 animation: `fpFloat ${2.6 + i * 0.3}s ease-in-out ${i * 0.2}s infinite alternate`,
               }}
             >
-              <Icon n={f.icon as never} size={13} color="#5A86CB" />
+              <Icon n={f.icon as never} size={13} color="#C7A052" />
               {f.label}
             </div>
           ))}
@@ -131,24 +131,24 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
             height: 76,
             margin: "0 auto 16px",
             borderRadius: "50%",
-            background: "linear-gradient(135deg,#163D70,#5A86CB)",
+            background: "linear-gradient(135deg,#C7A052,#8A6A25)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            boxShadow: "0 12px 30px rgba(22,61,112,.35)",
+            boxShadow: "0 12px 30px rgba(199,160,82,.28)",
           }}
         >
-          <Icon n="lock" size={34} color="#fff" />
+          <Icon n="lock" size={34} color="#0B1220" />
         </div>
 
-        <h2 style={{ fontFamily: DISPLAY, fontSize: "clamp(1.3rem, 4vw, 1.6rem)", color: "var(--fd-text, #081A35)", margin: "0 0 10px", fontWeight: 800 }}>
+        <h2 style={{ fontFamily: DISPLAY, fontSize: "clamp(1.3rem, 4vw, 1.6rem)", color: "#FFFFFF", margin: "0 0 10px", fontWeight: 800 }}>
           ¿Listo para el siguiente nivel?
         </h2>
-        <p style={{ color: "var(--fd-muted, #4A5872)", fontSize: 14.5, lineHeight: 1.6, margin: "0 0 6px" }}>
-          <b style={{ color: "var(--fd-text, #081A35)" }}>{feature}</b> es parte de la experiencia completa de FlightPath.
+        <p style={{ color: "#B8C5DA", fontSize: 14.5, lineHeight: 1.6, margin: "0 0 6px" }}>
+          <b style={{ color: "#FFFFFF" }}>{feature}</b> es parte de la experiencia completa de FlightPath.
           {benefit ? ` ${benefit}` : ""}
         </p>
-        <p style={{ color: "var(--fd-muted, #4A5872)", fontSize: 14.5, lineHeight: 1.6, margin: "0 0 22px" }}>
+        <p style={{ color: "#B8C5DA", fontSize: 14.5, lineHeight: 1.6, margin: "0 0 22px" }}>
           {config.mensajeConversion}
         </p>
 
@@ -157,10 +157,10 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
             onClick={() => goPrecios("Ver planes y precios")}
             style={{
               padding: "13px 20px",
-              borderRadius: "var(--fd-radius, 12px)",
+              borderRadius: 6,
               border: "none",
-              background: "#7A5C1E",
-              color: "#fff",
+              background: "linear-gradient(180deg,#C7A052,#8A6A25)",
+              color: "#0B1220",
               fontWeight: 800,
               fontSize: 15,
               cursor: "pointer",
@@ -175,10 +175,10 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
 
             style={{
               padding: "12px 20px",
-              borderRadius: "var(--fd-radius, 12px)",
-              border: "1.5px solid #163D70",
-              background: "var(--fd-panel, #fff)",
-              color: "var(--fd-text, #163D70)",
+              borderRadius: 6,
+              border: "1px solid rgba(199,160,82,.45)",
+              background: "rgba(255,255,255,.04)",
+              color: "#FFFFFF",
               fontWeight: 700,
               fontSize: 14.5,
               cursor: "pointer",
@@ -192,10 +192,10 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
             onClick={onClose}
             style={{
               padding: "10px 20px",
-              borderRadius: "var(--fd-radius, 12px)",
+              borderRadius: 6,
               border: "none",
               background: "transparent",
-              color: "var(--fd-muted, #4A5872)",
+              color: "#B8C5DA",
               fontWeight: 600,
               fontSize: 14,
               cursor: "pointer",

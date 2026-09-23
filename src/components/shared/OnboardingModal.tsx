@@ -16,8 +16,8 @@ import type { User } from "@/lib/store";
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
 const INK = "#081A35";
-const BRAND = "#7A5C1E";
-const CORAL = "#C7A052";
+const BRAND = "#C7A052";
+const CORAL = "#0B1220";
 
 const TOTAL_STEPS = 7;
 
@@ -166,13 +166,13 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
   const inputStyle: React.CSSProperties = {
     width: "100%",
     padding: "14px 16px",
-    borderRadius: "var(--fd-radius, 12px)",
-    border: "1.5px solid #E3EAF5",
+    borderRadius: 6,
+    border: "1.5px solid rgba(199,160,82,.22)",
     fontSize: 16, // ≥16px evita el zoom automático de iOS al enfocar
     fontFamily: FONT,
-    color: "var(--fd-text, #081A35)",
+    color: "#FFFFFF",
     outline: "none",
-    background: "var(--fd-panel, #F5F5F7)",
+    background: "rgba(255,255,255,.06)",
     boxSizing: "border-box",
     transition: "border-color .2s, box-shadow .2s",
   };
@@ -181,16 +181,16 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
     display: "block",
     fontSize: 12.5,
     fontWeight: 700,
-    color: "var(--fd-text, #081A35)",
+    color: "#FFFFFF",
     margin: "16px 0 7px",
   };
 
   const focus = (e: React.FocusEvent<HTMLInputElement>) => {
-    e.target.style.borderColor = "#163D70";
+    e.target.style.borderColor = "#C7A052";
     e.target.style.boxShadow = "0 0 0 4px rgba(22,61,112,0.10)";
   };
   const blur = (e: React.FocusEvent<HTMLInputElement>) => {
-    e.target.style.borderColor = "#E3EAF5";
+    e.target.style.borderColor = "rgba(199,160,82,.22)";
     e.target.style.boxShadow = "none";
   };
 
@@ -202,7 +202,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
       <style>{`
         .fp-ob-overlay {
           position: fixed; inset: 0; z-index: 4000;
-          background: rgba(15,26,51,.48);
+          background: rgba(3,8,15,.68);
           backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
           display: flex; align-items: flex-end; justify-content: center;
           font-family: ${FONT};
@@ -212,7 +212,8 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
           width: 100%; max-width: 600px;
           max-height: calc(100dvh - 24px);
           overflow-y: auto; overscroll-behavior: contain;
-          background: linear-gradient(180deg, #FFFFFF 0%, #F5F5F7 100%);
+          background: linear-gradient(180deg, #071326 0%, #050F22 100%);
+          border: 1px solid rgba(199,160,82,.35);
           border-radius: 26px 26px 0 0;
           padding: 24px 22px calc(22px + env(safe-area-inset-bottom, 0px));
           box-shadow: 0 -20px 80px rgba(15,26,51,.45);
@@ -263,7 +264,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
               fontSize: 10.5,
               fontWeight: 800,
               letterSpacing: ".14em",
-              color: "var(--fd-muted, #7E90AD)",
+              color: "#93A4BF",
               whiteSpace: "nowrap",
             }}
           >
@@ -306,7 +307,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                   height: 7,
                   borderRadius: "50%",
                   transform: "translate(-50%,-50%)",
-                  background: i <= step ? BRAND : "var(--fd-panel, #fff)",
+                  background: i <= step ? BRAND : "rgba(255,255,255,.04)",
                   border: i <= step ? "none" : "1.5px solid rgba(22,61,112,.35)",
                   transition: "background .3s",
                 }}
@@ -327,7 +328,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                   width: 26,
                   height: 26,
                   borderRadius: "50%",
-                  background: "var(--fd-panel, #fff)",
+                  background: "rgba(255,255,255,.04)",
                   boxShadow: "0 4px 14px rgba(15,26,51,.22)",
                   display: "flex",
                   alignItems: "center",
@@ -346,7 +347,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
             style={{
               background: "none",
               border: "none",
-              color: "var(--fd-muted, #7E90AD)",
+              color: "#93A4BF",
               fontSize: 12,
               fontWeight: 700,
               cursor: "pointer",
@@ -401,7 +402,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
               style={{
                 fontFamily: DISPLAY,
                 fontSize: "clamp(1.5rem,5.5vw,1.9rem)",
-                color: "var(--fd-text, #081A35)",
+                color: "#FFFFFF",
                 fontWeight: 800,
                 margin: "0 0 8px",
                 letterSpacing: "-0.02em",
@@ -411,14 +412,14 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
             </h2>
             <p
               style={{
-                color: "var(--fd-muted, #4A5872)",
+                color: "#B8C5DA",
                 fontSize: 14.5,
                 lineHeight: 1.65,
                 margin: "0 auto",
                 maxWidth: 400,
               }}
             >
-              Soy <strong style={{ color: "var(--fd-gold, #7A5C1E)" }}>Pathy</strong>, tu copiloto de estudio. Antes de
+              Soy <strong style={{ color: "#C7A052" }}>Pathy</strong>, tu copiloto de estudio. Antes de
               despegar, preparemos tu cabina — te toma menos de un minuto.
             </p>
             <button onClick={advance} className="fp-ob-btn fp-ob-btn-primary" style={primaryBtn}>
@@ -466,7 +467,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                   borderRadius: 999,
                   padding: "8px 16px",
                   fontSize: 13.5,
-                  color: "var(--fd-text, #123360)",
+                  color: "#FFFFFF",
                   fontWeight: 600,
                 }}
               >
@@ -509,11 +510,11 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                       gap: 12,
                       textAlign: "left",
                       padding: "14px 16px",
-                      borderRadius: "var(--fd-radius, 14px)",
+                      borderRadius: 6,
                       cursor: "pointer",
                       width: "100%",
-                      background: activo ? "rgba(122,92,30,0.05)" : "var(--fd-panel, #fff)",
-                      border: `1.5px solid ${activo ? BRAND : "#E3EAF5"}`,
+                      background: activo ? "rgba(122,92,30,0.05)" : "rgba(255,255,255,.04)",
+                      border: `1.5px solid ${activo ? BRAND : "rgba(199,160,82,.22)"}`,
                       fontFamily: FONT,
                     }}
                   >
@@ -523,7 +524,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                         height: 20,
                         borderRadius: "50%",
                         flexShrink: 0,
-                        border: `2px solid ${activo ? BRAND : "#C9D6E8"}`,
+                        border: `2px solid ${activo ? BRAND : "rgba(255,255,255,.12)"}`,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -537,12 +538,12 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                     </span>
                     <span>
                       <span
-                        style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: "var(--fd-text, #081A35)" }}
+                        style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: "#FFFFFF" }}
                       >
                         {g.label}
                       </span>
                       <span
-                        style={{ display: "block", fontSize: 12.5, color: "var(--fd-muted, #4A5872)", marginTop: 2 }}
+                        style={{ display: "block", fontSize: 12.5, color: "#B8C5DA", marginTop: 2 }}
                       >
                         {g.ejemplo}
                       </span>
@@ -553,11 +554,11 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
             </div>
 
             {/* Personalidad de Yaris IA */}
-            <div style={{ marginTop: 22, paddingTop: 18, borderTop: "1px solid #E3EAF5" }}>
-              <div style={{ fontSize: 14.5, fontWeight: 800, color: "var(--fd-text, #081A35)", marginBottom: 2 }}>
+            <div style={{ marginTop: 22, paddingTop: 18, borderTop: "1px solid rgba(199,160,82,.22)" }}>
+              <div style={{ fontSize: 14.5, fontWeight: 800, color: "#FFFFFF", marginBottom: 2 }}>
                 ¿Cómo quieres que te hable Yaris?
               </div>
-              <div style={{ fontSize: 12.5, color: "var(--fd-muted, #4A5872)", marginBottom: 12 }}>
+              <div style={{ fontSize: 12.5, color: "#B8C5DA", marginBottom: 12 }}>
                 Tu tutora IA. Cambia su forma de hablar, nunca su rigor técnico. Puedes cambiarlo en
                 Configuración.
               </div>
@@ -574,11 +575,11 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                         gap: 12,
                         textAlign: "left",
                         padding: "14px 16px",
-                        borderRadius: "var(--fd-radius, 14px)",
+                        borderRadius: 6,
                         cursor: "pointer",
                         width: "100%",
-                        background: activo ? "rgba(122,92,30,0.05)" : "var(--fd-panel, #fff)",
-                        border: `1.5px solid ${activo ? BRAND : "#E3EAF5"}`,
+                        background: activo ? "rgba(122,92,30,0.05)" : "rgba(255,255,255,.04)",
+                        border: `1.5px solid ${activo ? BRAND : "rgba(199,160,82,.22)"}`,
                         fontFamily: FONT,
                       }}
                     >
@@ -588,7 +589,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                           height: 20,
                           borderRadius: "50%",
                           flexShrink: 0,
-                          border: `2px solid ${activo ? BRAND : "#C9D6E8"}`,
+                          border: `2px solid ${activo ? BRAND : "rgba(255,255,255,.12)"}`,
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
@@ -607,7 +608,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                       </span>
                       <span>
                         <span
-                          style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: "var(--fd-text, #081A35)" }}
+                          style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: "#FFFFFF" }}
                         >
                           {t.label}
                         </span>
@@ -615,7 +616,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                           style={{
                             display: "block",
                             fontSize: 12.5,
-                            color: "var(--fd-muted, #4A5872)",
+                            color: "#B8C5DA",
                             marginTop: 2,
                           }}
                         >
@@ -665,11 +666,11 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                       gap: 12,
                       textAlign: "left",
                       padding: "14px 16px",
-                      borderRadius: "var(--fd-radius, 14px)",
+                      borderRadius: 6,
                       cursor: "pointer",
                       width: "100%",
-                      background: activo ? "rgba(122,92,30,0.05)" : "var(--fd-panel, #fff)",
-                      border: `1.5px solid ${activo ? BRAND : "#E3EAF5"}`,
+                      background: activo ? "rgba(122,92,30,0.05)" : "rgba(255,255,255,.04)",
+                      border: `1.5px solid ${activo ? BRAND : "rgba(199,160,82,.22)"}`,
                       fontFamily: FONT,
                     }}
                   >
@@ -677,10 +678,10 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                       style={{
                         width: 38,
                         height: 38,
-                        borderRadius: "var(--fd-radius, 11px)",
+                        borderRadius: 6,
                         flexShrink: 0,
-                        background: activo ? BRAND : "var(--fd-panel-alt, rgba(22,61,112,0.08))",
-                        color: activo ? CORAL : "var(--fd-text, #163D70)",
+                        background: activo ? BRAND : "rgba(255,255,255,.06)",
+                        color: activo ? CORAL : "#FFFFFF",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -690,12 +691,12 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                     </span>
                     <span>
                       <span
-                        style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: "var(--fd-text, #081A35)" }}
+                        style={{ display: "block", fontSize: 14.5, fontWeight: 700, color: "#FFFFFF" }}
                       >
                         {r.label}
                       </span>
                       <span
-                        style={{ display: "block", fontSize: 12.5, color: "var(--fd-muted, #4A5872)", marginTop: 2 }}
+                        style={{ display: "block", fontSize: 12.5, color: "#B8C5DA", marginTop: 2 }}
                       >
                         {r.sub}
                       </span>
@@ -769,7 +770,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                 type="checkbox"
                 checked={recordatorios}
                 onChange={(e) => setRecordatorios(e.target.checked)}
-                style={{ width: 18, height: 18, accentColor: "#163D70", flexShrink: 0 }}
+                style={{ width: 18, height: 18, accentColor: "#C7A052", flexShrink: 0 }}
               />
               Quiero recibir recordatorios de estudio por WhatsApp
             </label>
@@ -802,7 +803,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
               style={{
                 background: "none",
                 border: "none",
-                color: "var(--fd-text, #163D70)",
+                color: "#FFFFFF",
                 fontSize: 13,
                 fontWeight: 700,
                 cursor: "pointer",
@@ -841,9 +842,9 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                     display: "flex",
                     alignItems: "flex-start",
                     gap: 12,
-                    background: "var(--fd-panel, #fff)",
-                    border: "1px solid #E8ECF2",
-                    borderRadius: "var(--fd-radius, 14px)",
+                    background: "rgba(255,255,255,.04)",
+                    border: "1px solid rgba(255,255,255,.12)",
+                    borderRadius: 6,
                     padding: "13px 15px",
                     boxShadow: "0 1px 2px rgba(15,26,51,.04), 0 10px 26px -18px rgba(15,26,51,.18)",
                   }}
@@ -852,9 +853,9 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                     style={{
                       width: 38,
                       height: 38,
-                      borderRadius: "var(--fd-radius, 10px)",
-                      background: "var(--fd-panel, #FBF7EC)",
-                      color: "var(--fd-gold, #7A5C1E)",
+                      borderRadius: 6,
+                      background: "rgba(199,160,82,.16)",
+                      color: "#C7A052",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -869,7 +870,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                         display: "block",
                         fontSize: 14,
                         fontWeight: 800,
-                        color: "var(--fd-text, #081A35)",
+                        color: "#FFFFFF",
                         fontFamily: DISPLAY,
                         letterSpacing: "-0.01em",
                       }}
@@ -880,7 +881,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                       style={{
                         display: "block",
                         fontSize: 12.5,
-                        color: "var(--fd-muted, #4A5872)",
+                        color: "#B8C5DA",
                         lineHeight: 1.45,
                         marginTop: 2,
                       }}
@@ -913,10 +914,10 @@ const primaryBtn: React.CSSProperties = {
   marginTop: 24,
   padding: "15px 20px",
   minHeight: 52,
-  borderRadius: "var(--fd-radius, 14px)",
+  borderRadius: 6,
   border: "none",
-  background: BRAND,
-  color: "#fff",
+  background: "linear-gradient(180deg,#C7A052,#8A6A25)",
+  color: "#0B1220",
   fontWeight: 800,
   fontSize: 15.5,
   cursor: "pointer",
@@ -932,10 +933,10 @@ const ghostBtn: React.CSSProperties = {
   width: "100%",
   padding: "12px 20px",
   marginTop: 8,
-  borderRadius: "var(--fd-radius, 12px)",
+  borderRadius: 6,
   border: "none",
   background: "transparent",
-  color: "var(--fd-muted, #4A5872)",
+  color: "#B8C5DA",
   fontWeight: 700,
   fontSize: 13.5,
   cursor: "pointer",
@@ -949,8 +950,8 @@ function StepHead({ icon, title, sub }: { icon: FPIconName; title: string; sub: 
         style={{
           width: 52,
           height: 52,
-          borderRadius: "var(--fd-radius, 15px)",
-          background: `linear-gradient(135deg, ${INK}, #163D70)`,
+          borderRadius: 8,
+          background: "linear-gradient(135deg,#C7A052,#8A6A25)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -964,7 +965,7 @@ function StepHead({ icon, title, sub }: { icon: FPIconName; title: string; sub: 
         style={{
           fontFamily: DISPLAY,
           fontSize: "clamp(1.3rem,4.6vw,1.55rem)",
-          color: "var(--fd-text, #081A35)",
+          color: "#FFFFFF",
           fontWeight: 800,
           margin: "0 0 6px",
           letterSpacing: "-0.02em",
@@ -973,7 +974,7 @@ function StepHead({ icon, title, sub }: { icon: FPIconName; title: string; sub: 
       >
         {title}
       </h2>
-      <p style={{ color: "var(--fd-muted, #4A5872)", fontSize: 14, lineHeight: 1.6, margin: 0 }}>{sub}</p>
+      <p style={{ color: "#B8C5DA", fontSize: 14, lineHeight: 1.6, margin: 0 }}>{sub}</p>
     </>
   );
 }

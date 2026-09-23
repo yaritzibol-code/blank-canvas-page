@@ -39,7 +39,7 @@ const ESTADO_COLOR: Record<ReportStatus, string> = {
   pendiente: "#e74c3c",
   en_proceso: "#f39c12",
   resuelto: "#2ecc71",
-  cerrado: "#8DA1BE",
+  cerrado: "#93A4BF",
 };
 
 function AdminSoportePage() {
@@ -73,7 +73,7 @@ function AdminSoportePage() {
       {/* Filtros */}
       <div style={{ ...cardStyle, marginBottom: 16, display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
         <div style={{ position: "relative", flex: "1 1 220px", minWidth: 180 }}>
-          <span style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: "#8DA1BE" }}><Icon n="search" size={15} /></span>
+          <span style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: "#93A4BF" }}><Icon n="search" size={15} /></span>
           <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Buscar por estudiante, mensaje o recurso..." style={{ ...inputStyle, paddingLeft: 34 }} />
         </div>
         <select value={fEstado} onChange={(e) => setFEstado(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 140 }}>
@@ -90,13 +90,13 @@ function AdminSoportePage() {
         </select>
       </div>
 
-      <div style={{ fontSize: ".76rem", color: "#647DA0", marginBottom: 12 }}>
+      <div style={{ fontSize: ".76rem", color: "#93A4BF", marginBottom: 12 }}>
         {filtered.length} de {reports.length} reportes · {pendientes} pendientes
       </div>
 
       {filtered.length === 0 && (
         <div style={cardStyle}>
-          <p style={{ fontSize: ".82rem", color: "#8DA1BE", textAlign: "center", padding: "12px 0" }}>No hay reportes que coincidan con los filtros.</p>
+          <p style={{ fontSize: ".82rem", color: "#93A4BF", textAlign: "center", padding: "12px 0" }}>No hay reportes que coincidan con los filtros.</p>
         </div>
       )}
 
@@ -152,8 +152,8 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
       {/* Header */}
       <div style={{ display: "flex", alignItems: "flex-start", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
         <div style={{ flex: "1 1 220px", minWidth: 0 }}>
-          <div style={{ fontSize: ".9rem", fontWeight: 700, color: "#22375C" }}>{r.userName}</div>
-          <div style={{ fontSize: ".72rem", color: "#647DA0" }}>{r.userEmail} · {fmtDateTime(r.fecha)}</div>
+          <div style={{ fontSize: ".9rem", fontWeight: 700, color: "#FFFFFF" }}>{r.userName}</div>
+          <div style={{ fontSize: ".72rem", color: "#93A4BF" }}>{r.userEmail} · {fmtDateTime(r.fecha)}</div>
         </div>
         <Badge text={r.tipo} color="#6C0820" />
         <select
@@ -171,20 +171,20 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
       </div>
 
       {/* Meta */}
-      <div style={{ fontSize: ".74rem", color: "#647DA0", marginBottom: 8, display: "flex", gap: 14, flexWrap: "wrap" }}>
-        <span><strong style={{ color: "#22375C" }}>Sección:</strong> {r.seccion || "—"}</span>
-        <span><strong style={{ color: "#22375C" }}>Recurso:</strong> {r.recurso || "—"}</span>
+      <div style={{ fontSize: ".74rem", color: "#93A4BF", marginBottom: 8, display: "flex", gap: 14, flexWrap: "wrap" }}>
+        <span><strong style={{ color: "#FFFFFF" }}>Sección:</strong> {r.seccion || "—"}</span>
+        <span><strong style={{ color: "#FFFFFF" }}>Recurso:</strong> {r.recurso || "—"}</span>
       </div>
 
       {/* Mensaje */}
-      <div style={{ background: "#f5f7fc", borderLeft: "3px solid #3D5D91", borderRadius: 8, padding: "10px 14px", fontSize: ".84rem", color: "#22375C", lineHeight: 1.6, marginBottom: 12, whiteSpace: "pre-wrap" }}>
+      <div style={{ background: "#f5f7fc", borderLeft: "3px solid #C7A052", borderRadius: 8, padding: "10px 14px", fontSize: ".84rem", color: "#FFFFFF", lineHeight: 1.6, marginBottom: 12, whiteSpace: "pre-wrap" }}>
         {r.mensaje}
       </div>
 
       {r.pregunta && (
-        <div style={{ border: "1px solid #E3EAF4", background: "#F7FAFF", borderRadius: 10, padding: "10px 13px", marginBottom: 12 }}>
-          <div style={{ fontSize: ".66rem", fontWeight: 800, letterSpacing: ".06em", color: "#647DA0" }}>PREGUNTA REPORTADA</div>
-          <p style={{ margin: "5px 0 0", fontSize: ".8rem", color: "#22375C", lineHeight: 1.5 }}>{r.pregunta.text}</p>
+        <div style={{ border: "1px solid rgba(255,255,255,.10)", background: "#F7FAFF", borderRadius: 10, padding: "10px 13px", marginBottom: 12 }}>
+          <div style={{ fontSize: ".66rem", fontWeight: 800, letterSpacing: ".06em", color: "#93A4BF" }}>PREGUNTA REPORTADA</div>
+          <p style={{ margin: "5px 0 0", fontSize: ".8rem", color: "#FFFFFF", lineHeight: 1.5 }}>{r.pregunta.text}</p>
         </div>
       )}
 
@@ -192,13 +192,13 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
           <button
             onClick={() => setVerPregunta(true)}
-            style={{ padding: "7px 14px", background: "#3D5D91", color: "white", border: "none", borderRadius: 8, fontSize: ".76rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
+            style={{ padding: "7px 14px", background: "#C7A052", color: "#0B1220", border: "none", borderRadius: 8, fontSize: ".76rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
           >
             <Icon n="edit" size={14} /> Ver y editar pregunta
           </button>
           <button
             onClick={() => navigate({ to: "/admin/banco", search: { q: questionId } })}
-            style={{ padding: "7px 14px", background: "white", color: "#3D5D91", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".76rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
+            style={{ padding: "7px 14px", background: "#0A1B33", color: "#B8C5DA", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".76rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
           >
             <Icon n="help" size={14} /> Abrir en Banco de preguntas
           </button>
@@ -229,7 +229,7 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
           <button
             onClick={() => void guardarNotas()}
             disabled={!notasListas}
-            style={{ padding: "6px 14px", background: "#3D5D91", color: "white", border: "none", borderRadius: 7, fontSize: ".74rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 5 }}
+            style={{ padding: "6px 14px", background: "#C7A052", color: "#0B1220", border: "none", borderRadius: 7, fontSize: ".74rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 5 }}
           >
             <Icon n="check" size={13} /> Guardar notas
           </button>

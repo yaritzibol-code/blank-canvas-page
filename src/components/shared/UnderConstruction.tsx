@@ -14,17 +14,19 @@ interface Props {
  */
 export function UnderConstruction({ moduleName, description }: Props) {
   return (
-    <div className="fd-unavailable" style={{ minHeight: "70vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
+    <div className="fd-unavailable" style={{ minHeight: "100vh", background: "#050F22", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
       <div
         style={{
           maxWidth: 520,
           width: "100%",
-          background: "hsl(var(--card))",
-          border: "1px solid hsl(var(--border))",
-          borderRadius: 20,
+          background: "linear-gradient(180deg,#071326 0%,#050F22 100%)",
+          border: "1px solid rgba(199,160,82,.35)",
+          fontFamily: "'Manrope', sans-serif",
+          color: "#FFFFFF",
+          borderRadius: 8,
           padding: 40,
           textAlign: "center",
-          boxShadow: "0 10px 40px rgba(0,0,0,0.06)",
+          boxShadow: "0 24px 60px rgba(0,0,0,.45)",
         }}
       >
         <div
@@ -32,18 +34,18 @@ export function UnderConstruction({ moduleName, description }: Props) {
             width: 72,
             height: 72,
             borderRadius: "50%",
-            background: "hsl(var(--primary) / 0.1)",
+            background: "rgba(199,160,82,.14)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             margin: "0 auto 20px",
-            color: "hsl(var(--primary))",
+            color: "#C7A052",
           }}
         >
           <Icon n="wrench" size={30} />
         </div>
         <h2 style={{ fontSize: 24, fontWeight: 700, margin: "0 0 8px" }}>{moduleName}</h2>
-        <p style={{ fontSize: 15, color: "hsl(var(--muted-foreground))", margin: "0 0 24px", lineHeight: 1.6 }}>
+        <p style={{ fontSize: 15, color: "#93A4BF", margin: "0 0 24px", lineHeight: 1.6 }}>
           {description ??
             "Este módulo está en construcción. Estamos afinando la experiencia y estará disponible muy pronto."}
         </p>
@@ -54,9 +56,9 @@ export function UnderConstruction({ moduleName, description }: Props) {
             alignItems: "center",
             gap: 8,
             padding: "10px 20px",
-            borderRadius: 12,
-            background: "hsl(var(--primary))",
-            color: "hsl(var(--primary-foreground))",
+            borderRadius: 6,
+            background: "linear-gradient(180deg,#C7A052,#8A6A25)",
+            color: "#0B1220",
             textDecoration: "none",
             fontWeight: 600,
             fontSize: 14,

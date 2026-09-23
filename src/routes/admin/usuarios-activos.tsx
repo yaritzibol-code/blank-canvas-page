@@ -107,27 +107,27 @@ function UsuariosActivosPage() {
     <AdminShell title="Usuarios activos" active="usuarios_activos">
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12, marginBottom: 18 }}>
         <div style={{ ...cardStyle, padding: 18 }}>
-          <div style={{ fontSize: ".72rem", color: "#647DA0", textTransform: "uppercase", letterSpacing: ".8px", fontWeight: 700 }}>
+          <div style={{ fontSize: ".72rem", color: "#93A4BF", textTransform: "uppercase", letterSpacing: ".8px", fontWeight: 700 }}>
             En la plataforma ahora
           </div>
           <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "2.1rem", fontWeight: 900, color: "#2ecc71", lineHeight: 1.1, marginTop: 6 }}>
             {activos}
           </div>
-          <div style={{ fontSize: ".76rem", color: "#647DA0", marginTop: 4 }}>
+          <div style={{ fontSize: ".76rem", color: "#93A4BF", marginTop: 4 }}>
             {lista.length - activos} en reposo · {lista.reduce((n, p) => n + p.pestanas, 0)} pestañas
           </div>
         </div>
         <div style={{ ...cardStyle, padding: 18 }}>
-          <div style={{ fontSize: ".72rem", color: "#647DA0", textTransform: "uppercase", letterSpacing: ".8px", fontWeight: 700 }}>
+          <div style={{ fontSize: ".72rem", color: "#93A4BF", textTransform: "uppercase", letterSpacing: ".8px", fontWeight: 700 }}>
             Conexión en vivo
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 10 }}>
             <span style={{ width: 10, height: 10, borderRadius: 999, background: conectado ? "#2ecc71" : "#f39c12" }} />
-            <span style={{ fontSize: ".85rem", fontWeight: 700, color: "#22375C" }}>
+            <span style={{ fontSize: ".85rem", fontWeight: 700, color: "#FFFFFF" }}>
               {usandoRespaldo ? "Respaldo por actividad" : conectado ? "Escuchando" : "Conectando…"}
             </span>
           </div>
-          <div style={{ fontSize: ".76rem", color: "#647DA0", marginTop: 6 }}>
+          <div style={{ fontSize: ".76rem", color: "#93A4BF", marginTop: 6 }}>
             {usandoRespaldo
               ? "El canal en vivo no reportó a nadie; se muestran las sesiones con señal en los últimos 15 minutos."
               : "La lista se actualiza sola, sin recargar."}
@@ -137,8 +137,8 @@ function UsuariosActivosPage() {
 
       <div style={cardStyle}>
         <div style={cardHeadStyle}>
-          <Icon n="users" size={15} color="#3D5D91" />
-          <h3 style={{ fontSize: ".88rem", fontWeight: 800, color: "#22375C" }}>Quién está dentro</h3>
+          <Icon n="users" size={15} color="#C7A052" />
+          <h3 style={{ fontSize: ".88rem", fontWeight: 800, color: "#FFFFFF" }}>Quién está dentro</h3>
         </div>
 
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
@@ -152,10 +152,10 @@ function UsuariosActivosPage() {
               minHeight: 42,
               padding: "0 12px",
               borderRadius: 10,
-              border: "1.5px solid #E3EAF5",
+              border: "1.5px solid rgba(199,160,82,.22)",
               fontSize: ".85rem",
-              color: "#22375C",
-              background: "#fff",
+              color: "#FFFFFF",
+              background: "#0A1B33",
             }}
           />
           <button
@@ -165,9 +165,9 @@ function UsuariosActivosPage() {
               minHeight: 42,
               padding: "0 14px",
               borderRadius: 10,
-              border: "1.5px solid #E3EAF5",
-              background: incluirInactivos ? "#fff" : "#3D5D91",
-              color: incluirInactivos ? "#3D5D91" : "#fff",
+              border: "1.5px solid rgba(199,160,82,.22)",
+              background: incluirInactivos ? "transparent" : "#C7A052",
+              color: incluirInactivos ? "#C7A052" : "#0B1220",
               fontSize: ".82rem",
               fontWeight: 700,
               cursor: "pointer",
@@ -178,7 +178,7 @@ function UsuariosActivosPage() {
         </div>
 
         {filtradas.length === 0 ? (
-          <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>
+          <p style={{ fontSize: ".82rem", color: "#93A4BF" }}>
             Nadie conectado en este momento. En cuanto alguien entre a la plataforma aparecerá aquí.
           </p>
         ) : (
@@ -201,8 +201,8 @@ function UsuariosActivosPage() {
                     height: 36,
                     borderRadius: 999,
                     flexShrink: 0,
-                    background: p.inactivo ? "#E3EAF5" : "rgba(46,204,113,.15)",
-                    color: p.inactivo ? "#647DA0" : "#1e8449",
+                    background: p.inactivo ? "rgba(255,255,255,.10)" : "rgba(46,204,113,.15)",
+                    color: p.inactivo ? "#93A4BF" : "#1e8449",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -215,19 +215,19 @@ function UsuariosActivosPage() {
 
                 <div style={{ flex: "1 1 200px", minWidth: 0 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 7, flexWrap: "wrap" }}>
-                    <span style={{ fontSize: ".85rem", fontWeight: 700, color: "#22375C" }}>{p.nombre}</span>
-                    <Badge text={p.plan === "paga" ? "Pro" : "Básica"} color={p.plan === "paga" ? "#6C0820" : "#8DA1BE"} />
-                    {p.role === "admin" && <Badge text="Admin" color="#3D5D91" />}
-                    {p.pestanas > 1 && <Badge text={`${p.pestanas} pestañas`} color="#8DA1BE" />}
+                    <span style={{ fontSize: ".85rem", fontWeight: 700, color: "#FFFFFF" }}>{p.nombre}</span>
+                    <Badge text={p.plan === "paga" ? "Pro" : "Básica"} color={p.plan === "paga" ? "#6C0820" : "#93A4BF"} />
+                    {p.role === "admin" && <Badge text="Admin" color="#C7A052" />}
+                    {p.pestanas > 1 && <Badge text={`${p.pestanas} pestañas`} color="#93A4BF" />}
                   </div>
-                  <div style={{ fontSize: ".72rem", color: "#8DA1BE", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  <div style={{ fontSize: ".72rem", color: "#93A4BF", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                     {p.email}
                   </div>
                 </div>
 
                 <div style={{ flex: "1 1 220px", minWidth: 0 }}>
-                  <div style={{ fontSize: ".8rem", fontWeight: 600, color: "#22375C" }}>{p.pantalla}</div>
-                  <div style={{ fontSize: ".72rem", color: "#647DA0" }}>
+                  <div style={{ fontSize: ".8rem", fontWeight: 600, color: "#FFFFFF" }}>{p.pantalla}</div>
+                  <div style={{ fontSize: ".72rem", color: "#93A4BF" }}>
                     {p.actividad ? p.actividad : p.ruta}
                   </div>
                 </div>
@@ -237,7 +237,7 @@ function UsuariosActivosPage() {
                     text={p.inactivo ? "En reposo" : "Activa ahora"}
                     color={p.inactivo ? "#f39c12" : "#2ecc71"}
                   />
-                  <div style={{ fontSize: ".7rem", color: "#8DA1BE", marginTop: 4 }}>
+                  <div style={{ fontSize: ".7rem", color: "#93A4BF", marginTop: 4 }}>
                     conectada {duracion(p.desde, ahora)}
                   </div>
                 </div>
@@ -245,7 +245,7 @@ function UsuariosActivosPage() {
                 <Link
                   to="/admin/perfil"
                   search={{ id: p.userId }}
-                  style={{ fontSize: ".76rem", fontWeight: 700, color: "#3D5D91", textDecoration: "none", flexShrink: 0 }}
+                  style={{ fontSize: ".76rem", fontWeight: 700, color: "#B8C5DA", textDecoration: "none", flexShrink: 0 }}
                 >
                   Abrir perfil →
                 </Link>

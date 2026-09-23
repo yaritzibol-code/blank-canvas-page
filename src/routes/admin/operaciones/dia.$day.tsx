@@ -42,23 +42,23 @@ function DrilldownPage() {
   return (
     <AdminShell title={`Detalle · ${prettyDay}`} active="operaciones">
       <div style={{ marginBottom: 16 }}>
-        <Link to="/admin/operaciones" style={{ color: "#3D5D91", fontWeight: 700, fontSize: ".9rem" }}>
+        <Link to="/admin/operaciones" style={{ color: "#B8C5DA", fontWeight: 700, fontSize: ".9rem" }}>
           ← Volver al panel
         </Link>
       </div>
 
       {err && (
-        <div style={{ background: "#FEE2E2", color: "#991B1B", border: "1px solid #FCA5A5", padding: 12, borderRadius: 12, marginBottom: 16 }}>
+        <div style={{ background: "rgba(231,76,60,.14)", color: "#991B1B", border: "1px solid #FCA5A5", padding: 12, borderRadius: 12, marginBottom: 16 }}>
           {err}
         </div>
       )}
-      {loading && <div style={{ color: "#647DA0" }}>Cargando datos del día…</div>}
+      {loading && <div style={{ color: "#93A4BF" }}>Cargando datos del día…</div>}
 
       {data && (
         <>
           <section style={{ display: "grid", gap: 14, gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", marginBottom: 20 }}>
             <Kpi label="Subs activas" value={data.totals.subs} tone="#2ecc71" />
-            <Kpi label="Eventos de estudio" value={data.totals.events} tone="#3D5D91" />
+            <Kpi label="Eventos de estudio" value={data.totals.events} tone="#C7A052" />
             <Kpi label="Fallos de webhook" value={data.totals.failures} tone="#e74c3c" />
             <Kpi label="Drift usuarios (actual)" value={data.totals.drift} tone="#f39c12" />
           </section>
@@ -108,9 +108,9 @@ function DrilldownPage() {
                 ) : (
                   <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: 10 }}>
                     {data.stripe_failures.map((f) => (
-                      <li key={f.id} style={{ borderBottom: "1px solid #F2DCDB", paddingBottom: 8 }}>
-                        <div style={{ fontSize: ".85rem", color: "#22375C", fontWeight: 700 }}>{f.type}</div>
-                        <div style={{ fontSize: ".72rem", color: "#647DA0" }}>{new Date(f.received_at).toLocaleString("es-MX")}</div>
+                      <li key={f.id} style={{ borderBottom: "1px solid rgba(199,160,82,.28)", paddingBottom: 8 }}>
+                        <div style={{ fontSize: ".85rem", color: "#FFFFFF", fontWeight: 700 }}>{f.type}</div>
+                        <div style={{ fontSize: ".72rem", color: "#93A4BF" }}>{new Date(f.received_at).toLocaleString("es-MX")}</div>
                         {f.error_message && <div style={{ fontSize: ".78rem", color: "#e74c3c", marginTop: 4 }}>{f.error_message}</div>}
                       </li>
                     ))}
@@ -142,14 +142,14 @@ function DrilldownPage() {
 function Kpi({ label, value, tone }: { label: string; value: number; tone: string }) {
   return (
     <div style={{ ...cardStyle, padding: 18 }}>
-      <div style={{ fontSize: ".72rem", color: "#647DA0", textTransform: "uppercase", letterSpacing: ".8px", fontWeight: 700 }}>{label}</div>
+      <div style={{ fontSize: ".72rem", color: "#93A4BF", textTransform: "uppercase", letterSpacing: ".8px", fontWeight: 700 }}>{label}</div>
       <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.9rem", fontWeight: 800, color: tone, marginTop: 6 }}>{value}</div>
     </div>
   );
 }
 
 function Empty({ text }: { text: string }) {
-  return <div style={{ color: "#647DA0", fontSize: ".85rem" }}>{text}</div>;
+  return <div style={{ color: "#93A4BF", fontSize: ".85rem" }}>{text}</div>;
 }
 
 function Table({ head, rows }: { head: string[]; rows: (string | number)[][] }) {
@@ -159,7 +159,7 @@ function Table({ head, rows }: { head: string[]; rows: (string | number)[][] }) 
         <thead>
           <tr>
             {head.map((h) => (
-              <th key={h} style={{ textAlign: "left", padding: "6px 8px", color: "#647DA0", borderBottom: "1px solid #F2DCDB", fontSize: ".72rem", textTransform: "uppercase" }}>{h}</th>
+              <th key={h} style={{ textAlign: "left", padding: "6px 8px", color: "#93A4BF", borderBottom: "1px solid rgba(199,160,82,.28)", fontSize: ".72rem", textTransform: "uppercase" }}>{h}</th>
             ))}
           </tr>
         </thead>
@@ -167,7 +167,7 @@ function Table({ head, rows }: { head: string[]; rows: (string | number)[][] }) 
           {rows.map((r, i) => (
             <tr key={i}>
               {r.map((c, j) => (
-                <td key={j} style={{ padding: "8px", borderBottom: "1px solid #F7EEEE", color: "#22375C" }}>{c}</td>
+                <td key={j} style={{ padding: "8px", borderBottom: "1px solid #F7EEEE", color: "#FFFFFF" }}>{c}</td>
               ))}
             </tr>
           ))}
