@@ -153,7 +153,7 @@ const errorTextStyle: React.CSSProperties = {
 
 const googleMsgStyle: React.CSSProperties = {
   fontSize: "0.75rem",
-  color: "#4A5872",
+  color: "#93A4BF",
   textAlign: "center",
   lineHeight: 1.4,
 };
@@ -205,7 +205,7 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
       <div
         style={{
           background: INK,
-          color: "white",
+          color: "#0A1B33",
           borderRadius: 14,
           padding: "16px 20px",
           display: "flex",
@@ -295,7 +295,7 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
               background: "none",
               border: "none",
               cursor: "pointer",
-              color: "#7E90AD",
+              color: "#93A4BF",
               display: "flex",
             }}
           >
@@ -311,7 +311,7 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
           onChange={(e) => setMarketing(e.target.checked)}
           style={{ width: 18, height: 18, marginTop: 2, accentColor: "#7A5C1E", flexShrink: 0 }}
         />
-        <span style={{ fontSize: "0.82rem", color: "#4A5872", lineHeight: 1.4 }}>
+        <span style={{ fontSize: "0.82rem", color: "#93A4BF", lineHeight: 1.4 }}>
           Quiero recibir promociones, tips de estudio y novedades de FlightPath por correo.
         </span>
       </label>
@@ -323,13 +323,13 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
           onChange={(e) => setTerms(e.target.checked)}
           style={{ width: 18, height: 18, marginTop: 2, accentColor: "#7A5C1E", flexShrink: 0 }}
         />
-        <span style={{ fontSize: "0.82rem", color: "#4A5872", lineHeight: 1.4 }}>
+        <span style={{ fontSize: "0.82rem", color: "#93A4BF", lineHeight: 1.4 }}>
           Acepto los{" "}
-          <Link to="/legal" style={{ color: "#163D70", fontWeight: 600, textDecoration: "none" }}>
+          <Link to="/legal" style={{ color: "#C7A052", fontWeight: 600, textDecoration: "none" }}>
             Términos y condiciones
           </Link>{" "}
           y el{" "}
-          <Link to="/legal" style={{ color: "#163D70", fontWeight: 600, textDecoration: "none" }}>
+          <Link to="/legal" style={{ color: "#C7A052", fontWeight: 600, textDecoration: "none" }}>
             Aviso de privacidad
           </Link>
           .
@@ -343,13 +343,13 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
         Crear cuenta gratis
       </SubmitButton>
 
-      <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#7E90AD", marginTop: 4 }}>
+      <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#93A4BF", marginTop: 4 }}>
         ¿Ya tienes cuenta?{" "}
         <button
           type="button"
           onClick={onSwitch}
           style={{
-            color: "#163D70",
+            color: "#C7A052",
             fontWeight: 600,
             background: "none",
             border: "none",
@@ -415,7 +415,7 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
   if (showReset) {
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-        <p style={{ fontSize: ".85rem", color: "#4A5872", lineHeight: 1.5 }}>
+        <p style={{ fontSize: ".85rem", color: "#93A4BF", lineHeight: 1.5 }}>
           Escribe tu correo y te enviaremos un enlace para crear una contraseña nueva.
         </p>
         <Field label="Correo electrónico">
@@ -440,12 +440,12 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
           Enviar enlace
         </SubmitButton>
 
-        <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#7E90AD", marginTop: 4 }}>
+        <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#93A4BF", marginTop: 4 }}>
           <button
             type="button"
             onClick={() => setShowReset(false)}
             style={{
-              color: "#163D70",
+              color: "#C7A052",
               fontWeight: 600,
               background: "none",
               border: "none",
@@ -499,7 +499,7 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
               background: "none",
               border: "none",
               cursor: "pointer",
-              color: "#7E90AD",
+              color: "#93A4BF",
               display: "flex",
             }}
           >
@@ -519,7 +519,7 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
           }}
           style={{
             fontSize: "0.8rem",
-            color: "#163D70",
+            color: "#C7A052",
             fontWeight: 600,
             background: "none",
             border: "none",
@@ -539,13 +539,13 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
       <Divider />
       <GoogleButton onClick={() => signInWithGoogle((m) => setError(m), redirectTo)} />
 
-      <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#7E90AD", marginTop: 4 }}>
+      <p style={{ textAlign: "center", fontSize: "0.78rem", color: "#93A4BF", marginTop: 4 }}>
         ¿No tienes cuenta?{" "}
         <button
           type="button"
           onClick={onSwitch}
           style={{
-            color: "#163D70",
+            color: "#C7A052",
             fontWeight: 600,
             background: "none",
             border: "none",
@@ -564,7 +564,7 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
 
 const inputStyle: React.CSSProperties = {
   padding: "12px 16px",
-  border: "1.5px solid #E8ECF2",
+  border: "1.5px solid rgba(255,255,255,.12)",
   borderRadius: 12,
   fontSize: "0.9rem",
   fontFamily: FONT,
@@ -572,7 +572,7 @@ const inputStyle: React.CSSProperties = {
   outline: "none",
   transition: "border-color 0.2s",
   width: "100%",
-  background: "#F5F5F7",
+  background: "#050F22",
 };
 
 function Field({
@@ -590,7 +590,7 @@ function Field({
         style={{
           fontSize: "0.78rem",
           fontWeight: 700,
-          color: "#4A5872",
+          color: "#93A4BF",
           fontFamily: MONO,
           textTransform: "uppercase",
           letterSpacing: "0.1em",
@@ -599,7 +599,7 @@ function Field({
         {label}
       </label>
       {children}
-      {hint && <span style={{ fontSize: "0.75rem", color: "#7E90AD" }}>{hint}</span>}
+      {hint && <span style={{ fontSize: "0.75rem", color: "#93A4BF" }}>{hint}</span>}
     </div>
   );
 }
@@ -611,16 +611,16 @@ function Divider() {
         display: "flex",
         alignItems: "center",
         gap: 12,
-        color: "#B8C5DA",
+        color: "#93A4BF",
         fontSize: "0.78rem",
         fontFamily: MONO,
         textTransform: "uppercase",
         letterSpacing: "0.1em",
       }}
     >
-      <span style={{ flex: 1, height: 1, background: "#E8ECF2", display: "block" }} />
+      <span style={{ flex: 1, height: 1, background: "rgba(255,255,255,.12)", display: "block" }} />
       o
-      <span style={{ flex: 1, height: 1, background: "#E8ECF2", display: "block" }} />
+      <span style={{ flex: 1, height: 1, background: "rgba(255,255,255,.12)", display: "block" }} />
     </div>
   );
 }
@@ -639,9 +639,9 @@ function GoogleButton({ onClick }: { onClick?: () => void }) {
         justifyContent: "center",
         gap: 10,
         padding: 12,
-        border: `1.5px solid ${hovered ? "#B8C5DA" : "#E8ECF2"}`,
+        border: `1.5px solid ${hovered ? "#93A4BF" : "rgba(255,255,255,.12)"}`,
         borderRadius: 12,
-        background: hovered ? "#F5F5F7" : "white",
+        background: hovered ? "#050F22" : "#0A1B33",
         fontSize: "0.9rem",
         fontWeight: 600,
         color: INK,
@@ -676,8 +676,8 @@ function SubmitButton({
       onMouseLeave={() => setHovered(false)}
       style={{
         padding: 14,
-        background: loading ? "#7E90AD" : hovered ? "#614919" : "#7A5C1E",
-        color: "white",
+        background: loading ? "#93A4BF" : hovered ? "#8A6A25" : "#C7A052",
+        color: "#0A1B33",
         border: "none",
         borderRadius: 12,
         fontSize: "0.95rem",
@@ -770,13 +770,13 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
           }}
         >
           <PlaneMark size={36} />
-          Flight<span style={{ color: "#7A5C1E" }}>Path</span>
+          Flight<span style={{ color: "#C7A052" }}>Path</span>
         </Link>
         <Link
           to="/"
           style={{
             fontSize: "0.82rem",
-            color: "#4A5872",
+            color: "#93A4BF",
             textDecoration: "none",
             display: "flex",
             alignItems: "center",
@@ -847,9 +847,9 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
             }}
           >
             ¡Bienvenido a<br />
-            <span style={{ color: "#7A5C1E" }}>FlightPath!</span>
+            <span style={{ color: "#C7A052" }}>FlightPath!</span>
           </h2>
-          <p style={{ color: "#4A5872", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: 28 }}>
+          <p style={{ color: "#93A4BF", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: 28 }}>
             Tu copiloto Pathy ya está listo para acompañarte en cada paso hacia el CIAAC.
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 10, textAlign: "left" }}>
@@ -860,19 +860,19 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
                   display: "flex",
                   alignItems: "center",
                   gap: 12,
-                  background: "white",
+                  background: "#0A1B33",
                   borderRadius: 14,
                   padding: "12px 16px",
                   boxShadow: "0 1px 2px rgba(15,26,51,0.04), 0 8px 24px -12px rgba(15,26,51,0.12)",
-                  border: "1px solid #E8ECF2",
+                  border: "1px solid rgba(255,255,255,.12)",
                 }}
               >
                 <div
                   style={{
                     width: 36,
                     height: 36,
-                    background: "#FBF7EC",
-                    color: "#7A5C1E",
+                    background: "rgba(199,160,82,.12)",
+                    color: "#C7A052",
                     borderRadius: 9,
                     display: "flex",
                     alignItems: "center",
@@ -882,7 +882,7 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
                 >
                   <Icon n={perk.icon} size={18} />
                 </div>
-                <span style={{ fontSize: "0.85rem", color: "#123360", fontWeight: 500 }}>
+                <span style={{ fontSize: "0.85rem", color: "#8A6A25", fontWeight: 500 }}>
                   {perk.text}
                 </span>
               </div>
@@ -893,24 +893,24 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
         {/* RIGHT — CARD */}
         <div
           style={{
-            background: "white",
+            background: "#0A1B33",
             borderRadius: 24,
             padding: 40,
             width: "100%",
             maxWidth: 440,
             boxShadow: "0 2px 4px rgba(15,26,51,0.04), 0 24px 48px -20px rgba(15,26,51,0.22)",
-            border: "1px solid #E8ECF2",
+            border: "1px solid rgba(255,255,255,.12)",
           }}
         >
           {/* TABS */}
           <div
             style={{
               display: "flex",
-              background: "#F5F5F7",
+              background: "#050F22",
               borderRadius: 12,
               padding: 4,
               marginBottom: 32,
-              border: "1px solid #E8ECF2",
+              border: "1px solid rgba(255,255,255,.12)",
             }}
           >
             {(["register", "login"] as Tab[]).map((t, i) => (
@@ -927,9 +927,9 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
                   cursor: "pointer",
                   borderRadius: 9,
                   transition: "all 0.2s",
-                  color: tab === t ? "#081A35" : "#7E90AD",
+                  color: tab === t ? "#FFFFFF" : "#93A4BF",
                   border: "none",
-                  background: tab === t ? "white" : "transparent",
+                  background: tab === t ? "#0A1B33" : "transparent",
                   boxShadow: tab === t ? "0 2px 8px rgba(22,61,112,0.15)" : "none",
                   fontFamily: FONT,
                 }}
