@@ -17,7 +17,7 @@ const STATUS_COLOR: Record<string, string> = {
   processed: "#2ecc71",
   failed: "#e74c3c",
   ignored: "#f39c12",
-  received: "#3D5D91",
+  received: "#C7A052",
 };
 
 function StripeEventsPage() {
@@ -73,7 +73,7 @@ function StripeEventsPage() {
       </div>
 
       {err && (
-        <div style={{ background: "#FEE2E2", color: "#991B1B", border: "1px solid #FCA5A5", padding: 12, borderRadius: 12, marginBottom: 16 }}>
+        <div style={{ background: "rgba(231,76,60,.14)", color: "#991B1B", border: "1px solid #FCA5A5", padding: 12, borderRadius: 12, marginBottom: 16 }}>
           {err}
         </div>
       )}
@@ -101,7 +101,7 @@ function StripeEventsPage() {
                     <td style={{ ...td, fontFamily: "monospace", fontSize: ".78rem" }}>{r.type}</td>
                     <td style={td}>{r.environment}</td>
                     <td style={td}>
-                      <span style={{ background: STATUS_COLOR[r.status] ?? "#647DA0", color: "#fff", padding: "2px 8px", borderRadius: 999, fontSize: ".72rem", fontWeight: 700 }}>
+                      <span style={{ background: STATUS_COLOR[r.status] ?? "#93A4BF", color: "#fff", padding: "2px 8px", borderRadius: 999, fontSize: ".72rem", fontWeight: 700 }}>
                         {r.status}
                       </span>
                     </td>
@@ -161,11 +161,11 @@ function StripeEventsPage() {
 }
 
 const AUDIT_COLOR: Record<string, string> = {
-  checkout_session_created: "#3D5D91",
+  checkout_session_created: "#C7A052",
   checkout_session_failed: "#e74c3c",
   portal_session_created: "#8e6fb5",
   portal_session_failed: "#e74c3c",
-  plan_sync: "#647DA0",
+  plan_sync: "#93A4BF",
   plan_changed: "#2ecc71",
   webhook_received: "#f39c12",
   webhook_processed: "#2ecc71",
@@ -242,7 +242,7 @@ function BillingAuditCard({ env }: { env: "sandbox" | "live" }) {
                 <tr key={r.id} style={{ borderTop: "1px solid rgba(199,160,82,.28)" }}>
                   <td style={td}>{new Date(r.created_at).toLocaleString("es-MX")}</td>
                   <td style={td}>
-                    <span style={{ background: AUDIT_COLOR[r.event] ?? "#647DA0", color: "#fff", padding: "2px 8px", borderRadius: 999, fontSize: ".72rem", fontWeight: 700 }}>
+                    <span style={{ background: AUDIT_COLOR[r.event] ?? "#93A4BF", color: "#fff", padding: "2px 8px", borderRadius: 999, fontSize: ".72rem", fontWeight: 700 }}>
                       {r.event}
                     </span>
                     {!r.ok && <div style={{ color: "#e74c3c", fontSize: ".72rem" }}>{r.message}</div>}

@@ -33,12 +33,12 @@ const thStyle: CSSProperties = {
   padding: "10px 12px",
   fontSize: ".66rem",
   fontWeight: 700,
-  color: "#8DA1BE",
+  color: "#93A4BF",
   textTransform: "uppercase",
   letterSpacing: ".6px",
   textAlign: "left",
   whiteSpace: "nowrap",
-  borderBottom: "1px solid rgba(61,93,145,.1)",
+  borderBottom: "1px solid rgba(199,160,82,.14)",
 };
 
 const tdStyle: CSSProperties = {
@@ -144,7 +144,7 @@ function AdminAccesosPage() {
           <tbody>
             {filtered.length === 0 && (
               <tr>
-                <td colSpan={9} style={{ ...tdStyle, textAlign: "center", color: "#8DA1BE", padding: "26px 12px" }}>
+                <td colSpan={9} style={{ ...tdStyle, textAlign: "center", color: "#93A4BF", padding: "26px 12px" }}>
                   No hay estudiantes con ese estado de acceso.
                 </td>
               </tr>
@@ -161,7 +161,7 @@ function AdminAccesosPage() {
                 <td style={tdStyle}>{fmtDate(u.accessStart)}</td>
                 <td style={tdStyle}>{u.accessEnd ? fmtDate(u.accessEnd) : "Sin vencimiento"}</td>
                 <td style={tdStyle}>
-                  <Badge text={ACCESS_LABEL[u.accessStatus] ?? u.accessStatus} color={ACCESS_COLOR[u.accessStatus] ?? "#3D5D91"} />
+                  <Badge text={ACCESS_LABEL[u.accessStatus] ?? u.accessStatus} color={ACCESS_COLOR[u.accessStatus] ?? "#C7A052"} />
                 </td>
                 <td style={{ ...tdStyle, maxWidth: 160, overflow: "hidden", textOverflow: "ellipsis" }} title={u.notasInternas}>
                   {u.notasInternas || "—"}
@@ -196,12 +196,12 @@ function AdminAccesosPage() {
       <div style={cardStyle}>
         <div style={cardHeadStyle}><Icon n="list" size={15} /> Historial de cambios recientes</div>
         {changes.length === 0 ? (
-          <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>Sin cambios de acceso registrados todavía.</p>
+          <p style={{ fontSize: ".82rem", color: "#93A4BF" }}>Sin cambios de acceso registrados todavía.</p>
         ) : (
           <div style={{ display: "flex", flexDirection: "column" }}>
             {changes.map((c, i) => (
               <div key={c.id} style={{ display: "flex", gap: 10, padding: "8px 0", borderBottom: i < changes.length - 1 ? "1px solid rgba(61,93,145,.05)" : undefined, flexWrap: "wrap", alignItems: "baseline" }}>
-                <span style={{ fontSize: ".72rem", color: "#8DA1BE", width: 150, flexShrink: 0 }}>{fmtDateTime(c.fecha)}</span>
+                <span style={{ fontSize: ".72rem", color: "#93A4BF", width: 150, flexShrink: 0 }}>{fmtDateTime(c.fecha)}</span>
                 <span style={{ fontSize: ".78rem", fontWeight: 700, color: "#FFFFFF", width: 170, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                   {getUserById(c.userId)?.nombre ?? "Estudiante"}
                 </span>

@@ -158,7 +158,7 @@ function AdminResumenPage() {
         <div style={cardStyle}>
           <div style={cardHeadStyle}><Icon n="book" size={15} /> Materias con menor desempeño</div>
           {weakest.length === 0 ? (
-            <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>Aún no hay datos suficientes de cuestionarios o simuladores.</p>
+            <p style={{ fontSize: ".82rem", color: "#93A4BF" }}>Aún no hay datos suficientes de cuestionarios o simuladores.</p>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {weakest.map((m) => (
@@ -178,7 +178,7 @@ function AdminResumenPage() {
         <div style={cardStyle}>
           <div style={cardHeadStyle}><Icon n="headset" size={15} /> Soporte pendiente</div>
           {pending.length === 0 ? (
-            <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>No hay reportes pendientes. Todo al día.</p>
+            <p style={{ fontSize: ".82rem", color: "#93A4BF" }}>No hay reportes pendientes. Todo al día.</p>
           ) : (
             <div style={{ display: "flex", flexDirection: "column" }}>
               {pending.slice(0, 5).map((r, i) => (
@@ -187,7 +187,7 @@ function AdminResumenPage() {
                     <div style={{ fontSize: ".8rem", fontWeight: 600, color: "#FFFFFF", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.userName}</div>
                     <div style={{ fontSize: ".7rem", color: "#93A4BF" }}>{r.tipo} · {timeAgo(r.fecha)}</div>
                   </div>
-                  <Badge text={r.estado === "pendiente" ? "Pendiente" : "En proceso"} color={REPORT_STATE_COLOR[r.estado] ?? "#3D5D91"} />
+                  <Badge text={r.estado === "pendiente" ? "Pendiente" : "En proceso"} color={REPORT_STATE_COLOR[r.estado] ?? "#C7A052"} />
                 </div>
               ))}
             </div>
@@ -204,7 +204,7 @@ function AdminResumenPage() {
       <div style={cardStyle}>
         <div style={cardHeadStyle}><Icon n="clock" size={15} /> Actividad reciente</div>
         {activity.length === 0 ? (
-          <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>Sin actividad registrada todavía.</p>
+          <p style={{ fontSize: ".82rem", color: "#93A4BF" }}>Sin actividad registrada todavía.</p>
         ) : (
           activity.map((a, i) => {
             const vis = activityVisual(a.kind);
@@ -212,7 +212,7 @@ function AdminResumenPage() {
             return (
               <div key={a.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 0", borderBottom: i < activity.length - 1 ? "1px solid rgba(61,93,145,.05)" : undefined }}>
                 <div style={{ width: 30, height: 30, borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: vis.bg }}>
-                  <Icon n={vis.icon} size={16} color="#22375C" />
+                  <Icon n={vis.icon} size={16} color="#FFFFFF" />
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: ".82rem", fontWeight: 600, color: "#FFFFFF", marginBottom: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{a.label}</div>
@@ -222,7 +222,7 @@ function AdminResumenPage() {
                   <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: ".95rem", fontWeight: 900, color: scoreColor(a.score) }}>
                     {a.score !== null ? `${a.score}%` : "—"}
                   </div>
-                  <div style={{ fontSize: ".68rem", color: "#8DA1BE" }}>{timeAgo(a.date)}</div>
+                  <div style={{ fontSize: ".68rem", color: "#93A4BF" }}>{timeAgo(a.date)}</div>
                 </div>
               </div>
             );

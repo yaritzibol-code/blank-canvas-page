@@ -88,7 +88,7 @@ function YarisAdminPage() {
   return (
     <AdminShell title="Yaris & IA" active="operaciones_yaris" backTo={{ label: "Panel", to: "/admin/operaciones" }}>
       {msg && <div style={{ background: "#D1FAE5", color: "#065F46", padding: 10, borderRadius: 10, marginBottom: 14 }}>{msg}</div>}
-      {err && <div style={{ background: "#FEE2E2", color: "#991B1B", padding: 10, borderRadius: 10, marginBottom: 14 }}>{err}</div>}
+      {err && <div style={{ background: "rgba(231,76,60,.14)", color: "#991B1B", padding: 10, borderRadius: 10, marginBottom: 14 }}>{err}</div>}
 
       <section style={{ ...cardStyle, marginBottom: 18 }}>
         <div style={cardHeadStyle}>System prompt base de Yaris · versión {version}</div>

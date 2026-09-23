@@ -39,7 +39,7 @@ const ESTADO_COLOR: Record<ReportStatus, string> = {
   pendiente: "#e74c3c",
   en_proceso: "#f39c12",
   resuelto: "#2ecc71",
-  cerrado: "#8DA1BE",
+  cerrado: "#93A4BF",
 };
 
 function AdminSoportePage() {
@@ -73,7 +73,7 @@ function AdminSoportePage() {
       {/* Filtros */}
       <div style={{ ...cardStyle, marginBottom: 16, display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
         <div style={{ position: "relative", flex: "1 1 220px", minWidth: 180 }}>
-          <span style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: "#8DA1BE" }}><Icon n="search" size={15} /></span>
+          <span style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: "#93A4BF" }}><Icon n="search" size={15} /></span>
           <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Buscar por estudiante, mensaje o recurso..." style={{ ...inputStyle, paddingLeft: 34 }} />
         </div>
         <select value={fEstado} onChange={(e) => setFEstado(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 140 }}>
@@ -96,7 +96,7 @@ function AdminSoportePage() {
 
       {filtered.length === 0 && (
         <div style={cardStyle}>
-          <p style={{ fontSize: ".82rem", color: "#8DA1BE", textAlign: "center", padding: "12px 0" }}>No hay reportes que coincidan con los filtros.</p>
+          <p style={{ fontSize: ".82rem", color: "#93A4BF", textAlign: "center", padding: "12px 0" }}>No hay reportes que coincidan con los filtros.</p>
         </div>
       )}
 
@@ -177,12 +177,12 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
       </div>
 
       {/* Mensaje */}
-      <div style={{ background: "#f5f7fc", borderLeft: "3px solid #3D5D91", borderRadius: 8, padding: "10px 14px", fontSize: ".84rem", color: "#FFFFFF", lineHeight: 1.6, marginBottom: 12, whiteSpace: "pre-wrap" }}>
+      <div style={{ background: "#f5f7fc", borderLeft: "3px solid #C7A052", borderRadius: 8, padding: "10px 14px", fontSize: ".84rem", color: "#FFFFFF", lineHeight: 1.6, marginBottom: 12, whiteSpace: "pre-wrap" }}>
         {r.mensaje}
       </div>
 
       {r.pregunta && (
-        <div style={{ border: "1px solid #E3EAF4", background: "#F7FAFF", borderRadius: 10, padding: "10px 13px", marginBottom: 12 }}>
+        <div style={{ border: "1px solid rgba(255,255,255,.10)", background: "#F7FAFF", borderRadius: 10, padding: "10px 13px", marginBottom: 12 }}>
           <div style={{ fontSize: ".66rem", fontWeight: 800, letterSpacing: ".06em", color: "#93A4BF" }}>PREGUNTA REPORTADA</div>
           <p style={{ margin: "5px 0 0", fontSize: ".8rem", color: "#FFFFFF", lineHeight: 1.5 }}>{r.pregunta.text}</p>
         </div>
@@ -192,7 +192,7 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
           <button
             onClick={() => setVerPregunta(true)}
-            style={{ padding: "7px 14px", background: "#3D5D91", color: "white", border: "none", borderRadius: 8, fontSize: ".76rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
+            style={{ padding: "7px 14px", background: "#C7A052", color: "white", border: "none", borderRadius: 8, fontSize: ".76rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
           >
             <Icon n="edit" size={14} /> Ver y editar pregunta
           </button>
@@ -229,7 +229,7 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
           <button
             onClick={() => void guardarNotas()}
             disabled={!notasListas}
-            style={{ padding: "6px 14px", background: "#3D5D91", color: "white", border: "none", borderRadius: 7, fontSize: ".74rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 5 }}
+            style={{ padding: "6px 14px", background: "#C7A052", color: "white", border: "none", borderRadius: 7, fontSize: ".74rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 5 }}
           >
             <Icon n="check" size={13} /> Guardar notas
           </button>

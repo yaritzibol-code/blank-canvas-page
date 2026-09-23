@@ -9,7 +9,7 @@ export interface SparkPoint { label: string; value: number }
 export function SparkChart({
   points,
   height = 140,
-  color = "#3D5D91",
+  color = "#C7A052",
   fill = "rgba(61,93,145,0.14)",
   formatValue = (n: number) => n.toLocaleString("es-MX"),
   formatLabel = (l: string) => l,
@@ -72,7 +72,7 @@ export function SparkChart({
       {hover !== null && (
         <div style={{
           position: "absolute", bottom: 4, left: `${(hover / Math.max(1, points.length - 1)) * 100}%`,
-          transform: "translateX(-50%)", background: "#22375C", color: "white",
+          transform: "translateX(-50%)", background: "#FFFFFF", color: "white",
           padding: "3px 8px", borderRadius: 6, fontSize: ".72rem", whiteSpace: "nowrap",
           pointerEvents: "none",
         }}>

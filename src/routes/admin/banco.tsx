@@ -277,7 +277,7 @@ function AdminBancoPage() {
     { lab: "Total", num: total, color: "#B8C5DA" },
     { lab: "Publicadas", num: publicadas, color: "#2ecc71" },
     { lab: "Borrador", num: borrador, color: "#f39c12" },
-    { lab: "Ocultas", num: ocultas, color: "#8DA1BE" },
+    { lab: "Ocultas", num: ocultas, color: "#93A4BF" },
     { lab: "Sin clasificar", num: sinClasificar, color: "#6C0820" },
   ];
 
@@ -303,7 +303,7 @@ function AdminBancoPage() {
           <Icon n="download" size={15} /> Descargar plantilla
         </button>
       </div>
-      <p style={{ fontSize: ".74rem", color: "#8DA1BE", marginBottom: 16, display: "flex", alignItems: "center", gap: 6 }}>
+      <p style={{ fontSize: ".74rem", color: "#93A4BF", marginBottom: 16, display: "flex", alignItems: "center", gap: 6 }}>
         <Icon n="info" size={14} /> ¿Tu archivo está en Excel? Guárdalo como CSV (UTF-8) antes de subirlo.
       </p>
 
@@ -316,7 +316,7 @@ function AdminBancoPage() {
               {importResult.imported} {importResult.imported === 1 ? "pregunta importada" : "preguntas importadas"}
               {importResult.errors.length > 0 && ` · ${importResult.errors.length} ${importResult.errors.length === 1 ? "fila con error" : "filas con error"}`}
             </span>
-            <button onClick={() => setImportResult(null)} style={{ marginLeft: "auto", background: "none", border: "none", cursor: "pointer", color: "#8DA1BE", padding: 2 }}><Icon n="close" size={15} /></button>
+            <button onClick={() => setImportResult(null)} style={{ marginLeft: "auto", background: "none", border: "none", cursor: "pointer", color: "#93A4BF", padding: 2 }}><Icon n="close" size={15} /></button>
           </div>
           {importResult.errors.length > 0 && (
             <div style={{ display: "flex", flexDirection: "column", gap: 3, maxHeight: 160, overflowY: "auto" }}>
@@ -334,7 +334,7 @@ function AdminBancoPage() {
       {/* Filtros */}
       <div style={{ ...cardStyle, marginBottom: 16, display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
         <div style={{ position: "relative", flex: "1 1 220px", minWidth: 180 }}>
-          <span style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: "#8DA1BE" }}><Icon n="search" size={15} /></span>
+          <span style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: "#93A4BF" }}><Icon n="search" size={15} /></span>
           <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Buscar por texto o ID de la pregunta..." style={{ ...inputStyle, paddingLeft: 34 }} />
         </div>
         <select value={fMateria} onChange={(e) => setFMateria(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 170 }}>
@@ -389,22 +389,22 @@ function AdminBancoPage() {
       {/* Lista */}
       <div style={{ ...cardStyle, padding: 0, overflow: "hidden" }}>
         {filtered.length === 0 && (
-          <p style={{ fontSize: ".82rem", color: "#8DA1BE", padding: "24px 20px", textAlign: "center" }}>No hay preguntas que coincidan con los filtros.</p>
+          <p style={{ fontSize: ".82rem", color: "#93A4BF", padding: "24px 20px", textAlign: "center" }}>No hay preguntas que coincidan con los filtros.</p>
         )}
         {filtered.slice(0, limit).map((x, i) => (
           <div key={x.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "11px 16px", borderBottom: i < Math.min(filtered.length, limit) - 1 ? "1px solid rgba(61,93,145,.06)" : undefined, flexWrap: "wrap" }}>
             <div style={{ flex: "1 1 260px", minWidth: 0 }}>
               <div style={{ fontSize: ".82rem", fontWeight: 600, color: "#FFFFFF", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{x.text}</div>
-              <div style={{ fontSize: ".68rem", color: "#8DA1BE", marginTop: 1 }}>{x.options.length} opciones · {x.source === "import" ? "Importada" : x.source === "seed" ? "Semilla" : "Manual"}
+              <div style={{ fontSize: ".68rem", color: "#93A4BF", marginTop: 1 }}>{x.options.length} opciones · {x.source === "import" ? "Importada" : x.source === "seed" ? "Semilla" : "Manual"}
                 {x.fuente ? ` · ${x.fuente}` : ""}{x.seccion ? ` · ${x.seccion}` : ""}</div>
             </div>
-            <Badge text={catalogoLabel(x)} color={x.fuente ? "#6C0820" : x.materia ? "#3D5D91" : "#8DA1BE"} />
-            <Badge text={CONTENT_STATUS_LABEL[x.status] ?? x.status} color={CONTENT_STATUS_COLOR[x.status] ?? "#3D5D91"} />
+            <Badge text={catalogoLabel(x)} color={x.fuente ? "#6C0820" : x.materia ? "#C7A052" : "#93A4BF"} />
+            <Badge text={CONTENT_STATUS_LABEL[x.status] ?? x.status} color={CONTENT_STATUS_COLOR[x.status] ?? "#C7A052"} />
             <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
               <button onClick={() => openEdit(x)} title="Editar" style={{ padding: "6px 10px", background: "#0A1B33", color: "#B8C5DA", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}>
                 <Icon n="pencil" size={13} /> Editar
               </button>
-              <button onClick={() => toggleStatus(x)} title={x.status === "publicada" ? "Ocultar" : "Publicar"} style={{ padding: "6px 10px", background: "#0A1B33", color: x.status === "publicada" ? "#8DA1BE" : "#2ecc71", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}>
+              <button onClick={() => toggleStatus(x)} title={x.status === "publicada" ? "Ocultar" : "Publicar"} style={{ padding: "6px 10px", background: "#0A1B33", color: x.status === "publicada" ? "#93A4BF" : "#2ecc71", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}>
                 <Icon n={x.status === "publicada" ? "eyeOff" : "eye"} size={13} /> {x.status === "publicada" ? "Ocultar" : "Publicar"}
               </button>
               <button onClick={() => remove(x)} title="Eliminar" style={{ padding: "6px 10px", background: "#0A1B33", color: "#e74c3c", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}>

@@ -270,7 +270,7 @@ function AdminPerfilPage() {
     .join("");
 
   const accessLabel = ACCESS_LABEL[student.accessStatus] ?? student.accessStatus;
-  const accessColor = ACCESS_COLOR[student.accessStatus] ?? "#3D5D91";
+  const accessColor = ACCESS_COLOR[student.accessStatus] ?? "#C7A052";
   const isPaused = student.accessStatus === "pausado";
 
   const heroStats = [
@@ -309,10 +309,10 @@ function AdminPerfilPage() {
   ];
 
   const barColor = (avg: number | null) => {
-    if (avg === null) return "#8DA1BE";
+    if (avg === null) return "#93A4BF";
     if (avg >= 80) return "#2ecc71";
     if (avg >= 60) return "#f39c12";
-    if (avg >= 40) return "#3D5D91";
+    if (avg >= 40) return "#C7A052";
     return "#e74c3c";
   };
 
@@ -518,7 +518,7 @@ function AdminPerfilPage() {
                   padding: "11px 13px",
                   borderRadius: 10,
                   cursor: "pointer",
-                  border: `2px solid ${sel ? "#3D5D91" : "#E8EEF6"}`,
+                  border: `2px solid ${sel ? "#C7A052" : "rgba(255,255,255,.08)"}`,
                   background: sel ? "rgba(61,93,145,.06)" : "white",
                   fontFamily: "'Manrope', sans-serif",
                   transition: "all .15s",
@@ -528,7 +528,7 @@ function AdminPerfilPage() {
                   <Icon
                     n={p.tier === "paga" ? "star" : "user"}
                     size={15}
-                    color={sel ? "#3D5D91" : "#647DA0"}
+                    color={sel ? "#C7A052" : "#93A4BF"}
                   />
                   <span style={{ fontSize: ".88rem", fontWeight: 700, color: "#FFFFFF" }}>
                     {p.nombre}
@@ -663,7 +663,7 @@ function AdminPerfilPage() {
       {/* ───────── Hero ───────── */}
       <div
         style={{
-          background: "linear-gradient(135deg,#22375C,#2a2a4e)",
+          background: "linear-gradient(135deg,#FFFFFF,#2a2a4e)",
           borderRadius: 18,
           padding: "24px 28px",
           display: "flex",
@@ -692,7 +692,7 @@ function AdminPerfilPage() {
             width: 72,
             height: 72,
             borderRadius: "50%",
-            background: "linear-gradient(135deg,#3D5D91,#5A86CB)",
+            background: "linear-gradient(135deg,#C7A052,#5A86CB)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -730,7 +730,7 @@ function AdminPerfilPage() {
                 borderRadius: 20,
                 fontSize: ".7rem",
                 fontWeight: 700,
-                background: "#F2AEBC",
+                background: "rgba(231,76,60,.35)",
                 color: "#6C0820",
                 display: "inline-flex",
                 alignItems: "center",
@@ -829,7 +829,7 @@ function AdminPerfilPage() {
       {/* ───────── Plan card ───────── */}
       <div
         style={{
-          background: "linear-gradient(135deg,#3D5D91,#5A86CB)",
+          background: "linear-gradient(135deg,#C7A052,#5A86CB)",
           borderRadius: 14,
           padding: "18px 20px",
           marginBottom: 20,
@@ -1056,14 +1056,14 @@ function AdminPerfilPage() {
             label: "Extender",
             sub: "Más días de acceso",
             action: () => setModal("extend" as ModalType),
-            hoverColor: "#3D5D91",
+            hoverColor: "#C7A052",
           },
           {
             icon: "lock" as FPIconName,
             label: "Contraseña",
             sub: "Resetear acceso",
             action: () => setModal("reset" as ModalType),
-            hoverColor: "#3D5D91",
+            hoverColor: "#C7A052",
           },
         ].map((qa) => (
           <button
@@ -1082,19 +1082,19 @@ function AdminPerfilPage() {
             onMouseEnter={(e) => {
               e.currentTarget.style.borderColor = qa.hoverColor;
               e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow = "0 6px 16px rgba(61,93,145,.1)";
+              e.currentTarget.style.boxShadow = "0 6px 16px rgba(199,160,82,.14)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "#F2DCDB";
+              e.currentTarget.style.borderColor = "rgba(255,255,255,.10)";
               e.currentTarget.style.transform = "none";
               e.currentTarget.style.boxShadow = "none";
             }}
           >
             <div style={{ marginBottom: 5, display: "flex", justifyContent: "center" }}>
-              <Icon n={qa.icon} size={22} color="#22375C" />
+              <Icon n={qa.icon} size={22} color="#FFFFFF" />
             </div>
             <div style={{ fontSize: ".76rem", fontWeight: 700, color: "#FFFFFF" }}>{qa.label}</div>
-            <div style={{ fontSize: ".66rem", color: "#8DA1BE", marginTop: 2 }}>{qa.sub}</div>
+            <div style={{ fontSize: ".66rem", color: "#93A4BF", marginTop: 2 }}>{qa.sub}</div>
           </button>
         ))}
       </div>
@@ -1227,7 +1227,7 @@ function AdminPerfilPage() {
                   style={{
                     fontSize: ".72rem",
                     fontWeight: 700,
-                    color: "#8DA1BE",
+                    color: "#93A4BF",
                     display: "block",
                     marginBottom: 4,
                     textTransform: "uppercase",
@@ -1257,7 +1257,7 @@ function AdminPerfilPage() {
             <Icon n="clock" size={15} /> Actividad reciente
           </div>
           {activity.length === 0 ? (
-            <p style={{ fontSize: ".82rem", color: "#8DA1BE", marginTop: 10 }}>
+            <p style={{ fontSize: ".82rem", color: "#93A4BF", marginTop: 10 }}>
               Sin actividad registrada todavía.
             </p>
           ) : (
@@ -1287,7 +1287,7 @@ function AdminPerfilPage() {
                       background: vis.bg,
                     }}
                   >
-                    <Icon n={vis.icon} size={16} color="#22375C" />
+                    <Icon n={vis.icon} size={16} color="#FFFFFF" />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div
@@ -1318,7 +1318,7 @@ function AdminPerfilPage() {
                     >
                       {a.score !== null ? `${a.score}%` : "—"}
                     </div>
-                    <div style={{ fontSize: ".68rem", color: "#8DA1BE" }}>{timeAgo(a.date)}</div>
+                    <div style={{ fontSize: ".68rem", color: "#93A4BF" }}>{timeAgo(a.date)}</div>
                   </div>
                 </div>
               );
@@ -1345,7 +1345,7 @@ function AdminPerfilPage() {
                 fontWeight: 800,
                 letterSpacing: ".06em",
                 textTransform: "uppercase",
-                color: "#8DA1BE",
+                color: "#93A4BF",
                 marginBottom: 8,
               }}
             >
@@ -1353,7 +1353,7 @@ function AdminPerfilPage() {
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {grupo.items.length === 0 ? (
-                <p style={{ fontSize: ".78rem", color: "#8DA1BE" }}>Sin datos.</p>
+                <p style={{ fontSize: ".78rem", color: "#93A4BF" }}>Sin datos.</p>
               ) : (
                 grupo.items.map((m) => (
                   <div key={m.key} style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -1371,7 +1371,7 @@ function AdminPerfilPage() {
                         gap: 6,
                       }}
                     >
-                      <Icon n={m.icon as FPIconName} size={14} color="#647DA0" /> {m.name}
+                      <Icon n={m.icon as FPIconName} size={14} color="#93A4BF" /> {m.name}
                     </span>
                     <div
                       style={{
@@ -1441,10 +1441,10 @@ function AdminPerfilPage() {
             lineHeight: 1.6,
           }}
           onFocus={(e) => {
-            e.currentTarget.style.borderColor = "#3D5D91";
+            e.currentTarget.style.borderColor = "#C7A052";
           }}
           onBlur={(e) => {
-            e.currentTarget.style.borderColor = "#F2DCDB";
+            e.currentTarget.style.borderColor = "rgba(255,255,255,.10)";
           }}
         />
         <div
@@ -1455,14 +1455,14 @@ function AdminPerfilPage() {
             marginTop: 8,
           }}
         >
-          <span style={{ fontSize: ".72rem", color: "#8DA1BE" }}>
+          <span style={{ fontSize: ".72rem", color: "#93A4BF" }}>
             Solo tú puedes ver estas notas
           </span>
           <button
             onClick={doSaveNotes}
             style={{
               padding: "7px 16px",
-              background: "#3D5D91",
+              background: "#C7A052",
               color: "white",
               border: "none",
               borderRadius: 7,
@@ -1486,7 +1486,7 @@ function AdminPerfilPage() {
           <Icon n="list" size={15} /> Historial de cambios
         </div>
         {changes.length === 0 ? (
-          <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>Sin cambios registrados.</p>
+          <p style={{ fontSize: ".82rem", color: "#93A4BF" }}>Sin cambios registrados.</p>
         ) : (
           <div style={{ display: "flex", flexDirection: "column" }}>
             {changes.map((c, i) => (
@@ -1502,7 +1502,7 @@ function AdminPerfilPage() {
                   alignItems: "baseline",
                 }}
               >
-                <span style={{ fontSize: ".72rem", color: "#8DA1BE", width: 160, flexShrink: 0 }}>
+                <span style={{ fontSize: ".72rem", color: "#93A4BF", width: 160, flexShrink: 0 }}>
                   {fmtDateTime(c.fecha)}
                 </span>
                 <span style={{ fontSize: ".8rem", fontWeight: 700, color: "#FFFFFF" }}>

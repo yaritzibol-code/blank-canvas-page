@@ -16,8 +16,8 @@ export const Route = createFileRoute("/admin/yaris-chats")({
   component: YarisChatsPage,
 });
 
-const MUTED = "#647DA0";
-const INK = "#22375C";
+const MUTED = "#93A4BF";
+const INK = "#FFFFFF";
 const DISPLAY = "'Bricolage Grotesque', sans-serif";
 
 const TONOS: Record<string, string> = { formal: "Formal", normal: "Normal", amiga: "Amiga Yaris" };
@@ -63,7 +63,7 @@ function YarisChatsPage() {
         />
         <button
           onClick={() => setBuscar(query.trim())}
-          style={{ padding: "9px 15px", background: "#3D5D91", color: "white", border: "none", borderRadius: 8, fontSize: ".78rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+          style={{ padding: "9px 15px", background: "#C7A052", color: "white", border: "none", borderRadius: 8, fontSize: ".78rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
         >
           Buscar
         </button>
@@ -105,7 +105,7 @@ function YarisChatsPage() {
                     <span style={{ fontSize: ".7rem", fontWeight: 800, color: "#c0392b" }}>error: {r.error_message}</span>
                   )}
                   <span style={{ fontSize: ".72rem", color: MUTED }}>{fecha(r.created_at)}</span>
-                  <span style={{ fontSize: ".7rem", color: "#A9B8CE" }}>
+                  <span style={{ fontSize: ".7rem", color: "#93A4BF" }}>
                     {r.tokens_in + r.tokens_out} tokens · {Math.round(r.latency_ms / 100) / 10}s
                   </span>
                 </div>

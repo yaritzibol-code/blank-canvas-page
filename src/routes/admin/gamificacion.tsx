@@ -102,8 +102,8 @@ function GamificacionPage() {
                 cursor: "pointer",
                 fontWeight: 700,
                 fontSize: ".82rem",
-                background: tab === t ? "#22375C" : "rgba(61,93,145,.1)",
-                color: tab === t ? "white" : "#3D5D91",
+                background: tab === t ? "#FFFFFF" : "rgba(199,160,82,.14)",
+                color: tab === t ? "white" : "#C7A052",
                 textTransform: "capitalize",
               }}
             >
@@ -143,7 +143,7 @@ function GamificacionPage() {
             {(panel?.reglas ?? []).map((r) => (
               <div key={r.key} style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
                 <span style={{ flex: 1, minWidth: 220, fontSize: ".86rem", color: "#FFFFFF" }}>
-                  {r.label} <small style={{ color: "#9aa8bb" }}>· {r.categoria}</small>
+                  {r.label} <small style={{ color: "#93A4BF" }}>· {r.categoria}</small>
                 </span>
                 <input
                   type="number"
@@ -216,7 +216,7 @@ function GamificacionPage() {
             {(panel?.historial ?? []).map((h) => (
               <div key={h.id} style={{ fontSize: ".78rem", color: "#41526b" }}>
                 <strong>{h.key}</strong> · {h.antes} → {h.despues}{" "}
-                <small style={{ color: "#9aa8bb" }}>{new Date(h.createdAt).toLocaleString("es-MX")}</small>
+                <small style={{ color: "#93A4BF" }}>{new Date(h.createdAt).toLocaleString("es-MX")}</small>
               </div>
             ))}
           </div>
@@ -236,7 +236,7 @@ function GamificacionPage() {
                     cargar();
                   })
                 }
-                style={{ justifySelf: "start", padding: "8px 16px", borderRadius: 10, border: "none", background: "#22375C", color: "white", fontWeight: 700, cursor: "pointer", fontSize: ".82rem" }}
+                style={{ justifySelf: "start", padding: "8px 16px", borderRadius: 10, border: "none", background: "#FFFFFF", color: "white", fontWeight: 700, cursor: "pointer", fontSize: ".82rem" }}
               >
                 Aplicar ajuste
               </button>
@@ -273,7 +273,7 @@ function GamificacionPage() {
                 ) : (
                   <code>{a.userId.slice(0, 8)}…</code>
                 )}{" "}
-                <small style={{ color: "#9aa8bb" }}>{new Date(a.createdAt).toLocaleString("es-MX")}</small>
+                <small style={{ color: "#93A4BF" }}>{new Date(a.createdAt).toLocaleString("es-MX")}</small>
               </div>
             ))}
           </div>

@@ -16,7 +16,7 @@ export const Route = createFileRoute("/admin/activity-ratio")({
   component: ActivityRatioPage,
 });
 
-const MUTED = "#647DA0";
+const MUTED = "#93A4BF";
 const DISPLAY = "'Bricolage Grotesque', sans-serif";
 
 const PASOS_LEGIBLES: Record<string, string> = {
@@ -61,7 +61,7 @@ function Metric({ label, value, hint, tone }: { label: string; value: string; hi
       <div style={{ fontSize: ".7rem", color: MUTED, textTransform: "uppercase", letterSpacing: ".8px", fontWeight: 700 }}>
         {label}
       </div>
-      <div style={{ fontFamily: DISPLAY, fontSize: "2rem", fontWeight: 900, color: tone ?? "#0A1F44", lineHeight: 1.1, marginTop: 6 }}>
+      <div style={{ fontFamily: DISPLAY, fontSize: "2rem", fontWeight: 900, color: tone ?? "#C7A052", lineHeight: 1.1, marginTop: 6 }}>
         {value}
       </div>
       {hint ? <div style={{ fontSize: ".74rem", color: MUTED, marginTop: 4 }}>{hint}</div> : null}
@@ -91,7 +91,7 @@ const th: React.CSSProperties = {
 };
 const td: React.CSSProperties = {
   padding: "10px",
-  borderTop: "1px solid #E6ECF6",
+  borderTop: "1px solid rgba(255,255,255,.10)",
   fontSize: ".84rem",
   color: "#FFFFFF",
   whiteSpace: "nowrap",
@@ -99,7 +99,7 @@ const td: React.CSSProperties = {
 
 function Barra({ pct, tone }: { pct: number; tone: string }) {
   return (
-    <div style={{ background: "#E6ECF6", borderRadius: 999, height: 8, minWidth: 90, overflow: "hidden" }}>
+    <div style={{ background: "rgba(255,255,255,.10)", borderRadius: 999, height: 8, minWidth: 90, overflow: "hidden" }}>
       <div style={{ width: `${Math.min(100, Math.max(0, pct))}%`, height: "100%", background: tone, borderRadius: 999 }} />
     </div>
   );
@@ -172,9 +172,9 @@ function ActivityRatioPage() {
                 minHeight: 40,
                 padding: "8px 14px",
                 borderRadius: 10,
-                border: "1px solid " + (days === d ? "#0A1F44" : "#D5DEED"),
-                background: days === d ? "#0A1F44" : "#fff",
-                color: days === d ? "#fff" : "#0A1F44",
+                border: "1px solid " + (days === d ? "#C7A052" : "rgba(255,255,255,.10)"),
+                background: days === d ? "#C7A052" : "#fff",
+                color: days === d ? "#fff" : "#C7A052",
                 fontWeight: 700,
                 fontSize: ".8rem",
                 cursor: "pointer",
@@ -260,7 +260,7 @@ function ActivityRatioPage() {
             {funnel.map((f) => (
               <div key={f.step} style={{ display: "grid", gridTemplateColumns: "minmax(140px, 1fr) 2fr auto", gap: 10, alignItems: "center" }}>
                 <div style={{ fontSize: ".84rem", color: "#FFFFFF", fontWeight: 600 }}>{pasoLabel(f.step)}</div>
-                <Barra pct={(f.people / maxFunnel) * 100} tone={f.step.includes("abandon") ? "#A31637" : "#0A1F44"} />
+                <Barra pct={(f.people / maxFunnel) * 100} tone={f.step.includes("abandon") ? "#A31637" : "#C7A052"} />
                 <div style={{ fontSize: ".82rem", fontWeight: 800, color: "#FFFFFF" }}>{f.people}</div>
               </div>
             ))}
@@ -371,7 +371,7 @@ function ActivityRatioPage() {
                 <div
                   key={`${t.created_at}_${i}`}
                   style={{
-                    borderLeft: `3px solid ${t.type === "abandon" ? "#A31637" : t.type === "milestone" ? "#0A1F44" : "#D5DEED"}`,
+                    borderLeft: `3px solid ${t.type === "abandon" ? "#A31637" : t.type === "milestone" ? "#C7A052" : "rgba(255,255,255,.10)"}`,
                     padding: "6px 0 6px 10px",
                   }}
                 >

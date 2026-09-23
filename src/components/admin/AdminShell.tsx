@@ -767,7 +767,7 @@ export const ACCESS_COLOR: Record<string, string> = {
   activo: "#2ecc71",
   vencido: "#e74c3c",
   pausado: "#f39c12",
-  extendido: "#3D5D91",
+  extendido: "#C7A052",
   prueba: "#8e6cc0",
   cancelado: "#e74c3c",
 };
@@ -787,18 +787,18 @@ export function generalStateColor(state: string): string {
     case "Acceso de prueba":
       return "#8e6cc0";
     case "Eliminación pendiente":
-      return "#8DA1BE";
+      return "#93A4BF";
     case "Buen avance":
       return "#2ecc71";
     default:
-      return "#3D5D91"; // "Activo" y otros
+      return "#C7A052"; // "Activo" y otros
   }
 }
 
 export const CONTENT_STATUS_COLOR: Record<string, string> = {
   borrador: "#f39c12",
   publicada: "#2ecc71",
-  oculta: "#8DA1BE",
+  oculta: "#93A4BF",
 };
 
 export const CONTENT_STATUS_LABEL: Record<string, string> = {
@@ -808,7 +808,7 @@ export const CONTENT_STATUS_LABEL: Record<string, string> = {
 };
 
 export function scoreColor(score: number | null | undefined): string {
-  if (score === null || score === undefined) return "#8DA1BE";
+  if (score === null || score === undefined) return "#93A4BF";
   if (score >= 70) return "#2ecc71";
   if (score >= 50) return "#f39c12";
   return "#e74c3c";

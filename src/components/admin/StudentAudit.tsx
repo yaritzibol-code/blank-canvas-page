@@ -24,8 +24,8 @@ import { LINEA_AEREA_QUIZZES, capLabel } from "@/lib/store/linea-aerea-meta";
 import { adminRtariGrabaciones, type AdminRtariGrabacion } from "@/lib/admin.functions";
 import { sanitizeHtml, yarisToHtml } from "@/lib/yaris-format";
 
-const MUTED = "#647DA0";
-const INK = "#22375C";
+const MUTED = "#93A4BF";
+const INK = "#FFFFFF";
 const DISPLAY = "'Bricolage Grotesque', sans-serif";
 
 const TONOS: Record<string, string> = { formal: "Formal", normal: "Normal", amiga: "Amiga Yaris" };
@@ -81,7 +81,7 @@ function BucketList({ buckets }: { buckets: Bucket[] }) {
               <strong>{b.label}</strong>
               {b.sub && <span style={{ color: MUTED }}> · {b.sub}</span>}
             </span>
-            <div style={{ width: 90, height: 6, background: "#EEF2F8", borderRadius: 10, overflow: "hidden" }}>
+            <div style={{ width: 90, height: 6, background: "rgba(255,255,255,.06)", borderRadius: 10, overflow: "hidden" }}>
               <div style={{ height: "100%", width: `${pct}%`, background: pctColor(pct), borderRadius: 10 }} />
             </div>
             <span style={{ width: 78, textAlign: "right", color: MUTED }}>
@@ -141,7 +141,7 @@ function Detalle({ attempt }: { attempt: AuditAttempt }) {
             return (
               <div key={`${a.questionId}-${i}`} style={{ background: "#0A1B33", border: "1px solid rgba(199,160,82,.18)", borderRadius: 10, padding: "10px 12px" }}>
                 <div style={{ display: "flex", gap: 8, alignItems: "baseline", marginBottom: 4, flexWrap: "wrap" }}>
-                  <span style={{ fontSize: ".7rem", fontWeight: 800, color: blank ? "#8DA1BE" : ok ? "#2ecc71" : "#c0392b" }}>
+                  <span style={{ fontSize: ".7rem", fontWeight: 800, color: blank ? "#93A4BF" : ok ? "#2ecc71" : "#c0392b" }}>
                     {blank ? "EN BLANCO" : ok ? "CORRECTA" : "INCORRECTA"}
                   </span>
                   <span style={{ fontSize: ".7rem", color: MUTED }}>
@@ -149,7 +149,7 @@ function Detalle({ attempt }: { attempt: AuditAttempt }) {
                       ? `${fuenteName(a.fuente)} · ${capLabel(a.fuente)} ${a.capitulo ?? "—"}${a.capituloTitulo ? ` — ${a.capituloTitulo}` : ""}`
                       : materiaName(a.materia)}
                   </span>
-                  <span style={{ fontSize: ".68rem", color: "#A9B8CE", marginLeft: "auto" }}>{a.questionId}</span>
+                  <span style={{ fontSize: ".68rem", color: "#93A4BF", marginLeft: "auto" }}>{a.questionId}</span>
                 </div>
                 <div style={{ fontSize: ".82rem", color: INK, marginBottom: 6 }}>{q?.text ?? "—"}</div>
                 {q && q.options.length > 0 && (
@@ -240,7 +240,7 @@ function Cuestionarios({ userId, days }: { userId: string; days: number }) {
         {rows.map((r) => (
           <div key={r.id} style={{ border: "1px solid rgba(199,160,82,.18)", borderRadius: 12, padding: 12 }}>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
-              <span style={{ fontSize: ".72rem", fontWeight: 800, padding: "3px 9px", borderRadius: 20, background: r.track === "la" ? "rgba(108,8,32,.1)" : "rgba(61,93,145,.1)", color: r.track === "la" ? "#6C0820" : "#3D5D91" }}>
+              <span style={{ fontSize: ".72rem", fontWeight: 800, padding: "3px 9px", borderRadius: 20, background: r.track === "la" ? "rgba(108,8,32,.1)" : "rgba(199,160,82,.14)", color: r.track === "la" ? "#6C0820" : "#C7A052" }}>
                 {r.track === "la" ? "Línea Aérea" : r.track === "mixto" ? "Mixto" : "CIAAC"}
               </span>
               <span style={{ fontSize: ".8rem", color: INK, fontWeight: 700, flex: "1 1 160px" }}>
@@ -354,7 +354,7 @@ function Conversaciones({ userId, days }: { userId: string; days: number }) {
               {r.pre_answer && <span style={{ fontSize: ".7rem", fontWeight: 700, color: "#B8C5DA" }}>modo socrático</span>}
               {!r.success && <span style={{ fontSize: ".7rem", fontWeight: 800, color: "#c0392b" }}>error: {r.error_message}</span>}
               <span style={{ fontSize: ".72rem", color: MUTED, marginLeft: "auto" }}>{fecha(r.created_at)}</span>
-              <span style={{ fontSize: ".7rem", color: "#A9B8CE" }}>
+              <span style={{ fontSize: ".7rem", color: "#93A4BF" }}>
                 {r.tokens_in + r.tokens_out} tokens · {Math.round(r.latency_ms / 100) / 10}s
               </span>
             </div>
@@ -399,9 +399,9 @@ export function StudentAudit({ userId }: { userId: string }) {
   const tabStyle = (on: boolean) => ({
     padding: "7px 14px",
     borderRadius: 20,
-    border: on ? "none" : "2px solid #F2DCDB",
-    background: on ? "#3D5D91" : "white",
-    color: on ? "white" : "#3D5D91",
+    border: on ? "none" : "2px solid rgba(255,255,255,.10)",
+    background: on ? "#C7A052" : "white",
+    color: on ? "white" : "#C7A052",
     fontSize: ".76rem",
     fontWeight: 800,
     cursor: "pointer",

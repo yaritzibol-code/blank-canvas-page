@@ -48,7 +48,7 @@ function DrilldownPage() {
       </div>
 
       {err && (
-        <div style={{ background: "#FEE2E2", color: "#991B1B", border: "1px solid #FCA5A5", padding: 12, borderRadius: 12, marginBottom: 16 }}>
+        <div style={{ background: "rgba(231,76,60,.14)", color: "#991B1B", border: "1px solid #FCA5A5", padding: 12, borderRadius: 12, marginBottom: 16 }}>
           {err}
         </div>
       )}
@@ -58,7 +58,7 @@ function DrilldownPage() {
         <>
           <section style={{ display: "grid", gap: 14, gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", marginBottom: 20 }}>
             <Kpi label="Subs activas" value={data.totals.subs} tone="#2ecc71" />
-            <Kpi label="Eventos de estudio" value={data.totals.events} tone="#3D5D91" />
+            <Kpi label="Eventos de estudio" value={data.totals.events} tone="#C7A052" />
             <Kpi label="Fallos de webhook" value={data.totals.failures} tone="#e74c3c" />
             <Kpi label="Drift usuarios (actual)" value={data.totals.drift} tone="#f39c12" />
           </section>

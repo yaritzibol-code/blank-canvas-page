@@ -137,7 +137,7 @@ function UsuariosActivosPage() {
 
       <div style={cardStyle}>
         <div style={cardHeadStyle}>
-          <Icon n="users" size={15} color="#3D5D91" />
+          <Icon n="users" size={15} color="#C7A052" />
           <h3 style={{ fontSize: ".88rem", fontWeight: 800, color: "#FFFFFF" }}>Quién está dentro</h3>
         </div>
 
@@ -166,8 +166,8 @@ function UsuariosActivosPage() {
               padding: "0 14px",
               borderRadius: 10,
               border: "1.5px solid rgba(199,160,82,.22)",
-              background: incluirInactivos ? "#fff" : "#3D5D91",
-              color: incluirInactivos ? "#3D5D91" : "#fff",
+              background: incluirInactivos ? "#fff" : "#C7A052",
+              color: incluirInactivos ? "#C7A052" : "#fff",
               fontSize: ".82rem",
               fontWeight: 700,
               cursor: "pointer",
@@ -178,7 +178,7 @@ function UsuariosActivosPage() {
         </div>
 
         {filtradas.length === 0 ? (
-          <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>
+          <p style={{ fontSize: ".82rem", color: "#93A4BF" }}>
             Nadie conectado en este momento. En cuanto alguien entre a la plataforma aparecerá aquí.
           </p>
         ) : (
@@ -201,8 +201,8 @@ function UsuariosActivosPage() {
                     height: 36,
                     borderRadius: 999,
                     flexShrink: 0,
-                    background: p.inactivo ? "#E3EAF5" : "rgba(46,204,113,.15)",
-                    color: p.inactivo ? "#647DA0" : "#1e8449",
+                    background: p.inactivo ? "rgba(255,255,255,.10)" : "rgba(46,204,113,.15)",
+                    color: p.inactivo ? "#93A4BF" : "#1e8449",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -216,11 +216,11 @@ function UsuariosActivosPage() {
                 <div style={{ flex: "1 1 200px", minWidth: 0 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 7, flexWrap: "wrap" }}>
                     <span style={{ fontSize: ".85rem", fontWeight: 700, color: "#FFFFFF" }}>{p.nombre}</span>
-                    <Badge text={p.plan === "paga" ? "Pro" : "Básica"} color={p.plan === "paga" ? "#6C0820" : "#8DA1BE"} />
-                    {p.role === "admin" && <Badge text="Admin" color="#3D5D91" />}
-                    {p.pestanas > 1 && <Badge text={`${p.pestanas} pestañas`} color="#8DA1BE" />}
+                    <Badge text={p.plan === "paga" ? "Pro" : "Básica"} color={p.plan === "paga" ? "#6C0820" : "#93A4BF"} />
+                    {p.role === "admin" && <Badge text="Admin" color="#C7A052" />}
+                    {p.pestanas > 1 && <Badge text={`${p.pestanas} pestañas`} color="#93A4BF" />}
                   </div>
-                  <div style={{ fontSize: ".72rem", color: "#8DA1BE", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  <div style={{ fontSize: ".72rem", color: "#93A4BF", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                     {p.email}
                   </div>
                 </div>
@@ -237,7 +237,7 @@ function UsuariosActivosPage() {
                     text={p.inactivo ? "En reposo" : "Activa ahora"}
                     color={p.inactivo ? "#f39c12" : "#2ecc71"}
                   />
-                  <div style={{ fontSize: ".7rem", color: "#8DA1BE", marginTop: 4 }}>
+                  <div style={{ fontSize: ".7rem", color: "#93A4BF", marginTop: 4 }}>
                     conectada {duracion(p.desde, ahora)}
                   </div>
                 </div>

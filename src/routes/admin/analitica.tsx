@@ -58,7 +58,7 @@ function AdminAnaliticaPage() {
         <div style={cardStyle}>
           <div style={cardHeadStyle}><Icon n="book" size={15} /> Desempeño por materia</div>
           {g.materias.length === 0 ? (
-            <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>Aún no hay datos de cuestionarios o simuladores.</p>
+            <p style={{ fontSize: ".82rem", color: "#93A4BF" }}>Aún no hay datos de cuestionarios o simuladores.</p>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
               {g.materias.map((m) => (
@@ -72,7 +72,7 @@ function AdminAnaliticaPage() {
               ))}
             </div>
           )}
-          <p style={{ fontSize: ".7rem", color: "#8DA1BE", marginTop: 10 }}>Los primeros lugares de la lista son los temas más fallados a nivel plataforma.</p>
+          <p style={{ fontSize: ".7rem", color: "#93A4BF", marginTop: 10 }}>Los primeros lugares de la lista son los temas más fallados a nivel plataforma.</p>
         </div>
 
         {/* Uso de herramientas de estudio */}
@@ -85,7 +85,7 @@ function AdminAnaliticaPage() {
                 <div key={h.kind} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <span style={{ fontSize: ".76rem", color: "#FFFFFF", width: 150, flexShrink: 0 }}>{h.label}</span>
                   <div style={{ flex: 1, height: 6, background: "rgba(255,255,255,.08)", borderRadius: 10, overflow: "hidden" }}>
-                    <div style={{ height: "100%", borderRadius: 10, background: "#3D5D91", width: `${Math.round((h.count / max) * 100)}%` }} />
+                    <div style={{ height: "100%", borderRadius: 10, background: "#C7A052", width: `${Math.round((h.count / max) * 100)}%` }} />
                   </div>
                   <span style={{ fontSize: ".72rem", fontWeight: 700, width: 40, textAlign: "right", flexShrink: 0, color: "#FFFFFF" }}>{h.count}</span>
                 </div>
@@ -109,7 +109,7 @@ function AdminAnaliticaPage() {
       <div style={cardStyle}>
         <div style={cardHeadStyle}><Icon n="alert" size={15} /> Preguntas y contenido reportado</div>
         {reportadas.length === 0 ? (
-          <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>No hay reportes de preguntas o contenido. Todo en orden.</p>
+          <p style={{ fontSize: ".82rem", color: "#93A4BF" }}>No hay reportes de preguntas o contenido. Todo en orden.</p>
         ) : (
           <div style={{ display: "flex", flexDirection: "column" }}>
             {reportadas.map((r, i) => (
