@@ -61,6 +61,12 @@ export interface User {
   marketingOptIn: boolean;
   onboardingDone: boolean;
   /**
+   * Ya vio (o saltó) el recorrido de Pathy por los destinos del Director.
+   * Aparece por sí solo únicamente en el primer inicio de sesión; después se
+   * repite desde Configuración (`/dashboard?tour=1`).
+   */
+  tourDone?: boolean;
+  /**
    * Cómo se dirige la plataforma al estudiante ("¿lista?" / "¿listo?").
    * Se elige en el onboarding y se puede cambiar en Mi perfil.
    */

@@ -1,19 +1,22 @@
-import { useEffect, useRef, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { ArrowRight, CaretRight, Moon, AirplaneTakeoff, Sun, X } from "@phosphor-icons/react";
 import {
   getSimAttempts,
   materiaPerformance,
   studentStats,
+  updateUser,
   useSessionUser,
   useStore,
   type StudentStats,
 } from "@/lib/store";
+import { generoDe, porGenero } from "@/lib/store/genero";
 import { OnboardingModal } from "@/components/shared/OnboardingModal";
 import { DataSyncBanner } from "@/components/shared/DataSyncBanner";
 import { ASSETS, DESTINATIONS, type Destination } from "./destinations";
 import { Globe } from "./Globe";
 import { isTyping } from "./FlightDeck";
+import { PathyTour } from "./PathyTour";
 
 function metric(index: number, stats: StudentStats | null) {
   if (!stats) return "Por explorar";
@@ -142,10 +145,39 @@ function Arrival({
 }
 export function Director() {
   const user = useSessionUser();
+  const navigate = useNavigate();
   const root = useRef<HTMLDivElement>(null);
   const [selected, setSelected] = useState(1),
     [live, setLive] = useState(true),
     [flying, setFlying] = useState(false);
+  const selectedRef = useRef(selected);
+  selectedRef.current = selected;
+  /**
+   * Primer inicio de sesión: primero el recorrido de Pathy por los destinos y
+   * después el asistente que prepara la cabina (perfil). `?tour=1` repite el
+   * recorrido cuando se quiera.
+   */
+  const [tourReplay, setTourReplay] = useState(false);
+  const newPilot = !!user && !user.onboardingDone;
+  const showTour = tourReplay || (newPilot && !user?.tourDone);
+  /** Destino que estaba elegido antes del recorrido, para devolver el globo ahí. */
+  const beforeTour = useRef<number | null>(null);
+  const selectForTour = useCallback((index: number) => {
+    if (beforeTour.current === null) beforeTour.current = selectedRef.current;
+    setSelected(index);
+  }, []);
+  const closeTour = useCallback(() => {
+    if (beforeTour.current !== null) setSelected(beforeTour.current);
+    beforeTour.current = null;
+    setTourReplay(false);
+    // El foco vuelve al Director: las flechas ya mueven el globo.
+    root.current?.focus({ preventScroll: true });
+    if (user && !user.tourDone) updateUser(user.id, { tourDone: true });
+    // Sin el parámetro, recargar no vuelve a lanzar el recorrido.
+    if (new URLSearchParams(window.location.search).has("tour")) {
+      void navigate({ to: ".", search: {}, replace: true });
+    }
+  }, [navigate, user]);
   const [clock, setClock] = useState<Date | null>(null),
     [reduced, setReduced] = useState(false);
   const [details, setDetails] = useState(false);
@@ -165,6 +197,7 @@ export function Director() {
       /* restricted storage */
     }
     setClock(new Date());
+    if (new URLSearchParams(window.location.search).get("tour") === "1") setTourReplay(true);
     const tick = setInterval(() => setClock(new Date()), 60000);
     const media = matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => setReduced(media.matches || user?.prefs.toggles.pathy === false);
@@ -216,6 +249,7 @@ export function Director() {
     <div
       className="fd-director"
       ref={root}
+      data-touring={showTour || undefined}
       tabIndex={0}
       aria-label="Director de vuelo. Usa las flechas para elegir destino."
     >
@@ -226,6 +260,7 @@ export function Director() {
       <section
         className={"fd-destination-card" + (details ? " is-expanded" : "")}
         aria-labelledby="destination-title"
+        data-tour="destination-card"
       >
         <p className="fd-eyebrow">
           DESTINO · {destination.city} · {destination.code}
@@ -265,9 +300,13 @@ export function Director() {
           </div>
         </div>
         <p className="fd-eyebrow fd-submodule-label">SUBMÓDULOS · {destination.sections.length}</p>
-        <div className="fd-submodules">
+        <div className="fd-submodules" data-tour="submodules">
           {destination.sections.map((s, index) => (
-            <Link key={s.path} to={s.path as "/dashboard"}>
+            <Link
+              key={s.path}
+              to={s.path as "/dashboard"}
+              style={{ "--i": index } as React.CSSProperties}
+            >
               <span className="fd-submodule-icon">
                 <s.icon size={23} weight="duotone" />
               </span>
@@ -411,7 +450,21 @@ export function Director() {
       {flying && (
         <Arrival destination={destination} onClose={() => setFlying(false)} reduced={reduced} />
       )}
-      {user && !user.onboardingDone && <OnboardingModal user={user} onDone={() => {}} />}
+      {showTour && (
+        <PathyTour
+          welcomeTitle={porGenero(
+            generoDe(user),
+            "Bienvenida a FlightPath",
+            "Bienvenido a FlightPath",
+            "Bienvenido a FlightPath",
+          )}
+          finishLabel={newPilot ? "Preparar mi cabina" : "¡A despegar!"}
+          reduced={reduced}
+          onSelect={selectForTour}
+          onClose={closeTour}
+        />
+      )}
+      {user && newPilot && !showTour && <OnboardingModal user={user} onDone={() => {}} />}
     </div>
   );
 }

@@ -2894,3 +2894,461 @@ html[data-motion="reduced"] .fd-shell *::after {
   .fd-question-session .fp-quiz-area { padding-inline:10px!important; }
   .fd-question-session .fp-quiz-card h1 { font-size:27px!important; }
 }
+
+/* ── Recorrido de Pathy (primer inicio de sesión) ──────────────────────────
+ * Vive en un portal sobre <body>: la raíz es fija y no captura clics; cada
+ * capa opta por recibirlos. Orden: bloqueo de clics → velo de bienvenida →
+ * reflector → tarjeta de bienvenida o burbuja de Pathy.
+ */
+.fd-tour {
+  position: fixed;
+  inset: 0;
+  z-index: 4100;
+  pointer-events: none;
+}
+.fd-tour button {
+  font: inherit;
+}
+.fd-tour-catcher {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+  touch-action: none;
+}
+.fd-tour-backdrop {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 50% 42%, rgba(8, 26, 53, 0.55), rgba(2, 7, 15, 0.9));
+  backdrop-filter: blur(8px);
+}
+/* Un solo elemento: el hueco es la tarjeta y la sombra oscurece el resto. */
+.fd-tour-spot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-shadow:
+    0 0 0 1.5px rgba(227, 201, 138, 0.95),
+    0 0 0 8px rgba(199, 160, 82, 0.14),
+    0 0 48px 12px rgba(199, 160, 82, 0.26),
+    0 0 0 200vmax rgba(2, 7, 15, 0.66);
+}
+.fd-tour-spot::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: inherit;
+  border: 1.5px solid rgba(227, 201, 138, 0.75);
+  animation: fd-tour-pulse 2.2s ease-out infinite;
+}
+
+/* Bienvenida */
+.fd-tour-center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  overflow-y: auto;
+}
+.fd-tour-welcome {
+  pointer-events: auto;
+  position: relative;
+  width: min(520px, 100%);
+  margin-top: 64px;
+  padding: 96px 40px 28px;
+  text-align: center;
+  border-radius: 18px;
+  border: 1px solid rgba(227, 201, 138, 0.32);
+  background:
+    radial-gradient(120% 70% at 50% 0%, rgba(199, 160, 82, 0.16), transparent 60%),
+    linear-gradient(180deg, rgba(11, 32, 64, 0.97), rgba(5, 15, 34, 0.98));
+  box-shadow:
+    0 40px 90px -30px rgba(0, 0, 0, 0.85),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+.fd-tour-pathy-hero {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 156px;
+  height: 156px;
+  transform: translate(-50%, -54%);
+}
+.fd-tour-halo {
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(227, 201, 138, 0.55),
+    rgba(199, 160, 82, 0.18) 55%,
+    transparent 72%
+  );
+  filter: blur(6px);
+  animation: fd-tour-breathe 3.6s ease-in-out infinite;
+}
+.fd-tour-float {
+  position: absolute;
+  inset: 0;
+  animation: fd-tour-float 4s ease-in-out infinite;
+}
+.fd-tour-float img,
+.fd-tour-pathy img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, 0.5));
+}
+.fd-tour .fd-eyebrow {
+  margin: 0 0 8px;
+}
+.fd-tour h2 {
+  font:
+    400 46px/1.05 "Instrument Serif",
+    serif;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0 0 12px;
+}
+.fd-tour-lead {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: #d5deec;
+  margin: 0 auto 14px;
+  max-width: 410px;
+}
+.fd-tour-meta {
+  font:
+    10px/1.6 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8fa3c2;
+  margin: 0 0 22px;
+}
+.fd-tour-welcome-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.fd-tour-welcome .fd-tour-progress {
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Botones */
+.fd-tour-primary {
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 26px;
+  border-radius: 10px;
+  border: 1px solid #e3c98a;
+  background: linear-gradient(135deg, #ebd6a2 0%, #c7a052 46%, #9c7a35 100%);
+  color: #081a35;
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 10px 30px -10px rgba(199, 160, 82, 0.55);
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease;
+}
+.fd-tour-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 35%, #ffffff66 50%, transparent 65%);
+  transform: translateX(-150%);
+  animation: fd-sweep 3.6s ease-in-out infinite;
+  pointer-events: none;
+}
+.fd-tour-primary:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+.fd-tour-primary:active {
+  transform: scale(0.98);
+}
+.fd-tour-primary.is-compact {
+  min-height: 40px;
+  padding: 0 16px;
+  font-size: 13.5px;
+  gap: 8px;
+}
+.fd-tour-text {
+  border: 0;
+  background: none;
+  color: #b8c5da;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.fd-tour-text:hover {
+  color: #fff;
+}
+.fd-tour-ghost {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(2, 7, 15, 0.35);
+  color: #d5deec;
+  cursor: pointer;
+}
+.fd-tour-ghost:hover {
+  color: #fff;
+  border-color: rgba(227, 201, 138, 0.5);
+}
+.fd-tour-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(2, 7, 15, 0.4);
+  color: #b8c5da;
+  cursor: pointer;
+}
+.fd-tour-close:hover {
+  color: #fff;
+}
+
+/* Burbuja de Pathy */
+.fd-tour-bubble {
+  pointer-events: auto;
+  position: absolute;
+  width: min(384px, calc(100vw - 32px));
+  padding: 22px 22px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(227, 201, 138, 0.34);
+  background: linear-gradient(180deg, rgba(11, 32, 64, 0.97), rgba(5, 15, 34, 0.98));
+  box-shadow: 0 30px 70px -24px rgba(0, 0, 0, 0.85);
+  color: #fff;
+}
+.fd-tour-arrow {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #0a1c39;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.fd-tour-bubble.is-right .fd-tour-arrow {
+  border-left: 1px solid rgba(227, 201, 138, 0.34);
+  border-bottom: 1px solid rgba(227, 201, 138, 0.34);
+}
+.fd-tour-bubble.is-left .fd-tour-arrow {
+  border-top: 1px solid rgba(227, 201, 138, 0.34);
+  border-right: 1px solid rgba(227, 201, 138, 0.34);
+}
+.fd-tour-bubble.is-bottom .fd-tour-arrow {
+  background: #0b1f3e;
+  border-top: 1px solid rgba(227, 201, 138, 0.34);
+  border-left: 1px solid rgba(227, 201, 138, 0.34);
+}
+.fd-tour-bubble.is-top .fd-tour-arrow {
+  background: #06132b;
+  border-right: 1px solid rgba(227, 201, 138, 0.34);
+  border-bottom: 1px solid rgba(227, 201, 138, 0.34);
+}
+/* Pathy asoma por la esquina de la burbuja. */
+.fd-tour-pathy {
+  position: absolute;
+  left: -30px;
+  top: -48px;
+  width: 80px;
+  height: 80px;
+  z-index: 2;
+  animation: fd-tour-float 3.8s ease-in-out infinite;
+}
+.fd-tour-copy .fd-eyebrow {
+  padding-left: 42px;
+}
+.fd-tour-copy h2 {
+  font-size: 36px;
+  margin: 4px 0 8px;
+}
+.fd-tour-copy .fd-tour-lead {
+  font-size: 13.5px;
+  line-height: 1.6;
+  max-width: none;
+  margin: 0 0 14px;
+}
+.fd-tour-label {
+  font:
+    9.5px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8fa3c2;
+  margin: 0 0 8px;
+}
+.fd-tour-modules {
+  margin: 0;
+  color: #f2e6c8;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+/* Mientras Pathy habla, los submódulos reales de la tarjeta se iluminan en orden. */
+.fd-director[data-touring] [data-tour="submodules"] > a {
+  animation: fd-tour-point 1.3s ease-out both;
+  animation-delay: calc(0.45s + var(--i, 0) * 0.14s);
+}
+.fd-tour-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.fd-tour-nav {
+  display: flex;
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+/* Pista de progreso: seis tramos y un avión en el actual. */
+/* La pista cede espacio antes que los botones cuando la burbuja es estrecha. */
+.fd-tour-progress {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-items: center;
+  gap: 5px;
+}
+.fd-tour-progress span {
+  position: relative;
+  flex: 0 1 18px;
+  min-width: 8px;
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.14);
+  transition: background-color 0.3s ease;
+}
+.fd-tour-progress span.is-done,
+.fd-tour-progress span.is-current {
+  background: #c7a052;
+}
+.fd-tour-progress i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border-radius: 50%;
+  border: 1px solid #e3c98a;
+  background: #0b2040;
+  color: #e3c98a;
+}
+
+@keyframes fd-tour-point {
+  0%,
+  100% {
+    border-color: #ffffff28;
+    box-shadow: 0 0 0 0 rgba(227, 201, 138, 0);
+  }
+  30% {
+    border-color: #e3c98a;
+    box-shadow:
+      0 0 0 1px rgba(227, 201, 138, 0.9),
+      0 0 26px rgba(199, 160, 82, 0.38);
+  }
+}
+@keyframes fd-tour-pulse {
+  0% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.035);
+  }
+}
+@keyframes fd-tour-breathe {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.28);
+  }
+}
+@keyframes fd-tour-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@media (max-width: 600px) {
+  .fd-tour-welcome {
+    margin-top: 56px;
+    padding: 78px 22px 22px;
+  }
+  .fd-tour-pathy-hero {
+    width: 128px;
+    height: 128px;
+  }
+  .fd-tour h2 {
+    font-size: 38px;
+  }
+  .fd-tour-lead {
+    font-size: 13.5px;
+  }
+  .fd-tour-bubble {
+    padding: 18px 16px 14px;
+  }
+  .fd-tour-copy h2 {
+    font-size: 30px;
+  }
+  .fd-tour-pathy {
+    left: -10px;
+    top: -42px;
+    width: 64px;
+    height: 64px;
+  }
+  .fd-tour-copy .fd-eyebrow {
+    padding-left: 50px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fd-tour *,
+  .fd-tour *::after {
+    animation: none !important;
+  }
+}
+.fd-tour.is-reduced *,
+.fd-tour.is-reduced *::after,
+html[data-motion="reduced"] .fd-tour *,
+html[data-motion="reduced"] .fd-tour *::after {
+  animation: none !important;
+}
