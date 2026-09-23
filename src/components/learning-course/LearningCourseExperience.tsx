@@ -42,6 +42,7 @@ export function LearningCourseExperience({ def, course, vista, percent, complete
   children: ReactNode;
 }) {
   const user = useSessionUser();
+  const navigate = useNavigate();
   const [yarisOpen, setYarisOpen] = useState(false);
   const [yarisContext, setYarisContext] = useState<YarisContext>({});
   const module = vista.tipo === "modulo" ? course.modules.find((item) => item.id === vista.moduleId) : null;
