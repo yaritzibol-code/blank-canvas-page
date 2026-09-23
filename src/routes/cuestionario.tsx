@@ -1229,7 +1229,7 @@ function CuestionarioPage() {
 
         {/* ── QUESTION AREA ── */}
         <div
-          className="fp-quiz-area"
+          className={"fp-quiz-area" + (yarisOpen ? " yaris-is-open" : "")}
           style={{ flex: 1, minWidth: 0, display: showResult ? "none" : undefined, overflowY: "auto" }}
         >
           <div className="fp-quiz-primary">
