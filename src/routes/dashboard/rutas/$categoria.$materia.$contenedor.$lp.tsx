@@ -152,7 +152,12 @@ function LearningPathPage() {
         id: item.id, categoryId: categoria, subjectId: materia, chapterId: contenedor,
       }}
       user={user}
-      onBack={() => leaveLearningPath(`/dashboard/rutas/${categoria}/${materia}/${contenedor}`)}
+      onBack={() =>
+        leaveLearningPath(
+          `/dashboard/rutas/${categoria}/${materia}/${contenedor}`,
+          (href) => void navigate({ to: href, replace: true }),
+        )
+      }
       onYaris={(context) => { setYarisContext(context); setYarisOpen(true); }}
       subjectProgress={estado?.progreso ?? undefined}
       actions={
