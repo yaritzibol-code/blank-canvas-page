@@ -111,7 +111,7 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
                 padding: "6px 12px",
                 borderRadius: 999,
                 background: "rgba(255,255,255,.05)",
-                border: "1px solid #E3EAF5",
+                border: "1px solid rgba(199,160,82,.22)",
                 fontSize: 12,
                 fontWeight: 700,
                 color: "#FFFFFF",
