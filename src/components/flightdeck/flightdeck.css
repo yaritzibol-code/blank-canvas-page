@@ -2883,6 +2883,16 @@ html[data-motion="reduced"] .fd-shell *::after {
   .fp-question-footer { padding:0 12px; height:54px; }.fp-question-footer > span:first-child { display:none; }.fp-pathy-streak { width:100%; justify-content:center; text-align:center; font-size:9px; }
   .fd-submodules > a > em { display:none; }
 }
+/*
+ * En móvil la sesión crece con su contenido y se desplaza la página. La raíz
+ * de la pantalla trae `height: 100dvh; overflow: hidden` en línea (pensado
+ * para escritorio, donde la pregunta hace scroll por dentro), y aquí el área
+ * de la pregunta es `overflow: visible`: sin esto nada se podía desplazar y el
+ * botón "Siguiente pregunta" quedaba fuera de la pantalla.
+ */
+@media (max-width:760px) {
+  .fd-question-session > div { height:auto!important; max-height:none!important; overflow:visible!important; }
+}
 @media (max-width:360px) {
   .fd-topbar { padding-inline:10px; }
   .fd-director { padding-inline:10px; }
@@ -3351,4 +3361,660 @@ html[data-motion="reduced"] .fd-shell *::after {
 html[data-motion="reduced"] .fd-tour *,
 html[data-motion="reduced"] .fd-tour *::after {
   animation: none !important;
+}
+
+/* ── Informe de vuelo (fin del cuestionario) ───────────────────────────────
+ * Pantalla propia al terminar la sesión, dentro del mismo marco oscuro:
+ * nada de la pregunta queda a la vista. Menta = aciertos, coral = errores,
+ * dorado = marca, como en la sesión.
+ */
+.fd-results {
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.fd-results-top {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 76px;
+  padding: 0 36px;
+  border-bottom: 1px solid #ffffff0e;
+  background: #02070fb8;
+  backdrop-filter: blur(8px);
+}
+.fd-results-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid #ffffff2a;
+  border-radius: 5px;
+  color: #d5deec;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+.fd-results-back:hover {
+  color: #fff;
+  border-color: #c7a052;
+}
+.fd-results-module {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.fd-results-module strong {
+  font:
+    700 13px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #e3c98a;
+}
+.fd-results-module small {
+  overflow: hidden;
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #8fa3c2;
+}
+.fd-results-main {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 44px 40px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  outline: none;
+}
+.fd-results-hero,
+.fd-results-stats,
+.fd-results-grid,
+.fd-results-actions {
+  animation: fd-results-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.fd-results-stats {
+  animation-delay: 0.08s;
+}
+.fd-results-grid {
+  animation-delay: 0.16s;
+}
+.fd-results-actions {
+  animation-delay: 0.24s;
+}
+
+/* Titular y dial */
+.fd-results-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 40px;
+}
+.fd-results-copy h1 {
+  margin: 0 0 14px;
+  font:
+    400 64px/1.02 "Instrument Serif",
+    serif;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+.fd-results-copy h1 em {
+  font-style: italic;
+  color: #e3c98a;
+}
+.fd-results-lead {
+  max-width: 560px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #d5deec;
+}
+.fd-results-dial {
+  --tone: #e3c98a;
+  position: relative;
+  width: 220px;
+  height: 220px;
+  flex-shrink: 0;
+}
+.fd-results-dial.is-alto {
+  --tone: #7fd6a4;
+}
+.fd-results-dial.is-bajo {
+  --tone: #f0a08c;
+}
+.fd-results-dial svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.fd-results-dial line {
+  stroke: #ffffff2e;
+  stroke-width: 1.5;
+}
+.fd-results-dial-track {
+  fill: rgba(5, 15, 34, 0.72);
+  stroke: #ffffff17;
+  stroke-width: 10;
+}
+.fd-results-dial-arc {
+  fill: none;
+  stroke: var(--tone);
+  stroke-width: 10;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 10px color-mix(in oklab, var(--tone) 55%, transparent));
+  transition: stroke-dashoffset 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fd-results-dial-value {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+.fd-results-dial-value strong {
+  font:
+    400 62px/1 "Instrument Serif",
+    serif;
+  color: var(--tone);
+}
+.fd-results-dial-value strong em {
+  font-size: 30px;
+  font-style: normal;
+}
+.fd-results-dial-value small {
+  margin-top: 6px;
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.2em;
+  color: #8fa3c2;
+}
+.fd-results-dial-value span {
+  margin-top: 3px;
+  font-size: 12px;
+  color: #b8c5da;
+}
+
+/* Tira de datos, como la de los destinos del Director */
+.fd-results-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid #ffffff26;
+  border-radius: 6px;
+  background: rgba(8, 26, 53, 0.75);
+}
+.fd-results-stats > div {
+  padding: 14px 18px;
+}
+.fd-results-stats > div + div {
+  border-left: 1px solid #ffffff1c;
+}
+.fd-results-stats dt {
+  font:
+    8px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.16em;
+  color: #8fa3c2;
+}
+.fd-results-stats dd {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 0;
+  font:
+    400 32px/1.1 "Instrument Serif",
+    serif;
+  color: #fff;
+}
+.fd-results-stats .fd-stat-diamond {
+  font-size: 11px;
+  color: #c7a052;
+}
+.fd-results-stats .fd-stat-diamond.is-ok {
+  color: #7fd6a4;
+}
+.fd-results-stats .fd-stat-diamond.is-err {
+  color: #f0a08c;
+}
+
+/* Materias + lectura de Pathy */
+.fd-results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+.fd-results-grid .fd-debrief {
+  max-width: none;
+  margin: 0;
+}
+/* Sin lectura de Pathy (nada respondido), el rendimiento ocupa todo el ancho. */
+.fd-results-grid > :only-child {
+  grid-column: 1 / -1;
+}
+.fd-results-panel {
+  padding: 20px 22px;
+  border: 1px solid #ffffff24;
+  border-radius: 6px;
+  background: linear-gradient(180deg, rgba(8, 26, 53, 0.8), rgba(5, 15, 34, 0.78));
+  backdrop-filter: blur(8px);
+}
+.fd-results-empty {
+  margin: 0;
+  font-size: 13px;
+  color: #b8c5da;
+}
+.fd-results-materias {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.fd-results-materias li {
+  --tone: #e3c98a;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  column-gap: 12px;
+  row-gap: 9px;
+  padding: 12px;
+  border: 1px solid #ffffff1f;
+  border-radius: 5px;
+  background: #050f2299;
+}
+.fd-results-materias li.is-alto {
+  --tone: #7fd6a4;
+}
+.fd-results-materias li.is-bajo {
+  --tone: #f0a08c;
+}
+.fd-results-materia-icon {
+  grid-row: 1 / 3;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #c7a05255;
+  border-radius: 5px;
+  background: #c7a05212;
+  color: #e3c98a;
+}
+.fd-results-materia-name {
+  min-width: 0;
+}
+.fd-results-materia-name strong {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #fff;
+}
+.fd-results-materia-name small {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  color: #b8c5da;
+}
+.fd-results-materia-score {
+  text-align: right;
+}
+.fd-results-materia-score b {
+  display: block;
+  font:
+    400 24px/1 "Instrument Serif",
+    serif;
+  color: var(--tone);
+}
+.fd-results-materia-score em {
+  font:
+    8px "JetBrains Mono",
+    monospace;
+  font-style: normal;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--tone);
+}
+.fd-results-bar {
+  grid-column: 2 / 4;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #ffffff17;
+}
+.fd-results-bar i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--tone);
+  transform-origin: left;
+  animation: fd-results-grow 0.9s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Qué sigue */
+.fd-results-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.fd-results-ghost,
+.fd-results-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 50px;
+  padding: 0 24px;
+  border-radius: 5px;
+  font-family: Manrope, sans-serif;
+  font-size: 14.5px;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    filter 0.2s,
+    transform 0.2s;
+}
+.fd-results-ghost {
+  border: 1px solid #ffffff33;
+  background: #02070f80;
+  color: #fff;
+}
+.fd-results-ghost:hover {
+  border-color: #c7a052;
+}
+.fd-results-primary {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #e3c98a;
+  background: linear-gradient(135deg, #ebd6a2 0%, #c7a052 46%, #9c7a35 100%);
+  color: #081a35;
+  box-shadow: 0 10px 30px -12px #c7a05299;
+}
+.fd-results-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 35%, #ffffff55 50%, transparent 65%);
+  transform: translateX(-150%);
+  animation: fd-sweep 3.6s ease-in-out infinite;
+  pointer-events: none;
+}
+.fd-results-primary:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+/* Lectura de Pathy (fin de cuestionarios y simulacros) */
+.fd-debrief {
+  width: 100%;
+  max-width: 580px;
+  margin: 0 0 20px;
+  padding: 20px 22px;
+  border: 1px solid #c7a05240;
+  border-radius: 6px;
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(199, 160, 82, 0.1), transparent 55%),
+    linear-gradient(180deg, rgba(8, 26, 53, 0.82), rgba(5, 15, 34, 0.8));
+  backdrop-filter: blur(8px);
+  color: #d5deec;
+  font-size: 13.5px;
+  line-height: 1.65;
+  text-align: left;
+}
+.fd-debrief-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.fd-debrief-head strong {
+  display: block;
+  font:
+    400 26px/1.1 "Instrument Serif",
+    serif;
+  color: #fff;
+}
+.fd-debrief-head small {
+  display: block;
+  margin-top: 3px;
+  font-size: 11.5px;
+  color: #8fa3c2;
+}
+.fd-debrief-label {
+  margin: 0 0 8px;
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: #c7a052;
+}
+.fd-debrief-block {
+  margin-bottom: 14px;
+}
+.fd-debrief-spot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin-bottom: 6px;
+  padding: 8px 12px;
+  border: 1px solid #ffffff1f;
+  border-radius: 5px;
+  background: #050f2299;
+  color: #fff;
+  font-size: 13px;
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+.fd-debrief-spot.is-link:hover {
+  border-color: #c7a052;
+}
+.fd-debrief-spot-label {
+  flex: 1;
+  min-width: 0;
+}
+.fd-debrief-spot-label small {
+  font-size: 11px;
+  color: #8fa3c2;
+}
+.fd-debrief-spot strong {
+  font-weight: 800;
+  white-space: nowrap;
+}
+.fd-debrief-spot strong em {
+  font-style: normal;
+  font-weight: 600;
+  color: #8fa3c2;
+}
+.fd-debrief-spot strong.is-bajo {
+  color: #f0a08c;
+}
+.fd-debrief-spot strong.is-medio {
+  color: #e3c98a;
+}
+.fd-debrief-spot strong.is-alto {
+  color: #7fd6a4;
+}
+.fd-debrief-loading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px dashed #c7a05255;
+  border-radius: 5px;
+  background: #c7a0520d;
+  color: #e3c98a;
+  font-size: 13px;
+  font-weight: 700;
+}
+.fd-debrief-loading small {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #b8c5da;
+}
+.fd-debrief-spinner {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid #c7a05233;
+  border-top-color: #e3c98a;
+  border-radius: 50%;
+  animation: fd-debrief-spin 0.8s linear infinite;
+}
+.fd-debrief-reading p {
+  margin: 0 0 12px;
+}
+.fd-debrief-reading ul {
+  margin: 0 0 14px;
+  padding-left: 18px;
+}
+.fd-debrief-reading ul li::marker {
+  color: #c7a052;
+}
+.fd-debrief-plan {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: plan;
+}
+.fd-debrief-plan li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  counter-increment: plan;
+}
+.fd-debrief-plan li::before {
+  content: counter(plan, decimal-leading-zero);
+  height: 26px;
+  border: 1px solid #c7a05266;
+  border-radius: 4px;
+  background: #c7a05212;
+  font:
+    700 10px/24px "JetBrains Mono",
+    monospace;
+  text-align: center;
+  color: #e3c98a;
+}
+.fd-debrief-note {
+  margin: 0;
+}
+.fd-debrief-note.is-muted {
+  color: #b8c5da;
+}
+.fd-debrief-note a {
+  font-weight: 700;
+  color: #e3c98a;
+}
+
+@keyframes fd-results-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fd-results-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes fd-debrief-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1000px) {
+  .fd-results-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 760px) {
+  .fd-results {
+    height: auto;
+    overflow: visible;
+  }
+  .fd-results-top {
+    min-height: 64px;
+    gap: 12px;
+    padding: 0 12px;
+  }
+  .fd-results-main {
+    gap: 16px;
+    padding: 26px 16px 36px;
+  }
+  .fd-results-hero {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 22px;
+    text-align: center;
+  }
+  .fd-results-copy h1 {
+    font-size: 46px;
+  }
+  .fd-results-lead {
+    margin: 0 auto;
+    font-size: 14px;
+  }
+  .fd-results-dial {
+    width: 188px;
+    height: 188px;
+  }
+  .fd-results-dial-value strong {
+    font-size: 54px;
+  }
+  .fd-results-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .fd-results-stats > div:nth-child(3) {
+    border-left: 0;
+  }
+  .fd-results-stats > div:nth-child(n + 3) {
+    border-top: 1px solid #ffffff1c;
+  }
+  .fd-results-panel,
+  .fd-debrief {
+    padding: 16px;
+  }
+  .fd-results-actions {
+    flex-direction: column-reverse;
+  }
+  .fd-results-ghost,
+  .fd-results-primary {
+    width: 100%;
+  }
 }

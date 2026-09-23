@@ -2,6 +2,10 @@
  * Informe de Pathy tras una sesión: ranking real (calculado con las respuestas
  * guardadas) + lectura de la IA. Si la IA no está disponible, el ranking real
  * se muestra igual.
+ *
+ * Se muestra al terminar cuestionarios y simulacros, siempre dentro del marco
+ * oscuro de la sesión (`QuestionFrame`); sus estilos viven en
+ * `flightdeck.css` (`.fd-debrief*`).
  */
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
@@ -28,49 +32,25 @@ const MOTIVO_TXT: Record<string, string> = {
   error: "No pude conectarme con la IA en este momento, pero tu marcador real ya está calculado.",
 };
 
-const card: React.CSSProperties = {
-  background: "linear-gradient(135deg,#EEE1C5,#fce4ec)",
-  borderRadius: 16,
-  padding: "18px 20px",
-  width: "100%",
-  maxWidth: 580,
-  marginBottom: 20,
-  fontSize: "0.88rem",
-  color: "#4a4a4a",
-  lineHeight: 1.65,
-};
-
 function SpotRow({ s }: { s: PathyWeakSpot }) {
-  const color = s.pct < 60 ? "#c0392b" : s.pct < 80 ? "#b9770e" : "#1a7a4a";
+  const tier = s.pct < 60 ? "is-bajo" : s.pct < 80 ? "is-medio" : "is-alto";
   const body = (
     <>
-      <span style={{ flex: 1, minWidth: 0 }}>
+      <span className="fd-debrief-spot-label">
         {s.label}
-        {s.muestraCorta && (
-          <span style={{ color: "#8a6d3b", fontSize: "0.72rem" }}> · muestra corta</span>
-        )}
+        {s.muestraCorta && <small> · muestra corta</small>}
       </span>
-      <strong style={{ color, whiteSpace: "nowrap" }}>
-        {s.pct}% ({s.correct}/{s.total})
+      <strong className={tier}>
+        {s.pct}%{" "}
+        <em>
+          ({s.correct}/{s.total})
+        </em>
       </strong>
     </>
   );
-  const style: React.CSSProperties = {
-    display: "flex",
-    gap: 10,
-    alignItems: "center",
-    padding: "8px 12px",
-    borderRadius: 10,
-    background: "rgba(255,255,255,0.7)",
-    marginBottom: 6,
-    fontSize: "0.83rem",
-    color: "#081A35",
-    textDecoration: "none",
-    minHeight: 44,
-  };
-  if (!s.to) return <div style={style}>{body}</div>;
+  if (!s.to) return <div className="fd-debrief-spot">{body}</div>;
   return (
-    <Link to={s.to} search={s.search as never} style={style}>
+    <Link to={s.to} search={s.search as never} className="fd-debrief-spot is-link">
       {body}
     </Link>
   );
@@ -163,31 +143,25 @@ export function PathyDebrief({ userId, origen, titulo, scorePct, answers }: Prop
   }, [userId]);
 
   return (
-    <div style={card}>
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 10 }}>
-        <PathyMark size={30} />
-        <div style={{ flex: 1 }}>
-          <strong style={{ color: "#7A5C1E" }}>Lectura de Pathy</strong>
-          <div style={{ fontSize: "0.75rem", color: "#8a6a70" }}>
-            Basada en las {wrong.length} preguntas que fallaste en esta sesión
-          </div>
+    <section className="fd-debrief" aria-label="Lectura de Pathy">
+      <header className="fd-debrief-head">
+        <PathyMark size={34} />
+        <div>
+          <strong>Lectura de Pathy</strong>
+          <small>
+            {wrong.length === 0
+              ? "Sin errores en esta sesión"
+              : wrong.length === 1
+                ? "Basada en la pregunta que fallaste en esta sesión"
+                : `Basada en las ${wrong.length} preguntas que fallaste en esta sesión`}
+          </small>
         </div>
-      </div>
+      </header>
 
-      {spots.length > 0 && (
-        <div style={{ marginBottom: 12 }}>
-          <div
-            style={{
-              fontSize: "0.72rem",
-              fontWeight: 800,
-              letterSpacing: "0.4px",
-              textTransform: "uppercase",
-              color: "#7A5C1E",
-              marginBottom: 6,
-            }}
-          >
-            Lo que más costó
-          </div>
+      {/* Sin errores no hay nada que "costó": se omite aunque haya ranking. */}
+      {spots.length > 0 && wrong.length > 0 && (
+        <div className="fd-debrief-block">
+          <p className="fd-debrief-label">Lo que más costó</p>
           {spots.map((s) => (
             <SpotRow key={`${s.tipo}-${s.label}`} s={s} />
           ))}
@@ -195,98 +169,53 @@ export function PathyDebrief({ userId, origen, titulo, scorePct, answers }: Prop
       )}
 
       {loading && (
-        <div
-          role="status"
-          aria-live="polite"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            padding: "12px 14px",
-            borderRadius: 12,
-            background: "rgba(255,255,255,0.75)",
-            color: "#7A5C1E",
-            fontWeight: 700,
-            fontSize: "0.83rem",
-          }}
-        >
-          <style>{`@keyframes pathySpin{to{transform:rotate(360deg)}}`}</style>
-          <span
-            aria-hidden="true"
-            style={{
-              width: 18,
-              height: 18,
-              borderRadius: "50%",
-              border: "2.5px solid rgba(122,92,30,0.2)",
-              borderTopColor: "#7A5C1E",
-              animation: "pathySpin .8s linear infinite",
-              flexShrink: 0,
-            }}
-          />
+        <div className="fd-debrief-loading" role="status" aria-live="polite">
+          <span className="fd-debrief-spinner" aria-hidden="true" />
           <span>
             Pathy está analizando tu resultado…
-            <span style={{ display: "block", fontWeight: 500, color: "#7a6a70", fontSize: "0.76rem" }}>
+            <small>
               Revisando tus {wrong.length} errores y buscando el patrón. Tarda unos segundos.
-            </span>
+            </small>
           </span>
         </div>
       )}
 
       {!loading && diagnostico && (
-        <>
-          <p style={{ margin: "0 0 10px" }}>{diagnostico}</p>
+        <div className="fd-debrief-reading">
+          <p>{diagnostico}</p>
           {confusiones.length > 0 && (
-            <ul style={{ margin: "0 0 10px", paddingLeft: 18 }}>
+            <ul>
               {confusiones.map((c) => (
-                <li key={c} style={{ marginBottom: 4 }}>
-                  {c}
-                </li>
+                <li key={c}>{c}</li>
               ))}
             </ul>
           )}
           {acciones.length > 0 && (
             <>
-              <div
-                style={{
-                  fontSize: "0.72rem",
-                  fontWeight: 800,
-                  letterSpacing: "0.4px",
-                  textTransform: "uppercase",
-                  color: "#7A5C1E",
-                  marginBottom: 4,
-                }}
-              >
-                Tu plan de vuelo
-              </div>
-              <ol style={{ margin: 0, paddingLeft: 18 }}>
+              <p className="fd-debrief-label">Tu plan de vuelo</p>
+              <ol className="fd-debrief-plan">
                 {acciones.map((a) => (
-                  <li key={a} style={{ marginBottom: 4 }}>
-                    {a}
-                  </li>
+                  <li key={a}>{a}</li>
                 ))}
               </ol>
             </>
           )}
-        </>
+        </div>
       )}
 
       {!loading && !diagnostico && motivo === "sin_errores" && (
-        <p style={{ margin: 0 }}>
+        <p className="fd-debrief-note">
           Sesión perfecta: no fallaste ninguna. Sube la dificultad con más preguntas o cambia de
           capítulo para seguir avanzando.
         </p>
       )}
 
       {!loading && !diagnostico && motivo && motivo !== "sin_errores" && (
-        <p style={{ margin: 0, color: "#7a6a70" }}>
-          {MOTIVO_TXT[motivo] ?? MOTIVO_TXT['error']}{" "}
-          {motivo === "sin_pro" && (
-            <Link to="/precios" style={{ color: "#7A5C1E", fontWeight: 700 }}>
-              Ver planes
-            </Link>
-          )}
+        <p className="fd-debrief-note is-muted">
+          {MOTIVO_TXT[motivo] ?? MOTIVO_TXT["error"]}{" "}
+          {motivo === "sin_pro" && <Link to="/precios">Ver planes</Link>}
         </p>
       )}
-    </div>
+    </section>
   );
 }
