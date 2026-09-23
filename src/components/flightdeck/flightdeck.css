@@ -1443,6 +1443,19 @@ html:has(.fd-shell) {
   background-position: center;
   overflow: auto;
 }
+.fd-arrival-selector {
+  animation: fd-selector-arrive 0.42s ease-out both;
+}
+@keyframes fd-selector-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 .fd-arrival::backdrop {
   background: #02070f;
 }
@@ -2469,6 +2482,96 @@ html[data-motion="reduced"] .fd-shell *::after {
 }
 .fd-question-session .fp-quiz-area {
   padding-top: 30px !important;
+}
+.fd-question-session .fp-quiz-option {
+  border-color: var(--fd-border) !important;
+  background: var(--fd-panel-alt) !important;
+  color: var(--fd-text) !important;
+}
+.fd-question-session .fp-quiz-option:not(:disabled):hover {
+  border-color: var(--fd-gold) !important;
+  background: color-mix(in oklab, var(--fd-panel-alt) 78%, var(--fd-gold)) !important;
+  transform: translateX(3px);
+}
+.fd-question-session .fp-quiz-option > span:nth-child(2) {
+  color: var(--fd-text) !important;
+}
+.fd-question-session .fp-quiz-option > span:first-child {
+  border: 1px solid color-mix(in oklab, var(--fd-gold) 45%, transparent);
+  background: color-mix(in oklab, var(--fd-panel) 84%, var(--fd-gold)) !important;
+  color: var(--fd-gold) !important;
+}
+.fd-question-session .fp-yaris-panel {
+  background: color-mix(in oklab, var(--fd-panel) 96%, transparent) !important;
+  border-color: var(--fd-border) !important;
+  box-shadow: -18px 0 42px color-mix(in oklab, var(--background) 58%, transparent);
+}
+.fd-question-session .fp-yaris-header {
+  min-height: 68px;
+  background: var(--fd-panel) !important;
+  border-bottom: 1px solid color-mix(in oklab, var(--fd-gold) 42%, transparent);
+}
+.fd-question-session .fp-yaris-header::before {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 34px;
+  left: 0;
+  background: var(--fd-gold);
+}
+.fd-question-session .fp-yaris-mode {
+  background: color-mix(in oklab, var(--fd-panel) 88%, var(--fd-gold)) !important;
+  border-color: color-mix(in oklab, var(--fd-gold) 50%, transparent) !important;
+  color: var(--fd-text) !important;
+}
+.fd-question-session .fp-yaris-messages {
+  padding: 18px 14px !important;
+  background: color-mix(in oklab, var(--background) 72%, transparent);
+  scrollbar-color: var(--fd-gold) transparent;
+}
+.fd-question-session .fp-yaris-message > div:last-child {
+  border: 1px solid var(--fd-border);
+  background: var(--fd-panel-alt) !important;
+  color: var(--fd-text) !important;
+  border-radius: 3px 10px 10px 10px !important;
+}
+.fd-question-session .fp-yaris-message.is-user > div:last-child {
+  border-color: color-mix(in oklab, var(--fd-gold) 44%, transparent);
+  background: color-mix(in oklab, var(--fd-panel) 82%, var(--fd-gold)) !important;
+  border-radius: 10px 3px 10px 10px !important;
+}
+.fd-question-session .fp-yaris-composer {
+  padding: 12px 14px max(12px, env(safe-area-inset-bottom)) !important;
+  background: var(--fd-panel);
+  border-color: var(--fd-border) !important;
+}
+.fd-question-session .fp-yaris-composer input {
+  border-radius: 4px !important;
+  border-color: var(--fd-border) !important;
+  background: color-mix(in oklab, var(--fd-panel) 84%, var(--fd-text)) !important;
+}
+.fd-question-session .fp-yaris-composer button {
+  border-radius: 4px !important;
+  background: var(--fd-gold) !important;
+  color: var(--primary-foreground) !important;
+}
+@media (max-width: 1023px) {
+  .fd-question-session .fp-yaris-panel.is-open {
+    left: 12px !important;
+    right: 12px !important;
+    bottom: 12px !important;
+    width: auto !important;
+    height: min(66dvh, 540px) !important;
+    border: 1px solid var(--fd-border) !important;
+    border-radius: 6px !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fd-arrival-selector,
+  .fd-question-session .fp-quiz-option {
+    animation: none;
+    transition: none !important;
+  }
 }
 .fd-content[data-screen="rutas"] .fd-workspace-content > .fd-native-header {
   display: none;

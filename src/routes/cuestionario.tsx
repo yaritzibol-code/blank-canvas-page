@@ -1273,6 +1273,7 @@ function CuestionarioPage() {
                 <button
                   key={i}
                   type="button"
+                  className="fp-quiz-option"
                   onClick={() => handleOptionClick(i)}
                   disabled={answered}
                   aria-pressed={selectedIdx === i}
@@ -1284,20 +1285,6 @@ function CuestionarioPage() {
                     transition: "all 0.2s",
                     userSelect: "none",
                     ...getOptionStyle(i),
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!answered) {
-                      e.currentTarget.style.borderColor = "#163D70";
-                      e.currentTarget.style.background = "rgba(22,61,112,0.04)";
-                      e.currentTarget.style.transform = "translateX(3px)";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!answered) {
-                      e.currentTarget.style.borderColor = "#EEE1C5";
-                      e.currentTarget.style.background = "#f8f9ff";
-                      e.currentTarget.style.transform = "none";
-                    }
                   }}
                 >
                   <span
@@ -1608,6 +1595,7 @@ function CuestionarioPage() {
 
         {/* ── YARIS PANEL ── */}
         <div
+          className={"fp-yaris-panel" + (yarisOpen ? " is-open" : "")}
           style={
             isMobile && yarisOpen
               ? {
@@ -1639,9 +1627,10 @@ function CuestionarioPage() {
         >
           {/* Yaris header */}
           <div
+            className="fp-yaris-header"
             style={{
               padding: "14px 18px", flexShrink: 0,
-              background: "linear-gradient(135deg,#163D70,#5A86CB)",
+              background: "var(--fd-panel, #081A35)",
               display: "flex", alignItems: "center", justifyContent: "space-between",
             }}
           >
@@ -1678,6 +1667,7 @@ function CuestionarioPage() {
           {/* Indicador de modo "te ayudo a pensar" */}
           {thinkMode && (
             <div
+              className="fp-yaris-mode"
               role="status"
               aria-live="polite"
               style={{
@@ -1703,6 +1693,7 @@ function CuestionarioPage() {
 
           {/* Messages */}
           <div
+            className="fp-yaris-messages"
             ref={msgsBoxRef}
             style={{
               flex: 1, minHeight: 0, overflowY: "auto", overscrollBehavior: "contain", padding: 14,
@@ -1720,6 +1711,7 @@ function CuestionarioPage() {
               >
 
                 <div
+                  className={"fp-yaris-message is-" + msg.role}
                   style={{
                     width: 26, height: 26, borderRadius: "50%",
                     display: "flex", alignItems: "center", justifyContent: "center",
@@ -1791,6 +1783,7 @@ function CuestionarioPage() {
 
           {/* Input */}
           <div
+            className="fp-yaris-composer"
             style={{
               padding: "10px 14px calc(10px + env(safe-area-inset-bottom))",
               borderTop: "1px solid var(--fd-border, #EEE1C5)",
