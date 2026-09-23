@@ -174,8 +174,9 @@ export function Director() {
     root.current?.focus({ preventScroll: true });
     if (user && !user.tourDone) updateUser(user.id, { tourDone: true });
     // Sin el parámetro, recargar no vuelve a lanzar el recorrido.
+    // Ruta absoluta: con `to: "."` el router resolvía /dashboard/dashboard (404).
     if (new URLSearchParams(window.location.search).has("tour")) {
-      void navigate({ to: ".", search: {}, replace: true });
+      void navigate({ to: "/dashboard", search: {}, replace: true });
     }
   }, [navigate, user]);
   const [clock, setClock] = useState<Date | null>(null),
