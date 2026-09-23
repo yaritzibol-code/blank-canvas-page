@@ -81,7 +81,7 @@ function RutaCursoPage() {
     return (
       <div
         className="grid min-h-screen place-items-center px-6 text-center"
-        style={{ background: "#F5F5F7" }}
+        style={{ background: "#050F22" }}
       >
         <div>
           <h1 className="font-display text-[26px] text-ink-950">No encontramos esta ruta.</h1>
@@ -97,13 +97,13 @@ function RutaCursoPage() {
     );
   }
 
-  if (!ready || !user) return <div className="min-h-screen" style={{ background: "#F5F5F7" }} />;
+  if (!ready || !user) return <div className="min-h-screen" style={{ background: "#050F22" }} />;
 
   if (!course) {
     return (
       <div
         className="grid min-h-screen place-items-center"
-        style={{ background: "#F5F5F7" }}
+        style={{ background: "#050F22" }}
         aria-busy="true"
       >
         <div className="text-center">

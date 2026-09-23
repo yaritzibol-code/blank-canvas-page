@@ -77,22 +77,22 @@ function Sidebar({
       <div
         style={{
           padding: "16px 20px",
-          borderBottom: "1px solid #E8ECF2",
-          background: "#F5F5F7",
+          borderBottom: "1px solid rgba(255,255,255,.12)",
+          background: "#050F22",
           flexShrink: 0,
         }}
       >
-        <p style={{ fontSize: "0.62rem", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.16em", color: "#4A5872", fontWeight: 700, marginBottom: 4 }}>
+        <p style={{ fontSize: "0.62rem", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.16em", color: "#93A4BF", fontWeight: 700, marginBottom: 4 }}>
           Temas disponibles
         </p>
-        <p style={{ fontSize: "0.75rem", color: "#4A5872" }}>
-          <span style={{ color: "#081A35", fontWeight: 700, fontFamily: DISPLAY }}>{temas.length}</span> temas cargados
+        <p style={{ fontSize: "0.75rem", color: "#93A4BF" }}>
+          <span style={{ color: "#FFFFFF", fontWeight: 700, fontFamily: DISPLAY }}>{temas.length}</span> temas cargados
         </p>
       </div>
 
       <div style={{ flex: 1, overflowY: "auto", padding: "8px 0" }}>
         {bloqueNums.length === 0 && (
-          <p style={{ padding: "16px 20px", fontSize: "0.82rem", color: "#7E90AD" }}>
+          <p style={{ padding: "16px 20px", fontSize: "0.82rem", color: "#93A4BF" }}>
             Contenido próximamente
           </p>
         )}
@@ -108,7 +108,7 @@ function Sidebar({
                   fontFamily: MONO,
                   textTransform: "uppercase",
                   letterSpacing: "0.16em",
-                  color: "#4A5872",
+                  color: "#93A4BF",
                 }}
               >
                 Bloque {bNum} · {bloque.titulo}
@@ -132,7 +132,7 @@ function Sidebar({
                       border: "none",
                       cursor: "pointer",
                       transition: "all 0.15s",
-                      background: isSelected ? "#FBF7EC" : "transparent",
+                      background: isSelected ? "rgba(199,160,82,.12)" : "transparent",
                       textAlign: "left",
                       fontFamily: FONT,
                       opacity: isLockedItem ? 0.55 : 1,
@@ -153,8 +153,8 @@ function Sidebar({
                         fontSize: "0.68rem",
                         fontWeight: 700,
                         fontFamily: DISPLAY,
-                        background: isSelected ? "#7A5C1E" : "#E8ECF2",
-                        color: isSelected ? "white" : "#7E90AD",
+                        background: isSelected ? "#C7A052" : "rgba(255,255,255,.12)",
+                        color: isSelected ? "#0A1B33" : "#93A4BF",
                       }}
                     >
                       {t.tema}
@@ -164,13 +164,13 @@ function Sidebar({
                         style={{
                           fontSize: "0.82rem",
                           fontWeight: isSelected ? 700 : 500,
-                          color: isSelected ? "#7A5C1E" : "#123360",
+                          color: isSelected ? "#C7A052" : "#8A6A25",
                           lineHeight: 1.3,
                         }}
                       >
                         {t.title}
                       </div>
-                      <div style={{ fontSize: "0.68rem", color: "#7E90AD", marginTop: 3, display: "flex", alignItems: "center", gap: 4, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                      <div style={{ fontSize: "0.68rem", color: "#93A4BF", marginTop: 3, display: "flex", alignItems: "center", gap: 4, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em" }}>
                         <Icon n="timer" size={11} />
                         {t.duracion_min} min
                       </div>
@@ -192,14 +192,14 @@ function Sidebar({
         })}
       </div>
 
-      <div style={{ padding: "12px 20px", borderTop: "1px solid #E8ECF2", flexShrink: 0 }}>
+      <div style={{ padding: "12px 20px", borderTop: "1px solid rgba(255,255,255,.12)", flexShrink: 0 }}>
         <Link
           to="/dashboard/materias"
           style={{
             display: "inline-flex",
             alignItems: "center",
             gap: 6,
-            color: "#4A5872",
+            color: "#93A4BF",
             fontSize: "0.78rem",
             textDecoration: "none",
             fontWeight: 500,
@@ -235,16 +235,16 @@ function EmptyState({
           justifyContent: "center",
           height: "100%",
           gap: 16,
-          color: "#4A5872",
+          color: "#93A4BF",
           textAlign: "center",
           padding: 40,
         }}
       >
-        <span style={{ width: 72, height: 72, borderRadius: 18, background: "#FBF7EC", border: "1px solid #C7A052", color: "#7A5C1E", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+        <span style={{ width: 72, height: 72, borderRadius: 18, background: "rgba(199,160,82,.12)", border: "1px solid #C7A052", color: "#C7A052", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
           <Icon n={meta.icon} size={36} />
         </span>
-        <h2 style={{ fontFamily: DISPLAY, fontSize: "1.4rem", color: "#081A35", letterSpacing: "-0.02em" }}>{meta.name}</h2>
-        <p style={{ fontSize: "0.9rem", maxWidth: 340, color: "#4A5872" }}>
+        <h2 style={{ fontFamily: DISPLAY, fontSize: "1.4rem", color: "#FFFFFF", letterSpacing: "-0.02em" }}>{meta.name}</h2>
+        <p style={{ fontSize: "0.9rem", maxWidth: 340, color: "#93A4BF" }}>
           Los temas de esta materia están en preparación. ¡Pronto estarán disponibles!
         </p>
       </div>
@@ -264,7 +264,7 @@ function EmptyState({
         padding: 40,
       }}
     >
-      <span style={{ width: 86, height: 86, borderRadius: 22, background: "#FBF7EC", border: "1px solid #C7A052", color: "#7A5C1E", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+      <span style={{ width: 86, height: 86, borderRadius: 22, background: "rgba(199,160,82,.12)", border: "1px solid #C7A052", color: "#C7A052", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
         <Icon n={meta.icon} size={44} />
       </span>
       <div>
@@ -272,7 +272,7 @@ function EmptyState({
           style={{
             fontFamily: DISPLAY,
             fontSize: "1.8rem",
-            color: "#081A35",
+            color: "#FFFFFF",
             marginBottom: 6,
             letterSpacing: "-0.02em",
             lineHeight: 1.05,
@@ -280,7 +280,7 @@ function EmptyState({
         >
           {meta.name}
         </h2>
-        <p style={{ fontSize: "0.92rem", color: "#4A5872", maxWidth: 380 }}>
+        <p style={{ fontSize: "0.92rem", color: "#93A4BF", maxWidth: 380 }}>
           Selecciona un tema del panel izquierdo para comenzar a estudiar.
         </p>
       </div>
@@ -301,8 +301,8 @@ function EmptyState({
             onClick={() => onSelect(t.id)}
             style={{
               padding: "14px 16px",
-              background: "white",
-              border: "1px solid #E8ECF2",
+              background: "#0A1B33",
+              border: "1px solid rgba(255,255,255,.12)",
               borderRadius: 14,
               cursor: "pointer",
               textAlign: "left",
@@ -326,7 +326,7 @@ function EmptyState({
                 fontSize: "0.62rem",
                 fontWeight: 700,
                 fontFamily: MONO,
-                color: "#4A5872",
+                color: "#93A4BF",
                 textTransform: "uppercase",
                 letterSpacing: "0.16em",
                 marginBottom: 6,
@@ -334,10 +334,10 @@ function EmptyState({
             >
               Bloque {t.bloque} · Tema {t.tema}
             </div>
-            <div style={{ fontSize: "0.92rem", fontFamily: DISPLAY, color: "#081A35", lineHeight: 1.25, letterSpacing: "-0.01em" }}>
+            <div style={{ fontSize: "0.92rem", fontFamily: DISPLAY, color: "#FFFFFF", lineHeight: 1.25, letterSpacing: "-0.01em" }}>
               {t.title}
             </div>
-            <div style={{ fontSize: "0.68rem", color: "#7E90AD", marginTop: 8, display: "flex", alignItems: "center", gap: 4, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+            <div style={{ fontSize: "0.68rem", color: "#93A4BF", marginTop: 8, display: "flex", alignItems: "center", gap: 4, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>
               <Icon n="timer" size={12} />
               {t.duracion_min} min
             </div>
@@ -435,8 +435,8 @@ function SubjectDetail() {
       {/* ── TOPBAR ── */}
       <div
         style={{
-          background: "white",
-          borderBottom: "1px solid #E8ECF2",
+          background: "#0A1B33",
+          borderBottom: "1px solid rgba(255,255,255,.12)",
           padding: "0 24px",
           height: 64,
           display: "flex",
@@ -452,8 +452,8 @@ function SubjectDetail() {
           <span
             style={{
               display: "inline-flex", alignItems: "center", gap: 8,
-              background: "#FBF7EC",
-              color: "#7A5C1E",
+              background: "rgba(199,160,82,.12)",
+              color: "#C7A052",
               padding: "5px 12px 5px 8px",
               borderRadius: 20,
               border: "1px solid rgba(122,92,30,0.12)",
@@ -462,7 +462,7 @@ function SubjectDetail() {
               whiteSpace: "nowrap",
             }}
           >
-            <span style={{ width: 22, height: 22, borderRadius: "50%", background: "#7A5C1E", color: "#C7A052", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ width: 22, height: 22, borderRadius: "50%", background: "#C7A052", color: "#C7A052", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
               <Icon n={meta.icon} size={13} />
             </span>
             {meta.name}
@@ -472,7 +472,7 @@ function SubjectDetail() {
               style={{
                 fontFamily: DISPLAY,
                 fontSize: "1rem",
-                color: "#081A35",
+                color: "#FFFFFF",
                 fontWeight: 600,
                 letterSpacing: "-0.01em",
               }}
@@ -495,7 +495,7 @@ function SubjectDetail() {
               padding: "6px 10px",
               fontSize: "0.78rem",
               fontWeight: 600,
-              color: "#4A5872",
+              color: "#93A4BF",
               cursor: "pointer",
               fontFamily: FONT,
               transition: "background 0.15s",
@@ -512,13 +512,13 @@ function SubjectDetail() {
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             style={{
               display: "inline-flex", alignItems: "center", gap: 6,
-              background: "white",
-              border: "1px solid #E8ECF2",
+              background: "#0A1B33",
+              border: "1px solid rgba(255,255,255,.12)",
               borderRadius: 10,
               padding: "6px 12px",
               fontSize: "0.8rem",
               fontWeight: 600,
-              color: "#163D70",
+              color: "#C7A052",
               cursor: "pointer",
               fontFamily: FONT,
             }}
@@ -541,12 +541,12 @@ function SubjectDetail() {
               left: 0,
               right: 0,
               zIndex: 40,
-              background: "white",
+              background: "#0A1B33",
               maxHeight: "70vh",
               overflowY: "auto",
               display: "flex",
               flexDirection: "column",
-              borderBottom: "1px solid #E8ECF2",
+              borderBottom: "1px solid rgba(255,255,255,.12)",
               boxShadow: "0 24px 48px -20px rgba(15,26,51,0.22)",
             }}
           >
@@ -566,8 +566,8 @@ function SubjectDetail() {
           className="hidden md:flex"
           style={{
             width: 280,
-            background: "white",
-            borderRight: "1px solid #E8ECF2",
+            background: "#0A1B33",
+            borderRight: "1px solid rgba(255,255,255,.12)",
             flexDirection: "column",
             overflow: "hidden",
             flexShrink: 0,
@@ -588,7 +588,7 @@ function SubjectDetail() {
           style={{
             flex: 1,
             overflowY: "auto",
-            background: "#F5F5F7",
+            background: "#050F22",
           }}
         >
           {selectedTema ? (
@@ -629,8 +629,8 @@ function SubjectDetail() {
             left: "50%",
             transform: "translateX(-50%)",
             zIndex: 200,
-            background: "white",
-            border: "1px solid #E8ECF2",
+            background: "#0A1B33",
+            border: "1px solid rgba(255,255,255,.12)",
             borderRadius: 12,
             padding: "10px 16px",
             boxShadow: "0 12px 30px -10px rgba(15,26,51,0.25)",
@@ -639,7 +639,7 @@ function SubjectDetail() {
             gap: 8,
             fontSize: "0.82rem",
             fontWeight: 600,
-            color: "#123360",
+            color: "#8A6A25",
             fontFamily: FONT,
           }}
         >

@@ -32,10 +32,10 @@ function RutaHubPage() {
     })),
   );
 
-  if (!ready || !user) return <div className="min-h-screen" style={{ background: "#F5F5F7" }} />;
+  if (!ready || !user) return <div className="min-h-screen" style={{ background: "#050F22" }} />;
 
   return (
-    <div className="min-h-screen" style={{ background: "#F5F5F7" }}
+    <div className="min-h-screen" style={{ background: "#050F22" }}
       onClickCapture={(event) => {
         const anchor = (event.target as HTMLElement).closest<HTMLAnchorElement>("a[href]");
         if (anchor) rememberLearningPathOrigin(anchor.href);

@@ -286,7 +286,7 @@ export function CourseShell({
   );
 
   return (
-    <div className="min-h-screen bg-bone text-ink-950" style={{ background: "#F5F5F7" }}>
+    <div className="min-h-screen bg-bone text-ink-950" style={{ background: "#050F22" }}>
       {/* Barra móvil */}
       <div className="flex items-center justify-between bg-ink-950 px-4 py-3 lg:hidden">
         <button
