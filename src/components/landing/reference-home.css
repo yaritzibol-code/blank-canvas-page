@@ -12,10 +12,6 @@
 .flightpath-redesign a {
   text-decoration: none;
 }
-.flightpath-redesign main > section:not(.rd-hero) {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 900px;
-}
 .flightpath-redesign .rd-1 {
   position: relative;
   overflow: hidden;
