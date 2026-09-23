@@ -146,30 +146,24 @@ function AdminBancoPage() {
     titulo: chaptersFor(fFuente).find((c) => c.num === num)?.titulo ?? "",
   }));
 
-  const seccionesEnScope = [
-    ...new Set(
-      questions
-        .filter((x) => (fFuente === "todos" ? true : x.fuente === fFuente))
-        .filter((x) => fCap === "todos" || String(x.capitulo ?? "") === fCap)
-        .map((x) => x.seccion)
-        .filter((s): s is string => Boolean(s)),
-    ),
-  ].sort();
+  const conLamina = (x: BankQuestion) => Array.isArray(x.imagenes) && x.imagenes.length > 0;
+  const esAbierta = (x: BankQuestion) => x.tipo === "abierta";
 
   const t = query.trim().toLowerCase();
   const filtered = questions
     .filter((x) => {
-      if (fMateria === "sin" && x.materia !== "") return false;
-      if (fMateria !== "todas" && fMateria !== "sin" && x.materia !== fMateria) return false;
-      if (fEstado !== "todos" && x.status !== fEstado) return false;
       if (fFuente === "CIAAC" && x.fuente) return false;
       if (fFuente !== "todos" && fFuente !== "CIAAC" && x.fuente !== fFuente) return false;
       if (fCap !== "todos" && String(x.capitulo ?? "") !== fCap) return false;
-      if (fSeccion !== "todas" && (x.seccion ?? "") !== fSeccion) return false;
+      if (fTipo === "abiertas" && !esAbierta(x)) return false;
+      if (fTipo === "opcion" && esAbierta(x)) return false;
+      if (fTipo === "con_imagen" && !conLamina(x)) return false;
+      if (fTipo === "sin_imagen" && conLamina(x)) return false;
       if (t && !(x.text.toLowerCase().includes(t) || x.id.toLowerCase().includes(t))) return false;
       return true;
     })
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+
 
 
   /* ───────── CSV ───────── */
