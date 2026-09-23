@@ -344,6 +344,10 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         mode: isRecurring ? "subscription" : "payment",
         ui_mode: "embedded_page",
         return_url: data.returnUrl,
+        // El checkout siempre en español y cobrando en pesos: sin esto Stripe
+        // convierte el precio a la moneda del visitante (se veía en euros).
+        locale: "es-419",
+        adaptive_pricing: { enabled: false },
         customer: customerId,
         // El impuesto automático necesita la dirección del cliente. Se pide en
         // el checkout y Stripe la guarda en el customer (`customer_update`);
