@@ -102,7 +102,7 @@ function GamificacionPage() {
                 cursor: "pointer",
                 fontWeight: 700,
                 fontSize: ".82rem",
-                background: tab === t ? "#FFFFFF" : "rgba(199,160,82,.14)",
+                background: tab === t ? "#C7A052" : "rgba(199,160,82,.14)",
                 color: tab === t ? "#0B1220" : "#C7A052",
                 textTransform: "capitalize",
               }}

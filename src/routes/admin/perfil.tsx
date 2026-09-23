@@ -663,7 +663,7 @@ function AdminPerfilPage() {
       {/* ───────── Hero ───────── */}
       <div
         style={{
-          background: "linear-gradient(135deg,#FFFFFF,#2a2a4e)",
+          background: "linear-gradient(135deg,#0A1B33,#14233F)",
           borderRadius: 18,
           padding: "24px 28px",
           display: "flex",
