@@ -158,8 +158,7 @@ export function PathyDebrief({ userId, origen, titulo, scorePct, answers }: Prop
         </div>
       </header>
 
-      {/* Sin errores no hay nada que "costó": se omite aunque haya ranking. */}
-      {spots.length > 0 && wrong.length > 0 && (
+      {spots.length > 0 && (
         <div className="fd-debrief-block">
           <p className="fd-debrief-label">Lo que más costó</p>
           {spots.map((s) => (

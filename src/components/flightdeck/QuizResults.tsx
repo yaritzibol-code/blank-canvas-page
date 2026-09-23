@@ -78,9 +78,11 @@ function ScoreDial({ pct, correct, answered }: { pct: number; correct: number; a
   const r = 88;
   const length = 2 * Math.PI * r;
   const offset = length * (1 - (filled ? pct : 0) / 100);
+  // Sin respuestas no hay porcentaje que juzgar: el dial queda neutro.
+  const vacio = answered === 0;
 
   return (
-    <div className={"fd-results-dial is-" + tierOf(pct)}>
+    <div className={"fd-results-dial is-" + (vacio ? "vacio" : tierOf(pct))}>
       <svg viewBox="0 0 200 200" aria-hidden="true">
         {Array.from({ length: 40 }, (_, i) => (
           <line
@@ -105,13 +107,11 @@ function ScoreDial({ pct, correct, answered }: { pct: number; correct: number; a
       </svg>
       <div className="fd-results-dial-value">
         <strong>
-          {shown}
-          <em>%</em>
+          {vacio ? "—" : shown}
+          {!vacio && <em>%</em>}
         </strong>
         <small>ACIERTOS</small>
-        <span>
-          {correct} de {answered}
-        </span>
+        <span>{vacio ? "Sin respuestas" : `${correct} de ${answered}`}</span>
       </div>
     </div>
   );

@@ -118,9 +118,15 @@ export function weakByCapitulo(answers: AttemptAnswer[]): PathyWeakSpot[] {
   );
 }
 
-/** Los peores puntos de una tanda de respuestas (materias y capítulos juntos). */
+/**
+ * Los peores puntos de una tanda de respuestas (materias y capítulos juntos).
+ * Sólo cuenta lo que tuvo algún error: con pocas materias en la sesión, el
+ * ranking metía un 100 % bajo "Lo que más costó".
+ */
 export function weakSpots(answers: AttemptAnswer[], limit = 3): PathyWeakSpot[] {
-  return ordenar([...weakByMateria(answers), ...weakByCapitulo(answers)]).slice(0, limit);
+  return ordenar([...weakByMateria(answers), ...weakByCapitulo(answers)])
+    .filter((s) => s.correct < s.total)
+    .slice(0, limit);
 }
 
 /** Respuestas incorrectas o en blanco. */

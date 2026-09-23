@@ -3498,6 +3498,9 @@ html[data-motion="reduced"] .fd-tour *::after {
 .fd-results-dial.is-bajo {
   --tone: #f0a08c;
 }
+.fd-results-dial.is-vacio {
+  --tone: #8fa3c2;
+}
 .fd-results-dial svg {
   width: 100%;
   height: 100%;
