@@ -2783,8 +2783,8 @@ html[data-motion="reduced"] .fd-shell *::after {
 .fd-question-session .fp-progress-chip { height:32px; display:inline-flex; align-items:center; padding:0 11px; border:1px solid #ffffff28; border-radius:4px; font:700 10px "JetBrains Mono",monospace; color:#d5deec; white-space:nowrap; }
 .fd-question-session .fp-progress-chip.is-combo { color:#e3c98a; border-color:#c7a05266; background:#c7a0520d; }
 .fd-question-session .fp-progress-legacy { display:none; }
-.fd-question-session .fp-quiz-area { padding:16px 42px 62px!important; display:block!important; }
-.fd-question-session .fp-quiz-primary { max-width:none!important; display:grid; grid-template-columns:minmax(240px,330px) minmax(420px,1fr) minmax(220px,320px); gap:30px; align-items:start; }
+.fd-question-session .fp-quiz-area { padding:16px 42px 62px!important; display:grid!important; grid-template-columns:minmax(0,1fr) minmax(220px,300px); gap:30px; align-items:start; }
+.fd-question-session .fp-quiz-primary { max-width:none!important; display:grid; grid-template-columns:minmax(240px,330px) minmax(420px,1fr); gap:30px; align-items:start; }
 .fd-question-session .fp-question-rail { grid-column:1; grid-row:1/3; display:flex; flex-direction:column; gap:8px; }
 .fd-question-session .fp-question-figure { min-height:244px; border:1px solid #c7a05266; border-radius:5px; overflow:hidden; background:#081a3599; display:flex; flex-direction:column; }
 .fd-question-session .fp-question-figure > div { flex:1; min-height:0; margin:0!important; display:flex; }
@@ -2809,7 +2809,7 @@ html[data-motion="reduced"] .fd-shell *::after {
 .fd-question-session .fp-quiz-option.is-wrong > span:first-child { background:#f0a08c!important; border-color:#f0a08c!important; color:#02070f!important; }
 .fd-question-session .fp-quiz-nav { grid-column:2; grid-row:2; }
 .fd-question-session .fp-quiz-nav > button { min-height:54px; border-radius:5px!important; background:linear-gradient(135deg,#ebd6a2,#c7a052 46%,#9c7a35)!important; color:#081a35!important; }
-.fd-question-session .fp-question-context { grid-column:3; grid-row:1/3; display:flex; flex-direction:column; gap:14px; }
+.fd-question-session .fp-question-context { grid-column:2; grid-row:1; display:flex; flex-direction:column; gap:14px; }
 .fd-question-session .fp-question-yaris-card,.fd-question-session .fp-question-session-stats { position:relative; border:1px solid #ffffff24; border-radius:5px; background:linear-gradient(180deg,#081a35e6,#050f22e6); }
 .fd-question-session .fp-question-yaris-card { min-height:260px; padding:28px 24px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
 .fd-question-session .fp-question-yaris-card::before,.fd-question-session .fp-question-yaris-card::after { content:""; position:absolute; width:14px; height:14px; border-color:#c7a052; border-style:solid; }
@@ -2840,7 +2840,7 @@ html[data-motion="reduced"] .fd-shell *::after {
 .fd-takeoff:hover .fd-plane-trail { width:22px; }.fd-takeoff-chevrons { display:flex; gap:1px; font-size:20px; font-weight:800; }.fd-takeoff-chevrons i { font-style:normal; opacity:.2; animation:fd-chevron 1.3s ease-in-out infinite; }.fd-takeoff-chevrons i:nth-child(2){animation-delay:.15s}.fd-takeoff-chevrons i:nth-child(3){animation-delay:.3s}
 .fd-destination-chip { height:80px; padding:0; display:flex; flex-direction:row; border-radius:12px; background-image:none!important; background:#050f22c7!important; overflow:visible; position:relative; }
 .fd-destination-chip > small { display:none; }.fd-destination-chip > span:not(.fd-chip-rule) { display:grid; grid-template-columns:minmax(0,1fr) 62px; width:100%; align-items:stretch; margin:0; gap:0; }.fd-destination-chip > span > span:first-child { padding:11px 12px; display:flex; flex-direction:column; justify-content:center; min-width:0; }.fd-destination-chip > span > span:first-child > small { display:block; color:#c7a052; font:8px "JetBrains Mono",monospace; letter-spacing:.12em; }.fd-destination-chip > span > span:first-child strong { margin:6px 0 3px; }.fd-destination-chip > span > span:first-child em { color:#7fd6a4; font:7px "JetBrains Mono",monospace; letter-spacing:.1em; font-style:normal; }.fd-destination-chip > span > span:first-child em b { color:#7fd6a4; }
-.fd-ticket-stub { position:relative; border-left:1px dashed #ffffff38; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; }.fd-ticket-stub small { display:block!important; color:#8fa3c2!important; font:7px "JetBrains Mono",monospace!important; }.fd-ticket-stub strong { color:#e3c98a; font:17px "Instrument Serif",serif; }
+.fd-ticket-stub { position:relative; border-left:1px dashed #ffffff38; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; }.fd-ticket-stub small { display:block!important; color:#8fa3c2!important; font:7px "JetBrains Mono",monospace!important; }.fd-ticket-stub strong { color:#e3c98a; font:24px/1 "Instrument Serif",serif; }.fd-ticket-stub em { color:#8fa3c2; font:6px "JetBrains Mono",monospace; font-style:normal; }
 .fd-ticket-notch { position:absolute; right:55px; width:12px; height:12px; border-radius:50%; background:#02070f; z-index:2; }.fd-ticket-notch.is-top { top:-7px; }.fd-ticket-notch.is-bottom { bottom:-7px; }
 .fd-destination-chip.is-active { transform:translateY(-9px); background:#0c203eeb!important; }
 .fd-marker em { display:block; color:#b8c5da; font:7px "JetBrains Mono",monospace; font-style:normal; margin-top:3px; }.fd-marker-icon { width:44px; height:44px; }
@@ -2849,6 +2849,7 @@ html[data-motion="reduced"] .fd-shell *::after {
 @keyframes fd-takeoff-ring { from{opacity:.9;transform:scale(1)} to{opacity:0;transform:scale(1.08,1.45)} } @keyframes fd-takeoff-sheen { 0%,58%{left:-45%}100%{left:135%} } @keyframes fd-runway { to{background-position:28px 0} } @keyframes fd-chevron { 0%,100%{opacity:.18}50%{opacity:1} } @keyframes fd-blink { 50%{opacity:.2} }
 
 @media (max-width:1100px) {
+  .fd-question-session .fp-quiz-area { display:block!important; }
   .fd-question-session .fp-quiz-primary { grid-template-columns:minmax(210px,270px) minmax(0,1fr); }
   .fd-question-session .fp-question-context { display:none; }
 }

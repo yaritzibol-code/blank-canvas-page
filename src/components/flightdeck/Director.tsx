@@ -27,6 +27,11 @@ function metric(index: number, stats: StudentStats | null) {
 function routeStatus(index: number) {
   return ["A TIEMPO", "EMBARCANDO", "EMBARCANDO", "ABIERTO", "A TIEMPO"][index];
 }
+function ticketMetric(index: number, stats: StudentStats | null) {
+  if (index === 0) return `${stats?.courseProgress ?? 0}%`;
+  if (index === 1) return stats?.avgScore === null || stats?.avgScore === undefined ? "—" : `${stats.avgScore}%`;
+  return ["", "", "68%", "40%", `#${Math.max(1, stats?.streak ?? 1)}`][index];
+}
 function sectionMetric(index: number) {
   return ["68% del temario", "32 para hoy", "Racha de 3", "12 pendientes"][index] ?? "Abrir ruta";
 }
@@ -397,7 +402,7 @@ export function Director() {
             <small>{d.code}</small>
             <span>
               <span><small>MEX → {d.code}</small><strong>{d.name}</strong><em><b>●</b> {routeStatus(i)}</em></span>
-              <span className="fd-ticket-stub"><small>P0{i + 1}</small><strong>{metric(i, stats)}</strong></span>
+              <span className="fd-ticket-stub"><small>P0{i + 1}</small><strong>{ticketMetric(i, stats)}</strong><em>/100</em></span>
             </span>
             <i className="fd-ticket-notch is-top" /><i className="fd-ticket-notch is-bottom" />
           </button>
