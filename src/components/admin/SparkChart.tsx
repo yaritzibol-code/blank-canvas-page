@@ -72,7 +72,7 @@ export function SparkChart({
       {hover !== null && (
         <div style={{
           position: "absolute", bottom: 4, left: `${(hover / Math.max(1, points.length - 1)) * 100}%`,
-          transform: "translateX(-50%)", background: "#FFFFFF", color: "white",
+          transform: "translateX(-50%)", background: "#0A1B33", color: "white",
           padding: "3px 8px", borderRadius: 6, fontSize: ".72rem", whiteSpace: "nowrap",
           pointerEvents: "none",
         }}>

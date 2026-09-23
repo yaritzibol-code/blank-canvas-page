@@ -63,7 +63,7 @@ function YarisChatsPage() {
         />
         <button
           onClick={() => setBuscar(query.trim())}
-          style={{ padding: "9px 15px", background: "#C7A052", color: "white", border: "none", borderRadius: 8, fontSize: ".78rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+          style={{ padding: "9px 15px", background: "#C7A052", color: "#0B1220", border: "none", borderRadius: 8, fontSize: ".78rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
         >
           Buscar
         </button>

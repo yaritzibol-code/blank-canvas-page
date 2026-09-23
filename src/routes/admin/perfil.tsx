@@ -519,7 +519,7 @@ function AdminPerfilPage() {
                   borderRadius: 10,
                   cursor: "pointer",
                   border: `2px solid ${sel ? "#C7A052" : "rgba(255,255,255,.08)"}`,
-                  background: sel ? "rgba(61,93,145,.06)" : "white",
+                  background: sel ? "rgba(199,160,82,.12)" : "transparent",
                   fontFamily: "'Manrope', sans-serif",
                   transition: "all .15s",
                 }}

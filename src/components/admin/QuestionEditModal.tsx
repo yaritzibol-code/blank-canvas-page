@@ -242,7 +242,7 @@ export function QuestionEditModal({
               <button
                 onClick={() => void guardar()}
                 disabled={guardando}
-                style={{ padding: "9px 18px", background: "#C7A052", color: "white", border: "none", borderRadius: 9, fontSize: ".78rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
+                style={{ padding: "9px 18px", background: "#C7A052", color: "#0B1220", border: "none", borderRadius: 9, fontSize: ".78rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
               >
                 <Icon n="check" size={14} /> {guardando ? "Guardando…" : "Guardar cambios"}
               </button>

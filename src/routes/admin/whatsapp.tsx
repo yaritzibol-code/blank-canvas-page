@@ -171,7 +171,7 @@ function AdminWhatsappPage() {
                   <td style={tdStyle}>
                     <div style={{ display: "flex", gap: 3 }}>
                       {DIAS.map((d, i) => (
-                        <span key={i} style={{ width: 18, height: 18, borderRadius: 5, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: ".62rem", fontWeight: 700, background: row.dias[i] ? "#C7A052" : "rgba(255,255,255,.10)", color: row.dias[i] ? "white" : "#93A4BF" }}>{d}</span>
+                        <span key={i} style={{ width: 18, height: 18, borderRadius: 5, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: ".62rem", fontWeight: 700, background: row.dias[i] ? "#C7A052" : "rgba(255,255,255,.10)", color: row.dias[i] ? "#0B1220" : "#93A4BF" }}>{d}</span>
                       ))}
                     </div>
                   </td>

@@ -103,7 +103,7 @@ function GamificacionPage() {
                 fontWeight: 700,
                 fontSize: ".82rem",
                 background: tab === t ? "#FFFFFF" : "rgba(199,160,82,.14)",
-                color: tab === t ? "white" : "#C7A052",
+                color: tab === t ? "#0B1220" : "#C7A052",
                 textTransform: "capitalize",
               }}
             >
@@ -236,7 +236,7 @@ function GamificacionPage() {
                     cargar();
                   })
                 }
-                style={{ justifySelf: "start", padding: "8px 16px", borderRadius: 10, border: "none", background: "#FFFFFF", color: "white", fontWeight: 700, cursor: "pointer", fontSize: ".82rem" }}
+                style={{ justifySelf: "start", padding: "8px 16px", borderRadius: 10, border: "none", background: "#C7A052", color: "#0B1220", fontWeight: 700, cursor: "pointer", fontSize: ".82rem" }}
               >
                 Aplicar ajuste
               </button>

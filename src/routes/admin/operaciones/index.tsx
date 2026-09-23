@@ -162,8 +162,8 @@ function OperacionesPage() {
               fontSize: ".78rem",
               fontWeight: 700,
               border: env === v ? "2px solid #FFFFFF" : "1px solid rgba(61,93,145,.25)",
-              background: env === v ? "#FFFFFF" : "#fff",
-              color: env === v ? "#fff" : "#C7A052",
+              background: env === v ? "#C7A052" : "transparent",
+              color: env === v ? "#0B1220" : "#C7A052",
             }}
           >
             {v === "live" ? "Real (live)" : "Pruebas (sandbox)"}
@@ -367,7 +367,7 @@ function OperacionesPage() {
                       borderRadius: 10,
                       border: "1.5px solid rgba(199,160,82,.22)",
                       background: revisando ? "rgba(255,255,255,.10)" : "#FFFFFF",
-                      color: revisando ? "#93A4BF" : "#fff",
+                      color: revisando ? "#93A4BF" : "#0B1220",
                       fontSize: ".8rem",
                       fontWeight: 700,
                       cursor: revisando ? "default" : "pointer",

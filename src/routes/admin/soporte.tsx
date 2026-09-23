@@ -192,7 +192,7 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
           <button
             onClick={() => setVerPregunta(true)}
-            style={{ padding: "7px 14px", background: "#C7A052", color: "white", border: "none", borderRadius: 8, fontSize: ".76rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
+            style={{ padding: "7px 14px", background: "#C7A052", color: "#0B1220", border: "none", borderRadius: 8, fontSize: ".76rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
           >
             <Icon n="edit" size={14} /> Ver y editar pregunta
           </button>
@@ -229,7 +229,7 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
           <button
             onClick={() => void guardarNotas()}
             disabled={!notasListas}
-            style={{ padding: "6px 14px", background: "#C7A052", color: "white", border: "none", borderRadius: 7, fontSize: ".74rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 5 }}
+            style={{ padding: "6px 14px", background: "#C7A052", color: "#0B1220", border: "none", borderRadius: 7, fontSize: ".74rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 5 }}
           >
             <Icon n="check" size={13} /> Guardar notas
           </button>
