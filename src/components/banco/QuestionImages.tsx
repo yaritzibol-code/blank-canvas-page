@@ -35,12 +35,46 @@ function bucketFor(fuente?: string): string {
 /** Cache de la sesión: evita volver a firmar la misma lámina al navegar. */
 const signed = new Map<string, string>();
 
-export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: string }) {
+/**
+ * Marco con altura reservada: la lámina entra encima del esqueleto sin mover
+ * el resto de la pregunta (evita CLS mientras se firma y descarga la imagen).
+ */
+function Frame({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      style={{
+        position: "relative", width: "100%", minHeight: 320, borderRadius: "var(--fd-radius, 12px)",
+        overflow: "hidden", background: "var(--fd-panel, white)", border: "1px solid var(--fd-border, #EEE1C5)",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function Skeleton({ label }: { label: string }) {
+  return (
+    <div
+      aria-hidden
+      style={{
+        position: "absolute", inset: 0, display: "grid", placeItems: "center",
+        background: "linear-gradient(100deg, rgba(8,26,53,.06) 30%, rgba(199,160,82,.16) 50%, rgba(8,26,53,.06) 70%)",
+        backgroundSize: "220% 100%", animation: "fp-figure-shimmer 1.35s ease-in-out infinite",
+        font: "8px 'JetBrains Mono', monospace", letterSpacing: ".2em", color: "var(--fd-muted, #7E90AD)",
+      }}
+    >
+      {label}
+    </div>
+  );
+}
+
+export function QuestionImages({ files, fuente, fallbackSrc }: { files?: string[]; fuente?: string; fallbackSrc?: string }) {
   const BUCKET = bucketFor(fuente);
   const key = (files ?? []).join(",");
   const [urls, setUrls] = useState<string[]>([]);
   const [failed, setFailed] = useState(false);
   const [missing, setMissing] = useState<Record<string, boolean>>({});
+  const [loaded, setLoaded] = useState<Record<string, boolean>>({});
   const [retry, setRetry] = useState(0);
 
   useEffect(() => {
