@@ -117,18 +117,11 @@ function AdminBancoPage() {
   const sinClasificar = questions.filter((x) => x.materia === "" && !x.fuente).length;
 
   /*
-   * Los filtros se arman con lo que REALMENTE hay en el banco (materias,
-   * manuales, capítulos y secciones), unido al catálogo. Así, cada vez que se
-   * sube un manual o una materia nueva, aparece sola en los desplegables.
+   * Tres filtros y nada más: cuestionario (manual), bloque del temario y tipo
+   * de reactivo (abiertas / con lámina). Se arman con lo que REALMENTE hay en
+   * el banco unido al catálogo, así un manual nuevo aparece solo.
    */
-  const materiasEnBanco = [...new Set(questions.map((x) => x.materia).filter(Boolean))].sort();
-  const materiaOpts = [
-    ...MATERIAS_DEF.filter((m) => materiasEnBanco.includes(m.slug)).map((m) => ({ value: m.slug, label: m.name })),
-    ...materiasEnBanco
-      .filter((s) => !MATERIAS_DEF.some((m) => m.slug === s))
-      .map((s) => ({ value: s, label: s })),
-    ...MATERIAS_DEF.filter((m) => !materiasEnBanco.includes(m.slug)).map((m) => ({ value: m.slug, label: `${m.name} (0)` })),
-  ];
+
 
   const fuentesEnBanco = [...new Set(questions.map((x) => x.fuente).filter(Boolean) as string[])].sort();
   const fuenteOpts = [
