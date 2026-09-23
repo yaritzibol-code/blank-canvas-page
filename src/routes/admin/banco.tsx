@@ -372,6 +372,8 @@ function AdminBancoPage() {
                 {x.fuente ? ` · ${x.fuente}` : ""}{x.seccion ? ` · ${x.seccion}` : ""}</div>
             </div>
             <Badge text={catalogoLabel(x)} color={x.fuente ? "#6C0820" : x.materia ? "#C7A052" : "#93A4BF"} />
+            {esAbierta(x) && <Badge text="Abierta" color="#2ecc71" />}
+            {conLamina(x) && <Badge text="Con imagen" color="#3B82F6" />}
             <Badge text={CONTENT_STATUS_LABEL[x.status] ?? x.status} color={CONTENT_STATUS_COLOR[x.status] ?? "#C7A052"} />
             <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
               <button onClick={() => openEdit(x)} title="Editar" style={{ padding: "6px 10px", background: "#0A1B33", color: "#B8C5DA", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}>
