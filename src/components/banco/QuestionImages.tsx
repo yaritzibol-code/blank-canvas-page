@@ -85,6 +85,8 @@ export function QuestionImages({ files, fuente, fallbackSrc }: { files?: string[
     }
     let alive = true;
     setFailed(false);
+    setMissing({});
+    setLoaded({});
 
     const cached = names.map((n) => signed.get(`${BUCKET}/${n}`));
     if (cached.every((u): u is string => !!u)) {
