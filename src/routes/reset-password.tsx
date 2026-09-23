@@ -35,7 +35,12 @@ const inputStyle: React.CSSProperties = {
   borderRadius: 12,
   fontSize: ".9rem",
   width: "100%",
+  background: "#050F22",
+  color: "#FFFFFF",
+  fontFamily: "'Manrope', sans-serif",
+  outline: "none",
 };
+
 
 const buttonStyle = (disabled: boolean): React.CSSProperties => ({
   width: "100%",
