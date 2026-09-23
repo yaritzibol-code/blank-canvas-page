@@ -54,7 +54,7 @@ export function LearningCourseExperience({ def, course, vista, percent, complete
         title: course.meta.course || def.nombre, id: def.slug, categoryId: "ruta",
         subjectId: def.slug, chapterId: module?.id ?? vista.tipo }}
       user={user}
-      onBack={() => leaveLearningPath("/ruta")}
+      onBack={() => leaveLearningPath("/ruta", (href) => void navigate({ to: href, replace: true }))}
       onYaris={(context) => { setYarisContext(context); setYarisOpen(true); }}
     >
       <ModuleStages course={course} vista={vista} completedLessons={completedLessons}
