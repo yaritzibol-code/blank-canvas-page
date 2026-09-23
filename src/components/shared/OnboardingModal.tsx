@@ -16,8 +16,8 @@ import type { User } from "@/lib/store";
 const FONT = "'Manrope', system-ui, sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
 const INK = "#081A35";
-const BRAND = "linear-gradient(180deg,#C7A052,#8A6A25)";
-const CORAL = "#C7A052";
+const BRAND = "#C7A052";
+const CORAL = "#0B1220";
 
 const TOTAL_STEPS = 7;
 
@@ -916,8 +916,8 @@ const primaryBtn: React.CSSProperties = {
   minHeight: 52,
   borderRadius: 6,
   border: "none",
-  background: BRAND,
-  color: "#fff",
+  background: "linear-gradient(180deg,#C7A052,#8A6A25)",
+  color: "#0B1220",
   fontWeight: 800,
   fontSize: 15.5,
   cursor: "pointer",
@@ -951,7 +951,7 @@ function StepHead({ icon, title, sub }: { icon: FPIconName; title: string; sub: 
           width: 52,
           height: 52,
           borderRadius: 8,
-          background: `linear-gradient(135deg, ${INK}, #C7A052)`,
+          background: "linear-gradient(135deg,#C7A052,#8A6A25)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
