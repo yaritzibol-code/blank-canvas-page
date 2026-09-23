@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { YarisChatModal } from "@/components/shared/YarisChatModal";
 import { LearningPathExperience, useLearningPathStageView } from "@/components/lp/LearningPathExperience";
 import { leaveLearningPath } from "@/lib/lp/contextual-return";
