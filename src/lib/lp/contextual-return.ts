@@ -59,9 +59,20 @@ export function restoreLearningPathScroll(): void {
   window.sessionStorage.removeItem(returnKey);
   const y = Math.max(0, pending.scrollY);
   let tries = 0;
+  let cancelled = false;
+  // Si la persona empieza a desplazarse, dejamos de forzar su posición.
+  const stop = () => {
+    cancelled = true;
+    for (const evt of ["wheel", "touchstart", "keydown"]) window.removeEventListener(evt, stop);
+  };
+  for (const evt of ["wheel", "touchstart", "keydown"]) {
+    window.addEventListener(evt, stop, { passive: true, once: true });
+  }
   const restore = () => {
+    if (cancelled) return;
     window.scrollTo(0, y);
-    if (++tries < 75 && Math.abs(window.scrollY - y) > 2) window.setTimeout(restore, 80);
+    if (++tries < 20 && Math.abs(window.scrollY - y) > 2) window.setTimeout(restore, 80);
+    else stop();
   };
   window.setTimeout(restore, 0);
 }
