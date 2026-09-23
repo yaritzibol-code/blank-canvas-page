@@ -1803,7 +1803,7 @@ function CuestionarioPage() {
                 >
                   {msg.role === "bot" ? <YarisAvatar size={24} /> : initials}
                 </div>
-                <MessageContent
+                <div
                   className="fp-yaris-message-content"
                   style={{
                     maxWidth: "84%", padding: "9px 12px",
