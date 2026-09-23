@@ -2090,3 +2090,9 @@ html[data-theme="oscuro"] .cm-pedestal-3 { background: linear-gradient(180deg, #
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Esqueleto de carga de láminas de preguntas (QuestionImages). */
+@keyframes fp-figure-shimmer {
+  0% { background-position: 140% 0; }
+  100% { background-position: -40% 0; }
+}
