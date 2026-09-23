@@ -1827,8 +1827,8 @@ function CuestionarioPage() {
                       <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="book" size={12} /> {msg.cite}</span>
                     </span>
                   )}
-                </MessageContent>
-              </Message>
+                </div>
+              </div>
             ))}
             {yarisTyping && (
               <div style={{ display: "flex", gap: 7, alignItems: "flex-start" }}>
