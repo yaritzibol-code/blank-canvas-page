@@ -223,7 +223,7 @@ export function ReportProblemModal({
                   borderRadius: 6,
                   border: "none",
                   background: mensaje.trim() ? "linear-gradient(180deg,#C7A052,#8A6A25)" : "rgba(255,255,255,.12)",
-                  color: "#fff",
+                  color: "#0B1220",
                   fontWeight: 800,
                   fontSize: 14,
                   cursor: mensaje.trim() ? "pointer" : "not-allowed",

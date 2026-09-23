@@ -215,7 +215,7 @@ export function YarisChatModal({
                 key={i}
                 style={{
                   maxWidth: "88%", alignSelf: "flex-end",
-                  background: "linear-gradient(180deg,#C7A052,#8A6A25)", color: "white",
+                  background: "linear-gradient(180deg,#C7A052,#8A6A25)", color: "#0B1220",
                   borderRadius: "12px 12px 4px 12px", padding: "10px 14px",
                   fontSize: ".85rem", lineHeight: 1.5,
                 }}
@@ -253,7 +253,7 @@ export function YarisChatModal({
             style={{
               padding: "0 16px",
               background: input.trim() && !typing ? "linear-gradient(180deg,#C7A052,#8A6A25)" : "rgba(255,255,255,.12)",
-              color: "white", border: "none", borderRadius: 6,
+              color: "#0B1220", border: "none", borderRadius: 6,
               cursor: input.trim() && !typing ? "pointer" : "not-allowed",
               display: "flex", alignItems: "center", gap: 6,
               fontWeight: 700, fontSize: ".82rem", fontFamily: FONT,
