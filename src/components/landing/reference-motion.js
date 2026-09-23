@@ -30,7 +30,8 @@ class ReferenceMotion {
     this._loop = () => {
       if (this._dead) return;
       const now = performance.now();
-      const frameInterval = window.innerWidth <= 900 ? 32 : 16;
+      const lowEnd = (navigator.deviceMemory || 8) <= 4;
+      const frameInterval = lowEnd ? 24 : 0;
       if (!document.hidden && now - this._lastLoopAt >= frameInterval) {
         this._lastLoopAt = now;
         this._frame();
@@ -234,7 +235,8 @@ class ReferenceMotion {
     if (this._globe && this._globe.cv !== cv) this._disposeGlobe(this._globe);
     cv.parentElement?.classList.remove("is-globe-ready");
     var compact = window.innerWidth <= 900,
-      constrained = compact || (navigator.deviceMemory && navigator.deviceMemory <= 4);
+      lowEnd = !!(navigator.deviceMemory && navigator.deviceMemory <= 4),
+      constrained = lowEnd;
     var opts = {
       premultipliedAlpha: true,
       antialias: !constrained,
@@ -340,7 +342,13 @@ class ReferenceMotion {
     });
     gl.uniform1i(g.u.uDay, 0);
     gl.uniform1i(g.u.uNight, 1);
-    var textureSize = compact ? "1024" : window.devicePixelRatio > 1.25 ? "2048" : "nasa";
+    var textureSize = lowEnd
+      ? "1024"
+      : compact
+        ? "2048"
+        : window.devicePixelRatio > 1.25
+          ? "2048"
+          : "nasa";
     this._globeTex(g, "day", "/flightdeck/tierra-dia-" + textureSize + ".webp", 0);
     this._globeTex(g, "night", "/flightdeck/tierra-noche-" + textureSize + ".webp", 1);
 
@@ -525,7 +533,7 @@ class ReferenceMotion {
     if (!w || !h) return;
     var nativeDpr = window.devicePixelRatio || 1,
       deviceMemory = navigator.deviceMemory || 8,
-      maxPixels = deviceMemory <= 4 || w <= 900 ? 4000000 : 8000000,
+      maxPixels = deviceMemory <= 4 ? 4000000 : 8000000,
       pixelBudgetDpr = Math.sqrt(maxPixels / Math.max(1, w * h)),
       dpr = Math.max(1, Math.min(nativeDpr, deviceMemory <= 4 ? 2 : 3, pixelBudgetDpr));
     if (w !== g.w || h !== g.h || Math.abs(dpr - g.dpr) > 0.01) {
