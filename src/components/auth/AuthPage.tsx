@@ -35,7 +35,7 @@ type Tab = "register" | "login";
 const FONT = "'Manrope', sans-serif";
 const DISPLAY = "'Instrument Serif', serif";
 const MONO = "'JetBrains Mono', monospace";
-const INK = "#081A35";
+const INK = "#FFFFFF";
 
 /* ── Clean single-stroke line icons ── */
 type IconName = "gift" | "library" | "help" | "spark" | "cloud" | "check" | "arrow" | "back";
@@ -734,7 +734,7 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
     <div
       style={{
         fontFamily: FONT,
-        background: "linear-gradient(180deg, #F5F5F7 0%, #F5F5F7 55%, #FCFBF8 100%)",
+        background: "linear-gradient(180deg, #050F22 0%, #071326 55%, #0A1B33 100%)",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
@@ -743,10 +743,10 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
       {/* NAVBAR */}
       <nav
         style={{
-          background: "rgba(250,248,244,0.72)",
+          background: "rgba(5,15,34,0.82)",
           backdropFilter: "blur(16px) saturate(140%)",
           WebkitBackdropFilter: "blur(16px) saturate(140%)",
-          borderBottom: "1px solid rgba(22,61,112,0.1)",
+          borderBottom: "1px solid rgba(199,160,82,0.22)",
           padding: "0 5%",
           height: 70,
           display: "flex",
@@ -930,7 +930,7 @@ export function AuthPage({ initialTab, redirectTo }: { initialTab: Tab; redirect
                   color: tab === t ? "#FFFFFF" : "#93A4BF",
                   border: "none",
                   background: tab === t ? "#0A1B33" : "transparent",
-                  boxShadow: tab === t ? "0 2px 8px rgba(22,61,112,0.15)" : "none",
+                  boxShadow: tab === t ? "0 2px 10px rgba(0,0,0,.45)" : "none",
                   fontFamily: FONT,
                 }}
               >
