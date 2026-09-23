@@ -68,7 +68,8 @@ function Arrival({
     <dialog
       ref={dialog}
       className={"fd-arrival " + (landed ? "is-landed" : "is-diving")}
-      aria-labelledby="arrival-title"
+      aria-labelledby={landed ? "arrival-title" : undefined}
+      aria-label={landed ? undefined : `Volando hacia ${destination.name}`}
       onCancel={onClose}
       style={{ backgroundImage: `url("${ASSETS}aeropuerto-${destination.code}.jpg")` }}
     >
