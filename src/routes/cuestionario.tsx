@@ -29,16 +29,6 @@ import { PathyMark } from "@/components/shared/PathyMark";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { QuestionImages } from "@/components/banco/QuestionImages";
 import { QuizQuestionNavigator } from "@/components/banco/QuizQuestionNavigator";
-import {
-  Message,
-  MessageContent,
-} from "@/components/ai-elements/message";
-import {
-  PromptInput,
-  PromptInputFooter,
-  PromptInputSubmit,
-  PromptInputTextarea,
-} from "@/components/ai-elements/prompt-input";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
 import knowledgeQuestionImage from "@/assets/question-knowledge-default.jpg";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
