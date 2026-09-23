@@ -23,6 +23,7 @@ import {
 import {
   createQuestion,
   deleteQuestion,
+  flushCloudWrites,
   getQuestions,
   importQuestionsCsv,
   MATERIAS_DEF,
@@ -107,7 +108,9 @@ function AdminBancoPage() {
     if (searchQ) setQuery(searchQ);
   }, [searchQ]);
 
-  useQuestionBank({ all: true });
+  // Se relee al volver al banco pasados 2 min (cambios desde otra pestaña o
+  // desde Soporte); lo que se esté guardando aquí no se pisa.
+  useQuestionBank({ all: true }, 120_000);
   const questions = useStore(getQuestions);
 
   const total = questions.length;
@@ -166,6 +169,22 @@ function AdminBancoPage() {
 
 
 
+  /**
+   * Avisa sólo cuando la nube confirmó el cambio. Antes el aviso salía de
+   * inmediato aunque la subida fallara, y la corrección se perdía al recargar
+   * sin que nadie se enterara.
+   */
+  const confirmarGuardado = (msg: string, destructivo = false) => {
+    void flushCloudWrites(["questions"]).then((ok) =>
+      showFlash(
+        ok
+          ? msg
+          : "No se pudo guardar en la nube. Se reintentará en unos segundos; no cierres esta pestaña.",
+        destructivo || !ok,
+      ),
+    );
+  };
+
   /* ───────── CSV ───────── */
 
   const onFile = (e: ChangeEvent<HTMLInputElement>) => {
@@ -175,7 +194,9 @@ function AdminBancoPage() {
     reader.onload = () => {
       const res = importQuestionsCsv(String(reader.result ?? ""));
       setImportResult(res);
-      showFlash(`${res.imported} ${res.imported === 1 ? "pregunta importada" : "preguntas importadas"}`, res.imported === 0);
+      const msg = `${res.imported} ${res.imported === 1 ? "pregunta importada" : "preguntas importadas"}`;
+      if (res.imported > 0) confirmarGuardado(msg);
+      else showFlash(msg, true);
     };
     reader.readAsText(file);
     e.target.value = "";
@@ -237,10 +258,10 @@ function AdminBancoPage() {
           : {};
         saveQuestion({ ...orig, text: form.text.trim(), materia: form.materia, options: kept, correctIndex, explanation: form.explanation.trim(), cite: form.cite.trim(), status: form.status, ...catalogo });
       }
-      showFlash("Pregunta actualizada");
+      confirmarGuardado("Pregunta actualizada");
     } else {
       createQuestion({ materia: form.materia, text: form.text.trim(), options: kept, correctIndex, explanation: form.explanation.trim(), cite: form.cite.trim(), status: form.status, source: "manual" });
-      showFlash("Pregunta creada");
+      confirmarGuardado("Pregunta creada");
     }
     setForm(null);
     setEditId(null);
@@ -249,13 +270,13 @@ function AdminBancoPage() {
   const toggleStatus = (x: BankQuestion) => {
     const next: QuestionStatus = x.status === "publicada" ? "oculta" : "publicada";
     saveQuestion({ ...x, status: next });
-    showFlash(next === "publicada" ? "Pregunta publicada" : "Pregunta oculta");
+    confirmarGuardado(next === "publicada" ? "Pregunta publicada" : "Pregunta oculta");
   };
 
   const remove = (x: BankQuestion) => {
     if (window.confirm("¿Eliminar esta pregunta? Esta acción no se puede deshacer.")) {
       deleteQuestion(x.id);
-      showFlash("Pregunta eliminada", true);
+      confirmarGuardado("Pregunta eliminada", true);
     }
   };
 

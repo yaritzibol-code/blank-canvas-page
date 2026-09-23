@@ -14,21 +14,27 @@ import {
  * `questionsLoaded()` global: bastaba con que otra pantalla hubiera bajado
  * cualquier lote para dar por listo un capítulo que aún no existía en
  * memoria, y la pantalla se quedaba sin preguntas.
+ *
+ * `maxAgeMs`: si el lote se bajó hace más de ese tiempo se vuelve a pedir
+ * antes de dar la pantalla por lista. Lo usan los cuestionarios y el
+ * simulador para que una pregunta corregida en el panel admin llegue a la
+ * siguiente sesión sin tener que recargar la página.
  */
-export function useQuestionBank(scope: BankScope = {}): boolean {
+export function useQuestionBank(scope: BankScope = {}, maxAgeMs = Infinity): boolean {
   const key = JSON.stringify(scope);
   const stable = useMemo(() => JSON.parse(key) as BankScope, [key]);
-  const [ready, setReady] = useState(() => scopeLoaded(stable));
+  const [ready, setReady] = useState(() => scopeLoaded(stable, maxAgeMs));
   useEffect(() => {
     let alive = true;
-    setReady(scopeLoaded(stable));
-    void ensureQuestions(stable).then(() => {
+    const fresh = scopeLoaded(stable, maxAgeMs);
+    setReady(fresh);
+    void ensureQuestions(stable, !fresh && scopeLoaded(stable)).then(() => {
       if (alive) setReady(true);
     });
     return () => {
       alive = false;
     };
-  }, [stable]);
+  }, [stable, maxAgeMs]);
   return ready;
 }
 

@@ -7,7 +7,7 @@
  * oscuro de la sesión (`QuestionFrame`); sus estilos viven en
  * `flightdeck.css` (`.fd-debrief*`).
  */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { pathyAnalysis } from "@/lib/pathy-ai.functions";
@@ -17,6 +17,22 @@ import { weakSpots, wrongAnswers } from "@/lib/store/pathy-errors";
 import type { AttemptAnswer, PathyWeakSpot } from "@/lib/store/types";
 import { isPaid, useSessionUser } from "@/lib/store";
 import { consumeFree } from "@/lib/store/free-quota";
+
+interface Lectura {
+  diagnostico: string | null;
+  confusiones: string[];
+  acciones: string[];
+  motivo?: string;
+}
+
+/**
+ * Lecturas ya pedidas, por sesión respondida (el arreglo de respuestas de esa
+ * sesión). El simulador desmonta el informe al entrar a "Revisar examen" y lo
+ * vuelve a montar al regresar: sin esto cada vuelta pedía otra lectura a la IA
+ * y guardaba un informe repetido en el historial. Una sesión nueva trae otro
+ * arreglo, así que sí genera su propio informe aunque las respuestas coincidan.
+ */
+const lecturas = new WeakMap<AttemptAnswer[], Promise<Lectura>>();
 
 interface Props {
   userId: string;
@@ -64,14 +80,15 @@ export function PathyDebrief({ userId, origen, titulo, scorePct, answers }: Prop
   const [acciones, setAcciones] = useState<string[]>([]);
   const [motivo, setMotivo] = useState<string | undefined>();
   const sesionUser = useSessionUser();
-  const doneRef = useRef(false);
 
   const spots = weakSpots(answers, 3);
   const wrong = wrongAnswers(answers);
 
   useEffect(() => {
-    if (doneRef.current || !userId) return;
-    doneRef.current = true;
+    // Sin guardas por montaje: la caché de `lecturas` evita repetir la
+    // petición y el informe (también con el doble montaje de StrictMode).
+    if (!userId) return;
+    let vivo = true;
 
     const persist = (
       d: string | null,
@@ -94,51 +111,74 @@ export function PathyDebrief({ userId, origen, titulo, scorePct, answers }: Prop
       });
     };
 
-    if (wrong.length === 0) {
-      setLoading(false);
-      setMotivo("sin_errores");
-      persist(null, [], [], "sin_errores");
-      return;
+    let pedido = lecturas.get(answers);
+    const nueva = !pedido;
+    if (!pedido) {
+      pedido =
+        wrong.length === 0
+          ? Promise.resolve<Lectura>({
+              diagnostico: null,
+              confusiones: [],
+              acciones: [],
+              motivo: "sin_errores",
+            })
+          : run({
+              data: {
+                titulo,
+                origen,
+                scorePct,
+                answered: answers.length,
+                spots: spots.map((s) => ({
+                  label: s.label,
+                  pct: s.pct,
+                  correct: s.correct,
+                  total: s.total,
+                  muestraCorta: s.muestraCorta,
+                })),
+                wrong: wrong.slice(0, 40).map((w) => ({
+                  questionId: w.questionId,
+                  selectedIndex: w.selectedIndex,
+                  ...(w.materia ? { materia: w.materia } : {}),
+                  ...(w.fuente ? { fuente: w.fuente } : {}),
+                  ...(w.capitulo !== undefined ? { capitulo: w.capitulo } : {}),
+                  ...(w.capituloTitulo ? { capituloTitulo: w.capituloTitulo } : {}),
+                })),
+              },
+            }).then(
+              (r): Lectura => {
+                // Los análisis de cortesía del plan gratuito se descuentan al recibir
+                // un diagnóstico real (el servidor lleva la cuenta autoritativa).
+                if (r.diagnostico && sesionUser && !isPaid(sesionUser))
+                  consumeFree(sesionUser, "pathy");
+                return {
+                  diagnostico: r.diagnostico,
+                  confusiones: r.confusiones,
+                  acciones: r.acciones,
+                  motivo: r.motivo,
+                };
+              },
+              (): Lectura => {
+                // Un fallo no se recuerda: al volver a montar se reintenta.
+                lecturas.delete(answers);
+                return { diagnostico: null, confusiones: [], acciones: [], motivo: "error" };
+              },
+            );
+      lecturas.set(answers, pedido);
     }
 
-    void run({
-      data: {
-        titulo,
-        origen,
-        scorePct,
-        answered: answers.length,
-        spots: spots.map((s) => ({
-          label: s.label,
-          pct: s.pct,
-          correct: s.correct,
-          total: s.total,
-          muestraCorta: s.muestraCorta,
-        })),
-        wrong: wrong.slice(0, 40).map((w) => ({
-          questionId: w.questionId,
-          selectedIndex: w.selectedIndex,
-          ...(w.materia ? { materia: w.materia } : {}),
-          ...(w.fuente ? { fuente: w.fuente } : {}),
-          ...(w.capitulo !== undefined ? { capitulo: w.capitulo } : {}),
-          ...(w.capituloTitulo ? { capituloTitulo: w.capituloTitulo } : {}),
-        })),
-      },
-    })
-      .then((r) => {
-        // Los análisis de cortesía del plan gratuito se descuentan al recibir
-        // un diagnóstico real (el servidor lleva la cuenta autoritativa).
-        if (r.diagnostico && sesionUser && !isPaid(sesionUser)) consumeFree(sesionUser, "pathy");
-        setDiagnostico(r.diagnostico);
-        setConfusiones(r.confusiones);
-        setAcciones(r.acciones);
-        setMotivo(r.motivo);
-        persist(r.diagnostico, r.confusiones, r.acciones, r.motivo);
-      })
-      .catch(() => {
-        setMotivo("error");
-        persist(null, [], [], "error");
-      })
-      .finally(() => setLoading(false));
+    void pedido.then((l) => {
+      // El informe se guarda una sola vez por lectura, aunque se vuelva a montar.
+      if (nueva) persist(l.diagnostico, l.confusiones, l.acciones, l.motivo);
+      if (!vivo) return;
+      setDiagnostico(l.diagnostico);
+      setConfusiones(l.confusiones);
+      setAcciones(l.acciones);
+      setMotivo(l.motivo);
+      setLoading(false);
+    });
+    return () => {
+      vivo = false;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 

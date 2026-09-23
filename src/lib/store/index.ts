@@ -15,6 +15,7 @@ export {
   questionsLoaded,
   fetchBankCounts,
   clearQuestionMemory,
+  rememberQuestion,
   type BankScope,
   type BankCount,
 } from "./questions-cloud";

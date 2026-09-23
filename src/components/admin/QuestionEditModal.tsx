@@ -11,7 +11,7 @@ import { Icon } from "@/components/ui/fp-icon";
 import { supabase } from "@/integrations/supabase/client";
 import { inputStyle, labelStyle } from "@/components/admin/AdminShell";
 import { capLabel } from "@/lib/store/linea-aerea-meta";
-import type { ReportQuestionSnapshot } from "@/lib/store";
+import { rememberQuestion, type BankQuestion, type ReportQuestionSnapshot } from "@/lib/store";
 
 interface CloudQuestion {
   id: string;
@@ -55,7 +55,9 @@ export function QuestionEditModal({
       if (!vivo) return;
       const q = (data?.data ?? null) as CloudQuestion | null;
       if (q) {
-        setRow({ ...q, options: [...(q.options ?? [])] });
+        // "archivada" era una opción sólo de este editor: el Banco la llama "oculta".
+        const status = q.status === "archivada" ? "oculta" : q.status;
+        setRow({ ...q, status, options: [...(q.options ?? [])] });
       } else {
         setMissing(true);
         if (snapshot) {
@@ -87,6 +89,9 @@ export function QuestionEditModal({
       onFlash("No se pudo guardar la pregunta", true);
       return;
     }
+    // El Banco (si está abierto en esta sesión) debe ver ya la corrección y no
+    // volver a subir su copia vieja.
+    rememberQuestion(next as unknown as BankQuestion);
     onFlash("Pregunta actualizada");
     onClose();
   };
@@ -229,7 +234,7 @@ export function QuestionEditModal({
             >
               <option value="publicada">Publicada</option>
               <option value="borrador">Borrador</option>
-              <option value="archivada">Archivada</option>
+              <option value="oculta">Oculta</option>
             </select>
 
             <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>

@@ -24,8 +24,13 @@ import { FREE_CIAAC_MAX } from "@/lib/store/free-quota";
 import { yarisAiChat } from "@/lib/yaris-ai.functions";
 import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
-import { PathyMark } from "@/components/shared/PathyMark";
 import { PathyDebrief } from "@/components/shared/PathyDebrief";
+import {
+  QuizResults,
+  RepasoPanel,
+  type MateriaResult,
+  type RepasoItem,
+} from "@/components/flightdeck/QuizResults";
 import { QuestionImages } from "@/components/banco/QuestionImages";
 
 export const Route = createFileRoute("/simulador")({
@@ -281,11 +286,6 @@ function fmtTime(sec: number): string {
   return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 }
 
-function secToHM(sec: number): string {
-  const h = Math.floor(sec / 3600);
-  const m = Math.floor((sec % 3600) / 60);
-  return `${h}h ${String(m).padStart(2, "0")}min`;
-}
 
 function stripHtml(s: string): string {
   return s.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").trim();
@@ -314,10 +314,12 @@ function SimuladorPage() {
   const banco: SimBank = search.banco ?? "ciaac";
   // Lote acotado del banco: el examen se arma con las preguntas que necesita,
   // nunca con una descarga completa del banco.
+  // Lote fresco si el anterior tiene más de 30 s (correcciones del panel admin).
   const bankReady = useQuestionBank(
     banco === "la"
       ? { scope: "la", limit: 600 }
       : { scope: "ciaac", materias: MATERIAS.map((m) => m.slug), limit: 200 },
+    30_000,
   );
   // Presencia en vivo para el panel admin.
   useEffect(() => {
@@ -326,12 +328,16 @@ function SimuladorPage() {
     );
     return () => setPresenceActivity(null);
   }, [mode, banco]);
-  // El reparto por materia depende del plan (gratis = 25 reactivos).
+  // El reparto por materia depende del plan (gratis = 25 reactivos). Depende
+  // del plan y no del objeto `user`: ese se relee del store en cada render,
+  // así que como dependencia volvía a correr el efecto sin parar ("Maximum
+  // update depth exceeded") y borraba cada respuesta en cuanto se marcaba.
+  const planGratis = ready && !isPaid(user);
   useEffect(() => {
     if (!ready) return;
-    applyPlanTotals(!isPaid(user));
+    applyPlanTotals(planGratis);
     setQuestions(buildQuestions());
-  }, [ready, user]);
+  }, [ready, planGratis]);
 
   /** "Salir" vuelve al módulo de origen, no siempre al de CIAAC. */
   const exitTo: "/dashboard/banco" | "/dashboard/linea-aerea" =
@@ -784,7 +790,6 @@ function SimuladorPage() {
   /* Result data (calificación real) */
   const timeUsed = result?.timeUsed ?? Math.max(0, 5 * 3600 - secondsLeft);
   const totalCorrect = result?.correct ?? 0;
-  const scorePct = (result?.scorePct ?? 0).toFixed(2);
   const passed = result?.passed ?? false;
 
   /* Gating y disponibilidad del banco (solo relevante en fase warning) */
@@ -940,43 +945,87 @@ function SimuladorPage() {
 
   /* ─── PHASE: RESULT ─── */
   if (phase === "result") {
+    // Las que dejó en blanco cuentan mal para la calificación, no como respondidas.
+    const respondidas = questions.filter((q) => q.selectedOpt >= 0).length;
+    const calificacion = result?.scorePct ?? 0;
+    const materiasInforme: MateriaResult[] = MATERIAS.flatMap((m) => {
+      const pm = result?.porMateria[m.slug];
+      if (!pm || pm.total === 0) return [];
+      return [
+        {
+          slug: m.slug,
+          name: m.name,
+          icon: m.icon,
+          correct: pm.correct,
+          total: pm.total,
+          pct: Math.round((pm.correct / pm.total) * 100),
+        },
+      ];
+    });
+    const falladas = bankQs.flatMap((bq, i) => {
+      const elegida = questions[i]?.selectedOpt ?? -1;
+      return elegida === bq.correctIndex ? [] : [{ i, bq, elegida }];
+    });
+    const repaso: RepasoItem[] = falladas.slice(0, 3).map(({ i, bq, elegida }) => ({
+      numero: i + 1,
+      materia: MATERIAS[questions[i]?.materia ?? 0]?.name ?? "",
+      texto: bq.text,
+      tuRespuesta: elegida >= 0 ? `${LETTERS[elegida]} · ${bq.options[elegida]}` : null,
+      correcta: `${LETTERS[bq.correctIndex]} · ${bq.options[bq.correctIndex]}`,
+      explicacion: bq.explanation || undefined,
+      cita: bq.cite || undefined,
+    }));
+    const num = (n: number) => n.toFixed(2).replace(/\.?0+$/, "");
+    // Espacio duro antes de "%": que el signo no quede solo en otra línea.
+    const pct = (n: number) => `${num(n)}\u00a0%`;
+    const lectura =
+      respondidas === 0
+        ? "No respondiste preguntas en este intento. Cuando quieras, vuelve a intentarlo."
+        : calificacion >= 100
+          ? "Examen perfecto: no fallaste ninguna."
+          : passed
+            ? `Con ${pct(calificacion)} aprobarías: el examen pide ${pct(80)}.`
+            : calificacion >= 70
+              ? `Te faltaron ${num(80 - calificacion)} puntos para el ${pct(80)} que pide el examen. Estás cerca: repasa lo marcado.`
+              : `El examen pide ${pct(80)} para aprobar. Repasa las materias marcadas y vuelve a intentarlo.`;
+    const enBlanco =
+      respondidas > 0 && respondidas < TOTAL_QS
+        ? " Las que dejaste en blanco cuentan como incorrectas, igual que en el examen."
+        : "";
     return (
-      <div style={{ position: "fixed", inset: 0, background: "var(--fd-panel, #f5f7fc)", zIndex: 700, overflowY: "auto", padding: "28px 20px", fontFamily: "'Manrope', sans-serif" }}>
-        <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}`}</style>
-        <div style={{ maxWidth: 760, margin: "0 auto" }}>
-
-          {/* Header */}
-          <div style={{ textAlign: "center", marginBottom: 28 }}>
-            <div style={{ display: "inline-block" }}><PathyMark size={84} float /></div>
-            <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.8rem", color: "var(--fd-text, #081A35)", margin: "8px 0 4px" }}>
-              Examen <span style={{ color: passed ? "#2ecc71" : "var(--fd-gold, #7A5C1E)" }}>{passed ? "¡Aprobado!" : "entregado"}</span>
-            </h1>
-            <p style={{ fontSize: "0.9rem", color: "var(--fd-muted, #4A5872)" }}>Aquí está tu análisis completo de Pathy</p>
-          </div>
-
-          {/* Score card */}
-          <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 18px)", padding: 24, boxShadow: "0 2px 14px rgba(22,61,112,0.08)", marginBottom: 18, textAlign: "center" }}>
-            <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "3.5rem", fontWeight: 900, lineHeight: 1, marginBottom: 4, color: passed ? "#2ecc71" : "#e74c3c" }}>
-              {scorePct}%
-            </div>
-            <div style={{ fontSize: "0.85rem", color: "var(--fd-muted, #4A5872)", marginBottom: 20 }}>Calificación total del simulador</div>
-            <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-              {[
-                { num: totalCorrect, label: "Correctas", color: "#2ecc71" },
-                { num: TOTAL_QS - totalCorrect, label: "Incorrectas", color: "#e74c3c" },
-                { num: TOTAL_QS, label: "Total", color: "var(--fd-text, #081A35)" },
-                { num: secToHM(timeUsed), label: "Tiempo usado", color: "var(--fd-text, #163D70)" },
-              ].map((s) => (
-                <div key={s.label} style={{ textAlign: "center" }}>
-                  <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.5rem", fontWeight: 900, color: s.color }}>{s.num}</div>
-                  <div style={{ fontSize: "0.72rem", color: "var(--fd-muted, #7E90AD)" }}>{s.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Informe real de Pathy */}
-          {user && result && (
+      <QuizResults
+        modo={`SIMULADOR ${mode === "oficial" ? "OFICIAL" : "POTENCIADO"} · ${banco === "la" ? "LÍNEA AÉREA" : "CIAAC"}`}
+        eyebrow="ATERRIZAJE · EXAMEN ENTREGADO"
+        titulo={
+          passed ? (
+            <>
+              ¡Examen <em>aprobado!</em>
+            </>
+          ) : (
+            <>
+              Examen <em>entregado</em>
+            </>
+          )
+        }
+        verdict={lectura + enBlanco}
+        pilotName={(user?.nombre ?? "").trim().split(/\s+/)[0] ?? ""}
+        scorePct={calificacion}
+        decimales
+        scoreLabel="CALIFICACIÓN"
+        base={TOTAL_QS}
+        umbral={80}
+        medio={70}
+        marca={80}
+        correct={totalCorrect}
+        answered={respondidas}
+        total={TOTAL_QS}
+        seconds={timeUsed}
+        materias={materiasInforme}
+        exitTo={exitTo}
+        onRestart={resetSimulator}
+        restartLabel="Repetir simulador"
+        debrief={
+          user && result ? (
             <PathyDebrief
               userId={user.id}
               origen="simulador"
@@ -984,85 +1033,16 @@ function SimuladorPage() {
               scorePct={Math.round(result.scorePct)}
               answers={result.answers}
             />
-          )}
-
-          {/* Por materia */}
-          <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", padding: 20, boxShadow: "0 2px 10px rgba(22,61,112,0.06)", marginBottom: 18 }}>
-            <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--fd-muted, #4A5872)", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="chart" size={15} /> Resultado por materia</div>
-            {MATERIAS.map((m, i) => {
-              const pm = result?.porMateria[m.slug];
-              const p = pm && pm.total > 0 ? Math.round((pm.correct / pm.total) * 100) : 0;
-              const color = p >= 80 ? "#2ecc71" : p >= 70 ? "#f39c12" : "#e74c3c";
-              const bg = p >= 80 ? "rgba(46,204,113,0.06)" : p >= 70 ? "rgba(243,156,18,0.06)" : "rgba(231,76,60,0.06)";
-              const border = p >= 80 ? "rgba(46,204,113,0.2)" : p >= 70 ? "rgba(243,156,18,0.2)" : "rgba(231,76,60,0.2)";
-              return (
-                <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", background: bg, border: `1px solid ${border}`, borderRadius: "var(--fd-radius, 10px)", marginBottom: 7, gap: 10, flexWrap: "wrap" }}>
-                  <div>
-                    <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--fd-text, #081A35)", display: "flex", alignItems: "center", gap: 7 }}><Icon n={m.icon} size={15} color="var(--fd-muted, #4A5872)" /> {m.name}</div>
-                    <div style={{ fontSize: "0.72rem", color: "var(--fd-muted, #7E90AD)" }}>{m.total} preguntas</div>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                    <div style={{ width: 100, height: 6, background: "var(--fd-panel, #EEE1C5)", borderRadius: "var(--fd-radius, 10px)", overflow: "hidden" }}>
-                      <div style={{ height: "100%", width: `${p}%`, background: color, borderRadius: "var(--fd-radius, 10px)" }} />
-                    </div>
-                    <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.1rem", fontWeight: 900, color }}>{p}%</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Review Q sample */}
-          <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", padding: 20, boxShadow: "0 2px 10px rgba(22,61,112,0.06)", marginBottom: 24 }}>
-            <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--fd-muted, #4A5872)", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="sim" size={15} /> Preguntas corregidas</div>
-            {bankQs.slice(0, 3).map((q, i) => {
-              const userAns = questions[i]?.selectedOpt ?? -1;
-              const isCorrect = userAns === q.correctIndex;
-              return (
-                <div key={i} style={{ background: isCorrect ? "rgba(46,204,113,0.06)" : "rgba(231,76,60,0.05)", border: `1px solid ${isCorrect ? "rgba(46,204,113,0.2)" : "rgba(231,76,60,0.15)"}`, borderRadius: "var(--fd-radius, 12px)", padding: 16, marginBottom: 10 }}>
-                  <div style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 10 }}>
-                    <span style={{ flexShrink: 0, display: "flex", alignItems: "center", marginTop: 1 }}>{isCorrect ? <Icon n="checkCircle" size={17} color="#2ecc71" /> : <Icon n="close" size={17} color="#e74c3c" />}</span>
-                    <span style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--fd-text, #081A35)", lineHeight: 1.5 }}>{i + 1}. {q.text}</span>
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 10, paddingLeft: 24 }}>
-                    {q.options.map((o, oi) => {
-                      const isRight = oi === q.correctIndex;
-                      const isUser = oi === userAns;
-                      return (
-                        <div key={oi} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 12px", background: isRight ? "rgba(46,204,113,0.1)" : isUser && !isRight ? "rgba(231,76,60,0.08)" : "transparent", border: `1px solid ${isRight ? "#2ecc71" : isUser && !isRight ? "#e74c3c" : "#EEE1C5"}`, borderRadius: 8, fontSize: "0.82rem", color: "var(--fd-text, #081A35)" }}>
-                          <span>{LETTERS[oi]}</span>
-                          <span style={{ flex: 1 }}>{o}</span>
-                          {isUser && <span style={{ fontSize: "0.66rem", fontWeight: 700, color: isRight ? "#2ecc71" : "#e74c3c", whiteSpace: "nowrap" }}>Tu respuesta</span>}
-                          <span style={{ display: "flex", alignItems: "center" }}>{isRight ? <Icon n="checkCircle" size={15} color="#2ecc71" /> : isUser && !isRight ? <Icon n="close" size={15} color="#e74c3c" /> : null}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div style={{ padding: "10px 12px", background: "var(--fd-panel-alt, rgba(22,61,112,0.06))", borderLeft: "3px solid #163D70", borderRadius: "0 7px 7px 0", fontSize: "0.8rem", color: "var(--fd-muted, #555)", lineHeight: 1.5 }}>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="lightbulb" size={14} color="#f39c12" /> {q.explanation}</span>
-                    {q.cite && <div style={{ marginTop: 5, fontSize: "0.72rem", color: "var(--fd-text, #163D70)", fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><Icon n="book" size={13} /> {q.cite}</div>}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div style={{ marginBottom: 18 }}>
-            <button onClick={() => setPhase("review")} style={{ width: "100%", padding: 14, background: "#163D70", color: "white", border: "none", borderRadius: "var(--fd-radius, 12px)", fontSize: "0.95rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
-              <Icon n="doc" size={17} /> Revisar examen completo
-            </button>
-          </div>
-
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", paddingBottom: 40 }}>
-            <button onClick={resetSimulator} style={{ flex: 1, padding: 13, background: "var(--fd-panel, white)", color: "var(--fd-text, #163D70)", border: "2px solid #163D70", borderRadius: "var(--fd-radius, 11px)", fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
-              <Icon n="refresh" size={16} /> Repetir simulador
-            </button>
-            <Link to="/dashboard" style={{ flex: 1, padding: 13, background: "#7A5C1E", color: "white", border: "none", borderRadius: "var(--fd-radius, 11px)", fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
-              <Icon n="home" size={16} /> Ir al inicio
-            </Link>
-          </div>
-        </div>
-      </div>
+          ) : null
+        }
+        extra={
+          <RepasoPanel
+            items={repaso}
+            falladas={falladas.length}
+            onRevisar={() => setPhase("review")}
+          />
+        }
+      />
     );
   }
 
