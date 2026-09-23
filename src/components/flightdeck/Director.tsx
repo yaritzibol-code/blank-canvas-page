@@ -68,7 +68,8 @@ function Arrival({
     <dialog
       ref={dialog}
       className={"fd-arrival " + (landed ? "is-landed" : "is-diving")}
-      aria-labelledby="arrival-title"
+      aria-labelledby={landed ? "arrival-title" : undefined}
+      aria-label={landed ? undefined : `Volando hacia ${destination.name}`}
       onCancel={onClose}
       style={{ backgroundImage: `url("${ASSETS}aeropuerto-${destination.code}.jpg")` }}
     >
@@ -97,50 +98,28 @@ function Arrival({
       >
         <X size={24} />
       </button>
-      <div className="fd-arrival-card">
-        <p className="fd-eyebrow">
-          {landed ? "ATERRIZAJE COMPLETADO" : "EN APROXIMACIÓN"} · {destination.code}
-        </p>
-        <h2 id="arrival-title">{landed ? destination.city : "Tu siguiente destino."}</h2>
-        {landed ? (
-          <>
-            <p>¿A qué submódulo entras?</p>
-            <div className="fd-submodules">
-              {destination.sections.map((s) => (
-                <Link to={s.path as "/dashboard"} key={s.path}>
-                  <s.icon size={23} weight="duotone" />
-                  <span>
-                    <strong>{s.label}</strong>
-                    <small>{s.description}</small>
-                  </span>
-                  <ArrowRight size={19} />
-                </Link>
-              ))}
-            </div>
-            <button className="fd-text-button" onClick={onClose}>
-              Volver al Director
-            </button>
-          </>
-        ) : (
-          <>
-            <p>
-              {destination.name} ·{" "}
-              {Math.round(35786 * (1 - progress / 100)).toLocaleString("es-MX")} km
-            </p>
-            <progress max={100} value={progress} aria-label="Aproximación al destino" />
-            <button
-              className="fd-text-button"
-              onClick={() => {
-                skipped.current = true;
-                setLanded(true);
-                setProgress(100);
-              }}
-            >
-              Saltar animación
-            </button>
-          </>
-        )}
-      </div>
+      {landed && (
+        <div className="fd-arrival-card fd-arrival-selector">
+          <p className="fd-eyebrow">ATERRIZAJE COMPLETADO · {destination.code}</p>
+          <h2 id="arrival-title">{destination.city}</h2>
+          <p>¿A qué submódulo entras?</p>
+          <div className="fd-submodules">
+            {destination.sections.map((s) => (
+              <Link to={s.path as "/dashboard"} key={s.path}>
+                <s.icon size={23} weight="duotone" />
+                <span>
+                  <strong>{s.label}</strong>
+                  <small>{s.description}</small>
+                </span>
+                <ArrowRight size={19} />
+              </Link>
+            ))}
+          </div>
+          <button className="fd-text-button" onClick={onClose}>
+            Volver al Director
+          </button>
+        </div>
+      )}
     </dialog>
   );
 }
