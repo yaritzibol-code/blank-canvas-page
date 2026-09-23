@@ -36,8 +36,9 @@ export function DataSyncBanner() {
   if (dismissed || !status || !status.message) return null;
 
   const tone = status.severity === "warning"
-    ? { bg: "#FEF3C7", fg: "#92400E", border: "#F59E0B" }
-    : { bg: "#EFF6FF", fg: "#1E3A8A", border: "#93C5FD" };
+    ? { bg: "rgba(199,160,82,.12)", fg: "#F0DCAE", border: "rgba(199,160,82,.42)", btn: "linear-gradient(180deg,#C7A052,#8A6A25)" }
+    : { bg: "rgba(255,255,255,.05)", fg: "#B8C5DA", border: "rgba(255,255,255,.14)", btn: "rgba(255,255,255,.10)" };
+
 
   const handleDismiss = () => {
     setDismissed(true);
