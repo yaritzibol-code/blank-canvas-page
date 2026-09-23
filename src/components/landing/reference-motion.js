@@ -12,6 +12,7 @@ class ReferenceMotion {
     );
     this._fields = [];
     this._tick = 0;
+    this._lastLoopAt = 0;
     this._dead = false;
     this._globeAttempts = 0;
     this._globeRetryAt = 0;
@@ -28,7 +29,12 @@ class ReferenceMotion {
     this._media.addEventListener("change", this._onMotion);
     this._loop = () => {
       if (this._dead) return;
-      if (!document.hidden) this._frame();
+      const now = performance.now();
+      const frameInterval = window.innerWidth <= 900 ? 32 : 16;
+      if (!document.hidden && now - this._lastLoopAt >= frameInterval) {
+        this._lastLoopAt = now;
+        this._frame();
+      }
       this._raf = requestAnimationFrame(this._loop);
     };
     this._loop();
@@ -830,6 +836,8 @@ class ReferenceMotion {
     for (var c = 0; c < list.length; c++) {
       var cv = list[c];
       if (!cv.isConnected || !cv.parentElement) continue;
+      var r = cv.getBoundingClientRect();
+      if (!this._reduced && (r.bottom < -120 || r.top > (window.innerHeight || 0) + 120)) continue;
       var f = this._field(cv);
       if (!f.ctx) continue;
       var w = f.host.clientWidth,
@@ -854,8 +862,6 @@ class ReferenceMotion {
         continue;
       }
       if (this._reduced && f.drawnStatic) continue;
-      var r = cv.getBoundingClientRect();
-      if (!this._reduced && (r.bottom < -120 || r.top > (window.innerHeight || 0) + 120)) continue;
       var dark = cv.getAttribute("data-tone") === "dark";
       var rgb = dark ? "255,255,255" : "22,61,112";
       var ringRgb = "199,160,82";
