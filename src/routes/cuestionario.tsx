@@ -29,16 +29,6 @@ import { PathyMark } from "@/components/shared/PathyMark";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { QuestionImages } from "@/components/banco/QuestionImages";
 import { QuizQuestionNavigator } from "@/components/banco/QuizQuestionNavigator";
-import {
-  Message,
-  MessageContent,
-} from "@/components/ai-elements/message";
-import {
-  PromptInput,
-  PromptInputFooter,
-  PromptInputSubmit,
-  PromptInputTextarea,
-} from "@/components/ai-elements/prompt-input";
 import { PlanLimitNotice } from "@/components/shared/PlanLimitNotice";
 import knowledgeQuestionImage from "@/assets/question-knowledge-default.jpg";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
@@ -1789,9 +1779,8 @@ function CuestionarioPage() {
             }}
           >
             {yarisMsgs.map((msg, i) => (
-              <Message
+              <div
                 key={i}
-                from={msg.role === "bot" ? "assistant" : "user"}
                 data-msg-role={msg.role}
                 className="fp-yaris-message-row"
                 style={{
@@ -1814,7 +1803,7 @@ function CuestionarioPage() {
                 >
                   {msg.role === "bot" ? <YarisAvatar size={24} /> : initials}
                 </div>
-                <MessageContent
+                <div
                   className="fp-yaris-message-content"
                   style={{
                     maxWidth: "84%", padding: "9px 12px",
@@ -1838,8 +1827,8 @@ function CuestionarioPage() {
                       <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="book" size={12} /> {msg.cite}</span>
                     </span>
                   )}
-                </MessageContent>
-              </Message>
+                </div>
+              </div>
             ))}
             {yarisTyping && (
               <div style={{ display: "flex", gap: 7, alignItems: "flex-start" }}>
@@ -1873,32 +1862,51 @@ function CuestionarioPage() {
           </div>
 
           {/* Input */}
-          <PromptInput
+          <form
             className="fp-yaris-composer"
-            onSubmit={({ text }) => sendYarisMsg(text)}
+            onSubmit={(e) => {
+              e.preventDefault();
+              sendYarisMsg(yarisInput);
+            }}
           >
-            <PromptInputTextarea
+            <textarea
               value={yarisInput}
               onChange={(e) => setYarisInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  if (yarisInput.trim() && !yarisTyping) sendYarisMsg(yarisInput);
+                }
+              }}
               aria-label="Escribe tu mensaje para Yaris"
               placeholder={thinkMode ? "Pregúntame conceptos, no la respuesta..." : "Escribe tu duda..."}
               disabled={yarisTyping}
               style={{
                 // 16px evita el zoom automático de iOS al enfocar el campo.
+                width: "100%", resize: "none", border: "none", background: "transparent",
                 padding: "11px 14px", fontSize: "16px", minHeight: 64,
                 color: "var(--fd-text, #081A35)",
                 fontFamily: "'Manrope', sans-serif", outline: "none",
                 transition: "border-color 0.2s",
               }}
             />
-            <PromptInputFooter className="justify-end">
-              <PromptInputSubmit
-                status={yarisTyping ? "streaming" : "ready"}
+            <div style={{ display: "flex", justifyContent: "flex-end", padding: "0 10px 10px" }}>
+              <button
+                type="submit"
                 disabled={!yarisInput.trim() || yarisTyping}
                 aria-label="Enviar mensaje a Yaris"
-              />
-            </PromptInputFooter>
-          </PromptInput>
+                style={{
+                  width: 32, height: 32, borderRadius: "50%", border: "none",
+                  background: "#163D70", color: "white", cursor: "pointer",
+                  opacity: !yarisInput.trim() || yarisTyping ? 0.5 : 1,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "0.9rem", lineHeight: 1,
+                }}
+              >
+                ↑
+              </button>
+            </div>
+          </form>
         </div>
       </div>
 
