@@ -29,10 +29,21 @@ export function learningPathOrigin(path: string): LearningPathOrigin | null {
   } catch { return null; }
 }
 
-export function leaveLearningPath(fallback: string): void {
+/**
+ * Sale de la ruta de aprendizaje. Con `go` (navegación del router) el regreso
+ * es instantáneo; sin él se recarga el documento como último recurso, lo que
+ * dejaba la app en blanco mientras volvía a arrancar.
+ */
+export function leaveLearningPath(fallback: string, go?: (href: string) => void): void {
   if (typeof window === "undefined") return;
   const origin = learningPathOrigin(window.location.pathname) ?? { href: fallback, scrollY: 0 };
   window.sessionStorage.setItem(returnKey, JSON.stringify(origin));
+  if (go) {
+    go(origin.href);
+    // El destino ya está montado en la misma sesión: restaura sin esperar reboot.
+    window.setTimeout(() => restoreLearningPathScroll(), 0);
+    return;
+  }
   window.location.assign(origin.href);
 }
 
