@@ -109,7 +109,8 @@ export function ReportProblemModal({
         onClick={(e) => e.stopPropagation()}
         style={{
           width: "min(480px, 100%)",
-          background: "rgba(255,255,255,.04)",
+          background: "linear-gradient(180deg,#071326 0%,#050F22 100%)",
+          border: "1px solid rgba(199,160,82,.35)",
           borderRadius: 8,
           padding: "clamp(22px, 5vw, 32px)",
           boxShadow: "0 30px 80px rgba(3,8,15,.72)",

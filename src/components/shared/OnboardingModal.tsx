@@ -202,7 +202,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
       <style>{`
         .fp-ob-overlay {
           position: fixed; inset: 0; z-index: 4000;
-          background: rgba(15,26,51,.48);
+          background: rgba(3,8,15,.68);
           backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
           display: flex; align-items: flex-end; justify-content: center;
           font-family: ${FONT};
@@ -212,7 +212,8 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
           width: 100%; max-width: 600px;
           max-height: calc(100dvh - 24px);
           overflow-y: auto; overscroll-behavior: contain;
-          background: linear-gradient(180deg, #FFFFFF 0%, #F5F5F7 100%);
+          background: linear-gradient(180deg, #071326 0%, #050F22 100%);
+          border: 1px solid rgba(199,160,82,.35);
           border-radius: 26px 26px 0 0;
           padding: 24px 22px calc(22px + env(safe-area-inset-bottom, 0px));
           box-shadow: 0 -20px 80px rgba(15,26,51,.45);
@@ -853,8 +854,8 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                       width: 38,
                       height: 38,
                       borderRadius: 6,
-                      background: "var(--fd-panel, #FBF7EC)",
-                      color: "var(--fd-gold, #7A5C1E)",
+                      background: "rgba(199,160,82,.16)",
+                      color: "#C7A052",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",

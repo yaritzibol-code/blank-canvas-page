@@ -159,7 +159,8 @@ export function YarisChatModal({
           right: 0,
           bottom: 0,
           width: "min(400px, 100vw)",
-          background: "rgba(255,255,255,.04)",
+          background: "linear-gradient(180deg,#071326 0%,#050F22 100%)",
+          borderLeft: "1px solid rgba(199,160,82,.35)",
           boxShadow: "-16px 0 48px rgba(8,26,53,.28)",
           display: "flex",
           flexDirection: "column",
@@ -168,7 +169,7 @@ export function YarisChatModal({
         }}
       >
         {/* Header */}
-        <div style={{ background: INK, color: "white", padding: "16px 18px", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
+        <div style={{ background: "rgba(5,15,34,.92)", borderBottom: "1px solid rgba(199,160,82,.28)", color: "white", padding: "16px 18px", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
           <span style={{ width: 38, height: 38, borderRadius: 6, background: "rgba(199,160,82,.18)", color: "#C7A052", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             <YarisAvatar size={34} />
           </span>
