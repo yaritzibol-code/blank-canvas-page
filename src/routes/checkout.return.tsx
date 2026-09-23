@@ -87,7 +87,8 @@ function CheckoutReturn() {
     <div
       style={{
         minHeight: "100vh",
-        background: "radial-gradient(1200px 700px at 50% -10%, #0C2murk 0%, transparent 60%), linear-gradient(180deg,#050F22 0%,#03080F 100%)",
+        background:
+          "radial-gradient(1200px 700px at 50% -10%, rgba(199,160,82,0.10) 0%, transparent 60%), linear-gradient(180deg,#050F22 0%,#03080F 100%)",
         fontFamily: FONT,
         display: "grid",
         placeItems: "center",
