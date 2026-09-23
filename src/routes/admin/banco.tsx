@@ -90,11 +90,10 @@ function AdminBancoPage() {
   const fileRef = useRef<HTMLInputElement>(null);
 
   const [query, setQuery] = useState(searchQ ?? "");
-  const [fMateria, setFMateria] = useState("todas");
-  const [fEstado, setFEstado] = useState("todos");
   const [fFuente, setFFuente] = useState("todos");
   const [fCap, setFCap] = useState("todos");
-  const [fSeccion, setFSeccion] = useState("todas");
+  /** Tipo de reactivo: todas · abiertas · opción múltiple · con lámina · sin lámina. */
+  const [fTipo, setFTipo] = useState("todas");
 
   const [limit, setLimit] = useState(60);
   const [importResult, setImportResult] = useState<CsvImportResult | null>(null);
