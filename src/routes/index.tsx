@@ -140,23 +140,23 @@ function LandingPage() {
 
   return (
     <>
-      <ReferenceHome 
+      <ReferenceHome
         showcase={
           <Suspense fallback={<div className="h-[600px] bg-white/5 animate-pulse rounded-[28px]" />}>
             <Showcase />
           </Suspense>
-        } 
-        pathy={<Companion />} 
+        }
+        pathy={<Companion />}
         yaris={
           <Suspense fallback={<div className="h-[600px] bg-white/5 animate-pulse rounded-3xl" />}>
             <YarisChat />
           </Suspense>
-        } 
+        }
         pricing={
           <Suspense fallback={<div className="h-[600px] bg-white/5 animate-pulse rounded-3xl" />}>
             <Pricing />
           </Suspense>
-        } 
+        }
       />
       <ThemeSwitcher sky={sky} setSky={setSky} show={showCountdown} setShow={setShowCountdown} />
     </>

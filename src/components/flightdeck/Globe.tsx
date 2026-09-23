@@ -127,7 +127,7 @@ export function Globe({
     const maxAnisotropy = anisotropy
       ? Math.min(8, gl.getParameter(anisotropy.MAX_TEXTURE_MAX_ANISOTROPY_EXT) as number)
       : 1;
-    ["tierra-dia-nasa.jpg", "tierra-noche-nasa.jpg"].forEach((file, index) => {
+    ["tierra-dia-nasa.webp", "tierra-noche-nasa.webp"].forEach((file, index) => {
       const texture = gl.createTexture()!;
       textures.push(texture);
       gl.activeTexture(gl.TEXTURE0 + index);
@@ -324,7 +324,7 @@ export function Globe({
   return (
     <div className={"fd-globe" + (fallback ? " fd-globe-fallback" : "")}>
       {fallback ? (
-        <img src={ASSETS + "tierra-noche-nasa.jpg"} alt="La Tierra de noche" />
+        <img src={ASSETS + "tierra-noche-nasa.webp"} alt="La Tierra de noche" />
       ) : (
         <canvas
           ref={canvas}
