@@ -12,6 +12,10 @@
 .flightpath-redesign a {
   text-decoration: none;
 }
+.flightpath-redesign main > section:not(.rd-hero) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
 .flightpath-redesign .rd-1 {
   position: relative;
   overflow: hidden;
@@ -130,6 +134,10 @@
   background-position: center;
   box-shadow: 0 0 72px rgba(72, 121, 178, 0.48);
   opacity: 0.72;
+  transition: opacity 0.35s ease;
+}
+.flightpath-redesign .rd-globe-wrap.is-globe-ready .rd-globe-poster {
+  opacity: 0;
 }
 .flightpath-redesign .rd-14 {
   position: absolute;
@@ -1602,6 +1610,9 @@
 }
 
 @media (max-width: 900px) {
+  .flightpath-redesign .rd-1 {
+    height: max(900px, 100svh);
+  }
   .flightpath-redesign .rd-3 {
     width: calc(100% - 40px);
   }
@@ -1722,5 +1733,54 @@
   .flightpath-redesign .rd-170 {
     grid-template-columns: minmax(0, 1fr);
     gap: 24px;
+  }
+}
+@media (max-width: 600px) {
+  .flightpath-redesign .rd-1 {
+    height: max(940px, 100svh);
+  }
+  .flightpath-redesign .rd-3 {
+    width: calc(100% - 32px);
+    gap: 16px;
+    padding-top: 24px;
+  }
+  .flightpath-redesign .rd-4 {
+    min-width: 0;
+    text-align: center;
+  }
+  .flightpath-redesign .rd-6 {
+    font-size: 46px;
+  }
+  .flightpath-redesign .rd-8 {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .flightpath-redesign .rd-9 {
+    width: 100%;
+    justify-content: center;
+  }
+  .flightpath-redesign .rd-10,
+  .flightpath-redesign .rd-12 {
+    min-width: 0;
+    padding-inline: 18px;
+  }
+  .flightpath-redesign .rd-13 {
+    height: 450px;
+  }
+  .flightpath-redesign .rd-17 {
+    bottom: 20px;
+    width: calc(100% - 24px);
+  }
+  .flightpath-redesign .rd-18,
+  .flightpath-redesign .rd-21 {
+    min-width: 0;
+    padding: 11px 8px;
+  }
+  .flightpath-redesign .rd-19 {
+    font-size: 18px;
+  }
+  .flightpath-redesign .rd-20 {
+    font-size: 9px;
+    line-height: 1.3;
   }
 }

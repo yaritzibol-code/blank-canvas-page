@@ -69,7 +69,12 @@ export function Globe({
   useEffect(() => {
     const cv = canvas.current;
     if (!cv) return;
-    const gl = cv.getContext("webgl", { alpha: true, antialias: false, premultipliedAlpha: true });
+    const gl = cv.getContext("webgl", {
+      alpha: true,
+      antialias: true,
+      premultipliedAlpha: true,
+      powerPreference: "high-performance",
+    });
     if (!gl) {
       setFallback(true);
       return;
@@ -116,7 +121,13 @@ export function Globe({
         gl.getUniformLocation(program, k),
       ]),
     );
-    ["tierra-dia-nasa.jpg", "tierra-noche-nasa.jpg"].forEach((file, index) => {
+    const anisotropy =
+      gl.getExtension("EXT_texture_filter_anisotropic") ??
+      gl.getExtension("WEBKIT_EXT_texture_filter_anisotropic");
+    const maxAnisotropy = anisotropy
+      ? Math.min(8, gl.getParameter(anisotropy.MAX_TEXTURE_MAX_ANISOTROPY_EXT) as number)
+      : 1;
+    ["tierra-dia-nasa.webp", "tierra-noche-nasa.webp"].forEach((file, index) => {
       const texture = gl.createTexture()!;
       textures.push(texture);
       gl.activeTexture(gl.TEXTURE0 + index);
@@ -144,6 +155,15 @@ export function Globe({
         gl.activeTexture(gl.TEXTURE0 + index);
         gl.bindTexture(gl.TEXTURE_2D, texture);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+        gl.generateMipmap(gl.TEXTURE_2D);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+        if (anisotropy) {
+          gl.texParameterf(
+            gl.TEXTURE_2D,
+            anisotropy.TEXTURE_MAX_ANISOTROPY_EXT,
+            maxAnisotropy,
+          );
+        }
         loaded++;
         render();
       };
@@ -182,7 +202,8 @@ export function Globe({
       }
       const w = cv!.clientWidth,
         h = cv!.clientHeight,
-        ratio = Math.min(devicePixelRatio || 1, 2);
+        pixelBudgetRatio = Math.sqrt(8_000_000 / Math.max(1, w * h)),
+        ratio = Math.min(devicePixelRatio || 1, 3, pixelBudgetRatio);
       if (!w || !h) {
         raf = requestAnimationFrame(render);
         return;
@@ -303,7 +324,7 @@ export function Globe({
   return (
     <div className={"fd-globe" + (fallback ? " fd-globe-fallback" : "")}>
       {fallback ? (
-        <img src={ASSETS + "tierra-noche-nasa.jpg"} alt="La Tierra de noche" />
+        <img src={ASSETS + "tierra-noche-nasa.webp"} alt="La Tierra de noche" />
       ) : (
         <canvas
           ref={canvas}

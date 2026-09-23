@@ -217,7 +217,12 @@ class ReferenceMotion {
       self = this;
     if (!cv || !fx || !cv.isConnected || !fx.isConnected) return null;
     if (this._globe && this._globe.cv === cv && this._globe.gl && !this._globe.gl.isContextLost()) return this._globe;
-    var opts = { premultipliedAlpha: true, antialias: false, alpha: true };
+    var opts = {
+      premultipliedAlpha: true,
+      antialias: true,
+      alpha: true,
+      powerPreference: "high-performance",
+    };
     var gl = cv.getContext("webgl", opts),
       v2 = false;
     if (!gl) gl = cv.getContext("webgl", opts);
@@ -236,6 +241,7 @@ class ReferenceMotion {
       vel: 0,
       down: null,
       spin: 0,
+      dpr: 0,
       t0: performance.now(),
     };
     this._globe = g;
@@ -308,8 +314,8 @@ class ReferenceMotion {
     });
     gl.uniform1i(g.u.uDay, 0);
     gl.uniform1i(g.u.uNight, 1);
-    this._globeTex(g, "day", "/flightdeck/tierra-dia-nasa.jpg", 0);
-    this._globeTex(g, "night", "/flightdeck/tierra-noche-nasa.jpg", 1);
+    this._globeTex(g, "day", "/flightdeck/tierra-dia-nasa.webp", 0);
+    this._globeTex(g, "night", "/flightdeck/tierra-noche-nasa.webp", 1);
 
     g.onDown = function (e) {
       g.down = { x: e.clientX, y: e.clientY, lon: g.dragLon, lat: g.dragLat };
@@ -369,11 +375,23 @@ class ReferenceMotion {
       gl.bindTexture(gl.TEXTURE_2D, t);
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, s);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.generateMipmap(gl.TEXTURE_2D);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, g.v2 ? gl.REPEAT : gl.CLAMP_TO_EDGE);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      var aniso =
+        gl.getExtension("EXT_texture_filter_anisotropic") ||
+        gl.getExtension("WEBKIT_EXT_texture_filter_anisotropic");
+      if (aniso) {
+        var maxAniso = gl.getParameter(aniso.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+        gl.texParameterf(gl.TEXTURE_2D, aniso.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(8, maxAniso));
+      }
       g.tex[key] = t;
+      g.texturesReady = (g.texturesReady || 0) + 1;
+      if (g.texturesReady === 2 && g.cv.parentElement) {
+        g.cv.parentElement.classList.add("is-globe-ready");
+      }
       if (src.close) src.close();
     };
     var viaImg = function () {
@@ -467,10 +485,14 @@ class ReferenceMotion {
     var w = cv.clientWidth,
       h = cv.clientHeight;
     if (!w || !h) return;
-    var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    if (w !== g.w || h !== g.h) {
+    var nativeDpr = window.devicePixelRatio || 1,
+      maxPixels = 8000000,
+      pixelBudgetDpr = Math.sqrt(maxPixels / Math.max(1, w * h)),
+      dpr = Math.min(nativeDpr, 3, pixelBudgetDpr);
+    if (w !== g.w || h !== g.h || Math.abs(dpr - g.dpr) > 0.01) {
       g.w = w;
       g.h = h;
+      g.dpr = dpr;
       cv.width = Math.round(w * dpr);
       cv.height = Math.round(h * dpr);
       fx.width = cv.width;

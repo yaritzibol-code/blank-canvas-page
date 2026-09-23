@@ -61,9 +61,9 @@ export function PruebaModal({ mode, onClose }: { mode: PruebaMode; onClose: (int
   return (
     <div
       onClick={(e) => { if (e.target === e.currentTarget) onClose(interactions); }}
-      style={{ position: "fixed", inset: 0, background: "rgba(26,26,46,0.85)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 4000, padding: 20 }}
+      style={{ position: "fixed", inset: 0, background: "rgba(26,26,46,0.85)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 4000, padding: "max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left))" }}
     >
-      <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 20px)", padding: 28, width: "100%", maxWidth: 480, boxShadow: "0 20px 60px rgba(0,0,0,0.3)", fontFamily: "'Manrope', sans-serif" }}>
+      <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 20px)", padding: "clamp(18px, 5vw, 28px)", width: "min(480px, 100%)", maxHeight: "calc(100dvh - 24px)", overflowY: "auto", boxShadow: "0 20px 60px rgba(0,0,0,0.3)", fontFamily: "'Manrope', sans-serif" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
           <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.2rem", color: "var(--fd-text, #081A35)", margin: 0, display: "flex", alignItems: "center", gap: 8 }}>
             <Icon n="spark" size={20} color="var(--fd-text, #163D70)" /> {PRUEBA_TITLES[mode]}

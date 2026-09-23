@@ -119,9 +119,9 @@ function Modal({ title, subtitle, onClose, children, wide }: { title: string; su
   return (
     <div
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-      style={{ position: "fixed", inset: 0, background: "rgba(26,26,46,0.72)", zIndex: 1200, display: "flex", alignItems: "center", justifyContent: "center", padding: 16, overflowY: "auto", fontFamily: "'Manrope', sans-serif" }}
+      style={{ position: "fixed", inset: 0, background: "rgba(26,26,46,0.72)", zIndex: 1200, display: "flex", alignItems: "center", justifyContent: "center", padding: "max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left))", overflowY: "auto", fontFamily: "'Manrope', sans-serif" }}
     >
-      <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 20px)", width: "100%", maxWidth: wide ? 860 : 640, maxHeight: "92vh", display: "flex", flexDirection: "column", overflow: "hidden", boxShadow: "0 24px 60px rgba(0,0,0,0.3)" }}>
+      <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 20px)", width: `min(${wide ? 860 : 640}px, 100%)`, maxHeight: "calc(100dvh - 24px)", display: "flex", flexDirection: "column", overflow: "hidden", boxShadow: "0 24px 60px rgba(0,0,0,0.3)" }}>
         <div style={{ padding: "18px 22px", borderBottom: "1px solid var(--fd-border, #EEE1C5)", display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
           <div>
             <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.15rem", color: "var(--fd-text, #081A35)", margin: 0 }}>{title}</h3>
