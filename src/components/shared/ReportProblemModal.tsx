@@ -142,7 +142,7 @@ export function ReportProblemModal({
         ) : (
           <>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-              <Icon n="alert" size={20} color="var(--fd-gold, #7A5C1E)" />
+              <Icon n="alert" size={20} color="#C7A052" />
               <h3 style={{ fontFamily: DISPLAY, color: "#FFFFFF", margin: 0, fontSize: "1.25rem", fontWeight: 800 }}>
                 Reportar problema
               </h3>

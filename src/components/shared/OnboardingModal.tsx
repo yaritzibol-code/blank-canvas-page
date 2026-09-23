@@ -419,7 +419,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                 maxWidth: 400,
               }}
             >
-              Soy <strong style={{ color: "var(--fd-gold, #7A5C1E)" }}>Pathy</strong>, tu copiloto de estudio. Antes de
+              Soy <strong style={{ color: "#C7A052" }}>Pathy</strong>, tu copiloto de estudio. Antes de
               despegar, preparemos tu cabina — te toma menos de un minuto.
             </p>
             <button onClick={advance} className="fp-ob-btn fp-ob-btn-primary" style={primaryBtn}>
@@ -467,7 +467,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                   borderRadius: 999,
                   padding: "8px 16px",
                   fontSize: 13.5,
-                  color: "var(--fd-text, #123360)",
+                  color: "#FFFFFF",
                   fontWeight: 600,
                 }}
               >
@@ -678,9 +678,9 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                       style={{
                         width: 38,
                         height: 38,
-                        borderRadius: "var(--fd-radius, 11px)",
+                        borderRadius: 6,
                         flexShrink: 0,
-                        background: activo ? BRAND : "var(--fd-panel-alt, rgba(22,61,112,0.08))",
+                        background: activo ? BRAND : "rgba(255,255,255,.06)",
                         color: activo ? CORAL : "#FFFFFF",
                         display: "flex",
                         alignItems: "center",
@@ -950,7 +950,7 @@ function StepHead({ icon, title, sub }: { icon: FPIconName; title: string; sub: 
         style={{
           width: 52,
           height: 52,
-          borderRadius: "var(--fd-radius, 15px)",
+          borderRadius: 8,
           background: `linear-gradient(135deg, ${INK}, #C7A052)`,
           display: "flex",
           alignItems: "center",
