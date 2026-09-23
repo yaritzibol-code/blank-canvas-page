@@ -30,7 +30,8 @@ class ReferenceMotion {
     this._loop = () => {
       if (this._dead) return;
       const now = performance.now();
-      const frameInterval = window.innerWidth <= 900 ? 32 : 16;
+      const lowEnd = (navigator.deviceMemory || 8) <= 4;
+      const frameInterval = lowEnd ? 24 : 0;
       if (!document.hidden && now - this._lastLoopAt >= frameInterval) {
         this._lastLoopAt = now;
         this._frame();
