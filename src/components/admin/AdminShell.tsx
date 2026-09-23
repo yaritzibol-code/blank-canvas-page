@@ -518,7 +518,7 @@ export const confirmBtnStyle: CSSProperties = {
   flex: 2,
   padding: 10,
   background: "#C7A052",
-  color: "#FFFFFF",
+  color: "#0B1220",
   border: "none",
   borderRadius: 8,
   fontSize: ".84rem",
@@ -530,7 +530,7 @@ export const confirmBtnStyle: CSSProperties = {
 export const primaryBtnStyle: CSSProperties = {
   padding: "8px 16px",
   background: "#C7A052",
-  color: "#FFFFFF",
+  color: "#0B1220",
   border: "none",
   borderRadius: 8,
   fontSize: ".8rem",
