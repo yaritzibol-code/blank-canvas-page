@@ -384,6 +384,13 @@ function ConfiguracionPage() {
             </select>
           </div>
           <ConfigRow icon="spark" label="Animaciones de Pathy" sub="Desactiva si prefieres menos movimiento" right={<Toggle on={toggles.pathy} onToggle={() => toggle("pathy")} />} />
+          <ConfigRow
+            icon="compass"
+            label="Recorrido de Pathy"
+            sub="Vuelve a ver el tour rápido por los destinos de tu cabina"
+            onClick={() => navigate({ to: "/dashboard", search: { tour: 1 } as never })}
+            right={<Icon n="chevR" size={16} />}
+          />
 
           {/* Personalidad de Yaris IA */}
           <div style={{ padding: "14px 20px 18px", borderTop: "1px solid rgba(22,61,112,.04)" }}>

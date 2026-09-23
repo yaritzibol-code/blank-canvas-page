@@ -1,7 +1,9 @@
 /**
- * Onboarding guiado (PRD Flujo 2): recorrido de 5 pasos al entrar por primera
+ * Onboarding guiado (PRD Flujo 2): prepara la cabina al entrar por primera
  * vez. Pide el nombre (para mostrarlo bien en toda la cabina), escuela,
- * WhatsApp y fecha CIAAC, y cierra con un mini-tour de la plataforma.
+ * WhatsApp y fecha CIAAC. Llega justo después del recorrido de Pathy por los
+ * destinos del Director (`flightdeck/PathyTour`), así que no repite la
+ * bienvenida ni el tour de la plataforma.
  * Animaciones CSS puras (respetan prefers-reduced-motion) y diseño
  * mobile-first: en pantallas chicas se vuelve una hoja inferior a pantalla
  * completa con botones de dedo.
@@ -45,17 +47,6 @@ export const YARIS_TONOS: { key: YarisTono; label: string; ejemplo: string }[] =
     label: "Amiga Yaris",
     ejemplo: "“Ok, ese tema pega feo, pero míralo así: la MEA es obstáculos + señal.”",
   },
-];
-
-const TOUR: { icon: FPIconName; title: string; sub: string }[] = [
-  {
-    icon: "help",
-    title: "Cuestionarios",
-    sub: "2,900+ preguntas con explicación, por materia y tema",
-  },
-  { icon: "sim", title: "Simulador CIAAC", sub: "Simulacros cronometrados como el examen real" },
-  { icon: "library", title: "Biblioteca", sub: "Los manuales oficiales, organizados y listos" },
-  { icon: "spark", title: "Yaris & Pathy", sub: "Tu tutora IA y tu copiloto de motivación, 24/7" },
 ];
 
 const ONB_STEP_IDS = [
@@ -408,7 +399,7 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                 letterSpacing: "-0.02em",
               }}
             >
-              ¡Bienvenido a bordo!
+              Ahora, tu cabina
             </h2>
             <p
               style={{
@@ -419,11 +410,11 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
                 maxWidth: 400,
               }}
             >
-              Soy <strong style={{ color: "#C7A052" }}>Pathy</strong>, tu copiloto de estudio. Antes de
-              despegar, preparemos tu cabina — te toma menos de un minuto.
+              Cuéntame un poco de ti para que <strong style={{ color: "#C7A052" }}>Pathy</strong> y
+              Yaris te acompañen a tu medida — te toma menos de un minuto.
             </p>
             <button onClick={advance} className="fp-ob-btn fp-ob-btn-primary" style={primaryBtn}>
-              Preparar mi cabina <Icon n="arrow" size={17} color="#fff" />
+              Empezar <Icon n="arrow" size={17} color="#fff" />
             </button>
           </div>
         )}
@@ -818,80 +809,14 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
           </div>
         )}
 
-        {/* PASO 6 — Tour + despegue */}
+        {/* PASO 6 — Despegue (el tour de la plataforma ya lo hizo Pathy en el Director) */}
         {step === 6 && (
           <div className={`fp-ob-step ${dir === -1 ? "back" : ""}`} key="s4">
             <StepHead
               icon="rocket"
-              title={`Todo listo${firstName ? `, ${firstName}` : ""}. Esto te espera:`}
-              sub="Tu cabina de estudio, en cuatro instrumentos."
+              title={`Todo listo${firstName ? `, ${firstName}` : ""}.`}
+              sub="Tu cabina está preparada. Elige un destino en el globo y despega cuando quieras."
             />
-            <div
-              className="fp-ob-stagger"
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                gap: 10,
-                marginTop: 16,
-              }}
-            >
-              {TOUR.map((t) => (
-                <div
-                  key={t.title}
-                  style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    gap: 12,
-                    background: "rgba(255,255,255,.04)",
-                    border: "1px solid rgba(255,255,255,.12)",
-                    borderRadius: 6,
-                    padding: "13px 15px",
-                    boxShadow: "0 1px 2px rgba(15,26,51,.04), 0 10px 26px -18px rgba(15,26,51,.18)",
-                  }}
-                >
-                  <span
-                    style={{
-                      width: 38,
-                      height: 38,
-                      borderRadius: 6,
-                      background: "rgba(199,160,82,.16)",
-                      color: "#C7A052",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <Icon n={t.icon} size={19} />
-                  </span>
-                  <span>
-                    <span
-                      style={{
-                        display: "block",
-                        fontSize: 14,
-                        fontWeight: 800,
-                        color: "#FFFFFF",
-                        fontFamily: DISPLAY,
-                        letterSpacing: "-0.01em",
-                      }}
-                    >
-                      {t.title}
-                    </span>
-                    <span
-                      style={{
-                        display: "block",
-                        fontSize: 12.5,
-                        color: "#B8C5DA",
-                        lineHeight: 1.45,
-                        marginTop: 2,
-                      }}
-                    >
-                      {t.sub}
-                    </span>
-                  </span>
-                </div>
-              ))}
-            </div>
             <button
               onClick={() => finish(false)}
               className="fp-ob-btn fp-ob-btn-primary"

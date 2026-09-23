@@ -1,4 +1,5 @@
 import { QuestionFrame } from "@/components/flightdeck/QuestionFrame";
+import { QuizResults, type MateriaResult } from "@/components/flightdeck/QuizResults";
 import { setPresenceActivity } from "@/lib/presence";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
@@ -583,6 +584,13 @@ function CuestionarioPage() {
     return map;
   }
 
+  /** Duración de la sesión congelada al terminar: el reloj sigue corriendo cada 10 s. */
+  const [finalSec, setFinalSec] = useState(0);
+  useEffect(() => {
+    if (showResult) setFinalSec(Math.max(0, Math.round((Date.now() - startTime) / 1000)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showResult]);
+
   // Guarda el intento una sola vez al terminar la sesión.
   useEffect(() => {
     if (!showResult || savedRef.current || !user) return;
@@ -994,7 +1002,6 @@ function CuestionarioPage() {
   const thinkMode = !answered;
   const canGoNext = currentIdx < highestVisitedIdx || answered;
   const scorePercent = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
-  const scoreColor = scorePercent >= 70 ? "#2ecc71" : scorePercent >= 50 ? "#f39c12" : "#e74c3c";
   const consecutiveCorrect = (() => {
     let count = 0;
     for (let i = currentIdx - 1; i >= 0 && results[i] === true; i -= 1) count += 1;
@@ -1014,18 +1021,17 @@ function CuestionarioPage() {
   }
 
   // Materias reales de ESTA sesión (para la pantalla de resultados).
-  const sessionMaterias = Object.entries(computePorMateria()).map(([slug, v]) => {
+  const sessionMaterias: MateriaResult[] = Object.entries(computePorMateria()).map(([slug, v]) => {
     const def = materiaBySlug(slug);
     return {
       slug,
-      name: def?.name ?? slug,
+      name: def?.name ?? (slug || "Sin clasificar"),
       icon: (def?.icon ?? "help") as FPIconName,
+      correct: v.correct,
+      total: v.total,
       pct: v.total > 0 ? Math.round((v.correct / v.total) * 100) : 0,
     };
   });
-  const reforzar = sessionMaterias.filter((m) => m.pct < 70).sort((a, b) => a.pct - b.pct).slice(0, 2);
-  const dominado = sessionMaterias.filter((m) => m.pct >= 70).sort((a, b) => b.pct - a.pct).slice(0, 2);
-  const weakestSession = [...sessionMaterias].sort((a, b) => a.pct - b.pct)[0];
 
   const initials =
     (user?.nombre ?? "")
@@ -1041,6 +1047,43 @@ function CuestionarioPage() {
       <PlanLimitNotice
         title="Límite del plan Básica alcanzado"
         description={quizGate.reason}
+      />
+    );
+  }
+
+  /*
+   * Al terminar se cambia de pantalla por completo. Antes el informe se
+   * pintaba junto a la sesión y la pregunta sólo se ocultaba con
+   * `display: none`, que el `display: grid !important` del tema de la sesión
+   * anulaba: la pregunta, el reloj y el combo seguían a la vista.
+   */
+  if (showResult) {
+    return (
+      <QuizResults
+        modo={`APRENDIENDO · ${(quizTitulo ?? materiaLabel).toUpperCase()}`}
+        pilotName={(user?.nombre ?? "").trim().split(/\s+/)[0] ?? ""}
+        scorePct={scorePercent}
+        correct={correctCount}
+        answered={answeredCount}
+        total={total}
+        seconds={finalSec}
+        materias={sessionMaterias}
+        exitTo={exitTo}
+        onRestart={handleRestart}
+        debrief={
+          user && answeredCount > 0 ? (
+            <PathyDebrief
+              userId={user.id}
+              origen="cuestionario"
+              titulo={
+                quizTitulo ??
+                (sessionMaterias.length === 1 ? sessionMaterias[0].name : "Cuestionario")
+              }
+              scorePct={scorePercent}
+              answers={sessionAnswers()}
+            />
+          ) : null
+        }
       />
     );
   }
@@ -1220,7 +1263,7 @@ function CuestionarioPage() {
         {/* ── QUESTION AREA ── */}
         <div
           className={"fp-quiz-area" + (yarisOpen ? " yaris-is-open" : "")}
-          style={{ flex: 1, minWidth: 0, display: showResult ? "none" : undefined, overflowY: "auto" }}
+          style={{ flex: 1, minWidth: 0, overflowY: "auto" }}
         >
           <div className="fp-quiz-primary">
           <aside className="fp-question-rail">
@@ -1501,176 +1544,6 @@ function CuestionarioPage() {
 
         </div>
 
-        {/* ── RESULT SCREEN ── */}
-        {showResult && (
-          <div
-            style={{
-              flex: 1, display: "flex", flexDirection: "column", alignItems: "center",
-              padding: "40px 24px", overflowY: "auto",
-            }}
-          >
-            <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}`}</style>
-            <div style={{ marginBottom: 8 }}>
-              <PathyMark size={92} float />
-            </div>
-            <h1
-              style={{
-                fontFamily: "'Instrument Serif', serif",
-                fontSize: "2rem", color: "var(--fd-text, #081A35)",
-                marginBottom: 6, textAlign: "center",
-              }}
-            >
-              ¡Sesión <span style={{ color: "var(--fd-gold, #7A5C1E)" }}>completada!</span>
-            </h1>
-            <p style={{ fontSize: "0.9rem", color: "var(--fd-muted, #4A5872)", marginBottom: 28, textAlign: "center" }}>
-              Aquí está tu análisis de Pathy
-            </p>
-
-            {/* Score card */}
-            <div
-              style={{
-                background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 20px)", padding: 28,
-                width: "100%", maxWidth: 580,
-                boxShadow: "0 4px 20px rgba(22,61,112,0.1)",
-                marginBottom: 20, textAlign: "center",
-              }}
-            >
-              <div
-                style={{
-                  fontFamily: "'Instrument Serif', serif",
-                  fontSize: "4rem", fontWeight: 900,
-                  color: scoreColor, lineHeight: 1, marginBottom: 4,
-                }}
-              >
-                {scorePercent}%
-              </div>
-              <div style={{ fontSize: "0.85rem", color: "var(--fd-muted, #4A5872)", marginBottom: 20 }}>
-                Aciertos en esta sesión
-              </div>
-              <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-                {[
-                  { num: correctCount, label: "Correctas" },
-                  { num: answeredCount - correctCount, label: "Incorrectas" },
-                  { num: total, label: "Total" },
-                  { num: `${elapsedMin} min`, label: "Tiempo" },
-                ].map((s) => (
-                  <div key={s.label} style={{ textAlign: "center" }}>
-                    <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.4rem", fontWeight: 900, color: "var(--fd-text, #081A35)" }}>
-                      {s.num}
-                    </div>
-                    <div style={{ fontSize: "0.72rem", color: "var(--fd-muted, #7E90AD)" }}>{s.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Weakness/strength */}
-            <div
-              style={{
-                background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", padding: 20,
-                width: "100%", maxWidth: 580,
-                boxShadow: "0 2px 12px rgba(22,61,112,0.06)",
-                marginBottom: 16,
-              }}
-            >
-              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--fd-muted, #4A5872)", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}>
-                <Icon n="alert" size={15} /> Temas que necesitas reforzar
-              </div>
-              {reforzar.length === 0 ? (
-                <div
-                  style={{
-                    padding: "8px 12px", borderRadius: 8, marginBottom: 6,
-                    fontSize: "0.84rem", background: "rgba(46,204,113,0.06)",
-                    color: "#1a7a4a", fontWeight: 600,
-                  }}
-                >
-                  ¡Nada por reforzar hoy!
-                </div>
-              ) : (
-                reforzar.map((item) => {
-                  const color = item.pct < 60 ? "#e74c3c" : "#f39c12";
-                  const bg = item.pct < 60 ? "rgba(231,76,60,0.06)" : "rgba(243,156,18,0.06)";
-                  return (
-                    <div
-                      key={item.slug}
-                      style={{
-                        display: "flex", alignItems: "center", justifyContent: "space-between",
-                        padding: "8px 12px", borderRadius: 8, marginBottom: 6,
-                        fontSize: "0.84rem", background: bg,
-                      }}
-                    >
-                      <span style={{ display: "flex", alignItems: "center", gap: 7 }}><Icon n={item.icon} size={15} color="var(--fd-text, #081A35)" /> {item.name}</span>
-                      <span style={{ color, fontWeight: 700 }}>{item.pct}%</span>
-                    </div>
-                  );
-                })
-              )}
-              {dominado.length > 0 && (
-                <>
-                  <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--fd-muted, #4A5872)", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12, marginTop: 14, display: "flex", alignItems: "center", gap: 6 }}>
-                    <Icon n="check" size={15} /> Lo que dominaste
-                  </div>
-                  {dominado.map((item) => (
-                    <div
-                      key={item.slug}
-                      style={{
-                        display: "flex", alignItems: "center", justifyContent: "space-between",
-                        padding: "8px 12px", borderRadius: 8, marginBottom: 6,
-                        fontSize: "0.84rem", background: "rgba(46,204,113,0.06)",
-                      }}
-                    >
-                      <span style={{ display: "flex", alignItems: "center", gap: 7 }}><Icon n={item.icon} size={15} color="var(--fd-text, #081A35)" /> {item.name}</span>
-                      <span style={{ color: "#2ecc71", fontWeight: 700 }}>{item.pct}%</span>
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
-
-            {/* Informe real de Pathy */}
-            {user && (
-              <PathyDebrief
-                userId={user.id}
-                origen="cuestionario"
-                titulo={quizTitulo ?? (sessionMaterias.length === 1 ? sessionMaterias[0].name : "Cuestionario")}
-                scorePct={scorePercent}
-                answers={sessionAnswers()}
-              />
-            )}
-
-            {/* Buttons */}
-            <div style={{ display: "flex", gap: 10, width: "100%", maxWidth: 580, flexWrap: "wrap" }}>
-              <button
-                onClick={handleRestart}
-                style={{
-                  flex: 1, padding: 13,
-                  background: "var(--fd-panel, white)", color: "var(--fd-text, #163D70)",
-                  border: "2px solid #163D70", borderRadius: "var(--fd-radius, 11px)",
-                  fontSize: "0.9rem", fontWeight: 700, cursor: "pointer",
-                  fontFamily: "'Manrope', sans-serif",
-                  display: "flex", alignItems: "center", justifyContent: "center", gap: 7,
-                }}
-              >
-                <Icon n="refresh" size={16} /> Repetir sesión
-              </button>
-              <Link
-                to="/dashboard"
-                style={{
-                  flex: 1, padding: 13,
-                  background: "#7A5C1E", color: "white",
-                  border: "none", borderRadius: "var(--fd-radius, 11px)",
-                  fontSize: "0.9rem", fontWeight: 700, cursor: "pointer",
-                  fontFamily: "'Manrope', sans-serif",
-                  textDecoration: "none",
-                  display: "flex", alignItems: "center", justifyContent: "center", gap: 7,
-                }}
-              >
-                <Icon n="home" size={16} /> Ir al inicio
-              </Link>
-            </div>
-          </div>
-        )}
-
         {/* ── YARIS PANEL ── */}
         <div
           className={"fp-yaris-panel" + (yarisOpen ? " is-open" : "")}
@@ -1910,12 +1783,10 @@ function CuestionarioPage() {
         </div>
       </div>
 
-      {!showResult && (
-        <footer className="fp-question-footer">
-          <span><kbd>1–4</kbd> Responder <kbd>H</kbd> Pista <kbd>M</kbd> Marcar <kbd>ENTER</kbd> Siguiente <kbd>ESC</kbd> Pausa</span>
-          <span className="fp-pathy-streak"><PathyMark size={25} /><b>PATHY</b> {consecutiveCorrect > 1 ? `Llevas ${consecutiveCorrect} seguidas. Sigue así.` : "Un paso a la vez. Tu próximo acierto empieza aquí."}</span>
-        </footer>
-      )}
+      <footer className="fp-question-footer">
+        <span><kbd>1–4</kbd> Responder <kbd>H</kbd> Pista <kbd>M</kbd> Marcar <kbd>ENTER</kbd> Siguiente <kbd>ESC</kbd> Pausa</span>
+        <span className="fp-pathy-streak"><PathyMark size={25} /><b>PATHY</b> {consecutiveCorrect > 1 ? `Llevas ${consecutiveCorrect} seguidas. Sigue así.` : "Un paso a la vez. Tu próximo acierto empieza aquí."}</span>
+      </footer>
 
 
       {/* Reportar problema */}
