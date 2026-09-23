@@ -1,5 +1,8 @@
 # Roadmap
 
-- [ ] Reproducir 1:1 la pantalla de pregunta en sesión del HTML adjunto, preservando datos y funciones actuales.
-- [ ] Reproducir 1:1 el Director con globo del HTML adjunto, preservando datos, navegación y accesibilidad.
-- [ ] Verificar ambas pantallas visualmente en escritorio, iPad y teléfono, además de estados interactivos.
+- [ ] Aumentar el contraste de selecciones múltiples en los cuestionarios sin cambiar su estructura.
+- [ ] Convertir “Yaris está contigo” en el chat expandido al pedir ayuda o explicación.
+- [ ] Mostrar una imagen aeronáutica predeterminada en preguntas de conocimiento y ampliar las figuras reales sobre la pregunta.
+- [ ] Permitir cerrar avisos emergentes.
+- [ ] Restaurar las imágenes en la franja inferior del Director.
+- [ ] Verificar cuestionarios y Director en escritorio, iPad y teléfono.
