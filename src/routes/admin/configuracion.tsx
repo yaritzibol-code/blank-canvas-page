@@ -137,7 +137,7 @@ function AdminConfiguracionPage() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 14 }}>
           <div>
             <label style={labelStyle}>Precio de FlightPath Pro</label>
-            <input value={proPriceLabel} readOnly disabled style={{ ...inputStyle, background: "#F4F7FB", color: "#93A4BF" }} />
+            <input value={proPriceLabel} readOnly disabled style={{ ...inputStyle, background: "rgba(255,255,255,.05)", color: "#B8C5DA" }} />
             <div style={{ fontSize: ".72rem", color: "#93A4BF", marginTop: 5, lineHeight: 1.5 }}>
               Se lee de Stripe (<code>{PRO_MONTHLY_LOOKUP_KEY}</code>), que es lo que realmente se
               cobra. Para cambiarlo, edita el precio en Stripe: la app lo toma de ahí.

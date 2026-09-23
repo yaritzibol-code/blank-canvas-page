@@ -177,12 +177,12 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
       </div>
 
       {/* Mensaje */}
-      <div style={{ background: "#f5f7fc", borderLeft: "3px solid #C7A052", borderRadius: 8, padding: "10px 14px", fontSize: ".84rem", color: "#FFFFFF", lineHeight: 1.6, marginBottom: 12, whiteSpace: "pre-wrap" }}>
+      <div style={{ background: "rgba(255,255,255,.05)", borderLeft: "3px solid #C7A052", borderRadius: 8, padding: "10px 14px", fontSize: ".84rem", color: "#FFFFFF", lineHeight: 1.6, marginBottom: 12, whiteSpace: "pre-wrap" }}>
         {r.mensaje}
       </div>
 
       {r.pregunta && (
-        <div style={{ border: "1px solid rgba(255,255,255,.10)", background: "#F7FAFF", borderRadius: 10, padding: "10px 13px", marginBottom: 12 }}>
+        <div style={{ border: "1px solid rgba(199,160,82,.22)", background: "rgba(255,255,255,.05)", borderRadius: 10, padding: "10px 13px", marginBottom: 12 }}>
           <div style={{ fontSize: ".66rem", fontWeight: 800, letterSpacing: ".06em", color: "#93A4BF" }}>PREGUNTA REPORTADA</div>
           <p style={{ margin: "5px 0 0", fontSize: ".8rem", color: "#FFFFFF", lineHeight: 1.5 }}>{r.pregunta.text}</p>
         </div>

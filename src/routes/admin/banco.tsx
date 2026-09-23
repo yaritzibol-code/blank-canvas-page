@@ -90,11 +90,10 @@ function AdminBancoPage() {
   const fileRef = useRef<HTMLInputElement>(null);
 
   const [query, setQuery] = useState(searchQ ?? "");
-  const [fMateria, setFMateria] = useState("todas");
-  const [fEstado, setFEstado] = useState("todos");
   const [fFuente, setFFuente] = useState("todos");
   const [fCap, setFCap] = useState("todos");
-  const [fSeccion, setFSeccion] = useState("todas");
+  /** Tipo de reactivo: todas · abiertas · opción múltiple · con lámina · sin lámina. */
+  const [fTipo, setFTipo] = useState("todas");
 
   const [limit, setLimit] = useState(60);
   const [importResult, setImportResult] = useState<CsvImportResult | null>(null);
@@ -118,18 +117,11 @@ function AdminBancoPage() {
   const sinClasificar = questions.filter((x) => x.materia === "" && !x.fuente).length;
 
   /*
-   * Los filtros se arman con lo que REALMENTE hay en el banco (materias,
-   * manuales, capítulos y secciones), unido al catálogo. Así, cada vez que se
-   * sube un manual o una materia nueva, aparece sola en los desplegables.
+   * Tres filtros y nada más: cuestionario (manual), bloque del temario y tipo
+   * de reactivo (abiertas / con lámina). Se arman con lo que REALMENTE hay en
+   * el banco unido al catálogo, así un manual nuevo aparece solo.
    */
-  const materiasEnBanco = [...new Set(questions.map((x) => x.materia).filter(Boolean))].sort();
-  const materiaOpts = [
-    ...MATERIAS_DEF.filter((m) => materiasEnBanco.includes(m.slug)).map((m) => ({ value: m.slug, label: m.name })),
-    ...materiasEnBanco
-      .filter((s) => !MATERIAS_DEF.some((m) => m.slug === s))
-      .map((s) => ({ value: s, label: s })),
-    ...MATERIAS_DEF.filter((m) => !materiasEnBanco.includes(m.slug)).map((m) => ({ value: m.slug, label: `${m.name} (0)` })),
-  ];
+
 
   const fuentesEnBanco = [...new Set(questions.map((x) => x.fuente).filter(Boolean) as string[])].sort();
   const fuenteOpts = [
@@ -154,30 +146,24 @@ function AdminBancoPage() {
     titulo: chaptersFor(fFuente).find((c) => c.num === num)?.titulo ?? "",
   }));
 
-  const seccionesEnScope = [
-    ...new Set(
-      questions
-        .filter((x) => (fFuente === "todos" ? true : x.fuente === fFuente))
-        .filter((x) => fCap === "todos" || String(x.capitulo ?? "") === fCap)
-        .map((x) => x.seccion)
-        .filter((s): s is string => Boolean(s)),
-    ),
-  ].sort();
+  const conLamina = (x: BankQuestion) => Array.isArray(x.imagenes) && x.imagenes.length > 0;
+  const esAbierta = (x: BankQuestion) => x.tipo === "abierta";
 
   const t = query.trim().toLowerCase();
   const filtered = questions
     .filter((x) => {
-      if (fMateria === "sin" && x.materia !== "") return false;
-      if (fMateria !== "todas" && fMateria !== "sin" && x.materia !== fMateria) return false;
-      if (fEstado !== "todos" && x.status !== fEstado) return false;
       if (fFuente === "CIAAC" && x.fuente) return false;
       if (fFuente !== "todos" && fFuente !== "CIAAC" && x.fuente !== fFuente) return false;
       if (fCap !== "todos" && String(x.capitulo ?? "") !== fCap) return false;
-      if (fSeccion !== "todas" && (x.seccion ?? "") !== fSeccion) return false;
+      if (fTipo === "abiertas" && !esAbierta(x)) return false;
+      if (fTipo === "opcion" && esAbierta(x)) return false;
+      if (fTipo === "con_imagen" && !conLamina(x)) return false;
+      if (fTipo === "sin_imagen" && conLamina(x)) return false;
       if (t && !(x.text.toLowerCase().includes(t) || x.id.toLowerCase().includes(t))) return false;
       return true;
     })
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+
 
 
   /* ───────── CSV ───────── */
@@ -337,25 +323,12 @@ function AdminBancoPage() {
           <span style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: "#93A4BF" }}><Icon n="search" size={15} /></span>
           <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Buscar por texto o ID de la pregunta..." style={{ ...inputStyle, paddingLeft: 34 }} />
         </div>
-        <select value={fMateria} onChange={(e) => setFMateria(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 170 }}>
-          <option value="todas">Materia: todas</option>
-          {materiaOpts.map((m) => (
-            <option key={m.value} value={m.value}>{m.label}</option>
-          ))}
-          <option value="sin">Sin clasificar</option>
-        </select>
-        <select value={fEstado} onChange={(e) => setFEstado(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 140 }}>
-          <option value="todos">Estado: todos</option>
-          <option value="publicada">Publicada</option>
-          <option value="borrador">Borrador</option>
-          <option value="oculta">Oculta</option>
-        </select>
         <select
           value={fFuente}
-          onChange={(e) => { setFFuente(e.target.value); setFCap("todos"); setFSeccion("todas"); }}
-          style={{ ...inputStyle, width: "auto", minWidth: 170 }}
+          onChange={(e) => { setFFuente(e.target.value); setFCap("todos"); }}
+          style={{ ...inputStyle, width: "auto", minWidth: 200 }}
         >
-          <option value="todos">Banco: todos</option>
+          <option value="todos">Cuestionario: todos</option>
           <option value="CIAAC">CIAAC (sin manual)</option>
           {fuenteOpts.map((f) => (
             <option key={f.value} value={f.value}>{f.label}</option>
@@ -364,23 +337,23 @@ function AdminBancoPage() {
         {capOpts.length > 0 && (
           <select
             value={fCap}
-            onChange={(e) => { setFCap(e.target.value); setFSeccion("todas"); }}
-            style={{ ...inputStyle, width: "auto", minWidth: 200 }}
+            onChange={(e) => setFCap(e.target.value)}
+            style={{ ...inputStyle, width: "auto", minWidth: 220 }}
           >
-            <option value="todos">Capítulo: todos</option>
+            <option value="todos">Bloque: todos</option>
             {capOpts.map((c) => (
               <option key={c.num} value={String(c.num)}>{capLabel(fFuente)} {c.num}{c.titulo ? ` · ${c.titulo}` : ""}</option>
             ))}
           </select>
         )}
-        {seccionesEnScope.length > 0 && (
-          <select value={fSeccion} onChange={(e) => setFSeccion(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 200 }}>
-            <option value="todas">Sección: todas</option>
-            {seccionesEnScope.map((s) => (
-              <option key={s} value={s}>{s}</option>
-            ))}
-          </select>
-        )}
+        <select value={fTipo} onChange={(e) => setFTipo(e.target.value)} style={{ ...inputStyle, width: "auto", minWidth: 190 }}>
+          <option value="todas">Tipo: todas</option>
+          <option value="abiertas">Preguntas abiertas</option>
+          <option value="opcion">Opción múltiple</option>
+          <option value="con_imagen">Con imagen</option>
+          <option value="sin_imagen">Sin imagen</option>
+        </select>
+
 
       </div>
 
@@ -399,6 +372,8 @@ function AdminBancoPage() {
                 {x.fuente ? ` · ${x.fuente}` : ""}{x.seccion ? ` · ${x.seccion}` : ""}</div>
             </div>
             <Badge text={catalogoLabel(x)} color={x.fuente ? "#6C0820" : x.materia ? "#C7A052" : "#93A4BF"} />
+            {esAbierta(x) && <Badge text="Abierta" color="#2ecc71" />}
+            {conLamina(x) && <Badge text="Con imagen" color="#3B82F6" />}
             <Badge text={CONTENT_STATUS_LABEL[x.status] ?? x.status} color={CONTENT_STATUS_COLOR[x.status] ?? "#C7A052"} />
             <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
               <button onClick={() => openEdit(x)} title="Editar" style={{ padding: "6px 10px", background: "#0A1B33", color: "#B8C5DA", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}>
