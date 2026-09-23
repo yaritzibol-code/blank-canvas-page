@@ -20,7 +20,7 @@ import { Icon } from "@/components/ui/fp-icon";
 
 const BRAND = "#7A5C1E";
 const FONT = "'Manrope', sans-serif";
-const DISPLAY = "'Playfair Display', serif";
+const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
 const SETUP_LIST = 3000;
 
 /** Todo lo que se desbloquea con Pro (mismo listado que la card de precios). */
@@ -119,7 +119,7 @@ export function FlashOfferWatch() {
               position: "fixed",
               inset: 0,
               zIndex: 9999,
-              background: "rgba(12,10,14,0.78)",
+              background: "rgba(3,8,15,0.82)",
               display: "grid",
               placeItems: "center",
               padding: 16,
@@ -132,11 +132,11 @@ export function FlashOfferWatch() {
                 width: "min(520px, 100%)",
                 maxHeight: "92vh",
                 overflowY: "auto",
-                background: "#12141C",
-                borderRadius: 24,
+                background: "linear-gradient(180deg,#071326 0%,#050F22 100%)",
+                borderRadius: 6,
                 padding: "26px 22px",
                 boxShadow: "0 30px 90px rgba(0,0,0,0.55)",
-                border: "1px solid rgba(255,255,255,0.10)",
+                border: "1px solid rgba(199,160,82,0.35)",
                 color: "#fff",
               }}
             >
@@ -156,7 +156,7 @@ export function FlashOfferWatch() {
               {/* Card de precio, igual a la de la página de precios */}
               <div
                 style={{
-                  borderRadius: 18,
+                  borderRadius: 6,
                   border: "1px solid rgba(255,255,255,0.14)",
                   background: "rgba(255,255,255,0.06)",
                   padding: 16,
