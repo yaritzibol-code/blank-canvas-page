@@ -1657,6 +1657,17 @@ html:has(.fd-shell) {
   .fd-director-aside {
     display: none;
   }
+  .fd-destinations {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .fd-destination-chip {
+    flex: 0 0 150px;
+    scroll-snap-align: start;
+  }
   .fd-globe {
     left: 24%;
     right: -10%;
@@ -1673,6 +1684,27 @@ html:has(.fd-shell) {
   }
   .fd-content {
     padding: 24px 22px 90px;
+  }
+}
+@media (max-width: 360px) {
+  .fd-topbar {
+    padding-inline: 10px;
+  }
+  .fd-director {
+    padding-inline: 10px;
+  }
+  .fd-director .fd-globe {
+    width: calc(100% + 20px);
+    margin-inline: -10px;
+  }
+  .fd-destination-card {
+    padding-inline: 14px;
+  }
+  .fd-destination-card .fd-takeoff {
+    width: calc(100% - 90px);
+  }
+  .fd-mobile-details {
+    margin-left: 7px;
   }
 }
 @media (max-width: 600px) {

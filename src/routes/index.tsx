@@ -59,7 +59,6 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: "https://flightpath.mx/" },
-      { rel: "preload", as: "image", href: "/img/pathy-cloud.png", fetchPriority: "high" },
     ],
   }),
 });

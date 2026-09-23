@@ -69,11 +69,14 @@ export function Globe({
   useEffect(() => {
     const cv = canvas.current;
     if (!cv) return;
+    const compact = window.innerWidth <= 900;
+    const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8;
+    const constrained = compact || deviceMemory <= 4;
     const gl = cv.getContext("webgl", {
       alpha: true,
-      antialias: true,
+      antialias: !constrained,
       premultipliedAlpha: true,
-      powerPreference: "high-performance",
+      powerPreference: constrained ? "low-power" : "high-performance",
     });
     if (!gl) {
       setFallback(true);
@@ -127,7 +130,8 @@ export function Globe({
     const maxAnisotropy = anisotropy
       ? Math.min(8, gl.getParameter(anisotropy.MAX_TEXTURE_MAX_ANISOTROPY_EXT) as number)
       : 1;
-    ["tierra-dia-nasa.webp", "tierra-noche-nasa.webp"].forEach((file, index) => {
+    const textureSize = compact ? "1024" : window.devicePixelRatio > 1.25 ? "2048" : "nasa";
+    [`tierra-dia-${textureSize}.webp`, `tierra-noche-${textureSize}.webp`].forEach((file, index) => {
       const texture = gl.createTexture()!;
       textures.push(texture);
       gl.activeTexture(gl.TEXTURE0 + index);
@@ -152,9 +156,19 @@ export function Globe({
       images.push(image);
       image.onload = () => {
         if (stopped) return;
+        const maxTexture = gl.getParameter(gl.MAX_TEXTURE_SIZE) as number;
+        let source: TexImageSource = image;
+        if (image.naturalWidth > maxTexture) {
+          const scaled = document.createElement("canvas");
+          scaled.width = maxTexture;
+          scaled.height = Math.round((image.naturalHeight / image.naturalWidth) * maxTexture);
+          const context = scaled.getContext("2d");
+          context?.drawImage(image, 0, 0, scaled.width, scaled.height);
+          source = scaled;
+        }
         gl.activeTexture(gl.TEXTURE0 + index);
         gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, source);
         gl.generateMipmap(gl.TEXTURE_2D);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
         if (anisotropy) {
@@ -202,8 +216,9 @@ export function Globe({
       }
       const w = cv!.clientWidth,
         h = cv!.clientHeight,
-        pixelBudgetRatio = Math.sqrt(8_000_000 / Math.max(1, w * h)),
-        ratio = Math.min(devicePixelRatio || 1, 3, pixelBudgetRatio);
+        pixelBudget = constrained ? 4_000_000 : 8_000_000,
+        pixelBudgetRatio = Math.sqrt(pixelBudget / Math.max(1, w * h)),
+        ratio = Math.max(1, Math.min(devicePixelRatio || 1, constrained ? 2 : 3, pixelBudgetRatio));
       if (!w || !h) {
         raf = requestAnimationFrame(render);
         return;
@@ -324,7 +339,7 @@ export function Globe({
   return (
     <div className={"fd-globe" + (fallback ? " fd-globe-fallback" : "")}>
       {fallback ? (
-        <img src={ASSETS + "tierra-noche-nasa.webp"} alt="La Tierra de noche" />
+        <img src={ASSETS + "tierra-noche-1024.webp"} alt="La Tierra de noche" />
       ) : (
         <canvas
           ref={canvas}
