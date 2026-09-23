@@ -237,7 +237,7 @@ export function InterviewStage({
       <div
         style={{
           background: NAVY,
-          borderRadius: 22,
+          borderRadius: "var(--fd-radius, 22px)",
           padding: "22px 24px",
           color: "white",
           display: "flex",
@@ -424,7 +424,7 @@ export function InterviewStage({
               alignItems: "center",
               gap: 8,
               padding: "10px 18px",
-              borderRadius: 10,
+              borderRadius: "var(--fd-radius, 10px)",
               border: "none",
               background: CORAL,
               color: "white",
@@ -443,9 +443,9 @@ export function InterviewStage({
       {/* Guion */}
       <div
         style={{
-          background: "white",
+          background: "var(--fd-panel, white)",
           border: `1px solid ${NAVY}14`,
-          borderRadius: 22,
+          borderRadius: "var(--fd-radius, 22px)",
           padding: "20px 22px",
           alignSelf: "start",
         }}
@@ -457,7 +457,7 @@ export function InterviewStage({
             letterSpacing: "0.2em",
             textTransform: "uppercase",
             fontWeight: 700,
-            color: `${NAVY}66`,
+            color: "var(--fd-muted, #081A3566)",
             marginBottom: 4,
           }}
         >
@@ -468,7 +468,7 @@ export function InterviewStage({
             fontFamily: SERIF,
             fontStyle: "italic",
             fontSize: "1.3rem",
-            color: NAVY,
+            color: "var(--fd-text, #081A35)",
             marginBottom: 14,
           }}
         >
@@ -487,8 +487,8 @@ export function InterviewStage({
                   gap: 8,
                   alignItems: "flex-start",
                   padding: "8px 10px",
-                  borderRadius: 10,
-                  background: esActual ? CREAM : "transparent",
+                  borderRadius: "var(--fd-radius, 10px)",
+                  background: esActual ? "var(--fd-panel, #F5F5F7)" : "transparent",
                   border: `1px solid ${esActual ? `${NAVY}1A` : "transparent"}`,
                   opacity: pasada ? 0.5 : 1,
                 }}
@@ -498,7 +498,7 @@ export function InterviewStage({
                     fontFamily: MONO,
                     fontSize: "0.6rem",
                     fontWeight: 800,
-                    color: esActual ? CORAL : `${NAVY}44`,
+                    color: esActual ? "var(--fd-gold, #7A5C1E)" : "var(--fd-muted, #081A3544)",
                     paddingTop: 2,
                     minWidth: 16,
                   }}
@@ -509,7 +509,7 @@ export function InterviewStage({
                   style={{
                     fontSize: "0.8rem",
                     lineHeight: 1.4,
-                    color: esActual ? NAVY : HAZE,
+                    color: esActual ? "var(--fd-text, #081A35)" : "var(--fd-muted, #4A5872)",
                     fontWeight: esActual ? 600 : 400,
                   }}
                 >
@@ -526,7 +526,7 @@ export function InterviewStage({
             paddingTop: 14,
             borderTop: `1px solid ${NAVY}12`,
             fontSize: "0.74rem",
-            color: HAZE,
+            color: "var(--fd-muted, #4A5872)",
             lineHeight: 1.5,
           }}
         >
@@ -554,7 +554,7 @@ function ctrlBtn(disabled: boolean): React.CSSProperties {
     alignItems: "center",
     gap: 6,
     padding: "9px 14px",
-    borderRadius: 10,
+    borderRadius: "var(--fd-radius, 10px)",
     border: "1px solid rgba(255,255,255,0.18)",
     background: "transparent",
     color: disabled ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.9)",

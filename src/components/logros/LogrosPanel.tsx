@@ -7,12 +7,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Icon } from "@/components/ui/fp-icon";
 import { useStoreVersion } from "@/lib/store";
-import {
-  listarLogros,
-  getDestacados,
-  setDestacados,
-  MAX_DESTACADOS,
-} from "@/lib/logros/engine";
+import { listarLogros, getDestacados, setDestacados, MAX_DESTACADOS } from "@/lib/logros/engine";
 import { LOGRO_CATEGORIAS, LOGRO_MAXIMO_ID } from "@/lib/logros/catalog";
 import type { LogroEstado } from "@/lib/logros/types";
 
@@ -22,8 +17,8 @@ const fmt = (iso: string | null) =>
     : "";
 
 const card = {
-  background: "white",
-  borderRadius: 16,
+  background: "var(--fd-panel, white)",
+  borderRadius: "var(--fd-radius, 16px)",
   padding: 20,
   boxShadow: "0 2px 10px rgba(22,61,112,.06)",
   marginBottom: 24,
@@ -32,7 +27,7 @@ const card = {
 const titulo = {
   fontSize: ".78rem",
   fontWeight: 700,
-  color: "#4A5872",
+  color: "var(--fd-muted, #4A5872)",
   textTransform: "uppercase",
   letterSpacing: ".5px",
   display: "inline-flex",
@@ -67,14 +62,14 @@ function Badge({
       style={{
         textAlign: "center",
         padding: "14px 10px",
-        borderRadius: 12,
+        borderRadius: "var(--fd-radius, 12px)",
         cursor: onClick ? "pointer" : "default",
         background:
           esMax && l.desbloqueado
             ? "linear-gradient(150deg,#081A35,#163D70 60%,#B08A34)"
             : bloqueado
-              ? "#f5f7fc"
-              : "#f8f9ff",
+              ? "var(--fd-panel, #f5f7fc)"
+              : "var(--fd-panel, #f8f9ff)",
         border:
           l.destacado && seleccionable !== false
             ? "2px solid #163D70"
@@ -89,7 +84,7 @@ function Badge({
           marginBottom: 6,
           display: "flex",
           justifyContent: "center",
-          color: esMax && l.desbloqueado ? "#F2D27A" : "#163D70",
+          color: esMax && l.desbloqueado ? "#F2D27A" : "var(--fd-text, #163D70)",
         }}
       >
         <Icon n={(oculto ? "help" : l.icon) as never} size={26} />
@@ -98,7 +93,7 @@ function Badge({
         style={{
           fontSize: ".72rem",
           fontWeight: 700,
-          color: esMax && l.desbloqueado ? "white" : "#081A35",
+          color: esMax && l.desbloqueado ? "white" : "var(--fd-text, #081A35)",
           lineHeight: 1.2,
           marginBottom: 3,
         }}
@@ -108,7 +103,7 @@ function Badge({
       <div
         style={{
           fontSize: ".62rem",
-          color: esMax && l.desbloqueado ? "rgba(255,255,255,.8)" : "#7E90AD",
+          color: esMax && l.desbloqueado ? "rgba(255,255,255,.8)" : "var(--fd-muted, #7E90AD)",
           lineHeight: 1.3,
         }}
       >
@@ -140,13 +135,7 @@ function useModalClose(onClose: () => void) {
   }, [onClose]);
 }
 
-function LogroCatalogoModal({
-  userId,
-  onClose,
-}: {
-  userId: string;
-  onClose: () => void;
-}) {
+function LogroCatalogoModal({ userId, onClose }: { userId: string; onClose: () => void }) {
   const version = useStoreVersion();
   const [query, setQuery] = useState("");
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
@@ -217,8 +206,8 @@ function LogroCatalogoModal({
         aria-modal="true"
         aria-labelledby="logros-titulo"
         style={{
-          background: "white",
-          borderRadius: 20,
+          background: "var(--fd-panel, white)",
+          borderRadius: "var(--fd-radius, 20px)",
           width: "100%",
           maxWidth: 860,
           maxHeight: "90vh",
@@ -243,7 +232,7 @@ function LogroCatalogoModal({
             <div id="logros-titulo" style={titulo}>
               <Icon n="trophy" size={15} /> Catálogo de logros
             </div>
-            <div style={{ fontSize: ".82rem", color: "#4A5872", marginTop: 4 }}>
+            <div style={{ fontSize: ".82rem", color: "var(--fd-muted, #4A5872)", marginTop: 4 }}>
               {desbloqueados} / {total} desbloqueados · {pct}% completado
             </div>
           </div>
@@ -254,13 +243,13 @@ function LogroCatalogoModal({
               width: 34,
               height: 34,
               borderRadius: 999,
-              border: "1px solid #EEE1C5",
-              background: "white",
+              border: "1px solid var(--fd-border, #EEE1C5)",
+              background: "var(--fd-panel, white)",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "#4A5872",
+              color: "var(--fd-muted, #4A5872)",
             }}
           >
             <Icon n="close" size={16} />
@@ -273,7 +262,7 @@ function LogroCatalogoModal({
             style={{
               height: 8,
               borderRadius: 99,
-              background: "#eef2fa",
+              background: "var(--fd-panel, #eef2fa)",
               overflow: "hidden",
               marginBottom: 14,
             }}
@@ -292,13 +281,13 @@ function LogroCatalogoModal({
               display: "flex",
               alignItems: "center",
               gap: 8,
-              background: "#f8f9ff",
-              border: "1px solid #EEE1C5",
-              borderRadius: 10,
+              background: "var(--fd-panel, #f8f9ff)",
+              border: "1px solid var(--fd-border, #EEE1C5)",
+              borderRadius: "var(--fd-radius, 10px)",
               padding: "8px 12px",
             }}
           >
-            <Icon n="search" size={16} color="#7E90AD" />
+            <Icon n="search" size={16} color="var(--fd-muted, #7E90AD)" />
             <input
               type="text"
               value={query}
@@ -309,7 +298,7 @@ function LogroCatalogoModal({
                 border: "none",
                 background: "transparent",
                 fontSize: ".88rem",
-                color: "#081A35",
+                color: "var(--fd-text, #081A35)",
                 outline: "none",
                 fontFamily: "'Manrope', sans-serif",
               }}
@@ -319,7 +308,7 @@ function LogroCatalogoModal({
                 onClick={() => setQuery("")}
                 style={{
                   fontSize: ".7rem",
-                  color: "#4A5872",
+                  color: "var(--fd-muted, #4A5872)",
                   background: "transparent",
                   border: "none",
                   cursor: "pointer",
@@ -341,7 +330,14 @@ function LogroCatalogoModal({
           }}
         >
           {porCategoria.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "30px 0", color: "#7E90AD", fontSize: ".9rem" }}>
+            <div
+              style={{
+                textAlign: "center",
+                padding: "30px 0",
+                color: "var(--fd-muted, #7E90AD)",
+                fontSize: ".9rem",
+              }}
+            >
               No encontramos logros que coincidan con tu búsqueda.
             </div>
           ) : (
@@ -358,9 +354,9 @@ function LogroCatalogoModal({
                       alignItems: "center",
                       justifyContent: "space-between",
                       padding: "12px 14px",
-                      borderRadius: 12,
-                      border: "1px solid #EEE1C5",
-                      background: isOpen ? "rgba(22,61,112,.06)" : "white",
+                      borderRadius: "var(--fd-radius, 12px)",
+                      border: "1px solid var(--fd-border, #EEE1C5)",
+                      background: isOpen ? "rgba(22,61,112,.06)" : "var(--fd-panel, white)",
                       cursor: "pointer",
                       fontFamily: "'Manrope', sans-serif",
                     }}
@@ -369,7 +365,7 @@ function LogroCatalogoModal({
                       style={{
                         fontSize: ".78rem",
                         fontWeight: 800,
-                        color: "#081A35",
+                        color: "var(--fd-text, #081A35)",
                         display: "flex",
                         alignItems: "center",
                         gap: 7,
@@ -382,7 +378,7 @@ function LogroCatalogoModal({
                       style={{
                         fontSize: ".72rem",
                         fontWeight: 700,
-                        color: hechos === items.length ? "#2ecc71" : "#7E90AD",
+                        color: hechos === items.length ? "#2ecc71" : "var(--fd-muted, #7E90AD)",
                       }}
                     >
                       {hechos}/{items.length}
@@ -419,7 +415,7 @@ function LogroCatalogoModal({
             padding: "12px 20px",
             borderTop: "1px solid #eef2fa",
             fontSize: ".72rem",
-            color: "#4A5872",
+            color: "var(--fd-muted, #4A5872)",
             textAlign: "center",
           }}
         >
@@ -429,7 +425,7 @@ function LogroCatalogoModal({
     </div>
   );
 
-  return createPortal(modal, document.body);
+  return createPortal(<div className="fd-modal-theme">{modal}</div>, document.body);
 }
 
 export function LogrosPanel({ userId }: { userId: string }) {
@@ -474,7 +470,7 @@ export function LogrosPanel({ userId }: { userId: string }) {
             onClick={() => setModalAbierto(true)}
             style={{
               background: "transparent",
-              color: "#163D70",
+              color: "var(--fd-text, #163D70)",
               border: "1px solid #163D70",
               borderRadius: 8,
               padding: "6px 12px",
@@ -488,7 +484,7 @@ export function LogrosPanel({ userId }: { userId: string }) {
           </button>
         </div>
         {destacadosItems.length === 0 ? (
-          <div style={{ fontSize: ".8rem", color: "#7E90AD" }}>
+          <div style={{ fontSize: ".8rem", color: "var(--fd-muted, #7E90AD)" }}>
             Todavía no eliges destacados. Puedes mostrar hasta {MAX_DESTACADOS} de tus logros.
           </div>
         ) : (
@@ -521,7 +517,7 @@ export function LogrosPanel({ userId }: { userId: string }) {
           <div style={titulo}>
             <Icon n="trophy" size={15} /> Logros
           </div>
-          <div style={{ fontSize: ".82rem", fontWeight: 800, color: "#081A35" }}>
+          <div style={{ fontSize: ".82rem", fontWeight: 800, color: "var(--fd-text, #081A35)" }}>
             {desbloqueados} / {total} desbloqueados
           </div>
         </div>
@@ -529,7 +525,7 @@ export function LogrosPanel({ userId }: { userId: string }) {
           style={{
             height: 8,
             borderRadius: 99,
-            background: "#eef2fa",
+            background: "var(--fd-panel, #eef2fa)",
             overflow: "hidden",
             marginBottom: 18,
           }}
@@ -550,7 +546,7 @@ export function LogrosPanel({ userId }: { userId: string }) {
               style={{
                 fontSize: ".74rem",
                 fontWeight: 800,
-                color: "#081A35",
+                color: "var(--fd-text, #081A35)",
                 marginBottom: 10,
               }}
             >
@@ -576,7 +572,7 @@ export function LogrosPanel({ userId }: { userId: string }) {
           style={{
             width: "100%",
             padding: "12px 16px",
-            borderRadius: 10,
+            borderRadius: "var(--fd-radius, 10px)",
             border: "none",
             background: "#163D70",
             color: "white",
@@ -594,7 +590,9 @@ export function LogrosPanel({ userId }: { userId: string }) {
         </button>
       </div>
 
-      {modalAbierto && <LogroCatalogoModal userId={userId} onClose={() => setModalAbierto(false)} />}
+      {modalAbierto && (
+        <LogroCatalogoModal userId={userId} onClose={() => setModalAbierto(false)} />
+      )}
     </>
   );
 }

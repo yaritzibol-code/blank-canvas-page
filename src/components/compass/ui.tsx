@@ -20,9 +20,9 @@ export function CCard({ children, style }: { children: ReactNode; style?: React.
   return (
     <div
       style={{
-        background: "white",
+        background: "var(--fd-panel, white)",
         border: `1px solid ${NAVY}14`,
-        borderRadius: 22,
+        borderRadius: "var(--fd-radius, 22px)",
         padding: "22px 24px",
         ...style,
       }}
@@ -41,7 +41,7 @@ export function Eyebrow({ children, style }: { children: ReactNode; style?: Reac
         letterSpacing: "0.22em",
         textTransform: "uppercase",
         fontWeight: 700,
-        color: `${NAVY}66`,
+        color: "var(--fd-muted, #081A3566)",
         marginBottom: 10,
         ...style,
       }}
@@ -97,7 +97,7 @@ export function ScoreRing({
             fontStyle: "italic",
             fontSize: size * 0.3,
             lineHeight: 1,
-            color: NAVY,
+            color: "var(--fd-text, #081A35)",
           }}
         >
           {Math.round(score)}
@@ -108,7 +108,7 @@ export function ScoreRing({
             fontSize: "0.56rem",
             letterSpacing: "0.18em",
             textTransform: "uppercase",
-            color: HAZE,
+            color: "var(--fd-muted, #4A5872)",
             fontWeight: 700,
             marginTop: 4,
           }}
@@ -126,9 +126,9 @@ export function MetricChip({ m }: { m: CompassMetric }) {
     <div
       title={m.hint}
       style={{
-        background: CREAM,
+        background: "var(--fd-panel, #F5F5F7)",
         border: `1px solid ${NAVY}12`,
-        borderRadius: 14,
+        borderRadius: "var(--fd-radius, 14px)",
         padding: "12px 14px",
         minWidth: 0,
       }}
@@ -140,7 +140,7 @@ export function MetricChip({ m }: { m: CompassMetric }) {
           letterSpacing: "0.14em",
           textTransform: "uppercase",
           fontWeight: 700,
-          color: HAZE,
+          color: "var(--fd-muted, #4A5872)",
           marginBottom: 4,
           whiteSpace: "nowrap",
           overflow: "hidden",
@@ -154,14 +154,14 @@ export function MetricChip({ m }: { m: CompassMetric }) {
           fontFamily: SERIF,
           fontStyle: "italic",
           fontSize: "1.35rem",
-          color: NAVY,
+          color: "var(--fd-text, #081A35)",
           lineHeight: 1,
         }}
       >
         {m.value}
       </div>
       {m.hint && (
-        <div style={{ fontSize: "0.68rem", color: HAZE, marginTop: 5, lineHeight: 1.35 }}>
+        <div style={{ fontSize: "0.68rem", color: "var(--fd-muted, #4A5872)", marginTop: 5, lineHeight: 1.35 }}>
           {m.hint}
         </div>
       )}
@@ -190,10 +190,10 @@ export function CButton({
       disabled={disabled}
       style={{
         padding: "12px 22px",
-        borderRadius: 12,
+        borderRadius: "var(--fd-radius, 12px)",
         border: primary ? "none" : `1px solid ${NAVY}22`,
         background: primary ? CORAL : "transparent",
-        color: primary ? "white" : NAVY,
+        color: primary ? "white" : "var(--fd-text, #081A35)",
         fontFamily: SANS,
         fontSize: "0.88rem",
         fontWeight: 700,
@@ -237,7 +237,7 @@ export function CountdownIntro({ onDone }: { onDone: () => void }) {
         alignItems: "center",
         justifyContent: "center",
         background: "rgba(8,26,53,0.88)",
-        borderRadius: 18,
+        borderRadius: "var(--fd-radius, 18px)",
         zIndex: 5,
       }}
     >
@@ -270,7 +270,7 @@ export function PauseOverlay({ onResume, texto }: { onResume: () => void; texto?
         alignItems: "center",
         justifyContent: "center",
         background: "rgba(8,26,53,0.92)",
-        borderRadius: 18,
+        borderRadius: "var(--fd-radius, 18px)",
         zIndex: 6,
         padding: 20,
       }}
@@ -325,14 +325,14 @@ export function GameTopBar({
           letterSpacing: "0.2em",
           textTransform: "uppercase",
           fontWeight: 700,
-          color: `${NAVY}88`,
+          color: "var(--fd-muted, #081A3588)",
         }}
       >
         {nombre}
       </span>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
         {progressLabel && (
-          <span style={{ fontFamily: MONO, fontSize: "0.72rem", color: HAZE, fontWeight: 700 }}>
+          <span style={{ fontFamily: MONO, fontSize: "0.72rem", color: "var(--fd-muted, #4A5872)", fontWeight: 700 }}>
             {progressLabel}
           </span>
         )}
@@ -342,11 +342,11 @@ export function GameTopBar({
               fontFamily: MONO,
               fontSize: "0.86rem",
               fontWeight: 700,
-              color: low ? CORAL : NAVY,
-              background: low ? `${ROSE}44` : CREAM,
+              color: low ? "var(--fd-gold, #7A5C1E)" : "var(--fd-text, #081A35)",
+              background: low ? `${ROSE}44` : "var(--fd-panel, #F5F5F7)",
               border: `1px solid ${NAVY}14`,
               padding: "4px 10px",
-              borderRadius: 10,
+              borderRadius: "var(--fd-radius, 10px)",
               fontVariantNumeric: "tabular-nums",
             }}
           >
@@ -359,8 +359,8 @@ export function GameTopBar({
           style={{
             border: `1px solid ${NAVY}22`,
             background: "transparent",
-            color: HAZE,
-            borderRadius: 10,
+            color: "var(--fd-muted, #4A5872)",
+            borderRadius: "var(--fd-radius, 10px)",
             padding: "6px 12px",
             fontFamily: MONO,
             fontSize: "0.62rem",

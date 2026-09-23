@@ -49,7 +49,7 @@ export function ModuleHeader({
               fontFamily: "'JetBrains Mono', monospace",
               fontSize: "0.68rem",
               letterSpacing: "0.22em",
-              color: "#4A5872",
+              color: "var(--fd-muted, #4A5872)",
               textTransform: "uppercase",
               marginBottom: 10,
             }}
@@ -63,16 +63,16 @@ export function ModuleHeader({
               fontWeight: 400,
               fontSize: "clamp(2rem, 5vw, 3rem)",
               lineHeight: 1.05,
-              color: "#081A35",
+              color: "var(--fd-text, #081A35)",
               margin: 0,
             }}
           >
             {title}
-            {accent && <em style={{ color: "#7A5C1E" }}> {accent}</em>}
+            {accent && <em style={{ color: "var(--fd-gold, #7A5C1E)" }}> {accent}</em>}
             {tail}
           </h1>
           {subtitle && (
-            <div style={{ marginTop: 10, maxWidth: 560, fontSize: "0.92rem", color: "#4A5872", lineHeight: 1.55 }}>
+            <div style={{ marginTop: 10, maxWidth: 560, fontSize: "0.92rem", color: "var(--fd-muted, #4A5872)", lineHeight: 1.55 }}>
               {subtitle}
             </div>
           )}

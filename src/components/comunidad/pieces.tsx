@@ -431,7 +431,7 @@ export function BoardSkeleton() {
           <div key={i} className="cm-podium-col">
             <span className="cm-skel" style={{ width: 60, height: 60, borderRadius: 999 }} />
             <span className="cm-skel" style={{ width: "70%", height: 12 }} />
-            <span className="cm-skel" style={{ width: "100%", height: h, borderRadius: 16 }} />
+            <span className="cm-skel" style={{ width: "100%", height: h, borderRadius: "var(--fd-radius, 16px)" }} />
           </div>
         ))}
       </div>

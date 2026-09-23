@@ -151,7 +151,6 @@ function PerfilPage() {
     setTimeout(() => setSaved(false), 10000);
   };
 
-
   const memberSince = (() => {
     const d = new Date(user.createdAt).toLocaleDateString("es-MX", {
       month: "short",
@@ -174,7 +173,7 @@ function PerfilPage() {
 
   const fieldStyle: React.CSSProperties = {
     fontSize: ".88rem",
-    color: "#081A35",
+    color: "var(--fd-text, #081A35)",
     fontWeight: 500,
     padding: "9px 12px",
     borderRadius: 8,
@@ -183,12 +182,12 @@ function PerfilPage() {
   };
   const displayStyle: React.CSSProperties = {
     ...fieldStyle,
-    background: "#f8f9ff",
-    border: "2px solid #EEE1C5",
+    background: "var(--fd-panel, #f8f9ff)",
+    border: "1px solid var(--fd-border, #EEE1C5)",
   };
   const inputStyle: React.CSSProperties = {
     ...fieldStyle,
-    background: "white",
+    background: "var(--fd-panel, white)",
     border: "2px solid #163D70",
     outline: "none",
   };
@@ -199,7 +198,7 @@ function PerfilPage() {
         style={{
           fontSize: ".75rem",
           fontWeight: 700,
-          color: "#4A5872",
+          color: "var(--fd-muted, #4A5872)",
           marginBottom: 5,
           display: "block",
         }}
@@ -221,6 +220,7 @@ function PerfilPage() {
 
   return (
     <div
+      className="fd-profile-layout"
       style={{
         fontFamily: "'Manrope', sans-serif",
         maxWidth: 900,
@@ -244,13 +244,16 @@ function PerfilPage() {
       <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}`}</style>
 
       {/* Editorial header */}
-      <header style={{ position: "relative", zIndex: 1, marginBottom: 28, paddingTop: 8 }}>
+      <header
+        className="fd-native-header"
+        style={{ position: "relative", zIndex: 1, marginBottom: 28, paddingTop: 8 }}
+      >
         <div
           style={{
             fontFamily: "'JetBrains Mono', monospace",
             fontSize: "0.68rem",
             letterSpacing: "0.22em",
-            color: "#4A5872",
+            color: "var(--fd-muted, #4A5872)",
             textTransform: "uppercase",
             marginBottom: 10,
           }}
@@ -264,18 +267,22 @@ function PerfilPage() {
             fontWeight: 400,
             fontSize: "clamp(2rem, 5vw, 3rem)",
             lineHeight: 1.05,
-            color: "#081A35",
+            color: "var(--fd-text, #081A35)",
             margin: 0,
           }}
         >
-          Tu perfil, <em style={{ color: "#7A5C1E" }}>{info.nombre.split(" ")[0] || "piloto"}</em>.
+          Tu perfil,{" "}
+          <em style={{ color: "var(--fd-gold, #7A5C1E)" }}>
+            {info.nombre.split(" ")[0] || "piloto"}
+          </em>
+          .
         </h1>
         <div
           style={{
             marginTop: 10,
             maxWidth: 520,
             fontSize: "0.92rem",
-            color: "#4A5872",
+            color: "var(--fd-muted, #4A5872)",
             lineHeight: 1.55,
           }}
         >
@@ -303,7 +310,7 @@ function PerfilPage() {
             background: "#2ecc71",
             color: "white",
             padding: "10px 18px",
-            borderRadius: 10,
+            borderRadius: "var(--fd-radius, 10px)",
             fontWeight: 700,
             fontSize: ".85rem",
             zIndex: 200,
@@ -319,9 +326,10 @@ function PerfilPage() {
 
       {/* Profile hero */}
       <div
+        className="fd-profile-hero"
         style={{
           background: "linear-gradient(135deg,#081A35,#2a2a4e)",
-          borderRadius: 20,
+          borderRadius: "var(--fd-radius, 20px)",
           padding: "clamp(18px,4vw,28px)",
           display: "flex",
           alignItems: "center",
@@ -383,11 +391,11 @@ function PerfilPage() {
             <span
               style={{
                 padding: "4px 12px",
-                borderRadius: 20,
+                borderRadius: "var(--fd-radius, 20px)",
                 fontSize: ".72rem",
                 fontWeight: 700,
                 background: "#C7A052",
-                color: "#7A5C1E",
+                color: "var(--fd-text, #081A35)",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 5,
@@ -398,7 +406,7 @@ function PerfilPage() {
             <span
               style={{
                 padding: "4px 12px",
-                borderRadius: 20,
+                borderRadius: "var(--fd-radius, 20px)",
                 fontSize: ".72rem",
                 fontWeight: 700,
                 background: "rgba(255,255,255,.1)",
@@ -414,7 +422,7 @@ function PerfilPage() {
             <span
               style={{
                 padding: "4px 12px",
-                borderRadius: 20,
+                borderRadius: "var(--fd-radius, 20px)",
                 fontSize: ".72rem",
                 fontWeight: 700,
                 background: "rgba(255,255,255,.08)",
@@ -433,9 +441,10 @@ function PerfilPage() {
 
       {/* Información personal — arriba del todo: es lo que se viene a editar */}
       <div
+        className="fd-profile-info"
         style={{
-          background: "white",
-          borderRadius: 16,
+          background: "var(--fd-panel, white)",
+          borderRadius: "var(--fd-radius, 16px)",
           padding: 20,
           boxShadow: "0 2px 10px rgba(22,61,112,.06)",
           marginBottom: 18,
@@ -455,7 +464,7 @@ function PerfilPage() {
             style={{
               fontSize: ".78rem",
               fontWeight: 700,
-              color: "#4A5872",
+              color: "var(--fd-muted, #4A5872)",
               textTransform: "uppercase",
               letterSpacing: ".5px",
               display: "inline-flex",
@@ -476,9 +485,9 @@ function PerfilPage() {
                   fontWeight: 700,
                   cursor: "pointer",
                   fontFamily: "'Manrope', sans-serif",
-                  background: "white",
-                  color: "#4A5872",
-                  border: "2px solid #EEE1C5",
+                  background: "var(--fd-panel, white)",
+                  color: "var(--fd-muted, #4A5872)",
+                  border: "1px solid var(--fd-border, #EEE1C5)",
                 }}
               >
                 Cancelar
@@ -496,8 +505,8 @@ function PerfilPage() {
                 display: "flex",
                 alignItems: "center",
                 gap: 6,
-                background: editing ? "#163D70" : "white",
-                color: editing ? "white" : "#163D70",
+                background: editing ? "#163D70" : "var(--fd-panel, white)",
+                color: editing ? "white" : "var(--fd-text, #163D70)",
                 border: "2px solid #163D70",
                 transition: "all .2s",
               }}
@@ -540,8 +549,8 @@ function PerfilPage() {
       {/* Enfoque de estudio */}
       <div
         style={{
-          background: "white",
-          borderRadius: 16,
+          background: "var(--fd-panel, white)",
+          borderRadius: "var(--fd-radius, 16px)",
           padding: 20,
           boxShadow: "0 2px 10px rgba(22,61,112,.06)",
           marginBottom: 24,
@@ -551,7 +560,7 @@ function PerfilPage() {
           style={{
             fontSize: ".78rem",
             fontWeight: 700,
-            color: "#4A5872",
+            color: "var(--fd-muted, #4A5872)",
             textTransform: "uppercase",
             letterSpacing: ".5px",
             marginBottom: 6,
@@ -562,7 +571,14 @@ function PerfilPage() {
         >
           <Icon n="target" size={15} /> Materia en la que te enfocas
         </div>
-        <div style={{ fontSize: ".82rem", color: "#4A5872", marginBottom: 14, lineHeight: 1.5 }}>
+        <div
+          style={{
+            fontSize: ".82rem",
+            color: "var(--fd-muted, #4A5872)",
+            marginBottom: 14,
+            lineHeight: 1.5,
+          }}
+        >
           Define qué te muestra el inicio de tu dashboard y los atajos de estudio.
         </div>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
@@ -590,9 +606,9 @@ function PerfilPage() {
                   minWidth: 200,
                   textAlign: "left",
                   padding: "12px 14px",
-                  borderRadius: 12,
+                  borderRadius: "var(--fd-radius, 12px)",
                   border: `2px solid ${sel ? "#163D70" : "#EEE1C5"}`,
-                  background: sel ? "rgba(22,61,112,.06)" : "white",
+                  background: sel ? "rgba(22,61,112,.06)" : "var(--fd-panel, white)",
                   cursor: "pointer",
                   fontFamily: "'Manrope', sans-serif",
                   transition: "all .2s",
@@ -604,7 +620,7 @@ function PerfilPage() {
                     alignItems: "center",
                     gap: 8,
                     marginBottom: 3,
-                    color: sel ? "#163D70" : "#081A35",
+                    color: sel ? "var(--fd-text, #163D70)" : "var(--fd-text, #081A35)",
                   }}
                 >
                   <Icon n={r.icon as never} size={16} />
@@ -615,14 +631,16 @@ function PerfilPage() {
                         marginLeft: "auto",
                         fontSize: ".68rem",
                         fontWeight: 700,
-                        color: "#163D70",
+                        color: "var(--fd-text, #163D70)",
                       }}
                     >
                       Activo
                     </span>
                   )}
                 </div>
-                <div style={{ fontSize: ".76rem", color: "#4A5872" }}>{r.desc}</div>
+                <div style={{ fontSize: ".76rem", color: "var(--fd-muted, #4A5872)" }}>
+                  {r.desc}
+                </div>
               </button>
             );
           })}
@@ -633,7 +651,7 @@ function PerfilPage() {
               style={{
                 fontSize: ".75rem",
                 fontWeight: 700,
-                color: "#4A5872",
+                color: "var(--fd-muted, #4A5872)",
                 marginBottom: 5,
                 display: "block",
               }}
@@ -643,7 +661,12 @@ function PerfilPage() {
             <select
               value={focoMateria}
               onChange={(e) => setFoco("ciaac", e.target.value)}
-              style={{ ...displayStyle, background: "white", cursor: "pointer", maxWidth: 360 }}
+              style={{
+                ...displayStyle,
+                background: "var(--fd-panel, white)",
+                cursor: "pointer",
+                maxWidth: 360,
+              }}
             >
               <option value="">Sin materia prioritaria</option>
               {MATERIAS_DEF.map((m) => (
@@ -669,7 +692,7 @@ function PerfilPage() {
             disabled={!focoSucio || guardandoFoco}
             style={{
               padding: "12px 20px",
-              borderRadius: 10,
+              borderRadius: "var(--fd-radius, 10px)",
               border: "none",
               minHeight: 44,
               fontFamily: "'Manrope', sans-serif",
@@ -683,7 +706,7 @@ function PerfilPage() {
             {guardandoFoco ? "Guardando…" : "Guardar enfoque"}
           </button>
           {focoSucio && !guardandoFoco && (
-            <span style={{ fontSize: ".76rem", color: "#7A5C1E", fontWeight: 600 }}>
+            <span style={{ fontSize: ".76rem", color: "var(--fd-gold, #7A5C1E)", fontWeight: 600 }}>
               Tienes cambios sin guardar
             </span>
           )}
@@ -708,8 +731,8 @@ function PerfilPage() {
           <div
             key={s.label}
             style={{
-              background: "white",
-              borderRadius: 14,
+              background: "var(--fd-panel, white)",
+              borderRadius: "var(--fd-radius, 14px)",
               padding: "16px 18px",
               boxShadow: "0 2px 10px rgba(22,61,112,.06)",
               textAlign: "center",
@@ -720,7 +743,7 @@ function PerfilPage() {
                 marginBottom: 6,
                 display: "flex",
                 justifyContent: "center",
-                color: "#163D70",
+                color: "var(--fd-text, #163D70)",
               }}
             >
               <Icon n={s.icon as never} size={22} />
@@ -730,14 +753,14 @@ function PerfilPage() {
                 fontFamily: "'Instrument Serif', serif",
                 fontSize: "1.6rem",
                 fontWeight: 900,
-                color: "#081A35",
+                color: "var(--fd-text, #081A35)",
                 lineHeight: 1,
                 marginBottom: 4,
               }}
             >
               {s.val}
             </div>
-            <div style={{ fontSize: ".72rem", color: "#4A5872" }}>{s.label}</div>
+            <div style={{ fontSize: ".72rem", color: "var(--fd-muted, #4A5872)" }}>{s.label}</div>
           </div>
         ))}
       </div>
@@ -746,7 +769,7 @@ function PerfilPage() {
       <div
         style={{
           background: "linear-gradient(135deg,#163D70,#5A86CB)",
-          borderRadius: 14,
+          borderRadius: "var(--fd-radius, 14px)",
           padding: "18px 20px",
           marginBottom: 24,
           display: "flex",
@@ -781,8 +804,8 @@ function PerfilPage() {
             onClick={verPlan}
             style={{
               padding: "9px 18px",
-              background: "white",
-              color: "#163D70",
+              background: "var(--fd-panel, white)",
+              color: "var(--fd-text, #163D70)",
               border: "none",
               borderRadius: 8,
               fontSize: ".82rem",
@@ -813,7 +836,9 @@ function PerfilPage() {
       </div>
 
       {/* Logros */}
-      <LogrosPanel userId={user.id} />
+      <div className="fd-profile-logros">
+        <LogrosPanel userId={user.id} />
+      </div>
 
       <FlightPointsPanel />
 
@@ -850,8 +875,8 @@ function ProgresoCard({
   return (
     <div
       style={{
-        background: "white",
-        borderRadius: 16,
+        background: "var(--fd-panel, white)",
+        borderRadius: "var(--fd-radius, 16px)",
         padding: 20,
         boxShadow: "0 2px 10px rgba(22,61,112,.06)",
       }}
@@ -860,7 +885,7 @@ function ProgresoCard({
         style={{
           fontSize: ".78rem",
           fontWeight: 700,
-          color: "#4A5872",
+          color: "var(--fd-muted, #4A5872)",
           textTransform: "uppercase",
           letterSpacing: ".5px",
           marginBottom: 14,
@@ -872,7 +897,7 @@ function ProgresoCard({
         <Icon n={icon as never} size={15} /> {titulo}
       </div>
       {conDatos === 0 && (
-        <div style={{ fontSize: ".82rem", color: "#7E90AD", marginBottom: 12 }}>
+        <div style={{ fontSize: ".82rem", color: "var(--fd-muted, #7E90AD)", marginBottom: 12 }}>
           Aún no tienes cuestionarios de esta ruta. En cuanto hagas el primero verás aquí tu
           porcentaje de aciertos.
         </div>
@@ -886,7 +911,7 @@ function ProgresoCard({
                 title={m.name}
                 style={{
                   fontSize: ".78rem",
-                  color: "#081A35",
+                  color: "var(--fd-text, #081A35)",
                   flex: "1 1 auto",
                   minWidth: 0,
                   display: "inline-flex",
@@ -906,15 +931,15 @@ function ProgresoCard({
                   width: 100,
                   flexShrink: 0,
                   height: 8,
-                  background: "#EEE1C5",
-                  borderRadius: 10,
+                  background: "var(--fd-panel, #EEE1C5)",
+                  borderRadius: "var(--fd-radius, 10px)",
                   overflow: "hidden",
                 }}
               >
                 <div
                   style={{
                     height: "100%",
-                    borderRadius: 10,
+                    borderRadius: "var(--fd-radius, 10px)",
                     background: color,
                     width: `${m.avg ?? 0}%`,
                     transition: "width .6s ease",

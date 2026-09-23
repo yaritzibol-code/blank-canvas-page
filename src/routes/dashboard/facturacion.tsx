@@ -42,9 +42,9 @@ const DISPLAY = "'Instrument Serif', serif";
 const MONO = "'JetBrains Mono', monospace";
 
 const card: React.CSSProperties = {
-  background: "white",
+  background: "var(--fd-panel, white)",
   border: "1px solid #E8ECF2",
-  borderRadius: 16,
+  borderRadius: "var(--fd-radius, 16px)",
   padding: 20,
 };
 
@@ -76,7 +76,7 @@ function estadoVisible(b: BillingState | null, pro: boolean): EstadoVisible {
   const verde = { fondo: "#EAF6EE", borde: "#BFE7CE", color: "#1A7A4A" };
   const ambar = { fondo: "#FDF3D6", borde: "#F0DFAE", color: "#856404" };
   const rojo = { fondo: "#FEE2E2", borde: "#F3C7C2", color: "#B3261E" };
-  const gris = { fondo: "#F2F6FB", borde: "#E3EAF5", color: "#4A5872" };
+  const gris = { fondo: "#F2F6FB", borde: "#E3EAF5", color: "var(--fd-muted, #4A5872)" };
   const s = b?.status;
   if (b?.cancelAtPeriodEnd && b.active) return { texto: "Cancelada (activa hasta el corte)", ...ambar };
   if (s === "past_due" || s === "unpaid") return { texto: "Pago pendiente", ...ambar };
@@ -236,7 +236,7 @@ function FacturacionPage() {
             ...card,
             marginBottom: 16,
             borderColor: error ? "#F3C7C2" : "#BFE7CE",
-            background: error ? "#FEE2E2" : "#EAF6EE",
+            background: error ? "var(--fd-panel, #FEE2E2)" : "var(--fd-panel, #EAF6EE)",
             color: error ? "#B3261E" : "#1A7A4A",
             fontSize: ".86rem",
             fontWeight: 600,
@@ -248,20 +248,20 @@ function FacturacionPage() {
 
       {/* Estado actual */}
       <div style={{ ...card, marginBottom: 16 }}>
-        <div style={{ fontFamily: MONO, fontSize: ".62rem", letterSpacing: ".18em", textTransform: "uppercase", color: MIST, marginBottom: 10 }}>
+        <div style={{ fontFamily: MONO, fontSize: ".62rem", letterSpacing: ".18em", textTransform: "uppercase", color: "var(--fd-muted, #7E90AD)", marginBottom: 10 }}>
           Plan actual
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
-          <span style={{ fontFamily: DISPLAY, fontSize: "1.7rem", fontWeight: 900, color: INK, lineHeight: 1 }}>
+          <span style={{ fontFamily: DISPLAY, fontSize: "1.7rem", fontWeight: 900, color: "var(--fd-text, #081A35)", lineHeight: 1 }}>
             {esAdmin ? "Administradora" : pro ? planLabel(billing, user.planNombre) : "Básica (gratis)"}
           </span>
           {!esAdmin && (
-            <span style={{ padding: "3px 10px", borderRadius: 20, background: estado.fondo, color: estado.color, border: `1px solid ${estado.borde}`, fontSize: ".68rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
+            <span style={{ padding: "3px 10px", borderRadius: "var(--fd-radius, 20px)", background: estado.fondo, color: estado.color, border: `1px solid ${estado.borde}`, fontSize: ".68rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
               {estado.texto}
             </span>
           )}
         </div>
-        <div style={{ fontSize: ".86rem", color: HAZE, marginTop: 8, lineHeight: 1.55 }}>
+        <div style={{ fontSize: ".86rem", color: "var(--fd-muted, #4A5872)", marginTop: 8, lineHeight: 1.55 }}>
           {esAdmin
             ? "Como administradora tienes acceso completo sin pago."
             : loading
@@ -277,26 +277,26 @@ function FacturacionPage() {
         {!esAdmin && billing?.status && (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 12, marginTop: 16, paddingTop: 16, borderTop: "1px solid #EEF3F9" }}>
             <div>
-              <div style={{ fontFamily: MONO, fontSize: ".6rem", letterSpacing: ".16em", textTransform: "uppercase", color: MIST }}>
+              <div style={{ fontFamily: MONO, fontSize: ".6rem", letterSpacing: ".16em", textTransform: "uppercase", color: "var(--fd-muted, #7E90AD)" }}>
                 {billing.cancelAtPeriodEnd ? "Acceso hasta" : "Próximo cobro"}
               </div>
-              <div style={{ fontSize: ".95rem", fontWeight: 800, color: INK, marginTop: 4 }}>
+              <div style={{ fontSize: ".95rem", fontWeight: 800, color: "var(--fd-text, #081A35)", marginTop: 4 }}>
                 {fmtFecha(billing.currentPeriodEnd)}
               </div>
             </div>
             <div>
-              <div style={{ fontFamily: MONO, fontSize: ".6rem", letterSpacing: ".16em", textTransform: "uppercase", color: MIST }}>
+              <div style={{ fontFamily: MONO, fontSize: ".6rem", letterSpacing: ".16em", textTransform: "uppercase", color: "var(--fd-muted, #7E90AD)" }}>
                 Periodicidad
               </div>
-              <div style={{ fontSize: ".95rem", fontWeight: 800, color: INK, marginTop: 4 }}>
+              <div style={{ fontSize: ".95rem", fontWeight: 800, color: "var(--fd-text, #081A35)", marginTop: 4 }}>
                 {ciclo === "year" ? "Anual" : ciclo === "month" ? "Mensual" : "—"}
               </div>
             </div>
             <div>
-              <div style={{ fontFamily: MONO, fontSize: ".6rem", letterSpacing: ".16em", textTransform: "uppercase", color: MIST }}>
+              <div style={{ fontFamily: MONO, fontSize: ".6rem", letterSpacing: ".16em", textTransform: "uppercase", color: "var(--fd-muted, #7E90AD)" }}>
                 Importe
               </div>
-              <div style={{ fontSize: ".95rem", fontWeight: 800, color: INK, marginTop: 4 }}>
+              <div style={{ fontSize: ".95rem", fontWeight: 800, color: "var(--fd-text, #081A35)", marginTop: 4 }}>
                 {formatPriceWithInterval(ciclo === "year" ? PRO_ANNUAL_FALLBACK : PRO_MONTHLY_FALLBACK)}
               </div>
             </div>
@@ -307,10 +307,10 @@ function FacturacionPage() {
       {/* Cambio de periodicidad con prorrateo */}
       {puedeCambiar && (
         <div style={{ ...card, marginBottom: 16 }}>
-          <div style={{ fontFamily: MONO, fontSize: ".62rem", letterSpacing: ".18em", textTransform: "uppercase", color: MIST, marginBottom: 10 }}>
+          <div style={{ fontFamily: MONO, fontSize: ".62rem", letterSpacing: ".18em", textTransform: "uppercase", color: "var(--fd-muted, #7E90AD)", marginBottom: 10 }}>
             Cambiar periodicidad
           </div>
-          <p style={{ fontSize: ".86rem", color: HAZE, lineHeight: 1.6, margin: "0 0 14px" }}>
+          <p style={{ fontSize: ".86rem", color: "var(--fd-muted, #4A5872)", lineHeight: 1.6, margin: "0 0 14px" }}>
             {ciclo === "month"
               ? `Pasa al plan anual (${formatPriceWithInterval(PRO_ANNUAL_FALLBACK)}) y paga menos por mes. Stripe descuenta lo que ya pagaste de este mes.`
               : `Vuelve al plan mensual (${formatPriceWithInterval(PRO_MONTHLY_FALLBACK)}). Stripe te acredita el tiempo del año que no usaste.`}
@@ -319,7 +319,7 @@ function FacturacionPage() {
             onClick={() => setSwitchTo(ciclo === "month" ? "year" : "month")}
             disabled={busy}
             style={{
-              padding: "11px 18px", borderRadius: 10, cursor: busy ? "wait" : "pointer",
+              padding: "11px 18px", borderRadius: "var(--fd-radius, 10px)", cursor: busy ? "wait" : "pointer",
               background: INK, color: "white", border: "none",
               fontSize: ".86rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif",
             }}
@@ -332,20 +332,20 @@ function FacturacionPage() {
       {/* Historial de pagos */}
       {!esAdmin && (
         <div style={{ ...card, marginBottom: 16 }}>
-          <div style={{ fontFamily: MONO, fontSize: ".62rem", letterSpacing: ".18em", textTransform: "uppercase", color: MIST, marginBottom: 12 }}>
+          <div style={{ fontFamily: MONO, fontSize: ".62rem", letterSpacing: ".18em", textTransform: "uppercase", color: "var(--fd-muted, #7E90AD)", marginBottom: 12 }}>
             Historial de pagos
           </div>
           {loading ? (
-            <div style={{ fontSize: ".86rem", color: HAZE }}>Consultando tus cobros…</div>
+            <div style={{ fontSize: ".86rem", color: "var(--fd-muted, #4A5872)" }}>Consultando tus cobros…</div>
           ) : invoices.length === 0 ? (
-            <div style={{ fontSize: ".86rem", color: HAZE }}>
+            <div style={{ fontSize: ".86rem", color: "var(--fd-muted, #4A5872)" }}>
               Todavía no hay cobros a tu nombre. Cuando pagues, aquí aparecerá cada recibo con su PDF.
             </div>
           ) : (
             <div style={{ overflowX: "auto" }}>
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: ".84rem" }}>
                 <thead>
-                  <tr style={{ textAlign: "left", color: MIST }}>
+                  <tr style={{ textAlign: "left", color: "var(--fd-muted, #7E90AD)" }}>
                     <th style={{ padding: "6px 8px", fontWeight: 700 }}>Fecha</th>
                     <th style={{ padding: "6px 8px", fontWeight: 700 }}>Concepto</th>
                     <th style={{ padding: "6px 8px", fontWeight: 700 }}>Importe</th>
@@ -355,9 +355,9 @@ function FacturacionPage() {
                 </thead>
                 <tbody>
                   {invoices.map((inv) => (
-                    <tr key={inv.id} style={{ borderTop: "1px solid #EEF3F9", color: INK }}>
+                    <tr key={inv.id} style={{ borderTop: "1px solid #EEF3F9", color: "var(--fd-text, #081A35)" }}>
                       <td style={{ padding: "8px" }}>{fmtFecha(inv.date)}</td>
-                      <td style={{ padding: "8px", color: HAZE }}>{inv.concepto}</td>
+                      <td style={{ padding: "8px", color: "var(--fd-muted, #4A5872)" }}>{inv.concepto}</td>
                       <td style={{ padding: "8px", fontWeight: 700 }}>
                         ${inv.amount.toLocaleString("es-MX")} {inv.currency}
                       </td>
@@ -370,7 +370,7 @@ function FacturacionPage() {
                             href={(inv.pdfUrl ?? inv.hostedUrl) as string}
                             target="_blank"
                             rel="noopener noreferrer"
-                            style={{ color: WINE, fontWeight: 700, textDecoration: "none" }}
+                            style={{ color: "var(--fd-gold, #7A5C1E)", fontWeight: 700, textDecoration: "none" }}
                           >
                             Ver PDF
                           </a>
@@ -393,9 +393,9 @@ function FacturacionPage() {
       ) : (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 16, marginBottom: 16 }}>
           <div style={card}>
-            <div style={{ fontSize: ".95rem", fontWeight: 800, color: INK, marginBottom: 4 }}>Básica</div>
-            <div style={{ fontFamily: DISPLAY, fontSize: "1.6rem", fontWeight: 900, color: INK, marginBottom: 8 }}>Gratis</div>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0, fontSize: ".84rem", color: HAZE, lineHeight: 1.9 }}>
+            <div style={{ fontSize: ".95rem", fontWeight: 800, color: "var(--fd-text, #081A35)", marginBottom: 4 }}>Básica</div>
+            <div style={{ fontFamily: DISPLAY, fontSize: "1.6rem", fontWeight: 900, color: "var(--fd-text, #081A35)", marginBottom: 8 }}>Gratis</div>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, fontSize: ".84rem", color: "var(--fd-muted, #4A5872)", lineHeight: 1.9 }}>
               <li>Parte del banco de preguntas</li>
               <li>Un simulador al mes</li>
               <li>Bitácora y recordatorios básicos</li>
@@ -403,18 +403,18 @@ function FacturacionPage() {
           </div>
           <div style={{ ...card, borderColor: "#C7A052", borderWidth: 2 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-              <span style={{ fontSize: ".95rem", fontWeight: 800, color: INK }}>Pro</span>
-              <span style={{ padding: "2px 9px", borderRadius: 20, background: "#C7A052", color: WINE, fontSize: ".64rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
+              <span style={{ fontSize: ".95rem", fontWeight: 800, color: "var(--fd-text, #081A35)" }}>Pro</span>
+              <span style={{ padding: "2px 9px", borderRadius: "var(--fd-radius, 20px)", background: "#C7A052", color: "var(--fd-gold, #7A5C1E)", fontSize: ".64rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
                 Recomendado
               </span>
             </div>
-            <div style={{ fontFamily: DISPLAY, fontSize: "1.6rem", fontWeight: 900, color: INK, marginBottom: 2 }}>
+            <div style={{ fontFamily: DISPLAY, fontSize: "1.6rem", fontWeight: 900, color: "var(--fd-text, #081A35)", marginBottom: 2 }}>
               {formatPriceWithInterval(PRO_MONTHLY_FALLBACK)}
             </div>
-            <div style={{ fontSize: ".8rem", color: MIST, marginBottom: 8 }}>
+            <div style={{ fontSize: ".8rem", color: "var(--fd-muted, #7E90AD)", marginBottom: 8 }}>
               o {formatPriceWithInterval(PRO_ANNUAL_FALLBACK)} · {formatPrice(PRO_SETUP_FALLBACK)} de inscripción por única vez
             </div>
-            <ul style={{ listStyle: "none", padding: 0, margin: "0 0 14px", fontSize: ".84rem", color: HAZE, lineHeight: 1.9 }}>
+            <ul style={{ listStyle: "none", padding: 0, margin: "0 0 14px", fontSize: ".84rem", color: "var(--fd-muted, #4A5872)", lineHeight: 1.9 }}>
               <li>Banco completo y simulador ilimitado</li>
               <li>Yaris con IA y el contexto del curso</li>
               <li>Análisis completo por materia</li>
@@ -423,7 +423,7 @@ function FacturacionPage() {
               to="/dashboard/planes"
               style={{
                 display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
-                width: "100%", padding: "11px 16px", borderRadius: 10,
+                width: "100%", padding: "11px 16px", borderRadius: "var(--fd-radius, 10px)",
                 background: WINE, color: "white", fontSize: ".86rem", fontWeight: 700, textDecoration: "none",
               }}
             >
@@ -437,7 +437,7 @@ function FacturacionPage() {
       {/* Gestión */}
       {!esAdmin && (
         <div style={card}>
-          <div style={{ fontFamily: MONO, fontSize: ".62rem", letterSpacing: ".18em", textTransform: "uppercase", color: MIST, marginBottom: 12 }}>
+          <div style={{ fontFamily: MONO, fontSize: ".62rem", letterSpacing: ".18em", textTransform: "uppercase", color: "var(--fd-muted, #7E90AD)", marginBottom: 12 }}>
             Gestionar
           </div>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -445,8 +445,8 @@ function FacturacionPage() {
               onClick={doPortal}
               disabled={busy || !configured || !billing?.status}
               style={{
-                padding: "11px 18px", borderRadius: 10, cursor: busy ? "wait" : "pointer",
-                background: "white", color: INK, border: "2px solid #E8ECF2",
+                padding: "11px 18px", borderRadius: "var(--fd-radius, 10px)", cursor: busy ? "wait" : "pointer",
+                background: "var(--fd-panel, white)", color: "var(--fd-text, #081A35)", border: "2px solid #E8ECF2",
                 fontSize: ".86rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif",
                 opacity: !configured || !billing?.status ? 0.5 : 1,
               }}
@@ -458,7 +458,7 @@ function FacturacionPage() {
                 onClick={doResume}
                 disabled={busy}
                 style={{
-                  padding: "11px 18px", borderRadius: 10, cursor: busy ? "wait" : "pointer",
+                  padding: "11px 18px", borderRadius: "var(--fd-radius, 10px)", cursor: busy ? "wait" : "pointer",
                   background: "#1A7A4A", color: "white", border: "none",
                   fontSize: ".86rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif",
                 }}
@@ -470,9 +470,9 @@ function FacturacionPage() {
                 onClick={() => setConfirmOpen(true)}
                 disabled={busy || !billing?.active}
                 style={{
-                  padding: "11px 18px", borderRadius: 10,
+                  padding: "11px 18px", borderRadius: "var(--fd-radius, 10px)",
                   cursor: busy || !billing?.active ? "not-allowed" : "pointer",
-                  background: "white", color: "#B3261E", border: "2px solid #F3C7C2",
+                  background: "var(--fd-panel, white)", color: "#B3261E", border: "2px solid #F3C7C2",
                   fontSize: ".86rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif",
                   opacity: !billing?.active ? 0.5 : 1,
                 }}
@@ -481,7 +481,7 @@ function FacturacionPage() {
               </button>
             )}
           </div>
-          <p style={{ fontSize: ".78rem", color: MIST, marginTop: 12, lineHeight: 1.55 }}>
+          <p style={{ fontSize: ".78rem", color: "var(--fd-muted, #7E90AD)", marginTop: 12, lineHeight: 1.55 }}>
             Al cancelar conservas el acceso Pro hasta el final del periodo que ya pagaste. La
             inscripción es un pago único y no se cobra otra vez si vuelves.
           </p>
@@ -494,11 +494,11 @@ function FacturacionPage() {
           onClick={(e) => { if (e.target === e.currentTarget) setConfirmOpen(false); }}
           style={{ position: "fixed", inset: 0, background: "rgba(26,26,46,.6)", zIndex: 1200, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}
         >
-          <div style={{ background: "white", borderRadius: 18, padding: 24, maxWidth: 460, width: "100%" }}>
-            <h2 style={{ fontFamily: DISPLAY, fontSize: "1.2rem", fontWeight: 800, color: INK, marginBottom: 8 }}>
+          <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 18px)", padding: 24, maxWidth: 460, width: "100%" }}>
+            <h2 style={{ fontFamily: DISPLAY, fontSize: "1.2rem", fontWeight: 800, color: "var(--fd-text, #081A35)", marginBottom: 8 }}>
               ¿Cancelar tu suscripción?
             </h2>
-            <p style={{ fontSize: ".88rem", color: HAZE, lineHeight: 1.6, marginBottom: 18 }}>
+            <p style={{ fontSize: ".88rem", color: "var(--fd-muted, #4A5872)", lineHeight: 1.6, marginBottom: 18 }}>
               No se te volverá a cobrar. Conservas todo el acceso Pro hasta el{" "}
               <strong>{fmtFecha(billing?.currentPeriodEnd ?? null)}</strong> y tu progreso se queda
               guardado por si vuelves.
@@ -506,14 +506,14 @@ function FacturacionPage() {
             <div style={{ display: "flex", gap: 10 }}>
               <button
                 onClick={() => setConfirmOpen(false)}
-                style={{ flex: 1, padding: 11, borderRadius: 10, background: "white", color: HAZE, border: "2px solid #E8ECF2", fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                style={{ flex: 1, padding: 11, borderRadius: "var(--fd-radius, 10px)", background: "var(--fd-panel, white)", color: "var(--fd-muted, #4A5872)", border: "2px solid #E8ECF2", fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
               >
                 Mejor no
               </button>
               <button
                 onClick={doCancel}
                 disabled={busy}
-                style={{ flex: 1, padding: 11, borderRadius: 10, background: "#B3261E", color: "white", border: "none", fontSize: ".86rem", fontWeight: 700, cursor: busy ? "wait" : "pointer", fontFamily: "'Manrope', sans-serif" }}
+                style={{ flex: 1, padding: 11, borderRadius: "var(--fd-radius, 10px)", background: "#B3261E", color: "white", border: "none", fontSize: ".86rem", fontWeight: 700, cursor: busy ? "wait" : "pointer", fontFamily: "'Manrope', sans-serif" }}
               >
                 {busy ? "Cancelando…" : "Sí, cancelar"}
               </button>
@@ -528,11 +528,11 @@ function FacturacionPage() {
           onClick={(e) => { if (e.target === e.currentTarget) setSwitchTo(null); }}
           style={{ position: "fixed", inset: 0, background: "rgba(26,26,46,.6)", zIndex: 1200, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}
         >
-          <div style={{ background: "white", borderRadius: 18, padding: 24, maxWidth: 460, width: "100%" }}>
-            <h2 style={{ fontFamily: DISPLAY, fontSize: "1.2rem", fontWeight: 800, color: INK, marginBottom: 8 }}>
+          <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 18px)", padding: 24, maxWidth: 460, width: "100%" }}>
+            <h2 style={{ fontFamily: DISPLAY, fontSize: "1.2rem", fontWeight: 800, color: "var(--fd-text, #081A35)", marginBottom: 8 }}>
               {switchTo === "year" ? "¿Pasar al plan anual?" : "¿Volver al plan mensual?"}
             </h2>
-            <p style={{ fontSize: ".88rem", color: HAZE, lineHeight: 1.6, marginBottom: 18 }}>
+            <p style={{ fontSize: ".88rem", color: "var(--fd-muted, #4A5872)", lineHeight: 1.6, marginBottom: 18 }}>
               El cambio es inmediato. Stripe calcula el prorrateo: te acredita lo que ya pagaste de
               este periodo y sólo cobra la diferencia
               {switchTo === "year"
@@ -543,14 +543,14 @@ function FacturacionPage() {
             <div style={{ display: "flex", gap: 10 }}>
               <button
                 onClick={() => setSwitchTo(null)}
-                style={{ flex: 1, padding: 11, borderRadius: 10, background: "white", color: HAZE, border: "2px solid #E8ECF2", fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                style={{ flex: 1, padding: 11, borderRadius: "var(--fd-radius, 10px)", background: "var(--fd-panel, white)", color: "var(--fd-muted, #4A5872)", border: "2px solid #E8ECF2", fontSize: ".86rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
               >
                 Mejor no
               </button>
               <button
                 onClick={() => doSwitch(switchTo)}
                 disabled={busy}
-                style={{ flex: 1, padding: 11, borderRadius: 10, background: INK, color: "white", border: "none", fontSize: ".86rem", fontWeight: 700, cursor: busy ? "wait" : "pointer", fontFamily: "'Manrope', sans-serif" }}
+                style={{ flex: 1, padding: 11, borderRadius: "var(--fd-radius, 10px)", background: INK, color: "white", border: "none", fontSize: ".86rem", fontWeight: 700, cursor: busy ? "wait" : "pointer", fontFamily: "'Manrope', sans-serif" }}
               >
                 {busy ? "Cambiando…" : "Sí, cambiar"}
               </button>
@@ -584,8 +584,8 @@ function PlanesGratis() {
     borderRadius: 999,
     border: "none",
     cursor: "pointer",
-    background: activo ? "white" : "transparent",
-    color: activo ? INK : HAZE,
+    background: activo ? "var(--fd-panel, white)" : "transparent",
+    color: activo ? "var(--fd-text, #081A35)" : "var(--fd-muted, #4A5872)",
     fontFamily: "'Manrope', sans-serif",
     fontSize: ".82rem",
     fontWeight: 800,
@@ -605,7 +605,7 @@ function PlanesGratis() {
             gap: 4,
             padding: 4,
             borderRadius: 999,
-            background: "#EEF3F9",
+            background: "var(--fd-panel, #EEF3F9)",
             border: "1px solid #E8ECF2",
             width: "100%",
             maxWidth: 360,
@@ -633,12 +633,12 @@ function PlanesGratis() {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 16 }}>
         {/* Básica */}
         <div style={card}>
-          <div style={{ fontSize: ".95rem", fontWeight: 800, color: INK, marginBottom: 4 }}>Básica</div>
-          <div style={{ fontFamily: DISPLAY, fontSize: "2rem", fontWeight: 900, color: INK, lineHeight: 1 }}>
+          <div style={{ fontSize: ".95rem", fontWeight: 800, color: "var(--fd-text, #081A35)", marginBottom: 4 }}>Básica</div>
+          <div style={{ fontFamily: DISPLAY, fontSize: "2rem", fontWeight: 900, color: "var(--fd-text, #081A35)", lineHeight: 1 }}>
             Gratis
           </div>
-          <div style={{ fontSize: ".8rem", color: MIST, margin: "6px 0 12px" }}>Tu plan actual</div>
-          <ul style={{ listStyle: "none", padding: 0, margin: 0, fontSize: ".84rem", color: HAZE, lineHeight: 1.9 }}>
+          <div style={{ fontSize: ".8rem", color: "var(--fd-muted, #7E90AD)", margin: "6px 0 12px" }}>Tu plan actual</div>
+          <ul style={{ listStyle: "none", padding: 0, margin: 0, fontSize: ".84rem", color: "var(--fd-muted, #4A5872)", lineHeight: 1.9 }}>
             <li>Parte del banco de preguntas</li>
             <li>Un simulador al mes</li>
             <li>Bitácora y recordatorios básicos</li>
@@ -648,15 +648,15 @@ function PlanesGratis() {
         {/* Pro */}
         <div style={{ ...card, borderColor: "#C7A052", borderWidth: 2, position: "relative" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, flexWrap: "wrap" }}>
-            <span style={{ fontSize: ".95rem", fontWeight: 800, color: INK }}>
+            <span style={{ fontSize: ".95rem", fontWeight: 800, color: "var(--fd-text, #081A35)" }}>
               Pro {anual ? "Anual" : "Mensual"}
             </span>
-            <span style={{ padding: "2px 9px", borderRadius: 20, background: "#C7A052", color: WINE, fontSize: ".64rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
+            <span style={{ padding: "2px 9px", borderRadius: "var(--fd-radius, 20px)", background: "#C7A052", color: "var(--fd-gold, #7A5C1E)", fontSize: ".64rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
               Recomendado
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
-            <span style={{ fontFamily: DISPLAY, fontSize: "2rem", fontWeight: 900, color: INK, lineHeight: 1 }}>
+            <span style={{ fontFamily: DISPLAY, fontSize: "2rem", fontWeight: 900, color: "var(--fd-text, #081A35)", lineHeight: 1 }}>
               {formatPriceWithInterval(precio)}
             </span>
             {anual && (
@@ -665,13 +665,13 @@ function PlanesGratis() {
               </span>
             )}
           </div>
-          <div style={{ fontSize: ".8rem", color: MIST, margin: "8px 0 12px", lineHeight: 1.55 }}>
+          <div style={{ fontSize: ".8rem", color: "var(--fd-muted, #7E90AD)", margin: "8px 0 12px", lineHeight: 1.55 }}>
             {anual
               ? `Equivale a ${formatPrice({ ...PRO_MONTHLY_FALLBACK, amount: Math.round(PRO_ANNUAL_FALLBACK.amount / 12) })} al mes.`
               : `Con el anual pagarías ${formatPriceWithInterval(PRO_ANNUAL_FALLBACK)} y ahorrarías ${ahorroPct}%.`}{" "}
             Más {formatPrice(PRO_SETUP_FALLBACK)} de inscripción por única vez.
           </div>
-          <ul style={{ listStyle: "none", padding: 0, margin: "0 0 14px", fontSize: ".84rem", color: HAZE, lineHeight: 1.9 }}>
+          <ul style={{ listStyle: "none", padding: 0, margin: "0 0 14px", fontSize: ".84rem", color: "var(--fd-muted, #4A5872)", lineHeight: 1.9 }}>
             <li>Banco completo y simulador ilimitado</li>
             <li>Yaris con IA y el contexto del curso</li>
             <li>Análisis completo por materia</li>
@@ -680,7 +680,7 @@ function PlanesGratis() {
             to="/dashboard/planes"
             style={{
               display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
-              width: "100%", padding: "12px 16px", borderRadius: 10, minHeight: 46,
+              width: "100%", padding: "12px 16px", borderRadius: "var(--fd-radius, 10px)", minHeight: 46,
               background: WINE, color: "white", fontSize: ".88rem", fontWeight: 800, textDecoration: "none",
             }}
           >

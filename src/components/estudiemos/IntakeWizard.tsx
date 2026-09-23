@@ -5,8 +5,8 @@ import { PathyMark } from "@/components/shared/PathyMark";
 import type { StudyIntake, StudyMood, StudyTrack, StudyUrgency } from "@/lib/estudiemos/types";
 
 const CARD: React.CSSProperties = {
-  background: "white",
-  borderRadius: 18,
+  background: "var(--fd-panel, white)",
+  borderRadius: "var(--fd-radius, 18px)",
   padding: "24px 22px",
   boxShadow: "0 2px 16px rgba(22,61,112,0.08)",
   fontFamily: "'Manrope', sans-serif",
@@ -35,10 +35,10 @@ function Option({
         textAlign: "left",
         padding: "14px 16px",
         minHeight: 56,
-        borderRadius: 14,
+        borderRadius: "var(--fd-radius, 14px)",
         cursor: "pointer",
         border: `1.5px solid ${selected ? "#163D70" : "#EEE1C5"}`,
-        background: selected ? "rgba(22,61,112,0.07)" : "white",
+        background: selected ? "var(--fd-panel-alt, rgba(22,61,112,0.07))" : "var(--fd-panel, white)",
         fontFamily: "'Manrope', sans-serif",
         display: "flex",
         gap: 12,
@@ -47,7 +47,7 @@ function Option({
       }}
     >
       {icon && (
-        <span style={{ display: "flex", color: selected ? "#163D70" : "#4A5872", flexShrink: 0 }}>
+        <span style={{ display: "flex", color: selected ? "var(--fd-text, #163D70)" : "var(--fd-muted, #4A5872)", flexShrink: 0 }}>
           <Icon n={icon} size={22} />
         </span>
       )}
@@ -58,9 +58,9 @@ function Option({
         />
       )}
       <span>
-        <span style={{ display: "block", fontWeight: 800, color: "#081A35", fontSize: "0.92rem" }}>{title}</span>
+        <span style={{ display: "block", fontWeight: 800, color: "var(--fd-text, #081A35)", fontSize: "0.92rem" }}>{title}</span>
         {desc && (
-          <span style={{ display: "block", fontSize: "0.78rem", color: "#4A5872", lineHeight: 1.45 }}>{desc}</span>
+          <span style={{ display: "block", fontSize: "0.78rem", color: "var(--fd-muted, #4A5872)", lineHeight: 1.45 }}>{desc}</span>
         )}
       </span>
     </button>
@@ -102,10 +102,10 @@ export function IntakeWizard({
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
         <PathyMark size={34} float />
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: "0.7rem", fontWeight: 800, letterSpacing: ".06em", color: "#4A5872", textTransform: "uppercase" }}>
+          <div style={{ fontSize: "0.7rem", fontWeight: 800, letterSpacing: ".06em", color: "var(--fd-muted, #4A5872)", textTransform: "uppercase" }}>
             Paso {step + 1} de 5
           </div>
-          <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.15rem", color: "#081A35", margin: 0 }}>
+          <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.15rem", color: "var(--fd-text, #081A35)", margin: 0 }}>
             {titles[step]}
           </h2>
         </div>
@@ -143,7 +143,7 @@ export function IntakeWizard({
             style={{
               width: "100%",
               padding: "13px 15px",
-              borderRadius: 12,
+              borderRadius: "var(--fd-radius, 12px)",
               border: "1.5px solid #EEE1C5",
               fontSize: "0.92rem",
               fontFamily: "'Manrope', sans-serif",
@@ -156,7 +156,7 @@ export function IntakeWizard({
               onClick={() => setStep(2)}
               disabled={!tema.trim()}
               style={{
-                flex: "1 1 160px", minHeight: 46, borderRadius: 12, border: "none",
+                flex: "1 1 160px", minHeight: 46, borderRadius: "var(--fd-radius, 12px)", border: "none",
                 background: tema.trim() ? "#081A35" : "rgba(8,26,53,.25)",
                 color: "white", fontWeight: 700, fontSize: "0.86rem",
                 cursor: tema.trim() ? "pointer" : "not-allowed", fontFamily: "'Manrope', sans-serif",
@@ -167,8 +167,8 @@ export function IntakeWizard({
             <button
               onClick={() => { setTema(""); setStep(2); }}
               style={{
-                flex: "1 1 160px", minHeight: 46, borderRadius: 12,
-                border: "1.5px solid #163D70", background: "white", color: "#163D70",
+                flex: "1 1 160px", minHeight: 46, borderRadius: "var(--fd-radius, 12px)",
+                border: "1.5px solid #163D70", background: "var(--fd-panel, white)", color: "var(--fd-text, #163D70)",
                 fontWeight: 700, fontSize: "0.86rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif",
               }}
             >
@@ -227,11 +227,11 @@ export function IntakeWizard({
               value={minutos}
               onChange={(e) => setMinutos(e.target.value)}
               style={{
-                width: 96, padding: "12px 14px", borderRadius: 12, border: "1.5px solid #EEE1C5",
+                width: 96, padding: "12px 14px", borderRadius: "var(--fd-radius, 12px)", border: "1.5px solid #EEE1C5",
                 fontSize: "1rem", textAlign: "center", fontFamily: "'Manrope', sans-serif", outline: "none",
               }}
             />
-            <span style={{ fontSize: "0.88rem", color: "#4A5872", fontWeight: 600 }}>minutos</span>
+            <span style={{ fontSize: "0.88rem", color: "var(--fd-muted, #4A5872)", fontWeight: 600 }}>minutos</span>
           </div>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
             {[15, 25, 45, 60, 120].map((m) => (
@@ -239,10 +239,10 @@ export function IntakeWizard({
                 key={m}
                 onClick={() => setMinutos(String(m))}
                 style={{
-                  padding: "8px 15px", minHeight: 40, borderRadius: 20, cursor: "pointer",
+                  padding: "8px 15px", minHeight: 40, borderRadius: "var(--fd-radius, 20px)", cursor: "pointer",
                   border: `1.5px solid ${Number(minutos) === m ? "#163D70" : "#EEE1C5"}`,
-                  background: Number(minutos) === m ? "rgba(22,61,112,.08)" : "white",
-                  color: Number(minutos) === m ? "#163D70" : "#4A5872",
+                  background: Number(minutos) === m ? "rgba(22,61,112,.08)" : "var(--fd-panel, white)",
+                  color: Number(minutos) === m ? "var(--fd-text, #163D70)" : "var(--fd-muted, #4A5872)",
                   fontWeight: 700, fontSize: "0.82rem", fontFamily: "'Manrope', sans-serif",
                 }}
               >
@@ -254,7 +254,7 @@ export function IntakeWizard({
             onClick={finish}
             disabled={loading}
             style={{
-              width: "100%", minHeight: 50, borderRadius: 12, border: "none",
+              width: "100%", minHeight: 50, borderRadius: "var(--fd-radius, 12px)", border: "none",
               background: loading ? "rgba(122,92,30,.5)" : "#7A5C1E", color: "white",
               fontWeight: 800, fontSize: "0.92rem", cursor: loading ? "wait" : "pointer",
               fontFamily: "'Manrope', sans-serif", display: "inline-flex",
@@ -270,7 +270,7 @@ export function IntakeWizard({
         <button
           onClick={() => (step === 0 ? onCancel() : setStep((s) => s - 1))}
           style={{
-            background: "none", border: "none", color: "#4A5872", fontWeight: 700,
+            background: "none", border: "none", color: "var(--fd-muted, #4A5872)", fontWeight: 700,
             fontSize: "0.8rem", cursor: "pointer", fontFamily: "'Manrope', sans-serif", padding: 6,
           }}
         >

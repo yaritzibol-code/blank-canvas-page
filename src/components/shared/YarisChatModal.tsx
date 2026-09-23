@@ -159,7 +159,7 @@ export function YarisChatModal({
           right: 0,
           bottom: 0,
           width: "min(400px, 100vw)",
-          background: "white",
+          background: "var(--fd-panel, white)",
           boxShadow: "-16px 0 48px rgba(8,26,53,.28)",
           display: "flex",
           flexDirection: "column",
@@ -169,7 +169,7 @@ export function YarisChatModal({
       >
         {/* Header */}
         <div style={{ background: INK, color: "white", padding: "16px 18px", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
-          <span style={{ width: 38, height: 38, borderRadius: 10, background: "rgba(199,160,82,.18)", color: "#C7A052", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <span style={{ width: 38, height: 38, borderRadius: "var(--fd-radius, 10px)", background: "rgba(199,160,82,.18)", color: "#C7A052", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             <YarisAvatar size={34} />
           </span>
           <div style={{ flex: 1 }}>
@@ -188,7 +188,7 @@ export function YarisChatModal({
         {/* Mensajes */}
         <div
           ref={listRef}
-          style={{ flex: 1, overflowY: "auto", padding: 16, display: "flex", flexDirection: "column", gap: 10, background: "#F7F9FC" }}
+          style={{ flex: 1, overflowY: "auto", padding: 16, display: "flex", flexDirection: "column", gap: 10, background: "var(--fd-panel, #F7F9FC)" }}
         >
           {messages.map((m, i) =>
             m.from === "yaris" ? (
@@ -196,9 +196,9 @@ export function YarisChatModal({
                 key={i}
                 style={{
                   maxWidth: "88%", alignSelf: "flex-start",
-                  background: "white", border: "1px solid #E8ECF2",
+                  background: "var(--fd-panel, white)", border: "1px solid #E8ECF2",
                   borderRadius: "12px 12px 12px 4px", padding: "10px 14px",
-                  fontSize: ".85rem", color: INK, lineHeight: 1.5,
+                  fontSize: ".85rem", color: "var(--fd-text, #081A35)", lineHeight: 1.5,
                   boxShadow: "0 2px 8px rgba(22,61,112,.05)",
                 }}
               >
@@ -207,7 +207,7 @@ export function YarisChatModal({
                 <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(m.text) }} />
                 {m.streaming && <span className="yaris-caret" aria-hidden="true" />}
                 {m.cite && (
-                  <div style={{ marginTop: 6, fontSize: ".72rem", color: "#7E90AD" }}>Fuente: {m.cite}</div>
+                  <div style={{ marginTop: 6, fontSize: ".72rem", color: "var(--fd-muted, #7E90AD)" }}>Fuente: {m.cite}</div>
                 )}
               </div>
             ) : (
@@ -225,14 +225,14 @@ export function YarisChatModal({
             ),
           )}
           {typing && (
-            <div style={{ alignSelf: "flex-start", fontSize: ".78rem", color: "#7E90AD", fontStyle: "italic", padding: "2px 6px" }}>
+            <div style={{ alignSelf: "flex-start", fontSize: ".78rem", color: "var(--fd-muted, #7E90AD)", fontStyle: "italic", padding: "2px 6px" }}>
               Yaris está escribiendo...
             </div>
           )}
         </div>
 
         {/* Input */}
-        <div style={{ padding: 14, borderTop: "1px solid #E8ECF2", display: "flex", gap: 8, flexShrink: 0, background: "white" }}>
+        <div style={{ padding: 14, borderTop: "1px solid #E8ECF2", display: "flex", gap: 8, flexShrink: 0, background: "var(--fd-panel, white)" }}>
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -240,9 +240,9 @@ export function YarisChatModal({
             placeholder="Escribe tu duda académica..."
             style={{
               flex: 1, padding: "10px 14px",
-              border: "1.5px solid #E8ECF2", borderRadius: 10,
-              fontSize: ".85rem", fontFamily: FONT, color: INK,
-              outline: "none", background: "#F5F5F7",
+              border: "1.5px solid #E8ECF2", borderRadius: "var(--fd-radius, 10px)",
+              fontSize: ".85rem", fontFamily: FONT, color: "var(--fd-text, #081A35)",
+              outline: "none", background: "var(--fd-panel, #F5F5F7)",
             }}
             onFocus={(e) => (e.target.style.borderColor = "#163D70")}
             onBlur={(e) => (e.target.style.borderColor = "#E8ECF2")}
@@ -253,7 +253,7 @@ export function YarisChatModal({
             style={{
               padding: "0 16px",
               background: input.trim() && !typing ? "#7A5C1E" : "#C9D4E5",
-              color: "white", border: "none", borderRadius: 10,
+              color: "white", border: "none", borderRadius: "var(--fd-radius, 10px)",
               cursor: input.trim() && !typing ? "pointer" : "not-allowed",
               display: "flex", alignItems: "center", gap: 6,
               fontWeight: 700, fontSize: ".82rem", fontFamily: FONT,

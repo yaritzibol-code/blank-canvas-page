@@ -468,7 +468,7 @@ export function ComunidadView(props: ComunidadDatos & ComunidadAcciones) {
                   <div
                     key={r.id}
                     className="cm-card-2 flex items-center gap-2.5 px-3 py-2"
-                    style={{ ["--i" as string]: i, borderRadius: 12 }}
+                    style={{ ["--i" as string]: i, borderRadius: "var(--fd-radius, 12px)" }}
                   >
                     <span
                       className="cm-rank-icon"

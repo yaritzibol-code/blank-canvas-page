@@ -413,9 +413,9 @@ function ClasesPage() {
             <div style={{ background: "rgba(0,0,0,.8)", padding: "10px 16px", flexShrink: 0 }}>
               <div
                 onClick={scrub}
-                style={{ height: 4, background: "rgba(255,255,255,.2)", borderRadius: 10, marginBottom: 10, cursor: "pointer", overflow: "hidden" }}
+                style={{ height: 4, background: "rgba(255,255,255,.2)", borderRadius: "var(--fd-radius, 10px)", marginBottom: 10, cursor: "pointer", overflow: "hidden" }}
               >
-                <div style={{ height: "100%", background: "#C7A052", width: `${playProgress}%`, borderRadius: 10, transition: "width .1s" }} />
+                <div style={{ height: "100%", background: "#C7A052", width: `${playProgress}%`, borderRadius: "var(--fd-radius, 10px)", transition: "width .1s" }} />
               </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -452,17 +452,17 @@ function ClasesPage() {
               <div style={{ fontSize: ".84rem", color: "rgba(255,255,255,.65)", lineHeight: 1.6, marginBottom: 14 }}>{vid.desc}</div>
               <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
                 {vid.topics.map((t) => (
-                  <span key={t} style={{ padding: "4px 12px", background: "rgba(255,255,255,.06)", borderRadius: 20, fontSize: ".74rem", color: "rgba(255,255,255,.6)" }}>{t}</span>
+                  <span key={t} style={{ padding: "4px 12px", background: "rgba(255,255,255,.06)", borderRadius: "var(--fd-radius, 20px)", fontSize: ".74rem", color: "rgba(255,255,255,.6)" }}>{t}</span>
                 ))}
               </div>
             </div>
           </div>
 
           {/* Playlist side */}
-          <div className="player-playlist" style={{ width: 300, flexShrink: 0, background: "white", borderLeft: "1px solid rgba(22,61,112,.08)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
-            <div style={{ padding: "14px 16px", borderBottom: "1px solid #EEE1C5", background: "#f8f9ff" }}>
-              <h3 style={{ fontSize: ".85rem", fontWeight: 700, color: "#081A35", marginBottom: 2, display: "flex", alignItems: "center", gap: 6 }}><Icon n={mat.icon as never} size={16} /> {mat.name}</h3>
-              <p style={{ fontSize: ".72rem", color: "#4A5872" }}>{mat.total}</p>
+          <div className="player-playlist" style={{ width: 300, flexShrink: 0, background: "var(--fd-panel, white)", borderLeft: "1px solid rgba(22,61,112,.08)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <div style={{ padding: "14px 16px", borderBottom: "1px solid var(--fd-border, #EEE1C5)", background: "var(--fd-panel, #f8f9ff)" }}>
+              <h3 style={{ fontSize: ".85rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 2, display: "flex", alignItems: "center", gap: 6 }}><Icon n={mat.icon as never} size={16} /> {mat.name}</h3>
+              <p style={{ fontSize: ".72rem", color: "var(--fd-muted, #4A5872)" }}>{mat.total}</p>
             </div>
             <div style={{ flex: 1, overflowY: "auto" }}>
               {mat.videos.map((pv, i) => {
@@ -490,16 +490,16 @@ function ClasesPage() {
                       width: 28, height: 28, borderRadius: "50%", flexShrink: 0,
                       display: "flex", alignItems: "center", justifyContent: "center",
                       fontSize: ".72rem", fontWeight: 700,
-                      background: isActive ? "#163D70" : isDone ? "#2ecc71" : isLocked ? "#eee" : "#EEE1C5",
-                      color: isActive || isDone ? "white" : isLocked ? "#ccc" : "#4A5872",
+                      background: isActive ? "#163D70" : isDone ? "#2ecc71" : isLocked ? "#eee" : "var(--fd-panel, #EEE1C5)",
+                      color: isActive || isDone ? "white" : isLocked ? "#ccc" : "var(--fd-muted, #4A5872)",
                     }}>
                       {isDone ? <Icon n="check" size={15} /> : i + 1}
                     </div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: ".8rem", fontWeight: isActive ? 700 : 600, color: isActive ? "#163D70" : "#081A35", lineHeight: 1.3, marginBottom: 2 }}>{pv.title}</div>
-                      <div style={{ fontSize: ".7rem", color: "#7E90AD", display: "flex", alignItems: "center", gap: 4 }}><Icon n="clock" size={12} /> {pv.dur}</div>
+                      <div style={{ fontSize: ".8rem", fontWeight: isActive ? 700 : 600, color: isActive ? "var(--fd-text, #163D70)" : "var(--fd-text, #081A35)", lineHeight: 1.3, marginBottom: 2 }}>{pv.title}</div>
+                      <div style={{ fontSize: ".7rem", color: "var(--fd-muted, #7E90AD)", display: "flex", alignItems: "center", gap: 4 }}><Icon n="clock" size={12} /> {pv.dur}</div>
                     </div>
-                    <span style={{ flexShrink: 0, display: "flex", color: isLocked ? "#7E90AD" : "#2ecc71" }}>{isLocked ? <Icon n="lock" size={14} /> : isDone ? <Icon n="checkCircle" size={14} /> : null}</span>
+                    <span style={{ flexShrink: 0, display: "flex", color: isLocked ? "var(--fd-muted, #7E90AD)" : "#2ecc71" }}>{isLocked ? <Icon n="lock" size={14} /> : isDone ? <Icon n="checkCircle" size={14} /> : null}</span>
                   </div>
                 );
               })}
@@ -533,7 +533,7 @@ function ClasesPage() {
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 24 }}>
           <button
             onClick={showMaterias}
-            style={{ display: "flex", alignItems: "center", gap: 6, background: "white", border: "2px solid #EEE1C5", borderRadius: 8, padding: "7px 14px", fontSize: ".82rem", fontWeight: 700, color: "#4A5872", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all .2s" }}
+            style={{ display: "flex", alignItems: "center", gap: 6, background: "var(--fd-panel, white)", border: "1px solid var(--fd-border, #EEE1C5)", borderRadius: 8, padding: "7px 14px", fontSize: ".82rem", fontWeight: 700, color: "var(--fd-muted, #4A5872)", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all .2s" }}
             onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#163D70"; e.currentTarget.style.color = "#163D70"; }}
             onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#EEE1C5"; e.currentTarget.style.color = "#4A5872"; }}
           >
@@ -560,7 +560,7 @@ function ClasesPage() {
                 onMouseEnter={() => !isLocked && setHoverVideo(i)}
                 onMouseLeave={() => setHoverVideo(null)}
                 style={{
-                  background: "white", borderRadius: 14, padding: 16,
+                  background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 14px)", padding: 16,
                   display: "flex", alignItems: "center", gap: 16,
                   cursor: isLocked ? "not-allowed" : "pointer",
                   boxShadow: "0 2px 8px rgba(22,61,112,.05)",
@@ -569,32 +569,32 @@ function ClasesPage() {
                   transition: "all .2s",
                 }}
               >
-                <div style={{ width: 100, height: 64, borderRadius: 10, background: currentMat.color, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, position: "relative", color: "white" }}>
+                <div style={{ width: 100, height: 64, borderRadius: "var(--fd-radius, 10px)", background: currentMat.color, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, position: "relative", color: "white" }}>
                   <span style={{ display: "flex" }}><Icon n={currentMat.icon as never} size={26} /></span>
                   {!isLocked && (
-                    <div style={{ position: "absolute", width: 28, height: 28, background: "rgba(255,255,255,.9)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#163D70", boxShadow: "0 2px 8px rgba(0,0,0,.2)" }}><Icon n="play" size={14} /></div>
+                    <div style={{ position: "absolute", width: 28, height: 28, background: "rgba(255,255,255,.9)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--fd-text, #163D70)", boxShadow: "0 2px 8px rgba(0,0,0,.2)" }}><Icon n="play" size={14} /></div>
                   )}
                 </div>
 
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: ".88rem", fontWeight: 700, color: "#081A35", marginBottom: 3 }}>{i + 1}. {v.title}</div>
-                  <div style={{ fontSize: ".74rem", color: "#4A5872", marginBottom: 6, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                  <div style={{ fontSize: ".88rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 3 }}>{i + 1}. {v.title}</div>
+                  <div style={{ fontSize: ".74rem", color: "var(--fd-muted, #4A5872)", marginBottom: 6, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                     <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="clock" size={12} /> {v.dur}</span>
-                    {isDone && <span style={{ padding: "2px 8px", borderRadius: 10, fontSize: ".65rem", fontWeight: 700, background: "rgba(46,204,113,.1)", color: "#1a7a4a", display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="checkCircle" size={11} /> Vista</span>}
-                    {inProg && <span style={{ padding: "2px 8px", borderRadius: 10, fontSize: ".65rem", fontWeight: 700, background: "rgba(22,61,112,.08)", color: "#163D70", display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="play" size={11} /> En progreso</span>}
-                    {isLocked && <span style={{ padding: "2px 8px", borderRadius: 10, fontSize: ".65rem", fontWeight: 700, background: "#EEE1C5", color: "#7E90AD", display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="lock" size={11} /> Bloqueada</span>}
-                    {!isDone && !inProg && !isLocked && <span style={{ padding: "2px 8px", borderRadius: 10, fontSize: ".65rem", fontWeight: 700, background: "#EEE1C5", color: "#4A5872" }}>Sin ver</span>}
+                    {isDone && <span style={{ padding: "2px 8px", borderRadius: "var(--fd-radius, 10px)", fontSize: ".65rem", fontWeight: 700, background: "rgba(46,204,113,.1)", color: "#1a7a4a", display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="checkCircle" size={11} /> Vista</span>}
+                    {inProg && <span style={{ padding: "2px 8px", borderRadius: "var(--fd-radius, 10px)", fontSize: ".65rem", fontWeight: 700, background: "rgba(22,61,112,.08)", color: "var(--fd-text, #163D70)", display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="play" size={11} /> En progreso</span>}
+                    {isLocked && <span style={{ padding: "2px 8px", borderRadius: "var(--fd-radius, 10px)", fontSize: ".65rem", fontWeight: 700, background: "var(--fd-panel, #EEE1C5)", color: "var(--fd-muted, #7E90AD)", display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="lock" size={11} /> Bloqueada</span>}
+                    {!isDone && !inProg && !isLocked && <span style={{ padding: "2px 8px", borderRadius: "var(--fd-radius, 10px)", fontSize: ".65rem", fontWeight: 700, background: "var(--fd-panel, #EEE1C5)", color: "var(--fd-muted, #4A5872)" }}>Sin ver</span>}
                   </div>
                   {(isDone || inProg) && (
-                    <div style={{ height: 3, background: "#EEE1C5", borderRadius: 10, overflow: "hidden" }}>
-                      <div style={{ height: "100%", borderRadius: 10, background: isDone ? "#2ecc71" : "#163D70", width: `${isDone ? 100 : v.prog ?? 0}%` }} />
+                    <div style={{ height: 3, background: "var(--fd-panel, #EEE1C5)", borderRadius: "var(--fd-radius, 10px)", overflow: "hidden" }}>
+                      <div style={{ height: "100%", borderRadius: "var(--fd-radius, 10px)", background: isDone ? "#2ecc71" : "#163D70", width: `${isDone ? 100 : v.prog ?? 0}%` }} />
                     </div>
                   )}
                 </div>
 
                 <div style={{ flexShrink: 0, textAlign: "right" }}>
-                  <div style={{ fontSize: ".78rem", color: "#7E90AD", fontWeight: 600 }}>{v.dur}</div>
-                  <div style={{ marginTop: 2, display: "flex", justifyContent: "flex-end", color: isLocked ? "#7E90AD" : "#2ecc71" }}>{isLocked ? <Icon n="lock" size={16} /> : isDone ? <Icon n="checkCircle" size={16} /> : null}</div>
+                  <div style={{ fontSize: ".78rem", color: "var(--fd-muted, #7E90AD)", fontWeight: 600 }}>{v.dur}</div>
+                  <div style={{ marginTop: 2, display: "flex", justifyContent: "flex-end", color: isLocked ? "var(--fd-muted, #7E90AD)" : "#2ecc71" }}>{isLocked ? <Icon n="lock" size={16} /> : isDone ? <Icon n="checkCircle" size={16} /> : null}</div>
                 </div>
               </div>
             );
@@ -628,19 +628,19 @@ function ClasesPage() {
         <div style={{
           background: "linear-gradient(135deg, #EEE1C5, #fce4ec)",
           border: "1.5px solid #C7A052",
-          borderRadius: 14,
+          borderRadius: "var(--fd-radius, 14px)",
           padding: "14px 20px",
           display: "flex",
           alignItems: "center",
           gap: 12,
           marginBottom: 24,
         }}>
-          <span style={{ display: "flex", color: "#7A5C1E" }}><Icon n="play" size={22} /></span>
+          <span style={{ display: "flex", color: "var(--fd-gold, #7A5C1E)" }}><Icon n="play" size={22} /></span>
           <div>
-            <p style={{ fontSize: "0.88rem", fontWeight: 700, color: "#7A5C1E", margin: 0 }}>
+            <p style={{ fontSize: "0.88rem", fontWeight: 700, color: "var(--fd-gold, #7A5C1E)", margin: 0 }}>
               Clases grabadas — Próximamente
             </p>
-            <p style={{ fontSize: "0.78rem", color: "#4A5872", margin: "2px 0 0" }}>
+            <p style={{ fontSize: "0.78rem", color: "var(--fd-muted, #4A5872)", margin: "2px 0 0" }}>
               Estamos grabando los videos. ¡Muy pronto disponibles!
             </p>
           </div>
@@ -651,18 +651,18 @@ function ClasesPage() {
       {continueTarget ? (
         <div
           onClick={() => showPlayer(continueTarget!.mi, continueTarget!.vi)}
-          style={{ background: "linear-gradient(135deg,#081A35,#2a2a4e)", borderRadius: 16, padding: "20px 24px", display: "flex", alignItems: "center", gap: 18, marginBottom: 28, cursor: "pointer", position: "relative", overflow: "hidden" }}
+          style={{ background: "linear-gradient(135deg,#081A35,#2a2a4e)", borderRadius: "var(--fd-radius, 16px)", padding: "20px 24px", display: "flex", alignItems: "center", gap: 18, marginBottom: 28, cursor: "pointer", position: "relative", overflow: "hidden" }}
         >
-          <div style={{ width: 80, height: 56, borderRadius: 10, background: continueTarget.materia.color, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, position: "relative", color: "white" }}>
+          <div style={{ width: 80, height: 56, borderRadius: "var(--fd-radius, 10px)", background: continueTarget.materia.color, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, position: "relative", color: "white" }}>
             <Icon n={continueTarget.materia.icon as never} size={28} />
-            <div style={{ position: "absolute", width: 28, height: 28, background: "rgba(255,255,255,.9)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#163D70" }}><Icon n="play" size={15} /></div>
+            <div style={{ position: "absolute", width: 28, height: 28, background: "rgba(255,255,255,.9)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--fd-text, #163D70)" }}><Icon n="play" size={15} /></div>
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontSize: ".68rem", color: "#C7A052", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 4, display: "flex", alignItems: "center", gap: 5 }}><Icon n="play" size={12} /> Continuar viendo</div>
             <div style={{ fontSize: ".95rem", fontWeight: 700, color: "white", marginBottom: 4 }}>{continueTarget.materia.name} · {continueTarget.video.title}</div>
             <div style={{ fontSize: ".75rem", color: "rgba(255,255,255,.5)" }}>Clase {continueTarget.vi + 1} de {continueTarget.materia.videos.length} · Llevas {fmtProg(continueTarget.pct, continueTarget.video.dur)} de {continueTarget.video.dur}</div>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8 }}>
-              <div style={{ flex: 1, height: 4, background: "rgba(255,255,255,.1)", borderRadius: 10, overflow: "hidden" }}>
+              <div style={{ flex: 1, height: 4, background: "rgba(255,255,255,.1)", borderRadius: "var(--fd-radius, 10px)", overflow: "hidden" }}>
                 <div style={{ height: "100%", background: "#C7A052", width: `${continueTarget.pct}%` }} />
               </div>
               <span style={{ fontSize: ".72rem", color: "rgba(255,255,255,.5)" }}>{continueTarget.pct}%</span>
@@ -671,21 +671,21 @@ function ClasesPage() {
         </div>
       ) : (
         <div
-          style={{ background: "linear-gradient(135deg,#081A35,#2a2a4e)", borderRadius: 16, padding: "20px 24px", display: "flex", alignItems: "center", gap: 18, marginBottom: 28, cursor: "not-allowed", opacity: 0.5, position: "relative", overflow: "hidden" }}
+          style={{ background: "linear-gradient(135deg,#081A35,#2a2a4e)", borderRadius: "var(--fd-radius, 16px)", padding: "20px 24px", display: "flex", alignItems: "center", gap: 18, marginBottom: 28, cursor: "not-allowed", opacity: 0.5, position: "relative", overflow: "hidden" }}
         >
-          <div style={{ position: "absolute", top: 8, right: 12, background: "#C7A052", color: "#7A5C1E", fontSize: "0.68rem", fontWeight: 700, padding: "3px 10px", borderRadius: 20 }}>
+          <div style={{ position: "absolute", top: 8, right: 12, background: "#C7A052", color: "var(--fd-gold, #7A5C1E)", fontSize: "0.68rem", fontWeight: 700, padding: "3px 10px", borderRadius: "var(--fd-radius, 20px)" }}>
             Próximamente
           </div>
-          <div style={{ width: 80, height: 56, borderRadius: 10, background: "linear-gradient(135deg,#4facfe,#00f2fe)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, position: "relative", color: "white" }}>
+          <div style={{ width: 80, height: 56, borderRadius: "var(--fd-radius, 10px)", background: "linear-gradient(135deg,#4facfe,#00f2fe)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, position: "relative", color: "white" }}>
             <Icon n="cloud" size={28} />
-            <div style={{ position: "absolute", width: 28, height: 28, background: "rgba(255,255,255,.9)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#163D70" }}><Icon n="play" size={15} /></div>
+            <div style={{ position: "absolute", width: 28, height: 28, background: "rgba(255,255,255,.9)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--fd-text, #163D70)" }}><Icon n="play" size={15} /></div>
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontSize: ".68rem", color: "#C7A052", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 4, display: "flex", alignItems: "center", gap: 5 }}><Icon n="play" size={12} /> Continuar viendo</div>
             <div style={{ fontSize: ".95rem", fontWeight: 700, color: "white", marginBottom: 4 }}>Meteorología · Nubes — Clasificación y Formación</div>
             <div style={{ fontSize: ".75rem", color: "rgba(255,255,255,.5)" }}>Clase 3 de 6 · Llevas 8:24 de 22:15</div>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8 }}>
-              <div style={{ flex: 1, height: 4, background: "rgba(255,255,255,.1)", borderRadius: 10, overflow: "hidden" }}>
+              <div style={{ flex: 1, height: 4, background: "rgba(255,255,255,.1)", borderRadius: "var(--fd-radius, 10px)", overflow: "hidden" }}>
                 <div style={{ height: "100%", background: "#C7A052", width: "35%" }} />
               </div>
               <span style={{ fontSize: ".72rem", color: "rgba(255,255,255,.5)" }}>35%</span>
@@ -707,7 +707,7 @@ function ClasesPage() {
                 onMouseEnter={() => active && setHoverCard(i)}
                 onMouseLeave={() => setHoverCard(null)}
                 style={{
-                  background: "white", borderRadius: 16, overflow: "hidden",
+                  background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", overflow: "hidden",
                   cursor: active ? "pointer" : "not-allowed", opacity: active ? 1 : 0.55,
                   boxShadow: isHover ? "0 8px 24px rgba(22,61,112,.12)" : "0 2px 10px rgba(22,61,112,.06)",
                   border: isHover ? "2px solid #5A86CB" : "2px solid transparent",
@@ -719,18 +719,18 @@ function ClasesPage() {
                 <div style={{ height: 110, background: m.color, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", color: "white" }}>
                   <span style={{ display: "flex" }}><Icon n={m.icon as never} size={44} /></span>
                   {!active && (
-                    <div style={{ position: "absolute", background: "rgba(0,0,0,0.45)", color: "white", fontSize: "0.72rem", fontWeight: 700, padding: "4px 12px", borderRadius: 20, letterSpacing: "0.5px" }}>
+                    <div style={{ position: "absolute", background: "rgba(0,0,0,0.45)", color: "white", fontSize: "0.72rem", fontWeight: 700, padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", letterSpacing: "0.5px" }}>
                       PRÓXIMAMENTE
                     </div>
                   )}
                 </div>
                 <div style={{ padding: 14 }}>
-                  <div style={{ fontSize: ".88rem", fontWeight: 700, color: "#081A35", marginBottom: 4 }}>{m.name}</div>
-                  <div style={{ fontSize: ".74rem", color: "#4A5872", marginBottom: 10 }}>{active ? m.total : "Próximamente"}</div>
-                  <div style={{ height: 4, background: "#EEE1C5", borderRadius: 10, overflow: "hidden", marginBottom: 5 }}>
-                    <div style={{ height: "100%", borderRadius: 10, background: "linear-gradient(90deg,#163D70,#5A86CB)", width: `${active ? m.progressPct : 0}%` }} />
+                  <div style={{ fontSize: ".88rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 4 }}>{m.name}</div>
+                  <div style={{ fontSize: ".74rem", color: "var(--fd-muted, #4A5872)", marginBottom: 10 }}>{active ? m.total : "Próximamente"}</div>
+                  <div style={{ height: 4, background: "var(--fd-panel, #EEE1C5)", borderRadius: "var(--fd-radius, 10px)", overflow: "hidden", marginBottom: 5 }}>
+                    <div style={{ height: "100%", borderRadius: "var(--fd-radius, 10px)", background: "linear-gradient(90deg,#163D70,#5A86CB)", width: `${active ? m.progressPct : 0}%` }} />
                   </div>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".7rem", color: "#7E90AD" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".7rem", color: "var(--fd-muted, #7E90AD)" }}>
                     {active ? (
                       <>
                         <span>{m.watchedCount}/{m.totalCount} clases vistas</span>
@@ -746,11 +746,11 @@ function ClasesPage() {
           })}
         </div>
       ) : enPreparacion.length === 0 ? (
-        <div style={{ background: "white", borderRadius: 16, padding: "40px 24px", textAlign: "center", boxShadow: "0 2px 10px rgba(22,61,112,.06)" }}>
-          <div style={{ fontSize: ".95rem", fontWeight: 700, color: "#081A35", marginBottom: 6 }}>
+        <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", padding: "40px 24px", textAlign: "center", boxShadow: "0 2px 10px rgba(22,61,112,.06)" }}>
+          <div style={{ fontSize: ".95rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 6 }}>
             Todavía no hay clases en el catálogo
           </div>
-          <div style={{ fontSize: ".82rem", color: "#4A5872" }}>
+          <div style={{ fontSize: ".82rem", color: "var(--fd-muted, #4A5872)" }}>
             En cuanto se publiquen aparecerán aquí, organizadas por materia.
           </div>
         </div>
@@ -760,7 +760,7 @@ function ClasesPage() {
             <div
               key={fm.slug}
               style={{
-                background: "white", borderRadius: 16, overflow: "hidden",
+                background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", overflow: "hidden",
                 cursor: "not-allowed", opacity: 0.55,
                 boxShadow: "0 2px 10px rgba(22,61,112,.06)",
                 border: "2px solid transparent",
@@ -769,17 +769,17 @@ function ClasesPage() {
             >
               <div style={{ height: 110, background: fm.color, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", color: "white" }}>
                 <span style={{ display: "flex" }}><Icon n={fm.icon as never} size={44} /></span>
-                <div style={{ position: "absolute", background: "rgba(0,0,0,0.45)", color: "white", fontSize: "0.72rem", fontWeight: 700, padding: "4px 12px", borderRadius: 20, letterSpacing: "0.5px" }}>
+                <div style={{ position: "absolute", background: "rgba(0,0,0,0.45)", color: "white", fontSize: "0.72rem", fontWeight: 700, padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", letterSpacing: "0.5px" }}>
                   PRÓXIMAMENTE
                 </div>
               </div>
               <div style={{ padding: 14 }}>
-                <div style={{ fontSize: ".88rem", fontWeight: 700, color: "#081A35", marginBottom: 4 }}>{fm.name}</div>
-                <div style={{ fontSize: ".74rem", color: "#4A5872", marginBottom: 10 }}>{fm.total}</div>
-                <div style={{ height: 4, background: "#EEE1C5", borderRadius: 10, overflow: "hidden", marginBottom: 5 }}>
-                  <div style={{ height: "100%", borderRadius: 10, background: "linear-gradient(90deg,#163D70,#5A86CB)", width: "0%" }} />
+                <div style={{ fontSize: ".88rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 4 }}>{fm.name}</div>
+                <div style={{ fontSize: ".74rem", color: "var(--fd-muted, #4A5872)", marginBottom: 10 }}>{fm.total}</div>
+                <div style={{ height: 4, background: "var(--fd-panel, #EEE1C5)", borderRadius: "var(--fd-radius, 10px)", overflow: "hidden", marginBottom: 5 }}>
+                  <div style={{ height: "100%", borderRadius: "var(--fd-radius, 10px)", background: "linear-gradient(90deg,#163D70,#5A86CB)", width: "0%" }} />
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".7rem", color: "#7E90AD" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".7rem", color: "var(--fd-muted, #7E90AD)" }}>
                   <span>Próximamente disponible</span>
                   <span>{fm.totalCount} clases</span>
                 </div>

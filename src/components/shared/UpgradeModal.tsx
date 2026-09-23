@@ -89,8 +89,8 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
         style={{
           position: "relative",
           width: "min(520px, 100%)",
-          background: "#fff",
-          borderRadius: 24,
+          background: "var(--fd-panel, #fff)",
+          borderRadius: "var(--fd-radius, 24px)",
           padding: "clamp(24px, 5vw, 40px)",
           textAlign: "center",
           boxShadow: "0 30px 80px rgba(8,26,53,.35)",
@@ -110,11 +110,11 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
                 gap: 6,
                 padding: "6px 12px",
                 borderRadius: 999,
-                background: "#F4F7FC",
+                background: "var(--fd-panel, #F4F7FC)",
                 border: "1px solid #E3EAF5",
                 fontSize: 12,
                 fontWeight: 700,
-                color: "#163D70",
+                color: "var(--fd-text, #163D70)",
                 animation: `fpFloat ${2.6 + i * 0.3}s ease-in-out ${i * 0.2}s infinite alternate`,
               }}
             >
@@ -141,14 +141,14 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
           <Icon n="lock" size={34} color="#fff" />
         </div>
 
-        <h2 style={{ fontFamily: DISPLAY, fontSize: "clamp(1.3rem, 4vw, 1.6rem)", color: INK, margin: "0 0 10px", fontWeight: 800 }}>
+        <h2 style={{ fontFamily: DISPLAY, fontSize: "clamp(1.3rem, 4vw, 1.6rem)", color: "var(--fd-text, #081A35)", margin: "0 0 10px", fontWeight: 800 }}>
           ¿Listo para el siguiente nivel?
         </h2>
-        <p style={{ color: "#4A5872", fontSize: 14.5, lineHeight: 1.6, margin: "0 0 6px" }}>
-          <b style={{ color: INK }}>{feature}</b> es parte de la experiencia completa de FlightPath.
+        <p style={{ color: "var(--fd-muted, #4A5872)", fontSize: 14.5, lineHeight: 1.6, margin: "0 0 6px" }}>
+          <b style={{ color: "var(--fd-text, #081A35)" }}>{feature}</b> es parte de la experiencia completa de FlightPath.
           {benefit ? ` ${benefit}` : ""}
         </p>
-        <p style={{ color: "#4A5872", fontSize: 14.5, lineHeight: 1.6, margin: "0 0 22px" }}>
+        <p style={{ color: "var(--fd-muted, #4A5872)", fontSize: 14.5, lineHeight: 1.6, margin: "0 0 22px" }}>
           {config.mensajeConversion}
         </p>
 
@@ -157,7 +157,7 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
             onClick={() => goPrecios("Ver planes y precios")}
             style={{
               padding: "13px 20px",
-              borderRadius: 12,
+              borderRadius: "var(--fd-radius, 12px)",
               border: "none",
               background: "#7A5C1E",
               color: "#fff",
@@ -175,10 +175,10 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
 
             style={{
               padding: "12px 20px",
-              borderRadius: 12,
+              borderRadius: "var(--fd-radius, 12px)",
               border: "1.5px solid #163D70",
-              background: "#fff",
-              color: "#163D70",
+              background: "var(--fd-panel, #fff)",
+              color: "var(--fd-text, #163D70)",
               fontWeight: 700,
               fontSize: 14.5,
               cursor: "pointer",
@@ -192,10 +192,10 @@ export function UpgradeModal({ open, onClose, feature, benefit, userId }: Upgrad
             onClick={onClose}
             style={{
               padding: "10px 20px",
-              borderRadius: 12,
+              borderRadius: "var(--fd-radius, 12px)",
               border: "none",
               background: "transparent",
-              color: "#4A5872",
+              color: "var(--fd-muted, #4A5872)",
               fontWeight: 600,
               fontSize: 14,
               cursor: "pointer",

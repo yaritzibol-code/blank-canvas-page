@@ -237,7 +237,7 @@ function PlanesPage() {
     return (
       <div
         style={{
-          minHeight: "100vh", background: "#F7F9FC", fontFamily: FONT,
+          minHeight: "100vh", background: "var(--fd-panel, #F7F9FC)", fontFamily: FONT,
           display: "grid", placeItems: "center", padding: 24, textAlign: "center",
         }}
         aria-live="polite"
@@ -250,7 +250,7 @@ function PlanesPage() {
               animation: "fp-spin .8s linear infinite",
             }}
           />
-          <div style={{ fontFamily: DISPLAY, fontSize: 22, color: INK, marginBottom: 6 }}>
+          <div style={{ fontFamily: DISPLAY, fontSize: 22, color: "var(--fd-text, #081A35)", marginBottom: 6 }}>
             Preparando tu pago seguro
           </div>
           <div style={{ fontSize: 14, color: "#5B6B86" }}>
@@ -264,11 +264,11 @@ function PlanesPage() {
 
   if (clientSecret) {
     return (
-      <div style={{ minHeight: "100vh", background: "#F7F9FC", fontFamily: FONT }}>
+      <div style={{ minHeight: "100vh", background: "var(--fd-panel, #F7F9FC)", fontFamily: FONT }}>
         <div style={{ padding: "16px clamp(16px,4vw,32px)" }}>
           <button
             onClick={abandonarCheckout}
-            style={{ background: "none", border: "none", color: "#163D70", fontWeight: 700, cursor: "pointer", fontSize: 14 }}
+            style={{ background: "none", border: "none", color: "var(--fd-text, #163D70)", fontWeight: 700, cursor: "pointer", fontSize: 14 }}
           >
             ← Cancelar y volver
           </button>
@@ -283,12 +283,12 @@ function PlanesPage() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#F7F9FC", fontFamily: FONT }}>
+    <div style={{ minHeight: "100vh", background: "var(--fd-panel, #F7F9FC)", fontFamily: FONT }}>
 
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "clamp(24px,5vw,48px) 20px 80px" }}>
         <button
           onClick={() => navigate({ to: "/dashboard" })}
-          style={{ background: "none", border: "none", color: "#163D70", fontWeight: 700, cursor: "pointer", fontSize: 14, marginBottom: 20 }}
+          style={{ background: "none", border: "none", color: "var(--fd-text, #163D70)", fontWeight: 700, cursor: "pointer", fontSize: 14, marginBottom: 20 }}
         >
           ← Volver al dashboard
         </button>
@@ -311,17 +311,17 @@ function PlanesPage() {
         {/* Cómo funciona el cobro de Pro */}
         <div
           style={{
-            background: "#fff", border: "1px solid #E3EAF5", borderRadius: 16,
+            background: "var(--fd-panel, #fff)", border: "1px solid #E3EAF5", borderRadius: "var(--fd-radius, 16px)",
             padding: "18px 22px", marginBottom: 28, display: "grid", gap: 14,
             gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
           }}
         >
           <div>
-            <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: BRAND, marginBottom: 6 }}>
+            <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--fd-gold, #7A5C1E)", marginBottom: 6 }}>
               1 · Inscripción (pago único)
             </div>
             <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-              <span style={{ fontFamily: DISPLAY, fontSize: "1.6rem", fontWeight: 800, color: INK }}>
+              <span style={{ fontFamily: DISPLAY, fontSize: "1.6rem", fontWeight: 800, color: "var(--fd-text, #081A35)" }}>
                 ${setupPrice.amount.toLocaleString("es-MX")}
               </span>
               {setupPrice.amount < PRO_SETUP_LIST_PRICE && (
@@ -329,19 +329,19 @@ function PlanesPage() {
                   ${PRO_SETUP_LIST_PRICE.toLocaleString("es-MX")}
                 </span>
               )}
-              <span style={{ fontSize: 13, color: "#4A5872" }}>{setupPrice.currency}</span>
+              <span style={{ fontSize: 13, color: "var(--fd-muted, #4A5872)" }}>{setupPrice.currency}</span>
             </div>
             {setupPrice.amount < PRO_SETUP_LIST_PRICE && (
-              <div style={{ fontSize: 12, color: "#7A5C1E", fontWeight: 700, marginTop: 4 }}>
+              <div style={{ fontSize: 12, color: "var(--fd-gold, #7A5C1E)", fontWeight: 700, marginTop: 4 }}>
                 Promoción por la convocatoria
               </div>
             )}
-            <div style={{ fontSize: 12.5, color: "#4A5872", marginTop: 4 }}>
+            <div style={{ fontSize: 12.5, color: "var(--fd-muted, #4A5872)", marginTop: 4 }}>
               Se cobra una sola vez, junto con tu primer periodo.
             </div>
           </div>
           <div>
-            <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: BRAND, marginBottom: 6 }}>
+            <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--fd-gold, #7A5C1E)", marginBottom: 6 }}>
               2 · Elige cómo continuar
             </div>
             <div style={{ fontSize: 13.5, color: "#4A5F80", lineHeight: 1.7 }}>
@@ -359,16 +359,16 @@ function PlanesPage() {
         </div>
 
         {error && (
-          <div style={{ background: "#FEE2E2", border: "1px solid #FCA5A5", color: "#991B1B", padding: 12, borderRadius: 12, marginBottom: 20, fontSize: 14 }}>
+          <div style={{ background: "var(--fd-panel, #FEE2E2)", border: "1px solid #FCA5A5", color: "#991B1B", padding: 12, borderRadius: "var(--fd-radius, 12px)", marginBottom: 20, fontSize: 14 }}>
             {error}
           </div>
         )}
 
         <div style={{ display: "grid", gap: 20, gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
-          <div style={{ background: "#fff", border: "1px solid #E3EAF5", borderRadius: 20, padding: 28 }}>
-            <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.14em", color: "#4A5872", textTransform: "uppercase" }}>Básica</div>
-            <div style={{ fontFamily: DISPLAY, fontSize: "2.4rem", fontWeight: 800, color: INK, margin: "8px 0 4px" }}>$0 <span style={{ fontSize: 15, color: "#4A5872", fontWeight: 500 }}>MXN/mes</span></div>
-            <div style={{ color: "#4A5872", fontSize: 13, marginBottom: 20 }}>Gratis para siempre</div>
+          <div style={{ background: "var(--fd-panel, #fff)", border: "1px solid #E3EAF5", borderRadius: "var(--fd-radius, 20px)", padding: 28 }}>
+            <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.14em", color: "var(--fd-muted, #4A5872)", textTransform: "uppercase" }}>Básica</div>
+            <div style={{ fontFamily: DISPLAY, fontSize: "2.4rem", fontWeight: 800, color: "var(--fd-text, #081A35)", margin: "8px 0 4px" }}>$0 <span style={{ fontSize: 15, color: "var(--fd-muted, #4A5872)", fontWeight: 500 }}>MXN/mes</span></div>
+            <div style={{ color: "var(--fd-muted, #4A5872)", fontSize: 13, marginBottom: 20 }}>Gratis para siempre</div>
             <ul style={{ padding: 0, listStyle: "none", color: "#4A5F80", fontSize: 14, lineHeight: 1.8, marginBottom: 20 }}>
               <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> 10 preguntas por materia</li>
               <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> Máximo 2 intentos totales</li>
@@ -376,17 +376,17 @@ function PlanesPage() {
               <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="close" size={15} color="#c0392b" /> Sin Yaris IA</li>
               <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="close" size={15} color="#c0392b" /> Sin módulos avanzados</li>
             </ul>
-            <button disabled style={{ width: "100%", background: "#F3F4F6", color: "#4A5872", border: "none", padding: "12px 20px", borderRadius: 12, fontWeight: 700, fontSize: 14 }}>
+            <button disabled style={{ width: "100%", background: "var(--fd-panel, #F3F4F6)", color: "var(--fd-muted, #4A5872)", border: "none", padding: "12px 20px", borderRadius: "var(--fd-radius, 12px)", fontWeight: 700, fontSize: 14 }}>
               {isProActive ? "Plan gratuito" : "Plan actual"}
             </button>
           </div>
 
-          <div style={{ background: "#fff", border: `2px solid ${BRAND}`, borderRadius: 20, padding: 28, position: "relative" }}>
+          <div style={{ background: "var(--fd-panel, #fff)", border: `2px solid ${BRAND}`, borderRadius: "var(--fd-radius, 20px)", padding: 28, position: "relative" }}>
             <div style={{ position: "absolute", top: -12, right: 20, background: BRAND, color: "#fff", fontSize: 11, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", padding: "4px 10px", borderRadius: 999 }}>Recomendado</div>
-            <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.14em", color: BRAND, textTransform: "uppercase" }}>Pro</div>
+            <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.14em", color: "var(--fd-gold, #7A5C1E)", textTransform: "uppercase" }}>Pro</div>
 
             {/* Mensual o anual */}
-            <div style={{ display: "flex", gap: 6, background: "#F5F5F7", borderRadius: 12, padding: 4, margin: "12px 0 14px", border: "1px solid #E3EAF5" }}>
+            <div style={{ display: "flex", gap: 6, background: "var(--fd-panel, #F5F5F7)", borderRadius: "var(--fd-radius, 12px)", padding: 4, margin: "12px 0 14px", border: "1px solid #E3EAF5" }}>
               {([
                 { key: "mensual" as const, label: "Mensual" },
                 { key: "anual" as const, label: ahorro > 0 ? `Anual · −${ahorro} meses` : "Anual" },
@@ -397,8 +397,8 @@ function PlanesPage() {
                   style={{
                     flex: 1, padding: "9px 8px", borderRadius: 9, border: "none", cursor: "pointer",
                     fontSize: 12.5, fontWeight: 700, fontFamily: FONT,
-                    background: ciclo === opt.key ? "#fff" : "transparent",
-                    color: ciclo === opt.key ? INK : "#7E90AD",
+                    background: ciclo === opt.key ? "var(--fd-panel, #fff)" : "transparent",
+                    color: ciclo === opt.key ? "var(--fd-text, #081A35)" : "var(--fd-muted, #7E90AD)",
                     boxShadow: ciclo === opt.key ? "0 2px 8px rgba(22,61,112,0.15)" : "none",
                   }}
                 >
@@ -407,16 +407,16 @@ function PlanesPage() {
               ))}
             </div>
 
-            <div style={{ fontFamily: DISPLAY, fontSize: "2.4rem", fontWeight: 800, color: INK, margin: "0 0 4px" }}>
+            <div style={{ fontFamily: DISPLAY, fontSize: "2.4rem", fontWeight: 800, color: "var(--fd-text, #081A35)", margin: "0 0 4px" }}>
               ${(ciclo === "anual" ? annualPrice : proPrice).amount.toLocaleString("es-MX")}{" "}
-              <span style={{ fontSize: 15, color: "#4A5872", fontWeight: 500 }}>
+              <span style={{ fontSize: 15, color: "var(--fd-muted, #4A5872)", fontWeight: 500 }}>
                 {(ciclo === "anual" ? annualPrice : proPrice).currency}{ciclo === "anual" ? "/año" : "/mes"}
               </span>
             </div>
-            <div style={{ color: "#4A5872", fontSize: 13, marginBottom: 4 }}>
+            <div style={{ color: "var(--fd-muted, #4A5872)", fontSize: 13, marginBottom: 4 }}>
               + ${setupPrice.amount.toLocaleString("es-MX")} {setupPrice.currency} de inscripción (pago único, sólo la primera vez)
             </div>
-            <div style={{ color: "#4A5872", fontSize: 13, marginBottom: 20 }}>Cancela cuando quieras</div>
+            <div style={{ color: "var(--fd-muted, #4A5872)", fontSize: 13, marginBottom: 20 }}>Cancela cuando quieras</div>
             <ul style={{ padding: 0, listStyle: "none", color: "#4A5F80", fontSize: 14, lineHeight: 1.8, marginBottom: 20 }}>
               <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> Cuestionario y simulador ilimitados</li>
               <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> Todo el banco de preguntas</li>
@@ -425,7 +425,7 @@ function PlanesPage() {
               <li style={{ display: "flex", alignItems: "center", gap: 8 }}><Icon n="check" size={15} color="#1a7a4a" /> Análisis completo por materia</li>
             </ul>
             {isProActive ? (
-              <button onClick={handlePortal} disabled={loading} style={{ width: "100%", background: INK, color: "#fff", border: "none", padding: "12px 20px", borderRadius: 12, fontWeight: 700, fontSize: 14, cursor: "pointer" }}>
+              <button onClick={handlePortal} disabled={loading} style={{ width: "100%", background: INK, color: "#fff", border: "none", padding: "12px 20px", borderRadius: "var(--fd-radius, 12px)", fontWeight: 700, fontSize: 14, cursor: "pointer" }}>
                 {loading ? "Abriendo..." : "Gestionar suscripción →"}
               </button>
             ) : (
@@ -433,7 +433,7 @@ function PlanesPage() {
               {/* Cupón: si se escribe, se aplica al abrir el checkout; si se
                   deja vacío, el propio checkout permite capturarlo. */}
               <label style={{ display: "block", marginBottom: 12 }}>
-                <span style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#4A5872", marginBottom: 5 }}>
+                <span style={{ display: "block", fontSize: 12, fontWeight: 700, color: "var(--fd-muted, #4A5872)", marginBottom: 5 }}>
                   ¿Tienes un cupón?
                 </span>
                 <input
@@ -441,14 +441,14 @@ function PlanesPage() {
                   onChange={(e) => setCupon(e.target.value.toUpperCase().slice(0, 40))}
                   placeholder="CÓDIGO DE DESCUENTO"
                   style={{
-                    width: "100%", padding: "10px 12px", borderRadius: 10,
-                    border: "2px solid #E3EAF5", background: "white",
+                    width: "100%", padding: "10px 12px", borderRadius: "var(--fd-radius, 10px)",
+                    border: "2px solid #E3EAF5", background: "var(--fd-panel, white)",
                     fontSize: 13, fontWeight: 700, letterSpacing: ".06em",
-                    color: INK, outline: "none", fontFamily: "'Manrope', sans-serif",
+                    color: "var(--fd-text, #081A35)", outline: "none", fontFamily: "'Manrope', sans-serif",
                   }}
                 />
               </label>
-              <button onClick={() => handleUpgrade()} disabled={loading} style={{ width: "100%", background: BRAND, color: "#fff", border: "none", padding: "12px 20px", borderRadius: 12, fontWeight: 700, fontSize: 14, cursor: "pointer" }}>
+              <button onClick={() => handleUpgrade()} disabled={loading} style={{ width: "100%", background: BRAND, color: "#fff", border: "none", padding: "12px 20px", borderRadius: "var(--fd-radius, 12px)", fontWeight: 700, fontSize: 14, cursor: "pointer" }}>
                 {loading ? "Preparando pago..." : ciclo === "anual" ? "Actualizar a Pro anual →" : "Actualizar a Pro mensual →"}
               </button>
               </>
@@ -456,7 +456,7 @@ function PlanesPage() {
           </div>
         </div>
 
-        <p style={{ marginTop: 32, textAlign: "center", color: "#4A5872", fontSize: 13 }}>
+        <p style={{ marginTop: 32, textAlign: "center", color: "var(--fd-muted, #4A5872)", fontSize: 13 }}>
           Pago procesado por Stripe · Los admins tienen acceso completo sin pago
         </p>
       </div>

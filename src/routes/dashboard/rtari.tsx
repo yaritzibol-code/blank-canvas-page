@@ -11,6 +11,8 @@
  * está afiliada a la AFAC.
  */
 import { createFileRoute } from "@tanstack/react-router";
+import { Microphone } from "@phosphor-icons/react";
+import { LaunchButton } from "@/components/flightdeck/FlightDeck";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
 import { Icon, type FPIconName } from "@/components/ui/fp-icon";
@@ -86,9 +88,9 @@ function Card({ children, style }: { children: React.ReactNode; style?: React.CS
   return (
     <div
       style={{
-        background: "white",
+        background: "var(--fd-panel, white)",
         border: `1px solid ${NAVY}14`,
-        borderRadius: 22,
+        borderRadius: "var(--fd-radius, 22px)",
         padding: "22px 24px",
         ...style,
       }}
@@ -107,7 +109,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
         letterSpacing: "0.22em",
         textTransform: "uppercase",
         fontWeight: 700,
-        color: `${NAVY}66`,
+        color: "var(--fd-muted, #081A3566)",
         marginBottom: 10,
       }}
     >
@@ -126,7 +128,7 @@ function Kpi({ label, value, sub }: { label: string; value: string; sub?: string
           letterSpacing: "0.2em",
           textTransform: "uppercase",
           fontWeight: 700,
-          color: `${NAVY}80`,
+          color: "var(--fd-muted, #081A3580)",
         }}
       >
         {label}
@@ -137,12 +139,16 @@ function Kpi({ label, value, sub }: { label: string; value: string; sub?: string
           fontStyle: "italic",
           fontSize: "2.4rem",
           lineHeight: 1.1,
-          color: NAVY,
+          color: "var(--fd-text, #081A35)",
         }}
       >
         {value}
       </div>
-      {sub && <div style={{ fontSize: "0.76rem", color: HAZE, marginTop: 2 }}>{sub}</div>}
+      {sub && (
+        <div style={{ fontSize: "0.76rem", color: "var(--fd-muted, #4A5872)", marginTop: 2 }}>
+          {sub}
+        </div>
+      )}
     </Card>
   );
 }
@@ -172,10 +178,10 @@ function Opciones<T extends string | number>({
               style={{
                 textAlign: "left",
                 padding: o.sub ? "10px 14px" : "8px 16px",
-                borderRadius: 12,
+                borderRadius: "var(--fd-radius, 12px)",
                 border: `1px solid ${activo ? "transparent" : `${NAVY}18`}`,
                 background: activo ? NAVY : "transparent",
-                color: activo ? "white" : NAVY,
+                color: activo ? "white" : "var(--fd-text, #081A35)",
                 cursor: "pointer",
                 fontFamily: "inherit",
                 minWidth: o.sub ? 190 : 0,
@@ -188,7 +194,7 @@ function Opciones<T extends string | number>({
                     fontSize: "0.72rem",
                     marginTop: 2,
                     lineHeight: 1.35,
-                    color: activo ? "rgba(255,255,255,0.7)" : HAZE,
+                    color: activo ? "rgba(255,255,255,0.7)" : "var(--fd-muted, #4A5872)",
                   }}
                 >
                   {o.sub}
@@ -235,8 +241,8 @@ function HistorialRow({ s, onVer }: { s: RtariSessionRecord; onVer: () => void }
         style={{
           width: 38,
           height: 38,
-          borderRadius: 10,
-          background: def ? `${def.color}18` : CREAM,
+          borderRadius: "var(--fd-radius, 10px)",
+          background: def ? `${def.color}18` : "var(--fd-panel, #F5F5F7)",
           color: def?.color ?? `${NAVY}55`,
           display: "flex",
           alignItems: "center",
@@ -250,15 +256,29 @@ function HistorialRow({ s, onVer }: { s: RtariSessionRecord; onVer: () => void }
         {s.nivelGlobal ?? "—"}
       </span>
       <span style={{ flex: 1, minWidth: 0 }}>
-        <span style={{ display: "block", fontSize: "0.88rem", fontWeight: 600, color: NAVY }}>
+        <span
+          style={{
+            display: "block",
+            fontSize: "0.88rem",
+            fontWeight: 600,
+            color: "var(--fd-text, #081A35)",
+          }}
+        >
           {def ? `Nivel ${s.nivelGlobal} · ${def.nombre}` : "Entrevista sin evaluar"}
         </span>
-        <span style={{ display: "block", fontSize: "0.76rem", color: HAZE, marginTop: 1 }}>
+        <span
+          style={{
+            display: "block",
+            fontSize: "0.76rem",
+            color: "var(--fd-muted, #4A5872)",
+            marginTop: 1,
+          }}
+        >
           {fecha} · {dur} · {s.questionIds.length} preguntas · sinodal {s.nivel}
         </span>
       </span>
       {s.debrief && (
-        <span style={{ color: `${NAVY}44`, display: "flex" }}>
+        <span style={{ color: "var(--fd-muted, #081A3544)", display: "flex" }}>
           <Icon n="chevR" size={16} />
         </span>
       )}
@@ -316,7 +336,6 @@ function RtariPage() {
     if (!userId) return;
     void recargarSaldo();
   }, [userId, recargarSaldo]);
-
 
   // Vuelta del checkout de un paquete: el webhook acredita en un par de
   // segundos, así que se relee el saldo hasta verlo crecer.
@@ -511,7 +530,7 @@ function RtariPage() {
           style={{
             background: "none",
             border: "none",
-            color: "#163D70",
+            color: "var(--fd-text, #163D70)",
             fontWeight: 700,
             cursor: "pointer",
             fontSize: 14,
@@ -550,8 +569,8 @@ function RtariPage() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 6,
-                background: SALMON,
-                color: CORAL,
+                background: "var(--fd-panel, #EEE1C5)",
+                color: "var(--fd-gold, #7A5C1E)",
                 padding: "6px 14px",
                 borderRadius: 999,
                 fontFamily: MONO,
@@ -574,11 +593,11 @@ function RtariPage() {
             display: "flex",
             gap: 10,
             alignItems: "flex-start",
-            background: "#FFF1F2",
+            background: "var(--fd-panel, #FFF1F2)",
             border: `1px solid ${ROSE}`,
-            borderRadius: 14,
+            borderRadius: "var(--fd-radius, 14px)",
             padding: "12px 16px",
-            color: CORAL,
+            color: "var(--fd-gold, #7A5C1E)",
             fontSize: "0.88rem",
             lineHeight: 1.5,
             marginBottom: 18,
@@ -595,7 +614,7 @@ function RtariPage() {
               background: "none",
               border: "none",
               cursor: "pointer",
-              color: CORAL,
+              color: "var(--fd-gold, #7A5C1E)",
               display: "flex",
             }}
           >
@@ -623,15 +642,22 @@ function RtariPage() {
               height: 46,
               margin: "0 auto 18px",
               borderRadius: "50%",
-              border: `3px solid ${SALMON}`,
+              border: "1px solid var(--fd-border, #EEE1C5)",
               borderTopColor: CORAL,
               animation: "fp-rtari-spin 0.9s linear infinite",
             }}
           />
-          <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "1.5rem", color: NAVY }}>
+          <div
+            style={{
+              fontFamily: SERIF,
+              fontStyle: "italic",
+              fontSize: "1.5rem",
+              color: "var(--fd-text, #081A35)",
+            }}
+          >
             Calificando tu entrevista…
           </div>
-          <div style={{ color: HAZE, fontSize: "0.9rem", marginTop: 6 }}>
+          <div style={{ color: "var(--fd-muted, #4A5872)", fontSize: "0.9rem", marginTop: 6 }}>
             Se está revisando lo que dijiste contra las seis áreas de la escala OACI.
           </div>
           <style>{`@keyframes fp-rtari-spin { to { transform: rotate(360deg); } }`}</style>
@@ -651,9 +677,33 @@ function RtariPage() {
       )}
 
       {fase === "setup" && (
-        <div style={{ display: "grid", gap: 20 }}>
+        <div className="fd-rtari-setup" style={{ display: "grid", gap: 20 }}>
+          <section className="fd-voice-stage" aria-label="Preparación de entrevista">
+            <p className="fd-eyebrow">ENTREVISTA POR VOZ · INGLÉS</p>
+            <div className="fd-voice-orbit">
+              <div>
+                <small>LISTO PARA PRACTICAR</small>
+                <Microphone size={72} weight="duotone" />
+                <span>
+                  {numPreguntas} preguntas · {RTARI_MAX_MINUTOS} min máx.
+                </span>
+              </div>
+            </div>
+            <LaunchButton
+              onClick={comenzar}
+              disabled={!puedeArrancar}
+              subtitle="MICRÓFONO REQUERIDO · RESPONDE EN INGLÉS"
+            >
+              {!pro
+                ? "Iniciar contacto (Pro)"
+                : minutosDisponibles === 0
+                  ? "Sin minutos disponibles"
+                  : "Iniciar contacto"}
+            </LaunchButton>
+          </section>
           {/* KPIs */}
           <div
+            className="fd-rtari-metrics"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))",
@@ -687,195 +737,218 @@ function RtariPage() {
           </div>
 
           {pro && (
-            <SaldoPanel
-              saldo={saldo}
-              cargando={saldoCargando}
-              comprando={comprando}
-              onComprar={(p) => void comprarPaquete(p)}
-              destacarCompra={sinMinutos}
-            />
+            <details className="fd-rtari-balance">
+              <summary>
+                Minutos de entrevista y paquetes{" "}
+                {minutosDisponibles !== null ? `· ${minutosDisponibles} disponibles` : ""}
+              </summary>
+              <SaldoPanel
+                saldo={saldo}
+                cargando={saldoCargando}
+                comprando={comprando}
+                onComprar={(p) => void comprarPaquete(p)}
+                destacarCompra={sinMinutos}
+              />
+            </details>
           )}
 
           {/* Arranque */}
-          <Card>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                gap: 16,
-                flexWrap: "wrap",
-                marginBottom: 20,
-              }}
-            >
-              <div>
-                <Eyebrow>Nueva entrevista</Eyebrow>
-                <h2
+          <details className="fd-rtari-options">
+            <summary>Personalizar sesión · {numPreguntas} preguntas</summary>
+            <Card>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  gap: 16,
+                  flexWrap: "wrap",
+                  marginBottom: 20,
+                }}
+              >
+                <div>
+                  <Eyebrow>Nueva entrevista</Eyebrow>
+                  <h2
+                    style={{
+                      fontFamily: SERIF,
+                      fontStyle: "italic",
+                      fontSize: "1.8rem",
+                      color: "var(--fd-text, #081A35)",
+                      margin: 0,
+                    }}
+                  >
+                    Arma tu sesión de hoy
+                  </h2>
+                </div>
+                <div
                   style={{
-                    fontFamily: SERIF,
-                    fontStyle: "italic",
-                    fontSize: "1.8rem",
-                    color: NAVY,
-                    margin: 0,
+                    fontFamily: MONO,
+                    fontSize: "0.62rem",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: "var(--fd-muted, #4A5872)",
+                    textAlign: "right",
+                    lineHeight: 1.6,
                   }}
                 >
-                  Arma tu sesión de hoy
-                </h2>
-              </div>
-              <div
-                style={{
-                  fontFamily: MONO,
-                  fontSize: "0.62rem",
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  color: HAZE,
-                  textAlign: "right",
-                  lineHeight: 1.6,
-                }}
-              >
-                Máx. {RTARI_MAX_MINUTOS} min por sesión
-                <br />
-                {RTARI_MINUTOS_INCLUIDOS_PRO} min incluidos al mes
-              </div>
-            </div>
-
-            <div style={{ display: "grid", gap: 20 }}>
-              <Opciones
-                titulo="Cuántas preguntas"
-                valor={numPreguntas}
-                onChange={setNumPreguntas}
-                opciones={RTARI_PRESETS_PREGUNTAS.map((n) => ({
-                  key: n as number,
-                  label: `${n} preguntas`,
-                  sub: n <= 5 ? "≈ 5 min" : n <= 8 ? "≈ 10 min" : "≈ 15 min",
-                }))}
-              />
-
-              <div>
-                <Eyebrow>Sobre qué te van a preguntar</Eyebrow>
-                <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                  {[
-                    { id: "todos" as const, nombre: "Todo el banco", icon: "list" },
-                    ...RTARI_BLOQUES,
-                  ].map((b) => {
-                    const activo = bloque === b.id;
-                    return (
-                      <button
-                        key={b.id}
-                        onClick={() => setBloque(b.id as RtariBloque | "todos")}
-                        style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: 6,
-                          padding: "7px 14px",
-                          borderRadius: 999,
-                          border: `1px solid ${activo ? "transparent" : `${NAVY}18`}`,
-                          background: activo ? NAVY : "transparent",
-                          color: activo ? "white" : NAVY,
-                          fontSize: "0.8rem",
-                          fontWeight: 600,
-                          cursor: "pointer",
-                          fontFamily: "inherit",
-                        }}
-                      >
-                        <Icon n={b.icon as FPIconName} size={13} />
-                        {b.nombre}
-                      </button>
-                    );
-                  })}
+                  Máx. {RTARI_MAX_MINUTOS} min por sesión
+                  <br />
+                  {RTARI_MINUTOS_INCLUIDOS_PRO} min incluidos al mes
                 </div>
-                {bloqueSel && (
-                  <div style={{ fontSize: "0.8rem", color: HAZE, marginTop: 8 }}>
-                    {bloqueSel.descripcion}
-                  </div>
-                )}
               </div>
 
-              <Opciones
-                titulo="Tu sinodal"
-                valor={voice}
-                onChange={setVoice}
-                opciones={RTARI_VOICE_DEFS.map((v) => ({
-                  key: v.id,
-                  label: v.nombre,
-                  sub: v.descripcion,
-                }))}
-              />
+              <div style={{ display: "grid", gap: 20 }}>
+                <Opciones
+                  titulo="Cuántas preguntas"
+                  valor={numPreguntas}
+                  onChange={setNumPreguntas}
+                  opciones={RTARI_PRESETS_PREGUNTAS.map((n) => ({
+                    key: n as number,
+                    label: `${n} preguntas`,
+                    sub: n <= 5 ? "≈ 5 min" : n <= 8 ? "≈ 10 min" : "≈ 15 min",
+                  }))}
+                />
 
-              <Opciones
-                titulo="Qué tan duro"
-                valor={nivel}
-                onChange={setNivel}
-                opciones={RTARI_NIVEL_DEFS.map((n) => ({
-                  key: n.id,
-                  label: n.nombre,
-                  sub: n.descripcion,
-                }))}
-              />
-            </div>
+                <div>
+                  <Eyebrow>Sobre qué te van a preguntar</Eyebrow>
+                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                    {[
+                      { id: "todos" as const, nombre: "Todo el banco", icon: "list" },
+                      ...RTARI_BLOQUES,
+                    ].map((b) => {
+                      const activo = bloque === b.id;
+                      return (
+                        <button
+                          key={b.id}
+                          onClick={() => setBloque(b.id as RtariBloque | "todos")}
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: 6,
+                            padding: "7px 14px",
+                            borderRadius: 999,
+                            border: `1px solid ${activo ? "transparent" : `${NAVY}18`}`,
+                            background: activo ? NAVY : "transparent",
+                            color: activo ? "white" : "var(--fd-text, #081A35)",
+                            fontSize: "0.8rem",
+                            fontWeight: 600,
+                            cursor: "pointer",
+                            fontFamily: "inherit",
+                          }}
+                        >
+                          <Icon n={b.icon as FPIconName} size={13} />
+                          {b.nombre}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {bloqueSel && (
+                    <div
+                      style={{
+                        fontSize: "0.8rem",
+                        color: "var(--fd-muted, #4A5872)",
+                        marginTop: 8,
+                      }}
+                    >
+                      {bloqueSel.descripcion}
+                    </div>
+                  )}
+                </div>
 
-            <div
-              style={{
-                marginTop: 22,
-                paddingTop: 18,
-                borderTop: `1px solid ${NAVY}12`,
-                display: "flex",
-                alignItems: "center",
-                gap: 16,
-                flexWrap: "wrap",
-              }}
-            >
-              <button
-                onClick={comenzar}
-                disabled={!soportado || (pro && minutosDisponibles === 0)}
+                <Opciones
+                  titulo="Tu sinodal"
+                  valor={voice}
+                  onChange={setVoice}
+                  opciones={RTARI_VOICE_DEFS.map((v) => ({
+                    key: v.id,
+                    label: v.nombre,
+                    sub: v.descripcion,
+                  }))}
+                />
+
+                <Opciones
+                  titulo="Qué tan duro"
+                  valor={nivel}
+                  onChange={setNivel}
+                  opciones={RTARI_NIVEL_DEFS.map((n) => ({
+                    key: n.id,
+                    label: n.nombre,
+                    sub: n.descripcion,
+                  }))}
+                />
+              </div>
+
+              <div
                 style={{
-                  display: "inline-flex",
+                  marginTop: 22,
+                  paddingTop: 18,
+                  borderTop: `1px solid ${NAVY}12`,
+                  display: "flex",
                   alignItems: "center",
-                  gap: 10,
-                  padding: "14px 26px",
-                  borderRadius: 12,
-                  border: "none",
-                  background: puedeArrancar ? CORAL : `${NAVY}22`,
-                  color: puedeArrancar ? "white" : `${NAVY}88`,
-                  fontWeight: 700,
-                  fontSize: "0.95rem",
-                  cursor: puedeArrancar ? "pointer" : "not-allowed",
-                  fontFamily: "inherit",
+                  gap: 16,
+                  flexWrap: "wrap",
                 }}
               >
-                <Icon n="audio" size={18} />
-                {!pro
-                  ? "Comenzar entrevista (Pro)"
-                  : minutosDisponibles === 0
-                    ? "Sin minutos disponibles"
-                    : "Comenzar entrevista"}
-              </button>
-              <div
-                style={{ fontSize: "0.8rem", color: HAZE, lineHeight: 1.5, flex: 1, minWidth: 220 }}
-              >
-                {!soportado ? (
-                  <>
-                    Este navegador no soporta la entrevista por voz. Ábrela desde Chrome, Edge o
-                    Safari actualizados.
-                  </>
-                ) : pro && minutosDisponibles === 0 ? (
-                  <>
-                    Se te acabaron los minutos de este ciclo. Compra un paquete aquí arriba para
-                    seguir hoy.
-                  </>
-                ) : (
-                  <>
-                    Te va a pedir permiso del micrófono. Usa audífonos si puedes y contesta{" "}
-                    <strong style={{ color: NAVY }}>siempre en inglés</strong>: el sinodal no habla
-                    español.
-                    {minutosDisponibles !== null && pro && (
-                      <> Te quedan {minutosDisponibles} min de entrevista.</>
-                    )}
-                  </>
-                )}
+                <button
+                  onClick={comenzar}
+                  disabled={!soportado || (pro && minutosDisponibles === 0)}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 10,
+                    padding: "14px 26px",
+                    borderRadius: "var(--fd-radius, 12px)",
+                    border: "none",
+                    background: puedeArrancar ? CORAL : `${NAVY}22`,
+                    color: puedeArrancar ? "white" : "var(--fd-muted, #081A3588)",
+                    fontWeight: 700,
+                    fontSize: "0.95rem",
+                    cursor: puedeArrancar ? "pointer" : "not-allowed",
+                    fontFamily: "inherit",
+                  }}
+                >
+                  <Icon n="audio" size={18} />
+                  {!pro
+                    ? "Comenzar entrevista (Pro)"
+                    : minutosDisponibles === 0
+                      ? "Sin minutos disponibles"
+                      : "Comenzar entrevista"}
+                </button>
+                <div
+                  style={{
+                    fontSize: "0.8rem",
+                    color: "var(--fd-muted, #4A5872)",
+                    lineHeight: 1.5,
+                    flex: 1,
+                    minWidth: 220,
+                  }}
+                >
+                  {!soportado ? (
+                    <>
+                      Este navegador no soporta la entrevista por voz. Ábrela desde Chrome, Edge o
+                      Safari actualizados.
+                    </>
+                  ) : pro && minutosDisponibles === 0 ? (
+                    <>
+                      Se te acabaron los minutos de este ciclo. Compra un paquete aquí arriba para
+                      seguir hoy.
+                    </>
+                  ) : (
+                    <>
+                      Te va a pedir permiso del micrófono. Usa audífonos si puedes y contesta{" "}
+                      <strong style={{ color: "var(--fd-text, #081A35)" }}>
+                        siempre en inglés
+                      </strong>
+                      : el sinodal no habla español.
+                      {minutosDisponibles !== null && pro && (
+                        <> Te quedan {minutosDisponibles} min de entrevista.</>
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </details>
 
           {/* Historial */}
           {sesiones.length > 0 && (
@@ -898,16 +971,30 @@ function RtariPage() {
           )}
 
           {/* Cómo se califica */}
-          <Card style={{ background: CREAM }}>
+          <Card style={{ background: "var(--fd-panel, #F5F5F7)" }}>
             <Eyebrow>Cómo se califica</Eyebrow>
-            <p style={{ margin: 0, fontSize: "0.9rem", color: NAVY, lineHeight: 1.65 }}>
+            <p
+              style={{
+                margin: 0,
+                fontSize: "0.9rem",
+                color: "var(--fd-text, #081A35)",
+                lineHeight: 1.65,
+              }}
+            >
               La escala de la OACI evalúa seis áreas —pronunciación, estructura, vocabulario,
               fluidez, comprensión e interacción— del nivel 1 al 6, y{" "}
               <strong>tu calificación es la más baja de las seis</strong>, no el promedio: el nivel
               4 (operacional) sólo se alcanza cuando ninguna área se queda atrás. El acento no baja
               la calificación mientras no estorbe que te entiendan.
             </p>
-            <p style={{ margin: "10px 0 0", fontSize: "0.82rem", color: HAZE, lineHeight: 1.6 }}>
+            <p
+              style={{
+                margin: "10px 0 0",
+                fontSize: "0.82rem",
+                color: "var(--fd-muted, #4A5872)",
+                lineHeight: 1.6,
+              }}
+            >
               Esta calificación es una estimación de práctica generada por IA para orientar tu
               estudio. No tiene validez oficial ni sustituye la evaluación de la autoridad
               aeronáutica.

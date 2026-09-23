@@ -330,7 +330,7 @@ function FlashcardsPage() {
           title={subject.name}
           icon={subject.icon}
         />
-        <p style={{ fontSize: "0.8rem", color: "#4A5872", marginBottom: 14 }}>
+        <p style={{ fontSize: "0.8rem", color: "var(--fd-muted, #4A5872)", marginBottom: 14 }}>
           {subject.containerLabel} de {programa.categoria.titulo}
         </p>
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -383,17 +383,17 @@ function FlashcardsPage() {
           <div style={{ width: "100%", maxWidth: 500, display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
             <button
               onClick={() => setScreen("secciones")}
-              style={{ display: "flex", alignItems: "center", gap: 5, background: "white", border: "2px solid #EEE1C5", borderRadius: 8, padding: "6px 12px", fontSize: "0.8rem", fontWeight: 700, color: "#4A5872", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+              style={{ display: "flex", alignItems: "center", gap: 5, background: "var(--fd-panel, white)", border: "1px solid var(--fd-border, #EEE1C5)", borderRadius: 8, padding: "6px 12px", fontSize: "0.8rem", fontWeight: 700, color: "var(--fd-muted, #4A5872)", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
             >
               ← {subject.containerLabel}
             </button>
-            <span style={{ fontSize: "0.8rem", color: "#163D70", fontWeight: 700 }}>{section.titulo}</span>
-            <span style={{ fontSize: "0.85rem", color: "#4A5872", fontWeight: 600 }}>{Math.min(cardIdx + 1, sessionCards.length)} / {sessionCards.length}</span>
+            <span style={{ fontSize: "0.8rem", color: "var(--fd-text, #163D70)", fontWeight: 700 }}>{section.titulo}</span>
+            <span style={{ fontSize: "0.85rem", color: "var(--fd-muted, #4A5872)", fontWeight: 600 }}>{Math.min(cardIdx + 1, sessionCards.length)} / {sessionCards.length}</span>
           </div>
 
           <div style={{ width: "100%", maxWidth: 500, marginBottom: 20 }}>
-            <div style={{ height: 5, background: "#EEE1C5", borderRadius: 10, overflow: "hidden", marginBottom: 8 }}>
-              <div style={{ height: "100%", background: "linear-gradient(90deg,#163D70,#5A86CB)", borderRadius: 10, width: `${progressPct}%`, transition: "width 0.4s ease" }} />
+            <div style={{ height: 5, background: "var(--fd-panel, #EEE1C5)", borderRadius: "var(--fd-radius, 10px)", overflow: "hidden", marginBottom: 8 }}>
+              <div style={{ height: "100%", background: "linear-gradient(90deg,#163D70,#5A86CB)", borderRadius: "var(--fd-radius, 10px)", width: `${progressPct}%`, transition: "width 0.4s ease" }} />
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.72rem" }}>
               <span style={{ color: "#2ecc71", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="check" size={14} /> {knew} dominadas</span>
@@ -422,7 +422,7 @@ function FlashcardsPage() {
             >
               <div
                 style={{
-                  position: "absolute", inset: 0, borderRadius: 20,
+                  position: "absolute", inset: 0, borderRadius: "var(--fd-radius, 20px)",
                   display: "flex", flexDirection: "column", alignItems: "center",
                   justifyContent: "center", padding: 28, textAlign: "center",
                   backfaceVisibility: "hidden",
@@ -437,7 +437,7 @@ function FlashcardsPage() {
 
               <div
                 style={{
-                  position: "absolute", inset: 0, borderRadius: 20,
+                  position: "absolute", inset: 0, borderRadius: "var(--fd-radius, 20px)",
                   display: "flex", flexDirection: "column", alignItems: "center",
                   justifyContent: "center", padding: 28, textAlign: "center",
                   backfaceVisibility: "hidden",
@@ -455,15 +455,15 @@ function FlashcardsPage() {
           <div style={{ display: "flex", gap: 14, width: "100%", maxWidth: 500 }}>
             <button
               onClick={() => answerCard(false)}
-              style={{ flex: 1, padding: 14, background: "white", color: "#e74c3c", border: "2px solid #e74c3c", borderRadius: 14, fontSize: "0.95rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
+              style={{ flex: 1, padding: 14, background: "var(--fd-panel, white)", color: "#e74c3c", border: "2px solid #e74c3c", borderRadius: "var(--fd-radius, 14px)", fontSize: "0.95rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
               onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(231,76,60,0.06)"; e.currentTarget.style.transform = "translateX(-3px)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "white"; e.currentTarget.style.transform = "none"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "var(--fd-panel, white)"; e.currentTarget.style.transform = "none"; }}
             >
               <Icon n="refresh" size={17} /> A repasar
             </button>
             <button
               onClick={() => answerCard(true)}
-              style={{ flex: 1, padding: 14, background: "#2ecc71", color: "white", border: "2px solid #2ecc71", borderRadius: 14, fontSize: "0.95rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
+              style={{ flex: 1, padding: 14, background: "#2ecc71", color: "white", border: "2px solid #2ecc71", borderRadius: "var(--fd-radius, 14px)", fontSize: "0.95rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
               onMouseEnter={(e) => { e.currentTarget.style.background = "#27ae60"; e.currentTarget.style.borderColor = "#27ae60"; e.currentTarget.style.transform = "translateX(3px)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.background = "#2ecc71"; e.currentTarget.style.borderColor = "#2ecc71"; e.currentTarget.style.transform = "none"; }}
             >
@@ -481,22 +481,22 @@ function FlashcardsPage() {
       <style>{`@keyframes float3 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }`}</style>
       <div style={{ marginBottom: 12 }}><PathyMark size={92} float /></div>
       <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.8rem", textAlign: "center", marginBottom: 6 }}>{resultTitle}</h1>
-      <p style={{ fontSize: "0.9rem", color: "#4A5872", marginBottom: 28, textAlign: "center" }}>Así te fue en esta sesión</p>
+      <p style={{ fontSize: "0.9rem", color: "var(--fd-muted, #4A5872)", marginBottom: 28, textAlign: "center" }}>Así te fue en esta sesión</p>
 
-      <div style={{ background: "white", borderRadius: 20, padding: 24, maxWidth: 440, width: "100%", boxShadow: "0 4px 20px rgba(22,61,112,0.1)", marginBottom: 20 }}>
-        <div style={{ display: "flex", marginBottom: 20, borderRadius: 12, overflow: "hidden" }}>
+      <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 20px)", padding: 24, maxWidth: 440, width: "100%", boxShadow: "0 4px 20px rgba(22,61,112,0.1)", marginBottom: 20 }}>
+        <div style={{ display: "flex", marginBottom: 20, borderRadius: "var(--fd-radius, 12px)", overflow: "hidden" }}>
           <div style={{ flex: 1, padding: 16, textAlign: "center", background: "rgba(46,204,113,0.08)" }}>
             <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "2rem", fontWeight: 900, color: "#2ecc71" }}>{knew}</div>
-            <div style={{ fontSize: "0.76rem", color: "#4A5872", marginTop: 2, display: "inline-flex", alignItems: "center", gap: 4 }}>Ya las sé <Icon n="check" size={13} /></div>
+            <div style={{ fontSize: "0.76rem", color: "var(--fd-muted, #4A5872)", marginTop: 2, display: "inline-flex", alignItems: "center", gap: 4 }}>Ya las sé <Icon n="check" size={13} /></div>
           </div>
           <div style={{ flex: 1, padding: 16, textAlign: "center", background: "rgba(231,76,60,0.06)" }}>
             <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "2rem", fontWeight: 900, color: "#e74c3c" }}>{toReview}</div>
-            <div style={{ fontSize: "0.76rem", color: "#4A5872", marginTop: 2, display: "inline-flex", alignItems: "center", gap: 4 }}>A repasar <Icon n="refresh" size={13} /></div>
+            <div style={{ fontSize: "0.76rem", color: "var(--fd-muted, #4A5872)", marginTop: 2, display: "inline-flex", alignItems: "center", gap: 4 }}>A repasar <Icon n="refresh" size={13} /></div>
           </div>
         </div>
       </div>
 
-      <div style={{ background: "linear-gradient(135deg,#EEE1C5,#fce4ec)", borderRadius: 12, padding: "14px 16px", display: "flex", alignItems: "flex-start", gap: 10, fontSize: "0.85rem", color: "#555", lineHeight: 1.5, marginBottom: 16, maxWidth: 440, width: "100%" }}>
+      <div style={{ background: "linear-gradient(135deg,#EEE1C5,#fce4ec)", borderRadius: "var(--fd-radius, 12px)", padding: "14px 16px", display: "flex", alignItems: "flex-start", gap: 10, fontSize: "0.85rem", color: "var(--fd-muted, #555)", lineHeight: 1.5, marginBottom: 16, maxWidth: 440, width: "100%" }}>
         <PathyMark size={26} />
         <div dangerouslySetInnerHTML={{ __html: resultMsg }} />
       </div>
@@ -504,13 +504,13 @@ function FlashcardsPage() {
       <div style={{ display: "flex", gap: 10, maxWidth: 440, width: "100%" }}>
         <button
           onClick={() => startSession(sectionIdx)}
-          style={{ flex: 1, padding: 12, background: "white", color: "#163D70", border: "2px solid #163D70", borderRadius: 11, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6 }}
+          style={{ flex: 1, padding: 12, background: "var(--fd-panel, white)", color: "var(--fd-text, #163D70)", border: "2px solid #163D70", borderRadius: "var(--fd-radius, 11px)", fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6 }}
         >
           <Icon n="refresh" size={16} /> Repetir sección
         </button>
         <button
           onClick={() => setScreen("secciones")}
-          style={{ flex: 1, padding: 12, background: "#7A5C1E", color: "white", border: "none", borderRadius: 11, fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+          style={{ flex: 1, padding: 12, background: "#7A5C1E", color: "white", border: "none", borderRadius: "var(--fd-radius, 11px)", fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
         >
           ← Otras secciones
         </button>
@@ -526,7 +526,7 @@ function Breadcrumb({ backLabel, onBack, title, icon }: { backLabel: string; onB
     <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20, flexWrap: "wrap" }}>
       <button
         onClick={onBack}
-        style={{ display: "flex", alignItems: "center", gap: 6, background: "white", border: "2px solid #EEE1C5", borderRadius: 8, padding: "7px 14px", fontSize: "0.82rem", fontWeight: 700, color: "#4A5872", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s" }}
+        style={{ display: "flex", alignItems: "center", gap: 6, background: "var(--fd-panel, white)", border: "1px solid var(--fd-border, #EEE1C5)", borderRadius: 8, padding: "7px 14px", fontSize: "0.82rem", fontWeight: 700, color: "var(--fd-muted, #4A5872)", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s" }}
         onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#163D70"; e.currentTarget.style.color = "#163D70"; }}
         onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#EEE1C5"; e.currentTarget.style.color = "#4A5872"; }}
       >
@@ -548,14 +548,14 @@ function ProgramaCard({ titulo, subtitulo, onClick }: { titulo: string; subtitul
       onClick={onClick}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      style={{ background: "white", borderRadius: 16, padding: 22, cursor: "pointer", transition: "all 0.25s", boxShadow: hover ? "0 8px 24px rgba(22,61,112,0.12)" : "0 2px 10px rgba(22,61,112,0.06)", border: hover ? "2px solid #5A86CB" : "2px solid transparent", transform: hover ? "translateY(-3px)" : "none", display: "flex", alignItems: "center", gap: 14 }}
+      style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", padding: 22, cursor: "pointer", transition: "all 0.25s", boxShadow: hover ? "0 8px 24px rgba(22,61,112,0.12)" : "0 2px 10px rgba(22,61,112,0.06)", border: hover ? "2px solid #5A86CB" : "2px solid transparent", transform: hover ? "translateY(-3px)" : "none", display: "flex", alignItems: "center", gap: 14 }}
     >
-      <div style={{ width: 46, height: 46, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: "rgba(90,134,203,.12)", color: "#081A35" }}>
+      <div style={{ width: 46, height: 46, borderRadius: "var(--fd-radius, 12px)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: "rgba(90,134,203,.12)", color: "var(--fd-text, #081A35)" }}>
         <Icon n="cards" size={22} />
       </div>
       <div>
-        <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "#081A35", marginBottom: 2 }}>{titulo}</h3>
-        <p style={{ fontSize: "0.76rem", color: "#4A5872" }}>{subtitulo}</p>
+        <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 2 }}>{titulo}</h3>
+        <p style={{ fontSize: "0.76rem", color: "var(--fd-muted, #4A5872)" }}>{subtitulo}</p>
       </div>
     </div>
   );
@@ -570,26 +570,26 @@ function MateriaCard({ subject, onClick }: { subject: SubjectEntry; onClick: () 
       onClick={onClick}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      style={{ background: "white", borderRadius: 16, padding: 20, cursor: "pointer", transition: "all 0.25s", boxShadow: hover ? "0 8px 24px rgba(22,61,112,0.12)" : "0 2px 10px rgba(22,61,112,0.06)", border: hover ? "2px solid #5A86CB" : "2px solid transparent", transform: hover ? "translateY(-3px)" : "none", display: "flex", flexDirection: "column", gap: 12 }}
+      style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", padding: 20, cursor: "pointer", transition: "all 0.25s", boxShadow: hover ? "0 8px 24px rgba(22,61,112,0.12)" : "0 2px 10px rgba(22,61,112,0.06)", border: hover ? "2px solid #5A86CB" : "2px solid transparent", transform: hover ? "translateY(-3px)" : "none", display: "flex", flexDirection: "column", gap: 12 }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <div style={{ width: 44, height: 44, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: subject.iconBg, color: "#081A35" }}>
+        <div style={{ width: 44, height: 44, borderRadius: "var(--fd-radius, 12px)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: subject.iconBg, color: "var(--fd-text, #081A35)" }}>
           <Icon n={subject.icon as never} size={22} />
         </div>
         <div>
-          <h3 style={{ fontSize: "0.92rem", fontWeight: 700, color: "#081A35", marginBottom: 2 }}>{subject.name}</h3>
-          <p style={{ fontSize: "0.75rem", color: "#4A5872" }}>
+          <h3 style={{ fontSize: "0.92rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 2 }}>{subject.name}</h3>
+          <p style={{ fontSize: "0.75rem", color: "var(--fd-muted, #4A5872)" }}>
             {subject.sections.length} {subject.containerLabel.toLowerCase()} ·{" "}
             {subject.total > 0 ? `${subject.total} flashcards` : "próximamente"}
           </p>
         </div>
       </div>
       <div>
-        <div style={{ height: 5, background: "#EEE1C5", borderRadius: 10, overflow: "hidden", marginBottom: 5 }}>
-          <div style={{ height: "100%", borderRadius: 10, background: "linear-gradient(90deg,#163D70,#5A86CB)", width: `${subject.progress}%` }} />
+        <div style={{ height: 5, background: "var(--fd-panel, #EEE1C5)", borderRadius: "var(--fd-radius, 10px)", overflow: "hidden", marginBottom: 5 }}>
+          <div style={{ height: "100%", borderRadius: "var(--fd-radius, 10px)", background: "linear-gradient(90deg,#163D70,#5A86CB)", width: `${subject.progress}%` }} />
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.72rem", color: "#7E90AD" }}>
-          <span style={{ color: "#163D70", fontWeight: 700 }}>{subject.mastered} dominadas</span>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.72rem", color: "var(--fd-muted, #7E90AD)" }}>
+          <span style={{ color: "var(--fd-text, #163D70)", fontWeight: 700 }}>{subject.mastered} dominadas</span>
           <span>{subject.total - subject.mastered} por repasar</span>
         </div>
       </div>
@@ -607,29 +607,29 @@ function SeccionCard({ section, num, locked = false, onStudy }: { section: Secti
       onClick={onStudy}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      style={{ background: "white", borderRadius: 14, padding: "18px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: empty ? "default" : "pointer", transition: "all 0.2s", boxShadow: "0 2px 8px rgba(22,61,112,0.05)", border: hover && !empty ? "2px solid #5A86CB" : "2px solid transparent", transform: hover && !empty ? "translateX(4px)" : "none", gap: 12, opacity: locked || empty ? 0.6 : 1 }}
+      style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 14px)", padding: "18px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: empty ? "default" : "pointer", transition: "all 0.2s", boxShadow: "0 2px 8px rgba(22,61,112,0.05)", border: hover && !empty ? "2px solid #5A86CB" : "2px solid transparent", transform: hover && !empty ? "translateX(4px)" : "none", gap: 12, opacity: locked || empty ? 0.6 : 1 }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 12, flex: 1 }}>
-        <div style={{ width: 32, height: 32, borderRadius: "50%", background: "#EEE1C5", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.78rem", fontWeight: 700, color: "#163D70", flexShrink: 0 }}>
+        <div style={{ width: 32, height: 32, borderRadius: "50%", background: "var(--fd-panel, #EEE1C5)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.78rem", fontWeight: 700, color: "var(--fd-text, #163D70)", flexShrink: 0 }}>
           {num}
         </div>
         <div>
-          <h4 style={{ fontSize: "0.88rem", fontWeight: 700, color: "#081A35", marginBottom: 2 }}>{section.titulo}</h4>
-          <p style={{ fontSize: "0.74rem", color: "#4A5872" }}>
+          <h4 style={{ fontSize: "0.88rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 2 }}>{section.titulo}</h4>
+          <p style={{ fontSize: "0.74rem", color: "var(--fd-muted, #4A5872)" }}>
             {empty ? "Flashcards próximamente" : `${section.items.length} flashcards`}
           </p>
         </div>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
         {!empty && (
-          <span style={{ background: "#EEE1C5", color: "#7A5C1E", padding: "3px 10px", borderRadius: 20, fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}>
+          <span style={{ background: "var(--fd-panel, #EEE1C5)", color: "var(--fd-gold, #7A5C1E)", padding: "3px 10px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 4 }}>
             <Icon n="cards" size={14} /> {section.items.length}
           </span>
         )}
         {locked && <span style={{ display: "inline-flex", color: "#8CA0BF" }}><Icon n="lock" size={16} /></span>}
         {!locked && !empty && section.done && <span style={{ display: "inline-flex", color: "#2ecc71" }}><Icon n="check" size={16} /></span>}
         {empty ? (
-          <span style={{ padding: "8px 16px", background: "#F5F7FA", color: "#8CA0BF", borderRadius: 8, fontSize: "0.78rem", fontWeight: 700, whiteSpace: "nowrap" }}>
+          <span style={{ padding: "8px 16px", background: "var(--fd-panel, #F5F7FA)", color: "#8CA0BF", borderRadius: 8, fontSize: "0.78rem", fontWeight: 700, whiteSpace: "nowrap" }}>
             Próximamente
           </span>
         ) : (

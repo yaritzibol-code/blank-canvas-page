@@ -98,15 +98,15 @@ export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: s
     <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 22 }}>
       {failed && (
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
-          <p style={{ fontSize: "0.8rem", color: "#7E90AD", fontFamily: "'Manrope', sans-serif", margin: 0 }}>
+          <p style={{ fontSize: "0.8rem", color: "var(--fd-muted, #7E90AD)", fontFamily: "'Manrope', sans-serif", margin: 0 }}>
             No se pudo cargar la lámina de esta pregunta.
           </p>
           <button
             type="button"
             onClick={() => { setFailed(false); setRetry((n) => n + 1); }}
             style={{
-              minHeight: 44, padding: "8px 14px", borderRadius: 10, cursor: "pointer",
-              border: "1px solid #163D70", background: "white", color: "#081A35",
+              minHeight: 44, padding: "8px 14px", borderRadius: "var(--fd-radius, 10px)", cursor: "pointer",
+              border: "1px solid #163D70", background: "var(--fd-panel, white)", color: "var(--fd-text, #081A35)",
               fontWeight: 700, fontSize: "0.8rem", fontFamily: "'Manrope', sans-serif",
             }}
           >
@@ -121,9 +121,9 @@ export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: s
           <p
             key={u}
             style={{
-              fontSize: "0.8rem", color: "#7E90AD", fontFamily: "'Manrope', sans-serif",
-              margin: 0, padding: "14px 16px", borderRadius: 12,
-              border: "1px dashed #D9E2F0", background: "#F8FAFD",
+              fontSize: "0.8rem", color: "var(--fd-muted, #7E90AD)", fontFamily: "'Manrope', sans-serif",
+              margin: 0, padding: "14px 16px", borderRadius: "var(--fd-radius, 12px)",
+              border: "1px dashed #D9E2F0", background: "var(--fd-panel, #F8FAFD)",
             }}
           >
             Esta figura todavía no está disponible. La pregunta se puede contestar con el texto.
@@ -139,9 +139,9 @@ export function QuestionImages({ files, fuente }: { files?: string[]; fuente?: s
                 width: "100%",
                 maxHeight: 460,
                 objectFit: "contain",
-                borderRadius: 12,
-                border: "1px solid #EEE1C5",
-                background: "white",
+                borderRadius: "var(--fd-radius, 12px)",
+                border: "1px solid var(--fd-border, #EEE1C5)",
+                background: "var(--fd-panel, white)",
               }}
             />
           </a>

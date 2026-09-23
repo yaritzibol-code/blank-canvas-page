@@ -28,7 +28,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
         letterSpacing: "0.22em",
         textTransform: "uppercase",
         fontWeight: 700,
-        color: `${NAVY}66`,
+        color: "var(--fd-muted, #081A3566)",
         marginBottom: 10,
       }}
     >
@@ -41,9 +41,9 @@ function Card({ children, style }: { children: React.ReactNode; style?: React.CS
   return (
     <div
       style={{
-        background: "white",
+        background: "var(--fd-panel, white)",
         border: `1px solid ${NAVY}14`,
-        borderRadius: 22,
+        borderRadius: "var(--fd-radius, 22px)",
         padding: "22px 24px",
         ...style,
       }}
@@ -64,7 +64,7 @@ function SkillBar({ id, nivel }: { id: string; nivel: number | undefined }) {
         <span style={{ display: "flex", color: def?.color ?? `${NAVY}44` }}>
           <Icon n={skill.icon as FPIconName} size={15} />
         </span>
-        <span style={{ fontSize: "0.86rem", fontWeight: 700, color: NAVY, flex: 1 }}>
+        <span style={{ fontSize: "0.86rem", fontWeight: 700, color: "var(--fd-text, #081A35)", flex: 1 }}>
           {skill.nombre}
         </span>
         <span
@@ -95,7 +95,7 @@ function SkillBar({ id, nivel }: { id: string; nivel: number | undefined }) {
           />
         ))}
       </div>
-      <div style={{ fontSize: "0.74rem", color: HAZE, lineHeight: 1.4 }}>{skill.descripcion}</div>
+      <div style={{ fontSize: "0.74rem", color: "var(--fd-muted, #4A5872)", lineHeight: 1.4 }}>{skill.descripcion}</div>
     </div>
   );
 }
@@ -125,9 +125,9 @@ export function DebriefPanel({
             display: "flex",
             gap: 10,
             alignItems: "flex-start",
-            background: "#FFF6E6",
+            background: "var(--fd-panel, #FFF6E6)",
             border: "1px solid #E7C27D",
-            borderRadius: 14,
+            borderRadius: "var(--fd-radius, 14px)",
             padding: "12px 16px",
             color: "#7A5310",
             fontSize: "0.86rem",
@@ -149,7 +149,7 @@ export function DebriefPanel({
         style={{
           background: NAVY,
           color: "white",
-          borderRadius: 22,
+          borderRadius: "var(--fd-radius, 22px)",
           padding: "26px 28px",
           display: "grid",
           gridTemplateColumns: "auto minmax(0, 1fr)",
@@ -276,7 +276,7 @@ export function DebriefPanel({
             <Eyebrow>Lo que sí hiciste bien</Eyebrow>
             <ul style={{ margin: 0, paddingLeft: 18, display: "grid", gap: 8 }}>
               {debrief.fortalezas.map((f) => (
-                <li key={f} style={{ fontSize: "0.9rem", color: NAVY, lineHeight: 1.55 }}>
+                <li key={f} style={{ fontSize: "0.9rem", color: "var(--fd-text, #081A35)", lineHeight: 1.55 }}>
                   {f}
                 </li>
               ))}
@@ -302,14 +302,14 @@ export function DebriefPanel({
                         fontWeight: 800,
                         letterSpacing: "0.12em",
                         textTransform: "uppercase",
-                        color: CORAL,
+                        color: "var(--fd-gold, #7A5C1E)",
                         marginBottom: 4,
                       }}
                     >
                       <Icon n={(skill?.icon ?? "alert") as FPIconName} size={12} />
                       {skill?.nombre ?? a.skill}
                     </div>
-                    <div style={{ fontSize: "0.9rem", color: NAVY, lineHeight: 1.55 }}>
+                    <div style={{ fontSize: "0.9rem", color: "var(--fd-text, #081A35)", lineHeight: 1.55 }}>
                       {a.comentario}
                     </div>
                     {a.ejemplo && (
@@ -317,13 +317,13 @@ export function DebriefPanel({
                         style={{
                           marginTop: 6,
                           padding: "8px 12px",
-                          background: CREAM,
+                          background: "var(--fd-panel, #F5F5F7)",
                           borderLeft: `3px solid ${SALMON}`,
                           borderRadius: 6,
                           fontFamily: SERIF,
                           fontStyle: "italic",
                           fontSize: "0.86rem",
-                          color: HAZE,
+                          color: "var(--fd-muted, #4A5872)",
                         }}
                       >
                         “{a.ejemplo}”
@@ -347,9 +347,9 @@ export function DebriefPanel({
                 key={`${c.dijiste}-${i}`}
                 style={{
                   border: `1px solid ${NAVY}12`,
-                  borderRadius: 14,
+                  borderRadius: "var(--fd-radius, 14px)",
                   padding: "12px 16px",
-                  background: CREAM,
+                  background: "var(--fd-panel, #F5F5F7)",
                 }}
               >
                 <div
@@ -358,13 +358,13 @@ export function DebriefPanel({
                     gap: 8,
                     alignItems: "flex-start",
                     fontSize: "0.9rem",
-                    color: HAZE,
+                    color: "var(--fd-muted, #4A5872)",
                     textDecoration: "line-through",
                     textDecorationColor: `${CORAL}66`,
                   }}
                 >
                   <span
-                    style={{ display: "flex", color: CORAL, paddingTop: 3, textDecoration: "none" }}
+                    style={{ display: "flex", color: "var(--fd-gold, #7A5C1E)", paddingTop: 3, textDecoration: "none" }}
                   >
                     <Icon n="close" size={13} />
                   </span>
@@ -376,7 +376,7 @@ export function DebriefPanel({
                     gap: 8,
                     alignItems: "flex-start",
                     fontSize: "0.95rem",
-                    color: NAVY,
+                    color: "var(--fd-text, #081A35)",
                     fontWeight: 600,
                     marginTop: 6,
                   }}
@@ -387,7 +387,7 @@ export function DebriefPanel({
                   {c.mejor}
                 </div>
                 {c.porque && (
-                  <div style={{ fontSize: "0.8rem", color: HAZE, marginTop: 6, paddingLeft: 21 }}>
+                  <div style={{ fontSize: "0.8rem", color: "var(--fd-muted, #4A5872)", marginTop: 6, paddingLeft: 21 }}>
                     {c.porque}
                   </div>
                 )}
@@ -411,9 +411,9 @@ export function DebriefPanel({
             <div style={{ display: "grid", gap: 10 }}>
               {debrief.vocabulario.map((v) => (
                 <div key={v.en}>
-                  <div style={{ fontSize: "0.9rem", fontWeight: 700, color: NAVY }}>
+                  <div style={{ fontSize: "0.9rem", fontWeight: 700, color: "var(--fd-text, #081A35)" }}>
                     {v.en}
-                    <span style={{ fontWeight: 400, color: HAZE }}> — {v.es}</span>
+                    <span style={{ fontWeight: 400, color: "var(--fd-muted, #4A5872)" }}> — {v.es}</span>
                   </div>
                   {v.uso && (
                     <div
@@ -421,7 +421,7 @@ export function DebriefPanel({
                         fontFamily: SERIF,
                         fontStyle: "italic",
                         fontSize: "0.85rem",
-                        color: HAZE,
+                        color: "var(--fd-muted, #4A5872)",
                         marginTop: 2,
                       }}
                     >
@@ -439,7 +439,7 @@ export function DebriefPanel({
             <Eyebrow>Tu siguiente práctica</Eyebrow>
             <ol style={{ margin: 0, paddingLeft: 20, display: "grid", gap: 8 }}>
               {debrief.siguientes.map((s) => (
-                <li key={s} style={{ fontSize: "0.9rem", color: NAVY, lineHeight: 1.55 }}>
+                <li key={s} style={{ fontSize: "0.9rem", color: "var(--fd-text, #081A35)", lineHeight: 1.55 }}>
                   {s}
                 </li>
               ))}
@@ -464,7 +464,7 @@ export function DebriefPanel({
             cursor: "pointer",
             font: "inherit",
             padding: 0,
-            color: NAVY,
+            color: "var(--fd-text, #081A35)",
           }}
         >
           <span style={{ display: "flex", alignItems: "center", gap: 8, fontWeight: 700 }}>
@@ -484,14 +484,14 @@ export function DebriefPanel({
                     fontWeight: 800,
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
-                    color: t.role === "examiner" ? CORAL : HAZE,
+                    color: t.role === "examiner" ? "var(--fd-gold, #7A5C1E)" : "var(--fd-muted, #4A5872)",
                     minWidth: 66,
                     paddingTop: 4,
                   }}
                 >
                   {t.role === "examiner" ? "Sinodal" : "Tú"}
                 </span>
-                <span style={{ fontSize: "0.9rem", color: NAVY, lineHeight: 1.55 }}>{t.text}</span>
+                <span style={{ fontSize: "0.9rem", color: "var(--fd-text, #081A35)", lineHeight: 1.55 }}>{t.text}</span>
               </div>
             ))}
           </div>
@@ -506,7 +506,7 @@ export function DebriefPanel({
             alignItems: "center",
             gap: 8,
             padding: "12px 22px",
-            borderRadius: 12,
+            borderRadius: "var(--fd-radius, 12px)",
             border: "none",
             background: CORAL,
             color: "white",

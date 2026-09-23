@@ -618,7 +618,7 @@ function Reglas({ reglas }: { reglas: FpReglaPublica[] | null }) {
               <span className="cm-ink truncate font-semibold">{r.label}</span>
               <span
                 className="cm-display whitespace-nowrap"
-                style={{ color: "#7A5C1E", fontWeight: 700 }}
+                style={{ color: "var(--fd-gold, #7A5C1E)", fontWeight: 700 }}
               >
                 +{fpFormat(r.fp)} FP
               </span>

@@ -1,3 +1,4 @@
+import { QuestionFrame } from "@/components/flightdeck/QuestionFrame";
 import { setPresenceActivity } from "@/lib/presence";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
@@ -47,7 +48,7 @@ import {
 } from "@/lib/store/linea-aerea-meta";
 
 export const Route = createFileRoute("/cuestionario")({
-  component: CuestionarioPage,
+  component: () => <QuestionFrame><CuestionarioPage/></QuestionFrame>,
   validateSearch: (
     search: Record<string, unknown>,
   ): { materias?: string; qty?: number; fuente?: string; banco?: "la"; fuentes?: string; modo?: "oficial" | "potenciado"; caps?: string; parts?: string; sinHeli?: boolean } => {
@@ -855,8 +856,8 @@ function CuestionarioPage() {
     const opt = questions[currentIdx].options[optIdx];
     if (!answered) {
       return {
-        border: "2px solid #EEE1C5",
-        background: "#f8f9ff",
+        border: "1px solid var(--fd-border, #EEE1C5)",
+        background: "var(--fd-panel, #f8f9ff)",
         cursor: "pointer",
       };
     }
@@ -868,24 +869,24 @@ function CuestionarioPage() {
     if (opt.correct) {
       return { border: "2px solid #2ecc71", background: "rgba(46,204,113,0.07)", cursor: "default" };
     }
-    return { border: "2px solid #EEE1C5", background: "#f8f9ff", cursor: "default", opacity: 0.6 };
+    return { border: "1px solid var(--fd-border, #EEE1C5)", background: "var(--fd-panel, #f8f9ff)", cursor: "default", opacity: 0.6 };
   }
 
   function getLetterStyle(optIdx: number): React.CSSProperties {
     const opt = questions[currentIdx].options[optIdx];
-    if (!answered) return { background: "#EEE1C5", color: "#4A5872" };
+    if (!answered) return { background: "var(--fd-panel, #EEE1C5)", color: "var(--fd-muted, #4A5872)" };
     if (optIdx === selectedIdx) {
       return opt.correct
         ? { background: "#2ecc71", color: "white" }
         : { background: "#e74c3c", color: "white" };
     }
     if (opt.correct) return { background: "#2ecc71", color: "white" };
-    return { background: "#EEE1C5", color: "#4A5872" };
+    return { background: "var(--fd-panel, #EEE1C5)", color: "var(--fd-muted, #4A5872)" };
   }
 
   // Guard de sesión: nada que renderizar hasta estar autenticado y cargado.
   if (!ready || !loaded) {
-    return <div style={{ minHeight: "100vh", background: "#f5f7fc" }} />;
+    return <div style={{ minHeight: "100vh", background: "var(--fd-panel, #f5f7fc)" }} />;
   }
 
   const materiaLabel =
@@ -901,8 +902,8 @@ function CuestionarioPage() {
       <div
         style={{
           fontFamily: "'Manrope', sans-serif",
-          background: "#f5f7fc",
-          color: "#081A35",
+          background: "var(--fd-panel, #f5f7fc)",
+          color: "var(--fd-text, #081A35)",
           // Alto fijo: la pantalla no crece con el chat, cada panel scrollea
           // por dentro y Yaris queda contenida en lo que se ve.
           height: "100dvh",
@@ -914,8 +915,8 @@ function CuestionarioPage() {
       >
         <div
           style={{
-            background: "white",
-            borderBottom: "1px solid rgba(22,61,112,0.08)",
+            background: "var(--fd-panel, white)",
+            borderBottom: "1px solid var(--fd-border, rgba(22,61,112,0.08))",
             padding: "0 24px",
             height: 62,
             display: "flex",
@@ -932,18 +933,18 @@ function CuestionarioPage() {
               to={exitTo}
               style={{
                 display: "flex", alignItems: "center", gap: 5,
-                color: "#4A5872", fontSize: "0.8rem", textDecoration: "none",
-                padding: "5px 10px", borderRadius: 6, border: "1px solid #EEE1C5",
+                color: "var(--fd-muted, #4A5872)", fontSize: "0.8rem", textDecoration: "none",
+                padding: "5px 10px", borderRadius: 6, border: "1px solid var(--fd-border, #EEE1C5)",
                 transition: "all 0.2s",
               }}
             >
               ← Salir
             </Link>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "#081A35", display: "flex", alignItems: "center", gap: 6 }}>
-                <Icon n="spark" size={15} color="#163D70" /> Modo Aprendiendo
+              <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "var(--fd-text, #081A35)", display: "flex", alignItems: "center", gap: 6 }}>
+                <Icon n="spark" size={15} color="var(--fd-text, #163D70)" /> Modo Aprendiendo
               </span>
-              <span style={{ fontSize: "0.72rem", color: "#4A5872" }} className="hidden sm:block">
+              <span style={{ fontSize: "0.72rem", color: "var(--fd-muted, #4A5872)" }} className="hidden sm:block">
                 {materiaLabel}
               </span>
             </div>
@@ -952,18 +953,18 @@ function CuestionarioPage() {
         <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
           <div
             style={{
-              background: "white", borderRadius: 18, padding: 32,
+              background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 18px)", padding: 32,
               maxWidth: 480, width: "100%", textAlign: "center",
               boxShadow: "0 2px 16px rgba(22,61,112,0.07)",
             }}
           >
             <div style={{ marginBottom: 12, display: "flex", justifyContent: "center" }}>
-              <Icon n="help" size={40} color="#7E90AD" />
+              <Icon n="help" size={40} color="var(--fd-muted, #7E90AD)" />
             </div>
-            <p style={{ fontSize: "0.95rem", fontWeight: 700, color: "#081A35", marginBottom: 8 }}>
+            <p style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 8 }}>
               Esta materia aún no tiene preguntas publicadas
             </p>
-            <p style={{ fontSize: "0.82rem", color: "#4A5872", marginBottom: 20 }}>
+            <p style={{ fontSize: "0.82rem", color: "var(--fd-muted, #4A5872)", marginBottom: 20 }}>
               Elige otra materia para practicar mientras agregamos más contenido.
             </p>
             <Link
@@ -971,7 +972,7 @@ function CuestionarioPage() {
               style={{
                 display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 7,
                 padding: "12px 20px", background: "#7A5C1E", color: "white",
-                borderRadius: 11, fontSize: "0.88rem", fontWeight: 700,
+                borderRadius: "var(--fd-radius, 11px)", fontSize: "0.88rem", fontWeight: 700,
                 textDecoration: "none", fontFamily: "'Manrope', sans-serif",
               }}
             >
@@ -1030,8 +1031,8 @@ function CuestionarioPage() {
     <div
       style={{
         fontFamily: "'Manrope', sans-serif",
-        background: "#f5f7fc",
-        color: "#081A35",
+        background: "var(--fd-panel, #f5f7fc)",
+        color: "var(--fd-text, #081A35)",
         height: "100dvh",
         minHeight: "100dvh",
         maxHeight: "100dvh",
@@ -1060,8 +1061,8 @@ function CuestionarioPage() {
       <div
         className="px-3 sm:px-6"
         style={{
-          background: "white",
-          borderBottom: "1px solid rgba(22,61,112,0.08)",
+          background: "var(--fd-panel, white)",
+          borderBottom: "1px solid var(--fd-border, rgba(22,61,112,0.08))",
           minHeight: 62,
           display: "flex",
           alignItems: "center",
@@ -1079,9 +1080,9 @@ function CuestionarioPage() {
             aria-label="Salir del cuestionario"
             style={{
               display: "flex", alignItems: "center", justifyContent: "center", gap: 5,
-              color: "#163D70", fontSize: "0.82rem", fontWeight: 600, textDecoration: "none",
+              color: "var(--fd-text, #163D70)", fontSize: "0.82rem", fontWeight: 600, textDecoration: "none",
               minHeight: 44, minWidth: 44, padding: "0 12px", borderRadius: 8,
-              border: "1px solid #C9D4E5", flexShrink: 0,
+              border: "1px solid var(--fd-border, #C9D4E5)", flexShrink: 0,
               transition: "all 0.2s",
             }}
             onMouseEnter={(e) => { e.currentTarget.style.color = "#081A35"; e.currentTarget.style.borderColor = "#163D70"; }}
@@ -1090,10 +1091,10 @@ function CuestionarioPage() {
             <span aria-hidden="true">←</span> Salir
           </Link>
           <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
-            <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "#081A35", display: "flex", alignItems: "center", gap: 6 }}>
-              <Icon n="spark" size={15} color="#163D70" /> <span className="truncate">Modo Aprendiendo</span>
+            <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "var(--fd-text, #081A35)", display: "flex", alignItems: "center", gap: 6 }}>
+              <Icon n="spark" size={15} color="var(--fd-text, #163D70)" /> <span className="truncate">Modo Aprendiendo</span>
             </span>
-            <span style={{ fontSize: "0.74rem", color: "#5A6F92" }} className="hidden md:block truncate">
+            <span style={{ fontSize: "0.74rem", color: "var(--fd-muted, #5A6F92)" }} className="hidden md:block truncate">
               {materiaLabel} · {total} preguntas
             </span>
           </div>
@@ -1140,9 +1141,9 @@ function CuestionarioPage() {
       <div
         className="px-3 sm:px-6"
         style={{
-          background: "white",
+          background: "var(--fd-panel, white)",
           paddingBottom: 12,
-          borderBottom: "1px solid rgba(22,61,112,0.06)",
+          borderBottom: "1px solid var(--fd-border, rgba(22,61,112,0.06))",
           flexShrink: 0,
         }}
       >
@@ -1150,19 +1151,19 @@ function CuestionarioPage() {
           style={{
             display: "flex", justifyContent: "space-between", alignItems: "center",
             gap: 8,
-            fontSize: "0.76rem", color: "#5A6F92", marginBottom: 6,
+            fontSize: "0.76rem", color: "var(--fd-muted, #5A6F92)", marginBottom: 6,
           }}
         >
           <span>Progreso de la sesión</span>
-          <strong style={{ color: "#081A35", whiteSpace: "nowrap" }}>{answeredCount}/{total} respondidas</strong>
+          <strong style={{ color: "var(--fd-text, #081A35)", whiteSpace: "nowrap" }}>{answeredCount}/{total} respondidas</strong>
         </div>
 
-        <div style={{ height: 6, background: "#EEE1C5", borderRadius: 10, overflow: "hidden" }}>
+        <div style={{ height: 6, background: "var(--fd-panel, #EEE1C5)", borderRadius: "var(--fd-radius, 10px)", overflow: "hidden" }}>
           <div
             style={{
               height: "100%",
               background: "linear-gradient(90deg,#163D70,#5A86CB)",
-              borderRadius: 10,
+              borderRadius: "var(--fd-radius, 10px)",
               width: `${progressPct}%`,
               transition: "width 0.4s ease",
             }}
@@ -1183,7 +1184,7 @@ function CuestionarioPage() {
           <div
             className="fp-quiz-card"
             style={{
-              background: "white", borderRadius: 18,
+              background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 18px)",
               boxShadow: "0 2px 16px rgba(22,61,112,0.07)",
               marginBottom: 16,
             }}
@@ -1203,7 +1204,7 @@ function CuestionarioPage() {
               style={{
                 fontFamily: "'Instrument Serif', serif",
                 fontSize: "clamp(1.5rem, 2.4vw, 2rem)",
-                color: "#081A35",
+                color: "var(--fd-text, #081A35)",
                 lineHeight: 1.25,
                 marginBottom: 28,
               }}
@@ -1218,7 +1219,7 @@ function CuestionarioPage() {
             {currentQ.abierta ? (
               /* Respuesta escrita: el glosario de abreviaturas se contesta a mano. */
               <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
-                <label htmlFor="respuesta-abierta" style={{ fontSize: "0.82rem", color: "#4A5872", fontWeight: 600 }}>
+                <label htmlFor="respuesta-abierta" style={{ fontSize: "0.82rem", color: "var(--fd-muted, #4A5872)", fontWeight: 600 }}>
                   Escribe tu respuesta
                 </label>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
@@ -1240,8 +1241,8 @@ function CuestionarioPage() {
                     placeholder="Tu respuesta…"
                     style={{
                       flex: "1 1 240px", minHeight: 56, padding: "14px 18px",
-                      borderRadius: 12, border: "2px solid #EEE1C5", background: "#f8f9ff",
-                      font: "inherit", fontSize: "0.95rem", color: "#081A35",
+                      borderRadius: "var(--fd-radius, 12px)", border: "1px solid var(--fd-border, #EEE1C5)", background: "var(--fd-panel, #f8f9ff)",
+                      font: "inherit", fontSize: "0.95rem", color: "var(--fd-text, #081A35)",
                     }}
                   />
                   <button
@@ -1249,7 +1250,7 @@ function CuestionarioPage() {
                     onClick={handleOpenSubmit}
                     disabled={answered || openInput.trim().length === 0}
                     style={{
-                      minHeight: 56, padding: "14px 22px", borderRadius: 12, border: "none",
+                      minHeight: 56, padding: "14px 22px", borderRadius: "var(--fd-radius, 12px)", border: "none",
                       background: answered || openInput.trim().length === 0 ? "#B9C6DA" : "#7A5C1E",
                       color: "white", fontWeight: 700, fontSize: "0.9rem",
                       cursor: answered || openInput.trim().length === 0 ? "default" : "pointer",
@@ -1260,7 +1261,7 @@ function CuestionarioPage() {
                   </button>
                 </div>
                 {answered && (
-                  <p style={{ fontSize: "0.88rem", color: "#081A35", margin: 0 }}>
+                  <p style={{ fontSize: "0.88rem", color: "var(--fd-text, #081A35)", margin: 0 }}>
                     Respuesta correcta: <strong>{currentQ.options[currentQ.correctIndex]?.text}</strong>
                   </p>
                 )}
@@ -1277,7 +1278,7 @@ function CuestionarioPage() {
                   aria-pressed={selectedIdx === i}
                   style={{
                     display: "flex", alignItems: "center", gap: 14,
-                    padding: "14px 18px", borderRadius: 12,
+                    padding: "14px 18px", borderRadius: "var(--fd-radius, 12px)",
                     minHeight: 56, width: "100%", textAlign: "left",
                     font: "inherit", cursor: answered ? "default" : "pointer",
                     transition: "all 0.2s",
@@ -1311,7 +1312,7 @@ function CuestionarioPage() {
                   >
                     {LETTERS[i]}
                   </span>
-                  <span style={{ fontSize: "0.95rem", color: "#081A35", lineHeight: 1.45, flex: 1 }}>
+                  <span style={{ fontSize: "0.95rem", color: "var(--fd-text, #081A35)", lineHeight: 1.45, flex: 1 }}>
                     {opt.text}
                   </span>
                   {answered && (
@@ -1329,7 +1330,7 @@ function CuestionarioPage() {
             {answered && (
               <div
                 style={{
-                  borderRadius: 12, padding: "16px 20px", marginBottom: 16,
+                  borderRadius: "var(--fd-radius, 12px)", padding: "16px 20px", marginBottom: 16,
                   animation: "slideUp 0.3s ease",
                   background: answeredCorrectly ? "rgba(46,204,113,0.08)" : "rgba(231,76,60,0.06)",
                   border: answeredCorrectly ? "1px solid rgba(46,204,113,0.3)" : "1px solid rgba(231,76,60,0.2)",
@@ -1347,15 +1348,15 @@ function CuestionarioPage() {
                     {answeredCorrectly ? "¡Correcto!" : "Incorrecto"}
                   </span>
                 </div>
-                <p style={{ fontSize: "0.85rem", lineHeight: 1.6, color: "#555" }}>
+                <p style={{ fontSize: "0.85rem", lineHeight: 1.6, color: "var(--fd-muted, #555)" }}>
                   {answeredCorrectly ? currentQ.feedback.correct : currentQ.feedback.incorrect}
                 </p>
                 {currentQ.feedback.cite && (
                 <span
                   style={{
                     marginTop: 8, padding: "4px 10px",
-                    background: "rgba(22,61,112,0.07)", borderLeft: "3px solid #163D70",
-                    borderRadius: 3, fontSize: "0.74rem", color: "#163D70", fontWeight: 600,
+                    background: "var(--fd-panel-alt, rgba(22,61,112,0.07))", borderLeft: "3px solid #163D70",
+                    borderRadius: 3, fontSize: "0.74rem", color: "var(--fd-text, #163D70)", fontWeight: 600,
                     display: "inline-flex", alignItems: "center", gap: 5,
                   }}
                 >
@@ -1381,7 +1382,7 @@ function CuestionarioPage() {
                     style={{
                       minHeight: 44, padding: "0 14px",
                       background: "transparent",
-                      color: "#163D70", border: "1px solid #C9D4E5", borderRadius: 9,
+                      color: "var(--fd-text, #163D70)", border: "1px solid var(--fd-border, #C9D4E5)", borderRadius: 9,
                       fontSize: "0.82rem", fontWeight: 600, cursor: "pointer",
                       fontFamily: "'Manrope', sans-serif",
                       display: "inline-flex", alignItems: "center", gap: 5,
@@ -1403,8 +1404,8 @@ function CuestionarioPage() {
               style={{
                 width: "100%", padding: 13,
                 background: canGoNext ? "#7A5C1E" : "#ddd",
-                color: canGoNext ? "white" : "#7E90AD",
-                border: "none", borderRadius: 11,
+                color: canGoNext ? "white" : "var(--fd-muted, #7E90AD)",
+                border: "none", borderRadius: "var(--fd-radius, 11px)",
                 fontSize: "0.92rem", fontWeight: 700,
                 cursor: canGoNext ? "pointer" : "not-allowed",
                 fontFamily: "'Manrope', sans-serif",
@@ -1450,20 +1451,20 @@ function CuestionarioPage() {
             <h1
               style={{
                 fontFamily: "'Instrument Serif', serif",
-                fontSize: "2rem", color: "#081A35",
+                fontSize: "2rem", color: "var(--fd-text, #081A35)",
                 marginBottom: 6, textAlign: "center",
               }}
             >
-              ¡Sesión <span style={{ color: "#7A5C1E" }}>completada!</span>
+              ¡Sesión <span style={{ color: "var(--fd-gold, #7A5C1E)" }}>completada!</span>
             </h1>
-            <p style={{ fontSize: "0.9rem", color: "#4A5872", marginBottom: 28, textAlign: "center" }}>
+            <p style={{ fontSize: "0.9rem", color: "var(--fd-muted, #4A5872)", marginBottom: 28, textAlign: "center" }}>
               Aquí está tu análisis de Pathy
             </p>
 
             {/* Score card */}
             <div
               style={{
-                background: "white", borderRadius: 20, padding: 28,
+                background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 20px)", padding: 28,
                 width: "100%", maxWidth: 580,
                 boxShadow: "0 4px 20px rgba(22,61,112,0.1)",
                 marginBottom: 20, textAlign: "center",
@@ -1478,7 +1479,7 @@ function CuestionarioPage() {
               >
                 {scorePercent}%
               </div>
-              <div style={{ fontSize: "0.85rem", color: "#4A5872", marginBottom: 20 }}>
+              <div style={{ fontSize: "0.85rem", color: "var(--fd-muted, #4A5872)", marginBottom: 20 }}>
                 Aciertos en esta sesión
               </div>
               <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
@@ -1489,10 +1490,10 @@ function CuestionarioPage() {
                   { num: `${elapsedMin} min`, label: "Tiempo" },
                 ].map((s) => (
                   <div key={s.label} style={{ textAlign: "center" }}>
-                    <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.4rem", fontWeight: 900, color: "#081A35" }}>
+                    <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.4rem", fontWeight: 900, color: "var(--fd-text, #081A35)" }}>
                       {s.num}
                     </div>
-                    <div style={{ fontSize: "0.72rem", color: "#7E90AD" }}>{s.label}</div>
+                    <div style={{ fontSize: "0.72rem", color: "var(--fd-muted, #7E90AD)" }}>{s.label}</div>
                   </div>
                 ))}
               </div>
@@ -1501,13 +1502,13 @@ function CuestionarioPage() {
             {/* Weakness/strength */}
             <div
               style={{
-                background: "white", borderRadius: 16, padding: 20,
+                background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", padding: 20,
                 width: "100%", maxWidth: 580,
                 boxShadow: "0 2px 12px rgba(22,61,112,0.06)",
                 marginBottom: 16,
               }}
             >
-              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#4A5872", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}>
+              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--fd-muted, #4A5872)", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}>
                 <Icon n="alert" size={15} /> Temas que necesitas reforzar
               </div>
               {reforzar.length === 0 ? (
@@ -1533,7 +1534,7 @@ function CuestionarioPage() {
                         fontSize: "0.84rem", background: bg,
                       }}
                     >
-                      <span style={{ display: "flex", alignItems: "center", gap: 7 }}><Icon n={item.icon} size={15} color="#081A35" /> {item.name}</span>
+                      <span style={{ display: "flex", alignItems: "center", gap: 7 }}><Icon n={item.icon} size={15} color="var(--fd-text, #081A35)" /> {item.name}</span>
                       <span style={{ color, fontWeight: 700 }}>{item.pct}%</span>
                     </div>
                   );
@@ -1541,7 +1542,7 @@ function CuestionarioPage() {
               )}
               {dominado.length > 0 && (
                 <>
-                  <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#4A5872", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12, marginTop: 14, display: "flex", alignItems: "center", gap: 6 }}>
+                  <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--fd-muted, #4A5872)", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 12, marginTop: 14, display: "flex", alignItems: "center", gap: 6 }}>
                     <Icon n="check" size={15} /> Lo que dominaste
                   </div>
                   {dominado.map((item) => (
@@ -1553,7 +1554,7 @@ function CuestionarioPage() {
                         fontSize: "0.84rem", background: "rgba(46,204,113,0.06)",
                       }}
                     >
-                      <span style={{ display: "flex", alignItems: "center", gap: 7 }}><Icon n={item.icon} size={15} color="#081A35" /> {item.name}</span>
+                      <span style={{ display: "flex", alignItems: "center", gap: 7 }}><Icon n={item.icon} size={15} color="var(--fd-text, #081A35)" /> {item.name}</span>
                       <span style={{ color: "#2ecc71", fontWeight: 700 }}>{item.pct}%</span>
                     </div>
                   ))}
@@ -1578,8 +1579,8 @@ function CuestionarioPage() {
                 onClick={handleRestart}
                 style={{
                   flex: 1, padding: 13,
-                  background: "white", color: "#163D70",
-                  border: "2px solid #163D70", borderRadius: 11,
+                  background: "var(--fd-panel, white)", color: "var(--fd-text, #163D70)",
+                  border: "2px solid #163D70", borderRadius: "var(--fd-radius, 11px)",
                   fontSize: "0.9rem", fontWeight: 700, cursor: "pointer",
                   fontFamily: "'Manrope', sans-serif",
                   display: "flex", alignItems: "center", justifyContent: "center", gap: 7,
@@ -1592,7 +1593,7 @@ function CuestionarioPage() {
                 style={{
                   flex: 1, padding: 13,
                   background: "#7A5C1E", color: "white",
-                  border: "none", borderRadius: 11,
+                  border: "none", borderRadius: "var(--fd-radius, 11px)",
                   fontSize: "0.9rem", fontWeight: 700, cursor: "pointer",
                   fontFamily: "'Manrope', sans-serif",
                   textDecoration: "none",
@@ -1615,8 +1616,8 @@ function CuestionarioPage() {
                   position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 200,
                   height: "min(62dvh, 460px)",
                   width: "100%", display: "flex", flexDirection: "column",
-                  background: "white",
-                  borderTop: "1px solid rgba(22,61,112,0.12)",
+                  background: "var(--fd-panel, white)",
+                  borderTop: "1px solid var(--fd-border, rgba(22,61,112,0.12))",
                   borderRadius: "18px 18px 0 0",
                   boxShadow: "0 -18px 40px -16px rgba(15,26,51,0.35)",
                   overflow: "hidden",
@@ -1627,7 +1628,7 @@ function CuestionarioPage() {
                   minHeight: 0,
                   overflow: "hidden",
                   flexShrink: 0,
-                  background: "white",
+                  background: "var(--fd-panel, white)",
                   borderLeft: yarisOpen ? "1px solid rgba(22,61,112,0.1)" : "none",
                   display: "flex",
                   flexDirection: "column",
@@ -1647,7 +1648,7 @@ function CuestionarioPage() {
             <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
               <div
                 style={{
-                  width: 32, height: 32, background: "white", borderRadius: "50%",
+                  width: 32, height: 32, background: "var(--fd-panel, white)", borderRadius: "50%",
                   display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem",
                 }}
               >
@@ -1665,7 +1666,7 @@ function CuestionarioPage() {
               aria-label="Cerrar el chat de Yaris"
               style={{
                 background: "rgba(255,255,255,0.22)", border: "none", color: "white",
-                borderRadius: 10, minWidth: 44, minHeight: 44, cursor: "pointer",
+                borderRadius: "var(--fd-radius, 10px)", minWidth: 44, minHeight: 44, cursor: "pointer",
                 fontSize: "0.76rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif",
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}
@@ -1685,7 +1686,7 @@ function CuestionarioPage() {
                 padding: "10px 14px",
                 // Fondo sólido y tinta oscura: sobre el degradado translúcido
                 // anterior el texto no alcanzaba contraste AA.
-                background: "#FFF4DE",
+                background: "var(--fd-panel, #FFF4DE)",
                 borderBottom: "1px solid #E0A93C",
                 color: "#6B4200",
                 fontSize: "0.78rem", lineHeight: 1.5, fontWeight: 500,
@@ -1724,7 +1725,7 @@ function CuestionarioPage() {
                     display: "flex", alignItems: "center", justifyContent: "center",
                     fontSize: msg.role === "bot" ? "0.78rem" : "0.6rem",
                     fontWeight: msg.role === "user" ? 700 : undefined,
-                    background: msg.role === "bot" ? "#EEE1C5" : "#163D70",
+                    background: msg.role === "bot" ? "var(--fd-panel, #EEE1C5)" : "#163D70",
                     color: msg.role === "user" ? "white" : undefined,
                     flexShrink: 0,
                   }}
@@ -1736,8 +1737,8 @@ function CuestionarioPage() {
                     maxWidth: "84%", padding: "9px 12px",
                     borderRadius: msg.role === "bot" ? "4px 12px 12px 12px" : "12px 4px 12px 12px",
                     fontSize: "0.81rem", lineHeight: 1.55,
-                    background: msg.role === "bot" ? "#f0f4ff" : "#163D70",
-                    color: msg.role === "bot" ? "#081A35" : "white",
+                    background: msg.role === "bot" ? "var(--fd-panel, #f0f4ff)" : "#163D70",
+                    color: msg.role === "bot" ? "var(--fd-text, #081A35)" : "white",
                   }}
                 >
                   <span className="yaris-md" dangerouslySetInnerHTML={{ __html: sanitizeHtml(msg.text) }} />
@@ -1746,9 +1747,9 @@ function CuestionarioPage() {
                     <span
                       style={{
                         display: "block", marginTop: 6, padding: "4px 8px",
-                        background: "rgba(22,61,112,0.08)",
+                        background: "var(--fd-panel-alt, rgba(22,61,112,0.08))",
                         borderLeft: "3px solid #163D70", borderRadius: 3,
-                        fontSize: "0.7rem", color: "#163D70", fontWeight: 600,
+                        fontSize: "0.7rem", color: "var(--fd-text, #163D70)", fontWeight: 600,
                       }}
                     >
                       <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Icon n="book" size={12} /> {msg.cite}</span>
@@ -1762,7 +1763,7 @@ function CuestionarioPage() {
                 <div
                   style={{
                     width: 26, height: 26, borderRadius: "50%",
-                    background: "#EEE1C5", display: "flex", alignItems: "center",
+                    background: "var(--fd-panel, #EEE1C5)", display: "flex", alignItems: "center",
                     justifyContent: "center", fontSize: "0.78rem", flexShrink: 0,
                   }}
                 >
@@ -1770,7 +1771,7 @@ function CuestionarioPage() {
                 </div>
                 <div
                   style={{
-                    padding: "9px 12px", background: "#f0f4ff",
+                    padding: "9px 12px", background: "var(--fd-panel, #f0f4ff)",
                     borderRadius: "4px 12px 12px 12px",
                     display: "flex", alignItems: "center", gap: 4,
                   }}
@@ -1792,7 +1793,7 @@ function CuestionarioPage() {
           <div
             style={{
               padding: "10px 14px calc(10px + env(safe-area-inset-bottom))",
-              borderTop: "1px solid #EEE1C5",
+              borderTop: "1px solid var(--fd-border, #EEE1C5)",
               display: "flex", gap: 8, alignItems: "center", flexShrink: 0,
             }}
           >
@@ -1803,10 +1804,10 @@ function CuestionarioPage() {
               aria-label="Escribe tu mensaje para Yaris"
               placeholder={thinkMode ? "Pregúntame conceptos, no la respuesta..." : "Escribe tu duda..."}
               style={{
-                flex: 1, border: "2px solid #C9D4E5", borderRadius: 22,
+                flex: 1, border: "1px solid var(--fd-border, #C9D4E5)", borderRadius: "var(--fd-radius, 22px)",
                 // 16px evita el zoom automático de iOS al enfocar el campo.
                 padding: "11px 14px", fontSize: "16px", minHeight: 44,
-                color: "#081A35",
+                color: "var(--fd-text, #081A35)",
                 fontFamily: "'Manrope', sans-serif", outline: "none",
                 transition: "border-color 0.2s",
               }}

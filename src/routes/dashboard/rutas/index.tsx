@@ -99,7 +99,7 @@ function RutasIndex() {
         />
       )}
 
-      <LpGrid>
+      <div className="fd-lp-categories"><LpGrid>
         {LP_CATEGORIES.map((cat) => {
           const s = CATEGORY_STYLE[cat.id] ?? { icon: "book", accent: "var(--primary)" };
           const proximamente = cat.id === "ciaac";
@@ -121,7 +121,7 @@ function RutasIndex() {
             />
           );
         })}
-      </LpGrid>
+      </LpGrid></div>
     </>
   );
 }

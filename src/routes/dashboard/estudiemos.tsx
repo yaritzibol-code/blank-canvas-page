@@ -41,7 +41,7 @@ function VolverDashboard() {
       to="/dashboard"
       style={{
         display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 14,
-        color: "#163D70", fontWeight: 700, fontSize: "0.82rem", textDecoration: "none",
+        color: "var(--fd-text, #163D70)", fontWeight: 700, fontSize: "0.82rem", textDecoration: "none",
         fontFamily: "'Manrope', sans-serif",
       }}
     >
@@ -182,10 +182,10 @@ function EstudiemosJuntosPage() {
 
   const header = (
     <div style={{ marginBottom: 20 }}>
-      <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.6rem", fontWeight: 700, color: "#081A35", margin: "0 0 4px" }}>
+      <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.6rem", fontWeight: 700, color: "var(--fd-text, #081A35)", margin: "0 0 4px" }}>
         Estudiemos juntos
       </h1>
-      <p style={{ fontSize: "0.88rem", color: "#4A5872", margin: 0 }}>
+      <p style={{ fontSize: "0.88rem", color: "var(--fd-muted, #4A5872)", margin: 0 }}>
         Tú eliges cómo llegas. Pathy decide cómo estudiamos.
       </p>
     </div>
@@ -219,7 +219,7 @@ function EstudiemosJuntosPage() {
           <div
             style={{
               background: "linear-gradient(135deg,#EEE1C5,#fce4ec)",
-              borderRadius: 18, padding: "18px 20px", marginBottom: 18,
+              borderRadius: "var(--fd-radius, 18px)", padding: "18px 20px", marginBottom: 18,
               display: "flex", gap: 14, alignItems: "flex-start",
             }}
           >
@@ -242,8 +242,8 @@ function EstudiemosJuntosPage() {
             <button
               onClick={completeCurrent}
               style={{
-                flex: "1 1 180px", minHeight: 46, borderRadius: 12, border: "1.5px solid #163D70",
-                background: "white", color: "#163D70", fontWeight: 700, fontSize: "0.85rem",
+                flex: "1 1 180px", minHeight: 46, borderRadius: "var(--fd-radius, 12px)", border: "1.5px solid #163D70",
+                background: "var(--fd-panel, white)", color: "var(--fd-text, #163D70)", fontWeight: 700, fontSize: "0.85rem",
                 cursor: "pointer", fontFamily: "'Manrope', sans-serif",
                 display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 7,
               }}
@@ -253,7 +253,7 @@ function EstudiemosJuntosPage() {
             <button
               onClick={terminar}
               style={{
-                flex: "1 1 180px", minHeight: 46, borderRadius: 12, border: "none",
+                flex: "1 1 180px", minHeight: 46, borderRadius: "var(--fd-radius, 12px)", border: "none",
                 background: "#7A5C1E", color: "white", fontWeight: 700, fontSize: "0.85rem",
                 cursor: "pointer", fontFamily: "'Manrope', sans-serif",
               }}

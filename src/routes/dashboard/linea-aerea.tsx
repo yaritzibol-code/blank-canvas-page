@@ -58,9 +58,10 @@ function LineaAereaPage() {
 function LineaAereaHero() {
   return (
     <div
+      className="fd-la-overview"
       style={{
         background: "linear-gradient(145deg, #081A35, #2a2a4e)",
-        borderRadius: 20,
+        borderRadius: "var(--fd-radius, 20px)",
         padding: "30px 28px",
         marginBottom: 32,
         maxWidth: 820,
@@ -76,7 +77,7 @@ function LineaAereaHero() {
           background: "rgba(199,160,82,0.2)",
           color: "#C7A052",
           padding: "5px 12px",
-          borderRadius: 20,
+          borderRadius: "var(--fd-radius, 20px)",
           fontSize: "0.72rem",
           fontWeight: 700,
           textTransform: "uppercase",
@@ -138,6 +139,7 @@ const quizCardsCss = `
  */
 export function QuizCard({
   dark = false,
+  cover,
   badge,
   icon,
   titulo,
@@ -151,6 +153,7 @@ export function QuizCard({
   ctaLabel = "Iniciar cuestionario →",
 }: {
   dark?: boolean;
+  cover?: string;
   badge?: string;
   icon: FPIconName;
   titulo: string;
@@ -169,19 +172,20 @@ export function QuizCard({
     <div
       className={`fp-la-card${dark ? " fp-la-dark" : ""}`}
       style={{
-        borderRadius: 20,
+        borderRadius: "var(--fd-radius, 20px)",
         padding: "28px 26px",
         display: "flex",
         flexDirection: "column",
         position: "relative",
         overflow: "hidden",
         fontFamily: FONT,
-        background: dark ? "linear-gradient(145deg, #081A35, #2a2a4e)" : "white",
-        border: dark ? "3px solid transparent" : "3px solid #EEE1C5",
+        background: dark ? "linear-gradient(145deg, #081A35, #2a2a4e)" : "var(--fd-panel, white)",
+        border: dark ? "3px solid transparent" : "1px solid var(--fd-border, #EEE1C5)",
         boxShadow: dark ? "none" : "0 2px 16px rgba(22,61,112,0.07)",
       }}
     >
       {/* Distintivo (opcional) */}
+      {cover && <img src={cover} className="fd-la-cover" alt="" loading="lazy" />}
       {badge ? (
         <div
           style={{
@@ -189,10 +193,12 @@ export function QuizCard({
             alignItems: "center",
             gap: 6,
             alignSelf: "flex-start",
-            background: dark ? "rgba(199,160,82,0.16)" : "rgba(22,61,112,0.08)",
-            color: dark ? "#C7A052" : "#163D70",
+            background: dark
+              ? "rgba(199,160,82,0.16)"
+              : "var(--fd-panel-alt, rgba(22,61,112,0.08))",
+            color: dark ? "#C7A052" : "var(--fd-text, #163D70)",
             padding: "5px 12px",
-            borderRadius: 20,
+            borderRadius: "var(--fd-radius, 20px)",
             marginBottom: 18,
             fontSize: "0.68rem",
             fontWeight: 700,
@@ -204,7 +210,13 @@ export function QuizCard({
         </div>
       ) : null}
 
-      <div style={{ color: dark ? "#C7A052" : "#7A5C1E", marginBottom: 12, display: "flex" }}>
+      <div
+        style={{
+          color: dark ? "#C7A052" : "var(--fd-gold, #7A5C1E)",
+          marginBottom: 12,
+          display: "flex",
+        }}
+      >
         <Icon n={icon} size={26} />
       </div>
 
@@ -213,7 +225,7 @@ export function QuizCard({
           fontFamily: DISPLAY,
           fontSize: "1.3rem",
           lineHeight: 1.2,
-          color: dark ? "white" : INK,
+          color: dark ? "white" : "var(--fd-text, #081A35)",
           marginBottom: 8,
         }}
       >
@@ -223,7 +235,7 @@ export function QuizCard({
         style={{
           fontSize: "0.85rem",
           lineHeight: 1.55,
-          color: dark ? "rgba(255,255,255,0.72)" : "#4A5872",
+          color: dark ? "rgba(255,255,255,0.72)" : "var(--fd-muted, #4A5872)",
           marginBottom: 16,
         }}
       >
@@ -240,7 +252,7 @@ export function QuizCard({
               gap: 9,
               fontSize: "0.8rem",
               lineHeight: 1.45,
-              color: dark ? "rgba(255,255,255,0.85)" : "#123360",
+              color: dark ? "rgba(255,255,255,0.85)" : "var(--fd-text, #123360)",
             }}
           >
             <span
@@ -265,7 +277,7 @@ export function QuizCard({
             onClick={onStart}
             style={{
               padding: "13px 20px",
-              borderRadius: 12,
+              borderRadius: "var(--fd-radius, 12px)",
               fontSize: "0.9rem",
               fontWeight: 700,
               border: "none",
@@ -275,7 +287,7 @@ export function QuizCard({
               justifyContent: "center",
               gap: 8,
               background: dark ? "#C7A052" : "#163D70",
-              color: dark ? "#7A5C1E" : "white",
+              color: dark ? "var(--fd-gold, #7A5C1E)" : "white",
             }}
           >
             {ctaLabel}
@@ -286,7 +298,7 @@ export function QuizCard({
             search={(search ?? {}) as never}
             style={{
               padding: "13px 20px",
-              borderRadius: 12,
+              borderRadius: "var(--fd-radius, 12px)",
               fontSize: "0.9rem",
               fontWeight: 700,
               textDecoration: "none",
@@ -296,7 +308,7 @@ export function QuizCard({
               justifyContent: "center",
               gap: 8,
               background: dark ? "#C7A052" : "#163D70",
-              color: dark ? "#7A5C1E" : "white",
+              color: dark ? "var(--fd-gold, #7A5C1E)" : "white",
             }}
           >
             {ctaLabel}
@@ -308,7 +320,7 @@ export function QuizCard({
             <summary
               style={{
                 padding: "10px 20px",
-                borderRadius: 12,
+                borderRadius: "var(--fd-radius, 12px)",
                 fontSize: "0.82rem",
                 fontWeight: 700,
                 cursor: "pointer",
@@ -318,8 +330,8 @@ export function QuizCard({
                 alignItems: "center",
                 justifyContent: "center",
                 gap: 7,
-                background: "rgba(22,61,112,0.08)",
-                color: "#163D70",
+                background: "var(--fd-panel-alt, rgba(22,61,112,0.08))",
+                color: "var(--fd-text, #163D70)",
                 minHeight: 44,
               }}
             >
@@ -338,17 +350,17 @@ export function QuizCard({
                     gap: 8,
                     minHeight: 44,
                     padding: "10px 12px",
-                    borderRadius: 10,
+                    borderRadius: "var(--fd-radius, 10px)",
                     textDecoration: "none",
                     fontSize: "0.8rem",
                     fontWeight: 600,
                     lineHeight: 1.35,
-                    color: "#123360",
-                    background: "#F7FAFF",
+                    color: "var(--fd-text, #123360)",
+                    background: "var(--fd-panel, #F7FAFF)",
                     border: "1px solid #E4ECF7",
                   }}
                 >
-                  <Icon n="book" size={13} color="#7A5C1E" /> {d.label}
+                  <Icon n="book" size={13} color="var(--fd-gold, #7A5C1E)" /> {d.label}
                 </a>
               ))}
             </div>
@@ -362,7 +374,7 @@ export function QuizCard({
             rel="noopener noreferrer"
             style={{
               padding: "10px 20px",
-              borderRadius: 12,
+              borderRadius: "var(--fd-radius, 12px)",
               fontSize: "0.82rem",
               fontWeight: 700,
               textDecoration: "none",
@@ -371,8 +383,8 @@ export function QuizCard({
               alignItems: "center",
               justifyContent: "center",
               gap: 7,
-              background: "rgba(22,61,112,0.08)",
-              color: "#163D70",
+              background: "var(--fd-panel-alt, rgba(22,61,112,0.08))",
+              color: "var(--fd-text, #163D70)",
             }}
           >
             <Icon n="book" size={14} /> Ver PDF
@@ -431,9 +443,12 @@ export function ChapterPicker({
     ? totalBanco
     : chapters.reduce((s, c) => {
         if (c.subsections?.length) {
-          return s + c.subsections
-            .filter((sub) => sel.has(`${c.num}:${sub.key}`))
-            .reduce((subtotal, sub) => subtotal + sub.total, 0);
+          return (
+            s +
+            c.subsections
+              .filter((sub) => sel.has(`${c.num}:${sub.key}`))
+              .reduce((subtotal, sub) => subtotal + sub.total, 0)
+          );
         }
         return s + (sel.has(String(c.num)) ? c.total : 0);
       }, 0);
@@ -480,324 +495,361 @@ export function ChapterPicker({
 
   return (
     <QuizModalPortal onClose={onClose}>
-    <div
-      className="fp-question-picker-backdrop"
-      role="dialog"
-      aria-modal="true"
-      aria-label={`Elegir preguntas de ${nombre}`}
-      onClick={onClose}
-      style={{
-        position: "fixed",
-        inset: 0,
-        /* Por encima del sidebar fijo (z-index 200) para no quedar tapado. */
-        zIndex: 300,
-        background: "rgba(26,26,46,0.62)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 16,
-        overflow: "hidden",
-      }}
-    >
       <div
-        className="fp-question-picker-panel"
-        onClick={(e) => e.stopPropagation()}
+        className="fp-question-picker-backdrop"
+        role="dialog"
+        aria-modal="true"
+        aria-label={`Elegir preguntas de ${nombre}`}
+        onClick={onClose}
         style={{
-          background: "white",
-          borderRadius: 20,
-          width: "min(560px, calc(100vw - 32px))",
-          maxWidth: "100%",
-          maxHeight: "calc(100dvh - 32px)",
+          position: "fixed",
+          inset: 0,
+          /* Por encima del sidebar fijo (z-index 200) para no quedar tapado. */
+          zIndex: 300,
+          background: "rgba(26,26,46,0.62)",
           display: "flex",
-          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 16,
           overflow: "hidden",
-          fontFamily: FONT,
-          color: INK,
-          border: "1px solid rgba(242,220,219,0.92)",
-          boxShadow: "0 30px 80px rgba(26,26,46,0.38), 0 2px 8px rgba(8,26,53,0.08)",
         }}
       >
-        <div className="fp-question-picker-scroll" style={{ overflowY: "auto", padding: "26px 24px 8px", minHeight: 0 }}>
-
-        <h3 style={{ fontFamily: DISPLAY, fontSize: "1.25rem", marginBottom: 6, lineHeight: 1.25 }}>
-          {conCapitulos ? `${nombre} — elige ${capPalabra(code, 2)}` : nombre}
-        </h3>
-        <p style={{ fontSize: "0.85rem", color: "#4A5872", marginBottom: 18, lineHeight: 1.5 }}>
-          {conCapitulos
-            ? `Sin selección, el cuestionario mezcla todo el banco ${nombre}. Marca uno o varios ${capPalabra(code, 2)} para enfocarte.`
-            : "Elige cuántas preguntas quieres contestar en esta sesión."}
-        </p>
-
-        {conCapitulos && (
-          <>
-        <button
-          className="fp-question-picker-option"
-
-          type="button"
-          onClick={() => setSel(new Set())}
+        <div
+          className="fp-question-picker-panel"
+          onClick={(e) => e.stopPropagation()}
           style={{
-            width: "100%",
-            textAlign: "left",
-            marginBottom: 10,
-            cursor: "pointer",
-            padding: "12px 14px",
-            borderRadius: 12,
+            background: "var(--fd-panel, white)",
+            borderRadius: "var(--fd-radius, 20px)",
+            width: "min(560px, calc(100vw - 32px))",
+            maxWidth: "100%",
+            maxHeight: "calc(100dvh - 32px)",
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden",
             fontFamily: FONT,
-            fontSize: "0.88rem",
-            fontWeight: 700,
-            border: all ? "2px solid #163D70" : "2px solid #EEE1C5",
-            background: all ? "rgba(22,61,112,0.08)" : "white",
-            color: INK,
+            color: "var(--fd-text, #081A35)",
+            border: "1px solid rgba(242,220,219,0.92)",
+            boxShadow: "0 30px 80px rgba(26,26,46,0.38), 0 2px 8px rgba(8,26,53,0.08)",
           }}
         >
-          Todo el banco {nombre} · {totalBanco} preguntas
-        </button>
+          <div
+            className="fp-question-picker-scroll"
+            style={{ overflowY: "auto", padding: "26px 24px 8px", minHeight: 0 }}
+          >
+            <h3
+              style={{
+                fontFamily: DISPLAY,
+                fontSize: "1.25rem",
+                marginBottom: 6,
+                lineHeight: 1.25,
+              }}
+            >
+              {conCapitulos ? `${nombre} — elige ${capPalabra(code, 2)}` : nombre}
+            </h3>
+            <p
+              style={{
+                fontSize: "0.85rem",
+                color: "var(--fd-muted, #4A5872)",
+                marginBottom: 18,
+                lineHeight: 1.5,
+              }}
+            >
+              {conCapitulos
+                ? `Sin selección, el cuestionario mezcla todo el banco ${nombre}. Marca uno o varios ${capPalabra(code, 2)} para enfocarte.`
+                : "Elige cuántas preguntas quieres contestar en esta sesión."}
+            </p>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          {chapters.flatMap((c) => {
-            const rows = c.subsections?.length
-              ? c.subsections.map((sub, index) => ({
-                  key: `${c.num}:${sub.key}`,
-                  label: `${unidad} ${c.num}${String.fromCharCode(65 + index)} · ${sub.titulo}`,
-                  detail: sub.tituloEn,
-                  total: sub.total,
-                }))
-              : [{
-                  key: String(c.num),
-                  label: `${unidad} ${c.num} · ${c.titulo}`,
-                  detail: c.detalle ?? c.tituloEn,
-                  total: c.total,
-                }];
-            return rows.map((row) => {
-            const on = sel.has(row.key);
-            /* Capítulo del temario sin reactivos todavía: se ve, no se elige. */
-            const vacio = row.total === 0;
-            return (
-              <button
-                className="fp-question-picker-option"
-                key={row.key}
-                type="button"
-                aria-pressed={on}
-                disabled={vacio}
-                onClick={() => toggle(row.key)}
+            {conCapitulos && (
+              <>
+                <button
+                  className="fp-question-picker-option"
+
+                  type="button"
+                  onClick={() => setSel(new Set())}
+                  style={{
+                    width: "100%",
+                    textAlign: "left",
+                    marginBottom: 10,
+                    cursor: "pointer",
+                    padding: "12px 14px",
+                    borderRadius: "var(--fd-radius, 12px)",
+                    fontFamily: FONT,
+                    fontSize: "0.88rem",
+                    fontWeight: 700,
+                    border: all ? "2px solid #163D70" : "1px solid var(--fd-border, #EEE1C5)",
+                    background: all
+                      ? "var(--fd-panel-alt, rgba(22,61,112,0.08))"
+                      : "var(--fd-panel, white)",
+                    color: "var(--fd-text, #081A35)",
+                  }}
+                >
+                  Todo el banco {nombre} · {totalBanco} preguntas
+                </button>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {chapters.flatMap((c) => {
+                    const rows = c.subsections?.length
+                      ? c.subsections.map((sub, index) => ({
+                          key: `${c.num}:${sub.key}`,
+                          label: `${unidad} ${c.num}${String.fromCharCode(65 + index)} · ${sub.titulo}`,
+                          detail: sub.tituloEn,
+                          total: sub.total,
+                        }))
+                      : [
+                          {
+                            key: String(c.num),
+                            label: `${unidad} ${c.num} · ${c.titulo}`,
+                            detail: c.detalle ?? c.tituloEn,
+                            total: c.total,
+                          },
+                        ];
+                    return rows.map((row) => {
+                      const on = sel.has(row.key);
+                      /* Capítulo del temario sin reactivos todavía: se ve, no se elige. */
+                      const vacio = row.total === 0;
+                      return (
+                        <button
+                          className="fp-question-picker-option"
+                          key={row.key}
+                          type="button"
+                          aria-pressed={on}
+                          disabled={vacio}
+                          onClick={() => toggle(row.key)}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            gap: 12,
+                            textAlign: "left",
+                            cursor: vacio ? "not-allowed" : "pointer",
+                            opacity: vacio ? 0.55 : 1,
+                            padding: "12px 14px",
+                            borderRadius: "var(--fd-radius, 12px)",
+                            fontFamily: FONT,
+                            fontSize: "0.85rem",
+                            color: "var(--fd-text, #081A35)",
+                            border: on
+                              ? "2px solid #7A5C1E"
+                              : "1px solid var(--fd-border, #EEE1C5)",
+                            background: on ? "rgba(122,92,30,0.06)" : "var(--fd-panel, white)",
+                          }}
+                        >
+                          <span style={{ fontWeight: 700 }}>
+                            {row.label}
+                            <span
+                              style={{
+                                display: "block",
+                                fontWeight: 500,
+                                color: "var(--fd-muted, #4A5872)",
+                                fontSize: "0.76rem",
+                              }}
+                            >
+                              {row.detail}
+                            </span>
+                          </span>
+                          <span
+                            style={{
+                              color: "var(--fd-muted, #4A5872)",
+                              fontSize: "0.78rem",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            {vacio ? "Sin preguntas aún" : `${row.total} preg.`}
+                          </span>
+                        </button>
+                      );
+                    });
+                  })}
+                </div>
+              </>
+            )}
+
+            {/* Solo ATP: dejar fuera los reactivos de helicóptero */}
+            {ofreceSinHeli && (
+              <label
                 style={{
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: 12,
-                  textAlign: "left",
-                  cursor: vacio ? "not-allowed" : "pointer",
-                  opacity: vacio ? 0.55 : 1,
+                  alignItems: "flex-start",
+                  gap: 10,
+                  marginTop: 14,
                   padding: "12px 14px",
-                  borderRadius: 12,
-                  fontFamily: FONT,
-                  fontSize: "0.85rem",
-                  color: INK,
-                  border: on ? "2px solid #7A5C1E" : "2px solid #EEE1C5",
-                  background: on ? "rgba(122,92,30,0.06)" : "white",
+                  borderRadius: "var(--fd-radius, 12px)",
+                  cursor: "pointer",
+                  border: sinHeli ? "2px solid #163D70" : "1px solid var(--fd-border, #EEE1C5)",
+                  background: sinHeli
+                    ? "var(--fd-panel-alt, rgba(22,61,112,0.08))"
+                    : "var(--fd-panel, white)",
                 }}
               >
-                <span style={{ fontWeight: 700 }}>
-                   {row.label}
+                <input
+                  type="checkbox"
+                  checked={sinHeli}
+                  onChange={(e) => setSinHeli(e.target.checked)}
+                  style={{
+                    marginTop: 2,
+                    accentColor: "#163D70",
+                    width: 18,
+                    height: 18,
+                    flexShrink: 0,
+                  }}
+                />
+                <span style={{ fontSize: "0.85rem", fontWeight: 700 }}>
+                  Quitar las preguntas de helicópteros
                   <span
                     style={{
                       display: "block",
                       fontWeight: 500,
-                      color: "#4A5872",
+                      color: "var(--fd-muted, #4A5872)",
                       fontSize: "0.76rem",
+                      lineHeight: 1.45,
                     }}
                   >
-                     {row.detail}
+                    Deja fuera Helicopter Regulations, Helicopter Aerodynamics y cualquier reactivo
+                    que hable de helicópteros. La convocatoria es de ala fija.
                   </span>
                 </span>
-                <span style={{ color: "#4A5872", fontSize: "0.78rem", whiteSpace: "nowrap" }}>
-                   {vacio ? "Sin preguntas aún" : `${row.total} preg.`}
-                </span>
-              </button>
-            );
-          });
-          })}
-        </div>
-          </>
-        )}
+              </label>
+            )}
 
+            {/* ¿Cuántas preguntas? — mismo criterio que el CIAAC */}
+            <div style={{ marginTop: 20 }}>
+              <div style={{ fontSize: "0.85rem", fontWeight: 700, marginBottom: 4 }}>
+                ¿Cuántas preguntas?
+              </div>
+              <div
+                style={{ fontSize: "0.78rem", color: "var(--fd-muted, #4A5872)", marginBottom: 10 }}
+              >
+                Hay {disponibles} disponibles con tu selección
+                {ofreceSinHeli && sinHeli ? " (menos las de helicópteros)" : ""}.
+              </div>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                {opciones.map((v) => {
+                  const on = qtyActiva === v;
+                  const label = v === "todas" ? "Todas" : v === "custom" ? "Personalizar" : v;
+                  return (
+                    <button
+                      className="fp-question-picker-qty"
+                      key={v}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => setQty(v)}
+                      style={{
+                        padding: "10px 16px",
+                        borderRadius: "var(--fd-radius, 10px)",
+                        cursor: "pointer",
+                        minHeight: 44,
+                        fontFamily: FONT,
+                        fontWeight: 700,
+                        fontSize: "0.84rem",
+                        border: `2px solid ${on ? "#163D70" : "#EEE1C5"}`,
+                        background: on
+                          ? "var(--fd-panel-alt, rgba(22,61,112,0.08))"
+                          : "var(--fd-panel, #f8f9ff)",
+                        color: on ? "var(--fd-text, #163D70)" : "var(--fd-text, #081A35)",
+                      }}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+              {qtyActiva === "custom" && (
+                <input
+                  type="number"
+                  min={1}
+                  max={disponibles}
+                  value={customQty}
+                  onChange={(e) => setCustomQty(e.target.value)}
+                  placeholder={`Entre 1 y ${disponibles}`}
+                  aria-label="Número de preguntas"
+                  style={{
+                    marginTop: 10,
+                    width: "100%",
+                    padding: "12px 14px",
+                    borderRadius: "var(--fd-radius, 10px)",
+                    border: "1px solid var(--fd-border, #EEE1C5)",
+                    fontFamily: FONT,
+                    fontSize: "0.9rem",
+                    color: "var(--fd-text, #081A35)",
+                    outline: "none",
+                  }}
+                />
+              )}
+            </div>
 
+            {/* Leyenda de Pathy */}
+            <div
+              style={{
+                marginTop: 16,
+                padding: "12px 14px",
+                borderRadius: "var(--fd-radius, 12px)",
+                background: "rgba(122,92,30,0.05)",
+                border: "1px solid rgba(122,92,30,0.12)",
+                fontSize: "0.8rem",
+                color: "var(--fd-gold, #7A5C1E)",
+                lineHeight: 1.5,
+                fontWeight: 600,
+              }}
+            >
+              Al terminar, Pathy analizará tu rendimiento personalmente: mira lo que tiene que
+              decir.
+            </div>
+          </div>
 
-        {/* Solo ATP: dejar fuera los reactivos de helicóptero */}
-        {ofreceSinHeli && (
-          <label
+          <div
+            className="fp-question-picker-footer"
             style={{
               display: "flex",
-              alignItems: "flex-start",
               gap: 10,
-              marginTop: 14,
-              padding: "12px 14px",
-              borderRadius: 12,
-              cursor: "pointer",
-              border: sinHeli ? "2px solid #163D70" : "2px solid #EEE1C5",
-              background: sinHeli ? "rgba(22,61,112,0.08)" : "white",
+              flexWrap: "wrap",
+              padding: "14px 24px 20px",
+              borderTop: "1px solid var(--fd-border, #EEE1C5)",
+              background: "var(--fd-panel, white)",
+              flexShrink: 0,
             }}
           >
-            <input
-              type="checkbox"
-              checked={sinHeli}
-              onChange={(e) => setSinHeli(e.target.checked)}
-              style={{ marginTop: 2, accentColor: "#163D70", width: 18, height: 18, flexShrink: 0 }}
-            />
-            <span style={{ fontSize: "0.85rem", fontWeight: 700 }}>
-              Quitar las preguntas de helicópteros
-              <span
-                style={{
-                  display: "block",
-                  fontWeight: 500,
-                  color: "#4A5872",
-                  fontSize: "0.76rem",
-                  lineHeight: 1.45,
-                }}
-              >
-                Deja fuera Helicopter Regulations, Helicopter Aerodynamics y cualquier reactivo que
-                hable de helicópteros. La convocatoria es de ala fija.
-              </span>
-            </span>
-          </label>
-        )}
-
-        {/* ¿Cuántas preguntas? — mismo criterio que el CIAAC */}
-        <div style={{ marginTop: 20 }}>
-          <div style={{ fontSize: "0.85rem", fontWeight: 700, marginBottom: 4 }}>
-            ¿Cuántas preguntas?
-          </div>
-          <div style={{ fontSize: "0.78rem", color: "#4A5872", marginBottom: 10 }}>
-            Hay {disponibles} disponibles con tu selección
-            {ofreceSinHeli && sinHeli ? " (menos las de helicópteros)" : ""}.
-          </div>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            {opciones.map((v) => {
-              const on = qtyActiva === v;
-              const label = v === "todas" ? "Todas" : v === "custom" ? "Personalizar" : v;
-              return (
-                <button
-                  className="fp-question-picker-qty"
-                  key={v}
-                  type="button"
-                  aria-pressed={on}
-                  onClick={() => setQty(v)}
-                  style={{
-                    padding: "10px 16px",
-                    borderRadius: 10,
-                    cursor: "pointer",
-                    minHeight: 44,
-                    fontFamily: FONT,
-                    fontWeight: 700,
-                    fontSize: "0.84rem",
-                    border: `2px solid ${on ? "#163D70" : "#EEE1C5"}`,
-                    background: on ? "rgba(22,61,112,0.08)" : "#f8f9ff",
-                    color: on ? "#163D70" : INK,
-                  }}
-                >
-                  {label}
-                </button>
-              );
-            })}
-          </div>
-          {qtyActiva === "custom" && (
-
-            <input
-              type="number"
-              min={1}
-              max={disponibles}
-              value={customQty}
-              onChange={(e) => setCustomQty(e.target.value)}
-              placeholder={`Entre 1 y ${disponibles}`}
-              aria-label="Número de preguntas"
+            <button
+              className="fp-question-picker-action"
+              type="button"
+              onClick={onClose}
               style={{
-                marginTop: 10,
-                width: "100%",
-                padding: "12px 14px",
-                borderRadius: 10,
-                border: "2px solid #EEE1C5",
+                flex: "0 0 auto",
+                padding: "12px 18px",
+                borderRadius: "var(--fd-radius, 12px)",
+                cursor: "pointer",
+                border: "1px solid var(--fd-border, #EEE1C5)",
+                background: "var(--fd-panel, white)",
+                color: "var(--fd-text, #081A35)",
                 fontFamily: FONT,
-                fontSize: "0.9rem",
-                color: INK,
-                outline: "none",
+                fontWeight: 700,
+                fontSize: "0.85rem",
               }}
-            />
-          )}
-        </div>
-
-        {/* Leyenda de Pathy */}
-        <div
-          style={{
-            marginTop: 16,
-            padding: "12px 14px",
-            borderRadius: 12,
-            background: "rgba(122,92,30,0.05)",
-            border: "1px solid rgba(122,92,30,0.12)",
-            fontSize: "0.8rem",
-            color: "#7A5C1E",
-            lineHeight: 1.5,
-            fontWeight: 600,
-          }}
-        >
-          Al terminar, Pathy analizará tu rendimiento personalmente: mira lo que tiene que decir.
-        </div>
-        </div>
-
-        <div
-          className="fp-question-picker-footer"
-          style={{
-            display: "flex",
-            gap: 10,
-            flexWrap: "wrap",
-            padding: "14px 24px 20px",
-            borderTop: "1px solid #EEE1C5",
-            background: "white",
-            flexShrink: 0,
-          }}
-        >
-
-          <button
-            className="fp-question-picker-action"
-            type="button"
-            onClick={onClose}
-            style={{
-              flex: "0 0 auto",
-              padding: "12px 18px",
-              borderRadius: 12,
-              cursor: "pointer",
-              border: "2px solid #EEE1C5",
-              background: "white",
-              color: INK,
-              fontFamily: FONT,
-              fontWeight: 700,
-              fontSize: "0.85rem",
-            }}
-          >
-            Cancelar
-          </button>
-          <button
-            className="fp-question-picker-action"
-            type="button"
-            onClick={start}
-            disabled={qtyNum < 1}
-            style={{
-              flex: "1 1 190px",
-              padding: "12px 18px",
-              borderRadius: 12,
-              cursor: qtyNum < 1 ? "not-allowed" : "pointer",
-              border: "none",
-              background: qtyNum < 1 ? "#C9D6E8" : "#163D70",
-              color: "white",
-              fontFamily: FONT,
-              fontWeight: 700,
-              fontSize: "0.9rem",
-            }}
-          >
-            Iniciar con {qtyNum} preguntas →
-          </button>
+            >
+              Cancelar
+            </button>
+            <button
+              className="fp-question-picker-action"
+              type="button"
+              onClick={start}
+              disabled={qtyNum < 1}
+              style={{
+                flex: "1 1 190px",
+                padding: "12px 18px",
+                borderRadius: "var(--fd-radius, 12px)",
+                cursor: qtyNum < 1 ? "not-allowed" : "pointer",
+                border: "none",
+                background: qtyNum < 1 ? "#C9D6E8" : "#163D70",
+                color: "white",
+                fontFamily: FONT,
+                fontWeight: 700,
+                fontSize: "0.9rem",
+              }}
+            >
+              Iniciar con {qtyNum} preguntas →
+            </button>
+          </div>
         </div>
       </div>
-    </div>
     </QuizModalPortal>
   );
 }
@@ -815,31 +867,48 @@ const CHAPTER_BANKS: Record<string, { chapters: AtpChapter[]; total: number }> =
 );
 
 function QuizCards() {
+  const [selectedSource, setSelectedSource] = useState("ATP");
+  const covers: Record<string, string> = {
+    ATP: "fuente-ATP.jpg",
+    PHAK: "fuente-PHAK.jpg",
+    JEPP: "fuente-Jeppesen.jpg",
+    ANX10: "fuente-Anexo10.jpg",
+  };
   const [picker, setPicker] = useState<string | null>(null);
   const counts = useBankCounts();
   const pickerQuiz = picker ? LINEA_AEREA_QUIZZES.find((q) => q.code === picker) : null;
   const pickerBank = picker ? CHAPTER_BANKS[picker] : null;
   return (
-    <div style={{ maxWidth: 820, width: "100%", fontFamily: FONT, color: INK, marginBottom: 8 }}>
+    <div
+      style={{
+        maxWidth: 820,
+        width: "100%",
+        fontFamily: FONT,
+        color: "var(--fd-text, #081A35)",
+        marginBottom: 8,
+      }}
+    >
       <style>{quizCardsCss}</style>
       <h2
         style={{
           fontFamily: DISPLAY,
           fontSize: "1.15rem",
-          color: INK,
+          color: "var(--fd-text, #081A35)",
           display: "flex",
           alignItems: "center",
           gap: 8,
           marginBottom: 18,
         }}
       >
-        <Icon n="book" size={18} color="#7A5C1E" /> Cuestionarios
+        <Icon n="book" size={18} color="var(--fd-gold, #7A5C1E)" /> Cuestionarios
       </h2>
 
       {picker && (pickerBank || picker === "OFICIAL") && (
         <ChapterPicker
           code={picker === "OFICIAL" ? "OFICIAL" : picker}
-          nombre={picker === "OFICIAL" ? LINEA_AEREA_OFICIAL.titulo : (pickerQuiz?.titulo ?? picker)}
+          nombre={
+            picker === "OFICIAL" ? LINEA_AEREA_OFICIAL.titulo : (pickerQuiz?.titulo ?? picker)
+          }
           chapters={pickerBank ? pickerBank.chapters : []}
           totalBanco={pickerBank ? pickerBank.total : LINEA_AEREA_OFICIAL_TOTAL}
           counts={counts}
@@ -848,10 +917,29 @@ function QuizCards() {
         />
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 20 }}>
+      <div className="fd-source-cards" role="group" aria-label="Elegir fuente de estudio">
+        {LINEA_AEREA_QUIZZES.map((q) => (
+          <button
+            key={q.code}
+            aria-pressed={selectedSource === q.code}
+            onClick={() => setSelectedSource(q.code)}
+            style={{
+              backgroundImage: `linear-gradient(180deg,#02070f22,#02070feb 80%),url('/flightdeck/${covers[q.code] ?? "foto-biblioteca.jpg"}')`,
+            }}
+          >
+            <small>{q.code}</small>
+            <span>
+              <strong>{q.titulo}</strong>
+              <small>{q.total.toLocaleString("es-MX")} preguntas</small>
+            </span>
+          </button>
+        ))}
+      </div>
+      <div className="fd-la-grid" style={{ gap: 20 }}>
         {/* Guía oficial del proceso */}
         <QuizCard
           dark
+          cover="/flightdeck/foto-piloto-cabina.jpg"
           badge="Preguntas oficiales"
           icon="target"
           titulo={LINEA_AEREA_OFICIAL.titulo}
@@ -866,15 +954,15 @@ function QuizCards() {
           ctaLabel="Elegir preguntas →"
         />
 
-
         {/* Un cuestionario por manual del curso */}
-        {LINEA_AEREA_QUIZZES.map((q) => {
+        {LINEA_AEREA_QUIZZES.filter((q) => q.code === selectedSource).map((q) => {
           const bank = CHAPTER_BANKS[q.code];
           const vivo = bank ? chaptersConConteo(q.code, bank.chapters, counts) : null;
           const total = vivo?.total ?? bank?.total ?? q.total;
           return bank ? (
             <QuizCard
               key={q.code}
+              cover={"/flightdeck/" + (covers[q.code] ?? "foto-biblioteca.jpg")}
 
               icon={q.icon as FPIconName}
               titulo={q.titulo}
@@ -894,6 +982,7 @@ function QuizCards() {
             <QuizCard
               key={q.code}
               badge="Manual del curso"
+              cover={"/flightdeck/" + (covers[q.code] ?? "foto-biblioteca.jpg")}
               icon={q.icon as FPIconName}
               titulo={q.titulo}
               descripcion={q.descripcion}

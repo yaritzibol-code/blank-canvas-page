@@ -87,7 +87,7 @@ function PonmeAPruebaPage() {
           to="/dashboard"
           style={{
             display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 14,
-            color: "#163D70", fontWeight: 700, fontSize: "0.82rem", textDecoration: "none",
+            color: "var(--fd-text, #163D70)", fontWeight: 700, fontSize: "0.82rem", textDecoration: "none",
           }}
         >
           ← Volver al dashboard
@@ -98,11 +98,11 @@ function PonmeAPruebaPage() {
         <ExplicaleAYaris onSalir={() => setAbierto(null)} />
       ) : (
         <>
-          <header style={{ marginBottom: 22 }}>
-            <h1 style={{ fontFamily: DISPLAY, fontSize: "1.8rem", color: "#081A35", margin: "0 0 4px" }}>
+          <header className="fd-native-header" style={{ marginBottom: 22 }}>
+            <h1 style={{ fontFamily: DISPLAY, fontSize: "1.8rem", color: "var(--fd-text, #081A35)", margin: "0 0 4px" }}>
               Ponme a Prueba
             </h1>
-            <p style={{ fontSize: "0.95rem", color: "#4A5872", margin: 0 }}>
+            <p style={{ fontSize: "0.95rem", color: "var(--fd-muted, #4A5872)", margin: 0 }}>
               Demuestra que realmente entendiste.
             </p>
           </header>
@@ -139,9 +139,9 @@ function PonmeAPruebaPage() {
 function Tarjeta({ ejercicio, onComenzar }: { ejercicio: Ejercicio; onComenzar: () => void }) {
   const activo = ejercicio.disponible;
   const base: CSSProperties = {
-    background: activo ? "white" : "#F5F6F9",
+    background: activo ? "var(--fd-panel, white)" : "var(--fd-panel, #F5F6F9)",
     border: activo ? "2px solid #163D70" : "1px solid #E3E7EF",
-    borderRadius: 18,
+    borderRadius: "var(--fd-radius, 18px)",
     padding: 20,
     display: "flex",
     flexDirection: "column",
@@ -151,31 +151,31 @@ function Tarjeta({ ejercicio, onComenzar }: { ejercicio: Ejercicio; onComenzar: 
   };
 
   return (
-    <article style={base}>
+    <article className="fd-prueba-card" style={base}>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
         {activo ? (
           <YarisAvatar size={38} />
         ) : (
           <div
             style={{
-              width: 38, height: 38, borderRadius: 12, background: "#E7EBF3",
+              width: 38, height: 38, borderRadius: "var(--fd-radius, 12px)", background: "var(--fd-panel, #E7EBF3)",
               display: "flex", alignItems: "center", justifyContent: "center",
             }}
           >
-            <Icon n={ejercicio.icon} size={18} color="#7E90AD" />
+            <Icon n={ejercicio.icon} size={18} color="var(--fd-muted, #7E90AD)" />
           </div>
         )}
         <h2
           style={{
             fontFamily: DISPLAY, fontSize: "1.05rem", margin: 0,
-            color: activo ? "#081A35" : "#7B8CA6",
+            color: activo ? "var(--fd-text, #081A35)" : "var(--fd-muted, #7B8CA6)",
           }}
         >
           {ejercicio.titulo}
         </h2>
       </div>
 
-      <p style={{ fontSize: "0.86rem", lineHeight: 1.6, color: activo ? "#4A5C77" : "#7E90AD", margin: 0, flex: 1 }}>
+      <p style={{ fontSize: "0.86rem", lineHeight: 1.6, color: activo ? "var(--fd-muted, #4A5C77)" : "var(--fd-muted, #7E90AD)", margin: 0, flex: 1 }}>
         {ejercicio.descripcion}
       </p>
 
@@ -183,7 +183,7 @@ function Tarjeta({ ejercicio, onComenzar }: { ejercicio: Ejercicio; onComenzar: 
         <button
           onClick={onComenzar}
           style={{
-            minHeight: 46, borderRadius: 12, border: "none", background: "#163D70",
+            minHeight: 46, borderRadius: "var(--fd-radius, 12px)", border: "none", background: "#163D70",
             color: "white", fontWeight: 800, fontSize: "0.9rem", cursor: "pointer", fontFamily: FONT,
           }}
         >
@@ -193,7 +193,7 @@ function Tarjeta({ ejercicio, onComenzar }: { ejercicio: Ejercicio; onComenzar: 
         <span
           style={{
             alignSelf: "flex-start", display: "inline-flex", alignItems: "center", gap: 6,
-            background: "#E7EBF3", color: "#7B8CA6", borderRadius: 999,
+            background: "var(--fd-panel, #E7EBF3)", color: "var(--fd-muted, #7B8CA6)", borderRadius: 999,
             padding: "6px 12px", fontSize: "0.74rem", fontWeight: 800,
             textTransform: "uppercase", letterSpacing: ".05em",
           }}

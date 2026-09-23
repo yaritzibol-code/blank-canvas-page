@@ -46,18 +46,28 @@ export function RadarChart({
             return `${x},${y}`;
           }).join(" ")}
           fill="none"
-          stroke={r === 1 ? `${NAVY}33` : `${NAVY}14`}
+          stroke={r === 1 ? `var(--fd-faint, ${NAVY}33)` : `var(--fd-border, ${NAVY}14)`}
           strokeWidth={1}
         />
       ))}
       {COMPASS_MODULES.map((_, i) => {
         const { x, y } = pt(i, 1);
-        return <line key={i} x1={c} y1={c} x2={x} y2={y} stroke={`${NAVY}14`} strokeWidth={1} />;
+        return (
+          <line
+            key={i}
+            x1={c}
+            y1={c}
+            x2={x}
+            y2={y}
+            stroke={`var(--fd-border, ${NAVY}14)`}
+            strokeWidth={1}
+          />
+        );
       })}
       <polygon
         points={poly}
         fill={`${CORAL}22`}
-        stroke={CORAL}
+        stroke={`var(--fd-gold, ${CORAL})`}
         strokeWidth={2}
         strokeLinejoin="round"
       />
@@ -82,11 +92,16 @@ export function RadarChart({
             fontFamily={MONO}
             fontSize={10.5}
             fontWeight={700}
-            fill={v === null ? `${HAZE}88` : NAVY}
+            fill={v === null ? `var(--fd-faint, ${HAZE}88)` : `var(--fd-text, ${NAVY})`}
             style={{ textTransform: "uppercase", letterSpacing: "0.08em" }}
           >
             {m.nombre}
-            <tspan x={x} dy={12} fontSize={10} fill={v === null ? `${HAZE}66` : CORAL}>
+            <tspan
+              x={x}
+              dy={12}
+              fontSize={10}
+              fill={v === null ? `var(--fd-faint, ${HAZE}66)` : `var(--fd-gold, ${CORAL})`}
+            >
               {v === null ? "—" : v}
             </tspan>
           </text>

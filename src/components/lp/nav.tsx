@@ -69,7 +69,7 @@ export function LpHeader({
   right?: ReactNode;
 }) {
   return (
-    <header
+    <header className="fd-native-header"
       style={{
         display: "flex",
         alignItems: "flex-end",
@@ -265,7 +265,7 @@ const cardBase: CSSProperties = {
   display: "block",
   width: "100%",
   textAlign: "left",
-  borderRadius: 20,
+  borderRadius: "var(--fd-radius, 20px)",
   border: "1px solid var(--border)",
   background: "var(--card)",
   color: "inherit",
@@ -380,7 +380,7 @@ export function LpCategoryCard({
             style={{
               width: 46,
               height: 46,
-              borderRadius: 14,
+              borderRadius: "var(--fd-radius, 14px)",
               display: "grid",
               placeItems: "center",
               background: mix(disabled ? "var(--muted-foreground)" : accent, 16, "var(--card)"),
@@ -478,7 +478,7 @@ export function LpCard({
             style={{
               width: 38,
               height: 38,
-              borderRadius: 12,
+              borderRadius: "var(--fd-radius, 12px)",
               flexShrink: 0,
               display: "grid",
               placeItems: "center",
@@ -608,7 +608,7 @@ export function LpContinueCard({
         gap: 14,
         marginBottom: 22,
         padding: "18px 20px",
-        borderRadius: 20,
+        borderRadius: "var(--fd-radius, 20px)",
         textDecoration: "none",
         color: "inherit",
         border: `1px solid ${mix("var(--primary)", 30, "var(--border)")}`,
@@ -619,7 +619,7 @@ export function LpContinueCard({
         style={{
           width: 44,
           height: 44,
-          borderRadius: 14,
+          borderRadius: "var(--fd-radius, 14px)",
           flexShrink: 0,
           display: "grid",
           placeItems: "center",
@@ -659,7 +659,7 @@ export function LpEmptyState({
     <div
       style={{
         padding: 30,
-        borderRadius: 20,
+        borderRadius: "var(--fd-radius, 20px)",
         border: `1px dashed ${mix("var(--primary)", 28, "var(--border)")}`,
         background: `linear-gradient(160deg, ${mix("var(--accent)", 16, "var(--card)")}, var(--card) 65%)`,
         textAlign: "center",
@@ -670,7 +670,7 @@ export function LpEmptyState({
           width: 54,
           height: 54,
           margin: "0 auto 14px",
-          borderRadius: 18,
+          borderRadius: "var(--fd-radius, 18px)",
           display: "grid",
           placeItems: "center",
           background: mix("var(--primary)", 14, "var(--card)"),
@@ -777,7 +777,7 @@ export function LpActionBar({ children }: { children: ReactNode }) {
         alignItems: "center",
         justifyContent: "space-between",
         padding: 14,
-        borderRadius: 18,
+        borderRadius: "var(--fd-radius, 18px)",
         border: "1px solid var(--border)",
         background: mix("var(--foreground)", 3, "var(--card)"),
       }}

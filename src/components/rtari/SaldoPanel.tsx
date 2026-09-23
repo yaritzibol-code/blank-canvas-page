@@ -55,9 +55,9 @@ export function SaldoPanel({
   return (
     <div
       style={{
-        background: "white",
+        background: "var(--fd-panel, white)",
         border: `1px solid ${destacarCompra ? ROSE : `${NAVY}14`}`,
-        borderRadius: 22,
+        borderRadius: "var(--fd-radius, 22px)",
         padding: "22px 24px",
       }}
     >
@@ -78,7 +78,7 @@ export function SaldoPanel({
               letterSpacing: "0.22em",
               textTransform: "uppercase",
               fontWeight: 700,
-              color: `${NAVY}66`,
+              color: "var(--fd-muted, #081A3566)",
             }}
           >
             Tus minutos de entrevista
@@ -89,12 +89,12 @@ export function SaldoPanel({
               fontStyle: "italic",
               fontSize: "2.6rem",
               lineHeight: 1.1,
-              color: !ilimitado && total === 0 ? CORAL : NAVY,
+              color: !ilimitado && total === 0 ? "var(--fd-gold, #7A5C1E)" : "var(--fd-text, #081A35)",
             }}
           >
             {cargando ? "…" : ilimitado ? "Sin límite" : `${total} min`}
           </div>
-          <div style={{ fontSize: "0.8rem", color: HAZE, marginTop: 2 }}>
+          <div style={{ fontSize: "0.8rem", color: "var(--fd-muted, #4A5872)", marginTop: 2 }}>
             {cargando
               ? "Consultando tu saldo…"
               : ilimitado
@@ -112,13 +112,13 @@ export function SaldoPanel({
               fontSize: "0.6rem",
               letterSpacing: "0.12em",
               textTransform: "uppercase",
-              color: HAZE,
+              color: "var(--fd-muted, #4A5872)",
               lineHeight: 1.7,
             }}
           >
             {ilimitado ? "Acceso de administración" : "Sólo se cobran los minutos que hablas"}
           </div>
-          <div style={{ fontSize: "0.76rem", color: HAZE, marginTop: 4, lineHeight: 1.5 }}>
+          <div style={{ fontSize: "0.76rem", color: "var(--fd-muted, #4A5872)", marginTop: 4, lineHeight: 1.5 }}>
             {ilimitado
               ? "Puedes probar el módulo sin tope. Tu consumo aparece en Operaciones como el de cualquier otra llamada."
               : "Los minutos del plan se renuevan cada mes y no se acumulan. Los que compras no vencen."}
@@ -127,7 +127,7 @@ export function SaldoPanel({
       </div>
 
       {/* Barra de los incluidos del ciclo */}
-      <div style={{ marginTop: 16, height: 6, background: SALMON, borderRadius: 999 }}>
+      <div style={{ marginTop: 16, height: 6, background: "var(--fd-panel, #EEE1C5)", borderRadius: 999 }}>
         <div
           style={{
             width: `${pct}%`,
@@ -146,11 +146,11 @@ export function SaldoPanel({
             display: "flex",
             gap: 10,
             alignItems: "flex-start",
-            background: "#FFF1F2",
+            background: "var(--fd-panel, #FFF1F2)",
             border: `1px solid ${ROSE}`,
-            borderRadius: 14,
+            borderRadius: "var(--fd-radius, 14px)",
             padding: "12px 16px",
-            color: CORAL,
+            color: "var(--fd-gold, #7A5C1E)",
             fontSize: "0.86rem",
             lineHeight: 1.5,
           }}
@@ -174,7 +174,7 @@ export function SaldoPanel({
             letterSpacing: "0.2em",
             textTransform: "uppercase",
             fontWeight: 700,
-            color: `${NAVY}66`,
+            color: "var(--fd-muted, #081A3566)",
             marginBottom: 10,
           }}
         >
@@ -198,9 +198,9 @@ export function SaldoPanel({
                 style={{
                   textAlign: "left",
                   padding: "14px 16px",
-                  borderRadius: 14,
+                  borderRadius: "var(--fd-radius, 14px)",
                   border: `1px solid ${p.destacado ? CORAL : `${NAVY}18`}`,
-                  background: p.destacado ? CREAM : "white",
+                  background: p.destacado ? "var(--fd-panel, #F5F5F7)" : "var(--fd-panel, white)",
                   cursor: bloqueado || enCurso ? "wait" : "pointer",
                   opacity: bloqueado ? 0.5 : 1,
                   fontFamily: "inherit",
@@ -227,19 +227,19 @@ export function SaldoPanel({
                     El más pedido
                   </span>
                 )}
-                <div style={{ fontSize: "0.92rem", fontWeight: 700, color: NAVY }}>{p.nombre}</div>
+                <div style={{ fontSize: "0.92rem", fontWeight: 700, color: "var(--fd-text, #081A35)" }}>{p.nombre}</div>
                 <div
                   style={{
                     fontFamily: SERIF,
                     fontStyle: "italic",
                     fontSize: "1.5rem",
-                    color: CORAL,
+                    color: "var(--fd-gold, #7A5C1E)",
                     lineHeight: 1.2,
                   }}
                 >
                   ${p.precioMXN} MXN
                 </div>
-                <div style={{ fontSize: "0.72rem", color: HAZE, marginTop: 2 }}>
+                <div style={{ fontSize: "0.72rem", color: "var(--fd-muted, #4A5872)", marginTop: 2 }}>
                   {enCurso
                     ? "Abriendo el pago…"
                     : `≈ ${Math.round(p.minutos / 10)} entrevistas de 10 min`}

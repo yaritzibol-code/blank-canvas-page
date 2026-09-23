@@ -224,7 +224,7 @@ export function MultitareaGame({ cfg, onFinish, onQuit }: Props) {
                 style={{
                   background: NAVY,
                   color: "white",
-                  borderRadius: 14,
+                  borderRadius: "var(--fd-radius, 14px)",
                   padding: "14px 20px",
                   minWidth: 150,
                   textAlign: "center",
@@ -271,13 +271,13 @@ export function MultitareaGame({ cfg, onFinish, onQuit }: Props) {
                     flex: 1,
                     minWidth: 0,
                     padding: "12px 14px",
-                    borderRadius: 12,
+                    borderRadius: "var(--fd-radius, 12px)",
                     border: `2px solid ${errorFlash ? "#C24545" : `${NAVY}26`}`,
                     fontFamily: MONO,
                     fontSize: "1.2rem",
                     fontWeight: 700,
-                    color: NAVY,
-                    background: errorFlash ? "#FBEDED" : CREAM,
+                    color: "var(--fd-text, #081A35)",
+                    background: errorFlash ? "var(--fd-panel, #FBEDED)" : "var(--fd-panel, #F5F5F7)",
                     outline: "none",
                     transition: "border-color 0.15s, background 0.15s",
                   }}
@@ -309,9 +309,9 @@ export function MultitareaGame({ cfg, onFinish, onQuit }: Props) {
                     key={sys}
                     onClick={() => fase === "run" && ack(sys)}
                     style={{
-                      borderRadius: 14,
+                      borderRadius: "var(--fd-radius, 14px)",
                       border: `2px solid ${alert ? "#C88A00" : `${NAVY}1A`}`,
-                      background: alert ? "#FFF6E0" : "white",
+                      background: alert ? "var(--fd-panel, #FFF6E0)" : "var(--fd-panel, white)",
                       padding: "14px 12px 12px",
                       cursor: "pointer",
                       textAlign: "center",
@@ -324,14 +324,14 @@ export function MultitareaGame({ cfg, onFinish, onQuit }: Props) {
                         fontFamily: MONO,
                         fontSize: "0.78rem",
                         fontWeight: 800,
-                        color: alert ? "#8A6100" : NAVY,
+                        color: alert ? "#8A6100" : "var(--fd-text, #081A35)",
                         letterSpacing: "0.1em",
                       }}
                     >
                       {sys}
                     </div>
                     <div
-                      style={{ fontFamily: MONO, fontSize: "0.56rem", color: HAZE, marginTop: 2 }}
+                      style={{ fontFamily: MONO, fontSize: "0.56rem", color: "var(--fd-muted, #4A5872)", marginTop: 2 }}
                     >
                       tecla {KEY_OF_SYSTEM[sys]}
                     </div>
@@ -398,10 +398,10 @@ export function MultitareaGame({ cfg, onFinish, onQuit }: Props) {
           fontSize: "0.66rem",
           letterSpacing: "0.1em",
           textTransform: "uppercase",
-          color: HAZE,
-          background: CREAM,
+          color: "var(--fd-muted, #4A5872)",
+          background: "var(--fd-panel, #F5F5F7)",
           border: `1px solid ${NAVY}0F`,
-          borderRadius: 10,
+          borderRadius: "var(--fd-radius, 10px)",
           padding: "8px 12px",
         }}
       >

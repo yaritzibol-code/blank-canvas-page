@@ -14,7 +14,7 @@ interface Props {
  */
 export function UnderConstruction({ moduleName, description }: Props) {
   return (
-    <div style={{ minHeight: "70vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
+    <div className="fd-unavailable" style={{ minHeight: "70vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
       <div
         style={{
           maxWidth: 520,
@@ -42,7 +42,7 @@ export function UnderConstruction({ moduleName, description }: Props) {
         >
           <Icon n="wrench" size={30} />
         </div>
-        <h1 style={{ fontSize: 24, fontWeight: 700, margin: "0 0 8px" }}>{moduleName}</h1>
+        <h2 style={{ fontSize: 24, fontWeight: 700, margin: "0 0 8px" }}>{moduleName}</h2>
         <p style={{ fontSize: 15, color: "hsl(var(--muted-foreground))", margin: "0 0 24px", lineHeight: 1.6 }}>
           {description ??
             "Este módulo está en construcción. Estamos afinando la experiencia y estará disponible muy pronto."}
