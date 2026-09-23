@@ -1686,27 +1686,6 @@ html:has(.fd-shell) {
     padding: 24px 22px 90px;
   }
 }
-@media (max-width: 360px) {
-  .fd-topbar {
-    padding-inline: 10px;
-  }
-  .fd-director {
-    padding-inline: 10px;
-  }
-  .fd-director .fd-globe {
-    width: calc(100% + 20px);
-    margin-inline: -10px;
-  }
-  .fd-destination-card {
-    padding-inline: 14px;
-  }
-  .fd-destination-card .fd-takeoff {
-    width: calc(100% - 90px);
-  }
-  .fd-mobile-details {
-    margin-left: 7px;
-  }
-}
 @media (max-width: 600px) {
   .fd-topbar {
     padding: 12px 16px;
@@ -2880,7 +2859,7 @@ html[data-motion="reduced"] .fd-shell *::after {
 .fd-cloud-two { animation-delay:.25s; mix-blend-mode:screen; }.fd-cloud-three { animation-delay:.5s; mix-blend-mode:screen; transform:scaleX(-1); }.fd-arrival-title { display:flex; align-items:end; justify-content:space-between; gap:16px; }.fd-arrival-title > strong { color:#e3c98a; font:22px "Instrument Serif",serif; }
 @keyframes fd-takeoff-ring { from{opacity:.9;transform:scale(1)} to{opacity:0;transform:scale(1.08,1.45)} } @keyframes fd-takeoff-sheen { 0%,58%{left:-45%}100%{left:135%} } @keyframes fd-runway { to{background-position:28px 0} } @keyframes fd-chevron { 0%,100%{opacity:.18}50%{opacity:1} } @keyframes fd-blink { 50%{opacity:.2} }
 
-@media (max-width:1100px) {
+@media (max-width:1130px) {
   .fd-question-session .fp-quiz-area { display:block!important; }
   .fd-question-session .fp-quiz-primary { grid-template-columns:minmax(210px,270px) minmax(0,1fr); }
   .fd-question-session .fp-question-context { display:none; }
@@ -2896,4 +2875,15 @@ html[data-motion="reduced"] .fd-shell *::after {
   .fd-question-session .fp-quiz-card { order:1; }.fd-question-session .fp-quiz-nav { order:3; width:100%; }.fd-question-session .fp-quiz-card h1 { font-size:30px!important; }
   .fp-question-footer { padding:0 12px; height:54px; }.fp-question-footer > span:first-child { display:none; }.fp-pathy-streak { width:100%; justify-content:center; text-align:center; font-size:9px; }
   .fd-submodules > a > em { display:none; }
+}
+@media (max-width:360px) {
+  .fd-topbar { padding-inline:10px; }
+  .fd-director { padding-inline:10px; }
+  .fd-director .fd-globe { width:calc(100% + 20px); margin-inline:-10px; }
+  .fd-destination-card { padding-inline:14px; }
+  .fd-destination-card .fd-takeoff { width:calc(100% - 90px); }
+  .fd-mobile-details { margin-left:7px; }
+  .fd-question-session .fp-question-topbar { padding-inline:8px!important; }
+  .fd-question-session .fp-quiz-area { padding-inline:10px!important; }
+  .fd-question-session .fp-quiz-card h1 { font-size:27px!important; }
 }
