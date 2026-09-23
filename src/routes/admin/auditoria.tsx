@@ -107,7 +107,7 @@ function Detalle({ attempt }: { attempt: AuditAttempt }) {
   const la = agrupar(attempt.answers, "la");
 
   return (
-    <div style={{ background: "#F7F9FC", borderRadius: 12, padding: 14, marginTop: 10, display: "grid", gap: 14 }}>
+    <div style={{ background: "rgba(255,255,255,.05)", borderRadius: 12, padding: 14, marginTop: 10, display: "grid", gap: 14 }}>
       {ciaac.length > 0 && (
         <section>
           <h4 style={{ fontFamily: DISPLAY, fontSize: ".8rem", color: INK, marginBottom: 7 }}>CIAAC — por materia</h4>
@@ -133,7 +133,7 @@ function Detalle({ attempt }: { attempt: AuditAttempt }) {
             const ok = a.selectedIndex === a.correctIndex;
             const blank = a.selectedIndex < 0;
             return (
-              <div key={`${a.questionId}-${i}`} style={{ background: "white", border: "1px solid #E8EEF6", borderRadius: 10, padding: "10px 12px" }}>
+              <div key={`${a.questionId}-${i}`} style={{ background: "#0A1B33", border: "1px solid rgba(199,160,82,.18)", borderRadius: 10, padding: "10px 12px" }}>
                 <div style={{ display: "flex", gap: 8, alignItems: "baseline", marginBottom: 4 }}>
                   <span style={{ fontSize: ".7rem", fontWeight: 800, color: blank ? "#8DA1BE" : ok ? "#2ecc71" : "#c0392b" }}>
                     {blank ? "EN BLANCO" : ok ? "CORRECTA" : "INCORRECTA"}
@@ -290,7 +290,7 @@ function AuditoriaPage() {
                   </span>
                   <button
                     onClick={() => setAbierto(abierto === r.id ? null : r.id)}
-                    style={{ padding: "7px 13px", background: "white", color: "#3D5D91", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".74rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                    style={{ padding: "7px 13px", background: "#0A1B33", color: "#B8C5DA", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".74rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
                   >
                     {abierto === r.id ? "Ocultar detalle" : "Ver preguntas"}
                   </button>

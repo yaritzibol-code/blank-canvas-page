@@ -72,7 +72,7 @@ function Metric({ label, value, hint, tone }: { label: string; value: string; hi
 function Card({ title, subtitle, children }: { title: string; subtitle?: string; children: React.ReactNode }) {
   return (
     <div style={{ ...cardStyle, padding: 18, marginBottom: 16 }}>
-      <div style={{ fontFamily: DISPLAY, fontWeight: 800, color: "#0A1F44", fontSize: "1.02rem" }}>{title}</div>
+      <div style={{ fontFamily: DISPLAY, fontWeight: 800, color: "#FFFFFF", fontSize: "1.02rem" }}>{title}</div>
       {subtitle ? <div style={{ fontSize: ".78rem", color: MUTED, marginTop: 2, marginBottom: 10 }}>{subtitle}</div> : <div style={{ height: 10 }} />}
       {children}
     </div>
@@ -93,7 +93,7 @@ const td: React.CSSProperties = {
   padding: "10px",
   borderTop: "1px solid #E6ECF6",
   fontSize: ".84rem",
-  color: "#0A1F44",
+  color: "#FFFFFF",
   whiteSpace: "nowrap",
 };
 
@@ -259,9 +259,9 @@ function ActivityRatioPage() {
           <div style={{ display: "grid", gap: 10 }}>
             {funnel.map((f) => (
               <div key={f.step} style={{ display: "grid", gridTemplateColumns: "minmax(140px, 1fr) 2fr auto", gap: 10, alignItems: "center" }}>
-                <div style={{ fontSize: ".84rem", color: "#0A1F44", fontWeight: 600 }}>{pasoLabel(f.step)}</div>
+                <div style={{ fontSize: ".84rem", color: "#FFFFFF", fontWeight: 600 }}>{pasoLabel(f.step)}</div>
                 <Barra pct={(f.people / maxFunnel) * 100} tone={f.step.includes("abandon") ? "#A31637" : "#0A1F44"} />
-                <div style={{ fontSize: ".82rem", fontWeight: 800, color: "#0A1F44" }}>{f.people}</div>
+                <div style={{ fontSize: ".82rem", fontWeight: 800, color: "#FFFFFF" }}>{f.people}</div>
               </div>
             ))}
           </div>
@@ -338,7 +338,7 @@ function ActivityRatioPage() {
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              background: "#fff",
+              background: "#0A1B33",
               borderRadius: 18,
               width: "min(640px, 100%)",
               maxHeight: "86vh",
@@ -348,14 +348,14 @@ function ActivityRatioPage() {
           >
             <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-start" }}>
               <div>
-                <div style={{ fontFamily: DISPLAY, fontWeight: 800, fontSize: "1.1rem", color: "#0A1F44" }}>
+                <div style={{ fontFamily: DISPLAY, fontWeight: 800, fontSize: "1.1rem", color: "#FFFFFF" }}>
                   {abierto.nombre || "Sin nombre"}
                 </div>
                 <div style={{ fontSize: ".78rem", color: MUTED }}>{abierto.email}</div>
               </div>
               <button
                 onClick={() => setAbierto(null)}
-                style={{ minHeight: 40, minWidth: 40, borderRadius: 10, border: "1px solid #D5DEED", background: "#fff", cursor: "pointer", color: "#0A1F44" }}
+                style={{ minHeight: 40, minWidth: 40, borderRadius: 10, border: "1px solid rgba(199,160,82,.22)", background: "#0A1B33", cursor: "pointer", color: "#FFFFFF" }}
                 aria-label="Cerrar"
               >
                 ✕
@@ -375,7 +375,7 @@ function ActivityRatioPage() {
                     padding: "6px 0 6px 10px",
                   }}
                 >
-                  <div style={{ fontSize: ".84rem", color: "#0A1F44", fontWeight: 600 }}>
+                  <div style={{ fontSize: ".84rem", color: "#FFFFFF", fontWeight: 600 }}>
                     {t.step ? pasoLabel(t.step) : t.label || t.path || "Vista"}
                   </div>
                   <div style={{ fontSize: ".72rem", color: MUTED }}>

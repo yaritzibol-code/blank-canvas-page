@@ -125,7 +125,7 @@ function AdminDisputasPage() {
         {disputesError ? (
           <p style={{ fontSize: ".82rem", color: "#8DA1BE" }}>{disputesError}</p>
         ) : disputes.length === 0 ? (
-          <p style={{ fontSize: ".82rem", color: "#647DA0", lineHeight: 1.6 }}>
+          <p style={{ fontSize: ".82rem", color: "#93A4BF", lineHeight: 1.6 }}>
             Sin disputas registradas. Cuando Stripe envíe <code style={{ fontFamily: MONO, fontSize: ".76rem" }}>charge.dispute.created</code>,
             aparecerá aquí automáticamente con su expediente a un clic.
           </p>
@@ -214,8 +214,8 @@ function AdminDisputasPage() {
                 <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", color: INK, margin: "6px 0 2px" }}>
                   {dossier.user.nombre ?? dossier.user.email}
                 </h2>
-                <div style={{ fontSize: ".8rem", color: "#647DA0", fontFamily: MONO }}>{dossier.user.email} · {dossier.user.id}</div>
-                <div style={{ fontSize: ".8rem", color: "#647DA0", marginTop: 4 }}>
+                <div style={{ fontSize: ".8rem", color: "#93A4BF", fontFamily: MONO }}>{dossier.user.email} · {dossier.user.id}</div>
+                <div style={{ fontSize: ".8rem", color: "#93A4BF", marginTop: 4 }}>
                   Plan: <strong>{dossier.user.plan ?? "—"}</strong>
                   {dossier.user.accessStart ? ` · acceso desde ${fmtDate(dossier.user.accessStart)}` : ""}
                 </div>
@@ -232,11 +232,11 @@ function AdminDisputasPage() {
 
             {/* Score */}
             <div style={{ display: "grid", gridTemplateColumns: "minmax(140px, 200px) 1fr", gap: 18, marginTop: 18, alignItems: "start" }}>
-              <div style={{ textAlign: "center", background: "#F7F9FC", borderRadius: 14, padding: "18px 12px" }}>
+              <div style={{ textAlign: "center", background: "rgba(255,255,255,.05)", borderRadius: 14, padding: "18px 12px" }}>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "2.6rem", fontWeight: 800, color: dossier.score.pct >= 60 ? "#1d8a4c" : dossier.score.pct >= 35 ? "#b07d00" : "#c0392b" }}>
                   {dossier.score.pct}%
                 </div>
-                <div style={{ fontSize: ".72rem", color: "#647DA0", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em" }}>
+                <div style={{ fontSize: ".72rem", color: "#93A4BF", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em" }}>
                   Probabilidad de ganar
                 </div>
               </div>
@@ -324,7 +324,7 @@ function AdminDisputasPage() {
               </div>
             )}
             {dossier.subscriptions.length > 0 && (
-              <p style={{ fontSize: ".76rem", color: "#647DA0", marginTop: 10 }}>
+              <p style={{ fontSize: ".76rem", color: "#93A4BF", marginTop: 10 }}>
                 Suscripciones: {dossier.subscriptions.map((s) => `${s.price_id} (${s.status}, hasta ${fmtDate(s.current_period_end)})`).join(" · ")}
               </p>
             )}
@@ -348,7 +348,7 @@ function AdminDisputasPage() {
                   <span style={{ color: "#33527F" }}>
                     <strong>{t.event}</strong>
                     {t.ip ? <span style={{ fontFamily: MONO, color: "#8DA1BE" }}> · {t.ip}</span> : null}
-                    {t.detail ? <span style={{ color: "#647DA0" }}> — {t.detail}</span> : null}
+                    {t.detail ? <span style={{ color: "#93A4BF" }}> — {t.detail}</span> : null}
                   </span>
                 </div>
               ))}

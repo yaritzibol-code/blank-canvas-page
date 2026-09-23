@@ -51,11 +51,11 @@ function StripeEventsPage() {
   return (
     <AdminShell title="Eventos de Stripe" active="operaciones_stripe" backTo={{ label: "Panel", to: "/admin/operaciones" }}>
       <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 16, flexWrap: "wrap" }}>
-        <label style={{ fontSize: ".85rem", color: "#647DA0" }}>Estado:</label>
+        <label style={{ fontSize: ".85rem", color: "#93A4BF" }}>Estado:</label>
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          style={{ padding: "6px 10px", borderRadius: 8, border: "1px solid #E3EAF5", fontSize: ".85rem" }}
+          style={{ padding: "6px 10px", borderRadius: 8, border: "1px solid rgba(199,160,82,.22)", fontSize: ".85rem" }}
         >
           <option value="all">Todos</option>
           <option value="processed">Procesados</option>
@@ -63,10 +63,10 @@ function StripeEventsPage() {
           <option value="ignored">Ignorados</option>
           <option value="received">Pendientes</option>
         </select>
-        <span style={{ fontSize: ".78rem", color: "#647DA0" }}>{rows.length} eventos · env {env}</span>
+        <span style={{ fontSize: ".78rem", color: "#93A4BF" }}>{rows.length} eventos · env {env}</span>
         <button
           onClick={load}
-          style={{ marginLeft: "auto", padding: "6px 12px", borderRadius: 8, border: "1px solid #E3EAF5", background: "#fff", cursor: "pointer", fontSize: ".85rem", fontWeight: 700 }}
+          style={{ marginLeft: "auto", padding: "6px 12px", borderRadius: 8, border: "1px solid rgba(199,160,82,.22)", background: "#0A1B33", cursor: "pointer", fontSize: ".85rem", fontWeight: 700 }}
         >
           Actualizar
         </button>
@@ -83,7 +83,7 @@ function StripeEventsPage() {
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: ".85rem" }}>
             <thead>
-              <tr style={{ background: "#F7F9FC", color: "#647DA0", textAlign: "left" }}>
+              <tr style={{ background: "rgba(255,255,255,.05)", color: "#93A4BF", textAlign: "left" }}>
                 <th style={th}>Fecha</th>
                 <th style={th}>Tipo</th>
                 <th style={th}>Env</th>
@@ -96,7 +96,7 @@ function StripeEventsPage() {
             <tbody>
               {rows.map((r) => (
                 <>
-                  <tr key={r.id} style={{ borderTop: "1px solid #F2DCDB" }}>
+                  <tr key={r.id} style={{ borderTop: "1px solid rgba(199,160,82,.28)" }}>
                     <td style={td}>{new Date(r.received_at).toLocaleString("es-MX")}</td>
                     <td style={{ ...td, fontFamily: "monospace", fontSize: ".78rem" }}>{r.type}</td>
                     <td style={td}>{r.environment}</td>
@@ -105,7 +105,7 @@ function StripeEventsPage() {
                         {r.status}
                       </span>
                     </td>
-                    <td style={{ ...td, fontFamily: "monospace", fontSize: ".72rem", color: "#647DA0" }}>
+                    <td style={{ ...td, fontFamily: "monospace", fontSize: ".72rem", color: "#93A4BF" }}>
                       {r.user_id?.slice(0, 8) ?? "—"}
                       <br />
                       {r.stripe_subscription_id ?? ""}
@@ -134,8 +134,8 @@ function StripeEventsPage() {
                   </tr>
                   {expanded === r.id && (
                     <tr>
-                      <td colSpan={7} style={{ background: "#F7F9FC", padding: 14 }}>
-                        <pre style={{ margin: 0, fontSize: ".72rem", color: "#22375C", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+                      <td colSpan={7} style={{ background: "rgba(255,255,255,.05)", padding: 14 }}>
+                        <pre style={{ margin: 0, fontSize: ".72rem", color: "#FFFFFF", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
                           {JSON.stringify(r.payload, null, 2)}
                         </pre>
                       </td>
@@ -145,7 +145,7 @@ function StripeEventsPage() {
               ))}
               {rows.length === 0 && (
                 <tr>
-                  <td colSpan={7} style={{ padding: 24, textAlign: "center", color: "#647DA0" }}>
+                  <td colSpan={7} style={{ padding: 24, textAlign: "center", color: "#93A4BF" }}>
                     Sin eventos registrados aún.
                   </td>
                 </tr>
@@ -207,7 +207,7 @@ function BillingAuditCard({ env }: { env: "sandbox" | "live" }) {
         <select
           value={event}
           onChange={(e) => setEvent(e.target.value)}
-          style={{ marginLeft: "auto", padding: "4px 8px", borderRadius: 8, border: "1px solid #E3EAF5", fontSize: ".8rem" }}
+          style={{ marginLeft: "auto", padding: "4px 8px", borderRadius: 8, border: "1px solid rgba(199,160,82,.22)", fontSize: ".8rem" }}
         >
           <option value="all">Todos los eventos</option>
           <option value="checkout_session_created">Checkout creado</option>
@@ -228,7 +228,7 @@ function BillingAuditCard({ env }: { env: "sandbox" | "live" }) {
       <div style={{ overflowX: "auto" }}>
         <table style={{ width: "100%", borderCollapse: "collapse", fontSize: ".85rem" }}>
           <thead>
-            <tr style={{ background: "#F7F9FC", color: "#647DA0", textAlign: "left" }}>
+            <tr style={{ background: "rgba(255,255,255,.05)", color: "#93A4BF", textAlign: "left" }}>
               <th style={th}>Fecha</th>
               <th style={th}>Evento</th>
               <th style={th}>Origen</th>
@@ -239,7 +239,7 @@ function BillingAuditCard({ env }: { env: "sandbox" | "live" }) {
           <tbody>
             {rows.map((r) => (
               <>
-                <tr key={r.id} style={{ borderTop: "1px solid #F2DCDB" }}>
+                <tr key={r.id} style={{ borderTop: "1px solid rgba(199,160,82,.28)" }}>
                   <td style={td}>{new Date(r.created_at).toLocaleString("es-MX")}</td>
                   <td style={td}>
                     <span style={{ background: AUDIT_COLOR[r.event] ?? "#647DA0", color: "#fff", padding: "2px 8px", borderRadius: 999, fontSize: ".72rem", fontWeight: 700 }}>
@@ -248,7 +248,7 @@ function BillingAuditCard({ env }: { env: "sandbox" | "live" }) {
                     {!r.ok && <div style={{ color: "#e74c3c", fontSize: ".72rem" }}>{r.message}</div>}
                   </td>
                   <td style={td}>{r.source}</td>
-                  <td style={{ ...td, fontFamily: "monospace", fontSize: ".72rem", color: "#647DA0" }}>{r.user_id?.slice(0, 8) ?? "—"}</td>
+                  <td style={{ ...td, fontFamily: "monospace", fontSize: ".72rem", color: "#93A4BF" }}>{r.user_id?.slice(0, 8) ?? "—"}</td>
                   <td style={td}>
                     <button onClick={() => setOpen(open === r.id ? null : r.id)} style={linkBtn}>
                       {open === r.id ? "Ocultar" : "Ver"}
@@ -257,8 +257,8 @@ function BillingAuditCard({ env }: { env: "sandbox" | "live" }) {
                 </tr>
                 {open === r.id && (
                   <tr>
-                    <td colSpan={5} style={{ background: "#F7F9FC", padding: 14 }}>
-                      <pre style={{ margin: 0, fontSize: ".72rem", color: "#22375C", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+                    <td colSpan={5} style={{ background: "rgba(255,255,255,.05)", padding: 14 }}>
+                      <pre style={{ margin: 0, fontSize: ".72rem", color: "#FFFFFF", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
                         {JSON.stringify(r.detail, null, 2)}
                       </pre>
                     </td>
@@ -268,7 +268,7 @@ function BillingAuditCard({ env }: { env: "sandbox" | "live" }) {
             ))}
             {rows.length === 0 && (
               <tr>
-                <td colSpan={5} style={{ padding: 24, textAlign: "center", color: "#647DA0" }}>
+                <td colSpan={5} style={{ padding: 24, textAlign: "center", color: "#93A4BF" }}>
                   Sin registros todavía.
                 </td>
               </tr>
@@ -281,5 +281,5 @@ function BillingAuditCard({ env }: { env: "sandbox" | "live" }) {
 }
 
 const th: React.CSSProperties = { padding: "10px 12px", fontSize: ".72rem", textTransform: "uppercase", letterSpacing: ".6px", fontWeight: 700 };
-const td: React.CSSProperties = { padding: "10px 12px", color: "#22375C", verticalAlign: "top" };
-const linkBtn: React.CSSProperties = { background: "none", border: "none", color: "#3D5D91", fontWeight: 700, cursor: "pointer", padding: 0, fontSize: ".82rem" };
+const td: React.CSSProperties = { padding: "10px 12px", color: "#FFFFFF", verticalAlign: "top" };
+const linkBtn: React.CSSProperties = { background: "none", border: "none", color: "#B8C5DA", fontWeight: 700, cursor: "pointer", padding: 0, fontSize: ".82rem" };

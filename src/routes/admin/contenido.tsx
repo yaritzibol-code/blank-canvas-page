@@ -66,9 +66,9 @@ interface MaterialForm {
 
 const rowBtn = (color: string): React.CSSProperties => ({
   padding: "6px 10px",
-  background: "white",
+  background: "#0A1B33",
   color,
-  border: "2px solid #F2DCDB",
+  border: "2px solid rgba(199,160,82,.28)",
   borderRadius: 8,
   fontSize: ".72rem",
   fontWeight: 700,
@@ -215,7 +215,7 @@ function AdminContenidoPage() {
       {/* Nota informativa */}
       <div style={{ background: "rgba(61,93,145,.05)", border: "1px solid rgba(61,93,145,.15)", borderRadius: 10, padding: "10px 14px", marginBottom: 18, display: "flex", alignItems: "center", gap: 8 }}>
         <Icon n="info" size={16} color="#3D5D91" />
-        <span style={{ fontSize: ".76rem", color: "#647DA0", lineHeight: 1.5 }}>
+        <span style={{ fontSize: ".76rem", color: "#93A4BF", lineHeight: 1.5 }}>
           Las clases publicadas aparecen a los estudiantes con desbloqueo progresivo; el estudiante básico solo ve la primera de cada materia.
         </span>
       </div>
@@ -244,8 +244,8 @@ function AdminContenidoPage() {
                 <Icon n="play" size={15} color={c.videoUrl ? "#3D5D91" : "#8DA1BE"} />
               </div>
               <div style={{ flex: "1 1 240px", minWidth: 0 }}>
-                <div style={{ fontSize: ".84rem", fontWeight: 700, color: "#22375C", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.titulo}</div>
-                <div style={{ fontSize: ".7rem", color: "#647DA0" }}>
+                <div style={{ fontSize: ".84rem", fontWeight: 700, color: "#FFFFFF", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.titulo}</div>
+                <div style={{ fontSize: ".7rem", color: "#93A4BF" }}>
                   {materiaBySlug(c.materia)?.name ?? c.materia} · {c.duracionMin} min · Orden {c.orden}{c.videoUrl ? "" : " · Sin video"}
                 </div>
               </div>
@@ -278,8 +278,8 @@ function AdminContenidoPage() {
                 <Icon n="doc" size={15} color="white" />
               </div>
               <div style={{ flex: "1 1 240px", minWidth: 0 }}>
-                <div style={{ fontSize: ".84rem", fontWeight: 700, color: "#22375C", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{m.titulo}</div>
-                <div style={{ fontSize: ".7rem", color: "#647DA0" }}>
+                <div style={{ fontSize: ".84rem", fontWeight: 700, color: "#FFFFFF", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{m.titulo}</div>
+                <div style={{ fontSize: ".7rem", color: "#93A4BF" }}>
                   {m.autor || "Sin autor"} · {m.materia ? (materiaBySlug(m.materia)?.name ?? m.materia) : "General"}{m.pages > 0 ? ` · ${m.pages} págs.` : ""}
                 </div>
               </div>
@@ -404,7 +404,7 @@ function AdminContenidoPage() {
                 ["imprimible", "Imprimible"],
                 ["muestraGratis", "Muestra gratis"],
               ] as const).map(([k, l]) => (
-                <label key={k} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: ".8rem", color: "#22375C", fontWeight: 600, cursor: "pointer" }}>
+                <label key={k} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: ".8rem", color: "#FFFFFF", fontWeight: 600, cursor: "pointer" }}>
                   <input type="checkbox" checked={matForm[k]} onChange={(e) => setMatForm({ ...matForm, [k]: e.target.checked })} style={{ accentColor: "#3D5D91", width: 15, height: 15 }} />
                   {l}
                 </label>

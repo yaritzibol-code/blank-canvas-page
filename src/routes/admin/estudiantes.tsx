@@ -51,7 +51,7 @@ const thStyle: CSSProperties = {
 const tdStyle: CSSProperties = {
   padding: "12px 9px",
   fontSize: ".8rem",
-  color: "#22375C",
+  color: "#FFFFFF",
   verticalAlign: "middle",
   borderBottom: "1px solid rgba(61,93,145,.05)",
   whiteSpace: "nowrap",
@@ -228,17 +228,17 @@ function AdminEstudiantesPage() {
           <option value="avance">Orden: menor avance</option>
           <option value="preparacion">Orden: menor preparación</option>
         </select>
-        <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: ".8rem", color: "#22375C", fontWeight: 600, cursor: "pointer" }}>
+        <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: ".8rem", color: "#FFFFFF", fontWeight: 600, cursor: "pointer" }}>
           <input type="checkbox" checked={soloInactivos} onChange={(e) => setSoloInactivos(e.target.checked)} style={{ accentColor: "#3D5D91", width: 15, height: 15 }} />
           Solo inactivos
         </label>
-        <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: ".8rem", color: "#22375C", fontWeight: 600, cursor: "pointer" }}>
+        <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: ".8rem", color: "#FFFFFF", fontWeight: 600, cursor: "pointer" }}>
           <input type="checkbox" checked={proxCiaac} onChange={(e) => setProxCiaac(e.target.checked)} style={{ accentColor: "#3D5D91", width: 15, height: 15 }} />
           Próximos al CIAAC (30 días)
         </label>
       </div>
 
-      <div style={{ fontSize: ".76rem", color: "#647DA0", marginBottom: 10 }}>
+      <div style={{ fontSize: ".76rem", color: "#93A4BF", marginBottom: 10 }}>
         Mostrando {visibles.length} de {filtered.length} estudiantes filtrados ({rows.length} en total)
       </div>
 
@@ -274,7 +274,7 @@ function AdminEstudiantesPage() {
               <tr key={r.u.id}>
                 <td style={tdStyle}>
                   <div style={{ fontWeight: 700 }}>{r.u.nombre}</div>
-                  <div style={{ fontSize: ".72rem", color: "#647DA0" }}>{r.u.email}</div>
+                  <div style={{ fontSize: ".72rem", color: "#93A4BF" }}>{r.u.email}</div>
                 </td>
                 <td style={tdStyle}>
                   <IndicativoCelda fila={comunidad.get(r.u.id) ?? null} />
@@ -294,7 +294,7 @@ function AdminEstudiantesPage() {
                 </td>
                 <td style={tdStyle}>
                   <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                    <div style={{ width: 56, height: 6, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
+                    <div style={{ width: 56, height: 6, background: "rgba(255,255,255,.08)", borderRadius: 10, overflow: "hidden" }}>
                       <div style={{ height: "100%", borderRadius: 10, background: "#3D5D91", width: `${r.progress}%` }} />
                     </div>
                     <span style={{ fontSize: ".74rem", fontWeight: 700 }}>{r.progress}%</span>
@@ -307,7 +307,7 @@ function AdminEstudiantesPage() {
                 <td style={tdStyle}>
                   <button
                     onClick={() => navigate({ to: "/admin/perfil", search: { id: r.u.id } })}
-                    style={{ padding: "6px 12px", background: "white", color: "#3D5D91", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".74rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", whiteSpace: "nowrap" }}
+                    style={{ padding: "6px 12px", background: "#0A1B33", color: "#B8C5DA", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".74rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", whiteSpace: "nowrap" }}
                   >
                     Abrir perfil
                   </button>
@@ -327,7 +327,7 @@ function AdminEstudiantesPage() {
           >
             ← Anterior
           </button>
-          <span style={{ fontSize: ".78rem", color: "#647DA0", fontWeight: 700 }}>
+          <span style={{ fontSize: ".78rem", color: "#93A4BF", fontWeight: 700 }}>
             Página {pageSafe + 1} de {totalPages}
           </span>
           <button
@@ -354,10 +354,10 @@ function IndicativoCelda({ fila }: { fila: AdminComunidadFila | null }) {
     <div className="cm-root" style={{ display: "flex", alignItems: "center", gap: 9 }}>
       <Insignia callsign={fila.callsign} size={28} />
       <div style={{ display: "grid", lineHeight: 1.25 }}>
-        <span style={{ fontWeight: 700, color: "#22375C", fontSize: ".8rem" }}>
+        <span style={{ fontWeight: 700, color: "#FFFFFF", fontSize: ".8rem" }}>
           <Callsign texto={fila.callsign} />
         </span>
-        <span style={{ fontSize: ".68rem", color: "#647DA0" }}>
+        <span style={{ fontSize: ".68rem", color: "#93A4BF" }}>
           {anonimo ? "Aparece anónimo" : "Muestra su nombre"} · {fpFormat(fila.total)} FP
           {!fila.privacidadElegida ? " · sin elegir aún" : ""}
         </span>
@@ -369,9 +369,9 @@ function IndicativoCelda({ fila }: { fila: AdminComunidadFila | null }) {
 function pagerBtn(disabled: boolean): CSSProperties {
   return {
     padding: "7px 14px",
-    background: "white",
+    background: "#0A1B33",
     color: disabled ? "#B7C4D6" : "#3D5D91",
-    border: "2px solid #F2DCDB",
+    border: "2px solid rgba(199,160,82,.28)",
     borderRadius: 8,
     fontSize: ".76rem",
     fontWeight: 700,
@@ -405,9 +405,9 @@ function PlanSelect({ user }: { user: User }) {
       onChange={(e) => cambiar(e.target.value as PlanId)}
       title={`Plan actual: ${user.planNombre}`}
       style={{
-        border: "2px solid #F2DCDB", borderRadius: 8, padding: "5px 8px",
+        border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, padding: "5px 8px",
         fontSize: ".76rem", fontWeight: 700, fontFamily: "'Manrope', sans-serif",
-        color: user.plan === "paga" ? "#3D5D91" : "#647DA0", background: "white",
+        color: user.plan === "paga" ? "#3D5D91" : "#647DA0", background: "#0A1B33",
         outline: "none", cursor: "pointer", maxWidth: 150,
       }}
     >

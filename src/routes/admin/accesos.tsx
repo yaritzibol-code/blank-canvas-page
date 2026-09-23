@@ -44,7 +44,7 @@ const thStyle: CSSProperties = {
 const tdStyle: CSSProperties = {
   padding: "11px 12px",
   fontSize: ".8rem",
-  color: "#22375C",
+  color: "#FFFFFF",
   verticalAlign: "middle",
   borderBottom: "1px solid rgba(61,93,145,.05)",
   whiteSpace: "nowrap",
@@ -52,14 +52,14 @@ const tdStyle: CSSProperties = {
 
 const actionBtn: CSSProperties = {
   padding: "5px 9px",
-  background: "white",
-  border: "2px solid #F2DCDB",
+  background: "#0A1B33",
+  border: "2px solid rgba(199,160,82,.28)",
   borderRadius: 7,
   fontSize: ".7rem",
   fontWeight: 700,
   cursor: "pointer",
   fontFamily: "'Manrope', sans-serif",
-  color: "#3D5D91",
+  color: "#B8C5DA",
   whiteSpace: "nowrap",
 };
 
@@ -122,7 +122,7 @@ function AdminAccesosPage() {
             <option key={v} value={v}>{l}</option>
           ))}
         </select>
-        <span style={{ fontSize: ".76rem", color: "#647DA0" }}>{filtered.length} de {students.length} estudiantes</span>
+        <span style={{ fontSize: ".76rem", color: "#93A4BF" }}>{filtered.length} de {students.length} estudiantes</span>
       </div>
 
       {/* Tabla de accesos */}
@@ -153,7 +153,7 @@ function AdminAccesosPage() {
               <tr key={u.id}>
                 <td style={tdStyle}>
                   <div style={{ fontWeight: 700 }}>{u.nombre}</div>
-                  <div style={{ fontSize: ".72rem", color: "#647DA0" }}>{u.email}</div>
+                  <div style={{ fontSize: ".72rem", color: "#93A4BF" }}>{u.email}</div>
                 </td>
                 <td style={tdStyle}>{u.whatsapp || "—"}</td>
                 <td style={tdStyle}>{u.planNombre}</td>
@@ -202,11 +202,11 @@ function AdminAccesosPage() {
             {changes.map((c, i) => (
               <div key={c.id} style={{ display: "flex", gap: 10, padding: "8px 0", borderBottom: i < changes.length - 1 ? "1px solid rgba(61,93,145,.05)" : undefined, flexWrap: "wrap", alignItems: "baseline" }}>
                 <span style={{ fontSize: ".72rem", color: "#8DA1BE", width: 150, flexShrink: 0 }}>{fmtDateTime(c.fecha)}</span>
-                <span style={{ fontSize: ".78rem", fontWeight: 700, color: "#22375C", width: 170, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                <span style={{ fontSize: ".78rem", fontWeight: 700, color: "#FFFFFF", width: 170, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                   {getUserById(c.userId)?.nombre ?? "Estudiante"}
                 </span>
-                <span style={{ fontSize: ".78rem", fontWeight: 700, color: "#3D5D91" }}>{c.accion}</span>
-                <span style={{ fontSize: ".76rem", color: "#647DA0", flex: 1, minWidth: 160 }}>{c.detalle}</span>
+                <span style={{ fontSize: ".78rem", fontWeight: 700, color: "#B8C5DA" }}>{c.accion}</span>
+                <span style={{ fontSize: ".76rem", color: "#93A4BF", flex: 1, minWidth: 160 }}>{c.detalle}</span>
               </div>
             ))}
           </div>

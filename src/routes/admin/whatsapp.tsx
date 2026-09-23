@@ -56,7 +56,7 @@ const thStyle: CSSProperties = {
 const tdStyle: CSSProperties = {
   padding: "12px 12px",
   fontSize: ".8rem",
-  color: "#22375C",
+  color: "#FFFFFF",
   verticalAlign: "middle",
   borderBottom: "1px solid rgba(61,93,145,.05)",
   whiteSpace: "nowrap",
@@ -122,7 +122,7 @@ function AdminWhatsappPage() {
       {/* Aviso de privacidad */}
       <div style={{ background: "rgba(61,93,145,.05)", border: "1px solid rgba(61,93,145,.15)", borderRadius: 10, padding: "10px 14px", marginBottom: 18, display: "flex", alignItems: "center", gap: 8 }}>
         <Icon n="shield" size={16} color="#3D5D91" />
-        <span style={{ fontSize: ".76rem", color: "#647DA0", lineHeight: 1.5 }}>
+        <span style={{ fontSize: ".76rem", color: "#93A4BF", lineHeight: 1.5 }}>
           No se muestran conversaciones privadas, solo información operativa.
         </span>
       </div>
@@ -157,7 +157,7 @@ function AdminWhatsappPage() {
                 <tr key={row.u.id}>
                   <td style={tdStyle}>
                     <div style={{ fontWeight: 700 }}>{row.u.nombre}</div>
-                    <div style={{ fontSize: ".72rem", color: "#647DA0" }}>{row.u.email}</div>
+                    <div style={{ fontSize: ".72rem", color: "#93A4BF" }}>{row.u.email}</div>
                   </td>
                   <td style={tdStyle}>{row.u.whatsapp || "—"}</td>
                   <td style={tdStyle}>
@@ -184,14 +184,14 @@ function AdminWhatsappPage() {
                       <button
                         onClick={() => pauseAll(row)}
                         disabled={row.activos === 0}
-                        style={{ padding: "6px 10px", background: "white", color: row.activos === 0 ? "#C7D2E3" : "#f39c12", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: row.activos === 0 ? "default" : "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}
+                        style={{ padding: "6px 10px", background: "#0A1B33", color: row.activos === 0 ? "#C7D2E3" : "#f39c12", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: row.activos === 0 ? "default" : "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}
                       >
                         <Icon n="pause" size={12} /> Pausar todos
                       </button>
                       <button
                         onClick={() => resumeAll(row)}
                         disabled={row.pausados === 0}
-                        style={{ padding: "6px 10px", background: "white", color: row.pausados === 0 ? "#C7D2E3" : "#2ecc71", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: row.pausados === 0 ? "default" : "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}
+                        style={{ padding: "6px 10px", background: "#0A1B33", color: row.pausados === 0 ? "#C7D2E3" : "#2ecc71", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: row.pausados === 0 ? "default" : "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}
                       >
                         <Icon n="play" size={12} /> Reactivar todos
                       </button>

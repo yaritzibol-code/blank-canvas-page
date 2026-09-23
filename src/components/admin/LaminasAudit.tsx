@@ -52,7 +52,7 @@ export function LaminasAudit() {
     <div style={{ ...cardStyle, marginBottom: 20 }}>
       <div style={cardHeadStyle}>
         <Icon n="book" size={16} color="#3D5D91" />
-        <h3 style={{ fontSize: ".88rem", fontWeight: 800, color: "#22375C" }}>Láminas de las preguntas</h3>
+        <h3 style={{ fontSize: ".88rem", fontWeight: 800, color: "#FFFFFF" }}>Láminas de las preguntas</h3>
       </div>
 
       {!rows && !error && <p style={{ fontSize: ".8rem", color: "#8DA1BE" }}>Revisando módulos…</p>}
@@ -71,7 +71,7 @@ export function LaminasAudit() {
             key={r.fuente}
             style={{ display: "flex", alignItems: "center", gap: 10, fontSize: ".78rem", borderBottom: "1px solid #F0F4FA", paddingBottom: 7, marginBottom: 7 }}
           >
-            <span style={{ flex: 1, color: "#647DA0" }}>{NOMBRE[r.fuente] ?? r.fuente}</span>
+            <span style={{ flex: 1, color: "#93A4BF" }}>{NOMBRE[r.fuente] ?? r.fuente}</span>
             <span style={{ color: "#8DA1BE" }}>{Number(r.con_lamina)} preguntas con figura</span>
             <strong style={{ color: faltan === 0 ? "#22375C" : "#c0392b" }}>
               {existentes} / {distintas} imágenes

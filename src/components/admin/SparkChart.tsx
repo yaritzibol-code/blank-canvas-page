@@ -42,7 +42,7 @@ export function SparkChart({
   }, [points]);
 
   if (points.length === 0) {
-    return <div style={{ height, display: "flex", alignItems: "center", justifyContent: "center", color: "#647DA0", fontSize: ".85rem" }}>Sin datos suficientes</div>;
+    return <div style={{ height, display: "flex", alignItems: "center", justifyContent: "center", color: "#93A4BF", fontSize: ".85rem" }}>Sin datos suficientes</div>;
   }
 
   return (
@@ -65,7 +65,7 @@ export function SparkChart({
           />
         ))}
       </svg>
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, display: "flex", justifyContent: "space-between", fontSize: ".68rem", color: "#647DA0" }}>
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, display: "flex", justifyContent: "space-between", fontSize: ".68rem", color: "#93A4BF" }}>
         <span>max {formatValue(max)}</span>
         <span>min {formatValue(min)}</span>
       </div>

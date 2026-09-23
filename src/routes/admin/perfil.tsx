@@ -254,7 +254,7 @@ function AdminPerfilPage() {
         maxWidth={900}
       >
         <div style={cardStyle}>
-          <p style={{ fontSize: ".86rem", color: "#647DA0" }}>
+          <p style={{ fontSize: ".86rem", color: "#93A4BF" }}>
             No hay estudiantes registrados todavía.
           </p>
         </div>
@@ -347,7 +347,7 @@ function AdminPerfilPage() {
             onClick={() => setModal("cancel")}
             style={{
               padding: "7px 14px",
-              background: "white",
+              background: "#0A1B33",
               color: "#e74c3c",
               border: "2px solid #e74c3c",
               borderRadius: 8,
@@ -530,7 +530,7 @@ function AdminPerfilPage() {
                     size={15}
                     color={sel ? "#3D5D91" : "#647DA0"}
                   />
-                  <span style={{ fontSize: ".88rem", fontWeight: 700, color: "#22375C" }}>
+                  <span style={{ fontSize: ".88rem", fontWeight: 700, color: "#FFFFFF" }}>
                     {p.nombre}
                   </span>
                   <span
@@ -538,13 +538,13 @@ function AdminPerfilPage() {
                       marginLeft: "auto",
                       fontSize: ".7rem",
                       fontWeight: 700,
-                      color: "#647DA0",
+                      color: "#93A4BF",
                     }}
                   >
                     {p.dias === null ? "Sin vencimiento" : `${p.dias} días`}
                   </span>
                 </div>
-                <div style={{ fontSize: ".76rem", color: "#647DA0", lineHeight: 1.45 }}>
+                <div style={{ fontSize: ".76rem", color: "#93A4BF", lineHeight: 1.45 }}>
                   {p.descripcion}
                 </div>
               </button>
@@ -876,8 +876,8 @@ function AdminPerfilPage() {
                 fontWeight: 700,
                 cursor: "pointer",
                 fontFamily: "'Manrope', sans-serif",
-                background: "white",
-                color: "#3D5D91",
+                background: "#0A1B33",
+                color: "#B8C5DA",
                 border: "none",
                 display: "flex",
                 alignItems: "center",
@@ -1072,8 +1072,8 @@ function AdminPerfilPage() {
             style={{
               padding: "14px 10px",
               borderRadius: 12,
-              border: "2px solid #F2DCDB",
-              background: "white",
+              border: "2px solid rgba(199,160,82,.28)",
+              background: "#0A1B33",
               cursor: "pointer",
               fontFamily: "'Manrope', sans-serif",
               textAlign: "center",
@@ -1093,7 +1093,7 @@ function AdminPerfilPage() {
             <div style={{ marginBottom: 5, display: "flex", justifyContent: "center" }}>
               <Icon n={qa.icon} size={22} color="#22375C" />
             </div>
-            <div style={{ fontSize: ".76rem", fontWeight: 700, color: "#22375C" }}>{qa.label}</div>
+            <div style={{ fontSize: ".76rem", fontWeight: 700, color: "#FFFFFF" }}>{qa.label}</div>
             <div style={{ fontSize: ".66rem", color: "#8DA1BE", marginTop: 2 }}>{qa.sub}</div>
           </button>
         ))}
@@ -1145,12 +1145,12 @@ function AdminPerfilPage() {
                   fontFamily: "'Bricolage Grotesque', sans-serif",
                   fontSize: "1.1rem",
                   fontWeight: 900,
-                  color: "#22375C",
+                  color: "#FFFFFF",
                 }}
               >
                 {s.val}
               </div>
-              <div style={{ fontSize: ".66rem", color: "#647DA0", marginTop: 2 }}>{s.lab}</div>
+              <div style={{ fontSize: ".66rem", color: "#93A4BF", marginTop: 2 }}>{s.lab}</div>
             </div>
           ))}
         </div>
@@ -1239,7 +1239,7 @@ function AdminPerfilPage() {
                 <div
                   style={{
                     fontSize: ".86rem",
-                    color: "#22375C",
+                    color: "#FFFFFF",
                     fontWeight: 500,
                     overflowWrap: "anywhere",
                   }}
@@ -1294,7 +1294,7 @@ function AdminPerfilPage() {
                       style={{
                         fontSize: ".82rem",
                         fontWeight: 600,
-                        color: "#22375C",
+                        color: "#FFFFFF",
                         marginBottom: 1,
                         whiteSpace: "nowrap",
                         overflow: "hidden",
@@ -1303,7 +1303,7 @@ function AdminPerfilPage() {
                     >
                       {a.label}
                     </div>
-                    <div style={{ fontSize: ".72rem", color: "#647DA0" }}>
+                    <div style={{ fontSize: ".72rem", color: "#93A4BF" }}>
                       {a.durationMin > 0 ? `${a.durationMin} min` : "—"}
                     </div>
                   </div>
@@ -1360,7 +1360,7 @@ function AdminPerfilPage() {
                     <span
                       style={{
                         fontSize: ".75rem",
-                        color: "#22375C",
+                        color: "#FFFFFF",
                         width: 170,
                         flexShrink: 0,
                         whiteSpace: "nowrap",
@@ -1377,7 +1377,7 @@ function AdminPerfilPage() {
                       style={{
                         flex: 1,
                         height: 6,
-                        background: "#F2DCDB",
+                        background: "rgba(255,255,255,.08)",
                         borderRadius: 10,
                         overflow: "hidden",
                       }}
@@ -1430,12 +1430,12 @@ function AdminPerfilPage() {
           style={{
             width: "100%",
             minHeight: 100,
-            border: "2px solid #F2DCDB",
+            border: "2px solid rgba(199,160,82,.28)",
             borderRadius: 10,
             padding: "12px 14px",
             fontSize: ".85rem",
             fontFamily: "'Manrope', sans-serif",
-            color: "#22375C",
+            color: "#FFFFFF",
             outline: "none",
             resize: "vertical",
             lineHeight: 1.6,
@@ -1505,10 +1505,10 @@ function AdminPerfilPage() {
                 <span style={{ fontSize: ".72rem", color: "#8DA1BE", width: 160, flexShrink: 0 }}>
                   {fmtDateTime(c.fecha)}
                 </span>
-                <span style={{ fontSize: ".8rem", fontWeight: 700, color: "#22375C" }}>
+                <span style={{ fontSize: ".8rem", fontWeight: 700, color: "#FFFFFF" }}>
                   {c.accion}
                 </span>
-                <span style={{ fontSize: ".78rem", color: "#647DA0", flex: 1, minWidth: 160 }}>
+                <span style={{ fontSize: ".78rem", color: "#93A4BF", flex: 1, minWidth: 160 }}>
                   {c.detalle}
                 </span>
               </div>

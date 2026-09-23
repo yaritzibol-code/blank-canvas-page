@@ -274,7 +274,7 @@ function AdminBancoPage() {
   };
 
   const stats = [
-    { lab: "Total", num: total, color: "#3D5D91" },
+    { lab: "Total", num: total, color: "#B8C5DA" },
     { lab: "Publicadas", num: publicadas, color: "#2ecc71" },
     { lab: "Borrador", num: borrador, color: "#f39c12" },
     { lab: "Ocultas", num: ocultas, color: "#8DA1BE" },
@@ -291,7 +291,7 @@ function AdminBancoPage() {
         {stats.map((s) => (
           <div key={s.lab} style={{ ...cardStyle, padding: "14px 16px" }}>
             <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.3rem", fontWeight: 900, color: s.color, lineHeight: 1.1 }}>{s.num}</div>
-            <div style={{ fontSize: ".7rem", color: "#647DA0", marginTop: 2 }}>{s.lab}</div>
+            <div style={{ fontSize: ".7rem", color: "#93A4BF", marginTop: 2 }}>{s.lab}</div>
           </div>
         ))}
       </div>
@@ -299,7 +299,7 @@ function AdminBancoPage() {
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center", marginBottom: 10 }}>
         <button onClick={openNew} style={primaryBtnStyle}><Icon n="plus" size={15} /> Crear pregunta nueva</button>
         <button onClick={() => fileRef.current?.click()} style={secondaryBtnStyle}><Icon n="upload" size={15} /> Subir archivo (CSV)</button>
-        <button onClick={downloadTemplate} style={{ background: "none", border: "none", color: "#3D5D91", fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 5, padding: "8px 4px" }}>
+        <button onClick={downloadTemplate} style={{ background: "none", border: "none", color: "#B8C5DA", fontSize: ".78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 5, padding: "8px 4px" }}>
           <Icon n="download" size={15} /> Descargar plantilla
         </button>
       </div>
@@ -312,7 +312,7 @@ function AdminBancoPage() {
         <div style={{ background: importResult.errors.length > 0 ? "rgba(243,156,18,.06)" : "rgba(46,204,113,.06)", border: `2px solid ${importResult.errors.length > 0 ? "rgba(243,156,18,.25)" : "rgba(46,204,113,.25)"}`, borderRadius: 12, padding: "14px 16px", marginBottom: 16 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: importResult.errors.length > 0 ? 8 : 0 }}>
             <Icon n={importResult.errors.length > 0 ? "alert" : "checkCircle"} size={18} color={importResult.errors.length > 0 ? "#f39c12" : "#2ecc71"} />
-            <span style={{ fontSize: ".85rem", fontWeight: 700, color: "#22375C" }}>
+            <span style={{ fontSize: ".85rem", fontWeight: 700, color: "#FFFFFF" }}>
               {importResult.imported} {importResult.imported === 1 ? "pregunta importada" : "preguntas importadas"}
               {importResult.errors.length > 0 && ` · ${importResult.errors.length} ${importResult.errors.length === 1 ? "fila con error" : "filas con error"}`}
             </span>
@@ -326,7 +326,7 @@ function AdminBancoPage() {
             </div>
           )}
           {importResult.imported > 0 && (
-            <p style={{ fontSize: ".74rem", color: "#647DA0", marginTop: 6 }}>Las preguntas importadas quedan en borrador y sin clasificar: asígnales materia y publícalas.</p>
+            <p style={{ fontSize: ".74rem", color: "#93A4BF", marginTop: 6 }}>Las preguntas importadas quedan en borrador y sin clasificar: asígnales materia y publícalas.</p>
           )}
         </div>
       )}
@@ -384,7 +384,7 @@ function AdminBancoPage() {
 
       </div>
 
-      <div style={{ fontSize: ".76rem", color: "#647DA0", marginBottom: 10 }}>{filtered.length} de {total} preguntas</div>
+      <div style={{ fontSize: ".76rem", color: "#93A4BF", marginBottom: 10 }}>{filtered.length} de {total} preguntas</div>
 
       {/* Lista */}
       <div style={{ ...cardStyle, padding: 0, overflow: "hidden" }}>
@@ -394,20 +394,20 @@ function AdminBancoPage() {
         {filtered.slice(0, limit).map((x, i) => (
           <div key={x.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "11px 16px", borderBottom: i < Math.min(filtered.length, limit) - 1 ? "1px solid rgba(61,93,145,.06)" : undefined, flexWrap: "wrap" }}>
             <div style={{ flex: "1 1 260px", minWidth: 0 }}>
-              <div style={{ fontSize: ".82rem", fontWeight: 600, color: "#22375C", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{x.text}</div>
+              <div style={{ fontSize: ".82rem", fontWeight: 600, color: "#FFFFFF", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{x.text}</div>
               <div style={{ fontSize: ".68rem", color: "#8DA1BE", marginTop: 1 }}>{x.options.length} opciones · {x.source === "import" ? "Importada" : x.source === "seed" ? "Semilla" : "Manual"}
                 {x.fuente ? ` · ${x.fuente}` : ""}{x.seccion ? ` · ${x.seccion}` : ""}</div>
             </div>
             <Badge text={catalogoLabel(x)} color={x.fuente ? "#6C0820" : x.materia ? "#3D5D91" : "#8DA1BE"} />
             <Badge text={CONTENT_STATUS_LABEL[x.status] ?? x.status} color={CONTENT_STATUS_COLOR[x.status] ?? "#3D5D91"} />
             <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
-              <button onClick={() => openEdit(x)} title="Editar" style={{ padding: "6px 10px", background: "white", color: "#3D5D91", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}>
+              <button onClick={() => openEdit(x)} title="Editar" style={{ padding: "6px 10px", background: "#0A1B33", color: "#B8C5DA", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}>
                 <Icon n="pencil" size={13} /> Editar
               </button>
-              <button onClick={() => toggleStatus(x)} title={x.status === "publicada" ? "Ocultar" : "Publicar"} style={{ padding: "6px 10px", background: "white", color: x.status === "publicada" ? "#8DA1BE" : "#2ecc71", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}>
+              <button onClick={() => toggleStatus(x)} title={x.status === "publicada" ? "Ocultar" : "Publicar"} style={{ padding: "6px 10px", background: "#0A1B33", color: x.status === "publicada" ? "#8DA1BE" : "#2ecc71", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}>
                 <Icon n={x.status === "publicada" ? "eyeOff" : "eye"} size={13} /> {x.status === "publicada" ? "Ocultar" : "Publicar"}
               </button>
-              <button onClick={() => remove(x)} title="Eliminar" style={{ padding: "6px 10px", background: "white", color: "#e74c3c", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}>
+              <button onClick={() => remove(x)} title="Eliminar" style={{ padding: "6px 10px", background: "#0A1B33", color: "#e74c3c", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".72rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4 }}>
                 <Icon n="trash" size={13} />
               </button>
             </div>
@@ -504,7 +504,7 @@ function AdminBancoPage() {
                 ))}
               </div>
               {form.options.length < 4 && (
-                <button onClick={() => setForm({ ...form, options: [...form.options, ""] })} style={{ marginTop: 8, background: "none", border: "none", color: "#3D5D91", fontSize: ".76rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4, padding: 0 }}>
+                <button onClick={() => setForm({ ...form, options: [...form.options, ""] })} style={{ marginTop: 8, background: "none", border: "none", color: "#B8C5DA", fontSize: ".76rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 4, padding: 0 }}>
                   <Icon n="plus" size={13} /> Añadir 4ª opción
                 </button>
               )}

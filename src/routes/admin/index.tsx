@@ -121,8 +121,8 @@ function AdminResumenPage() {
               <Icon n={s.icon} size={17} color={s.color} />
             </div>
             <div>
-              <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.7rem", fontWeight: 400, color: "#081A35", lineHeight: 1.1 }}>{s.num}</div>
-              <div style={{ fontSize: ".7rem", color: "#647DA0", marginTop: 2 }}>{s.lab}</div>
+              <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.7rem", fontWeight: 400, color: "#FFFFFF", lineHeight: 1.1 }}>{s.num}</div>
+              <div style={{ fontSize: ".7rem", color: "#93A4BF", marginTop: 2 }}>{s.lab}</div>
             </div>
           </div>
         ))}
@@ -141,9 +141,9 @@ function AdminResumenPage() {
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             {alerts.slice(0, 6).map(({ u, state }) => (
               <div key={u.id} style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-                <span style={{ fontSize: ".82rem", fontWeight: 600, color: "#22375C" }}>{u.nombre}</span>
+                <span style={{ fontSize: ".82rem", fontWeight: 600, color: "#FFFFFF" }}>{u.nombre}</span>
                 <Badge text={state} color={generalStateColor(state)} />
-                <Link to="/admin/perfil" search={{ id: u.id }} style={{ marginLeft: "auto", fontSize: ".76rem", fontWeight: 700, color: "#3D5D91", textDecoration: "none" }}>
+                <Link to="/admin/perfil" search={{ id: u.id }} style={{ marginLeft: "auto", fontSize: ".76rem", fontWeight: 700, color: "#B8C5DA", textDecoration: "none" }}>
                   Abrir perfil →
                 </Link>
               </div>
@@ -163,8 +163,8 @@ function AdminResumenPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {weakest.map((m) => (
                 <div key={m.name} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: ".78rem", color: "#22375C", width: 170, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{m.name}</span>
-                  <div style={{ flex: 1, height: 6, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
+                  <span style={{ fontSize: ".78rem", color: "#FFFFFF", width: 170, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{m.name}</span>
+                  <div style={{ flex: 1, height: 6, background: "rgba(255,255,255,.08)", borderRadius: 10, overflow: "hidden" }}>
                     <div style={{ height: "100%", borderRadius: 10, background: scoreColor(m.avg), width: `${m.avg}%` }} />
                   </div>
                   <span style={{ fontSize: ".74rem", fontWeight: 700, width: 34, textAlign: "right", flexShrink: 0, color: scoreColor(m.avg) }}>{m.avg}%</span>
@@ -184,8 +184,8 @@ function AdminResumenPage() {
               {pending.slice(0, 5).map((r, i) => (
                 <div key={r.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 0", borderBottom: i < Math.min(pending.length, 5) - 1 ? "1px solid rgba(61,93,145,.05)" : undefined }}>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: ".8rem", fontWeight: 600, color: "#22375C", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.userName}</div>
-                    <div style={{ fontSize: ".7rem", color: "#647DA0" }}>{r.tipo} · {timeAgo(r.fecha)}</div>
+                    <div style={{ fontSize: ".8rem", fontWeight: 600, color: "#FFFFFF", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.userName}</div>
+                    <div style={{ fontSize: ".7rem", color: "#93A4BF" }}>{r.tipo} · {timeAgo(r.fecha)}</div>
                   </div>
                   <Badge text={r.estado === "pendiente" ? "Pendiente" : "En proceso"} color={REPORT_STATE_COLOR[r.estado] ?? "#3D5D91"} />
                 </div>
@@ -193,7 +193,7 @@ function AdminResumenPage() {
             </div>
           )}
           <div style={{ marginTop: 10 }}>
-            <Link to="/admin/soporte" style={{ fontSize: ".78rem", fontWeight: 700, color: "#3D5D91", textDecoration: "none" }}>
+            <Link to="/admin/soporte" style={{ fontSize: ".78rem", fontWeight: 700, color: "#B8C5DA", textDecoration: "none" }}>
               Ver soporte y feedback →
             </Link>
           </div>
@@ -215,8 +215,8 @@ function AdminResumenPage() {
                   <Icon n={vis.icon} size={16} color="#22375C" />
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: ".82rem", fontWeight: 600, color: "#22375C", marginBottom: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{a.label}</div>
-                  <div style={{ fontSize: ".72rem", color: "#647DA0" }}>{student?.nombre ?? "Estudiante"}</div>
+                  <div style={{ fontSize: ".82rem", fontWeight: 600, color: "#FFFFFF", marginBottom: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{a.label}</div>
+                  <div style={{ fontSize: ".72rem", color: "#93A4BF" }}>{student?.nombre ?? "Estudiante"}</div>
                 </div>
                 <div style={{ textAlign: "right", flexShrink: 0 }}>
                   <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: ".95rem", fontWeight: 900, color: scoreColor(a.score) }}>

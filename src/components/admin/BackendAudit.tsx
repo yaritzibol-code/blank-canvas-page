@@ -53,7 +53,7 @@ export function BackendAudit({ localUsers, localReports }: { localUsers: number;
     <div style={{ ...cardStyle, marginBottom: 20 }}>
       <div style={cardHeadStyle}>
         <Icon n="chart" size={16} color="#3D5D91" />
-        <h3 style={{ fontSize: ".88rem", fontWeight: 800, color: "#22375C" }}>Auditoría de conexiones</h3>
+        <h3 style={{ fontSize: ".88rem", fontWeight: 800, color: "#FFFFFF" }}>Auditoría de conexiones</h3>
       </div>
 
       {cargando && <p style={{ fontSize: ".8rem", color: "#8DA1BE" }}>Consultando la base de datos…</p>}
@@ -63,8 +63,8 @@ export function BackendAudit({ localUsers, localReports }: { localUsers: number;
         <div style={{ display: "grid", gap: 8 }}>
           {rows.map((r) => (
             <div key={r.lab} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: ".78rem", borderBottom: "1px solid #F0F4FA", paddingBottom: 7 }}>
-              <span style={{ flex: 1, color: "#647DA0" }}>{r.lab}</span>
-              <strong style={{ color: "#22375C" }}>{r.real}</strong>
+              <span style={{ flex: 1, color: "#93A4BF" }}>{r.lab}</span>
+              <strong style={{ color: "#FFFFFF" }}>{r.real}</strong>
               {r.local !== undefined && (
                 <span style={{ color: "#8DA1BE" }}>panel: {r.local}</span>
               )}

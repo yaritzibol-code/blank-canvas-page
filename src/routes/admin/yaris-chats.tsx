@@ -99,7 +99,7 @@ function YarisChatsPage() {
                     {TONOS[r.tono ?? "normal"] ?? r.tono}
                   </span>
                   {r.pre_answer && (
-                    <span style={{ fontSize: ".7rem", fontWeight: 700, color: "#3D5D91" }}>modo socrático</span>
+                    <span style={{ fontSize: ".7rem", fontWeight: 700, color: "#B8C5DA" }}>modo socrático</span>
                   )}
                   {!r.success && (
                     <span style={{ fontSize: ".7rem", fontWeight: 800, color: "#c0392b" }}>error: {r.error_message}</span>
@@ -115,7 +115,7 @@ function YarisChatsPage() {
                 </div>
                 <div
                   style={{
-                    background: "#F7F9FC", border: "1px solid #E8EEF6", borderRadius: "12px 12px 4px 12px",
+                    background: "rgba(255,255,255,.05)", border: "1px solid rgba(199,160,82,.18)", borderRadius: "12px 12px 4px 12px",
                     padding: "9px 13px", fontSize: ".83rem", color: INK, lineHeight: 1.5,
                     maxHeight: abierto === r.id ? "none" : 150, overflow: "hidden",
                   }}
@@ -124,13 +124,13 @@ function YarisChatsPage() {
                 <div style={{ display: "flex", gap: 10, marginTop: 8, flexWrap: "wrap" }}>
                   <button
                     onClick={() => setAbierto(abierto === r.id ? null : r.id)}
-                    style={{ padding: "6px 12px", background: "white", color: "#3D5D91", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".73rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                    style={{ padding: "6px 12px", background: "#0A1B33", color: "#B8C5DA", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".73rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
                   >
                     {abierto === r.id ? "Ver menos" : "Ver completo"}
                   </button>
                   {r.question_text && (
                     <details style={{ fontSize: ".75rem", color: MUTED }}>
-                      <summary style={{ cursor: "pointer", fontWeight: 700, color: "#3D5D91" }}>Reactivo en contexto</summary>
+                      <summary style={{ cursor: "pointer", fontWeight: 700, color: "#B8C5DA" }}>Reactivo en contexto</summary>
                       <div style={{ marginTop: 6, maxWidth: 720, fontFamily: DISPLAY }}>{r.question_text}</div>
                     </details>
                   )}

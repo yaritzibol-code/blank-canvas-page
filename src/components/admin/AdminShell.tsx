@@ -151,7 +151,7 @@ export function AdminShell({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const live = useLiveData(ready);
 
-  if (!ready) return <div style={{ minHeight: "100vh", background: "#f5f5f7" }} />;
+  if (!ready) return <div style={{ minHeight: "100vh", background: "#050F22" }} />;
 
   const adminName = user?.nombre?.trim() || "Administradora";
   const firstName = adminName.split(" ")[0];
@@ -182,7 +182,7 @@ export function AdminShell({
         fontFamily: "'Manrope', sans-serif",
         display: "flex",
         minHeight: "100vh",
-        background: "#f5f5f7",
+        background: "#050F22",
       }}
     >
       {/* Mobile overlay */}
@@ -348,7 +348,7 @@ export function AdminShell({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "#081A35",
+              color: "#FFFFFF",
               fontSize: ".75rem",
               fontWeight: 700,
               flexShrink: 0,
@@ -378,8 +378,8 @@ export function AdminShell({
         <div
           style={{
             height: 58,
-            background: "rgba(255,255,255,.94)",
-            borderBottom: "1px solid #E1E5ED",
+            background: "rgba(5,15,34,.92)",
+            borderBottom: "1px solid rgba(199,160,82,.22)",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -439,12 +439,12 @@ export function AdminShell({
                   display: "flex",
                   alignItems: "center",
                   gap: 5,
-                  color: "#4A5872",
+                  color: "#93A4BF",
                   fontSize: ".8rem",
                   textDecoration: "none",
                   padding: "5px 10px",
                   borderRadius: 6,
-                  border: "1px solid #E1E5ED",
+                  border: "1px solid rgba(199,160,82,.22)",
                   transition: "all .2s",
                   whiteSpace: "nowrap",
                 }}
@@ -457,7 +457,7 @@ export function AdminShell({
                 fontFamily: "'Instrument Serif', serif",
                 fontSize: "1.45rem",
                 fontWeight: 400,
-                color: "#081A35",
+                color: "#FFFFFF",
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
@@ -484,19 +484,19 @@ export function AdminShell({
 export const inputStyle: CSSProperties = {
   width: "100%",
   padding: "9px 13px",
-  border: "1px solid #E1E5ED",
+  border: "1px solid rgba(199,160,82,.22)",
   borderRadius: 8,
   fontSize: ".86rem",
   fontFamily: "'Manrope', sans-serif",
   outline: "none",
-  color: "#081A35",
-  background: "white",
+  color: "#FFFFFF",
+  background: "#0A1B33",
 };
 
 export const labelStyle: CSSProperties = {
   fontSize: ".75rem",
   fontWeight: 700,
-  color: "#081A35",
+  color: "#FFFFFF",
   marginBottom: 5,
   display: "block",
 };
@@ -504,9 +504,9 @@ export const labelStyle: CSSProperties = {
 export const cancelBtnStyle: CSSProperties = {
   flex: 1,
   padding: 10,
-  background: "white",
-  color: "#647DA0",
-  border: "2px solid #F2DCDB",
+  background: "#0A1B33",
+  color: "#93A4BF",
+  border: "2px solid rgba(199,160,82,.28)",
   borderRadius: 8,
   fontSize: ".84rem",
   fontWeight: 700,
@@ -518,7 +518,7 @@ export const confirmBtnStyle: CSSProperties = {
   flex: 2,
   padding: 10,
   background: "#C7A052",
-  color: "#081A35",
+  color: "#FFFFFF",
   border: "none",
   borderRadius: 8,
   fontSize: ".84rem",
@@ -530,7 +530,7 @@ export const confirmBtnStyle: CSSProperties = {
 export const primaryBtnStyle: CSSProperties = {
   padding: "8px 16px",
   background: "#C7A052",
-  color: "#081A35",
+  color: "#FFFFFF",
   border: "none",
   borderRadius: 8,
   fontSize: ".8rem",
@@ -544,9 +544,9 @@ export const primaryBtnStyle: CSSProperties = {
 
 export const secondaryBtnStyle: CSSProperties = {
   padding: "8px 16px",
-  background: "white",
-  color: "#3D5D91",
-  border: "2px solid #F2DCDB",
+  background: "#0A1B33",
+  color: "#B8C5DA",
+  border: "2px solid rgba(199,160,82,.28)",
   borderRadius: 8,
   fontSize: ".8rem",
   fontWeight: 700,
@@ -558,17 +558,17 @@ export const secondaryBtnStyle: CSSProperties = {
 };
 
 export const cardStyle: CSSProperties = {
-  background: "white",
+  background: "#0A1B33",
   borderRadius: 8,
   padding: "18px 20px",
-  border: "1px solid #E1E5ED",
+  border: "1px solid rgba(199,160,82,.22)",
   boxShadow: "0 12px 32px -28px rgba(8,26,53,.45)",
 };
 
 export const cardHeadStyle: CSSProperties = {
   fontSize: ".74rem",
   fontWeight: 700,
-  color: "#4A5872",
+  color: "#93A4BF",
   textTransform: "uppercase",
   letterSpacing: ".5px",
   marginBottom: 14,
@@ -584,12 +584,12 @@ export const modalTitleStyle: CSSProperties = {
   display: "flex",
   alignItems: "center",
   gap: 8,
-  color: "#22375C",
+  color: "#FFFFFF",
 };
 
 export const modalSubStyle: CSSProperties = {
   fontSize: ".84rem",
-  color: "#647DA0",
+  color: "#93A4BF",
   marginBottom: 18,
   lineHeight: 1.5,
 };
@@ -646,7 +646,7 @@ export function Modal({
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          background: "white",
+          background: "#0A1B33",
           borderRadius: 16,
           padding: 26,
           maxWidth,

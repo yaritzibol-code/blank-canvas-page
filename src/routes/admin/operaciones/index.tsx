@@ -28,9 +28,9 @@ export const Route = createFileRoute("/admin/operaciones/")({ component: Operaci
 function Kpi({ label, value, sub, tone = "#3D5D91" }: { label: string; value: string | number; sub?: string; tone?: string }) {
   return (
     <div style={{ ...cardStyle, padding: 18 }}>
-      <div style={{ fontSize: ".72rem", color: "#647DA0", textTransform: "uppercase", letterSpacing: ".8px", fontWeight: 700 }}>{label}</div>
+      <div style={{ fontSize: ".72rem", color: "#93A4BF", textTransform: "uppercase", letterSpacing: ".8px", fontWeight: 700 }}>{label}</div>
       <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.9rem", fontWeight: 800, color: tone, marginTop: 6 }}>{value}</div>
-      {sub && <div style={{ fontSize: ".78rem", color: "#647DA0", marginTop: 4 }}>{sub}</div>}
+      {sub && <div style={{ fontSize: ".78rem", color: "#93A4BF", marginTop: 4 }}>{sub}</div>}
     </div>
   );
 }
@@ -148,7 +148,7 @@ function OperacionesPage() {
   return (
     <AdminShell title="Panel de operaciones" active="operaciones">
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
-        <span style={{ fontSize: ".74rem", color: "#647DA0", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".8px" }}>Ambiente de cobros</span>
+        <span style={{ fontSize: ".74rem", color: "#93A4BF", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".8px" }}>Ambiente de cobros</span>
         {(["live", "sandbox"] as const).map((v) => (
           <button
             key={v}
@@ -176,7 +176,7 @@ function OperacionesPage() {
           {err}
         </div>
       )}
-      {loading && !data && <div style={{ color: "#647DA0" }}>Cargando métricas…</div>}
+      {loading && !data && <div style={{ color: "#93A4BF" }}>Cargando métricas…</div>}
       {data && (
         <>
           <section style={{ marginBottom: 20 }}>
@@ -219,7 +219,7 @@ function OperacionesPage() {
 
 
           {/* Gráficos de 30 días — click en un punto abre el drill-down del día */}
-          <div style={{ fontSize: ".8rem", color: "#647DA0", marginBottom: 8 }}>
+          <div style={{ fontSize: ".8rem", color: "#93A4BF", marginBottom: 8 }}>
             Haz clic en un punto de cualquier gráfico para ver el detalle de ese día.
           </div>
           <section style={{ display: "grid", gap: 14, gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", marginBottom: 20 }}>
@@ -280,7 +280,7 @@ function OperacionesPage() {
                   <Row k="Últimas 24h · llamadas" v={data.ai.calls} />
                   <Row k="Últimas 24h · p50 / p95" v={`${data.ai.latency_p50}ms / ${data.ai.latency_p95}ms`} />
                 </div>
-                <Link to="/admin/operaciones/yaris" style={{ display: "inline-block", marginTop: 10, fontSize: ".85rem", color: "#3D5D91", fontWeight: 700 }}>
+                <Link to="/admin/operaciones/yaris" style={{ display: "inline-block", marginTop: 10, fontSize: ".85rem", color: "#B8C5DA", fontWeight: 700 }}>
                   Configurar Yaris →
                 </Link>
               </div>
@@ -302,7 +302,7 @@ function OperacionesPage() {
                   <Row k="Costo por llamada" v={fmtMxn(costPerCall)} />
                   <Row k="Tokens entrada / salida (30d)" v={`${aiTotals.tokensIn.toLocaleString("es-MX")} / ${aiTotals.tokensOut.toLocaleString("es-MX")}`} />
                 </div>
-                <div style={{ marginTop: 10, fontSize: ".75rem", color: "#647DA0" }}>
+                <div style={{ marginTop: 10, fontSize: ".75rem", color: "#93A4BF" }}>
                   Estimado con las tarifas del modelo sobre los tokens registrados (tipo de cambio de referencia ${USD_MXN} MXN/USD). No sustituye la factura del proveedor.
                 </div>
               </div>
@@ -320,7 +320,7 @@ function OperacionesPage() {
                 <Stat label="Pendientes" value={data.stripe.received} color="#3D5D91" />
               </div>
               <div style={{ padding: "0 16px 16px" }}>
-                <Link to="/admin/operaciones/stripe" style={{ fontSize: ".85rem", color: "#3D5D91", fontWeight: 700 }}>
+                <Link to="/admin/operaciones/stripe" style={{ fontSize: ".85rem", color: "#B8C5DA", fontWeight: 700 }}>
                   Ver bitácora completa →
                 </Link>
               </div>
@@ -334,7 +334,7 @@ function OperacionesPage() {
                 ) : (
                   <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
                     {data.drift.slice(0, 8).map((d) => (
-                      <li key={d.user_id} style={{ fontSize: ".85rem", color: "#22375C", borderBottom: "1px solid #F2DCDB", paddingBottom: 6 }}>
+                      <li key={d.user_id} style={{ fontSize: ".85rem", color: "#FFFFFF", borderBottom: "1px solid rgba(199,160,82,.28)", paddingBottom: 6 }}>
                         <strong>{d.email}</strong> · perfil={d.profile_plan ?? "?"} · sub={d.sub_status ?? "sin sub"}
                         <div style={{ color: "#e74c3c", fontSize: ".72rem" }}>{d.kind}</div>
                       </li>
@@ -365,7 +365,7 @@ function OperacionesPage() {
                       minHeight: 38,
                       padding: "0 14px",
                       borderRadius: 10,
-                      border: "1.5px solid #E3EAF5",
+                      border: "1.5px solid rgba(199,160,82,.22)",
                       background: revisando ? "#E3EAF5" : "#22375C",
                       color: revisando ? "#647DA0" : "#fff",
                       fontSize: ".8rem",
@@ -375,7 +375,7 @@ function OperacionesPage() {
                   >
                     {revisando ? "Revisando…" : "Revisar ahora"}
                   </button>
-                  <span style={{ fontSize: ".76rem", color: "#647DA0" }}>
+                  <span style={{ fontSize: ".76rem", color: "#93A4BF" }}>
                     Stripe {env} + consultas críticas del panel. Corre sola cada hora.
                   </span>
                 </div>
@@ -384,7 +384,7 @@ function OperacionesPage() {
                 ) : (
                   <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 8, maxHeight: 260, overflowY: "auto" }}>
                     {salud.map((h) => (
-                      <li key={h.id} style={{ fontSize: ".82rem", color: "#22375C", borderBottom: "1px solid #F2DCDB", paddingBottom: 6 }}>
+                      <li key={h.id} style={{ fontSize: ".82rem", color: "#FFFFFF", borderBottom: "1px solid rgba(199,160,82,.28)", paddingBottom: 6 }}>
                         <span style={{ color: h.ok ? "#2ecc71" : "#e74c3c", fontWeight: 800 }}>{h.ok ? "✓" : "✕"}</span>{" "}
                         <strong>{h.check_key}</strong>
                         <span style={{ color: "#8DA1BE" }}> · {new Date(h.created_at).toLocaleString("es-MX")}</span>
@@ -406,15 +406,15 @@ function OperacionesPage() {
 function Stat({ label, value, color }: { label: string; value: number; color: string }) {
   return (
     <div>
-      <div style={{ fontSize: ".72rem", color: "#647DA0", fontWeight: 600 }}>{label}</div>
+      <div style={{ fontSize: ".72rem", color: "#93A4BF", fontWeight: 600 }}>{label}</div>
       <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.5rem", fontWeight: 800, color }}>{value}</div>
     </div>
   );
 }
 function Row({ k, v }: { k: string; v: string | number }) {
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".85rem", color: "#22375C" }}>
-      <span style={{ color: "#647DA0" }}>{k}</span>
+    <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".85rem", color: "#FFFFFF" }}>
+      <span style={{ color: "#93A4BF" }}>{k}</span>
       <strong>{v}</strong>
     </div>
   );

@@ -20,19 +20,19 @@ function AdminAnaliticaPage() {
   );
 
   const tiles: { icon: FPIconName; num: string; lab: string; color: string }[] = [
-    { icon: "users", num: String(g.totalStudents), lab: "Estudiantes totales", color: "#3D5D91" },
+    { icon: "users", num: String(g.totalStudents), lab: "Estudiantes totales", color: "#B8C5DA" },
     { icon: "check", num: String(g.activeStudents), lab: "Activos (7 días)", color: "#2ecc71" },
     { icon: "clock", num: String(g.inactiveStudents), lab: "Inactivos", color: "#f39c12" },
     { icon: "spark", num: String(g.newLast7), lab: "Nuevos registros (7 días)", color: "#6C0820" },
-    { icon: "chart", num: `${g.avgCourseProgress}%`, lab: "Promedio de avance", color: "#3D5D91" },
+    { icon: "chart", num: `${g.avgCourseProgress}%`, lab: "Promedio de avance", color: "#B8C5DA" },
     { icon: "target", num: g.avgReadiness !== null ? `${g.avgReadiness}%` : "—", lab: "Preparación estimada", color: "#6C0820" },
     { icon: "checkCircle", num: g.avgScore !== null ? `${g.avgScore}%` : "—", lab: "Promedio de aciertos", color: "#2ecc71" },
-    { icon: "help", num: String(g.answered), lab: "Preguntas respondidas", color: "#3D5D91" },
-    { icon: "cards", num: String(g.quizCount), lab: "Cuestionarios realizados", color: "#3D5D91" },
-    { icon: "sim", num: String(g.simCount), lab: "Simuladores completados", color: "#3D5D91" },
-    { icon: "map", num: String(g.temasDone), lab: "Learning Paths completados", color: "#3D5D91" },
-    { icon: "play", num: String(g.clasesVistas), lab: "Clases vistas", color: "#3D5D91" },
-    { icon: "brain", num: String(g.flashRepasadas), lab: "Flashcards repasadas", color: "#3D5D91" },
+    { icon: "help", num: String(g.answered), lab: "Preguntas respondidas", color: "#B8C5DA" },
+    { icon: "cards", num: String(g.quizCount), lab: "Cuestionarios realizados", color: "#B8C5DA" },
+    { icon: "sim", num: String(g.simCount), lab: "Simuladores completados", color: "#B8C5DA" },
+    { icon: "map", num: String(g.temasDone), lab: "Learning Paths completados", color: "#B8C5DA" },
+    { icon: "play", num: String(g.clasesVistas), lab: "Clases vistas", color: "#B8C5DA" },
+    { icon: "brain", num: String(g.flashRepasadas), lab: "Flashcards repasadas", color: "#B8C5DA" },
     { icon: "alert", num: String(g.preguntasReportadas), lab: "Preguntas reportadas", color: "#e74c3c" },
   ];
 
@@ -46,8 +46,8 @@ function AdminAnaliticaPage() {
               <Icon n={s.icon} size={17} color={s.color} />
             </div>
             <div>
-              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", fontWeight: 900, color: "#22375C", lineHeight: 1.1 }}>{s.num}</div>
-              <div style={{ fontSize: ".7rem", color: "#647DA0", marginTop: 2 }}>{s.lab}</div>
+              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.4rem", fontWeight: 900, color: "#FFFFFF", lineHeight: 1.1 }}>{s.num}</div>
+              <div style={{ fontSize: ".7rem", color: "#93A4BF", marginTop: 2 }}>{s.lab}</div>
             </div>
           </div>
         ))}
@@ -63,8 +63,8 @@ function AdminAnaliticaPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
               {g.materias.map((m) => (
                 <div key={m.name} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: ".76rem", color: "#22375C", width: 170, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{m.name}</span>
-                  <div style={{ flex: 1, height: 6, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
+                  <span style={{ fontSize: ".76rem", color: "#FFFFFF", width: 170, flexShrink: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{m.name}</span>
+                  <div style={{ flex: 1, height: 6, background: "rgba(255,255,255,.08)", borderRadius: 10, overflow: "hidden" }}>
                     <div style={{ height: "100%", borderRadius: 10, background: scoreColor(m.avg), width: `${m.avg}%` }} />
                   </div>
                   <span style={{ fontSize: ".72rem", fontWeight: 700, width: 34, textAlign: "right", flexShrink: 0, color: scoreColor(m.avg) }}>{m.avg}%</span>
@@ -83,23 +83,23 @@ function AdminAnaliticaPage() {
               const max = Math.max(1, ...g.usoHerramientas.map((h) => h.count));
               return g.usoHerramientas.map((h) => (
                 <div key={h.kind} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: ".76rem", color: "#22375C", width: 150, flexShrink: 0 }}>{h.label}</span>
-                  <div style={{ flex: 1, height: 6, background: "#F2DCDB", borderRadius: 10, overflow: "hidden" }}>
+                  <span style={{ fontSize: ".76rem", color: "#FFFFFF", width: 150, flexShrink: 0 }}>{h.label}</span>
+                  <div style={{ flex: 1, height: 6, background: "rgba(255,255,255,.08)", borderRadius: 10, overflow: "hidden" }}>
                     <div style={{ height: "100%", borderRadius: 10, background: "#3D5D91", width: `${Math.round((h.count / max) * 100)}%` }} />
                   </div>
-                  <span style={{ fontSize: ".72rem", fontWeight: 700, width: 40, textAlign: "right", flexShrink: 0, color: "#22375C" }}>{h.count}</span>
+                  <span style={{ fontSize: ".72rem", fontWeight: 700, width: 40, textAlign: "right", flexShrink: 0, color: "#FFFFFF" }}>{h.count}</span>
                 </div>
               ));
             })()}
           </div>
           <div style={{ display: "flex", gap: 14, marginTop: 14, paddingTop: 12, borderTop: "1px solid rgba(61,93,145,.08)" }}>
             <div>
-              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", fontWeight: 900, color: "#22375C" }}>{g.actividad7d}</div>
-              <div style={{ fontSize: ".68rem", color: "#647DA0" }}>eventos · últimos 7 días</div>
+              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", fontWeight: 900, color: "#FFFFFF" }}>{g.actividad7d}</div>
+              <div style={{ fontSize: ".68rem", color: "#93A4BF" }}>eventos · últimos 7 días</div>
             </div>
             <div>
-              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", fontWeight: 900, color: "#22375C" }}>{g.actividad30d}</div>
-              <div style={{ fontSize: ".68rem", color: "#647DA0" }}>eventos · últimos 30 días</div>
+              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "1.1rem", fontWeight: 900, color: "#FFFFFF" }}>{g.actividad30d}</div>
+              <div style={{ fontSize: ".68rem", color: "#93A4BF" }}>eventos · últimos 30 días</div>
             </div>
           </div>
         </div>
@@ -115,10 +115,10 @@ function AdminAnaliticaPage() {
             {reportadas.map((r, i) => (
               <div key={r.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 0", borderBottom: i < reportadas.length - 1 ? "1px solid rgba(61,93,145,.05)" : undefined }}>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: ".8rem", fontWeight: 600, color: "#22375C", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.tipo} · {r.seccion}</div>
-                  <div style={{ fontSize: ".72rem", color: "#647DA0", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.mensaje}</div>
+                  <div style={{ fontSize: ".8rem", fontWeight: 600, color: "#FFFFFF", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.tipo} · {r.seccion}</div>
+                  <div style={{ fontSize: ".72rem", color: "#93A4BF", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.mensaje}</div>
                 </div>
-                <Link to="/admin/soporte" style={{ fontSize: ".74rem", fontWeight: 700, color: "#3D5D91", textDecoration: "none", flexShrink: 0 }}>
+                <Link to="/admin/soporte" style={{ fontSize: ".74rem", fontWeight: 700, color: "#B8C5DA", textDecoration: "none", flexShrink: 0 }}>
                   Ver en soporte →
                 </Link>
               </div>

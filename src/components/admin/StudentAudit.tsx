@@ -113,7 +113,7 @@ function Detalle({ attempt }: { attempt: AuditAttempt }) {
   const la = agrupar(attempt.answers, "la");
 
   return (
-    <div style={{ background: "#F7F9FC", borderRadius: 12, padding: 14, marginTop: 10, display: "grid", gap: 14 }}>
+    <div style={{ background: "rgba(255,255,255,.05)", borderRadius: 12, padding: 14, marginTop: 10, display: "grid", gap: 14 }}>
       {ciaac.length > 0 && (
         <section>
           <h4 style={{ fontFamily: DISPLAY, fontSize: ".8rem", color: INK, marginBottom: 7 }}>CIAAC — por materia</h4>
@@ -139,7 +139,7 @@ function Detalle({ attempt }: { attempt: AuditAttempt }) {
             const ok = a.selectedIndex === a.correctIndex;
             const blank = a.selectedIndex < 0;
             return (
-              <div key={`${a.questionId}-${i}`} style={{ background: "white", border: "1px solid #E8EEF6", borderRadius: 10, padding: "10px 12px" }}>
+              <div key={`${a.questionId}-${i}`} style={{ background: "#0A1B33", border: "1px solid rgba(199,160,82,.18)", borderRadius: 10, padding: "10px 12px" }}>
                 <div style={{ display: "flex", gap: 8, alignItems: "baseline", marginBottom: 4, flexWrap: "wrap" }}>
                   <span style={{ fontSize: ".7rem", fontWeight: 800, color: blank ? "#8DA1BE" : ok ? "#2ecc71" : "#c0392b" }}>
                     {blank ? "EN BLANCO" : ok ? "CORRECTA" : "INCORRECTA"}
@@ -218,13 +218,13 @@ function Cuestionarios({ userId, days }: { userId: string; days: number }) {
   return (
     <>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 14, marginBottom: 14 }}>
-        <div style={{ background: "#F7F9FC", borderRadius: 12, padding: 12 }}>
+        <div style={{ background: "rgba(255,255,255,.05)", borderRadius: 12, padding: 12 }}>
           <h4 style={{ fontFamily: DISPLAY, fontSize: ".82rem", color: INK, marginBottom: 8 }}>CIAAC — por materia</h4>
           {ciaac.length === 0
             ? <p style={{ fontSize: ".78rem", color: MUTED }}>Sin respuestas de CIAAC.</p>
             : <BucketList buckets={ciaac} />}
         </div>
-        <div style={{ background: "#F7F9FC", borderRadius: 12, padding: 12 }}>
+        <div style={{ background: "rgba(255,255,255,.05)", borderRadius: 12, padding: 12 }}>
           <h4 style={{ fontFamily: DISPLAY, fontSize: ".82rem", color: INK, marginBottom: 8 }}>Línea Aérea — por manual y capítulo</h4>
           {la.length === 0
             ? <p style={{ fontSize: ".78rem", color: MUTED }}>Sin respuestas de Línea Aérea.</p>
@@ -238,7 +238,7 @@ function Cuestionarios({ userId, days }: { userId: string; days: number }) {
 
       <div style={{ display: "grid", gap: 10 }}>
         {rows.map((r) => (
-          <div key={r.id} style={{ border: "1px solid #E8EEF6", borderRadius: 12, padding: 12 }}>
+          <div key={r.id} style={{ border: "1px solid rgba(199,160,82,.18)", borderRadius: 12, padding: 12 }}>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
               <span style={{ fontSize: ".72rem", fontWeight: 800, padding: "3px 9px", borderRadius: 20, background: r.track === "la" ? "rgba(108,8,32,.1)" : "rgba(61,93,145,.1)", color: r.track === "la" ? "#6C0820" : "#3D5D91" }}>
                 {r.track === "la" ? "Línea Aérea" : r.track === "mixto" ? "Mixto" : "CIAAC"}
@@ -252,7 +252,7 @@ function Cuestionarios({ userId, days }: { userId: string; days: number }) {
               </span>
               <button
                 onClick={() => setAbierto(abierto === r.id ? null : r.id)}
-                style={{ padding: "7px 13px", background: "white", color: "#3D5D91", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".74rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                style={{ padding: "7px 13px", background: "#0A1B33", color: "#B8C5DA", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".74rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
               >
                 {abierto === r.id ? "Ocultar detalle" : "Ver preguntas"}
               </button>
@@ -282,7 +282,7 @@ function ResumenYaris({ userId, days }: { userId: string; days: number }) {
   if (!sum) return null;
 
   const chip = (label: string, valor: string | number) => (
-    <div key={label} style={{ border: "1px solid #E8EEF6", borderRadius: 10, padding: "8px 12px", minWidth: 120 }}>
+    <div key={label} style={{ border: "1px solid rgba(199,160,82,.18)", borderRadius: 10, padding: "8px 12px", minWidth: 120 }}>
       <div style={{ fontSize: ".68rem", color: MUTED, fontWeight: 700 }}>{label}</div>
       <div style={{ fontSize: ".95rem", color: INK, fontWeight: 800, fontFamily: DISPLAY }}>{valor}</div>
     </div>
@@ -301,7 +301,7 @@ function ResumenYaris({ userId, days }: { userId: string; days: number }) {
       {sum.porSeccion.length > 0 && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 8 }}>
           {sum.porSeccion.map((s) => (
-            <span key={s.seccion} style={{ fontSize: ".72rem", fontWeight: 700, color: "#3D5D91", background: "#F7F9FC", border: "1px solid #E8EEF6", borderRadius: 20, padding: "4px 10px" }}>
+            <span key={s.seccion} style={{ fontSize: ".72rem", fontWeight: 700, color: "#B8C5DA", background: "rgba(255,255,255,.05)", border: "1px solid rgba(199,160,82,.18)", borderRadius: 20, padding: "4px 10px" }}>
               {s.seccion} · {s.total}
             </span>
           ))}
@@ -345,13 +345,13 @@ function Conversaciones({ userId, days }: { userId: string; days: number }) {
       <div style={{ fontSize: ".76rem", color: MUTED, marginBottom: 8 }}>{rows.length} intercambios</div>
       <div style={{ display: "grid", gap: 10 }}>
         {rows.map((r) => (
-          <div key={r.id} style={{ border: "1px solid #E8EEF6", borderRadius: 12, padding: 12 }}>
+          <div key={r.id} style={{ border: "1px solid rgba(199,160,82,.18)", borderRadius: 12, padding: 12 }}>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center", marginBottom: 8 }}>
               <span style={{ fontSize: ".72rem", color: MUTED }}>{materiaName(r.materia)}</span>
               <span style={{ fontSize: ".72rem", fontWeight: 800, padding: "3px 9px", borderRadius: 20, background: "rgba(242,174,188,.22)", color: "#6C0820" }}>
                 {TONOS[r.tono ?? "normal"] ?? r.tono}
               </span>
-              {r.pre_answer && <span style={{ fontSize: ".7rem", fontWeight: 700, color: "#3D5D91" }}>modo socrático</span>}
+              {r.pre_answer && <span style={{ fontSize: ".7rem", fontWeight: 700, color: "#B8C5DA" }}>modo socrático</span>}
               {!r.success && <span style={{ fontSize: ".7rem", fontWeight: 800, color: "#c0392b" }}>error: {r.error_message}</span>}
               <span style={{ fontSize: ".72rem", color: MUTED, marginLeft: "auto" }}>{fecha(r.created_at)}</span>
               <span style={{ fontSize: ".7rem", color: "#A9B8CE" }}>
@@ -364,7 +364,7 @@ function Conversaciones({ userId, days }: { userId: string; days: number }) {
             </div>
             <div
               style={{
-                background: "#F7F9FC", border: "1px solid #E8EEF6", borderRadius: "12px 12px 4px 12px",
+                background: "rgba(255,255,255,.05)", border: "1px solid rgba(199,160,82,.18)", borderRadius: "12px 12px 4px 12px",
                 padding: "9px 13px", fontSize: ".83rem", color: INK, lineHeight: 1.5,
                 maxHeight: abierto === r.id ? "none" : 150, overflow: "hidden",
               }}
@@ -373,13 +373,13 @@ function Conversaciones({ userId, days }: { userId: string; days: number }) {
             <div style={{ display: "flex", gap: 10, marginTop: 8, flexWrap: "wrap" }}>
               <button
                 onClick={() => setAbierto(abierto === r.id ? null : r.id)}
-                style={{ padding: "6px 12px", background: "white", color: "#3D5D91", border: "2px solid #F2DCDB", borderRadius: 8, fontSize: ".73rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
+                style={{ padding: "6px 12px", background: "#0A1B33", color: "#B8C5DA", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".73rem", fontWeight: 800, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
               >
                 {abierto === r.id ? "Ver menos" : "Ver completo"}
               </button>
               {r.question_text && (
                 <details style={{ fontSize: ".75rem", color: MUTED }}>
-                  <summary style={{ cursor: "pointer", fontWeight: 700, color: "#3D5D91" }}>Reactivo en contexto</summary>
+                  <summary style={{ cursor: "pointer", fontWeight: 700, color: "#B8C5DA" }}>Reactivo en contexto</summary>
                   <div style={{ marginTop: 6, maxWidth: 720, fontFamily: DISPLAY }}>{r.question_text}</div>
                 </details>
               )}
@@ -465,24 +465,24 @@ function EntrevistasRtari({ userId }: { userId: string }) {
     };
   }, [userId]);
 
-  if (cargando) return <p style={{ fontSize: ".85rem", color: "#647DA0" }}>Cargando entrevistas…</p>;
+  if (cargando) return <p style={{ fontSize: ".85rem", color: "#93A4BF" }}>Cargando entrevistas…</p>;
   if (error) return <p style={{ fontSize: ".85rem", color: "#e74c3c" }}>{error}</p>;
   if (filas.length === 0)
-    return <p style={{ fontSize: ".85rem", color: "#647DA0" }}>Este alumno no ha hecho entrevistas RTARI.</p>;
+    return <p style={{ fontSize: ".85rem", color: "#93A4BF" }}>Este alumno no ha hecho entrevistas RTARI.</p>;
 
   const minutos = filas.reduce((a, f) => a + f.duration_sec, 0) / 60;
   const costo = filas.reduce((a, f) => a + (f.cost_usd ?? 0), 0);
 
   return (
     <div>
-      <p style={{ fontSize: ".8rem", color: "#647DA0", marginTop: 0 }}>
+      <p style={{ fontSize: ".8rem", color: "#93A4BF", marginTop: 0 }}>
         {filas.length} entrevistas · {minutos.toFixed(1)} minutos hablados · costo real de voz{" "}
         {costo > 0 ? `US$${costo.toFixed(2)}` : "sin registro"}
       </p>
       <div style={{ display: "grid", gap: 12 }}>
         {filas.map((f) => (
-          <div key={f.id} style={{ border: "2px solid #F2DCDB", borderRadius: 14, padding: 14 }}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center", fontSize: ".8rem", color: "#22375C" }}>
+          <div key={f.id} style={{ border: "2px solid rgba(199,160,82,.28)", borderRadius: 14, padding: 14 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center", fontSize: ".8rem", color: "#FFFFFF" }}>
               <strong>{new Date(f.created_at).toLocaleString("es-MX")}</strong>
               <span>· {mmss(f.duration_sec)}</span>
               <span>· {f.preguntas} preguntas</span>
@@ -499,7 +499,7 @@ function EntrevistasRtari({ userId }: { userId: string }) {
                 style={{ width: "100%", marginTop: 10 }}
               />
             ) : (
-              <p style={{ fontSize: ".78rem", color: "#647DA0", margin: "8px 0 0" }}>
+              <p style={{ fontSize: ".78rem", color: "#93A4BF", margin: "8px 0 0" }}>
                 Sin audio guardado para esta entrevista.
               </p>
             )}
