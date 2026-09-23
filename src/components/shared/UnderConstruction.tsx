@@ -14,7 +14,7 @@ interface Props {
  */
 export function UnderConstruction({ moduleName, description }: Props) {
   return (
-    <div className="fd-unavailable" style={{ minHeight: "70vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
+    <div className="fd-unavailable" style={{ minHeight: "100vh", background: "#050F22", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
       <div
         style={{
           maxWidth: 520,
