@@ -477,10 +477,17 @@ function ConfiguracionPage() {
                 onClick={() => void guardarYaris()}
                 disabled={!yarisSucio || guardandoYaris}
                 style={{
-                  padding: "12px 20px", borderRadius: "var(--fd-radius, 10px)", border: "none", minHeight: 44,
-                  fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: ".86rem",
-                  color: "white", cursor: !yarisSucio || guardandoYaris ? "not-allowed" : "pointer",
-                  background: !yarisSucio || guardandoYaris ? "#C9D6E8" : "#163D70",
+                  padding: "12px 20px",
+                  borderRadius: "var(--fd-radius, 10px)",
+                  border: "none",
+                  minHeight: 44,
+                  fontFamily: "'Manrope', sans-serif",
+                  fontWeight: 700,
+                  fontSize: ".86rem",
+                  color: !yarisSucio || guardandoYaris ? "var(--fd-muted, #4A5872)" : "white",
+                  cursor: !yarisSucio || guardandoYaris ? "not-allowed" : "pointer",
+                  background:
+                    !yarisSucio || guardandoYaris ? "var(--fd-panel-alt, #C9D6E8)" : "#163D70",
                 }}
               >
                 {guardandoYaris ? "Guardando…" : "Guardar cambios de Yaris"}

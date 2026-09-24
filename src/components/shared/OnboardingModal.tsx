@@ -166,6 +166,8 @@ export function OnboardingModal({ user, onDone }: { user: User; onDone: () => vo
     background: "rgba(255,255,255,.06)",
     boxSizing: "border-box",
     transition: "border-color .2s, box-shadow .2s",
+    // Controles nativos (lista del select, calendario) en modo oscuro.
+    colorScheme: "dark",
   };
 
   const labelStyle: React.CSSProperties = {

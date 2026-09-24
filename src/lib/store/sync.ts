@@ -649,28 +649,42 @@ async function sendRows(
   }
 
   if (key === "reports") {
-    // La fila de `reports` la puede leer su dueña: se publica sin las notas
-    // internas del equipo (esas viven en `report_admin_notes`, sólo admin).
+    // RLS de `reports`: cada quien sólo da de alta los suyos (INSERT con su
+    // user_id) y sólo la admin los cambia (UPDATE). Un upsert pasa por las dos
+    // reglas a la vez —Postgres revisa la del INSERT aunque la fila ya exista—,
+    // así que la admin no podía cambiar el estado del ticket de una alumna y la
+    // alumna perdía el reporte nuevo que viajaba junto a uno anterior. Por eso
+    // la admin actualiza por id y lo que aún no existe se da de alta sin tocar
+    // filas existentes. La fila la puede leer su dueña: se publica sin las
+    // notas internas del equipo (esas viven en `report_admin_notes`).
     const mine = rows.filter((r) => admin || r.userId === uid);
     const ajenos = rows.filter((r) => !mine.includes(r)).map(rowId);
-    const byId = new Map(mine.map((r) => [rowId(r), r]));
-    const up = await inChunks([...byId.keys()], (chunk) =>
-      s.from("reports").upsert(
-        chunk.map((id) => {
-          const { notasInternas: _notas, ...data } = byId.get(id) as Row & {
-            notasInternas?: string;
-          };
-          return {
-            id,
-            user_id: (data.userId as string | undefined) ?? null,
-            data,
-            updated_at: new Date().toISOString(),
-          };
-        }),
-      ),
-    );
+    const settled: string[] = [];
+    let ok = true;
+    for (const row of mine) {
+      const id = rowId(row);
+      const { notasInternas: _notas, ...data } = row as Row & { notasInternas?: string };
+      const updated_at = new Date().toISOString();
+      let error: unknown = null;
+      let existe = false;
+      if (admin) {
+        const res = await s.from("reports").update({ data, updated_at }).eq("id", id).select("id");
+        error = res.error;
+        existe = (res.data?.length ?? 0) > 0;
+      }
+      if (!error && !existe) {
+        ({ error } = await s
+          .from("reports")
+          .upsert(
+            { id, user_id: (data.userId as string | undefined) ?? null, data, updated_at },
+            { onConflict: "id", ignoreDuplicates: true },
+          ));
+      }
+      if (error) ok = false;
+      if (!error || isPermanent(error)) settled.push(id);
+    }
     // Los reportes no se borran desde la app.
-    return { ok: up.ok, settled: [...up.settled, ...ajenos, ...gone] };
+    return { ok, settled: [...settled, ...ajenos, ...gone] };
   }
 
   // users → profiles. Los usuarios demo locales (usr_*) no existen en la nube.

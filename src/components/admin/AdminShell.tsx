@@ -183,6 +183,9 @@ export function AdminShell({
         display: "flex",
         minHeight: "100vh",
         background: "#050F22",
+        // Texto claro por defecto: sin esto lo que no fija su color heredaba el
+        // azul marino del body y quedaba invisible sobre las tarjetas oscuras.
+        color: "#DCE4F0",
       }}
     >
       {/* Mobile overlay */}
@@ -491,6 +494,8 @@ export const inputStyle: CSSProperties = {
   outline: "none",
   color: "#FFFFFF",
   background: "#0A1B33",
+  // Controles nativos (lista del select, calendario) en modo oscuro.
+  colorScheme: "dark",
 };
 
 export const labelStyle: CSSProperties = {
@@ -596,7 +601,22 @@ export const modalSubStyle: CSSProperties = {
 
 /* ───────────────────────── Componentes compartidos ───────────────────────── */
 
+/** Luminancia relativa de un color #rrggbb (null si no es hex). */
+function luminancia(hex: string): number | null {
+  const m = /^#([0-9a-f]{6})$/i.exec(hex);
+  if (!m) return null;
+  const canal = (i: number) => {
+    const v = parseInt(m[1].slice(i, i + 2), 16) / 255;
+    return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * canal(0) + 0.7152 * canal(2) + 0.0722 * canal(4);
+}
+
 export function Badge({ text, color, bg }: { text: string; color: string; bg?: string }) {
+  // Los tonos muy oscuros (vino, azul marino) no se leen sobre el panel
+  // oscuro: el texto se aclara hacia blanco conservando el matiz.
+  const lum = luminancia(color);
+  const texto = lum !== null && lum < 0.12 ? `color-mix(in srgb, ${color} 35%, #ffffff)` : color;
   return (
     <span
       style={{
@@ -604,7 +624,7 @@ export function Badge({ text, color, bg }: { text: string; color: string; bg?: s
         borderRadius: 20,
         fontSize: ".7rem",
         fontWeight: 700,
-        color,
+        color: texto,
         background: bg ?? `${color}1c`,
         whiteSpace: "nowrap",
         display: "inline-block",

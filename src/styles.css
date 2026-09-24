@@ -1287,6 +1287,29 @@ html[data-theme="oscuro"] svg {
   opacity: 0.9;
 }
 
+/*
+ * Lista de opciones de los <select> nativos. En Windows y Android el navegador
+ * la dibuja sobre fondo claro con el color de texto del select, así que los
+ * selects de los paneles oscuros (texto blanco sobre fondo translúcido) dejaban
+ * las opciones en blanco sobre blanco. Fondo y texto propios y opacos para que
+ * se lean siempre; los selects claros conservan una lista clara. Sin
+ * especificidad (`:where`) para no estorbar a reglas más concretas.
+ */
+:where(select) :where(option, optgroup) {
+  background-color: #0b1c36;
+  color: #f4f6fa;
+}
+:where(
+    select.bg-white,
+    .lp-course-controls select,
+    .jp-match select,
+    .hb-controls select
+  )
+  :where(option, optgroup) {
+  background-color: #ffffff;
+  color: #0f1833;
+}
+
 /* ── Accesibilidad global: foco visible en cualquier tema ────────── */
 :focus-visible {
   outline: 2px solid #163D70;

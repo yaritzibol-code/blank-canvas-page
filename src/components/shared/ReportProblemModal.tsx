@@ -4,7 +4,7 @@
  */
 import { useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
-import { submitReport } from "@/lib/store";
+import { flushCloudWrites, submitReport } from "@/lib/store";
 import type { ReportQuestionSnapshot, User } from "@/lib/store";
 
 const FONT = "'Manrope', system-ui, sans-serif";
@@ -53,11 +53,30 @@ export function ReportProblemModal({
   const [tipo, setTipo] = useState(tipoInicial ?? REPORT_TYPES[0]);
   const [mensaje, setMensaje] = useState("");
   const [sent, setSent] = useState(false);
+  /** Envío en curso o fallido: el aviso de "enviado" espera a la nube. */
+  const [envio, setEnvio] = useState<"idle" | "enviando" | "error">("idle");
 
   if (!open) return null;
 
+  const confirmar = async () => {
+    setEnvio("enviando");
+    const ok = await flushCloudWrites(["reports"]);
+    if (!ok) {
+      // Queda pendiente y se reintenta solo mientras la página siga abierta.
+      setEnvio("error");
+      return;
+    }
+    setEnvio("idle");
+    setSent(true);
+    setTimeout(() => {
+      setSent(false);
+      setMensaje("");
+      onClose();
+    }, 1800);
+  };
+
   const handleSend = () => {
-    if (!mensaje.trim()) return;
+    if (!mensaje.trim() || envio !== "idle") return;
     submitReport({
       userId: user?.id ?? "anon",
       userName: user?.nombre ?? "Invitado",
@@ -68,12 +87,17 @@ export function ReportProblemModal({
       pregunta,
       mensaje: mensaje.trim(),
     });
-    setSent(true);
-    setTimeout(() => {
-      setSent(false);
+    void confirmar();
+  };
+
+  const cerrar = () => {
+    if (envio === "enviando") return;
+    if (envio === "error") {
+      // El reporte ya está guardado aquí y sigue reintentando: no se repite.
+      setEnvio("idle");
       setMensaje("");
-      onClose();
-    }, 1800);
+    }
+    onClose();
   };
 
 
@@ -87,11 +111,16 @@ export function ReportProblemModal({
     color: "#FFFFFF",
     outline: "none",
     background: "rgba(255,255,255,.04)",
+    // Controles nativos en modo oscuro: la lista del select se pintaba en
+    // blanco con el texto blanco del campo.
+    colorScheme: "dark",
   } as const;
+  const bloqueado = envio !== "idle";
+  const puedeEnviar = !!mensaje.trim() && envio !== "enviando";
 
   return (
     <div
-      onClick={onClose}
+      onClick={cerrar}
       style={{
         position: "fixed",
         inset: 0,
@@ -180,7 +209,12 @@ export function ReportProblemModal({
             <label style={{ display: "block", fontSize: 12.5, fontWeight: 700, color: "#FFFFFF", marginBottom: 6 }}>
               Tipo de reporte
             </label>
-            <select value={tipo} onChange={(e) => setTipo(e.target.value)} style={{ ...inputStyle, marginBottom: 14 }}>
+            <select
+              value={tipo}
+              onChange={(e) => setTipo(e.target.value)}
+              disabled={bloqueado}
+              style={{ ...inputStyle, marginBottom: 14 }}
+            >
               {REPORT_TYPES.map((t) => (
                 <option key={t} value={t}>
                   {t}
@@ -194,14 +228,35 @@ export function ReportProblemModal({
             <textarea
               value={mensaje}
               onChange={(e) => setMensaje(e.target.value)}
+              readOnly={bloqueado}
               rows={4}
               placeholder="Cuéntanos qué pasó o qué debería mejorar..."
               style={{ ...inputStyle, resize: "vertical", marginBottom: 18 }}
             />
 
+            {envio === "error" && (
+              <p
+                role="alert"
+                style={{
+                  margin: "-4px 0 16px",
+                  padding: "10px 12px",
+                  borderRadius: 6,
+                  border: "1px solid rgba(240,160,140,.45)",
+                  background: "rgba(240,160,140,.12)",
+                  color: "#F6C9BD",
+                  fontSize: 13,
+                  lineHeight: 1.5,
+                }}
+              >
+                No se pudo enviar tu reporte. Revisa tu conexión: lo seguiremos intentando mientras
+                sigas en esta página, o pulsa Reintentar.
+              </p>
+            )}
+
             <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
               <button
-                onClick={onClose}
+                onClick={cerrar}
+                disabled={envio === "enviando"}
                 style={{
                   padding: "10px 18px",
                   borderRadius: 6,
@@ -214,24 +269,24 @@ export function ReportProblemModal({
                   fontFamily: FONT,
                 }}
               >
-                Cancelar
+                {envio === "error" ? "Cerrar" : "Cancelar"}
               </button>
               <button
-                onClick={handleSend}
-                disabled={!mensaje.trim()}
+                onClick={envio === "error" ? () => void confirmar() : handleSend}
+                disabled={!puedeEnviar}
                 style={{
                   padding: "10px 18px",
                   borderRadius: 6,
                   border: "none",
-                  background: mensaje.trim() ? "linear-gradient(180deg,#C7A052,#8A6A25)" : "rgba(255,255,255,.12)",
+                  background: puedeEnviar ? "linear-gradient(180deg,#C7A052,#8A6A25)" : "rgba(255,255,255,.12)",
                   color: "#0B1220",
                   fontWeight: 800,
                   fontSize: 14,
-                  cursor: mensaje.trim() ? "pointer" : "not-allowed",
+                  cursor: puedeEnviar ? "pointer" : "not-allowed",
                   fontFamily: FONT,
                 }}
               >
-                Enviar reporte
+                {envio === "enviando" ? "Enviando…" : envio === "error" ? "Reintentar" : "Enviar reporte"}
               </button>
             </div>
           </>

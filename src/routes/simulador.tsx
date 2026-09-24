@@ -25,6 +25,7 @@ import { yarisAiChat } from "@/lib/yaris-ai.functions";
 import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { PathyDebrief } from "@/components/shared/PathyDebrief";
+import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import {
   QuizResults,
   RepasoPanel,
@@ -352,6 +353,8 @@ function SimuladorPage() {
   const [calcOpen, setCalcOpen] = useState(false);
   const [calc, setCalc] = useState<CalcState>(CALC_INIT);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  /** Reportar la pregunta actual, igual que en los cuestionarios. */
+  const [reportOpen, setReportOpen] = useState(false);
   const [leftPanelOpen, setLeftPanelOpen] = useState(false);
   // Review
   const [reviewCurrent, setReviewCurrent] = useState(0);
@@ -485,10 +488,10 @@ function SimuladorPage() {
 
   // Atajos de teclado durante el examen y la calculadora
   useEffect(() => {
-    if (phase !== "exam") return;
+    if (phase !== "exam" || reportOpen) return;
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
-      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) return;
+      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.tagName === "SELECT" || target.isContentEditable)) return;
       // Calculadora abierta: teclado numérico
       if (calcOpen) {
         if (/^[0-9]$/.test(e.key)) { setCalc((s) => calcReducer(s, { type: "NUM", payload: e.key })); e.preventDefault(); return; }
@@ -519,11 +522,15 @@ function SimuladorPage() {
         e.preventDefault();
       }
       if (letter === "f") { toggleFlag(); e.preventDefault(); }
+      if (letter === "r" && !calcOpen) {
+        setReportOpen(true);
+        e.preventDefault();
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase, calcOpen, current]);
+  }, [phase, calcOpen, current, reportOpen]);
 
 
   /* Materia offset helpers */
@@ -792,6 +799,36 @@ function SimuladorPage() {
   const totalCorrect = result?.correct ?? 0;
   const passed = result?.passed ?? false;
 
+  /* Reporte de la pregunta a la vista: la del examen o la de la revisión. */
+  const reportIdx = phase === "review" ? reviewCurrent : current;
+  const reportQ = bankQs[reportIdx];
+  const reportSel = questions[reportIdx]?.selectedOpt ?? -1;
+  const reportModal = (
+    <ReportProblemModal
+      open={reportOpen}
+      onClose={() => setReportOpen(false)}
+      user={user}
+      seccion="Simulador"
+      recurso={reportQ?.id ?? ""}
+      tipoInicial={phase === "review" ? "Respuesta incorrecta" : "Pregunta mal redactada"}
+      {...(reportQ
+        ? {
+            pregunta: {
+              id: reportQ.id,
+              text: reportQ.text,
+              options: reportQ.options,
+              correctIndex: reportQ.correctIndex,
+              explanation: reportQ.explanation,
+              materia: reportQ.materia,
+              ...(reportQ.fuente ? { fuente: reportQ.fuente } : {}),
+              ...(reportQ.capitulo !== undefined ? { capitulo: reportQ.capitulo } : {}),
+              selectedIndex: reportSel >= 0 ? reportSel : null,
+            },
+          }
+        : {})}
+    />
+  );
+
   /* Gating y disponibilidad del banco (solo relevante en fase warning) */
   const gate = canStartSimulator(user);
   const bankEmpty = phase === "warning" && ready && bankReady ? getPublishedQuestions().length === 0 : false;
@@ -1039,7 +1076,10 @@ function SimuladorPage() {
           <RepasoPanel
             items={repaso}
             falladas={falladas.length}
-            onRevisar={() => setPhase("review")}
+            onRevisar={() => {
+              setLeftPanelOpen(false);
+              setPhase("review");
+            }}
           />
         }
       />
@@ -1053,6 +1093,47 @@ function SimuladorPage() {
     const userAns = questions[reviewCurrent]?.selectedOpt ?? -1;
     const isCorrect = userAns === reviewQ.correctIndex;
     const mi = questions[reviewCurrent]?.materia ?? 0;
+    const reviewList = (
+      <>
+        <div style={{ padding: "10px 14px", borderBottom: "1px solid var(--fd-border, #EEE1C5)", background: "var(--fd-panel, #f8f9ff)" }}>
+          <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 4 }}>Preguntas del examen</div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.62rem", color: "var(--fd-muted, #4A5872)" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#2ecc71" }} />Correcta</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.62rem", color: "var(--fd-muted, #4A5872)" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#e74c3c" }} />Incorrecta</div>
+          </div>
+        </div>
+        <div style={{ flex: 1, overflowY: "auto" }}>
+          {MATERIAS.map((m, mi) => {
+            const offset = materiaOffset(mi);
+            return (
+              <div key={mi}>
+                <div style={{ padding: "6px 12px", background: "var(--fd-panel, #f8f9ff)", borderBottom: "1px solid var(--fd-border, rgba(22,61,112,0.06))", fontSize: "0.68rem", fontWeight: 700, color: "var(--fd-text, #163D70)", textTransform: "uppercase", letterSpacing: "0.4px", display: "flex", alignItems: "center", gap: 5 }}>
+                  <Icon n={m.icon} size={12} /> {m.name}
+                </div>
+                {Array.from({ length: m.total }, (_, i) => {
+                  const idx = offset + i;
+                  const bqi = bankQs[idx];
+                  const correct = !!bqi && questions[idx]?.selectedOpt === bqi.correctIndex;
+                  const active = idx === reviewCurrent;
+                  return (
+                    <div
+                      key={idx}
+                      onClick={() => { setReviewCurrent(idx); setLeftPanelOpen(false); }}
+                      style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 12px 5px 16px", cursor: "pointer", background: active ? "var(--fd-panel-alt, rgba(22,61,112,0.06))" : "transparent", borderLeft: `3px solid ${correct ? "#2ecc71" : "#e74c3c"}`, transition: "background 0.2s" }}
+                    >
+                      <div style={{ width: 17, height: 17, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: correct ? "#2ecc71" : "#e74c3c", color: "white" }}>
+                        {correct ? <Icon n="check" size={11} sw={2.4} /> : <Icon n="close" size={11} sw={2.4} />}
+                      </div>
+                      <span style={{ fontSize: "0.73rem", color: "var(--fd-muted, #555)" }}>Pregunta {i + 1}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      </>
+    );
 
     return (
       <div style={{ position: "fixed", inset: 0, zIndex: 800, background: "var(--fd-panel, #f5f7fc)", display: "flex", flexDirection: "column", fontFamily: "'Manrope', sans-serif" }}>
@@ -1062,74 +1143,84 @@ function SimuladorPage() {
             <button onClick={() => setPhase("result")} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "5px 12px", borderRadius: 7, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
               ← Volver
             </button>
+            <button
+              onClick={() => setLeftPanelOpen((o) => !o)}
+              aria-label="Ver lista de preguntas"
+              className="flex md:hidden"
+              style={{
+                alignItems: "center",
+                gap: 5,
+                background: "rgba(255,255,255,0.1)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                color: "white",
+                padding: "5px 10px",
+                borderRadius: 7,
+                fontSize: "0.8rem",
+                fontWeight: 600,
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+              }}
+            >
+              <Icon n="list" size={15} /> Preguntas
+            </button>
             <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1rem", color: "white", fontWeight: 700 }}>Revisión del examen</span>
           </div>
-          <span style={{ background: "#C7A052", color: "var(--fd-gold, #7A5C1E)", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.75rem", fontWeight: 700, display: "flex", alignItems: "center", gap: 5 }}><Icon n="doc" size={14} /> Modo revisión</span>
+          <span className="hidden sm:flex" style={{ background: "#C7A052", color: "#02070F", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.75rem", fontWeight: 700, alignItems: "center", gap: 5 }}><Icon n="doc" size={14} /> Modo revisión</span>
         </div>
 
         {/* Review body */}
         <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
           {/* Left list */}
-          <div style={{ width: 200, flexShrink: 0, background: "var(--fd-panel, white)", borderRight: "1px solid rgba(22,61,112,0.08)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
-            <div style={{ padding: "10px 14px", borderBottom: "1px solid var(--fd-border, #EEE1C5)", background: "var(--fd-panel, #f8f9ff)" }}>
-              <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 4 }}>Preguntas del examen</div>
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.62rem", color: "var(--fd-muted, #4A5872)" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#2ecc71" }} />Correcta</div>
-                <div style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.62rem", color: "var(--fd-muted, #4A5872)" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#e74c3c" }} />Incorrecta</div>
-              </div>
-            </div>
-            <div style={{ flex: 1, overflowY: "auto" }}>
-              {MATERIAS.map((m, mi) => {
-                const offset = materiaOffset(mi);
-                return (
-                  <div key={mi}>
-                    <div style={{ padding: "6px 12px", background: "var(--fd-panel, #f8f9ff)", borderBottom: "1px solid var(--fd-border, rgba(22,61,112,0.06))", fontSize: "0.68rem", fontWeight: 700, color: "var(--fd-text, #163D70)", textTransform: "uppercase", letterSpacing: "0.4px", display: "flex", alignItems: "center", gap: 5 }}>
-                      <Icon n={m.icon} size={12} /> {m.name}
-                    </div>
-                    {Array.from({ length: m.total }, (_, i) => {
-                      const idx = offset + i;
-                      const bqi = bankQs[idx];
-                      const correct = !!bqi && questions[idx]?.selectedOpt === bqi.correctIndex;
-                      const active = idx === reviewCurrent;
-                      return (
-                        <div
-                          key={idx}
-                          onClick={() => setReviewCurrent(idx)}
-                          style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 12px 5px 16px", cursor: "pointer", background: active ? "var(--fd-panel-alt, rgba(22,61,112,0.06))" : "transparent", borderLeft: `3px solid ${correct ? "#2ecc71" : "#e74c3c"}`, transition: "background 0.2s" }}
-                        >
-                          <div style={{ width: 17, height: 17, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: correct ? "#2ecc71" : "#e74c3c", color: "white" }}>
-                            {correct ? <Icon n="check" size={11} sw={2.4} /> : <Icon n="close" size={11} sw={2.4} />}
-                          </div>
-                          <span style={{ fontSize: "0.73rem", color: "var(--fd-muted, #555)" }}>Pregunta {i + 1}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                );
-              })}
-            </div>
+          <div className="hidden md:flex" style={{ width: 200, flexShrink: 0, background: "var(--fd-panel, white)", borderRight: "1px solid rgba(22,61,112,0.08)", flexDirection: "column", overflow: "hidden" }}>
+            {reviewList}
           </div>
 
+          {leftPanelOpen && (
+            <>
+              <div
+                className="flex md:hidden"
+                style={{
+                  position: "fixed",
+                  top: 56,
+                  left: 0,
+                  bottom: 0,
+                  zIndex: 80,
+                  width: 260,
+                  background: "#0A1B33",
+                  boxShadow: "4px 0 20px rgba(0,0,0,0.35)",
+                  flexDirection: "column",
+                  overflow: "hidden",
+                }}
+              >
+                {reviewList}
+              </div>
+              <div
+                className="md:hidden"
+                style={{ position: "fixed", inset: 0, top: 56, zIndex: 79, background: "rgba(0,0,0,0.4)" }}
+                onClick={() => setLeftPanelOpen(false)}
+              />
+            </>
+          )}
           {/* Review content */}
           <div style={{ flex: 1, overflowY: "auto", padding: "20px 16px", display: "flex", flexDirection: "column", alignItems: "center" }}>
             <div style={{ maxWidth: 680, width: "100%" }}>
               <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", padding: 24, boxShadow: "0 2px 14px rgba(22,61,112,0.07)", marginBottom: 16 }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16, gap: 8, flexWrap: "wrap" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                     <span style={{ display: "flex", alignItems: "center" }}>{isCorrect ? <Icon n="checkCircle" size={20} color="#2ecc71" /> : <Icon n="close" size={20} color="#e74c3c" />}</span>
                     <span style={{ background: "var(--fd-panel-alt, rgba(22,61,112,0.07))", color: "var(--fd-text, #163D70)", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n={MATERIAS[mi].icon} size={13} /> {MATERIAS[mi].name}</span>
                     {userAns === -1 && (
-                      <span style={{ background: "rgba(243,156,18,0.1)", color: "#8a6000", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.72rem", fontWeight: 700 }}>Sin responder</span>
+                      <span style={{ background: "rgba(243,156,18,0.14)", color: "#F3C969", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.72rem", fontWeight: 700, whiteSpace: "nowrap" }}>Sin responder</span>
                     )}
                   </div>
-                  <span style={{ fontSize: "0.76rem", color: "var(--fd-muted, #7E90AD)" }}>Pregunta {reviewCurrent + 1} / {TOTAL_QS}</span>
+                  <span style={{ fontSize: "0.76rem", color: "var(--fd-muted, #7E90AD)", whiteSpace: "nowrap" }}>Pregunta {reviewCurrent + 1} / {TOTAL_QS}</span>
                 </div>
 
                 {/* Veredicto de la pregunta */}
                 {userAns === -1 ? (
                   <div style={{ display: "flex", alignItems: "flex-start", gap: 9, padding: "11px 14px", background: "rgba(243,156,18,0.08)", border: "1px solid rgba(243,156,18,0.35)", borderRadius: "var(--fd-radius, 10px)", marginBottom: 16, fontSize: "0.84rem", color: "var(--fd-muted, #555)", lineHeight: 1.5 }}>
                     <span style={{ display: "flex", flexShrink: 0, marginTop: 1 }}><Icon n="alert" size={17} color="#f39c12" /></span>
-                    <span><b style={{ color: "#8a6000" }}>Sin responder.</b> No marcaste ninguna opción; la respuesta correcta está resaltada en <b style={{ color: "#2ecc71" }}>verde</b>.</span>
+                    <span><b style={{ color: "#F3C969" }}>Sin responder.</b> No marcaste ninguna opción; la respuesta correcta está resaltada en <b style={{ color: "#2ecc71" }}>verde</b>.</span>
                   </div>
                 ) : isCorrect ? (
                   <div style={{ display: "flex", alignItems: "flex-start", gap: 9, padding: "11px 14px", background: "rgba(46,204,113,0.1)", border: "1px solid rgba(46,204,113,0.4)", borderRadius: "var(--fd-radius, 10px)", marginBottom: 16, fontSize: "0.84rem", color: "var(--fd-muted, #555)", lineHeight: 1.5 }}>
@@ -1171,6 +1262,29 @@ function SimuladorPage() {
                 <button onClick={openYaris} style={{ width: "100%", padding: 11, background: "linear-gradient(135deg,#163D70,#5A86CB)", color: "white", border: "none", borderRadius: "var(--fd-radius, 10px)", fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
                   <YarisAvatar size={20} /> Explícamelo Yaris
                 </button>
+                <button
+                  type="button"
+                  onClick={() => setReportOpen(true)}
+                  style={{
+                    width: "100%",
+                    marginTop: 8,
+                    padding: 10,
+                    background: "transparent",
+                    color: "var(--fd-muted, #4A5872)",
+                    border: "1px solid var(--fd-border, #EEE1C5)",
+                    borderRadius: "var(--fd-radius, 10px)",
+                    fontSize: "0.84rem",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    fontFamily: "'Manrope', sans-serif",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 7,
+                  }}
+                >
+                  <Icon n="alert" size={15} /> Reportar pregunta
+                </button>
               </div>
 
               <div style={{ display: "flex", gap: 10 }}>
@@ -1195,6 +1309,7 @@ function SimuladorPage() {
             />
           </div>
         </div>
+        {reportModal}
       </div>
     );
   }
@@ -1230,10 +1345,10 @@ function SimuladorPage() {
       {/* Topbar */}
       <div style={{ height: 56, background: "#081A35", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 16px", flexShrink: 0, zIndex: 50, gap: 8 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
-          <button onClick={() => setLeftPanelOpen((o) => !o)} aria-label="Ver lista de preguntas" className="md:hidden" style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "6px 10px", borderRadius: 7, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", minHeight: 40 }}>
+          <button onClick={() => setLeftPanelOpen((o) => !o)} aria-label="Ver lista de preguntas" className="flex md:hidden" style={{ alignItems: "center", gap: 5, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "6px 10px", borderRadius: 7, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", minHeight: 40 }}>
             <Icon n="list" size={15} /> Preguntas
           </button>
-          <span style={{ background: "#7A5C1E", color: "white", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", display: "inline-flex", alignItems: "center", gap: 5, flexShrink: 0 }}><Icon n="target" size={13} /> Simulador</span>
+          <span className="hidden sm:inline-flex" style={{ background: "#7A5C1E", color: "white", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", alignItems: "center", gap: 5, flexShrink: 0 }}><Icon n="target" size={13} /> Simulador</span>
           <span className="hidden md:block" style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1rem", color: "white", fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Examen General de Egreso — Piloto Comercial</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
@@ -1320,7 +1435,7 @@ function SimuladorPage() {
 
         {/* Left panel (mobile overlay) */}
         {leftPanelOpen && (
-          <div className="md:hidden" style={{ position: "fixed", top: 60, left: 0, bottom: 0, zIndex: 80, width: 260, background: "var(--fd-panel, white)", boxShadow: "4px 0 20px rgba(0,0,0,0.2)", display: "flex", flexDirection: "column" }}>
+          <div className="flex md:hidden" style={{ position: "fixed", top: 60, left: 0, bottom: 0, zIndex: 80, width: 260, background: "var(--fd-panel, white)", boxShadow: "4px 0 20px rgba(0,0,0,0.2)", flexDirection: "column" }}>
             <LeftPanel questions={questions} current={current} expandedMaterias={expandedMaterias} onToggleMateria={(mi) => setExpandedMaterias((s) => { const n = new Set(s); if (n.has(mi)) { n.delete(mi); } else { n.add(mi); } return n; })} onSelectQ={(i) => { setCurrent(i); setLeftPanelOpen(false); }} answeredCount={answeredCount} />
           </div>
         )}
@@ -1335,7 +1450,15 @@ function SimuladorPage() {
                 <div style={{ background: "var(--fd-panel-alt, rgba(22,61,112,0.07))", color: "var(--fd-text, #163D70)", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 5 }}>
                   <Icon n={MATERIAS[currentQ.materia].icon} size={14} /> {MATERIAS[currentQ.materia].name}
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    flexWrap: "wrap",
+                    justifyContent: "flex-end",
+                  }}
+                >
                   <button
                     onClick={toggleFlag}
                     aria-pressed={currentQ.flagged}
@@ -1343,6 +1466,28 @@ function SimuladorPage() {
                     style={{ display: "flex", alignItems: "center", gap: 5, padding: "6px 12px", border: `1px solid ${currentQ.flagged ? "#f39c12" : "#EEE1C5"}`, borderRadius: 7, background: currentQ.flagged ? "rgba(243,156,18,0.08)" : "var(--fd-panel, white)", fontSize: "0.76rem", fontWeight: 600, color: currentQ.flagged ? "#f39c12" : "var(--fd-muted, #4A5872)", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s", minHeight: 36 }}
                   >
                     <Icon n="flag" size={14} /> {currentQ.flagged ? "Marcada" : "Marcar para revisar"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setReportOpen(true)}
+                    title="Reportar pregunta (R)"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 5,
+                      padding: "6px 12px",
+                      border: "1px solid #EEE1C5",
+                      borderRadius: 7,
+                      background: "var(--fd-panel, white)",
+                      fontSize: "0.76rem",
+                      fontWeight: 600,
+                      color: "var(--fd-muted, #4A5872)",
+                      cursor: "pointer",
+                      fontFamily: "'Manrope', sans-serif",
+                      minHeight: 36,
+                    }}
+                  >
+                    <Icon n="alert" size={14} /> Reportar
                   </button>
                   <span style={{ fontSize: "0.76rem", color: "var(--fd-muted, #7E90AD)", fontFamily: "'JetBrains Mono', ui-monospace, monospace" }}>{current + 1} / {TOTAL_QS}</span>
                 </div>
@@ -1366,38 +1511,53 @@ function SimuladorPage() {
                       aria-checked={selected}
                       data-selected={selected}
                       onClick={() => selectOpt(current, oi)}
-                      className="sim-opt"
+                      className={`fp-quiz-option sim-opt${selected ? " is-selected" : ""}`}
                       style={{
-                        display: "flex", alignItems: "center", gap: 14, padding: "14px 18px",
-                        background: selected ? "var(--fd-panel-alt, rgba(22,61,112,0.09))" : "var(--fd-panel, #f8f9ff)",
-                        border: `2px solid ${selected ? "#163D70" : "#EEE1C5"}`,
-                        borderRadius: "var(--fd-radius, 12px)", cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 14,
+                        padding: "14px 18px",
+                        border: "1px solid var(--fd-border, #EEE1C5)",
+                        borderRadius: "var(--fd-radius, 12px)",
+                        cursor: "pointer",
                         transition: "background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s",
-                        userSelect: "none", fontFamily: "'Manrope', sans-serif", minHeight: 56, width: "100%",
+                        userSelect: "none",
+                        font: "inherit",
+                        minHeight: 56,
+                        width: "100%",
                       }}
                     >
-                      <div
+                      <span
                         className="sim-opt-letter"
                         aria-hidden="true"
                         style={{
-                          width: 30, height: 30, borderRadius: "50%",
-                          display: "flex", alignItems: "center", justifyContent: "center",
-                          fontSize: "0.8rem", fontWeight: 700, flexShrink: 0,
-                          background: selected ? "#163D70" : "var(--fd-panel, #EEE1C5)",
-                          color: selected ? "white" : "var(--fd-muted, #4A5872)",
+                          width: 34,
+                          height: 34,
+                          borderRadius: "50%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: "0.82rem",
+                          fontWeight: 700,
+                          flexShrink: 0,
                         }}
                       >
                         {selected ? <Icon n="check" size={16} /> : LETTERS[oi]}
-                      </div>
-                      <div style={{ fontSize: "0.9rem", color: "var(--fd-text, #081A35)", lineHeight: 1.4, flex: 1, textAlign: "left" }}>{opt}</div>
+                      </span>
+                      <span
+                        style={{ fontSize: "0.95rem", lineHeight: 1.45, flex: 1, textAlign: "left" }}
+                      >
+                        {opt}
+                      </span>
                     </button>
                   );
                 })}
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 14, fontSize: "0.72rem", color: "var(--fd-muted, #7E90AD)", flexWrap: "wrap" }}>
+              {/* Atajos de teclado: sólo donde hay teclado. */}
+              <div className="hidden sm:flex" style={{ alignItems: "center", gap: 6, marginTop: 14, fontSize: "0.72rem", color: "var(--fd-muted, #7E90AD)", flexWrap: "wrap" }}>
                 <span style={{ display: "flex", alignItems: "center" }}><Icon n="lightbulb" size={14} /></span>
-                <span>Atajos: <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>1-4</kbd> respuesta · <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>←/→</kbd> navegar · <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>F</kbd> marcar</span>
+                <span>Atajos: <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>1-4</kbd> respuesta · <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>←/→</kbd> navegar · <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>F</kbd> marcar · <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>R</kbd> reportar</span>
               </div>
             </div>
 
@@ -1509,6 +1669,8 @@ function SimuladorPage() {
           </div>
         </div>
       )}
+
+      {reportModal}
     </div>
   );
 }

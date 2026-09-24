@@ -206,7 +206,7 @@ export function CourseShell({
             id="lp-course-select"
             value={def.slug}
             onChange={(e) => onSwitchCourse(e.target.value)}
-            className="w-full appearance-none rounded-lg border border-white/15 bg-white/8 py-2 pl-3 pr-8 text-[13px] font-bold text-white outline-none transition-colors hover:bg-white/12 focus:border-coral-300/60 [&>option]:text-ink-950"
+            className="w-full appearance-none rounded-lg border border-white/15 bg-white/8 py-2 pl-3 pr-8 text-[13px] font-bold text-white outline-none transition-colors hover:bg-white/12 focus:border-coral-300/60 [color-scheme:dark]"
           >
             {LP_COURSES.map((c) => (
               <option key={c.slug} value={c.slug}>
