@@ -265,7 +265,9 @@ function CuestionarioPage() {
       ordered: !paidUser,
     };
   })();
-  const bankReady = useQuestionBank(bankScope);
+  // Lote fresco si el anterior tiene más de 30 s: una corrección del panel
+  // admin llega a la siguiente sesión sin recargar la página.
+  const bankReady = useQuestionBank(bankScope, 30_000);
   /** Clave de la sesión activa: distinta por usuario y por configuración. */
   const sessionVariant = [
     search.materias ?? "all",
@@ -910,6 +912,7 @@ function CuestionarioPage() {
   if (questions.length === 0) {
     return (
       <div
+        className="fp-quiz-shell"
         style={{
           fontFamily: "'Manrope', sans-serif",
           background: "var(--fd-panel, #f5f7fc)",
@@ -1091,6 +1094,7 @@ function CuestionarioPage() {
 
   return (
     <div
+      className="fp-quiz-shell"
       style={{
         fontFamily: "'Manrope', sans-serif",
         background: "var(--fd-panel, #f5f7fc)",

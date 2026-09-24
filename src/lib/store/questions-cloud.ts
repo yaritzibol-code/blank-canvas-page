@@ -9,8 +9,8 @@
  * guardan en el navegador ni se descargan completas.
  */
 import { supa } from "./cloud";
-import { read, write } from "./db";
-import { applyRemoteContent } from "./sync";
+import { read } from "./db";
+import { applyRemoteContent, forgetLocalRows } from "./sync";
 import type { BankQuestion } from "./types";
 
 /** Ámbito de preguntas que necesita una pantalla. */
@@ -64,12 +64,16 @@ function scopeKey(s: BankScope): string {
  * apuntando al ámbito equivocado. La UI se daba por lista sin tener sus
  * preguntas en memoria: ese era el "a veces no cargan".
  */
-const loadedKeys = new Set<string>();
+const loadedKeys = new Map<string, number>();
 const inFlight = new Map<string, Promise<boolean>>();
 
-/** true cuando ese ámbito concreto ya se pidió con éxito. */
-export function scopeLoaded(scope: BankScope = {}): boolean {
-  return loadedKeys.has(scopeKey(scope));
+/**
+ * true cuando ese ámbito concreto ya se pidió con éxito (y, con `maxAgeMs`,
+ * hace menos de ese tiempo).
+ */
+export function scopeLoaded(scope: BankScope = {}, maxAgeMs = Infinity): boolean {
+  const at = loadedKeys.get(scopeKey(scope));
+  return at !== undefined && Date.now() - at <= maxAgeMs;
 }
 
 /** true cuando ya hay algún lote del banco en memoria. */
@@ -96,8 +100,42 @@ async function rpc(args: Partial<RpcArgs>): Promise<BankQuestion[] | null> {
   return (data ?? []) as unknown as BankQuestion[];
 }
 
-/** Descarga completa paginada (solo admin: la RPC topa al resto en 600). */
+/**
+ * Banco completo para el editor (sólo admin), con TODOS los estados.
+ *
+ * Se lee la tabla `content` directamente —su RLS ya limita las preguntas a la
+ * admin—. La RPC sólo entrega publicadas: un borrador o una pregunta oculta
+ * desaparecían del panel al recargar y ya no había cómo volver a publicarlos.
+ */
 async function fetchAllAdmin(): Promise<BankQuestion[] | null> {
+  const s = supa();
+  if (!s) return null;
+  const out: BankQuestion[] = [];
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await s
+      .from("content")
+      .select("data")
+      .eq("collection", "questions")
+      .order("id")
+      .range(from, from + 999);
+    // Sin lectura directa se cae a la RPC; a media descarga, mejor nada que
+    // un banco incompleto.
+    if (error) return from === 0 ? fetchAllPublished() : null;
+    const rows = (data ?? []) as { data: BankQuestion }[];
+    // El editor de Soporte guardaba "archivada", que el Banco no reconoce: es
+    // una pregunta oculta (la RPC de las alumnas sólo entrega publicadas).
+    rows.forEach((r) =>
+      out.push(
+        (r.data.status as string) === "archivada" ? { ...r.data, status: "oculta" } : r.data,
+      ),
+    );
+    if (rows.length < 1000 || from > 20000) break;
+  }
+  return out;
+}
+
+/** Descarga paginada por la RPC (sólo publicadas). */
+async function fetchAllPublished(): Promise<BankQuestion[] | null> {
   const out: BankQuestion[] = [];
   for (let offset = 0; ; offset += 1000) {
     const page = await rpc({ p_limit: 1000, p_offset: offset, p_ordered: true });
@@ -136,12 +174,29 @@ async function fetchScope(scope: BankScope): Promise<BankQuestion[] | null> {
   return merged;
 }
 
-/** Fusiona un lote con lo que ya hay en memoria (sin duplicar por id). */
-function mergeIntoMemory(rows: BankQuestion[]): void {
-  const current = read<BankQuestion[]>("questions", []);
-  const byId = new Map(current.map((q) => [q.id, q]));
-  rows.forEach((q) => byId.set(q.id, q));
-  applyRemoteContent("questions", [...byId.values()] as unknown as Record<string, unknown>[]);
+/** Misma selección que hace `get_bank_questions` para un ámbito. */
+function matchesScope(q: BankQuestion, s: BankScope): boolean {
+  const fuente = q.fuente ?? "";
+  if (s.scope === "ciaac" && fuente) return false;
+  if (s.scope === "la" && !fuente) return false;
+  if (s.materias?.length && !s.materias.includes(q.materia)) return false;
+  if (s.fuentes?.length && !s.fuentes.includes(fuente)) return false;
+  if (s.caps?.length && !s.caps.includes(Number(q.capitulo ?? 0))) return false;
+  return true;
+}
+
+/**
+ * Fusiona un lote con lo que ya hay en memoria (sin duplicar por id). Con
+ * `replaceScope`, el lote sustituye a todo lo que había de ese ámbito: así una
+ * pregunta que la admin corrigió u ocultó no sobrevive en su versión vieja.
+ */
+function mergeIntoMemory(rows: BankQuestion[], replaceScope?: BankScope): void {
+  applyRemoteContent(
+    "questions",
+    rows as unknown as Record<string, unknown>[],
+    "merge",
+    replaceScope ? (r) => matchesScope(r as unknown as BankQuestion, replaceScope) : undefined,
+  );
 }
 
 /**
@@ -154,10 +209,8 @@ function mergeIntoMemory(rows: BankQuestion[]): void {
  */
 export function ensureQuestions(scope: BankScope = {}, force = false): Promise<boolean> {
   const key = scopeKey(scope);
-  if (force) {
-    loadedKeys.delete(key);
-    inFlight.delete(key);
-  }
+  // Forzar pide datos frescos; una petición que ya va en camino lo es.
+  if (force) loadedKeys.delete(key);
   if (loadedKeys.has(key)) return Promise.resolve(true);
   const running = inFlight.get(key);
   if (running) return running;
@@ -167,11 +220,11 @@ export function ensureQuestions(scope: BankScope = {}, force = false): Promise<b
       const rows = await fetchScope(scope);
       if (rows && rows.length > 0) {
         if (scope.all) {
-          applyRemoteContent("questions", rows as unknown as Record<string, unknown>[]);
+          applyRemoteContent("questions", rows as unknown as Record<string, unknown>[], "replace");
         } else {
-          mergeIntoMemory(rows);
+          mergeIntoMemory(rows, force ? scope : undefined);
         }
-        loadedKeys.add(key);
+        loadedKeys.set(key, Date.now());
         return true;
       }
       // Sin nube o lote vacío: se usa lo que ya haya en memoria y se permite
@@ -185,6 +238,14 @@ export function ensureQuestions(scope: BankScope = {}, force = false): Promise<b
   return job;
 }
 
+
+/**
+ * Refleja en memoria una pregunta que se guardó directo en la nube (editor de
+ * Soporte), para que el Banco la muestre ya corregida.
+ */
+export function rememberQuestion(q: BankQuestion): void {
+  mergeIntoMemory([q]);
+}
 
 /**
  * Recupera preguntas concretas por id (sesiones en curso que se retoman tras
@@ -225,6 +286,6 @@ export async function fetchBankCounts(): Promise<BankCount[]> {
 export function clearQuestionMemory(): void {
   loadedKeys.clear();
   inFlight.clear();
-
-  write("questions", []);
+  // Sólo memoria: vaciarla no debe leerse como "la admin borró el banco".
+  forgetLocalRows("questions");
 }

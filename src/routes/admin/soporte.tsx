@@ -17,6 +17,7 @@ import {
   useFlash,
 } from "@/components/admin/AdminShell";
 import {
+  flushCloudWrites,
   getReports,
   updateReport,
   useStore,
@@ -159,8 +160,17 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
         <select
           value={r.estado}
           onChange={(e) => {
-            updateReport(r.id, { estado: e.target.value as ReportStatus });
-            onFlash(`Reporte marcado como "${ESTADO_LABEL[e.target.value as ReportStatus]}"`);
+            const estado = e.target.value as ReportStatus;
+            updateReport(r.id, { estado });
+            // El aviso espera a la nube: si no se guardó, que se note.
+            void flushCloudWrites(["reports"]).then((ok) =>
+              onFlash(
+                ok
+                  ? `Reporte marcado como "${ESTADO_LABEL[estado]}"`
+                  : "No se pudo guardar el estado en la nube. Se reintentará en unos segundos.",
+                !ok,
+              ),
+            );
           }}
           style={{ ...inputStyle, width: "auto", padding: "6px 10px", fontSize: ".76rem", fontWeight: 700, color: ESTADO_COLOR[r.estado], borderColor: `${ESTADO_COLOR[r.estado]}55` }}
         >

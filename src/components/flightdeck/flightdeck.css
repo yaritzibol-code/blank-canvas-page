@@ -2821,6 +2821,9 @@ html[data-motion="reduced"] .fd-shell *::after {
 .fd-question-session .fp-quiz-option.is-wrong { background:#f0a08c26!important; border-color:#f0a08c!important; opacity:.92; }
 .fd-question-session .fp-quiz-option.is-correct > span:first-child { background:#7fd6a4!important; border-color:#7fd6a4!important; color:#02070f!important; }
 .fd-question-session .fp-quiz-option.is-wrong > span:first-child { background:#f0a08c!important; border-color:#f0a08c!important; color:#02070f!important; }
+/* Simulador: la opción elegida, sin decir si es correcta (se sabe al entregar). */
+.fd-question-session .fp-quiz-option.is-selected { background:#c7a0521f!important; border-color:#e3c98a!important; box-shadow:inset 0 0 0 1px #e3c98a; }
+.fd-question-session .fp-quiz-option.is-selected > span:first-child { background:#c7a052!important; border-color:#c7a052!important; color:#02070f!important; }
 .fd-question-session .fp-quiz-nav { grid-column:2; grid-row:2; }
 .fd-question-session .fp-quiz-nav > button { min-height:54px; border-radius:5px!important; background:linear-gradient(135deg,#ebd6a2,#c7a052 46%,#9c7a35)!important; color:#081a35!important; }
 .fd-question-session .fp-question-context { grid-column:2; grid-row:1; display:flex; flex-direction:column; gap:14px; }
@@ -2844,6 +2847,16 @@ html[data-motion="reduced"] .fd-shell *::after {
 
 /* Director — boarding passes and takeoff details from the supplied reference. */
 .fd-destination-card h1 { font-size:58px; letter-spacing:0; }
+/*
+ * Móvil: el nombre del destino va en una sola línea y a un tamaño que deja
+ * libre el dato de la esquina (`.fd-mobile-summary`). Con 58 px y el
+ * `overflow-wrap: anywhere` global de los h1, "Cuestionarios" se partía en
+ * "Cuestionario / s". 0.165 ≈ el 73 % de ancho disponible entre lo que ocupa
+ * "Cuestionarios", el nombre más largo, por cada px de fuente.
+ */
+@media (max-width:600px) {
+  .fd-destination-card h1 { font-size:min(58px, calc((100vw - 72px) * 0.165)); overflow-wrap:normal; }
+}
 .fd-director .fd-eyebrow { letter-spacing:.22em; }
 .fd-flight-stats strong { font-size:28px; }.fd-flight-stats > div:first-child strong { color:#fff; }.fd-stat-diamond { font-size:13px!important; color:#c7a052!important; margin-right:5px; }
 .fd-submodules > a > em { margin-left:auto; color:#e3c98a; font:700 9px "JetBrains Mono",monospace; font-style:normal; white-space:nowrap; }
@@ -2889,9 +2902,12 @@ html[data-motion="reduced"] .fd-shell *::after {
  * para escritorio, donde la pregunta hace scroll por dentro), y aquí el área
  * de la pregunta es `overflow: visible`: sin esto nada se podía desplazar y el
  * botón "Siguiente pregunta" quedaba fuera de la pantalla.
+ * Sólo la raíz del cuestionario (`.fp-quiz-shell`): las pantallas del
+ * simulador son capas fijas con su propio scroll, y con una regla general la
+ * casilla y el botón para empezar el examen quedaban fuera de alcance.
  */
 @media (max-width:760px) {
-  .fd-question-session > div { height:auto!important; max-height:none!important; overflow:visible!important; }
+  .fd-question-session > .fp-quiz-shell { height:auto!important; max-height:none!important; overflow:visible!important; }
 }
 @media (max-width:360px) {
   .fd-topbar { padding-inline:10px; }
@@ -3501,6 +3517,13 @@ html[data-motion="reduced"] .fd-tour *::after {
 .fd-results-dial.is-vacio {
   --tone: #8fa3c2;
 }
+/* Marca del 80 % para aprobar (simulador); pisa el estilo de las rayas. */
+.fd-results-dial .fd-results-dial-marca {
+  stroke: #e3c98a;
+  stroke-width: 3;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 3px #02070f);
+}
 .fd-results-dial svg {
   width: 100%;
   height: 100%;
@@ -3609,6 +3632,13 @@ html[data-motion="reduced"] .fd-tour *::after {
   max-width: none;
   margin: 0;
 }
+/* Con muchas materias (simulador), la lectura de Pathy acompaña al desplazarse. */
+@media (min-width: 1001px) {
+  .fd-results-grid > .fd-debrief {
+    position: sticky;
+    top: 94px;
+  }
+}
 /* Sin lectura de Pathy (nada respondido), el rendimiento ocupa todo el ancho. */
 .fd-results-grid > :only-child {
   grid-column: 1 / -1;
@@ -3711,6 +3741,115 @@ html[data-motion="reduced"] .fd-tour *::after {
   background: var(--tone);
   transform-origin: left;
   animation: fd-results-grow 0.9s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Para repasar (simulador): las primeras preguntas falladas */
+.fd-results-repaso {
+  animation: fd-results-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+.fd-results-repaso-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 12px;
+  margin-bottom: 14px;
+}
+.fd-results-repaso-head .fd-eyebrow {
+  margin: 0;
+}
+.fd-results-repaso-head small {
+  font:
+    10px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8fa3c2;
+}
+.fd-results-repaso-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+.fd-results-repaso-list > li {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid #ffffff1f;
+  border-left: 2px solid #f0a08c;
+  border-radius: 5px;
+  background: #050f2299;
+}
+.fd-results-repaso-list small {
+  font:
+    9.5px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.14em;
+  color: #e3c98a;
+}
+.fd-results-repaso-q {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #fff;
+}
+.fd-results-repaso-list dl {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+.fd-results-repaso-list dl > div {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 4px;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+.fd-results-repaso-list dt {
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.fd-results-repaso-list dd {
+  margin: 0;
+  color: #fff;
+}
+.fd-results-repaso-list .is-err {
+  background: #f0a08c14;
+}
+.fd-results-repaso-list .is-err dt {
+  color: #f0a08c;
+}
+.fd-results-repaso-list .is-ok {
+  background: #7fd6a414;
+}
+.fd-results-repaso-list .is-ok dt {
+  color: #7fd6a4;
+}
+.fd-results-repaso-exp {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #b8c5da;
+}
+.fd-results-repaso-exp cite {
+  display: block;
+  margin-top: 4px;
+  font-size: 11.5px;
+  font-style: normal;
+  color: #8fa3c2;
+}
+.fd-results-repaso > .fd-results-ghost {
+  min-height: 44px;
 }
 
 /* Qué sigue */

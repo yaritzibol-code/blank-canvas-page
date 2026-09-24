@@ -404,7 +404,7 @@ function FacturacionPage() {
           <div style={{ ...card, borderColor: "#C7A052", borderWidth: 2 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
               <span style={{ fontSize: ".95rem", fontWeight: 800, color: "var(--fd-text, #081A35)" }}>Pro</span>
-              <span style={{ padding: "2px 9px", borderRadius: "var(--fd-radius, 20px)", background: "#C7A052", color: "var(--fd-gold, #7A5C1E)", fontSize: ".64rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
+              <span style={{ padding: "2px 9px", borderRadius: "var(--fd-radius, 20px)", background: "#C7A052", color: "#02070F", fontSize: ".64rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
                 Recomendado
               </span>
             </div>
@@ -651,7 +651,7 @@ function PlanesGratis() {
             <span style={{ fontSize: ".95rem", fontWeight: 800, color: "var(--fd-text, #081A35)" }}>
               Pro {anual ? "Anual" : "Mensual"}
             </span>
-            <span style={{ padding: "2px 9px", borderRadius: "var(--fd-radius, 20px)", background: "#C7A052", color: "var(--fd-gold, #7A5C1E)", fontSize: ".64rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
+            <span style={{ padding: "2px 9px", borderRadius: "var(--fd-radius, 20px)", background: "#C7A052", color: "#02070F", fontSize: ".64rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".05em" }}>
               Recomendado
             </span>
           </div>

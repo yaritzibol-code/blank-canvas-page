@@ -472,7 +472,9 @@ function RecordatoriosPage() {
 
         {/* Pathy tips */}
         <div style={{ background: "linear-gradient(135deg,#EEE1C5,#fce4ec)", borderRadius: "var(--fd-radius, 14px)", padding: 18, marginBottom: 24 }}>
-          <h3 style={{ fontSize: ".88rem", fontWeight: 700, color: "var(--fd-gold, #7A5C1E)", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}><PathyMark size={22} /> Consejos de Pathy para mantener tu racha</h3>
+          {/* La tarjeta es clara en cualquier tema: su texto va oscuro fijo (con los
+              colores del tema quedaba gris claro sobre crema). */}
+          <h3 style={{ fontSize: ".88rem", fontWeight: 700, color: "#7A5C1E", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}><PathyMark size={22} /> Consejos de Pathy para mantener tu racha</h3>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {[
               "Estudia siempre a la misma hora — tu cerebro lo convertirá en hábito automático en 21 días.",
@@ -480,7 +482,7 @@ function RecordatoriosPage() {
               "Pon tu teléfono donde lo veas cuando llegues del trabajo/escuela — ese será tu recordatorio visual.",
               "Si un día no puedes estudiar mucho, haz aunque sea 5 flashcards — lo importante es no romper la racha.",
             ].map((tip, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: ".82rem", color: "var(--fd-muted, #555)", lineHeight: 1.5 }}>
+              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: ".82rem", color: "#4A3F2C", lineHeight: 1.5 }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#7A5C1E", flexShrink: 0, marginTop: 6 }} />
                 {tip}
               </div>

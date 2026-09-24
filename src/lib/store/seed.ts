@@ -721,6 +721,13 @@ export function ensureSeeded() {
   const current = read<number>("seed_version", 0);
   if (current >= SEED_VERSION) return;
 
+  // Con Lovable Cloud el banco de preguntas vive en Supabase y se pide por
+  // lotes. Sembrar aquí la copia empaquetada hacía que, en la primera visita
+  // de cada navegador, cuestionarios y panel admin trabajaran con la versión
+  // original del seed y no con la que corrigió la admin (y una edición en el
+  // Banco podía subir esa copia vieja).
+  const bancoLocal = !cloudEnabled();
+
   if (current >= 1) {
     // Migraciones incrementales para navegadores ya sembrados (conservan usuarios,
     // historial y contenido creado por la administradora).
@@ -741,11 +748,13 @@ export function ensureSeeded() {
       // verificación técnica; explicaciones descolocadas reescritas.
       // v6: se suman los 5 cuestionarios del curso de Línea Aérea (250
       // preguntas) y los manuales nuevos de la biblioteca.
-      const custom = read<BankQuestion[]>("questions", []).filter(
-        (q) => !q.id.startsWith("q_seed_") && !q.id.startsWith("q_la_"),
-      );
       const fresh = seedQuestions();
-      write("questions", [...fresh, ...custom]);
+      if (bancoLocal) {
+        const custom = read<BankQuestion[]>("questions", []).filter(
+          (q) => !q.id.startsWith("q_seed_") && !q.id.startsWith("q_la_"),
+        );
+        write("questions", [...fresh, ...custom]);
+      }
       write("flashcards", seedFlashcards(fresh));
     }
     if (current < 8) {
@@ -770,12 +779,14 @@ export function ensureSeeded() {
   // El contenido real (banco, flashcards, clases, biblioteca) se siembra
   // siempre: es material del curso, no datos de mentira.
   const questions = seedQuestions();
-  write("questions", [
-    ...questions,
-    ...read<BankQuestion[]>("questions", []).filter(
-      (q) => !q.id.startsWith("q_seed_") && !q.id.startsWith("q_la_"),
-    ),
-  ]);
+  if (bancoLocal) {
+    write("questions", [
+      ...questions,
+      ...read<BankQuestion[]>("questions", []).filter(
+        (q) => !q.id.startsWith("q_seed_") && !q.id.startsWith("q_la_"),
+      ),
+    ]);
+  }
   write("flashcards", seedFlashcards(questions));
   write("clases", seedClases());
   write("materiales", seedMateriales());

@@ -546,6 +546,62 @@ function PerfilPage() {
         </div>
       </div>
 
+      {/* Recorrido guiado de Pathy: se repite cuando se quiera, no sólo al
+          primer inicio de sesión. */}
+      <div
+        className="fd-profile-tour"
+        style={{
+          background: "var(--fd-panel, white)",
+          border: "1px solid var(--fd-border, #EEE1C5)",
+          borderRadius: "var(--fd-radius, 16px)",
+          padding: "16px 20px",
+          marginBottom: 18,
+          display: "flex",
+          alignItems: "center",
+          gap: 16,
+          flexWrap: "wrap",
+        }}
+      >
+        <PathyMark size={48} />
+        <div style={{ flex: "1 1 260px", minWidth: 0 }}>
+          <div
+            style={{
+              fontSize: ".95rem",
+              fontWeight: 700,
+              color: "var(--fd-text, #081A35)",
+              marginBottom: 3,
+            }}
+          >
+            Recorrido guiado de Pathy
+          </div>
+          <div style={{ fontSize: ".82rem", color: "var(--fd-muted, #4A5872)", lineHeight: 1.5 }}>
+            Pathy te muestra en un minuto dónde está cada destino de tu cabina y cómo moverte entre
+            ellos.
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={() => navigate({ to: "/dashboard", search: { tour: 1 } as never })}
+          style={{
+            padding: "11px 18px",
+            minHeight: 44,
+            borderRadius: "var(--fd-radius, 10px)",
+            border: "none",
+            background: "#C7A052",
+            color: "#02070F",
+            fontFamily: "'Manrope', sans-serif",
+            fontWeight: 800,
+            fontSize: ".86rem",
+            cursor: "pointer",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 7,
+          }}
+        >
+          <Icon n="compass" size={16} /> Iniciar recorrido
+        </button>
+      </div>
+
       {/* Enfoque de estudio */}
       <div
         style={{
@@ -698,9 +754,9 @@ function PerfilPage() {
               fontFamily: "'Manrope', sans-serif",
               fontWeight: 700,
               fontSize: ".86rem",
-              color: "white",
+              color: !focoSucio || guardandoFoco ? "var(--fd-muted, #4A5872)" : "white",
               cursor: !focoSucio || guardandoFoco ? "not-allowed" : "pointer",
-              background: !focoSucio || guardandoFoco ? "#C9D6E8" : "#163D70",
+              background: !focoSucio || guardandoFoco ? "var(--fd-panel-alt, #C9D6E8)" : "#163D70",
             }}
           >
             {guardandoFoco ? "Guardando…" : "Guardar enfoque"}

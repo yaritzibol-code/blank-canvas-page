@@ -13,21 +13,23 @@ import type { PathyReport, PathySignal, SignalTone, RutaPerf } from "@/lib/store
 import { LiveIndicator } from "@/components/shared/LiveIndicator";
 import type { LiveDataState } from "@/hooks/use-live-data";
 
-const NAVY = "#081A35";
-const HAZE = "#4A5872";
-const MIST = "#7E90AD";
+// Las tarjetas de este informe son oscuras (#0A1B33): texto claro. Antes el
+// texto principal era azul marino y quedaba invisible sobre ellas.
+const TEXT = "#FFFFFF";
+const MUTED = "#B8C5DA";
+const FAINT = "#8FA3C2";
 const DISPLAY = "'Instrument Serif', serif";
 const MONO = "'JetBrains Mono', monospace";
 
 const TONE: Record<SignalTone, { color: string; bg: string; icon: string; label: string }> = {
-  riesgo: { color: "#B3261E", bg: "rgba(179,38,30,.08)", icon: "alert", label: "Atiende esto" },
-  ojo: { color: "#8A6000", bg: "rgba(243,156,18,.1)", icon: "eye", label: "Ojo" },
-  bien: { color: "#1A7A4A", bg: "rgba(46,204,113,.1)", icon: "checkCircle", label: "Vas bien" },
+  riesgo: { color: "#F0A08C", bg: "rgba(240,160,140,.14)", icon: "alert", label: "Atiende esto" },
+  ojo: { color: "#F3C969", bg: "rgba(243,201,105,.14)", icon: "eye", label: "Ojo" },
+  bien: { color: "#7FD6A4", bg: "rgba(127,214,164,.14)", icon: "checkCircle", label: "Vas bien" },
   neutro: { color: "#C7A052", bg: "rgba(22,61,112,.08)", icon: "info", label: "Dato" },
 };
 
 const scoreColor = (avg: number | null) =>
-  avg === null ? MIST : avg >= 80 ? "#2ecc71" : avg >= 60 ? "#f39c12" : "#e74c3c";
+  avg === null ? FAINT : avg >= 80 ? "#2ecc71" : avg >= 60 ? "#f39c12" : "#e74c3c";
 
 function Metric({
   label,
@@ -60,7 +62,7 @@ function Metric({
           fontSize: ".62rem",
           letterSpacing: ".16em",
           textTransform: "uppercase",
-          color: MIST,
+          color: FAINT,
         }}
       >
         {label}
@@ -71,7 +73,7 @@ function Metric({
             fontFamily: DISPLAY,
             fontSize: "1.9rem",
             fontWeight: 900,
-            color: NAVY,
+            color: TEXT,
             lineHeight: 1,
           }}
         >
@@ -89,7 +91,7 @@ function Metric({
           </span>
         )}
       </div>
-      <div style={{ fontSize: ".72rem", color: HAZE, lineHeight: 1.45 }}>{nota}</div>
+      <div style={{ fontSize: ".72rem", color: MUTED, lineHeight: 1.45 }}>{nota}</div>
     </div>
   );
 }
@@ -126,7 +128,7 @@ function SignalCard({ s }: { s: PathySignal }) {
         >
           <Icon n={t.icon as never} size={12} /> {t.label}
         </span>
-        <span style={{ fontSize: ".88rem", fontWeight: 700, color: NAVY }}>{s.titulo}</span>
+        <span style={{ fontSize: ".88rem", fontWeight: 700, color: TEXT }}>{s.titulo}</span>
         <span
           style={{
             marginLeft: "auto",
@@ -140,7 +142,7 @@ function SignalCard({ s }: { s: PathySignal }) {
           {s.dato}
         </span>
       </div>
-      <p style={{ fontSize: ".82rem", color: HAZE, lineHeight: 1.55 }}>{s.detalle}</p>
+      <p style={{ fontSize: ".82rem", color: MUTED, lineHeight: 1.55 }}>{s.detalle}</p>
     </div>
   );
 }
@@ -153,7 +155,7 @@ function BarraMateria({ m }: { m: RutaPerf }) {
         title={m.name}
         style={{
           fontSize: ".78rem",
-          color: NAVY,
+          color: TEXT,
           flex: "1 1 auto",
           minWidth: 0,
           display: "inline-flex",
@@ -214,7 +216,7 @@ function Bloque({
         style={{
           fontSize: ".72rem",
           fontWeight: 800,
-          color: HAZE,
+          color: MUTED,
           textTransform: "uppercase",
           letterSpacing: ".08em",
           marginBottom: 12,
@@ -293,7 +295,7 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
               fontFamily: DISPLAY,
               fontSize: "1.35rem",
               fontWeight: 900,
-              color: "#0A1B33",
+              color: TEXT,
               lineHeight: 1.2,
               marginBottom: 8,
             }}
@@ -366,7 +368,7 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
       >
         <Bloque titulo="Materias del CIAAC" icon="help">
           {materias.debiles.length === 0 && materias.fuertes.length === 0 ? (
-            <p style={{ fontSize: ".82rem", color: MIST, lineHeight: 1.5 }}>
+            <p style={{ fontSize: ".82rem", color: FAINT, lineHeight: 1.5 }}>
               Aún no hay suficiente práctica para clasificar materias. Necesito al menos 5 preguntas
               respondidas por materia.
             </p>
@@ -418,7 +420,7 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
                 <div
                   style={{
                     fontSize: ".76rem",
-                    color: MIST,
+                    color: FAINT,
                     lineHeight: 1.5,
                     paddingTop: 4,
                     borderTop: "1px dashed rgba(255,255,255,.12)",
@@ -433,7 +435,7 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
 
         <Bloque titulo="Manuales de Línea Aérea" icon="plane">
           {report.lineaAerea.length === 0 ? (
-            <p style={{ fontSize: ".82rem", color: MIST, lineHeight: 1.5 }}>
+            <p style={{ fontSize: ".82rem", color: FAINT, lineHeight: 1.5 }}>
               Todavía no has practicado los cuestionarios por manual de la convocatoria.
             </p>
           ) : (
@@ -491,7 +493,7 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
                 <div
                   style={{
                     fontSize: ".76rem",
-                    color: MIST,
+                    color: FAINT,
                     lineHeight: 1.5,
                     paddingTop: 4,
                     borderTop: "1px dashed rgba(255,255,255,.12)",
@@ -507,7 +509,7 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
 
         <Bloque titulo="Cómo lo estás viviendo" icon="heart">
           {animo.entradas === 0 ? (
-            <p style={{ fontSize: ".82rem", color: MIST, lineHeight: 1.5 }}>
+            <p style={{ fontSize: ".82rem", color: FAINT, lineHeight: 1.5 }}>
               Sin entradas de bitácora en las últimas 2 semanas. Los números dicen qué fallaste; tu
               bitácora dice por qué.
             </p>
@@ -524,13 +526,13 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
                         fontFamily: DISPLAY,
                         fontSize: "1.35rem",
                         fontWeight: 900,
-                        color: NAVY,
+                        color: TEXT,
                         lineHeight: 1,
                       }}
                     >
                       {x.val === null ? "—" : `${x.val}/5`}
                     </div>
-                    <div style={{ fontSize: ".7rem", color: MIST }}>{x.label}</div>
+                    <div style={{ fontSize: ".7rem", color: FAINT }}>{x.label}</div>
                   </div>
                 ))}
                 <div>
@@ -539,16 +541,16 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
                       fontFamily: DISPLAY,
                       fontSize: "1.35rem",
                       fontWeight: 900,
-                      color: animo.diasBajos14 >= 3 ? "#B3261E" : NAVY,
+                      color: animo.diasBajos14 >= 3 ? "#F0A08C" : TEXT,
                       lineHeight: 1,
                     }}
                   >
                     {animo.diasBajos14}
                   </div>
-                  <div style={{ fontSize: ".7rem", color: MIST }}>Días difíciles</div>
+                  <div style={{ fontSize: ".7rem", color: FAINT }}>Días difíciles</div>
                 </div>
               </div>
-              <div style={{ fontSize: ".78rem", color: HAZE, lineHeight: 1.5 }}>
+              <div style={{ fontSize: ".78rem", color: MUTED, lineHeight: 1.5 }}>
                 {animo.entradas} {animo.entradas === 1 ? "entrada" : "entradas"} en 14 días
                 {animo.temaRepetido
                   ? ` · "${animo.temaRepetido.tema}" se repite ${animo.temaRepetido.veces} veces`
@@ -564,7 +566,7 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
       {report.plan.length > 0 && (
         <div
           style={{
-            background: "#FAFBFF",
+            background: "rgba(255,255,255,.03)",
             border: "1px solid rgba(255,255,255,.12)",
             borderRadius: 16,
             padding: 18,
@@ -574,7 +576,7 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
             style={{
               fontSize: ".72rem",
               fontWeight: 800,
-              color: HAZE,
+              color: MUTED,
               textTransform: "uppercase",
               letterSpacing: ".08em",
               marginBottom: 4,
@@ -585,7 +587,7 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
           >
             <Icon n="target" size={14} /> Tu plan de esta semana
           </div>
-          <p style={{ fontSize: ".8rem", color: MIST, marginBottom: 14 }}>
+          <p style={{ fontSize: ".8rem", color: FAINT, marginBottom: 14 }}>
             Ordenado por lo que más te sube el promedio, no por lo que más te gusta.
           </p>
           <div
@@ -627,11 +629,11 @@ export function PathyAnalysis({ report, live }: { report: PathyReport; live?: Li
                   >
                     {i + 1}
                   </span>
-                  <span style={{ fontSize: ".88rem", fontWeight: 700, color: NAVY }}>
+                  <span style={{ fontSize: ".88rem", fontWeight: 700, color: TEXT }}>
                     {a.titulo}
                   </span>
                 </div>
-                <p style={{ fontSize: ".78rem", color: HAZE, lineHeight: 1.5, flex: 1 }}>
+                <p style={{ fontSize: ".78rem", color: MUTED, lineHeight: 1.5, flex: 1 }}>
                   {a.porque}
                 </p>
                 <Link

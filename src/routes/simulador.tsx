@@ -24,8 +24,14 @@ import { FREE_CIAAC_MAX } from "@/lib/store/free-quota";
 import { yarisAiChat } from "@/lib/yaris-ai.functions";
 import { yarisToHtml, sanitizeHtml } from "@/lib/yaris-format";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
-import { PathyMark } from "@/components/shared/PathyMark";
 import { PathyDebrief } from "@/components/shared/PathyDebrief";
+import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
+import {
+  QuizResults,
+  RepasoPanel,
+  type MateriaResult,
+  type RepasoItem,
+} from "@/components/flightdeck/QuizResults";
 import { QuestionImages } from "@/components/banco/QuestionImages";
 
 export const Route = createFileRoute("/simulador")({
@@ -281,11 +287,6 @@ function fmtTime(sec: number): string {
   return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 }
 
-function secToHM(sec: number): string {
-  const h = Math.floor(sec / 3600);
-  const m = Math.floor((sec % 3600) / 60);
-  return `${h}h ${String(m).padStart(2, "0")}min`;
-}
 
 function stripHtml(s: string): string {
   return s.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").trim();
@@ -314,10 +315,12 @@ function SimuladorPage() {
   const banco: SimBank = search.banco ?? "ciaac";
   // Lote acotado del banco: el examen se arma con las preguntas que necesita,
   // nunca con una descarga completa del banco.
+  // Lote fresco si el anterior tiene más de 30 s (correcciones del panel admin).
   const bankReady = useQuestionBank(
     banco === "la"
       ? { scope: "la", limit: 600 }
       : { scope: "ciaac", materias: MATERIAS.map((m) => m.slug), limit: 200 },
+    30_000,
   );
   // Presencia en vivo para el panel admin.
   useEffect(() => {
@@ -326,12 +329,16 @@ function SimuladorPage() {
     );
     return () => setPresenceActivity(null);
   }, [mode, banco]);
-  // El reparto por materia depende del plan (gratis = 25 reactivos).
+  // El reparto por materia depende del plan (gratis = 25 reactivos). Depende
+  // del plan y no del objeto `user`: ese se relee del store en cada render,
+  // así que como dependencia volvía a correr el efecto sin parar ("Maximum
+  // update depth exceeded") y borraba cada respuesta en cuanto se marcaba.
+  const planGratis = ready && !isPaid(user);
   useEffect(() => {
     if (!ready) return;
-    applyPlanTotals(!isPaid(user));
+    applyPlanTotals(planGratis);
     setQuestions(buildQuestions());
-  }, [ready, user]);
+  }, [ready, planGratis]);
 
   /** "Salir" vuelve al módulo de origen, no siempre al de CIAAC. */
   const exitTo: "/dashboard/banco" | "/dashboard/linea-aerea" =
@@ -346,6 +353,8 @@ function SimuladorPage() {
   const [calcOpen, setCalcOpen] = useState(false);
   const [calc, setCalc] = useState<CalcState>(CALC_INIT);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  /** Reportar la pregunta actual, igual que en los cuestionarios. */
+  const [reportOpen, setReportOpen] = useState(false);
   const [leftPanelOpen, setLeftPanelOpen] = useState(false);
   // Review
   const [reviewCurrent, setReviewCurrent] = useState(0);
@@ -479,10 +488,10 @@ function SimuladorPage() {
 
   // Atajos de teclado durante el examen y la calculadora
   useEffect(() => {
-    if (phase !== "exam") return;
+    if (phase !== "exam" || reportOpen) return;
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
-      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) return;
+      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.tagName === "SELECT" || target.isContentEditable)) return;
       // Calculadora abierta: teclado numérico
       if (calcOpen) {
         if (/^[0-9]$/.test(e.key)) { setCalc((s) => calcReducer(s, { type: "NUM", payload: e.key })); e.preventDefault(); return; }
@@ -513,11 +522,15 @@ function SimuladorPage() {
         e.preventDefault();
       }
       if (letter === "f") { toggleFlag(); e.preventDefault(); }
+      if (letter === "r" && !calcOpen) {
+        setReportOpen(true);
+        e.preventDefault();
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase, calcOpen, current]);
+  }, [phase, calcOpen, current, reportOpen]);
 
 
   /* Materia offset helpers */
@@ -784,8 +797,37 @@ function SimuladorPage() {
   /* Result data (calificación real) */
   const timeUsed = result?.timeUsed ?? Math.max(0, 5 * 3600 - secondsLeft);
   const totalCorrect = result?.correct ?? 0;
-  const scorePct = (result?.scorePct ?? 0).toFixed(2);
   const passed = result?.passed ?? false;
+
+  /* Reporte de la pregunta a la vista: la del examen o la de la revisión. */
+  const reportIdx = phase === "review" ? reviewCurrent : current;
+  const reportQ = bankQs[reportIdx];
+  const reportSel = questions[reportIdx]?.selectedOpt ?? -1;
+  const reportModal = (
+    <ReportProblemModal
+      open={reportOpen}
+      onClose={() => setReportOpen(false)}
+      user={user}
+      seccion="Simulador"
+      recurso={reportQ?.id ?? ""}
+      tipoInicial={phase === "review" ? "Respuesta incorrecta" : "Pregunta mal redactada"}
+      {...(reportQ
+        ? {
+            pregunta: {
+              id: reportQ.id,
+              text: reportQ.text,
+              options: reportQ.options,
+              correctIndex: reportQ.correctIndex,
+              explanation: reportQ.explanation,
+              materia: reportQ.materia,
+              ...(reportQ.fuente ? { fuente: reportQ.fuente } : {}),
+              ...(reportQ.capitulo !== undefined ? { capitulo: reportQ.capitulo } : {}),
+              selectedIndex: reportSel >= 0 ? reportSel : null,
+            },
+          }
+        : {})}
+    />
+  );
 
   /* Gating y disponibilidad del banco (solo relevante en fase warning) */
   const gate = canStartSimulator(user);
@@ -940,43 +982,87 @@ function SimuladorPage() {
 
   /* ─── PHASE: RESULT ─── */
   if (phase === "result") {
+    // Las que dejó en blanco cuentan mal para la calificación, no como respondidas.
+    const respondidas = questions.filter((q) => q.selectedOpt >= 0).length;
+    const calificacion = result?.scorePct ?? 0;
+    const materiasInforme: MateriaResult[] = MATERIAS.flatMap((m) => {
+      const pm = result?.porMateria[m.slug];
+      if (!pm || pm.total === 0) return [];
+      return [
+        {
+          slug: m.slug,
+          name: m.name,
+          icon: m.icon,
+          correct: pm.correct,
+          total: pm.total,
+          pct: Math.round((pm.correct / pm.total) * 100),
+        },
+      ];
+    });
+    const falladas = bankQs.flatMap((bq, i) => {
+      const elegida = questions[i]?.selectedOpt ?? -1;
+      return elegida === bq.correctIndex ? [] : [{ i, bq, elegida }];
+    });
+    const repaso: RepasoItem[] = falladas.slice(0, 3).map(({ i, bq, elegida }) => ({
+      numero: i + 1,
+      materia: MATERIAS[questions[i]?.materia ?? 0]?.name ?? "",
+      texto: bq.text,
+      tuRespuesta: elegida >= 0 ? `${LETTERS[elegida]} · ${bq.options[elegida]}` : null,
+      correcta: `${LETTERS[bq.correctIndex]} · ${bq.options[bq.correctIndex]}`,
+      explicacion: bq.explanation || undefined,
+      cita: bq.cite || undefined,
+    }));
+    const num = (n: number) => n.toFixed(2).replace(/\.?0+$/, "");
+    // Espacio duro antes de "%": que el signo no quede solo en otra línea.
+    const pct = (n: number) => `${num(n)}\u00a0%`;
+    const lectura =
+      respondidas === 0
+        ? "No respondiste preguntas en este intento. Cuando quieras, vuelve a intentarlo."
+        : calificacion >= 100
+          ? "Examen perfecto: no fallaste ninguna."
+          : passed
+            ? `Con ${pct(calificacion)} aprobarías: el examen pide ${pct(80)}.`
+            : calificacion >= 70
+              ? `Te faltaron ${num(80 - calificacion)} puntos para el ${pct(80)} que pide el examen. Estás cerca: repasa lo marcado.`
+              : `El examen pide ${pct(80)} para aprobar. Repasa las materias marcadas y vuelve a intentarlo.`;
+    const enBlanco =
+      respondidas > 0 && respondidas < TOTAL_QS
+        ? " Las que dejaste en blanco cuentan como incorrectas, igual que en el examen."
+        : "";
     return (
-      <div style={{ position: "fixed", inset: 0, background: "var(--fd-panel, #f5f7fc)", zIndex: 700, overflowY: "auto", padding: "28px 20px", fontFamily: "'Manrope', sans-serif" }}>
-        <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}`}</style>
-        <div style={{ maxWidth: 760, margin: "0 auto" }}>
-
-          {/* Header */}
-          <div style={{ textAlign: "center", marginBottom: 28 }}>
-            <div style={{ display: "inline-block" }}><PathyMark size={84} float /></div>
-            <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.8rem", color: "var(--fd-text, #081A35)", margin: "8px 0 4px" }}>
-              Examen <span style={{ color: passed ? "#2ecc71" : "var(--fd-gold, #7A5C1E)" }}>{passed ? "¡Aprobado!" : "entregado"}</span>
-            </h1>
-            <p style={{ fontSize: "0.9rem", color: "var(--fd-muted, #4A5872)" }}>Aquí está tu análisis completo de Pathy</p>
-          </div>
-
-          {/* Score card */}
-          <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 18px)", padding: 24, boxShadow: "0 2px 14px rgba(22,61,112,0.08)", marginBottom: 18, textAlign: "center" }}>
-            <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "3.5rem", fontWeight: 900, lineHeight: 1, marginBottom: 4, color: passed ? "#2ecc71" : "#e74c3c" }}>
-              {scorePct}%
-            </div>
-            <div style={{ fontSize: "0.85rem", color: "var(--fd-muted, #4A5872)", marginBottom: 20 }}>Calificación total del simulador</div>
-            <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-              {[
-                { num: totalCorrect, label: "Correctas", color: "#2ecc71" },
-                { num: TOTAL_QS - totalCorrect, label: "Incorrectas", color: "#e74c3c" },
-                { num: TOTAL_QS, label: "Total", color: "var(--fd-text, #081A35)" },
-                { num: secToHM(timeUsed), label: "Tiempo usado", color: "var(--fd-text, #163D70)" },
-              ].map((s) => (
-                <div key={s.label} style={{ textAlign: "center" }}>
-                  <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.5rem", fontWeight: 900, color: s.color }}>{s.num}</div>
-                  <div style={{ fontSize: "0.72rem", color: "var(--fd-muted, #7E90AD)" }}>{s.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Informe real de Pathy */}
-          {user && result && (
+      <QuizResults
+        modo={`SIMULADOR ${mode === "oficial" ? "OFICIAL" : "POTENCIADO"} · ${banco === "la" ? "LÍNEA AÉREA" : "CIAAC"}`}
+        eyebrow="ATERRIZAJE · EXAMEN ENTREGADO"
+        titulo={
+          passed ? (
+            <>
+              ¡Examen <em>aprobado!</em>
+            </>
+          ) : (
+            <>
+              Examen <em>entregado</em>
+            </>
+          )
+        }
+        verdict={lectura + enBlanco}
+        pilotName={(user?.nombre ?? "").trim().split(/\s+/)[0] ?? ""}
+        scorePct={calificacion}
+        decimales
+        scoreLabel="CALIFICACIÓN"
+        base={TOTAL_QS}
+        umbral={80}
+        medio={70}
+        marca={80}
+        correct={totalCorrect}
+        answered={respondidas}
+        total={TOTAL_QS}
+        seconds={timeUsed}
+        materias={materiasInforme}
+        exitTo={exitTo}
+        onRestart={resetSimulator}
+        restartLabel="Repetir simulador"
+        debrief={
+          user && result ? (
             <PathyDebrief
               userId={user.id}
               origen="simulador"
@@ -984,85 +1070,19 @@ function SimuladorPage() {
               scorePct={Math.round(result.scorePct)}
               answers={result.answers}
             />
-          )}
-
-          {/* Por materia */}
-          <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", padding: 20, boxShadow: "0 2px 10px rgba(22,61,112,0.06)", marginBottom: 18 }}>
-            <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--fd-muted, #4A5872)", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="chart" size={15} /> Resultado por materia</div>
-            {MATERIAS.map((m, i) => {
-              const pm = result?.porMateria[m.slug];
-              const p = pm && pm.total > 0 ? Math.round((pm.correct / pm.total) * 100) : 0;
-              const color = p >= 80 ? "#2ecc71" : p >= 70 ? "#f39c12" : "#e74c3c";
-              const bg = p >= 80 ? "rgba(46,204,113,0.06)" : p >= 70 ? "rgba(243,156,18,0.06)" : "rgba(231,76,60,0.06)";
-              const border = p >= 80 ? "rgba(46,204,113,0.2)" : p >= 70 ? "rgba(243,156,18,0.2)" : "rgba(231,76,60,0.2)";
-              return (
-                <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", background: bg, border: `1px solid ${border}`, borderRadius: "var(--fd-radius, 10px)", marginBottom: 7, gap: 10, flexWrap: "wrap" }}>
-                  <div>
-                    <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--fd-text, #081A35)", display: "flex", alignItems: "center", gap: 7 }}><Icon n={m.icon} size={15} color="var(--fd-muted, #4A5872)" /> {m.name}</div>
-                    <div style={{ fontSize: "0.72rem", color: "var(--fd-muted, #7E90AD)" }}>{m.total} preguntas</div>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                    <div style={{ width: 100, height: 6, background: "var(--fd-panel, #EEE1C5)", borderRadius: "var(--fd-radius, 10px)", overflow: "hidden" }}>
-                      <div style={{ height: "100%", width: `${p}%`, background: color, borderRadius: "var(--fd-radius, 10px)" }} />
-                    </div>
-                    <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.1rem", fontWeight: 900, color }}>{p}%</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Review Q sample */}
-          <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", padding: 20, boxShadow: "0 2px 10px rgba(22,61,112,0.06)", marginBottom: 24 }}>
-            <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--fd-muted, #4A5872)", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}><Icon n="sim" size={15} /> Preguntas corregidas</div>
-            {bankQs.slice(0, 3).map((q, i) => {
-              const userAns = questions[i]?.selectedOpt ?? -1;
-              const isCorrect = userAns === q.correctIndex;
-              return (
-                <div key={i} style={{ background: isCorrect ? "rgba(46,204,113,0.06)" : "rgba(231,76,60,0.05)", border: `1px solid ${isCorrect ? "rgba(46,204,113,0.2)" : "rgba(231,76,60,0.15)"}`, borderRadius: "var(--fd-radius, 12px)", padding: 16, marginBottom: 10 }}>
-                  <div style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 10 }}>
-                    <span style={{ flexShrink: 0, display: "flex", alignItems: "center", marginTop: 1 }}>{isCorrect ? <Icon n="checkCircle" size={17} color="#2ecc71" /> : <Icon n="close" size={17} color="#e74c3c" />}</span>
-                    <span style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--fd-text, #081A35)", lineHeight: 1.5 }}>{i + 1}. {q.text}</span>
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 10, paddingLeft: 24 }}>
-                    {q.options.map((o, oi) => {
-                      const isRight = oi === q.correctIndex;
-                      const isUser = oi === userAns;
-                      return (
-                        <div key={oi} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 12px", background: isRight ? "rgba(46,204,113,0.1)" : isUser && !isRight ? "rgba(231,76,60,0.08)" : "transparent", border: `1px solid ${isRight ? "#2ecc71" : isUser && !isRight ? "#e74c3c" : "#EEE1C5"}`, borderRadius: 8, fontSize: "0.82rem", color: "var(--fd-text, #081A35)" }}>
-                          <span>{LETTERS[oi]}</span>
-                          <span style={{ flex: 1 }}>{o}</span>
-                          {isUser && <span style={{ fontSize: "0.66rem", fontWeight: 700, color: isRight ? "#2ecc71" : "#e74c3c", whiteSpace: "nowrap" }}>Tu respuesta</span>}
-                          <span style={{ display: "flex", alignItems: "center" }}>{isRight ? <Icon n="checkCircle" size={15} color="#2ecc71" /> : isUser && !isRight ? <Icon n="close" size={15} color="#e74c3c" /> : null}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div style={{ padding: "10px 12px", background: "var(--fd-panel-alt, rgba(22,61,112,0.06))", borderLeft: "3px solid #163D70", borderRadius: "0 7px 7px 0", fontSize: "0.8rem", color: "var(--fd-muted, #555)", lineHeight: 1.5 }}>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="lightbulb" size={14} color="#f39c12" /> {q.explanation}</span>
-                    {q.cite && <div style={{ marginTop: 5, fontSize: "0.72rem", color: "var(--fd-text, #163D70)", fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><Icon n="book" size={13} /> {q.cite}</div>}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div style={{ marginBottom: 18 }}>
-            <button onClick={() => setPhase("review")} style={{ width: "100%", padding: 14, background: "#163D70", color: "white", border: "none", borderRadius: "var(--fd-radius, 12px)", fontSize: "0.95rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
-              <Icon n="doc" size={17} /> Revisar examen completo
-            </button>
-          </div>
-
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", paddingBottom: 40 }}>
-            <button onClick={resetSimulator} style={{ flex: 1, padding: 13, background: "var(--fd-panel, white)", color: "var(--fd-text, #163D70)", border: "2px solid #163D70", borderRadius: "var(--fd-radius, 11px)", fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
-              <Icon n="refresh" size={16} /> Repetir simulador
-            </button>
-            <Link to="/dashboard" style={{ flex: 1, padding: 13, background: "#7A5C1E", color: "white", border: "none", borderRadius: "var(--fd-radius, 11px)", fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
-              <Icon n="home" size={16} /> Ir al inicio
-            </Link>
-          </div>
-        </div>
-      </div>
+          ) : null
+        }
+        extra={
+          <RepasoPanel
+            items={repaso}
+            falladas={falladas.length}
+            onRevisar={() => {
+              setLeftPanelOpen(false);
+              setPhase("review");
+            }}
+          />
+        }
+      />
     );
   }
 
@@ -1073,6 +1093,47 @@ function SimuladorPage() {
     const userAns = questions[reviewCurrent]?.selectedOpt ?? -1;
     const isCorrect = userAns === reviewQ.correctIndex;
     const mi = questions[reviewCurrent]?.materia ?? 0;
+    const reviewList = (
+      <>
+        <div style={{ padding: "10px 14px", borderBottom: "1px solid var(--fd-border, #EEE1C5)", background: "var(--fd-panel, #f8f9ff)" }}>
+          <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 4 }}>Preguntas del examen</div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.62rem", color: "var(--fd-muted, #4A5872)" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#2ecc71" }} />Correcta</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.62rem", color: "var(--fd-muted, #4A5872)" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#e74c3c" }} />Incorrecta</div>
+          </div>
+        </div>
+        <div style={{ flex: 1, overflowY: "auto" }}>
+          {MATERIAS.map((m, mi) => {
+            const offset = materiaOffset(mi);
+            return (
+              <div key={mi}>
+                <div style={{ padding: "6px 12px", background: "var(--fd-panel, #f8f9ff)", borderBottom: "1px solid var(--fd-border, rgba(22,61,112,0.06))", fontSize: "0.68rem", fontWeight: 700, color: "var(--fd-text, #163D70)", textTransform: "uppercase", letterSpacing: "0.4px", display: "flex", alignItems: "center", gap: 5 }}>
+                  <Icon n={m.icon} size={12} /> {m.name}
+                </div>
+                {Array.from({ length: m.total }, (_, i) => {
+                  const idx = offset + i;
+                  const bqi = bankQs[idx];
+                  const correct = !!bqi && questions[idx]?.selectedOpt === bqi.correctIndex;
+                  const active = idx === reviewCurrent;
+                  return (
+                    <div
+                      key={idx}
+                      onClick={() => { setReviewCurrent(idx); setLeftPanelOpen(false); }}
+                      style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 12px 5px 16px", cursor: "pointer", background: active ? "var(--fd-panel-alt, rgba(22,61,112,0.06))" : "transparent", borderLeft: `3px solid ${correct ? "#2ecc71" : "#e74c3c"}`, transition: "background 0.2s" }}
+                    >
+                      <div style={{ width: 17, height: 17, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: correct ? "#2ecc71" : "#e74c3c", color: "white" }}>
+                        {correct ? <Icon n="check" size={11} sw={2.4} /> : <Icon n="close" size={11} sw={2.4} />}
+                      </div>
+                      <span style={{ fontSize: "0.73rem", color: "var(--fd-muted, #555)" }}>Pregunta {i + 1}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      </>
+    );
 
     return (
       <div style={{ position: "fixed", inset: 0, zIndex: 800, background: "var(--fd-panel, #f5f7fc)", display: "flex", flexDirection: "column", fontFamily: "'Manrope', sans-serif" }}>
@@ -1082,74 +1143,84 @@ function SimuladorPage() {
             <button onClick={() => setPhase("result")} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "5px 12px", borderRadius: 7, fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}>
               ← Volver
             </button>
+            <button
+              onClick={() => setLeftPanelOpen((o) => !o)}
+              aria-label="Ver lista de preguntas"
+              className="flex md:hidden"
+              style={{
+                alignItems: "center",
+                gap: 5,
+                background: "rgba(255,255,255,0.1)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                color: "white",
+                padding: "5px 10px",
+                borderRadius: 7,
+                fontSize: "0.8rem",
+                fontWeight: 600,
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+              }}
+            >
+              <Icon n="list" size={15} /> Preguntas
+            </button>
             <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1rem", color: "white", fontWeight: 700 }}>Revisión del examen</span>
           </div>
-          <span style={{ background: "#C7A052", color: "var(--fd-gold, #7A5C1E)", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.75rem", fontWeight: 700, display: "flex", alignItems: "center", gap: 5 }}><Icon n="doc" size={14} /> Modo revisión</span>
+          <span className="hidden sm:flex" style={{ background: "#C7A052", color: "#02070F", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.75rem", fontWeight: 700, alignItems: "center", gap: 5 }}><Icon n="doc" size={14} /> Modo revisión</span>
         </div>
 
         {/* Review body */}
         <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
           {/* Left list */}
-          <div style={{ width: 200, flexShrink: 0, background: "var(--fd-panel, white)", borderRight: "1px solid rgba(22,61,112,0.08)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
-            <div style={{ padding: "10px 14px", borderBottom: "1px solid var(--fd-border, #EEE1C5)", background: "var(--fd-panel, #f8f9ff)" }}>
-              <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--fd-text, #081A35)", marginBottom: 4 }}>Preguntas del examen</div>
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.62rem", color: "var(--fd-muted, #4A5872)" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#2ecc71" }} />Correcta</div>
-                <div style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.62rem", color: "var(--fd-muted, #4A5872)" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#e74c3c" }} />Incorrecta</div>
-              </div>
-            </div>
-            <div style={{ flex: 1, overflowY: "auto" }}>
-              {MATERIAS.map((m, mi) => {
-                const offset = materiaOffset(mi);
-                return (
-                  <div key={mi}>
-                    <div style={{ padding: "6px 12px", background: "var(--fd-panel, #f8f9ff)", borderBottom: "1px solid var(--fd-border, rgba(22,61,112,0.06))", fontSize: "0.68rem", fontWeight: 700, color: "var(--fd-text, #163D70)", textTransform: "uppercase", letterSpacing: "0.4px", display: "flex", alignItems: "center", gap: 5 }}>
-                      <Icon n={m.icon} size={12} /> {m.name}
-                    </div>
-                    {Array.from({ length: m.total }, (_, i) => {
-                      const idx = offset + i;
-                      const bqi = bankQs[idx];
-                      const correct = !!bqi && questions[idx]?.selectedOpt === bqi.correctIndex;
-                      const active = idx === reviewCurrent;
-                      return (
-                        <div
-                          key={idx}
-                          onClick={() => setReviewCurrent(idx)}
-                          style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 12px 5px 16px", cursor: "pointer", background: active ? "var(--fd-panel-alt, rgba(22,61,112,0.06))" : "transparent", borderLeft: `3px solid ${correct ? "#2ecc71" : "#e74c3c"}`, transition: "background 0.2s" }}
-                        >
-                          <div style={{ width: 17, height: 17, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: correct ? "#2ecc71" : "#e74c3c", color: "white" }}>
-                            {correct ? <Icon n="check" size={11} sw={2.4} /> : <Icon n="close" size={11} sw={2.4} />}
-                          </div>
-                          <span style={{ fontSize: "0.73rem", color: "var(--fd-muted, #555)" }}>Pregunta {i + 1}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                );
-              })}
-            </div>
+          <div className="hidden md:flex" style={{ width: 200, flexShrink: 0, background: "var(--fd-panel, white)", borderRight: "1px solid rgba(22,61,112,0.08)", flexDirection: "column", overflow: "hidden" }}>
+            {reviewList}
           </div>
 
+          {leftPanelOpen && (
+            <>
+              <div
+                className="flex md:hidden"
+                style={{
+                  position: "fixed",
+                  top: 56,
+                  left: 0,
+                  bottom: 0,
+                  zIndex: 80,
+                  width: 260,
+                  background: "#0A1B33",
+                  boxShadow: "4px 0 20px rgba(0,0,0,0.35)",
+                  flexDirection: "column",
+                  overflow: "hidden",
+                }}
+              >
+                {reviewList}
+              </div>
+              <div
+                className="md:hidden"
+                style={{ position: "fixed", inset: 0, top: 56, zIndex: 79, background: "rgba(0,0,0,0.4)" }}
+                onClick={() => setLeftPanelOpen(false)}
+              />
+            </>
+          )}
           {/* Review content */}
           <div style={{ flex: 1, overflowY: "auto", padding: "20px 16px", display: "flex", flexDirection: "column", alignItems: "center" }}>
             <div style={{ maxWidth: 680, width: "100%" }}>
               <div style={{ background: "var(--fd-panel, white)", borderRadius: "var(--fd-radius, 16px)", padding: 24, boxShadow: "0 2px 14px rgba(22,61,112,0.07)", marginBottom: 16 }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16, gap: 8, flexWrap: "wrap" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                     <span style={{ display: "flex", alignItems: "center" }}>{isCorrect ? <Icon n="checkCircle" size={20} color="#2ecc71" /> : <Icon n="close" size={20} color="#e74c3c" />}</span>
                     <span style={{ background: "var(--fd-panel-alt, rgba(22,61,112,0.07))", color: "var(--fd-text, #163D70)", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n={MATERIAS[mi].icon} size={13} /> {MATERIAS[mi].name}</span>
                     {userAns === -1 && (
-                      <span style={{ background: "rgba(243,156,18,0.1)", color: "#8a6000", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.72rem", fontWeight: 700 }}>Sin responder</span>
+                      <span style={{ background: "rgba(243,156,18,0.14)", color: "#F3C969", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.72rem", fontWeight: 700, whiteSpace: "nowrap" }}>Sin responder</span>
                     )}
                   </div>
-                  <span style={{ fontSize: "0.76rem", color: "var(--fd-muted, #7E90AD)" }}>Pregunta {reviewCurrent + 1} / {TOTAL_QS}</span>
+                  <span style={{ fontSize: "0.76rem", color: "var(--fd-muted, #7E90AD)", whiteSpace: "nowrap" }}>Pregunta {reviewCurrent + 1} / {TOTAL_QS}</span>
                 </div>
 
                 {/* Veredicto de la pregunta */}
                 {userAns === -1 ? (
                   <div style={{ display: "flex", alignItems: "flex-start", gap: 9, padding: "11px 14px", background: "rgba(243,156,18,0.08)", border: "1px solid rgba(243,156,18,0.35)", borderRadius: "var(--fd-radius, 10px)", marginBottom: 16, fontSize: "0.84rem", color: "var(--fd-muted, #555)", lineHeight: 1.5 }}>
                     <span style={{ display: "flex", flexShrink: 0, marginTop: 1 }}><Icon n="alert" size={17} color="#f39c12" /></span>
-                    <span><b style={{ color: "#8a6000" }}>Sin responder.</b> No marcaste ninguna opción; la respuesta correcta está resaltada en <b style={{ color: "#2ecc71" }}>verde</b>.</span>
+                    <span><b style={{ color: "#F3C969" }}>Sin responder.</b> No marcaste ninguna opción; la respuesta correcta está resaltada en <b style={{ color: "#2ecc71" }}>verde</b>.</span>
                   </div>
                 ) : isCorrect ? (
                   <div style={{ display: "flex", alignItems: "flex-start", gap: 9, padding: "11px 14px", background: "rgba(46,204,113,0.1)", border: "1px solid rgba(46,204,113,0.4)", borderRadius: "var(--fd-radius, 10px)", marginBottom: 16, fontSize: "0.84rem", color: "var(--fd-muted, #555)", lineHeight: 1.5 }}>
@@ -1191,6 +1262,29 @@ function SimuladorPage() {
                 <button onClick={openYaris} style={{ width: "100%", padding: 11, background: "linear-gradient(135deg,#163D70,#5A86CB)", color: "white", border: "none", borderRadius: "var(--fd-radius, 10px)", fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
                   <YarisAvatar size={20} /> Explícamelo Yaris
                 </button>
+                <button
+                  type="button"
+                  onClick={() => setReportOpen(true)}
+                  style={{
+                    width: "100%",
+                    marginTop: 8,
+                    padding: 10,
+                    background: "transparent",
+                    color: "var(--fd-muted, #4A5872)",
+                    border: "1px solid var(--fd-border, #EEE1C5)",
+                    borderRadius: "var(--fd-radius, 10px)",
+                    fontSize: "0.84rem",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    fontFamily: "'Manrope', sans-serif",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 7,
+                  }}
+                >
+                  <Icon n="alert" size={15} /> Reportar pregunta
+                </button>
               </div>
 
               <div style={{ display: "flex", gap: 10 }}>
@@ -1215,6 +1309,7 @@ function SimuladorPage() {
             />
           </div>
         </div>
+        {reportModal}
       </div>
     );
   }
@@ -1250,10 +1345,10 @@ function SimuladorPage() {
       {/* Topbar */}
       <div style={{ height: 56, background: "#081A35", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 16px", flexShrink: 0, zIndex: 50, gap: 8 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
-          <button onClick={() => setLeftPanelOpen((o) => !o)} aria-label="Ver lista de preguntas" className="md:hidden" style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "6px 10px", borderRadius: 7, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", minHeight: 40 }}>
+          <button onClick={() => setLeftPanelOpen((o) => !o)} aria-label="Ver lista de preguntas" className="flex md:hidden" style={{ alignItems: "center", gap: 5, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "white", padding: "6px 10px", borderRadius: 7, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Manrope', sans-serif", minHeight: 40 }}>
             <Icon n="list" size={15} /> Preguntas
           </button>
-          <span style={{ background: "#7A5C1E", color: "white", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", display: "inline-flex", alignItems: "center", gap: 5, flexShrink: 0 }}><Icon n="target" size={13} /> Simulador</span>
+          <span className="hidden sm:inline-flex" style={{ background: "#7A5C1E", color: "white", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", alignItems: "center", gap: 5, flexShrink: 0 }}><Icon n="target" size={13} /> Simulador</span>
           <span className="hidden md:block" style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1rem", color: "white", fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Examen General de Egreso — Piloto Comercial</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
@@ -1340,7 +1435,7 @@ function SimuladorPage() {
 
         {/* Left panel (mobile overlay) */}
         {leftPanelOpen && (
-          <div className="md:hidden" style={{ position: "fixed", top: 60, left: 0, bottom: 0, zIndex: 80, width: 260, background: "var(--fd-panel, white)", boxShadow: "4px 0 20px rgba(0,0,0,0.2)", display: "flex", flexDirection: "column" }}>
+          <div className="flex md:hidden" style={{ position: "fixed", top: 60, left: 0, bottom: 0, zIndex: 80, width: 260, background: "var(--fd-panel, white)", boxShadow: "4px 0 20px rgba(0,0,0,0.2)", flexDirection: "column" }}>
             <LeftPanel questions={questions} current={current} expandedMaterias={expandedMaterias} onToggleMateria={(mi) => setExpandedMaterias((s) => { const n = new Set(s); if (n.has(mi)) { n.delete(mi); } else { n.add(mi); } return n; })} onSelectQ={(i) => { setCurrent(i); setLeftPanelOpen(false); }} answeredCount={answeredCount} />
           </div>
         )}
@@ -1355,7 +1450,15 @@ function SimuladorPage() {
                 <div style={{ background: "var(--fd-panel-alt, rgba(22,61,112,0.07))", color: "var(--fd-text, #163D70)", padding: "4px 12px", borderRadius: "var(--fd-radius, 20px)", fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 5 }}>
                   <Icon n={MATERIAS[currentQ.materia].icon} size={14} /> {MATERIAS[currentQ.materia].name}
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    flexWrap: "wrap",
+                    justifyContent: "flex-end",
+                  }}
+                >
                   <button
                     onClick={toggleFlag}
                     aria-pressed={currentQ.flagged}
@@ -1363,6 +1466,28 @@ function SimuladorPage() {
                     style={{ display: "flex", alignItems: "center", gap: 5, padding: "6px 12px", border: `1px solid ${currentQ.flagged ? "#f39c12" : "#EEE1C5"}`, borderRadius: 7, background: currentQ.flagged ? "rgba(243,156,18,0.08)" : "var(--fd-panel, white)", fontSize: "0.76rem", fontWeight: 600, color: currentQ.flagged ? "#f39c12" : "var(--fd-muted, #4A5872)", cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "all 0.2s", minHeight: 36 }}
                   >
                     <Icon n="flag" size={14} /> {currentQ.flagged ? "Marcada" : "Marcar para revisar"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setReportOpen(true)}
+                    title="Reportar pregunta (R)"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 5,
+                      padding: "6px 12px",
+                      border: "1px solid #EEE1C5",
+                      borderRadius: 7,
+                      background: "var(--fd-panel, white)",
+                      fontSize: "0.76rem",
+                      fontWeight: 600,
+                      color: "var(--fd-muted, #4A5872)",
+                      cursor: "pointer",
+                      fontFamily: "'Manrope', sans-serif",
+                      minHeight: 36,
+                    }}
+                  >
+                    <Icon n="alert" size={14} /> Reportar
                   </button>
                   <span style={{ fontSize: "0.76rem", color: "var(--fd-muted, #7E90AD)", fontFamily: "'JetBrains Mono', ui-monospace, monospace" }}>{current + 1} / {TOTAL_QS}</span>
                 </div>
@@ -1386,38 +1511,53 @@ function SimuladorPage() {
                       aria-checked={selected}
                       data-selected={selected}
                       onClick={() => selectOpt(current, oi)}
-                      className="sim-opt"
+                      className={`fp-quiz-option sim-opt${selected ? " is-selected" : ""}`}
                       style={{
-                        display: "flex", alignItems: "center", gap: 14, padding: "14px 18px",
-                        background: selected ? "var(--fd-panel-alt, rgba(22,61,112,0.09))" : "var(--fd-panel, #f8f9ff)",
-                        border: `2px solid ${selected ? "#163D70" : "#EEE1C5"}`,
-                        borderRadius: "var(--fd-radius, 12px)", cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 14,
+                        padding: "14px 18px",
+                        border: "1px solid var(--fd-border, #EEE1C5)",
+                        borderRadius: "var(--fd-radius, 12px)",
+                        cursor: "pointer",
                         transition: "background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s",
-                        userSelect: "none", fontFamily: "'Manrope', sans-serif", minHeight: 56, width: "100%",
+                        userSelect: "none",
+                        font: "inherit",
+                        minHeight: 56,
+                        width: "100%",
                       }}
                     >
-                      <div
+                      <span
                         className="sim-opt-letter"
                         aria-hidden="true"
                         style={{
-                          width: 30, height: 30, borderRadius: "50%",
-                          display: "flex", alignItems: "center", justifyContent: "center",
-                          fontSize: "0.8rem", fontWeight: 700, flexShrink: 0,
-                          background: selected ? "#163D70" : "var(--fd-panel, #EEE1C5)",
-                          color: selected ? "white" : "var(--fd-muted, #4A5872)",
+                          width: 34,
+                          height: 34,
+                          borderRadius: "50%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: "0.82rem",
+                          fontWeight: 700,
+                          flexShrink: 0,
                         }}
                       >
                         {selected ? <Icon n="check" size={16} /> : LETTERS[oi]}
-                      </div>
-                      <div style={{ fontSize: "0.9rem", color: "var(--fd-text, #081A35)", lineHeight: 1.4, flex: 1, textAlign: "left" }}>{opt}</div>
+                      </span>
+                      <span
+                        style={{ fontSize: "0.95rem", lineHeight: 1.45, flex: 1, textAlign: "left" }}
+                      >
+                        {opt}
+                      </span>
                     </button>
                   );
                 })}
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 14, fontSize: "0.72rem", color: "var(--fd-muted, #7E90AD)", flexWrap: "wrap" }}>
+              {/* Atajos de teclado: sólo donde hay teclado. */}
+              <div className="hidden sm:flex" style={{ alignItems: "center", gap: 6, marginTop: 14, fontSize: "0.72rem", color: "var(--fd-muted, #7E90AD)", flexWrap: "wrap" }}>
                 <span style={{ display: "flex", alignItems: "center" }}><Icon n="lightbulb" size={14} /></span>
-                <span>Atajos: <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>1-4</kbd> respuesta · <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>←/→</kbd> navegar · <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>F</kbd> marcar</span>
+                <span>Atajos: <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>1-4</kbd> respuesta · <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>←/→</kbd> navegar · <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>F</kbd> marcar · <kbd style={{ background: "var(--fd-panel, #f2f4fa)", padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "0.7rem" }}>R</kbd> reportar</span>
               </div>
             </div>
 
@@ -1529,6 +1669,8 @@ function SimuladorPage() {
           </div>
         </div>
       )}
+
+      {reportModal}
     </div>
   );
 }
