@@ -1064,6 +1064,60 @@ function CuestionarioPage() {
    * `display: none`, que el `display: grid !important` del tema de la sesión
    * anulaba: la pregunta, el reloj y el combo seguían a la vista.
    */
+  /*
+   * Revisión del intento recién terminado: solo lectura. No guarda intento,
+   * no recalifica y no toca XP, racha ni estadísticas; únicamente lee el
+   * estado de esta sesión.
+   */
+  if (showResult && reviewing) {
+    const reportQ = reviewReportIdx !== null ? questions[reviewReportIdx] : null;
+    return (
+      <>
+        <QuizReview
+          titulo={`APRENDIENDO · ${(quizTitulo ?? materiaLabel).toUpperCase()}`}
+          items={questions.map((q, i) => ({
+            id: q.questionId,
+            text: q.text,
+            ...(q.capituloTitulo ? { eyebrow: q.capituloTitulo } : {}),
+            options: q.options.map((o) => o.text),
+            correctIndex: q.correctIndex,
+            selectedIndex: picks[i] ?? null,
+            ...(q.abierta ? { abierta: true } : {}),
+            respuestaEscrita: openResponses[i] ?? null,
+            correcta: results[i] ?? null,
+            explicacion:
+              results[i] === true ? q.feedback.correct : q.feedback.incorrect || q.explanation,
+            ...(q.feedback.cite ? { cita: q.feedback.cite } : {}),
+            ...(q.imagenes?.length ? { imagenes: q.imagenes } : {}),
+            ...(q.fuente ? { fuente: q.fuente } : {}),
+            fallbackImage: knowledgeQuestionImage,
+          }))}
+          onExit={() => setReviewing(false)}
+          onReport={(i) => setReviewReportIdx(i)}
+        />
+        {reportQ && (
+          <ReportProblemModal
+            open
+            onClose={() => setReviewReportIdx(null)}
+            user={user}
+            seccion="Cuestionarios"
+            recurso={reportQ.questionId}
+            tipoInicial="Respuesta incorrecta"
+            pregunta={{
+              id: reportQ.questionId,
+              text: reportQ.text,
+              options: reportQ.options.map((o) => o.text),
+              correctIndex: reportQ.correctIndex,
+              explanation: reportQ.explanation,
+              materia: reportQ.slug,
+              selectedIndex: picks[reviewReportIdx ?? 0] ?? null,
+            }}
+          />
+        )}
+      </>
+    );
+  }
+
   if (showResult) {
     return (
       <QuizResults
