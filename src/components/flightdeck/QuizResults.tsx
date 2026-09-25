@@ -225,6 +225,9 @@ export function QuizResults({
   exitTo: "/dashboard/banco" | "/dashboard/linea-aerea";
   onRestart: () => void;
   restartLabel?: string;
+  /** Abre la revisión solo lectura del intento recién terminado. */
+  onReview?: () => void;
+  reviewLabel?: string;
   /** Lectura de Pathy (`PathyDebrief`). */
   debrief: ReactNode;
   /** Bloque adicional bajo el rendimiento (p. ej. las preguntas para repasar). */
