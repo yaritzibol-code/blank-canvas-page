@@ -147,6 +147,7 @@ function LearningPathPage() {
   return (
     <>
     <LearningPathExperience
+      key={item.id}
       identity={{
         category: cat.titulo, subject: subject.titulo, chapter: cont.titulo, title: item.titulo,
         id: item.id, categoryId: categoria, subjectId: materia, chapterId: contenedor,

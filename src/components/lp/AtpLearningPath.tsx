@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LearningPathYarisAvatar } from "./LearningPathCharacters";
 import { getLpJourney, resetLpJourney, saveLpJourney } from "@/lib/store/lp-journey";
 import { useLearningPathStageView } from "@/components/lp/LearningPathExperience";
@@ -121,6 +121,7 @@ export function AtpLearningPath({
   const [state, setState] = useState<AtpJourneyState>(() => freshState(labels.length));
   const [hydrated, setHydrated] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const completionReconciled = useRef<string | null>(null);
 
   useEffect(() => {
     if (hydrated) return;
@@ -140,6 +141,14 @@ export function AtpLearningPath({
   useEffect(() => {
     if (hydrated) saveLpJourney(userId, lpId, state);
   }, [hydrated, lpId, state, userId]);
+
+  useEffect(() => {
+    if (!hydrated || !state.finished || completed) return;
+    const journeyId = `${userId}:${lpId}`;
+    if (completionReconciled.current === journeyId) return;
+    completionReconciled.current = journeyId;
+    onComplete();
+  }, [completed, hydrated, lpId, onComplete, state.finished, userId]);
 
   const currentDone = missionDone(state, content.steps, content.takeaways, content.introExplore);
   const openThrough = frontier(state);

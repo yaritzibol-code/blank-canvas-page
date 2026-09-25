@@ -77,7 +77,7 @@ export function LearningPathExperience({
     if (!view) return;
     const previous = previousStageRef.current;
     previousStageRef.current = { pathId: identity.id, index: view.current };
-    if (!previous || previous.pathId !== identity.id || previous.index === view.current) return;
+    if (previous?.pathId === identity.id && previous.index === view.current) return;
 
     const content = contentRef.current;
     if (!content) return;
