@@ -9,7 +9,7 @@ import { buildCalcItem, calcTopicLabel, type CalcItem } from "@/modules/compass/
 import { scoreCalc } from "@/modules/compass/scoring";
 import type { CompassResult, CompassRunConfig } from "@/modules/compass/types";
 import { classifyInput } from "./use-game-loop";
-import { CButton, CCard, Eyebrow, GameTopBar, CREAM, HAZE, MONO, NAVY, SERIF } from "./ui";
+import { CButton, CCard, Eyebrow, GameTopBar, GREEN, INK2, INK3, MONO, RED } from "./ui";
 
 interface Props {
   cfg: CompassRunConfig;
@@ -170,8 +170,10 @@ export function CalculoGame({ cfg, onFinish, onQuit }: Props) {
     else counts.current.mouse++;
   };
 
+  const acerto = picked !== null && picked === item.correctIndex;
+
   return (
-    <div style={{ maxWidth: 640, margin: "0 auto" }} onPointerDown={trackPointer}>
+    <div onPointerDown={trackPointer}>
       <GameTopBar
         nombre={`Cálculo · ${esPractica ? `Práctica` : "Examen"}`}
         remainingSec={remaining}
@@ -179,18 +181,9 @@ export function CalculoGame({ cfg, onFinish, onQuit }: Props) {
         onQuit={onQuit}
       />
 
-      <CCard style={{ padding: "30px 26px" }}>
+      <CCard style={{ maxWidth: 760, margin: "0 auto", padding: "clamp(18px, 3.4vw, 32px)" }}>
         <Eyebrow>{calcTopicLabel(item.topic)}</Eyebrow>
-        <div
-          style={{
-            fontFamily: SERIF,
-            fontStyle: "italic",
-            fontSize: "clamp(1.3rem, 3vw, 1.7rem)",
-            color: "var(--fd-text, #081A35)",
-            lineHeight: 1.3,
-            marginBottom: 22,
-          }}
-        >
+        <div key={idx} className="cx-question">
           {item.question}
         </div>
         <div
@@ -203,56 +196,30 @@ export function CalculoGame({ cfg, onFinish, onQuit }: Props) {
           {item.options.map((o, i) => {
             const isCorrect = picked !== null && i === item.correctIndex;
             const isWrongPick = picked === i && i !== item.correctIndex;
+            const estado = isCorrect
+              ? " is-correct"
+              : isWrongPick
+                ? " is-wrong"
+                : picked !== null
+                  ? " is-dim"
+                  : "";
             return (
               <button
                 key={i}
+                type="button"
+                className={`cx-key is-row${estado}`}
                 onClick={() => choose(i)}
                 disabled={picked !== null}
-                style={{
-                  textAlign: "left",
-                  padding: "13px 16px",
-                  borderRadius: "var(--fd-radius, 12px)",
-                  border: `1px solid ${isCorrect ? "#12B26B" : isWrongPick ? "#C24545" : `${NAVY}22`}`,
-                  background: isCorrect ? "var(--fd-panel, #EAF7F0)" : isWrongPick ? "var(--fd-panel, #FBEDED)" : "var(--fd-panel, white)",
-                  color: "var(--fd-text, #081A35)",
-                  fontFamily: MONO,
-                  fontSize: "0.95rem",
-                  fontWeight: 700,
-                  cursor: picked === null ? "pointer" : "default",
-                  minHeight: 48,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 10,
-                }}
               >
-                <span
-                  style={{
-                    fontSize: "0.62rem",
-                    color: "var(--fd-muted, #4A5872)",
-                    border: `1px solid ${NAVY}1F`,
-                    borderRadius: 6,
-                    padding: "2px 6px",
-                    flexShrink: 0,
-                  }}
-                >
-                  {i + 1}
-                </span>
-                {o}
+                <span className="cx-key-n">{i + 1}</span>
+                <span style={{ fontFamily: MONO, fontSize: "1rem", fontWeight: 700 }}>{o}</span>
               </button>
             );
           })}
         </div>
 
         {esPractica && picked !== null && (
-          <div
-            style={{
-              marginTop: 18,
-              background: "var(--fd-panel, #F5F5F7)",
-              border: `1px solid ${NAVY}12`,
-              borderRadius: "var(--fd-radius, 14px)",
-              padding: "14px 16px",
-            }}
-          >
+          <div className={`cx-feedback ${acerto ? "is-ok" : "is-bad"}`}>
             <div
               style={{
                 fontFamily: MONO,
@@ -260,17 +227,19 @@ export function CalculoGame({ cfg, onFinish, onQuit }: Props) {
                 letterSpacing: "0.16em",
                 textTransform: "uppercase",
                 fontWeight: 700,
-                color: "var(--fd-muted, #4A5872)",
+                color: acerto ? GREEN : picked === -1 ? INK3 : RED,
                 marginBottom: 6,
               }}
             >
-              {picked === item.correctIndex
+              {acerto
                 ? "Correcto — así se resuelve"
                 : picked === -1
                   ? "Saltada — así se resolvía"
                   : "Así se resolvía"}
             </div>
-            <div style={{ fontSize: "0.9rem", color: "var(--fd-text, #081A35)", lineHeight: 1.5 }}>{item.rationale}</div>
+            <div style={{ fontSize: "0.9rem", color: INK2, lineHeight: 1.55 }}>
+              {item.rationale}
+            </div>
             <div style={{ marginTop: 12, display: "flex", justifyContent: "flex-end" }}>
               <CButton onClick={advance}>
                 {tally.current.total >= cfg.items ? "Ver debrief" : "Siguiente (Enter)"}

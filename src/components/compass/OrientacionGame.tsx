@@ -5,7 +5,7 @@
  * (aguja de marcación relativa). El alumno elige el mapa cenital que coincide.
  * Cada distractor representa UNA confusión con nombre: el debrief la señala.
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import {
   buildOrientationItem,
   confusionKey,
@@ -16,7 +16,22 @@ import {
 import { scoreItemsConError } from "@/modules/compass/scoring";
 import type { CompassResult, CompassRunConfig } from "@/modules/compass/types";
 import { classifyInput } from "./use-game-loop";
-import { CButton, CCard, Eyebrow, GameTopBar, CORAL, CREAM, HAZE, MONO, NAVY, SERIF } from "./ui";
+import { AVION_PATH } from "./sprites";
+import {
+  CButton,
+  CCard,
+  Eyebrow,
+  GameTopBar,
+  AMBER,
+  GOLD,
+  GREEN,
+  INK,
+  INK2,
+  MONO,
+  RED,
+  SERIF,
+  SKY,
+} from "./ui";
 
 interface Props {
   cfg: CompassRunConfig;
@@ -26,25 +41,118 @@ interface Props {
 
 /* ── Instrumentos ─────────────────────────────────────────────────────── */
 
-function DirectionIndicator({ heading, size = 150 }: { heading: number; size?: number }) {
-  const c = size / 2;
-  const r = c - 6;
+/** Lado del viewBox de los instrumentos: se dibujan a 200 y escalan con CSS. */
+const IV = 200;
+const IC = IV / 2;
+const INSTR_SIZE = "clamp(118px, 35vw, 184px)";
+const TICK_FONT = "'Geist Mono', 'JetBrains Mono', monospace";
+
+/** Ids seguros para url(#...) a partir de useId. */
+function useSvgId(prefix: string) {
+  return `${prefix}${useId().replace(/[^\w-]/g, "")}`;
+}
+
+/** Caja del instrumento: marco con tornillos, bisel metálico y carátula. */
+function InstrumentCase({ id, children }: { id: string; children: React.ReactNode }) {
+  const tornillos: [number, number][] = [
+    [17, 17],
+    [IV - 17, 17],
+    [17, IV - 17],
+    [IV - 17, IV - 17],
+  ];
+  return (
+    <>
+      <defs>
+        <linearGradient id={`${id}-case`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#1c2638" />
+          <stop offset="1" stopColor="#060b15" />
+        </linearGradient>
+        <linearGradient id={`${id}-bezel`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#6a768a" />
+          <stop offset="0.45" stopColor="#1a2230" />
+          <stop offset="1" stopColor="#465267" />
+        </linearGradient>
+        <radialGradient id={`${id}-face`} cx="0.5" cy="0.4" r="0.62">
+          <stop offset="0" stopColor="#123260" />
+          <stop offset="1" stopColor="#030a18" />
+        </radialGradient>
+        <linearGradient id={`${id}-glass`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#fff" stopOpacity={0.17} />
+          <stop offset="1" stopColor="#fff" stopOpacity={0} />
+        </linearGradient>
+        <filter id={`${id}-glow`} x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="2.4" result="b" />
+          <feMerge>
+            <feMergeNode in="b" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+      <rect
+        x={2}
+        y={2}
+        width={IV - 4}
+        height={IV - 4}
+        rx={24}
+        fill={`url(#${id}-case)`}
+        stroke="rgba(255,255,255,.08)"
+      />
+      {tornillos.map(([x, y]) => (
+        <g key={`${x}-${y}`}>
+          <circle cx={x} cy={y} r={5.2} fill="#0a101b" stroke="rgba(255,255,255,.2)" />
+          <line
+            x1={x - 3.2}
+            y1={y}
+            x2={x + 3.2}
+            y2={y}
+            stroke="rgba(255,255,255,.34)"
+            strokeWidth={1.3}
+            transform={`rotate(38 ${x} ${y})`}
+          />
+        </g>
+      ))}
+      <circle cx={IC} cy={IC} r={92} fill={`url(#${id}-bezel)`} />
+      <circle cx={IC} cy={IC} r={86} fill={`url(#${id}-face)`} />
+      {children}
+      {/* Sombra interior del bisel y reflejo del cristal */}
+      <circle cx={IC} cy={IC} r={86} fill="none" stroke="rgba(0,0,0,.55)" strokeWidth={5} />
+      <ellipse
+        cx={IC - 16}
+        cy={IC - 42}
+        rx={64}
+        ry={30}
+        fill={`url(#${id}-glass)`}
+        transform={`rotate(-24 ${IC - 16} ${IC - 42})`}
+      />
+    </>
+  );
+}
+
+/** Marcas de carátula cada 5°: medianas cada 10°, mayores cada 30°. */
+function CardTicks() {
   const ticks = [];
-  for (let d = 0; d < 360; d += 10) {
+  for (let d = 0; d < 360; d += 5) {
     const major = d % 30 === 0;
+    const mid = d % 10 === 0;
+    const len = major ? 13 : mid ? 8.5 : 5;
     ticks.push(
       <line
         key={d}
-        x1={c}
-        y1={c - r + (major ? 0 : 4)}
-        x2={c}
-        y2={c - r + (major ? 12 : 9)}
-        stroke="white"
-        strokeWidth={major ? 2 : 1}
-        transform={`rotate(${d} ${c} ${c})`}
+        x1={IC}
+        y1={IC - 82}
+        x2={IC}
+        y2={IC - 82 + len}
+        stroke={major ? "#fff" : "rgba(255,255,255,.7)"}
+        strokeWidth={major ? 2.4 : mid ? 1.6 : 1}
+        transform={`rotate(${d} ${IC} ${IC})`}
       />,
     );
   }
+  return <>{ticks}</>;
+}
+
+function DirectionIndicator({ heading }: { heading: number }) {
+  const id = useSvgId("cx-dg");
   const labels = [
     { d: 0, t: "N" },
     { d: 30, t: "3" },
@@ -61,97 +169,119 @@ function DirectionIndicator({ heading, size = 150 }: { heading: number; size?: n
   ];
   return (
     <svg
-      width={size}
-      height={size}
-      viewBox={`0 0 ${size} ${size}`}
+      viewBox={`0 0 ${IV} ${IV}`}
+      style={{ width: INSTR_SIZE, height: "auto", display: "block" }}
       role="img"
       aria-label={`Girodireccional marcando rumbo ${heading}`}
     >
-      <circle cx={c} cy={c} r={c - 1} fill={NAVY} />
-      <g transform={`rotate(${-heading} ${c} ${c})`}>
-        {ticks}
-        {labels.map((l) => (
-          <text
-            key={l.d}
-            x={c}
-            y={c - r + 24}
-            fill="white"
-            fontSize={l.t.length > 1 ? 10 : 12}
-            fontWeight={700}
-            fontFamily="'JetBrains Mono', monospace"
-            textAnchor="middle"
-            transform={`rotate(${l.d} ${c} ${c})`}
-          >
-            {l.t}
-          </text>
+      <InstrumentCase id={id}>
+        {/* La rosa gira; el índice queda arriba */}
+        <g transform={`rotate(${-heading} ${IC} ${IC})`}>
+          <CardTicks />
+          {labels.map((l) => {
+            const cardinal = l.t.length === 1 && Number.isNaN(Number(l.t));
+            return (
+              <text
+                key={l.d}
+                x={IC}
+                y={IC - 82 + 33}
+                fill={cardinal ? "#fff" : "rgba(255,255,255,.88)"}
+                fontSize={cardinal ? 17 : 14}
+                fontWeight={700}
+                fontFamily={TICK_FONT}
+                textAnchor="middle"
+                transform={`rotate(${l.d} ${IC} ${IC})`}
+              >
+                {l.t}
+              </text>
+            );
+          })}
+        </g>
+        {/* Índices fijos cada 45° sobre el bisel */}
+        {[45, 90, 135, 180, 225, 270, 315].map((d) => (
+          <polygon
+            key={d}
+            points={`${IC - 3.5},${IC - 91} ${IC + 3.5},${IC - 91} ${IC},${IC - 85}`}
+            fill="rgba(255,255,255,.65)"
+            transform={`rotate(${d} ${IC} ${IC})`}
+          />
         ))}
-      </g>
-      {/* Índice fijo (lubber line) y silueta propia */}
-      <polygon points={`${c - 6},6 ${c + 6},6 ${c},18`} fill={CORAL} />
-      <g stroke="#C7A052" strokeWidth={2.4} strokeLinecap="round">
-        <line x1={c} y1={c - 14} x2={c} y2={c + 12} />
-        <line x1={c - 11} y1={c - 2} x2={c + 11} y2={c - 2} />
-        <line x1={c - 6} y1={c + 9} x2={c + 6} y2={c + 9} />
-      </g>
+        {/* Índice de rumbo (lubber line) */}
+        <polygon
+          points={`${IC - 8},${IC - 92} ${IC + 8},${IC - 92} ${IC},${IC - 76}`}
+          fill={AMBER}
+          filter={`url(#${id}-glow)`}
+        />
+        {/* Avión fijo, nariz arriba */}
+        <path
+          d={AVION_PATH}
+          transform={`translate(${IC} ${IC}) scale(1.05)`}
+          fill={GOLD}
+          stroke="#7a5c1e"
+          strokeWidth={0.8}
+          filter={`url(#${id}-glow)`}
+        />
+      </InstrumentCase>
     </svg>
   );
 }
 
-function RbiInstrument({ rb, size = 150 }: { rb: number; size?: number }) {
-  const c = size / 2;
-  const r = c - 6;
-  const ticks = [];
-  for (let d = 0; d < 360; d += 15) {
-    const major = d % 45 === 0;
-    ticks.push(
-      <line
-        key={d}
-        x1={c}
-        y1={c - r + (major ? 0 : 4)}
-        x2={c}
-        y2={c - r + (major ? 11 : 8)}
-        stroke="white"
-        strokeWidth={major ? 2 : 1}
-        transform={`rotate(${d} ${c} ${c})`}
-      />,
-    );
-  }
+function RbiInstrument({ rb }: { rb: number }) {
+  const id = useSvgId("cx-rbi");
+  const labels = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330];
   return (
     <svg
-      width={size}
-      height={size}
-      viewBox={`0 0 ${size} ${size}`}
+      viewBox={`0 0 ${IV} ${IV}`}
+      style={{ width: INSTR_SIZE, height: "auto", display: "block" }}
       role="img"
       aria-label={`Indicador de marcación relativa con aguja en ${rb} grados`}
     >
-      <circle cx={c} cy={c} r={c - 1} fill={NAVY} />
-      {ticks}
-      {[0, 90, 180, 270].map((d) => (
-        <text
-          key={d}
-          x={c}
-          y={c - r + 23}
-          fill="white"
-          fontSize={11}
-          fontWeight={700}
-          fontFamily="'JetBrains Mono', monospace"
-          textAnchor="middle"
-          transform={`rotate(${d} ${c} ${c})`}
-        >
-          {d === 0 ? "0" : d / 10}
-        </text>
-      ))}
-      {/* Aguja ADF */}
-      <g transform={`rotate(${rb} ${c} ${c})`}>
-        <polygon points={`${c},${c - r + 14} ${c - 7},${c + 8} ${c + 7},${c + 8}`} fill="#F2D06B" />
-        <rect x={c - 2.6} y={c + 6} width={5.2} height={r * 0.5} rx={2.6} fill="#F2D06B" />
-      </g>
-      <circle cx={c} cy={c} r={4.5} fill={NAVY} stroke="white" strokeWidth={1.5} />
+      <InstrumentCase id={id}>
+        {/* Carátula fija: 0 = nariz del avión */}
+        <CardTicks />
+        {labels.map((d) => {
+          const eje = d % 90 === 0;
+          return (
+            <text
+              key={d}
+              x={IC}
+              y={IC - 82 + 32}
+              fill={eje ? "#fff" : "rgba(255,255,255,.7)"}
+              fontSize={eje ? 16 : 12}
+              fontWeight={700}
+              fontFamily={TICK_FONT}
+              textAnchor="middle"
+              transform={`rotate(${d} ${IC} ${IC})`}
+            >
+              {d / 10}
+            </text>
+          );
+        })}
+        {/* Avión de referencia, tenue */}
+        <path
+          d={AVION_PATH}
+          transform={`translate(${IC} ${IC}) scale(0.9)`}
+          fill="rgba(255,255,255,.16)"
+        />
+        {/* Aguja ADF */}
+        <g transform={`rotate(${rb} ${IC} ${IC})`} filter={`url(#${id}-glow)`}>
+          <polygon
+            points={`${IC},${IC - 74} ${IC - 9},${IC - 50} ${IC - 3},${IC - 50} ${IC - 3},${IC + 62} ${IC + 3},${IC + 62} ${IC + 3},${IC - 50} ${IC + 9},${IC - 50}`}
+            fill="#F2D06B"
+          />
+          <polygon
+            points={`${IC - 8},${IC + 70} ${IC},${IC + 58} ${IC + 8},${IC + 70} ${IC + 8},${IC + 76} ${IC},${IC + 66} ${IC - 8},${IC + 76}`}
+            fill="#F2D06B"
+          />
+        </g>
+        <circle cx={IC} cy={IC} r={7} fill="#0b1830" stroke="#F2D06B" strokeWidth={2} />
+        <circle cx={IC} cy={IC} r={2.2} fill="#fff" />
+      </InstrumentCase>
     </svg>
   );
 }
 
-/** Mapa cenital de opción: estación al centro, avión sobre el radial. */
+/** Mapa cenital de opción: pantalla de navegación con la estación al centro y el avión sobre el radial. */
 function MiniMap({
   opt,
   size = 132,
@@ -165,82 +295,133 @@ function MiniMap({
   onClick?: () => void;
   index: number;
 }) {
+  const id = useSvgId("cx-map");
   const c = size / 2;
   const dist = size * 0.32;
   const rad = (opt.radial * Math.PI) / 180;
   const px = c + Math.sin(rad) * dist;
   const py = c - Math.cos(rad) * dist;
-  const border = state === "correct" ? "#12B26B" : state === "wrong" ? "#C24545" : `${NAVY}22`;
+  const clase =
+    state === "correct"
+      ? " is-correct"
+      : state === "wrong"
+        ? " is-wrong"
+        : state === "dim"
+          ? " is-dim"
+          : "";
+  const rejilla = [];
+  for (let g = size / 6; g < size; g += size / 6) {
+    rejilla.push(
+      <line key={`v${g}`} x1={g} y1={0} x2={g} y2={size} />,
+      <line key={`h${g}`} x1={0} y1={g} x2={size} y2={g} />,
+    );
+  }
   return (
     <button
+      type="button"
+      className={`cx-key cx-map${clase}`}
       onClick={onClick}
       disabled={!onClick}
-      style={{
-        border: `2px solid ${border}`,
-        borderRadius: "var(--fd-radius, 16px)",
-        background: state === "dim" ? "var(--fd-panel, #F4F3F0)" : "var(--fd-panel, white)",
-        opacity: state === "dim" ? 0.55 : 1,
-        cursor: onClick ? "pointer" : "default",
-        padding: 6,
-        lineHeight: 0,
-        position: "relative",
-      }}
+      aria-label={`Mapa ${index + 1}`}
     >
-      <span
-        style={{
-          position: "absolute",
-          top: 8,
-          left: 10,
-          fontFamily: MONO,
-          fontSize: "0.62rem",
-          fontWeight: 700,
-          color: "var(--fd-muted, #4A5872)",
-          lineHeight: 1,
-        }}
+      <span className="cx-key-n">{index + 1}</span>
+      <svg
+        viewBox={`0 0 ${size} ${size}`}
+        style={{ width: "100%", height: "auto", display: "block" }}
+        aria-hidden="true"
       >
-        {index + 1}
-      </span>
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true">
+        <defs>
+          <radialGradient id={`${id}-bg`} cx="0.5" cy="0.5" r="0.7">
+            <stop offset="0" stopColor="#0f2c55" />
+            <stop offset="1" stopColor="#030a18" />
+          </radialGradient>
+          <filter id={`${id}-glow`} x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="1.8" result="b" />
+            <feMerge>
+              <feMergeNode in="b" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        <rect x={0} y={0} width={size} height={size} rx={10} fill={`url(#${id}-bg)`} />
+        <g stroke="rgba(143,211,244,.07)" strokeWidth={1}>
+          {rejilla}
+        </g>
+        {/* Anillos de distancia */}
+        <circle
+          cx={c}
+          cy={c}
+          r={dist}
+          fill="none"
+          stroke="rgba(143,211,244,.22)"
+          strokeWidth={1}
+          strokeDasharray="2 4"
+        />
+        <circle
+          cx={c}
+          cy={c}
+          r={dist / 2}
+          fill="none"
+          stroke="rgba(143,211,244,.14)"
+          strokeWidth={1}
+          strokeDasharray="2 4"
+        />
         {/* Norte del mapa */}
-        <g transform={`translate(${size - 16}, 16)`}>
-          <line x1={0} y1={8} x2={0} y2={-8} stroke={HAZE} strokeWidth={1.6} />
-          <polygon points="0,-9 -4,-2 4,-2" fill={HAZE} />
+        <g transform={`translate(${size - 15}, 20)`}>
+          <line x1={0} y1={8} x2={0} y2={-6} stroke={INK2} strokeWidth={1.5} />
+          <polygon points="0,-10 -4,-3 4,-3" fill={INK} />
           <text
             x={0}
-            y={-12}
-            fontSize={9}
+            y={-13}
+            fontSize={8.5}
             fontWeight={700}
-            fill={HAZE}
+            fill={INK2}
             textAnchor="middle"
-            fontFamily="'JetBrains Mono', monospace"
+            fontFamily={TICK_FONT}
           >
             N
           </text>
         </g>
-        {/* Estación NDB */}
-        <circle
-          cx={c}
-          cy={c}
-          r={13}
-          fill="none"
-          stroke={`${NAVY}55`}
-          strokeWidth={1.4}
-          strokeDasharray="3 3"
-        />
-        <circle cx={c} cy={c} r={3.4} fill={NAVY} />
-        {/* Radial (sutil) */}
+        {/* Radial estación → avión */}
         <line
           x1={c}
           y1={c}
           x2={px}
           y2={py}
-          stroke={`${NAVY}22`}
-          strokeWidth={1.2}
-          strokeDasharray="4 4"
+          stroke="rgba(227,201,138,.45)"
+          strokeWidth={1.3}
+          strokeDasharray="3 3"
         />
+        {/* Estación NDB (símbolo punteado) */}
+        <g filter={`url(#${id}-glow)`}>
+          <circle
+            cx={c}
+            cy={c}
+            r={10}
+            fill="none"
+            stroke={SKY}
+            strokeWidth={2.2}
+            strokeDasharray="0.1 3.4"
+            strokeLinecap="round"
+          />
+          <circle
+            cx={c}
+            cy={c}
+            r={5.5}
+            fill="none"
+            stroke={SKY}
+            strokeWidth={2}
+            strokeDasharray="0.1 3"
+            strokeLinecap="round"
+          />
+          <circle cx={c} cy={c} r={2.4} fill={SKY} />
+        </g>
         {/* Avión con su rumbo */}
-        <g transform={`translate(${px} ${py}) rotate(${opt.heading})`}>
-          <path d="M0,-10 L7,6 L0,2 L-7,6 Z" fill={CORAL} />
+        <g
+          transform={`translate(${px} ${py}) rotate(${opt.heading}) scale(0.5)`}
+          filter={`url(#${id}-glow)`}
+        >
+          <path d={AVION_PATH} fill={GOLD} stroke="#fff6dc" strokeWidth={1.2} />
         </g>
       </svg>
     </button>
@@ -391,9 +572,10 @@ export function OrientacionGame({ cfg, onFinish, onQuit }: Props) {
   };
 
   const pickedOpt = picked !== null ? item.options[picked] : null;
+  const pad3 = (n: number) => String(n).padStart(3, "0");
 
   return (
-    <div style={{ maxWidth: 720, margin: "0 auto" }} onPointerDown={trackPointer}>
+    <div onPointerDown={trackPointer}>
       <GameTopBar
         nombre={`Orientación · Nivel ${cfg.level}`}
         remainingSec={remaining}
@@ -401,37 +583,39 @@ export function OrientacionGame({ cfg, onFinish, onQuit }: Props) {
         onQuit={onQuit}
       />
 
-      <CCard style={{ padding: "26px 24px" }}>
+      <CCard style={{ maxWidth: 900, margin: "0 auto", padding: "clamp(16px, 3vw, 28px)" }}>
         <div
           style={{
             display: "flex",
             flexWrap: "wrap",
-            gap: 20,
+            gap: "18px 28px",
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <div style={{ textAlign: "center" }}>
-            <Eyebrow style={{ marginBottom: 6 }}>Girodireccional</Eyebrow>
-            <DirectionIndicator heading={item.heading} />
+          <div className="cx-panel-row">
+            <figure style={{ margin: 0, textAlign: "center" }}>
+              <DirectionIndicator heading={item.heading} />
+              <Eyebrow style={{ margin: "8px 0 0" }}>Girodireccional</Eyebrow>
+            </figure>
+            <figure style={{ margin: 0, textAlign: "center" }}>
+              <RbiInstrument rb={item.relativeBearing} />
+              <Eyebrow style={{ margin: "8px 0 0" }}>Aguja ADF (rel.)</Eyebrow>
+            </figure>
           </div>
-          <div style={{ textAlign: "center" }}>
-            <Eyebrow style={{ marginBottom: 6 }}>Aguja ADF (rel.)</Eyebrow>
-            <RbiInstrument rb={item.relativeBearing} />
-          </div>
-          <div style={{ flex: "1 1 200px", minWidth: 190 }}>
+          <div style={{ flex: "1 1 220px", minWidth: 200, maxWidth: 340 }}>
             <div
               style={{
                 fontFamily: SERIF,
                 fontStyle: "italic",
-                fontSize: "1.25rem",
-                color: "var(--fd-text, #081A35)",
-                lineHeight: 1.35,
+                fontSize: "clamp(1.2rem, 2.4vw, 1.5rem)",
+                color: INK,
+                lineHeight: 1.3,
               }}
             >
               ¿Qué mapa muestra tu posición respecto a la estación?
             </div>
-            <div style={{ marginTop: 8, fontSize: "0.78rem", color: "var(--fd-muted, #4A5872)", lineHeight: 1.5 }}>
+            <div style={{ marginTop: 10, fontSize: "0.8rem", color: INK2, lineHeight: 1.55 }}>
               El mapa tiene el norte arriba. La estación es el punto del centro; el avión conserva
               su rumbo real.
             </div>
@@ -440,11 +624,10 @@ export function OrientacionGame({ cfg, onFinish, onQuit }: Props) {
 
         <div
           style={{
-            marginTop: 20,
+            marginTop: 22,
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(132px, 1fr))",
-            gap: 10,
-            justifyItems: "center",
+            gridTemplateColumns: "repeat(auto-fit, minmax(128px, 1fr))",
+            gap: 12,
           }}
         >
           {item.options.map((opt, i) => {
@@ -467,15 +650,7 @@ export function OrientacionGame({ cfg, onFinish, onQuit }: Props) {
         </div>
 
         {esPractica && picked !== null && (
-          <div
-            style={{
-              marginTop: 18,
-              background: "var(--fd-panel, #F5F5F7)",
-              border: `1px solid ${NAVY}12`,
-              borderRadius: "var(--fd-radius, 14px)",
-              padding: "14px 16px",
-            }}
-          >
+          <div className={`cx-feedback ${pickedOpt?.confusion === null ? "is-ok" : "is-bad"}`}>
             <div
               style={{
                 fontFamily: MONO,
@@ -483,28 +658,26 @@ export function OrientacionGame({ cfg, onFinish, onQuit }: Props) {
                 letterSpacing: "0.16em",
                 textTransform: "uppercase",
                 fontWeight: 700,
-                color: "var(--fd-muted, #4A5872)",
+                color: pickedOpt?.confusion === null ? GREEN : RED,
                 marginBottom: 6,
               }}
             >
               {pickedOpt?.confusion === null ? "Correcto" : "La lectura correcta"}
             </div>
-            <div style={{ fontSize: "0.9rem", color: "var(--fd-text, #081A35)", lineHeight: 1.55 }}>
-              HDG{" "}
-              <strong style={{ fontFamily: MONO }}>{String(item.heading).padStart(3, "0")}</strong>{" "}
-              + marcación{" "}
-              <strong style={{ fontFamily: MONO }}>
-                {String(item.relativeBearing).padStart(3, "0")}
+            <div style={{ fontSize: "0.9rem", color: INK2, lineHeight: 1.6 }}>
+              HDG <strong style={{ fontFamily: MONO, color: GOLD }}>{pad3(item.heading)}</strong> +
+              marcación{" "}
+              <strong style={{ fontFamily: MONO, color: GOLD }}>
+                {pad3(item.relativeBearing)}
               </strong>{" "}
               → la estación queda al QDM{" "}
-              <strong style={{ fontFamily: MONO }}>{String(item.qdm).padStart(3, "0")}</strong>; tú
-              estás en el radial{" "}
-              <strong style={{ fontFamily: MONO }}>{String(item.qdr).padStart(3, "0")}</strong>{" "}
-              (QDR).
+              <strong style={{ fontFamily: MONO, color: GOLD }}>{pad3(item.qdm)}</strong>; tú estás
+              en el radial{" "}
+              <strong style={{ fontFamily: MONO, color: GOLD }}>{pad3(item.qdr)}</strong> (QDR).
               {pickedOpt?.confusion && (
                 <>
                   {" "}
-                  <span style={{ color: "#A13333" }}>{CONFUSION_LABEL[pickedOpt.confusion]}</span>
+                  <span style={{ color: RED }}>{CONFUSION_LABEL[pickedOpt.confusion]}</span>
                 </>
               )}
             </div>

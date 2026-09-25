@@ -18,18 +18,7 @@ import {
 import { scoreMulti } from "@/modules/compass/scoring";
 import type { CompassResult, CompassRunConfig } from "@/modules/compass/types";
 import { classifyInput, useGameLoop } from "./use-game-loop";
-import {
-  CButton,
-  CCard,
-  CountdownIntro,
-  Eyebrow,
-  GameTopBar,
-  PauseOverlay,
-  CREAM,
-  HAZE,
-  MONO,
-  NAVY,
-} from "./ui";
+import { CButton, CCard, CountdownIntro, Eyebrow, GameHint, GameTopBar, PauseOverlay } from "./ui";
 
 interface Props {
   cfg: CompassRunConfig;
@@ -48,6 +37,24 @@ const KEY_OF_SYSTEM: Record<MultiSystem, string> = {
   ELEC: "W",
   FUEL: "E",
   PRESS: "R",
+};
+
+/** Glifos de trazo para cada sistema del panel. */
+const SYSTEM_GLYPH: Record<MultiSystem, React.ReactNode> = {
+  HYD: <path d="M8 1.8C8 1.8 3.2 7.4 3.2 10.3a4.8 4.8 0 0 0 9.6 0C12.8 7.4 8 1.8 8 1.8Z" />,
+  ELEC: <path d="M9.2 1.2 3.4 9h4.3l-1 5.8L12.6 7H8.3Z" />,
+  FUEL: (
+    <>
+      <path d="M3 14.2V3.4A1.4 1.4 0 0 1 4.4 2h4.2A1.4 1.4 0 0 1 10 3.4v10.8Z" />
+      <path d="M4.8 4h3.4v3H4.8ZM10 6.2l2.4 2.2v3.4a1 1 0 0 0 2 0V6.8L12 4.4" />
+    </>
+  ),
+  PRESS: (
+    <>
+      <path d="M2.4 11.4a5.6 5.6 0 1 1 11.2 0" />
+      <path d="M8 11.4 11 6.6" />
+    </>
+  ),
 };
 
 interface ActiveAlert {
@@ -206,7 +213,7 @@ export function MultitareaGame({ cfg, onFinish, onQuit }: Props) {
   };
 
   return (
-    <div style={{ maxWidth: 680, margin: "0 auto" }} onPointerDown={trackPointer}>
+    <div onPointerDown={trackPointer}>
       <GameTopBar
         nombre={`Multitarea · Nivel ${cfg.level}`}
         remainingSec={fase === "countdown" ? cfg.durationSec : remaining}
@@ -214,72 +221,32 @@ export function MultitareaGame({ cfg, onFinish, onQuit }: Props) {
         onQuit={onQuit}
       />
 
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative", maxWidth: 760, margin: "0 auto", borderRadius: 14 }}>
         <div style={{ display: "grid", gap: 14 }}>
           {/* Tarea primaria: transferencia */}
-          <CCard style={{ padding: "22px 24px" }}>
+          <CCard style={{ padding: "clamp(16px, 3vw, 24px)" }}>
             <Eyebrow>Tarea primaria — transfiere el dato</Eyebrow>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center" }}>
-              <div
-                style={{
-                  background: NAVY,
-                  color: "white",
-                  borderRadius: "var(--fd-radius, 14px)",
-                  padding: "14px 20px",
-                  minWidth: 150,
-                  textAlign: "center",
-                }}
-              >
-                <div
-                  style={{
-                    fontFamily: MONO,
-                    fontSize: "0.58rem",
-                    letterSpacing: "0.18em",
-                    color: "#C7A052",
-                    fontWeight: 700,
-                    marginBottom: 4,
-                  }}
-                >
-                  RECIBIDO · {datum.label}
-                </div>
-                <div
-                  style={{
-                    fontFamily: MONO,
-                    fontSize: "1.6rem",
-                    fontWeight: 700,
-                    fontVariantNumeric: "tabular-nums",
-                  }}
-                >
-                  {datum.value}
-                </div>
+              <div className="cx-lcd" aria-live="polite">
+                <div className="cx-lcd-label">RECIBIDO · {datum.label}</div>
+                <div className="cx-lcd-value">{datum.value}</div>
               </div>
-              <div style={{ flex: "1 1 200px", display: "flex", gap: 10 }}>
+              <div style={{ flex: "1 1 220px", display: "flex", gap: 10, minWidth: 0 }}>
                 <input
                   ref={inputRef}
+                  size={1}
                   value={typed}
                   inputMode="decimal"
                   autoComplete="off"
                   placeholder={`Teclea ${datum.label} y Enter`}
+                  aria-label={`Teclea ${datum.label}`}
+                  className={`cx-entry${errorFlash ? " is-error" : ""}`}
                   onChange={(e) => setTyped(e.target.value.replace(/[^\d.]/g, ""))}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
                       submitTransfer();
                     }
-                  }}
-                  style={{
-                    flex: 1,
-                    minWidth: 0,
-                    padding: "12px 14px",
-                    borderRadius: "var(--fd-radius, 12px)",
-                    border: `2px solid ${errorFlash ? "#C24545" : `${NAVY}26`}`,
-                    fontFamily: MONO,
-                    fontSize: "1.2rem",
-                    fontWeight: 700,
-                    color: "var(--fd-text, #081A35)",
-                    background: errorFlash ? "var(--fd-panel, #FBEDED)" : "var(--fd-panel, #F5F5F7)",
-                    outline: "none",
-                    transition: "border-color 0.15s, background 0.15s",
                   }}
                 />
                 <CButton onClick={submitTransfer} style={{ padding: "12px 18px" }}>
@@ -289,14 +256,14 @@ export function MultitareaGame({ cfg, onFinish, onQuit }: Props) {
             </div>
           </CCard>
 
-          {/* Tarea secundaria: monitor de sistemas */}
-          <CCard style={{ padding: "22px 24px" }}>
+          {/* Tarea secundaria: panel anunciador de sistemas */}
+          <CCard style={{ padding: "clamp(16px, 3vw, 24px)" }}>
             <Eyebrow>Monitor — apaga las alertas antes de que venzan</Eyebrow>
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
-                gap: 10,
+                gridTemplateColumns: "repeat(auto-fit, minmax(128px, 1fr))",
+                gap: 12,
               }}
             >
               {MULTI_SYSTEMS.map((sys) => {
@@ -304,69 +271,37 @@ export function MultitareaGame({ cfg, onFinish, onQuit }: Props) {
                 const frac = alert
                   ? Math.max(0, 1 - (simT.current - alert.startedT) / alert.windowSec)
                   : 0;
+                const estado = alert ? (frac > 0.4 ? " is-alert" : " is-alert is-urgent") : "";
                 return (
                   <button
                     key={sys}
+                    type="button"
+                    className={`cx-annun${estado}`}
                     onClick={() => fase === "run" && ack(sys)}
-                    style={{
-                      borderRadius: "var(--fd-radius, 14px)",
-                      border: `2px solid ${alert ? "#C88A00" : `${NAVY}1A`}`,
-                      background: alert ? "var(--fd-panel, #FFF6E0)" : "var(--fd-panel, white)",
-                      padding: "14px 12px 12px",
-                      cursor: "pointer",
-                      textAlign: "center",
-                      minHeight: 86,
-                      transition: "background 0.15s, border-color 0.15s",
-                    }}
                   >
-                    <div
-                      style={{
-                        fontFamily: MONO,
-                        fontSize: "0.78rem",
-                        fontWeight: 800,
-                        color: alert ? "#8A6100" : "var(--fd-text, #081A35)",
-                        letterSpacing: "0.1em",
-                      }}
+                    <span className="cx-annun-key" aria-hidden="true">
+                      {KEY_OF_SYSTEM[sys]}
+                    </span>
+                    <svg
+                      width={22}
+                      height={22}
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={1.4}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                      className="cx-annun-glyph"
                     >
-                      {sys}
-                    </div>
-                    <div
-                      style={{ fontFamily: MONO, fontSize: "0.56rem", color: "var(--fd-muted, #4A5872)", marginTop: 2 }}
-                    >
-                      tecla {KEY_OF_SYSTEM[sys]}
-                    </div>
-                    <div
-                      style={{
-                        marginTop: 10,
-                        height: 5,
-                        background: `${NAVY}0F`,
-                        borderRadius: 999,
-                        overflow: "hidden",
-                      }}
-                    >
-                      {alert && (
-                        <div
-                          style={{
-                            height: "100%",
-                            width: `${frac * 100}%`,
-                            background: frac > 0.4 ? "#C88A00" : "#C24545",
-                            borderRadius: 999,
-                          }}
-                        />
-                      )}
-                    </div>
-                    <div
-                      style={{
-                        marginTop: 8,
-                        fontFamily: MONO,
-                        fontSize: "0.6rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.14em",
-                        color: alert ? "#C88A00" : "#12B26B",
-                      }}
-                    >
-                      {alert ? "ALERTA" : "OK"}
-                    </div>
+                      {SYSTEM_GLYPH[sys]}
+                    </svg>
+                    <span className="cx-annun-name">{sys}</span>
+                    <span className="cx-annun-lamp">{alert ? "ALERTA" : "OK"}</span>
+                    <span className="cx-annun-sub">tecla {KEY_OF_SYSTEM[sys]}</span>
+                    <span className="cx-annun-bar">
+                      {alert && <i style={{ width: `${frac * 100}%` }} />}
+                    </span>
                   </button>
                 );
               })}
@@ -390,23 +325,7 @@ export function MultitareaGame({ cfg, onFinish, onQuit }: Props) {
         )}
       </div>
 
-      <p
-        style={{
-          textAlign: "center",
-          marginTop: 12,
-          fontFamily: MONO,
-          fontSize: "0.66rem",
-          letterSpacing: "0.1em",
-          textTransform: "uppercase",
-          color: "var(--fd-muted, #4A5872)",
-          background: "var(--fd-panel, #F5F5F7)",
-          border: `1px solid ${NAVY}0F`,
-          borderRadius: "var(--fd-radius, 10px)",
-          padding: "8px 12px",
-        }}
-      >
-        Copia el dato y Enter · apaga alertas con click/tap o Q W E R
-      </p>
+      <GameHint>Copia el dato y Enter · apaga alertas con click/tap o Q W E R</GameHint>
     </div>
   );
 }

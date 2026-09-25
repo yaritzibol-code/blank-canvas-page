@@ -1,10 +1,11 @@
 /**
  * Piezas visuales compartidas del Pilot Aptitude Trainer.
- * Mismo lenguaje editorial del dashboard: serif itálica, mono en mayúsculas,
- * paleta navy/vino/rosa.
+ * Mismo lenguaje editorial del dashboard (serif itálica, mono en mayúsculas)
+ * sobre la cabina oscura de FlightDeck: navy profundo, oro y luces de estado.
  */
 import { useEffect, useState, type ReactNode } from "react";
 import type { CompassMetric } from "@/modules/compass/types";
+import "./compass-game.css";
 
 export const NAVY = "#081A35";
 export const CORAL = "#7A5C1E";
@@ -14,19 +15,48 @@ export const ROSE = "#C7A052";
 export const SALMON = "#EEE1C5";
 export const SERIF = "'Instrument Serif', serif";
 export const SANS = "'Manrope', sans-serif";
-export const MONO = "'JetBrains Mono', monospace";
+export const MONO = "'Geist Mono', 'JetBrains Mono', ui-monospace, monospace";
+
+/* Tinta y luces sobre fondo oscuro: lo que se dibuja encima de los paneles. */
+export const INK = "#F4F6FA";
+export const INK2 = "#B8C5DA";
+export const INK3 = "#8FA3C2";
+export const GOLD = "#E3C98A";
+export const GOLD2 = "#C7A052";
+export const GREEN = "#7FD6A4";
+export const AMBER = "#F3C969";
+export const RED = "#F0826E";
+export const SKY = "#8FD3F4";
+export const VIOLET = "#B9A6F5";
+/** Filete dorado tenue para bordes sobre paneles oscuros. */
+export const LINE = "rgba(227,201,138,.16)";
+
+/**
+ * Escenario de una prueba: marco de cabina con esquinas HUD y, si existe, el
+ * arte de la prueba de fondo. Su presencia pone el espacio de trabajo en modo
+ * inmersivo (ver compass-game.css).
+ */
+export function GameStage({ art, children }: { art?: string; children: ReactNode }) {
+  return (
+    <section
+      className="cx-stage"
+      data-art={art ? "" : undefined}
+      style={art ? ({ "--cx-art": `url("${art}")` } as React.CSSProperties) : undefined}
+    >
+      <div className="cx-corners" aria-hidden="true">
+        <i />
+        <i />
+        <i />
+        <i />
+      </div>
+      {children}
+    </section>
+  );
+}
 
 export function CCard({ children, style }: { children: ReactNode; style?: React.CSSProperties }) {
   return (
-    <div
-      style={{
-        background: "var(--fd-panel, white)",
-        border: `1px solid ${NAVY}14`,
-        borderRadius: "var(--fd-radius, 22px)",
-        padding: "22px 24px",
-        ...style,
-      }}
-    >
+    <div className="cx-screen" style={{ padding: "22px 24px", ...style }}>
       {children}
     </div>
   );
@@ -37,11 +67,11 @@ export function Eyebrow({ children, style }: { children: ReactNode; style?: Reac
     <div
       style={{
         fontFamily: MONO,
-        fontSize: "0.6rem",
+        fontSize: "0.62rem",
         letterSpacing: "0.22em",
         textTransform: "uppercase",
         fontWeight: 700,
-        color: "var(--fd-muted, #081A3566)",
+        color: "var(--cx-ink-3, var(--fd-muted, #8FA3C2))",
         marginBottom: 10,
         ...style,
       }}
@@ -64,11 +94,32 @@ export function ScoreRing({
   const r = size / 2 - 9;
   const c = 2 * Math.PI * r;
   const frac = Math.max(0, Math.min(100, score)) / 100;
-  const color = score >= 75 ? "#12B26B" : score >= 45 ? CORAL : "#C24545";
+  const color = score >= 75 ? GREEN : score >= 45 ? GOLD : RED;
   return (
     <div style={{ position: "relative", width: size, height: size }}>
-      <svg width={size} height={size} style={{ transform: "rotate(-90deg)" }} aria-hidden="true">
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={SALMON} strokeWidth={7} />
+      <svg
+        width={size}
+        height={size}
+        style={{ transform: "rotate(-90deg)", filter: `drop-shadow(0 0 10px ${color}55)` }}
+        aria-hidden="true"
+      >
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          fill="none"
+          stroke="rgba(255,255,255,.09)"
+          strokeWidth={7}
+        />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r - 11}
+          fill="none"
+          stroke={LINE}
+          strokeWidth={1}
+          strokeDasharray="2 6"
+        />
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -97,7 +148,7 @@ export function ScoreRing({
             fontStyle: "italic",
             fontSize: size * 0.3,
             lineHeight: 1,
-            color: "var(--fd-text, #081A35)",
+            color: INK,
           }}
         >
           {Math.round(score)}
@@ -108,7 +159,7 @@ export function ScoreRing({
             fontSize: "0.56rem",
             letterSpacing: "0.18em",
             textTransform: "uppercase",
-            color: "var(--fd-muted, #4A5872)",
+            color: INK3,
             fontWeight: 700,
             marginTop: 4,
           }}
@@ -126,9 +177,9 @@ export function MetricChip({ m }: { m: CompassMetric }) {
     <div
       title={m.hint}
       style={{
-        background: "var(--fd-panel, #F5F5F7)",
-        border: `1px solid ${NAVY}12`,
-        borderRadius: "var(--fd-radius, 14px)",
+        background: "linear-gradient(180deg, rgba(22,61,112,.26), rgba(3,10,24,.5))",
+        border: `1px solid ${LINE}`,
+        borderRadius: 12,
         padding: "12px 14px",
         minWidth: 0,
       }}
@@ -140,7 +191,7 @@ export function MetricChip({ m }: { m: CompassMetric }) {
           letterSpacing: "0.14em",
           textTransform: "uppercase",
           fontWeight: 700,
-          color: "var(--fd-muted, #4A5872)",
+          color: INK3,
           marginBottom: 4,
           whiteSpace: "nowrap",
           overflow: "hidden",
@@ -154,14 +205,14 @@ export function MetricChip({ m }: { m: CompassMetric }) {
           fontFamily: SERIF,
           fontStyle: "italic",
           fontSize: "1.35rem",
-          color: "var(--fd-text, #081A35)",
+          color: INK,
           lineHeight: 1,
         }}
       >
         {m.value}
       </div>
       {m.hint && (
-        <div style={{ fontSize: "0.68rem", color: "var(--fd-muted, #4A5872)", marginTop: 5, lineHeight: 1.35 }}>
+        <div style={{ fontSize: "0.68rem", color: INK2, marginTop: 5, lineHeight: 1.35 }}>
           {m.hint}
         </div>
       )}
@@ -169,7 +220,7 @@ export function MetricChip({ m }: { m: CompassMetric }) {
   );
 }
 
-/** Botón principal (vino) y secundario (borde). */
+/** Botón principal (oro) y secundario (filete). */
 export function CButton({
   children,
   onClick,
@@ -190,24 +241,28 @@ export function CButton({
       disabled={disabled}
       style={{
         padding: "12px 22px",
-        borderRadius: "var(--fd-radius, 12px)",
-        border: primary ? "none" : `1px solid ${NAVY}22`,
-        background: primary ? CORAL : "transparent",
-        color: primary ? "white" : "var(--fd-text, #081A35)",
+        borderRadius: 10,
+        border: primary ? "none" : `1px solid rgba(227,201,138,.3)`,
+        background: primary ? `linear-gradient(180deg, ${GOLD}, ${GOLD2})` : "rgba(3,10,24,.35)",
+        color: primary ? NAVY : INK,
         fontFamily: SANS,
         fontSize: "0.88rem",
-        fontWeight: 700,
+        fontWeight: 800,
         cursor: disabled ? "default" : "pointer",
         opacity: disabled ? 0.5 : 1,
-        transition: "transform 0.12s, background 0.12s",
+        boxShadow: primary ? "0 10px 24px -14px rgba(199,160,82,.9)" : "none",
+        transition: "transform 0.12s, filter 0.12s, border-color 0.12s",
         minHeight: 44,
         ...style,
       }}
       onMouseEnter={(e) => {
-        if (!disabled && primary) e.currentTarget.style.background = "#614919";
+        if (disabled) return;
+        if (primary) e.currentTarget.style.filter = "brightness(1.07)";
+        else e.currentTarget.style.borderColor = "rgba(227,201,138,.55)";
       }}
       onMouseLeave={(e) => {
-        if (primary) e.currentTarget.style.background = CORAL;
+        e.currentTarget.style.filter = "";
+        if (!primary) e.currentTarget.style.borderColor = "rgba(227,201,138,.3)";
       }}
     >
       {children}
@@ -229,30 +284,11 @@ export function CountdownIntro({ onDone }: { onDone: () => void }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [n]);
   return (
-    <div
-      style={{
-        position: "absolute",
-        inset: 0,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "rgba(8,26,53,0.88)",
-        borderRadius: "var(--fd-radius, 18px)",
-        zIndex: 5,
-      }}
-    >
-      <span
-        key={n}
-        style={{
-          fontFamily: SERIF,
-          fontStyle: "italic",
-          fontSize: "5rem",
-          color: "white",
-          animation: "fp-fadeIn 0.4s ease",
-        }}
-      >
-        {n}
-      </span>
+    <div className="cx-overlay" role="status" aria-live="assertive">
+      <div className="cx-count">
+        <span key={n}>{n}</span>
+      </div>
+      <div className="cx-count-label">Prepárate</div>
     </div>
   );
 }
@@ -260,28 +296,16 @@ export function CountdownIntro({ onDone }: { onDone: () => void }) {
 /** Overlay de pausa (práctica) al perder visibilidad o pedirla el usuario. */
 export function PauseOverlay({ onResume, texto }: { onResume: () => void; texto?: string }) {
   return (
-    <div
-      style={{
-        position: "absolute",
-        inset: 0,
-        display: "flex",
-        flexDirection: "column",
-        gap: 16,
-        alignItems: "center",
-        justifyContent: "center",
-        background: "rgba(8,26,53,0.92)",
-        borderRadius: "var(--fd-radius, 18px)",
-        zIndex: 6,
-        padding: 20,
-      }}
-    >
+    <div className="cx-overlay" role="dialog" aria-label="Pausa">
+      {texto && <div className="cx-count-label">Pausa</div>}
       <div
         style={{
           fontFamily: SERIF,
           fontStyle: "italic",
           fontSize: "1.7rem",
-          color: "white",
-          textAlign: "center",
+          color: INK,
+          maxWidth: 420,
+          lineHeight: 1.25,
         }}
       >
         {texto ?? "Pausa"}
@@ -291,7 +315,7 @@ export function PauseOverlay({ onResume, texto }: { onResume: () => void; texto?
   );
 }
 
-/** Barra superior de una tarea en curso: nombre, reloj y salida. */
+/** HUD superior de una tarea en curso: nombre, reloj, avance y salida. */
 export function GameTopBar({
   nombre,
   remainingSec,
@@ -309,70 +333,24 @@ export function GameTopBar({
   const ss = remainingSec !== null ? Math.max(0, Math.floor(remainingSec % 60)) : 0;
   const low = remainingSec !== null && remainingSec <= 15;
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: 10,
-        marginBottom: 12,
-      }}
-    >
-      <span
-        style={{
-          fontFamily: MONO,
-          fontSize: "0.62rem",
-          letterSpacing: "0.2em",
-          textTransform: "uppercase",
-          fontWeight: 700,
-          color: "var(--fd-muted, #081A3588)",
-        }}
-      >
-        {nombre}
-      </span>
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        {progressLabel && (
-          <span style={{ fontFamily: MONO, fontSize: "0.72rem", color: "var(--fd-muted, #4A5872)", fontWeight: 700 }}>
-            {progressLabel}
-          </span>
-        )}
+    <div className="cx-hud">
+      <span className="cx-hud-name">{nombre}</span>
+      <div className="cx-hud-right">
+        {progressLabel && <span className="cx-chip">{progressLabel}</span>}
         {remainingSec !== null && (
-          <span
-            style={{
-              fontFamily: MONO,
-              fontSize: "0.86rem",
-              fontWeight: 700,
-              color: low ? "var(--fd-gold, #7A5C1E)" : "var(--fd-text, #081A35)",
-              background: low ? `${ROSE}44` : "var(--fd-panel, #F5F5F7)",
-              border: `1px solid ${NAVY}14`,
-              padding: "4px 10px",
-              borderRadius: "var(--fd-radius, 10px)",
-              fontVariantNumeric: "tabular-nums",
-            }}
-          >
+          <span className={`cx-chip is-clock${low ? " is-low" : ""}`} aria-label="Tiempo restante">
             {mm}:{String(ss).padStart(2, "0")}
           </span>
         )}
-        <button
-          onClick={onQuit}
-          title="Abandonar la sesión"
-          style={{
-            border: `1px solid ${NAVY}22`,
-            background: "transparent",
-            color: "var(--fd-muted, #4A5872)",
-            borderRadius: "var(--fd-radius, 10px)",
-            padding: "6px 12px",
-            fontFamily: MONO,
-            fontSize: "0.62rem",
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            cursor: "pointer",
-          }}
-        >
+        <button type="button" className="cx-exit" onClick={onQuit} title="Abandonar la sesión">
           Salir
         </button>
       </div>
     </div>
   );
+}
+
+/** Pie de controles de una tarea ("← → / A D o arrastra"). */
+export function GameHint({ children }: { children: ReactNode }) {
+  return <p className="cx-hint">{children}</p>;
 }

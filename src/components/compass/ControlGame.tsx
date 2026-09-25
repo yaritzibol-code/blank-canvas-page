@@ -23,20 +23,190 @@ import type { CompassResult, CompassRunConfig } from "@/modules/compass/types";
 import { classifyInput, useGameLoop } from "./use-game-loop";
 import {
   CountdownIntro,
+  GameHint,
   GameTopBar,
   PauseOverlay,
-  CORAL,
-  CREAM,
-  HAZE,
-  MONO,
-  NAVY,
-  SALMON,
+  AMBER,
+  GOLD,
+  GREEN,
+  RED,
+  SKY,
 } from "./ui";
 
 interface Props {
   cfg: CompassRunConfig;
   onFinish: (r: CompassResult) => void;
   onQuit: () => void;
+}
+
+const LAMP_FONT = "700 10px 'Geist Mono', 'JetBrains Mono', monospace";
+
+/**
+ * Capa fija del indicador (fondo, bisel, marcas, bandas y escala). Se pinta
+ * una vez por tamaño en un canvas aparte y cada frame sólo la copia.
+ */
+function paintDial(ctx: CanvasRenderingContext2D, side: number, band01: number) {
+  const c = side / 2;
+  const R = side * 0.44;
+  const track = R * 0.86;
+  const band = band01 * track;
+
+  const bg = ctx.createRadialGradient(c, c * 0.9, side * 0.05, c, c, side * 0.75);
+  bg.addColorStop(0, "#0c2446");
+  bg.addColorStop(1, "#02070f");
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, side, side);
+
+  // Bisel metálico
+  const bezel = ctx.createLinearGradient(0, 0, side, side);
+  bezel.addColorStop(0, "#6a768a");
+  bezel.addColorStop(0.45, "#161e2b");
+  bezel.addColorStop(1, "#465267");
+  ctx.beginPath();
+  ctx.arc(c, c, R + side * 0.028, 0, Math.PI * 2);
+  ctx.fillStyle = bezel;
+  ctx.fill();
+
+  // Carátula
+  const face = ctx.createRadialGradient(c, c * 0.82, R * 0.1, c, c, R);
+  face.addColorStop(0, "#123361");
+  face.addColorStop(1, "#040d1d");
+  ctx.beginPath();
+  ctx.arc(c, c, R, 0, Math.PI * 2);
+  ctx.fillStyle = face;
+  ctx.fill();
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(c, c, R, 0, Math.PI * 2);
+  ctx.clip();
+
+  // Retícula tenue
+  ctx.strokeStyle = "rgba(143,211,244,.06)";
+  ctx.lineWidth = 1;
+  const paso = track / 4;
+  for (let g = -8; g <= 8; g++) {
+    ctx.beginPath();
+    ctx.moveTo(c + g * paso, c - R);
+    ctx.lineTo(c + g * paso, c + R);
+    ctx.moveTo(c - R, c + g * paso);
+    ctx.lineTo(c + R, c + g * paso);
+    ctx.stroke();
+  }
+
+  // Banda "centrado": corredor verde en cruz y caja objetivo dorada al centro
+  ctx.fillStyle = "rgba(127,214,164,.1)";
+  ctx.fillRect(c - band, c - R, band * 2, R * 2);
+  ctx.fillRect(c - R, c - band, R * 2, band * 2);
+  ctx.setLineDash([5, 5]);
+  ctx.strokeStyle = "rgba(127,214,164,.42)";
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  for (const s of [-1, 1]) {
+    ctx.moveTo(c + s * band, c - R);
+    ctx.lineTo(c + s * band, c + R);
+    ctx.moveTo(c - R, c + s * band);
+    ctx.lineTo(c + R, c + s * band);
+  }
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = "rgba(227,201,138,.16)";
+  ctx.fillRect(c - band, c - band, band * 2, band * 2);
+  ctx.strokeStyle = "rgba(227,201,138,.75)";
+  ctx.lineWidth = 1.5;
+  ctx.strokeRect(c - band, c - band, band * 2, band * 2);
+  ctx.restore();
+
+  // Marcas perimetrales cada 10°
+  for (let d = 0; d < 360; d += 10) {
+    const a = (d * Math.PI) / 180;
+    const major = d % 30 === 0;
+    const r0 = R * (major ? 0.9 : 0.94);
+    ctx.beginPath();
+    ctx.moveTo(c + Math.sin(a) * r0, c - Math.cos(a) * r0);
+    ctx.lineTo(c + Math.sin(a) * R * 0.985, c - Math.cos(a) * R * 0.985);
+    ctx.strokeStyle = major ? "rgba(255,255,255,.55)" : "rgba(255,255,255,.22)";
+    ctx.lineWidth = major ? 2 : 1;
+    ctx.stroke();
+  }
+
+  // Escala de puntos (estilo CDI)
+  ctx.strokeStyle = "rgba(255,255,255,.55)";
+  ctx.lineWidth = 1.4;
+  for (let i = -4; i <= 4; i++) {
+    if (i === 0) continue;
+    const off = (i / 4) * track * 0.9;
+    ctx.beginPath();
+    ctx.arc(c + off, c, 3.4, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(c, c + off, 3.4, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  // Referencia central
+  ctx.strokeStyle = GOLD;
+  ctx.lineWidth = 1.6;
+  ctx.beginPath();
+  ctx.arc(c, c, 10, 0, Math.PI * 2);
+  ctx.moveTo(c - 18, c);
+  ctx.lineTo(c - 10, c);
+  ctx.moveTo(c + 10, c);
+  ctx.lineTo(c + 18, c);
+  ctx.moveTo(c, c - 18);
+  ctx.lineTo(c, c - 10);
+  ctx.moveTo(c, c + 10);
+  ctx.lineTo(c, c + 18);
+  ctx.stroke();
+
+  // Sombra interior del bisel y reflejo del cristal
+  ctx.beginPath();
+  ctx.arc(c, c, R, 0, Math.PI * 2);
+  ctx.strokeStyle = "rgba(0,0,0,.55)";
+  ctx.lineWidth = 6;
+  ctx.stroke();
+  const glass = ctx.createLinearGradient(0, c - R, 0, c);
+  glass.addColorStop(0, "rgba(255,255,255,.055)");
+  glass.addColorStop(1, "rgba(255,255,255,0)");
+  ctx.save();
+  ctx.translate(c - R * 0.18, c - R * 0.48);
+  ctx.rotate(-0.4);
+  ctx.beginPath();
+  ctx.ellipse(0, 0, R * 0.72, R * 0.32, 0, 0, Math.PI * 2);
+  ctx.fillStyle = glass;
+  ctx.fill();
+  ctx.restore();
+}
+
+/** Lámpara anunciadora ("LOC", "G/S"): encendida en verde cuando el eje está en banda. */
+function paintLamp(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  label: string,
+  on: boolean,
+) {
+  const w = 46;
+  const h = 20;
+  ctx.save();
+  ctx.beginPath();
+  ctx.roundRect(x, y, w, h, 5);
+  ctx.fillStyle = on ? "rgba(127,214,164,.2)" : "rgba(3,10,24,.8)";
+  ctx.fill();
+  ctx.strokeStyle = on ? "rgba(127,214,164,.8)" : "rgba(143,163,194,.25)";
+  ctx.lineWidth = 1;
+  if (on) {
+    ctx.shadowColor = GREEN;
+    ctx.shadowBlur = 12;
+  }
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+  ctx.font = LAMP_FONT;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = on ? "#dff7ea" : "rgba(143,163,194,.55)";
+  ctx.fillText(label, x + w / 2, y + h / 2 + 0.5);
+  ctx.restore();
 }
 
 export function ControlGame({ cfg, onFinish, onQuit }: Props) {
@@ -66,6 +236,9 @@ export function ControlGame({ cfg, onFinish, onQuit }: Props) {
   });
   const interruptions = useRef(0);
   const [remaining, setRemaining] = useState(cfg.durationSec);
+  // Sólo visual: capa fija cacheada y estela del punto de cruce.
+  const dialLayer = useRef<{ key: string; canvas: HTMLCanvasElement } | null>(null);
+  const trail = useRef<{ x: number; y: number }[]>([]);
 
   if (!pertX.current) {
     pertX.current = buildAxisPerturbation(cfg.seed, 0, cfg.level, cfg.durationSec);
@@ -77,7 +250,7 @@ export function ControlGame({ cfg, onFinish, onQuit }: Props) {
     const el = wrapRef.current;
     if (!el) return;
     const ro = new ResizeObserver(() => {
-      setSide(Math.max(260, Math.min(520, el.clientWidth)));
+      setSide(Math.max(260, Math.min(560, el.clientWidth)));
     });
     ro.observe(el);
     return () => ro.disconnect();
@@ -164,104 +337,143 @@ export function ControlGame({ cfg, onFinish, onQuit }: Props) {
     }
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const c = side / 2;
     const R = side * 0.44;
     const track = R * 0.86; // recorrido útil de las agujas
 
-    ctx.clearRect(0, 0, side, side);
+    // Capa fija: se repinta sólo si cambia el tamaño o la banda.
+    const key = `${side}|${dpr}|${params.band}`;
+    if (dialLayer.current?.key !== key) {
+      const off = document.createElement("canvas");
+      off.width = side * dpr;
+      off.height = side * dpr;
+      const octx = off.getContext("2d");
+      if (octx) {
+        octx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        paintDial(octx, side, params.band);
+      }
+      dialLayer.current = { key, canvas: off };
+    }
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(dialLayer.current.canvas, 0, 0);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    // Dial exterior
-    ctx.beginPath();
-    ctx.arc(c, c, R, 0, Math.PI * 2);
-    ctx.strokeStyle = `${NAVY}33`;
-    ctx.lineWidth = 2;
-    ctx.stroke();
+    const px = axisX.current.pos;
+    const py = axisY.current.pos;
+    const nx = c + px * track;
+    const ny = c + py * track;
+    // Color de cada aguja según su error: en banda, cerca o lejos.
+    const tono = (pos: number) =>
+      Math.abs(pos) <= params.band ? GREEN : Math.abs(pos) <= params.band * 2.2 ? AMBER : RED;
+    const inX = Math.abs(px) <= params.band;
+    const inY = Math.abs(py) <= params.band;
 
-    // Banda "centrado" (depende del nivel)
-    const band = params.band * track;
-    ctx.fillStyle = `${SALMON}88`;
-    ctx.fillRect(c - band, c - R * 0.92, band * 2, R * 1.84);
-    ctx.fillRect(c - R * 0.92, c - band, R * 1.84, band * 2);
-
-    // Escala de puntos (estilo CDI)
-    ctx.fillStyle = `${NAVY}44`;
-    for (let i = -4; i <= 4; i++) {
-      if (i === 0) continue;
-      const off = (i / 4) * track * 0.9;
+    // Estela del punto de cruce
+    const tr = trail.current;
+    tr.push({ x: nx, y: ny });
+    if (tr.length > 22) tr.shift();
+    for (let i = 0; i < tr.length - 1; i++) {
       ctx.beginPath();
-      ctx.arc(c + off, c, 2.5, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(c, c + off, 2.5, 0, Math.PI * 2);
+      ctx.arc(tr[i].x, tr[i].y, 1.5 + (i / tr.length) * 3, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(227,201,138,${((i + 1) / tr.length) * 0.28})`;
       ctx.fill();
     }
 
-    // Cruz central
-    ctx.strokeStyle = NAVY;
-    ctx.lineWidth = 1.4;
+    ctx.save();
     ctx.beginPath();
-    ctx.moveTo(c - 12, c);
-    ctx.lineTo(c + 12, c);
-    ctx.moveTo(c, c - 12);
-    ctx.lineTo(c, c + 12);
-    ctx.stroke();
-
-    const nx = c + axisX.current.pos * track;
-    const ny = c + axisY.current.pos * track;
-
-    // Aguja vertical (error horizontal)
-    ctx.strokeStyle = CORAL;
-    ctx.lineWidth = 4;
+    ctx.arc(c, c, R - 2, 0, Math.PI * 2);
+    ctx.clip();
     ctx.lineCap = "round";
-    ctx.beginPath();
-    ctx.moveTo(nx, c - R * 0.88);
-    ctx.lineTo(nx, c + R * 0.88);
-    ctx.stroke();
-    // Aguja horizontal (error vertical)
-    ctx.beginPath();
-    ctx.moveTo(c - R * 0.88, ny);
-    ctx.lineTo(c + R * 0.88, ny);
-    ctx.stroke();
+    const aguja = (x0: number, y0: number, x1: number, y1: number, color: string) => {
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 14;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x1, y1);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle = "rgba(255,255,255,.75)";
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x1, y1);
+      ctx.stroke();
+    };
+    // Aguja vertical (error horizontal) y horizontal (error vertical)
+    aguja(nx, c - R * 0.88, nx, c + R * 0.88, tono(px));
+    aguja(c - R * 0.88, ny, c + R * 0.88, ny, tono(py));
+    ctx.restore();
 
-    // Punto de intersección
+    // Punto de intersección (halo verde con ambos ejes en banda)
+    if (inX && inY) {
+      ctx.beginPath();
+      ctx.arc(nx, ny, 15, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(127,214,164,.55)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
     ctx.beginPath();
-    ctx.arc(nx, ny, 6, 0, Math.PI * 2);
-    ctx.fillStyle = CORAL;
+    ctx.arc(nx, ny, 7, 0, Math.PI * 2);
+    ctx.fillStyle = inX && inY ? GREEN : GOLD;
+    ctx.shadowColor = ctx.fillStyle;
+    ctx.shadowBlur = 16;
     ctx.fill();
-    ctx.beginPath();
-    ctx.arc(nx, ny, 6, 0, Math.PI * 2);
+    ctx.shadowBlur = 0;
     ctx.strokeStyle = "white";
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Stick virtual: deflexión comandada (hueco) y tasa efectiva del mando
-    // (relleno). La separación entre ambos ES la inercia que hay que anticipar.
+    // Anunciadores por eje
+    paintLamp(ctx, 14, 14, "LOC", inX);
+    paintLamp(ctx, side - 60, 14, "G/S", inY);
+
+    // Stick virtual: deflexión comandada (anillo) y tasa efectiva del mando
+    // (punto). La separación entre ambos ES la inercia que hay que anticipar.
     const inp = input.current;
     const bx = side - 44;
     const by = side - 44;
     ctx.beginPath();
-    ctx.arc(bx, by, 24, 0, Math.PI * 2);
-    ctx.strokeStyle = `${NAVY}22`;
-    ctx.lineWidth = 1.5;
+    ctx.roundRect(bx - 28, by - 28, 56, 56, 12);
+    ctx.fillStyle = "rgba(3,10,24,.78)";
+    ctx.fill();
+    ctx.strokeStyle = "rgba(227,201,138,.28)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.strokeStyle = "rgba(143,163,194,.2)";
+    ctx.beginPath();
+    ctx.moveTo(bx - 18, by);
+    ctx.lineTo(bx + 18, by);
+    ctx.moveTo(bx, by - 18);
+    ctx.lineTo(bx, by + 18);
     ctx.stroke();
     const ssMax = Math.max(0.4, params.authority / params.damping);
     ctx.beginPath();
     ctx.arc(
       bx + Math.max(-1, Math.min(1, axisX.current.uVel / ssMax)) * 15,
       by + Math.max(-1, Math.min(1, axisY.current.uVel / ssMax)) * 15,
-      6,
+      5.5,
       0,
       Math.PI * 2,
     );
-    ctx.fillStyle = HAZE;
+    ctx.fillStyle = SKY;
     ctx.fill();
     ctx.beginPath();
-    ctx.arc(bx + inp.stickX * 15, by + inp.stickY * 15, 8, 0, Math.PI * 2);
-    ctx.strokeStyle = CORAL;
-    ctx.lineWidth = 1.6;
+    ctx.arc(bx + inp.stickX * 15, by + inp.stickY * 15, 8.5, 0, Math.PI * 2);
+    ctx.strokeStyle = GOLD;
+    ctx.lineWidth = 1.8;
+    ctx.shadowColor = GOLD;
+    ctx.shadowBlur = 8;
     ctx.stroke();
+    ctx.shadowBlur = 0;
   }, [side, params]);
+
+  // Pinta el indicador también fuera del loop (cuenta regresiva, pausa).
+  useEffect(() => {
+    if (fase !== "run") draw();
+  }, [draw, fase]);
 
   useGameLoop({
     running: fase === "run",
@@ -320,56 +532,35 @@ export function ControlGame({ cfg, onFinish, onQuit }: Props) {
   };
 
   return (
-    <div ref={wrapRef} style={{ maxWidth: 560, margin: "0 auto" }}>
+    <div>
       <GameTopBar
         nombre={`Control · Nivel ${cfg.level}`}
         remainingSec={fase === "countdown" ? cfg.durationSec : remaining}
         onQuit={onQuit}
       />
-      <div style={{ position: "relative" }}>
-        <canvas
-          ref={canvasRef}
-          style={{
-            width: side,
-            height: side,
-            display: "block",
-            margin: "0 auto",
-            background: "var(--fd-panel, white)",
-            border: `1px solid ${NAVY}14`,
-            borderRadius: "var(--fd-radius, 18px)",
-            touchAction: "none",
-            cursor: "crosshair",
-          }}
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={releasePointer}
-          onPointerCancel={releasePointer}
-        />
-        {fase === "countdown" && <CountdownIntro onDone={() => setFase("run")} />}
-        {fase === "pausa" && (
-          <PauseOverlay
-            texto="Sesión en pausa — la interrupción queda registrada"
-            onResume={() => setFase("run")}
+      <div ref={wrapRef} style={{ maxWidth: 580, margin: "0 auto" }}>
+        <div className="cx-canvas-wrap" style={{ width: side }}>
+          <canvas
+            ref={canvasRef}
+            className="cx-canvas"
+            style={{ width: side, height: side, cursor: "crosshair" }}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={releasePointer}
+            onPointerCancel={releasePointer}
           />
-        )}
+          {fase === "countdown" && <CountdownIntro onDone={() => setFase("run")} />}
+          {fase === "pausa" && (
+            <PauseOverlay
+              texto="Sesión en pausa — la interrupción queda registrada"
+              onResume={() => setFase("run")}
+            />
+          )}
+        </div>
+        <GameHint>
+          Centra ambas agujas · el mando tiene inercia: suelta antes de llegar · ← → ↑ ↓ / WASD
+        </GameHint>
       </div>
-      <p
-        style={{
-          textAlign: "center",
-          marginTop: 12,
-          fontFamily: MONO,
-          fontSize: "0.66rem",
-          letterSpacing: "0.1em",
-          textTransform: "uppercase",
-          color: "var(--fd-muted, #4A5872)",
-          background: "var(--fd-panel, #F5F5F7)",
-          border: `1px solid ${NAVY}0F`,
-          borderRadius: "var(--fd-radius, 10px)",
-          padding: "8px 12px",
-        }}
-      >
-        Centra ambas agujas · el mando tiene inercia: suelta antes de llegar · ← → ↑ ↓ / WASD
-      </p>
     </div>
   );
 }

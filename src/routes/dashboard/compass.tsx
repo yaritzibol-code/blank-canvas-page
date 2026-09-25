@@ -47,19 +47,23 @@ import { OrientacionGame } from "@/components/compass/OrientacionGame";
 import { MultitareaGame } from "@/components/compass/MultitareaGame";
 import { LogicaGame } from "@/components/compass/LogicaGame";
 import { RadarChart } from "@/components/compass/RadarChart";
+import { COMPASS_STAGE_ART } from "@/components/compass/art";
+import { ModuleCover } from "@/components/compass/ModuleCover";
 import {
   CButton,
   CCard,
   Eyebrow,
+  GameStage,
   MetricChip,
   ScoreRing,
-  CORAL,
-  CREAM,
-  HAZE,
+  GOLD,
+  GOLD2,
+  GREEN,
+  LINE,
   MONO,
   NAVY,
+  RED,
   ROSE,
-  SALMON,
   SANS,
   SERIF,
 } from "@/components/compass/ui";
@@ -189,13 +193,15 @@ function CompassPage() {
   if (fase.t === "run") {
     const Game = GAME[fase.cfg.moduleId];
     return (
-      <div style={{ fontFamily: SANS }}>
-        <Game
-          cfg={fase.cfg}
-          onFinish={(r) => alTerminar(fase.cfg, r)}
-          onQuit={() => setFase({ t: "hub" })}
-        />
-      </div>
+      <GameStage art={COMPASS_STAGE_ART[fase.cfg.moduleId]}>
+        <div style={{ fontFamily: SANS }}>
+          <Game
+            cfg={fase.cfg}
+            onFinish={(r) => alTerminar(fase.cfg, r)}
+            onQuit={() => setFase({ t: "hub" })}
+          />
+        </div>
+      </GameStage>
     );
   }
 
@@ -203,7 +209,7 @@ function CompassPage() {
     const def = COMPASS_MODULE_MAP[fase.moduleId];
     const esPractica = fase.mode === "practica";
     return (
-      <div style={{ fontFamily: SANS, maxWidth: 720, margin: "0 auto" }}>
+      <div className="cx-hub" style={{ fontFamily: SANS, maxWidth: 820, margin: "0 auto" }}>
         <BriefingView
           def={def}
           mode={fase.mode}
@@ -218,7 +224,7 @@ function CompassPage() {
 
   if (fase.t === "debrief") {
     return (
-      <div style={{ fontFamily: SANS, maxWidth: 780, margin: "0 auto" }}>
+      <div className="cx-hub" style={{ fontFamily: SANS, maxWidth: 780, margin: "0 auto" }}>
         <DebriefView
           record={fase.record}
           tendencia={fase.tendencia}
@@ -231,7 +237,7 @@ function CompassPage() {
 
   if (fase.t === "sim-intro") {
     return (
-      <div style={{ fontFamily: SANS, maxWidth: 720, margin: "0 auto" }}>
+      <div className="cx-hub" style={{ fontFamily: SANS, maxWidth: 720, margin: "0 auto" }}>
         <SimIntroView onBack={() => setFase({ t: "hub" })} onStart={empezarSimulacro} />
       </div>
     );
@@ -241,8 +247,16 @@ function CompassPage() {
     const next = SIMULACRO_COMPACTO[fase.nextIdx];
     const def = COMPASS_MODULE_MAP[next.moduleId];
     return (
-      <div style={{ fontFamily: SANS, maxWidth: 640, margin: "0 auto" }}>
-        <CCard style={{ textAlign: "center", padding: "40px 28px" }}>
+      <div className="cx-hub" style={{ fontFamily: SANS, maxWidth: 640, margin: "0 auto" }}>
+        <CCard
+          style={{
+            textAlign: "center",
+            padding: "clamp(20px, 4vw, 40px) clamp(18px, 3.5vw, 28px)",
+          }}
+        >
+          <div className="cx-brief-cover" style={{ margin: "0 auto 22px", maxWidth: 420 }}>
+            <ModuleCover id={next.moduleId} />
+          </div>
           <Eyebrow>
             Simulacro · módulo {fase.nextIdx + 1} de {SIMULACRO_COMPACTO.length}
           </Eyebrow>
@@ -288,7 +302,7 @@ function CompassPage() {
 
   if (fase.t === "sim-final") {
     return (
-      <div style={{ fontFamily: SANS, maxWidth: 820, margin: "0 auto" }}>
+      <div className="cx-hub" style={{ fontFamily: SANS, maxWidth: 820, margin: "0 auto" }}>
         <SimFinalView records={fase.records} onHub={() => setFase({ t: "hub" })} />
       </div>
     );
@@ -299,7 +313,7 @@ function CompassPage() {
   const debilDef = profile.debil ? COMPASS_MODULE_MAP[profile.debil] : null;
 
   return (
-    <div style={{ fontFamily: SANS, maxWidth: 1240, margin: "0 auto" }}>
+    <div className="cx-hub" style={{ fontFamily: SANS, maxWidth: 1240, margin: "0 auto" }}>
       <ModuleHeader
         eyebrow="Entrenamiento · Aptitudes de selección"
         title="Pilot"
@@ -362,7 +376,10 @@ function CompassPage() {
           <div
             className="fd-compass-sim"
             style={{
-              background: NAVY,
+              background:
+                "radial-gradient(120% 120% at 100% 0%, rgba(199,160,82,.2), transparent 55%), linear-gradient(160deg, #0d2a52, #061226)",
+              border: `1px solid ${LINE}`,
+              boxShadow: "0 24px 50px -30px rgba(0,0,0,.9)",
               color: "white",
               borderRadius: "var(--fd-radius, 22px)",
               padding: "24px 26px",
@@ -417,11 +434,10 @@ function CompassPage() {
                 Sin pausas largas y con debrief hasta el final, como en un screening real. Tu perfil
                 de aptitudes se actualiza con los siete resultados.
               </p>
+              <RutaSimulacro />
             </div>
             <div style={{ position: "relative" }}>
-              <CButton onClick={() => setFase({ t: "sim-intro" })} style={{ background: CORAL }}>
-                Iniciar simulacro
-              </CButton>
+              <CButton onClick={() => setFase({ t: "sim-intro" })}>Iniciar simulacro</CButton>
             </div>
           </div>
         </div>
@@ -532,7 +548,7 @@ function CompassPage() {
                   alignItems: "center",
                   gap: 12,
                   padding: "9px 2px",
-                  borderBottom: `1px solid ${NAVY}0C`,
+                  borderBottom: `1px solid ${LINE}`,
                   flexWrap: "wrap",
                 }}
               >
@@ -568,12 +584,7 @@ function CompassPage() {
                     fontFamily: SERIF,
                     fontStyle: "italic",
                     fontSize: "1.2rem",
-                    color:
-                      s.score >= 75
-                        ? "#0B7A49"
-                        : s.score >= 45
-                          ? "var(--fd-text, #081A35)"
-                          : "#A13333",
+                    color: s.score >= 75 ? GREEN : s.score >= 45 ? "var(--fd-text, #081A35)" : RED,
                     marginLeft: "auto",
                   }}
                 >
@@ -657,25 +668,7 @@ function KpiMini({ label, value, sub }: { label: string; value: string; sub?: st
 }
 
 function ChipMini({ children, tono }: { children: React.ReactNode; tono?: "alerta" }) {
-  return (
-    <span
-      style={{
-        fontFamily: MONO,
-        fontSize: "0.58rem",
-        letterSpacing: "0.08em",
-        textTransform: "uppercase",
-        fontWeight: 700,
-        color: tono === "alerta" ? "#8A6100" : "var(--fd-muted, #4A5872)",
-        background: tono === "alerta" ? "var(--fd-panel, #FFF6E0)" : "var(--fd-panel, #F5F5F7)",
-        border: `1px solid ${NAVY}12`,
-        padding: "3px 8px",
-        borderRadius: 999,
-        whiteSpace: "nowrap",
-      }}
-    >
-      {children}
-    </span>
-  );
+  return <span className={`cx-chip-mini${tono === "alerta" ? " is-alert" : ""}`}>{children}</span>;
 }
 
 function TendenciaChip({ delta }: { delta: number | null }) {
@@ -691,7 +684,7 @@ function TendenciaChip({ delta }: { delta: number | null }) {
         fontFamily: MONO,
         fontSize: "0.66rem",
         fontWeight: 800,
-        color: flat ? "var(--fd-muted, #4A5872)" : up ? "#0B7A49" : "#A13333",
+        color: flat ? "var(--fd-muted, #4A5872)" : up ? GREEN : RED,
       }}
       title="Contra la mediana de tus 3 sesiones previas comparables"
     >
@@ -713,128 +706,26 @@ function ModuleCard({
   onPractica: () => void;
   onExamen: () => void;
 }) {
-  const [hov, setHov] = useState(false);
   return (
-    <div
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      style={{
-        background: "var(--fd-panel, white)",
-        border: `1px solid ${debil ? ROSE : `${NAVY}14`}`,
-        borderRadius: "var(--fd-radius, 22px)",
-        overflow: "hidden",
-        display: "flex",
-        flexDirection: "column",
-        transition: "transform 0.15s, box-shadow 0.15s",
-        transform: hov ? "translateY(-2px)" : "none",
-        boxShadow: hov ? "0 12px 30px rgba(8,26,53,0.08)" : "0 1px 0 rgba(8,26,53,0.03)",
-      }}
-    >
-      <div
-        style={{
-          padding: "20px 20px 16px",
-          display: "flex",
-          flexDirection: "column",
-          gap: 10,
-          flex: 1,
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "flex-start",
-            justifyContent: "space-between",
-            gap: 8,
-          }}
-        >
-          <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span
-              style={{
-                width: 38,
-                height: 38,
-                borderRadius: "var(--fd-radius, 10px)",
-                background: "var(--fd-panel, #F5F5F7)",
-                color: "var(--fd-text, #081A35)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Icon n={def.icon} size={19} />
-            </span>
-            {debil && (
-              <span
-                style={{
-                  fontFamily: MONO,
-                  fontSize: "0.52rem",
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  fontWeight: 800,
-                  color: "var(--fd-gold, #7A5C1E)",
-                  background: `${ROSE}44`,
-                  padding: "3px 8px",
-                  borderRadius: 999,
-                }}
-              >
-                Enfócate aquí
-              </span>
-            )}
+    <div className={`cx-mcard${debil ? " is-weak" : ""}`}>
+      <div className="cx-mcard-cover">
+        <ModuleCover id={def.id} />
+        <span className="cx-mcard-icon">
+          <Icon n={def.icon} size={17} />
+        </span>
+        {debil && <span className="cx-mcard-flag">Enfócate aquí</span>}
+        {stats.ultimoScore !== null && (
+          <span className="cx-mcard-score">
+            {stats.ultimoScore}
+            <TendenciaChip delta={stats.tendencia} />
           </span>
-          <span style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-            {stats.ultimoScore !== null && (
-              <>
-                <span
-                  style={{
-                    fontFamily: SERIF,
-                    fontStyle: "italic",
-                    fontSize: "1.6rem",
-                    color: "var(--fd-text, #081A35)",
-                  }}
-                >
-                  {stats.ultimoScore}
-                </span>
-                <TendenciaChip delta={stats.tendencia} />
-              </>
-            )}
-          </span>
-        </div>
-        <div>
-          <div
-            style={{
-              fontFamily: SERIF,
-              fontStyle: "italic",
-              fontSize: "1.3rem",
-              color: "var(--fd-text, #081A35)",
-              lineHeight: 1.1,
-            }}
-          >
-            {def.nombre}
-          </div>
-          <div
-            style={{
-              fontFamily: MONO,
-              fontSize: "0.6rem",
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              fontWeight: 700,
-              color: "var(--fd-muted, #4A5872)",
-              marginTop: 4,
-            }}
-          >
-            {def.aptitud}
-          </div>
-        </div>
-        <p
-          style={{
-            fontSize: "0.8rem",
-            color: "var(--fd-muted, #081A3599)",
-            lineHeight: 1.5,
-            margin: 0,
-          }}
-        >
-          {def.descripcion}
-        </p>
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: "auto" }}>
+        )}
+      </div>
+      <div className="cx-mcard-body">
+        <h3 className="cx-mcard-title">{def.nombre}</h3>
+        <div className="cx-mcard-apt">{def.aptitud}</div>
+        <p className="cx-mcard-desc">{def.descripcion}</p>
+        <div className="cx-mcard-chips">
           <ChipMini>
             {stats.sesiones} {stats.sesiones === 1 ? "sesión" : "sesiones"}
           </ChipMini>
@@ -842,11 +733,11 @@ function ModuleCard({
           <ChipMini>Nivel sug. {stats.nivelSugerido}</ChipMini>
         </div>
       </div>
-      <div style={{ display: "flex", gap: 8, padding: "0 20px 18px" }}>
-        <button onClick={onPractica} style={cardBtn(true)}>
+      <div className="cx-mcard-actions">
+        <button type="button" className="cx-btn is-gold" onClick={onPractica}>
           Práctica
         </button>
-        <button onClick={onExamen} style={cardBtn(false)}>
+        <button type="button" className="cx-btn" onClick={onExamen}>
           Examen{" "}
           {def.examenItems > 0
             ? `${def.examenItems}/${Math.round(def.examenSec / 60)}′`
@@ -857,22 +748,51 @@ function ModuleCard({
   );
 }
 
-function cardBtn(primary: boolean): React.CSSProperties {
-  return {
-    flex: 1,
-    padding: "10px 0",
-    borderRadius: "var(--fd-radius, 10px)",
-    border: primary ? "none" : `1px solid ${NAVY}1F`,
-    background: primary ? NAVY : "transparent",
-    color: primary ? "white" : "var(--fd-text, #081A35)",
-    fontFamily: MONO,
-    fontSize: "0.62rem",
-    fontWeight: 700,
-    letterSpacing: "0.1em",
-    textTransform: "uppercase",
-    cursor: "pointer",
-    minHeight: 40,
-  };
+/** Plan de vuelo del simulacro: una escala por módulo, en su orden. */
+function RutaSimulacro() {
+  const n = SIMULACRO_COMPACTO.length;
+  const x = (i: number) => 18 + (i * (300 - 36)) / (n - 1);
+  const y = (i: number) => (i % 2 === 0 ? 24 : 40);
+  const d = SIMULACRO_COMPACTO.map((_, i) => `${i === 0 ? "M" : "L"}${x(i)} ${y(i)}`).join(" ");
+  return (
+    <svg className="cx-route" viewBox="0 0 300 64" aria-hidden="true">
+      <path d={d} fill="none" stroke="rgba(227,201,138,.25)" strokeWidth={6} />
+      <path
+        className="cx-route-line"
+        d={d}
+        fill="none"
+        stroke={GOLD}
+        strokeWidth={1.6}
+        strokeDasharray="6 6"
+      />
+      {SIMULACRO_COMPACTO.map((b, i) => (
+        <g key={b.moduleId}>
+          <rect
+            x={x(i) - 5}
+            y={y(i) - 5}
+            width={10}
+            height={10}
+            transform={`rotate(45 ${x(i)} ${y(i)})`}
+            fill="#061226"
+            stroke={GOLD}
+            strokeWidth={1.4}
+          />
+          <text
+            x={x(i)}
+            y={i % 2 === 0 ? y(i) - 11 : y(i) + 19}
+            textAnchor="middle"
+            fontFamily="'Geist Mono', monospace"
+            fontSize={8}
+            fontWeight={700}
+            letterSpacing="0.08em"
+            fill="rgba(184,197,218,.85)"
+          >
+            {COMPASS_MODULE_MAP[b.moduleId].nombre.slice(0, 3).toUpperCase()}
+          </text>
+        </g>
+      ))}
+    </svg>
+  );
 }
 
 function CrossLink({
@@ -1002,33 +922,41 @@ function BriefingView({
       >
         <Icon n="chevL" size={14} /> Volver al hub
       </button>
-      <CCard style={{ padding: "30px 28px" }}>
-        <Eyebrow>
-          Briefing · {def.nombre} · {esPractica ? "práctica" : "examen de módulo"}
-        </Eyebrow>
-        <h2
-          style={{
-            fontFamily: SERIF,
-            fontStyle: "italic",
-            fontWeight: 400,
-            fontSize: "2rem",
-            color: "var(--fd-text, #081A35)",
-            margin: "0 0 10px",
-            lineHeight: 1.1,
-          }}
-        >
-          {def.aptitud}
-        </h2>
-        <p
-          style={{
-            color: "var(--fd-muted, #081A3599)",
-            fontSize: "0.94rem",
-            lineHeight: 1.6,
-            maxWidth: 560,
-          }}
-        >
-          {def.descripcion}
-        </p>
+      <CCard style={{ padding: "clamp(20px, 3vw, 30px)" }}>
+        <div className="cx-brief-head">
+          <div>
+            <Eyebrow>
+              Briefing · {def.nombre} · {esPractica ? "práctica" : "examen de módulo"}
+            </Eyebrow>
+            <h2
+              style={{
+                fontFamily: SERIF,
+                fontStyle: "italic",
+                fontWeight: 400,
+                fontSize: "2rem",
+                color: "var(--fd-text, #081A35)",
+                margin: "0 0 10px",
+                lineHeight: 1.1,
+              }}
+            >
+              {def.aptitud}
+            </h2>
+            <p
+              style={{
+                color: "var(--fd-muted, #081A3599)",
+                fontSize: "0.94rem",
+                lineHeight: 1.6,
+                maxWidth: 560,
+                margin: 0,
+              }}
+            >
+              {def.descripcion}
+            </p>
+          </div>
+          <div className="cx-brief-cover">
+            <ModuleCover id={def.id} />
+          </div>
+        </div>
 
         <div
           style={{
@@ -1129,23 +1057,14 @@ function BriefingView({
         {esPractica ? (
           <div style={{ marginBottom: 20 }}>
             <Eyebrow>Nivel de dificultad</Eyebrow>
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <div className="cx-levels">
               {[1, 2, 3, 4, 5].map((n) => (
                 <button
                   key={n}
+                  type="button"
+                  className={`cx-key${n === nivel ? " is-on" : ""}`}
+                  aria-pressed={n === nivel}
                   onClick={() => setNivel(n)}
-                  style={{
-                    width: 46,
-                    height: 46,
-                    borderRadius: "var(--fd-radius, 12px)",
-                    border: `1px solid ${n === nivel ? "transparent" : `${NAVY}1F`}`,
-                    background: n === nivel ? NAVY : "transparent",
-                    color: n === nivel ? "white" : "var(--fd-text, #081A35)",
-                    fontFamily: MONO,
-                    fontSize: "0.95rem",
-                    fontWeight: 700,
-                    cursor: "pointer",
-                  }}
                 >
                   {n}
                 </button>
@@ -1268,7 +1187,7 @@ function DebriefView({
         </div>
       </CCard>
 
-      <CCard style={{ padding: "22px 26px", marginBottom: 18, borderLeft: `3px solid ${CORAL}` }}>
+      <CCard style={{ padding: "22px 26px", marginBottom: 18, borderLeft: `3px solid ${GOLD2}` }}>
         <Eyebrow style={{ color: "var(--fd-gold, #7A5C1E)" }}>Siguiente paso</Eyebrow>
         <p
           style={{
@@ -1472,7 +1391,7 @@ function SimFinalView({ records, onHub }: { records: CompassSessionRecord[]; onH
                       style={{
                         width: `${r.score}%`,
                         height: "100%",
-                        background: r.score >= 75 ? "#12B26B" : r.score >= 45 ? NAVY : "#C24545",
+                        background: r.score >= 75 ? GREEN : r.score >= 45 ? GOLD : RED,
                         borderRadius: 999,
                       }}
                     />
@@ -1500,7 +1419,7 @@ function SimFinalView({ records, onHub }: { records: CompassSessionRecord[]; onH
       </CCard>
 
       {peor && (
-        <CCard style={{ padding: "22px 26px", marginBottom: 18, borderLeft: `3px solid ${CORAL}` }}>
+        <CCard style={{ padding: "22px 26px", marginBottom: 18, borderLeft: `3px solid ${GOLD2}` }}>
           <Eyebrow style={{ color: "var(--fd-gold, #7A5C1E)" }}>Tu siguiente sesión</Eyebrow>
           <p
             style={{
