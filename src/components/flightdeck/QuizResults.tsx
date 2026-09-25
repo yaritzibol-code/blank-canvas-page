@@ -190,6 +190,8 @@ export function QuizResults({
   exitTo,
   onRestart,
   restartLabel = "Repetir sesión",
+  onReview,
+  reviewLabel = "Revisar cuestionario",
   debrief,
   extra,
 }: {
