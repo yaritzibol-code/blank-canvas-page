@@ -48,6 +48,11 @@ REVOKE ALL ON public.notifications, public.notification_reads FROM anon;
 GRANT ALL ON public.notifications, public.notification_reads TO service_role;
 GRANT SELECT, INSERT, UPDATE, DELETE ON public.notifications TO authenticated;
 GRANT SELECT, INSERT ON public.notification_reads TO authenticated;
+-- Supabase da ALL por omisión a authenticated en las tablas nuevas: se deja
+-- sólo lo que la app usa (la RLS decide sobre qué filas). El borrado en
+-- cascada de los "Recibido" lo hace la llave foránea, no necesita DELETE.
+REVOKE TRUNCATE, REFERENCES, TRIGGER ON public.notifications FROM authenticated;
+REVOKE UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER ON public.notification_reads FROM authenticated;
 
 ALTER TABLE public.notifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.notification_reads ENABLE ROW LEVEL SECURITY;
