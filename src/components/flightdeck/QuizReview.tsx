@@ -104,6 +104,11 @@ export function QuizReview({
         .fp-quiz-review .fp-review-area { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
         .fp-quiz-review .fp-review-primary { width: 100%; max-width: 900px; margin: 0 auto; min-width: 0; }
         .fp-quiz-review .fp-review-card { padding: 20px; }
+        .fp-quiz-review .fp-progress-segments { display: grid; grid-template-columns: repeat(var(--question-count,20), minmax(5px,1fr)); gap: 4px; }
+        .fp-quiz-review .fp-progress-segments button { height: 6px; min-width: 0; padding: 0; border: 0; border-radius: 4px; background: #ffffff24; cursor: pointer; }
+        .fp-quiz-review .fp-progress-segments button.is-correct { background: #7fd6a4; }
+        .fp-quiz-review .fp-progress-segments button.is-wrong { background: #f0a08c; }
+        .fp-quiz-review .fp-progress-segments button.is-current { outline: 2px solid #c7a052; outline-offset: 2px; }
         @media (min-width: 768px) {
           .fp-quiz-review .fp-review-area { padding: 20px 24px; }
           .fp-quiz-review .fp-review-card { padding: 24px 28px; }
