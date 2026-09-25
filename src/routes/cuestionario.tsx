@@ -1,5 +1,6 @@
 import { QuestionFrame } from "@/components/flightdeck/QuestionFrame";
 import { QuizResults, type MateriaResult } from "@/components/flightdeck/QuizResults";
+import { QuizReview } from "@/components/flightdeck/QuizReview";
 import { setPresenceActivity } from "@/lib/presence";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
