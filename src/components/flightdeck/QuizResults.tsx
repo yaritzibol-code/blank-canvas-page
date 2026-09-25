@@ -342,6 +342,12 @@ export function QuizResults({
         {extra}
 
         <nav className="fd-results-actions" aria-label="Qué sigue">
+          {onReview && (
+            <button type="button" className="fd-results-ghost" onClick={onReview}>
+              <Icon n="doc" size={16} />
+              {reviewLabel}
+            </button>
+          )}
           <button type="button" className="fd-results-ghost" onClick={onRestart}>
             <ArrowCounterClockwise size={17} weight="bold" />
             {restartLabel}
