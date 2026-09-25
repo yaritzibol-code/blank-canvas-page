@@ -310,6 +310,10 @@ function CuestionarioPage() {
   const [picks, setPicks] = useState<(number | null)[]>([]);
   const [openResponses, setOpenResponses] = useState<string[]>([]);
   const [showResult, setShowResult] = useState(false);
+  /** Revisión solo lectura del intento ya terminado (no recalifica nada). */
+  const [reviewing, setReviewing] = useState(false);
+  /** Pregunta que se está reportando desde la revisión. */
+  const [reviewReportIdx, setReviewReportIdx] = useState<number | null>(null);
   const [yarisOpen, setYarisOpen] = useState(false);
   const [yarisMsgs, setYarisMsgs] = useState<YarisMsg[]>([]);
   const [yarisInput, setYarisInput] = useState("");
