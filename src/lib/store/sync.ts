@@ -82,6 +82,17 @@ const pushing = new Map<string, Promise<boolean>>();
 const lastPushOk = new Map<string, number>();
 /** Reintentos consecutivos tras un fallo (para el backoff). */
 const retryAttempts = new Map<string, number>();
+/** Otras lecturas que acompañan cada refresco en vivo (p. ej. las notificaciones). */
+const liveRefreshers = new Set<() => Promise<void>>();
+
+/**
+ * Suma una lectura a cada refresco en vivo: al iniciar sesión, en el intervalo
+ * del panel y al volver a la pestaña. Un fallo suyo no detiene la sincronización.
+ */
+export function registerLiveRefresher(fn: () => Promise<void>): () => void {
+  liveRefreshers.add(fn);
+  return () => liveRefreshers.delete(fn);
+}
 
 function rowId(r: Row): string {
   return String(r.id);
@@ -408,6 +419,9 @@ async function hydrateLive(): Promise<void> {
       });
     });
   }
+
+  // 6) Lecturas en vivo de otros módulos (notificaciones)
+  await Promise.allSettled([...liveRefreshers].map((fn) => fn()));
   lastRefreshAt = Date.now();
 }
 

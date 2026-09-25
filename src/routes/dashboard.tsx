@@ -8,6 +8,7 @@ import { TimerProvider } from "@/contexts/StudyTimerContext";
 import { StudySessionProvider } from "@/contexts/StudySessionContext";
 import { LogroWatcher } from "@/components/logros/LogroWatcher";
 import { FpWatcher } from "@/components/fp/FpWatcher";
+import { RadioWatcher } from "@/components/notificaciones/RadioWatcher";
 import { PathyCloud } from "@/components/estudiemos/PathyCloud";
 import { rememberLearningPathOrigin, restoreLearningPathScroll } from "@/lib/lp/contextual-return";
 import { FlightDeck } from "@/components/flightdeck/FlightDeck";
@@ -61,6 +62,7 @@ function DashboardLayout() {
             <PathyCloud />
             <LogroWatcher />
             <FpWatcher />
+            <RadioWatcher />
           </div>
         </div>
       </StudySessionProvider>

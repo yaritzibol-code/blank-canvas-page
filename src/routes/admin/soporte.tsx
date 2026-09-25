@@ -5,6 +5,11 @@ import { Icon } from "@/components/ui/fp-icon";
 import { supabase } from "@/integrations/supabase/client";
 import { REPORT_TYPES } from "@/components/shared/ReportProblemModal";
 import { QuestionEditModal } from "@/components/admin/QuestionEditModal";
+import {
+  ResponderReporteModal,
+  RespuestasDelReporte,
+} from "@/components/notificaciones/ResponderReporte";
+import { sePuedeResponder } from "@/components/notificaciones/opciones";
 
 import {
   AdminShell,
@@ -19,6 +24,8 @@ import {
 import {
   flushCloudWrites,
   getReports,
+  notificacionesDisponibles,
+  refreshNotificaciones,
   updateReport,
   useStore,
   type Report,
@@ -50,6 +57,10 @@ function AdminSoportePage() {
   const [query, setQuery] = useState("");
 
   const reports = useStore(getReports);
+  // Para saber al momento si la alumna ya recibió cada respuesta.
+  useEffect(() => {
+    void refreshNotificaciones();
+  }, []);
 
   const q = query.trim().toLowerCase();
   const filtered = reports.filter((r) => {
@@ -118,6 +129,9 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
   const [notas, setNotas] = useState("");
   const [notasListas, setNotasListas] = useState(false);
   const [verPregunta, setVerPregunta] = useState(false);
+  const [responder, setResponder] = useState(false);
+  const disponibles = useStore(notificacionesDisponibles);
+  const puedeResponder = sePuedeResponder(r) && disponibles !== false;
   const questionId = r.pregunta?.id || r.recurso;
   const isQuestion = Boolean(r.pregunta) || r.recurso.startsWith("q_");
 
@@ -198,22 +212,88 @@ function ReportCard({ r, onFlash }: { r: Report; onFlash: (msg: string, error?: 
         </div>
       )}
 
-      {isQuestion && (
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
-          <button
-            onClick={() => setVerPregunta(true)}
-            style={{ padding: "7px 14px", background: "#C7A052", color: "#0B1220", border: "none", borderRadius: 8, fontSize: ".76rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
-          >
-            <Icon n="edit" size={14} /> Ver y editar pregunta
-          </button>
-          <button
-            onClick={() => navigate({ to: "/admin/banco", search: { q: questionId } })}
-            style={{ padding: "7px 14px", background: "#0A1B33", color: "#B8C5DA", border: "2px solid rgba(199,160,82,.28)", borderRadius: 8, fontSize: ".76rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
-          >
-            <Icon n="help" size={14} /> Abrir en Banco de preguntas
-          </button>
-        </div>
-      )}
+      <RespuestasDelReporte r={r} />
+
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
+        <button
+          onClick={() => setResponder(true)}
+          disabled={!puedeResponder}
+          title={
+            puedeResponder
+              ? undefined
+              : disponibles === false
+                ? "Falta activar las notificaciones en la base de datos"
+                : "Este reporte no tiene una alumna registrada a quien avisarle"
+          }
+          style={{
+            padding: "7px 14px",
+            background: "rgba(159,195,245,.14)",
+            color: "#DCEBFF",
+            border: "1.5px solid rgba(159,195,245,.55)",
+            borderRadius: 8,
+            fontSize: ".76rem",
+            fontWeight: 800,
+            cursor: puedeResponder ? "pointer" : "not-allowed",
+            opacity: puedeResponder ? 1 : 0.5,
+            fontFamily: "'Manrope', sans-serif",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+          }}
+        >
+          <Icon n="radio" size={14} />{" "}
+          {r.respuestas?.length ? "Responder de nuevo" : "Responder a la alumna"}
+        </button>
+        {isQuestion && (
+          <>
+            <button
+              onClick={() => setVerPregunta(true)}
+              style={{
+                padding: "7px 14px",
+                background: "#C7A052",
+                color: "#0B1220",
+                border: "none",
+                borderRadius: 8,
+                fontSize: ".76rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+              }}
+            >
+              <Icon n="edit" size={14} /> Ver y editar pregunta
+            </button>
+            <button
+              onClick={() => navigate({ to: "/admin/banco", search: { q: questionId } })}
+              style={{
+                padding: "7px 14px",
+                background: "#0A1B33",
+                color: "#B8C5DA",
+                border: "2px solid rgba(199,160,82,.28)",
+                borderRadius: 8,
+                fontSize: ".76rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                fontFamily: "'Manrope', sans-serif",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+              }}
+            >
+              <Icon n="help" size={14} /> Abrir en Banco de preguntas
+            </button>
+          </>
+        )}
+      </div>
+
+      <ResponderReporteModal
+        r={r}
+        open={responder}
+        onClose={() => setResponder(false)}
+        onFlash={onFlash}
+      />
 
       {verPregunta && (
         <QuestionEditModal

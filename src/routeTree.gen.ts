@@ -46,6 +46,7 @@ import { Route as AdminConfiguracionRouteImport } from './routes/admin/configura
 import { Route as AdminContenidoRouteImport } from './routes/admin/contenido'
 import { Route as AdminEstudiantesRouteImport } from './routes/admin/estudiantes'
 import { Route as AdminGamificacionRouteImport } from './routes/admin/gamificacion'
+import { Route as AdminNotificacionesRouteImport } from './routes/admin/notificaciones'
 import { Route as AdminPerfilRouteImport } from './routes/admin/perfil'
 import { Route as AdminSoporteRouteImport } from './routes/admin/soporte'
 import { Route as AdminUsuariosActivosRouteImport } from './routes/admin/usuarios-activos'
@@ -284,6 +285,11 @@ const AdminEstudiantesRoute = AdminEstudiantesRouteImport.update({
 const AdminGamificacionRoute = AdminGamificacionRouteImport.update({
   id: '/admin/gamificacion',
   path: '/admin/gamificacion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminNotificacionesRoute = AdminNotificacionesRouteImport.update({
+  id: '/admin/notificaciones',
+  path: '/admin/notificaciones',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminPerfilRoute = AdminPerfilRouteImport.update({
@@ -597,6 +603,7 @@ export interface FileRoutesByFullPath {
   '/admin/contenido': typeof AdminContenidoRoute
   '/admin/estudiantes': typeof AdminEstudiantesRoute
   '/admin/gamificacion': typeof AdminGamificacionRoute
+  '/admin/notificaciones': typeof AdminNotificacionesRoute
   '/admin/perfil': typeof AdminPerfilRoute
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
@@ -688,6 +695,7 @@ export interface FileRoutesByTo {
   '/admin/contenido': typeof AdminContenidoRoute
   '/admin/estudiantes': typeof AdminEstudiantesRoute
   '/admin/gamificacion': typeof AdminGamificacionRoute
+  '/admin/notificaciones': typeof AdminNotificacionesRoute
   '/admin/perfil': typeof AdminPerfilRoute
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
@@ -780,6 +788,7 @@ export interface FileRoutesById {
   '/admin/contenido': typeof AdminContenidoRoute
   '/admin/estudiantes': typeof AdminEstudiantesRoute
   '/admin/gamificacion': typeof AdminGamificacionRoute
+  '/admin/notificaciones': typeof AdminNotificacionesRoute
   '/admin/perfil': typeof AdminPerfilRoute
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
@@ -874,6 +883,7 @@ export interface FileRouteTypes {
     | '/admin/contenido'
     | '/admin/estudiantes'
     | '/admin/gamificacion'
+    | '/admin/notificaciones'
     | '/admin/perfil'
     | '/admin/soporte'
     | '/admin/usuarios-activos'
@@ -965,6 +975,7 @@ export interface FileRouteTypes {
     | '/admin/contenido'
     | '/admin/estudiantes'
     | '/admin/gamificacion'
+    | '/admin/notificaciones'
     | '/admin/perfil'
     | '/admin/soporte'
     | '/admin/usuarios-activos'
@@ -1056,6 +1067,7 @@ export interface FileRouteTypes {
     | '/admin/contenido'
     | '/admin/estudiantes'
     | '/admin/gamificacion'
+    | '/admin/notificaciones'
     | '/admin/perfil'
     | '/admin/soporte'
     | '/admin/usuarios-activos'
@@ -1149,6 +1161,7 @@ export interface RootRouteChildren {
   AdminContenidoRoute: typeof AdminContenidoRoute
   AdminEstudiantesRoute: typeof AdminEstudiantesRoute
   AdminGamificacionRoute: typeof AdminGamificacionRoute
+  AdminNotificacionesRoute: typeof AdminNotificacionesRoute
   AdminPerfilRoute: typeof AdminPerfilRoute
   AdminSoporteRoute: typeof AdminSoporteRoute
   AdminUsuariosActivosRoute: typeof AdminUsuariosActivosRoute
@@ -1438,6 +1451,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/gamificacion'
       fullPath: '/admin/gamificacion'
       preLoaderRoute: typeof AdminGamificacionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/notificaciones': {
+      id: '/admin/notificaciones'
+      path: '/admin/notificaciones'
+      fullPath: '/admin/notificaciones'
+      preLoaderRoute: typeof AdminNotificacionesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/perfil': {
@@ -1927,6 +1947,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminContenidoRoute: AdminContenidoRoute,
   AdminEstudiantesRoute: AdminEstudiantesRoute,
   AdminGamificacionRoute: AdminGamificacionRoute,
+  AdminNotificacionesRoute: AdminNotificacionesRoute,
   AdminPerfilRoute: AdminPerfilRoute,
   AdminSoporteRoute: AdminSoporteRoute,
   AdminUsuariosActivosRoute: AdminUsuariosActivosRoute,
