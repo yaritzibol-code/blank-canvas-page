@@ -13,7 +13,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { QuestionImages } from "@/components/banco/QuestionImages";
-import { QuizQuestionNavigator } from "@/components/banco/QuizQuestionNavigator";
 
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
 
