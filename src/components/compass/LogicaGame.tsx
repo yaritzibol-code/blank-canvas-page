@@ -5,7 +5,7 @@
  * con las eliminaciones de su fila y su columna a la vista. Examen: reloj
  * global, sin feedback y con opción de saltar. Teclas 1-5 responden.
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import {
   buildLogicItem,
   logicConfusionKey,
@@ -21,13 +21,14 @@ import {
   CCard,
   Eyebrow,
   GameTopBar,
-  CORAL,
-  CREAM,
-  HAZE,
+  GOLD,
+  GREEN,
+  INK2,
+  INK3,
   MONO,
-  NAVY,
-  SALMON,
-  SERIF,
+  RED,
+  SKY,
+  VIOLET,
 } from "./ui";
 
 interface Props {
@@ -46,16 +47,32 @@ interface Tally {
 
 /* ── Figuras ─────────────────────────────────────────────────────────── */
 
-/** Cada figura se distingue por forma, no por color: legible en monocromo. */
+/**
+ * Cada figura tiene forma y color propios. La forma basta para distinguirlas
+ * (legible en monocromo); el color sólo acelera la lectura del tablero.
+ */
+const SHAPE_COLOR: Record<LogicShape, string> = {
+  circulo: SKY,
+  cuadrado: GOLD,
+  triangulo: RED,
+  rombo: GREEN,
+  hexagono: VIOLET,
+};
+
+/** Ficha con volumen: color base, brillo superior y halo. */
 export function Shape({
   n,
   size = 30,
-  color = NAVY,
+  color,
+  glow = true,
 }: {
   n: LogicShape;
   size?: number;
   color?: string;
+  glow?: boolean;
 }) {
+  const gid = `cx-shine${useId().replace(/[^\w-]/g, "")}`;
+  const tint = color ?? SHAPE_COLOR[n];
   const c = 12;
   const paths: Record<LogicShape, React.ReactNode> = {
     circulo: <circle cx={c} cy={c} r={8} />,
@@ -65,8 +82,27 @@ export function Shape({
     hexagono: <polygon points="12,2.8 20,7.4 20,16.6 12,21.2 4,16.6 4,7.4" />,
   };
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} aria-hidden="true">
-      {paths[n]}
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      style={{
+        overflow: "visible",
+        filter: glow ? `drop-shadow(0 0 ${Math.max(3, size / 6)}px ${tint}73)` : undefined,
+      }}
+    >
+      <defs>
+        <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#fff" stopOpacity={0.6} />
+          <stop offset="0.46" stopColor="#fff" stopOpacity={0} />
+          <stop offset="1" stopColor="#000" stopOpacity={0.32} />
+        </linearGradient>
+      </defs>
+      <g fill={tint} stroke={tint} strokeWidth={0.8} strokeLinejoin="round">
+        {paths[n]}
+      </g>
+      <g fill={`url(#${gid})`}>{paths[n]}</g>
     </svg>
   );
 }
@@ -81,12 +117,12 @@ const SHAPE_LABEL: Record<LogicShape, string> = {
 
 /** Fila de figuras para el debrief ("en su fila ya están: ▲ ◆"). */
 function ShapeRow({ shapes }: { shapes: LogicShape[] }) {
-  if (shapes.length === 0) return <span style={{ color: "var(--fd-muted, #4A5872)" }}>ninguna todavía</span>;
+  if (shapes.length === 0) return <span style={{ color: INK3 }}>ninguna todavía</span>;
   return (
-    <span style={{ display: "inline-flex", alignItems: "center", gap: 6, verticalAlign: "middle" }}>
+    <span style={{ display: "inline-flex", alignItems: "center", gap: 7, verticalAlign: "middle" }}>
       {shapes.map((s) => (
         <span key={s} style={{ display: "inline-flex" }} title={SHAPE_LABEL[s]}>
-          <Shape n={s} size={18} color={HAZE} />
+          <Shape n={s} size={18} glow={false} />
         </span>
       ))}
     </span>
@@ -245,10 +281,14 @@ export function LogicaGame({ cfg, onFinish, onQuit }: Props) {
   };
 
   const acerto = picked !== null && picked === item.correctIndex;
-  const celda = `clamp(38px, ${item.size === 4 ? "13vw" : "10.5vw"}, 62px)`;
+  const celda = `clamp(40px, ${item.size === 4 ? "14vw" : "11vw"}, 72px)`;
+  const ficha = item.size === 4 ? 34 : 30;
+  // En práctica, tras responder, se iluminan la fila y la columna del hueco:
+  // son las que explica el panel de abajo.
+  const resaltaLineas = esPractica && picked !== null;
 
   return (
-    <div style={{ maxWidth: 640, margin: "0 auto" }} onPointerDown={trackPointer}>
+    <div onPointerDown={trackPointer}>
       <GameTopBar
         nombre={`Lógica · ${esPractica ? "Práctica" : "Examen"}`}
         remainingSec={remaining}
@@ -256,56 +296,49 @@ export function LogicaGame({ cfg, onFinish, onQuit }: Props) {
         onQuit={onQuit}
       />
 
-      <CCard style={{ padding: "26px 24px" }}>
-        <Eyebrow>
+      <CCard style={{ maxWidth: 680, margin: "0 auto", padding: "clamp(16px, 3vw, 28px)" }}>
+        <Eyebrow style={{ textAlign: "center" }}>
           Cuadrícula {item.size}×{item.size} · cada figura, una vez por fila y una por columna
         </Eyebrow>
 
-        {/* Tablero */}
+        {/* Tablero: se vuelve a montar con cada ítem para que entre en ola. */}
         <div
+          key={idx}
+          className="cx-board"
           role="img"
           aria-label={`Cuadrícula de ${item.size} por ${item.size} con una casilla incógnita en la fila ${item.targetRow + 1}, columna ${item.targetCol + 1}`}
-          style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(${item.size}, ${celda})`,
-            gap: 6,
-            justifyContent: "center",
-            margin: "20px 0 22px",
-          }}
+          style={{ gridTemplateColumns: `repeat(${item.size}, ${celda})` }}
         >
           {item.grid.map((row, r) =>
             row.map((v, c) => {
               const esHueco = r === item.targetRow && c === item.targetCol;
+              const enLinea =
+                resaltaLineas && !esHueco && (r === item.targetRow || c === item.targetCol);
+              const clase = esHueco
+                ? picked === null
+                  ? "is-target"
+                  : acerto
+                    ? "is-solved"
+                    : "is-reveal"
+                : v === null
+                  ? "is-empty"
+                  : enLinea
+                    ? "is-line"
+                    : "";
               return (
                 <div
                   key={`${r}-${c}`}
-                  style={{
-                    height: celda,
-                    borderRadius: "var(--fd-radius, 10px)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: esHueco ? "var(--fd-panel, #EEE1C5)" : v !== null ? "var(--fd-panel, white)" : "var(--fd-panel, #F5F5F7)",
-                    border: esHueco ? `2px solid ${CORAL}` : `1px solid ${NAVY}14`,
-                  }}
+                  className={`cx-tile ${clase}`}
+                  style={{ height: celda, animationDelay: `${(r + c) * 35}ms` }}
                 >
                   {esHueco ? (
-                    <span
-                      style={{
-                        fontFamily: SERIF,
-                        fontStyle: "italic",
-                        fontSize: "1.5rem",
-                        color: "var(--fd-gold, #7A5C1E)",
-                      }}
-                    >
-                      {picked !== null ? (
-                        <Shape n={item.options[item.correctIndex].shape} size={30} color={CORAL} />
-                      ) : (
-                        "?"
-                      )}
-                    </span>
+                    picked !== null ? (
+                      <Shape n={item.options[item.correctIndex].shape} size={ficha} />
+                    ) : (
+                      <span className="cx-tile-q">?</span>
+                    )
                   ) : v !== null ? (
-                    <Shape n={item.shapes[v]} size={30} />
+                    <Shape n={item.shapes[v]} size={ficha} />
                   ) : null}
                 </div>
               );
@@ -313,53 +346,45 @@ export function LogicaGame({ cfg, onFinish, onQuit }: Props) {
           )}
         </div>
 
-        {/* Opciones */}
+        {/* Opciones: teclas iluminadas 1-5 */}
         <div
           style={{
             display: "grid",
             gridTemplateColumns: `repeat(${item.size}, minmax(0, 1fr))`,
-            gap: 8,
+            gap: 10,
+            maxWidth: item.size * 104,
+            margin: "0 auto",
           }}
         >
           {item.options.map((o, i) => {
             const esCorrecta = picked !== null && i === item.correctIndex;
             const esFallo = picked === i && i !== item.correctIndex;
+            const estado = esCorrecta
+              ? " is-correct"
+              : esFallo
+                ? " is-wrong"
+                : picked !== null
+                  ? " is-dim"
+                  : "";
             return (
               <button
                 key={o.shape}
+                type="button"
+                className={`cx-key${estado}`}
                 onClick={() => choose(i)}
                 disabled={picked !== null}
                 aria-label={SHAPE_LABEL[o.shape]}
-                style={{
-                  padding: "12px 6px 8px",
-                  borderRadius: "var(--fd-radius, 12px)",
-                  border: `1px solid ${esCorrecta ? "#12B26B" : esFallo ? "#C24545" : `${NAVY}22`}`,
-                  background: esCorrecta ? "var(--fd-panel, #EAF7F0)" : esFallo ? "var(--fd-panel, #FBEDED)" : "var(--fd-panel, white)",
-                  cursor: picked === null ? "pointer" : "default",
-                  minHeight: 62,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: 5,
-                }}
+                style={{ minHeight: 70 }}
               >
-                <Shape n={o.shape} size={28} />
-                <span style={{ fontFamily: MONO, fontSize: "0.6rem", color: "var(--fd-muted, #4A5872)" }}>{i + 1}</span>
+                <span className="cx-key-n">{i + 1}</span>
+                <Shape n={o.shape} size={30} />
               </button>
             );
           })}
         </div>
 
         {esPractica && picked !== null && (
-          <div
-            style={{
-              marginTop: 18,
-              background: "var(--fd-panel, #F5F5F7)",
-              border: `1px solid ${NAVY}12`,
-              borderRadius: "var(--fd-radius, 14px)",
-              padding: "14px 16px",
-            }}
-          >
+          <div className={`cx-feedback ${acerto ? "is-ok" : "is-bad"}`}>
             <div
               style={{
                 fontFamily: MONO,
@@ -367,7 +392,7 @@ export function LogicaGame({ cfg, onFinish, onQuit }: Props) {
                 letterSpacing: "0.16em",
                 textTransform: "uppercase",
                 fontWeight: 700,
-                color: "var(--fd-muted, #4A5872)",
+                color: acerto ? GREEN : picked === -1 ? INK3 : RED,
                 marginBottom: 8,
               }}
             >
@@ -378,21 +403,21 @@ export function LogicaGame({ cfg, onFinish, onQuit }: Props) {
                   : "Así se descartaba"}
             </div>
 
-            <div style={{ fontSize: "0.88rem", color: "var(--fd-text, #081A35)", lineHeight: 1.9 }}>
+            <div style={{ fontSize: "0.88rem", color: INK2, lineHeight: 1.9 }}>
               <div>
                 En su fila ya estaban: <ShapeRow shapes={item.explain.enFila} />
               </div>
               <div>
                 En su columna ya estaban: <ShapeRow shapes={item.explain.enColumna} />
               </div>
-              <div style={{ marginTop: 4 }}>
+              <div style={{ marginTop: 4, color: "#fff" }}>
                 Queda una sola figura posible:{" "}
                 <span style={{ display: "inline-flex", verticalAlign: "middle" }}>
-                  <Shape n={item.options[item.correctIndex].shape} size={20} color={CORAL} />
+                  <Shape n={item.options[item.correctIndex].shape} size={20} />
                 </span>
               </div>
               {item.explain.requiereCadena && (
-                <div style={{ color: "var(--fd-muted, #4A5872)", fontSize: "0.83rem", lineHeight: 1.5, marginTop: 6 }}>
+                <div style={{ color: INK3, fontSize: "0.83rem", lineHeight: 1.5, marginTop: 6 }}>
                   Fila y columna por sí solas no bastaban: había que deducir antes otra casilla y
                   usar ese resultado. Empieza siempre por la línea más llena del tablero.
                 </div>
@@ -404,9 +429,9 @@ export function LogicaGame({ cfg, onFinish, onQuit }: Props) {
                 style={{
                   marginTop: 10,
                   paddingTop: 10,
-                  borderTop: `1px solid ${NAVY}12`,
+                  borderTop: "1px solid rgba(227,201,138,.14)",
                   fontSize: "0.85rem",
-                  color: "var(--fd-gold, #7A5C1E)",
+                  color: GOLD,
                   lineHeight: 1.5,
                   fontWeight: 600,
                 }}
