@@ -1131,6 +1131,9 @@ function CuestionarioPage() {
         materias={sessionMaterias}
         exitTo={exitTo}
         onRestart={handleRestart}
+        {...(answeredCount > 0 || total > 0
+          ? { onReview: () => { setReviewReportIdx(null); setReviewing(true); } }
+          : {})}
         debrief={
           user && answeredCount > 0 ? (
             <PathyDebrief
