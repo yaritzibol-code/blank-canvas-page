@@ -95,7 +95,8 @@ export function QuizReview({
         fontFamily: "'Manrope', sans-serif",
         background: "var(--fd-panel, #f5f7fc)",
         color: "var(--fd-text, #081A35)",
-        minHeight: "100dvh",
+        height: "100dvh",
+        overflow: "hidden",
         display: "flex",
         flexDirection: "column",
       }}
