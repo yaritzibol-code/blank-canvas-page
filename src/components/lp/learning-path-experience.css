@@ -291,15 +291,18 @@
     white-space: nowrap;
     scrollbar-width: none;
     padding: 7px 14px 4px;
+    font-size: 10px;
+    line-height: 1.5;
   }
   .lp-study-context::-webkit-scrollbar { display: none; }
   .lp-study-context .lp-study-subject-progress { width: auto; flex: none; margin: 0 0 0 10px; }
   .lp-study-progress { margin-top: 0; padding: 6px 14px 8px; }
   .lp-study-progress-summary { gap: 2px 7px; }
-  .lp-study-progress-summary::before { width: auto; margin-right: auto; font-size: 8px; }
-  .lp-study-progress-summary strong { max-width: 50vw; }
+  .lp-study-progress-summary::before { width: auto; margin-right: auto; font-size: 9px; }
+  .lp-study-progress-summary strong { max-width: 50vw; font-size: 11px; }
+  .lp-study .lp-study-progress-summary button { min-height: 30px; font-size: 10px; }
   .lp-study-progress-track { margin: 5px 0; }
-  .lp-study-mobile-stages summary { padding: 5px 0 2px; }
+  .lp-study-mobile-stages summary { padding: 7px 0 4px; font-size: 12px; }
   .lp-study-mobile-stages .lp-study-stage-list { display: grid; gap: 5px; max-height: min(42vh,280px); overflow-y: auto; }
   .lp-study-mobile-stages .lp-study-stage { min-height: 48px; }
   .lp-study-mobile-stages .lp-study-stage-copy small { display: block; }
