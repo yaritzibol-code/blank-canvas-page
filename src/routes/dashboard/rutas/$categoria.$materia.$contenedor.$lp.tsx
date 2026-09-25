@@ -166,11 +166,11 @@ function LearningPathPage() {
             <button
               type="button"
               onClick={() => irA(vecinos.prev!.id)}
-              style={lpButtonStyle("ghost")}
+              className="lp-study-neighbor lp-study-neighbor--previous"
               aria-label={`Anterior: ${vecinos.prev.titulo}`}
             >
               <Icon n="chevL" size={15} />
-              <span className="hidden sm:inline">Anterior</span>
+              <span>Anterior</span>
             </button>
           )}
 
@@ -178,10 +178,10 @@ function LearningPathPage() {
             <button
               type="button"
               onClick={() => completeLp(user.id, item, subject.titulo)}
-              style={lpButtonStyle("primary")}
+              className="lp-study-neighbor lp-study-neighbor--complete"
             >
               <Icon n="check" size={15} />
-              <span className="hidden sm:inline">Marcar como completado</span>
+              <span>Marcar como completado</span>
             </button>
           )}
 
@@ -189,7 +189,7 @@ function LearningPathPage() {
             type="button"
             disabled={!completado || !vecinos?.next}
             onClick={() => vecinos?.next && irA(vecinos.next.id)}
-            style={lpButtonStyle(completado && vecinos?.next ? "primary" : "disabled")}
+            className="lp-study-neighbor lp-study-neighbor--next"
             title={
               completado
                 ? vecinos?.next
@@ -198,7 +198,7 @@ function LearningPathPage() {
                 : "Completa este learning path para avanzar"
             }
           >
-            <span className="hidden sm:inline">Siguiente</span>
+            <span>Siguiente</span>
             <Icon n="chevR" size={15} />
           </button>
         </>

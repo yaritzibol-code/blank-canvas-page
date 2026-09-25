@@ -508,6 +508,7 @@ function StepAddress({
   wrong: boolean;
   onPick: (index: number) => void;
 }) {
+  const [reviewIndex, setReviewIndex] = useState<number | null>(null);
   const tokens = [
     {
       small: "El libro",
@@ -529,6 +530,7 @@ function StepAddress({
     },
   ];
   const last = count > 0 ? tokens[count - 1] : null;
+  const selected = reviewIndex !== null && reviewIndex < count ? tokens[reviewIndex] : last;
   return (
     <>
       <SectionHeading
@@ -557,8 +559,11 @@ function StepAddress({
                 key={token.big}
                 type="button"
                 className={index < count ? "is-filled" : ""}
-                onClick={() => onPick(index)}
-                disabled={index < count}
+                aria-pressed={reviewIndex === index && index < count}
+                onClick={() => {
+                  setReviewIndex(index);
+                  if (index >= count) onPick(index);
+                }}
               >
                 <small>{token.small}</small>
                 <strong>{token.big}</strong>
@@ -570,11 +575,11 @@ function StepAddress({
             role="status"
           >
             <strong>
-              {wrong ? "Ese no va todavía." : (last?.title ?? "Empieza por lo más grande.")}
+              {wrong ? "Ese no va todavía." : (selected?.title ?? "Empieza por lo más grande.")}
             </strong>{" "}
             {wrong
               ? "Recuerda: primero el libro, luego el capítulo y al final la regla."
-              : (last?.body ?? "¿Cuál es el libro completo donde viven todas las reglas?")}
+              : (selected?.body ?? "¿Cuál es el libro completo donde viven todas las reglas?")}
           </div>
         </div>
         <div className="ar-address-board">

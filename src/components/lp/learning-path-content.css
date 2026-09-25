@@ -163,3 +163,39 @@
   .lp-study .lp-study-content :is(.ar-card,.ar-mini,.ar-case,.ar-quiz,.atp-card,.hb-card,.jp-question,.law-card) { padding:17px; }
   .lp-study .lp-study-content :is(.ar-guide,.atp-guide,.hb-guide,.jp-yaris-line,.law-coach) { margin-inline:0; }
 }
+
+/* Keep the real stage controls in view while the lesson scrolls. */
+.lp-study .lp-study-content :is(.ar-footer,.atp-footer,.hb-footer,.jp-footer,.law-main>footer) {
+  position: sticky;
+  bottom: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 62px;
+  margin-top: 18px;
+  padding: 9px 14px;
+  border: 1px solid var(--lp-line);
+  border-radius: 10px;
+  background: rgba(4,17,31,.94);
+  box-shadow: 0 14px 40px rgba(0,7,18,.34);
+  backdrop-filter: blur(18px);
+}
+.lp-study .lp-study-content :is(.ar-footer,.atp-footer,.hb-footer,.jp-footer,.law-main>footer) button {
+  min-height: 40px;
+  white-space: nowrap;
+}
+.lp-study .lp-study-content :is(.ar-button--primary,.atp-actions .is-primary,.hb-actions .is-primary,.jp-actions .is-primary,.law-actions .is-primary):not(:disabled) {
+  box-shadow: 0 5px 18px rgba(210,165,91,.19);
+}
+@media (max-width:620px) {
+  .lp-study .lp-study-content :is(.ar-footer,.atp-footer,.hb-footer,.jp-footer,.law-main>footer) {
+    flex-wrap: wrap;
+    padding: 9px;
+    border-radius: 8px;
+  }
+  .lp-study .lp-study-content :is(.ar-guide,.atp-guide,.hb-guide,.jp-yaris-line,.law-coach) {
+    flex: 1 1 100%;
+  }
+  .lp-study .lp-study-content .jp-yaris-line p { display: block; }
+}

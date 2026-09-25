@@ -153,7 +153,7 @@ export function LearningPathExperience({
               <div className="lp-study-progress-track" role="progressbar" aria-label="Progreso del Learning Path" aria-valuemin={0} aria-valuemax={100} aria-valuenow={view.percent}>
                 <span style={{ width: `${view.percent}%` }} />
               </div>
-              <details className="lp-study-mobile-stages" open>
+              <details className="lp-study-mobile-stages">
                 <summary>Etapa {view.current + 1} de {labels.length} · Ver recorrido</summary>
                 <StageList view={view} />
               </details>
