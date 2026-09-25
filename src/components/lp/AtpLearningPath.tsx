@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { YarisAvatar } from "@/components/shared/YarisAvatar";
+import { LearningPathYarisAvatar } from "./LearningPathCharacters";
 import { getLpJourney, resetLpJourney, saveLpJourney } from "@/lib/store/lp-journey";
 import { useLearningPathStageView } from "@/components/lp/LearningPathExperience";
 import type { AtpLearningPathDocument, AtpLessonStep, AtpQuestion } from "@/lib/lp/atp-types";
@@ -231,7 +231,7 @@ export function AtpLearningPath({
           })}
         </nav>
         <div className="atp-altitude">
-          <img src="/img/pathy-small.png" alt="" />
+          <img src="/lp/visual/pathy.png" alt="" />
           <div>
             <small>Tu altitud</small>
             <strong>{percent}%</strong>
@@ -312,7 +312,7 @@ export function AtpLearningPath({
 
         <footer className="atp-footer">
           <div className="atp-guide">
-            <YarisAvatar size={44} ring />
+            <LearningPathYarisAvatar size={44} ring />
             <div>{guide}</div>
           </div>
           <div className="atp-actions">
@@ -394,7 +394,7 @@ function Takeoff({
             </span>
           </div>
         </div>
-        <img src="/img/pathy-small.png" alt="Pathy acompaña el recorrido" />
+        <img src="/lp/visual/pathy.png" alt="Pathy acompaña el recorrido" />
       </div>
       {content.introExplore && (
         <section className="atp-card atp-dark">
@@ -632,7 +632,7 @@ function Landing({
           </div>
           <div className="atp-celebration">
             <img
-              src={finished ? "/img/pathy-5-elite.png" : "/img/pathy-small.png"}
+              src="/lp/visual/pathy.png"
               alt="Pathy acompaña el cierre"
             />
             <p>

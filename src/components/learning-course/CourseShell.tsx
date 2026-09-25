@@ -74,9 +74,9 @@ export function CourseHero({
 }) {
   return (
     <section
-      className="relative overflow-hidden"
+      className="lp-course-hero relative overflow-hidden"
       style={{
-        background: "radial-gradient(120% 160% at 85% -20%, #123360 0%, #081A35 45%, #1B2B4A 100%)",
+        background: "transparent",
       }}
     >
       <div
@@ -130,7 +130,7 @@ export function CourseHero({
         {mascot && (
           <div className="hidden md:block shrink-0" aria-hidden>
             <img
-              src="/img/yaris-mini.png"
+              src="/lp/visual/pathy.png"
               alt=""
               width={230}
               height={230}

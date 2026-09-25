@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useRef, useState, type ReactNode 
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import type { User, YarisContext } from "@/lib/store";
 import "./learning-path-experience.css";
+import "./learning-path-content.css";
 
 export interface LearningPathStageView {
   labels: string[];
@@ -121,10 +122,19 @@ export function LearningPathExperience({
   return (
     <StageContext.Provider value={setView}>
       <div className="lp-study">
+        <svg className="lp-study-svg-filter" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+          <filter id="flightpath-learning-logo-dark" colorInterpolationFilters="sRGB">
+            <feColorMatrix type="matrix" values="-.33 0 0 0 .98 -.535 0 0 0 .94 -.844 0 0 0 .9 0 0 0 1 0" />
+          </filter>
+        </svg>
         <header className="lp-study-header">
           <div className="lp-study-topline">
-            <span className="lp-study-brand">Flight<span>Path</span></span>
+            <span className="lp-study-brand"><img src="/lp/visual/flightpath-logo.png" alt="FlightPath" /></span>
             <button type="button" className="lp-study-back" onClick={onBack}>← Regresar a Learning Paths</button>
+            <div className="lp-study-actions">
+              <button type="button" onClick={() => setReportOpen(true)}>Reportar contenido</button>
+              <button type="button" onClick={() => onYaris(studyContext)}>Pregúntale a Yaris</button>
+            </div>
           </div>
           <div className="lp-study-context" aria-label="Ubicación en Learning Paths">
             {[identity.category, identity.subject, identity.chapter, identity.title].map((part, index) =>
@@ -132,10 +142,6 @@ export function LearningPathExperience({
             {subjectProgress && <span className="lp-study-subject-progress" title="Progreso de la materia">
               · {subjectProgress.done} de {subjectProgress.total} Learning Paths · {subjectProgress.percent}%
             </span>}
-          </div>
-          <div className="lp-study-actions">
-            <button type="button" onClick={() => setReportOpen(true)}>Reportar contenido</button>
-            <button type="button" onClick={() => onYaris(studyContext)}>Pregúntale a Yaris</button>
           </div>
           {view && (
             <div className="lp-study-progress">
@@ -147,7 +153,7 @@ export function LearningPathExperience({
               <div className="lp-study-progress-track" role="progressbar" aria-label="Progreso del Learning Path" aria-valuemin={0} aria-valuemax={100} aria-valuenow={view.percent}>
                 <span style={{ width: `${view.percent}%` }} />
               </div>
-              <details className="lp-study-mobile-stages">
+              <details className="lp-study-mobile-stages" open>
                 <summary>Etapa {view.current + 1} de {labels.length} · Ver recorrido</summary>
                 <StageList view={view} />
               </details>
@@ -181,7 +187,8 @@ function StageList({ view }: { view: LearningPathStageView }) {
       className={`lp-study-stage ${done ? "is-done" : ""} ${current ? "is-current" : ""}`}
       onClick={() => view.onNavigate(index)}>
       <span className="lp-study-stage-dot">{done ? "✓" : index + 1}</span>
-      <span className="lp-study-stage-label">{label}</span>
+      <span className="lp-study-stage-copy"><span className="lp-study-stage-label">{label}</span>
+        <small>{done ? "Completada" : current ? "En ruta" : locked ? "Bloqueada" : "Disponible"}</small></span>
     </button>;
   })}</div>;
 }

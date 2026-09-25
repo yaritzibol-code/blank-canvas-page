@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { YarisAvatar } from "@/components/shared/YarisAvatar";
+import { LearningPathYarisAvatar } from "./LearningPathCharacters";
 import { getLpJourney, resetLpJourney, saveLpJourney } from "@/lib/store/lp-journey";
 import { useLearningPathStageView } from "@/components/lp/LearningPathExperience";
 
@@ -378,7 +378,7 @@ export function ApplicableRegulationsPath({
         </main>
 
         <div className="ar-guide">
-          <YarisAvatar size={42} ring />
+          <LearningPathYarisAvatar size={42} ring />
           <div>
             <strong>Mini Yaris</strong>
             <p>{guide}</p>
@@ -474,7 +474,7 @@ function StepTakeoff({
             </span>
           </div>
         </div>
-        <img src="/img/pathy-small.png" alt="Pathy con gorra de piloto" />
+        <img src="/lp/visual/pathy.png" alt="Pathy con gorra de piloto" />
       </div>
       <div className="ar-dark-panel">
         <span className="ar-overline">Misión 1 · Descubre el mapa</span>
@@ -924,7 +924,7 @@ function StepOtherRules({
         >
           No todo es <em>91, 121 y 135.</em>
         </SectionHeading>
-        <img src="/img/yaris-mini.png" alt="Yaris con la carpeta de reglamentos" />
+        <img src="/lp/visual/yaris.png" alt="Yaris con la carpeta de reglamentos" />
       </div>
       <div className="ar-three ar-tabs">
         <article className="ar-mini">
@@ -1031,7 +1031,7 @@ function StepQuiz({
         >
           ¿Qué Part <em>abrirías primero?</em>
         </SectionHeading>
-        <img src="/img/yaris-mini.png" alt="Yaris piensa en la respuesta" />
+        <img src="/lp/visual/yaris.png" alt="Yaris piensa en la respuesta" />
       </div>
       <div className="ar-quiz-list">
         {questions.map((question) => {
@@ -1153,7 +1153,7 @@ function StepLanding({
       </div>
       <div className={`ar-finish ${finished ? "is-finished" : ""}`}>
         <img
-          src={finished ? "/img/pathy-5-elite.png" : "/img/pathy-small.png"}
+          src="/lp/visual/pathy.png"
           alt="Pathy acompaña el cierre del recorrido"
         />
         <div>

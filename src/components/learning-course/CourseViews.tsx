@@ -84,7 +84,7 @@ export function CourseDashboard({
         <section className="mt-6 rounded-3xl border border-ink/8 bg-white p-5 sm:p-6 shadow-card">
           <div className="flex items-center gap-5">
             <img
-              src="/img/yaris-mini.png"
+              src="/lp/visual/yaris.png"
               alt="Mini Yaris, instructora de FlightPath"
               width={96}
               height={96}
@@ -457,7 +457,7 @@ export function CourseSimulator({ course }: { course: LpCourse }) {
         <div className="mx-auto max-w-[860px] px-5 sm:px-8 py-8">
           <section className="relative z-10 -mt-16 flex flex-wrap items-center gap-6 rounded-3xl border border-ink/8 bg-white p-6 sm:p-7 shadow-card">
             <img
-              src="/img/yaris-mini.png"
+              src="/lp/visual/yaris.png"
               alt="Mini Yaris"
               width={110}
               height={110}

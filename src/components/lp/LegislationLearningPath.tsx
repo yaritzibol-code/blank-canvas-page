@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { YarisAvatar } from "@/components/shared/YarisAvatar";
-import { PathyMark } from "@/components/shared/PathyMark";
+import { LearningPathYarisAvatar } from "./LearningPathCharacters";
+import { LearningPathPathyMark } from "./LearningPathCharacters";
 import { LEGISLATION_ANNEXES } from "@/lib/lp/legislation-content.generated";
 import type { LegislationCourse, LegislationStep } from "@/lib/lp/legislation-types";
 import { getLpJourney, resetLpJourney, saveLpJourney } from "@/lib/store/lp-journey";
@@ -164,7 +164,7 @@ export function LegislationLearningPath({
             <strong>{step.label}</strong>
           </div>
           <span className="law-mission">
-            <PathyMark size={28} />
+            <LearningPathPathyMark size={28} />
             {canContinue ? "Etapa lista" : "Misión en curso"}
           </span>
         </header>
@@ -243,7 +243,7 @@ export function LegislationLearningPath({
         </main>
         <footer>
           <div className="law-coach">
-            <YarisAvatar size={44} ring />
+            <LearningPathYarisAvatar size={44} ring />
             <span>
               {state.complete
                 ? "Recorrido completo; puedes repasar cualquier etapa."

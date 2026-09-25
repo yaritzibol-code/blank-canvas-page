@@ -446,7 +446,7 @@ export function LessonStage({
       {/* Refuerzo de Yaris */}
       <section className="mt-6 flex gap-4 rounded-2xl border border-ink/10 bg-haze-50 p-5">
         <img
-          src="/img/yaris-mini.png"
+          src="/lp/visual/yaris.png"
           alt="Mini Yaris, instructora de FlightPath"
           width={64}
           height={64}

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { YarisAvatar } from "@/components/shared/YarisAvatar";
+import { LearningPathYarisAvatar } from "./LearningPathCharacters";
 import type {
   HandbookCard,
   HandbookExercise,
@@ -195,7 +195,7 @@ export function HandbookLearningPath({
           })}
         </nav>
         <div className="hb-altitude">
-          <img src={state.complete ? "/img/pathy-5-elite.png" : "/img/pathy-small.png"} alt="" />
+          <img src="/lp/visual/pathy.png" alt="" />
           <div>
             <small>Tu altitud</small>
             <strong>{percent}%</strong>
@@ -292,7 +292,7 @@ export function HandbookLearningPath({
 
         <footer className="hb-footer">
           <div className="hb-guide">
-            <YarisAvatar size={44} ring />
+            <LearningPathYarisAvatar size={44} ring />
             <div>{guide}</div>
           </div>
           <div className="hb-actions">
@@ -367,7 +367,7 @@ function Intro({ document }: { document: HandbookLearningPathDocument }) {
             </span>
           </div>
         </div>
-        <img src="/img/pathy-small.png" alt="Pathy acompaña el recorrido" />
+        <img src="/lp/visual/pathy.png" alt="Pathy acompaña el recorrido" />
       </section>
       <section className="hb-card hb-dark">
         <span className="hb-overline">La misión</span>
@@ -595,13 +595,13 @@ function Finish({
           </p>
         </div>
         <img
-          src={complete ? "/img/pathy-5-elite.png" : "/img/pathy-small.png"}
+          src="/lp/visual/pathy.png"
           alt="Pathy celebra el recorrido"
         />
       </section>
       {document.tips.length > 0 && (
         <aside className="hb-tip">
-          <YarisAvatar size={52} ring />
+          <LearningPathYarisAvatar size={52} ring />
           <p>
             <strong>Para recordar</strong>
             {document.tips.join(" ")}

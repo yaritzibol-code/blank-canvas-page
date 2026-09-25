@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { YarisAvatar } from "@/components/shared/YarisAvatar";
+import { LearningPathYarisAvatar } from "./LearningPathCharacters";
 import type {
   JeppesenFigure,
   JeppesenLearningPathDocument,
@@ -180,7 +180,7 @@ export function JeppesenLearningPath({
           )}
         </nav>
         <div className="jp-altitude">
-          <img src={state.complete ? "/img/pathy-5-elite.png" : "/img/pathy-small.png"} alt="" />
+          <img src="/lp/visual/pathy.png" alt="" />
           <div>
             <small>Progreso interno</small>
             <strong>{percent}%</strong>
@@ -247,7 +247,7 @@ export function JeppesenLearningPath({
 
         <footer className="jp-footer">
           <div className="jp-yaris-line">
-            <YarisAvatar size={44} ring />
+            <LearningPathYarisAvatar size={44} ring />
             <p>
               {state.complete
                 ? "Ruta completada. Todas las etapas siguen disponibles para repaso."
@@ -292,7 +292,7 @@ function Intro({ document }: { document: JeppesenLearningPathDocument }) {
       <h2>{document.title}</h2>
       <p className="jp-lead">{document.subtitle}</p>
       <div className="jp-objective">
-        <YarisAvatar size={52} ring />
+        <LearningPathYarisAvatar size={52} ring />
         <div>
           <span>Objetivo de misión</span>
           <p>{document.objective}</p>
@@ -477,7 +477,7 @@ function Finish({
 }) {
   return (
     <article className="jp-finish">
-      <img src={complete ? "/img/pathy-5-elite.png" : "/img/pathy-small.png"} alt="Pathy" />
+      <img src="/lp/visual/pathy.png" alt="Pathy" />
       <div className="jp-eyebrow">Chequeo final</div>
       <h2>{complete ? "Learning Path completado" : "Confirma tu briefing"}</h2>
       <p>Marca cada capacidad cuando puedas explicarla sin mirar la respuesta.</p>
