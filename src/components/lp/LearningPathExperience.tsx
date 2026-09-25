@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import type { User, YarisContext } from "@/lib/store";
 import "./learning-path-experience.css";
@@ -25,7 +25,7 @@ export function useLearningPathStageView(view: LearningPathStageView) {
   reset.current = view.onReset;
   const stateKey = JSON.stringify([view.labels, view.current, view.highest, view.done, view.percent]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!publish) return;
     publish({
       ...view,
@@ -70,7 +70,27 @@ export function LearningPathExperience({
   const [reportOpen, setReportOpen] = useState(false);
   const [section, setSection] = useState("");
   const contentRef = useRef<HTMLDivElement>(null);
+  const previousStageRef = useRef<{ pathId: string; index: number } | null>(null);
   const currentStage = view?.current ?? 0;
+
+  useLayoutEffect(() => {
+    if (!view) return;
+    const previous = previousStageRef.current;
+    previousStageRef.current = { pathId: identity.id, index: view.current };
+    if (!previous || previous.pathId !== identity.id || previous.index === view.current) return;
+
+    const content = contentRef.current;
+    if (!content) return;
+    const resetVerticalScroll = (element: Element) => {
+      if (element.scrollTop > 0) element.scrollTo({ top: 0, behavior: "instant" });
+    };
+    content.querySelectorAll("*").forEach(resetVerticalScroll);
+    for (let element: Element | null = content; element; element = element.parentElement) {
+      resetVerticalScroll(element);
+    }
+    if (document.scrollingElement) resetVerticalScroll(document.scrollingElement);
+    if (window.scrollY > 0) window.scrollTo({ top: 0, behavior: "instant" });
+  }, [identity.id, view?.current]);
 
   useEffect(() => {
     setSection("");
