@@ -18,6 +18,7 @@ export type AdminNavKey =
   | "banco"
   | "contenido"
   | "soporte"
+  | "notificaciones"
   | "whatsapp"
   | "configuracion"
   | "operaciones"
@@ -112,6 +113,12 @@ const ADMIN_NAV: { label: string; items: NavItem[] }[] = [
   {
     label: "Comunicación",
     items: [
+      {
+        icon: "radio",
+        label: "Notificaciones",
+        key: "notificaciones",
+        path: "/admin/notificaciones",
+      },
       { icon: "headset", label: "Soporte y feedback", key: "soporte", path: "/admin/soporte" },
       { icon: "chat", label: "WhatsApp y recordatorios", key: "whatsapp", path: "/admin/whatsapp" },
     ],
@@ -394,10 +401,11 @@ export function AdminShell({
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
+            {/* Sin `display` en línea: anularía `md:hidden` y el botón saldría en escritorio. */}
             <button
               onClick={() => setSidebarOpen(true)}
+              aria-label="Abrir menú"
               style={{
-                display: "flex",
                 flexDirection: "column",
                 gap: 4,
                 cursor: "pointer",
@@ -405,14 +413,14 @@ export function AdminShell({
                 border: "none",
                 padding: 3,
               }}
-              className="md:hidden"
+              className="flex md:hidden"
             >
               <span
                 style={{
                   display: "block",
                   width: 20,
                   height: 2,
-                 background: "#081A35",
+                  background: "#DCE4F0",
                   borderRadius: 2,
                 }}
               />
@@ -421,7 +429,7 @@ export function AdminShell({
                   display: "block",
                   width: 20,
                   height: 2,
-                 background: "#081A35",
+                  background: "#DCE4F0",
                   borderRadius: 2,
                 }}
               />
@@ -430,7 +438,7 @@ export function AdminShell({
                   display: "block",
                   width: 20,
                   height: 2,
-                 background: "#081A35",
+                  background: "#DCE4F0",
                   borderRadius: 2,
                 }}
               />

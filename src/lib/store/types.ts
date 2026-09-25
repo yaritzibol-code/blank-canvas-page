@@ -373,6 +373,17 @@ export interface Report {
   mensaje: string;
   estado: ReportStatus;
   notasInternas: string;
+  /** Respuestas que la admin le envió a la alumna (como transmisión de radio). */
+  respuestas?: ReportRespuesta[];
+}
+
+export interface ReportRespuesta {
+  fecha: string; // ISO
+  /** "correcto" = la alumna tenía razón; "incorrecto" = la pregunta está bien. */
+  veredicto: "correcto" | "incorrecto" | "info";
+  mensaje: string;
+  /** Transmisión con la que se le avisó (para saber si ya la recibió). */
+  notificacionId?: string;
 }
 
 
