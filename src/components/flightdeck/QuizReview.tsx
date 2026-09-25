@@ -191,14 +191,30 @@ export function QuizReview({
               boxShadow: "0 2px 16px rgba(22,61,112,0.07)",
             }}
           >
-            <div className="fp-question-navigator" style={{ marginBottom: 8 }}>
-              <QuizQuestionNavigator
-                total={total}
-                currentIdx={idx}
-                highestVisitedIdx={total - 1}
-                results={estados}
-                onSelect={setIdx}
-              />
+            {/*
+              Salto rápido entre preguntas: misma tira de segmentos que usa la
+              sesión, coloreada con el resultado de cada reactivo.
+            */}
+            <div
+              className="fp-progress-segments"
+              style={{ ["--question-count" as string]: total, marginBottom: 14 }}
+              role="tablist"
+              aria-label="Preguntas del intento"
+            >
+              {estados.map((estado, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  role="tab"
+                  aria-selected={i === idx}
+                  aria-label={`Pregunta ${i + 1}${estado === true ? ", correcta" : estado === false ? ", incorrecta" : ", sin responder"}`}
+                  className={[
+                    i === idx ? "is-current" : "",
+                    estado === true ? "is-correct" : estado === false ? "is-wrong" : "",
+                  ].filter(Boolean).join(" ")}
+                  onClick={() => setIdx(i)}
+                />
+              ))}
             </div>
 
             {!!item.imagenes?.length && (
