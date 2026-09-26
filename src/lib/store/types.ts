@@ -355,6 +355,8 @@ export interface ReportQuestionSnapshot {
   materia?: string;
   fuente?: string;
   capitulo?: number;
+  /** Referencias originales a las láminas; también se conservan en el reporte. */
+  imagenes?: string[];
   /** Índice elegido por la estudiante al reportar (null si no había respondido). */
   selectedIndex?: number | null;
 }

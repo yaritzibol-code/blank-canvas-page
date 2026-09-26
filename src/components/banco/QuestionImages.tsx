@@ -39,11 +39,11 @@ const signed = new Map<string, string>();
  * Marco con altura reservada: la lámina entra encima del esqueleto sin mover
  * el resto de la pregunta (evita CLS mientras se firma y descarga la imagen).
  */
-function Frame({ children }: { children: React.ReactNode }) {
+function Frame({ children, adminReview = false }: { children: React.ReactNode; adminReview?: boolean }) {
   return (
     <div
       style={{
-        position: "relative", width: "100%", minHeight: 320, borderRadius: "var(--fd-radius, 12px)",
+        position: "relative", width: "100%", minHeight: adminReview ? 120 : 320, borderRadius: "var(--fd-radius, 12px)",
         overflow: "hidden", background: "var(--fd-panel, white)", border: "1px solid var(--fd-border, #EEE1C5)",
       }}
     >
@@ -68,7 +68,7 @@ function Skeleton({ label }: { label: string }) {
   );
 }
 
-export function QuestionImages({ files, fuente, fallbackSrc }: { files?: string[]; fuente?: string; fallbackSrc?: string }) {
+export function QuestionImages({ files, fuente, fallbackSrc, adminReview = false }: { files?: string[]; fuente?: string; fallbackSrc?: string; adminReview?: boolean }) {
   const BUCKET = bucketFor(fuente);
   const key = (files ?? []).join(",");
   const [urls, setUrls] = useState<string[]>([]);
@@ -76,6 +76,7 @@ export function QuestionImages({ files, fuente, fallbackSrc }: { files?: string[
   const [missing, setMissing] = useState<Record<string, boolean>>({});
   const [loaded, setLoaded] = useState<Record<string, boolean>>({});
   const [retry, setRetry] = useState(0);
+  const [unavailableFiles, setUnavailableFiles] = useState<string[]>([]);
 
   useEffect(() => {
     const names = key ? key.split(",") : [];
@@ -87,6 +88,8 @@ export function QuestionImages({ files, fuente, fallbackSrc }: { files?: string[
     setFailed(false);
     setMissing({});
     setLoaded({});
+    setUnavailableFiles([]);
+    if (adminReview) setUrls([]);
 
     const cached = names.map((n) => signed.get(`${BUCKET}/${n}`));
     if (cached.every((u): u is string => !!u)) {
@@ -104,13 +107,21 @@ export function QuestionImages({ files, fuente, fallbackSrc }: { files?: string[
           if (!alive) return;
           if (!error && data) {
             const out: string[] = [];
+            const unavailable: string[] = [];
             data.forEach((row, i) => {
               const name = names[i];
               if (row.signedUrl && name) {
                 signed.set(`${BUCKET}/${name}`, row.signedUrl);
                 out.push(row.signedUrl);
+              } else if (name) {
+                unavailable.push(name);
               }
             });
+            // El administrador debe detectar también una firma parcialmente fallida.
+            if (adminReview) {
+              names.slice(data.length).forEach((name) => unavailable.push(name));
+              setUnavailableFiles(unavailable);
+            }
             if (out.length > 0) {
               setUrls(out);
               setFailed(false);
@@ -126,7 +137,7 @@ export function QuestionImages({ files, fuente, fallbackSrc }: { files?: string[
     return () => {
       alive = false;
     };
-  }, [key, BUCKET, retry]);
+  }, [key, BUCKET, retry, adminReview]);
 
   if (!files || files.length === 0) return null;
 
@@ -135,7 +146,7 @@ export function QuestionImages({ files, fuente, fallbackSrc }: { files?: string[
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 22 }}>
       {cargando && (
-        <Frame>
+        <Frame adminReview={adminReview}>
           {fallbackSrc && (
             <img
               src={fallbackSrc}
@@ -148,7 +159,7 @@ export function QuestionImages({ files, fuente, fallbackSrc }: { files?: string[
         </Frame>
       )}
       {failed && (
-        <Frame>
+        <Frame adminReview={adminReview}>
           {fallbackSrc && (
             <img
               src={fallbackSrc}
@@ -165,7 +176,7 @@ export function QuestionImages({ files, fuente, fallbackSrc }: { files?: string[
             }}
           >
             <p style={{ fontSize: "0.8rem", color: "var(--fd-muted, #7E90AD)", fontFamily: "'Manrope', sans-serif", margin: 0 }}>
-              No se pudo cargar la lámina de esta pregunta.
+              {adminReview ? "No se pudo cargar el recurso visual asociado a esta pregunta." : "No se pudo cargar la lámina de esta pregunta."}
             </p>
             <button
               type="button"
@@ -181,11 +192,16 @@ export function QuestionImages({ files, fuente, fallbackSrc }: { files?: string[
           </div>
         </Frame>
       )}
+      {adminReview && !failed && unavailableFiles.map((name) => (
+        <p key={name} role="status" style={{ margin: 0, padding: "10px 12px", fontSize: ".8rem", color: "#B8C5DA", border: "1px solid rgba(255,255,255,.12)", borderRadius: 8, overflowWrap: "anywhere" }}>
+          No se pudo cargar el recurso visual asociado a esta pregunta. <span style={{ fontSize: ".72rem" }}>({name})</span>
+        </p>
+      ))}
       {urls.map((u, i) =>
         missing[u] ? (
           // El archivo no está en el manual todavía: reintentar no sirve de nada,
           // así que se avisa con claridad en vez de invitar a un botón inútil.
-          <Frame key={u}>
+          <Frame key={u} adminReview={adminReview}>
             {fallbackSrc && (
               <img
                 src={fallbackSrc}
@@ -201,12 +217,12 @@ export function QuestionImages({ files, fuente, fallbackSrc }: { files?: string[
                 background: "color-mix(in srgb, var(--fd-panel, white) 76%, transparent)",
               }}
             >
-              Esta figura todavía no está disponible. La pregunta se puede contestar con el texto.
+              {adminReview ? "No se pudo cargar el recurso visual asociado a esta pregunta." : "Esta figura todavía no está disponible. La pregunta se puede contestar con el texto."}
             </p>
           </Frame>
         ) : (
           <a key={u} href={u} target="_blank" rel="noreferrer" style={{ display: "block" }}>
-            <Frame>
+            <Frame adminReview={adminReview}>
               {!loaded[u] && <Skeleton label="CARGANDO LÁMINA" />}
               <img
                 src={u}
@@ -218,8 +234,9 @@ export function QuestionImages({ files, fuente, fallbackSrc }: { files?: string[
                 style={{
                   display: "block",
                   width: "100%",
-                  maxHeight: 460,
-                  minHeight: 320,
+                  height: adminReview ? "auto" : undefined,
+                  maxHeight: adminReview ? "none" : 460,
+                  minHeight: adminReview ? undefined : 320,
                   objectFit: "contain",
                   background: "var(--fd-panel, white)",
                   opacity: loaded[u] ? 1 : 0,

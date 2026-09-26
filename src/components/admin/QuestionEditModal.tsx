@@ -8,6 +8,7 @@
  */
 import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
+import { QuestionImages } from "@/components/banco/QuestionImages";
 import { supabase } from "@/integrations/supabase/client";
 import { inputStyle, labelStyle } from "@/components/admin/AdminShell";
 import { capLabel } from "@/lib/store/linea-aerea-meta";
@@ -24,6 +25,7 @@ interface CloudQuestion {
   materia?: string;
   fuente?: string;
   capitulo?: number;
+  imagenes?: string[];
   [k: string]: unknown;
 }
 
@@ -45,6 +47,9 @@ export function QuestionEditModal({
 
   useEffect(() => {
     let vivo = true;
+    setCargando(true);
+    setMissing(false);
+    setRow(null);
     void (async () => {
       const { data } = await supabase
         .from("content")
@@ -67,6 +72,10 @@ export function QuestionEditModal({
             options: [...snapshot.options],
             correctIndex: snapshot.correctIndex,
             explanation: snapshot.explanation ?? "",
+            materia: snapshot.materia,
+            fuente: snapshot.fuente,
+            capitulo: snapshot.capitulo,
+            imagenes: snapshot.imagenes,
           });
         }
       }
@@ -182,6 +191,13 @@ export function QuestionEditModal({
               rows={3}
               style={{ ...inputStyle, resize: "vertical", marginBottom: 12 }}
             />
+
+            {!!row.imagenes?.length && (
+              <section aria-label="Imagen / recurso visual" style={{ minWidth: 0 }}>
+                <div style={labelStyle}>Imagen / recurso visual</div>
+                <QuestionImages key={questionId} files={row.imagenes} fuente={row.fuente} adminReview />
+              </section>
+            )}
 
             <label style={labelStyle}>Opciones (marca la correcta)</label>
             <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 12 }}>
