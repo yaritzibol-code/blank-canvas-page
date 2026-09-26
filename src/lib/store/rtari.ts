@@ -20,6 +20,7 @@ export interface RtariTurnRecord {
 
 export interface RtariSessionRecord {
   id: string;
+  serverSessionId?: string;
   userId: string;
   date: string;
   durationSec: number;
@@ -42,6 +43,7 @@ export function getRtariSessions(userId: string): RtariSessionRecord[] {
 }
 
 export function saveRtariSession(input: {
+  serverSessionId?: string;
   userId: string;
   durationSec: number;
   nivel: RtariNivel;
@@ -53,6 +55,7 @@ export function saveRtariSession(input: {
   const debrief = input.debrief ?? null;
   const row: RtariSessionRecord = {
     id: uid("rtari"),
+    serverSessionId: input.serverSessionId,
     userId: input.userId,
     date: nowISO(),
     durationSec: input.durationSec,

@@ -11,7 +11,9 @@
  * aerolínea, y el score no equivale a una calificación oficial.
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { beginCompassPractice, markPracticeSession } from "@/lib/fp/practice.functions";
+import { rewardCompass } from "@/lib/fp/practice-client";
 import { Icon } from "@/components/ui/fp-icon";
 import { ModuleHeader } from "@/components/shared/ModuleHeader";
 import {
@@ -117,6 +119,19 @@ function CompassPage() {
   const user = useSessionUser();
   const [fase, setFase] = useState<Fase>({ t: "hub" });
   const [nivel, setNivel] = useState(1);
+  const runRef = useRef<string | null>(null);
+  const launchRef = useRef(false);
+  const finishRef = useRef(false);
+  const mountedRef = useRef(false);
+  const launchTokenRef = useRef(0);
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+      launchTokenRef.current++;
+      if (runRef.current) void markPracticeSession({ data: { id: runRef.current, action: "abandoned" } }).catch(() => {});
+    };
+  }, []);
   // Estado del simulacro en curso (fuera del render de cada juego).
   const simRef = useRef<{ id: string; seed: number; records: CompassSessionRecord[] }>({
     id: "",
@@ -142,21 +157,45 @@ function CompassPage() {
     setFase({ t: "briefing", moduleId, mode });
   };
 
+  const launch = async (cfg: CompassRunConfig, newBatch = false) => {
+    if (launchRef.current) return;
+    launchRef.current = true;
+    const launchToken = ++launchTokenRef.current;
+    finishRef.current = false;
+    runRef.current = null;
+    try {
+      const run = await beginCompassPractice({ data: { moduleId: cfg.moduleId, mode: cfg.mode, level: cfg.level,
+        ...(cfg.mode === "simulacro" && !newBatch ? { simulacroId: simRef.current.id } : {}), newBatch } });
+      if (!mountedRef.current || launchToken !== launchTokenRef.current) {
+        void markPracticeSession({ data: { id: run.id, action: "abandoned" } }).catch(() => {});
+        return;
+      }
+      runRef.current = run.id;
+      if (cfg.mode === "simulacro") simRef.current.id = run.simulacroId;
+      setFase({ t: "run", cfg: run.config });
+    } catch (error) {
+      // Practice remains available if the reward service is unavailable, but earns no unverified FP.
+      console.warn("[FlightPoints] Practice registration unavailable", error);
+      if (mountedRef.current && launchToken === launchTokenRef.current) setFase({ t: "run", cfg });
+    } finally { launchRef.current = false; }
+  };
   const empezar = (moduleId: CompassModuleId, mode: CompassMode, level: number) => {
-    setFase({ t: "run", cfg: buildRunConfig(moduleId, mode, level, newSeed()) });
+    void launch(buildRunConfig(moduleId, mode, level, newSeed()));
   };
 
   const empezarSimulacro = () => {
     simRef.current = { id: uid("sim"), seed: newSeed(), records: [] };
     const b = SIMULACRO_COMPACTO[0];
-    setFase({
-      t: "run",
-      cfg: buildRunConfig(b.moduleId, "simulacro", b.level, deriveSeed(simRef.current.seed, 0)),
-    });
+    void launch(buildRunConfig(b.moduleId, "simulacro", b.level, deriveSeed(simRef.current.seed, 0)), true);
   };
 
-  const alTerminar = (cfg: CompassRunConfig, r: CompassResult) => {
+  const alTerminar = async (cfg: CompassRunConfig, r: CompassResult) => {
+    if (finishRef.current) return;
+    finishRef.current = true;
+    const serverSessionId = runRef.current ?? undefined;
+    runRef.current = null;
     const record = saveCompassSession({
+      serverSessionId,
       userId: user.id,
       mode: cfg.mode,
       level: cfg.level,
@@ -164,6 +203,8 @@ function CompassPage() {
       result: r,
       simulacroId: cfg.mode === "simulacro" ? simRef.current.id : undefined,
     });
+    if (serverSessionId) await rewardCompass(serverSessionId, r);
+    if (!mountedRef.current) return;
     if (cfg.mode !== "simulacro") {
       // La tendencia se lee DESPUÉS de guardar: compara esta sesión contra la
       // mediana de las 3 previas comparables.
@@ -182,10 +223,7 @@ function CompassPage() {
 
   const continuarSimulacro = (idx: number) => {
     const b = SIMULACRO_COMPACTO[idx];
-    setFase({
-      t: "run",
-      cfg: buildRunConfig(b.moduleId, "simulacro", b.level, deriveSeed(simRef.current.seed, idx)),
-    });
+    void launch(buildRunConfig(b.moduleId, "simulacro", b.level, deriveSeed(simRef.current.seed, idx)));
   };
 
   /* ── Vistas ── */
@@ -198,7 +236,12 @@ function CompassPage() {
           <Game
             cfg={fase.cfg}
             onFinish={(r) => alTerminar(fase.cfg, r)}
-            onQuit={() => setFase({ t: "hub" })}
+            onQuit={() => {
+              finishRef.current = true;
+              if (runRef.current) void markPracticeSession({ data: { id: runRef.current, action: "abandoned" } }).catch(() => {});
+              runRef.current = null;
+              setFase({ t: "hub" });
+            }}
           />
         </div>
       </GameStage>
@@ -215,7 +258,7 @@ function CompassPage() {
           mode={fase.mode}
           nivel={nivel}
           setNivel={setNivel}
-          onBack={() => setFase({ t: "hub" })}
+          onBack={() => { launchTokenRef.current++; setFase({ t: "hub" }); }}
           onStart={() => empezar(fase.moduleId, fase.mode, esPractica ? nivel : def.examenNivel)}
         />
       </div>
@@ -238,7 +281,7 @@ function CompassPage() {
   if (fase.t === "sim-intro") {
     return (
       <div className="cx-hub" style={{ fontFamily: SANS, maxWidth: 720, margin: "0 auto" }}>
-        <SimIntroView onBack={() => setFase({ t: "hub" })} onStart={empezarSimulacro} />
+        <SimIntroView onBack={() => { launchTokenRef.current++; setFase({ t: "hub" }); }} onStart={empezarSimulacro} />
       </div>
     );
   }

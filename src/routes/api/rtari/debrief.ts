@@ -14,6 +14,7 @@ import { RTARI_MAX_PREGUNTAS, RTARI_MAX_TURNOS } from "@/modules/rtari/config";
 import { sanitizeQuestionIds } from "@/modules/rtari/questions";
 
 const schema = z.object({
+  sessionId: z.string().uuid().optional(),
   questionIds: z.array(z.string().max(40)).min(1).max(RTARI_MAX_PREGUNTAS),
   turns: z
     .array(
@@ -51,6 +52,16 @@ export const Route = createFileRoute("/api/rtari/debrief")({
 
         const profile = await loadRouteProfile(auth);
         if (!profile.isPro) return json({ error: "requiere_pro" }, 402);
+        if (parsed.sessionId) {
+          try {
+            const { practiceRun } = await import("@/lib/fp/practice.server");
+            const run = await practiceRun(auth.userId, parsed.sessionId);
+            if (run.kind !== "rtari" || !["closed", "completed"].includes(run.state)
+              || JSON.stringify(run.config.questionIds) !== JSON.stringify(parsed.questionIds)) return json({ error: "invalid_session" }, 400);
+          } catch {
+            // Legacy/unregistered interviews can still be evaluated, but cannot claim new rewards.
+          }
+        }
 
         const { buildDebriefMessages, parseDebrief, RTARI_DEBRIEF_MAX_TOKENS } =
           await import("@/lib/rtari.server");
@@ -102,6 +113,14 @@ export const Route = createFileRoute("/api/rtari/debrief")({
         });
 
         if (!debrief) return json({ error: "ilegible" }, 502);
+        if (parsed.sessionId) {
+          try {
+            const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+            const db = supabaseAdmin as any;
+            // Separate column: simultaneous evaluation cannot overwrite verified practice evidence.
+            await db.from("fp_practice_runs").update({ debrief }).eq("id", parsed.sessionId).eq("user_id", auth.userId).eq("kind", "rtari");
+          } catch (error) { console.warn("[FlightPoints] Linked evaluation persistence unavailable", error); }
+        }
         return json({ debrief });
       },
     },

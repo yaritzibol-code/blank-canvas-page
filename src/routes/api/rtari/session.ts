@@ -111,6 +111,14 @@ export const Route = createFileRoute("/api/rtari/session")({
           return json({ error: "openai", status: secret.status }, 502);
         }
 
+        try {
+          const { startRtariPractice } = await import("@/lib/fp/practice.server");
+          await startRtariPractice(auth.userId, sessionId, { questionIds: questions.map((q) => q.id), model, maxSeconds: reserva.segundos });
+        } catch (error) {
+          // Missing/unavailable reward infrastructure never changes paid voice access.
+          console.warn("[FlightPoints] RTARI evidence registration unavailable", error);
+        }
+
         return json({
           value: secret.value,
           expiresAt: secret.expiresAt,

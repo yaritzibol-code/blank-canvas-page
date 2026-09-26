@@ -17,6 +17,16 @@ export function FpWatcher() {
 
   useEffect(() => {
     if (!user) return;
+    const awarded = (event: Event) => {
+      const nuevos = (event as CustomEvent<FpNuevo[]>).detail;
+      if (nuevos?.length) setLote((prev) => [...(prev ?? []), ...nuevos]);
+    };
+    window.addEventListener("fp-awarded", awarded);
+    return () => window.removeEventListener("fp-awarded", awarded);
+  }, [user?.id]);
+
+  useEffect(() => {
+    if (!user) return;
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => {
       void sincronizarFP().then((nuevos) => {

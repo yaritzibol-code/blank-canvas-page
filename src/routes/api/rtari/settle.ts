@@ -37,6 +37,7 @@ const usageSchema = z
   }));
 
 const schema = z.object({
+  completed: z.boolean().default(false),
   sessionId: z.string().uuid(),
   model: z.string().min(1).max(60),
   durationSec: z
@@ -93,6 +94,11 @@ export const Route = createFileRoute("/api/rtari/settle")({
         }
 
         const profile = await loadRouteProfile(auth);
+        // Settlement is never an award. Explicit completion only seals an already connected run.
+        try {
+          const { markPractice } = await import("@/lib/fp/practice.server");
+          await markPractice(auth.userId, parsed.sessionId, parsed.completed ? "closed" : "abandoned");
+        } catch (error) { console.warn("[FlightPoints] RTARI close evidence unavailable", error); }
         const saldoDe = async () =>
           profile.isAdmin ? asegurarSaldo(auth.userId, true, true) : leerSaldo(auth.userId);
 

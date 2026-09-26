@@ -142,6 +142,7 @@ export function InterviewStage({
   const [actual, setActual] = useState(-1);
 
   const sesionRef = useRef<RtariRealtimeSession | null>(null);
+  const finishingRef = useRef(false);
   const turnsRef = useRef<RtariTurn[]>([]);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   // Las props llegan del padre y no cambian durante la entrevista; se guardan
@@ -203,7 +204,8 @@ export function InterviewStage({
 
   const terminar = useCallback(() => {
     const sesion = sesionRef.current;
-    if (!sesion) return;
+    if (!sesion || finishingRef.current) return;
+    finishingRef.current = true;
     // El cierre se toma ANTES de colgar: `finish()` detiene el cronómetro.
     // Tomarlo aquí también le quita el turno a la limpieza al desmontar: la
     // liquidación la hace la pantalla, que sí puede usar el saldo devuelto.

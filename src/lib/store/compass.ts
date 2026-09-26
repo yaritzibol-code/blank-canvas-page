@@ -24,6 +24,8 @@ import type {
 
 export interface CompassSessionRecord {
   id: string;
+  serverSessionId?: string;
+  interactions?: number;
   userId: string;
   date: string; // ISO
   moduleId: CompassModuleId;
@@ -52,6 +54,7 @@ export function getCompassSessions(userId: string): CompassSessionRecord[] {
 }
 
 export function saveCompassSession(input: {
+  serverSessionId?: string;
   userId: string;
   mode: CompassMode;
   level: number;
@@ -62,6 +65,8 @@ export function saveCompassSession(input: {
   const { result } = input;
   const row: CompassSessionRecord = {
     id: uid("cps"),
+    serverSessionId: input.serverSessionId,
+    interactions: result.interactions,
     userId: input.userId,
     date: nowISO(),
     moduleId: result.moduleId,

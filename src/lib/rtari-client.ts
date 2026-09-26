@@ -69,7 +69,7 @@ export async function settleSessionDetallado(cierre: RtariCierre): Promise<Rtari
     const res = await fetch("/api/rtari/settle", {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-      body: JSON.stringify(cierre),
+      body: JSON.stringify({ ...cierre, completed: true }),
     });
     if (!res.ok) return { saldo: null, costoUsd: null };
     const body = (await res.json()) as { saldo?: RtariSaldoInfo; costoUsd?: number };
@@ -106,6 +106,7 @@ export interface DebriefResultado {
 }
 
 export async function requestDebrief(input: {
+  sessionId?: string;
   questionIds: string[];
   turns: DebriefTurn[];
   durationSec: number;
@@ -124,6 +125,7 @@ export async function requestDebrief(input: {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       body: JSON.stringify({
+        sessionId: input.sessionId,
         questionIds: input.questionIds,
         turns,
         durationSec: Math.max(0, Math.round(input.durationSec)),

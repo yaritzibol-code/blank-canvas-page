@@ -101,6 +101,7 @@ export function MemoriaGame({ cfg, onFinish, onQuit }: Props) {
       raw: { ...raw, medianAnswerSec: median ?? -1 },
       durationSec: elapsedSec(),
       input: classifyInput(counts.current),
+      interactions: Object.values(counts.current).reduce((a, b) => a + b, 0),
       interruptions: interruptions.current,
       advice,
     });

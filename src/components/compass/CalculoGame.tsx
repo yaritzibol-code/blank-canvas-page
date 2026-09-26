@@ -80,6 +80,7 @@ export function CalculoGame({ cfg, onFinish, onQuit }: Props) {
       },
       durationSec: elapsedSec(),
       input: classifyInput(counts.current),
+      interactions: Object.values(counts.current).reduce((a, b) => a + b, 0),
       interruptions: interruptions.current,
       advice,
     });

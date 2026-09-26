@@ -14,6 +14,7 @@
  * reconocimiento de voz configurado en la sesión.
  */
 import { supabase } from "@/integrations/supabase/client";
+import { markPracticeSession } from "@/lib/fp/practice.functions";
 import { EMPTY_REALTIME_USAGE, type RealtimeUsage } from "@/lib/ai-cost";
 import { RTARI_MAX_MINUTOS, type RtariNivel, type RtariVoice } from "@/modules/rtari/config";
 
@@ -337,6 +338,7 @@ export class RtariRealtimeSession {
 
     this.startedAt = Date.now();
     this.setEstado("en_curso");
+    void markPracticeSession({ data: { id: this.sessionId, action: "connected" } }).catch(() => {});
 
     // Corte duro a los minutos que el servidor reservó: pasado ese punto el
     // alumno ya no tiene saldo y la sesión sólo seguiría generando costo.

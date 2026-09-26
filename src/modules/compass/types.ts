@@ -42,6 +42,8 @@ export interface CompassResult {
   input: CompassInput;
   /** Salidas de foco / cambios de pestaña durante la tarea. */
   interruptions: number;
+  /** Real input events observed during this run (not inferred from the score). */
+  interactions?: number;
   /** Consejo accionable derivado de reglas deterministas (sin IA). */
   advice: string;
 }

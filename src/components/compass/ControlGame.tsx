@@ -288,6 +288,7 @@ export function ControlGame({ cfg, onFinish, onQuit }: Props) {
       },
       durationSec: cfg.durationSec,
       input: classifyInput(input.current.counts),
+      interactions: Object.values(input.current.counts).reduce((a, b) => a + b, 0),
       interruptions: interruptions.current,
       advice,
     });

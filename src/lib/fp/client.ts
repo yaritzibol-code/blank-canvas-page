@@ -12,6 +12,11 @@ import type { FpNuevo } from "./shared";
 let corriendo: Promise<FpNuevo[]> | null = null;
 let ultimo = 0;
 
+/** Reuse the existing toast for transactions already committed by practice RPCs. */
+export function anunciarFP(nuevos: FpNuevo[]) {
+  if (typeof window !== "undefined" && nuevos.length) window.dispatchEvent(new CustomEvent("fp-awarded", { detail: nuevos }));
+}
+
 /** Pide al servidor que otorgue lo que falte. Devuelve sólo lo confirmado. */
 export async function sincronizarFP(force = false): Promise<FpNuevo[]> {
   if (!cloudSessionActive()) return [];

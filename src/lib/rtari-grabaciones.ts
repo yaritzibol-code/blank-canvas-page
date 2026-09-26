@@ -33,7 +33,7 @@ export interface RtariGrabacionInput {
   audio: Blob | null;
 }
 
-export async function registrarGrabacion(input: RtariGrabacionInput): Promise<void> {
+export async function registrarGrabacion(input: RtariGrabacionInput): Promise<boolean> {
   let storagePath: string | null = null;
 
   if (input.audio && input.audio.size > 0) {
@@ -45,7 +45,7 @@ export async function registrarGrabacion(input: RtariGrabacionInput): Promise<vo
     if (!error) storagePath = path;
   }
 
-  await supabase.from("rtari_grabaciones").upsert(
+  const { error } = await supabase.from("rtari_grabaciones").upsert(
     {
       user_id: input.userId,
       session_id: input.sessionId,
@@ -61,6 +61,7 @@ export async function registrarGrabacion(input: RtariGrabacionInput): Promise<vo
     },
     { onConflict: "user_id,session_id" },
   );
+  return !error && storagePath !== null;
 }
 
 /** Actualiza el nivel OACI del renglón cuando el debrief llega después. */

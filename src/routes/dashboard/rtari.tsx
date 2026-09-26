@@ -33,6 +33,7 @@ import {
   type RtariSessionRecord,
 } from "@/lib/store";
 import { createCheckoutSession } from "@/lib/payments.functions";
+import { rewardRtari } from "@/lib/fp/practice-client";
 import { getStripe, getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
 import {
   fetchSaldo,
@@ -439,6 +440,7 @@ function RtariPage() {
 
       const questionIds = guion.map((q) => q.id);
       const registro = saveRtariSession({
+        serverSessionId: cierre.sessionId || undefined,
         userId: user.id,
         durationSec,
         nivel,
@@ -455,7 +457,7 @@ function RtariPage() {
       setResultado(registro);
 
       // Bitácora auditable: minutos, costo real y audio de la entrevista.
-      void registrarGrabacion({
+      const recordingSaved = await registrarGrabacion({
         userId: user.id,
         sessionId: cierre.sessionId || registro.id,
         localSessionId: registro.id,
@@ -467,7 +469,7 @@ function RtariPage() {
         costUsd: costoUsd,
         preguntas: questionIds.length,
         audio,
-      }).catch(() => {});
+      }).catch(() => false);
 
       const respuestas = turns.filter((t) => t.role === "candidate");
       if (respuestas.length === 0) {
@@ -479,10 +481,13 @@ function RtariPage() {
       }
 
       const res = await requestDebrief({
+        sessionId: cierre.sessionId || undefined,
         questionIds,
         turns: turns.map((t) => ({ role: t.role, text: t.text })),
         durationSec,
       });
+      // Independently verified practice, regardless of OACI score or evaluation service availability.
+      if (recordingSaved && cierre.sessionId) void rewardRtari(cierre.sessionId, durationSec, turns);
 
       if (res.ok && res.debrief) {
         setRtariDebrief(registro.id, res.debrief);

@@ -246,6 +246,7 @@ export function SlalomGame({ cfg, onFinish, onQuit }: Props) {
       raw: { ...raw },
       durationSec: cfg.durationSec,
       input: classifyInput(input.current.counts),
+      interactions: Object.values(input.current.counts).reduce((a, b) => a + b, 0),
       interruptions: interruptions.current,
       advice,
     });

@@ -106,16 +106,11 @@ async function cargarEstado(
 }
 
 async function recalcularSaldo(admin: { from: (t: string) => any }, userId: string): Promise<number> {
-  const { data } = await admin
-    .from("fp_transactions")
-    .select("amount")
-    .eq("user_id", userId)
-    .eq("status", "procesada");
-  const total = ((data ?? []) as { amount: number }[]).reduce((s, t) => s + Number(t.amount ?? 0), 0);
-  await admin
-    .from("fp_balances")
-    .upsert({ user_id: userId, total, updated_at: new Date().toISOString() });
-  return total;
+  // Server aggregate + the same per-user transaction lock as practice awards:
+  // an old sync must not overwrite a concurrently awarded RTARI/Compass balance.
+  const { data, error } = await (admin as any).rpc("fp_reconcile_balance", { p_user: userId });
+  if (error) throw new Error("No se pudo reconciliar el saldo de FlightPoints");
+  return Number(data ?? 0);
 }
 
 /* ───────────────────────── Otorgar / backfill ───────────────────────── */
@@ -159,10 +154,14 @@ export async function procesarUsuarioFP(
         rule_snapshot: (rules.get(e.ruleKey)?.value ?? {}) as Record<string, number>,
         occurred_at: e.occurredAt,
       }));
+      const inserted = new Set<string>();
       for (let i = 0; i < filas.length; i += 400) {
-        await admin
+        const { data, error } = await admin
           .from("fp_transactions")
-          .upsert(filas.slice(i, i + 400), { onConflict: "user_id,event_key", ignoreDuplicates: true });
+          .upsert(filas.slice(i, i + 400), { onConflict: "user_id,event_key", ignoreDuplicates: true })
+          .select("event_key");
+        if (error) throw new Error("No se pudieron registrar los FlightPoints");
+        (data ?? []).forEach((r: { event_key: string }) => inserted.add(r.event_key));
       }
       const sospechosas = nuevas.filter((e) => e.sospecha);
       if (sospechosas.length > 0) {
@@ -176,7 +175,7 @@ export async function procesarUsuarioFP(
         );
       }
       nuevas
-        .filter((e) => !e.sospecha)
+        .filter((e) => !e.sospecha && inserted.has(e.eventKey))
         .forEach((e) =>
           nuevos.push({
             amount: e.amount,

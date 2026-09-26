@@ -159,6 +159,9 @@ export const FP_TOP_N = 10;
 export const FP_ACTIVITY_LABEL: Record<string, string> = {
   material: "Material",
   learning_path: "Learning Paths",
+  rtari: "RTARI",
+  compass: "Compass",
+  compass_bateria: "Simulacro Compass",
   materia: "Materias completas",
   cuestionario: "Cuestionarios",
   flashcards: "Flashcards",
