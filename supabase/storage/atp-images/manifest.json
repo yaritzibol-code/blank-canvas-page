@@ -1,0 +1,43 @@
+{
+  "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+  "supplement": "FAA-CT-8080-7D",
+  "dpi": 200,
+  "bucket": "atp-images",
+  "assets": [
+    {
+      "file": "atp_2026_legend-12.png",
+      "label": "Legend 12",
+      "pdfPage": 32
+    },
+    {
+      "file": "atp_2026_figure-185a.png",
+      "label": "Figure 185A",
+      "pdfPage": 203
+    },
+    {
+      "file": "atp_2026_figure-186.png",
+      "label": "Figure 186",
+      "pdfPage": 204
+    },
+    {
+      "file": "atp_2026_figure-187.png",
+      "label": "Figure 187",
+      "pdfPage": 205
+    },
+    {
+      "file": "atp_2026_figure-188.png",
+      "label": "Figure 188",
+      "pdfPage": 206
+    },
+    {
+      "file": "atp_2026_figure-188a.png",
+      "label": "Figure 188A",
+      "pdfPage": 207
+    },
+    {
+      "file": "atp_2026_figure-301.png",
+      "label": "Figure 301",
+      "pdfPage": 304
+    }
+  ]
+}
