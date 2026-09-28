@@ -332,9 +332,10 @@ export function chaptersConConteo(
   code: string,
   chapters: AtpChapter[],
   counts: BankCount[] | undefined,
+  emptyIsZero = false,
 ): { chapters: AtpChapter[]; total: number | null } {
   const vivos = counts?.filter((c) => c.fuente === code) ?? [];
-  if (vivos.length === 0) return { chapters, total: null };
+  if (vivos.length === 0 && !emptyIsZero) return { chapters, total: null };
   return {
     chapters: chapters.map((c) => ({
       ...c,

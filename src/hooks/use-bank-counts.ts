@@ -9,6 +9,7 @@
  */
 import { useEffect, useState } from "react";
 import { fetchBankCounts, type BankCount } from "@/lib/store";
+import { fetchAtpFixedWingCounts } from "@/lib/store/questions-cloud";
 
 export function useBankCounts(): BankCount[] | undefined {
   const [counts, setCounts] = useState<BankCount[] | undefined>();
@@ -21,5 +22,20 @@ export function useBankCounts(): BankCount[] | undefined {
       vivo = false;
     };
   }, []);
+  return counts;
+}
+
+/** undefined = pendiente; null = error; [] = ningún reactivo disponible. */
+export function useAtpFixedWingCounts(enabled: boolean): BankCount[] | null | undefined {
+  const [counts, setCounts] = useState<BankCount[] | null>();
+  useEffect(() => {
+    if (!enabled || counts !== undefined) return;
+    let alive = true;
+    void fetchAtpFixedWingCounts().then(
+      (rows) => { if (alive) setCounts(rows); },
+      () => { if (alive) setCounts(null); },
+    );
+    return () => { alive = false; };
+  }, [enabled, counts]);
   return counts;
 }
