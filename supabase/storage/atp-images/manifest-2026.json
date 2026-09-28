@@ -1,0 +1,1074 @@
+{
+  "edition": "2025–2026",
+  "bucket": "atp-images",
+  "format": "SVG",
+  "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+  "supplement": "FAA-CT-8080-7D",
+  "assets": [
+    {
+      "file": "atp_2026_figure-1.svg",
+      "bytes": 191052,
+      "sha256": "9265479bdeae7857cc73967669d407af3814f6ae249dcbc629780839b6d75839",
+      "label": "figure-1",
+      "pdfPage": 94,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8736"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-100.svg",
+      "bytes": 3505925,
+      "sha256": "0265bcb9757d2e7230535461d11b04d56639e41ddb5d9745afdf99beb8839223",
+      "label": "figure-100",
+      "pdfPage": 148,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8784"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-101.svg",
+      "bytes": 106522,
+      "sha256": "aa5d85577eaea4e0d292fe41b942fc4a54ae18a226ba4a2c84fdc6b1b6107699",
+      "label": "figure-101",
+      "pdfPage": 150,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8782"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-101a.svg",
+      "bytes": 206197,
+      "sha256": "4130a5872d5abd0bf47db665ec3cd4a6a884a19e30c127a591d9915ec35f232b",
+      "label": "figure-101a",
+      "pdfPage": 151,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8782"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-114.svg",
+      "bytes": 1632929,
+      "sha256": "3e3f7bbf40508c926560a4e9cf28f9021f2ca4bea40639d5dffe92fbf6172279",
+      "label": "figure-114",
+      "pdfPage": 156,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8824",
+        "8825",
+        "8826"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-123.svg",
+      "bytes": 141651,
+      "sha256": "fcf7ab6ef5726a5e01876be83f7cee36d052d006d0c8a2df8043c081b93d3240",
+      "label": "figure-123",
+      "pdfPage": 163,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8861",
+        "8862",
+        "8863",
+        "8864"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-124.svg",
+      "bytes": 141651,
+      "sha256": "fcf7ab6ef5726a5e01876be83f7cee36d052d006d0c8a2df8043c081b93d3240",
+      "label": "figure-124",
+      "pdfPage": 163,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8865",
+        "8866",
+        "8867"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-126.svg",
+      "bytes": 588655,
+      "sha256": "d2ab4a9d9b7a0e7ce4b0a0291f4f6dcab50968c1e9f2fce91e7c89453f1901b6",
+      "label": "figure-126",
+      "pdfPage": 164,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8872",
+        "8873",
+        "8874",
+        "8875",
+        "8876"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-127.svg",
+      "bytes": 588655,
+      "sha256": "d2ab4a9d9b7a0e7ce4b0a0291f4f6dcab50968c1e9f2fce91e7c89453f1901b6",
+      "label": "figure-127",
+      "pdfPage": 164,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8881",
+        "8882",
+        "8883",
+        "8884",
+        "8885",
+        "8886",
+        "8888"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-129.svg",
+      "bytes": 7114106,
+      "sha256": "231d5d9bca4790e47be29aca143d0ebfb196a5325b7a8631dae44179cb9da733",
+      "label": "figure-129",
+      "pdfPage": 165,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8922"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-130.svg",
+      "bytes": 7117636,
+      "sha256": "2ceb906b8fd888b998e73ddd1fecbe401e1ace2b2a70e02407b0b95d7c600988",
+      "label": "figure-130",
+      "pdfPage": 165,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8923",
+        "8924",
+        "8925",
+        "8926"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-131.svg",
+      "bytes": 7117636,
+      "sha256": "6dac578a4a9fde6c0c2dd3bfdd99a257c088423df4875c728d0add7ee5bf703f",
+      "label": "figure-131",
+      "pdfPage": 165,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8927",
+        "8928",
+        "8929",
+        "8930",
+        "8931",
+        "8932"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-139.svg",
+      "bytes": 1329728,
+      "sha256": "ffbb08f06c9d5eec2d9ae2e9ba28e9581d73f34815f1b4f2cd5882a0653cca84",
+      "label": "figure-139",
+      "pdfPage": 167,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8984",
+        "8985",
+        "8986",
+        "8987",
+        "8988",
+        "8989"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-140.svg",
+      "bytes": 4616979,
+      "sha256": "62d7db9f0432135fde27c8b88319346da0ba7aa1b5675dedd420e26ae71b7de1",
+      "label": "figure-140",
+      "pdfPage": 168,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8990",
+        "8991",
+        "8992",
+        "8993",
+        "8994",
+        "8995",
+        "8996",
+        "8998",
+        "9932"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-141.svg",
+      "bytes": 139167,
+      "sha256": "43c7f016f1d1203ab11c1b37e3723b5ded1309dc4f5be261ccfb0fba6494417c",
+      "label": "figure-141",
+      "pdfPage": 169,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8990",
+        "8991",
+        "8992",
+        "8993",
+        "8994",
+        "8995",
+        "8996",
+        "8998",
+        "9932"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-142.svg",
+      "bytes": 139167,
+      "sha256": "43c7f016f1d1203ab11c1b37e3723b5ded1309dc4f5be261ccfb0fba6494417c",
+      "label": "figure-142",
+      "pdfPage": 169,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8999",
+        "9000",
+        "9001",
+        "9002",
+        "9003",
+        "9004"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-143.svg",
+      "bytes": 3036382,
+      "sha256": "0768039c66d6854fcfe82d306c8cc2fd0ae07076c2d17bf4664aae7650be2e18",
+      "label": "figure-143",
+      "pdfPage": 170,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8999",
+        "9000",
+        "9001",
+        "9002",
+        "9003",
+        "9004"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-144.svg",
+      "bytes": 2486964,
+      "sha256": "aa4395f6689af8c79dc455eab624bfedb672240a2c4dd0e1cef2692918bfd680",
+      "label": "figure-144",
+      "pdfPage": 171,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9145",
+        "9146",
+        "9147",
+        "9148",
+        "9149",
+        "9926"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-145.svg",
+      "bytes": 221002,
+      "sha256": "d290b5d14f7775004cf05cda7e9828b14d68e38c589eb359bde3c7b4fb4e3358",
+      "label": "figure-145",
+      "pdfPage": 172,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8950",
+        "9266",
+        "9267",
+        "9269",
+        "9270",
+        "9273",
+        "9271"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-146.svg",
+      "bytes": 189021,
+      "sha256": "1770da7e987dce555f6f0703b3647a80f5705d0747e22692e6e687ff9512624b",
+      "label": "figure-146",
+      "pdfPage": 173,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9268",
+        "9276"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-148.svg",
+      "bytes": 108153,
+      "sha256": "adcd1446beeac6fb5d12d057506ff3fb56c6b8889d6f78dbe84b60e82bb52b6f",
+      "label": "figure-148",
+      "pdfPage": 175,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9284"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-149.svg",
+      "bytes": 261708,
+      "sha256": "44b7b298d39fd0662d12ed846c58ca7bb8b8f4a233858a577794fb9a5db8eaf6",
+      "label": "figure-149",
+      "pdfPage": 176,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9287",
+        "9288",
+        "9289",
+        "9290",
+        "9291",
+        "9292",
+        "9293",
+        "9294"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-149a.svg",
+      "bytes": 1001196,
+      "sha256": "1d12543e79091dcbc41c06562e2183ce93b182fb423e11e2a661dd6c07856cce",
+      "label": "figure-149a",
+      "pdfPage": 177,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9939"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-156.svg",
+      "bytes": 33648,
+      "sha256": "3af56e0286aa16aa6c2335b7e15c20a9ab6aa11d97730cc451a71b987e4cf252",
+      "label": "figure-156",
+      "pdfPage": 184,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9436"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-157.svg",
+      "bytes": 33648,
+      "sha256": "3af56e0286aa16aa6c2335b7e15c20a9ab6aa11d97730cc451a71b987e4cf252",
+      "label": "figure-157",
+      "pdfPage": 184,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9437"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-163a.svg",
+      "bytes": 482447,
+      "sha256": "9c61075cfb77e38d26637e003df6abe71e09ab5102cac4283d0d78740321b346",
+      "label": "figure-163a",
+      "pdfPage": 186,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8704-1"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-185.svg",
+      "bytes": 481510,
+      "sha256": "13f90799b0bcc1ef877840afebc2f3def52a5eabf28fea52da9ff3c6fb44b4a7",
+      "label": "figure-185",
+      "pdfPage": 202,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9658"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-185a.svg",
+      "bytes": 725746,
+      "sha256": "9d4b822091f8ccf41f7cb2b0686837fc91156fa9237519540c599fdf3653cfb1",
+      "label": "figure-185a",
+      "pdfPage": 203,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9658",
+        "9659",
+        "9668"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-186.svg",
+      "bytes": 964307,
+      "sha256": "2f883fc5e4495c62504f919cec7a7eb24be4765800ff8bfa967cea812a08ebf6",
+      "label": "figure-186",
+      "pdfPage": 204,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9638"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-187.svg",
+      "bytes": 2519138,
+      "sha256": "9724be56ab0604578b1a4c8689811ca685f7d71b203c6b7229cb55656a868081",
+      "label": "figure-187",
+      "pdfPage": 205,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9638"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-188.svg",
+      "bytes": 456706,
+      "sha256": "cb9ec7f8ce4869548ec6b2b77c81bd94a7af660ce71fd2f1df6a06b63931a810",
+      "label": "figure-188",
+      "pdfPage": 206,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9638"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-188a.svg",
+      "bytes": 325702,
+      "sha256": "68bec01a98abe0e746cc862dc5fc32f17e8a4d63d86841e17d364b0f4e3d8865",
+      "label": "figure-188a",
+      "pdfPage": 207,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9638"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-192.svg",
+      "bytes": 1037874,
+      "sha256": "007ebadfaabd58d126a0037078acb0d6e73b9e32d70b881a7f463c7784f4de0f",
+      "label": "figure-192",
+      "pdfPage": 212,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9644"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-201.svg",
+      "bytes": 522049,
+      "sha256": "5c8ef830184f189d07276e2b994ef39551781eb31d201cba34bdc68be2e5a756",
+      "label": "figure-201",
+      "pdfPage": 218,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9655"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-201a.svg",
+      "bytes": 426041,
+      "sha256": "b5541f3f5f6318d4cd46c75f8ae574673516eef050802b6996bdc3207325404c",
+      "label": "figure-201a",
+      "pdfPage": 219,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9655"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-210.svg",
+      "bytes": 2135277,
+      "sha256": "a02faeebbe88627d7a2e50923f1340f12f842cfd3f46486a895ae94bc5668402",
+      "label": "figure-210",
+      "pdfPage": 221,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9670"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-223.svg",
+      "bytes": 49341,
+      "sha256": "551fa9fb78b2d277bf31ea68390e0d370c96cc2d2f58d4ffaa95fdde072d0318",
+      "label": "figure-223",
+      "pdfPage": 226,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9735"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-224.svg",
+      "bytes": 49341,
+      "sha256": "551fa9fb78b2d277bf31ea68390e0d370c96cc2d2f58d4ffaa95fdde072d0318",
+      "label": "figure-224",
+      "pdfPage": 226,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9416-1"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-225.svg",
+      "bytes": 49341,
+      "sha256": "551fa9fb78b2d277bf31ea68390e0d370c96cc2d2f58d4ffaa95fdde072d0318",
+      "label": "figure-225",
+      "pdfPage": 226,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9735-2"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-226.svg",
+      "bytes": 42001,
+      "sha256": "060828f7438e180c38b2e43c5140044085860d99f7a33f98479a7ab85b66d536",
+      "label": "figure-226",
+      "pdfPage": 227,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9735-3"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-227.svg",
+      "bytes": 42001,
+      "sha256": "060828f7438e180c38b2e43c5140044085860d99f7a33f98479a7ab85b66d536",
+      "label": "figure-227",
+      "pdfPage": 227,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9423-1"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-228.svg",
+      "bytes": 42001,
+      "sha256": "060828f7438e180c38b2e43c5140044085860d99f7a33f98479a7ab85b66d536",
+      "label": "figure-228",
+      "pdfPage": 227,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9735-1"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-241.svg",
+      "bytes": 107290,
+      "sha256": "4fa1c46effbf8c65d35e04397439d010c7a04fc1e025c5fc300508c2a5c74300",
+      "label": "figure-241",
+      "pdfPage": 238,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9787",
+        "9790",
+        "9790-1"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-242.svg",
+      "bytes": 349875,
+      "sha256": "cff7d331c706aa4ef52254e9fabe5f5d5120701e01168bf918e11436b4b1cf1e",
+      "label": "figure-242",
+      "pdfPage": 240,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9790",
+        "9790-1"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-250.svg",
+      "bytes": 334376,
+      "sha256": "d18048d55ae9ec8db99394c27bfdebc0cec4b3da3a5a1bc6312580e9017b564d",
+      "label": "figure-250",
+      "pdfPage": 250,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9796"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-251.svg",
+      "bytes": 288498,
+      "sha256": "b7406c2692e5a0d3fb347992cce55d050c84e442ff1a7d2d699050fb9c2943a8",
+      "label": "figure-251",
+      "pdfPage": 251,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9794",
+        "8703"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-252.svg",
+      "bytes": 375762,
+      "sha256": "d33ace4aec8eb592e0a3a60d27b96ce943ab46c27122603ae4a6b2a5b2b02572",
+      "label": "figure-252",
+      "pdfPage": 252,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9812-1"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-253.svg",
+      "bytes": 535858,
+      "sha256": "aaa8164c4d3eeafa0084d5467af3bf1bbd2fd5cdcd36051921d23daf2126cc94",
+      "label": "figure-253",
+      "pdfPage": 253,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9795"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-255a.svg",
+      "bytes": 1458704,
+      "sha256": "27c11f1ae9dd7b93fe87447e5f0d0935c044f709f14d9eb876d62237c22881e0",
+      "label": "figure-255a",
+      "pdfPage": 256,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8799"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-255b.svg",
+      "bytes": 643564,
+      "sha256": "96985a831cae2ae0a663d81ddf5e9ac6c94b2f6a62fe07b0d544885136f57578",
+      "label": "figure-255b",
+      "pdfPage": 257,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8799"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-256.svg",
+      "bytes": 760834,
+      "sha256": "a658c8150f6949d48871fd52b06f2b71800240b05b0d9d67d9ca0158749a3ca2",
+      "label": "figure-256",
+      "pdfPage": 258,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8806"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-257a.svg",
+      "bytes": 4182691,
+      "sha256": "53a498d1113ac8ff370bf65d0f1ae116dbf872586ad8a3d8dd0ce012080f0326",
+      "label": "figure-257a",
+      "pdfPage": 260,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8800",
+        "8803",
+        "8804",
+        "8806"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-257b.svg",
+      "bytes": 4330795,
+      "sha256": "923dce204d2322cbf1371c068a3776bcd672f9e62083008639da6f0dea9ca50a",
+      "label": "figure-257b",
+      "pdfPage": 261,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8802"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-258.svg",
+      "bytes": 1516097,
+      "sha256": "72894be522d2171527c923e05e5733c9df0a15745465e7809823a1bbd18c60cd",
+      "label": "figure-258",
+      "pdfPage": 262,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9617"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-259.svg",
+      "bytes": 3556182,
+      "sha256": "0eb1277c79f11c1dff943d74aeb0ab0dfc691360b0e7094743835ddd1725873d",
+      "label": "figure-259",
+      "pdfPage": 263,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9554",
+        "9571"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-262.svg",
+      "bytes": 2666217,
+      "sha256": "891796fb0f76e7b9f854ed7c0a298465035e72703ec57c957bb91036ba27a85d",
+      "label": "figure-262",
+      "pdfPage": 266,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8704"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-263.svg",
+      "bytes": 1525300,
+      "sha256": "432ce1eba84fdb2a290dfd85ba00a22d7d47a7fa733af236863f8825c29085fe",
+      "label": "figure-263",
+      "pdfPage": 267,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8704"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-269.svg",
+      "bytes": 1969493,
+      "sha256": "ce32cde2227585610828cbaa60211ebb1c7c7ed54969b2c502675463ebee4561",
+      "label": "figure-269",
+      "pdfPage": 273,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9614"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-273.svg",
+      "bytes": 2333751,
+      "sha256": "931378a63bb9d2e55aff142a55a1961abbe7d1095512cc8cbe4614143f1a9dec",
+      "label": "figure-273",
+      "pdfPage": 277,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9588",
+        "8836"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-279.svg",
+      "bytes": 2333259,
+      "sha256": "92f88c2e8d3d1cddb32d6b5e8124cbe2088d416b51ae3fdd921a514bae36ee59",
+      "label": "figure-279",
+      "pdfPage": 282,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8852",
+        "9933"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-293.svg",
+      "bytes": 4245898,
+      "sha256": "772535be3d3088d66a1c90f90887ae8fa260d86ae4c5eaa9ac62ef8cac1932d5",
+      "label": "figure-293",
+      "pdfPage": 296,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9599",
+        "9600",
+        "9601",
+        "9602",
+        "9603",
+        "9604",
+        "9615"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-301.svg",
+      "bytes": 2279512,
+      "sha256": "59ecd40585b2782869d2d77b5f83c984287e4b7502aadd99a5b89ac4900e7b56",
+      "label": "figure-301",
+      "pdfPage": 304,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9619",
+        "9618"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-310.svg",
+      "bytes": 2304931,
+      "sha256": "276e38a23683aedad78e9d7d0acb12b8b5625302d5c240d1a2e313e7c6893cb1",
+      "label": "figure-310",
+      "pdfPage": 312,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8726"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-335.svg",
+      "bytes": 457893,
+      "sha256": "8c46b9d5f25c656a6b44704cf31dd3f5c6e05e465683b1aec87a6396f51a8793",
+      "label": "figure-335",
+      "pdfPage": 336,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9666"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-343.svg",
+      "bytes": 337812,
+      "sha256": "9e675546402613885b98dabe96940482849ed8bac7cc266f98f9f4e3ade2816f",
+      "label": "figure-343",
+      "pdfPage": 344,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9686"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-348.svg",
+      "bytes": 483297,
+      "sha256": "fcf1a082437e876cba66623b60ed55fbd1f9d1434095e93d0dd9f373e696f4a9",
+      "label": "figure-348",
+      "pdfPage": 349,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8793",
+        "8796",
+        "8797",
+        "8798"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-360.svg",
+      "bytes": 2146609,
+      "sha256": "313a483ae155635576e1be540373cdf6e0119a7328c9089636a111ac7eef2210",
+      "label": "figure-360",
+      "pdfPage": 362,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9555"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-361.svg",
+      "bytes": 2472929,
+      "sha256": "3841ccb7185a29fe1a55d603930d3b82f5ebd534684ba9620c1c81fb0bf2c308",
+      "label": "figure-361",
+      "pdfPage": 363,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8793",
+        "8852-1"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-373.svg",
+      "bytes": 2760829,
+      "sha256": "720a9f24921b74f64db79af93db3811363620b8c4ce2db7c8082c9f13996d714",
+      "label": "figure-373",
+      "pdfPage": 375,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9645"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-374.svg",
+      "bytes": 2145298,
+      "sha256": "06d0a49d1a87deb025f04960780873ef78d488e3a21f675d949f0d0149a646b1",
+      "label": "figure-374",
+      "pdfPage": 376,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9645-1"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-388.svg",
+      "bytes": 365695,
+      "sha256": "f38907d6684a2b48cc6aae346e1fec70f86bb2bdacaa3c18adcfefdb81cdbb6b",
+      "label": "figure-388",
+      "pdfPage": 390,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9555"
+      ]
+    },
+    {
+      "file": "atp_2026_figure-99.svg",
+      "bytes": 3525412,
+      "sha256": "a83812ed5e0fb47b236c7086389b46f015f78c17e56addff65fcf7e239ddc351",
+      "label": "figure-99",
+      "pdfPage": 147,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8782"
+      ]
+    },
+    {
+      "file": "atp_2026_legend-12.svg",
+      "bytes": 433912,
+      "sha256": "cc90642d21773326f4e9fcd681bd7c482a6fc00df54b47869a84c1499073649d",
+      "label": "legend-12",
+      "pdfPage": 32,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "9636",
+        "9668"
+      ]
+    },
+    {
+      "file": "atp_2026_legend-38.svg",
+      "bytes": 2244556,
+      "sha256": "4f85132517546773aa9b7fc31cf157d6459eadd403b5885be6ba2ace7552b323",
+      "label": "legend-38",
+      "pdfPage": 58,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8804"
+      ]
+    },
+    {
+      "file": "atp_2026_legend-72.svg",
+      "bytes": 2474507,
+      "sha256": "cef3efe3e7299c91eee9b29137f9e9378b50779f52a82112042a103e83861626",
+      "label": "legend-72",
+      "pdfPage": 92,
+      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "nativePagePreserved": true,
+      "sourceQuestionIds": [
+        "8852",
+        "8852-1"
+      ]
+    },
+    {
+      "file": "atp_2026_question-8206-faa.svg",
+      "bytes": 858559,
+      "sha256": "791a631eabf1fd1c215608420c359a186e8bc3e4ceec2b03c2838dbdad9b1299",
+      "source": "https://www.govinfo.gov/content/pkg/GOVPUB-TD4-PURL-gpo46261/pdf/GOVPUB-TD4-PURL-gpo46261.pdf",
+      "sourceTitle": "FAA-H-8083-6 Advanced Avionics Handbook",
+      "pdfPage": 19,
+      "bookPage": "2-3",
+      "sourceFigure": "2-2",
+      "question": "8206",
+      "viewBox": [
+        129,
+        253,
+        59,
+        192
+      ],
+      "nativeGraphicPreserved": true,
+      "nativeVectorsPreserved": true,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8206"
+      ]
+    },
+    {
+      "file": "atp_2026_question-9737.svg",
+      "bytes": 102219,
+      "sha256": "46fa294e5406d23eba34f096c9ed340e630635bf9187fc4bfc5a04cd65b3e76e",
+      "source": "ASA Library ATP Test Prep 2025–2026",
+      "readerPage": 338,
+      "question": "9737",
+      "viewBox": [
+        286,
+        249,
+        244,
+        305
+      ],
+      "nativeGraphicPreserved": true,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9737"
+      ]
+    },
+    {
+      "file": "atp_2026_question-9751-faa.svg",
+      "bytes": 1445036,
+      "sha256": "e574dd38ea3ea3e43a38be713d550458855fcdfbd917c394d021c9b26c00a159",
+      "source": "https://www.govinfo.gov/content/pkg/GOVPUB-TD4-PURL-gpo46261/pdf/GOVPUB-TD4-PURL-gpo46261.pdf",
+      "sourceTitle": "FAA-H-8083-6 Advanced Avionics Handbook",
+      "pdfPage": 89,
+      "bookPage": "5-5",
+      "sourceFigure": "5-9",
+      "question": "9751",
+      "viewBox": [
+        321,
+        377,
+        237,
+        176
+      ],
+      "nativeGraphicPreserved": true,
+      "nativeVectorsPreserved": true,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9751"
+      ]
+    }
+  ]
+}
