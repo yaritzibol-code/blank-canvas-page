@@ -37,7 +37,7 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
     descripcion: "Airline Transport Pilot Test Prep (ASA) — banco completo por capítulos.",
     materia: "operaciones",
     icon: "doc",
-    total: 1191,
+    total: 1199,
     fileUrl: "https://drive.google.com/file/d/1x_BE-nE3wNp3DJ2iEqGMjcxcPxLOzuaa/preview",
   },
   {
@@ -113,7 +113,7 @@ export interface AtpChapter {
 }
 
 export const ATP_CHAPTERS: AtpChapter[] = [
-  { num: 1, titulo: "Regulaciones", tituloEn: "Regulations", total: 355 },
+  { num: 1, titulo: "Regulaciones", tituloEn: "Regulations", total: 363 },
   { num: 2, titulo: "Equipo, Navegación e Instalaciones", tituloEn: "Equipment, Navigation and Facilities", total: 205 },
   { num: 3, titulo: "Aerodinámica", tituloEn: "Aerodynamics", total: 106 },
   { num: 6, titulo: "Operaciones de Vuelo", tituloEn: "Flight Operations", total: 213 },
