@@ -21,7 +21,7 @@ import {
   chaptersConConteo,
   type AtpChapter,
 } from "@/lib/store/linea-aerea-meta";
-import { useBankCounts } from "@/hooks/use-bank-counts";
+import { useBankCounts, useAtpFixedWingCounts } from "@/hooks/use-bank-counts";
 import { LA_CONVOCATORIA_COPY as CONVOCATORIA } from "@/lib/convocatoria";
 import { BancoScreen } from "@/components/banco/BancoScreen";
 import { QuizModalPortal } from "@/components/shared/QuizModalPortal";
@@ -428,9 +428,6 @@ export function ChapterPicker({
   const [customQty, setCustomQty] = useState("");
   /** Sin capítulos (guía oficial) solo se elige la cantidad de preguntas. */
   const conCapitulos = catalogo.length > 0;
-  const vivo = conCapitulos ? chaptersConConteo(code, catalogo, counts) : null;
-  const chapters = vivo?.chapters ?? catalogo;
-  const totalBanco = vivo?.total ?? totalCatalogo;
   const unidad = capLabel(code);
   /**
    * Solo el ATP mezcla helicóptero en capítulos de avión (Cap. 1 y 3): la
@@ -438,6 +435,14 @@ export function ChapterPicker({
    */
   const ofreceSinHeli = code === "ATP";
   const [sinHeli, setSinHeli] = useState(false);
+  const filtrandoHeli = ofreceSinHeli && sinHeli;
+  const conteosSinHeli = useAtpFixedWingCounts(filtrandoHeli);
+  const conteoListo = !filtrandoHeli || Array.isArray(conteosSinHeli);
+  const vivo = conCapitulos
+    ? chaptersConConteo(code, catalogo, filtrandoHeli ? conteosSinHeli ?? [] : counts, filtrandoHeli)
+    : null;
+  const chapters = vivo?.chapters ?? catalogo;
+  const totalBanco = vivo?.total ?? totalCatalogo;
   const all = sel.size === 0;
   const disponibles = all
     ? totalBanco
@@ -477,6 +482,7 @@ export function ChapterPicker({
   }
 
   function start() {
+    if (!conteoListo || qtyNum < 1) return;
     const selected = [...sel];
     const caps = selected
       .map((key) => Number(key.split(":")[0]))
@@ -583,7 +589,7 @@ export function ChapterPicker({
                     color: "var(--fd-text, #081A35)",
                   }}
                 >
-                  Todo el banco {nombre} · {totalBanco} preguntas
+                  Todo el banco {nombre} · {conteoListo ? totalBanco : "…"} preguntas
                 </button>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -654,7 +660,7 @@ export function ChapterPicker({
                               whiteSpace: "nowrap",
                             }}
                           >
-                            {vacio ? "Sin preguntas aún" : `${row.total} preg.`}
+                            {!conteoListo ? "…" : vacio ? "Sin preguntas aún" : `${row.total} preg.`}
                           </span>
                         </button>
                       );
@@ -717,10 +723,14 @@ export function ChapterPicker({
                 ¿Cuántas preguntas?
               </div>
               <div
+                role="status"
                 style={{ fontSize: "0.78rem", color: "var(--fd-muted, #4A5872)", marginBottom: 10 }}
               >
-                Hay {disponibles} disponibles con tu selección
-                {ofreceSinHeli && sinHeli ? " (menos las de helicópteros)" : ""}.
+                {!conteoListo
+                  ? conteosSinHeli === null
+                    ? "No pudimos cargar el conteo sin helicópteros. Cierra y vuelve a abrir el selector para reintentar."
+                    : "Calculando preguntas disponibles sin helicópteros…"
+                  : `Hay ${disponibles} disponibles con tu selección${filtrandoHeli ? " (sin helicópteros)" : ""}.`}
               </div>
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                 {opciones.map((v) => {

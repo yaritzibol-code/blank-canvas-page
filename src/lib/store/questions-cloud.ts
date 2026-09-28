@@ -282,6 +282,15 @@ export async function fetchBankCounts(): Promise<BankCount[]> {
   return data as unknown as BankCount[];
 }
 
+/** Conteos ATP sin helicópteros; null distingue un fallo de un banco vacío. */
+export async function fetchAtpFixedWingCounts(): Promise<BankCount[] | null> {
+  const s = supa();
+  if (!s) return null;
+  const { data, error } = await s.rpc("get_atp_fixed_wing_counts" as never);
+  if (error || !data) return null;
+  return data as unknown as BankCount[];
+}
+
 /** Limpia el banco en memoria (cierre de sesión). */
 export function clearQuestionMemory(): void {
   loadedKeys.clear();
