@@ -1,0 +1,4393 @@
+{
+  "edition": "2025–2026",
+  "bucket": "atp-images",
+  "format": "SVG",
+  "source": "https://library.asa2fly.com/reader/#/reader",
+  "supplement": "FAA-CT-8080-7D Figures (included in ASA Reader)",
+  "bookISBN": "9781644254271",
+  "assets": [
+    {
+      "file": "atp_2026_asa_figure-1-unit.svg",
+      "bytes": 187582,
+      "sha256": "12fa1f04868cd02f302b83993b57ef0c68592d0cb37eec8110fa6af7de0bbbc2",
+      "label": "figure-1",
+      "readerPage": 576,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "6f4f58a551143e69eda452068d4806712d551348bf67295df756c214fbe3e3df",
+      "viewBox": [
+        30,
+        52,
+        498,
+        149
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        230
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8736"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-100-unit.svg",
+      "bytes": 328683,
+      "sha256": "9cb477a656ee19885b351aee9a9ed01c9e8ca64c16bdecf6cac93565336e5022",
+      "label": "figure-100",
+      "readerPage": 630,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "3b2c2be45212cc339e9d2bc9b43f42b7acec4806de6405a5ca5f85061dda83b0",
+      "viewBox": [
+        28,
+        33,
+        501,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8784"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-101-unit.svg",
+      "bytes": 261145,
+      "sha256": "2da74353bea11d959211bfa860dacf7b0cb01f238cd52d222fc7a1c4f984e3b6",
+      "label": "figure-101",
+      "readerPage": 632,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "8f8fe44587462478d258c1f7b88eb4919e194fa96c849d33df2d2bb4a9d43118",
+      "viewBox": [
+        32,
+        33,
+        497,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8782"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-101a-unit.svg",
+      "bytes": 348444,
+      "sha256": "4e8de9991f558aaca4b7f6ca79f5d926f51b70ae408898f16a0e9383698d2d1b",
+      "label": "figure-101a",
+      "readerPage": 633,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "b37cbc71c2863262a2fc7403f334cf922474f173c23b69c1661694f75a2eedd3",
+      "viewBox": [
+        66,
+        33,
+        499,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8782"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-114-unit.svg",
+      "bytes": 204637,
+      "sha256": "f468591972a51aea5352982cf6cdb4cb4c8a35f8f7a693dee82d9c5dc3e3a04a",
+      "label": "figure-114",
+      "readerPage": 638,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "6c9b1fbee214001c6ed62f40dd98bf32430fe505d109477503948b3596c3df92",
+      "viewBox": [
+        30,
+        33,
+        499,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8824",
+        "8825",
+        "8826"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-123-unit.svg",
+      "bytes": 158887,
+      "sha256": "ad4fd5c2b8999eb0ff1042f90dd6a72ee55743b0dd834159302ae0509127e149",
+      "label": "figure-123",
+      "readerPage": 645,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "ae5cbac220f91bf5e2cc3d3855c07448ee8471059d76976c90a54899e9d19b0c",
+      "viewBox": [
+        65,
+        47,
+        251,
+        282
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          24,
+          21
+        ],
+        [
+          12,
+          21
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        316,
+        380
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8861",
+        "8862",
+        "8863",
+        "8864"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-124-unit.svg",
+      "bytes": 158888,
+      "sha256": "6ce60f3f84a6fba749fe0d41c0f8d513423bdeb46a19dc2db7cadf011ebaf40b",
+      "label": "figure-124",
+      "readerPage": 645,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "ae5cbac220f91bf5e2cc3d3855c07448ee8471059d76976c90a54899e9d19b0c",
+      "viewBox": [
+        316,
+        47,
+        249,
+        282
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          24,
+          21
+        ],
+        [
+          12,
+          21
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        316,
+        33,
+        594,
+        380
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8865",
+        "8866",
+        "8867"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-126-unit.svg",
+      "bytes": 288258,
+      "sha256": "0b73e8cc6fc89419abef0dc0d8143b81ff3d52ade0f4bf4a5685626f07a8166a",
+      "label": "figure-126",
+      "readerPage": 646,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "6ae21db458fe1edb2b8688ccd99ca5eaf8b6f805308365ca8e0406793ea8ae1b",
+      "viewBox": [
+        35,
+        38,
+        493,
+        298
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        380
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8872",
+        "8873",
+        "8874",
+        "8875",
+        "8876"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-127-unit.svg",
+      "bytes": 288259,
+      "sha256": "bf1a1383d688dec104e61621daa03c3c157bce334d96be81d8cb3a32c2d38c81",
+      "label": "figure-127",
+      "readerPage": 646,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "6ae21db458fe1edb2b8688ccd99ca5eaf8b6f805308365ca8e0406793ea8ae1b",
+      "viewBox": [
+        29,
+        427,
+        499,
+        264
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        380,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8881",
+        "8882",
+        "8883",
+        "8884",
+        "8885",
+        "8886",
+        "8888"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-129-unit.svg",
+      "bytes": 201275,
+      "sha256": "24f383ded53bd65cc3fe831ee2bb2ae5354808f3a8811f7951a6f78c3cd74483",
+      "label": "figure-129",
+      "readerPage": 647,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "7e468ba51f4b683688d44d2751f3c237ccffad1cdaf373e177b53040a96925f5",
+      "viewBox": [
+        66,
+        48,
+        499,
+        178
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        240
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8922"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-130-unit.svg",
+      "bytes": 201276,
+      "sha256": "5758a735b91551af12ce473f556fdaebe975c5536daf625f9d7da8eea4b874f3",
+      "label": "figure-130",
+      "readerPage": 647,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "7e468ba51f4b683688d44d2751f3c237ccffad1cdaf373e177b53040a96925f5",
+      "viewBox": [
+        66,
+        255,
+        500,
+        212
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        240,
+        594,
+        500
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8923",
+        "8924",
+        "8925",
+        "8926"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-131-unit.svg",
+      "bytes": 201276,
+      "sha256": "92d9bcf28550e83b275fbcaa77bae2754da9b9f5b4b6a3b9be22c15edd7e1ff9",
+      "label": "figure-131",
+      "readerPage": 647,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "7e468ba51f4b683688d44d2751f3c237ccffad1cdaf373e177b53040a96925f5",
+      "viewBox": [
+        65,
+        505,
+        500,
+        211
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        500,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8927",
+        "8928",
+        "8929",
+        "8930",
+        "8931",
+        "8932"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-139-unit.svg",
+      "bytes": 233192,
+      "sha256": "8eb77de7cd620d26f46078182795c3fe95df939b8b2a407bed56edda468def10",
+      "label": "figure-139",
+      "readerPage": 649,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "4791bbe87e5b4359ed10d30d276558383c6ac245b874535e608f24b8ba11c825",
+      "viewBox": [
+        80,
+        411,
+        470,
+        330
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        350,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8984",
+        "8985",
+        "8986",
+        "8987",
+        "8988",
+        "8989"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-140-unit.svg",
+      "bytes": 339976,
+      "sha256": "2368209a070b87d3c4dbdc100aed2c17f938fa995c09520d1c28b8fbbf0d811c",
+      "label": "figure-140",
+      "readerPage": 650,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "5a4fe7324494ff5615d72ed94e22dd2d8c23e34990fa2cb41a9e390b1dce503c",
+      "viewBox": [
+        30,
+        33,
+        499,
+        571
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          17,
+          17
+        ],
+        [
+          16,
+          15
+        ],
+        [
+          15,
+          16
+        ],
+        [
+          15,
+          14
+        ],
+        [
+          14,
+          15
+        ],
+        [
+          13,
+          14
+        ],
+        [
+          11,
+          9
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8990",
+        "8991",
+        "8992",
+        "8993",
+        "8994",
+        "8995",
+        "8996",
+        "8998",
+        "9932"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-141-unit.svg",
+      "bytes": 185229,
+      "sha256": "cb80b043c09db30a162ab8713d121907118994a45f7980ee3ca0e65b489b6dd3",
+      "label": "figure-141",
+      "readerPage": 651,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "5578be3b6f3bc5bce2844505384b1b8f604af6d1f20bee82c67593c620ff5f2c",
+      "viewBox": [
+        66,
+        48,
+        499,
+        159
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        260
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8990",
+        "8991",
+        "8992",
+        "8993",
+        "8994",
+        "8995",
+        "8996",
+        "8998",
+        "9932"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-142-unit.svg",
+      "bytes": 185230,
+      "sha256": "8d48d7e1dc22377b46162ede5ec4f44f7decfeec157a5cbf1f8a432398f9fffe",
+      "label": "figure-142",
+      "readerPage": 651,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "5578be3b6f3bc5bce2844505384b1b8f604af6d1f20bee82c67593c620ff5f2c",
+      "viewBox": [
+        66,
+        303,
+        499,
+        413
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        260,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8999",
+        "9000",
+        "9001",
+        "9002",
+        "9003",
+        "9004"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-143-unit.svg",
+      "bytes": 249859,
+      "sha256": "06c7a0a4bd34cd25216b80584ab518cad85ad7ecbd105fd985b6f058cfbbd60a",
+      "label": "figure-143",
+      "readerPage": 652,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "e89219b66f703ee828f38251aa3f86f3e1fbaaa495dd00e12e7841554e01fbf2",
+      "viewBox": [
+        30,
+        38,
+        501,
+        391
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8999",
+        "9000",
+        "9001",
+        "9002",
+        "9003",
+        "9004"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-144-unit.svg",
+      "bytes": 148657,
+      "sha256": "8ae29e9abdd1c6068ca1b839c68b6d068ff216b4128502a04302aba3527c43c5",
+      "label": "figure-144",
+      "readerPage": 653,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "8030f9012545067ecc01a06acd2aebecbc03c230d12beda988504e90d18a0528",
+      "viewBox": [
+        66,
+        47,
+        499,
+        285
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9145",
+        "9146",
+        "9147",
+        "9148",
+        "9149",
+        "9926"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-145-unit.svg",
+      "bytes": 218623,
+      "sha256": "97ee06475f2acd1081e7b5da1ba90550195440d2613fbf43c8dc9789dc153f64",
+      "label": "figure-145",
+      "readerPage": 654,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "009759194812dda12504679c2f9a00d7dc1a0697a8f223e6aacad07f2a592fad",
+      "viewBox": [
+        30,
+        41,
+        499,
+        675
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8950",
+        "9266",
+        "9267",
+        "9269",
+        "9270",
+        "9273",
+        "9271"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-146-unit.svg",
+      "bytes": 193899,
+      "sha256": "3e622e7a4ccaca51b03ae682abbb328caadb2f8168c3816b76a256e4155851b8",
+      "label": "figure-146",
+      "readerPage": 655,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "126330a3df0a2cb1a89166d71a85b2c26a83e6bb7a0a2fd8ebbf04aafda2f70d",
+      "viewBox": [
+        66,
+        48,
+        498,
+        668
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9268",
+        "9276"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-148-unit.svg",
+      "bytes": 133966,
+      "sha256": "faf9011127e2578975c59c7051040a12a76dfb3e554b645e9ffd6feda67c9854",
+      "label": "figure-148",
+      "readerPage": 657,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "31561d9c27c3ed869850401e824cc21e9f0372486a717a0c48e0fd0f52dd2d73",
+      "viewBox": [
+        149,
+        47,
+        374,
+        383
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9284"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-149-unit.svg",
+      "bytes": 235314,
+      "sha256": "3dd0b8db6adb18c94f7f4049bb1de32182222950c11f1040c5e1dd1e9e20dc73",
+      "label": "figure-149",
+      "readerPage": 658,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "6b73c9a60777013ec83c43c936b0a5803b60f3f4628b9978fbe1a602eb95fdf5",
+      "viewBox": [
+        30,
+        38,
+        498,
+        704
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9287",
+        "9288",
+        "9289",
+        "9290",
+        "9291",
+        "9292",
+        "9293",
+        "9294"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-149a-unit.svg",
+      "bytes": 252247,
+      "sha256": "f1d5197440fc3c04e79b187a0fa4fed5d8736922500e54905e29c132983ce9f1",
+      "label": "figure-149a",
+      "readerPage": 659,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "06422f2f7060eba39faf8e06fd8fc6f4a1b2284276c6573baa4b479ef4c34e70",
+      "viewBox": [
+        114,
+        33,
+        406,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9939"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-156-unit.svg",
+      "bytes": 121057,
+      "sha256": "90ea11d26b8144f545ed0cff5038c5d20a2f350fd42047421229ba3ef9729660",
+      "label": "figure-156",
+      "readerPage": 666,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "8e1ba24d56aea5a6e0fd6eac82ca24ecadfa09004e152e752b1d2ef203a87cb2",
+      "viewBox": [
+        30,
+        47,
+        497,
+        150
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        220
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9436"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-157-unit.svg",
+      "bytes": 121058,
+      "sha256": "ef867adf6b6557d257d50e7750d4369dfb163f26f29777d7ac1f64baa885672e",
+      "label": "figure-157",
+      "readerPage": 666,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "8e1ba24d56aea5a6e0fd6eac82ca24ecadfa09004e152e752b1d2ef203a87cb2",
+      "viewBox": [
+        31,
+        255,
+        497,
+        242
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        220,
+        594,
+        550
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9437"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-163a-unit.svg",
+      "bytes": 336522,
+      "sha256": "686f3b975debaa0dbf44877bad3c654d0d5cd934bbb5636d1eb13bc20e35d022",
+      "label": "figure-163a",
+      "readerPage": 668,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "d6cc5ad4dd367b4e2b7bcf7c72c7a367bf7c04283decb63ffcdb6f496c2c9b8b",
+      "viewBox": [
+        30,
+        33,
+        499,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8704-1"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-185-unit.svg",
+      "bytes": 407917,
+      "sha256": "a99379677fa799fc964720276cdd05f6d8c1e5e55700f1f2578b720fffcef794",
+      "label": "figure-185",
+      "readerPage": 684,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "33765a8cabe3320af4183a6c907fed7d8d9c07eb4958dfedac8b0040ad19273d",
+      "viewBox": [
+        30,
+        33,
+        500,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9658"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-185a-unit.svg",
+      "bytes": 380158,
+      "sha256": "5a84ccb090f6a4649554fb828335aff09b8f1f9720e16ced15f013fa74ccafad",
+      "label": "figure-185a",
+      "readerPage": 685,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "790a4b75c263456c2ab30f38e8efed5ef06765ee39d395bfd481577f2874a53d",
+      "viewBox": [
+        66,
+        33,
+        499,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          79,
+          16
+        ],
+        [
+          40,
+          18
+        ],
+        [
+          31,
+          18
+        ],
+        [
+          31,
+          15
+        ],
+        [
+          29,
+          20
+        ],
+        [
+          29,
+          16
+        ],
+        [
+          18,
+          16
+        ],
+        [
+          13,
+          15
+        ],
+        [
+          8,
+          15
+        ],
+        [
+          7,
+          15
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9658",
+        "9659",
+        "9668"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-186-unit.svg",
+      "bytes": 235499,
+      "sha256": "8423381b519773bf1d9906627c0ae576e170d39378a9b429e1cc17c869350e54",
+      "label": "figure-186",
+      "readerPage": 686,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "a123dbdd60af75b9c919193eb3d81e177c3e497efdc11584278ad95c6db3852f",
+      "viewBox": [
+        29,
+        33,
+        500,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9638"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-187-unit.svg",
+      "bytes": 307284,
+      "sha256": "a07830ca619fe800980f3509283eff7e67c9199e21674df63d2c529ffce27a5e",
+      "label": "figure-187",
+      "readerPage": 687,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "1414e52e6f531d739295c7368c62871c309b8b392e3e9d41b36c78a0c710d66a",
+      "viewBox": [
+        66,
+        33,
+        499,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9638"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-188-unit.svg",
+      "bytes": 375456,
+      "sha256": "730f6d2b06f5e505b4c40e226eb5113ea202d83462df5dae5ae7a8ba86d60156",
+      "label": "figure-188",
+      "readerPage": 688,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "55e6362443b420e4eb235734e1f6f7688f35ea3bf5713d7c8b096ce26bbf24c5",
+      "viewBox": [
+        30,
+        33,
+        499,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          79,
+          16
+        ],
+        [
+          39,
+          17
+        ],
+        [
+          31,
+          18
+        ],
+        [
+          31,
+          15
+        ],
+        [
+          29,
+          20
+        ],
+        [
+          29,
+          16
+        ],
+        [
+          19,
+          17
+        ],
+        [
+          18,
+          17
+        ],
+        [
+          18,
+          16
+        ],
+        [
+          13,
+          15
+        ],
+        [
+          9,
+          17
+        ],
+        [
+          8,
+          17
+        ],
+        [
+          8,
+          15
+        ],
+        [
+          8,
+          13
+        ],
+        [
+          7,
+          15
+        ],
+        [
+          5,
+          17
+        ],
+        [
+          5,
+          16
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9638"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-188a-unit.svg",
+      "bytes": 288184,
+      "sha256": "6a0b66b3328b12e5203a8849b46c8474b363b8dfe58ef70f5411fe03a2cdf28c",
+      "label": "figure-188a",
+      "readerPage": 689,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "797044fd8c0aa57db2d8170715dc981d96edf05210b8cbc1cd8fcfcab0002b1b",
+      "viewBox": [
+        66,
+        33,
+        499,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9638"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-192-unit.svg",
+      "bytes": 207991,
+      "sha256": "822f935988b5b71af351ebdfd10b4111adce01647e9126e0f4d723dfa0d98343",
+      "label": "figure-192",
+      "readerPage": 694,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "5e0a573dcb2a270da579fcd1ad83a95018b19cdbbd7e7b9cc80a2b840a438e74",
+      "viewBox": [
+        29,
+        58,
+        500,
+        684
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9644"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-201-unit.svg",
+      "bytes": 359265,
+      "sha256": "6fccd53daebef651208504d2847cbc5f6ba9cff25f5c0ea2f5546ccbdcfdeaa5",
+      "label": "figure-201",
+      "readerPage": 700,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "4022181ea5ba55bfc01f109f3879e3af548a3f49ab8c8accb78cc2ef0313bccc",
+      "viewBox": [
+        29,
+        33,
+        500,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          83,
+          16
+        ],
+        [
+          32,
+          16
+        ],
+        [
+          30,
+          16
+        ],
+        [
+          19,
+          16
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          9,
+          16
+        ],
+        [
+          8,
+          16
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9655"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-201a-unit.svg",
+      "bytes": 321482,
+      "sha256": "55b0c0ad00c11772f886457add5886bef9e686b8cdec8ae3e52940295ee374e4",
+      "label": "figure-201a",
+      "readerPage": 701,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "cd4ed637fdb0c6268610cb2d5338034c28d2d7e538e200d095decf22f58280b4",
+      "viewBox": [
+        65,
+        33,
+        499,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9655"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-210-unit.svg",
+      "bytes": 281697,
+      "sha256": "9c7e66743532a1f20d4940ffedb01c1c17f14bd4e1b906a5f4fdb7c233bc7a12",
+      "label": "figure-210",
+      "readerPage": 703,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "bedc97929b26816ff8c71ad1291fd43ae04bd511a2db625437afba21936be64f",
+      "viewBox": [
+        66,
+        33,
+        499,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9670"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-223-unit.svg",
+      "bytes": 128305,
+      "sha256": "159ae0dd0f613295610bb3f53ed70da57cb8441d31c4036fc016770578edf983",
+      "label": "figure-223",
+      "readerPage": 708,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "37828293b1b51dd8096f2b7627ba477f2c871542cc58fd6d78763ad9a395a372",
+      "viewBox": [
+        60,
+        47,
+        445,
+        166
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        245
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9735"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-224-unit.svg",
+      "bytes": 128306,
+      "sha256": "7ed189588d4c40c1a8930a39c3d0d1861bd1e5adf48a767b62164768ae54dde8",
+      "label": "figure-224",
+      "readerPage": 708,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "37828293b1b51dd8096f2b7627ba477f2c871542cc58fd6d78763ad9a395a372",
+      "viewBox": [
+        56,
+        284,
+        449,
+        162
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        245,
+        594,
+        510
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9416-1"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-225-unit.svg",
+      "bytes": 128307,
+      "sha256": "b8d9c81ccef20d8d2c7dff71f8cc96656b528958bd89a9d64bb36f3bced32033",
+      "label": "figure-225",
+      "readerPage": 708,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "37828293b1b51dd8096f2b7627ba477f2c871542cc58fd6d78763ad9a395a372",
+      "viewBox": [
+        158,
+        527,
+        243,
+        189
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        510,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9735-2"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-226-unit.svg",
+      "bytes": 128914,
+      "sha256": "bf4e99bc9f5057d07e1e10215cfd193f5306d17415903d8e03ec2c1588d2d6e2",
+      "label": "figure-226",
+      "readerPage": 709,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "dabc4c203123115432f91dc1d3d96bc93397e5d72a3ab2504589acb76d858336",
+      "viewBox": [
+        205,
+        49,
+        219,
+        168
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        245
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9735-3"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-227-unit.svg",
+      "bytes": 128915,
+      "sha256": "6538932fcfbad319895dc46eaa44c03c4cc104d014538d1a38b2fc8e9f715ef7",
+      "label": "figure-227",
+      "readerPage": 709,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "dabc4c203123115432f91dc1d3d96bc93397e5d72a3ab2504589acb76d858336",
+      "viewBox": [
+        175,
+        270,
+        281,
+        206
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        245,
+        594,
+        530
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9423-1"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-228-unit.svg",
+      "bytes": 128915,
+      "sha256": "4694ef0c7f8f497137ddcb56944f7f8e6ae68de739b61358abe76399d90b100e",
+      "label": "figure-228",
+      "readerPage": 709,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "dabc4c203123115432f91dc1d3d96bc93397e5d72a3ab2504589acb76d858336",
+      "viewBox": [
+        172,
+        539,
+        281,
+        177
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        530,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9735-1"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-241-unit.svg",
+      "bytes": 216183,
+      "sha256": "6e26dbfb829f56a0a3e8aaabda4f24692631a84ec0e63558c2fa51da867b2113",
+      "label": "figure-241",
+      "readerPage": 720,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "ddb6dad91c19d9da06a3df3676b9d88b48fe22eb8ecc6f6eb669d1b6df340df6",
+      "viewBox": [
+        61,
+        33,
+        438,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9787",
+        "9790",
+        "9790-1"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-242-unit.svg",
+      "bytes": 219571,
+      "sha256": "7e9af3b39872a532c5cc1c7dc970f5c157920534373d69ebad095a54d51d7e5d",
+      "label": "figure-242",
+      "readerPage": 722,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "b88c17eaa6918b083b40404e6458102a7389d341f6104b143181f54751bf8ba4",
+      "viewBox": [
+        47,
+        38,
+        461,
+        704
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9790",
+        "9790-1"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-250-unit.svg",
+      "bytes": 223070,
+      "sha256": "92dc3102630d4c7ae9bb08472a0d650527560370255534eb9b253a95846ac2a4",
+      "label": "figure-250",
+      "readerPage": 732,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "fee41c2df4bd0a5440c890561668e05d2de3180251d8bd9daa782bf52c37f58a",
+      "viewBox": [
+        47,
+        39,
+        462,
+        703
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9796"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-251-unit.svg",
+      "bytes": 215482,
+      "sha256": "0293cb9b6545cad6bade8a04582707a408ab84bb5e4deaa7f83bafd85cfc52ec",
+      "label": "figure-251",
+      "readerPage": 733,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "b9f4f8534433ade370c890e03f54fc68daa81f21a3187004e1d21ffd5424cda0",
+      "viewBox": [
+        84,
+        38,
+        461,
+        704
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9794",
+        "8703"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-252-unit.svg",
+      "bytes": 247404,
+      "sha256": "fe7b053a4cb7343fdd43ebd6e14c6c97f2d630bcaea2c7610a83a99d813e9816",
+      "label": "figure-252",
+      "readerPage": 734,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "e45c12eb84c9ccc063e6d9e632e4145c5ae3c561537935d4eb7f85d68bd2eef1",
+      "viewBox": [
+        48,
+        38,
+        461,
+        704
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9812-1"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-253-unit.svg",
+      "bytes": 233735,
+      "sha256": "104cdb38098cfbfcc3651296d1937d83c8f3510595f15737c0212e542f310b21",
+      "label": "figure-253",
+      "readerPage": 735,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "39c80ba3f754f9ac4028cab4a8b9d4fe560ceb9ba6b2d721b006afc389c76d31",
+      "viewBox": [
+        83,
+        38,
+        461,
+        704
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9795"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-255a-unit.svg",
+      "bytes": 246513,
+      "sha256": "a830241cfb0dc2a8f0fb9da04bb6c03f5609847e6b454db4d83c686057e48c7d",
+      "label": "figure-255a",
+      "readerPage": 738,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "a267d1acf46243bf68da93d0118d25b69bd878083cbbaa6437a3d85b8c4248d2",
+      "viewBox": [
+        57,
+        33,
+        442,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          74,
+          23
+        ],
+        [
+          59,
+          18
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8799"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-255b-unit.svg",
+      "bytes": 176878,
+      "sha256": "637f866a100c01521edfcf9f303d76ed0e83d377ece69fb6d3777749e885e271",
+      "label": "figure-255b",
+      "readerPage": 739,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "251df49f8b4b32afa9dbd4c4d71a4898704d3fa01d6bc3ec22d65af38f870410",
+      "viewBox": [
+        96,
+        33,
+        438,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          74,
+          23
+        ],
+        [
+          58,
+          18
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8799"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-256-unit.svg",
+      "bytes": 418805,
+      "sha256": "a5f605fabaf855ecfc35f2c753a359cf30a5cdf72aa29b6a6fd559355d93eb42",
+      "label": "figure-256",
+      "readerPage": 740,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "99a16442cdec5d7f247f2a2a0fec389a9b7881d090de1e337603f9b81d2868a0",
+      "viewBox": [
+        30,
+        38,
+        499,
+        704
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          85,
+          17
+        ],
+        [
+          33,
+          16
+        ],
+        [
+          31,
+          17
+        ],
+        [
+          19,
+          17
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          9,
+          16
+        ],
+        [
+          8,
+          16
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8806"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-257a-unit.svg",
+      "bytes": 390235,
+      "sha256": "ebf2bab4769c367b4766ef4255fb793f4f77eaed1f4ab63f47b4c2dbf16de2ff",
+      "label": "figure-257a",
+      "readerPage": 742,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "25707aad17ccbc9ce71f947db8fa133547fb93a1bf97253e7f6eba4610cd7c83",
+      "viewBox": [
+        56,
+        33,
+        444,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          75,
+          23
+        ],
+        [
+          60,
+          18
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8800",
+        "8803",
+        "8804",
+        "8806"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-257b-unit.svg",
+      "bytes": 392205,
+      "sha256": "0e95ff7aebeee9f98de52be10c927bcaba43fe2163c1336c39fcf267a67e51ae",
+      "label": "figure-257b",
+      "readerPage": 743,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "b69457dbc99dd3116a91cbf300b024b422f0bda3660826416b6c5353eb781248",
+      "viewBox": [
+        89,
+        33,
+        450,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          76,
+          23
+        ],
+        [
+          59,
+          18
+        ],
+        [
+          13,
+          16
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          10,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8802"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-258-unit.svg",
+      "bytes": 268512,
+      "sha256": "0dee75d232f5526cb4800495292414bce1e0db9abef4a993f857543640079976",
+      "label": "figure-258",
+      "readerPage": 744,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "4597847117748bc564d35b848636ce94ec6bb1fa38e04d8f3f50bed9ea5579a7",
+      "viewBox": [
+        54,
+        33,
+        449,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          76,
+          23
+        ],
+        [
+          41,
+          18
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9617"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-259-unit.svg",
+      "bytes": 294903,
+      "sha256": "41c951764f88fe6b48a393f651d7953ef9a1a771bbbb5ebad1fe74e316e33e42",
+      "label": "figure-259",
+      "readerPage": 745,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "e8566769e2670f42ddae7cc1e3f42e7d53c1ce170f53fa6d9fbaeb7f18ddb8cb",
+      "viewBox": [
+        92,
+        33,
+        451,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          76,
+          23
+        ],
+        [
+          41,
+          18
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          10,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9554",
+        "9571"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-262-unit.svg",
+      "bytes": 377701,
+      "sha256": "8e9c940ecc836d7f8a16c25323c9f489a45968c8d742f19ac5cb32ccb90b645f",
+      "label": "figure-262",
+      "readerPage": 748,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "c649e41c07323415aa75897212e8839b500d6ae2e0e1190c520cf78c4dcbf8f9",
+      "viewBox": [
+        59,
+        33,
+        439,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          74,
+          23
+        ],
+        [
+          40,
+          18
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8704"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-263-unit.svg",
+      "bytes": 273704,
+      "sha256": "d85c88aede3269628836c542fd559b928e2dc7a6935364b17a0ee130d53ff3d1",
+      "label": "figure-263",
+      "readerPage": 749,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "223bd3a43adea0ea8e37812b21406b48d5c7636d05a43f627b44e4bc188b24b9",
+      "viewBox": [
+        93,
+        33,
+        442,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          74,
+          23
+        ],
+        [
+          40,
+          18
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8704"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-269-unit.svg",
+      "bytes": 288687,
+      "sha256": "43e55739497848819447e06afffc4da04163e06fa06e8474dbf46edbabb06292",
+      "label": "figure-269",
+      "readerPage": 755,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "8b58e2e04c7e6ab53bb5711fc25afe1b8de611d3d50e4b7b6e42fd9dbb9d8d97",
+      "viewBox": [
+        95,
+        33,
+        438,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          74,
+          23
+        ],
+        [
+          40,
+          18
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9614"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-273-unit.svg",
+      "bytes": 295582,
+      "sha256": "2efdf18d79e182514269043ff9e895c9b5318c16fadaf70b97ede27e1234e46a",
+      "label": "figure-273",
+      "readerPage": 759,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "13aa55a2e5089d4c8bcc817c9592ed5d5d9d6bc9619b710d94a35f2b9626942a",
+      "viewBox": [
+        90,
+        33,
+        448,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          75,
+          23
+        ],
+        [
+          41,
+          18
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9588",
+        "8836"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-279-unit.svg",
+      "bytes": 288599,
+      "sha256": "0f556264436da04186fd71944f719245845ddddb43d4c02f0ff538259f7251ef",
+      "label": "figure-279",
+      "readerPage": 764,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "786136b76f2033d1c5b5aaa5ffdb1f8e07afd5cc73f5bbfba402ceee8527817d",
+      "viewBox": [
+        54,
+        33,
+        448,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          75,
+          23
+        ],
+        [
+          41,
+          18
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8852",
+        "9933"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-293-unit.svg",
+      "bytes": 322351,
+      "sha256": "33d8e74bca83f77bf33a4c668201b8e6c5dcd8bc581f3b59f1e0ac4367a0252a",
+      "label": "figure-293",
+      "readerPage": 778,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "133c813c711ad7f0866374a220b3cabc01f2bbefbe25d6c29bec403d4fb27a09",
+      "viewBox": [
+        55,
+        33,
+        446,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          75,
+          23
+        ],
+        [
+          41,
+          18
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9599",
+        "9600",
+        "9601",
+        "9602",
+        "9603",
+        "9604",
+        "9615"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-301-unit.svg",
+      "bytes": 301565,
+      "sha256": "e85f00ac507e58ec5861cf0c0be0ebed6c8dd2160e4c7bf4650cbfcde4b67f6a",
+      "label": "figure-301",
+      "readerPage": 786,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "f86d956ceec93eccf43d9969ff22466c45412f3b3e56818c2556b2864598022a",
+      "viewBox": [
+        60,
+        40,
+        443,
+        702
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          74,
+          23
+        ],
+        [
+          37,
+          18
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9619",
+        "9618"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-310-unit.svg",
+      "bytes": 329269,
+      "sha256": "33d4c3a829cb0b360afbc081bfa50d507f1c97b70c8fd116c933a69f66635bd4",
+      "label": "figure-310",
+      "readerPage": 794,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "de6e21d859cb6bcd18ad45c5f859247bbd983849cbebc5768ead4e8805ca0aa1",
+      "viewBox": [
+        54,
+        33,
+        448,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          75,
+          23
+        ],
+        [
+          40,
+          18
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8726"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-335-unit.svg",
+      "bytes": 228106,
+      "sha256": "549d2324b1b71899294b6a2091bc46fb098e4e2e7f56c68b8d4107b3ad473c8b",
+      "label": "figure-335",
+      "readerPage": 818,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "f121191b270e2844808833954710ae5c0dc76e6da74fc2ceb4219745fcc7c9b3",
+      "viewBox": [
+        54,
+        33,
+        450,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9666"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-343-unit.svg",
+      "bytes": 201093,
+      "sha256": "95670e4e6ffc131bfefc44b637faa0faa8f8248142c5d40af88cb75704b2f2fc",
+      "label": "figure-343",
+      "readerPage": 826,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "36c9e2dd505c8ce4d22a8cc1667007cba324586da8f5814ecd4edef2cbfeba4e",
+      "viewBox": [
+        54,
+        33,
+        449,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9686"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-348-unit.svg",
+      "bytes": 359788,
+      "sha256": "e62195b3dcd30b444e5d088265fa43a1eec1f3bd63a64c140022d1d888434c80",
+      "label": "figure-348",
+      "readerPage": 831,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "f43b5da950f8d1b2481753bb14acf7076863327281ff215cde93465733645242",
+      "viewBox": [
+        65,
+        33,
+        500,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8793",
+        "8796",
+        "8797",
+        "8798"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-360-unit.svg",
+      "bytes": 295238,
+      "sha256": "868287e8f65c500e521ddf3955e4272b0d16c44419d11e94973de883e06522e8",
+      "label": "figure-360",
+      "readerPage": 844,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "cd310fdc36a483cce4daf63117827eb224e1b915e8606955ccf538c23c199481",
+      "viewBox": [
+        55,
+        33,
+        446,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          75,
+          23
+        ],
+        [
+          40,
+          18
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9555"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-361-unit.svg",
+      "bytes": 313938,
+      "sha256": "4c7f8e041b59ce81e467acd6f3ed20da3b096113b1be8f5dceea2b24aa36a0a0",
+      "label": "figure-361",
+      "readerPage": 845,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "39767062f6703a2bd0f936a4e43091dbacdd05f5d5cf67d1f1d72828685a2af1",
+      "viewBox": [
+        97,
+        33,
+        435,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          73,
+          23
+        ],
+        [
+          36,
+          18
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          12,
+          15
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8793",
+        "8852-1"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-373-unit.svg",
+      "bytes": 274815,
+      "sha256": "518b52f645691bb8270e07ba872af12cd2083d2bf8972de17187906ab84f482f",
+      "label": "figure-373",
+      "readerPage": 857,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "239403d4bcaf3843a9a799adbcfabb8488d88460bec9dbc6e4feb8967af60356",
+      "viewBox": [
+        92,
+        33,
+        444,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          75,
+          23
+        ],
+        [
+          40,
+          18
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9645"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-374-unit.svg",
+      "bytes": 266396,
+      "sha256": "ff292fc423a355163c68ee3f39c17beac54ada4283da7477fb5aeaef7cb55def",
+      "label": "figure-374",
+      "readerPage": 858,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "ea3581c0e21d8b5271ea992aa90354859f311a3433959d2eef70539d7bc18e05",
+      "viewBox": [
+        56,
+        33,
+        444,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          75,
+          23
+        ],
+        [
+          41,
+          18
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9645-1"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-388-unit.svg",
+      "bytes": 316272,
+      "sha256": "94287a9c9867c4347c60614d113b0f509fc4e9d1bf3062f2a7d83be3f646f12a",
+      "label": "figure-388",
+      "readerPage": 872,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "2bdc724e701f4317be3e0f6ba83233abb109923531b0dd4e4f56b615582bf793",
+      "viewBox": [
+        30,
+        33,
+        482,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          76,
+          23
+        ],
+        [
+          41,
+          18
+        ],
+        [
+          37,
+          11
+        ],
+        [
+          21,
+          11
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          10,
+          8
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9555"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-99-unit.svg",
+      "bytes": 289177,
+      "sha256": "3bdd521c8a803757fc8283a8f2f61f94c138a8e572f2fd0c296a9d7c91bb5ffc",
+      "label": "figure-99",
+      "readerPage": 629,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "3de5ba91068c2e11c52f459564885d5001e2d5cde3ebcf436eecd03a131947b6",
+      "viewBox": [
+        66,
+        54,
+        499,
+        688
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8782"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_legend-12-unit.svg",
+      "bytes": 386617,
+      "sha256": "4bd5b602cc81041640efdc08c5ef5ab765c5f68a2aa8022c47009dec9c315924",
+      "label": "legend-12",
+      "readerPage": 514,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "d7c2382f7f75af0e60c09e377b292c6c5f35623c549db70a4c11b12ca6ccd17e",
+      "viewBox": [
+        66,
+        35,
+        423,
+        707
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          54,
+          11
+        ],
+        [
+          32,
+          11
+        ],
+        [
+          18,
+          11
+        ],
+        [
+          15,
+          13
+        ],
+        [
+          6,
+          11
+        ],
+        [
+          5,
+          11
+        ],
+        [
+          3,
+          11
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9636",
+        "9668"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_legend-38-unit.svg",
+      "bytes": 277599,
+      "sha256": "ac3a971d1bcbf7caf29dac986ec09c2766f5c88229a01c350b75de5dbfe20e78",
+      "label": "legend-38",
+      "readerPage": 540,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "1a245d7c13fc1f3bbe0fd0e0467ac04ecf1d24ccbf4925235e6699113894dd82",
+      "viewBox": [
+        53,
+        33,
+        454,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          15,
+          289
+        ],
+        [
+          10,
+          13
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8804"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_legend-72-unit.svg",
+      "bytes": 353573,
+      "sha256": "cbf4a0d20bfae4fc6a2510d2ff91ab684609c34e3cf4c7e3a2c9ff1b93c978df",
+      "label": "legend-72",
+      "readerPage": 574,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "7c68ece966458d7ac88e68fbcefd85e0f1c52b69da019decc688d153a2b5fba4",
+      "viewBox": [
+        33,
+        33,
+        489,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8852",
+        "8852-1"
+      ]
+    },
+    {
+      "file": "atp_2026_question-8206.svg",
+      "bytes": 81236,
+      "sha256": "e79a391144aa7414bb7d4944314fe59a35df1478a4e21457c0648470e679cb99",
+      "source": "ASA Library ATP Test Prep 2025–2026",
+      "readerPage": 122,
+      "question": "8206",
+      "viewBox": [
+        185,
+        445,
+        86,
+        205
+      ],
+      "nativeGraphicPreserved": true,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "8206"
+      ]
+    },
+    {
+      "file": "atp_2026_question-9737.svg",
+      "bytes": 102219,
+      "sha256": "46fa294e5406d23eba34f096c9ed340e630635bf9187fc4bfc5a04cd65b3e76e",
+      "source": "ASA Library ATP Test Prep 2025–2026",
+      "readerPage": 338,
+      "question": "9737",
+      "viewBox": [
+        286,
+        249,
+        244,
+        305
+      ],
+      "nativeGraphicPreserved": true,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9737"
+      ]
+    },
+    {
+      "file": "atp_2026_question-9751.svg",
+      "bytes": 106817,
+      "sha256": "d9721ae2902aabab551c87e3fb28ef33fb0c6ed4fb71846c149582fddf5ab413",
+      "source": "ASA Library ATP Test Prep 2025–2026",
+      "readerPage": 135,
+      "question": "9751",
+      "viewBox": [
+        322,
+        60,
+        244,
+        181
+      ],
+      "nativeGraphicPreserved": true,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9751"
+      ]
+    }
+  ]
+}

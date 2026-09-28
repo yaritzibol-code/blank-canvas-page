@@ -23,4 +23,7 @@ Un resultado vacío equivale a cero preguntas, sin recurrir al catálogo.
 - Migración aplicada en Cloud: la consulta de Regulations devuelve total 363,
   sin helicópteros 342; reconoce Helicopter Regulations y conserva rotor clouds.
 
-Esta corrección no modifica ni añade preguntas. El capítulo 2 permanece pendiente.
+Esta corrección se integró en `main` mediante el PR 72. Se comprobó también
+en FlightPath que Regulations cambia de 363 a 342 al activar la casilla y que
+"Todas" respeta el mismo conteo. Las importaciones de capítulos actualizan
+automáticamente estos agregados; no necesitan cambiar el criterio del filtro.

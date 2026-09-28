@@ -39,9 +39,10 @@ Las 9,072 filas de preguntas de los demás capítulos y fuentes conservan la mis
 huella antes y después (`ee2f6d1325f4783ab57a1d0c18f958b5`, MD5 de IDs y datos
 ordenados). El selector de FlightPath muestra Regulations con 363 y ATP con
 1,242 preguntas en total. La casilla de helicópteros permanece disponible;
-el selector muestra el conteo antes del filtro y el motor aplica la exclusión.
-Los valores estáticos del catálogo son respaldo cuando la nube no responde;
-los demás capítulos conservan sus valores previos.
+la corrección posterior del PR 72 actualiza también el conteo del selector,
+incluidos los límites de cantidad y "Todas": 363 pasa a 342 al activar la
+casilla. Los valores estáticos del catálogo son respaldo cuando la nube no
+responde; los conteos filtrados se consultan a la base de datos.
 
 ## Corrección editorial identificada
 
@@ -65,7 +66,7 @@ fechas impresas. No se sustituyen por cartas operacionales actuales.
 | 9668 | Legend 12 y Figure 185A |
 | 9638 | Figures 186, 187, 188 y 188A |
 
-Los siete PNG y un manifiesto de páginas del PDF están en
+Los siete PNG originales y un manifiesto de páginas del PDF están en
 `supabase/storage/atp-images/`. `imagenes` conserva el formato de nombres de
 archivo que ya consume `QuestionImages`; el bucket sigue siendo privado y se
 usan las políticas existentes para usuarios autenticados.

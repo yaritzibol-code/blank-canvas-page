@@ -37,7 +37,7 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
     descripcion: "Airline Transport Pilot Test Prep (ASA) — banco completo por capítulos.",
     materia: "operaciones",
     icon: "doc",
-    total: 1242,
+    total: 1226,
     fileUrl: "https://drive.google.com/file/d/1x_BE-nE3wNp3DJ2iEqGMjcxcPxLOzuaa/preview",
   },
   {
@@ -114,11 +114,11 @@ export interface AtpChapter {
 
 export const ATP_CHAPTERS: AtpChapter[] = [
   { num: 1, titulo: "Regulaciones", tituloEn: "Regulations", total: 363 },
-  { num: 2, titulo: "Equipo, Navegación e Instalaciones", tituloEn: "Equipment, Navigation and Facilities", total: 205 },
-  { num: 3, titulo: "Aerodinámica", tituloEn: "Aerodynamics", total: 106 },
-  { num: 6, titulo: "Operaciones de Vuelo", tituloEn: "Flight Operations", total: 213 },
-  { num: 7, titulo: "Emergencias, Peligros y Fisiología", tituloEn: "Emergencies, Hazards and Flight Physiology", total: 80 },
-  { num: 8, titulo: "Meteorología y Servicios Meteorológicos", tituloEn: "Meteorology and Weather Services", total: 232 },
+  { num: 2, titulo: "Equipo, Navegación e Instalaciones", tituloEn: "Equipment, Navigation and Facilities", total: 213 },
+  { num: 3, titulo: "Aerodinámica", tituloEn: "Aerodynamics", total: 117 },
+  { num: 6, titulo: "Operaciones de Vuelo", tituloEn: "Flight Operations", total: 216 },
+  { num: 7, titulo: "Emergencias, Peligros y Fisiología", tituloEn: "Emergencies, Hazards and Flight Physiology", total: 87 },
+  { num: 8, titulo: "Meteorología y Servicios Meteorológicos", tituloEn: "Meteorology and Weather Services", total: 230 },
 ];
 
 export const ATP_TOTAL = ATP_CHAPTERS.reduce((s, c) => s + c.total, 0);
