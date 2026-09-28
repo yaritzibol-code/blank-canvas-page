@@ -26,8 +26,8 @@ for(const q of questions){
  assert.ok(q.options.every(o=>!/\(PLT\d|FAA-H-8083|Answer \([ABC]\) is/.test(o)),q.id);
 }
 const lookup=n=>questions.find(q=>q.sourceQuestionId===n);
-assert.deepEqual(lookup('8206').imagenes,['atp_2026_question-8206-faa.svg']);
-assert.deepEqual(lookup('9751').imagenes,['atp_2026_question-9751-faa.svg']);
+assert.deepEqual(lookup('8206').imagenes,['atp_2026_question-8206.svg']);
+assert.deepEqual(lookup('9751').imagenes,['atp_2026_question-9751.svg']);
 assert.deepEqual(lookup('9737').imagenes,['atp_2026_question-9737.svg']);
 assert.ok(!/CONTROL TOWER|WEST RAMP|Runway Incursion Figure\. 16/.test(lookup('9737').text));
 assert.equal(lookup('9831').correctIndex,2);assert.equal(lookup('9831').sourceOriginalAnswerKey,'9381 [C]');
@@ -45,6 +45,8 @@ assert.ok(!esPreguntaHelicoptero({text:'Rotor clouds indicate mountain-wave turb
 const directory=new URL('../supabase/storage/atp-images/',import.meta.url);
 const manifest=JSON.parse(readFileSync(new URL('manifest-2026.json',directory),'utf8'));
 assert.equal(manifest.assets.length,78);
+assert.equal(manifest.source,'https://library.asa2fly.com/reader/#/reader');
+assert.equal(manifest.bookISBN,'9781644254271');
 assert.equal(manifest.assets.filter(a=>a.individualFigure).length,75);
 const names=new Set(manifest.assets.map(a=>a.file));assert.equal(names.size,78);
 for(const q of questions)for(const file of q.imagenes)assert.ok(names.has(file),q.id+' missing '+file);
@@ -59,6 +61,9 @@ for(const asset of manifest.assets){
  assert.ok((asset.nativeGraphicPreserved||asset.nativeFigurePreserved)&&asset.viewBox.length===4,asset.file);
  assert.ok(svg.includes('viewBox="'+asset.viewBox.join(' ')+'"'),asset.file+' crop must match reviewed bounds');
  if(asset.individualFigure){
+  assert.ok(asset.file.startsWith('atp_2026_asa_')&&asset.source===manifest.source,asset.file);
+  assert.ok(Number.isInteger(asset.readerPage)&&asset.readerPage>482,asset.file);
+  assert.match(asset.sourceOriginalSha256,/^[a-f0-9]{64}$/,asset.file);
   assert.ok(asset.file.endsWith('-unit.svg')&&asset.nativeVectorsPreserved,asset.file);
   const [x,y,w,h]=asset.viewBox;
   assert.ok(x>=0&&y>=33&&w>0&&h>0&&x+w<=594&&y+h<=742,asset.file);

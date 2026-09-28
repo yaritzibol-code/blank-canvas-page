@@ -31,22 +31,23 @@ sus enunciados, opciones, claves y explicaciones permanecen iguales.
 ## Figuras y revisión
 
 `supabase/storage/atp-images/manifest-2026.json` registra 78 archivos, páginas
-de origen, preguntas que los usan, tamaño y SHA-256. Las figuras numeradas y
-leyendas provienen del suplemento de examen
-[FAA-CT-8080-7D](https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf),
-con sus fechas originales. Son 75 enlaces a figuras/leyendas en 65 páginas
-distintas, incluidas las siete figuras de Regulations.
+de origen, preguntas que los usan, tamaño y SHA-256. Todas las imágenes se
+descargaron directamente del libro abierto en
+[ASA Reader](https://library.asa2fly.com/reader/#/reader). El apartado final
+«FAA-CT-8080-7D Figures» contiene las 75 figuras y leyendas necesarias en 65
+páginas distintas, incluidas las siete figuras de Regulations. El manifiesto
+registra también la página del lector y la huella de cada SVG original.
 
 Cada SVG muestra una sola figura o leyenda completa, recortada con un margen
 de protección alrededor del gráfico, sus notas y su rótulo. Las figuras que
 comparten una página se separan por número. Los paneles de una misma figura
 permanecen juntos. Se conservan trazos vectoriales y la resolución nativa
-de cada imagen. Las imágenes PNG internas se comprimen sin pérdida; se comprobó
-que sus píxeles RGBA fueran idénticos antes y después. No se reconstruyen cartas,
-no se sustituyen por cartas actuales y no se aumenta artificialmente la
-resolución. Se revisaron los 75 recortes contra sus 65 páginas de origen: rótulos,
-notas y bordes completos. La carta de Tucson Figure 361 se comprobó
-también al 200% en el navegador, con texto y trazos nítidos.
+de cada imagen. El recorte cambia solo el marco visible del SVG; conserva
+las imágenes y los elementos vectoriales originales, sin comprimirlos ni
+reconstruirlos. Se renderizaron los SVG completos antes de delimitar cada
+recorte para conservar también los rótulos vectoriales. Se revisaron los 75
+recortes: rótulos, notas y bordes completos. La carta de Tucson Figure 361
+se revisó también ampliada al doble, incluida toda la descripción de salida.
 La vista del cuestionario utiliza `object-fit: contain` y abre el original
 desde el enlace de la figura.
 
@@ -54,15 +55,13 @@ Tres diagramas están dentro del libro: 8206, 9751 y 9737. En 9737 se conserva
 el gráfico de ASA con los puntos 1-12, pistas, calles, West Ramp y Control
 Tower; sus etiquetas vectoriales permanecen nítidas al ampliar.
 
-Para 8206 y 9751 se localizaron los mismos instrumentos en el manual original
-[FAA-H-8083-6](https://www.govinfo.gov/content/pkg/GOVPUB-TD4-PURL-gpo46261/pdf/GOVPUB-TD4-PURL-gpo46261.pdf),
-Figures 2-2 y 5-9, páginas PDF 19 y 89. Conservan la indicación de 64 KT y el
-mapa con pérdida de posición y el aviso Nav Source Not Communicating. La cinta
-8206 conserva sus números y marcas G/Y/X/R como vectores; se retiraron solo
-los globos didácticos externos del manual. El mapa 9751 conserva completo el
-marco, botones, navegación y aviso. Ambos se revisaron a tamaño normal y al
-200%. Algunos elementos internos del mapa son mapas de bits del original y
-pueden suavizarse a ampliaciones grandes; SVG no inventa detalle inexistente.
+8206 y 9751 también conservan exclusivamente sus imágenes del libro ASA,
+páginas del lector 122 y 135. La cinta muestra 64 KT y sus marcas G/Y/X/R;
+el mapa conserva el marco, los controles y el aviso Nav Source Not
+Communicating. El original ASA de 9751 tiene poca resolución: al ampliar
+se ve borroso. Esta limitación se comunicó al usuario. El formato SVG
+conserva el contenido original, pero no convierte sus mapas de bits en vectores.
+No se usan los archivos de otras fuentes que se habían preparado anteriormente.
 
 ## Correcciones registradas
 
@@ -81,13 +80,23 @@ Cada corrección conserva su texto/clave original y su justificación en la fila
 - `node tests/atp-regulations-2026.mjs` y `node tests/atp-fixed-wing-counts.mjs`:
   importación original y correspondencia del filtro SQL/cliente.
 - TypeScript y compilación completa de cliente/servidor: correctos.
-- Carga inicial verificada en almacenamiento: 78 SVG, todos `image/svg+xml`,
-  110,638,109 bytes. Después de esta comprobación se mejoraron las figuras
-  8206 y 9751 con los originales FAA. Después se recortaron individualmente
-  las 75 figuras/leyendas del suplemento y se versionaron como `-unit.svg`;
-  esas 75 versiones y los dos archivos `-faa.svg` requieren carga antes de
-  aplicar la migración. El manifiesto actualizado
-  mantiene 78 archivos activos y sus SHA-256.
+- El manifiesto contiene 75 recortes `atp_2026_asa_…-unit.svg` y tres
+  diagramas originales `atp_2026_question-….svg`. Todos son `image/svg+xml`.
+- Producción, 28 de septiembre de 2026: los 78 archivos coinciden en tamaño,
+  tipo y MD5 con los archivos locales; total 19,593,872 bytes.
+- Publicación verificada: 1,226 preguntas de la edición nueva, todas con tres
+  opciones, clave válida y explicación. 1,170 disponibles sin helicópteros.
+- Reemplazo verificado: 863 nuevas publicadas, 879 anteriores ocultas,
+  ninguna pregunta anterior activa y ningún borrador de esta carga pendiente.
+- Enlaces activos verificados: 78 archivos distintos; ninguno faltante o de
+  una fuente distinta de ASA. Los otros 8,193 registros conservan la misma
+  huella MD5 antes y después.
+
+La carga se realizó en 22 grupos como borradores para evitar la limitación de
+tamaño del editor web. Cada grupo comprobó igualdad de todo su JSON con los
+datos preparados. La transacción final comprobó las huellas de las 863 filas,
+los archivos y los conteos antes de publicar y ocultar las preguntas antiguas.
+El resultado coincide con la migración completa incluida en el repositorio.
 
 Para repetir la aplicación:
 
@@ -104,8 +113,5 @@ Para repetir la aplicación:
    Antes de la aplicación: 8,193 filas; huella MD5
    `6d1aea1db9e27f31a75d033639153442`, calculada sobre IDs y JSON ordenados.
 
-La carga inicial está terminada. La carga de los recortes individuales y
-las dos figuras mejoradas,
-la aplicación de la migración y su comprobación en producción están
-pendientes de recuperar Chrome. Integrar
-los archivos en GitHub por sí solo no ejecuta la migración de datos.
+La migración de datos está aplicada y verificada en producción. Integrar los
+archivos en GitHub por sí solo no ejecuta la migración de datos.

@@ -2,21 +2,24 @@
   "edition": "2025–2026",
   "bucket": "atp-images",
   "format": "SVG",
-  "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-  "supplement": "FAA-CT-8080-7D",
+  "source": "https://library.asa2fly.com/reader/#/reader",
+  "supplement": "FAA-CT-8080-7D Figures (included in ASA Reader)",
+  "bookISBN": "9781644254271",
   "assets": [
     {
-      "file": "atp_2026_figure-1-unit.svg",
-      "bytes": 191030,
-      "sha256": "a23002e785ddc4149530c97ef44bb1f71c00166413f90f8149959bc451504c95",
+      "file": "atp_2026_asa_figure-1-unit.svg",
+      "bytes": 187582,
+      "sha256": "12fa1f04868cd02f302b83993b57ef0c68592d0cb37eec8110fa6af7de0bbbc2",
       "label": "figure-1",
-      "pdfPage": 94,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 576,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "6f4f58a551143e69eda452068d4806712d551348bf67295df756c214fbe3e3df",
       "viewBox": [
         30,
         52,
         498,
-        148
+        149
       ],
       "sourcePageViewBox": [
         0,
@@ -26,6 +29,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -40,16 +49,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-100-unit.svg",
-      "bytes": 3505276,
-      "sha256": "c303a135e94c58a8c8576d6d246335543912606379b683685668e5e1492c46e1",
+      "file": "atp_2026_asa_figure-100-unit.svg",
+      "bytes": 328683,
+      "sha256": "9cb477a656ee19885b351aee9a9ed01c9e8ca64c16bdecf6cac93565336e5022",
       "label": "figure-100",
-      "pdfPage": 148,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 630,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "3b2c2be45212cc339e9d2bc9b43f42b7acec4806de6405a5ca5f85061dda83b0",
       "viewBox": [
         28,
         33,
-        500,
+        501,
         709
       ],
       "sourcePageViewBox": [
@@ -60,6 +71,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -74,16 +91,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-101-unit.svg",
-      "bytes": 105843,
-      "sha256": "4cf358dff6e3b0343c00e32dc3e210ef6156b35a871a689671490645f0aafcff",
+      "file": "atp_2026_asa_figure-101-unit.svg",
+      "bytes": 261145,
+      "sha256": "2da74353bea11d959211bfa860dacf7b0cb01f238cd52d222fc7a1c4f984e3b6",
       "label": "figure-101",
-      "pdfPage": 150,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 632,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "8f8fe44587462478d258c1f7b88eb4919e194fa96c849d33df2d2bb4a9d43118",
       "viewBox": [
         32,
         33,
-        496,
+        497,
         709
       ],
       "sourcePageViewBox": [
@@ -94,6 +113,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -108,12 +133,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-101a-unit.svg",
-      "bytes": 205469,
-      "sha256": "4828ab6d1a3605e12aef69614abf47d45de8401768301521ab622f617611abf6",
+      "file": "atp_2026_asa_figure-101a-unit.svg",
+      "bytes": 348444,
+      "sha256": "4e8de9991f558aaca4b7f6ca79f5d926f51b70ae408898f16a0e9383698d2d1b",
       "label": "figure-101a",
-      "pdfPage": 151,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 633,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "b37cbc71c2863262a2fc7403f334cf922474f173c23b69c1661694f75a2eedd3",
       "viewBox": [
         66,
         33,
@@ -128,6 +155,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -142,16 +175,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-114-unit.svg",
-      "bytes": 1632274,
-      "sha256": "9dfd1cdafdf46cfc8358f13988ea66a739f4756fcce802f505a2652ec01f8f89",
+      "file": "atp_2026_asa_figure-114-unit.svg",
+      "bytes": 204637,
+      "sha256": "f468591972a51aea5352982cf6cdb4cb4c8a35f8f7a693dee82d9c5dc3e3a04a",
       "label": "figure-114",
-      "pdfPage": 156,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 638,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "6c9b1fbee214001c6ed62f40dd98bf32430fe505d109477503948b3596c3df92",
       "viewBox": [
         30,
         33,
-        498,
+        499,
         709
       ],
       "sourcePageViewBox": [
@@ -162,6 +197,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -178,16 +219,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-123-unit.svg",
-      "bytes": 141289,
-      "sha256": "79da27ed8e1fc4b883256deb6a7c7de8e4dc579cb0c15466a19ce09e63f85f3b",
+      "file": "atp_2026_asa_figure-123-unit.svg",
+      "bytes": 158887,
+      "sha256": "ad4fd5c2b8999eb0ff1042f90dd6a72ee55743b0dd834159302ae0509127e149",
       "label": "figure-123",
-      "pdfPage": 163,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 645,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "ae5cbac220f91bf5e2cc3d3855c07448ee8471059d76976c90a54899e9d19b0c",
       "viewBox": [
         65,
         47,
-        250,
+        251,
         282
       ],
       "sourcePageViewBox": [
@@ -198,6 +241,20 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          24,
+          21
+        ],
+        [
+          12,
+          21
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -215,12 +272,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-124-unit.svg",
-      "bytes": 141290,
-      "sha256": "2c6d13e164a2e06eda68204b81e854f02ff5b834215f57b666821f398a13e83a",
+      "file": "atp_2026_asa_figure-124-unit.svg",
+      "bytes": 158888,
+      "sha256": "6ce60f3f84a6fba749fe0d41c0f8d513423bdeb46a19dc2db7cadf011ebaf40b",
       "label": "figure-124",
-      "pdfPage": 163,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 645,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "ae5cbac220f91bf5e2cc3d3855c07448ee8471059d76976c90a54899e9d19b0c",
       "viewBox": [
         316,
         47,
@@ -235,6 +294,20 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          24,
+          21
+        ],
+        [
+          12,
+          21
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         316,
@@ -251,17 +324,19 @@
       ]
     },
     {
-      "file": "atp_2026_figure-126-unit.svg",
-      "bytes": 592617,
-      "sha256": "6d5bf1964719bf967232a5b1ee68ed8e39dafa5d0fabcb600f3df7669e7cfbfd",
+      "file": "atp_2026_asa_figure-126-unit.svg",
+      "bytes": 288258,
+      "sha256": "0b73e8cc6fc89419abef0dc0d8143b81ff3d52ade0f4bf4a5685626f07a8166a",
       "label": "figure-126",
-      "pdfPage": 164,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 646,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "6ae21db458fe1edb2b8688ccd99ca5eaf8b6f805308365ca8e0406793ea8ae1b",
       "viewBox": [
-        36,
-        39,
-        491,
-        297
+        35,
+        38,
+        493,
+        298
       ],
       "sourcePageViewBox": [
         0,
@@ -271,6 +346,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -289,16 +370,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-127-unit.svg",
-      "bytes": 592618,
-      "sha256": "dcec1a73efb9186d8ee80901a157fbe6a2d37275f93934e165b25e1e4b51f8f2",
+      "file": "atp_2026_asa_figure-127-unit.svg",
+      "bytes": 288259,
+      "sha256": "bf1a1383d688dec104e61621daa03c3c157bce334d96be81d8cb3a32c2d38c81",
       "label": "figure-127",
-      "pdfPage": 164,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 646,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "6ae21db458fe1edb2b8688ccd99ca5eaf8b6f805308365ca8e0406793ea8ae1b",
       "viewBox": [
         29,
         427,
-        498,
+        499,
         264
       ],
       "sourcePageViewBox": [
@@ -309,6 +392,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -329,16 +418,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-129-unit.svg",
-      "bytes": 7166713,
-      "sha256": "369e9ea45626febbef3b0d0205ad803157e2d96d061b804fd1a0a4c1f499723b",
+      "file": "atp_2026_asa_figure-129-unit.svg",
+      "bytes": 201275,
+      "sha256": "24f383ded53bd65cc3fe831ee2bb2ae5354808f3a8811f7951a6f78c3cd74483",
       "label": "figure-129",
-      "pdfPage": 165,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 647,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "7e468ba51f4b683688d44d2751f3c237ccffad1cdaf373e177b53040a96925f5",
       "viewBox": [
         66,
         48,
-        498,
+        499,
         178
       ],
       "sourcePageViewBox": [
@@ -349,6 +440,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -363,16 +460,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-130-unit.svg",
-      "bytes": 7170244,
-      "sha256": "d895b9387b55f199fd0574d8fff1efae725311945a1b2d1e33ac009a93998938",
+      "file": "atp_2026_asa_figure-130-unit.svg",
+      "bytes": 201276,
+      "sha256": "5758a735b91551af12ce473f556fdaebe975c5536daf625f9d7da8eea4b874f3",
       "label": "figure-130",
-      "pdfPage": 165,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 647,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "7e468ba51f4b683688d44d2751f3c237ccffad1cdaf373e177b53040a96925f5",
       "viewBox": [
         66,
         255,
-        499,
+        500,
         212
       ],
       "sourcePageViewBox": [
@@ -383,6 +482,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -400,12 +505,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-131-unit.svg",
-      "bytes": 7170244,
-      "sha256": "f4fabc7c5cdde79d1659fddf53ff9336c3a5891cffc1f3d01fe2be19152a698b",
+      "file": "atp_2026_asa_figure-131-unit.svg",
+      "bytes": 201276,
+      "sha256": "92d9bcf28550e83b275fbcaa77bae2754da9b9f5b4b6a3b9be22c15edd7e1ff9",
       "label": "figure-131",
-      "pdfPage": 165,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 647,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "7e468ba51f4b683688d44d2751f3c237ccffad1cdaf373e177b53040a96925f5",
       "viewBox": [
         65,
         505,
@@ -420,6 +527,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -439,16 +552,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-139-unit.svg",
-      "bytes": 1339701,
-      "sha256": "081b6568074baa283dff1151c054eb4cdcc812662e7f570be7b311bf38727bc1",
+      "file": "atp_2026_asa_figure-139-unit.svg",
+      "bytes": 233192,
+      "sha256": "8eb77de7cd620d26f46078182795c3fe95df939b8b2a407bed56edda468def10",
       "label": "figure-139",
-      "pdfPage": 167,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 649,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "4791bbe87e5b4359ed10d30d276558383c6ac245b874535e608f24b8ba11c825",
       "viewBox": [
         80,
         411,
-        469,
+        470,
         330
       ],
       "sourcePageViewBox": [
@@ -459,6 +574,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -478,17 +599,19 @@
       ]
     },
     {
-      "file": "atp_2026_figure-140-unit.svg",
-      "bytes": 4657185,
-      "sha256": "ec93a04821a97aa12bd1c1c053825f4093c7cc9ef57eb9acc948353b745538c9",
+      "file": "atp_2026_asa_figure-140-unit.svg",
+      "bytes": 339976,
+      "sha256": "2368209a070b87d3c4dbdc100aed2c17f938fa995c09520d1c28b8fbbf0d811c",
       "label": "figure-140",
-      "pdfPage": 168,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 650,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "5a4fe7324494ff5615d72ed94e22dd2d8c23e34990fa2cb41a9e390b1dce503c",
       "viewBox": [
         30,
         33,
         499,
-        570
+        571
       ],
       "sourcePageViewBox": [
         0,
@@ -498,6 +621,44 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          17,
+          17
+        ],
+        [
+          16,
+          15
+        ],
+        [
+          15,
+          16
+        ],
+        [
+          15,
+          14
+        ],
+        [
+          14,
+          15
+        ],
+        [
+          13,
+          14
+        ],
+        [
+          11,
+          9
+        ],
+        [
+          9,
+          10
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -520,16 +681,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-141-unit.svg",
-      "bytes": 138774,
-      "sha256": "c467365817f22393b8ecf21c37a0dbfad875387031c4afb331c4ac3c097ed1c0",
+      "file": "atp_2026_asa_figure-141-unit.svg",
+      "bytes": 185229,
+      "sha256": "cb80b043c09db30a162ab8713d121907118994a45f7980ee3ca0e65b489b6dd3",
       "label": "figure-141",
-      "pdfPage": 169,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 651,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "5578be3b6f3bc5bce2844505384b1b8f604af6d1f20bee82c67593c620ff5f2c",
       "viewBox": [
         66,
         48,
-        498,
+        499,
         159
       ],
       "sourcePageViewBox": [
@@ -540,6 +703,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -562,12 +731,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-142-unit.svg",
-      "bytes": 138775,
-      "sha256": "241024ece5ed8ca6a5ecad1cf655dba8c67eb93a5a5c0ca0ee80f23dc8457375",
+      "file": "atp_2026_asa_figure-142-unit.svg",
+      "bytes": 185230,
+      "sha256": "8d48d7e1dc22377b46162ede5ec4f44f7decfeec157a5cbf1f8a432398f9fffe",
       "label": "figure-142",
-      "pdfPage": 169,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 651,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "5578be3b6f3bc5bce2844505384b1b8f604af6d1f20bee82c67593c620ff5f2c",
       "viewBox": [
         66,
         303,
@@ -582,6 +753,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -601,17 +778,19 @@
       ]
     },
     {
-      "file": "atp_2026_figure-143-unit.svg",
-      "bytes": 3062686,
-      "sha256": "276bbb13780fe112eb03f572d10fa4781bbe29dff026815758d9ec4a81b48387",
+      "file": "atp_2026_asa_figure-143-unit.svg",
+      "bytes": 249859,
+      "sha256": "06c7a0a4bd34cd25216b80584ab518cad85ad7ecbd105fd985b6f058cfbbd60a",
       "label": "figure-143",
-      "pdfPage": 170,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 652,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "e89219b66f703ee828f38251aa3f86f3e1fbaaa495dd00e12e7841554e01fbf2",
       "viewBox": [
         30,
-        39,
-        500,
-        390
+        38,
+        501,
+        391
       ],
       "sourcePageViewBox": [
         0,
@@ -621,6 +800,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -640,12 +825,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-144-unit.svg",
-      "bytes": 2509033,
-      "sha256": "abf7b6c40de9f7948e7dc831ce9931d5cbba9bd3d6a971ca5cbcbbb828257394",
+      "file": "atp_2026_asa_figure-144-unit.svg",
+      "bytes": 148657,
+      "sha256": "8ae29e9abdd1c6068ca1b839c68b6d068ff216b4128502a04302aba3527c43c5",
       "label": "figure-144",
-      "pdfPage": 171,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 653,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "8030f9012545067ecc01a06acd2aebecbc03c230d12beda988504e90d18a0528",
       "viewBox": [
         66,
         47,
@@ -660,6 +847,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -679,12 +872,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-145-unit.svg",
-      "bytes": 222591,
-      "sha256": "83645bf57145aa268ecddf2c6ee9524ac2c95bc5530764d5f184634b46a9a2e0",
+      "file": "atp_2026_asa_figure-145-unit.svg",
+      "bytes": 218623,
+      "sha256": "97ee06475f2acd1081e7b5da1ba90550195440d2613fbf43c8dc9789dc153f64",
       "label": "figure-145",
-      "pdfPage": 172,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 654,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "009759194812dda12504679c2f9a00d7dc1a0697a8f223e6aacad07f2a592fad",
       "viewBox": [
         30,
         41,
@@ -699,6 +894,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -719,12 +920,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-146-unit.svg",
-      "bytes": 190235,
-      "sha256": "05d51c6abb257593aad6746c4784154610e5f60fe042759c216130b661c40766",
+      "file": "atp_2026_asa_figure-146-unit.svg",
+      "bytes": 193899,
+      "sha256": "3e622e7a4ccaca51b03ae682abbb328caadb2f8168c3816b76a256e4155851b8",
       "label": "figure-146",
-      "pdfPage": 173,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 655,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "126330a3df0a2cb1a89166d71a85b2c26a83e6bb7a0a2fd8ebbf04aafda2f70d",
       "viewBox": [
         66,
         48,
@@ -739,6 +942,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -754,12 +963,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-148-unit.svg",
-      "bytes": 108000,
-      "sha256": "9d9d26570eecd76d73cd9fc7cd2893244e65270e5093c3e59c5130da06ca6149",
+      "file": "atp_2026_asa_figure-148-unit.svg",
+      "bytes": 133966,
+      "sha256": "faf9011127e2578975c59c7051040a12a76dfb3e554b645e9ffd6feda67c9854",
       "label": "figure-148",
-      "pdfPage": 175,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 657,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "31561d9c27c3ed869850401e824cc21e9f0372486a717a0c48e0fd0f52dd2d73",
       "viewBox": [
         149,
         47,
@@ -774,6 +985,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -788,12 +1005,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-149-unit.svg",
-      "bytes": 263377,
-      "sha256": "616a62612da407c83f4bb8574b550112fd768f8671892d1efbb9efcb32e9f79c",
+      "file": "atp_2026_asa_figure-149-unit.svg",
+      "bytes": 235314,
+      "sha256": "3dd0b8db6adb18c94f7f4049bb1de32182222950c11f1040c5e1dd1e9e20dc73",
       "label": "figure-149",
-      "pdfPage": 176,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 658,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "6b73c9a60777013ec83c43c936b0a5803b60f3f4628b9978fbe1a602eb95fdf5",
       "viewBox": [
         30,
         38,
@@ -808,6 +1027,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -829,12 +1054,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-149a-unit.svg",
-      "bytes": 1000498,
-      "sha256": "a60fd43d8a77a206741c85033ede83ec54b3aa06d333c8c4929b016e1cfb6a9e",
+      "file": "atp_2026_asa_figure-149a-unit.svg",
+      "bytes": 252247,
+      "sha256": "f1d5197440fc3c04e79b187a0fa4fed5d8736922500e54905e29c132983ce9f1",
       "label": "figure-149a",
-      "pdfPage": 177,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 659,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "06422f2f7060eba39faf8e06fd8fc6f4a1b2284276c6573baa4b479ef4c34e70",
       "viewBox": [
         114,
         33,
@@ -849,6 +1076,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -863,12 +1096,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-156-unit.svg",
-      "bytes": 33004,
-      "sha256": "c522a4f2cd5072217a6ab71af35a3765d4fdc0da8bf10149afdcd973263a473c",
+      "file": "atp_2026_asa_figure-156-unit.svg",
+      "bytes": 121057,
+      "sha256": "90ea11d26b8144f545ed0cff5038c5d20a2f350fd42047421229ba3ef9729660",
       "label": "figure-156",
-      "pdfPage": 184,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 666,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "8e1ba24d56aea5a6e0fd6eac82ca24ecadfa09004e152e752b1d2ef203a87cb2",
       "viewBox": [
         30,
         47,
@@ -883,6 +1118,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -897,17 +1138,19 @@
       ]
     },
     {
-      "file": "atp_2026_figure-157-unit.svg",
-      "bytes": 33005,
-      "sha256": "b30918d6172196b65053799117210b77032ceb2be784f125776318430195cee2",
+      "file": "atp_2026_asa_figure-157-unit.svg",
+      "bytes": 121058,
+      "sha256": "ef867adf6b6557d257d50e7750d4369dfb163f26f29777d7ac1f64baa885672e",
       "label": "figure-157",
-      "pdfPage": 184,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 666,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "8e1ba24d56aea5a6e0fd6eac82ca24ecadfa09004e152e752b1d2ef203a87cb2",
       "viewBox": [
-        32,
-        256,
-        496,
-        241
+        31,
+        255,
+        497,
+        242
       ],
       "sourcePageViewBox": [
         0,
@@ -917,6 +1160,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -931,16 +1180,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-163a-unit.svg",
-      "bytes": 484560,
-      "sha256": "21886e53a174602b6810f936ba65234e942b306ba29d2960e644eba1ce04d8ce",
+      "file": "atp_2026_asa_figure-163a-unit.svg",
+      "bytes": 336522,
+      "sha256": "686f3b975debaa0dbf44877bad3c654d0d5cd934bbb5636d1eb13bc20e35d022",
       "label": "figure-163a",
-      "pdfPage": 186,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 668,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "d6cc5ad4dd367b4e2b7bcf7c72c7a367bf7c04283decb63ffcdb6f496c2c9b8b",
       "viewBox": [
         30,
         33,
-        498,
+        499,
         709
       ],
       "sourcePageViewBox": [
@@ -951,6 +1202,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -965,12 +1222,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-185-unit.svg",
-      "bytes": 485316,
-      "sha256": "625034c386ece8382262f6af93b6a12d38c4726b74a5dfd1631c53ad07e1ee6f",
+      "file": "atp_2026_asa_figure-185-unit.svg",
+      "bytes": 407917,
+      "sha256": "a99379677fa799fc964720276cdd05f6d8c1e5e55700f1f2578b720fffcef794",
       "label": "figure-185",
-      "pdfPage": 202,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 684,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "33765a8cabe3320af4183a6c907fed7d8d9c07eb4958dfedac8b0040ad19273d",
       "viewBox": [
         30,
         33,
@@ -985,6 +1244,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -999,12 +1264,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-185a-unit.svg",
-      "bytes": 728500,
-      "sha256": "ed0bbf3e1e0676971d7ff5e095adf90419778a6a07764436600d9f91eb749c9f",
+      "file": "atp_2026_asa_figure-185a-unit.svg",
+      "bytes": 380158,
+      "sha256": "5a84ccb090f6a4649554fb828335aff09b8f1f9720e16ced15f013fa74ccafad",
       "label": "figure-185a",
-      "pdfPage": 203,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 685,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "790a4b75c263456c2ab30f38e8efed5ef06765ee39d395bfd481577f2874a53d",
       "viewBox": [
         66,
         33,
@@ -1019,6 +1286,52 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          79,
+          16
+        ],
+        [
+          40,
+          18
+        ],
+        [
+          31,
+          18
+        ],
+        [
+          31,
+          15
+        ],
+        [
+          29,
+          20
+        ],
+        [
+          29,
+          16
+        ],
+        [
+          18,
+          16
+        ],
+        [
+          13,
+          15
+        ],
+        [
+          8,
+          15
+        ],
+        [
+          7,
+          15
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1035,14 +1348,58 @@
       ]
     },
     {
-      "file": "atp_2026_figure-186-unit.svg",
-      "bytes": 963573,
-      "sha256": "f9077dac14f8ff966c498235712597867e571c60d8bee1c971a99392ed5e893f",
+      "file": "atp_2026_asa_figure-186-unit.svg",
+      "bytes": 235499,
+      "sha256": "8423381b519773bf1d9906627c0ae576e170d39378a9b429e1cc17c869350e54",
       "label": "figure-186",
-      "pdfPage": 204,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 686,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "a123dbdd60af75b9c919193eb3d81e177c3e497efdc11584278ad95c6db3852f",
       "viewBox": [
         29,
+        33,
+        500,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
+      "sourceQuestionIds": [
+        "9638"
+      ]
+    },
+    {
+      "file": "atp_2026_asa_figure-187-unit.svg",
+      "bytes": 307284,
+      "sha256": "a07830ca619fe800980f3509283eff7e67c9199e21674df63d2c529ffce27a5e",
+      "label": "figure-187",
+      "readerPage": 687,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "1414e52e6f531d739295c7368c62871c309b8b392e3e9d41b36c78a0c710d66a",
+      "viewBox": [
+        66,
         33,
         499,
         709
@@ -1055,6 +1412,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1069,46 +1432,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-187-unit.svg",
-      "bytes": 2518357,
-      "sha256": "3b5d3c4d621924749ccb14134923c8cb134d839f78e62c0de53ef922de8f7d53",
-      "label": "figure-187",
-      "pdfPage": 205,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "viewBox": [
-        66,
-        33,
-        498,
-        709
-      ],
-      "sourcePageViewBox": [
-        0,
-        0,
-        594,
-        774
-      ],
-      "nativeFigurePreserved": true,
-      "nativeVectorsPreserved": true,
-      "individualFigure": true,
-      "cropRegion": [
-        0,
-        33,
-        594,
-        742
-      ],
-      "marginPoints": 6,
-      "format": "SVG",
-      "sourceQuestionIds": [
-        "9638"
-      ]
-    },
-    {
-      "file": "atp_2026_figure-188-unit.svg",
-      "bytes": 459335,
-      "sha256": "d877c79e7eaaaab221965b412b7d1107c7a0f53a07b74d53ea754adbc1a00b08",
+      "file": "atp_2026_asa_figure-188-unit.svg",
+      "bytes": 375456,
+      "sha256": "730f6d2b06f5e505b4c40e226eb5113ea202d83462df5dae5ae7a8ba86d60156",
       "label": "figure-188",
-      "pdfPage": 206,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 688,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "55e6362443b420e4eb235734e1f6f7688f35ea3bf5713d7c8b096ce26bbf24c5",
       "viewBox": [
         30,
         33,
@@ -1123,6 +1454,80 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          79,
+          16
+        ],
+        [
+          39,
+          17
+        ],
+        [
+          31,
+          18
+        ],
+        [
+          31,
+          15
+        ],
+        [
+          29,
+          20
+        ],
+        [
+          29,
+          16
+        ],
+        [
+          19,
+          17
+        ],
+        [
+          18,
+          17
+        ],
+        [
+          18,
+          16
+        ],
+        [
+          13,
+          15
+        ],
+        [
+          9,
+          17
+        ],
+        [
+          8,
+          17
+        ],
+        [
+          8,
+          15
+        ],
+        [
+          8,
+          13
+        ],
+        [
+          7,
+          15
+        ],
+        [
+          5,
+          17
+        ],
+        [
+          5,
+          16
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1137,16 +1542,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-188a-unit.svg",
-      "bytes": 326996,
-      "sha256": "b2e6b5b05b9426276ebd46941eb72448b8aeb9161e35674028647073896bf785",
+      "file": "atp_2026_asa_figure-188a-unit.svg",
+      "bytes": 288184,
+      "sha256": "6a0b66b3328b12e5203a8849b46c8474b363b8dfe58ef70f5411fe03a2cdf28c",
       "label": "figure-188a",
-      "pdfPage": 207,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 689,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "797044fd8c0aa57db2d8170715dc981d96edf05210b8cbc1cd8fcfcab0002b1b",
       "viewBox": [
         66,
         33,
-        498,
+        499,
         709
       ],
       "sourcePageViewBox": [
@@ -1157,6 +1564,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1171,16 +1584,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-192-unit.svg",
-      "bytes": 1037148,
-      "sha256": "5a5bca3a449bd5b60005b68003d052d8539b5eedae015de09a5129e1e9318149",
+      "file": "atp_2026_asa_figure-192-unit.svg",
+      "bytes": 207991,
+      "sha256": "822f935988b5b71af351ebdfd10b4111adce01647e9126e0f4d723dfa0d98343",
       "label": "figure-192",
-      "pdfPage": 212,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 694,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "5e0a573dcb2a270da579fcd1ad83a95018b19cdbbd7e7b9cc80a2b840a438e74",
       "viewBox": [
         29,
         58,
-        499,
+        500,
         684
       ],
       "sourcePageViewBox": [
@@ -1191,6 +1606,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1205,16 +1626,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-201-unit.svg",
-      "bytes": 524576,
-      "sha256": "4983e759f5fae897ccf97158a86443ab10abe4a90743d4e164214380356f4f5a",
+      "file": "atp_2026_asa_figure-201-unit.svg",
+      "bytes": 359265,
+      "sha256": "6fccd53daebef651208504d2847cbc5f6ba9cff25f5c0ea2f5546ccbdcfdeaa5",
       "label": "figure-201",
-      "pdfPage": 218,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 700,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "4022181ea5ba55bfc01f109f3879e3af548a3f49ab8c8accb78cc2ef0313bccc",
       "viewBox": [
         29,
         33,
-        499,
+        500,
         709
       ],
       "sourcePageViewBox": [
@@ -1225,6 +1648,40 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          83,
+          16
+        ],
+        [
+          32,
+          16
+        ],
+        [
+          30,
+          16
+        ],
+        [
+          19,
+          16
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          9,
+          16
+        ],
+        [
+          8,
+          16
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1239,12 +1696,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-201a-unit.svg",
-      "bytes": 427887,
-      "sha256": "7d0291aefeca31df71431aa27dedde261505786340d4e53a743a97c89f7e6892",
+      "file": "atp_2026_asa_figure-201a-unit.svg",
+      "bytes": 321482,
+      "sha256": "55b0c0ad00c11772f886457add5886bef9e686b8cdec8ae3e52940295ee374e4",
       "label": "figure-201a",
-      "pdfPage": 219,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 701,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "cd4ed637fdb0c6268610cb2d5338034c28d2d7e538e200d095decf22f58280b4",
       "viewBox": [
         65,
         33,
@@ -1259,6 +1718,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1273,16 +1738,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-210-unit.svg",
-      "bytes": 2134493,
-      "sha256": "2f89522f070b14861614805adbc0de63d3a12cdc7635a9c0d271f4f1bca7644b",
+      "file": "atp_2026_asa_figure-210-unit.svg",
+      "bytes": 281697,
+      "sha256": "9c7e66743532a1f20d4940ffedb01c1c17f14bd4e1b906a5f4fdb7c233bc7a12",
       "label": "figure-210",
-      "pdfPage": 221,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 703,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "bedc97929b26816ff8c71ad1291fd43ae04bd511a2db625437afba21936be64f",
       "viewBox": [
         66,
         33,
-        498,
+        499,
         709
       ],
       "sourcePageViewBox": [
@@ -1293,6 +1760,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1307,12 +1780,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-223-unit.svg",
-      "bytes": 48717,
-      "sha256": "030420a8ec0e6e849b129434d2801afba562ad3c934766aa3d2188a9debe1f03",
+      "file": "atp_2026_asa_figure-223-unit.svg",
+      "bytes": 128305,
+      "sha256": "159ae0dd0f613295610bb3f53ed70da57cb8441d31c4036fc016770578edf983",
       "label": "figure-223",
-      "pdfPage": 226,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 708,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "37828293b1b51dd8096f2b7627ba477f2c871542cc58fd6d78763ad9a395a372",
       "viewBox": [
         60,
         47,
@@ -1327,6 +1802,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1341,17 +1822,19 @@
       ]
     },
     {
-      "file": "atp_2026_figure-224-unit.svg",
-      "bytes": 48718,
-      "sha256": "781a31488bd5400a973373785ec7fa02d576f8663bf7b02c8daa39f976ba5bc9",
+      "file": "atp_2026_asa_figure-224-unit.svg",
+      "bytes": 128306,
+      "sha256": "7ed189588d4c40c1a8930a39c3d0d1861bd1e5adf48a767b62164768ae54dde8",
       "label": "figure-224",
-      "pdfPage": 226,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 708,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "37828293b1b51dd8096f2b7627ba477f2c871542cc58fd6d78763ad9a395a372",
       "viewBox": [
-        57,
-        285,
-        448,
-        161
+        56,
+        284,
+        449,
+        162
       ],
       "sourcePageViewBox": [
         0,
@@ -1361,6 +1844,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1375,16 +1864,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-225-unit.svg",
-      "bytes": 48719,
-      "sha256": "deeb6169865b29dacfd577779cbe291de724cb10cf3ff31f1cae0d354d965ba9",
+      "file": "atp_2026_asa_figure-225-unit.svg",
+      "bytes": 128307,
+      "sha256": "b8d9c81ccef20d8d2c7dff71f8cc96656b528958bd89a9d64bb36f3bced32033",
       "label": "figure-225",
-      "pdfPage": 226,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 708,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "37828293b1b51dd8096f2b7627ba477f2c871542cc58fd6d78763ad9a395a372",
       "viewBox": [
-        159,
+        158,
         527,
-        241,
+        243,
         189
       ],
       "sourcePageViewBox": [
@@ -1395,6 +1886,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1409,17 +1906,19 @@
       ]
     },
     {
-      "file": "atp_2026_figure-226-unit.svg",
-      "bytes": 41286,
-      "sha256": "bb23ad4a6889488c4a386f0968e64e0133b548d41fb574fcbf6f3834c47d1893",
+      "file": "atp_2026_asa_figure-226-unit.svg",
+      "bytes": 128914,
+      "sha256": "bf4e99bc9f5057d07e1e10215cfd193f5306d17415903d8e03ec2c1588d2d6e2",
       "label": "figure-226",
-      "pdfPage": 227,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 709,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "dabc4c203123115432f91dc1d3d96bc93397e5d72a3ab2504589acb76d858336",
       "viewBox": [
-        206,
-        50,
-        217,
-        167
+        205,
+        49,
+        219,
+        168
       ],
       "sourcePageViewBox": [
         0,
@@ -1429,6 +1928,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1443,12 +1948,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-227-unit.svg",
-      "bytes": 41287,
-      "sha256": "6da1db01f0f5d23b119820853b69f777e469d509d9d06e045556e206d70493db",
+      "file": "atp_2026_asa_figure-227-unit.svg",
+      "bytes": 128915,
+      "sha256": "6538932fcfbad319895dc46eaa44c03c4cc104d014538d1a38b2fc8e9f715ef7",
       "label": "figure-227",
-      "pdfPage": 227,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 709,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "dabc4c203123115432f91dc1d3d96bc93397e5d72a3ab2504589acb76d858336",
       "viewBox": [
         175,
         270,
@@ -1463,6 +1970,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1477,12 +1990,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-228-unit.svg",
-      "bytes": 41287,
-      "sha256": "682373f4d0d94bb3d10623e6b86da1f54fe900d1a20832178d2e43431e7b5ba0",
+      "file": "atp_2026_asa_figure-228-unit.svg",
+      "bytes": 128915,
+      "sha256": "4694ef0c7f8f497137ddcb56944f7f8e6ae68de739b61358abe76399d90b100e",
       "label": "figure-228",
-      "pdfPage": 227,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 709,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "dabc4c203123115432f91dc1d3d96bc93397e5d72a3ab2504589acb76d858336",
       "viewBox": [
         172,
         539,
@@ -1497,6 +2012,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1511,16 +2032,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-241-unit.svg",
-      "bytes": 106543,
-      "sha256": "6e66029186c9d448ef6c91f819782f3d6951d789d8f501000560e1f84dd29057",
+      "file": "atp_2026_asa_figure-241-unit.svg",
+      "bytes": 216183,
+      "sha256": "6e26dbfb829f56a0a3e8aaabda4f24692631a84ec0e63558c2fa51da867b2113",
       "label": "figure-241",
-      "pdfPage": 238,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 720,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "ddb6dad91c19d9da06a3df3676b9d88b48fe22eb8ecc6f6eb669d1b6df340df6",
       "viewBox": [
         61,
         33,
-        437,
+        438,
         709
       ],
       "sourcePageViewBox": [
@@ -1531,6 +2054,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1547,17 +2076,19 @@
       ]
     },
     {
-      "file": "atp_2026_figure-242-unit.svg",
-      "bytes": 349148,
-      "sha256": "e8e671a58486014123647c6a426d48b6b60007e7093a5b0701ecf8a708ddb33e",
+      "file": "atp_2026_asa_figure-242-unit.svg",
+      "bytes": 219571,
+      "sha256": "7e9af3b39872a532c5cc1c7dc970f5c157920534373d69ebad095a54d51d7e5d",
       "label": "figure-242",
-      "pdfPage": 240,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 722,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "b88c17eaa6918b083b40404e6458102a7389d341f6104b143181f54751bf8ba4",
       "viewBox": [
-        48,
-        39,
-        459,
-        703
+        47,
+        38,
+        461,
+        704
       ],
       "sourcePageViewBox": [
         0,
@@ -1567,6 +2098,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1582,16 +2119,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-250-unit.svg",
-      "bytes": 333650,
-      "sha256": "fe11f19910ccd8149ff4757319c8d300215b99c7c82da1ac07ffa42df419fadd",
+      "file": "atp_2026_asa_figure-250-unit.svg",
+      "bytes": 223070,
+      "sha256": "92dc3102630d4c7ae9bb08472a0d650527560370255534eb9b253a95846ac2a4",
       "label": "figure-250",
-      "pdfPage": 250,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 732,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "fee41c2df4bd0a5440c890561668e05d2de3180251d8bd9daa782bf52c37f58a",
       "viewBox": [
         47,
         39,
-        461,
+        462,
         703
       ],
       "sourcePageViewBox": [
@@ -1602,6 +2141,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1616,17 +2161,19 @@
       ]
     },
     {
-      "file": "atp_2026_figure-251-unit.svg",
-      "bytes": 287726,
-      "sha256": "7e5c6aac49cf0173a4bfdcead87733e5e3f5965df0e49f54792136a42ee7be88",
+      "file": "atp_2026_asa_figure-251-unit.svg",
+      "bytes": 215482,
+      "sha256": "0293cb9b6545cad6bade8a04582707a408ab84bb5e4deaa7f83bafd85cfc52ec",
       "label": "figure-251",
-      "pdfPage": 251,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 733,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "b9f4f8534433ade370c890e03f54fc68daa81f21a3187004e1d21ffd5424cda0",
       "viewBox": [
         84,
-        39,
-        460,
-        703
+        38,
+        461,
+        704
       ],
       "sourcePageViewBox": [
         0,
@@ -1636,6 +2183,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1651,17 +2204,19 @@
       ]
     },
     {
-      "file": "atp_2026_figure-252-unit.svg",
-      "bytes": 375037,
-      "sha256": "b179123bd20328c0bbeabb83d3823786ed2a969e84db6a1b4b8dbb53583e59ec",
+      "file": "atp_2026_asa_figure-252-unit.svg",
+      "bytes": 247404,
+      "sha256": "fe7b053a4cb7343fdd43ebd6e14c6c97f2d630bcaea2c7610a83a99d813e9816",
       "label": "figure-252",
-      "pdfPage": 252,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 734,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "e45c12eb84c9ccc063e6d9e632e4145c5ae3c561537935d4eb7f85d68bd2eef1",
       "viewBox": [
-        41,
-        39,
-        467,
-        703
+        48,
+        38,
+        461,
+        704
       ],
       "sourcePageViewBox": [
         0,
@@ -1671,6 +2226,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1685,17 +2246,19 @@
       ]
     },
     {
-      "file": "atp_2026_figure-253-unit.svg",
-      "bytes": 535070,
-      "sha256": "dd1f9b21ea46bc133dd408dd30b1d0cb244eeda1dad288c97a3085819607ff2e",
+      "file": "atp_2026_asa_figure-253-unit.svg",
+      "bytes": 233735,
+      "sha256": "104cdb38098cfbfcc3651296d1937d83c8f3510595f15737c0212e542f310b21",
       "label": "figure-253",
-      "pdfPage": 253,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 735,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "39c80ba3f754f9ac4028cab4a8b9d4fe560ceb9ba6b2d721b006afc389c76d31",
       "viewBox": [
-        84,
-        39,
-        459,
-        703
+        83,
+        38,
+        461,
+        704
       ],
       "sourcePageViewBox": [
         0,
@@ -1705,6 +2268,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1719,16 +2288,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-255a-unit.svg",
-      "bytes": 1459628,
-      "sha256": "a5d10383c362bc542e5fa09f9d94d2d8e04c1b521de405a7d1970abf07314e71",
+      "file": "atp_2026_asa_figure-255a-unit.svg",
+      "bytes": 246513,
+      "sha256": "a830241cfb0dc2a8f0fb9da04bb6c03f5609847e6b454db4d83c686057e48c7d",
       "label": "figure-255a",
-      "pdfPage": 256,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 738,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "a267d1acf46243bf68da93d0118d25b69bd878083cbbaa6437a3d85b8c4248d2",
       "viewBox": [
-        58,
+        57,
         33,
-        441,
+        442,
         709
       ],
       "sourcePageViewBox": [
@@ -1739,6 +2310,60 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          74,
+          23
+        ],
+        [
+          59,
+          18
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1753,16 +2378,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-255b-unit.svg",
-      "bytes": 643431,
-      "sha256": "0f9728da5359b673c918dd1c49d3a8160939c9b852a45f5e9d8a76bfb7ffd507",
+      "file": "atp_2026_asa_figure-255b-unit.svg",
+      "bytes": 176878,
+      "sha256": "637f866a100c01521edfcf9f303d76ed0e83d377ece69fb6d3777749e885e271",
       "label": "figure-255b",
-      "pdfPage": 257,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 739,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "251df49f8b4b32afa9dbd4c4d71a4898704d3fa01d6bc3ec22d65af38f870410",
       "viewBox": [
         96,
         33,
-        437,
+        438,
         709
       ],
       "sourcePageViewBox": [
@@ -1773,6 +2400,60 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          74,
+          23
+        ],
+        [
+          58,
+          18
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1787,16 +2468,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-256-unit.svg",
-      "bytes": 764864,
-      "sha256": "805a609a89febc2f4d621815af431eebbc7da06562895e6616b0a6db5a30dc31",
+      "file": "atp_2026_asa_figure-256-unit.svg",
+      "bytes": 418805,
+      "sha256": "a5f605fabaf855ecfc35f2c753a359cf30a5cdf72aa29b6a6fd559355d93eb42",
       "label": "figure-256",
-      "pdfPage": 258,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 740,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "99a16442cdec5d7f247f2a2a0fec389a9b7881d090de1e337603f9b81d2868a0",
       "viewBox": [
         30,
         38,
-        498,
+        499,
         704
       ],
       "sourcePageViewBox": [
@@ -1807,6 +2490,40 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          85,
+          17
+        ],
+        [
+          33,
+          16
+        ],
+        [
+          31,
+          17
+        ],
+        [
+          19,
+          17
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          9,
+          16
+        ],
+        [
+          8,
+          16
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1821,12 +2538,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-257a-unit.svg",
-      "bytes": 4187479,
-      "sha256": "9c568012f2c57e4e6b7e69bf59f29ef07a3414566c5139dfd90b6f1c0b00278a",
+      "file": "atp_2026_asa_figure-257a-unit.svg",
+      "bytes": 390235,
+      "sha256": "ebf2bab4769c367b4766ef4255fb793f4f77eaed1f4ab63f47b4c2dbf16de2ff",
       "label": "figure-257a",
-      "pdfPage": 260,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 742,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "25707aad17ccbc9ce71f947db8fa133547fb93a1bf97253e7f6eba4610cd7c83",
       "viewBox": [
         56,
         33,
@@ -1841,6 +2560,56 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          75,
+          23
+        ],
+        [
+          60,
+          18
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1858,12 +2627,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-257b-unit.svg",
-      "bytes": 4335432,
-      "sha256": "f0b183f7319874428c9c6d0fac2cce1f09376d0d0eecb53aa5269dbef63850c7",
+      "file": "atp_2026_asa_figure-257b-unit.svg",
+      "bytes": 392205,
+      "sha256": "0e95ff7aebeee9f98de52be10c927bcaba43fe2163c1336c39fcf267a67e51ae",
       "label": "figure-257b",
-      "pdfPage": 261,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 743,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "b69457dbc99dd3116a91cbf300b024b422f0bda3660826416b6c5353eb781248",
       "viewBox": [
         89,
         33,
@@ -1878,6 +2649,56 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          76,
+          23
+        ],
+        [
+          59,
+          18
+        ],
+        [
+          13,
+          16
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          10,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1892,12 +2713,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-258-unit.svg",
-      "bytes": 1517087,
-      "sha256": "a1bb6ba9e4ef92e00d5133116e5f686a9223f1d6774179135259f13c7aa4b394",
+      "file": "atp_2026_asa_figure-258-unit.svg",
+      "bytes": 268512,
+      "sha256": "0dee75d232f5526cb4800495292414bce1e0db9abef4a993f857543640079976",
       "label": "figure-258",
-      "pdfPage": 262,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 744,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "4597847117748bc564d35b848636ce94ec6bb1fa38e04d8f3f50bed9ea5579a7",
       "viewBox": [
         54,
         33,
@@ -1912,6 +2735,52 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          76,
+          23
+        ],
+        [
+          41,
+          18
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1926,12 +2795,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-259-unit.svg",
-      "bytes": 3562450,
-      "sha256": "6b4c5ccf40560e392353641b4eaa69ac9268c322eb3fe007250eef8f8b692bb9",
+      "file": "atp_2026_asa_figure-259-unit.svg",
+      "bytes": 294903,
+      "sha256": "41c951764f88fe6b48a393f651d7953ef9a1a771bbbb5ebad1fe74e316e33e42",
       "label": "figure-259",
-      "pdfPage": 263,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 745,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "e8566769e2670f42ddae7cc1e3f42e7d53c1ce170f53fa6d9fbaeb7f18ddb8cb",
       "viewBox": [
         92,
         33,
@@ -1946,6 +2817,52 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          76,
+          23
+        ],
+        [
+          41,
+          18
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          10,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1961,16 +2878,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-262-unit.svg",
-      "bytes": 2668405,
-      "sha256": "22c368d73e5e656359ef4a5356111647860bd1e837eb163531edd81e22714f8e",
+      "file": "atp_2026_asa_figure-262-unit.svg",
+      "bytes": 377701,
+      "sha256": "8e9c940ecc836d7f8a16c25323c9f489a45968c8d742f19ac5cb32ccb90b645f",
       "label": "figure-262",
-      "pdfPage": 266,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 748,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "c649e41c07323415aa75897212e8839b500d6ae2e0e1190c520cf78c4dcbf8f9",
       "viewBox": [
-        60,
+        59,
         33,
-        437,
+        439,
         709
       ],
       "sourcePageViewBox": [
@@ -1981,6 +2900,60 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          74,
+          23
+        ],
+        [
+          40,
+          18
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -1995,16 +2968,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-263-unit.svg",
-      "bytes": 1526163,
-      "sha256": "0962b9613f29e5746d6d0a286072299f914f22a442f0b9855beede36e53152f9",
+      "file": "atp_2026_asa_figure-263-unit.svg",
+      "bytes": 273704,
+      "sha256": "d85c88aede3269628836c542fd559b928e2dc7a6935364b17a0ee130d53ff3d1",
       "label": "figure-263",
-      "pdfPage": 267,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 749,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "223bd3a43adea0ea8e37812b21406b48d5c7636d05a43f627b44e4bc188b24b9",
       "viewBox": [
-        94,
+        93,
         33,
-        440,
+        442,
         709
       ],
       "sourcePageViewBox": [
@@ -2015,6 +2990,60 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          74,
+          23
+        ],
+        [
+          40,
+          18
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2029,16 +3058,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-269-unit.svg",
-      "bytes": 1970716,
-      "sha256": "0fc522a3e49e9d61a1b71c5eb1a93f12907e5d9ef91720cfd4d1e9b629a21c76",
+      "file": "atp_2026_asa_figure-269-unit.svg",
+      "bytes": 288687,
+      "sha256": "43e55739497848819447e06afffc4da04163e06fa06e8474dbf46edbabb06292",
       "label": "figure-269",
-      "pdfPage": 273,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 755,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "8b58e2e04c7e6ab53bb5711fc25afe1b8de611d3d50e4b7b6e42fd9dbb9d8d97",
       "viewBox": [
-        96,
+        95,
         33,
-        436,
+        438,
         709
       ],
       "sourcePageViewBox": [
@@ -2049,6 +3080,60 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          74,
+          23
+        ],
+        [
+          40,
+          18
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2063,12 +3148,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-273-unit.svg",
-      "bytes": 2336091,
-      "sha256": "3b5dc14abaa8b5dea8ad06a68e20db39236772247a34e5cf1341dbf4df668b3e",
+      "file": "atp_2026_asa_figure-273-unit.svg",
+      "bytes": 295582,
+      "sha256": "2efdf18d79e182514269043ff9e895c9b5318c16fadaf70b97ede27e1234e46a",
       "label": "figure-273",
-      "pdfPage": 277,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 759,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "13aa55a2e5089d4c8bcc817c9592ed5d5d9d6bc9619b710d94a35f2b9626942a",
       "viewBox": [
         90,
         33,
@@ -2083,6 +3170,60 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          75,
+          23
+        ],
+        [
+          41,
+          18
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2098,12 +3239,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-279-unit.svg",
-      "bytes": 2335496,
-      "sha256": "9a9b95d988cd3be433b80ed8a852e90653b0160b4cf91119192eba12dc671e63",
+      "file": "atp_2026_asa_figure-279-unit.svg",
+      "bytes": 288599,
+      "sha256": "0f556264436da04186fd71944f719245845ddddb43d4c02f0ff538259f7251ef",
       "label": "figure-279",
-      "pdfPage": 282,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 764,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "786136b76f2033d1c5b5aaa5ffdb1f8e07afd5cc73f5bbfba402ceee8527817d",
       "viewBox": [
         54,
         33,
@@ -2118,6 +3261,52 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          75,
+          23
+        ],
+        [
+          41,
+          18
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2133,12 +3322,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-293-unit.svg",
-      "bytes": 4255731,
-      "sha256": "ce749172da7864c88f0a54f2b3b20cd41a1929dfa7350b7c3b4ed8e4772fac86",
+      "file": "atp_2026_asa_figure-293-unit.svg",
+      "bytes": 322351,
+      "sha256": "33d8e74bca83f77bf33a4c668201b8e6c5dcd8bc581f3b59f1e0ac4367a0252a",
       "label": "figure-293",
-      "pdfPage": 296,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 778,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "133c813c711ad7f0866374a220b3cabc01f2bbefbe25d6c29bec403d4fb27a09",
       "viewBox": [
         55,
         33,
@@ -2153,6 +3344,48 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          75,
+          23
+        ],
+        [
+          41,
+          18
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2173,16 +3406,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-301-unit.svg",
-      "bytes": 2281632,
-      "sha256": "20a0cf4926b7666d975049f1fad3e3aec6ddfdeb03f18a54e939d5e327b6c312",
+      "file": "atp_2026_asa_figure-301-unit.svg",
+      "bytes": 301565,
+      "sha256": "e85f00ac507e58ec5861cf0c0be0ebed6c8dd2160e4c7bf4650cbfcde4b67f6a",
       "label": "figure-301",
-      "pdfPage": 304,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 786,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "f86d956ceec93eccf43d9969ff22466c45412f3b3e56818c2556b2864598022a",
       "viewBox": [
-        61,
+        60,
         40,
-        442,
+        443,
         702
       ],
       "sourcePageViewBox": [
@@ -2193,6 +3428,48 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          74,
+          23
+        ],
+        [
+          37,
+          18
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2208,12 +3485,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-310-unit.svg",
-      "bytes": 2307433,
-      "sha256": "754f753662df6203faf03d9a5f54e9e0d464756b9fdfc87f750da13ac59f4c7b",
+      "file": "atp_2026_asa_figure-310-unit.svg",
+      "bytes": 329269,
+      "sha256": "33d4c3a829cb0b360afbc081bfa50d507f1c97b70c8fd116c933a69f66635bd4",
       "label": "figure-310",
-      "pdfPage": 312,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 794,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "de6e21d859cb6bcd18ad45c5f859247bbd983849cbebc5768ead4e8805ca0aa1",
       "viewBox": [
         54,
         33,
@@ -2228,6 +3507,52 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          75,
+          23
+        ],
+        [
+          40,
+          18
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2242,16 +3567,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-335-unit.svg",
-      "bytes": 457163,
-      "sha256": "79471929caa4b843ecbc2c94b9e8ed51a89a2b674caf1a94db5c07e88164f5d8",
+      "file": "atp_2026_asa_figure-335-unit.svg",
+      "bytes": 228106,
+      "sha256": "549d2324b1b71899294b6a2091bc46fb098e4e2e7f56c68b8d4107b3ad473c8b",
       "label": "figure-335",
-      "pdfPage": 336,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 818,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "f121191b270e2844808833954710ae5c0dc76e6da74fc2ceb4219745fcc7c9b3",
       "viewBox": [
         54,
         33,
-        449,
+        450,
         709
       ],
       "sourcePageViewBox": [
@@ -2262,6 +3589,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2276,16 +3609,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-343-unit.svg",
-      "bytes": 337081,
-      "sha256": "0a26b989e3affd714e69179e9f953ee0bffc9b943e21a9ed378a4599db5806d7",
+      "file": "atp_2026_asa_figure-343-unit.svg",
+      "bytes": 201093,
+      "sha256": "95670e4e6ffc131bfefc44b637faa0faa8f8248142c5d40af88cb75704b2f2fc",
       "label": "figure-343",
-      "pdfPage": 344,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 826,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "36c9e2dd505c8ce4d22a8cc1667007cba324586da8f5814ecd4edef2cbfeba4e",
       "viewBox": [
-        55,
+        54,
         33,
-        447,
+        449,
         709
       ],
       "sourcePageViewBox": [
@@ -2296,6 +3631,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2310,16 +3651,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-348-unit.svg",
-      "bytes": 485917,
-      "sha256": "c512d554b2a5ba4a73f0b5048359a4c818a7afc950e2fd4296a3dee0a26dd95d",
+      "file": "atp_2026_asa_figure-348-unit.svg",
+      "bytes": 359788,
+      "sha256": "e62195b3dcd30b444e5d088265fa43a1eec1f3bd63a64c140022d1d888434c80",
       "label": "figure-348",
-      "pdfPage": 349,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 831,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "f43b5da950f8d1b2481753bb14acf7076863327281ff215cde93465733645242",
       "viewBox": [
-        66,
+        65,
         33,
-        498,
+        500,
         709
       ],
       "sourcePageViewBox": [
@@ -2330,6 +3673,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2347,16 +3696,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-360-unit.svg",
-      "bytes": 2148343,
-      "sha256": "aeaca27c3c74a1d2b6f548089f66abc1dba808315249a1aafcdf46dc5119dbae",
+      "file": "atp_2026_asa_figure-360-unit.svg",
+      "bytes": 295238,
+      "sha256": "868287e8f65c500e521ddf3955e4272b0d16c44419d11e94973de883e06522e8",
       "label": "figure-360",
-      "pdfPage": 362,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 844,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "cd310fdc36a483cce4daf63117827eb224e1b915e8606955ccf538c23c199481",
       "viewBox": [
         55,
         33,
-        445,
+        446,
         709
       ],
       "sourcePageViewBox": [
@@ -2367,6 +3718,48 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          75,
+          23
+        ],
+        [
+          40,
+          18
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2381,16 +3774,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-361-unit.svg",
-      "bytes": 2474718,
-      "sha256": "3fc90022fe63f36155b17a9dc82fe3103e4acdf6a14f302c904873d2ebdb93d1",
+      "file": "atp_2026_asa_figure-361-unit.svg",
+      "bytes": 313938,
+      "sha256": "4c7f8e041b59ce81e467acd6f3ed20da3b096113b1be8f5dceea2b24aa36a0a0",
       "label": "figure-361",
-      "pdfPage": 363,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 845,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "39767062f6703a2bd0f936a4e43091dbacdd05f5d5cf67d1f1d72828685a2af1",
       "viewBox": [
         97,
         33,
-        434,
+        435,
         709
       ],
       "sourcePageViewBox": [
@@ -2401,6 +3796,60 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          73,
+          23
+        ],
+        [
+          36,
+          18
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          12,
+          15
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2416,16 +3865,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-373-unit.svg",
-      "bytes": 2765982,
-      "sha256": "f6074ca72ad954d7928cc67bc0084fb79b27e9889d0354cd5efec30d155001fa",
+      "file": "atp_2026_asa_figure-373-unit.svg",
+      "bytes": 274815,
+      "sha256": "518b52f645691bb8270e07ba872af12cd2083d2bf8972de17187906ab84f482f",
       "label": "figure-373",
-      "pdfPage": 375,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 857,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "239403d4bcaf3843a9a799adbcfabb8488d88460bec9dbc6e4feb8967af60356",
       "viewBox": [
         92,
         33,
-        443,
+        444,
         709
       ],
       "sourcePageViewBox": [
@@ -2436,6 +3887,56 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          75,
+          23
+        ],
+        [
+          40,
+          18
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2450,12 +3951,14 @@
       ]
     },
     {
-      "file": "atp_2026_figure-374-unit.svg",
-      "bytes": 2147815,
-      "sha256": "e5b5608c4c3b87969124a7369d3ecc67dd9ab4c21e6b0d53b1b3eaef2def4f7b",
+      "file": "atp_2026_asa_figure-374-unit.svg",
+      "bytes": 266396,
+      "sha256": "ff292fc423a355163c68ee3f39c17beac54ada4283da7477fb5aeaef7cb55def",
       "label": "figure-374",
-      "pdfPage": 376,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 858,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "ea3581c0e21d8b5271ea992aa90354859f311a3433959d2eef70539d7bc18e05",
       "viewBox": [
         56,
         33,
@@ -2470,6 +3973,56 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          75,
+          23
+        ],
+        [
+          41,
+          18
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          9,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2484,16 +4037,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-388-unit.svg",
-      "bytes": 367719,
-      "sha256": "2ff0c5d5c8a57979cdaf5cbd7cc605dba0bcb6b81ec8320d42a5c44103f6b03d",
+      "file": "atp_2026_asa_figure-388-unit.svg",
+      "bytes": 316272,
+      "sha256": "94287a9c9867c4347c60614d113b0f509fc4e9d1bf3062f2a7d83be3f646f12a",
       "label": "figure-388",
-      "pdfPage": 390,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 872,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "2bdc724e701f4317be3e0f6ba83233abb109923531b0dd4e4f56b615582bf793",
       "viewBox": [
         30,
         33,
-        481,
+        482,
         709
       ],
       "sourcePageViewBox": [
@@ -2504,6 +4059,60 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          76,
+          23
+        ],
+        [
+          41,
+          18
+        ],
+        [
+          37,
+          11
+        ],
+        [
+          21,
+          11
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          10,
+          8
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2518,16 +4127,18 @@
       ]
     },
     {
-      "file": "atp_2026_figure-99-unit.svg",
-      "bytes": 3524684,
-      "sha256": "c700fd989cff3fb50a6c33f2544576fc04e4a75c008215a048aa396ea37c63b5",
+      "file": "atp_2026_asa_figure-99-unit.svg",
+      "bytes": 289177,
+      "sha256": "3bdd521c8a803757fc8283a8f2f61f94c138a8e572f2fd0c296a9d7c91bb5ffc",
       "label": "figure-99",
-      "pdfPage": 147,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 629,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "3de5ba91068c2e11c52f459564885d5001e2d5cde3ebcf436eecd03a131947b6",
       "viewBox": [
         66,
         54,
-        498,
+        499,
         688
       ],
       "sourcePageViewBox": [
@@ -2538,6 +4149,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2552,16 +4169,18 @@
       ]
     },
     {
-      "file": "atp_2026_legend-12-unit.svg",
-      "bytes": 436992,
-      "sha256": "ddac887305116e5dd6f4ef1cc3eaca0bbeac0601817946c6884d5d751900c4c0",
+      "file": "atp_2026_asa_legend-12-unit.svg",
+      "bytes": 386617,
+      "sha256": "4bd5b602cc81041640efdc08c5ef5ab765c5f68a2aa8022c47009dec9c315924",
       "label": "legend-12",
-      "pdfPage": 32,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 514,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "d7c2382f7f75af0e60c09e377b292c6c5f35623c549db70a4c11b12ca6ccd17e",
       "viewBox": [
         66,
         35,
-        422,
+        423,
         707
       ],
       "sourcePageViewBox": [
@@ -2572,6 +4191,40 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          54,
+          11
+        ],
+        [
+          32,
+          11
+        ],
+        [
+          18,
+          11
+        ],
+        [
+          15,
+          13
+        ],
+        [
+          6,
+          11
+        ],
+        [
+          5,
+          11
+        ],
+        [
+          3,
+          11
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2587,16 +4240,18 @@
       ]
     },
     {
-      "file": "atp_2026_legend-38-unit.svg",
-      "bytes": 2246886,
-      "sha256": "5c6e2d64dd39d9f628276ec09c39029182e6c6b66062880e5be3e89cafa14509",
+      "file": "atp_2026_asa_legend-38-unit.svg",
+      "bytes": 277599,
+      "sha256": "ac3a971d1bcbf7caf29dac986ec09c2766f5c88229a01c350b75de5dbfe20e78",
       "label": "legend-38",
-      "pdfPage": 58,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 540,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "1a245d7c13fc1f3bbe0fd0e0467ac04ecf1d24ccbf4925235e6699113894dd82",
       "viewBox": [
         53,
         33,
-        453,
+        454,
         709
       ],
       "sourcePageViewBox": [
@@ -2607,6 +4262,20 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ],
+        [
+          15,
+          289
+        ],
+        [
+          10,
+          13
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2621,12 +4290,14 @@
       ]
     },
     {
-      "file": "atp_2026_legend-72-unit.svg",
-      "bytes": 2475724,
-      "sha256": "8fc67314ddfd3f4133598bfca780e82292fd75b079aa0d0cf5fd3e30894bfad5",
+      "file": "atp_2026_asa_legend-72-unit.svg",
+      "bytes": 353573,
+      "sha256": "cbf4a0d20bfae4fc6a2510d2ff91ab684609c34e3cf4c7e3a2c9ff1b93c978df",
       "label": "legend-72",
-      "pdfPage": 92,
-      "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
+      "readerPage": 574,
+      "source": "https://library.asa2fly.com/reader/#/reader",
+      "bookISBN": "9781644254271",
+      "sourceOriginalSha256": "7c68ece966458d7ac88e68fbcefd85e0f1c52b69da019decc688d153a2b5fba4",
       "viewBox": [
         33,
         33,
@@ -2641,6 +4312,12 @@
       ],
       "nativeFigurePreserved": true,
       "nativeVectorsPreserved": true,
+      "embeddedRasterSizes": [
+        [
+          1237,
+          1612
+        ]
+      ],
       "individualFigure": true,
       "cropRegion": [
         0,
@@ -2656,23 +4333,19 @@
       ]
     },
     {
-      "file": "atp_2026_question-8206-faa.svg",
-      "bytes": 858559,
-      "sha256": "791a631eabf1fd1c215608420c359a186e8bc3e4ceec2b03c2838dbdad9b1299",
-      "source": "https://www.govinfo.gov/content/pkg/GOVPUB-TD4-PURL-gpo46261/pdf/GOVPUB-TD4-PURL-gpo46261.pdf",
-      "sourceTitle": "FAA-H-8083-6 Advanced Avionics Handbook",
-      "pdfPage": 19,
-      "bookPage": "2-3",
-      "sourceFigure": "2-2",
+      "file": "atp_2026_question-8206.svg",
+      "bytes": 81236,
+      "sha256": "e79a391144aa7414bb7d4944314fe59a35df1478a4e21457c0648470e679cb99",
+      "source": "ASA Library ATP Test Prep 2025–2026",
+      "readerPage": 122,
       "question": "8206",
       "viewBox": [
-        129,
-        253,
-        59,
-        192
+        185,
+        445,
+        86,
+        205
       ],
       "nativeGraphicPreserved": true,
-      "nativeVectorsPreserved": true,
       "format": "SVG",
       "sourceQuestionIds": [
         "8206"
@@ -2698,23 +4371,19 @@
       ]
     },
     {
-      "file": "atp_2026_question-9751-faa.svg",
-      "bytes": 1445036,
-      "sha256": "e574dd38ea3ea3e43a38be713d550458855fcdfbd917c394d021c9b26c00a159",
-      "source": "https://www.govinfo.gov/content/pkg/GOVPUB-TD4-PURL-gpo46261/pdf/GOVPUB-TD4-PURL-gpo46261.pdf",
-      "sourceTitle": "FAA-H-8083-6 Advanced Avionics Handbook",
-      "pdfPage": 89,
-      "bookPage": "5-5",
-      "sourceFigure": "5-9",
+      "file": "atp_2026_question-9751.svg",
+      "bytes": 106817,
+      "sha256": "d9721ae2902aabab551c87e3fb28ef33fb0c6ed4fb71846c149582fddf5ab413",
+      "source": "ASA Library ATP Test Prep 2025–2026",
+      "readerPage": 135,
       "question": "9751",
       "viewBox": [
-        321,
-        377,
-        237,
-        176
+        322,
+        60,
+        244,
+        181
       ],
       "nativeGraphicPreserved": true,
-      "nativeVectorsPreserved": true,
       "format": "SVG",
       "sourceQuestionIds": [
         "9751"
