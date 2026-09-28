@@ -1,7 +1,7 @@
 -- ASA ATP Test Prep 2025–2026: replace published questions in chapters 2,3,6,7,8.
 -- Chapters 4 and 5 are excluded. Historical rows keep their IDs and data.
 -- Upload manifest-2026.json assets to private atp-images before applying.
--- Chapter 1 receives only native SVG figure links; its 363 questions are retained.
+-- Chapter 1 receives only individual native SVG figure links; its 363 questions are retained.
 DO $migration$
 DECLARE
  v_questions jsonb := $questions$
@@ -1964,8 +1964,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-142.svg",
-      "atp_2026_figure-143.svg"
+      "atp_2026_figure-142-unit.svg",
+      "atp_2026_figure-143-unit.svg"
     ]
   },
   {
@@ -1995,8 +1995,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-142.svg",
-      "atp_2026_figure-143.svg"
+      "atp_2026_figure-142-unit.svg",
+      "atp_2026_figure-143-unit.svg"
     ]
   },
   {
@@ -2026,8 +2026,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-142.svg",
-      "atp_2026_figure-143.svg"
+      "atp_2026_figure-142-unit.svg",
+      "atp_2026_figure-143-unit.svg"
     ]
   },
   {
@@ -2057,8 +2057,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-142.svg",
-      "atp_2026_figure-143.svg"
+      "atp_2026_figure-142-unit.svg",
+      "atp_2026_figure-143-unit.svg"
     ]
   },
   {
@@ -2088,8 +2088,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-142.svg",
-      "atp_2026_figure-143.svg"
+      "atp_2026_figure-142-unit.svg",
+      "atp_2026_figure-143-unit.svg"
     ]
   },
   {
@@ -2119,8 +2119,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-142.svg",
-      "atp_2026_figure-143.svg"
+      "atp_2026_figure-142-unit.svg",
+      "atp_2026_figure-143-unit.svg"
     ]
   },
   {
@@ -2150,7 +2150,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-139.svg"
+      "atp_2026_figure-139-unit.svg"
     ]
   },
   {
@@ -2180,7 +2180,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-139.svg"
+      "atp_2026_figure-139-unit.svg"
     ]
   },
   {
@@ -2210,7 +2210,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-139.svg"
+      "atp_2026_figure-139-unit.svg"
     ]
   },
   {
@@ -2240,7 +2240,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-139.svg"
+      "atp_2026_figure-139-unit.svg"
     ]
   },
   {
@@ -2270,7 +2270,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-139.svg"
+      "atp_2026_figure-139-unit.svg"
     ]
   },
   {
@@ -2300,7 +2300,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-139.svg"
+      "atp_2026_figure-139-unit.svg"
     ]
   },
   {
@@ -2330,8 +2330,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-140.svg",
-      "atp_2026_figure-141.svg"
+      "atp_2026_figure-140-unit.svg",
+      "atp_2026_figure-141-unit.svg"
     ]
   },
   {
@@ -2361,8 +2361,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-140.svg",
-      "atp_2026_figure-141.svg"
+      "atp_2026_figure-140-unit.svg",
+      "atp_2026_figure-141-unit.svg"
     ]
   },
   {
@@ -2392,8 +2392,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-140.svg",
-      "atp_2026_figure-141.svg"
+      "atp_2026_figure-140-unit.svg",
+      "atp_2026_figure-141-unit.svg"
     ]
   },
   {
@@ -2423,8 +2423,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-140.svg",
-      "atp_2026_figure-141.svg"
+      "atp_2026_figure-140-unit.svg",
+      "atp_2026_figure-141-unit.svg"
     ]
   },
   {
@@ -2454,8 +2454,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-140.svg",
-      "atp_2026_figure-141.svg"
+      "atp_2026_figure-140-unit.svg",
+      "atp_2026_figure-141-unit.svg"
     ]
   },
   {
@@ -2485,8 +2485,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-140.svg",
-      "atp_2026_figure-141.svg"
+      "atp_2026_figure-140-unit.svg",
+      "atp_2026_figure-141-unit.svg"
     ]
   },
   {
@@ -2516,8 +2516,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-140.svg",
-      "atp_2026_figure-141.svg"
+      "atp_2026_figure-140-unit.svg",
+      "atp_2026_figure-141-unit.svg"
     ]
   },
   {
@@ -2547,8 +2547,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-140.svg",
-      "atp_2026_figure-141.svg"
+      "atp_2026_figure-140-unit.svg",
+      "atp_2026_figure-141-unit.svg"
     ]
   },
   {
@@ -2578,8 +2578,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-140.svg",
-      "atp_2026_figure-141.svg"
+      "atp_2026_figure-140-unit.svg",
+      "atp_2026_figure-141-unit.svg"
     ]
   },
   {
@@ -3240,7 +3240,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-251.svg"
+      "atp_2026_figure-251-unit.svg"
     ]
   },
   {
@@ -3268,7 +3268,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-253.svg"
+      "atp_2026_figure-253-unit.svg"
     ]
   },
   {
@@ -3296,7 +3296,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-250.svg"
+      "atp_2026_figure-250-unit.svg"
     ]
   },
   {
@@ -3324,7 +3324,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-251.svg"
+      "atp_2026_figure-251-unit.svg"
     ]
   },
   {
@@ -3534,7 +3534,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-252.svg"
+      "atp_2026_figure-252-unit.svg"
     ]
   },
   {
@@ -4276,7 +4276,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-223.svg"
+      "atp_2026_figure-223-unit.svg"
     ]
   },
   {
@@ -4306,7 +4306,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-228.svg"
+      "atp_2026_figure-228-unit.svg"
     ]
   },
   {
@@ -4336,7 +4336,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-225.svg"
+      "atp_2026_figure-225-unit.svg"
     ]
   },
   {
@@ -4366,7 +4366,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-226.svg"
+      "atp_2026_figure-226-unit.svg"
     ]
   },
   {
@@ -4614,7 +4614,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-129.svg"
+      "atp_2026_figure-129-unit.svg"
     ]
   },
   {
@@ -4644,7 +4644,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-130.svg"
+      "atp_2026_figure-130-unit.svg"
     ]
   },
   {
@@ -4674,7 +4674,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-130.svg"
+      "atp_2026_figure-130-unit.svg"
     ]
   },
   {
@@ -4704,7 +4704,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-130.svg"
+      "atp_2026_figure-130-unit.svg"
     ]
   },
   {
@@ -4734,7 +4734,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-130.svg"
+      "atp_2026_figure-130-unit.svg"
     ]
   },
   {
@@ -4764,7 +4764,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-131.svg"
+      "atp_2026_figure-131-unit.svg"
     ]
   },
   {
@@ -4794,7 +4794,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-131.svg"
+      "atp_2026_figure-131-unit.svg"
     ]
   },
   {
@@ -4824,7 +4824,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-131.svg"
+      "atp_2026_figure-131-unit.svg"
     ]
   },
   {
@@ -4854,7 +4854,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-131.svg"
+      "atp_2026_figure-131-unit.svg"
     ]
   },
   {
@@ -4884,7 +4884,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-131.svg"
+      "atp_2026_figure-131-unit.svg"
     ]
   },
   {
@@ -4914,7 +4914,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-131.svg"
+      "atp_2026_figure-131-unit.svg"
     ]
   },
   {
@@ -5112,7 +5112,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-224.svg"
+      "atp_2026_figure-224-unit.svg"
     ]
   },
   {
@@ -5170,7 +5170,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-227.svg"
+      "atp_2026_figure-227-unit.svg"
     ]
   },
   {
@@ -5256,7 +5256,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-156.svg"
+      "atp_2026_figure-156-unit.svg"
     ]
   },
   {
@@ -5482,7 +5482,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-241.svg"
+      "atp_2026_figure-241-unit.svg"
     ]
   },
   {
@@ -5512,7 +5512,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-157.svg"
+      "atp_2026_figure-157-unit.svg"
     ]
   },
   {
@@ -9055,7 +9055,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-127.svg"
+      "atp_2026_figure-127-unit.svg"
     ]
   },
   {
@@ -9083,7 +9083,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-127.svg"
+      "atp_2026_figure-127-unit.svg"
     ]
   },
   {
@@ -9111,7 +9111,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-127.svg"
+      "atp_2026_figure-127-unit.svg"
     ]
   },
   {
@@ -9139,7 +9139,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-127.svg"
+      "atp_2026_figure-127-unit.svg"
     ]
   },
   {
@@ -9167,7 +9167,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-127.svg"
+      "atp_2026_figure-127-unit.svg"
     ]
   },
   {
@@ -9195,7 +9195,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-127.svg"
+      "atp_2026_figure-127-unit.svg"
     ]
   },
   {
@@ -9223,7 +9223,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-127.svg"
+      "atp_2026_figure-127-unit.svg"
     ]
   },
   {
@@ -9355,7 +9355,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-126.svg"
+      "atp_2026_figure-126-unit.svg"
     ]
   },
   {
@@ -9383,7 +9383,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-126.svg"
+      "atp_2026_figure-126-unit.svg"
     ]
   },
   {
@@ -9411,7 +9411,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-126.svg"
+      "atp_2026_figure-126-unit.svg"
     ]
   },
   {
@@ -9439,7 +9439,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-126.svg"
+      "atp_2026_figure-126-unit.svg"
     ]
   },
   {
@@ -9467,7 +9467,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-126.svg"
+      "atp_2026_figure-126-unit.svg"
     ]
   },
   {
@@ -11221,8 +11221,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-241.svg",
-      "atp_2026_figure-242.svg"
+      "atp_2026_figure-241-unit.svg",
+      "atp_2026_figure-242-unit.svg"
     ]
   },
   {
@@ -11252,8 +11252,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-241.svg",
-      "atp_2026_figure-242.svg"
+      "atp_2026_figure-241-unit.svg",
+      "atp_2026_figure-242-unit.svg"
     ]
   },
   {
@@ -11943,7 +11943,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-310.svg"
+      "atp_2026_figure-310-unit.svg"
     ]
   },
   {
@@ -12337,7 +12337,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-1.svg"
+      "atp_2026_figure-1-unit.svg"
     ]
   },
   {
@@ -13257,7 +13257,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-123.svg"
+      "atp_2026_figure-123-unit.svg"
     ]
   },
   {
@@ -13287,7 +13287,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-123.svg"
+      "atp_2026_figure-123-unit.svg"
     ]
   },
   {
@@ -13317,7 +13317,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-123.svg"
+      "atp_2026_figure-123-unit.svg"
     ]
   },
   {
@@ -13347,7 +13347,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-123.svg"
+      "atp_2026_figure-123-unit.svg"
     ]
   },
   {
@@ -13377,7 +13377,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-124.svg"
+      "atp_2026_figure-124-unit.svg"
     ]
   },
   {
@@ -13407,7 +13407,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-124.svg"
+      "atp_2026_figure-124-unit.svg"
     ]
   },
   {
@@ -13437,7 +13437,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-124.svg"
+      "atp_2026_figure-124-unit.svg"
     ]
   },
   {
@@ -13545,7 +13545,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-259.svg"
+      "atp_2026_figure-259-unit.svg"
     ]
   },
   {
@@ -13573,8 +13573,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-360.svg",
-      "atp_2026_figure-388.svg"
+      "atp_2026_figure-360-unit.svg",
+      "atp_2026_figure-388-unit.svg"
     ]
   },
   {
@@ -13602,7 +13602,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-259.svg"
+      "atp_2026_figure-259-unit.svg"
     ]
   },
   {
@@ -13630,7 +13630,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-273.svg"
+      "atp_2026_figure-273-unit.svg"
     ]
   },
   {
@@ -13658,7 +13658,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-293.svg"
+      "atp_2026_figure-293-unit.svg"
     ]
   },
   {
@@ -13686,7 +13686,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-293.svg"
+      "atp_2026_figure-293-unit.svg"
     ]
   },
   {
@@ -13714,7 +13714,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-293.svg"
+      "atp_2026_figure-293-unit.svg"
     ]
   },
   {
@@ -13742,7 +13742,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-293.svg"
+      "atp_2026_figure-293-unit.svg"
     ]
   },
   {
@@ -13770,7 +13770,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-293.svg"
+      "atp_2026_figure-293-unit.svg"
     ]
   },
   {
@@ -13798,7 +13798,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-293.svg"
+      "atp_2026_figure-293-unit.svg"
     ]
   },
   {
@@ -13826,7 +13826,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-269.svg"
+      "atp_2026_figure-269-unit.svg"
     ]
   },
   {
@@ -13854,7 +13854,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-293.svg"
+      "atp_2026_figure-293-unit.svg"
     ]
   },
   {
@@ -13884,7 +13884,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-258.svg"
+      "atp_2026_figure-258-unit.svg"
     ]
   },
   {
@@ -13912,7 +13912,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-301.svg"
+      "atp_2026_figure-301-unit.svg"
     ]
   },
   {
@@ -13940,7 +13940,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-192.svg"
+      "atp_2026_figure-192-unit.svg"
     ]
   },
   {
@@ -13968,7 +13968,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-373.svg"
+      "atp_2026_figure-373-unit.svg"
     ]
   },
   {
@@ -13996,7 +13996,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-374.svg"
+      "atp_2026_figure-374-unit.svg"
     ]
   },
   {
@@ -14024,8 +14024,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-201.svg",
-      "atp_2026_figure-201a.svg"
+      "atp_2026_figure-201-unit.svg",
+      "atp_2026_figure-201a-unit.svg"
     ]
   },
   {
@@ -14053,8 +14053,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-185.svg",
-      "atp_2026_figure-185a.svg"
+      "atp_2026_figure-185-unit.svg",
+      "atp_2026_figure-185a-unit.svg"
     ]
   },
   {
@@ -14082,7 +14082,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-185a.svg"
+      "atp_2026_figure-185a-unit.svg"
     ]
   },
   {
@@ -14110,7 +14110,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-335.svg"
+      "atp_2026_figure-335-unit.svg"
     ]
   },
   {
@@ -14138,7 +14138,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-210.svg"
+      "atp_2026_figure-210-unit.svg"
     ]
   },
   {
@@ -14166,7 +14166,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-343.svg"
+      "atp_2026_figure-343-unit.svg"
     ]
   },
   {
@@ -14246,8 +14246,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-348.svg",
-      "atp_2026_figure-361.svg"
+      "atp_2026_figure-348-unit.svg",
+      "atp_2026_figure-361-unit.svg"
     ]
   },
   {
@@ -14275,7 +14275,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-348.svg"
+      "atp_2026_figure-348-unit.svg"
     ]
   },
   {
@@ -14303,7 +14303,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-348.svg"
+      "atp_2026_figure-348-unit.svg"
     ]
   },
   {
@@ -14331,7 +14331,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-348.svg"
+      "atp_2026_figure-348-unit.svg"
     ]
   },
   {
@@ -14359,9 +14359,9 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-99.svg",
-      "atp_2026_figure-101.svg",
-      "atp_2026_figure-101a.svg"
+      "atp_2026_figure-99-unit.svg",
+      "atp_2026_figure-101-unit.svg",
+      "atp_2026_figure-101a-unit.svg"
     ]
   },
   {
@@ -14389,7 +14389,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-100.svg"
+      "atp_2026_figure-100-unit.svg"
     ]
   },
   {
@@ -14417,7 +14417,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-114.svg"
+      "atp_2026_figure-114-unit.svg"
     ]
   },
   {
@@ -14445,7 +14445,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-114.svg"
+      "atp_2026_figure-114-unit.svg"
     ]
   },
   {
@@ -14473,7 +14473,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-114.svg"
+      "atp_2026_figure-114-unit.svg"
     ]
   },
   {
@@ -14501,8 +14501,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-279.svg",
-      "atp_2026_legend-72.svg"
+      "atp_2026_figure-279-unit.svg",
+      "atp_2026_legend-72-unit.svg"
     ]
   },
   {
@@ -14530,8 +14530,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-361.svg",
-      "atp_2026_legend-72.svg"
+      "atp_2026_figure-361-unit.svg",
+      "atp_2026_legend-72-unit.svg"
     ]
   },
   {
@@ -14559,7 +14559,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-279.svg"
+      "atp_2026_figure-279-unit.svg"
     ]
   },
   {
@@ -14587,8 +14587,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-255a.svg",
-      "atp_2026_figure-255b.svg"
+      "atp_2026_figure-255a-unit.svg",
+      "atp_2026_figure-255b-unit.svg"
     ]
   },
   {
@@ -14616,7 +14616,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-257a.svg"
+      "atp_2026_figure-257a-unit.svg"
     ]
   },
   {
@@ -14644,7 +14644,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-257b.svg"
+      "atp_2026_figure-257b-unit.svg"
     ],
     "sourceOriginalExplanation": "The RA height at the IM is also the DH for the 100-foot minimums. At this point, the radio altimeter will indicate 111 feet. (PLT083, AA.VI.C.K1) — Instrument Approach Procedure Answer (A) is incorrect because 120 feet is the touchdown zone elevation (TDZE). Answer (C) is incorrect because 126 feet is the airport elevation.",
     "sourceCorrection": "The explanation prints 111 feet; the printed answer B and the DH/RA label in FAA Figure 257B both say 115 feet. Corrected only that explanation value; choices and answer B are unchanged.",
@@ -14675,7 +14675,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-257a.svg"
+      "atp_2026_figure-257a-unit.svg"
     ]
   },
   {
@@ -14703,8 +14703,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-257a.svg",
-      "atp_2026_legend-38.svg"
+      "atp_2026_figure-257a-unit.svg",
+      "atp_2026_legend-38-unit.svg"
     ]
   },
   {
@@ -14732,8 +14732,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-257a.svg",
-      "atp_2026_figure-256.svg"
+      "atp_2026_figure-257a-unit.svg",
+      "atp_2026_figure-256-unit.svg"
     ]
   },
   {
@@ -14762,7 +14762,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-145.svg"
+      "atp_2026_figure-145-unit.svg"
     ]
   },
   {
@@ -14790,7 +14790,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-273.svg"
+      "atp_2026_figure-273-unit.svg"
     ]
   },
   {
@@ -14819,8 +14819,8 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-262.svg",
-      "atp_2026_figure-263.svg"
+      "atp_2026_figure-262-unit.svg",
+      "atp_2026_figure-263-unit.svg"
     ]
   },
   {
@@ -14849,7 +14849,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-163a.svg"
+      "atp_2026_figure-163a-unit.svg"
     ]
   },
   {
@@ -19870,7 +19870,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-144.svg"
+      "atp_2026_figure-144-unit.svg"
     ]
   },
   {
@@ -19898,7 +19898,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-144.svg"
+      "atp_2026_figure-144-unit.svg"
     ]
   },
   {
@@ -19926,7 +19926,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-144.svg"
+      "atp_2026_figure-144-unit.svg"
     ]
   },
   {
@@ -19954,7 +19954,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-144.svg"
+      "atp_2026_figure-144-unit.svg"
     ]
   },
   {
@@ -19982,7 +19982,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-144.svg"
+      "atp_2026_figure-144-unit.svg"
     ]
   },
   {
@@ -20010,7 +20010,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-144.svg"
+      "atp_2026_figure-144-unit.svg"
     ]
   },
   {
@@ -21600,7 +21600,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-145.svg"
+      "atp_2026_figure-145-unit.svg"
     ]
   },
   {
@@ -21628,7 +21628,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-145.svg"
+      "atp_2026_figure-145-unit.svg"
     ]
   },
   {
@@ -21656,7 +21656,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-146.svg"
+      "atp_2026_figure-146-unit.svg"
     ]
   },
   {
@@ -21684,7 +21684,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-145.svg"
+      "atp_2026_figure-145-unit.svg"
     ]
   },
   {
@@ -21712,7 +21712,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-145.svg"
+      "atp_2026_figure-145-unit.svg"
     ]
   },
   {
@@ -21766,7 +21766,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-145.svg"
+      "atp_2026_figure-145-unit.svg"
     ]
   },
   {
@@ -21872,7 +21872,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-146.svg"
+      "atp_2026_figure-146-unit.svg"
     ]
   },
   {
@@ -22342,7 +22342,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-149.svg"
+      "atp_2026_figure-149-unit.svg"
     ]
   },
   {
@@ -22370,7 +22370,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-149.svg"
+      "atp_2026_figure-149-unit.svg"
     ]
   },
   {
@@ -22398,7 +22398,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-149.svg"
+      "atp_2026_figure-149-unit.svg"
     ]
   },
   {
@@ -22426,7 +22426,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-149.svg"
+      "atp_2026_figure-149-unit.svg"
     ]
   },
   {
@@ -22454,7 +22454,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-149.svg"
+      "atp_2026_figure-149-unit.svg"
     ]
   },
   {
@@ -22482,7 +22482,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-149.svg"
+      "atp_2026_figure-149-unit.svg"
     ]
   },
   {
@@ -22510,7 +22510,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-149.svg"
+      "atp_2026_figure-149-unit.svg"
     ]
   },
   {
@@ -22538,7 +22538,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-149.svg"
+      "atp_2026_figure-149-unit.svg"
     ]
   },
   {
@@ -22670,7 +22670,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-149a.svg"
+      "atp_2026_figure-149a-unit.svg"
     ]
   },
   {
@@ -22880,7 +22880,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-148.svg"
+      "atp_2026_figure-148-unit.svg"
     ]
   },
   {
@@ -23116,7 +23116,7 @@ DECLARE
     "status": "publicada",
     "source": "import",
     "imagenes": [
-      "atp_2026_figure-145.svg"
+      "atp_2026_figure-145-unit.svg"
     ]
   },
   {
@@ -23173,7 +23173,7 @@ DECLARE
   }
 ]
 $questions$::jsonb;
- v_chapter1_images jsonb := $chapter1$[{"id":"q_la_ATP_2026_9618","imagenes":["atp_2026_figure-301.svg"]},{"id":"q_la_ATP_2026_9636","imagenes":["atp_2026_legend-12.svg"]},{"id":"q_la_ATP_2026_9638","imagenes":["atp_2026_figure-186.svg","atp_2026_figure-187.svg","atp_2026_figure-188.svg","atp_2026_figure-188a.svg"]},{"id":"q_la_ATP_2026_9668","imagenes":["atp_2026_legend-12.svg","atp_2026_figure-185a.svg"]}]$chapter1$::jsonb;
+ v_chapter1_images jsonb := $chapter1$[{"id":"q_la_ATP_2026_9618","imagenes":["atp_2026_figure-301-unit.svg"]},{"id":"q_la_ATP_2026_9636","imagenes":["atp_2026_legend-12-unit.svg"]},{"id":"q_la_ATP_2026_9638","imagenes":["atp_2026_figure-186-unit.svg","atp_2026_figure-187-unit.svg","atp_2026_figure-188-unit.svg","atp_2026_figure-188a-unit.svg"]},{"id":"q_la_ATP_2026_9668","imagenes":["atp_2026_legend-12-unit.svg","atp_2026_figure-185a-unit.svg"]}]$chapter1$::jsonb;
  v_expected jsonb := '{"2":213,"3":117,"6":216,"7":87,"8":230}'::jsonb;
  v_missing text;
  v_count integer;

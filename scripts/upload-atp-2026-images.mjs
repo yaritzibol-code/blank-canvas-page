@@ -7,7 +7,7 @@ const directory=new URL('../supabase/storage/atp-images/',import.meta.url);
 const manifest=JSON.parse(await readFile(new URL('manifest-2026.json',directory),'utf8'));
 const digest=b=>createHash('sha256').update(b).digest('hex');
 for(const asset of manifest.assets){
- if(!/^atp_2026_(?:figure-\d+[a-z]?|legend-\d+|question-\d+(?:-faa)?)\.svg$/.test(asset.file))throw new Error('Unexpected filename '+asset.file);
+ if(!/^atp_2026_(?:figure-\d+[a-z]?(?:-unit)?|legend-\d+(?:-unit)?|question-\d+(?:-faa)?)\.svg$/.test(asset.file))throw new Error('Unexpected filename '+asset.file);
  const bytes=await readFile(new URL(asset.file,directory));
  if(digest(bytes)!==asset.sha256)throw new Error('Local figure checksum mismatch '+asset.file);
  const target=`${url.replace(/\/$/,'')}/storage/v1/object/atp-images/${asset.file}`;

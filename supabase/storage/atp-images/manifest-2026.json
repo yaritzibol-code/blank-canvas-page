@@ -6,61 +6,171 @@
   "supplement": "FAA-CT-8080-7D",
   "assets": [
     {
-      "file": "atp_2026_figure-1.svg",
-      "bytes": 191052,
-      "sha256": "9265479bdeae7857cc73967669d407af3814f6ae249dcbc629780839b6d75839",
+      "file": "atp_2026_figure-1-unit.svg",
+      "bytes": 191030,
+      "sha256": "a23002e785ddc4149530c97ef44bb1f71c00166413f90f8149959bc451504c95",
       "label": "figure-1",
       "pdfPage": 94,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        30,
+        52,
+        498,
+        148
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        230
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8736"
       ]
     },
     {
-      "file": "atp_2026_figure-100.svg",
-      "bytes": 3505925,
-      "sha256": "0265bcb9757d2e7230535461d11b04d56639e41ddb5d9745afdf99beb8839223",
+      "file": "atp_2026_figure-100-unit.svg",
+      "bytes": 3505276,
+      "sha256": "c303a135e94c58a8c8576d6d246335543912606379b683685668e5e1492c46e1",
       "label": "figure-100",
       "pdfPage": 148,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        28,
+        33,
+        500,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8784"
       ]
     },
     {
-      "file": "atp_2026_figure-101.svg",
-      "bytes": 106522,
-      "sha256": "aa5d85577eaea4e0d292fe41b942fc4a54ae18a226ba4a2c84fdc6b1b6107699",
+      "file": "atp_2026_figure-101-unit.svg",
+      "bytes": 105843,
+      "sha256": "4cf358dff6e3b0343c00e32dc3e210ef6156b35a871a689671490645f0aafcff",
       "label": "figure-101",
       "pdfPage": 150,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        32,
+        33,
+        496,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8782"
       ]
     },
     {
-      "file": "atp_2026_figure-101a.svg",
-      "bytes": 206197,
-      "sha256": "4130a5872d5abd0bf47db665ec3cd4a6a884a19e30c127a591d9915ec35f232b",
+      "file": "atp_2026_figure-101a-unit.svg",
+      "bytes": 205469,
+      "sha256": "4828ab6d1a3605e12aef69614abf47d45de8401768301521ab622f617611abf6",
       "label": "figure-101a",
       "pdfPage": 151,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        66,
+        33,
+        499,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8782"
       ]
     },
     {
-      "file": "atp_2026_figure-114.svg",
-      "bytes": 1632929,
-      "sha256": "3e3f7bbf40508c926560a4e9cf28f9021f2ca4bea40639d5dffe92fbf6172279",
+      "file": "atp_2026_figure-114-unit.svg",
+      "bytes": 1632274,
+      "sha256": "9dfd1cdafdf46cfc8358f13988ea66a739f4756fcce802f505a2652ec01f8f89",
       "label": "figure-114",
       "pdfPage": 156,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        30,
+        33,
+        498,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8824",
         "8825",
@@ -68,13 +178,35 @@
       ]
     },
     {
-      "file": "atp_2026_figure-123.svg",
-      "bytes": 141651,
-      "sha256": "fcf7ab6ef5726a5e01876be83f7cee36d052d006d0c8a2df8043c081b93d3240",
+      "file": "atp_2026_figure-123-unit.svg",
+      "bytes": 141289,
+      "sha256": "79da27ed8e1fc4b883256deb6a7c7de8e4dc579cb0c15466a19ce09e63f85f3b",
       "label": "figure-123",
       "pdfPage": 163,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        65,
+        47,
+        250,
+        282
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        316,
+        380
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8861",
         "8862",
@@ -83,13 +215,35 @@
       ]
     },
     {
-      "file": "atp_2026_figure-124.svg",
-      "bytes": 141651,
-      "sha256": "fcf7ab6ef5726a5e01876be83f7cee36d052d006d0c8a2df8043c081b93d3240",
+      "file": "atp_2026_figure-124-unit.svg",
+      "bytes": 141290,
+      "sha256": "2c6d13e164a2e06eda68204b81e854f02ff5b834215f57b666821f398a13e83a",
       "label": "figure-124",
       "pdfPage": 163,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        316,
+        47,
+        249,
+        282
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        316,
+        33,
+        594,
+        380
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8865",
         "8866",
@@ -97,13 +251,35 @@
       ]
     },
     {
-      "file": "atp_2026_figure-126.svg",
-      "bytes": 588655,
-      "sha256": "d2ab4a9d9b7a0e7ce4b0a0291f4f6dcab50968c1e9f2fce91e7c89453f1901b6",
+      "file": "atp_2026_figure-126-unit.svg",
+      "bytes": 592617,
+      "sha256": "6d5bf1964719bf967232a5b1ee68ed8e39dafa5d0fabcb600f3df7669e7cfbfd",
       "label": "figure-126",
       "pdfPage": 164,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        36,
+        39,
+        491,
+        297
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        380
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8872",
         "8873",
@@ -113,13 +289,35 @@
       ]
     },
     {
-      "file": "atp_2026_figure-127.svg",
-      "bytes": 588655,
-      "sha256": "d2ab4a9d9b7a0e7ce4b0a0291f4f6dcab50968c1e9f2fce91e7c89453f1901b6",
+      "file": "atp_2026_figure-127-unit.svg",
+      "bytes": 592618,
+      "sha256": "dcec1a73efb9186d8ee80901a157fbe6a2d37275f93934e165b25e1e4b51f8f2",
       "label": "figure-127",
       "pdfPage": 164,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        29,
+        427,
+        498,
+        264
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        380,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8881",
         "8882",
@@ -131,25 +329,69 @@
       ]
     },
     {
-      "file": "atp_2026_figure-129.svg",
-      "bytes": 7114106,
-      "sha256": "231d5d9bca4790e47be29aca143d0ebfb196a5325b7a8631dae44179cb9da733",
+      "file": "atp_2026_figure-129-unit.svg",
+      "bytes": 7166713,
+      "sha256": "369e9ea45626febbef3b0d0205ad803157e2d96d061b804fd1a0a4c1f499723b",
       "label": "figure-129",
       "pdfPage": 165,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        66,
+        48,
+        498,
+        178
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        240
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8922"
       ]
     },
     {
-      "file": "atp_2026_figure-130.svg",
-      "bytes": 7117636,
-      "sha256": "2ceb906b8fd888b998e73ddd1fecbe401e1ace2b2a70e02407b0b95d7c600988",
+      "file": "atp_2026_figure-130-unit.svg",
+      "bytes": 7170244,
+      "sha256": "d895b9387b55f199fd0574d8fff1efae725311945a1b2d1e33ac009a93998938",
       "label": "figure-130",
       "pdfPage": 165,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        66,
+        255,
+        499,
+        212
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        240,
+        594,
+        500
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8923",
         "8924",
@@ -158,13 +400,35 @@
       ]
     },
     {
-      "file": "atp_2026_figure-131.svg",
-      "bytes": 7117636,
-      "sha256": "6dac578a4a9fde6c0c2dd3bfdd99a257c088423df4875c728d0add7ee5bf703f",
+      "file": "atp_2026_figure-131-unit.svg",
+      "bytes": 7170244,
+      "sha256": "f4fabc7c5cdde79d1659fddf53ff9336c3a5891cffc1f3d01fe2be19152a698b",
       "label": "figure-131",
       "pdfPage": 165,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        65,
+        505,
+        500,
+        211
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        500,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8927",
         "8928",
@@ -175,13 +439,35 @@
       ]
     },
     {
-      "file": "atp_2026_figure-139.svg",
-      "bytes": 1329728,
-      "sha256": "ffbb08f06c9d5eec2d9ae2e9ba28e9581d73f34815f1b4f2cd5882a0653cca84",
+      "file": "atp_2026_figure-139-unit.svg",
+      "bytes": 1339701,
+      "sha256": "081b6568074baa283dff1151c054eb4cdcc812662e7f570be7b311bf38727bc1",
       "label": "figure-139",
       "pdfPage": 167,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        80,
+        411,
+        469,
+        330
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        350,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8984",
         "8985",
@@ -192,13 +478,35 @@
       ]
     },
     {
-      "file": "atp_2026_figure-140.svg",
-      "bytes": 4616979,
-      "sha256": "62d7db9f0432135fde27c8b88319346da0ba7aa1b5675dedd420e26ae71b7de1",
+      "file": "atp_2026_figure-140-unit.svg",
+      "bytes": 4657185,
+      "sha256": "ec93a04821a97aa12bd1c1c053825f4093c7cc9ef57eb9acc948353b745538c9",
       "label": "figure-140",
       "pdfPage": 168,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        30,
+        33,
+        499,
+        570
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8990",
         "8991",
@@ -212,13 +520,35 @@
       ]
     },
     {
-      "file": "atp_2026_figure-141.svg",
-      "bytes": 139167,
-      "sha256": "43c7f016f1d1203ab11c1b37e3723b5ded1309dc4f5be261ccfb0fba6494417c",
+      "file": "atp_2026_figure-141-unit.svg",
+      "bytes": 138774,
+      "sha256": "c467365817f22393b8ecf21c37a0dbfad875387031c4afb331c4ac3c097ed1c0",
       "label": "figure-141",
       "pdfPage": 169,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        66,
+        48,
+        498,
+        159
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        260
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8990",
         "8991",
@@ -232,13 +562,35 @@
       ]
     },
     {
-      "file": "atp_2026_figure-142.svg",
-      "bytes": 139167,
-      "sha256": "43c7f016f1d1203ab11c1b37e3723b5ded1309dc4f5be261ccfb0fba6494417c",
+      "file": "atp_2026_figure-142-unit.svg",
+      "bytes": 138775,
+      "sha256": "241024ece5ed8ca6a5ecad1cf655dba8c67eb93a5a5c0ca0ee80f23dc8457375",
       "label": "figure-142",
       "pdfPage": 169,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        66,
+        303,
+        499,
+        413
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        260,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8999",
         "9000",
@@ -249,13 +601,35 @@
       ]
     },
     {
-      "file": "atp_2026_figure-143.svg",
-      "bytes": 3036382,
-      "sha256": "0768039c66d6854fcfe82d306c8cc2fd0ae07076c2d17bf4664aae7650be2e18",
+      "file": "atp_2026_figure-143-unit.svg",
+      "bytes": 3062686,
+      "sha256": "276bbb13780fe112eb03f572d10fa4781bbe29dff026815758d9ec4a81b48387",
       "label": "figure-143",
       "pdfPage": 170,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        30,
+        39,
+        500,
+        390
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8999",
         "9000",
@@ -266,13 +640,35 @@
       ]
     },
     {
-      "file": "atp_2026_figure-144.svg",
-      "bytes": 2486964,
-      "sha256": "aa4395f6689af8c79dc455eab624bfedb672240a2c4dd0e1cef2692918bfd680",
+      "file": "atp_2026_figure-144-unit.svg",
+      "bytes": 2509033,
+      "sha256": "abf7b6c40de9f7948e7dc831ce9931d5cbba9bd3d6a971ca5cbcbbb828257394",
       "label": "figure-144",
       "pdfPage": 171,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        66,
+        47,
+        499,
+        285
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9145",
         "9146",
@@ -283,13 +679,35 @@
       ]
     },
     {
-      "file": "atp_2026_figure-145.svg",
-      "bytes": 221002,
-      "sha256": "d290b5d14f7775004cf05cda7e9828b14d68e38c589eb359bde3c7b4fb4e3358",
+      "file": "atp_2026_figure-145-unit.svg",
+      "bytes": 222591,
+      "sha256": "83645bf57145aa268ecddf2c6ee9524ac2c95bc5530764d5f184634b46a9a2e0",
       "label": "figure-145",
       "pdfPage": 172,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        30,
+        41,
+        499,
+        675
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8950",
         "9266",
@@ -301,38 +719,104 @@
       ]
     },
     {
-      "file": "atp_2026_figure-146.svg",
-      "bytes": 189021,
-      "sha256": "1770da7e987dce555f6f0703b3647a80f5705d0747e22692e6e687ff9512624b",
+      "file": "atp_2026_figure-146-unit.svg",
+      "bytes": 190235,
+      "sha256": "05d51c6abb257593aad6746c4784154610e5f60fe042759c216130b661c40766",
       "label": "figure-146",
       "pdfPage": 173,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        66,
+        48,
+        498,
+        668
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9268",
         "9276"
       ]
     },
     {
-      "file": "atp_2026_figure-148.svg",
-      "bytes": 108153,
-      "sha256": "adcd1446beeac6fb5d12d057506ff3fb56c6b8889d6f78dbe84b60e82bb52b6f",
+      "file": "atp_2026_figure-148-unit.svg",
+      "bytes": 108000,
+      "sha256": "9d9d26570eecd76d73cd9fc7cd2893244e65270e5093c3e59c5130da06ca6149",
       "label": "figure-148",
       "pdfPage": 175,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        149,
+        47,
+        374,
+        383
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9284"
       ]
     },
     {
-      "file": "atp_2026_figure-149.svg",
-      "bytes": 261708,
-      "sha256": "44b7b298d39fd0662d12ed846c58ca7bb8b8f4a233858a577794fb9a5db8eaf6",
+      "file": "atp_2026_figure-149-unit.svg",
+      "bytes": 263377,
+      "sha256": "616a62612da407c83f4bb8574b550112fd768f8671892d1efbb9efcb32e9f79c",
       "label": "figure-149",
       "pdfPage": 176,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        30,
+        38,
+        498,
+        704
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9287",
         "9288",
@@ -345,73 +829,205 @@
       ]
     },
     {
-      "file": "atp_2026_figure-149a.svg",
-      "bytes": 1001196,
-      "sha256": "1d12543e79091dcbc41c06562e2183ce93b182fb423e11e2a661dd6c07856cce",
+      "file": "atp_2026_figure-149a-unit.svg",
+      "bytes": 1000498,
+      "sha256": "a60fd43d8a77a206741c85033ede83ec54b3aa06d333c8c4929b016e1cfb6a9e",
       "label": "figure-149a",
       "pdfPage": 177,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        114,
+        33,
+        406,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9939"
       ]
     },
     {
-      "file": "atp_2026_figure-156.svg",
-      "bytes": 33648,
-      "sha256": "3af56e0286aa16aa6c2335b7e15c20a9ab6aa11d97730cc451a71b987e4cf252",
+      "file": "atp_2026_figure-156-unit.svg",
+      "bytes": 33004,
+      "sha256": "c522a4f2cd5072217a6ab71af35a3765d4fdc0da8bf10149afdcd973263a473c",
       "label": "figure-156",
       "pdfPage": 184,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        30,
+        47,
+        497,
+        150
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        220
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9436"
       ]
     },
     {
-      "file": "atp_2026_figure-157.svg",
-      "bytes": 33648,
-      "sha256": "3af56e0286aa16aa6c2335b7e15c20a9ab6aa11d97730cc451a71b987e4cf252",
+      "file": "atp_2026_figure-157-unit.svg",
+      "bytes": 33005,
+      "sha256": "b30918d6172196b65053799117210b77032ceb2be784f125776318430195cee2",
       "label": "figure-157",
       "pdfPage": 184,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        32,
+        256,
+        496,
+        241
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        220,
+        594,
+        550
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9437"
       ]
     },
     {
-      "file": "atp_2026_figure-163a.svg",
-      "bytes": 482447,
-      "sha256": "9c61075cfb77e38d26637e003df6abe71e09ab5102cac4283d0d78740321b346",
+      "file": "atp_2026_figure-163a-unit.svg",
+      "bytes": 484560,
+      "sha256": "21886e53a174602b6810f936ba65234e942b306ba29d2960e644eba1ce04d8ce",
       "label": "figure-163a",
       "pdfPage": 186,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        30,
+        33,
+        498,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8704-1"
       ]
     },
     {
-      "file": "atp_2026_figure-185.svg",
-      "bytes": 481510,
-      "sha256": "13f90799b0bcc1ef877840afebc2f3def52a5eabf28fea52da9ff3c6fb44b4a7",
+      "file": "atp_2026_figure-185-unit.svg",
+      "bytes": 485316,
+      "sha256": "625034c386ece8382262f6af93b6a12d38c4726b74a5dfd1631c53ad07e1ee6f",
       "label": "figure-185",
       "pdfPage": 202,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        30,
+        33,
+        500,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9658"
       ]
     },
     {
-      "file": "atp_2026_figure-185a.svg",
-      "bytes": 725746,
-      "sha256": "9d4b822091f8ccf41f7cb2b0686837fc91156fa9237519540c599fdf3653cfb1",
+      "file": "atp_2026_figure-185a-unit.svg",
+      "bytes": 728500,
+      "sha256": "ed0bbf3e1e0676971d7ff5e095adf90419778a6a07764436600d9f91eb749c9f",
       "label": "figure-185a",
       "pdfPage": 203,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        66,
+        33,
+        499,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9658",
         "9659",
@@ -419,181 +1035,511 @@
       ]
     },
     {
-      "file": "atp_2026_figure-186.svg",
-      "bytes": 964307,
-      "sha256": "2f883fc5e4495c62504f919cec7a7eb24be4765800ff8bfa967cea812a08ebf6",
+      "file": "atp_2026_figure-186-unit.svg",
+      "bytes": 963573,
+      "sha256": "f9077dac14f8ff966c498235712597867e571c60d8bee1c971a99392ed5e893f",
       "label": "figure-186",
       "pdfPage": 204,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        29,
+        33,
+        499,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9638"
       ]
     },
     {
-      "file": "atp_2026_figure-187.svg",
-      "bytes": 2519138,
-      "sha256": "9724be56ab0604578b1a4c8689811ca685f7d71b203c6b7229cb55656a868081",
+      "file": "atp_2026_figure-187-unit.svg",
+      "bytes": 2518357,
+      "sha256": "3b5d3c4d621924749ccb14134923c8cb134d839f78e62c0de53ef922de8f7d53",
       "label": "figure-187",
       "pdfPage": 205,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        66,
+        33,
+        498,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9638"
       ]
     },
     {
-      "file": "atp_2026_figure-188.svg",
-      "bytes": 456706,
-      "sha256": "cb9ec7f8ce4869548ec6b2b77c81bd94a7af660ce71fd2f1df6a06b63931a810",
+      "file": "atp_2026_figure-188-unit.svg",
+      "bytes": 459335,
+      "sha256": "d877c79e7eaaaab221965b412b7d1107c7a0f53a07b74d53ea754adbc1a00b08",
       "label": "figure-188",
       "pdfPage": 206,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        30,
+        33,
+        499,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9638"
       ]
     },
     {
-      "file": "atp_2026_figure-188a.svg",
-      "bytes": 325702,
-      "sha256": "68bec01a98abe0e746cc862dc5fc32f17e8a4d63d86841e17d364b0f4e3d8865",
+      "file": "atp_2026_figure-188a-unit.svg",
+      "bytes": 326996,
+      "sha256": "b2e6b5b05b9426276ebd46941eb72448b8aeb9161e35674028647073896bf785",
       "label": "figure-188a",
       "pdfPage": 207,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        66,
+        33,
+        498,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9638"
       ]
     },
     {
-      "file": "atp_2026_figure-192.svg",
-      "bytes": 1037874,
-      "sha256": "007ebadfaabd58d126a0037078acb0d6e73b9e32d70b881a7f463c7784f4de0f",
+      "file": "atp_2026_figure-192-unit.svg",
+      "bytes": 1037148,
+      "sha256": "5a5bca3a449bd5b60005b68003d052d8539b5eedae015de09a5129e1e9318149",
       "label": "figure-192",
       "pdfPage": 212,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        29,
+        58,
+        499,
+        684
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9644"
       ]
     },
     {
-      "file": "atp_2026_figure-201.svg",
-      "bytes": 522049,
-      "sha256": "5c8ef830184f189d07276e2b994ef39551781eb31d201cba34bdc68be2e5a756",
+      "file": "atp_2026_figure-201-unit.svg",
+      "bytes": 524576,
+      "sha256": "4983e759f5fae897ccf97158a86443ab10abe4a90743d4e164214380356f4f5a",
       "label": "figure-201",
       "pdfPage": 218,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        29,
+        33,
+        499,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9655"
       ]
     },
     {
-      "file": "atp_2026_figure-201a.svg",
-      "bytes": 426041,
-      "sha256": "b5541f3f5f6318d4cd46c75f8ae574673516eef050802b6996bdc3207325404c",
+      "file": "atp_2026_figure-201a-unit.svg",
+      "bytes": 427887,
+      "sha256": "7d0291aefeca31df71431aa27dedde261505786340d4e53a743a97c89f7e6892",
       "label": "figure-201a",
       "pdfPage": 219,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        65,
+        33,
+        499,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9655"
       ]
     },
     {
-      "file": "atp_2026_figure-210.svg",
-      "bytes": 2135277,
-      "sha256": "a02faeebbe88627d7a2e50923f1340f12f842cfd3f46486a895ae94bc5668402",
+      "file": "atp_2026_figure-210-unit.svg",
+      "bytes": 2134493,
+      "sha256": "2f89522f070b14861614805adbc0de63d3a12cdc7635a9c0d271f4f1bca7644b",
       "label": "figure-210",
       "pdfPage": 221,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        66,
+        33,
+        498,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9670"
       ]
     },
     {
-      "file": "atp_2026_figure-223.svg",
-      "bytes": 49341,
-      "sha256": "551fa9fb78b2d277bf31ea68390e0d370c96cc2d2f58d4ffaa95fdde072d0318",
+      "file": "atp_2026_figure-223-unit.svg",
+      "bytes": 48717,
+      "sha256": "030420a8ec0e6e849b129434d2801afba562ad3c934766aa3d2188a9debe1f03",
       "label": "figure-223",
       "pdfPage": 226,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        60,
+        47,
+        445,
+        166
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        245
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9735"
       ]
     },
     {
-      "file": "atp_2026_figure-224.svg",
-      "bytes": 49341,
-      "sha256": "551fa9fb78b2d277bf31ea68390e0d370c96cc2d2f58d4ffaa95fdde072d0318",
+      "file": "atp_2026_figure-224-unit.svg",
+      "bytes": 48718,
+      "sha256": "781a31488bd5400a973373785ec7fa02d576f8663bf7b02c8daa39f976ba5bc9",
       "label": "figure-224",
       "pdfPage": 226,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        57,
+        285,
+        448,
+        161
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        245,
+        594,
+        510
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9416-1"
       ]
     },
     {
-      "file": "atp_2026_figure-225.svg",
-      "bytes": 49341,
-      "sha256": "551fa9fb78b2d277bf31ea68390e0d370c96cc2d2f58d4ffaa95fdde072d0318",
+      "file": "atp_2026_figure-225-unit.svg",
+      "bytes": 48719,
+      "sha256": "deeb6169865b29dacfd577779cbe291de724cb10cf3ff31f1cae0d354d965ba9",
       "label": "figure-225",
       "pdfPage": 226,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        159,
+        527,
+        241,
+        189
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        510,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9735-2"
       ]
     },
     {
-      "file": "atp_2026_figure-226.svg",
-      "bytes": 42001,
-      "sha256": "060828f7438e180c38b2e43c5140044085860d99f7a33f98479a7ab85b66d536",
+      "file": "atp_2026_figure-226-unit.svg",
+      "bytes": 41286,
+      "sha256": "bb23ad4a6889488c4a386f0968e64e0133b548d41fb574fcbf6f3834c47d1893",
       "label": "figure-226",
       "pdfPage": 227,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        206,
+        50,
+        217,
+        167
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        245
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9735-3"
       ]
     },
     {
-      "file": "atp_2026_figure-227.svg",
-      "bytes": 42001,
-      "sha256": "060828f7438e180c38b2e43c5140044085860d99f7a33f98479a7ab85b66d536",
+      "file": "atp_2026_figure-227-unit.svg",
+      "bytes": 41287,
+      "sha256": "6da1db01f0f5d23b119820853b69f777e469d509d9d06e045556e206d70493db",
       "label": "figure-227",
       "pdfPage": 227,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        175,
+        270,
+        281,
+        206
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        245,
+        594,
+        530
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9423-1"
       ]
     },
     {
-      "file": "atp_2026_figure-228.svg",
-      "bytes": 42001,
-      "sha256": "060828f7438e180c38b2e43c5140044085860d99f7a33f98479a7ab85b66d536",
+      "file": "atp_2026_figure-228-unit.svg",
+      "bytes": 41287,
+      "sha256": "682373f4d0d94bb3d10623e6b86da1f54fe900d1a20832178d2e43431e7b5ba0",
       "label": "figure-228",
       "pdfPage": 227,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        172,
+        539,
+        281,
+        177
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        530,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9735-1"
       ]
     },
     {
-      "file": "atp_2026_figure-241.svg",
-      "bytes": 107290,
-      "sha256": "4fa1c46effbf8c65d35e04397439d010c7a04fc1e025c5fc300508c2a5c74300",
+      "file": "atp_2026_figure-241-unit.svg",
+      "bytes": 106543,
+      "sha256": "6e66029186c9d448ef6c91f819782f3d6951d789d8f501000560e1f84dd29057",
       "label": "figure-241",
       "pdfPage": 238,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        61,
+        33,
+        437,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9787",
         "9790",
@@ -601,111 +1547,309 @@
       ]
     },
     {
-      "file": "atp_2026_figure-242.svg",
-      "bytes": 349875,
-      "sha256": "cff7d331c706aa4ef52254e9fabe5f5d5120701e01168bf918e11436b4b1cf1e",
+      "file": "atp_2026_figure-242-unit.svg",
+      "bytes": 349148,
+      "sha256": "e8e671a58486014123647c6a426d48b6b60007e7093a5b0701ecf8a708ddb33e",
       "label": "figure-242",
       "pdfPage": 240,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        48,
+        39,
+        459,
+        703
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9790",
         "9790-1"
       ]
     },
     {
-      "file": "atp_2026_figure-250.svg",
-      "bytes": 334376,
-      "sha256": "d18048d55ae9ec8db99394c27bfdebc0cec4b3da3a5a1bc6312580e9017b564d",
+      "file": "atp_2026_figure-250-unit.svg",
+      "bytes": 333650,
+      "sha256": "fe11f19910ccd8149ff4757319c8d300215b99c7c82da1ac07ffa42df419fadd",
       "label": "figure-250",
       "pdfPage": 250,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        47,
+        39,
+        461,
+        703
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9796"
       ]
     },
     {
-      "file": "atp_2026_figure-251.svg",
-      "bytes": 288498,
-      "sha256": "b7406c2692e5a0d3fb347992cce55d050c84e442ff1a7d2d699050fb9c2943a8",
+      "file": "atp_2026_figure-251-unit.svg",
+      "bytes": 287726,
+      "sha256": "7e5c6aac49cf0173a4bfdcead87733e5e3f5965df0e49f54792136a42ee7be88",
       "label": "figure-251",
       "pdfPage": 251,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        84,
+        39,
+        460,
+        703
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9794",
         "8703"
       ]
     },
     {
-      "file": "atp_2026_figure-252.svg",
-      "bytes": 375762,
-      "sha256": "d33ace4aec8eb592e0a3a60d27b96ce943ab46c27122603ae4a6b2a5b2b02572",
+      "file": "atp_2026_figure-252-unit.svg",
+      "bytes": 375037,
+      "sha256": "b179123bd20328c0bbeabb83d3823786ed2a969e84db6a1b4b8dbb53583e59ec",
       "label": "figure-252",
       "pdfPage": 252,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        41,
+        39,
+        467,
+        703
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9812-1"
       ]
     },
     {
-      "file": "atp_2026_figure-253.svg",
-      "bytes": 535858,
-      "sha256": "aaa8164c4d3eeafa0084d5467af3bf1bbd2fd5cdcd36051921d23daf2126cc94",
+      "file": "atp_2026_figure-253-unit.svg",
+      "bytes": 535070,
+      "sha256": "dd1f9b21ea46bc133dd408dd30b1d0cb244eeda1dad288c97a3085819607ff2e",
       "label": "figure-253",
       "pdfPage": 253,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        84,
+        39,
+        459,
+        703
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9795"
       ]
     },
     {
-      "file": "atp_2026_figure-255a.svg",
-      "bytes": 1458704,
-      "sha256": "27c11f1ae9dd7b93fe87447e5f0d0935c044f709f14d9eb876d62237c22881e0",
+      "file": "atp_2026_figure-255a-unit.svg",
+      "bytes": 1459628,
+      "sha256": "a5d10383c362bc542e5fa09f9d94d2d8e04c1b521de405a7d1970abf07314e71",
       "label": "figure-255a",
       "pdfPage": 256,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        58,
+        33,
+        441,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8799"
       ]
     },
     {
-      "file": "atp_2026_figure-255b.svg",
-      "bytes": 643564,
-      "sha256": "96985a831cae2ae0a663d81ddf5e9ac6c94b2f6a62fe07b0d544885136f57578",
+      "file": "atp_2026_figure-255b-unit.svg",
+      "bytes": 643431,
+      "sha256": "0f9728da5359b673c918dd1c49d3a8160939c9b852a45f5e9d8a76bfb7ffd507",
       "label": "figure-255b",
       "pdfPage": 257,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        96,
+        33,
+        437,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8799"
       ]
     },
     {
-      "file": "atp_2026_figure-256.svg",
-      "bytes": 760834,
-      "sha256": "a658c8150f6949d48871fd52b06f2b71800240b05b0d9d67d9ca0158749a3ca2",
+      "file": "atp_2026_figure-256-unit.svg",
+      "bytes": 764864,
+      "sha256": "805a609a89febc2f4d621815af431eebbc7da06562895e6616b0a6db5a30dc31",
       "label": "figure-256",
       "pdfPage": 258,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        30,
+        38,
+        498,
+        704
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8806"
       ]
     },
     {
-      "file": "atp_2026_figure-257a.svg",
-      "bytes": 4182691,
-      "sha256": "53a498d1113ac8ff370bf65d0f1ae116dbf872586ad8a3d8dd0ce012080f0326",
+      "file": "atp_2026_figure-257a-unit.svg",
+      "bytes": 4187479,
+      "sha256": "9c568012f2c57e4e6b7e69bf59f29ef07a3414566c5139dfd90b6f1c0b00278a",
       "label": "figure-257a",
       "pdfPage": 260,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        56,
+        33,
+        444,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8800",
         "8803",
@@ -714,112 +1858,310 @@
       ]
     },
     {
-      "file": "atp_2026_figure-257b.svg",
-      "bytes": 4330795,
-      "sha256": "923dce204d2322cbf1371c068a3776bcd672f9e62083008639da6f0dea9ca50a",
+      "file": "atp_2026_figure-257b-unit.svg",
+      "bytes": 4335432,
+      "sha256": "f0b183f7319874428c9c6d0fac2cce1f09376d0d0eecb53aa5269dbef63850c7",
       "label": "figure-257b",
       "pdfPage": 261,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        89,
+        33,
+        450,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8802"
       ]
     },
     {
-      "file": "atp_2026_figure-258.svg",
-      "bytes": 1516097,
-      "sha256": "72894be522d2171527c923e05e5733c9df0a15745465e7809823a1bbd18c60cd",
+      "file": "atp_2026_figure-258-unit.svg",
+      "bytes": 1517087,
+      "sha256": "a1bb6ba9e4ef92e00d5133116e5f686a9223f1d6774179135259f13c7aa4b394",
       "label": "figure-258",
       "pdfPage": 262,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        54,
+        33,
+        449,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9617"
       ]
     },
     {
-      "file": "atp_2026_figure-259.svg",
-      "bytes": 3556182,
-      "sha256": "0eb1277c79f11c1dff943d74aeb0ab0dfc691360b0e7094743835ddd1725873d",
+      "file": "atp_2026_figure-259-unit.svg",
+      "bytes": 3562450,
+      "sha256": "6b4c5ccf40560e392353641b4eaa69ac9268c322eb3fe007250eef8f8b692bb9",
       "label": "figure-259",
       "pdfPage": 263,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        92,
+        33,
+        451,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9554",
         "9571"
       ]
     },
     {
-      "file": "atp_2026_figure-262.svg",
-      "bytes": 2666217,
-      "sha256": "891796fb0f76e7b9f854ed7c0a298465035e72703ec57c957bb91036ba27a85d",
+      "file": "atp_2026_figure-262-unit.svg",
+      "bytes": 2668405,
+      "sha256": "22c368d73e5e656359ef4a5356111647860bd1e837eb163531edd81e22714f8e",
       "label": "figure-262",
       "pdfPage": 266,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        60,
+        33,
+        437,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8704"
       ]
     },
     {
-      "file": "atp_2026_figure-263.svg",
-      "bytes": 1525300,
-      "sha256": "432ce1eba84fdb2a290dfd85ba00a22d7d47a7fa733af236863f8825c29085fe",
+      "file": "atp_2026_figure-263-unit.svg",
+      "bytes": 1526163,
+      "sha256": "0962b9613f29e5746d6d0a286072299f914f22a442f0b9855beede36e53152f9",
       "label": "figure-263",
       "pdfPage": 267,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        94,
+        33,
+        440,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8704"
       ]
     },
     {
-      "file": "atp_2026_figure-269.svg",
-      "bytes": 1969493,
-      "sha256": "ce32cde2227585610828cbaa60211ebb1c7c7ed54969b2c502675463ebee4561",
+      "file": "atp_2026_figure-269-unit.svg",
+      "bytes": 1970716,
+      "sha256": "0fc522a3e49e9d61a1b71c5eb1a93f12907e5d9ef91720cfd4d1e9b629a21c76",
       "label": "figure-269",
       "pdfPage": 273,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        96,
+        33,
+        436,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9614"
       ]
     },
     {
-      "file": "atp_2026_figure-273.svg",
-      "bytes": 2333751,
-      "sha256": "931378a63bb9d2e55aff142a55a1961abbe7d1095512cc8cbe4614143f1a9dec",
+      "file": "atp_2026_figure-273-unit.svg",
+      "bytes": 2336091,
+      "sha256": "3b5dc14abaa8b5dea8ad06a68e20db39236772247a34e5cf1341dbf4df668b3e",
       "label": "figure-273",
       "pdfPage": 277,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        90,
+        33,
+        448,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9588",
         "8836"
       ]
     },
     {
-      "file": "atp_2026_figure-279.svg",
-      "bytes": 2333259,
-      "sha256": "92f88c2e8d3d1cddb32d6b5e8124cbe2088d416b51ae3fdd921a514bae36ee59",
+      "file": "atp_2026_figure-279-unit.svg",
+      "bytes": 2335496,
+      "sha256": "9a9b95d988cd3be433b80ed8a852e90653b0160b4cf91119192eba12dc671e63",
       "label": "figure-279",
       "pdfPage": 282,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        54,
+        33,
+        448,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8852",
         "9933"
       ]
     },
     {
-      "file": "atp_2026_figure-293.svg",
-      "bytes": 4245898,
-      "sha256": "772535be3d3088d66a1c90f90887ae8fa260d86ae4c5eaa9ac62ef8cac1932d5",
+      "file": "atp_2026_figure-293-unit.svg",
+      "bytes": 4255731,
+      "sha256": "ce749172da7864c88f0a54f2b3b20cd41a1929dfa7350b7c3b4ed8e4772fac86",
       "label": "figure-293",
       "pdfPage": 296,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        55,
+        33,
+        446,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9599",
         "9600",
@@ -831,62 +2173,172 @@
       ]
     },
     {
-      "file": "atp_2026_figure-301.svg",
-      "bytes": 2279512,
-      "sha256": "59ecd40585b2782869d2d77b5f83c984287e4b7502aadd99a5b89ac4900e7b56",
+      "file": "atp_2026_figure-301-unit.svg",
+      "bytes": 2281632,
+      "sha256": "20a0cf4926b7666d975049f1fad3e3aec6ddfdeb03f18a54e939d5e327b6c312",
       "label": "figure-301",
       "pdfPage": 304,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        61,
+        40,
+        442,
+        702
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9619",
         "9618"
       ]
     },
     {
-      "file": "atp_2026_figure-310.svg",
-      "bytes": 2304931,
-      "sha256": "276e38a23683aedad78e9d7d0acb12b8b5625302d5c240d1a2e313e7c6893cb1",
+      "file": "atp_2026_figure-310-unit.svg",
+      "bytes": 2307433,
+      "sha256": "754f753662df6203faf03d9a5f54e9e0d464756b9fdfc87f750da13ac59f4c7b",
       "label": "figure-310",
       "pdfPage": 312,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        54,
+        33,
+        448,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8726"
       ]
     },
     {
-      "file": "atp_2026_figure-335.svg",
-      "bytes": 457893,
-      "sha256": "8c46b9d5f25c656a6b44704cf31dd3f5c6e05e465683b1aec87a6396f51a8793",
+      "file": "atp_2026_figure-335-unit.svg",
+      "bytes": 457163,
+      "sha256": "79471929caa4b843ecbc2c94b9e8ed51a89a2b674caf1a94db5c07e88164f5d8",
       "label": "figure-335",
       "pdfPage": 336,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        54,
+        33,
+        449,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9666"
       ]
     },
     {
-      "file": "atp_2026_figure-343.svg",
-      "bytes": 337812,
-      "sha256": "9e675546402613885b98dabe96940482849ed8bac7cc266f98f9f4e3ade2816f",
+      "file": "atp_2026_figure-343-unit.svg",
+      "bytes": 337081,
+      "sha256": "0a26b989e3affd714e69179e9f953ee0bffc9b943e21a9ed378a4599db5806d7",
       "label": "figure-343",
       "pdfPage": 344,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        55,
+        33,
+        447,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9686"
       ]
     },
     {
-      "file": "atp_2026_figure-348.svg",
-      "bytes": 483297,
-      "sha256": "fcf1a082437e876cba66623b60ed55fbd1f9d1434095e93d0dd9f373e696f4a9",
+      "file": "atp_2026_figure-348-unit.svg",
+      "bytes": 485917,
+      "sha256": "c512d554b2a5ba4a73f0b5048359a4c818a7afc950e2fd4296a3dee0a26dd95d",
       "label": "figure-348",
       "pdfPage": 349,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        66,
+        33,
+        498,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8793",
         "8796",
@@ -895,111 +2347,309 @@
       ]
     },
     {
-      "file": "atp_2026_figure-360.svg",
-      "bytes": 2146609,
-      "sha256": "313a483ae155635576e1be540373cdf6e0119a7328c9089636a111ac7eef2210",
+      "file": "atp_2026_figure-360-unit.svg",
+      "bytes": 2148343,
+      "sha256": "aeaca27c3c74a1d2b6f548089f66abc1dba808315249a1aafcdf46dc5119dbae",
       "label": "figure-360",
       "pdfPage": 362,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        55,
+        33,
+        445,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9555"
       ]
     },
     {
-      "file": "atp_2026_figure-361.svg",
-      "bytes": 2472929,
-      "sha256": "3841ccb7185a29fe1a55d603930d3b82f5ebd534684ba9620c1c81fb0bf2c308",
+      "file": "atp_2026_figure-361-unit.svg",
+      "bytes": 2474718,
+      "sha256": "3fc90022fe63f36155b17a9dc82fe3103e4acdf6a14f302c904873d2ebdb93d1",
       "label": "figure-361",
       "pdfPage": 363,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        97,
+        33,
+        434,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8793",
         "8852-1"
       ]
     },
     {
-      "file": "atp_2026_figure-373.svg",
-      "bytes": 2760829,
-      "sha256": "720a9f24921b74f64db79af93db3811363620b8c4ce2db7c8082c9f13996d714",
+      "file": "atp_2026_figure-373-unit.svg",
+      "bytes": 2765982,
+      "sha256": "f6074ca72ad954d7928cc67bc0084fb79b27e9889d0354cd5efec30d155001fa",
       "label": "figure-373",
       "pdfPage": 375,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        92,
+        33,
+        443,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9645"
       ]
     },
     {
-      "file": "atp_2026_figure-374.svg",
-      "bytes": 2145298,
-      "sha256": "06d0a49d1a87deb025f04960780873ef78d488e3a21f675d949f0d0149a646b1",
+      "file": "atp_2026_figure-374-unit.svg",
+      "bytes": 2147815,
+      "sha256": "e5b5608c4c3b87969124a7369d3ecc67dd9ab4c21e6b0d53b1b3eaef2def4f7b",
       "label": "figure-374",
       "pdfPage": 376,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        56,
+        33,
+        444,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9645-1"
       ]
     },
     {
-      "file": "atp_2026_figure-388.svg",
-      "bytes": 365695,
-      "sha256": "f38907d6684a2b48cc6aae346e1fec70f86bb2bdacaa3c18adcfefdb81cdbb6b",
+      "file": "atp_2026_figure-388-unit.svg",
+      "bytes": 367719,
+      "sha256": "2ff0c5d5c8a57979cdaf5cbd7cc605dba0bcb6b81ec8320d42a5c44103f6b03d",
       "label": "figure-388",
       "pdfPage": 390,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        30,
+        33,
+        481,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9555"
       ]
     },
     {
-      "file": "atp_2026_figure-99.svg",
-      "bytes": 3525412,
-      "sha256": "a83812ed5e0fb47b236c7086389b46f015f78c17e56addff65fcf7e239ddc351",
+      "file": "atp_2026_figure-99-unit.svg",
+      "bytes": 3524684,
+      "sha256": "c700fd989cff3fb50a6c33f2544576fc04e4a75c008215a048aa396ea37c63b5",
       "label": "figure-99",
       "pdfPage": 147,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        66,
+        54,
+        498,
+        688
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8782"
       ]
     },
     {
-      "file": "atp_2026_legend-12.svg",
-      "bytes": 433912,
-      "sha256": "cc90642d21773326f4e9fcd681bd7c482a6fc00df54b47869a84c1499073649d",
+      "file": "atp_2026_legend-12-unit.svg",
+      "bytes": 436992,
+      "sha256": "ddac887305116e5dd6f4ef1cc3eaca0bbeac0601817946c6884d5d751900c4c0",
       "label": "legend-12",
       "pdfPage": 32,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        66,
+        35,
+        422,
+        707
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "9636",
         "9668"
       ]
     },
     {
-      "file": "atp_2026_legend-38.svg",
-      "bytes": 2244556,
-      "sha256": "4f85132517546773aa9b7fc31cf157d6459eadd403b5885be6ba2ace7552b323",
+      "file": "atp_2026_legend-38-unit.svg",
+      "bytes": 2246886,
+      "sha256": "5c6e2d64dd39d9f628276ec09c39029182e6c6b66062880e5be3e89cafa14509",
       "label": "legend-38",
       "pdfPage": 58,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        53,
+        33,
+        453,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8804"
       ]
     },
     {
-      "file": "atp_2026_legend-72.svg",
-      "bytes": 2474507,
-      "sha256": "cef3efe3e7299c91eee9b29137f9e9378b50779f52a82112042a103e83861626",
+      "file": "atp_2026_legend-72-unit.svg",
+      "bytes": 2475724,
+      "sha256": "8fc67314ddfd3f4133598bfca780e82292fd75b079aa0d0cf5fd3e30894bfad5",
       "label": "legend-72",
       "pdfPage": 92,
       "source": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/atp_akts.pdf",
-      "nativePagePreserved": true,
+      "viewBox": [
+        33,
+        33,
+        489,
+        709
+      ],
+      "sourcePageViewBox": [
+        0,
+        0,
+        594,
+        774
+      ],
+      "nativeFigurePreserved": true,
+      "nativeVectorsPreserved": true,
+      "individualFigure": true,
+      "cropRegion": [
+        0,
+        33,
+        594,
+        742
+      ],
+      "marginPoints": 6,
+      "format": "SVG",
       "sourceQuestionIds": [
         "8852",
         "8852-1"

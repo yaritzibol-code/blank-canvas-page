@@ -37,11 +37,16 @@ leyendas provienen del suplemento de examen
 con sus fechas originales. Son 75 enlaces a figuras/leyendas en 65 páginas
 distintas, incluidas las siete figuras de Regulations.
 
-Los SVG conservan páginas completas, trazos vectoriales y la resolución nativa
+Cada SVG muestra una sola figura o leyenda completa, recortada con un margen
+de protección alrededor del gráfico, sus notas y su rótulo. Las figuras que
+comparten una página se separan por número. Los paneles de una misma figura
+permanecen juntos. Se conservan trazos vectoriales y la resolución nativa
 de cada imagen. Las imágenes PNG internas se comprimen sin pérdida; se comprobó
 que sus píxeles RGBA fueran idénticos antes y después. No se reconstruyen cartas,
 no se sustituyen por cartas actuales y no se aumenta artificialmente la
-resolución. La revisión de las 65 páginas completas comprueba rótulos y bordes.
+resolución. Se revisaron los 75 recortes contra sus 65 páginas de origen: rótulos,
+notas y bordes completos. La carta de Tucson Figure 361 se comprobó
+también al 200% en el navegador, con texto y trazos nítidos.
 La vista del cuestionario utiliza `object-fit: contain` y abre el original
 desde el enlace de la figura.
 
@@ -78,8 +83,10 @@ Cada corrección conserva su texto/clave original y su justificación en la fila
 - TypeScript y compilación completa de cliente/servidor: correctos.
 - Carga inicial verificada en almacenamiento: 78 SVG, todos `image/svg+xml`,
   110,638,109 bytes. Después de esta comprobación se mejoraron las figuras
-  8206 y 9751 con los originales FAA; sus dos nuevos archivos `-faa.svg`
-  requieren carga antes de aplicar la migración. El manifiesto actualizado
+  8206 y 9751 con los originales FAA. Después se recortaron individualmente
+  las 75 figuras/leyendas del suplemento y se versionaron como `-unit.svg`;
+  esas 75 versiones y los dos archivos `-faa.svg` requieren carga antes de
+  aplicar la migración. El manifiesto actualizado
   mantiene 78 archivos activos y sus SHA-256.
 
 Para repetir la aplicación:
@@ -97,7 +104,8 @@ Para repetir la aplicación:
    Antes de la aplicación: 8,193 filas; huella MD5
    `6d1aea1db9e27f31a75d033639153442`, calculada sobre IDs y JSON ordenados.
 
-La carga inicial está terminada. La carga de las dos figuras mejoradas,
+La carga inicial está terminada. La carga de los recortes individuales y
+las dos figuras mejoradas,
 la aplicación de la migración y su comprobación en producción están
 pendientes de recuperar Chrome. Integrar
 los archivos en GitHub por sí solo no ejecuta la migración de datos.

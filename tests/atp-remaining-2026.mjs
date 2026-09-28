@@ -45,6 +45,7 @@ assert.ok(!esPreguntaHelicoptero({text:'Rotor clouds indicate mountain-wave turb
 const directory=new URL('../supabase/storage/atp-images/',import.meta.url);
 const manifest=JSON.parse(readFileSync(new URL('manifest-2026.json',directory),'utf8'));
 assert.equal(manifest.assets.length,78);
+assert.equal(manifest.assets.filter(a=>a.individualFigure).length,75);
 const names=new Set(manifest.assets.map(a=>a.file));assert.equal(names.size,78);
 for(const q of questions)for(const file of q.imagenes)assert.ok(names.has(file),q.id+' missing '+file);
 for(const asset of manifest.assets){
@@ -55,8 +56,18 @@ for(const asset of manifest.assets){
  assert.ok(!/<(?:script|foreignObject)\b|\son\w+\s*=/i.test(svg),asset.file);
  const links=[...svg.matchAll(/(?:xlink:)?href="([^"]+)"/g)].map(m=>m[1]);
  assert.ok(links.every(h=>h.startsWith('#')||/^data:image\/(?:png|jpeg|jpg|webp);base64,/.test(h)),asset.file);
- if(asset.nativePagePreserved)assert.ok(/viewBox="0 0 594 774"/.test(svg),asset.file+' must keep complete source page');
- else assert.ok(asset.nativeGraphicPreserved&&asset.viewBox.length===4,asset.file);
+ assert.ok((asset.nativeGraphicPreserved||asset.nativeFigurePreserved)&&asset.viewBox.length===4,asset.file);
+ assert.ok(svg.includes('viewBox="'+asset.viewBox.join(' ')+'"'),asset.file+' crop must match reviewed bounds');
+ if(asset.individualFigure){
+  assert.ok(asset.file.endsWith('-unit.svg')&&asset.nativeVectorsPreserved,asset.file);
+  const [x,y,w,h]=asset.viewBox;
+  assert.ok(x>=0&&y>=33&&w>0&&h>0&&x+w<=594&&y+h<=742,asset.file);
+  assert.notDeepEqual(asset.viewBox,asset.sourcePageViewBox,asset.file+' must isolate the figure');
+ }
+}
+for(const group of [['123','124'],['126','127'],['129','130','131'],['141','142'],['156','157'],['223','224','225'],['226','227','228']]){
+ const crops=group.map(n=>manifest.assets.find(a=>a.label==='figure-'+n).viewBox.join(','));
+ assert.equal(new Set(crops).size,group.length,'Figures on one page must have independent crops: '+group.join(','));
 }
 assert.ok(!/DELETE\s+FROM/i.test(sql));
 assert.ok(sql.includes("c.data->>'capitulo' IN ('2','3','6','7','8')"));
