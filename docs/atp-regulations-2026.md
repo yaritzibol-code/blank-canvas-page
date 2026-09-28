@@ -27,12 +27,21 @@ Las tablas explicativas se separan de las opciones de respuesta.
 - Prueba: `node tests/atp-regulations-2026.mjs` (Node 24 o compatible con
   eliminación de tipos TypeScript). No hay cambios de dependencias.
 
-El banco en producción no se ha leído ni modificado desde esta tarea. Se ha
-comprobado su esquema en el repositorio: `public.content`, colección `questions`,
-con `fuente`, `capitulo`, `seccion` e `imagenes` dentro de `data`. Los conteos de la
-captura proporcionada por la autora son datos del banco anterior; los valores
-estáticos del catálogo son solamente conteos de respaldo cuando la nube no
-responde. Los demás capítulos mantienen esos valores previos.
+La actualización se aplicó el 28 de septiembre de 2026 desde el administrador
+Cloud de Lovable del proyecto FlightPath. Se verificó `public.content`, colección
+`questions`, con `fuente`, `capitulo`, `seccion` e `imagenes` dentro de `data`.
+El capítulo anterior contenía 358 preguntas publicadas; quedaron ocultas y
+conservan sus IDs. El capítulo nuevo contiene 363 preguntas publicadas de la
+edición 2025–2026, todas con explicación y tres opciones. Las siete figuras
+están en el bucket privado y cuatro preguntas las enlazan.
+
+Las 9,072 filas de preguntas de los demás capítulos y fuentes conservan la misma
+huella antes y después (`ee2f6d1325f4783ab57a1d0c18f958b5`, MD5 de IDs y datos
+ordenados). El selector de FlightPath muestra Regulations con 363 y ATP con
+1,242 preguntas en total. La casilla de helicópteros permanece disponible;
+el selector muestra el conteo antes del filtro y el motor aplica la exclusión.
+Los valores estáticos del catálogo son respaldo cuando la nube no responde;
+los demás capítulos conservan sus valores previos.
 
 ## Corrección editorial identificada
 
@@ -80,5 +89,6 @@ conservando sus IDs, datos y referencias históricas. No borra filas, no cambia
 otros capítulos ni fuentes y puede repetirse sin duplicar preguntas. Si falta
 una figura o falla el conteo final, la transacción no modifica el banco.
 
-La aplicación remota y la publicación de la rama requieren acceso autorizado;
-preparar estos archivos por sí solo no actualiza la plataforma en producción.
+La rama está publicada en GitHub y la actualización de datos ya se aplicó.
+Las instrucciones anteriores permiten repetir el proceso sin duplicar filas;
+subir o integrar estos archivos en GitHub por sí solo no ejecuta una migración.

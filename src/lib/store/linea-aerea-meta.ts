@@ -37,7 +37,7 @@ export const LINEA_AEREA_QUIZZES: LineaAereaQuiz[] = [
     descripcion: "Airline Transport Pilot Test Prep (ASA) — banco completo por capítulos.",
     materia: "operaciones",
     icon: "doc",
-    total: 1199,
+    total: 1242,
     fileUrl: "https://drive.google.com/file/d/1x_BE-nE3wNp3DJ2iEqGMjcxcPxLOzuaa/preview",
   },
   {
