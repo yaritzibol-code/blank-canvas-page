@@ -7,6 +7,7 @@
  */
 import { useEffect, useState } from "react";
 import { supa } from "@/lib/store/cloud";
+import { questionImageBucket } from "@/lib/question-image-policy";
 
 const TTL = 60 * 60; // 1 hora
 
@@ -19,17 +20,6 @@ const TTL = 60 * 60; // 1 hora
  * política de lectura en `storage.objects` — sin las dos cosas la lámina no
  * se firma y la pregunta se ve sin imagen.
  */
-const BUCKETS: Record<string, string> = {
-  JEPP: "jeppesen-images",
-  ATP: "atp-images",
-  LAOF: "e190-images",
-};
-
-const BUCKET_POR_DEFECTO = "jeppesen-images";
-
-function bucketFor(fuente?: string): string {
-  return (fuente && BUCKETS[fuente]) || BUCKET_POR_DEFECTO;
-}
 
 
 /** Cache de la sesión: evita volver a firmar la misma lámina al navegar. */
@@ -69,7 +59,7 @@ function Skeleton({ label }: { label: string }) {
 }
 
 export function QuestionImages({ files, fuente, fallbackSrc, adminReview = false }: { files?: string[]; fuente?: string; fallbackSrc?: string; adminReview?: boolean }) {
-  const BUCKET = bucketFor(fuente);
+  const BUCKET = questionImageBucket(fuente);
   const key = (files ?? []).join(",");
   const [urls, setUrls] = useState<string[]>([]);
   const [failed, setFailed] = useState(false);

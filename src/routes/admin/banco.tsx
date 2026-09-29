@@ -37,6 +37,7 @@ import {
 } from "@/lib/store";
 import { LINEA_AEREA_QUIZZES, capLabel, capituloNombre, chaptersFor } from "@/lib/store/linea-aerea-meta";
 import { seccionesDe } from "@/lib/store/linea-aerea-temario";
+import { QuestionImageEditor, prepareQuestionImages, questionImageDrafts, type QuestionImageDraft } from "@/components/admin/QuestionImageEditor";
 
 /** Nombre legible del manual ("ATP", "Jeppesen", "Handbook"...). */
 function fuenteLabel(code?: string): string {
@@ -102,6 +103,9 @@ function AdminBancoPage() {
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState<QForm | null>(null);
   const [formErr, setFormErr] = useState<string | null>(null);
+  const [images, setImages] = useState<QuestionImageDraft[]>([]);
+  const [saving, setSaving] = useState(false);
+  const savingRef = useRef(false);
 
   // Si llega ?q= (p. ej. desde Soporte), prefiltra la búsqueda.
   useEffect(() => {
@@ -218,6 +222,7 @@ function AdminBancoPage() {
     setEditId(null);
     setForm({ text: "", materia: "", options: ["", "", ""], correctIndex: 0, explanation: "", cite: "", status: "borrador" });
     setFormErr(null);
+    setImages([]);
   };
 
   const openEdit = (x: BankQuestion) => {
@@ -227,10 +232,11 @@ function AdminBancoPage() {
       ...(x.fuente ? { fuente: x.fuente, capitulo: x.capitulo, seccion: x.seccion } : {}),
     });
     setFormErr(null);
+    setImages(questionImageDrafts(x.imagenes));
   };
 
-  const saveForm = () => {
-    if (!form) return;
+  const saveForm = async () => {
+    if (!form || savingRef.current) return;
     const opts = form.options.map((o) => o.trim());
     const kept = opts.filter((o) => o !== "");
     if (!form.text.trim()) return setFormErr("La pregunta necesita texto.");
@@ -239,32 +245,73 @@ function AdminBancoPage() {
     if (!correctText) return setFormErr("Marca como correcta una opción que tenga texto.");
     if (!form.explanation.trim()) return setFormErr("La explicación es obligatoria.");
     const correctIndex = kept.indexOf(correctText);
-
-    if (editId) {
-      const orig = questions.find((x) => x.id === editId);
-      if (orig) {
-        // Capítulo y sección del temario: sólo para reactivos de un manual. La
-        // sección vacía se borra (no se guarda ""), y el título del capítulo se
-        // toma del catálogo para que no quede el del capítulo anterior.
-        const catalogo = orig.fuente
-          ? {
-              capitulo: form.capitulo,
-              capituloTitulo:
-                form.capitulo === undefined
-                  ? undefined
-                  : capituloNombre(orig.fuente, form.capitulo) || orig.capituloTitulo,
-              seccion: form.seccion?.trim() || undefined,
-            }
-          : {};
-        saveQuestion({ ...orig, text: form.text.trim(), materia: form.materia, options: kept, correctIndex, explanation: form.explanation.trim(), cite: form.cite.trim(), status: form.status, ...catalogo });
+    savingRef.current = true;
+    setSaving(true);
+    setFormErr(null);
+    try {
+      const imagenes = await prepareQuestionImages(images, form.fuente);
+      if (editId) {
+        const orig = questions.find((x) => x.id === editId);
+        if (!orig) throw new Error("La pregunta ya no está disponible. Vuelve a abrir el banco.");
+        if (orig) {
+          // Capítulo y sección del temario: sólo para reactivos de un manual. La
+          // sección vacía se borra (no se guarda ""), y el título del capítulo se
+          // toma del catálogo para que no quede el del capítulo anterior.
+          const catalogo = orig.fuente
+            ? {
+                capitulo: form.capitulo,
+                capituloTitulo:
+                  form.capitulo === undefined
+                    ? undefined
+                    : capituloNombre(orig.fuente, form.capitulo) || orig.capituloTitulo,
+                seccion: form.seccion?.trim() || undefined,
+              }
+            : {};
+          saveQuestion({
+            ...orig,
+            text: form.text.trim(),
+            materia: form.materia,
+            options: kept,
+            correctIndex,
+            explanation: form.explanation.trim(),
+            cite: form.cite.trim(),
+            status: form.status,
+            imagenes,
+            ...catalogo,
+          });
+        }
+      } else {
+        const created = createQuestion({
+          materia: form.materia,
+          text: form.text.trim(),
+          options: kept,
+          correctIndex,
+          explanation: form.explanation.trim(),
+          cite: form.cite.trim(),
+          status: form.status,
+          source: "manual",
+        });
+        saveQuestion({ ...created, imagenes });
+        setEditId(created.id); // A retry updates this question instead of creating a duplicate.
       }
-      confirmarGuardado("Pregunta actualizada");
-    } else {
-      createQuestion({ materia: form.materia, text: form.text.trim(), options: kept, correctIndex, explanation: form.explanation.trim(), cite: form.cite.trim(), status: form.status, source: "manual" });
-      confirmarGuardado("Pregunta creada");
+      const ok = await flushCloudWrites(["questions"]);
+      if (!ok) {
+        setFormErr(
+          "No se pudo confirmar el guardado en la nube. Reintenta guardar; no cierres esta pestaña.",
+        );
+        return;
+      }
+      showFlash(editId ? "Pregunta actualizada" : "Pregunta creada");
+      setForm(null);
+      setEditId(null);
+    } catch (error) {
+      setFormErr(
+        error instanceof Error ? error.message : "No se pudo guardar la imagen de la pregunta.",
+      );
+    } finally {
+      savingRef.current = false;
+      setSaving(false);
     }
-    setForm(null);
-    setEditId(null);
   };
 
   const toggleStatus = (x: BankQuestion) => {
@@ -417,16 +464,19 @@ function AdminBancoPage() {
       )}
 
       {/* Modal crear/editar */}
-      <Modal open={!!form} onClose={() => setForm(null)} maxWidth={560}>
+      <Modal open={!!form} onClose={() => { if (!savingRef.current) setForm(null); }} maxWidth={560}>
         {form && (
           <>
             <h2 style={modalTitleStyle}><Icon n={editId ? "pencil" : "plus"} size={20} color="#6C0820" /> {editId ? "Editar pregunta" : "Crear pregunta nueva"}</h2>
             <p style={modalSubStyle}>La pregunta necesita texto, mínimo 2 opciones, una respuesta correcta marcada y explicación.</p>
 
+            <fieldset disabled={saving} style={{ border: 0, padding: 0, margin: 0, minWidth: 0 }}>
             <div style={{ marginBottom: 14 }}>
               <label style={labelStyle}>Pregunta</label>
               <textarea value={form.text} onChange={(e) => setForm({ ...form, text: e.target.value })} rows={3} style={{ ...inputStyle, resize: "vertical" }} placeholder="Escribe la pregunta..." />
             </div>
+
+            <QuestionImageEditor drafts={images} fuente={form.fuente} disabled={saving} onChange={setImages} />
 
             <div style={{ marginBottom: 14 }}>
               <label style={labelStyle}>Materia</label>
@@ -530,9 +580,10 @@ function AdminBancoPage() {
             )}
 
             <div style={{ display: "flex", gap: 10 }}>
-              <button onClick={() => setForm(null)} style={cancelBtnStyle}>Cancelar</button>
-              <button onClick={saveForm} style={{ ...confirmBtnStyle, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}><Icon n="check" size={16} /> Guardar pregunta</button>
+              <button disabled={saving} onClick={() => setForm(null)} style={cancelBtnStyle}>Cancelar</button>
+              <button disabled={saving} onClick={() => void saveForm()} style={{ ...confirmBtnStyle, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}><Icon n="check" size={16} /> {saving ? "Guardando…" : "Guardar pregunta"}</button>
             </div>
+            </fieldset>
           </>
         )}
       </Modal>
