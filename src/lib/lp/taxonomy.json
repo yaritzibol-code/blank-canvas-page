@@ -3602,9 +3602,14 @@
          "orden": 15
         },
         {
+         "id": "linea-aerea/atp/chapter-1-regulations/safety-reporting-programs-16",
+         "titulo": "Safety Reporting Programs",
+         "orden": 16
+        },
+        {
          "id": "linea-aerea/atp/chapter-1-regulations/part-135-regulations-16",
          "titulo": "Part 135 Regulations",
-         "orden": 16
+         "orden": 17
         }
        ]
       },
@@ -3664,14 +3669,24 @@
          "orden": 10
         },
         {
+         "id": "linea-aerea/atp/chapter-2-equipment-navigation-and-facilities/gnss-disruption-and-vor-mon-11",
+         "titulo": "GNSS Disruption and VOR MON",
+         "orden": 11
+        },
+        {
+         "id": "linea-aerea/atp/chapter-2-equipment-navigation-and-facilities/ads-b-12",
+         "titulo": "ADS-B",
+         "orden": 12
+        },
+        {
          "id": "linea-aerea/atp/chapter-2-equipment-navigation-and-facilities/airport-lighting-and-marking-11",
          "titulo": "Airport Lighting and Marking",
-         "orden": 11
+         "orden": 13
         },
         {
          "id": "linea-aerea/atp/chapter-2-equipment-navigation-and-facilities/approach-lighting-12",
          "titulo": "Approach Lighting",
-         "orden": 12
+         "orden": 14
         }
        ]
       },

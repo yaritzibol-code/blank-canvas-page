@@ -4,8 +4,9 @@
  * que consume el renderer React nativo de FlightPath.
  */
 import type { AtpLearningPathDocument } from "./atp-types";
+import { applyAtp2026Updates } from "./atp-content.2026";
 
-export const ATP_LEARNING_PATHS: Record<string, AtpLearningPathDocument> = {
+export const ATP_LEARNING_PATHS: Record<string, AtpLearningPathDocument> = applyAtp2026Updates({
   "linea-aerea/atp/chapter-1-regulations/flight-engineer-requirements-3": {
     meta: {
       chapter_number: 1,
@@ -10083,4 +10084,4 @@ export const ATP_LEARNING_PATHS: Record<string, AtpLearningPathDocument> = {
     },
     figures: {},
   },
-};
+});
