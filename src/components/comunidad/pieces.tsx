@@ -229,34 +229,10 @@ const AVATAR_PODIO = [82, 66, 66] as const;
 const DELAY_PODIO = [260, 80, 420] as const;
 
 function AlasPodio({ lugar }: { lugar: 1 | 2 | 3 }) {
-  const tonos = {
-    1: ["#fff0c1", "#d9ac58", "#8b6029"],
-    2: ["#f5f8ff", "#acbacb", "#586a80"],
-    3: ["#ffe1ca", "#c88863", "#74482f"],
-  }[lugar];
-  const metal = `cm-wing-metal-${lugar}`;
-  const half = `cm-wing-half-${lugar}`;
   return (
-    <svg className="cm-podium-wings" viewBox="0 0 320 120" fill="none" aria-hidden="true">
-      <defs>
-        <linearGradient id={metal} x1="40" y1="22" x2="120" y2="87" gradientUnits="userSpaceOnUse">
-          <stop stopColor={tonos[0]} />
-          <stop offset=".5" stopColor={tonos[1]} />
-          <stop offset="1" stopColor={tonos[2]} />
-        </linearGradient>
-        <g id={half}>
-          <path d="M136 56C105 37 72 39 13 20c11 21 30 37 53 47 25 10 48 10 72 2l-2-13Z" fill={`url(#${metal})`} stroke={tonos[0]} strokeOpacity=".75" strokeWidth="1.3" />
-          <path d="M132 69C107 60 82 60 42 51c15 19 37 28 67 31l26-7-3-6Z" fill={`url(#${metal})`} stroke={tonos[0]} strokeOpacity=".58" strokeWidth="1.2" />
-          <path d="M128 79c-23-4-43-5-64-9 15 15 34 22 55 22l13-9-4-4Z" fill={`url(#${metal})`} stroke={tonos[0]} strokeOpacity=".45" strokeWidth="1.1" />
-          <path d="M39 49c30 14 58 18 91 19M60 68c23 10 45 12 67 11" stroke={tonos[2]} strokeOpacity=".9" strokeWidth="2.5" />
-          <path d="M20 25c35 15 70 17 105 36M48 56c24 9 51 13 76 18M71 74c18 7 34 10 49 11" stroke="#fff" strokeOpacity=".32" strokeWidth="1.4" />
-        </g>
-      </defs>
-      <circle cx="160" cy="60" r="58" stroke={tonos[1]} strokeOpacity=".36" strokeWidth="1" />
-      <circle cx="160" cy="60" r="52" stroke={tonos[0]} strokeOpacity=".68" strokeWidth="2" />
-      <use href={`#${half}`} />
-      <use href={`#${half}`} transform="translate(320 0) scale(-1 1)" />
-    </svg>
+    <span className={`cm-podium-wings cm-podium-wings-${lugar}`} aria-hidden="true">
+      <img src="/ranking/insignias-referencia.png" alt="" />
+    </span>
   );
 }
 

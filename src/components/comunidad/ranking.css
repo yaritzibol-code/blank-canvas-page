@@ -227,13 +227,32 @@
 .fd-shell .cm-ranking-page .cm-avatar-wrap-1 { animation: none; }
 .fd-shell .cm-ranking-page .cm-podium-wings {
   position: absolute;
-  width: min(106%, 250px);
-  height: 94px;
-  color: var(--medal);
-  opacity: .94;
-  filter: drop-shadow(0 5px 9px rgba(0, 0, 0, .45));
+  display: block;
+  width: min(110%, 245px);
+  aspect-ratio: 555 / 270;
+  overflow: hidden;
+  mix-blend-mode: lighten;
   pointer-events: none;
 }
+.fd-shell .cm-ranking-page .cm-podium-wings img {
+  position: absolute;
+  display: block;
+  width: 353%;
+  max-width: none;
+  height: auto;
+  left: -15.3%;
+  top: -70.4%;
+}
+.fd-shell .cm-ranking-page .cm-podium-wings-1 {
+  width: min(118%, 270px);
+  aspect-ratio: 640 / 310;
+}
+.fd-shell .cm-ranking-page .cm-podium-wings-1 img {
+  width: 306.1%;
+  left: -103.1%;
+  top: -48.4%;
+}
+.fd-shell .cm-ranking-page .cm-podium-wings-3 img { left: -237.8%; }
 .fd-shell .cm-ranking-page .cm-avatar-wrap > span {
   position: relative;
   z-index: 1;
