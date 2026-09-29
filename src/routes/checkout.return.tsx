@@ -9,8 +9,12 @@ import { Icon } from "@/components/ui/fp-icon";
 
 
 export const Route = createFileRoute("/checkout/return")({
-  validateSearch: (search: Record<string, unknown>): { session_id?: string } => ({
+  validateSearch: (
+    search: Record<string, unknown>,
+  ): { session_id?: string; plan?: "mensual" | "anual" } => ({
     session_id: typeof search.session_id === "string" ? search.session_id : undefined,
+    // El plan viaja hasta /gracias para que las conversiones lleven el importe correcto.
+    ...(search.plan === "anual" || search.plan === "mensual" ? { plan: search.plan } : {}),
   }),
   component: CheckoutReturn,
 });
@@ -20,7 +24,7 @@ const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
 const INK = "#FFFFFF";
 
 function CheckoutReturn() {
-  const { session_id } = Route.useSearch();
+  const { session_id, plan } = Route.useSearch();
   const navigate = useNavigate();
   const [status, setStatus] = useState<"pending" | "active" | "failed">(session_id ? "pending" : "failed");
 
@@ -58,11 +62,15 @@ function CheckoutReturn() {
   useEffect(() => {
     if (status !== "active") return;
     const t = setTimeout(
-      () => navigate({ to: "/gracias", search: session_id ? { session_id } : {} }),
+      () =>
+        navigate({
+          to: "/gracias",
+          search: { ...(session_id ? { session_id } : {}), ...(plan ? { plan } : {}) },
+        }),
       900,
     );
     return () => clearTimeout(t);
-  }, [status, navigate, session_id]);
+  }, [status, navigate, session_id, plan]);
 
 
   const title =

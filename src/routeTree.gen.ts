@@ -22,6 +22,7 @@ import { Route as ExamenCompassRouteImport } from './routes/examen-compass'
 import { Route as ExamenRtariRouteImport } from './routes/examen-rtari'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as GraciasRouteImport } from './routes/gracias'
+import { Route as LandingRouteImport } from './routes/landing'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as LineaAereaRouteImport } from './routes/linea-aerea'
 import { Route as LoginRouteImport } from './routes/login'
@@ -164,6 +165,11 @@ const FaqRoute = FaqRouteImport.update({
 const GraciasRoute = GraciasRouteImport.update({
   id: '/gracias',
   path: '/gracias',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LandingRoute = LandingRouteImport.update({
+  id: '/landing',
+  path: '/landing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LegalRoute = LegalRouteImport.update({
@@ -580,6 +586,7 @@ export interface FileRoutesByFullPath {
   '/examen-rtari': typeof ExamenRtariRoute
   '/faq': typeof FaqRoute
   '/gracias': typeof GraciasRoute
+  '/landing': typeof LandingRoute
   '/legal': typeof LegalRoute
   '/linea-aerea': typeof LineaAereaRoute
   '/login': typeof LoginRoute
@@ -672,6 +679,7 @@ export interface FileRoutesByTo {
   '/examen-rtari': typeof ExamenRtariRoute
   '/faq': typeof FaqRoute
   '/gracias': typeof GraciasRoute
+  '/landing': typeof LandingRoute
   '/legal': typeof LegalRoute
   '/linea-aerea': typeof LineaAereaRoute
   '/login': typeof LoginRoute
@@ -765,6 +773,7 @@ export interface FileRoutesById {
   '/examen-rtari': typeof ExamenRtariRoute
   '/faq': typeof FaqRoute
   '/gracias': typeof GraciasRoute
+  '/landing': typeof LandingRoute
   '/legal': typeof LegalRoute
   '/linea-aerea': typeof LineaAereaRoute
   '/login': typeof LoginRoute
@@ -860,6 +869,7 @@ export interface FileRouteTypes {
     | '/examen-rtari'
     | '/faq'
     | '/gracias'
+    | '/landing'
     | '/legal'
     | '/linea-aerea'
     | '/login'
@@ -952,6 +962,7 @@ export interface FileRouteTypes {
     | '/examen-rtari'
     | '/faq'
     | '/gracias'
+    | '/landing'
     | '/legal'
     | '/linea-aerea'
     | '/login'
@@ -1044,6 +1055,7 @@ export interface FileRouteTypes {
     | '/examen-rtari'
     | '/faq'
     | '/gracias'
+    | '/landing'
     | '/legal'
     | '/linea-aerea'
     | '/login'
@@ -1138,6 +1150,7 @@ export interface RootRouteChildren {
   ExamenRtariRoute: typeof ExamenRtariRoute
   FaqRoute: typeof FaqRoute
   GraciasRoute: typeof GraciasRoute
+  LandingRoute: typeof LandingRoute
   LegalRoute: typeof LegalRoute
   LineaAereaRoute: typeof LineaAereaRoute
   LoginRoute: typeof LoginRoute
@@ -1283,6 +1296,13 @@ declare module '@tanstack/react-router' {
       path: '/gracias'
       fullPath: '/gracias'
       preLoaderRoute: typeof GraciasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/landing': {
+      id: '/landing'
+      path: '/landing'
+      fullPath: '/landing'
+      preLoaderRoute: typeof LandingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/legal': {
@@ -1923,6 +1943,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExamenRtariRoute: ExamenRtariRoute,
   FaqRoute: FaqRoute,
   GraciasRoute: GraciasRoute,
+  LandingRoute: LandingRoute,
   LegalRoute: LegalRoute,
   LineaAereaRoute: LineaAereaRoute,
   LoginRoute: LoginRoute,

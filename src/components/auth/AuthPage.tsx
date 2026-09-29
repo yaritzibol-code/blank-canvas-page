@@ -3,6 +3,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { Eye, EyeOff } from "lucide-react";
 import { register, login, resetPassword, ensureSeededAsync, useSessionUser } from "@/lib/store";
 import { lovable } from "@/integrations/lovable";
+import { metaTrack } from "@/lib/meta";
 
 /**
  * El destino post-login puede traer query (p. ej. `/dashboard/planes?checkout=1&plan=anual`).
@@ -187,6 +188,7 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
       setError(res.error ?? "No pudimos crear tu cuenta. Inténtalo de nuevo.");
       return;
     }
+    metaTrack("CompleteRegistration", { content_name: "FlightPath Básica" });
     if (res.info) {
       // La nube pide confirmar el correo antes de entrar.
       setLoading(false);

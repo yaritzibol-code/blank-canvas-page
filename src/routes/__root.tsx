@@ -14,6 +14,8 @@ import { useActivityTracker } from "@/hooks/use-activity-tracker";
 import { installClientErrorReporter, reportClientError } from "@/lib/client-error-reporter";
 import { useApplyPrefs } from "@/hooks/use-apply-prefs";
 import { GOOGLE_ADS_ID, isAdsConfigured } from "@/lib/ads";
+import { isMetaConfigured, metaPixelBootScript } from "@/lib/meta";
+import { useMetaPixel } from "@/hooks/use-meta-pixel";
 import { FlashOfferWatch } from "@/components/shared/FlashOfferWatch";
 
 import appCss from "../styles.css?url";
@@ -200,6 +202,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             },
           ]
         : []),
+      // Pixel de Meta: sólo se inyecta cuando hay ID configurado en `@/lib/meta`.
+      ...(isMetaConfigured() ? [{ children: metaPixelBootScript() }] : []),
     ],
   }),
   shellComponent: RootShell,
@@ -240,6 +244,8 @@ function RootComponent() {
   usePresence(sessionUser);
   // Activity Ratio: bounce rate y recorrido real de cada visita.
   useActivityTracker(sessionUser);
+  // Meta: PageView por pantalla y atribución del anuncio hasta el checkout.
+  useMetaPixel();
 
   return (
     <QueryClientProvider client={queryClient}>
