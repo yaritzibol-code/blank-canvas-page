@@ -231,7 +231,7 @@ const DELAY_PODIO = [260, 80, 420] as const;
 function AlasPodio({ lugar }: { lugar: 1 | 2 | 3 }) {
   return (
     <span className={`cm-podium-wings cm-podium-wings-${lugar}`} aria-hidden="true">
-      <img src="/ranking/insignias-referencia.png" alt="" />
+      <img src={`/ranking/insignia-${lugar}.png`} alt="" />
     </span>
   );
 }
