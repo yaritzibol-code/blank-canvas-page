@@ -3,6 +3,7 @@
  * y sincronización del plan Pro al perfil del usuario tras el webhook.
  */
 import { createServerFn } from "@tanstack/react-start";
+import { getRequest } from "@tanstack/react-start/server";
 import type Stripe from "stripe";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { type StripeEnv, createStripeClient, getStripeErrorMessage } from "@/lib/stripe.server";
@@ -13,6 +14,7 @@ import {
   type PlanPrice,
 } from "@/lib/pricing";
 import { logBillingEvent } from "@/lib/billing-audit.server";
+import type { Attribution } from "@/lib/meta";
 
 type CheckoutResult = { clientSecret: string } | { error: string };
 type PortalResult = { url: string } | { error: string };
@@ -232,14 +234,78 @@ async function flashSetupCoupon(
   return coupon.id;
 }
 
+/** Claves de atribución que el navegador puede mandar al checkout. */
+const ATTRIBUTION_KEYS = [
+  "fbc",
+  "fbp",
+  "url",
+  "utm_source",
+  "utm_medium",
+  "utm_campaign",
+  "utm_content",
+  "utm_term",
+  "fb_ad_id",
+] as const satisfies ReadonlyArray<keyof Attribution>;
+
+/** Sólo claves conocidas y cadenas dentro del límite de 500 caracteres de Stripe. */
+function cleanAttribution(raw: unknown): Attribution {
+  if (!raw || typeof raw !== "object") return {};
+  const out: Attribution = {};
+  for (const k of ATTRIBUTION_KEYS) {
+    const v = (raw as Record<string, unknown>)[k];
+    if (typeof v === "string" && v.trim()) out[k] = v.trim().slice(0, 500);
+  }
+  return out;
+}
+
+/**
+ * Metadata de atribución del anuncio para la sesión de checkout. Los `fb_*`
+ * los usa el webhook para la API de Conversiones de Meta; los UTM y el
+ * `fb_ad_id` también se copian a la suscripción para ver en Stripe qué
+ * anuncio trajo cada alta.
+ */
+function attributionMetadata(attr: Attribution): {
+  session: Record<string, string>;
+  subscription: Record<string, string>;
+} {
+  const campaign: Record<string, string> = {};
+  for (const k of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fb_ad_id"] as const) {
+    if (attr[k]) campaign[k] = attr[k];
+  }
+  const request = (() => {
+    try {
+      return getRequest();
+    } catch {
+      return null;
+    }
+  })();
+  const h = request?.headers;
+  const ip = (h?.get("cf-connecting-ip") ?? h?.get("x-forwarded-for") ?? "").split(",")[0].trim();
+  const ua = h?.get("user-agent") ?? "";
+  const session: Record<string, string> = { ...campaign };
+  if (attr.fbc) session.fb_fbc = attr.fbc;
+  if (attr.fbp) session.fb_fbp = attr.fbp;
+  if (attr.url) session.fb_url = attr.url;
+  if (ip) session.fb_ip = ip.slice(0, 500);
+  if (ua) session.fb_ua = ua.slice(0, 500);
+  return { session, subscription: campaign };
+}
+
 export const createCheckoutSession = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(
-    (data: { priceId: string; returnUrl: string; environment: StripeEnv; promoCode?: string; flash?: boolean }) => {
+    (data: {
+      priceId: string;
+      returnUrl: string;
+      environment: StripeEnv;
+      promoCode?: string;
+      flash?: boolean;
+      attribution?: Attribution;
+    }) => {
       if (!/^[a-zA-Z0-9_-]+$/.test(data.priceId)) throw new Error("Invalid priceId");
       const promoCode = data.promoCode?.trim().toUpperCase();
       if (promoCode && !/^[A-Z0-9_-]{2,40}$/.test(promoCode)) throw new Error("Invalid promoCode");
-      return { ...data, ...(promoCode ? { promoCode } : {}) };
+      return { ...data, ...(promoCode ? { promoCode } : {}), attribution: cleanAttribution(data.attribution) };
     },
   )
 
@@ -336,6 +402,8 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       }
 
 
+      const attrMeta = attributionMetadata(data.attribution);
+
       const session = await stripe.checkout.sessions.create({
         line_items: [
           { price: stripePrice.id, quantity: 1 },
@@ -358,10 +426,10 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         // El `lookup_key` viaja en la metadata para que el webhook sepa QUÉ se
         // compró sin volver a pedirle las líneas a Stripe. Sin esto, un pago
         // único de minutos RTARI sería indistinguible de la inscripción.
-        metadata: { userId: context.userId, priceLookupKey: data.priceId },
+        metadata: { ...attrMeta.session, userId: context.userId, priceLookupKey: data.priceId },
         ...(discounts ? { discounts } : { allow_promotion_codes: true }),
         ...(isRecurring && {
-          subscription_data: { metadata: { userId: context.userId } },
+          subscription_data: { metadata: { ...attrMeta.subscription, userId: context.userId } },
         }),
       });
 
@@ -377,6 +445,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
           promo_code: data.promoCode ?? null,
           customer: customerId,
           mode: session.mode,
+          attribution: attrMeta.subscription,
         },
       });
 

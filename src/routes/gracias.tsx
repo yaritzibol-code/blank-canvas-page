@@ -11,6 +11,7 @@ import { PlaneField } from "@/components/shared/PlaneField";
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
 import { PathyBubble } from "@/components/landing/shared";
 import { trackPurchase } from "@/lib/ads";
+import { metaTrackSubscription } from "@/lib/meta";
 import { PRO_ANNUAL_FALLBACK, PRO_MONTHLY_FALLBACK, PRO_SETUP_FALLBACK } from "@/lib/pricing";
 
 export const Route = createFileRoute("/gracias")({
@@ -74,6 +75,7 @@ function GraciasPage() {
 
   useEffect(() => {
     trackPurchase({ value: valor, currency: recurrente.currency, transactionId: session_id });
+    metaTrackSubscription({ value: valor, currency: recurrente.currency, sessionId: session_id });
   }, [valor, recurrente.currency, session_id]);
 
   return (

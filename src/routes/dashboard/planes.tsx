@@ -9,6 +9,7 @@ import { Icon } from "@/components/ui/fp-icon";
 import { useEffect, useState } from "react";
 import { flashOfferActive, startFlashOffer as startFlashLocal } from "@/lib/flash-offer";
 import { trackAbandon, trackMilestone } from "@/lib/activity-tracker";
+import { getAttribution, metaTrack } from "@/lib/meta";
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
 import { getStripe, getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
 import {
@@ -179,18 +180,26 @@ function PlanesPage() {
       const result = await createCheckoutSession({
         data: {
           priceId: ciclo === "anual" ? PRO_ANNUAL_LOOKUP_KEY : PRO_MONTHLY_LOOKUP_KEY,
-          returnUrl: `${window.location.origin}/checkout/return?session_id={CHECKOUT_SESSION_ID}`,
+          returnUrl: `${window.location.origin}/checkout/return?session_id={CHECKOUT_SESSION_ID}&plan=${ciclo}`,
           environment: env,
           // Sin código, el propio checkout deja escribir uno.
           ...(cupon.trim() ? { promoCode: cupon.trim() } : {}),
           // Oferta relámpago viva: el servidor revalida la ventana y aplica el
           // descuento de inscripción a $1,500.
           ...(flashOfferActive() ? { flash: true as const } : {}),
+          // fbclid/UTM del anuncio: el webhook los usa para atribuir la compra en Meta.
+          attribution: getAttribution(),
         },
       });
       if ("error" in result) throw new Error(result.error);
       setClientSecret(result.clientSecret);
       trackMilestone("pago_abierto");
+      const recurrente = ciclo === "anual" ? annualPrice : proPrice;
+      metaTrack("InitiateCheckout", {
+        value: recurrente.amount + setupPrice.amount,
+        currency: recurrente.currency,
+        content_name: "FlightPath Pro",
+      });
     } catch (e) {
       setError(e instanceof Error ? e.message : "No pudimos iniciar el pago.");
     } finally {

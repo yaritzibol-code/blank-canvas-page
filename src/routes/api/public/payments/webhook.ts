@@ -227,6 +227,10 @@ export async function processStripeEvent(event: { type: string; data: { object: 
             .eq("id", userId);
         }
       }
+      // Meta: la suscripción pagada se atribuye al anuncio (API de Conversiones).
+      const { sendMetaSubscriptionEvents } = await import("@/lib/meta-capi.server");
+      await sendMetaSubscriptionEvents(session, env);
+
       if (typeof session?.subscription === "string") {
         const { createStripeClient } = await import("@/lib/stripe.server");
         const sub = await createStripeClient(env).subscriptions.retrieve(session.subscription);
