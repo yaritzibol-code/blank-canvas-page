@@ -4320,6 +4320,30 @@
     "page": "6–28, 6–32"
   },
   {
+    "id": "atp-6-b30216f3115a",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "RVR not reported — ground visibility substitution",
+    "back": "Permitted except for CAT II/III approaches",
+    "page": "6-29"
+  },
+  {
+    "id": "atp-6-3ba76c8e6d39",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "ASR approach — required airborne equipment",
+    "back": "Operating radio receiver",
+    "page": "6-29"
+  },
+  {
+    "id": "atp-6-b6d566e30665",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "OIS penetration — lowest published approach visibility",
+    "back": "3/4 SM",
+    "page": "6-29"
+  },
+  {
     "id": "atp-6-a66900d5e91a",
     "chapter": 6,
     "topic": "Instrument Approaches",
@@ -4414,6 +4438,54 @@
     "front": "Braking action reports — terms",
     "back": "Good; good to medium; medium; medium to poor; poor; nil",
     "page": "6–36"
+  },
+  {
+    "id": "atp-6-d2e8932bf0e0",
+    "chapter": 6,
+    "topic": "Landing",
+    "front": "RwyCC 0",
+    "back": "Nil braking action",
+    "page": "6-38"
+  },
+  {
+    "id": "atp-6-3fe75a3f3f3f",
+    "chapter": 6,
+    "topic": "Landing",
+    "front": "RwyCC 1",
+    "back": "Poor braking action",
+    "page": "6-38"
+  },
+  {
+    "id": "atp-6-0dadbf413513",
+    "chapter": 6,
+    "topic": "Landing",
+    "front": "RwyCC 5",
+    "back": "Good braking action",
+    "page": "6-38"
+  },
+  {
+    "id": "atp-6-3c3591cbeab8",
+    "chapter": 6,
+    "topic": "Landing",
+    "front": "RwyCC 6 in all three runway thirds",
+    "back": "No RwyCC issued; runway dry with no contaminants",
+    "page": "6-38"
+  },
+  {
+    "id": "atp-6-14558b532544",
+    "chapter": 6,
+    "topic": "Landing",
+    "front": "FICON NOTAM — paved runway",
+    "back": "Contaminant measurements",
+    "page": "6-38"
+  },
+  {
+    "id": "atp-6-14e45ccf5bdf",
+    "chapter": 6,
+    "topic": "Landing",
+    "front": "Landing weight increase of 10% — landing distance",
+    "back": "About 10% increase",
+    "page": "6-38"
   },
   {
     "id": "atp-6-cf3594ee4e80",
@@ -4622,6 +4694,22 @@
     "front": "STAR — purpose",
     "back": "Simplify arrival clearance delivery",
     "page": "6–48–49"
+  },
+  {
+    "id": "atp-6-32e5566b25da",
+    "chapter": 6,
+    "topic": "Charts",
+    "front": "Approach chart “A” in triangle",
+    "back": "Nonstandard alternate minimums",
+    "page": "6-50"
+  },
+  {
+    "id": "atp-6-a3fdad08fc2f",
+    "chapter": 6,
+    "topic": "Charts",
+    "front": "RNAV (GPS) approach mode — armed to active",
+    "back": "Within 2 NM of FAWP",
+    "page": "6-51"
   },
   {
     "id": "atp-6-4f2ca9b0112d",
@@ -4870,6 +4958,38 @@
     "front": "Night vision — most acute area",
     "back": "Off-center peripheral vision",
     "page": "7–11"
+  },
+  {
+    "id": "atp-7-43e12e471622",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Night scanning technique",
+    "back": "Scan slowly to allow off-center viewing",
+    "page": "7–14"
+  },
+  {
+    "id": "atp-7-9dd6bae1d677",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Ear block — most likely phase",
+    "back": "Descent; aggravated by upper respiratory infection",
+    "page": "7–14"
+  },
+  {
+    "id": "atp-7-486e571f21ce",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Collision-course target",
+    "back": "No relative motion and increasing apparent size",
+    "page": "7–14"
+  },
+  {
+    "id": "atp-7-2a2c2b9371fd",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Visual scan — outside vs. instrument panel",
+    "back": "About 16 seconds outside for 4–5 seconds inside",
+    "page": "7–14"
   },
   {
     "id": "atp-7-4f2cd75a525e",
