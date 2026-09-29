@@ -1,0 +1,6666 @@
+[
+  {
+    "id": "atp-1-5ba0a10a47a1",
+    "chapter": 1,
+    "topic": "Applicable Regulations",
+    "front": "Part 1",
+    "back": "Definitions and abbreviations",
+    "page": "1–3"
+  },
+  {
+    "id": "atp-1-f1f7342cdc4e",
+    "chapter": 1,
+    "topic": "Applicable Regulations",
+    "front": "Part 61",
+    "back": "Certification of pilots and flight instructors",
+    "page": "1–3"
+  },
+  {
+    "id": "atp-1-0fff33a60968",
+    "chapter": 1,
+    "topic": "Applicable Regulations",
+    "front": "Part 67",
+    "back": "Medical certificate standards and issuance",
+    "page": "1–3"
+  },
+  {
+    "id": "atp-1-302621237b11",
+    "chapter": 1,
+    "topic": "Applicable Regulations",
+    "front": "Part 91",
+    "back": "General operating and flight rules",
+    "page": "1–3"
+  },
+  {
+    "id": "atp-1-67d52d317871",
+    "chapter": 1,
+    "topic": "Applicable Regulations",
+    "front": "Part 121",
+    "back": "Air carriers",
+    "page": "1–3"
+  },
+  {
+    "id": "atp-1-8c543c945e7b",
+    "chapter": 1,
+    "topic": "Applicable Regulations",
+    "front": "Part 135",
+    "back": "Commuter and on-demand operations",
+    "page": "1–3"
+  },
+  {
+    "id": "atp-1-29624f73a7e7",
+    "chapter": 1,
+    "topic": "Applicable Regulations",
+    "front": "Common carriage",
+    "back": "Services offered to the public for compensation",
+    "page": "1–3"
+  },
+  {
+    "id": "atp-1-3b5db4116e7a",
+    "chapter": 1,
+    "topic": "Applicable Regulations",
+    "front": "Domestic air carrier",
+    "back": "Scheduled operations within the 48 contiguous states",
+    "page": "1–3"
+  },
+  {
+    "id": "atp-1-8750b96cc3f3",
+    "chapter": 1,
+    "topic": "Applicable Regulations",
+    "front": "Flag air carrier",
+    "back": "Scheduled operations inside and outside the 48 contiguous states",
+    "page": "1–3"
+  },
+  {
+    "id": "atp-1-dc265cc1ef21",
+    "chapter": 1,
+    "topic": "Applicable Regulations",
+    "front": "Supplemental carrier",
+    "back": "Nonscheduled operations where operations specifications permit",
+    "page": "1–3"
+  },
+  {
+    "id": "atp-1-ba9c53290e3c",
+    "chapter": 1,
+    "topic": "Applicable Regulations",
+    "front": "Commuter operation — schedule",
+    "back": "At least 5 round trips per week on at least one published route",
+    "page": "1–3"
+  },
+  {
+    "id": "atp-1-ea43c93f6fc8",
+    "chapter": 1,
+    "topic": "Applicable Regulations",
+    "front": "Commuter operation — airplane/powered-lift seating",
+    "back": "9 or fewer passenger seats, excluding crew seats",
+    "page": "1–3"
+  },
+  {
+    "id": "atp-1-fbd9c832c9d9",
+    "chapter": 1,
+    "topic": "Applicable Regulations",
+    "front": "Commuter operation — airplane/powered-lift payload",
+    "back": "7,500 lb or less",
+    "page": "1–3"
+  },
+  {
+    "id": "atp-1-8bd65ff79ee7",
+    "chapter": 1,
+    "topic": "Applicable Regulations",
+    "front": "On-demand operation — turbojet/powered-lift seating",
+    "back": "30 or fewer passenger seats",
+    "page": "1–3"
+  },
+  {
+    "id": "atp-1-9d35d3b59714",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "Part 121 SIC — certificate and rating",
+    "back": "ATP Certificate and appropriate aircraft type rating",
+    "page": "1–4"
+  },
+  {
+    "id": "atp-1-e139e700652a",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "SIC type rating under §61.55 — Part 121 SIC",
+    "back": "Does not satisfy §121.436",
+    "page": "1–4"
+  },
+  {
+    "id": "atp-1-2a35dd50e77c",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "PIC of aircraft over 12,500 lb gross takeoff weight",
+    "back": "Aircraft type rating",
+    "page": "1–3, 1–4"
+  },
+  {
+    "id": "atp-1-6d5fbe4837c9",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "PIC of turbojet-powered airplane",
+    "back": "Aircraft type rating",
+    "page": "1–3, 1–4"
+  },
+  {
+    "id": "atp-1-253223d7b579",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "Prior type ratings after ATP checkride in same category and class",
+    "back": "Carried onto ATP Certificate at ATP privileges",
+    "page": "1–3, 1–5"
+  },
+  {
+    "id": "atp-1-58153db973dd",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "Prior VFR-only type rating after ATP checkride",
+    "back": "VFR limitation carries forward",
+    "page": "1–3, 1–5"
+  },
+  {
+    "id": "atp-1-c6642a8d4dfe",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "ATP instruction in air transportation — daily maximum",
+    "back": "8 hours",
+    "page": "1–4, 1–6"
+  },
+  {
+    "id": "atp-1-56db0f170558",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "ATP instruction in air transportation — 7-day maximum",
+    "back": "36 hours",
+    "page": "1–4, 1–6"
+  },
+  {
+    "id": "atp-1-f847d3ede973",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "Lost pilot or medical certificate — temporary replacement validity",
+    "back": "Up to 60 days",
+    "page": "1–4, 1–6"
+  },
+  {
+    "id": "atp-1-d857268ac887",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "Part 61 certificate holder — motor vehicle action reporting deadline",
+    "back": "60 days",
+    "page": "1–4, 1–6"
+  },
+  {
+    "id": "atp-1-039bd571771e",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "Crewmember",
+    "back": "Person assigned duty in an aircraft during flight time",
+    "page": "1–4, 1–6"
+  },
+  {
+    "id": "atp-1-1f45d70424ca",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "Flight crewmember",
+    "back": "Pilot, flight engineer, or flight navigator assigned duty during flight",
+    "page": "1–4"
+  },
+  {
+    "id": "atp-1-490e904d810e",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "Part 121 pilot — age limit",
+    "back": "May not serve upon reaching 65th birthday",
+    "page": "1–4, 1–7"
+  },
+  {
+    "id": "atp-1-95dc6aa1ec79",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "ATP privileges — medical class",
+    "back": "First Class Medical Certificate",
+    "page": "1–4"
+  },
+  {
+    "id": "atp-1-838901df9b53",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "ATP privileges — First Class Medical validity, over age 40",
+    "back": "6 calendar months",
+    "page": "1–4"
+  },
+  {
+    "id": "atp-1-0f948ca081cc",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "ATP privileges — First Class Medical validity, under age 40",
+    "back": "12 calendar months",
+    "page": "1–4"
+  },
+  {
+    "id": "atp-1-e7a63682ffda",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "Practical test in aircraft — minimum medical",
+    "back": "Current Third Class Medical Certificate",
+    "page": "1–4, 1–6–7"
+  },
+  {
+    "id": "atp-1-65e6f092b26c",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "Practical test entirely in approved simulator or flight training device — medical",
+    "back": "Not required",
+    "page": "1–4, 1–6–7"
+  },
+  {
+    "id": "atp-1-e3849820733f",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "Original CAT II authorization — initial DH",
+    "back": "150 ft",
+    "page": "1–5, 1–13"
+  },
+  {
+    "id": "atp-1-be19e8f22266",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "Original CAT II authorization — initial RVR",
+    "back": "1,600 ft",
+    "page": "1–5, 1–13"
+  },
+  {
+    "id": "atp-1-66dd81fd8b54",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "CAT I — minimum DH",
+    "back": "200 ft",
+    "page": "1–5"
+  },
+  {
+    "id": "atp-1-b3a6dae9a9e6",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "CAT II — lowest DH after initial limitation removed",
+    "back": "100 ft",
+    "page": "1–5"
+  },
+  {
+    "id": "atp-1-7623702f51a9",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "CAT III — DH",
+    "back": "Below 100 ft or none",
+    "page": "1–5"
+  },
+  {
+    "id": "atp-1-48f08f9c847b",
+    "chapter": 1,
+    "topic": "The ATP Certificate",
+    "front": "CAT III — RVR",
+    "back": "Less than 1,200 ft",
+    "page": "1–5"
+  },
+  {
+    "id": "atp-1-ab484b365dbb",
+    "chapter": 1,
+    "topic": "Flight Engineer Requirements",
+    "front": "Airplane type certificate before Jan. 2, 1964 — flight engineer threshold",
+    "back": "Maximum certificated takeoff weight over 80,000 lb",
+    "page": "1–8"
+  },
+  {
+    "id": "atp-1-f702f9c11c55",
+    "chapter": 1,
+    "topic": "Flight Engineer Requirements",
+    "front": "Flight engineer incapacitation — backup",
+    "back": "At least one other qualified flight crewmember",
+    "page": "1–8–9"
+  },
+  {
+    "id": "atp-1-4e1cd418aa94",
+    "chapter": 1,
+    "topic": "Flight Engineer Requirements",
+    "front": "Emergency flight engineer functions — backup pilot certificate",
+    "back": "Flight Engineer Certificate not required",
+    "page": "1–8–9"
+  },
+  {
+    "id": "atp-1-eb2408c9b235",
+    "chapter": 1,
+    "topic": "Flight Attendants",
+    "front": "Part 121 flight attendant count — basis",
+    "back": "Installed passenger seats, not passengers aboard",
+    "page": "1–9"
+  },
+  {
+    "id": "atp-1-9679b4c38560",
+    "chapter": 1,
+    "topic": "Flight Attendants",
+    "front": "10–50 passenger seats",
+    "back": "1 flight attendant",
+    "page": "1–9"
+  },
+  {
+    "id": "atp-1-828da768eb79",
+    "chapter": 1,
+    "topic": "Flight Attendants",
+    "front": "51–100 passenger seats",
+    "back": "2 flight attendants",
+    "page": "1–9"
+  },
+  {
+    "id": "atp-1-86a41e6f923a",
+    "chapter": 1,
+    "topic": "Flight Attendants",
+    "front": "More than 100 passenger seats",
+    "back": "2 plus 1 for each 50 seats or fraction above 100",
+    "page": "1–9"
+  },
+  {
+    "id": "atp-1-53065d9f4594",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Initial training",
+    "back": "New capacity in the aircraft group",
+    "page": "1–10"
+  },
+  {
+    "id": "atp-1-3a1259d424d9",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Transition training",
+    "back": "Same capacity, another aircraft in same group",
+    "page": "1–10"
+  },
+  {
+    "id": "atp-1-0c76a64d46fe",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Upgrade training",
+    "back": "SIC→PIC or flight engineer→SIC on same aircraft type",
+    "page": "1–10"
+  },
+  {
+    "id": "atp-1-b77c86a9a7ae",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Differences training",
+    "back": "Same capacity, variation of same aircraft type",
+    "page": "1–10"
+  },
+  {
+    "id": "atp-1-7c762b45c7d4",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Part 121 PIC — proficiency check",
+    "back": "Within preceding 12 calendar months",
+    "page": "1–10, 1–14"
+  },
+  {
+    "id": "atp-1-a21763d563a9",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Part 121 PIC — proficiency check or approved simulator course",
+    "back": "Within preceding 6 calendar months",
+    "page": "1–10, 1–14"
+  },
+  {
+    "id": "atp-1-b2142f58f07a",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Part 121 non-PIC pilot — proficiency check or LOFT",
+    "back": "Within preceding 24 calendar months",
+    "page": "1–10, 1–14"
+  },
+  {
+    "id": "atp-1-96c208bf3d50",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Part 121 SIC — proficiency check or other simulator training",
+    "back": "Within preceding 12 calendar months",
+    "page": "1–10, 1–14"
+  },
+  {
+    "id": "atp-1-2704e742daf4",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Part 121 PIC — line check",
+    "back": "Within preceding 12 calendar months",
+    "page": "1–10, 1–15"
+  },
+  {
+    "id": "atp-1-1ec9f0362005",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "PIC qualified on multiple aircraft types — line check",
+    "back": "One qualified type suffices",
+    "page": "1–10, 1–15"
+  },
+  {
+    "id": "atp-1-576412e411c4",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Recurrent check in month before or after due month",
+    "back": "Credited to due month",
+    "page": "1–10, 1–15"
+  },
+  {
+    "id": "atp-1-bfcfb2ae4c90",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Part 121 pilot — takeoff/landing recency",
+    "back": "3 takeoffs and 3 landings in type within preceding 90 days",
+    "page": "1–11, 1–15"
+  },
+  {
+    "id": "atp-1-0ed2a7146d92",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Part 121 recency reestablishment — check airman",
+    "back": "3 takeoffs and 3 landings under supervision",
+    "page": "1–11, 1–15"
+  },
+  {
+    "id": "atp-1-f07d193b4596",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Recency reestablishment — critical-engine failure",
+    "back": "At least 1 takeoff with simulated failure",
+    "page": "1–11, 1–15"
+  },
+  {
+    "id": "atp-1-ca599e2dff5a",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Recency reestablishment — ILS",
+    "back": "At least 1 landing from ILS to lowest authorized minimums",
+    "page": "1–11, 1–15"
+  },
+  {
+    "id": "atp-1-9cdb3a01cd6c",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Recency reestablishment — full stop",
+    "back": "At least 1 landing",
+    "page": "1–11, 1–15"
+  },
+  {
+    "id": "atp-1-ea922488c56f",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "PIC with under 100 hours in type under Part 121 — DH/MDA addition",
+    "back": "+100 ft",
+    "page": "1–11, 1–16"
+  },
+  {
+    "id": "atp-1-3bd03f8bbc84",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "PIC with under 100 hours in type under Part 121 — visibility addition",
+    "back": "+½ SM or 2,400 ft RVR",
+    "page": "1–11, 1–16"
+  },
+  {
+    "id": "atp-1-c84498da10ee",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "PIC under 100 hours in type — alternate landing floor",
+    "back": "300 ft and 1 SM",
+    "page": "1–11"
+  },
+  {
+    "id": "atp-1-3dbea0507cd5",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "PIC under 100 hours in type — prior Part 121 PIC credit",
+    "back": "1 hour reduction per landing, up to 50 hours",
+    "page": "1–11"
+  },
+  {
+    "id": "atp-1-08ee99902af9",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "CAT II eligibility — recent ILS approaches",
+    "back": "6 in preceding 6 months",
+    "page": "1–11–13"
+  },
+  {
+    "id": "atp-1-10826eea5f03",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "CAT II eligibility — hand-flown ILS approaches",
+    "back": "At least 3 of the 6",
+    "page": "1–11–13"
+  },
+  {
+    "id": "atp-1-96e6fd07752e",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "CAT II initial limitation removal",
+    "back": "3 CAT II ILS approaches to landing at 150-ft DH in preceding 6 months",
+    "page": "1–11, 1–13"
+  },
+  {
+    "id": "atp-1-5e4442a73d26",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Dispatcher — flight deck familiarization",
+    "back": "At least 5 hours in preceding 12 calendar months",
+    "page": "1–11, 1–16"
+  },
+  {
+    "id": "atp-1-2aa36ccaf990",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Part 61 IFR PIC currency — approaches",
+    "back": "6 within preceding 6 calendar months",
+    "page": "1–11–12"
+  },
+  {
+    "id": "atp-1-f5e76427ff53",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Part 61 IFR PIC currency — other tasks",
+    "back": "Holding, intercepting, and tracking courses",
+    "page": "1–11–12"
+  },
+  {
+    "id": "atp-1-eda2d43d6f04",
+    "chapter": 1,
+    "topic": "Experience and Training Requirements",
+    "front": "Restricted-privileges ATP in Part 121",
+    "back": "SIC on operation requiring fewer than 3 pilots",
+    "page": "1–12"
+  },
+  {
+    "id": "atp-1-36104e9e7d88",
+    "chapter": 1,
+    "topic": "Part 135 Flight Crew Requirements",
+    "front": "Part 135 commuter PIC operating experience — single-engine",
+    "back": "10 hours",
+    "page": "1–18–19"
+  },
+  {
+    "id": "atp-1-a841f0ca76e8",
+    "chapter": 1,
+    "topic": "Part 135 Flight Crew Requirements",
+    "front": "Part 135 commuter PIC operating experience — multiengine reciprocating",
+    "back": "15 hours",
+    "page": "1–18–19"
+  },
+  {
+    "id": "atp-1-501811387b97",
+    "chapter": 1,
+    "topic": "Part 135 Flight Crew Requirements",
+    "front": "Part 135 commuter PIC operating experience — multiengine turbine",
+    "back": "20 hours",
+    "page": "1–18–19"
+  },
+  {
+    "id": "atp-1-24383c469445",
+    "chapter": 1,
+    "topic": "Part 135 Flight Crew Requirements",
+    "front": "Part 135 commuter PIC operating experience — turbojet",
+    "back": "25 hours",
+    "page": "1–18–19"
+  },
+  {
+    "id": "atp-1-1f9ad32d4a05",
+    "chapter": 1,
+    "topic": "Part 135 Flight Crew Requirements",
+    "front": "Part 135 PIC operating experience — takeoff/landing substitution",
+    "back": "1 extra takeoff and landing per hour reduced",
+    "page": "1–18–19"
+  },
+  {
+    "id": "atp-1-affaee92e21f",
+    "chapter": 1,
+    "topic": "Part 135 Flight Crew Requirements",
+    "front": "Part 135 PIC operating experience — minimum after substitution",
+    "back": "50% of required hours",
+    "page": "1–18–19"
+  },
+  {
+    "id": "atp-1-2a89d7ace653",
+    "chapter": 1,
+    "topic": "Part 135 Flight Crew Requirements",
+    "front": "Part 135 flight attendant threshold",
+    "back": "More than 19 passenger seats, excluding pilot seats",
+    "page": "1–20"
+  },
+  {
+    "id": "atp-1-b9abe1aaf06e",
+    "chapter": 1,
+    "topic": "Part 135 Flight Crew Requirements",
+    "front": "Part 135 passenger oxygen briefing",
+    "back": "Before takeoff if flight above 12,000 ft MSL",
+    "page": "1–20"
+  },
+  {
+    "id": "atp-1-86b47f44de99",
+    "chapter": 1,
+    "topic": "Part 135 Flight Crew Requirements",
+    "front": "Part 135 commuter autopilot in lieu of SIC — PIC experience",
+    "back": "100 hours PIC in make and model",
+    "page": "1–21"
+  },
+  {
+    "id": "atp-1-c9feae56972a",
+    "chapter": 1,
+    "topic": "Part 135 Flight Crew Requirements",
+    "front": "Part 135 SIC threshold",
+    "back": "10 or more passenger seats, excluding pilot seats",
+    "page": "1–21"
+  },
+  {
+    "id": "atp-1-b363c2e80463",
+    "chapter": 1,
+    "topic": "Part 135 Flight Crew Requirements",
+    "front": "Part 135 PIC line check",
+    "back": "Within preceding 12 calendar months",
+    "page": "1–22"
+  },
+  {
+    "id": "atp-1-565f712e6c82",
+    "chapter": 1,
+    "topic": "Part 135 Flight Crew Requirements",
+    "front": "Part 135 IFR PIC instrument proficiency check",
+    "back": "Since beginning of sixth preceding calendar month",
+    "page": "1–17, 1–23"
+  },
+  {
+    "id": "atp-1-ce3215f46ec8",
+    "chapter": 1,
+    "topic": "Part 135 Flight Crew Requirements",
+    "front": "Part 135 PIC assigned single- and multiengine — first instrument check",
+    "back": "Multiengine aircraft",
+    "page": "1–17, 1–23"
+  },
+  {
+    "id": "atp-1-879f51ff46cb",
+    "chapter": 1,
+    "topic": "Part 135 Flight Crew Requirements",
+    "front": "Part 135 PIC assigned single- and multiengine — subsequent checks",
+    "back": "Alternate single- and multiengine",
+    "page": "1–17, 1–23"
+  },
+  {
+    "id": "atp-1-30215dff6f1e",
+    "chapter": 1,
+    "topic": "Part 135 Flight Crew Requirements",
+    "front": "Part 135 PIC under 100 hours in turbine type — landing DH/MDA",
+    "back": "+100 ft",
+    "page": "1–19"
+  },
+  {
+    "id": "atp-1-bb8da2ddf218",
+    "chapter": 1,
+    "topic": "Part 135 Flight Crew Requirements",
+    "front": "Part 135 PIC under 100 hours in turbine type — landing visibility",
+    "back": "+½ SM",
+    "page": "1–19"
+  },
+  {
+    "id": "atp-1-dbf705d29eea",
+    "chapter": 1,
+    "topic": "Flight Crew Duty Time Limits",
+    "front": "Deadhead transportation to/from assignment",
+    "back": "Duty; not required rest",
+    "page": "1–25, 1–28"
+  },
+  {
+    "id": "atp-1-105d7a1197aa",
+    "chapter": 1,
+    "topic": "Flight Crew Duty Time Limits",
+    "front": "Airport/standby reserve",
+    "back": "At airport for possible assignment; all time counts as FDP",
+    "page": "1–25, 1–34"
+  },
+  {
+    "id": "atp-1-a26563d88367",
+    "chapter": 1,
+    "topic": "Flight Crew Duty Time Limits",
+    "front": "Physiological night's rest — duration",
+    "back": "10 hours",
+    "page": "1–25, 1–31"
+  },
+  {
+    "id": "atp-1-5f1808955610",
+    "chapter": 1,
+    "topic": "Flight Crew Duty Time Limits",
+    "front": "Physiological night's rest — clock hours encompassed",
+    "back": "0100–0700 at home base or acclimated location",
+    "page": "1–25, 1–31"
+  },
+  {
+    "id": "atp-1-f33836dc5ca8",
+    "chapter": 1,
+    "topic": "Flight Crew Duty Time Limits",
+    "front": "Window of circadian low",
+    "back": "0200–0559",
+    "page": "1–26, 1–29"
+  },
+  {
+    "id": "atp-1-a9d4cf00a1d2",
+    "chapter": 1,
+    "topic": "Flight Crew Duty Time Limits",
+    "front": "Consecutive FDPs infringing window of circadian low — maximum",
+    "back": "3",
+    "page": "1–26, 1–34"
+  },
+  {
+    "id": "atp-1-5abf51676123",
+    "chapter": 1,
+    "topic": "Flight Crew Duty Time Limits",
+    "front": "Short-call reserve — maximum availability",
+    "back": "14 hours",
+    "page": "1–25, 1–29"
+  },
+  {
+    "id": "atp-1-d32c7e7c8f12",
+    "chapter": 1,
+    "topic": "Flight Crew Duty Time Limits",
+    "front": "Theater — longitude span",
+    "back": "No more than 60°",
+    "page": "1–25, 1–30"
+  },
+  {
+    "id": "atp-1-6b53ac46a56d",
+    "chapter": 1,
+    "topic": "Flight Crew Duty Time Limits",
+    "front": "Required rest before reserve or FDP",
+    "back": "10 consecutive hours",
+    "page": "1–26, 1–29–30"
+  },
+  {
+    "id": "atp-1-6ae8686fc7de",
+    "chapter": 1,
+    "topic": "Flight Crew Duty Time Limits",
+    "front": "Required rest — uninterrupted sleep opportunity",
+    "back": "At least 8 hours",
+    "page": "1–26, 1–29–30"
+  },
+  {
+    "id": "atp-1-fcce8bb4c6e0",
+    "chapter": 1,
+    "topic": "Flight Crew Duty Time Limits",
+    "front": "Rest free from all duty in prior 168 hours",
+    "back": "30 consecutive hours",
+    "page": "1–26, 1–34"
+  },
+  {
+    "id": "atp-1-e6f487c949d1",
+    "chapter": 1,
+    "topic": "Flight Crew Duty Time Limits",
+    "front": "Flag unaugmented two-pilot — flight time in 7 consecutive days",
+    "back": "32 hours",
+    "page": "1–28"
+  },
+  {
+    "id": "atp-1-e52929c77220",
+    "chapter": 1,
+    "topic": "Flight Crew Duty Time Limits",
+    "front": "Flag unaugmented two-pilot — flight time in calendar month",
+    "back": "100 hours",
+    "page": "1–28"
+  },
+  {
+    "id": "atp-1-d011b5136f9a",
+    "chapter": 1,
+    "topic": "Flight Crew Duty Time Limits",
+    "front": "Domestic/flag dispatcher — scheduled consecutive duty maximum",
+    "back": "10 hours",
+    "page": "1–34"
+  },
+  {
+    "id": "atp-1-910559f891f7",
+    "chapter": 1,
+    "topic": "Flight Duty Periods",
+    "front": "Total FDP in 168 consecutive hours — maximum",
+    "back": "60 hours",
+    "page": "1–26, 1–34"
+  },
+  {
+    "id": "atp-1-6a6a5f8c50f8",
+    "chapter": 1,
+    "topic": "Flight Duty Periods",
+    "front": "Total FDP in 672 consecutive hours — maximum",
+    "back": "190 hours",
+    "page": "1–26, 1–28"
+  },
+  {
+    "id": "atp-1-a44569e74d4f",
+    "chapter": 1,
+    "topic": "Flight Duty Periods",
+    "front": "Part 117 Table A",
+    "back": "Maximum flight time for unaugmented operations",
+    "page": "1–26, 1–31"
+  },
+  {
+    "id": "atp-1-919d8ec450f6",
+    "chapter": 1,
+    "topic": "Flight Duty Periods",
+    "front": "Part 117 Table B",
+    "back": "Maximum FDP by start time and number of segments",
+    "page": "1–26–27, 1–32"
+  },
+  {
+    "id": "atp-1-21aa738fbaf8",
+    "chapter": 1,
+    "topic": "Flight Duty Periods",
+    "front": "Part 117 Table C",
+    "back": "Maximum augmented FDP by start time, rest facility class, and pilot count",
+    "page": "1–27, 1–32"
+  },
+  {
+    "id": "atp-1-8cc8ef30ce39",
+    "chapter": 1,
+    "topic": "Flight Duty Periods",
+    "front": "Augmented crew not acclimated — Table C adjustment",
+    "back": "Reduce maximum FDP by 30 minutes",
+    "page": "1–27, 1–33"
+  },
+  {
+    "id": "atp-1-954457b5383e",
+    "chapter": 1,
+    "topic": "Flight Duty Periods",
+    "front": "Unaugmented suitable-accommodation rest — minimum for FDP exclusion",
+    "back": "3 hours after arrival",
+    "page": "1–26, 1–32"
+  },
+  {
+    "id": "atp-1-fa23ff179be1",
+    "chapter": 1,
+    "topic": "Flight Duty Periods",
+    "front": "Unaugmented suitable-accommodation rest — scheduling",
+    "back": "Before start of FDP",
+    "page": "1–33"
+  },
+  {
+    "id": "atp-1-945815b51b81",
+    "chapter": 1,
+    "topic": "Flight Duty Periods",
+    "front": "Unforeseen circumstances before takeoff — FDP extension",
+    "back": "Up to 2 hours by PIC and certificate holder",
+    "page": "1–25, 1–33"
+  },
+  {
+    "id": "atp-1-5ced994ec5a6",
+    "chapter": 1,
+    "topic": "Flight Duty Periods",
+    "front": "Unforeseen circumstances after takeoff — FDP extension",
+    "back": "As needed to safely land at next destination or alternate",
+    "page": "1–26, 1–33"
+  },
+  {
+    "id": "atp-1-bd978d2e76dd",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "Operational control",
+    "back": "Authority over initiating, conducting, or terminating a flight",
+    "page": "1–35–36"
+  },
+  {
+    "id": "atp-1-485dd6ccfe98",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "Supplemental/commercial flight — joint operational responsibility",
+    "back": "PIC and director of operations",
+    "page": "1–35, 1–38"
+  },
+  {
+    "id": "atp-1-6239f0cdef7f",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "Domestic flight — preflight planning, delay, dispatch release",
+    "back": "PIC and aircraft dispatcher jointly",
+    "page": "1–38"
+  },
+  {
+    "id": "atp-1-b3a831152a1e",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "Domestic/flag — release document",
+    "back": "Dispatch release",
+    "page": "1–35"
+  },
+  {
+    "id": "atp-1-bac2c9b077b5",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "Supplemental/commercial — release document",
+    "back": "Flight release",
+    "page": "1–35, 1–41"
+  },
+  {
+    "id": "atp-1-dfeec66d172e",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "Supplemental/commercial flight release — unique crew item",
+    "back": "Names of flight crew, flight attendants, and designated PIC",
+    "page": "1–35, 1–41–42"
+  },
+  {
+    "id": "atp-1-c517ecce0479",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "Domestic/flag PIC — airport, navigation, and weather information source",
+    "back": "Aircraft dispatcher",
+    "page": "1–35, 1–39"
+  },
+  {
+    "id": "atp-1-d53f6e9211d8",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "Supplemental/commercial PIC — airport and weather information source",
+    "back": "PIC obtains it",
+    "page": "1–36, 1–43"
+  },
+  {
+    "id": "atp-1-9ff701371751",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "Domestic intermediate stop — redispatch threshold",
+    "back": "More than 1 hour on ground",
+    "page": "1–35, 1–40"
+  },
+  {
+    "id": "atp-1-9769bc9946ec",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "Flag intermediate stop — redispatch threshold",
+    "back": "More than 6 hours on ground",
+    "page": "1–35, 1–40"
+  },
+  {
+    "id": "atp-1-c7fae45f191b",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "Part 121 flight documents — retention",
+    "back": "At least 3 months",
+    "page": "1–35, 1–41"
+  },
+  {
+    "id": "atp-1-dfc53c9d0abe",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "Provisional airport",
+    "back": "Serves a community when regular airport unavailable",
+    "page": "1–36–37"
+  },
+  {
+    "id": "atp-1-17b0a6eae8ff",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "Authorized routes, areas, and kinds of operations",
+    "back": "Operations specifications",
+    "page": "1–36–37"
+  },
+  {
+    "id": "atp-1-17209f38dbe7",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "ETOPS entry point — twin-engine airplane",
+    "back": "First point >60 min from adequate airport at one-engine-inoperative cruise",
+    "page": "1–36, 1–42"
+  },
+  {
+    "id": "atp-1-9f556e5199b7",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "ETOPS entry point — passenger airplane with >2 engines",
+    "back": "First point >180 min from adequate airport",
+    "page": "1–42"
+  },
+  {
+    "id": "atp-1-5e1806204245",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "ETOPS up to 180 minutes — alternate RFFS",
+    "back": "ICAO Category 4 or higher",
+    "page": "1–36, 1–43"
+  },
+  {
+    "id": "atp-1-10000ef66581",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "Beyond-180-minute ETOPS — adequate airport within authorized diversion time",
+    "back": "RFFS ICAO Category 7 or higher",
+    "page": "1–36"
+  },
+  {
+    "id": "atp-1-af8599174c0e",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "ETOPS alternate RFFS augmentation — response time",
+    "back": "30 minutes",
+    "page": "1–43"
+  },
+  {
+    "id": "atp-1-9e2b535407e2",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "North polar area",
+    "back": "North of 78° N",
+    "page": "1–43"
+  },
+  {
+    "id": "atp-1-90c345767bff",
+    "chapter": 1,
+    "topic": "Dispatching and Flight Release",
+    "front": "South polar area",
+    "back": "South of 60° S",
+    "page": "1–43"
+  },
+  {
+    "id": "atp-1-8923b4cdfa04",
+    "chapter": 1,
+    "topic": "Fuel Requirements",
+    "front": "Domestic fuel — reserve after most distant alternate",
+    "back": "45 min at normal cruise",
+    "page": "1–44"
+  },
+  {
+    "id": "atp-1-de08bcb61a6e",
+    "chapter": 1,
+    "topic": "Fuel Requirements",
+    "front": "Flag turbine within 48 contiguous states/DC — fuel",
+    "back": "Domestic fuel rule",
+    "page": "1–44–45"
+  },
+  {
+    "id": "atp-1-5acf996afe51",
+    "chapter": 1,
+    "topic": "Fuel Requirements",
+    "front": "Supplemental/commercial reciprocating, contiguous U.S. — reserve after alternate",
+    "back": "45 min at normal cruise",
+    "page": "1–44, 1–46"
+  },
+  {
+    "id": "atp-1-857199c38524",
+    "chapter": 1,
+    "topic": "Fuel Requirements",
+    "front": "Turbojet to airport with no available alternate — reserve",
+    "back": "2 hours at normal cruise after destination",
+    "page": "1–44–45"
+  },
+  {
+    "id": "atp-1-9719df10baf9",
+    "chapter": 1,
+    "topic": "Fuel Requirements",
+    "front": "Flag/supplemental/commercial turbine other than turboprop outside 48 states/DC — enroute allowance",
+    "back": "10% of time to destination",
+    "page": "1–44, 1–46"
+  },
+  {
+    "id": "atp-1-f1c2e3e32018",
+    "chapter": 1,
+    "topic": "Fuel Requirements",
+    "front": "Flag/supplemental/commercial turbine other than turboprop outside 48 states/DC — final reserve",
+    "back": "30 min at holding speed, 1,500 ft above alternate/destination",
+    "page": "1–44, 1–46"
+  },
+  {
+    "id": "atp-1-424afcf9f4d2",
+    "chapter": 1,
+    "topic": "Fuel Requirements",
+    "front": "Flag nonturbine/turboprop — final reserve",
+    "back": "30 min + 15% of destination-and-alternate time, or 90 min; whichever is less",
+    "page": "1–44, 1–47"
+  },
+  {
+    "id": "atp-1-c34564f8a0e4",
+    "chapter": 1,
+    "topic": "Fuel Requirements",
+    "front": "Supplemental/commercial nonturbine/turboprop without alternate — reserve",
+    "back": "3 hours at normal cruise after destination",
+    "page": "1–44, 1–47"
+  },
+  {
+    "id": "atp-1-f63c5e074443",
+    "chapter": 1,
+    "topic": "Carriage of Passengers and Cargo",
+    "front": "Flight above FL250 — passenger oxygen briefing",
+    "back": "Before flight; need after depressurization and oxygen equipment use",
+    "page": "1–47, 1–50"
+  },
+  {
+    "id": "atp-1-4e53f340c464",
+    "chapter": 1,
+    "topic": "Carriage of Passengers and Cargo",
+    "front": "Passenger at least 2 years old",
+    "back": "Own seat or berth and approved seatbelt",
+    "page": "1–47, 1–50"
+  },
+  {
+    "id": "atp-1-f683f23be295",
+    "chapter": 1,
+    "topic": "Carriage of Passengers and Cargo",
+    "front": "Two people sharing multiple lounge/divan seatbelt",
+    "back": "Enroute only",
+    "page": "1–47, 1–50"
+  },
+  {
+    "id": "atp-1-8073b3991aa3",
+    "chapter": 1,
+    "topic": "Carriage of Passengers and Cargo",
+    "front": "Sterile flight deck",
+    "back": "No nonessential activity during critical phases",
+    "page": "1–47, 1–49"
+  },
+  {
+    "id": "atp-1-052e59017536",
+    "chapter": 1,
+    "topic": "Carriage of Passengers and Cargo",
+    "front": "Critical phase — altitude",
+    "back": "Below 10,000 ft, except cruise",
+    "page": "1–47, 1–49"
+  },
+  {
+    "id": "atp-1-474efef7855e",
+    "chapter": 1,
+    "topic": "Carriage of Passengers and Cargo",
+    "front": "Authorized person carrying accessible weapon — advance notice",
+    "back": "At least 1 hour, except emergency",
+    "page": "1–47, 1–49"
+  },
+  {
+    "id": "atp-1-5f36a8c0e67a",
+    "chapter": 1,
+    "topic": "Carriage of Passengers and Cargo",
+    "front": "Firearm in checked baggage — condition",
+    "back": "Unloaded; locked; passenger retains key/combination",
+    "page": "1–48–49"
+  },
+  {
+    "id": "atp-1-97f2ff8f878c",
+    "chapter": 1,
+    "topic": "Carriage of Passengers and Cargo",
+    "front": "Maximum-risk prisoner — maximum aboard",
+    "back": "1",
+    "page": "1–48, 1–50"
+  },
+  {
+    "id": "atp-1-418c465dde10",
+    "chapter": 1,
+    "topic": "Carriage of Passengers and Cargo",
+    "front": "Intoxicated person causing in-flight incident — report",
+    "back": "To Administrator within 5 days",
+    "page": "1–48, 1–51"
+  },
+  {
+    "id": "atp-1-5b952e55a335",
+    "chapter": 1,
+    "topic": "Carriage of Passengers and Cargo",
+    "front": "Part 121 cabin cargo bin — strength",
+    "back": "Passenger-seat load factor ×1.15",
+    "page": "1–48, 1–51"
+  },
+  {
+    "id": "atp-1-54feb0151d08",
+    "chapter": 1,
+    "topic": "Carriage of Passengers and Cargo",
+    "front": "Part 121 cabin cargo outside approved bin — position",
+    "back": "Aft of bulkhead or divider",
+    "page": "1–48, 1–52"
+  },
+  {
+    "id": "atp-1-a1a6bcfe4c4f",
+    "chapter": 1,
+    "topic": "Part 135 Carriage of Passengers and Cargo Requirements",
+    "front": "Hazardous materials handling — recurrent training interval",
+    "back": "Preceding 12 calendar months",
+    "page": "1–48, 1–53"
+  },
+  {
+    "id": "atp-1-9a34fbb921e8",
+    "chapter": 1,
+    "topic": "Part 135 Carriage of Passengers and Cargo Requirements",
+    "front": "Part 135 completed load manifest — retention",
+    "back": "At least 30 days",
+    "page": "1–52"
+  },
+  {
+    "id": "atp-1-f8a8fb4770e7",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Part 121 crash axe",
+    "back": "1 on flight deck",
+    "page": "1–55"
+  },
+  {
+    "id": "atp-1-8841a20424dd",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Part 121 hand fire extinguisher — flight deck",
+    "back": "At least 1",
+    "page": "1–55"
+  },
+  {
+    "id": "atp-1-61d1bcf00784",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Part 121 cabin extinguishers — basis",
+    "back": "Installed passenger seats",
+    "page": "1–55, 1–59"
+  },
+  {
+    "id": "atp-1-c87cbf659775",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Part 121 cabin extinguishers — 6–30 seats",
+    "back": "1",
+    "page": "1–55"
+  },
+  {
+    "id": "atp-1-e73b0227654d",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Part 121 cabin extinguishers — 31–60 seats",
+    "back": "2",
+    "page": "1–55"
+  },
+  {
+    "id": "atp-1-e6a34fb2420a",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Part 121 cabin extinguishers — 61–200 seats",
+    "back": "3",
+    "page": "1–55"
+  },
+  {
+    "id": "atp-1-f89c7b05421f",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Part 121 cabin extinguishers — each additional 100 seats above 200",
+    "back": "1 additional extinguisher; maximum 8 at 601+ seats",
+    "page": "1–55"
+  },
+  {
+    "id": "atp-1-9848012a2107",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Part 121 megaphone — 60–99 seats",
+    "back": "1 at rear of passenger cabin",
+    "page": "1–55, 1–59"
+  },
+  {
+    "id": "atp-1-2ea22fd62892",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Part 121 megaphones — 100+ seats",
+    "back": "2, front and rear",
+    "page": "1–55, 1–60"
+  },
+  {
+    "id": "atp-1-609038e6b44b",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Emergency exit lights — armed/on",
+    "back": "Taxi, takeoff, landing",
+    "page": "1–55, 1–60"
+  },
+  {
+    "id": "atp-1-4dce3b4cdfea",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Emergency exit above ground requiring assist",
+    "back": "More than 6 ft, excluding over-wing exit",
+    "page": "1–55, 1–60"
+  },
+  {
+    "id": "atp-1-83a915ab8eb1",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Door to required exit in another compartment",
+    "back": "Latched open during takeoff/landing",
+    "page": "1–55, 1–61"
+  },
+  {
+    "id": "atp-1-b9c1e8f9d37b",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Part 121/135 PA and crew interphone — seating threshold",
+    "back": "More than 19 passenger seats",
+    "page": "1–55, 1–61"
+  },
+  {
+    "id": "atp-1-9af9285ca755",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Flight deck crewmember oxygen above 10,000-ft flight altitude",
+    "back": "For entire flight at those altitudes; minimum 2-hour supply",
+    "page": "1–55, 1–61"
+  },
+  {
+    "id": "atp-1-c5fe0ebaca34",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Flight deck quick-donning mask — Part 121",
+    "back": "Above FL250",
+    "page": "1–56, 1–61"
+  },
+  {
+    "id": "atp-1-bcb377dd2c17",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Quick-donning mask — donning time",
+    "back": "Within 5 seconds, one hand",
+    "page": "1–56, 1–62"
+  },
+  {
+    "id": "atp-1-d919a1c439b1",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Part 121 pilot oxygen mask — above FL410",
+    "back": "One pilot wears continuously",
+    "page": "1–56, 1–62"
+  },
+  {
+    "id": "atp-1-5860df50da61",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Part 121 without quick-donning masks — above FL250",
+    "back": "One pilot wears oxygen mask",
+    "page": "1–62"
+  },
+  {
+    "id": "atp-1-9ce0caddcf92",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Turbine passenger oxygen — cabin altitude >10,000 through 14,000 ft",
+    "back": "10% of passengers after 30 min",
+    "page": "1–56"
+  },
+  {
+    "id": "atp-1-9115ce04a475",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Turbine passenger oxygen — cabin altitude >14,000 through 15,000 ft",
+    "back": "30% for entire time",
+    "page": "1–56"
+  },
+  {
+    "id": "atp-1-8e0e07943120",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Passenger oxygen — cabin altitude >15,000 ft",
+    "back": "All passengers for entire time",
+    "page": "1–56, 1–62"
+  },
+  {
+    "id": "atp-1-b772d83fc962",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Reciprocating passenger oxygen — cabin altitude >8,000 through 14,000 ft",
+    "back": "10% for 30 min",
+    "page": "1–63"
+  },
+  {
+    "id": "atp-1-752498c82159",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Pressurized passenger oxygen — emergency-descent benchmark",
+    "back": "Descend to 14,000 ft within 4 min",
+    "page": "1–56, 1–63"
+  },
+  {
+    "id": "atp-1-77704682cd1b",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "First-aid oxygen — minimum dispensing units",
+    "back": "2",
+    "page": "1–56, 1–63"
+  },
+  {
+    "id": "atp-1-51269341f7e8",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Extended overwater — threshold",
+    "back": "More than 50 NM from shoreline",
+    "page": "1–56"
+  },
+  {
+    "id": "atp-1-0e3fdfff8df5",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Extended overwater — life preservers",
+    "back": "One per occupant, with survivor locator light",
+    "page": "1–56, 1–63–64"
+  },
+  {
+    "id": "atp-1-4446a1829ffe",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Extended overwater — life raft locator light",
+    "back": "Required on each raft",
+    "page": "1–56, 1–63"
+  },
+  {
+    "id": "atp-1-e43754087d82",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Extended overwater — pyrotechnic signaling device",
+    "back": "At least 1 per raft",
+    "page": "1–63"
+  },
+  {
+    "id": "atp-1-6cca0b8cf6f2",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Extended overwater — survival kit",
+    "back": "Attached to each raft",
+    "page": "1–56, 1–63"
+  },
+  {
+    "id": "atp-1-58f9baf1c298",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Extended overwater — survival-type ELT",
+    "back": "At least 1",
+    "page": "1–56, 1–63"
+  },
+  {
+    "id": "atp-1-1f0f4320f343",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Uninhabited terrain — survival kits",
+    "back": "Enough for all occupants",
+    "page": "1–56, 1–64"
+  },
+  {
+    "id": "atp-1-d7793f34bc66",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Emergency equipment drills after initial training",
+    "back": "Every 24 calendar months",
+    "page": "1–57, 1–65"
+  },
+  {
+    "id": "atp-1-d8727bb74f8c",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Emergency training — recurrent interval",
+    "back": "Annually",
+    "page": "1–57"
+  },
+  {
+    "id": "atp-1-30afe9f9568e",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "High-altitude hypoxia/decompression training",
+    "back": "Crewmembers serving above FL250",
+    "page": "1–57, 1–65"
+  },
+  {
+    "id": "atp-1-4d8ab5a53302",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Engine rotation stops in flight — report",
+    "back": "Appropriate ground radio station as soon as practicable",
+    "page": "1–57, 1–66"
+  },
+  {
+    "id": "atp-1-14041c44fd5f",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Two-engine aircraft — engine failure/shutdown landing",
+    "back": "Nearest suitable airport in point of time",
+    "page": "1–57, 1–66"
+  },
+  {
+    "id": "atp-1-9b3590bbf9e4",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Aircraft with ≥3 engines — one-engine failure exception",
+    "back": "May continue farther if PIC finds it equally safe",
+    "page": "1–57, 1–66"
+  },
+  {
+    "id": "atp-1-317b798a6543",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "PIC emergency deviation — written report deadline",
+    "back": "Within 10 days after return to home base",
+    "page": "1–57, 1–66"
+  },
+  {
+    "id": "atp-1-1dc9b6f7a82c",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "Dispatcher emergency deviation — written report deadline",
+    "back": "Within 10 days after emergency",
+    "page": "1–57, 1–67"
+  },
+  {
+    "id": "atp-1-e81b534651ef",
+    "chapter": 1,
+    "topic": "Emergency Equipment and Operations",
+    "front": "ATC priority in emergency — report if requested",
+    "back": "To ATC facility manager within 48 hours",
+    "page": "1–57–58"
+  },
+  {
+    "id": "atp-1-81976f32c640",
+    "chapter": 1,
+    "topic": "Part 135 Oxygen Requirements",
+    "front": "Part 135 unpressurized pilot — >10,000 through 12,000 ft MSL",
+    "back": "Oxygen after 30 min",
+    "page": "1–67–68"
+  },
+  {
+    "id": "atp-1-c9900002f3a1",
+    "chapter": 1,
+    "topic": "Part 135 Oxygen Requirements",
+    "front": "Part 135 unpressurized pilot — >12,000 ft MSL",
+    "back": "Continuous oxygen",
+    "page": "1–67–69"
+  },
+  {
+    "id": "atp-1-edc9a9e788a7",
+    "chapter": 1,
+    "topic": "Part 135 Oxygen Requirements",
+    "front": "Part 135 pressurized aircraft — cabin >10,000 ft",
+    "back": "Pilot follows unpressurized oxygen rules",
+    "page": "1–67"
+  },
+  {
+    "id": "atp-1-15c2a8cde7ed",
+    "chapter": 1,
+    "topic": "Part 135 Oxygen Requirements",
+    "front": "Part 135 pressurized aircraft — flight >FL250",
+    "back": "Both pilots have quick-donning masks",
+    "page": "1–67"
+  },
+  {
+    "id": "atp-1-11178b366416",
+    "chapter": 1,
+    "topic": "Part 135 Oxygen Requirements",
+    "front": "Part 135 pressurized aircraft — one pilot leaves above FL250",
+    "back": "Remaining pilot wears oxygen mask",
+    "page": "1–67"
+  },
+  {
+    "id": "atp-1-880eac78cfdc",
+    "chapter": 1,
+    "topic": "Part 135 Oxygen Requirements",
+    "front": "Part 135 pressurized aircraft — flight >FL350",
+    "back": "One pilot wears oxygen mask",
+    "page": "1–67–69"
+  },
+  {
+    "id": "atp-1-a084ce624869",
+    "chapter": 1,
+    "topic": "Part 135 Oxygen Requirements",
+    "front": "Part 135 unpressurized occupants other than pilots — >10,000 through 15,000 ft",
+    "back": "Oxygen for 10% after 30 min",
+    "page": "1–68–70"
+  },
+  {
+    "id": "atp-1-49ee34971b7b",
+    "chapter": 1,
+    "topic": "Part 135 Oxygen Requirements",
+    "front": "Part 135 unpressurized occupants other than pilots — >15,000 ft",
+    "back": "Oxygen for all",
+    "page": "1–68–70"
+  },
+  {
+    "id": "atp-1-fca676be9905",
+    "chapter": 1,
+    "topic": "Part 135 Oxygen Requirements",
+    "front": "Part 135 pressurized aircraft >15,000 ft — occupants other than pilots",
+    "back": "1-hour oxygen supply",
+    "page": "1–68"
+  },
+  {
+    "id": "atp-1-5e4911012d44",
+    "chapter": 1,
+    "topic": "Part 135 Oxygen Requirements",
+    "front": "Part 135 pressurized aircraft — descend to 15,000 ft in ≤4 min",
+    "back": "Occupant oxygen may be reduced to 30 min",
+    "page": "1–68"
+  },
+  {
+    "id": "atp-1-5f424dd85d0f",
+    "chapter": 1,
+    "topic": "Part 135 Oxygen Requirements",
+    "front": "Smoking near oxygen dispensing equipment",
+    "back": "Prohibited within 10 ft",
+    "page": "1–69"
+  },
+  {
+    "id": "atp-1-fded16de7de6",
+    "chapter": 1,
+    "topic": "Part 135 Oxygen Requirements",
+    "front": "Deviation from Part 135 medical oxygen rules — report",
+    "back": "FAA FSDO within 10 working days",
+    "page": "1–70"
+  },
+  {
+    "id": "atp-1-ce88d4756a8f",
+    "chapter": 1,
+    "topic": "National Transportation Safety Board (NTSB)",
+    "front": "Aircraft accident — interval",
+    "back": "Boarding with intent to fly through final disembarkation",
+    "page": "1–71"
+  },
+  {
+    "id": "atp-1-20bac75e0997",
+    "chapter": 1,
+    "topic": "National Transportation Safety Board (NTSB)",
+    "front": "Aircraft accident — outcome",
+    "back": "Death, serious injury, or substantial aircraft damage",
+    "page": "1–71"
+  },
+  {
+    "id": "atp-1-dd6f99bd82be",
+    "chapter": 1,
+    "topic": "National Transportation Safety Board (NTSB)",
+    "front": "Serious injury — hospitalization",
+    "back": "More than 48 hours, starting within 7 days of injury",
+    "page": "1–71–72"
+  },
+  {
+    "id": "atp-1-604a7b79e28a",
+    "chapter": 1,
+    "topic": "National Transportation Safety Board (NTSB)",
+    "front": "Serious injury — fracture",
+    "back": "Any bone except simple finger, toe, or nose fracture",
+    "page": "1–71"
+  },
+  {
+    "id": "atp-1-7590c0c22cd1",
+    "chapter": 1,
+    "topic": "National Transportation Safety Board (NTSB)",
+    "front": "Substantial damage",
+    "back": "Adversely affects strength, performance, or flight characteristics; normally needs major repair/replacement",
+    "page": "1–71–72"
+  },
+  {
+    "id": "atp-1-0a336cb23f4d",
+    "chapter": 1,
+    "topic": "National Transportation Safety Board (NTSB)",
+    "front": "NTSB — accident notification",
+    "back": "Immediately by most expeditious means",
+    "page": "1–71–72"
+  },
+  {
+    "id": "atp-1-dd418ed86ac9",
+    "chapter": 1,
+    "topic": "National Transportation Safety Board (NTSB)",
+    "front": "NTSB — flight control system malfunction",
+    "back": "Immediate notification",
+    "page": "1–71–72"
+  },
+  {
+    "id": "atp-1-db4f7ea03968",
+    "chapter": 1,
+    "topic": "National Transportation Safety Board (NTSB)",
+    "front": "NTSB — required flightcrew member unable to perform due to illness/injury",
+    "back": "Immediate notification",
+    "page": "1–71"
+  },
+  {
+    "id": "atp-1-8a1a328c5d29",
+    "chapter": 1,
+    "topic": "National Transportation Safety Board (NTSB)",
+    "front": "NTSB — turbine-engine structural component failure",
+    "back": "Immediate notification, excluding compressor/turbine blades or vanes",
+    "page": "1–71"
+  },
+  {
+    "id": "atp-1-972688b83ecd",
+    "chapter": 1,
+    "topic": "National Transportation Safety Board (NTSB)",
+    "front": "NTSB — other property damage threshold",
+    "back": "More than $25,000",
+    "page": "1–71"
+  },
+  {
+    "id": "atp-1-16cca2d6625c",
+    "chapter": 1,
+    "topic": "National Transportation Safety Board (NTSB)",
+    "front": "NTSB — written aircraft accident report",
+    "back": "Within 10 days",
+    "page": "1–71–72"
+  },
+  {
+    "id": "atp-1-571ee2f6fffd",
+    "chapter": 1,
+    "topic": "National Transportation Safety Board (NTSB)",
+    "front": "NTSB — overdue aircraft still missing",
+    "back": "Written report within 7 days",
+    "page": "1–71"
+  },
+  {
+    "id": "atp-1-9742dfc76c2b",
+    "chapter": 1,
+    "topic": "National Transportation Safety Board (NTSB)",
+    "front": "NTSB — written incident report",
+    "back": "Only if requested",
+    "page": "1–71–72"
+  },
+  {
+    "id": "atp-1-86b3412bd710",
+    "chapter": 1,
+    "topic": "Safety Reporting Programs",
+    "front": "VDRP",
+    "back": "Voluntary disclosure of regulatory violations",
+    "page": "1–58–59"
+  },
+  {
+    "id": "atp-1-e276d4671f6b",
+    "chapter": 1,
+    "topic": "Safety Reporting Programs",
+    "front": "FOQA",
+    "back": "De-identified aggregate flight-data trends",
+    "page": "1–59"
+  },
+  {
+    "id": "atp-1-b33f815a833a",
+    "chapter": 1,
+    "topic": "Safety Reporting Programs",
+    "front": "ASAP",
+    "back": "Voluntary employee safety reports",
+    "page": "1–59"
+  },
+  {
+    "id": "atp-1-6020385f3193",
+    "chapter": 1,
+    "topic": "Safety Reporting Programs",
+    "front": "ASRS",
+    "back": "Voluntary, confidential, de-identified incident reporting",
+    "page": "1–73"
+  },
+  {
+    "id": "atp-1-f39649421725",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 turbojet — third gyroscopic pitch-and-bank indicator",
+    "back": "Required",
+    "page": "1–73"
+  },
+  {
+    "id": "atp-1-c07a4787a841",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Third gyroscopic pitch-and-bank indicator — electrical failure endurance",
+    "back": "At least 30 minutes",
+    "page": "1–73"
+  },
+  {
+    "id": "atp-1-e21023e5c389",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 Class A TAWS — threshold",
+    "back": "Turbine airplane with ≥10 passenger seats, excluding pilot seats",
+    "page": "1–73"
+  },
+  {
+    "id": "atp-1-da22dd26cb54",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 shoulder harness — flightcrew stations",
+    "back": "Turbojet or aircraft with ≥10 passenger seats",
+    "page": "1–74, 1–82"
+  },
+  {
+    "id": "atp-1-a493338779bb",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 extended overwater — ELT",
+    "back": "Attached to one raft",
+    "page": "1–74, 1–82"
+  },
+  {
+    "id": "atp-1-15e4237916aa",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 IFR fuel — destination and alternate",
+    "back": "Destination → alternate if required → 45 min normal cruise",
+    "page": "1–74"
+  },
+  {
+    "id": "atp-1-434f3a7c2382",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 reciprocating takeoff data — headwind credit",
+    "back": "No more than 50%",
+    "page": "1–74"
+  },
+  {
+    "id": "atp-1-ae4940cc2ff1",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 reciprocating takeoff data — tailwind factor",
+    "back": "At least 150%",
+    "page": "1–75"
+  },
+  {
+    "id": "atp-1-ddc461c076e3",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 multiengine passenger IFR/VFR-over-top — engine-out climb",
+    "back": "At least 50 ft/min at MEA or 5,000 ft MSL, whichever higher",
+    "page": "1–75"
+  },
+  {
+    "id": "atp-1-da899d6310a9",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Clearway credit in takeoff distance",
+    "back": "Turbine transport airplanes certificated after Sept. 30, 1958",
+    "page": "1–75"
+  },
+  {
+    "id": "atp-1-5d81ad32508e",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 CVR — required aircraft",
+    "back": "Multiengine turbine airplane/rotorcraft with ≥20 passenger seats",
+    "page": "1–79–80"
+  },
+  {
+    "id": "atp-1-a427055f23b5",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 CVR — operating interval",
+    "back": "First preflight checklist through final postflight check",
+    "page": "1–79–80"
+  },
+  {
+    "id": "atp-1-ac766d85502a",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 MEL operation — authorization",
+    "back": "Operations specifications and approved MEL",
+    "page": "1–80, 1–86"
+  },
+  {
+    "id": "atp-1-d97639978d0c",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 crash axe — threshold/location",
+    "back": ">19 passenger seats; crew accessible, passenger inaccessible",
+    "page": "1–81"
+  },
+  {
+    "id": "atp-1-447b795d9830",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 first aid kit — threshold",
+    "back": "1 kit if >19 passenger seats",
+    "page": "1–81"
+  },
+  {
+    "id": "atp-1-2e4d50178cef",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 airborne weather radar",
+    "back": "Large transport-category passenger aircraft",
+    "page": "1–81"
+  },
+  {
+    "id": "atp-1-550f6d8fe9aa",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 thunderstorm detection or radar — threshold",
+    "back": "Passenger aircraft with ≥10 passenger seats",
+    "page": "1–81"
+  },
+  {
+    "id": "atp-1-21605b0818eb",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 GPWS/TAWS — alert",
+    "back": "Excessive terrain closure and deviation below glideslope",
+    "page": "1–82"
+  },
+  {
+    "id": "atp-1-beb5e99de964",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 IFR departure without approved SIAP",
+    "back": "FAA-issued operations specifications authorization",
+    "page": "1–83–84"
+  },
+  {
+    "id": "atp-1-0c42357000e1",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 no-alternate rule — forecast window",
+    "back": "ETA ±1 hour",
+    "page": "1–83, 1–85"
+  },
+  {
+    "id": "atp-1-4eb232aca1ac",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 no-alternate rule — visibility",
+    "back": "≥3 SM or 2 SM above approach minimum, whichever greater",
+    "page": "1–83"
+  },
+  {
+    "id": "atp-1-df9067cb5b81",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 no-alternate rule — no circling approach, ceiling",
+    "back": "≥1,500 ft above lowest published minimum or 2,000 ft above field, whichever higher",
+    "page": "1–85"
+  },
+  {
+    "id": "atp-1-d61668b5174e",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 departure below landing minimums",
+    "back": "Alternate within 1 hour at normal cruise in still air",
+    "page": "1–83, 1–89"
+  },
+  {
+    "id": "atp-1-55e468c612df",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 IFR military/foreign airport — takeoff visibility",
+    "back": "At least 1 SM",
+    "page": "1–85"
+  },
+  {
+    "id": "atp-1-c399d454b70d",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 VFR in uncontrolled airspace with ceiling <1,000 ft",
+    "back": "At least 2 SM flight visibility",
+    "page": "1–85"
+  },
+  {
+    "id": "atp-1-4de9ec2131ab",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 passenger PIC recency",
+    "back": "3 takeoffs and 3 landings in preceding 90 days",
+    "page": "1–86–88"
+  },
+  {
+    "id": "atp-1-e6ff38df7acd",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 night passenger PIC recency — time window",
+    "back": "1 hour after sunset to 1 hour before sunrise",
+    "page": "1–86"
+  },
+  {
+    "id": "atp-1-9f3788f379ac",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Safety-sensitive employee after accident — alcohol",
+    "back": "No use for 8 hours",
+    "page": "1–86"
+  },
+  {
+    "id": "atp-1-3e99a9057d12",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Scheduled Part 135 flightcrew — 7-day commercial flight time",
+    "back": "34 hours",
+    "page": "1–86"
+  },
+  {
+    "id": "atp-1-c85905fa34d9",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Scheduled Part 135 flightcrew — calendar-month commercial flight time",
+    "back": "120 hours",
+    "page": "1–86–87"
+  },
+  {
+    "id": "atp-1-02d17acc1f91",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Scheduled Part 135 flightcrew — calendar-year commercial flight time",
+    "back": "1,200 hours",
+    "page": "1–86–87"
+  },
+  {
+    "id": "atp-1-92ce748fdec4",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 outside U.S.",
+    "back": "ICAO Annex 2 or applicable foreign rules",
+    "page": "1–76"
+  },
+  {
+    "id": "atp-1-32415f0455a6",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 autopilot enroute minimum",
+    "back": "Higher of 500 ft AGL or 2× AFM malfunction altitude loss",
+    "page": "1–77, 1–79"
+  },
+  {
+    "id": "atp-1-666f2de5110c",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 autopilot non-ILS approach minimum",
+    "back": "Higher of 50 ft below MDA or 2× AFM approach malfunction altitude loss",
+    "page": "1–79"
+  },
+  {
+    "id": "atp-1-935a2d62ca61",
+    "chapter": 1,
+    "topic": "Part 135 Regulations",
+    "front": "Part 135 autopilot coupled ILS in below-VFR weather",
+    "back": "Higher of 50 ft AGL or AFM approach-coupler altitude loss",
+    "page": "1–79"
+  },
+  {
+    "id": "atp-2-cef1f49baeeb",
+    "chapter": 2,
+    "topic": "Inoperative Equipment",
+    "front": "MEL / Letter of Authorization",
+    "back": "Allows specified equipment to be inoperative before flight when prescribed procedures are followed",
+    "page": "2–3"
+  },
+  {
+    "id": "atp-2-b1a6ff151b56",
+    "chapter": 2,
+    "topic": "Inoperative Equipment",
+    "front": "Part 121 required equipment fails en route — continuance procedure",
+    "back": "Certificate holder's manual",
+    "page": "2–3–4"
+  },
+  {
+    "id": "atp-2-7a0df7ed8fbb",
+    "chapter": 2,
+    "topic": "Inoperative Equipment",
+    "front": "IFR in controlled airspace — navigation, approach, or communication malfunction",
+    "back": "Report to ATC as soon as practicable",
+    "page": "2–3–4"
+  },
+  {
+    "id": "atp-2-eed13f1bcad7",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Altimeter indication vs. known field elevation — questionable discrepancy",
+    "back": "More than 75 ft",
+    "page": "2–4"
+  },
+  {
+    "id": "atp-2-263cfd737ac8",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Station pressure",
+    "back": "Actual pressure at field elevation",
+    "page": "2–4, 2–7"
+  },
+  {
+    "id": "atp-2-0e6a598d9a05",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Altimeter setting",
+    "back": "Station pressure corrected to sea level",
+    "page": "2–4"
+  },
+  {
+    "id": "atp-2-1b9bd2e280f8",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Pressure altitude — altimeter setting",
+    "back": "29.92 inHg",
+    "page": "2–5"
+  },
+  {
+    "id": "atp-2-7670744f9b32",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Density altitude",
+    "back": "Pressure altitude corrected for nonstandard temperature",
+    "page": "2–5"
+  },
+  {
+    "id": "atp-2-28933e14261e",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Warmer than standard — true vs. indicated altitude",
+    "back": "True altitude is higher",
+    "page": "2–4–5"
+  },
+  {
+    "id": "atp-2-22030444da95",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Colder than standard — true vs. indicated altitude",
+    "back": "True altitude is lower",
+    "page": "2–4–5"
+  },
+  {
+    "id": "atp-2-6323cee6c10b",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Warmer than standard — density vs. pressure altitude",
+    "back": "Density altitude is higher",
+    "page": "2–5, 2–8"
+  },
+  {
+    "id": "atp-2-3d97037dbe78",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "U.S. transition altitude — standard altimeter setting",
+    "back": "FL180 and above: 29.92 inHg",
+    "page": "2–5"
+  },
+  {
+    "id": "atp-2-dd1a861d2b75",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Local altimeter setting above 31.00 inHg",
+    "back": "Special procedures; many altimeters cannot be set higher",
+    "page": "2–5"
+  },
+  {
+    "id": "atp-2-8ca8cd917cdf",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Altimeter setting error — 1 inHg",
+    "back": "Approximately 1,000 ft of altitude error",
+    "page": "2–5"
+  },
+  {
+    "id": "atp-2-63a7a2b82edc",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Pitot inlet and drain both blocked",
+    "back": "ASI acts like an altimeter",
+    "page": "2–6, 2–8–9"
+  },
+  {
+    "id": "atp-2-0b7a96aac22d",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Pitot inlet and drain blocked — climb",
+    "back": "Indicated airspeed increases",
+    "page": "2–6, 2–8–9"
+  },
+  {
+    "id": "atp-2-ff1a4dc22efb",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Pitot inlet and drain blocked — descent",
+    "back": "Indicated airspeed decreases",
+    "page": "2–6, 2–8–9"
+  },
+  {
+    "id": "atp-2-d93a554e88ee",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Pitot inlet blocked; drain and static port open",
+    "back": "Indicated airspeed drops to zero",
+    "page": "2–6, 2–9"
+  },
+  {
+    "id": "atp-2-ddbb1e3bdd1e",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Compass turning error — northern headings",
+    "back": "Lags actual heading",
+    "page": "2–6"
+  },
+  {
+    "id": "atp-2-9deb61b9bcb1",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Compass turning error — southern headings",
+    "back": "Leads actual heading",
+    "page": "2–6"
+  },
+  {
+    "id": "atp-2-2ff688b3444d",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Compass turning error — maximum magnitude",
+    "back": "Approximately equal to latitude in degrees",
+    "page": "2–6"
+  },
+  {
+    "id": "atp-2-2f79ac2ee8f1",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Compass indication during acceleration",
+    "back": "Turns toward north",
+    "page": "2–6"
+  },
+  {
+    "id": "atp-2-8d9f7d30f6f1",
+    "chapter": 2,
+    "topic": "Pitot-Static Instruments",
+    "front": "Compass indication during deceleration",
+    "back": "Turns toward south",
+    "page": "2–6"
+  },
+  {
+    "id": "atp-2-0cf5186d1cc8",
+    "chapter": 2,
+    "topic": "Electronic Flight Instruments",
+    "front": "PFD speed tape replaced by a red X",
+    "back": "ADC or pressure-transducer failure",
+    "page": "2–10"
+  },
+  {
+    "id": "atp-2-a33a9d665ade",
+    "chapter": 2,
+    "topic": "Safety of Flight Equipment",
+    "front": "Airborne weather radar — dispatch required",
+    "back": "IFR or night VFR with radar-detectable hazardous weather forecast en route",
+    "page": "2–12, 2–15"
+  },
+  {
+    "id": "atp-2-52c9d36603f6",
+    "chapter": 2,
+    "topic": "Safety of Flight Equipment",
+    "front": "Inoperative airborne weather radar — dispatch exception",
+    "back": "Day VFR or no hazardous weather forecast",
+    "page": "2–12"
+  },
+  {
+    "id": "atp-2-60b36dca077e",
+    "chapter": 2,
+    "topic": "Safety of Flight Equipment",
+    "front": "Airborne weather radar fails en route",
+    "back": "Follow approved operations-manual procedures",
+    "page": "2–12, 2–15"
+  },
+  {
+    "id": "atp-2-43b2dfbd67a0",
+    "chapter": 2,
+    "topic": "Safety of Flight Equipment",
+    "front": "TCAS I",
+    "back": "Proximity warning only; no resolution advisories",
+    "page": "2–12, 2–14"
+  },
+  {
+    "id": "atp-2-a66280f7ab20",
+    "chapter": 2,
+    "topic": "Safety of Flight Equipment",
+    "front": "TCAS II",
+    "back": "Traffic advisories and resolution advisories",
+    "page": "2–12, 2–14"
+  },
+  {
+    "id": "atp-2-5602394c0e6c",
+    "chapter": 2,
+    "topic": "Safety of Flight Equipment",
+    "front": "TCAS II resolution advisory — maneuver direction",
+    "back": "Vertical",
+    "page": "2–12, 2–14"
+  },
+  {
+    "id": "atp-2-cb83d984f104",
+    "chapter": 2,
+    "topic": "Safety of Flight Equipment",
+    "front": "Deviation for TCAS II RA — ATC notification",
+    "back": "As soon as practicable",
+    "page": "2–12, 2–14"
+  },
+  {
+    "id": "atp-2-2b196505e838",
+    "chapter": 2,
+    "topic": "Safety of Flight Equipment",
+    "front": "After TCAS conflict resolves",
+    "back": "Expeditiously return to current ATC clearance",
+    "page": "2–12, 2–14"
+  },
+  {
+    "id": "atp-2-8c6fbcacdb15",
+    "chapter": 2,
+    "topic": "Safety of Flight Equipment",
+    "front": "Flight deck voice recorder — operating interval",
+    "back": "Before-starting checklist through final checklist",
+    "page": "2–13, 2–16"
+  },
+  {
+    "id": "atp-2-4a725dc0175d",
+    "chapter": 2,
+    "topic": "Safety of Flight Equipment",
+    "front": "Flight deck voice recorder — minimum retained recording",
+    "back": "Most recent 30 minutes",
+    "page": "2–13, 2–16"
+  },
+  {
+    "id": "atp-2-09d48697bfeb",
+    "chapter": 2,
+    "topic": "Safety of Flight Equipment",
+    "front": "Flight recorder — aircraft certificated above altitude",
+    "back": "25,000 ft",
+    "page": "2–13"
+  },
+  {
+    "id": "atp-2-8e1da86e459c",
+    "chapter": 2,
+    "topic": "Safety of Flight Equipment",
+    "front": "Flight recorder data — normal retention",
+    "back": "Until aircraft has operated at least 25 hours after data removal",
+    "page": "2–13"
+  },
+  {
+    "id": "atp-2-6c5957400966",
+    "chapter": 2,
+    "topic": "Safety of Flight Equipment",
+    "front": "Flight recorder testing — erasable data",
+    "back": "Up to 1 hour of oldest recorded data",
+    "page": "2–13, 2–16"
+  },
+  {
+    "id": "atp-2-625cf37b22db",
+    "chapter": 2,
+    "topic": "Safety of Flight Equipment",
+    "front": "NTSB-reportable event terminating flight — recorder data retention",
+    "back": "At least 60 days",
+    "page": "2–13–14"
+  },
+  {
+    "id": "atp-2-2339e61083ad",
+    "chapter": 2,
+    "topic": "Safety of Flight Equipment",
+    "front": "Flight recorder / CVR data — FAA civil penalty or certificate action",
+    "back": "May not be used",
+    "page": "2–13"
+  },
+  {
+    "id": "atp-2-1c3e6de9cde2",
+    "chapter": 2,
+    "topic": "Communications",
+    "front": "Domestic/flag carrier — route communications",
+    "back": "Two-way radio with appropriate dispatch office and ATC",
+    "page": "2–17"
+  },
+  {
+    "id": "atp-2-f0e3208073a8",
+    "chapter": 2,
+    "topic": "Communications",
+    "front": "ASDE-X airport — transponder during taxi",
+    "back": "On with altitude reporting continuously",
+    "page": "2–17"
+  },
+  {
+    "id": "atp-2-aa138d8d21d5",
+    "chapter": 2,
+    "topic": "Navigation Equipment",
+    "front": "Part 121 IFR or VFR over-the-top — primary enroute navigation",
+    "back": "Two independent systems",
+    "page": "2–18, 2–21"
+  },
+  {
+    "id": "atp-2-c8572c9132e2",
+    "chapter": 2,
+    "topic": "Navigation Equipment",
+    "front": "Part 121 IFR on VOR airways — VOR installations",
+    "back": "Two",
+    "page": "2–18, 2–21"
+  },
+  {
+    "id": "atp-2-d3a63e959adb",
+    "chapter": 2,
+    "topic": "Navigation Equipment",
+    "front": "Part 121 — ILS and marker beacon installations",
+    "back": "One each",
+    "page": "2–18"
+  },
+  {
+    "id": "atp-2-56b22e0935ce",
+    "chapter": 2,
+    "topic": "Navigation Equipment",
+    "front": "VOR under maintenance — identifier",
+    "back": "Removed or changed to T-E-S-T",
+    "page": "2–18–19"
+  },
+  {
+    "id": "atp-2-0744a9a7e2c5",
+    "chapter": 2,
+    "topic": "Navigation Equipment",
+    "front": "VOR check for IFR — interval",
+    "back": "Preceding 30 days",
+    "page": "2–18, 2–20"
+  },
+  {
+    "id": "atp-2-6d8f6eb977a8",
+    "chapter": 2,
+    "topic": "Navigation Equipment",
+    "front": "VOT check — centered CDI",
+    "back": "360° FROM or 180° TO",
+    "page": "2–18, 2–20"
+  },
+  {
+    "id": "atp-2-add57512632f",
+    "chapter": 2,
+    "topic": "Navigation Equipment",
+    "front": "VOT check — maximum VOR error",
+    "back": "±4°",
+    "page": "2–18, 2–20"
+  },
+  {
+    "id": "atp-2-5f59c6b523cf",
+    "chapter": 2,
+    "topic": "Navigation Equipment",
+    "front": "Ground VOR checkpoint — maximum error",
+    "back": "±4°",
+    "page": "2–18"
+  },
+  {
+    "id": "atp-2-039190050256",
+    "chapter": 2,
+    "topic": "Navigation Equipment",
+    "front": "Airborne VOR checkpoint — maximum error",
+    "back": "±6°",
+    "page": "2–18, 2–20"
+  },
+  {
+    "id": "atp-2-dbea31169bb7",
+    "chapter": 2,
+    "topic": "Navigation Equipment",
+    "front": "Dual VOR cross-check — maximum difference",
+    "back": "4°",
+    "page": "2–18–19"
+  },
+  {
+    "id": "atp-2-5276f75910d5",
+    "chapter": 2,
+    "topic": "Navigation Equipment",
+    "front": "Static/altimeter and transponder inspection — interval",
+    "back": "24 calendar months",
+    "page": "2–18, 2–20"
+  },
+  {
+    "id": "atp-2-4d3d0daa46d2",
+    "chapter": 2,
+    "topic": "Navigation Equipment",
+    "front": "Part 91 — DME or suitable RNAV when VOR required",
+    "back": "At or above 24,000 ft MSL",
+    "page": "2–18, 2–21"
+  },
+  {
+    "id": "atp-2-54ac1215e007",
+    "chapter": 2,
+    "topic": "Navigation Equipment",
+    "front": "Part 121 — DME or suitable RNAV when VOR required in U.S.",
+    "back": "At least one unit",
+    "page": "2–18, 2–22"
+  },
+  {
+    "id": "atp-2-da44e96f2580",
+    "chapter": 2,
+    "topic": "Navigation Equipment",
+    "front": "DME indicates",
+    "back": "Slant-range distance",
+    "page": "2–18, 2–21"
+  },
+  {
+    "id": "atp-2-ee369ba081f6",
+    "chapter": 2,
+    "topic": "Navigation Equipment",
+    "front": "DME slant-range error — greatest",
+    "back": "High altitude close to the station",
+    "page": "2–18, 2–21"
+  },
+  {
+    "id": "atp-2-59ae7cad232f",
+    "chapter": 2,
+    "topic": "Horizontal Situation Indicator (HSI)",
+    "front": "HSI",
+    "back": "Heading indicator and VOR combined",
+    "page": "2–23"
+  },
+  {
+    "id": "atp-2-8bb55a56511c",
+    "chapter": 2,
+    "topic": "Horizontal Situation Indicator (HSI)",
+    "front": "HSI glide-slope pointer below center",
+    "back": "Aircraft above glide slope",
+    "page": "2–23"
+  },
+  {
+    "id": "atp-2-e69b4997792c",
+    "chapter": 2,
+    "topic": "Horizontal Situation Indicator (HSI)",
+    "front": "HSI course displacement — one dot",
+    "back": "Approximately 200 ft per NM from station",
+    "page": "2–24"
+  },
+  {
+    "id": "atp-2-f4408636cb93",
+    "chapter": 2,
+    "topic": "Horizontal Situation Indicator (HSI)",
+    "front": "VOR CDI full-scale deflection",
+    "back": "10°",
+    "page": "2–26"
+  },
+  {
+    "id": "atp-2-f9d2f11b98fe",
+    "chapter": 2,
+    "topic": "Horizontal Situation Indicator (HSI)",
+    "front": "VOR CDI — one dot",
+    "back": "2°",
+    "page": "2–26"
+  },
+  {
+    "id": "atp-2-42ac579cd462",
+    "chapter": 2,
+    "topic": "Global Navigation",
+    "front": "Outside contiguous U.S. — position cannot be reliably fixed for >1 hour",
+    "back": "Flight navigator or approved specialized navigation",
+    "page": "2–28–29"
+  },
+  {
+    "id": "atp-2-1682bbb204ca",
+    "chapter": 2,
+    "topic": "Global Navigation",
+    "front": "Routes requiring flight navigator or specialized navigation",
+    "back": "Operations specifications",
+    "page": "2–28"
+  },
+  {
+    "id": "atp-2-675fe56ca781",
+    "chapter": 2,
+    "topic": "Global Navigation",
+    "front": "Flight navigator — required medical class",
+    "back": "Second Class or higher",
+    "page": "2–28"
+  },
+  {
+    "id": "atp-2-4b3f94ca9aee",
+    "chapter": 2,
+    "topic": "Global Navigation",
+    "front": "Flight navigator — medical issuance interval",
+    "back": "Within preceding 12 months",
+    "page": "2–28"
+  },
+  {
+    "id": "atp-2-60ee0acf8f51",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "ILS localizer — frequency range",
+    "back": "108.10–111.95 MHz",
+    "page": "2–29, 2–31"
+  },
+  {
+    "id": "atp-2-77c4e44a51b5",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "ILS localizer identifier",
+    "back": "I followed by three letters",
+    "page": "2–29"
+  },
+  {
+    "id": "atp-2-3a5d67ef171a",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "ILS outer marker",
+    "back": "Blue light; continuous dashes",
+    "page": "2–29, 2–32"
+  },
+  {
+    "id": "atp-2-c9bf574e436f",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "ILS middle marker",
+    "back": "Amber light; alternating dots and dashes",
+    "page": "2–29, 2–32"
+  },
+  {
+    "id": "atp-2-d340288bd5ee",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "ILS inner marker",
+    "back": "White light; continuous dots",
+    "page": "2–29, 2–31"
+  },
+  {
+    "id": "atp-2-596a46d0f73c",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "ILS back-course marker",
+    "back": "White light; two-dot combinations",
+    "page": "2–29, 2–32"
+  },
+  {
+    "id": "atp-2-4a69e0155ff1",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "Outer compass locator identifier",
+    "back": "First two letters of localizer identifier",
+    "page": "2–29, 2–32–33"
+  },
+  {
+    "id": "atp-2-5d7c38689c8f",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "Middle compass locator identifier",
+    "back": "Last two letters of localizer identifier",
+    "page": "2–29, 2–32–33"
+  },
+  {
+    "id": "atp-2-1dbc31cb4386",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "CAT I ILS — middle marker inoperative",
+    "back": "No effect on straight-in minimums",
+    "page": "2–29, 2–33"
+  },
+  {
+    "id": "atp-2-914a69b416de",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "CAT I ILS — standard RVR minimum",
+    "back": "2,400 ft",
+    "page": "2–34"
+  },
+  {
+    "id": "atp-2-e2752ef61496",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "CAT I ILS with TDZ and centerline lights — RVR, Categories A–C",
+    "back": "1,800 ft",
+    "page": "2–30, 2–34"
+  },
+  {
+    "id": "atp-2-0499f0caa18f",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "CAT I ILS with TDZ and centerline lights — RVR, Category D",
+    "back": "2,000 ft",
+    "page": "2–34"
+  },
+  {
+    "id": "atp-2-202a3507a5cd",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "CAT II ILS — additional runway equipment",
+    "back": "HIRL, TDZL, runway centerline lights, and RVR",
+    "page": "2–30–31, 2–34"
+  },
+  {
+    "id": "atp-2-1981114e8e2e",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "CAT II using approach lights only — below 100 ft TDZE",
+    "back": "Red terminating or red side-row bars must be visible",
+    "page": "2–31, 2–34"
+  },
+  {
+    "id": "atp-2-961d1d0cea8b",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "3° glidepath — descent-rate rule of thumb",
+    "back": "Groundspeed in knots × 5 = ft/min",
+    "page": "2–29–30, 2–33"
+  },
+  {
+    "id": "atp-2-15c53bfeed0d",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "LDA vs. ILS localizer",
+    "back": "LDA is offset more than 3° from runway alignment",
+    "page": "2–31, 2–35"
+  },
+  {
+    "id": "atp-2-dbcb85a8b0d7",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "LDA straight-in minimums — alignment",
+    "back": "Within 30° of runway",
+    "page": "2–31"
+  },
+  {
+    "id": "atp-2-c029321a0b78",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "SDF course width",
+    "back": "6° or 12°",
+    "page": "2–31, 2–35"
+  },
+  {
+    "id": "atp-2-872a24beafb6",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "WAAS MAY NOT BE AVBL NOTAM — avionics show LPV/LNAV-VNAV available",
+    "back": "Use displayed level of service",
+    "page": "2–35"
+  },
+  {
+    "id": "atp-2-10bf3b640d5e",
+    "chapter": 2,
+    "topic": "Approach Systems",
+    "front": "RNP approach with radius-to-fix leg",
+    "back": "FMS/GPS must have RF capability",
+    "page": "2–35"
+  },
+  {
+    "id": "atp-2-953178363f25",
+    "chapter": 2,
+    "topic": "GPS",
+    "front": "RAIM",
+    "back": "GPS signal integrity monitoring",
+    "page": "2–36–37"
+  },
+  {
+    "id": "atp-2-260a28c588e6",
+    "chapter": 2,
+    "topic": "GPS",
+    "front": "RAIM unavailable for GPS approach",
+    "back": "Use another approach/navigation system, choose another destination, or delay",
+    "page": "2–36–37"
+  },
+  {
+    "id": "atp-2-9e3c39c04861",
+    "chapter": 2,
+    "topic": "GPS",
+    "front": "Published GPS visual descent point",
+    "back": "Not included in waypoint sequence",
+    "page": "2–36–37"
+  },
+  {
+    "id": "atp-2-9d744f7edbe2",
+    "chapter": 2,
+    "topic": "GPS",
+    "front": "Published GPS IFR departure — terminal CDI sensitivity",
+    "back": "±1 NM",
+    "page": "2–36, 2–40"
+  },
+  {
+    "id": "atp-2-b6bece221302",
+    "chapter": 2,
+    "topic": "GPS",
+    "front": "Manually override automatic GPS approach sensitivity",
+    "back": "Approach mode cancels; do not descend to MDA",
+    "page": "2–36–37"
+  },
+  {
+    "id": "atp-2-7499748ab992",
+    "chapter": 2,
+    "topic": "GPS",
+    "front": "GPS missed approach — receiver sequencing",
+    "back": "After the MAWP",
+    "page": "2–36, 2–39"
+  },
+  {
+    "id": "atp-2-ad2f8447baee",
+    "chapter": 2,
+    "topic": "GPS",
+    "front": "GPS missed approach — turns",
+    "back": "Do not begin before MAWP",
+    "page": "2–36, 2–39"
+  },
+  {
+    "id": "atp-2-e8070497ca24",
+    "chapter": 2,
+    "topic": "GPS",
+    "front": "Air carrier GPS/WAAS approach authorization",
+    "back": "Operations specifications",
+    "page": "2–38"
+  },
+  {
+    "id": "atp-2-f6c7b1e45aeb",
+    "chapter": 2,
+    "topic": "GPS",
+    "front": "WAAS MAY NOT BE AVBL NOTAM",
+    "back": "Predicted service may be unavailable; not an actual outage report",
+    "page": "2–39"
+  },
+  {
+    "id": "atp-2-2156b3a47955",
+    "chapter": 2,
+    "topic": "GPS",
+    "front": "RNAV 1 departure with DME/DME/IRU but no GPS — position confirmation",
+    "back": "Within 1,000 ft at start of takeoff roll",
+    "page": "2–40"
+  },
+  {
+    "id": "atp-2-b7997dd9d156",
+    "chapter": 2,
+    "topic": "GNSS Disruption and VOR MON",
+    "front": "VOR MON",
+    "back": "Basic conventional navigation backup when GNSS is unavailable",
+    "page": "2–19"
+  },
+  {
+    "id": "atp-2-a3f4fae76a64",
+    "chapter": 2,
+    "topic": "GNSS Disruption and VOR MON",
+    "front": "VOR MON — near-continuous coverage outside western mountainous area",
+    "back": "5,000 ft AGL",
+    "page": "2–41"
+  },
+  {
+    "id": "atp-2-8cf1b3b98327",
+    "chapter": 2,
+    "topic": "GNSS Disruption and VOR MON",
+    "front": "VOR MON — maximum distance to MON airport in contiguous U.S.",
+    "back": "100 NM",
+    "page": "2–41"
+  },
+  {
+    "id": "atp-2-7e582c27916c",
+    "chapter": 2,
+    "topic": "ADS-B",
+    "front": "Class A airspace — ADS-B link",
+    "back": "1090ES at 1090 MHz",
+    "page": "2–42"
+  },
+  {
+    "id": "atp-2-9b301f811c68",
+    "chapter": 2,
+    "topic": "ADS-B",
+    "front": "Below FL180 — ADS-B link options",
+    "back": "1090ES or UAT",
+    "page": "2–42"
+  },
+  {
+    "id": "atp-2-25d8b4b344aa",
+    "chapter": 2,
+    "topic": "ADS-B",
+    "front": "Installed ADS-B Out — transmit mode",
+    "back": "At all times unless FAA authorizes otherwise or ATC directs",
+    "page": "2–42"
+  },
+  {
+    "id": "atp-2-4bfeed2eb9f3",
+    "chapter": 2,
+    "topic": "ADS-B",
+    "front": "Inoperative ADS-B — deviation request",
+    "back": "ATC facility with jurisdiction, at any time",
+    "page": "2–42"
+  },
+  {
+    "id": "atp-2-5716e88347a2",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "Civil airport rotating beacon",
+    "back": "Alternating green and white",
+    "page": "2–43"
+  },
+  {
+    "id": "atp-2-cdd27a8685f5",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "Military airport rotating beacon",
+    "back": "Green and dual-flash white",
+    "page": "2–43–44"
+  },
+  {
+    "id": "atp-2-c0a32eb8833e",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "Airport hot spot — circle or ellipse",
+    "back": "Ground movement risk",
+    "page": "2–43–44, 2–52"
+  },
+  {
+    "id": "atp-2-158087bf58bd",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "Airport hot spot — cylinder",
+    "back": "Wrong-surface risk",
+    "page": "2–43–44, 2–52"
+  },
+  {
+    "id": "atp-2-08dabf38975d",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "Runway fixed-distance marker",
+    "back": "1,000 ft from threshold",
+    "page": "2–43, 2–47"
+  },
+  {
+    "id": "atp-2-7b6d60cdf265",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "Instrument runway edge lights — caution zone",
+    "back": "Amber in last 2,000 ft or half runway length, whichever is less",
+    "page": "2–43, 2–45–48"
+  },
+  {
+    "id": "atp-2-dba2b975a5bc",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "Runway centerline lights — 3,000 to 1,000 ft remaining",
+    "back": "Alternating red and white",
+    "page": "2–43, 2–46–48"
+  },
+  {
+    "id": "atp-2-282f476ac781",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "Runway centerline lights — last 1,000 ft",
+    "back": "All red",
+    "page": "2–43, 2–46–48"
+  },
+  {
+    "id": "atp-2-e93705029e5e",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "Taxiway lead-off lights",
+    "back": "Alternating green and yellow",
+    "page": "2–43, 2–46, 2–51"
+  },
+  {
+    "id": "atp-2-e188a49dfb93",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "Runway distance-remaining signs — unit",
+    "back": "Thousands of feet",
+    "page": "2–43, 2–46"
+  },
+  {
+    "id": "atp-2-700c7d943dca",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "REIL",
+    "back": "Synchronized flashing lights on each side of runway threshold",
+    "page": "2–43, 2–48–49"
+  },
+  {
+    "id": "atp-2-0dd74cd8ef79",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "Mandatory instruction sign",
+    "back": "White inscription on red background",
+    "page": "2–44"
+  },
+  {
+    "id": "atp-2-859a13be0385",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "Airport information sign",
+    "back": "Black inscription on yellow background",
+    "page": "2–45"
+  },
+  {
+    "id": "atp-2-c9f4f1e28c75",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "Runway hold marking",
+    "back": "Two solid and two dashed yellow lines",
+    "page": "2–50"
+  },
+  {
+    "id": "atp-2-1c33dcebe981",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "Runway hold marking — hold side",
+    "back": "Solid lines",
+    "page": "2–50"
+  },
+  {
+    "id": "atp-2-6f4b5e66e280",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "Aircraft clear of runway",
+    "back": "All parts crossed holding-position marking",
+    "page": "2–51"
+  },
+  {
+    "id": "atp-2-405f33edab34",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "Accepted LAHSO clearance — rejected landing",
+    "back": "Still permitted",
+    "page": "2–43, 2–49"
+  },
+  {
+    "id": "atp-2-8bd4203e107d",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "THL red lights",
+    "back": "Unsafe to take off; runway occupied or about to be occupied",
+    "page": "2–51"
+  },
+  {
+    "id": "atp-2-4b657c052d58",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "REL red lights",
+    "back": "High-speed runway traffic or aircraft on final",
+    "page": "2–51"
+  },
+  {
+    "id": "atp-2-10730e408a13",
+    "chapter": 2,
+    "topic": "Airport Lighting and Marking",
+    "front": "RWSL",
+    "back": "Automatic runway-status lights; does not convey ATC clearance",
+    "page": "2–51–52"
+  },
+  {
+    "id": "atp-2-94d68435efa9",
+    "chapter": 2,
+    "topic": "Approach Lighting",
+    "front": "VASI approach — altitude",
+    "back": "At or above glidepath until lower altitude needed for safe landing",
+    "page": "2–53–54"
+  },
+  {
+    "id": "atp-2-0ae493ecda67",
+    "chapter": 2,
+    "topic": "Approach Lighting",
+    "front": "High-performance airplane — VASI slope >3.5°",
+    "back": "Longer landing rollout may result",
+    "page": "2–53–54"
+  },
+  {
+    "id": "atp-2-10a8821c6a2c",
+    "chapter": 2,
+    "topic": "Approach Lighting",
+    "front": "Three-bar VASI — high flight deck aircraft",
+    "back": "Use middle and far bars",
+    "page": "2–53–54"
+  },
+  {
+    "id": "atp-2-58aa190aed3c",
+    "chapter": 2,
+    "topic": "Approach Lighting",
+    "front": "Three-bar VASI — upper glidepath vs. lower",
+    "back": "About ¼° higher",
+    "page": "2–54"
+  },
+  {
+    "id": "atp-2-123407e3ce38",
+    "chapter": 2,
+    "topic": "Approach Lighting",
+    "front": "PAPI — high",
+    "back": "4 white lights",
+    "page": "2–53, 2–55"
+  },
+  {
+    "id": "atp-2-e6b54ed179ab",
+    "chapter": 2,
+    "topic": "Approach Lighting",
+    "front": "PAPI — slightly high",
+    "back": "3 white, 1 red",
+    "page": "2–53, 2–55"
+  },
+  {
+    "id": "atp-2-1915b0c665d7",
+    "chapter": 2,
+    "topic": "Approach Lighting",
+    "front": "PAPI — on glidepath",
+    "back": "2 white, 2 red",
+    "page": "2–53, 2–55"
+  },
+  {
+    "id": "atp-2-dfec1db6ddf8",
+    "chapter": 2,
+    "topic": "Approach Lighting",
+    "front": "PAPI — slightly low",
+    "back": "1 white, 3 red",
+    "page": "2–53, 2–55"
+  },
+  {
+    "id": "atp-2-c802664c4011",
+    "chapter": 2,
+    "topic": "Approach Lighting",
+    "front": "PAPI — low",
+    "back": "4 red lights",
+    "page": "2–53, 2–55"
+  },
+  {
+    "id": "atp-2-aab0aca49f50",
+    "chapter": 2,
+    "topic": "Approach Lighting",
+    "front": "Pulsating VASI — above glidepath",
+    "back": "Pulsating white",
+    "page": "2–53, 2–55"
+  },
+  {
+    "id": "atp-2-a8e1eb5bb5e2",
+    "chapter": 2,
+    "topic": "Approach Lighting",
+    "front": "Pulsating VASI — below glidepath",
+    "back": "Pulsating red",
+    "page": "2–53, 2–55"
+  },
+  {
+    "id": "atp-3-05e0d1856361",
+    "chapter": 3,
+    "topic": "Lift and Drag",
+    "front": "Lift — direction relative to the relative wind",
+    "back": "Perpendicular",
+    "page": "3–3"
+  },
+  {
+    "id": "atp-3-a0555a947310",
+    "chapter": 3,
+    "topic": "Lift and Drag",
+    "front": "Angle of attack",
+    "back": "Angle between the chord line and relative wind",
+    "page": "3–3"
+  },
+  {
+    "id": "atp-3-22d92718ef11",
+    "chapter": 3,
+    "topic": "Lift and Drag",
+    "front": "Wing stall — critical condition",
+    "back": "Critical angle of attack exceeded",
+    "page": "3–3"
+  },
+  {
+    "id": "atp-3-9918c2746594",
+    "chapter": 3,
+    "topic": "Lift and Drag",
+    "front": "Stall angle of attack",
+    "back": "Remains the same",
+    "page": "3–3, 3–5"
+  },
+  {
+    "id": "atp-3-ec57425bdf09",
+    "chapter": 3,
+    "topic": "Lift and Drag",
+    "front": "Airspeed doubled at constant angle of attack — lift",
+    "back": "Four times greater",
+    "page": "3–3–4"
+  },
+  {
+    "id": "atp-3-82007844afd7",
+    "chapter": 3,
+    "topic": "Lift and Drag",
+    "front": "Indicated stall speed — affected by",
+    "back": "Weight, load factor, and power",
+    "page": "3–5"
+  },
+  {
+    "id": "atp-3-e38280d8fe21",
+    "chapter": 3,
+    "topic": "Lift and Drag",
+    "front": "Altitude increase — calibrated stall speed",
+    "back": "Relatively unchanged",
+    "page": "3–6"
+  },
+  {
+    "id": "atp-3-c2f6f07a3590",
+    "chapter": 3,
+    "topic": "Lift and Drag",
+    "front": "Altitude increase — true stall speed",
+    "back": "Increases",
+    "page": "3–6"
+  },
+  {
+    "id": "atp-3-cef6c8a1199d",
+    "chapter": 3,
+    "topic": "Lift and Drag",
+    "front": "Maximum L/D speed",
+    "back": "Minimum total drag",
+    "page": "3–3, 3–5"
+  },
+  {
+    "id": "atp-3-5153e2074b88",
+    "chapter": 3,
+    "topic": "Lift and Drag",
+    "front": "Below maximum L/D speed — drag increase",
+    "back": "Induced drag",
+    "page": "3–5"
+  },
+  {
+    "id": "atp-3-48ed5ae8cb6b",
+    "chapter": 3,
+    "topic": "Lift and Drag",
+    "front": "Higher gross weight — drag most affected",
+    "back": "Induced drag increases",
+    "page": "3–3, 3–6"
+  },
+  {
+    "id": "atp-3-dc454d80a3ca",
+    "chapter": 3,
+    "topic": "Lift and Drag",
+    "front": "Ground effect — induced drag",
+    "back": "Decreases",
+    "page": "3–3"
+  },
+  {
+    "id": "atp-3-eb820ad9063d",
+    "chapter": 3,
+    "topic": "Lift and Drag",
+    "front": "Leaving ground effect — induced drag",
+    "back": "Increases",
+    "page": "3–7"
+  },
+  {
+    "id": "atp-3-3dabd8ee015a",
+    "chapter": 3,
+    "topic": "Lift and Drag",
+    "front": "Absolute ceiling — maximum rate of climb",
+    "back": "Zero",
+    "page": "3–7"
+  },
+  {
+    "id": "atp-3-1877343cbd1b",
+    "chapter": 3,
+    "topic": "Critical Engine and VMC",
+    "front": "Critical engine",
+    "back": "Engine whose failure most adversely affects performance or handling",
+    "page": "3–8–9"
+  },
+  {
+    "id": "atp-3-8c08ee8549a7",
+    "chapter": 3,
+    "topic": "Critical Engine and VMC",
+    "front": "Most propeller twins — critical engine thrust line",
+    "back": "Closest to fuselage centerline",
+    "page": "3–8–9"
+  },
+  {
+    "id": "atp-3-51f42a12b448",
+    "chapter": 3,
+    "topic": "Critical Engine and VMC",
+    "front": "VMC — minimum performance assured",
+    "back": "Directional control / heading",
+    "page": "3–8"
+  },
+  {
+    "id": "atp-3-78784cc03265",
+    "chapter": 3,
+    "topic": "Critical Engine and VMC",
+    "front": "Engine inoperative — recommended bank",
+    "back": "At least 5° toward the operating engine",
+    "page": "3–8"
+  },
+  {
+    "id": "atp-3-3671ac4dad43",
+    "chapter": 3,
+    "topic": "Critical Engine and VMC",
+    "front": "Twin-engine airspeed indicator — red radial line",
+    "back": "VMC",
+    "page": "3–9"
+  },
+  {
+    "id": "atp-3-1c022df0e012",
+    "chapter": 3,
+    "topic": "Critical Engine and VMC",
+    "front": "Twin-engine airspeed indicator — blue radial line",
+    "back": "VYSE; best single-engine rate of climb",
+    "page": "3–9"
+  },
+  {
+    "id": "atp-3-471e7e4affbb",
+    "chapter": 3,
+    "topic": "Critical Engine and VMC",
+    "front": "Unsupercharged engine — VMC with increasing altitude",
+    "back": "Decreases",
+    "page": "3–8–9"
+  },
+  {
+    "id": "atp-3-69744763b2a4",
+    "chapter": 3,
+    "topic": "Critical Engine and VMC",
+    "front": "Twin-engine stall practice — prohibited condition",
+    "back": "One engine inoperative",
+    "page": "3–8–9"
+  },
+  {
+    "id": "atp-3-a816bb209dc8",
+    "chapter": 3,
+    "topic": "Maneuvering Flight",
+    "front": "Load factor",
+    "back": "Lift divided by aircraft weight",
+    "page": "3–10–11"
+  },
+  {
+    "id": "atp-3-b940acd02e6f",
+    "chapter": 3,
+    "topic": "Maneuvering Flight",
+    "front": "Level coordinated turn — load factor determined by",
+    "back": "Bank angle",
+    "page": "3–10–11"
+  },
+  {
+    "id": "atp-3-63f307f74218",
+    "chapter": 3,
+    "topic": "Maneuvering Flight",
+    "front": "Constant bank, increasing airspeed — load factor",
+    "back": "Unchanged",
+    "page": "3–11–12"
+  },
+  {
+    "id": "atp-3-5d7ed0a64d32",
+    "chapter": 3,
+    "topic": "Maneuvering Flight",
+    "front": "Constant bank, increasing airspeed — turn rate",
+    "back": "Decreases",
+    "page": "3–12"
+  },
+  {
+    "id": "atp-3-db6425485cdb",
+    "chapter": 3,
+    "topic": "Maneuvering Flight",
+    "front": "Constant bank, increasing airspeed — turn radius",
+    "back": "Increases",
+    "page": "3–12"
+  },
+  {
+    "id": "atp-3-b08fff43147e",
+    "chapter": 3,
+    "topic": "Maneuvering Flight",
+    "front": "15° bank — induced drag increase",
+    "back": "About 7%",
+    "page": "3–12"
+  },
+  {
+    "id": "atp-3-e5f4be9d977d",
+    "chapter": 3,
+    "topic": "Stability",
+    "front": "Directional stability — primary surface",
+    "back": "Vertical tail",
+    "page": "3–13"
+  },
+  {
+    "id": "atp-3-6be709cfe43b",
+    "chapter": 3,
+    "topic": "Stability",
+    "front": "Pitch stability — primary surface",
+    "back": "Horizontal tail",
+    "page": "3–13"
+  },
+  {
+    "id": "atp-3-4d618d277a46",
+    "chapter": 3,
+    "topic": "Stability",
+    "front": "Aft CG — longitudinal stability",
+    "back": "Decreases",
+    "page": "3–13–14"
+  },
+  {
+    "id": "atp-3-72f416fe61bf",
+    "chapter": 3,
+    "topic": "Stability",
+    "front": "Aft CG — stall speed",
+    "back": "Decreases",
+    "page": "3–13–14"
+  },
+  {
+    "id": "atp-3-be73c77bc12f",
+    "chapter": 3,
+    "topic": "Stability",
+    "front": "Aft CG — cruise speed for a given power",
+    "back": "Increases",
+    "page": "3–13–14"
+  },
+  {
+    "id": "atp-3-c935c0253e57",
+    "chapter": 3,
+    "topic": "Stability",
+    "front": "Positive static stability",
+    "back": "Initial tendency to return to original attitude",
+    "page": "3–13"
+  },
+  {
+    "id": "atp-3-82ddc9e8d639",
+    "chapter": 3,
+    "topic": "Stability",
+    "front": "Negative static stability",
+    "back": "Initial tendency to diverge farther",
+    "page": "3–13"
+  },
+  {
+    "id": "atp-3-0215015da6ad",
+    "chapter": 3,
+    "topic": "Stability",
+    "front": "Neutral static stability",
+    "back": "Initial tendency to remain in disturbed attitude",
+    "page": "3–13"
+  },
+  {
+    "id": "atp-3-e7fb10475939",
+    "chapter": 3,
+    "topic": "Stability",
+    "front": "Positive dynamic stability",
+    "back": "Oscillations decrease over time",
+    "page": "3–13"
+  },
+  {
+    "id": "atp-3-7562b7f412c0",
+    "chapter": 3,
+    "topic": "Stability",
+    "front": "Negative dynamic stability",
+    "back": "Oscillations increase over time",
+    "page": "3–13"
+  },
+  {
+    "id": "atp-3-d7796a26e290",
+    "chapter": 3,
+    "topic": "High Speed Flight",
+    "front": "Mach number",
+    "back": "TAS divided by speed of sound",
+    "page": "3–15"
+  },
+  {
+    "id": "atp-3-c5965d93b25b",
+    "chapter": 3,
+    "topic": "High Speed Flight",
+    "front": "Subsonic regime — approximate Mach",
+    "back": "Below 0.75",
+    "page": "3–15–16"
+  },
+  {
+    "id": "atp-3-153c1e1de11b",
+    "chapter": 3,
+    "topic": "High Speed Flight",
+    "front": "Transonic regime — approximate Mach",
+    "back": "0.75 to 1.20",
+    "page": "3–15–16"
+  },
+  {
+    "id": "atp-3-2fd55859a1ee",
+    "chapter": 3,
+    "topic": "High Speed Flight",
+    "front": "Critical Mach number (MCRIT)",
+    "back": "First local sonic airflow over the wing",
+    "page": "3–15–16"
+  },
+  {
+    "id": "atp-3-8192f3ed49a6",
+    "chapter": 3,
+    "topic": "High Speed Flight",
+    "front": "Wing-root shock stall — pitch response",
+    "back": "Pitch down / Mach tuck",
+    "page": "3–15, 3–17"
+  },
+  {
+    "id": "atp-3-baac468687dd",
+    "chapter": 3,
+    "topic": "High Speed Flight",
+    "front": "Swept-wing tip shock stall — pitch response",
+    "back": "Pitch up",
+    "page": "3–15, 3–17"
+  },
+  {
+    "id": "atp-3-20e2620dcd8f",
+    "chapter": 3,
+    "topic": "High Speed Flight",
+    "front": "Wing sweep — critical Mach number",
+    "back": "Increases",
+    "page": "3–15, 3–17"
+  },
+  {
+    "id": "atp-3-acd51f32f304",
+    "chapter": 3,
+    "topic": "High Speed Flight",
+    "front": "Wing sweep for significant compressibility benefit",
+    "back": "At least 30°–35°",
+    "page": "3–17"
+  },
+  {
+    "id": "atp-3-2bb9acb7e6cc",
+    "chapter": 3,
+    "topic": "High Speed Flight",
+    "front": "Swept-wing low-speed stall tendency",
+    "back": "Wing tips stall first",
+    "page": "3–15, 3–17"
+  },
+  {
+    "id": "atp-3-3290001c2786",
+    "chapter": 3,
+    "topic": "Primary Flight Controls",
+    "front": "Primary flight controls",
+    "back": "Ailerons, elevator, rudder",
+    "page": "3–18, 3–20"
+  },
+  {
+    "id": "atp-3-f8828eecca16",
+    "chapter": 3,
+    "topic": "Primary Flight Controls",
+    "front": "Inboard ailerons — operating range",
+    "back": "Low- and high-speed flight",
+    "page": "3–18, 3–20"
+  },
+  {
+    "id": "atp-3-f8dd2e3f9de3",
+    "chapter": 3,
+    "topic": "Primary Flight Controls",
+    "front": "Outboard ailerons — operating range",
+    "back": "Low-speed flight with flaps extended",
+    "page": "3–19–20"
+  },
+  {
+    "id": "atp-3-cd47fff54abf",
+    "chapter": 3,
+    "topic": "Primary Flight Controls",
+    "front": "Spoilers — aerodynamic effect",
+    "back": "Reduce lift and increase drag",
+    "page": "3–19, 3–21"
+  },
+  {
+    "id": "atp-3-7ce89140d054",
+    "chapter": 3,
+    "topic": "Primary Flight Controls",
+    "front": "Ground spoilers — deployment condition",
+    "back": "Weight on landing gear",
+    "page": "3–19"
+  },
+  {
+    "id": "atp-3-4784b850011d",
+    "chapter": 3,
+    "topic": "Primary Flight Controls",
+    "front": "Ground spoilers — braking effect",
+    "back": "Increase wheel loading and tire-ground friction",
+    "page": "3–19, 3–21"
+  },
+  {
+    "id": "atp-3-3dd3ce22a13f",
+    "chapter": 3,
+    "topic": "Primary Flight Controls",
+    "front": "Aerodynamic braking — below touchdown speed",
+    "back": "Little effect below 60–70%",
+    "page": "3–21"
+  },
+  {
+    "id": "atp-3-d950db658a65",
+    "chapter": 3,
+    "topic": "Primary Flight Controls",
+    "front": "Vortex generators",
+    "back": "Delay airflow separation by energizing the boundary layer",
+    "page": "3–19, 3–22"
+  },
+  {
+    "id": "atp-3-0ec9f3e67524",
+    "chapter": 3,
+    "topic": "Tabs",
+    "front": "Servo tab — movement relative to control surface",
+    "back": "Opposite direction",
+    "page": "3–23"
+  },
+  {
+    "id": "atp-3-07d484905bd7",
+    "chapter": 3,
+    "topic": "Tabs",
+    "front": "Anti-servo tab — movement relative to control surface",
+    "back": "Same direction",
+    "page": "3–23–24"
+  },
+  {
+    "id": "atp-3-6824257934c3",
+    "chapter": 3,
+    "topic": "Tabs",
+    "front": "Anti-servo tab — purpose",
+    "back": "Increase control force and resist full deflection",
+    "page": "3–23–24"
+  },
+  {
+    "id": "atp-3-b927bac21612",
+    "chapter": 3,
+    "topic": "Tabs",
+    "front": "Trim tab — response to primary control movement",
+    "back": "Remains fixed until independently adjusted",
+    "page": "3–24"
+  },
+  {
+    "id": "atp-3-7704fc4a1b7f",
+    "chapter": 3,
+    "topic": "Tabs",
+    "front": "Control tab — use",
+    "back": "Manual reversion after loss of hydraulic power",
+    "page": "3–23–24"
+  },
+  {
+    "id": "atp-3-8bc02fda88dc",
+    "chapter": 3,
+    "topic": "High-Lift Devices",
+    "front": "High-lift devices — primary purpose",
+    "back": "Increase CLMAX and reduce stall speed",
+    "page": "3–25"
+  },
+  {
+    "id": "atp-3-204b80f71b2d",
+    "chapter": 3,
+    "topic": "High-Lift Devices",
+    "front": "Krueger flap",
+    "back": "Leading-edge flap that increases wing camber",
+    "page": "3–25"
+  },
+  {
+    "id": "atp-3-e10d26162982",
+    "chapter": 3,
+    "topic": "High-Lift Devices",
+    "front": "Slat",
+    "back": "Leading-edge device that creates a slot",
+    "page": "3–25"
+  },
+  {
+    "id": "atp-3-b1333a7ee083",
+    "chapter": 3,
+    "topic": "High-Lift Devices",
+    "front": "Leading-edge slot — stall angle of attack",
+    "back": "Increases",
+    "page": "3–25–26"
+  },
+  {
+    "id": "atp-3-f5e9b3f0464e",
+    "chapter": 3,
+    "topic": "High-Lift Devices",
+    "front": "Fowler flap — wing area",
+    "back": "Increases",
+    "page": "3–26"
+  },
+  {
+    "id": "atp-3-9ccef6a41c44",
+    "chapter": 3,
+    "topic": "High-Lift Devices",
+    "front": "Fowler flap — pitching moment among flap types",
+    "back": "Greatest change",
+    "page": "3–26"
+  },
+  {
+    "id": "atp-3-08443948d6f4",
+    "chapter": 3,
+    "topic": "High-Lift Devices",
+    "front": "Split flap vs. plain flap — drag",
+    "back": "Much more drag",
+    "page": "3–26"
+  },
+  {
+    "id": "atp-6-3c5cc32ed3ca",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Class D entry altitude — large or turbine-powered airplane",
+    "back": "At least 1,500 ft AGL",
+    "page": "6–3, 6–12"
+  },
+  {
+    "id": "atp-6-af0972515e92",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Class D departure climb — large or turbine-powered airplane",
+    "back": "Climb to 1,500 ft AGL as rapidly as practicable",
+    "page": "6–3, 6–12"
+  },
+  {
+    "id": "atp-6-fb1d52cdf2a0",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Class D — normal ceiling",
+    "back": "2,500 ft AGL",
+    "page": "6–6"
+  },
+  {
+    "id": "atp-6-194ed8e33ff2",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Class C — surface radius",
+    "back": "5 NM",
+    "page": "6–3, 6–7"
+  },
+  {
+    "id": "atp-6-737c6787f08e",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Class C — shelf outer radius",
+    "back": "10 NM",
+    "page": "6–3, 6–7"
+  },
+  {
+    "id": "atp-6-3c8be70e6f74",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Class C — outer area radius",
+    "back": "20 NM",
+    "page": "6–3, 6–7"
+  },
+  {
+    "id": "atp-6-0f3e0b8c2290",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Class C — shelf floor",
+    "back": "1,200 ft AGL",
+    "page": "6–3, 6–8"
+  },
+  {
+    "id": "atp-6-183b534d6f60",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Class C — upper limit",
+    "back": "4,000 ft above airport",
+    "page": "6–3, 6–8"
+  },
+  {
+    "id": "atp-6-06ea2f5c51be",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Class C — required equipment",
+    "back": "Two-way radio and transponder",
+    "page": "6–4, 6–8"
+  },
+  {
+    "id": "atp-6-238d93e5ed0a",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Class C — specific pilot certificate requirement",
+    "back": "None",
+    "page": "6–4, 6–9"
+  },
+  {
+    "id": "atp-6-3258f8eea960",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Class A — vertical limits",
+    "back": "18,000 ft MSL to FL600",
+    "page": "6–4, 6–6"
+  },
+  {
+    "id": "atp-6-c2d6164abc28",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Class E — upper limit",
+    "back": "18,000 ft MSL",
+    "page": "6–6"
+  },
+  {
+    "id": "atp-6-e7af86d2fbab",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Below 10,000 ft MSL — maximum indicated airspeed",
+    "back": "250 KIAS",
+    "page": "6–4, 6–9"
+  },
+  {
+    "id": "atp-6-4d57d2ca710d",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Within Class D — maximum indicated airspeed",
+    "back": "200 KIAS",
+    "page": "6–4, 6–12"
+  },
+  {
+    "id": "atp-6-222cb99247de",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Below the lateral limits of Class B — maximum indicated airspeed",
+    "back": "200 KIAS",
+    "page": "6–4, 6–7"
+  },
+  {
+    "id": "atp-6-7556c0809ca6",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Within Class B below 10,000 ft — maximum indicated airspeed",
+    "back": "250 KIAS",
+    "page": "6–4, 6–12"
+  },
+  {
+    "id": "atp-6-9b1c91862c6b",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "MOA — purpose",
+    "back": "Separate military training activities from IFR traffic",
+    "page": "6–4, 6–9"
+  },
+  {
+    "id": "atp-6-2efb82efb19b",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "ADIZ penetration — flight plan",
+    "back": "IFR or DVFR",
+    "page": "6–5"
+  },
+  {
+    "id": "atp-6-ed6102aedcaf",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "ADIZ penetration — time tolerance",
+    "back": "±5 minutes of flight plan estimate",
+    "page": "6–5"
+  },
+  {
+    "id": "atp-6-21219f589a86",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "ADIZ penetration — land position tolerance",
+    "back": "Within 10 miles",
+    "page": "6–5"
+  },
+  {
+    "id": "atp-6-35739aaeb256",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "ADIZ penetration — overwater position tolerance",
+    "back": "Within 20 miles",
+    "page": "6–5"
+  },
+  {
+    "id": "atp-6-cb82127729cb",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "VFR-on-top — prohibited airspace",
+    "back": "Class A",
+    "page": "6–5, 6–10"
+  },
+  {
+    "id": "atp-6-12f68ecc7c0a",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "VFR-on-top — altitude and weather rules",
+    "back": "VFR altitudes, visibility and cloud clearance; applicable IFR rules",
+    "page": "6–5, 6–10"
+  },
+  {
+    "id": "atp-6-66a72d99110c",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "VFR-on-top — ATC service",
+    "back": "Traffic advisories only",
+    "page": "6–5, 6–10"
+  },
+  {
+    "id": "atp-6-1573b2ccce79",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "OROCA — obstacle buffer, nonmountainous",
+    "back": "1,000 ft",
+    "page": "6–5, 6–11"
+  },
+  {
+    "id": "atp-6-662cc66e8a15",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "OROCA — obstacle buffer, mountainous",
+    "back": "2,000 ft",
+    "page": "6–5, 6–11"
+  },
+  {
+    "id": "atp-6-1cc158f7b537",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "MSA — normal radius",
+    "back": "25 NM",
+    "page": "6–5, 6–11"
+  },
+  {
+    "id": "atp-6-1d092334f42e",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Class E VFR-on-top below 10,000 ft MSL — visibility",
+    "back": "3 SM",
+    "page": "6–11"
+  },
+  {
+    "id": "atp-6-f1511d612e88",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Class E VFR-on-top below 10,000 ft MSL — cloud clearance",
+    "back": "1,000 ft above, 500 ft below, 2,000 ft horizontal",
+    "page": "6–11"
+  },
+  {
+    "id": "atp-6-00e362ea1e2a",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Class E VFR-on-top at or above 10,000 ft MSL — visibility",
+    "back": "5 SM",
+    "page": "6–11"
+  },
+  {
+    "id": "atp-6-061a9e9ebafa",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Class E VFR-on-top at or above 10,000 ft MSL — cloud clearance",
+    "back": "1,000 ft above, 1,000 ft below, 1 SM horizontal",
+    "page": "6–11"
+  },
+  {
+    "id": "atp-6-5dddcc5cc4fa",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Day over-the-top below minimum IFR altitude — clearance above lower layer",
+    "back": "At least 1,000 ft",
+    "page": "6–5, 6–11"
+  },
+  {
+    "id": "atp-6-55cba290427a",
+    "chapter": 6,
+    "topic": "Airspace",
+    "front": "Day over-the-top below minimum IFR altitude — visibility",
+    "back": "At least 5 SM",
+    "page": "6–5, 6–11"
+  },
+  {
+    "id": "atp-6-780f8e4f9538",
+    "chapter": 6,
+    "topic": "NOTAMs (Notices To AirMen)",
+    "front": "NOTAM (D)",
+    "back": "Airport, runway, NAVAID, ILS and other operational changes",
+    "page": "6–13–14"
+  },
+  {
+    "id": "atp-6-46f2eedcb4dd",
+    "chapter": 6,
+    "topic": "NOTAMs (Notices To AirMen)",
+    "front": "FDC NOTAM",
+    "back": "Regulatory information and changes to published IAPs/charts",
+    "page": "6–13"
+  },
+  {
+    "id": "atp-6-69a902fb3733",
+    "chapter": 6,
+    "topic": "NOTAMs (Notices To AirMen)",
+    "front": "Pointer NOTAM",
+    "back": "Directs pilots to another NOTAM",
+    "page": "6–13"
+  },
+  {
+    "id": "atp-6-d33cbc8e7535",
+    "chapter": 6,
+    "topic": "NOTAMs (Notices To AirMen)",
+    "front": "SAA NOTAM",
+    "back": "Special Activity Airspace outside published active times",
+    "page": "6–13"
+  },
+  {
+    "id": "atp-6-2263baeb2e38",
+    "chapter": 6,
+    "topic": "NOTAMs (Notices To AirMen)",
+    "front": "Military NOTAM",
+    "back": "Military NAVAIDs and airports in the NAS",
+    "page": "6–13"
+  },
+  {
+    "id": "atp-6-74d5e31cdeb4",
+    "chapter": 6,
+    "topic": "Items on the Flight Plan",
+    "front": "IFR flight plan — suggested filing lead time",
+    "back": "At least 30 minutes before departure",
+    "page": "6–14–15"
+  },
+  {
+    "id": "atp-6-70784d90f9d4",
+    "chapter": 6,
+    "topic": "Items on the Flight Plan",
+    "front": "IFR clearance request — suggested timing",
+    "back": "No more than 10 minutes before taxi",
+    "page": "6–14–15"
+  },
+  {
+    "id": "atp-6-e194ffdd85b2",
+    "chapter": 6,
+    "topic": "Items on the Flight Plan",
+    "front": "Off-airway direct route — fixes to list",
+    "back": "All radio fixes along the route",
+    "page": "6–14–15"
+  },
+  {
+    "id": "atp-6-5e13b1bb72de",
+    "chapter": 6,
+    "topic": "Items on the Flight Plan",
+    "front": "Random RNAV route — ATC requirement",
+    "back": "Radar monitoring along entire route",
+    "page": "6–14–16"
+  },
+  {
+    "id": "atp-6-458ee1ec23d3",
+    "chapter": 6,
+    "topic": "Items on the Flight Plan",
+    "front": "Random RNAV route — waypoint per ARTCC",
+    "back": "At least one, within 200 NM of preceding center boundary",
+    "page": "6–14–15"
+  },
+  {
+    "id": "atp-6-d39f3d7a0d35",
+    "chapter": 6,
+    "topic": "Items on the Flight Plan",
+    "front": "Random RNAV route — latitude/longitude fixes",
+    "back": "Permitted at or above FL390",
+    "page": "6–14–16"
+  },
+  {
+    "id": "atp-6-10f361056a9b",
+    "chapter": 6,
+    "topic": "Items on the Flight Plan",
+    "front": "Special or privately owned IAP — filing approval",
+    "back": "Procedure owner's approval",
+    "page": "6–14, 6–16"
+  },
+  {
+    "id": "atp-6-d31928ce57e8",
+    "chapter": 6,
+    "topic": "Items on the Flight Plan",
+    "front": "RVSM clearance request — flight plan",
+    "back": "Annotate RVSM approval correctly",
+    "page": "6–16"
+  },
+  {
+    "id": "atp-6-3286b8ab2840",
+    "chapter": 6,
+    "topic": "Alternate Airport Planning",
+    "front": "Standard alternate minimums — precision approach",
+    "back": "600-ft ceiling and 2 SM visibility",
+    "page": "6–17"
+  },
+  {
+    "id": "atp-6-6ddfd1cd65ac",
+    "chapter": 6,
+    "topic": "Alternate Airport Planning",
+    "front": "Standard alternate minimums — nonprecision approach",
+    "back": "800-ft ceiling and 2 SM visibility",
+    "page": "6–17"
+  },
+  {
+    "id": "atp-6-32c416c8eeef",
+    "chapter": 6,
+    "topic": "Alternate Airport Planning",
+    "front": "Domestic carrier — marginal destination and first alternate",
+    "back": "List an additional alternate",
+    "page": "6–17–18"
+  },
+  {
+    "id": "atp-6-5b05552bd64b",
+    "chapter": 6,
+    "topic": "Alternate Airport Planning",
+    "front": "Flag carrier — flight longer than 6 hours",
+    "back": "Alternate required",
+    "page": "6–17–18"
+  },
+  {
+    "id": "atp-6-054901919403",
+    "chapter": 6,
+    "topic": "Alternate Airport Planning",
+    "front": "Flag carrier under 6 hours without alternate — forecast window",
+    "back": "1 hour before to 1 hour after ETA",
+    "page": "6–17–18"
+  },
+  {
+    "id": "atp-6-9bbee6221c92",
+    "chapter": 6,
+    "topic": "Alternate Airport Planning",
+    "front": "Flag carrier under 6 hours without alternate — ceiling",
+    "back": "At least 1,500 ft above lowest minimum or 2,000 ft, whichever is higher",
+    "page": "6–17"
+  },
+  {
+    "id": "atp-6-92ccadd67e44",
+    "chapter": 6,
+    "topic": "Alternate Airport Planning",
+    "front": "Flag carrier under 6 hours without alternate — visibility",
+    "back": "At least 3 SM or 2 SM above lowest minimum, whichever is higher",
+    "page": "6–17–18"
+  },
+  {
+    "id": "atp-6-bbad255edf12",
+    "chapter": 6,
+    "topic": "Alternate Airport Planning",
+    "front": "Supplemental carrier IFR destination",
+    "back": "Alternate required on every flight",
+    "page": "6–17, 6–19"
+  },
+  {
+    "id": "atp-6-54b0fe293b13",
+    "chapter": 6,
+    "topic": "Alternate Airport Planning",
+    "front": "Alternate planning weather minimums — source",
+    "back": "Certificate holder's operations specifications",
+    "page": "6–17, 6–19"
+  },
+  {
+    "id": "atp-6-4899efdf714d",
+    "chapter": 6,
+    "topic": "Alternate Airport Planning",
+    "front": "Actual diversion to alternate — landing minimums",
+    "back": "Published IAP minimums",
+    "page": "6–17–18"
+  },
+  {
+    "id": "atp-6-15e9cd70a335",
+    "chapter": 6,
+    "topic": "Alternate Airport Planning",
+    "front": "Departure alternate — trigger",
+    "back": "Departure airport weather below authorized landing minimums",
+    "page": "6–17, 6–19"
+  },
+  {
+    "id": "atp-6-42de5505c60d",
+    "chapter": 6,
+    "topic": "Alternate Airport Planning",
+    "front": "Departure alternate — two-engine aircraft maximum",
+    "back": "1 hour in still air at normal cruise with one engine inoperative",
+    "page": "6–17, 6–19–20"
+  },
+  {
+    "id": "atp-6-69c27637a673",
+    "chapter": 6,
+    "topic": "Alternate Airport Planning",
+    "front": "Departure alternate — three or more engines maximum",
+    "back": "2 hours in still air at normal cruise with one engine inoperative",
+    "page": "6–17, 6–19–20"
+  },
+  {
+    "id": "atp-6-fa5bb0df6ead",
+    "chapter": 6,
+    "topic": "ATC Clearances",
+    "front": "IFR in Class A–E — prerequisites",
+    "back": "Filed IFR flight plan and ATC clearance",
+    "page": "6–21–22"
+  },
+  {
+    "id": "atp-6-ec24067daedd",
+    "chapter": 6,
+    "topic": "ATC Clearances",
+    "front": "IFR in Class G — flight plan and ATC clearance",
+    "back": "Not required",
+    "page": "6–21–22"
+  },
+  {
+    "id": "atp-6-487311ddaf24",
+    "chapter": 6,
+    "topic": "ATC Clearances",
+    "front": "“Cleared as filed” — portion replaced",
+    "back": "Route of flight only",
+    "page": "6–21–22"
+  },
+  {
+    "id": "atp-6-467d9461d179",
+    "chapter": 6,
+    "topic": "ATC Clearances",
+    "front": "IFR clearance — always includes",
+    "back": "Clearance limit, route, altitude and departure instructions",
+    "page": "6–21"
+  },
+  {
+    "id": "atp-6-7cfa6a49868b",
+    "chapter": 6,
+    "topic": "ATC Clearances",
+    "front": "Approach clearance on radar vector — altitude",
+    "back": "Last assigned until established on a published segment, unless ATC assigns another",
+    "page": "6–28, 6–31"
+  },
+  {
+    "id": "atp-6-70d547598fe3",
+    "chapter": 6,
+    "topic": "ATC Clearances",
+    "front": "“No PT” / radar vector / timed approach — procedure turn",
+    "back": "Prohibited unless cleared by ATC",
+    "page": "6–28, 6–31"
+  },
+  {
+    "id": "atp-6-b9be556aae4d",
+    "chapter": 6,
+    "topic": "ATC Clearances",
+    "front": "Hold for release",
+    "back": "Departure delayed for traffic management",
+    "page": "6–21, 6–23"
+  },
+  {
+    "id": "atp-6-7182b57349ac",
+    "chapter": 6,
+    "topic": "ATC Clearances",
+    "front": "Gate hold — contact ATC",
+    "back": "Before engine start",
+    "page": "6–21, 6–23"
+  },
+  {
+    "id": "atp-6-646bd79fe41d",
+    "chapter": 6,
+    "topic": "ATC Clearances",
+    "front": "IFR clearance void time",
+    "back": "Departure must occur before specified time",
+    "page": "6–21, 6–24"
+  },
+  {
+    "id": "atp-6-ac763cd11e3f",
+    "chapter": 6,
+    "topic": "ATC Clearances",
+    "front": "Airborne IFR flight plan — cancellation",
+    "back": "VFR conditions outside Class A",
+    "page": "6–21, 6–24"
+  },
+  {
+    "id": "atp-6-f01a2815708a",
+    "chapter": 6,
+    "topic": "ATC Clearances",
+    "front": "EDCT — acceptable departure window",
+    "back": "5 minutes before to 5 minutes after",
+    "page": "6–25"
+  },
+  {
+    "id": "atp-6-ffa8fe08ddba",
+    "chapter": 6,
+    "topic": "ATC Clearances",
+    "front": "Taxi clearance — runway crossing",
+    "back": "Separate explicit crossing clearance for each runway",
+    "page": "6–25"
+  },
+  {
+    "id": "atp-6-9caf11965bed",
+    "chapter": 6,
+    "topic": "Takeoff Procedures",
+    "front": "No published takeoff minimums — two engines or fewer",
+    "back": "1 SM visibility",
+    "page": "6–26"
+  },
+  {
+    "id": "atp-6-da4db4cd5af3",
+    "chapter": 6,
+    "topic": "Takeoff Procedures",
+    "front": "No published takeoff minimums — three or more engines",
+    "back": "1/2 SM visibility",
+    "page": "6–26"
+  },
+  {
+    "id": "atp-6-e53cd9b9d9eb",
+    "chapter": 6,
+    "topic": "Takeoff Procedures",
+    "front": "Unlisted domestic alternate with no published takeoff minimums",
+    "back": "800-2, 900-1½, or 1,000-1",
+    "page": "6–26–27"
+  },
+  {
+    "id": "atp-6-edb47519e514",
+    "chapter": 6,
+    "topic": "Takeoff Procedures",
+    "front": "V1",
+    "back": "Critical engine failure / takeoff decision speed",
+    "page": "6–26–27"
+  },
+  {
+    "id": "atp-6-8f6c72f6ec29",
+    "chapter": 6,
+    "topic": "Takeoff Procedures",
+    "front": "VR — relationship to V1",
+    "back": "Must not be less than V1",
+    "page": "6–26–28"
+  },
+  {
+    "id": "atp-6-f1a098b00826",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "Contact approach — initiator",
+    "back": "Pilot only",
+    "page": "6–28, 6–30"
+  },
+  {
+    "id": "atp-6-436d21c51b34",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "Contact approach — minimum flight visibility",
+    "back": "1 SM and clear of clouds",
+    "page": "6–28"
+  },
+  {
+    "id": "atp-6-847fda8c5e0a",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "Visual approach — visual reference",
+    "back": "Airport or preceding aircraft in sight",
+    "page": "6–28"
+  },
+  {
+    "id": "atp-6-1042f2475018",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "Simultaneous ILS approaches — runway separation",
+    "back": "At least 4,300 ft",
+    "page": "6–28"
+  },
+  {
+    "id": "atp-6-76a861004ee9",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "Simultaneous ILS approaches — radar advisories frequency",
+    "back": "Tower",
+    "page": "6–28, 6–30"
+  },
+  {
+    "id": "atp-6-23a22f5045f2",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "Side-step maneuver — initiation",
+    "back": "As soon as runway environment is in sight",
+    "page": "6–28, 6–30"
+  },
+  {
+    "id": "atp-6-7cabb3977772",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "Procedure turn — maximum speed",
+    "back": "200 KIAS",
+    "page": "6–28, 6–32"
+  },
+  {
+    "id": "atp-6-b30216f3115a",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "RVR not reported — ground visibility substitution",
+    "back": "Permitted except for CAT II/III approaches",
+    "page": "6-29"
+  },
+  {
+    "id": "atp-6-3ba76c8e6d39",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "ASR approach — required airborne equipment",
+    "back": "Operating radio receiver",
+    "page": "6-29"
+  },
+  {
+    "id": "atp-6-b6d566e30665",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "OIS penetration — lowest published approach visibility",
+    "back": "3/4 SM",
+    "page": "6-29"
+  },
+  {
+    "id": "atp-6-a66900d5e91a",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "Approach lights only — descent limit",
+    "back": "100 ft above TDZE",
+    "page": "6–32"
+  },
+  {
+    "id": "atp-6-57e818a8cd2e",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "Below 100 ft TDZE using approach lights — required lights",
+    "back": "Red terminating bars or red side row bars",
+    "page": "6–32"
+  },
+  {
+    "id": "atp-6-420d360ac4e3",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "ILS missed approach — no required visual reference",
+    "back": "At DA/DH",
+    "page": "6–33"
+  },
+  {
+    "id": "atp-6-96a966fdcd78",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "ILS missed approach — visual reference lost after DA/DH",
+    "back": "Immediately",
+    "page": "6–33"
+  },
+  {
+    "id": "atp-6-8e82d7661c91",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "Circling approach — visual reference lost",
+    "back": "Initial climbing turn toward landing runway, then missed approach course",
+    "page": "6–33"
+  },
+  {
+    "id": "atp-6-1f950adda16c",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "PRM",
+    "back": "Simultaneous independent approaches to closely spaced parallel runways",
+    "page": "6–34"
+  },
+  {
+    "id": "atp-6-ece0601595c3",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "PRM approach — communication capability",
+    "back": "Monitor two frequencies simultaneously",
+    "page": "6–34"
+  },
+  {
+    "id": "atp-6-ada70277cd60",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "Published RNAV/RNP procedure — database requirement",
+    "back": "Retrievable by procedure name and conforming to chart",
+    "page": "6–35"
+  },
+  {
+    "id": "atp-6-3fed8306eea1",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "Part 121 weather falls below minimum after final segment begins",
+    "back": "May continue to DH/MDA",
+    "page": "6–35"
+  },
+  {
+    "id": "atp-6-fb12b0bae00c",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "Stabilized straight-in instrument approach in IFR — by altitude",
+    "back": "1,000 ft above airport or TDZE",
+    "page": "6–35–36"
+  },
+  {
+    "id": "atp-6-378af907a247",
+    "chapter": 6,
+    "topic": "Instrument Approaches",
+    "front": "Stabilized straight-in instrument approach — descent rate",
+    "back": "Less than 1,000 fpm",
+    "page": "6–35–36"
+  },
+  {
+    "id": "atp-6-c23b4ce1d5cf",
+    "chapter": 6,
+    "topic": "Landing",
+    "front": "Braking action reports — terms",
+    "back": "Good; good to medium; medium; medium to poor; poor; nil",
+    "page": "6–36"
+  },
+  {
+    "id": "atp-6-d2e8932bf0e0",
+    "chapter": 6,
+    "topic": "Landing",
+    "front": "RwyCC 0",
+    "back": "Nil braking action",
+    "page": "6-38"
+  },
+  {
+    "id": "atp-6-3fe75a3f3f3f",
+    "chapter": 6,
+    "topic": "Landing",
+    "front": "RwyCC 1",
+    "back": "Poor braking action",
+    "page": "6-38"
+  },
+  {
+    "id": "atp-6-0dadbf413513",
+    "chapter": 6,
+    "topic": "Landing",
+    "front": "RwyCC 5",
+    "back": "Good braking action",
+    "page": "6-38"
+  },
+  {
+    "id": "atp-6-3c3591cbeab8",
+    "chapter": 6,
+    "topic": "Landing",
+    "front": "RwyCC 6 in all three runway thirds",
+    "back": "No RwyCC issued; runway dry with no contaminants",
+    "page": "6-38"
+  },
+  {
+    "id": "atp-6-14558b532544",
+    "chapter": 6,
+    "topic": "Landing",
+    "front": "FICON NOTAM — paved runway",
+    "back": "Contaminant measurements",
+    "page": "6-38"
+  },
+  {
+    "id": "atp-6-14e45ccf5bdf",
+    "chapter": 6,
+    "topic": "Landing",
+    "front": "Landing weight increase of 10% — landing distance",
+    "back": "About 10% increase",
+    "page": "6-38"
+  },
+  {
+    "id": "atp-6-cf3594ee4e80",
+    "chapter": 6,
+    "topic": "Landing",
+    "front": "Controlled airport — after landing radio",
+    "back": "Remain on tower frequency until instructed otherwise",
+    "page": "6–36–37"
+  },
+  {
+    "id": "atp-6-2a40f8bcfd97",
+    "chapter": 6,
+    "topic": "Landing",
+    "front": "Uncontrolled airport IFR approach — radar service ends",
+    "back": "Landing or instruction to change to advisory frequency, whichever first",
+    "page": "6–36–37"
+  },
+  {
+    "id": "atp-6-ae54572f41b3",
+    "chapter": 6,
+    "topic": "Communications",
+    "front": "Sterile flight deck — airborne threshold",
+    "back": "Below 10,000 ft except cruise",
+    "page": "6–39–42"
+  },
+  {
+    "id": "atp-6-9a62c40a3fcb",
+    "chapter": 6,
+    "topic": "Communications",
+    "front": "IFR report without ATC request — unable to climb/descend",
+    "back": "At least 500 fpm",
+    "page": "6–39–40"
+  },
+  {
+    "id": "atp-6-cbdf16a907bb",
+    "chapter": 6,
+    "topic": "Communications",
+    "front": "IFR report without ATC request — TAS change",
+    "back": "10 kt or 5%, whichever is greater",
+    "page": "6–39–40"
+  },
+  {
+    "id": "atp-6-9983633a72ef",
+    "chapter": 6,
+    "topic": "Communications",
+    "front": "IFR non-radar — ETA error report",
+    "back": "More than 3 minutes",
+    "page": "6–39–41"
+  },
+  {
+    "id": "atp-6-1bd9036fa723",
+    "chapter": 6,
+    "topic": "Communications",
+    "front": "IFR non-radar — compulsory fixes",
+    "back": "Position report required",
+    "page": "6–39–41"
+  },
+  {
+    "id": "atp-6-1265241cd5db",
+    "chapter": 6,
+    "topic": "Communications",
+    "front": "IFR non-radar — final approach fix inbound",
+    "back": "Report leaving FAF",
+    "page": "6–39–41"
+  },
+  {
+    "id": "atp-6-d0b58a6ec1cc",
+    "chapter": 6,
+    "topic": "Communications",
+    "front": "ATC “verify [altitude]” — meaning",
+    "back": "Confirm current altitude; not a clearance to change",
+    "page": "6–39, 6–41"
+  },
+  {
+    "id": "atp-6-32215f21a164",
+    "chapter": 6,
+    "topic": "Speed Adjustments",
+    "front": "ATC minimum speed — turbine aircraft below 10,000 ft",
+    "back": "210 KIAS",
+    "page": "6–42–43"
+  },
+  {
+    "id": "atp-6-d346f3cc7755",
+    "chapter": 6,
+    "topic": "Speed Adjustments",
+    "front": "ATC minimum speed — turbine departure",
+    "back": "230 KIAS",
+    "page": "6–42–43"
+  },
+  {
+    "id": "atp-6-325c33a46a28",
+    "chapter": 6,
+    "topic": "Speed Adjustments",
+    "front": "ATC minimum speed — 10,000 ft to FL280",
+    "back": "250 KIAS or equivalent Mach",
+    "page": "6–43"
+  },
+  {
+    "id": "atp-6-860298723fe2",
+    "chapter": 6,
+    "topic": "Holding",
+    "front": "Standard holding pattern — turn direction",
+    "back": "Right",
+    "page": "6–44"
+  },
+  {
+    "id": "atp-6-f6bd2ea7fec2",
+    "chapter": 6,
+    "topic": "Holding",
+    "front": "Holding below/at 14,000 ft — inbound leg",
+    "back": "1 minute",
+    "page": "6–44–46"
+  },
+  {
+    "id": "atp-6-e25ee1b40d0f",
+    "chapter": 6,
+    "topic": "Holding",
+    "front": "Holding above 14,000 ft — inbound leg",
+    "back": "1½ minutes",
+    "page": "6–44–46"
+  },
+  {
+    "id": "atp-6-7ec578fd55aa",
+    "chapter": 6,
+    "topic": "Holding",
+    "front": "Holding speed at/below 6,000 ft MSL",
+    "back": "200 KIAS",
+    "page": "6–44–45"
+  },
+  {
+    "id": "atp-6-2943bdf2b6e4",
+    "chapter": 6,
+    "topic": "Holding",
+    "front": "Holding speed 6,001–14,000 ft MSL",
+    "back": "230 KIAS",
+    "page": "6–44–45"
+  },
+  {
+    "id": "atp-6-2c4d6fe0a744",
+    "chapter": 6,
+    "topic": "Holding",
+    "front": "Holding speed above 14,000 ft MSL",
+    "back": "265 KIAS",
+    "page": "6–44–45"
+  },
+  {
+    "id": "atp-6-9b350793384a",
+    "chapter": 6,
+    "topic": "Holding",
+    "front": "Holding at military/joint-use airport up to 14,000 ft",
+    "back": "230 KIAS maximum",
+    "page": "6–45"
+  },
+  {
+    "id": "atp-6-ce79a768831b",
+    "chapter": 6,
+    "topic": "Holding",
+    "front": "Holding fix within 3 minutes — speed",
+    "back": "Reduce to cross at/below maximum holding speed",
+    "page": "6–44–45"
+  },
+  {
+    "id": "atp-6-6eaf1ad05d34",
+    "chapter": 6,
+    "topic": "Holding",
+    "front": "Holding outbound timing — start",
+    "back": "Over or abeam fix, whichever is later",
+    "page": "6–44, 6–46"
+  },
+  {
+    "id": "atp-6-1af5739417f8",
+    "chapter": 6,
+    "topic": "Holding",
+    "front": "Holding turn — bank/rate limit",
+    "back": "Least bank for 3°/sec, 30° bank, or 25° with flight director",
+    "page": "6–46"
+  },
+  {
+    "id": "atp-6-feef6657524d",
+    "chapter": 6,
+    "topic": "Charts",
+    "front": "Jet route system — vertical range",
+    "back": "18,000 ft MSL to FL450",
+    "page": "6–49, 6–52"
+  },
+  {
+    "id": "atp-6-4155c75d67b4",
+    "chapter": 6,
+    "topic": "Charts",
+    "front": "Pilot NAV DP — navigation responsibility",
+    "back": "Pilot",
+    "page": "6–48–49"
+  },
+  {
+    "id": "atp-6-77e441582450",
+    "chapter": 6,
+    "topic": "Charts",
+    "front": "Vector DP — navigation guidance",
+    "back": "ATC radar vectors",
+    "page": "6–48–49"
+  },
+  {
+    "id": "atp-6-d18e8fea8ac1",
+    "chapter": 6,
+    "topic": "Charts",
+    "front": "STAR — purpose",
+    "back": "Simplify arrival clearance delivery",
+    "page": "6–48–49"
+  },
+  {
+    "id": "atp-6-32e5566b25da",
+    "chapter": 6,
+    "topic": "Charts",
+    "front": "Approach chart “A” in triangle",
+    "back": "Nonstandard alternate minimums",
+    "page": "6-50"
+  },
+  {
+    "id": "atp-6-a3fdad08fc2f",
+    "chapter": 6,
+    "topic": "Charts",
+    "front": "RNAV (GPS) approach mode — armed to active",
+    "back": "Within 2 NM of FAWP",
+    "page": "6-51"
+  },
+  {
+    "id": "atp-6-4f2ca9b0112d",
+    "chapter": 6,
+    "topic": "Charts",
+    "front": "GPS navigation — flight plan category",
+    "back": "RNAV aircraft",
+    "page": "6–49, 6–53"
+  },
+  {
+    "id": "atp-6-8a045f08d313",
+    "chapter": 6,
+    "topic": "Charts",
+    "front": "Enroute chart changeover point — absent symbol",
+    "back": "Midpoint between VORs",
+    "page": "6–54"
+  },
+  {
+    "id": "atp-6-e6010bed50cf",
+    "chapter": 6,
+    "topic": "Charts",
+    "front": "Charted MCA — symbol",
+    "back": "Flag at the fix",
+    "page": "6–54–55"
+  },
+  {
+    "id": "atp-6-69be1825e98b",
+    "chapter": 6,
+    "topic": "Charts",
+    "front": "Controlled airport — IFR flight plan closure",
+    "back": "Automatic upon landing",
+    "page": "6–56"
+  },
+  {
+    "id": "atp-7-89a3113176fa",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "Distress condition",
+    "back": "Serious or imminent danger requiring immediate assistance",
+    "page": "7–3"
+  },
+  {
+    "id": "atp-7-49407287820e",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "Urgency condition",
+    "back": "Safety concern requiring timely but not immediate assistance",
+    "page": "7–3"
+  },
+  {
+    "id": "atp-7-d34011d1b28a",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "Transponder 7700",
+    "back": "Emergency / distress or urgency",
+    "page": "7–3"
+  },
+  {
+    "id": "atp-7-0eced7b39d3d",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "Transponder 7600",
+    "back": "Two-way radio failure",
+    "page": "7–3"
+  },
+  {
+    "id": "atp-7-3f40d003c880",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "Transponder 7500",
+    "back": "Hijack or unlawful interference",
+    "page": "7–3, 7–5"
+  },
+  {
+    "id": "atp-7-71e6164cd963",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "Radio failure with VFR conditions",
+    "back": "Continue VFR and land as soon as practicable",
+    "page": "7–3"
+  },
+  {
+    "id": "atp-7-13dbb6c0a47a",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "IFR radio failure — route priority",
+    "back": "Assigned; vector; expected; filed",
+    "page": "7–3, 7–5–7"
+  },
+  {
+    "id": "atp-7-523aea9bf7fd",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "IFR radio failure while being vectored",
+    "back": "Direct from failure point to fix, route or airway specified in vector clearance",
+    "page": "7–3, 7–5"
+  },
+  {
+    "id": "atp-7-864d002c4480",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "IFR radio failure — altitude",
+    "back": "Highest of assigned, minimum IFR, or expected for each segment",
+    "page": "7–3, 7–6"
+  },
+  {
+    "id": "atp-7-b02adf57099c",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "Radio failure — approach fix is clearance limit, with EFC",
+    "back": "Begin approach as close as possible to EFC",
+    "page": "7–3, 7–5–6"
+  },
+  {
+    "id": "atp-7-0d2863c671e8",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "Radio failure — approach fix is clearance limit, no EFC",
+    "back": "Begin approach as close as possible to ETA",
+    "page": "7–3, 7–5–6"
+  },
+  {
+    "id": "atp-7-05726c0cff5f",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "Near midair collision — proximity",
+    "back": "500 ft or less",
+    "page": "7–3, 7–7"
+  },
+  {
+    "id": "atp-7-c51f8cff3150",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "“Minimum fuel”",
+    "back": "Cannot accept undue delay; no priority or emergency declaration",
+    "page": "7–4, 7–7"
+  },
+  {
+    "id": "atp-7-26963a98f847",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "Fuel priority needed to land safely",
+    "back": "Declare emergency and report fuel remaining in minutes",
+    "page": "7–7–8"
+  },
+  {
+    "id": "atp-7-19a300445682",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "Greatest wake vortex strength",
+    "back": "Heavy, clean, slow aircraft",
+    "page": "7–4, 7–8"
+  },
+  {
+    "id": "atp-7-2e95dfd5a9b4",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "Wake vortices — vertical movement",
+    "back": "Sink to about 900–1,000 ft below generating flight path",
+    "page": "7–4, 7–9"
+  },
+  {
+    "id": "atp-7-0ec998da8c31",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "Light crosswind — upwind vortex",
+    "back": "May remain over runway",
+    "page": "7–4, 7–9"
+  },
+  {
+    "id": "atp-7-9b6854950968",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "Wake turbulence — most hazardous wind",
+    "back": "Light quartering tailwind",
+    "page": "7–4, 7–10"
+  },
+  {
+    "id": "atp-7-4b6b36244cf1",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "Taking off behind departing large aircraft — rotation",
+    "back": "Before its rotation point",
+    "page": "7–4, 7–10"
+  },
+  {
+    "id": "atp-7-c3e66d8478bf",
+    "chapter": 7,
+    "topic": "Flight Emergencies and Hazards",
+    "front": "Taking off behind landed large aircraft — rotation",
+    "back": "Past its touchdown point",
+    "page": "7–4, 7–10"
+  },
+  {
+    "id": "atp-7-d2f405379b3a",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Alcohol — bottle to throttle minimum",
+    "back": "8 hours",
+    "page": "7–11–12"
+  },
+  {
+    "id": "atp-7-454dacb34978",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Crewmember — blood alcohol limit",
+    "back": "Less than 0.04%",
+    "page": "7–11"
+  },
+  {
+    "id": "atp-7-566161911fdc",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Narrow runway illusion",
+    "back": "Aircraft appears higher than actual",
+    "page": "7–11, 7–13"
+  },
+  {
+    "id": "atp-7-873dbbb8e773",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Wide runway illusion",
+    "back": "Aircraft appears lower than actual",
+    "page": "7–11"
+  },
+  {
+    "id": "atp-7-f01c950b58a0",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Featureless terrain illusion",
+    "back": "Aircraft appears higher than actual",
+    "page": "7–11, 7–13"
+  },
+  {
+    "id": "atp-7-2445ca3f7fb9",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Autokinesis",
+    "back": "Stationary light appears to move in darkness",
+    "page": "7–11, 7–13"
+  },
+  {
+    "id": "atp-7-1c5f9743493b",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Night vision — most acute area",
+    "back": "Off-center peripheral vision",
+    "page": "7–11"
+  },
+  {
+    "id": "atp-7-43e12e471622",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Night scanning technique",
+    "back": "Scan slowly to allow off-center viewing",
+    "page": "7–14"
+  },
+  {
+    "id": "atp-7-9dd6bae1d677",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Ear block — most likely phase",
+    "back": "Descent; aggravated by upper respiratory infection",
+    "page": "7–14"
+  },
+  {
+    "id": "atp-7-486e571f21ce",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Collision-course target",
+    "back": "No relative motion and increasing apparent size",
+    "page": "7–14"
+  },
+  {
+    "id": "atp-7-2a2c2b9371fd",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Visual scan — outside vs. instrument panel",
+    "back": "About 16 seconds outside for 4–5 seconds inside",
+    "page": "7–14"
+  },
+  {
+    "id": "atp-7-4f2cd75a525e",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "The leans",
+    "back": "Abrupt bank correction creates illusion of opposite bank",
+    "page": "7–11"
+  },
+  {
+    "id": "atp-7-368458543c71",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Coriolis illusion",
+    "back": "Head movement during turn creates apparent rotation on another axis",
+    "page": "7–11, 7–15"
+  },
+  {
+    "id": "atp-7-055d86811c60",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Inversion illusion",
+    "back": "Level-off from climb creates backward-tumbling illusion",
+    "page": "7–11"
+  },
+  {
+    "id": "atp-7-6a2e7aee93ce",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Somatogravic illusion",
+    "back": "Takeoff acceleration creates nose-up illusion",
+    "page": "7–11, 7–13"
+  },
+  {
+    "id": "atp-7-33ef24813706",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Haze illusion",
+    "back": "Runway appears farther away",
+    "page": "7–15"
+  },
+  {
+    "id": "atp-7-76765be2d918",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Fog penetration illusion",
+    "back": "Pitch-up sensation",
+    "page": "7–15"
+  },
+  {
+    "id": "atp-7-e2f193f5a0b9",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Rain on windshield illusion",
+    "back": "Aircraft appears higher than actual",
+    "page": "7–16"
+  },
+  {
+    "id": "atp-7-d1ce9ab8d006",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Altitude-induced hypoxia — cause",
+    "back": "Reduced oxygen partial pressure",
+    "page": "7–11, 7–16"
+  },
+  {
+    "id": "atp-7-20b7e1a72d49",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Hypoxia",
+    "back": "Insufficient oxygen reaching brain",
+    "page": "7–11, 7–16"
+  },
+  {
+    "id": "atp-7-64fee79d659e",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Carbon monoxide poisoning — mechanism",
+    "back": "CO binds hemoglobin, reducing oxygen transport",
+    "page": "7–11"
+  },
+  {
+    "id": "atp-7-6e7dc70d05bf",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Hyperventilation — mechanism",
+    "back": "Reduced blood carbon dioxide from rapid breathing",
+    "page": "7–11"
+  },
+  {
+    "id": "atp-7-bbb92061e231",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Spatial disorientation — reliable reference",
+    "back": "Flight instruments",
+    "page": "7–11, 7–15"
+  },
+  {
+    "id": "atp-7-98ec47a34773",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "CRM",
+    "back": "Application of team management in flight deck",
+    "page": "7–18"
+  },
+  {
+    "id": "atp-7-0f98e8310acf",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "CRM — resources",
+    "back": "People, hardware and information",
+    "page": "7–18"
+  },
+  {
+    "id": "atp-7-3beb50b4aad2",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Error management — elements",
+    "back": "Prevention, detection and recovery",
+    "page": "7–18–19"
+  },
+  {
+    "id": "atp-7-e68fa9bfcb19",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Risk management — key external factor",
+    "back": "External pressures",
+    "page": "7–19"
+  },
+  {
+    "id": "atp-7-e5105c3b7c7e",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Sleep inertia",
+    "back": "Reduced alertness and performance after awakening",
+    "page": "7–21"
+  },
+  {
+    "id": "atp-7-cfc9ac14ba23",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Anti-authority hazardous attitude",
+    "back": "“Don't tell me” / disregard for rules",
+    "page": "7–20–21"
+  },
+  {
+    "id": "atp-7-d2b43bc9e49c",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Impulsivity hazardous attitude",
+    "back": "“Do something quickly”",
+    "page": "7–20"
+  },
+  {
+    "id": "atp-7-91dff36503fa",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Invulnerability hazardous attitude",
+    "back": "“It won't happen to me”",
+    "page": "7–20"
+  },
+  {
+    "id": "atp-7-c5d13ea15272",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Macho hazardous attitude",
+    "back": "“I can do it”",
+    "page": "7–20"
+  },
+  {
+    "id": "atp-7-47f62beb0070",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Resignation hazardous attitude",
+    "back": "“What's the use?”",
+    "page": "7–20"
+  },
+  {
+    "id": "atp-7-23d00bc7fc01",
+    "chapter": 7,
+    "topic": "Flight Physiology",
+    "front": "Blood donation — hypoxia type",
+    "back": "Hypemic hypoxia",
+    "page": "7–20"
+  },
+  {
+    "id": "atp-8-f9e9936681ac",
+    "chapter": 8,
+    "topic": "The Atmosphere",
+    "front": "Northern Hemisphere — Coriolis deflection",
+    "back": "To the right",
+    "page": "8–3"
+  },
+  {
+    "id": "atp-8-57a35ce6abe5",
+    "chapter": 8,
+    "topic": "The Atmosphere",
+    "front": "Southern Hemisphere — Coriolis deflection",
+    "back": "To the left",
+    "page": "8–3"
+  },
+  {
+    "id": "atp-8-1d840fb93ca3",
+    "chapter": 8,
+    "topic": "The Atmosphere",
+    "front": "Northern Hemisphere high pressure — rotation",
+    "back": "Clockwise",
+    "page": "8–3, 8–5"
+  },
+  {
+    "id": "atp-8-705efdd12709",
+    "chapter": 8,
+    "topic": "The Atmosphere",
+    "front": "Northern Hemisphere low pressure — rotation",
+    "back": "Counterclockwise",
+    "page": "8–3, 8–5"
+  },
+  {
+    "id": "atp-8-00786371055b",
+    "chapter": 8,
+    "topic": "The Atmosphere",
+    "front": "Anticyclone",
+    "back": "High-pressure circulation",
+    "page": "8–3, 8–5"
+  },
+  {
+    "id": "atp-8-3e6c6e5749c0",
+    "chapter": 8,
+    "topic": "The Atmosphere",
+    "front": "Cyclone",
+    "back": "Low-pressure circulation",
+    "page": "8–3, 8–6"
+  },
+  {
+    "id": "atp-8-f8f3792364f1",
+    "chapter": 8,
+    "topic": "The Atmosphere",
+    "front": "Coriolis effect — minimum latitude",
+    "back": "Equator",
+    "page": "8–3, 8–5"
+  },
+  {
+    "id": "atp-8-22f14950890a",
+    "chapter": 8,
+    "topic": "The Atmosphere",
+    "front": "Troposphere — average temperature lapse rate",
+    "back": "About 2°C per 1,000 ft",
+    "page": "8–4"
+  },
+  {
+    "id": "atp-8-b93580276b56",
+    "chapter": 8,
+    "topic": "The Atmosphere",
+    "front": "Tropopause",
+    "back": "Boundary between troposphere and stratosphere",
+    "page": "8–4"
+  },
+  {
+    "id": "atp-8-582a52b7ee88",
+    "chapter": 8,
+    "topic": "The Atmosphere",
+    "front": "Tropopause — characteristic",
+    "back": "Abrupt lapse-rate change",
+    "page": "8–4, 8–6"
+  },
+  {
+    "id": "atp-8-5598be0932a7",
+    "chapter": 8,
+    "topic": "The Atmosphere",
+    "front": "Jet stream — minimum wind speed",
+    "back": "50 kt",
+    "page": "8–4, 8–11"
+  },
+  {
+    "id": "atp-8-7c08196671cf",
+    "chapter": 8,
+    "topic": "The Atmosphere",
+    "front": "Jet stream — usual location",
+    "back": "Break in the tropopause",
+    "page": "8–4, 8–7"
+  },
+  {
+    "id": "atp-8-3b84a08ab3e7",
+    "chapter": 8,
+    "topic": "The Atmosphere",
+    "front": "Jet stream — maximum wind side",
+    "back": "Polar side of core",
+    "page": "8–4, 8–7"
+  },
+  {
+    "id": "atp-8-035865064b75",
+    "chapter": 8,
+    "topic": "The Atmosphere",
+    "front": "Jet stream — cirriform clouds",
+    "back": "Equatorial side",
+    "page": "8–4, 8–7"
+  },
+  {
+    "id": "atp-8-52d7c73d2c68",
+    "chapter": 8,
+    "topic": "The Atmosphere",
+    "front": "Tropopause — typical temperature",
+    "back": "−55°C to −65°C",
+    "page": "8–7"
+  },
+  {
+    "id": "atp-8-1d3bdfab6c0c",
+    "chapter": 8,
+    "topic": "Weather Systems",
+    "front": "Trough",
+    "back": "Elongated area of low pressure",
+    "page": "8–8–9"
+  },
+  {
+    "id": "atp-8-29aa97c7198a",
+    "chapter": 8,
+    "topic": "Weather Systems",
+    "front": "Front",
+    "back": "Boundary between air masses",
+    "page": "8–8"
+  },
+  {
+    "id": "atp-8-0b6bada75d0a",
+    "chapter": 8,
+    "topic": "Weather Systems",
+    "front": "Frontogenesis",
+    "back": "Formation of a front",
+    "page": "8–8"
+  },
+  {
+    "id": "atp-8-7727eebca8f9",
+    "chapter": 8,
+    "topic": "Weather Systems",
+    "front": "Frontolysis",
+    "back": "Dissipation of a front",
+    "page": "8–8"
+  },
+  {
+    "id": "atp-8-c1889fb31c99",
+    "chapter": 8,
+    "topic": "Weather Systems",
+    "front": "Cold front",
+    "back": "Cold air displacing warm air",
+    "page": "8–8"
+  },
+  {
+    "id": "atp-8-9532b5d4789f",
+    "chapter": 8,
+    "topic": "Weather Systems",
+    "front": "Warm front",
+    "back": "Warm air displacing cold air",
+    "page": "8–8"
+  },
+  {
+    "id": "atp-8-85ad8371b526",
+    "chapter": 8,
+    "topic": "Weather Systems",
+    "front": "Occluded front",
+    "back": "Cold front overtakes warm front and lifts warm air",
+    "page": "8–8"
+  },
+  {
+    "id": "atp-8-7b1d30f75f21",
+    "chapter": 8,
+    "topic": "Weather Systems",
+    "front": "Stationary front",
+    "back": "Little or no movement",
+    "page": "8–8–9"
+  },
+  {
+    "id": "atp-8-06cab59ca82d",
+    "chapter": 8,
+    "topic": "Weather Systems",
+    "front": "Dry line / dew-point front",
+    "back": "Moisture contrast between similar-temperature air masses",
+    "page": "8–8, 8–10"
+  },
+  {
+    "id": "atp-8-bbbebb405dbb",
+    "chapter": 8,
+    "topic": "Weather Systems",
+    "front": "Frontal waves — likely on",
+    "back": "Stationary or slow-moving cold fronts",
+    "page": "8–8, 8–10"
+  },
+  {
+    "id": "atp-8-b6a7100ee823",
+    "chapter": 8,
+    "topic": "Weather Systems",
+    "front": "Warm-front speed vs. cold-front speed",
+    "back": "About half as fast under similar winds",
+    "page": "8–8, 8–10"
+  },
+  {
+    "id": "atp-8-fc52351c951b",
+    "chapter": 8,
+    "topic": "Weather Systems",
+    "front": "Jet stream at occlusion",
+    "back": "Crosses front near point of occlusion",
+    "page": "8–8, 8–10"
+  },
+  {
+    "id": "atp-8-02cef476076e",
+    "chapter": 8,
+    "topic": "Weather Systems",
+    "front": "Jet streams — strongest season",
+    "back": "Winter",
+    "page": "8–11"
+  },
+  {
+    "id": "atp-8-f4c068602f01",
+    "chapter": 8,
+    "topic": "Stability and Instability of Air",
+    "front": "Dry adiabatic rate",
+    "back": "About 3°C per 1,000 ft",
+    "page": "8–11–12"
+  },
+  {
+    "id": "atp-8-84dabbba1495",
+    "chapter": 8,
+    "topic": "Stability and Instability of Air",
+    "front": "Temperature/dew-point convergence in rising moist air",
+    "back": "About 2.5°C per 1,000 ft",
+    "page": "8–11"
+  },
+  {
+    "id": "atp-8-ecde54da830e",
+    "chapter": 8,
+    "topic": "Stability and Instability of Air",
+    "front": "Adiabatic cooling",
+    "back": "Air expansion without heat exchange",
+    "page": "8–11–12"
+  },
+  {
+    "id": "atp-8-c6bed44b1e4f",
+    "chapter": 8,
+    "topic": "Stability and Instability of Air",
+    "front": "Adiabatic warming",
+    "back": "Air compression without heat exchange",
+    "page": "8–11–13"
+  },
+  {
+    "id": "atp-8-ea8269f0cda7",
+    "chapter": 8,
+    "topic": "Stability and Instability of Air",
+    "front": "Cloud base formation",
+    "back": "Temperature and dew point converge",
+    "page": "8–11, 8–13"
+  },
+  {
+    "id": "atp-8-70e5e79cf896",
+    "chapter": 8,
+    "topic": "Stability and Instability of Air",
+    "front": "Temperature inversion",
+    "back": "Temperature increases with altitude",
+    "page": "8–12–13"
+  },
+  {
+    "id": "atp-8-d065d68cc931",
+    "chapter": 8,
+    "topic": "Stability and Instability of Air",
+    "front": "Rapid ambient temperature decrease with altitude",
+    "back": "Unstable air",
+    "page": "8–12–14"
+  },
+  {
+    "id": "atp-8-b36105eb20e3",
+    "chapter": 8,
+    "topic": "Stability and Instability of Air",
+    "front": "Small or no ambient temperature decrease with altitude",
+    "back": "Stable air",
+    "page": "8–12–14"
+  },
+  {
+    "id": "atp-8-1ffdf1d83a2c",
+    "chapter": 8,
+    "topic": "Stability and Instability of Air",
+    "front": "Stable air — cloud type",
+    "back": "Stratiform",
+    "page": "8–13"
+  },
+  {
+    "id": "atp-8-9657d691bbe0",
+    "chapter": 8,
+    "topic": "Stability and Instability of Air",
+    "front": "Unstable air — cloud type",
+    "back": "Cumuliform",
+    "page": "8–13"
+  },
+  {
+    "id": "atp-8-97feba9f12a9",
+    "chapter": 8,
+    "topic": "Stability and Instability of Air",
+    "front": "Stable air — precipitation",
+    "back": "Continuous",
+    "page": "8–13"
+  },
+  {
+    "id": "atp-8-de511a91ebac",
+    "chapter": 8,
+    "topic": "Stability and Instability of Air",
+    "front": "Unstable air — precipitation",
+    "back": "Showery",
+    "page": "8–13"
+  },
+  {
+    "id": "atp-8-f2f2069a9b20",
+    "chapter": 8,
+    "topic": "Stability and Instability of Air",
+    "front": "Katabatic wind",
+    "back": "Downslope wind that warms and dries",
+    "page": "8–11–12"
+  },
+  {
+    "id": "atp-8-e0c74580a66d",
+    "chapter": 8,
+    "topic": "Fog and Rain",
+    "front": "Fog — stability condition",
+    "back": "Stable air",
+    "page": "8–15"
+  },
+  {
+    "id": "atp-8-85c08aeaa4c6",
+    "chapter": 8,
+    "topic": "Fog and Rain",
+    "front": "Radiation fog — formation",
+    "back": "Clear, calm night with surface cooling to dew point",
+    "page": "8–15–17"
+  },
+  {
+    "id": "atp-8-05e84fb17af0",
+    "chapter": 8,
+    "topic": "Fog and Rain",
+    "front": "Radiation fog — most common timing",
+    "back": "Just after sunrise",
+    "page": "8–15"
+  },
+  {
+    "id": "atp-8-2649e49e73d1",
+    "chapter": 8,
+    "topic": "Fog and Rain",
+    "front": "Advection fog",
+    "back": "Warm moist air moving over a colder surface",
+    "page": "8–15–17"
+  },
+  {
+    "id": "atp-8-3eafc67ad752",
+    "chapter": 8,
+    "topic": "Fog and Rain",
+    "front": "Advection fog — wind above about 15 kt",
+    "back": "Lifts to low stratus",
+    "page": "8–15–16"
+  },
+  {
+    "id": "atp-8-f3c7463a9fc0",
+    "chapter": 8,
+    "topic": "Fog and Rain",
+    "front": "Upslope fog",
+    "back": "Moist stable air forced up terrain by wind",
+    "page": "8–15–16"
+  },
+  {
+    "id": "atp-8-c51353c7d096",
+    "chapter": 8,
+    "topic": "Fog and Rain",
+    "front": "Precipitation-induced fog",
+    "back": "Warm rain or drizzle evaporates into cooler air",
+    "page": "8–16"
+  },
+  {
+    "id": "atp-8-5fae016080d2",
+    "chapter": 8,
+    "topic": "Fog and Rain",
+    "front": "Light-or-greater precipitation — typical cloud thickness",
+    "back": "At least 4,000 ft",
+    "page": "8–15, 8–17"
+  },
+  {
+    "id": "atp-8-4fc949ab88fa",
+    "chapter": 8,
+    "topic": "Thunderstorms",
+    "front": "Cumulus stage",
+    "back": "Continuous updraft",
+    "page": "8–18–19"
+  },
+  {
+    "id": "atp-8-13915877f5cf",
+    "chapter": 8,
+    "topic": "Thunderstorms",
+    "front": "Mature stage — start",
+    "back": "Precipitation reaches surface / downdraft develops",
+    "page": "8–18–19"
+  },
+  {
+    "id": "atp-8-606b82e63377",
+    "chapter": 8,
+    "topic": "Thunderstorms",
+    "front": "Dissipating stage",
+    "back": "Downdrafts predominate",
+    "page": "8–18–19"
+  },
+  {
+    "id": "atp-8-076ee40f5839",
+    "chapter": 8,
+    "topic": "Thunderstorms",
+    "front": "Air-mass thunderstorm — main trigger",
+    "back": "Local surface heating",
+    "page": "8–18–19"
+  },
+  {
+    "id": "atp-8-84bafdb912c6",
+    "chapter": 8,
+    "topic": "Thunderstorms",
+    "front": "Steady-state thunderstorm — source",
+    "back": "Fronts, converging winds or troughs aloft",
+    "page": "8–18, 8–22"
+  },
+  {
+    "id": "atp-8-74691f5fda6f",
+    "chapter": 8,
+    "topic": "Thunderstorms",
+    "front": "Squall line",
+    "back": "Nonfrontal line of active thunderstorms, often ahead of cold front",
+    "page": "8–18–20"
+  },
+  {
+    "id": "atp-8-4cb75cbd81b1",
+    "chapter": 8,
+    "topic": "Thunderstorms",
+    "front": "Severe thunderstorm — surface wind threshold",
+    "back": "50 kt or more",
+    "page": "8–18, 8–20"
+  },
+  {
+    "id": "atp-8-5671f7346b4e",
+    "chapter": 8,
+    "topic": "Thunderstorms",
+    "front": "Severe thunderstorm — hail threshold",
+    "back": "3/4 in diameter or more",
+    "page": "8–18, 8–20"
+  },
+  {
+    "id": "atp-8-3e387fc70553",
+    "chapter": 8,
+    "topic": "Thunderstorms",
+    "front": "Cumulonimbus mammatus",
+    "back": "Violent thunderstorms and possible tornadoes",
+    "page": "8–18, 8–20"
+  },
+  {
+    "id": "atp-8-4f86228b0439",
+    "chapter": 8,
+    "topic": "Thunderstorms",
+    "front": "Embedded thunderstorm",
+    "back": "Obscured within stratiform clouds",
+    "page": "8–18, 8–21"
+  },
+  {
+    "id": "atp-8-f57078853dce",
+    "chapter": 8,
+    "topic": "Thunderstorms",
+    "front": "Airborne weather radar — primary return",
+    "back": "Precipitation-size raindrops and hail",
+    "page": "8–18, 8–21"
+  },
+  {
+    "id": "atp-8-2e4813d90042",
+    "chapter": 8,
+    "topic": "Thunderstorms",
+    "front": "Severe thunderstorm overflight clearance",
+    "back": "1,000 ft per 10 kt wind at cloud top",
+    "page": "8–18, 8–21"
+  },
+  {
+    "id": "atp-8-9a5e9a6b5c67",
+    "chapter": 8,
+    "topic": "Wind Shear",
+    "front": "Severe wind shear — airspeed change",
+    "back": "More than 15 kt",
+    "page": "8–22–23"
+  },
+  {
+    "id": "atp-8-7444f33347de",
+    "chapter": 8,
+    "topic": "Wind Shear",
+    "front": "Severe wind shear — vertical speed change",
+    "back": "More than 500 fpm",
+    "page": "8–22–23"
+  },
+  {
+    "id": "atp-8-7a62a38f3881",
+    "chapter": 8,
+    "topic": "Wind Shear",
+    "front": "Sudden headwind increase — initial indicated airspeed",
+    "back": "Increases",
+    "page": "8–22–25"
+  },
+  {
+    "id": "atp-8-d2d0e14cbcc1",
+    "chapter": 8,
+    "topic": "Wind Shear",
+    "front": "Sudden tailwind increase — initial indicated airspeed",
+    "back": "Decreases",
+    "page": "8–22–25"
+  },
+  {
+    "id": "atp-8-be1db695c655",
+    "chapter": 8,
+    "topic": "Wind Shear",
+    "front": "Microburst — maximum downdraft",
+    "back": "Up to 6,000 fpm",
+    "page": "8–22, 8–26–27"
+  },
+  {
+    "id": "atp-8-fd420e0e867c",
+    "chapter": 8,
+    "topic": "Wind Shear",
+    "front": "Microburst — near-surface outflow wind",
+    "back": "Up to 45 kt",
+    "page": "8–22, 8–26–27"
+  },
+  {
+    "id": "atp-8-f3de293cab9d",
+    "chapter": 8,
+    "topic": "Wind Shear",
+    "front": "Microburst — peak headwind-to-tailwind shear",
+    "back": "Up to 90 kt",
+    "page": "8–22, 8–26–27"
+  },
+  {
+    "id": "atp-8-93ca531c1509",
+    "chapter": 8,
+    "topic": "Wind Shear",
+    "front": "Microburst — maximum-intensity winds duration",
+    "back": "About 2–4 minutes",
+    "page": "8–28"
+  },
+  {
+    "id": "atp-8-a04cdef52501",
+    "chapter": 8,
+    "topic": "Wind Shear",
+    "front": "Microburst — approximate total duration",
+    "back": "About 15 minutes after ground contact",
+    "page": "8–22, 8–28"
+  },
+  {
+    "id": "atp-8-5b39cd3de34d",
+    "chapter": 8,
+    "topic": "Wind Shear",
+    "front": "Low-level inversion wind shear — wind at 2,000–4,000 ft",
+    "back": "25 kt or more",
+    "page": "8–26"
+  },
+  {
+    "id": "atp-8-5a70d53b0784",
+    "chapter": 8,
+    "topic": "Wind Shear",
+    "front": "Wind shear recovery — pitch",
+    "back": "Maintain or increase; accept lower airspeed",
+    "page": "8–23, 8–29"
+  },
+  {
+    "id": "atp-8-215183e56683",
+    "chapter": 8,
+    "topic": "Wind Shear",
+    "front": "Wind shear recovery — power",
+    "back": "Maximum available",
+    "page": "8–23"
+  },
+  {
+    "id": "atp-8-10a30bca5e7a",
+    "chapter": 8,
+    "topic": "Wind Shear",
+    "front": "LLWAS",
+    "back": "Compares perimeter and center-field wind sensors",
+    "page": "8–23, 8–28"
+  },
+  {
+    "id": "atp-8-806e6c719689",
+    "chapter": 8,
+    "topic": "Frost and Ice",
+    "front": "Deicing",
+    "back": "Removal of existing frost, ice or snow",
+    "page": "8–29"
+  },
+  {
+    "id": "atp-8-6b0fbd269a53",
+    "chapter": 8,
+    "topic": "Frost and Ice",
+    "front": "Anti-icing",
+    "back": "Temporary protection against new frost or ice",
+    "page": "8–29"
+  },
+  {
+    "id": "atp-8-5e4cf13090fa",
+    "chapter": 8,
+    "topic": "Frost and Ice",
+    "front": "Type I fluid",
+    "back": "Unthickened; relatively short holdover",
+    "page": "8–29, 8–33"
+  },
+  {
+    "id": "atp-8-f665ea1fd1d9",
+    "chapter": 8,
+    "topic": "Frost and Ice",
+    "front": "Type I fluid — minimum glycol",
+    "back": "80%",
+    "page": "8–29, 8–33"
+  },
+  {
+    "id": "atp-8-57811e824075",
+    "chapter": 8,
+    "topic": "Frost and Ice",
+    "front": "Type II fluid",
+    "back": "Thickened; longer holdover",
+    "page": "8–29, 8–33"
+  },
+  {
+    "id": "atp-8-001e1382dfbd",
+    "chapter": 8,
+    "topic": "Frost and Ice",
+    "front": "Type II fluid — minimum glycol",
+    "back": "50%",
+    "page": "8–29, 8–33"
+  },
+  {
+    "id": "atp-8-7dec9a2af459",
+    "chapter": 8,
+    "topic": "Frost and Ice",
+    "front": "Two-step deicing — first step",
+    "back": "Remove ice with heated diluted fluid",
+    "page": "8–29"
+  },
+  {
+    "id": "atp-8-1e4ad0c9f9d3",
+    "chapter": 8,
+    "topic": "Frost and Ice",
+    "front": "Two-step deicing — second step",
+    "back": "Anti-ice with more concentrated, usually cold fluid",
+    "page": "8–29, 8–33"
+  },
+  {
+    "id": "atp-8-9dc6b712a190",
+    "chapter": 8,
+    "topic": "Frost and Ice",
+    "front": "Anti-icing residual film — freeze-point margin",
+    "back": "At least 20°F below ambient or surface temperature, whichever is lower",
+    "page": "8–29, 8–34–35"
+  },
+  {
+    "id": "atp-8-7a60ca323377",
+    "chapter": 8,
+    "topic": "Frost and Ice",
+    "front": "Part 135 pretakeoff contamination check — timing",
+    "back": "No more than 5 minutes before takeoff",
+    "page": "8–38"
+  },
+  {
+    "id": "atp-8-29b1bfcabda8",
+    "chapter": 8,
+    "topic": "Icing",
+    "front": "Rime ice",
+    "back": "Small droplets freeze immediately; milky white, rough",
+    "page": "8–29–30, 8–35"
+  },
+  {
+    "id": "atp-8-1f87c4256b17",
+    "chapter": 8,
+    "topic": "Icing",
+    "front": "Clear ice",
+    "back": "Large droplets/freezing rain spread before freezing",
+    "page": "8–30–31"
+  },
+  {
+    "id": "atp-8-ae3963a8d2a7",
+    "chapter": 8,
+    "topic": "Icing",
+    "front": "Mixed ice",
+    "back": "Combination of clear and rime ice",
+    "page": "8–30"
+  },
+  {
+    "id": "atp-8-289893b132df",
+    "chapter": 8,
+    "topic": "Icing",
+    "front": "Structural icing — two necessary conditions",
+    "back": "Visible moisture and airframe contact temperature at/below 0°C",
+    "page": "8–29–30, 8–35"
+  },
+  {
+    "id": "atp-8-a62b8151eeec",
+    "chapter": 8,
+    "topic": "Icing",
+    "front": "Freezing rain — temperature structure",
+    "back": "Warmer layer aloft above subfreezing layer",
+    "page": "8–30, 8–35–36"
+  },
+  {
+    "id": "atp-8-2cad52a9afa9",
+    "chapter": 8,
+    "topic": "Icing",
+    "front": "Ice pellets encountered in flight",
+    "back": "Freezing rain at a higher altitude",
+    "page": "8–30, 8–36"
+  },
+  {
+    "id": "atp-8-5915f2767e9d",
+    "chapter": 8,
+    "topic": "Icing",
+    "front": "Wet snow in flight",
+    "back": "Temperature above freezing at flight level",
+    "page": "8–31, 8–36"
+  },
+  {
+    "id": "atp-8-05a2967d7587",
+    "chapter": 8,
+    "topic": "Icing",
+    "front": "Induction icing",
+    "back": "Icing affecting powerplant operation",
+    "page": "8–30"
+  },
+  {
+    "id": "atp-8-4227379e9f72",
+    "chapter": 8,
+    "topic": "Hazards of Structural Icing",
+    "front": "Severe icing",
+    "back": "Accumulation exceeds deicing/anti-icing system capability",
+    "page": "8–30, 8–54"
+  },
+  {
+    "id": "atp-8-0bb6da1218a4",
+    "chapter": 8,
+    "topic": "Hazards of Structural Icing",
+    "front": "Tailplane stall — aircraft pitch response",
+    "back": "Pitch down, possibly uncontrollable",
+    "page": "8–30"
+  },
+  {
+    "id": "atp-8-2684a3ef0993",
+    "chapter": 8,
+    "topic": "Hazards of Structural Icing",
+    "front": "Tailplane stall — flap application",
+    "back": "Can trigger or worsen stall",
+    "page": "8–30"
+  },
+  {
+    "id": "atp-8-b8fdfab48d8b",
+    "chapter": 8,
+    "topic": "Hazards of Structural Icing",
+    "front": "Ice/snow/frost like coarse sandpaper — lift reduction",
+    "back": "Up to 30%",
+    "page": "8–31, 8–37"
+  },
+  {
+    "id": "atp-8-a6cac0ca3200",
+    "chapter": 8,
+    "topic": "Hazards of Structural Icing",
+    "front": "Ice/snow/frost like coarse sandpaper — drag increase",
+    "back": "Up to 40%",
+    "page": "8–31, 8–37"
+  },
+  {
+    "id": "atp-8-94efdac01c87",
+    "chapter": 8,
+    "topic": "Hazards of Structural Icing",
+    "front": "Icing on wings/control surfaces/propellers before takeoff",
+    "back": "Must be removed",
+    "page": "8–29–30, 8–38"
+  },
+  {
+    "id": "atp-8-f28c188e3ec7",
+    "chapter": 8,
+    "topic": "Frost Formation",
+    "front": "Frost — formation",
+    "back": "Water vapor deposits as ice on a subfreezing surface at/below dew point",
+    "page": "8–31, 8–37"
+  },
+  {
+    "id": "atp-8-a222e8554e91",
+    "chapter": 8,
+    "topic": "Frost Formation",
+    "front": "Frost vs. frozen dew — appearance",
+    "back": "Frost white/opaque; frozen dew hard/transparent",
+    "page": "8–31"
+  },
+  {
+    "id": "atp-8-80dc2ab67245",
+    "chapter": 8,
+    "topic": "Frost Formation",
+    "front": "Clear ice — favorable temperature",
+    "back": "Near freezing",
+    "page": "8–31"
+  },
+  {
+    "id": "atp-8-4f93c3154794",
+    "chapter": 8,
+    "topic": "Turbulence",
+    "front": "Light chop",
+    "back": "Slight rapid bumpiness without appreciable altitude/attitude changes",
+    "page": "8–38–39"
+  },
+  {
+    "id": "atp-8-8450d0305db1",
+    "chapter": 8,
+    "topic": "Turbulence",
+    "front": "Moderate turbulence",
+    "back": "Altitude/attitude changes; positive control maintained",
+    "page": "8–38–39"
+  },
+  {
+    "id": "atp-8-c0b7707c3f79",
+    "chapter": 8,
+    "topic": "Turbulence",
+    "front": "Severe turbulence",
+    "back": "Large abrupt changes; momentary loss of control possible",
+    "page": "8–38"
+  },
+  {
+    "id": "atp-8-6025f4c403ab",
+    "chapter": 8,
+    "topic": "Turbulence",
+    "front": "Extreme turbulence",
+    "back": "Practically impossible to control; structural damage possible",
+    "page": "8–38"
+  },
+  {
+    "id": "atp-8-4977cde78838",
+    "chapter": 8,
+    "topic": "Turbulence",
+    "front": "Occasional turbulence",
+    "back": "Less than 1/3 of the time",
+    "page": "8–38"
+  },
+  {
+    "id": "atp-8-b57a19799a13",
+    "chapter": 8,
+    "topic": "Turbulence",
+    "front": "Intermittent turbulence",
+    "back": "1/3 to 2/3 of the time",
+    "page": "8–38"
+  },
+  {
+    "id": "atp-8-002405be5e15",
+    "chapter": 8,
+    "topic": "Turbulence",
+    "front": "Continuous turbulence",
+    "back": "More than 2/3 of the time",
+    "page": "8–38"
+  },
+  {
+    "id": "atp-8-ca63ffeb46a6",
+    "chapter": 8,
+    "topic": "Turbulence",
+    "front": "Mountain-wave rotor cloud",
+    "back": "Lowest stationary cloud in wave group",
+    "page": "8–38, 8–40"
+  },
+  {
+    "id": "atp-8-ee773f5d0b4a",
+    "chapter": 8,
+    "topic": "Turbulence",
+    "front": "Mountain-wave CAT — downwind reach",
+    "back": "100 miles or more",
+    "page": "8–38, 8–40"
+  },
+  {
+    "id": "atp-8-30d6da8accf4",
+    "chapter": 8,
+    "topic": "Turbulence",
+    "front": "Mountain-wave CAT — upper reach",
+    "back": "Up to 5,000 ft above tropopause",
+    "page": "8–38, 8–40"
+  },
+  {
+    "id": "atp-8-e728cbf9d973",
+    "chapter": 8,
+    "topic": "Turbulence",
+    "front": "Jet stream CAT — likely side",
+    "back": "Polar side in an upper trough",
+    "page": "8–39–40"
+  },
+  {
+    "id": "atp-8-af216573253f",
+    "chapter": 8,
+    "topic": "Turbulence",
+    "front": "Jet stream CAT — threshold wind speed",
+    "back": "About 110 kt",
+    "page": "8–40"
+  },
+  {
+    "id": "atp-8-d41f9b656922",
+    "chapter": 8,
+    "topic": "Turbulence",
+    "front": "Jet stream turbulence, temperature falling — escape altitude",
+    "back": "Descend",
+    "page": "8–39–41"
+  },
+  {
+    "id": "atp-8-9c3e2caaa31a",
+    "chapter": 8,
+    "topic": "Turbulence",
+    "front": "Jet stream turbulence, temperature rising — escape altitude",
+    "back": "Climb",
+    "page": "8–39–41"
+  },
+  {
+    "id": "atp-8-c29afe86dc35",
+    "chapter": 8,
+    "topic": "Arctic and Tropical Weather Hazards",
+    "front": "Whiteout",
+    "back": "Cloud layer over snow/ice removes shadows and depth perception",
+    "page": "8–42"
+  },
+  {
+    "id": "atp-8-76edc5ccd67e",
+    "chapter": 8,
+    "topic": "Arctic and Tropical Weather Hazards",
+    "front": "Tropical depression — sustained wind",
+    "back": "Up to 34 kt",
+    "page": "8–42"
+  },
+  {
+    "id": "atp-8-b346ba504810",
+    "chapter": 8,
+    "topic": "Arctic and Tropical Weather Hazards",
+    "front": "Tropical storm — sustained wind",
+    "back": "35–64 kt",
+    "page": "8–42"
+  },
+  {
+    "id": "atp-8-9a444c1f2e70",
+    "chapter": 8,
+    "topic": "Arctic and Tropical Weather Hazards",
+    "front": "Hurricane/typhoon — sustained wind",
+    "back": "65 kt or more",
+    "page": "8–42"
+  },
+  {
+    "id": "atp-8-b813037f4920",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "METAR",
+    "back": "Routine observed aerodrome weather report",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-d0eea8826089",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "SPECI",
+    "back": "Special weather report",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-6cbdfef262ad",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "AUTO",
+    "back": "Automated observation",
+    "page": "8–43–44"
+  },
+  {
+    "id": "atp-8-d8ee7d36b492",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "METAR wind direction reference",
+    "back": "True north",
+    "page": "8–43–44"
+  },
+  {
+    "id": "atp-8-fd032a27ed9b",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "METAR cloud heights",
+    "back": "Hundreds of feet AGL",
+    "page": "8–43–45"
+  },
+  {
+    "id": "atp-8-e491f2eeda69",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "FEW cloud cover",
+    "back": "More than 0/8 to 2/8",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-18561766c47e",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "SCT cloud cover",
+    "back": "3/8 to 4/8",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-7fabbc5b9da3",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "BKN cloud cover",
+    "back": "5/8 to 7/8",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-bc96a1c1b513",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "OVC cloud cover",
+    "back": "8/8",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-0cac8a1606e2",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "Ceiling",
+    "back": "Lowest BKN/OVC layer or vertical visibility",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-8ff0ee08b110",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "VV in METAR",
+    "back": "Vertical visibility in hundreds of feet",
+    "page": "8–43, 8–46"
+  },
+  {
+    "id": "atp-8-937f3008bbd5",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "METAR “M” before temperature/visibility",
+    "back": "Minus / below zero or less than reported fraction",
+    "page": "8–43, 8–46"
+  },
+  {
+    "id": "atp-8-6a73f33a824b",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "METAR “A” altimeter group",
+    "back": "Inches Hg and hundredths",
+    "page": "8–43–44"
+  },
+  {
+    "id": "atp-8-6182b276ef51",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "METAR “Q” altimeter group",
+    "back": "Hectopascals",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-a0dde12b9c23",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "METAR “$” remark",
+    "back": "Automated system may need maintenance",
+    "page": "8–46"
+  },
+  {
+    "id": "atp-8-6f926e207b10",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "AO2 remark",
+    "back": "Automated station with precipitation discriminator",
+    "page": "8–44"
+  },
+  {
+    "id": "atp-8-3ad45b1bcb65",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "“−” weather intensity",
+    "back": "Light",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-f25500474876",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "“+” weather intensity",
+    "back": "Heavy",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-47ea779f01b2",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "No weather intensity sign",
+    "back": "Moderate",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-73de0af838bf",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "BR",
+    "back": "Mist",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-094c9dd8d5e9",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "FG",
+    "back": "Fog",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-1e37665a023d",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "FZ",
+    "back": "Freezing",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-4f64b951743f",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "SH",
+    "back": "Showers",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-3a0b4af99caa",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "TS",
+    "back": "Thunderstorm",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-37c70524d4fd",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "PL",
+    "back": "Ice pellets",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-2435e6023d66",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "FC",
+    "back": "Funnel cloud",
+    "page": "8–43, 8–45"
+  },
+  {
+    "id": "atp-8-b0508924d4e3",
+    "chapter": 8,
+    "topic": "Aviation Routine Weather Report (METAR)",
+    "front": "RAB / RAE remark",
+    "back": "Rain began / rain ended at coded minute",
+    "page": "8–44–45"
+  },
+  {
+    "id": "atp-8-d930a93f4b98",
+    "chapter": 8,
+    "topic": "The Terminal Aerodrome Forecast (TAF)",
+    "front": "TAF",
+    "back": "Forecast aerodrome weather for specified period",
+    "page": "8–47"
+  },
+  {
+    "id": "atp-8-aabab4190257",
+    "chapter": 8,
+    "topic": "The Terminal Aerodrome Forecast (TAF)",
+    "front": "TAF “FM”",
+    "back": "Change beginning at specified date and time",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-59a6c8b9f12c",
+    "chapter": 8,
+    "topic": "The Terminal Aerodrome Forecast (TAF)",
+    "front": "TAF “TEMPO”",
+    "back": "Temporary change under 1 hour and under half the period",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-67af249f0973",
+    "chapter": 8,
+    "topic": "The Terminal Aerodrome Forecast (TAF)",
+    "front": "TAF “PROB30/40”",
+    "back": "30% or 40% probability of precipitation or thunderstorms",
+    "page": "8–43, 8–47"
+  },
+  {
+    "id": "atp-8-d60fad1b5497",
+    "chapter": 8,
+    "topic": "The Terminal Aerodrome Forecast (TAF)",
+    "front": "TAF “BECMG”",
+    "back": "Change occurring during specified period",
+    "page": "8–43"
+  },
+  {
+    "id": "atp-8-b9514edcafbc",
+    "chapter": 8,
+    "topic": "The Terminal Aerodrome Forecast (TAF)",
+    "front": "TAF “VC”",
+    "back": "Weather 5–10 SM from runway complex, not at airport",
+    "page": "8–43, 8–47"
+  },
+  {
+    "id": "atp-8-93e525cb571a",
+    "chapter": 8,
+    "topic": "The Terminal Aerodrome Forecast (TAF)",
+    "front": "TAF “VCTS”",
+    "back": "Thunderstorms in vicinity, 5–10 SM away",
+    "page": "8–47"
+  },
+  {
+    "id": "atp-8-dca641c07937",
+    "chapter": 8,
+    "topic": "The Terminal Aerodrome Forecast (TAF)",
+    "front": "TAF “00000KT”",
+    "back": "Calm wind, 3 kt or less",
+    "page": "8–47–48"
+  },
+  {
+    "id": "atp-8-5921f3f0a094",
+    "chapter": 8,
+    "topic": "The Terminal Aerodrome Forecast (TAF)",
+    "front": "TAF — only cloud type forecast",
+    "back": "Cumulonimbus (CB)",
+    "page": "8–47"
+  },
+  {
+    "id": "atp-8-b1ea1dd42a9b",
+    "chapter": 8,
+    "topic": "Enroute Forecasts",
+    "front": "Winds/temperatures aloft — direction reference",
+    "back": "True north",
+    "page": "8–48–50"
+  },
+  {
+    "id": "atp-8-9aeb813fb475",
+    "chapter": 8,
+    "topic": "Enroute Forecasts",
+    "front": "FB “9900”",
+    "back": "Light and variable wind",
+    "page": "8–48–49"
+  },
+  {
+    "id": "atp-8-ce838324c898",
+    "chapter": 8,
+    "topic": "Enroute Forecasts",
+    "front": "FB wind 100–199 kt — direction code",
+    "back": "Add 50 when encoding; subtract 50 when decoding",
+    "page": "8–48, 8–50"
+  },
+  {
+    "id": "atp-8-f20f57b26ec0",
+    "chapter": 8,
+    "topic": "Enroute Forecasts",
+    "front": "FB wind 100–199 kt — speed code",
+    "back": "Encode last two digits; add 100 when decoding",
+    "page": "8–48, 8–50"
+  },
+  {
+    "id": "atp-8-a378aaf416f3",
+    "chapter": 8,
+    "topic": "Enroute Forecasts",
+    "front": "FB wind above 199 kt",
+    "back": "Code as 199 kt",
+    "page": "8–48, 8–51"
+  },
+  {
+    "id": "atp-8-ff97dd30c42e",
+    "chapter": 8,
+    "topic": "Enroute Forecasts",
+    "front": "FB temperatures at 3,000 ft",
+    "back": "Not forecast",
+    "page": "8–48, 8–50"
+  },
+  {
+    "id": "atp-8-3c96e5607dd0",
+    "chapter": 8,
+    "topic": "Enroute Forecasts",
+    "front": "ISA sea-level temperature",
+    "back": "15°C",
+    "page": "8–48"
+  },
+  {
+    "id": "atp-8-c121295c6b8c",
+    "chapter": 8,
+    "topic": "Enroute Forecasts",
+    "front": "ISA lapse rate to 36,000 ft",
+    "back": "2°C per 1,000 ft",
+    "page": "8–48"
+  },
+  {
+    "id": "atp-8-3162256c804a",
+    "chapter": 8,
+    "topic": "Enroute Forecasts",
+    "front": "ISA temperature near tropopause",
+    "back": "About −56°C",
+    "page": "8–48"
+  },
+  {
+    "id": "atp-8-cdb66295d3ff",
+    "chapter": 8,
+    "topic": "Surface Analysis and Constant Pressure Charts",
+    "front": "Surface analysis — isobars",
+    "back": "Lines of equal sea-level pressure",
+    "page": "8–51–52"
+  },
+  {
+    "id": "atp-8-05c2c85d895a",
+    "chapter": 8,
+    "topic": "Surface Analysis and Constant Pressure Charts",
+    "front": "Constant-pressure chart — contours",
+    "back": "Height of selected pressure surface",
+    "page": "8–48, 8–51"
+  },
+  {
+    "id": "atp-8-8ab1ab80dcd1",
+    "chapter": 8,
+    "topic": "Surface Analysis and Constant Pressure Charts",
+    "front": "Constant-pressure chart — isotherms",
+    "back": "Equal temperature",
+    "page": "8–51"
+  },
+  {
+    "id": "atp-8-509d3e133fac",
+    "chapter": 8,
+    "topic": "Surface Analysis and Constant Pressure Charts",
+    "front": "Constant-pressure chart — isotachs",
+    "back": "Equal wind speed",
+    "page": "8–51"
+  },
+  {
+    "id": "atp-8-517c44d71b62",
+    "chapter": 8,
+    "topic": "Reports and Forecasts of Hazardous Weather",
+    "front": "Convective Outlook (AC)",
+    "back": "Thunderstorm prospects over following 24 hours",
+    "page": "8–53–54"
+  },
+  {
+    "id": "atp-8-66816805af1b",
+    "chapter": 8,
+    "topic": "Reports and Forecasts of Hazardous Weather",
+    "front": "AIRMET — icing",
+    "back": "Moderate",
+    "page": "8–53"
+  },
+  {
+    "id": "atp-8-8cffce323792",
+    "chapter": 8,
+    "topic": "Reports and Forecasts of Hazardous Weather",
+    "front": "AIRMET — turbulence",
+    "back": "Moderate",
+    "page": "8–53"
+  },
+  {
+    "id": "atp-8-81c071af39af",
+    "chapter": 8,
+    "topic": "Reports and Forecasts of Hazardous Weather",
+    "front": "AIRMET — sustained surface wind",
+    "back": "30 kt or more",
+    "page": "8–53"
+  },
+  {
+    "id": "atp-8-4206d8db8cb5",
+    "chapter": 8,
+    "topic": "Reports and Forecasts of Hazardous Weather",
+    "front": "AIRMET — widespread ceiling/visibility",
+    "back": "Ceiling under 1,000 ft or visibility under 3 SM",
+    "page": "8–53"
+  },
+  {
+    "id": "atp-8-9b0dc6b19ead",
+    "chapter": 8,
+    "topic": "Reports and Forecasts of Hazardous Weather",
+    "front": "SIGMET — icing",
+    "back": "Severe",
+    "page": "8–53"
+  },
+  {
+    "id": "atp-8-895bc189c3e2",
+    "chapter": 8,
+    "topic": "Reports and Forecasts of Hazardous Weather",
+    "front": "SIGMET — turbulence",
+    "back": "Severe or extreme",
+    "page": "8–53"
+  },
+  {
+    "id": "atp-8-f8aefdfcf5a4",
+    "chapter": 8,
+    "topic": "Reports and Forecasts of Hazardous Weather",
+    "front": "Convective SIGMET — thunderstorm types",
+    "back": "Embedded or line of thunderstorms",
+    "page": "8–53, 8–55"
+  },
+  {
+    "id": "atp-8-d5f1cacb79aa",
+    "chapter": 8,
+    "topic": "Reports and Forecasts of Hazardous Weather",
+    "front": "Convective SIGMET — severe storm thresholds",
+    "back": "Surface wind >50 kt, hail ≥3/4 in, or tornado",
+    "page": "8–55"
+  },
+  {
+    "id": "atp-8-0a9c7bbd402d",
+    "chapter": 8,
+    "topic": "Reports and Forecasts of Hazardous Weather",
+    "front": "Volcanic Ash Advisory — update interval",
+    "back": "At least every 6 hours while ash remains",
+    "page": "8–55"
+  },
+  {
+    "id": "atp-8-237ae325d866",
+    "chapter": 8,
+    "topic": "PIREPs",
+    "front": "PIREP “UA”",
+    "back": "Routine pilot report",
+    "page": "8–56"
+  },
+  {
+    "id": "atp-8-717aa19b2abe",
+    "chapter": 8,
+    "topic": "PIREPs",
+    "front": "PIREP “UUA”",
+    "back": "Urgent pilot report",
+    "page": "8–57"
+  },
+  {
+    "id": "atp-8-c6e5034c377f",
+    "chapter": 8,
+    "topic": "PIREPs",
+    "front": "PIREP “OV”",
+    "back": "Location",
+    "page": "8–56"
+  },
+  {
+    "id": "atp-8-e65a0ae5534e",
+    "chapter": 8,
+    "topic": "PIREPs",
+    "front": "PIREP “TM”",
+    "back": "Observation time",
+    "page": "8–56"
+  },
+  {
+    "id": "atp-8-6a2d2741a1a1",
+    "chapter": 8,
+    "topic": "PIREPs",
+    "front": "PIREP “FL”",
+    "back": "Flight level or altitude",
+    "page": "8–56"
+  },
+  {
+    "id": "atp-8-c8f7896bf7c0",
+    "chapter": 8,
+    "topic": "PIREPs",
+    "front": "PIREP “TP”",
+    "back": "Aircraft type",
+    "page": "8–56"
+  },
+  {
+    "id": "atp-8-8c7870bca022",
+    "chapter": 8,
+    "topic": "PIREPs",
+    "front": "PIREP “SK”",
+    "back": "Sky condition / cloud layers",
+    "page": "8–56"
+  },
+  {
+    "id": "atp-8-472921a2950b",
+    "chapter": 8,
+    "topic": "PIREPs",
+    "front": "PIREP “TB”",
+    "back": "Turbulence",
+    "page": "8–57"
+  }
+]
