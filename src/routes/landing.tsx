@@ -1,10 +1,16 @@
 /**
  * Landing de conversión para tráfico pagado (Meta Ads y similares).
  *
- * A diferencia del home, aquí hay una sola meta: suscribirse a Pro. Sin menú
- * de navegación ni enlaces que saquen a la persona de la página; el único
- * camino alterno es la cuenta gratis, que sigue siendo un registro medible.
- * `noindex`: la versión que posiciona en buscadores es `/`.
+ * Está construida con el mismo sistema visual y de movimiento del home
+ * (`reference-home.css` + `mountReferenceMotion`): globo WebGL con rutas de
+ * vuelo, aviones en canvas, parallax de nubes, etapas "sticky" y tarjetas que
+ * se apilan con el scroll. Encima, capas propias en `landing-motion.css`:
+ * titular palabra por palabra, revelado al hacer scroll, brillo en los CTA,
+ * chat de Yaris que se escribe solo y borde animado en la oferta.
+ *
+ * A diferencia del home hay una sola meta: suscribirse a Pro. Sin menú de
+ * navegación; el único camino alterno es la cuenta gratis. `noindex`: la
+ * versión que posiciona en buscadores es `/`.
  *
  * El CTA lleva al registro y de ahí directo al checkout embebido de Stripe
  * (`/dashboard/planes?checkout=1&plan=…`). Los `fbclid`/UTM del anuncio los
@@ -14,18 +20,30 @@
  * testimonios inventados y aviso de no afiliación visible.
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import {
-  Btn,
-  Eyebrow,
-  Icon,
-  Logo,
-  PathyBubble,
-  Pill,
-  PlaneField,
-  SectionHead,
-  type IconName,
-} from "@/components/landing/shared";
+  BookOpenText,
+  Brain,
+  Books,
+  ChartLineUp,
+  ChatCircleDots,
+  CheckCircle,
+  Clock,
+  Files,
+  Lightning,
+  LockKey,
+  Path,
+  Question,
+  ShieldCheck,
+  Sparkle,
+  Target,
+  Timer,
+  XCircle,
+} from "@phosphor-icons/react";
+import { CountUp } from "@/components/landing/shared";
+import { mountReferenceMotion } from "@/components/landing/reference-motion";
+import "@/components/landing/reference-home.css";
+import "@/components/landing/landing-motion.css";
 import { useSessionUser } from "@/lib/store";
 import { SIM_TOTAL_QS } from "@/lib/store/materias";
 import { getStripeEnvironment, isPaymentsConfigured } from "@/lib/stripe";
@@ -59,106 +77,115 @@ export const Route = createFileRoute("/landing")({
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://flightpath.mx/landing" },
     ],
-    links: [{ rel: "canonical", href: "https://flightpath.mx/" }],
+    links: [
+      { rel: "canonical", href: "https://flightpath.mx/" },
+      // El póster del globo pinta el héroe antes de que cargue WebGL.
+      { rel: "preload", as: "image", href: "/redesign/earth-night.png" },
+    ],
   }),
   component: LandingPage,
 });
 
 /* ───────────────────────── Contenido ───────────────────────── */
 
-const PRUEBAS = [
+const STATS = [
   { n: "2,800+", t: "preguntas con explicación" },
   { n: String(SIM_TOTAL_QS), t: "preguntas por simulacro" },
   { n: "12", t: "materias del temario" },
+  { n: "5", t: "fuentes de línea aérea" },
   { n: "100+", t: "manuales en la biblioteca" },
+  { n: "24/7", t: "Yaris, tutora con IA" },
 ];
 
-const DOLORES: { icon: IconName; t: string; d: string }[] = [
+const MARQUEE = [
+  "Examen CIAAC",
+  "ATP",
+  "Jeppesen",
+  "Handbook",
+  "Simulacros con reloj",
+  "Yaris con IA",
+  "Análisis por materia",
+  "Convocatorias de línea aérea",
+];
+
+const DOLORES: { icon: ReactNode; t: string; d: string }[] = [
   {
-    icon: "doc",
+    icon: <Files size={24} weight="duotone" />,
     t: "PDFs sueltos y guías de hace años",
     d: "Horas buscando material sin saber si está vigente ni si cubre todo el temario.",
   },
   {
-    icon: "target",
+    icon: <Target size={24} weight="duotone" />,
     t: "No sabes si ya estás preparado",
     d: "Sin un simulacro con reloj, el día del examen es la primera vez que te mides de verdad.",
   },
   {
-    icon: "chat",
+    icon: <Question size={24} weight="duotone" />,
     t: "Dudas a las 11 de la noche",
     d: "Fallas una pregunta, no entiendes por qué y no hay nadie a quién preguntarle.",
   },
 ];
 
-const PASOS = [
+const ETAPAS: {
+  icon: ReactNode;
+  img: string;
+  alt: string;
+  t: string;
+  d: string;
+  chips: string[];
+}[] = [
   {
-    n: "01",
+    icon: <Lightning size={24} weight="duotone" />,
+    img: "/redesign/64b895fbc7418153.jpg",
+    alt: "Estudiante de piloto estudiando con cartas aeronáuticas y un computador de vuelo",
     t: "Activa tu acceso",
-    d: "Creas tu cuenta y pagas en un par de minutos. Entras al banco completo de inmediato.",
+    d: "Creas tu cuenta y pagas en un par de minutos. Entras al banco completo en ese momento, sin esperas.",
+    chips: ["Acceso inmediato", "Pago seguro con Stripe", "Cancela cuando quieras"],
   },
   {
-    n: "02",
+    icon: <Timer size={24} weight="duotone" />,
+    img: "/redesign/feb8a7194679fec4.jpg",
+    alt: "Laptop con un simulador de examen cronometrado y un headset de piloto al lado",
     t: "Haz tu diagnóstico",
-    d: "Un simulacro cronometrado te muestra en qué materias vas fuerte y dónde se te va el puntaje.",
+    d: `Un simulacro cronometrado de ${SIM_TOTAL_QS} preguntas te muestra en qué materias vas fuerte y dónde se te va el puntaje.`,
+    chips: [`Simulacro de ${SIM_TOTAL_QS}`, "Con reloj", "Resultado por materia"],
   },
   {
-    n: "03",
+    icon: <Brain size={24} weight="duotone" />,
+    img: "/redesign/4bbe0ae2e413c22b.jpg",
+    alt: "Manuales de aviación apilados junto a una tableta con análisis de avance",
     t: "Practica lo que te falta",
-    d: "Cuestionarios por materia y capítulo, con Yaris explicándote cada error hasta dominarlo.",
-  },
-];
-
-const INCLUYE: { icon: IconName; t: string; d: string }[] = [
-  {
-    icon: "book",
-    t: "Banco completo CIAAC y Línea Aérea",
-    d: "2,800+ preguntas con explicación, más ATP, Jeppesen y Handbook por capítulos.",
+    d: "Cuestionarios por materia y capítulo. Cada error trae su explicación y Yaris te lo aclara con el contexto del curso.",
+    chips: ["Por materia y capítulo", "Explicación en cada pregunta", "Yaris con IA"],
   },
   {
-    icon: "sim",
-    t: "Simulacros ilimitados con reloj",
-    d: `${SIM_TOTAL_QS} preguntas cronometradas para medir tu ritmo antes del día real.`,
-  },
-  {
-    icon: "spark",
-    t: "Yaris, tu tutora con IA",
-    d: "Te explica por qué fallaste, con el contexto del curso, a cualquier hora.",
-  },
-  {
-    icon: "chart",
-    t: "Análisis por materia",
-    d: "Ves tu avance y tus puntos débiles para estudiar sólo lo que te falta.",
-  },
-  {
-    icon: "library",
-    t: "Biblioteca de 100+ manuales",
-    d: "Todo el material de consulta en un solo lugar, desde el celular o la compu.",
-  },
-  {
-    icon: "bell",
-    t: "Recordatorios por WhatsApp",
-    d: "Pathy te avisa cuándo toca estudiar para que no pierdas tu racha.",
+    icon: <Target size={24} weight="duotone" />,
+    img: "/redesign/a79f863e1813a98f.jpg",
+    alt: "Jet regional despegando al anochecer con las luces de pista encendidas",
+    t: "Llega con confianza",
+    d: "Tu análisis te dice cuándo ya dominas cada materia. El día del examen no es la primera vez que te mides.",
+    chips: ["Análisis por materia", "Simulacros ilimitados"],
   },
 ];
 
 const COMPARA = [
+  { solo: "PDFs dispersos y guías viejas", fp: "Banco organizado por materia y capítulo" },
   {
-    k: "Material",
-    solo: "PDFs dispersos y guías viejas",
-    fp: "Banco organizado por materia y capítulo",
-  },
-  {
-    k: "¿Ya estás listo?",
-    solo: "Lo descubres el día del examen",
+    solo: "Descubres si estás listo el día del examen",
     fp: "Simulacros con reloj y análisis por materia",
   },
-  { k: "Dudas", solo: "Foros y grupos de WhatsApp", fp: "Yaris te explica cada pregunta" },
-  {
-    k: "Constancia",
-    solo: "Depende sólo de tu fuerza de voluntad",
-    fp: "Recordatorios y racha de estudio",
-  },
+  { solo: "Dudas en foros y grupos de WhatsApp", fp: "Yaris te explica cada pregunta" },
+  { solo: "Constancia a pura fuerza de voluntad", fp: "Recordatorios y racha de estudio" },
+];
+
+const INCLUYE = [
+  "Banco completo: CIAAC, ATP, Jeppesen y Handbook",
+  "Cuestionarios y simulacros ilimitados",
+  "Yaris con IA: te explica y te acompaña",
+  "Análisis de desempeño por materia",
+  "Biblioteca y manuales completos",
+  "Recordatorios de estudio por WhatsApp",
+  "Módulos nuevos conforme se liberan",
 ];
 
 const FAQS = [
@@ -192,9 +219,32 @@ const FAQS = [
   },
 ];
 
-/* ───────────────────────── Página ───────────────────────── */
+/** Conversación de ejemplo del chat de Yaris (contenido original del curso). */
+const CHAT: { me: boolean; t: string }[] = [
+  { me: true, t: "¿Por qué sube la velocidad de pérdida en un viraje?" },
+  {
+    me: false,
+    t: "Porque aumenta el factor de carga: el ala necesita más sustentación. La velocidad de pérdida crece con la raíz cuadrada de ese factor.",
+  },
+  { me: true, t: "¿Y en un viraje de 60°?" },
+  {
+    me: false,
+    t: "El factor de carga es 2, así que sube cerca de 41 %. Por eso en virajes cerrados conviene llevar más velocidad.",
+  },
+];
+
+/* ───────────────────────── Utilidades ───────────────────────── */
 
 type Ciclo = "mensual" | "anual";
+type Buy = { to: string; search: Record<string, unknown> };
+
+function reducedMotion(): boolean {
+  return (
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+}
 
 /** Precios vivos de Stripe con respaldo en `@/lib/pricing` (igual que /precios). */
 function usePublicPricing() {
@@ -229,42 +279,140 @@ function usePublicPricing() {
   return { monthly, annual, setup };
 }
 
+/**
+ * Revelado al hacer scroll: marca la página como lista y añade `is-in` a cada
+ * `.lp-reveal` cuando entra a pantalla. Sin IntersectionObserver o con
+ * movimiento reducido no se oculta nada.
+ */
+function useScrollReveal(root: React.RefObject<HTMLDivElement | null>) {
+  useEffect(() => {
+    const el = root.current;
+    if (!el || reducedMotion() || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          e.target.classList.add("is-in");
+          io.unobserve(e.target);
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.12 },
+    );
+    el.querySelectorAll(".lp-reveal").forEach((n) => io.observe(n));
+    el.setAttribute("data-lp-ready", "");
+    return () => {
+      io.disconnect();
+      el.removeAttribute("data-lp-ready");
+    };
+  }, [root]);
+}
+
+/** Texto partido en palabras que suben una tras otra. */
+function Words({ text, start = 0 }: { text: string; start?: number }) {
+  return (
+    <>
+      {text.split(" ").map((w, i) => (
+        <span key={i}>
+          <span className="lp-w" style={{ "--i": start + i } as React.CSSProperties}>
+            {w}
+          </span>{" "}
+        </span>
+      ))}
+    </>
+  );
+}
+
+function Arrow({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 256 256" aria-hidden="true">
+      <g fill="currentColor">
+        <path d="m216 128l-72 72V56Z" opacity=".28"></path>
+        <path d="m221.66 122.34l-72-72A8 8 0 0 0 136 56v64H40a8 8 0 0 0 0 16h96v64a8 8 0 0 0 13.66 5.66l72-72a8 8 0 0 0 0-11.32M152 180.69V75.31L204.69 128Z"></path>
+      </g>
+    </svg>
+  );
+}
+
+function BuyLink({
+  buy,
+  className,
+  children,
+}: {
+  buy: Buy;
+  className: string;
+  children: ReactNode;
+}) {
+  return (
+    <Link to={buy.to} search={buy.search as never} className={className}>
+      {children}
+    </Link>
+  );
+}
+
+/* ───────────────────────── Página ───────────────────────── */
+
 function LandingPage() {
+  const root = useRef<HTMLDivElement>(null);
   const user = useSessionUser();
   const { monthly, annual, setup } = usePublicPricing();
   const [ciclo, setCiclo] = useState<Ciclo>("anual");
+  const [scrolled, setScrolled] = useState(false);
   const [sticky, setSticky] = useState(false);
+
+  useEffect(() => {
+    if (root.current) return mountReferenceMotion(root.current);
+  }, []);
+  useScrollReveal(root);
 
   useEffect(() => {
     metaTrack("ViewContent", { content_name: "FlightPath Pro", content_category: "landing" });
   }, []);
 
-  // Barra fija de CTA en móvil en cuanto el héroe sale de pantalla.
   useEffect(() => {
-    const onScroll = () => setSticky(window.scrollY > 640);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 12);
+      setSticky(window.scrollY > 760);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   /** Con sesión, directo al checkout; sin ella, registro y luego checkout del mismo plan. */
-  const buy = {
+  const buy: Buy = {
     to: user ? "/dashboard/planes" : "/register",
     search: user
       ? { checkout: 1, plan: ciclo }
       : { next: `/dashboard/planes?checkout=1&plan=${ciclo}` },
   };
-  const ctaLabel = user ? "Activar mi acceso Pro" : "Quiero mi acceso Pro";
+  const cta = user ? "Activar mi acceso Pro" : "Quiero mi acceso Pro";
 
   return (
-    <div className="min-h-screen bg-ink-50 text-ink">
-      <LandingHeader buy={buy} />
+    <div ref={root} className="flightpath-redesign">
+      <header className={`lp-header${scrolled ? " is-scrolled" : ""}`}>
+        <div className="lp-header-in">
+          <span className="lp-brand">
+            <img src="/redesign/3585687c1b6a244a.png" alt="" width={32} height={32} />
+            <span>
+              Flight<b>Path</b>
+            </span>
+          </span>
+          <div className="lp-header-actions">
+            <Link to="/login" className="lp-login">
+              Iniciar sesión
+            </Link>
+            <BuyLink buy={buy} className="lp-btn-sm lp-shine">
+              Empezar
+              <Arrow size={16} />
+            </BuyLink>
+          </div>
+        </div>
+      </header>
 
       <main>
-        <Hero buy={buy} ctaLabel={ctaLabel} />
-        <ProofBar />
-        <Dolores />
-        <ComoFunciona />
+        <Hero buy={buy} cta={cta} />
+        <Marquee />
+        <Problema />
         <Incluye />
         <Comparativa />
         <Oferta
@@ -274,251 +422,245 @@ function LandingPage() {
           annual={annual}
           setup={setup}
           buy={buy}
-          ctaLabel={ctaLabel}
+          cta={cta}
         />
         <Faq />
-        <CtaFinal buy={buy} ctaLabel={ctaLabel} />
+        <Cierre buy={buy} cta={cta} />
       </main>
 
-      <LandingFooter />
+      <footer className="lp-footer">
+        <div className="lp-wrap">
+          <div className="lp-footer-row">
+            <span className="lp-brand">
+              <img src="/redesign/3585687c1b6a244a.png" alt="" width={32} height={32} />
+              <span>
+                Flight<b>Path</b>
+              </span>
+            </span>
+            <nav>
+              <Link to="/legal">Términos y privacidad</Link>
+              <a href="mailto:contacto@flightpath.mx">contacto@flightpath.mx</a>
+            </nav>
+          </div>
+          {/* Disclaimer permanente de no afiliación — no quitar (regla de compliance). */}
+          <p className="lp-legal">
+            FlightPath es una plataforma independiente. No está afiliada a la AFAC ni al CIAAC, ni a
+            ASPA de México, Aeroméxico, Volaris o ninguna otra aerolínea o institución. El banco de
+            preguntas es propio, desarrollado de forma independiente y mapeado al temario oficial
+            publicado. © 2026 FlightPath · Hecho en CDMX.
+          </p>
+        </div>
+      </footer>
 
       {/* CTA fijo en móvil: el botón siempre a un pulgar de distancia. */}
-      <div
-        className={`fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-white/95 px-4 py-3 backdrop-blur transition-transform duration-300 lg:hidden ${
-          sticky ? "translate-y-0" : "translate-y-full"
-        }`}
-        aria-hidden={!sticky}
-      >
-        <Btn
-          kind="primary"
-          size="lg"
-          icon="arrow"
-          className="w-full"
-          to={buy.to}
-          search={buy.search}
-        >
-          {ctaLabel}
-        </Btn>
+      <div className={`lp-sticky${sticky ? " is-on" : ""}`} aria-hidden={!sticky}>
+        <BuyLink buy={buy} className="btn btn-gold rd-10 lp-shine">
+          {cta}
+          <Arrow />
+        </BuyLink>
       </div>
     </div>
   );
 }
-
-type Buy = { to: string; search: Record<string, unknown> };
 
 /* ───────────────────────── Secciones ───────────────────────── */
 
-function LandingHeader({ buy }: { buy: Buy }) {
+function Hero({ buy, cta }: { buy: Buy; cta: string }) {
   return (
-    <header className="absolute inset-x-0 top-0 z-30">
-      <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <Logo size={30} />
-        <div className="flex items-center gap-2">
-          <Link
-            to="/login"
-            className="hidden min-h-11 items-center px-3 text-[14px] font-semibold text-ink/60 hover:text-ink sm:inline-flex"
-          >
-            Entrar
-          </Link>
-          <Btn kind="navy" size="sm" to={buy.to} search={buy.search}>
-            Empezar
-          </Btn>
+    <section className="rd-hero rd-1 lp-hero">
+      <div className="rd-2"></div>
+      <div className="rd-hero-copy rd-3">
+        <div className="soft-in rd-4">
+          <span className="rd-5"></span>
+          <span>CIAAC · Convocatorias de línea aérea</span>
+          <span className="rd-5"></span>
         </div>
+        <h1 className="rd-6 lp-words">
+          <Words text="Deja de estudiar a ciegas." />
+          <span className="rd-7">
+            <Words text="Llega a tu examen con un plan." start={4} />
+          </span>
+        </h1>
+        <p className="soft-in-2 rd-8">
+          Un banco propio de 2,800+ preguntas con explicación, simulacros cronometrados de{" "}
+          {SIM_TOTAL_QS} preguntas y Yaris, tu tutora con IA, te muestran qué dominas y qué te
+          falta, materia por materia.
+        </p>
+        <div className="soft-in-3 rd-9">
+          <BuyLink buy={buy} className="btn btn-gold rd-10 lp-shine">
+            {cta}
+            <Arrow />
+          </BuyLink>
+          <a className="btn rd-12" href="#tu-ruta">
+            Ver cómo funciona
+          </a>
+        </div>
+        <ul className="soft-in-3 lp-trust">
+          <li>
+            <span className="pulse-dot" aria-hidden="true"></span>
+            Acceso inmediato
+          </li>
+          <li>
+            <LockKey size={16} weight="duotone" />
+            Pago seguro con Stripe
+          </li>
+          <li>
+            <ShieldCheck size={16} weight="duotone" />
+            Cancela cuando quieras
+          </li>
+        </ul>
       </div>
-    </header>
-  );
-}
-
-function Hero({ buy, ctaLabel }: { buy: Buy; ctaLabel: string }) {
-  return (
-    <section className="relative overflow-hidden pt-28 pb-14 lg:pt-36 lg:pb-20">
-      <PlaneField count={18} />
-      <div className="relative mx-auto grid max-w-[1180px] items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
-        <div>
-          <Pill tone="coral">CIAAC · Convocatorias de línea aérea</Pill>
-          <h1 className="font-display mt-6 text-[40px] leading-[1.02] tracking-tight text-ink sm:text-5xl lg:text-[60px]">
-            Deja de estudiar a ciegas.{" "}
-            <span className="text-coral-600">Llega a tu examen con un plan.</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-ink/60 lg:text-[18px]">
-            Un banco propio de <b className="text-ink">2,800+ preguntas con explicación</b>,
-            simulacros cronometrados de {SIM_TOTAL_QS} preguntas y{" "}
-            <b className="text-ink">Yaris, tu tutora con IA</b>, te muestran qué dominas y qué te
-            falta, materia por materia.
-          </p>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Btn kind="primary" size="lg" icon="arrow" to={buy.to} search={buy.search}>
-              {ctaLabel}
-            </Btn>
-            <Link
-              to="/register"
-              className="inline-flex min-h-11 items-center justify-center px-2 text-[14px] font-semibold text-ink/60 underline-offset-4 hover:text-ink hover:underline"
-            >
-              o crea tu cuenta gratis
-            </Link>
+      <div className="rd-globe-wrap rd-13">
+        <div className="rd-globe-poster" aria-hidden="true"></div>
+        <canvas className="rd-14" aria-hidden="true" data-motion="globe"></canvas>
+        <canvas className="rd-15" aria-hidden="true" data-motion="globe-fx"></canvas>
+        <div className="rd-16"></div>
+      </div>
+      <div className="rd-stats rd-17">
+        {STATS.map((s, i) => (
+          <div key={s.t} className={i === STATS.length - 1 ? "rd-21" : "rd-18"}>
+            <CountUp value={s.n} className="rd-19" />
+            <span className="rd-20">{s.t}</span>
           </div>
-
-          <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[13px] text-ink/55">
-            {["Acceso inmediato", "Pago seguro con Stripe", "Cancela cuando quieras"].map((t) => (
-              <li key={t} className="inline-flex items-center gap-1.5">
-                <Icon n="check" className="h-4 w-4 text-coral-600" sw={2.4} />
-                {t}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <HeroMock />
+        ))}
       </div>
     </section>
   );
 }
 
-/** Vista ilustrativa del producto: una pregunta explicada y un análisis de ejemplo. */
-function HeroMock() {
-  const opciones = ["Disminuye", "Permanece igual", "Aumenta", "Depende sólo del peso"];
-  const barras = [
-    { m: "Aerodinámica", v: 91 },
-    { m: "Meteorología", v: 82 },
-    { m: "Navegación", v: 64 },
-    { m: "Legislación", v: 48 },
-  ];
+function Marquee() {
+  // Dos copias idénticas: la animación recorre el 50 % y vuelve sin salto.
+  const items = [...MARQUEE, ...MARQUEE];
   return (
-    <div className="relative mx-auto w-full max-w-[460px]" aria-hidden="true">
-      <div className="rounded-3xl border border-ink/8 bg-white p-5 shadow-lift sm:p-6">
-        <div className="flex items-center justify-between">
-          <span className="font-mono text-[11px] tracking-wide text-haze-400">
-            SIMULACRO · 12 / {SIM_TOTAL_QS}
-          </span>
-          <span className="inline-flex items-center gap-1 font-mono text-[11px] text-coral-600">
-            <Icon n="clock" className="h-3.5 w-3.5" /> 38:12
-          </span>
-        </div>
-        <p className="mt-4 text-[15px] font-semibold leading-snug text-ink">
-          En un viraje aumenta el factor de carga. ¿Qué ocurre con la velocidad de pérdida?
-        </p>
-        <div className="mt-4 space-y-2">
-          {opciones.map((o, i) => {
-            const ok = i === 2;
-            return (
-              <div
-                key={o}
-                className={`flex items-center justify-between rounded-xl border px-3.5 py-2.5 text-[14px] ${
-                  ok
-                    ? "border-coral-300 bg-coral-50 font-semibold text-coral-700"
-                    : "border-ink/8 text-ink/65"
-                }`}
-              >
-                {o}
-                {ok && <Icon n="check" className="h-4 w-4" sw={2.4} />}
-              </div>
-            );
-          })}
-        </div>
-        <div className="mt-4 flex gap-3 rounded-2xl bg-ink-50 p-3.5">
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-ink text-white">
-            <Icon n="spark" className="h-4 w-4" />
-          </span>
-          <p className="text-[13px] leading-relaxed text-ink/70">
-            <b className="text-ink">Yaris:</b> la velocidad de pérdida crece con la raíz cuadrada
-            del factor de carga. En un viraje de 60° (factor 2) sube cerca de 41&nbsp;%.
-          </p>
-        </div>
-      </div>
-
-      <div className="relative -mt-5 -mr-2 ml-auto hidden w-[230px] rounded-2xl border border-ink/8 bg-white p-4 shadow-lift sm:block lg:-mr-8">
-        <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-haze-500">
-          Tu análisis · ejemplo
-        </div>
-        <div className="mt-3 space-y-2.5">
-          {barras.map((b) => (
-            <div key={b.m}>
-              <div className="flex justify-between text-[12px] text-ink/65">
-                <span>{b.m}</span>
-                <span className="font-semibold text-ink">{b.v}%</span>
-              </div>
-              <div className="mt-1 h-1.5 rounded-full bg-ink/8">
-                <div
-                  className={`h-1.5 rounded-full ${b.v >= 70 ? "bg-coral-400" : "bg-ink/35"}`}
-                  style={{ width: `${b.v}%` }}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
+    <div className="rd-22" aria-hidden="true">
+      <div className="marquee rd-23">
+        {items.flatMap((t, i) => [
+          <span key={`t${i}`}>{t.toUpperCase()}</span>,
+          <span key={`s${i}`} className="rd-24 rd-25">
+            <Sparkle size={14} weight="fill" />
+          </span>,
+        ])}
       </div>
     </div>
   );
 }
 
-function ProofBar() {
+function Problema() {
   return (
-    <section className="relative py-10">
-      <div className="mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-ink/8 bg-ink/8 shadow-card lg:grid-cols-4">
-          {PRUEBAS.map((p) => (
-            <div key={p.t} className="bg-white px-5 py-6 text-center">
-              <div className="font-display text-3xl tracking-tight text-ink lg:text-4xl">{p.n}</div>
-              <div className="mt-1 text-[13px] text-ink/55">{p.t}</div>
-            </div>
-          ))}
-        </div>
-        <p className="mt-4 text-center text-[12px] text-ink/40">
-          Banco propio, desarrollado de forma independiente y mapeado al temario oficial publicado.
-        </p>
-      </div>
-    </section>
-  );
-}
-
-function Dolores() {
-  return (
-    <section className="relative py-16 lg:py-24">
-      <div className="mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
-        <SectionHead
-          center
-          eyebrow="El problema"
-          title={
-            <>
-              Estudiar mucho no es lo mismo que{" "}
-              <span className="text-coral-600">estudiar lo correcto</span>
-            </>
-          }
+    <section className="rd-26" id="tu-ruta">
+      <div className="rd-27" data-motion="parallax">
+        <img
+          className="rd-28"
+          data-depth="0.5"
+          loading="lazy"
+          decoding="async"
+          src="/redesign/e262e5c0cc1ebd63.jpg"
+          alt=""
         />
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {DOLORES.map((d) => (
-            <div key={d.t} className="rounded-3xl border border-ink/8 bg-white p-7 shadow-card">
-              <span className="grid h-11 w-11 place-items-center rounded-xl bg-ink-50 text-ink/70">
-                <Icon n={d.icon} className="h-5 w-5" />
-              </span>
-              <h3 className="font-display mt-5 text-[20px] leading-snug text-ink">{d.t}</h3>
-              <p className="mt-2 text-[14.5px] leading-relaxed text-ink/60">{d.d}</p>
-            </div>
+        <div className="rd-29"></div>
+        <img
+          className="rd-30"
+          data-depth="0.34"
+          loading="lazy"
+          decoding="async"
+          src="/redesign/d570a146527c74e6.webp"
+          alt=""
+        />
+        <div className="rd-31" data-depth="0.2">
+          <div className="rd-4">
+            <span className="rd-5"></span>
+            <span>El problema</span>
+            <span className="rd-5"></span>
+          </div>
+          <h2 className="rd-32">
+            Estudiar mucho no es <span className="rd-7">lo mismo que estudiar bien.</span>
+          </h2>
+        </div>
+        <img
+          className="rd-33"
+          data-depth="0.06"
+          loading="lazy"
+          decoding="async"
+          src="/redesign/6d490e09a9343478.webp"
+          alt=""
+        />
+        <div className="rd-34"></div>
+      </div>
+      <canvas className="rd-35" aria-hidden="true" data-tone="light" data-motion="planes"></canvas>
+
+      <div className="rd-36">
+        <div className="lp-pains">
+          {DOLORES.map((d, i) => (
+            <article
+              key={d.t}
+              className="lp-pain lp-reveal"
+              style={{ "--d": `${i * 120}ms` } as React.CSSProperties}
+            >
+              <span className="lp-pain-ic">{d.icon}</span>
+              <h3>{d.t}</h3>
+              <p>{d.d}</p>
+            </article>
           ))}
         </div>
-        <p className="font-display mt-10 text-center text-[22px] text-ink">
-          FlightPath resuelve las tres. <span className="text-coral-600">Así funciona:</span>
+        <p className="lp-bridge lp-reveal">
+          FlightPath resuelve las tres. <em>Así se ve tu ruta:</em>
         </p>
-      </div>
-    </section>
-  );
-}
 
-function ComoFunciona() {
-  return (
-    <section className="relative pb-16 lg:pb-24">
-      <div className="mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-5 md:grid-cols-3">
-          {PASOS.map((p) => (
-            <div key={p.n} className="relative rounded-3xl bg-ink p-7 text-white shadow-navy">
-              <span className="font-mono text-[12px] font-bold tracking-[0.14em] text-coral-300">
-                {p.n}
-              </span>
-              <h3 className="font-display mt-3 text-[22px] leading-snug">{p.t}</h3>
-              <p className="mt-2 text-[14.5px] leading-relaxed text-white/65">{p.d}</p>
+        <div className="rd-38" data-motion="stages">
+          <div className="rd-39" data-stage-panel="">
+            {ETAPAS.map((e, i) => (
+              <img
+                key={e.img}
+                className={i === 0 ? "rd-40" : "rd-41"}
+                data-stage-img={i}
+                loading="lazy"
+                decoding="async"
+                src={e.img}
+                alt={e.alt}
+              />
+            ))}
+            <div className="rd-42"></div>
+            <div className="rd-43">
+              <div className="rd-44">
+                <span className="rd-25">PASO</span>
+                <span className="rd-45">
+                  {ETAPAS.map((_, i) => (
+                    <span key={i} className={i === 0 ? "rd-46" : "rd-47"} data-stage-num={i}>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                  ))}
+                </span>
+                <span className="rd-48">/ {String(ETAPAS.length).padStart(2, "0")}</span>
+              </div>
+              <div className="rd-49">
+                {ETAPAS.map((_, i) => (
+                  <span key={i} className={i === 0 ? "rd-50" : "rd-51"} data-stage-seg={i}></span>
+                ))}
+              </div>
             </div>
-          ))}
+          </div>
+          <div className="rd-52">
+            {ETAPAS.map((e, i) => (
+              <article key={e.t} className={i === 0 ? "rd-53" : "rd-62"} data-stage-item={i}>
+                <div className="rd-54">
+                  <span className="rd-55">{e.icon}</span>
+                  <span className="rd-56">
+                    PASO {String(i + 1).padStart(2, "0")} · DE{" "}
+                    {String(ETAPAS.length).padStart(2, "0")}
+                  </span>
+                </div>
+                <h3 className="rd-57">{e.t}</h3>
+                <p className="rd-58">{e.d}</p>
+                <div className="rd-59">
+                  {e.chips.map((c) => (
+                    <span key={c} className="rd-60">
+                      {c}
+                    </span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -527,76 +669,280 @@ function ComoFunciona() {
 
 function Incluye() {
   return (
-    <section className="relative py-16 lg:py-24">
-      <PlaneField count={12} />
-      <div className="relative mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
-        <SectionHead
-          center
-          eyebrow="FlightPath Pro"
-          title={
-            <>
-              Todo lo que necesitas, <span className="text-coral-600">en un solo lugar</span>
-            </>
-          }
-          sub="Sin armar tu propio temario con PDFs: entras y sabes exactamente qué estudiar hoy."
-        />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {INCLUYE.map((f) => (
-            <div
-              key={f.t}
-              className="flex gap-4 rounded-3xl border border-ink/8 bg-white p-6 shadow-card"
-            >
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-coral-50 text-coral-600">
-                <Icon n={f.icon} className="h-5 w-5" />
-              </span>
-              <div>
-                <h3 className="text-[16px] font-bold text-ink">{f.t}</h3>
-                <p className="mt-1.5 text-[14px] leading-relaxed text-ink/60">{f.d}</p>
+    <section className="rd-63" id="incluye">
+      <canvas className="rd-64" aria-hidden="true" data-tone="light" data-motion="planes"></canvas>
+      <div className="rd-65">
+        <div className="rd-66">
+          <div className="rd-67 lp-reveal lp-from-left">
+            <div className="rd-68">
+              <span className="rd-5"></span>
+              <span>FlightPath Pro</span>
+            </div>
+            <h2 className="rd-69">
+              Todo lo que necesitas <span className="rd-70">en un solo lugar.</span>
+            </h2>
+          </div>
+          <p className="rd-71 lp-reveal lp-from-right">
+            Sin armar tu propio temario con PDFs: entras y sabes exactamente qué estudiar hoy. Estas
+            son las herramientas que hacen el trabajo pesado.
+          </p>
+        </div>
+
+        <div className="rd-72" data-motion="stack">
+          <div className="rd-73" data-stack-slot="0">
+            <div className="rd-74" data-stack-card="0">
+              <div className="rd-75">
+                <div className="rd-54">
+                  <span className="rd-76" style={{ color: "#c7a052" }}>
+                    <BookOpenText size={28} weight="duotone" />
+                  </span>
+                  <span className="rd-77">01 / 05</span>
+                </div>
+                <h3 className="rd-79">Banco completo</h3>
+                <p className="rd-80">
+                  2,800+ preguntas CIAAC con explicación, más ATP, Jeppesen y Handbook por
+                  capítulos.
+                </p>
+              </div>
+              <img
+                className="rd-81"
+                loading="lazy"
+                decoding="async"
+                src="/redesign/6c09800564036fbe.jpg"
+                alt="Mano respondiendo un cuestionario de opción múltiple en una tableta"
+              />
+            </div>
+          </div>
+
+          <div className="rd-73" data-stack-slot="1">
+            <div className="rd-82" data-stack-card="1">
+              <div className="rd-75">
+                <div className="rd-54">
+                  <span className="rd-83" style={{ color: "#e3c98a" }}>
+                    <ChartLineUp size={28} weight="duotone" />
+                  </span>
+                  <span className="rd-84">02 / 05</span>
+                </div>
+                <h3 className="rd-79">Tu análisis, tu ruta</h3>
+                <p className="rd-80">
+                  Ves tu avance por materia y tus puntos débiles. Estudias sólo lo que te falta.
+                </p>
+              </div>
+              <img
+                className="rd-81"
+                loading="lazy"
+                decoding="async"
+                src="/redesign/bab3f7d3613131e0.jpg"
+                alt="Ruta dorada con waypoints sobre un mapa topográfico azul marino"
+              />
+            </div>
+          </div>
+
+          <div className="rd-73" data-stack-slot="2">
+            <div className="rd-85" data-stack-card="2">
+              <div className="rd-75">
+                <div className="rd-54">
+                  <span className="rd-86" style={{ color: "#c7a052" }}>
+                    <ChatCircleDots size={28} weight="duotone" />
+                  </span>
+                  <span className="rd-56">03 / 05</span>
+                </div>
+                <h3 className="rd-79">Yaris, tu tutora con IA</h3>
+                <p className="rd-87">
+                  Te explica por qué fallaste, con el contexto del curso, a la hora que estudies.
+                </p>
+              </div>
+              <YarisChat />
+            </div>
+          </div>
+
+          <div className="rd-73" data-stack-slot="3">
+            <div className="rd-88" data-stack-card="3">
+              <div className="rd-75">
+                <div className="rd-54">
+                  <span className="rd-86" style={{ color: "#c7a052" }}>
+                    <Books size={28} weight="duotone" />
+                  </span>
+                  <span className="rd-89">04 / 05</span>
+                </div>
+                <h3 className="rd-79">Biblioteca de 100+ manuales</h3>
+                <p className="rd-90">
+                  Todo el material de consulta en un solo lugar, desde el celular o la compu.
+                </p>
+              </div>
+              <img
+                className="rd-81"
+                loading="lazy"
+                decoding="async"
+                src="/redesign/2825076171976561.jpg"
+                alt="Librero con manuales de aviación azul marino y un avión a escala"
+              />
+            </div>
+          </div>
+
+          <div className="rd-73" data-stack-slot="4">
+            <div className="rd-91" data-stack-card="4">
+              <div className="rd-75">
+                <div className="rd-54">
+                  <span className="rd-92 rd-93">
+                    <Clock size={28} weight="duotone" />
+                  </span>
+                  <span className="rd-94">05 / 05</span>
+                </div>
+                <h3 className="rd-79">Pathy te cuida la racha</h3>
+                <p className="rd-96">
+                  Recordatorios por WhatsApp para que estudiar se vuelva hábito, no fuerza de
+                  voluntad.
+                </p>
+              </div>
+              <div className="lp-pathy-card">
+                <img
+                  className="float-y"
+                  loading="lazy"
+                  decoding="async"
+                  src="/redesign/b079792a862094a0.png"
+                  alt="Pathy, la nube copiloto de FlightPath"
+                />
+                <span className="lp-bubble lp-bubble-1 float-y-late">¡Hora de estudiar! ✈️</span>
+                <span className="lp-bubble lp-bubble-2 float-y">🔥 Racha de 12 días</span>
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
+/** Chat de ejemplo que se escribe solo al entrar a pantalla (en bucle). */
+function YarisChat() {
+  const ref = useRef<HTMLDivElement>(null);
+  // SSR y movimiento reducido: la conversación completa, sin animar.
+  const [shown, setShown] = useState(CHAT.length);
+  const [typing, setTyping] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || reducedMotion() || typeof IntersectionObserver === "undefined") return;
+    const timers: number[] = [];
+    const later = (fn: () => void, ms: number) => timers.push(window.setTimeout(fn, ms));
+    const run = () => {
+      setShown(0);
+      setTyping(false);
+      let t = 500;
+      CHAT.forEach((m, i) => {
+        if (!m.me) {
+          later(() => setTyping(true), t);
+          t += 1400;
+        }
+        later(() => {
+          setTyping(false);
+          setShown(i + 1);
+        }, t);
+        t += m.me ? 900 : 1800;
+      });
+      later(run, t + 3500);
+    };
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        run();
+      },
+      { threshold: 0.35 },
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      timers.forEach((id) => window.clearTimeout(id));
+    };
+  }, []);
+
+  return (
+    <div ref={ref} className="lp-chat" aria-label="Ejemplo de conversación con Yaris">
+      <div className="lp-chat-top">
+        <span className="lp-chat-av">
+          <Sparkle size={18} weight="fill" />
+        </span>
+        <span>
+          <b>Yaris</b> · tutora con IA
+        </span>
+      </div>
+      {CHAT.slice(0, shown).map((m, i) => (
+        <div key={i} className={`lp-msg lp-msg-in ${m.me ? "lp-msg-me" : "lp-msg-ai"}`}>
+          {m.t}
+        </div>
+      ))}
+      {typing && (
+        <div className="lp-msg lp-msg-ai lp-msg-in" aria-hidden="true">
+          <span className="lp-typing">
+            <i></i>
+            <i></i>
+            <i></i>
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function Comparativa() {
   return (
-    <section className="relative py-16 lg:py-24">
-      <div className="mx-auto max-w-[980px] px-4 sm:px-6 lg:px-8">
-        <SectionHead
-          center
-          eyebrow="La diferencia"
-          title={
-            <>
-              Por tu cuenta vs. <span className="text-coral-600">con FlightPath</span>
-            </>
-          }
-        />
-        <div className="mt-10 overflow-hidden rounded-3xl border border-ink/8 bg-white shadow-card">
-          {COMPARA.map((r) => (
-            <div
-              key={r.k}
-              className="grid gap-2 border-b border-ink/6 p-5 last:border-0 sm:grid-cols-[150px_1fr_1fr] sm:items-center sm:gap-6"
-            >
-              <div className="text-[12px] font-bold uppercase tracking-[0.12em] text-haze-500">
-                {r.k}
-              </div>
-              <div className="flex items-start gap-2 text-[14.5px] text-ink/50">
-                <Icon n="close" className="mt-0.5 h-4 w-4 shrink-0 text-ink/30" />
-                {r.solo}
-              </div>
-              <div className="flex items-start gap-2 text-[14.5px] font-semibold text-ink">
-                <Icon n="check" className="mt-0.5 h-4 w-4 shrink-0 text-coral-600" sw={2.4} />
-                {r.fp}
-              </div>
-            </div>
-          ))}
+    <section className="lp-compare">
+      <canvas className="rd-64" aria-hidden="true" data-tone="light" data-motion="planes"></canvas>
+      <div className="lp-wrap">
+        <div className="lp-head lp-reveal">
+          <div className="lp-kicker">
+            <span className="rd-5"></span>
+            <span>La diferencia</span>
+            <span className="rd-5"></span>
+          </div>
+          <h2 className="lp-h2">
+            Por tu cuenta vs. <em>con FlightPath</em>
+          </h2>
         </div>
-        <p className="mx-auto mt-8 max-w-2xl text-center text-[15px] leading-relaxed text-ink/60">
-          Presentar de nuevo cuesta otra cuota, más meses de estudio y esperar la siguiente fecha.
-          <b className="text-ink"> Prepararte bien a la primera es la inversión más barata.</b>
+        <div className="lp-vs">
+          <div className="lp-col lp-col-solo lp-reveal lp-from-left">
+            <h3>Por tu cuenta</h3>
+            <ul>
+              {COMPARA.map((r, i) => (
+                <li key={r.solo}>
+                  <XCircle size={20} weight="duotone" />
+                  <span
+                    className="lp-strike"
+                    style={{ "--d": `${400 + i * 160}ms` } as React.CSSProperties}
+                  >
+                    {r.solo}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div
+            className="lp-col lp-col-fp lp-reveal lp-from-right"
+            style={{ "--d": "120ms" } as React.CSSProperties}
+          >
+            <h3>Con FlightPath Pro</h3>
+            <ul>
+              {COMPARA.map((r, i) => (
+                <li key={r.fp}>
+                  <span
+                    className="lp-pop"
+                    style={
+                      { "--d": `${500 + i * 160}ms`, display: "inline-flex" } as React.CSSProperties
+                    }
+                  >
+                    <CheckCircle size={20} weight="duotone" />
+                  </span>
+                  <span>{r.fp}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <p className="lp-note lp-reveal">
+          Presentar de nuevo cuesta otra cuota, más meses de estudio y esperar la siguiente fecha.{" "}
+          <b>Prepararte bien a la primera es la inversión más barata.</b>
         </p>
       </div>
     </section>
@@ -610,7 +956,7 @@ function Oferta({
   annual,
   setup,
   buy,
-  ctaLabel,
+  cta,
 }: {
   ciclo: Ciclo;
   setCiclo: (c: Ciclo) => void;
@@ -618,7 +964,7 @@ function Oferta({
   annual: PlanPrice;
   setup: PlanPrice;
   buy: Buy;
-  ctaLabel: string;
+  cta: string;
 }) {
   const anual = ciclo === "anual";
   const doceMeses = monthly.amount * 12;
@@ -627,168 +973,138 @@ function Oferta({
   const precio = anual ? annual : monthly;
   const equivalente = Math.round(annual.amount / 12);
 
-  return (
-    <section id="oferta" className="relative scroll-mt-20 py-16 lg:py-24">
-      <div className="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
-        <SectionHead
-          center
-          eyebrow="Tu acceso"
-          title={
-            <>
-              Un solo plan. <span className="text-coral-600">Todo incluido.</span>
-            </>
-          }
-          sub="Sin letras chiquitas: banco completo, simulacros ilimitados y Yaris con IA desde el primer minuto."
-        />
+  // Píldora del selector: se desliza hasta el botón activo.
+  const group = useRef<HTMLDivElement>(null);
+  const [pill, setPill] = useState<{ left: number; width: number } | null>(null);
+  useLayoutEffect(() => {
+    const btn = group.current?.querySelector<HTMLButtonElement>('button[aria-pressed="true"]');
+    if (btn) setPill({ left: btn.offsetLeft, width: btn.offsetWidth });
+  }, [ciclo, ahorroPct]);
 
-        <div className="mt-10 flex justify-center">
+  return (
+    <section className="lp-offer" id="oferta">
+      <canvas className="rd-64" aria-hidden="true" data-tone="dark" data-motion="planes"></canvas>
+      <div className="lp-wrap">
+        <div className="lp-head lp-reveal">
+          <div className="lp-kicker is-light">
+            <span className="rd-5"></span>
+            <span>Tu acceso</span>
+            <span className="rd-5"></span>
+          </div>
+          <h2 className="lp-h2 is-light">
+            Un solo plan. <em>Todo incluido.</em>
+          </h2>
+          <p className="lp-sub is-light">
+            Sin letras chiquitas: banco completo, simulacros ilimitados y Yaris con IA desde el
+            primer minuto.
+          </p>
           <div
+            ref={group}
             role="group"
             aria-label="Periodicidad del plan Pro"
-            className="inline-flex items-center gap-1 rounded-full border border-ink/10 bg-white p-1 shadow-card"
+            className="lp-toggle"
           >
-            {(["mensual", "anual"] as const).map((c) => {
-              const on = ciclo === c;
-              return (
-                <button
-                  key={c}
-                  type="button"
-                  onClick={() => setCiclo(c)}
-                  aria-pressed={on}
-                  className={`min-h-11 rounded-full px-5 text-[14px] font-semibold transition-all ${
-                    on ? "bg-ink text-white shadow-navy" : "text-ink/60 hover:text-ink"
-                  }`}
-                >
-                  {c === "mensual" ? "Mensual" : `Anual · ahorra ${ahorroPct}%`}
-                </button>
-              );
-            })}
+            {pill && (
+              <span
+                className="lp-toggle-pill"
+                aria-hidden="true"
+                style={{ left: pill.left, width: pill.width }}
+              />
+            )}
+            {(["mensual", "anual"] as const).map((c) => (
+              <button
+                key={c}
+                type="button"
+                aria-pressed={ciclo === c}
+                onClick={() => setCiclo(c)}
+                style={!pill && ciclo === c ? { background: "#c7a052" } : undefined}
+              >
+                {c === "mensual" ? "Mensual" : `Anual · ahorra ${ahorroPct}%`}
+              </button>
+            ))}
           </div>
         </div>
 
-        <div className="relative mt-8 overflow-hidden rounded-[32px] bg-ink shadow-navy">
-          <div
-            className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full"
-            style={{
-              background: "radial-gradient(closest-side, rgba(199,160,82,0.22), transparent)",
-            }}
-          />
-          <div className="relative grid gap-10 p-7 sm:p-10 lg:grid-cols-[1fr_1fr] lg:p-12">
+        <div className="lp-card-ring lp-reveal lp-zoom">
+          <div className="lp-card">
             <div>
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-coral-300">
-                  FlightPath Pro {anual ? "Anual" : "Mensual"}
-                </span>
-                {anual && <Pill tone="light">Más recomendado</Pill>}
+              <div className="lp-plan">
+                FlightPath Pro {anual ? "Anual" : "Mensual"}
+                {anual && <span className="lp-badge">Más recomendado</span>}
               </div>
-              <div className="mt-5 flex items-baseline gap-2">
-                <span className="font-display text-6xl tracking-tight text-white">
+              <div className="lp-price">
+                <span key={ciclo} className="lp-price-n">
                   ${precio.amount.toLocaleString("es-MX")}
                 </span>
-                <span className="text-sm text-white/50">
+                <span className="lp-price-u">
                   {precio.currency} {anual ? "/ año" : "/ mes"}
                 </span>
               </div>
-              <p className="mt-2 text-[13.5px] text-white/60">
+              <p className="lp-price-eq">
                 {anual ? (
                   <>
                     Equivale a ${equivalente.toLocaleString("es-MX")} {annual.currency} al mes ·
-                    ahorras <b className="text-coral-300">{ahorroPct}%</b>
+                    ahorras <b>{ahorroPct}%</b>
                   </>
                 ) : (
                   <>
                     Con el anual pagas ${annual.amount.toLocaleString("es-MX")} {annual.currency} y
-                    ahorras <b className="text-coral-300">{ahorroPct}%</b>
+                    ahorras <b>{ahorroPct}%</b>
                   </>
                 )}
               </p>
 
-              <div className="mt-6 rounded-2xl border border-white/12 bg-white/5 p-4">
-                <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">
-                  Inscripción · pago único
-                </div>
-                <div className="mt-1.5 flex items-baseline gap-2">
-                  <span className="font-display text-2xl text-white">{formatPrice(setup)}</span>
+              <div className="lp-setup">
+                <div className="lp-setup-k">Inscripción · pago único</div>
+                <div className="lp-setup-v">
+                  <strong>{formatPrice(setup)}</strong>
                   {setup.amount < PRO_SETUP_LIST_PRICE && (
                     <>
-                      <span className="text-[13px] text-white/40 line-through">
-                        ${PRO_SETUP_LIST_PRICE.toLocaleString("es-MX")}
-                      </span>
-                      <span className="text-[12px] font-bold text-coral-300">
-                        Precio de promoción
-                      </span>
+                      <s>${PRO_SETUP_LIST_PRICE.toLocaleString("es-MX")}</s>
+                      <em>Precio de promoción</em>
                     </>
                   )}
                 </div>
-                <p className="mt-1.5 text-[12.5px] leading-relaxed text-white/55">
+                <p>
                   Se cobra una sola vez junto con tu primer periodo y activa tu acceso al material
                   del curso.
                 </p>
               </div>
 
-              <Btn
-                kind="primary"
-                size="lg"
-                icon="arrow"
-                className="mt-7 w-full"
-                to={buy.to}
-                search={buy.search}
-              >
-                {ctaLabel}
-              </Btn>
-              <p className="mt-3 text-center text-[12px] text-white/45">
-                Pago seguro con Stripe · Factura disponible
-              </p>
+              <BuyLink buy={buy} className="btn btn-gold rd-10 lp-shine">
+                {cta}
+                <Arrow />
+              </BuyLink>
+              <p className="lp-secure">Pago seguro con Stripe · Factura disponible</p>
             </div>
 
-            <div className="lg:border-l lg:border-white/10 lg:pl-10">
-              <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/45">
-                Incluye
-              </div>
-              <ul className="mt-5 space-y-3.5">
-                {[
-                  "Banco completo: CIAAC, ATP, Jeppesen y Handbook",
-                  "Cuestionarios y simulacros ilimitados",
-                  "Yaris con IA: te explica y te acompaña",
-                  "Análisis de desempeño por materia",
-                  "Biblioteca y manuales completos",
-                  "Recordatorios de estudio por WhatsApp",
-                  "Módulos nuevos conforme se liberan",
-                ].map((f) => (
-                  <li key={f} className="flex items-start gap-3">
-                    <Icon n="check" className="mt-0.5 h-4 w-4 shrink-0 text-coral-300" sw={2.4} />
-                    <span className="text-[14.5px] text-white/85">{f}</span>
+            <div>
+              <div className="lp-includes-k">Incluye</div>
+              <ul className="lp-includes">
+                {INCLUYE.map((f) => (
+                  <li key={f}>
+                    <CheckCircle size={20} weight="duotone" />
+                    {f}
                   </li>
                 ))}
               </ul>
-
-              <div className="mt-8 space-y-3 rounded-2xl bg-white/5 p-5">
-                {[
-                  {
-                    icon: "shield" as const,
-                    t: "Cancela en un clic desde tu panel, sin permanencia.",
-                  },
-                  {
-                    icon: "clock" as const,
-                    t: "Conservas el acceso hasta el final del periodo pagado.",
-                  },
-                ].map((g) => (
-                  <div key={g.t} className="flex items-start gap-3 text-[13.5px] text-white/70">
-                    <Icon n={g.icon} className="mt-0.5 h-4 w-4 shrink-0 text-coral-300" />
-                    {g.t}
-                  </div>
-                ))}
+              <div className="lp-guarantee">
+                <div>
+                  <ShieldCheck size={20} weight="duotone" />
+                  Cancela en un clic desde tu panel, sin permanencia.
+                </div>
+                <div>
+                  <Path size={20} weight="duotone" />
+                  Conservas el acceso hasta el final del periodo que pagaste.
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <p className="mt-6 text-center text-[13.5px] text-ink/55">
-          ¿Aún no te decides?{" "}
-          <Link to="/register" className="font-semibold text-ink underline underline-offset-4">
-            Empieza con la cuenta gratis
-          </Link>{" "}
-          y actualiza cuando quieras.
+        <p className="lp-free lp-reveal">
+          ¿Aún no te decides? <Link to="/register">Empieza con la cuenta gratis</Link> y actualiza
+          cuando quieras.
         </p>
       </div>
     </section>
@@ -797,23 +1113,30 @@ function Oferta({
 
 function Faq() {
   return (
-    <section className="relative py-16 lg:py-24">
-      <div className="mx-auto max-w-[820px] px-4 sm:px-6 lg:px-8">
-        <SectionHead center eyebrow="Preguntas" title={<>Antes de despegar</>} />
-        <div className="mt-10 space-y-3">
-          {FAQS.map((f) => (
+    <section className="lp-faq">
+      <div className="lp-wrap">
+        <div className="lp-head lp-reveal">
+          <div className="lp-kicker">
+            <span className="rd-5"></span>
+            <span>Preguntas</span>
+            <span className="rd-5"></span>
+          </div>
+          <h2 className="lp-h2">
+            Antes de <em>despegar</em>
+          </h2>
+        </div>
+        <div className="lp-faq-list">
+          {FAQS.map((f, i) => (
             <details
               key={f.q}
-              className="group rounded-2xl border border-ink/8 bg-white px-5 py-4 shadow-card"
+              className="lp-reveal"
+              style={{ "--d": `${i * 60}ms` } as React.CSSProperties}
             >
-              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-[15px] font-semibold text-ink">
-                <h3 style={{ margin: 0, font: "inherit" }}>{f.q}</h3>
-                <Icon
-                  n="arrow"
-                  className="h-4 w-4 shrink-0 text-coral-600 transition-transform group-open:rotate-90"
-                />
+              <summary>
+                <h3>{f.q}</h3>
+                <span className="lp-plus" aria-hidden="true"></span>
               </summary>
-              <p className="mt-3 text-[14.5px] leading-relaxed text-ink/60">{f.a}</p>
+              <p>{f.a}</p>
             </details>
           ))}
         </div>
@@ -822,71 +1145,35 @@ function Faq() {
   );
 }
 
-function CtaFinal({ buy, ctaLabel }: { buy: Buy; ctaLabel: string }) {
+function Cierre({ buy, cta }: { buy: Buy; cta: string }) {
   return (
-    <section className="relative pb-24">
-      <div className="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-[32px] bg-ink px-6 py-12 text-center shadow-navy sm:px-12 lg:py-16">
-          <div
-            className="pointer-events-none absolute -left-16 -top-16 h-64 w-64 rounded-full"
-            style={{
-              background: "radial-gradient(closest-side, rgba(199,160,82,0.18), transparent)",
-            }}
+    <section className="rd-152 lp-final">
+      <canvas className="rd-64" aria-hidden="true" data-tone="dark" data-motion="planes"></canvas>
+      <div className="rd-153">
+        <div className="rd-99 lp-reveal lp-from-left">
+          <h2 className="rd-154">
+            Tu examen tiene fecha. <span className="rd-7">Tu preparación también.</span>
+          </h2>
+          <p className="rd-155">
+            Empieza hoy con el banco completo, simulacros ilimitados y una tutora con IA que no se
+            cansa de explicarte.
+          </p>
+          <BuyLink buy={buy} className="btn btn-gold rd-156 lp-shine">
+            {cta}
+            <Arrow />
+          </BuyLink>
+          <p className="lp-final-trust">Acceso inmediato · Cancela cuando quieras</p>
+        </div>
+        <div className="lp-reveal lp-zoom" style={{ display: "grid", justifyItems: "center" }}>
+          <img
+            className="float-y rd-157"
+            loading="lazy"
+            decoding="async"
+            src="/redesign/b079792a862094a0.png"
+            alt="Pathy, la nube copiloto de FlightPath"
           />
-          <div className="relative">
-            <div className="mb-4 flex justify-center">
-              <PathyBubble size={120} />
-            </div>
-            <Eyebrow light>Pathy y Yaris te esperan</Eyebrow>
-            <h2 className="font-display mx-auto mt-4 max-w-2xl text-3xl leading-tight text-white lg:text-[44px]">
-              Tu examen tiene fecha.{" "}
-              <span className="text-coral-300">Tu preparación también debería.</span>
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-[15.5px] leading-relaxed text-white/60">
-              Empieza hoy con el banco completo, simulacros ilimitados y una tutora con IA que no se
-              cansa de explicarte.
-            </p>
-            <div className="mt-8 flex justify-center">
-              <Btn kind="primary" size="lg" icon="arrow" to={buy.to} search={buy.search}>
-                {ctaLabel}
-              </Btn>
-            </div>
-            <p className="mt-4 text-[12.5px] text-white/40">
-              Acceso inmediato · Cancela cuando quieras
-            </p>
-          </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function LandingFooter() {
-  return (
-    <footer className="bg-ink pb-24 text-white lg:pb-0">
-      <div className="mx-auto max-w-[1180px] px-4 py-10 sm:px-6 lg:px-8">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <Logo light size={26} />
-          <nav className="flex flex-wrap gap-x-5 gap-y-2 text-[13px] text-white/60">
-            <Link to="/legal" className="hover:text-white">
-              Términos y privacidad
-            </Link>
-            <a href="mailto:contacto@flightpath.mx" className="hover:text-white">
-              contacto@flightpath.mx
-            </a>
-          </nav>
-        </div>
-        {/* Disclaimer permanente de no afiliación — no quitar (regla de compliance). */}
-        <p className="mt-6 max-w-3xl text-[11.5px] leading-relaxed text-white/40">
-          FlightPath es una plataforma independiente. No está afiliada a la AFAC ni al CIAAC, ni a
-          ASPA de México, Aeroméxico, Volaris o ninguna otra aerolínea o institución. El banco de
-          preguntas es propio, desarrollado de forma independiente y mapeado al temario oficial
-          publicado.
-        </p>
-        <p className="mt-4 text-[12px] text-white/35">
-          © 2026 FlightPath. Hecho con cuidado en CDMX.
-        </p>
-      </div>
-    </footer>
   );
 }
