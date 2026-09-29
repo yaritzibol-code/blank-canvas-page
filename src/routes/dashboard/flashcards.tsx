@@ -13,14 +13,14 @@ import {
   type FlashCardItem,
 } from "@/lib/store";
 import { LP_CATEGORIES, type LpCategory, type LpSubject } from "@/lib/lp/taxonomy";
+import atpFlashcards from "@/lib/lp/atp-flashcards-2025-2026.json";
 import { UpgradeModal } from "@/components/shared/UpgradeModal";
 
-import { adminOnly } from "@/components/shared/UnderConstruction";
 import { PathyMark } from "@/components/shared/PathyMark";
 import { ModuleHeader } from "@/components/shared/ModuleHeader";
 
 export const Route = createFileRoute("/dashboard/flashcards")({
-  component: adminOnly(FlashcardsPage, "Flashcards"),
+  component: FlashcardsPage,
 });
 
 /* ─── Árbol de contenidos (reutiliza la taxonomía existente) ─── */
@@ -57,6 +57,13 @@ interface SectionEntry {
   temas: number;
   items: FlashCardItem[];
   done: boolean;
+  topics?: TopicEntry[];
+}
+interface TopicEntry {
+  id: string;
+  titulo: string;
+  items: FlashCardItem[];
+  done: boolean;
 }
 interface SubjectEntry {
   id: string;
@@ -81,7 +88,7 @@ const ICON_BGS = [
   "rgba(42,245,152,.12)",
 ];
 
-type Screen = "programa" | "materias" | "secciones" | "flashcard" | "result";
+type Screen = "programa" | "materias" | "secciones" | "temas" | "flashcard" | "result";
 type SwipeDir = "left" | "right" | null;
 
 /* ─── Main component ─────────────────────────────────────── */
@@ -94,6 +101,7 @@ function FlashcardsPage() {
   const [catIdx, setCatIdx] = useState(0);
   const [subjectIdx, setSubjectIdx] = useState(0);
   const [sectionIdx, setSectionIdx] = useState(0);
+  const [topicIdx, setTopicIdx] = useState(0);
   const [cardIdx, setCardIdx] = useState(0);
   const [knew, setKnew] = useState(0);
   const [toReview, setToReview] = useState(0);
@@ -102,13 +110,20 @@ function FlashcardsPage() {
   const [resultTitle, setResultTitle] = useState("");
   const [resultMsg, setResultMsg] = useState("");
   const [sessionCards, setSessionCards] = useState<FlashCardItem[]>([]);
+  const [sessionTitle, setSessionTitle] = useState("");
   const [upgradeOpen, setUpgradeOpen] = useState(false);
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
 
   /** Programas → materias → secciones, tomados del árbol existente. */
   const programas = useStore<{ categoria: LpCategory; subjects: SubjectEntry[] }[]>(() => {
-    const published = getFlashcards().filter((c) => c.status === "publicada");
+    const published: FlashCardItem[] = [
+      ...getFlashcards().filter((c) => c.status === "publicada" && c.materia !== "atp"),
+      ...atpFlashcards.map((c) => ({
+        id: c.id, materia: "atp", tema: c.topic,
+        q: c.front, a: c.back, status: "publicada" as const,
+      })),
+    ];
     const stateOf = new Map((user ? getFlashStates(user.id) : []).map((s) => [s.cardId, s.state]));
     const byMateria = new Map<string, FlashCardItem[]>();
     for (const c of published) {
@@ -123,6 +138,22 @@ function FlashcardsPage() {
         const cards = byMateria.get(slug) ?? [];
         const used = new Set<string>();
         const sections: SectionEntry[] = subject.containers.map((container) => {
+          if (subject.id === "linea-aerea/atp") {
+            const topics = container.learningPaths.map((lp): TopicEntry => {
+              const items = cards.filter((c) => norm(c.tema) === norm(lp.titulo));
+              items.forEach((c) => used.add(c.id));
+              return {
+                id: lp.id, titulo: lp.titulo, items,
+                done: items.length > 0 && items.every((c) => stateOf.get(c.id) === "dominada"),
+              };
+            });
+            const items = topics.flatMap((topic) => topic.items);
+            return {
+              id: container.id, titulo: container.titulo,
+              temas: topics.length, topics, items,
+              done: items.length > 0 && items.every((c) => stateOf.get(c.id) === "dominada"),
+            };
+          }
           const titles = new Set(container.learningPaths.map((lp) => norm(lp.titulo)));
           const items = cards.filter((c) => {
             if (used.has(c.id)) return false;
@@ -178,10 +209,14 @@ function FlashcardsPage() {
     sessionCards.length > 0 ? sessionCards[cardIdx % sessionCards.length] : undefined;
   const progressPct = sessionCards.length > 0 ? (cardIdx / sessionCards.length) * 100 : 0;
 
-  function startSession(si: number) {
-    const items = subject?.sections[si]?.items ?? [];
+  function startSession(si: number, ti?: number) {
+    const selectedSection = subject?.sections[si];
+    const selectedTopic = ti === undefined ? undefined : selectedSection?.topics?.[ti];
+    const items = selectedTopic?.items ?? selectedSection?.items ?? [];
     if (items.length === 0) return;
     setSectionIdx(si);
+    if (ti !== undefined) setTopicIdx(ti);
+    setSessionTitle(selectedTopic?.titulo ?? selectedSection?.titulo ?? "");
     setSessionCards(items);
     setCardIdx(0);
     setKnew(0);
@@ -231,7 +266,7 @@ function FlashcardsPage() {
           saveFlashSession({
             userId: user.id,
             materia: subject.id,
-            tema: section.titulo,
+            tema: sessionTitle,
             total,
             knew: knewFinal,
             review: total - knewFinal,
@@ -346,8 +381,10 @@ function FlashcardsPage() {
                 onStudy={() => {
                   if (empty) return;
                   if (locked) setUpgradeOpen(true);
+                  else if (s.topics) { setSectionIdx(i); setTopicIdx(0); setScreen("temas"); }
                   else startSession(i);
                 }}
+                actionLabel={s.topics ? "Ver temas →" : "Estudiar →"}
               />
             );
           })}
@@ -358,6 +395,31 @@ function FlashcardsPage() {
           feature="Flashcards completas"
           userId={user?.id}
         />
+      </div>
+    );
+  }
+
+  /* ── SCREEN: TEMAS ATP (mismo orden que Learning Paths) ── */
+  if (screen === "temas" && section?.topics) {
+    const locked = !paid && sectionIdx > 0;
+    return (
+      <div style={{ fontFamily: "'Manrope', sans-serif" }}>
+        <Breadcrumb backLabel={`← ${subject.containerLabel}`} onBack={() => setScreen("secciones")} title={section.titulo} icon={subject.icon} />
+        <p style={{ fontSize: "0.8rem", color: "var(--fd-muted, #4A5872)", marginBottom: 14 }}>
+          {section.topics.length} temas · {section.items.length} flashcards
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {section.topics.map((topic, i) => (
+            <SeccionCard
+              key={topic.id}
+              section={{ ...topic, temas: 0 }}
+              num={i + 1}
+              locked={locked}
+              onStudy={() => locked ? setUpgradeOpen(true) : startSession(sectionIdx, i)}
+            />
+          ))}
+        </div>
+        <UpgradeModal open={upgradeOpen} onClose={() => setUpgradeOpen(false)} feature="Flashcards completas" userId={user?.id} />
       </div>
     );
   }
@@ -382,12 +444,12 @@ function FlashcardsPage() {
         <div style={{ minHeight: "calc(100vh - 200px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "16px 0" }}>
           <div style={{ width: "100%", maxWidth: 500, display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
             <button
-              onClick={() => setScreen("secciones")}
+              onClick={() => setScreen(section.topics ? "temas" : "secciones")}
               style={{ display: "flex", alignItems: "center", gap: 5, background: "var(--fd-panel, white)", border: "1px solid var(--fd-border, #EEE1C5)", borderRadius: 8, padding: "6px 12px", fontSize: "0.8rem", fontWeight: 700, color: "var(--fd-muted, #4A5872)", cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
             >
-              ← {subject.containerLabel}
+              ← {section.topics ? "Temas" : subject.containerLabel}
             </button>
-            <span style={{ fontSize: "0.8rem", color: "var(--fd-text, #163D70)", fontWeight: 700 }}>{section.titulo}</span>
+            <span style={{ fontSize: "0.8rem", color: "var(--fd-text, #163D70)", fontWeight: 700 }}>{sessionTitle}</span>
             <span style={{ fontSize: "0.85rem", color: "var(--fd-muted, #4A5872)", fontWeight: 600 }}>{Math.min(cardIdx + 1, sessionCards.length)} / {sessionCards.length}</span>
           </div>
 
@@ -503,16 +565,16 @@ function FlashcardsPage() {
 
       <div style={{ display: "flex", gap: 10, maxWidth: 440, width: "100%" }}>
         <button
-          onClick={() => startSession(sectionIdx)}
+          onClick={() => startSession(sectionIdx, section?.topics ? topicIdx : undefined)}
           style={{ flex: 1, padding: 12, background: "var(--fd-panel, white)", color: "var(--fd-text, #163D70)", border: "2px solid #163D70", borderRadius: "var(--fd-radius, 11px)", fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6 }}
         >
           <Icon n="refresh" size={16} /> Repetir sección
         </button>
         <button
-          onClick={() => setScreen("secciones")}
+          onClick={() => setScreen(section?.topics ? "temas" : "secciones")}
           style={{ flex: 1, padding: 12, background: "#7A5C1E", color: "white", border: "none", borderRadius: "var(--fd-radius, 11px)", fontSize: "0.88rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif" }}
         >
-          ← Otras secciones
+          ← {section?.topics ? "Otros temas" : "Otras secciones"}
         </button>
       </div>
     </div>
@@ -599,7 +661,7 @@ function MateriaCard({ subject, onClick }: { subject: SubjectEntry; onClick: () 
 
 /* ─── Sección Card ───────────────────────────────────────── */
 
-function SeccionCard({ section, num, locked = false, onStudy }: { section: SectionEntry; num: number; locked?: boolean; onStudy: () => void }) {
+function SeccionCard({ section, num, locked = false, onStudy, actionLabel = "Estudiar →" }: { section: SectionEntry; num: number; locked?: boolean; onStudy: () => void; actionLabel?: string }) {
   const [hover, setHover] = useState(false);
   const empty = section.items.length === 0;
   return (
@@ -639,7 +701,7 @@ function SeccionCard({ section, num, locked = false, onStudy }: { section: Secti
             onMouseEnter={(e) => { e.currentTarget.style.background = "#2d4a7a"; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = "#163D70"; }}
           >
-            Estudiar →
+            {actionLabel}
           </button>
         )}
       </div>
