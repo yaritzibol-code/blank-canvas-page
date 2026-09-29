@@ -225,16 +225,8 @@ export function PeriodSwitch({
 /* ───────────────────────── Podio ───────────────────────── */
 
 const ORDEN_PODIO = [1, 0, 2] as const; // 2º, 1º, 3º
-const AVATAR_PODIO = [82, 66, 66] as const;
+const AVATAR_PODIO = [76, 60, 60] as const;
 const DELAY_PODIO = [260, 80, 420] as const;
-
-function AlasPodio({ lugar }: { lugar: 1 | 2 | 3 }) {
-  return (
-    <span className={`cm-podium-wings cm-podium-wings-${lugar}`} aria-hidden="true">
-      <img src={`/ranking/insignia-${lugar}.png`} alt="" />
-    </span>
-  );
-}
 
 export function Podium({
   filas,
@@ -252,17 +244,14 @@ export function Podium({
       {ORDEN_PODIO.map((idx) => {
         const r = top3[idx];
         if (!r) return <div key={`vacio-${idx}`} aria-hidden="true" />;
-        const lugar = (idx + 1) as 1 | 2 | 3;
+        const lugar = idx + 1;
         return (
           <div
             key={r.userId}
             className="cm-podium-col"
-            data-place={lugar}
             style={{ ["--d" as string]: `${DELAY_PODIO[idx]}ms` }}
           >
-            <span className="cm-podium-place">{String(lugar).padStart(2, "0")}</span>
             <div className={`cm-avatar-wrap ${lugar === 1 ? "cm-avatar-wrap-1" : ""}`}>
-              <AlasPodio lugar={lugar} />
               <span className={`inline-block rounded-full cm-ring-${lugar}`}>
                 <Avatar
                   nombre={r.display}
@@ -272,6 +261,7 @@ export function Podium({
                   size={AVATAR_PODIO[idx]}
                 />
               </span>
+              <span className={`cm-medal cm-medal-${lugar}`}>{lugar}</span>
             </div>
             <div className="grid w-full justify-items-center gap-0.5 px-1 text-center">
               <span
@@ -288,6 +278,12 @@ export function Podium({
               >
                 <Numero valor={r.valor} />{" "}
                 <span className="cm-muted text-[11px] font-semibold">{unidad}</span>
+              </span>
+            </div>
+            <div className={`cm-pedestal cm-pedestal-${lugar}`}>
+              {lugar === 1 && <span className="cm-shine" aria-hidden="true" />}
+              <span className="cm-pedestal-num" style={{ fontSize: lugar === 1 ? 44 : 32 }}>
+                {lugar}
               </span>
             </div>
           </div>

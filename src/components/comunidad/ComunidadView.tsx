@@ -33,7 +33,6 @@ import {
   type FpRankingRow,
   type FpResumen,
 } from "@/lib/fp/shared";
-import "./ranking.css";
 
 const PERIODO_TITULO: Record<FpPeriodo, string> = {
   semana: "esta semana",
@@ -135,16 +134,27 @@ export function ComunidadView(props: ComunidadDatos & ComunidadAcciones) {
   const maxDesglose = Math.max(1, ...desglose.map((l) => l.fp));
 
   return (
-    <div className="cm-root cm-ranking-page grid gap-5 sm:gap-6">
+    <div className="cm-root grid gap-5 sm:gap-6">
       <Backdrop />
 
       {/* ── Encabezado: reconocimiento + HUD personal ── */}
-      <section className="cm-ranking-intro cm-rise" data-tour="hud">
+      <section className="cm-hero cm-rise p-5 sm:p-7 lg:p-8" data-tour="hud">
+        <div className="cm-hero-grid" aria-hidden="true" />
+        <span
+          className="cm-hero-glow"
+          style={{ right: -120, top: -160, background: "#C7A052" }}
+          aria-hidden="true"
+        />
+        <span
+          className="cm-hero-glow"
+          style={{ left: -160, bottom: -220, background: "#5A86CB", animationDelay: "-3s" }}
+          aria-hidden="true"
+        />
         <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-end">
           <div className="min-w-0">
             <Eyebrow light>Mi progreso · Comunidad</Eyebrow>
             <h1 className="cm-display mt-4 text-[34px] leading-[1.02] text-white sm:text-[44px] lg:text-[50px]">
-              Los que van al frente{" "}
+              Los que van al frente
               <span className="block" style={{ color: "#C7A052" }}>
                 {PERIODO_TITULO[periodoEfectivo]}.
               </span>
@@ -210,18 +220,18 @@ export function ComunidadView(props: ComunidadDatos & ComunidadAcciones) {
       </section>
 
       {/* ── Selector de rankings ── */}
-      <section className="cm-ranking-tabs" data-tour="rankings">
+      <section data-tour="rankings">
         <RankingSelector metric={metric} onChange={onMetric} />
       </section>
 
-      <div className="cm-ranking-layout grid gap-5 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start">
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start">
         {/* ── Tabla ── */}
         <section
-          className="cm-card cm-ranking-board cm-rise p-4 sm:p-6"
+          className="cm-card cm-rise p-4 sm:p-6"
           data-tour="tabla"
           style={{ animationDelay: "120ms" }}
         >
-          <div className="cm-ranking-board-head mb-5 flex flex-wrap items-center gap-3">
+          <div className="mb-5 flex flex-wrap items-center gap-3">
             <span className="cm-rank-icon" style={{ ["--cm-acento" as string]: ranking.acento }}>
               <Icon n={ranking.icono as FPIconName} size={18} sw={1.8} />
             </span>
@@ -267,13 +277,13 @@ export function ComunidadView(props: ComunidadDatos & ComunidadAcciones) {
               </p>
             </div>
           ) : (
-            <div key={`${metric}-${periodoEfectivo}`} className="cm-swap cm-ranking-results grid gap-5">
+            <div key={`${metric}-${periodoEfectivo}`} className="cm-swap grid gap-5">
               <div data-tour="podio">
                 <Podium filas={podio} unidad={ranking.unidad} acento={ranking.acento} />
               </div>
 
               {resto.length > 0 && (
-                <div className="cm-ranking-list grid gap-1.5">
+                <div className="grid gap-1.5">
                   {resto.map((r, i) => (
                     <Fila
                       key={r.userId}
@@ -331,7 +341,7 @@ export function ComunidadView(props: ComunidadDatos & ComunidadAcciones) {
         </section>
 
         {/* ── Ficha de piloto ── */}
-        <aside className="cm-ranking-aside grid gap-4" data-tour="piloto">
+        <aside className="grid gap-4" data-tour="piloto">
           <section className="cm-card cm-rise overflow-hidden" style={{ animationDelay: "220ms" }}>
             <div className="cm-hero p-4" style={{ borderRadius: 0, boxShadow: "none" }}>
               <div className="cm-hero-grid" aria-hidden="true" />
