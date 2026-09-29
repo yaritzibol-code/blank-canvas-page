@@ -613,6 +613,101 @@ export type Database = {
         }
         Relationships: []
       }
+      fp_compass_batches: {
+        Row: {
+          id: string
+          started_at: string
+          state: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          started_at?: string
+          state?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          started_at?: string
+          state?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      fp_practice_activation: {
+        Row: {
+          activated_at: string
+          singleton: boolean
+        }
+        Insert: {
+          activated_at?: string
+          singleton?: boolean
+        }
+        Update: {
+          activated_at?: string
+          singleton?: boolean
+        }
+        Relationships: []
+      }
+      fp_practice_runs: {
+        Row: {
+          audio_hash: string | null
+          closed_at: string | null
+          completed_at: string | null
+          config: Json
+          connected_at: string | null
+          debrief: Json | null
+          id: string
+          kind: string
+          module_id: string | null
+          result: Json | null
+          simulacro_id: string | null
+          started_at: string
+          state: string
+          user_id: string
+        }
+        Insert: {
+          audio_hash?: string | null
+          closed_at?: string | null
+          completed_at?: string | null
+          config: Json
+          connected_at?: string | null
+          debrief?: Json | null
+          id?: string
+          kind: string
+          module_id?: string | null
+          result?: Json | null
+          simulacro_id?: string | null
+          started_at?: string
+          state?: string
+          user_id: string
+        }
+        Update: {
+          audio_hash?: string | null
+          closed_at?: string | null
+          completed_at?: string | null
+          config?: Json
+          connected_at?: string | null
+          debrief?: Json | null
+          id?: string
+          kind?: string
+          module_id?: string | null
+          result?: Json | null
+          simulacro_id?: string | null
+          started_at?: string
+          state?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fp_practice_runs_simulacro_id_fkey"
+            columns: ["simulacro_id"]
+            isOneToOne: false
+            referencedRelation: "fp_compass_batches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       fp_rules: {
         Row: {
           categoria: string
@@ -1369,7 +1464,25 @@ export type Database = {
       admin_resumen: { Args: never; Returns: Json }
       admin_rtari_stats: { Args: { days_back?: number }; Returns: Json }
       admin_stripe_event_stats: { Args: { hours_back?: number }; Returns: Json }
+      fp_begin_compass: {
+        Args: {
+          p_batch?: string
+          p_config: Json
+          p_new_batch?: boolean
+          p_user: string
+        }
+        Returns: Json
+      }
       fp_economy: { Args: never; Returns: Json }
+      fp_finish_practice: {
+        Args: {
+          p_audio_hash?: string
+          p_id: string
+          p_result: Json
+          p_user: string
+        }
+        Returns: Json
+      }
       fp_leaderboard: {
         Args: { p_metric: string; p_period: string }
         Returns: {
@@ -1383,6 +1496,20 @@ export type Database = {
           privacidad: string
           user_id: string
           valor: number
+        }[]
+      }
+      fp_mark_practice: {
+        Args: { p_action: string; p_id: string; p_user: string }
+        Returns: boolean
+      }
+      fp_reconcile_balance: { Args: { p_user: string }; Returns: number }
+      get_atp_fixed_wing_counts: {
+        Args: never
+        Returns: {
+          capitulo: number
+          fuente: string
+          materia: string
+          total: number
         }[]
       }
       get_bank_counts: {
@@ -1413,6 +1540,7 @@ export type Database = {
       }
       is_admin: { Args: never; Returns: boolean }
       is_admin_ctx: { Args: never; Returns: boolean }
+      is_atp_helicopter: { Args: { q: Json }; Returns: boolean }
       match_rag_chunks: {
         Args: {
           match_count?: number
