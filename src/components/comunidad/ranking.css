@@ -1,0 +1,356 @@
+/* Ranking presentation only. FlightPoints, queries and the shared FlightDeck stay untouched. */
+.fd-shell .cm-ranking-page {
+  --cm-ink: #f5f5f2;
+  --cm-ink-2: #e0e7ef;
+  --cm-muted: #b8c5d5;
+  --cm-muted-2: #8fa3bb;
+  --cm-card: rgba(5, 18, 34, .90);
+  --cm-card-2: rgba(15, 38, 61, .82);
+  --cm-card-3: #19324b;
+  --cm-border: rgba(194, 213, 231, .17);
+  --cm-border-strong: rgba(199, 160, 82, .52);
+  --cm-coral: #e1be79;
+  --cm-coral-700: #c7a052;
+  --cm-cherry-50: rgba(199, 160, 82, .13);
+  --cm-shadow-card: 0 18px 40px rgba(0, 7, 17, .22);
+  --cm-shadow-lift: 0 20px 45px rgba(0, 7, 17, .32);
+  color: var(--cm-ink);
+  min-width: 0;
+  padding: 2px 0 36px;
+}
+
+.fd-shell .cm-ranking-page .cm-backdrop {
+  display: block;
+  inset: -32px -48px -90px;
+  border-radius: 0;
+  background:
+    linear-gradient(180deg, rgba(2, 11, 24, .46) 0%, rgba(2, 11, 24, .78) 41%, #020b18 88%),
+    url("/flightdeck/foto-avion-pista.jpg") center top / 100% auto no-repeat;
+  opacity: .74;
+}
+.cm-ranking-page .cm-backdrop > * { display: none; }
+
+.fd-shell .cm-ranking-page .cm-ranking-intro {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid rgba(199, 160, 82, .28);
+}
+.fd-shell .cm-ranking-page .cm-ranking-intro > div {
+  grid-template-columns: minmax(0, 1.25fr) minmax(300px, .95fr);
+  align-items: end;
+}
+.fd-shell .cm-ranking-page .cm-ranking-intro h1 {
+  font: 400 clamp(34px, 3.6vw, 54px)/.95 "Instrument Serif", serif !important;
+  letter-spacing: -.02em;
+  margin: 10px 0 0;
+  max-width: 750px;
+}
+.fd-shell .cm-ranking-page .cm-ranking-intro h1 span {
+  display: inline;
+  color: #e1be79 !important;
+}
+.fd-shell .cm-ranking-page .cm-ranking-intro p {
+  display: block;
+  color: #c6d0dc;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 12px;
+  max-width: 660px;
+}
+.fd-shell .cm-ranking-page .cm-ranking-intro .cm-btn-light {
+  height: 34px;
+  padding-inline: 13px;
+  background: rgba(8, 25, 44, .7);
+  border-color: rgba(199, 160, 82, .5);
+  color: #f4dfb6;
+  font-size: 11px;
+  border-radius: 6px;
+}
+.fd-shell .cm-ranking-page .cm-ranking-intro .cm-btn-light:hover {
+  background: rgba(199, 160, 82, .18);
+}
+.fd-shell .cm-ranking-page .cm-ranking-intro .cm-hud {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.fd-shell .cm-ranking-page .cm-hud-tile {
+  border-radius: 6px;
+  background: rgba(5, 18, 34, .70);
+  border-color: rgba(199, 160, 82, .23);
+  padding: 10px 12px;
+}
+.fd-shell .cm-ranking-page .cm-hud-num {
+  font-size: 27px;
+  color: #f4dfb6;
+}
+
+.fd-shell .cm-ranking-page .cm-ranking-tabs [role="tablist"] {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0;
+  border: 1px solid rgba(199, 160, 82, .3);
+  background: rgba(4, 16, 31, .86);
+  border-radius: 8px;
+  padding: 4px;
+}
+.fd-shell .cm-ranking-page .cm-rank-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 42px;
+  padding: 8px 9px;
+  background: transparent;
+  color: #c9d2dd;
+  border: 0;
+  border-radius: 5px;
+  box-shadow: none;
+  text-align: center;
+  transform: none;
+}
+.fd-shell .cm-ranking-page .cm-rank-card:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, .07);
+}
+.fd-shell .cm-ranking-page .cm-rank-card:hover {
+  transform: none;
+  box-shadow: none;
+  color: white;
+  background: rgba(199, 160, 82, .1);
+}
+.fd-shell .cm-ranking-page .cm-rank-card[aria-pressed="true"] {
+  background: linear-gradient(125deg, #ecd19a, #b58b49);
+  color: #081a35;
+  box-shadow: 0 5px 17px rgba(199, 160, 82, .18);
+}
+.fd-shell .cm-ranking-page .cm-rank-card::after,
+.fd-shell .cm-ranking-page .cm-rank-card .cm-rank-icon,
+.fd-shell .cm-ranking-page .cm-rank-card .cm-muted {
+  display: none;
+}
+.fd-shell .cm-ranking-page .cm-rank-card > .cm-display {
+  font: 700 12px/1.2 Manrope, sans-serif;
+  letter-spacing: .01em;
+  white-space: normal;
+}
+
+.fd-shell .cm-ranking-page .cm-ranking-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(275px, 310px);
+  align-items: start;
+}
+.fd-shell .cm-ranking-page .cm-card {
+  background: var(--cm-card);
+  border-color: var(--cm-border);
+  border-radius: 8px;
+  box-shadow: var(--cm-shadow-card);
+  backdrop-filter: blur(14px);
+}
+.fd-shell .cm-ranking-page .cm-card-2 { background: var(--cm-card-2); border-radius: 6px; }
+.fd-shell .cm-ranking-page .cm-ranking-board {
+  padding: 20px 22px 22px;
+  border-top: 1px solid rgba(199, 160, 82, .56);
+}
+.fd-shell .cm-ranking-page .cm-ranking-board-head {
+  padding-bottom: 14px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
+}
+.fd-shell .cm-ranking-page .cm-ranking-board-head .cm-rank-icon {
+  color: #e5c486;
+  background: rgba(199, 160, 82, .12);
+}
+.fd-shell .cm-ranking-page .cm-ranking-board-head h2 {
+  font: 400 27px/1 "Instrument Serif", serif;
+  letter-spacing: 0;
+}
+.fd-shell .cm-ranking-page .cm-seg {
+  background: rgba(5, 18, 34, .8);
+  border-color: rgba(199, 160, 82, .27);
+  border-radius: 6px;
+}
+.fd-shell .cm-ranking-page .cm-seg-thumb {
+  background: #d9b779;
+  border-radius: 4px;
+}
+.fd-shell .cm-ranking-page .cm-seg-btn {
+  color: #c6d0dc;
+  padding-inline: 9px;
+  font-size: 11px;
+}
+.fd-shell .cm-ranking-page .cm-seg-btn[aria-selected="true"] { color: #081a35; }
+
+.fd-shell .cm-ranking-page .cm-podium {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 10px;
+  align-items: end;
+  padding: 12px 0 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
+}
+.fd-shell .cm-ranking-page .cm-podium-col {
+  --medal: #d3ad70;
+  min-width: 0;
+  gap: 8px;
+  position: relative;
+  padding: 22px 8px 16px;
+  min-height: 212px;
+  color: var(--medal);
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-top-color: color-mix(in srgb, var(--medal) 58%, transparent);
+  border-radius: 7px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--medal) 10%, #071629) 0%, rgba(4, 18, 33, .76) 100%);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--medal) 18%, transparent);
+  animation: cm-rise .6s var(--cm-ease) both;
+  animation-delay: var(--d);
+}
+.fd-shell .cm-ranking-page .cm-podium-col[data-place="1"] {
+  --medal: #e4bd72;
+  min-height: 240px;
+  background:
+    radial-gradient(ellipse at 50% 26%, rgba(222, 174, 91, .20), transparent 70%),
+    linear-gradient(180deg, #1b2530, #081725 80%);
+  border-color: rgba(228, 189, 114, .38);
+  box-shadow: 0 13px 35px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(241, 211, 148, .30);
+}
+.fd-shell .cm-ranking-page .cm-podium-col[data-place="2"] { --medal: #c0ccd7; }
+.fd-shell .cm-ranking-page .cm-podium-col[data-place="3"] { --medal: #d7a483; }
+.fd-shell .cm-ranking-page .cm-podium-place {
+  font: 400 34px/.9 "Instrument Serif", serif;
+  letter-spacing: -.04em;
+  font-variant-numeric: tabular-nums;
+}
+.fd-shell .cm-ranking-page .cm-podium-col[data-place="1"] .cm-podium-place { font-size: 42px; }
+.fd-shell .cm-ranking-page .cm-avatar-wrap {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 79px;
+  animation: none;
+}
+.fd-shell .cm-ranking-page .cm-avatar-wrap-1 { animation: none; }
+.fd-shell .cm-ranking-page .cm-podium-wings {
+  position: absolute;
+  width: min(106%, 250px);
+  height: 94px;
+  color: var(--medal);
+  opacity: .94;
+  filter: drop-shadow(0 5px 9px rgba(0, 0, 0, .45));
+  pointer-events: none;
+}
+.fd-shell .cm-ranking-page .cm-avatar-wrap > span {
+  position: relative;
+  z-index: 1;
+  border: 3px solid #071a2c;
+  border-radius: 50%;
+}
+.fd-shell .cm-ranking-page .cm-ring-1,
+.fd-shell .cm-ranking-page .cm-ring-2,
+.fd-shell .cm-ranking-page .cm-ring-3 {
+  box-shadow: 0 0 0 2px var(--medal), 0 5px 20px rgba(0, 0, 0, .4);
+  animation: none;
+}
+.fd-shell .cm-ranking-page .cm-podium-col > div:last-child { gap: 3px; }
+.fd-shell .cm-ranking-page .cm-podium-col > div:last-child > .cm-display:first-child {
+  font: 500 18px/1.1 "Instrument Serif", serif;
+  color: #f5f5f2;
+}
+.fd-shell .cm-ranking-page .cm-podium-col[data-place="1"] > div:last-child > .cm-display:first-child {
+  font-size: 22px;
+}
+.fd-shell .cm-ranking-page .cm-podium-col > div:last-child > .cm-display:last-child {
+  font: 400 28px/1 "Instrument Serif", serif;
+  color: var(--medal) !important;
+  white-space: nowrap;
+}
+.fd-shell .cm-ranking-page .cm-podium-col > div:last-child > .cm-display:last-child .cm-muted {
+  color: #c8d2de;
+  font: 700 10px Manrope, sans-serif;
+}
+.fd-shell .cm-ranking-page .cm-podium-col[data-place="1"] > div:last-child > .cm-display:last-child { font-size: 34px; }
+.fd-shell .cm-ranking-page .cm-podium .cm-you-tag { background: rgba(199, 160, 82, .2); color: #efcf97; }
+
+.fd-shell .cm-ranking-page .cm-ranking-list { gap: 0; }
+.fd-shell .cm-ranking-page .cm-ranking-list::before {
+  content: "CLASIFICACIÓN · POSICIÓN / PILOTO / RESULTADO";
+  padding: 6px 14px 10px;
+  color: #c7a052;
+  font: 700 10px/1.4 "JetBrains Mono", monospace;
+  letter-spacing: .12em;
+}
+.fd-shell .cm-ranking-page .cm-row {
+  border-bottom: 1px solid rgba(255, 255, 255, .075);
+  border-radius: 0;
+  padding-block: 11px;
+  animation-duration: .35s;
+}
+.fd-shell .cm-ranking-page .cm-row:last-child { border-bottom-color: transparent; }
+.fd-shell .cm-ranking-page .cm-row:hover { background: rgba(199, 160, 82, .07); transform: none; }
+.fd-shell .cm-ranking-page .cm-row::before { display: none; }
+.fd-shell .cm-ranking-page .cm-row-you {
+  background: rgba(199, 160, 82, .13);
+  border-color: rgba(199, 160, 82, .35);
+  border-radius: 5px;
+  animation: cm-rise .35s var(--cm-ease) both;
+}
+.fd-shell .cm-ranking-page .cm-row .cm-display[style] { color: #e4c082 !important; }
+.fd-shell .cm-ranking-page .cm-row .cm-display .cm-muted { color: #b8c5d5; }
+.fd-shell .cm-ranking-page .cm-you-tag { background: #c7a052; color: #081a35; }
+
+.fd-shell .cm-ranking-page .cm-ranking-aside > .cm-card { overflow: hidden; }
+.fd-shell .cm-ranking-page .cm-ranking-aside > .cm-card:first-child > .cm-hero {
+  background: linear-gradient(115deg, #0b263f, #07182b);
+  border-bottom: 1px solid rgba(199, 160, 82, .3);
+}
+.fd-shell .cm-ranking-page .cm-ranking-aside > .cm-card:first-child > .cm-hero p {
+  display: block;
+}
+.fd-shell .cm-ranking-page .cm-ranking-aside .cm-priv-opt {
+  background: rgba(12, 34, 55, .86);
+  border-color: rgba(255, 255, 255, .16);
+  color: #e8eef5;
+  border-radius: 5px;
+}
+.fd-shell .cm-ranking-page .cm-ranking-aside .cm-priv-opt[aria-pressed="true"] {
+  background: rgba(199, 160, 82, .14);
+  border-color: #c7a052;
+}
+.fd-shell .cm-ranking-page .cm-ranking-aside .cm-bar { height: 5px; }
+.fd-shell .cm-ranking-page :is(button, [role="tab"]):focus-visible {
+  outline: 2px solid #f0d49a;
+  outline-offset: 3px;
+}
+
+@media (max-width: 1180px) {
+  .fd-shell .cm-ranking-page .cm-ranking-intro > div { grid-template-columns: 1fr; }
+  .fd-shell .cm-ranking-page .cm-ranking-intro .cm-hud { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .fd-shell .cm-ranking-page .cm-ranking-layout { grid-template-columns: minmax(0, 1fr); }
+  .fd-shell .cm-ranking-page .cm-ranking-aside { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fd-shell .cm-ranking-page .cm-ranking-aside > :first-child { grid-row: span 2; }
+}
+@media (max-width: 900px) {
+  .fd-shell .cm-ranking-page .cm-ranking-intro h1 { display: none; }
+  .fd-shell .cm-ranking-page .cm-ranking-intro p { margin-top: 8px; }
+}
+@media (max-width: 700px) {
+  .fd-shell .cm-ranking-page .cm-backdrop { inset: -24px -20px -80px; background-size: auto, auto 520px; background-position: center, 55% top; }
+  .fd-shell .cm-ranking-page .cm-ranking-intro { padding-top: 7px; }
+  .fd-shell .cm-ranking-page .cm-ranking-intro .cm-hud { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fd-shell .cm-ranking-page .cm-ranking-tabs [role="tablist"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fd-shell .cm-ranking-page .cm-rank-card:last-child { grid-column: span 2; }
+  .fd-shell .cm-ranking-page .cm-ranking-board { padding: 16px 12px 18px; }
+  .fd-shell .cm-ranking-page .cm-ranking-board-head > [data-tour="periodo"] { width: 100%; }
+  .fd-shell .cm-ranking-page .cm-ranking-board-head .cm-seg { width: 100%; }
+  .fd-shell .cm-ranking-page .cm-ranking-aside { grid-template-columns: 1fr; }
+  .fd-shell .cm-ranking-page .cm-ranking-aside > :first-child { grid-row: auto; }
+  .fd-shell .cm-ranking-page .cm-podium { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+  .fd-shell .cm-ranking-page .cm-podium-col { min-height: 188px; padding: 16px 5px 13px; }
+  .fd-shell .cm-ranking-page .cm-podium-col[data-place="1"] { grid-column: 1 / -1; grid-row: 1; min-height: 218px; }
+  .fd-shell .cm-ranking-page .cm-podium-col[data-place="2"] { grid-column: 1; grid-row: 2; }
+  .fd-shell .cm-ranking-page .cm-podium-col[data-place="3"] { grid-column: 2; grid-row: 2; }
+  .fd-shell .cm-ranking-page .cm-podium-place { font-size: 31px; }
+  .fd-shell .cm-ranking-page .cm-podium-col[data-place="1"] .cm-podium-place { font-size: 40px; }
+  .fd-shell .cm-ranking-page .cm-podium-wings { width: 108%; }
+  .fd-shell .cm-ranking-page .cm-podium-col > div:last-child > .cm-display:first-child { font-size: 16px; }
+  .fd-shell .cm-ranking-page .cm-podium-col[data-place="1"] > div:last-child > .cm-display:first-child { font-size: 20px; }
+  .fd-shell .cm-ranking-page .cm-podium-col > div:last-child > .cm-display:last-child { font-size: 23px; }
+  .fd-shell .cm-ranking-page .cm-podium-col[data-place="1"] > div:last-child > .cm-display:last-child { font-size: 30px; }
+  .fd-shell .cm-ranking-page .cm-row { grid-template-columns: 24px 36px minmax(0, 1fr) auto; gap: 7px; padding-inline: 3px; }
+  .fd-shell .cm-ranking-page .cm-row .cm-display[style] { font-size: 14px; }
+}
