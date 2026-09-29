@@ -88,6 +88,8 @@ const ICON_BGS = [
   "rgba(42,245,152,.12)",
 ];
 
+const ATP_CHAPTER_BY_CARD_ID = new Map(atpFlashcards.map((card) => [card.id, card.chapter]));
+
 type Screen = "programa" | "materias" | "secciones" | "temas" | "flashcard" | "result";
 type SwipeDir = "left" | "right" | null;
 
@@ -139,8 +141,11 @@ function FlashcardsPage() {
         const used = new Set<string>();
         const sections: SectionEntry[] = subject.containers.map((container) => {
           if (subject.id === "linea-aerea/atp") {
+            const chapter = Number(container.id.match(/\/chapter-(\d+)-/)?.[1]);
             const topics = container.learningPaths.map((lp): TopicEntry => {
-              const items = cards.filter((c) => norm(c.tema) === norm(lp.titulo));
+              const items = cards.filter(
+                (c) => ATP_CHAPTER_BY_CARD_ID.get(c.id) === chapter && norm(c.tema) === norm(lp.titulo),
+              );
               items.forEach((c) => used.add(c.id));
               return {
                 id: lp.id, titulo: lp.titulo, items,
