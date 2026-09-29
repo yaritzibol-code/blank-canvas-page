@@ -6,7 +6,7 @@
  * Si la pregunta ya no existe en la nube, cae al snapshot guardado con el
  * reporte y lo muestra en solo lectura.
  */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import { QuestionImages } from "@/components/banco/QuestionImages";
 import { supabase } from "@/integrations/supabase/client";
@@ -44,9 +44,17 @@ export function QuestionEditModal({
   const [missing, setMissing] = useState(false);
   const [cargando, setCargando] = useState(true);
   const [guardando, setGuardando] = useState(false);
+  const snapshotRef = useRef(snapshot);
+
+  useEffect(() => {
+    snapshotRef.current = snapshot;
+  }, [snapshot]);
 
   useEffect(() => {
     let vivo = true;
+    // La copia del reporte sólo sirve para la carga inicial. Los refrescos del
+    // store crean nuevas referencias y no deben reinicializar el borrador.
+    const initialSnapshot = snapshotRef.current;
     setCargando(true);
     setMissing(false);
     setRow(null);
@@ -65,17 +73,17 @@ export function QuestionEditModal({
         setRow({ ...q, status, options: [...(q.options ?? [])] });
       } else {
         setMissing(true);
-        if (snapshot) {
+        if (initialSnapshot) {
           setRow({
-            id: snapshot.id,
-            text: snapshot.text,
-            options: [...snapshot.options],
-            correctIndex: snapshot.correctIndex,
-            explanation: snapshot.explanation ?? "",
-            materia: snapshot.materia,
-            fuente: snapshot.fuente,
-            capitulo: snapshot.capitulo,
-            imagenes: snapshot.imagenes,
+            id: initialSnapshot.id,
+            text: initialSnapshot.text,
+            options: [...initialSnapshot.options],
+            correctIndex: initialSnapshot.correctIndex,
+            explanation: initialSnapshot.explanation ?? "",
+            materia: initialSnapshot.materia,
+            fuente: initialSnapshot.fuente,
+            capitulo: initialSnapshot.capitulo,
+            imagenes: initialSnapshot.imagenes,
           });
         }
       }
@@ -84,7 +92,7 @@ export function QuestionEditModal({
     return () => {
       vivo = false;
     };
-  }, [questionId, snapshot]);
+  }, [questionId]);
 
   const guardar = async () => {
     if (!row) return;
