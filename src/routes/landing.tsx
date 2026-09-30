@@ -364,7 +364,11 @@ function LandingPage() {
   }, []);
   useScrollReveal(root);
 
+  // Una sola vez por visita, aunque el efecto se repita (StrictMode en desarrollo).
+  const vistaRegistrada = useRef(false);
   useEffect(() => {
+    if (vistaRegistrada.current) return;
+    vistaRegistrada.current = true;
     metaTrack("ViewContent", { content_name: "FlightPath Pro", content_category: "landing" });
   }, []);
 

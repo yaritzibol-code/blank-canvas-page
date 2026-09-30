@@ -12,16 +12,21 @@
  * suscripción queda atribuida al anuncio aunque el navegador bloquee el pixel.
  */
 
-/** ID del pixel / dataset de Meta: sólo dígitos. */
-export const META_PIXEL_ID = "";
+/** ID del dataset "FlightPath – Web" (cuenta publicitaria FlightPath): sólo dígitos. */
+export const META_PIXEL_ID = "2109603919647918";
 
 export function isMetaConfigured(): boolean {
   return /^\d{6,20}$/.test(META_PIXEL_ID);
 }
 
-/** Código base del pixel: carga `fbevents.js`, inicializa y registra la primera visita. */
+/**
+ * Código base del pixel: carga `fbevents.js`, inicializa y registra la primera
+ * visita. El router vuelve a ejecutar los scripts del `<head>` al navegar, así
+ * que la bandera `__fpMetaBoot` garantiza que corra una sola vez; los PageView
+ * siguientes los registra `useMetaPixel`.
+ */
 export function metaPixelBootScript(): string {
-  return `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`;
+  return `if(!window.__fpMetaBoot){window.__fpMetaBoot=1;!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');}`;
 }
 
 type FbqFn = (...args: unknown[]) => void;
