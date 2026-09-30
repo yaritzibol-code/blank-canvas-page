@@ -95,7 +95,7 @@ export const Route = createFileRoute("/precios")({
 
 function PreciosPage() {
   const user = useSessionUser();
-  const [ciclo, setCiclo] = useState<"mensual" | "anual">("anual");
+  const [ciclo, setCiclo] = useState<"mensual" | "anual">("mensual");
   const [monthly, setMonthly] = useState<PlanPrice>(PRO_MONTHLY_FALLBACK);
   const [annual, setAnnual] = useState<PlanPrice>(PRO_ANNUAL_FALLBACK);
   const [setup, setSetup] = useState<PlanPrice>(PRO_SETUP_FALLBACK);

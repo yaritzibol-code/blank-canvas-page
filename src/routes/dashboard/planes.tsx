@@ -34,6 +34,7 @@ import { refreshCloudProfile } from "@/lib/store/auth";
 import { syncPlanIfStale } from "@/lib/plan-sync";
 import { useRequireAuth } from "@/lib/store/hooks";
 import { supa } from "@/lib/store/cloud";
+import { AnnualUpsellModal } from "@/components/shared/AnnualUpsellModal";
 
 export const Route = createFileRoute("/dashboard/planes")({
   component: PlanesPage,
@@ -78,6 +79,9 @@ function PlanesPage() {
   /** Periodicidad elegida para el cobro recurrente de Pro (la landing de
    *  precios la manda en `?plan=` para que el checkout abra el mismo plan). */
   const [ciclo, setCiclo] = useState<"mensual" | "anual">(plan ?? "mensual");
+  /** Popup de upsell al anual (se ofrece una sola vez por visita). */
+  const [upsell, setUpsell] = useState(false);
+  const [upsellVisto, setUpsellVisto] = useState(false);
 
   const ahorro = mesesAhorrados(proPrice, annualPrice);
   const configured = isPaymentsConfigured();
@@ -164,11 +168,22 @@ function PlanesPage() {
     if (checkout !== 1 || autoLaunched || !ready || !configured || !subChecked) return;
     if (isProActive || clientSecret || loading) return;
     setAutoLaunched(true);
-    void handleUpgrade();
+    iniciarPago();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkout, autoLaunched, ready, configured, subChecked, isProActive]);
 
-  async function handleUpgrade() {
+  /** Mensual: antes de abrir Stripe ofrece el anual una vez. */
+  function iniciarPago() {
+    if (ciclo === "mensual" && !upsellVisto && configured) {
+      setUpsellVisto(true);
+      setUpsell(true);
+      trackMilestone("upsell_anual_visto");
+      return;
+    }
+    void handleUpgrade(ciclo);
+  }
+
+  async function handleUpgrade(c: "mensual" | "anual" = ciclo) {
     if (!configured) {
       setError("Los pagos aún no están habilitados en este ambiente.");
       return;
@@ -179,8 +194,8 @@ function PlanesPage() {
       const env = getStripeEnvironment();
       const result = await createCheckoutSession({
         data: {
-          priceId: ciclo === "anual" ? PRO_ANNUAL_LOOKUP_KEY : PRO_MONTHLY_LOOKUP_KEY,
-          returnUrl: `${window.location.origin}/checkout/return?session_id={CHECKOUT_SESSION_ID}&plan=${ciclo}`,
+          priceId: c === "anual" ? PRO_ANNUAL_LOOKUP_KEY : PRO_MONTHLY_LOOKUP_KEY,
+          returnUrl: `${window.location.origin}/checkout/return?session_id={CHECKOUT_SESSION_ID}&plan=${c}`,
           environment: env,
           // Sin código, el propio checkout deja escribir uno.
           ...(cupon.trim() ? { promoCode: cupon.trim() } : {}),
@@ -194,7 +209,7 @@ function PlanesPage() {
       if ("error" in result) throw new Error(result.error);
       setClientSecret(result.clientSecret);
       trackMilestone("pago_abierto");
-      const recurrente = ciclo === "anual" ? annualPrice : proPrice;
+      const recurrente = c === "anual" ? annualPrice : proPrice;
       metaTrack("InitiateCheckout", {
         value: recurrente.amount + setupPrice.amount,
         currency: recurrente.currency,
@@ -238,6 +253,24 @@ function PlanesPage() {
 
   if (!ready) return null;
 
+  const upsellModal = upsell ? (
+    <AnnualUpsellModal
+      monthly={proPrice}
+      annual={annualPrice}
+      setup={setupPrice}
+      onAccept={() => {
+        setUpsell(false);
+        setCiclo("anual");
+        trackMilestone("upsell_anual_aceptado");
+        void handleUpgrade("anual");
+      }}
+      onDecline={() => {
+        setUpsell(false);
+        void handleUpgrade("mensual");
+      }}
+    />
+  ) : null;
+
   // Transición continua desde /precios: mientras se pide la sesión de Stripe
   // se muestra el mismo lienzo del checkout, no la tabla de planes.
   const preparando = checkout === 1 && !clientSecret && !error && !isProActive;
@@ -267,6 +300,7 @@ function PlanesPage() {
           </div>
         </div>
         <style>{"@keyframes fp-spin{to{transform:rotate(360deg)}}"}</style>
+        {upsellModal}
       </div>
     );
   }
@@ -293,7 +327,7 @@ function PlanesPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--fd-panel, #F7F9FC)", fontFamily: FONT }}>
-
+      {upsellModal}
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "clamp(24px,5vw,48px) 20px 80px" }}>
         <button
           onClick={() => navigate({ to: "/dashboard" })}
@@ -457,7 +491,7 @@ function PlanesPage() {
                   }}
                 />
               </label>
-              <button onClick={() => handleUpgrade()} disabled={loading} style={{ width: "100%", background: BRAND, color: "#fff", border: "none", padding: "12px 20px", borderRadius: "var(--fd-radius, 12px)", fontWeight: 700, fontSize: 14, cursor: "pointer" }}>
+              <button onClick={() => iniciarPago()} disabled={loading} style={{ width: "100%", background: BRAND, color: "#fff", border: "none", padding: "12px 20px", borderRadius: "var(--fd-radius, 12px)", fontWeight: 700, fontSize: 14, cursor: "pointer" }}>
                 {loading ? "Preparando pago..." : ciclo === "anual" ? "Actualizar a Pro anual →" : "Actualizar a Pro mensual →"}
               </button>
               </>
