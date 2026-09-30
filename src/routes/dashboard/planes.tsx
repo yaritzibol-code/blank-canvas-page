@@ -34,6 +34,7 @@ import { refreshCloudProfile } from "@/lib/store/auth";
 import { syncPlanIfStale } from "@/lib/plan-sync";
 import { useRequireAuth } from "@/lib/store/hooks";
 import { supa } from "@/lib/store/cloud";
+import { AnnualUpsellModal } from "@/components/shared/AnnualUpsellModal";
 
 export const Route = createFileRoute("/dashboard/planes")({
   component: PlanesPage,
@@ -252,6 +253,24 @@ function PlanesPage() {
 
   if (!ready) return null;
 
+  const upsellModal = upsell ? (
+    <AnnualUpsellModal
+      monthly={proPrice}
+      annual={annualPrice}
+      setup={setupPrice}
+      onAccept={() => {
+        setUpsell(false);
+        setCiclo("anual");
+        trackMilestone("upsell_anual_aceptado");
+        void handleUpgrade("anual");
+      }}
+      onDecline={() => {
+        setUpsell(false);
+        void handleUpgrade("mensual");
+      }}
+    />
+  ) : null;
+
   // Transición continua desde /precios: mientras se pide la sesión de Stripe
   // se muestra el mismo lienzo del checkout, no la tabla de planes.
   const preparando = checkout === 1 && !clientSecret && !error && !isProActive;
@@ -281,6 +300,7 @@ function PlanesPage() {
           </div>
         </div>
         <style>{"@keyframes fp-spin{to{transform:rotate(360deg)}}"}</style>
+        {upsellModal}
       </div>
     );
   }
@@ -307,7 +327,7 @@ function PlanesPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--fd-panel, #F7F9FC)", fontFamily: FONT }}>
-
+      {upsellModal}
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "clamp(24px,5vw,48px) 20px 80px" }}>
         <button
           onClick={() => navigate({ to: "/dashboard" })}
