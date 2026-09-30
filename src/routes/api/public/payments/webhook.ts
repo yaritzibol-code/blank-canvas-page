@@ -229,7 +229,16 @@ export async function processStripeEvent(event: { type: string; data: { object: 
       }
       // Meta: la suscripción pagada se atribuye al anuncio (API de Conversiones).
       const { sendMetaSubscriptionEvents } = await import("@/lib/meta-capi.server");
-      await sendMetaSubscriptionEvents(session, env);
+      const meta = await sendMetaSubscriptionEvents(session, env);
+      await logBillingEvent({
+        event: `meta_capi_${meta.status}`,
+        environment: env,
+        source: "webhook",
+        ok: meta.status === "sent",
+        userId: userId ?? null,
+        message: meta.reason ?? null,
+        detail: { checkout_session: session?.id ?? null, ...(meta.detail ?? {}) },
+      }).catch(() => {});
 
       if (typeof session?.subscription === "string") {
         const { createStripeClient } = await import("@/lib/stripe.server");

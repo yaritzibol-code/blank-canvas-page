@@ -11,6 +11,10 @@
 import type { StripeEnv } from "@/lib/stripe.server";
 
 export type BillingAuditEvent =
+  | "meta_capi_sent"
+  | "meta_capi_skipped"
+  | "meta_capi_rejected"
+  | "meta_capi_failed"
   | "checkout_session_created"
   | "checkout_session_failed"
   | "portal_session_created"
