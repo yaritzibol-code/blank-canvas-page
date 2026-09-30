@@ -108,8 +108,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "La plataforma de México para estudiar aviación: banco CIAAC de 2,800+ preguntas con explicación, simulador de 310, entrevista RTARI en inglés por voz, aptitudes tipo COMPASS y manuales. Empieza gratis.",
       },
       { name: "author", content: "FlightPath" },
-      // Verificación del dominio flightpath.mx en Meta Business (portafolio Señal Digital).
-      { name: "facebook-domain-verification", content: "ry0ms1d7bdc22n9r1hgvbzinowm0s5" },
+      // Verificación del dominio flightpath.mx en Meta Business (portafolio nuevo).
+      { name: "facebook-domain-verification", content: "sayskdep5r92qkc9mew8wqe4v59jzr" },
       {
         property: "og:title",
         content: "FlightPath — Estudia aviación en México: CIAAC, línea aérea e inglés",
