@@ -11,17 +11,20 @@ import { captureAttribution, isMetaConfigured, metaTrack } from "@/lib/meta";
 
 export function useMetaPixel(): void {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const primera = useRef(true);
+  // Última ruta registrada: el código base ya contó la primera visita, y así
+  // un efecto repetido (StrictMode en desarrollo) no duplica el PageView.
+  const ultima = useRef<string | null>(null);
 
   useEffect(() => {
     captureAttribution();
   }, []);
 
   useEffect(() => {
-    if (primera.current) {
-      primera.current = false;
+    if (ultima.current === null || ultima.current === pathname) {
+      ultima.current = pathname;
       return;
     }
+    ultima.current = pathname;
     if (isMetaConfigured()) metaTrack("PageView");
   }, [pathname]);
 }
