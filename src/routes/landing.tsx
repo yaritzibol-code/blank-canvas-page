@@ -355,7 +355,7 @@ function LandingPage() {
   const root = useRef<HTMLDivElement>(null);
   const user = useSessionUser();
   const { monthly, annual, setup } = usePublicPricing();
-  const [ciclo, setCiclo] = useState<Ciclo>("anual");
+  const [ciclo, setCiclo] = useState<Ciclo>("mensual");
   const [scrolled, setScrolled] = useState(false);
   const [sticky, setSticky] = useState(false);
 
@@ -405,10 +405,10 @@ function LandingPage() {
             <Link to="/login" className="lp-login">
               Iniciar sesión
             </Link>
-            <BuyLink buy={buy} className="lp-btn-sm lp-shine">
-              Empezar
+            <Link to="/register" className="lp-btn-sm lp-shine">
+              Crear cuenta gratis
               <Arrow size={16} />
-            </BuyLink>
+            </Link>
           </div>
         </div>
       </header>
@@ -495,9 +495,9 @@ function Hero({ buy, cta }: { buy: Buy; cta: string }) {
             {cta}
             <Arrow />
           </BuyLink>
-          <a className="btn rd-12" href="#tu-ruta">
-            Ver cómo funciona
-          </a>
+          <Link className="btn rd-12" to="/register">
+            Empieza gratis · sin tarjeta
+          </Link>
         </div>
         <ul className="soft-in-3 lp-trust">
           <li>
@@ -1106,10 +1106,19 @@ function Oferta({
           </div>
         </div>
 
-        <p className="lp-free lp-reveal">
-          ¿Aún no te decides? <Link to="/register">Empieza con la cuenta gratis</Link> y actualiza
-          cuando quieras.
-        </p>
+        <div className="lp-free-card lp-reveal">
+          <div>
+            <div className="lp-free-k">FlightPath Básica · $0 MXN</div>
+            <p>
+              ¿Aún no te decides? Crea tu cuenta gratis, sin tarjeta: practica con preguntas reales,
+              conoce a Yaris y actualiza a Pro cuando estés listo.
+            </p>
+          </div>
+          <Link to="/register" className="btn rd-12">
+            Crear cuenta gratis
+            <Arrow />
+          </Link>
+        </div>
       </div>
     </section>
   );
@@ -1166,6 +1175,9 @@ function Cierre({ buy, cta }: { buy: Buy; cta: string }) {
             {cta}
             <Arrow />
           </BuyLink>
+          <Link to="/register" className="lp-final-free">
+            o empieza gratis, sin tarjeta →
+          </Link>
           <p className="lp-final-trust">Acceso inmediato · Cancela cuando quieras</p>
         </div>
         <div className="lp-reveal lp-zoom" style={{ display: "grid", justifyItems: "center" }}>

@@ -830,6 +830,40 @@
   text-underline-offset: 4px;
 }
 
+.flightpath-redesign .lp-free-card {
+  margin: 28px auto 0;
+  width: min(980px, 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 22px 26px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  color: #b8c5da;
+}
+.flightpath-redesign .lp-free-card > div { flex: 1 1 320px; }
+.flightpath-redesign .lp-free-k {
+  color: #c7a052;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.flightpath-redesign .lp-free-card p { margin: 0; font-size: 15px; line-height: 1.5; }
+.flightpath-redesign .lp-free-card .btn { flex: 0 0 auto; }
+.flightpath-redesign .lp-final-free {
+  display: inline-block;
+  margin-top: 14px;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 /* ───────────── FAQ ───────────── */
 .flightpath-redesign .lp-faq {
   padding: 104px 0;
