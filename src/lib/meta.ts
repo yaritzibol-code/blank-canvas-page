@@ -13,7 +13,7 @@
  */
 
 /** ID del dataset "FlightPath – Web" (cuenta publicitaria FlightPath): sólo dígitos. */
-export const META_PIXEL_ID = "2109603919647918";
+export const META_PIXEL_ID = "1989487085061440";
 
 export function isMetaConfigured(): boolean {
   return /^\d{6,20}$/.test(META_PIXEL_ID);
