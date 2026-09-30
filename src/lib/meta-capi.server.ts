@@ -40,6 +40,7 @@ interface CheckoutSessionLike {
   id?: string;
   mode?: string;
   amount_total?: number | null;
+  amount_subtotal?: number | null;
   currency?: string | null;
   customer_email?: string | null;
   metadata?: Record<string, string> | null;
@@ -51,15 +52,24 @@ interface CheckoutSessionLike {
   } | null;
 }
 
+export type MetaCapiResult = {
+  status: "sent" | "skipped" | "rejected" | "failed";
+  reason?: string;
+  detail?: Record<string, unknown>;
+};
+
 export async function sendMetaSubscriptionEvents(
   session: CheckoutSessionLike | null | undefined,
   env: StripeEnv,
-): Promise<void> {
+): Promise<MetaCapiResult> {
   const token = process.env.META_CAPI_ACCESS_TOKEN;
   const testCode = process.env.META_TEST_EVENT_CODE;
-  if (!isMetaConfigured() || !token) return;
-  if (env === "sandbox" && !testCode) return;
-  if (session?.mode !== "subscription" || !session?.id) return;
+  if (!isMetaConfigured()) return { status: "skipped", reason: "sin META_PIXEL_ID" };
+  if (!token) return { status: "skipped", reason: "falta el secreto META_CAPI_ACCESS_TOKEN" };
+  if (env === "sandbox" && !testCode)
+    return { status: "skipped", reason: "sandbox sin el secreto META_TEST_EVENT_CODE" };
+  if (session?.mode !== "subscription" || !session?.id)
+    return { status: "skipped", reason: `checkout modo ${session?.mode ?? "desconocido"}` };
 
   try {
     const md = session.metadata ?? {};
@@ -86,7 +96,8 @@ export async function sendMetaSubscriptionEvents(
     );
 
     const custom_data = {
-      value: (session.amount_total ?? 0) / 100,
+      // Mismo criterio que el pixel de /gracias: precio de lista sin impuestos.
+      value: (session.amount_subtotal ?? session.amount_total ?? 0) / 100,
       currency: String(session.currency ?? "mxn").toUpperCase(),
       content_name: "FlightPath Pro",
       content_ids: [md.priceLookupKey].filter(Boolean),
@@ -114,8 +125,21 @@ export async function sendMetaSubscriptionEvents(
       }),
       signal: AbortSignal.timeout(5000),
     });
-    if (!res.ok) console.error("meta capi rejected", res.status, await res.text());
+    const text = await res.text();
+    const detail = {
+      http: res.status,
+      pixel: META_PIXEL_ID,
+      value: custom_data.value,
+      test: env === "sandbox" ? testCode : null,
+      response: text.slice(0, 500),
+    };
+    if (!res.ok) {
+      console.error("meta capi rejected", res.status, text);
+      return { status: "rejected", reason: `Meta respondió ${res.status}`, detail };
+    }
+    return { status: "sent", detail };
   } catch (e) {
     console.error("meta capi failed", e);
+    return { status: "failed", reason: e instanceof Error ? e.message : String(e) };
   }
 }
