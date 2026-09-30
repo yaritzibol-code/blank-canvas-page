@@ -78,6 +78,9 @@ function PlanesPage() {
   /** Periodicidad elegida para el cobro recurrente de Pro (la landing de
    *  precios la manda en `?plan=` para que el checkout abra el mismo plan). */
   const [ciclo, setCiclo] = useState<"mensual" | "anual">(plan ?? "mensual");
+  /** Popup de upsell al anual (se ofrece una sola vez por visita). */
+  const [upsell, setUpsell] = useState(false);
+  const [upsellVisto, setUpsellVisto] = useState(false);
 
   const ahorro = mesesAhorrados(proPrice, annualPrice);
   const configured = isPaymentsConfigured();
@@ -164,11 +167,22 @@ function PlanesPage() {
     if (checkout !== 1 || autoLaunched || !ready || !configured || !subChecked) return;
     if (isProActive || clientSecret || loading) return;
     setAutoLaunched(true);
-    void handleUpgrade();
+    iniciarPago();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkout, autoLaunched, ready, configured, subChecked, isProActive]);
 
-  async function handleUpgrade() {
+  /** Mensual: antes de abrir Stripe ofrece el anual una vez. */
+  function iniciarPago() {
+    if (ciclo === "mensual" && !upsellVisto && configured) {
+      setUpsellVisto(true);
+      setUpsell(true);
+      trackMilestone("upsell_anual_visto");
+      return;
+    }
+    void handleUpgrade(ciclo);
+  }
+
+  async function handleUpgrade(c: "mensual" | "anual" = ciclo) {
     if (!configured) {
       setError("Los pagos aún no están habilitados en este ambiente.");
       return;
@@ -179,8 +193,8 @@ function PlanesPage() {
       const env = getStripeEnvironment();
       const result = await createCheckoutSession({
         data: {
-          priceId: ciclo === "anual" ? PRO_ANNUAL_LOOKUP_KEY : PRO_MONTHLY_LOOKUP_KEY,
-          returnUrl: `${window.location.origin}/checkout/return?session_id={CHECKOUT_SESSION_ID}&plan=${ciclo}`,
+          priceId: c === "anual" ? PRO_ANNUAL_LOOKUP_KEY : PRO_MONTHLY_LOOKUP_KEY,
+          returnUrl: `${window.location.origin}/checkout/return?session_id={CHECKOUT_SESSION_ID}&plan=${c}`,
           environment: env,
           // Sin código, el propio checkout deja escribir uno.
           ...(cupon.trim() ? { promoCode: cupon.trim() } : {}),
@@ -194,7 +208,7 @@ function PlanesPage() {
       if ("error" in result) throw new Error(result.error);
       setClientSecret(result.clientSecret);
       trackMilestone("pago_abierto");
-      const recurrente = ciclo === "anual" ? annualPrice : proPrice;
+      const recurrente = c === "anual" ? annualPrice : proPrice;
       metaTrack("InitiateCheckout", {
         value: recurrente.amount + setupPrice.amount,
         currency: recurrente.currency,
@@ -457,7 +471,7 @@ function PlanesPage() {
                   }}
                 />
               </label>
-              <button onClick={() => handleUpgrade()} disabled={loading} style={{ width: "100%", background: BRAND, color: "#fff", border: "none", padding: "12px 20px", borderRadius: "var(--fd-radius, 12px)", fontWeight: 700, fontSize: 14, cursor: "pointer" }}>
+              <button onClick={() => iniciarPago()} disabled={loading} style={{ width: "100%", background: BRAND, color: "#fff", border: "none", padding: "12px 20px", borderRadius: "var(--fd-radius, 12px)", fontWeight: 700, fontSize: 14, cursor: "pointer" }}>
                 {loading ? "Preparando pago..." : ciclo === "anual" ? "Actualizar a Pro anual →" : "Actualizar a Pro mensual →"}
               </button>
               </>
