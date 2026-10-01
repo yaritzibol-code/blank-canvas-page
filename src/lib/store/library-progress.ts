@@ -9,6 +9,9 @@ export interface LibraryReadingProgress {
   totalPages: number;
   visitedPages: number[];
   bookmarks: number[];
+  readingMode?: "vertical" | "horizontal";
+  readingZoom?: number;
+  readingFit?: "width" | "page";
   updatedAt: string;
 }
 
@@ -30,6 +33,7 @@ export function saveLibraryPage(userId: string, materialId: string, page: number
     const id = `${userId}:${materialId}`;
     const current = entries.find((entry) => entry.id === id);
     const next: LibraryReadingProgress = {
+      ...current,
       id, userId, materialId,
       lastPage: Math.min(page, totalPages),
       furthestPage: Math.max(current?.furthestPage ?? 1, Math.min(page, totalPages)),
@@ -40,6 +44,19 @@ export function saveLibraryPage(userId: string, materialId: string, page: number
     };
     return [...entries.filter((entry) => entry.id !== id), next];
   });
+}
+
+export function saveLibraryReaderPreferences(
+  userId: string,
+  materialId: string,
+  preferences: { mode: "vertical" | "horizontal"; zoom: number; fit: "width" | "page" },
+): void {
+  if (!userId || !materialId || !Number.isFinite(preferences.zoom)) return;
+  update<LibraryReadingProgress[]>(KEY, [], (entries) => entries.map((entry) =>
+    entry.userId === userId && entry.materialId === materialId
+      ? { ...entry, readingMode: preferences.mode, readingZoom: preferences.zoom, readingFit: preferences.fit, updatedAt: new Date().toISOString() }
+      : entry,
+  ));
 }
 
 export function toggleLibraryBookmark(userId: string, materialId: string, page: number): void {

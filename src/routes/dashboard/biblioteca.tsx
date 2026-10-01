@@ -14,6 +14,7 @@ import {
   refreshLibraryMaterials,
   registerLiveRefresher,
   saveLibraryPage,
+  saveLibraryReaderPreferences,
   toggleLibraryBookmark,
   useSessionUser,
   useStore,
@@ -571,6 +572,12 @@ function BibliotecaPage() {
                     page={currentPage}
                     bookmarks={readerProgress?.bookmarks ?? []}
                     visitedCount={readerProgress?.visitedPages?.length ?? 0}
+                    initialMode={readerProgress?.readingMode ?? "vertical"}
+                    initialZoom={readerProgress?.readingZoom ?? 1}
+                    initialFit={readerProgress?.readingFit ?? "width"}
+                    onPreferences={(preferences) => {
+                      if (user) saveLibraryReaderPreferences(user.id, readerBook.id, preferences);
+                    }}
                     onPage={(page, total) => {
                       setReaderPageText("");
                       setCurrentPage(page);
