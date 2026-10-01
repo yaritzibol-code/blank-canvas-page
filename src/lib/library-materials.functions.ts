@@ -24,7 +24,7 @@ export const uploadLibraryPdf = createServerFn({ method: "POST" })
     } catch {
       return { error: "Datos del material inválidos." };
     }
-    if (typeof material.id !== "string" || !/^mat_[\w-]{1,100}$/.test(material.id) ||
+    if (typeof material.id !== "string" || !/^[A-Za-z0-9][A-Za-z0-9_-]{0,119}$/.test(material.id) ||
         typeof material.titulo !== "string" || !material.titulo.trim() ||
         !["borrador", "publicada", "oculta"].includes(String(material.status)))
       return { error: "Datos del material incompletos." };
