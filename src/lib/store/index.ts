@@ -21,6 +21,7 @@ export {
 } from "./questions-cloud";
 export * from "./notifications";
 export * from "./yaris";
+export * from "./library-progress";
 export * from "./rtari";
 export * from "./compass";
 export * from "./learning-course";
@@ -35,7 +36,7 @@ export {
 } from "./seed-meta";
 export { uid, nowISO, todayKey, subscribe as subscribeStore } from "./db";
 export { cloudEnabled } from "./cloud";
-export { cloudSessionActive, refreshCloudData, lastCloudRefresh, flushCloudWrites } from "./sync";
+export { cloudSessionActive, refreshCloudData, refreshLibraryMaterials, registerLiveRefresher, lastCloudRefresh, flushCloudWrites } from "./sync";
 export {
   sessionKey,
   saveActiveSession,

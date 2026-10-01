@@ -41,6 +41,7 @@ const USER_ARRAY_KEYS = [
   "bitacora",
   "reminders",
   "clase_progress",
+  "library_progress",
   "flash_states",
   "flash_sessions",
   "pathy_reports",
@@ -461,6 +462,22 @@ export async function refreshCloudData(): Promise<boolean> {
   } finally {
     refreshing = false;
   }
+}
+
+/** Refresca solo el catálogo de Biblioteca al abrirlo o volver a la pestaña. */
+export async function refreshLibraryMaterials(): Promise<boolean> {
+  const s = supa();
+  if (!s || !sessionUserId) return false;
+  const { data, error } = await fetchAll<{ id: string; data: unknown }>((from, to) =>
+    s.from("content")
+      .select("id,data")
+      .eq("collection", "materiales")
+      .order("id")
+      .range(from, to),
+  );
+  if (error) return false;
+  applyRemoteRows("materiales", data.map((row) => row.data as Row), "replace");
+  return true;
 }
 
 /**

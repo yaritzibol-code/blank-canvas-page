@@ -100,6 +100,7 @@ export function useYarisAsk() {
           context: {
             ...(ctx.materiaName && { materia: ctx.materiaName }),
             ...(ctx.resourceTitle && { resourceTitle: ctx.resourceTitle }),
+            ...(ctx.libraryDocument && { libraryDocument: ctx.libraryDocument }),
             ...(ctx.studyContext && { studyContext: ctx.studyContext }),
             ...(ctx.learningPathContext && { learningPathContext: ctx.learningPathContext }),
             ...(q && {

@@ -1,13 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { YarisAvatar } from "@/components/shared/YarisAvatar";
+import { PdfStudyViewer } from "@/components/library/PdfStudyViewer";
 import { useState, useEffect, useRef, useMemo, useDeferredValue } from "react";
 import { Icon } from "@/components/ui/fp-icon";
 import {
   getMateriales,
+  getLibraryProgress,
+  getLibraryProgressForUser,
   isPaid,
   logActivity,
   logYarisUse,
   materiaBySlug,
+  refreshLibraryMaterials,
+  registerLiveRefresher,
+  saveLibraryPage,
+  toggleLibraryBookmark,
   useSessionUser,
   useStore,
 } from "@/lib/store";
@@ -94,6 +101,9 @@ function BibliotecaPage() {
   const [readerFileUrl, setReaderFileUrl] = useState("");
   const [readerFileError, setReaderFileError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [readerTotalPages, setReaderTotalPages] = useState(0);
+  const [readerPageText, setReaderPageText] = useState("");
+  const [readerControlledUnavailable, setReaderControlledUnavailable] = useState(false);
   const [zoom, setZoom] = useState(1);
   const [yarisOpen, setYarisOpen] = useState(true);
   const [yarisMsgs, setYarisMsgs] = useState<YarisMsg[]>([]);
@@ -130,6 +140,16 @@ function BibliotecaPage() {
         muestraGratis: m.muestraGratis,
       })),
   );
+  const readingProgress = useStore(() => user ? getLibraryProgressForUser(user.id) : []);
+  const readerProgress = readerBook && user ? readingProgress.find((entry) => entry.materialId === readerBook.id) : null;
+
+  useEffect(() => {
+    const refresh = () => { void refreshLibraryMaterials(); };
+    refresh();
+    window.addEventListener("focus", refresh);
+    const unregister = registerLiveRefresher(async () => { await refreshLibraryMaterials(); });
+    return () => { window.removeEventListener("focus", refresh); unregister(); };
+  }, []);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -189,7 +209,10 @@ function BibliotecaPage() {
       logYarisUse(user.id, "Biblioteca");
     }
     setReaderBook(book);
-    setCurrentPage(1);
+    setCurrentPage(user ? getLibraryProgress(user.id, book.id)?.lastPage ?? 1 : 1);
+    setReaderTotalPages(0);
+    setReaderPageText("");
+    setReaderControlledUnavailable(false);
     setZoom(1);
     setYarisOpen(true);
     // Saludo local (no simula pensar); las respuestas vienen del modelo real.
@@ -212,6 +235,14 @@ function BibliotecaPage() {
       history: toHistory(next.map((m) => ({ text: m.text, fromUser: m.role === "user" }))),
       ctx: {
         resourceTitle: readerBook.title,
+        libraryDocument: {
+          id: readerBook.id,
+          title: readerBook.title,
+          ...(isControlledPdf && readerTotalPages > 0 ? {
+            page: currentPage, totalPages: readerTotalPages,
+            ...(readerPageText ? { pageText: readerPageText } : {}),
+          } : {}),
+        },
         ...(readerBook.materiaTag && { materiaName: readerBook.materiaTag }),
       },
     });
@@ -294,6 +325,7 @@ function BibliotecaPage() {
 
   const featured = books.find((b) => b.id === "aero-basica") ?? books[0];
   const readerReady = !readerBook?.fileUrl.startsWith("storage://library-materials/") || !!readerFileUrl;
+  const isControlledPdf = !readerControlledUnavailable && !!readerBook?.fileUrl && (readerBook.fileUrl.startsWith("storage://library-materials/") || /\.pdf(?:[?#]|$)/i.test(readerBook.fileUrl));
   const canDownload = !!readerBook && readerReady && readerBook.descargable && (paid || readerBook.muestraGratis);
   const canPrint = !!readerBook && readerReady && readerBook.imprimible && (paid || readerBook.muestraGratis);
   const userInitials =
@@ -407,9 +439,14 @@ function BibliotecaPage() {
                   <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="doc" size={14} /> {featured.author}</span>
                   <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon n="plane" size={14} /> {featured.materiaTag || "Todas las materias"}</span>
                 </div>
+                {readingProgress.find((entry) => entry.materialId === featured.id) && (
+                  <div style={{ marginTop: 8, fontSize: "0.74rem", color: "#e2c685" }}>
+                    Continuar donde lo dejaste · pág. {readingProgress.find((entry) => entry.materialId === featured.id)!.lastPage}
+                  </div>
+                )}
               </div>
               <button style={{ padding: "10px 20px", background: "#C7A052", color: "var(--fd-gold, #7A5C1E)", border: "none", borderRadius: 8, fontSize: "0.85rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", flexShrink: 0 }}>
-                Leer ahora →
+                {readingProgress.some((entry) => entry.materialId === featured.id) ? "Continuar leyendo →" : "Leer ahora →"}
               </button>
             </div>
           </div>
@@ -430,7 +467,7 @@ function BibliotecaPage() {
         {/* Books grid */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(200px,1fr))", gap: 18, marginBottom: 32 }}>
           {visibleBooks.map((book) => (
-            <BookCard key={book.id} book={book} locked={!canOpen(book)} onOpen={() => openBook(book)} />
+            <BookCard key={book.id} book={book} locked={!canOpen(book)} progress={readingProgress.find((entry) => entry.materialId === book.id)} onOpen={() => openBook(book)} />
           ))}
           {visibleCount < filteredBooks.length && (
             <div style={{ gridColumn: "1/-1", display: "flex", justifyContent: "center", padding: "8px 0" }}>
@@ -485,6 +522,7 @@ function BibliotecaPage() {
             {/* PDF viewer */}
             <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", background: "#2a2a2a" }}>
               {/* PDF toolbar */}
+              {!isControlledPdf && (
               <div style={{ height: 44, background: "rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 16px", flexShrink: 0 }}>
                 {readerBook.fileUrl ? (
                   <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.5)" }}>Documento oficial — usa los controles del visor para navegar</span>
@@ -519,11 +557,37 @@ function BibliotecaPage() {
                   </button>
                 </div>
               </div>
+              )}
 
               {/* PDF content */}
               {readerBook.fileUrl ? (
                 <div style={{ flex: 1, overflow: "hidden", display: "flex" }}>
-                  {readerFileUrl ? <iframe
+                  {readerFileUrl && isControlledPdf ? <PdfStudyViewer
+                    key={readerBook.id}
+                    url={readerFileUrl}
+                    title={readerBook.title}
+                    page={currentPage}
+                    bookmarks={readerProgress?.bookmarks ?? []}
+                    visitedCount={readerProgress?.visitedPages?.length ?? 0}
+                    onPage={(page, total) => {
+                      setReaderPageText("");
+                      setCurrentPage(page);
+                      if (user) saveLibraryPage(user.id, readerBook.id, page, total);
+                    }}
+                    onReady={(total) => {
+                      setReaderTotalPages(total);
+                      const page = Math.min(currentPage, total);
+                      if (page !== currentPage) setCurrentPage(page);
+                      if (user) saveLibraryPage(user.id, readerBook.id, page, total);
+                    }}
+                    onPageText={setReaderPageText}
+                    onBookmark={(page) => { if (user) toggleLibraryBookmark(user.id, readerBook.id, page); }}
+                    onUnavailable={() => { setReaderPageText(""); setReaderTotalPages(0); setReaderControlledUnavailable(true); }}
+                    canDownload={canDownload}
+                    canPrint={canPrint}
+                    onDownload={handleDownload}
+                    onPrint={handlePrint}
+                  /> : readerFileUrl ? <iframe
                     ref={pdfIframeRef}
                     src={readerFileUrl}
                     title={readerBook.title}
@@ -687,7 +751,7 @@ function FeaturedCover({ book }: { book: Book }) {
 
 /* ─── Book Card ──────────────────────────────────────────── */
 
-function BookCard({ book, locked = false, onOpen }: { book: Book; locked?: boolean; onOpen: () => void }) {
+function BookCard({ book, locked = false, progress, onOpen }: { book: Book; locked?: boolean; progress?: { lastPage: number; furthestPage: number; totalPages: number; visitedPages: number[] }; onOpen: () => void }) {
   const [hover, setHover] = useState(false);
   // Portada real (primera página del PDF). Si Drive no la entrega, se cae al
   // degradado con ícono que ya usaba la tarjeta.
@@ -731,13 +795,16 @@ function BookCard({ book, locked = false, onOpen }: { book: Book; locked?: boole
         <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginBottom: 10 }}>
           <span style={{ padding: "2px 8px", background: "var(--fd-panel, #EEE1C5)", color: "var(--fd-gold, #7A5C1E)", borderRadius: "var(--fd-radius, 10px)", fontSize: "0.65rem", fontWeight: 600 }}>{book.materiaTag || "General"}</span>
         </div>
+        {progress && <div style={{ marginBottom: 8, color: "var(--fd-muted, #4A5872)", fontSize: "0.7rem" }}>
+          {Math.round(((progress.visitedPages?.length ?? 0) / Math.max(1, progress.totalPages)) * 100)}% visitado · pág. {progress.lastPage} de {progress.totalPages}
+        </div>}
         <button
           onClick={(e) => { e.stopPropagation(); onOpen(); }}
           style={{ width: "100%", padding: "7px 0", background: "#163D70", color: "white", border: "none", borderRadius: 8, fontSize: "0.78rem", fontWeight: 700, cursor: "pointer", fontFamily: "'Manrope', sans-serif", transition: "background 0.2s" }}
           onMouseEnter={(e) => { e.currentTarget.style.background = "#2d4a7a"; }}
           onMouseLeave={(e) => { e.currentTarget.style.background = "#163D70"; }}
         >
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>{locked ? <Icon n="lock" size={14} /> : <Icon n="book" size={14} />} Leer</span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>{locked ? <Icon n="lock" size={14} /> : <Icon n="book" size={14} />} {progress && !locked ? "Continuar leyendo" : "Leer"}</span>
         </button>
       </div>
     </div>

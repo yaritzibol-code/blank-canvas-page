@@ -20,6 +20,12 @@ const contextSchema = z
     cite: z.string().optional(),
     /** Libro o tema abierto cuando la duda nace de la biblioteca. */
     resourceTitle: z.string().max(300).optional(),
+    libraryDocument: z.object({
+      id: z.string().max(200), title: z.string().max(300),
+      page: z.number().int().positive().optional(),
+      totalPages: z.number().int().positive().optional(),
+      pageText: z.string().max(4000).optional(),
+    }).optional(),
     studyContext: z.string().max(600).optional(),
     learningPathContext: z.object({
       category: z.string().max(180), course: z.string().max(180),

@@ -28,6 +28,13 @@ export interface YarisContext {
   preAnswer?: boolean;
   /** Recurso de biblioteca o tema activo. */
   resourceTitle?: string;
+  libraryDocument?: {
+    id: string;
+    title: string;
+    page?: number;
+    totalPages?: number;
+    pageText?: string;
+  };
   materiaName?: string;
   /** Ruta educativa visible, etapa y sección del Learning Path. */
   studyContext?: string;
