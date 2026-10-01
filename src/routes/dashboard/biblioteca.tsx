@@ -43,6 +43,7 @@ interface Book {
   materiaTag: string;
   pages: number;
   fileUrl: string;
+  coverUrl: string;
   descargable: boolean;
   imprimible: boolean;
   muestraGratis: boolean;
@@ -135,6 +136,7 @@ function BibliotecaPage() {
         materiaTag: materiaBySlug(m.materia)?.name ?? "",
         pages: m.pages,
         fileUrl: m.fileUrl,
+        coverUrl: m.coverUrl ?? "",
         descargable: m.descargable,
         imprimible: m.imprimible,
         muestraGratis: m.muestraGratis,
@@ -719,8 +721,9 @@ function BibliotecaPage() {
 
 /** Portada real del libro destacado, con el ícono genérico como respaldo. */
 function FeaturedCover({ book }: { book: Book }) {
-  const cover = driveCoverUrl(book.fileUrl, 300);
+  const cover = book.coverUrl || driveCoverUrl(book.fileUrl, 300);
   const [ok, setOk] = useState(cover !== "");
+  useEffect(() => setOk(cover !== ""), [cover]);
 
   if (!ok) {
     return (
@@ -755,8 +758,9 @@ function BookCard({ book, locked = false, progress, onOpen }: { book: Book; lock
   const [hover, setHover] = useState(false);
   // Portada real (primera página del PDF). Si Drive no la entrega, se cae al
   // degradado con ícono que ya usaba la tarjeta.
-  const cover = driveCoverUrl(book.fileUrl);
+  const cover = book.coverUrl || driveCoverUrl(book.fileUrl);
   const [coverOk, setCoverOk] = useState(cover !== "");
+  useEffect(() => setCoverOk(cover !== ""), [cover]);
 
   return (
     <div

@@ -59,6 +59,7 @@ interface MaterialForm {
   badge: string;
   pages: string;
   fileUrl: string;
+  coverUrl: string;
   descargable: boolean;
   imprimible: boolean;
   muestraGratis: boolean;
@@ -162,7 +163,7 @@ function AdminContenidoPage() {
   const openNewMat = () => {
     setMatId(null);
     setMatDraftId(uid("mat"));
-    setMatForm({ titulo: "", autor: "", materia: "", badge: "", pages: "0", fileUrl: "", descargable: true, imprimible: false, muestraGratis: false, status: "borrador" });
+    setMatForm({ titulo: "", autor: "", materia: "", badge: "", pages: "0", fileUrl: "", coverUrl: "", descargable: true, imprimible: false, muestraGratis: false, status: "borrador" });
     setMatErr(null);
     setMatPdf(null);
   };
@@ -170,7 +171,7 @@ function AdminContenidoPage() {
   const openEditMat = (m: Material) => {
     setMatId(m.id);
     setMatDraftId("");
-    setMatForm({ titulo: m.titulo, autor: m.autor, materia: m.materia, badge: m.badge, pages: String(m.pages), fileUrl: m.fileUrl, descargable: m.descargable, imprimible: m.imprimible, muestraGratis: m.muestraGratis, status: m.status });
+    setMatForm({ titulo: m.titulo, autor: m.autor, materia: m.materia, badge: m.badge, pages: String(m.pages), fileUrl: m.fileUrl, coverUrl: m.coverUrl ?? "", descargable: m.descargable, imprimible: m.imprimible, muestraGratis: m.muestraGratis, status: m.status });
     setMatErr(null);
     setMatPdf(null);
   };
@@ -195,6 +196,7 @@ function AdminContenidoPage() {
         gradient: orig?.gradient ?? "linear-gradient(135deg,#667eea,#764ba2)",
         pages: Math.max(0, parseInt(matForm.pages, 10) || 0),
         fileUrl: matForm.fileUrl.trim(),
+        coverUrl: matForm.coverUrl.trim(),
         descargable: matForm.descargable,
         imprimible: matForm.imprimible,
         muestraGratis: matForm.muestraGratis,
@@ -427,6 +429,10 @@ function AdminContenidoPage() {
               <input type="file" accept="application/pdf,.pdf" onChange={(e) => setMatPdf(e.target.files?.[0] ?? null)} style={{ ...inputStyle, marginBottom: 8 }} aria-label="Subir PDF" />
               <input value={matForm.fileUrl} onChange={(e) => setMatForm({ ...matForm, fileUrl: e.target.value })} style={inputStyle} placeholder="O URL del PDF existente" aria-label="URL del PDF" />
               {matPdf && <span style={{ fontSize: ".72rem", color: "#C7A052" }}>Se subirá {matPdf.name} al guardar.</span>}
+            </div>
+            <div style={{ marginBottom: 14 }}>
+              <label style={labelStyle}>URL de portada (opcional)</label>
+              <input value={matForm.coverUrl} onChange={(e) => setMatForm({ ...matForm, coverUrl: e.target.value })} style={inputStyle} placeholder="/library/portada.png" aria-label="URL de portada" />
             </div>
             <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 14 }}>
               {([

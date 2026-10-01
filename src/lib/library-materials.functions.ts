@@ -36,6 +36,10 @@ export const uploadLibraryPdf = createServerFn({ method: "POST" })
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const bucket = supabaseAdmin.storage.from(BUCKET);
+    const { data: previous, error: previousError } = await supabaseAdmin.from("content")
+      .select("data").eq("collection", "materiales").eq("id", material.id).maybeSingle();
+    if (previousError) return { error: "No se pudo verificar el material anterior." };
+    const previousFileUrl = (previous?.data as { fileUrl?: unknown } | null)?.fileUrl;
     const path = `${crypto.randomUUID()}.pdf`;
     const created = await supabaseAdmin.storage.createBucket(BUCKET, {
       public: false,
@@ -55,6 +59,10 @@ export const uploadLibraryPdf = createServerFn({ method: "POST" })
     if (catalogError) {
       await bucket.remove([path]);
       return { error: "El PDF se subió, pero no se pudo registrar en la Biblioteca." };
+    }
+    if (typeof previousFileUrl === "string" && previousFileUrl.startsWith(PREFIX) && previousFileUrl !== fileUrl) {
+      const previousPath = previousFileUrl.slice(PREFIX.length);
+      if (/^[a-f\d-]{36}\.pdf$/i.test(previousPath)) await bucket.remove([previousPath]);
     }
     return { fileUrl };
   });

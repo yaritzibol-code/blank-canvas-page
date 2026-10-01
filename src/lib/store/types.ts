@@ -274,6 +274,7 @@ export interface Material {
   gradient: string;
   pages: number;
   fileUrl: string; // URL de PDF real; "" = visor simulado
+  coverUrl?: string; // portada opcional para archivos sin miniatura de Drive
   descargable: boolean;
   imprimible: boolean;
   muestraGratis: boolean; // accesible con suscripción básica
