@@ -16,6 +16,7 @@ import { UpgradeModal } from "@/components/shared/UpgradeModal";
 import { ReportProblemModal } from "@/components/shared/ReportProblemModal";
 import { ModuleHeader } from "@/components/shared/ModuleHeader";
 import { sanitizeHtml } from "@/lib/yaris-format";
+import { libraryPdfReaderUrl } from "@/lib/library-materials.functions";
 
 export const Route = createFileRoute("/dashboard/biblioteca")({
   component: BibliotecaPage,
@@ -90,6 +91,8 @@ function BibliotecaPage() {
   const [materiaFilter, setMateriaFilter] = useState("todas");
   const [sort, setSort] = useState<SortKey>("az");
   const [readerBook, setReaderBook] = useState<Book | null>(null);
+  const [readerFileUrl, setReaderFileUrl] = useState("");
+  const [readerFileError, setReaderFileError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [zoom, setZoom] = useState(1);
   const [yarisOpen, setYarisOpen] = useState(true);
@@ -134,6 +137,28 @@ function BibliotecaPage() {
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
+
+  useEffect(() => {
+    let active = true;
+    setReaderFileError("");
+    if (!readerBook?.fileUrl) {
+      setReaderFileUrl("");
+      return;
+    }
+    if (!readerBook.fileUrl.startsWith("storage://library-materials/")) {
+      setReaderFileUrl(readerBook.fileUrl);
+      return;
+    }
+    setReaderFileUrl("");
+    void libraryPdfReaderUrl({ data: { materialId: readerBook.id } })
+      .then((result) => {
+        if (!active) return;
+        if ("error" in result) setReaderFileError(result.error);
+        else setReaderFileUrl(result.url + "#toolbar=0&navpanes=0");
+      })
+      .catch(() => { if (active) setReaderFileError("No se pudo abrir el PDF."); });
+    return () => { active = false; };
+  }, [readerBook?.id, readerBook?.fileUrl]);
 
   useEffect(() => {
     if (yarisMsgs[yarisMsgs.length - 1]?.role !== "user") return;
@@ -196,7 +221,7 @@ function BibliotecaPage() {
 
   function handleDownload() {
     if (!readerBook) return;
-    if (readerBook.fileUrl) window.open(driveDownloadUrl(readerBook.fileUrl), "_blank");
+    if (readerBook.fileUrl) window.open(readerBook.fileUrl.startsWith("storage://library-materials/") ? readerFileUrl.split("#")[0] : driveDownloadUrl(readerBook.fileUrl), "_blank");
     else showNotice("El archivo estará disponible próximamente");
   }
 
@@ -204,6 +229,10 @@ function BibliotecaPage() {
     if (!readerBook) return;
     if (!readerBook.fileUrl) {
       showNotice("El archivo estará disponible próximamente");
+      return;
+    }
+    if (readerBook.fileUrl.startsWith("storage://library-materials/")) {
+      window.open(readerFileUrl.split("#")[0], "_blank");
       return;
     }
     if (/drive\.google\.com|docs\.google\.com/.test(readerBook.fileUrl)) {
@@ -264,8 +293,9 @@ function BibliotecaPage() {
   const visibleBooks = filteredBooks.slice(0, visibleCount);
 
   const featured = books.find((b) => b.id === "aero-basica") ?? books[0];
-  const canDownload = !!readerBook && readerBook.descargable && (paid || readerBook.muestraGratis);
-  const canPrint = !!readerBook && readerBook.imprimible && (paid || readerBook.muestraGratis);
+  const readerReady = !readerBook?.fileUrl.startsWith("storage://library-materials/") || !!readerFileUrl;
+  const canDownload = !!readerBook && readerReady && readerBook.descargable && (paid || readerBook.muestraGratis);
+  const canPrint = !!readerBook && readerReady && readerBook.imprimible && (paid || readerBook.muestraGratis);
   const userInitials =
     (user?.nombre ?? "")
       .split(/\s+/)
@@ -493,12 +523,12 @@ function BibliotecaPage() {
               {/* PDF content */}
               {readerBook.fileUrl ? (
                 <div style={{ flex: 1, overflow: "hidden", display: "flex" }}>
-                  <iframe
+                  {readerFileUrl ? <iframe
                     ref={pdfIframeRef}
-                    src={readerBook.fileUrl}
+                    src={readerFileUrl}
                     title={readerBook.title}
                     style={{ flex: 1, width: "100%", height: "100%", border: "none", background: "var(--fd-panel, white)" }}
-                  />
+                  /> : <div role="status" style={{ color: "white", padding: 24 }}>{readerFileError || "Abriendo PDF…"}</div>}
                 </div>
               ) : (
                 <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: 32, background: "var(--fd-panel, #F7F9FC)" }}>

@@ -1,6 +1,7 @@
 /** Panel Admin — Clases y materiales (PRD 9.7). */
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { uploadLibraryPdf } from "@/lib/library-materials.functions";
 import { Icon } from "@/components/ui/fp-icon";
 import {
   AdminShell,
@@ -92,8 +93,11 @@ function AdminContenidoPage() {
   const [claseErr, setClaseErr] = useState<string | null>(null);
 
   const [matId, setMatId] = useState<string | null>(null);
+  const [matDraftId, setMatDraftId] = useState("");
   const [matForm, setMatForm] = useState<MaterialForm | null>(null);
   const [matErr, setMatErr] = useState<string | null>(null);
+  const [matPdf, setMatPdf] = useState<File | null>(null);
+  const [savingMat, setSavingMat] = useState(false);
 
   /* ───────── Clases ───────── */
 
@@ -157,42 +161,66 @@ function AdminContenidoPage() {
 
   const openNewMat = () => {
     setMatId(null);
+    setMatDraftId(uid("mat"));
     setMatForm({ titulo: "", autor: "", materia: "", badge: "", pages: "0", fileUrl: "", descargable: true, imprimible: false, muestraGratis: false, status: "borrador" });
     setMatErr(null);
+    setMatPdf(null);
   };
 
   const openEditMat = (m: Material) => {
     setMatId(m.id);
+    setMatDraftId("");
     setMatForm({ titulo: m.titulo, autor: m.autor, materia: m.materia, badge: m.badge, pages: String(m.pages), fileUrl: m.fileUrl, descargable: m.descargable, imprimible: m.imprimible, muestraGratis: m.muestraGratis, status: m.status });
     setMatErr(null);
+    setMatPdf(null);
   };
 
-  const saveMatForm = () => {
-    if (!matForm) return;
+  const saveMatForm = async () => {
+    if (!matForm || savingMat) return;
     if (!matForm.titulo.trim()) return setMatErr("El material necesita un título.");
-    const orig = matId ? materiales.find((m) => m.id === matId) : null;
-    saveMaterial({
-      id: orig?.id ?? uid("mat"),
-      titulo: matForm.titulo.trim(),
-      autor: matForm.autor.trim(),
-      materia: matForm.materia,
-      tags: orig?.tags ?? [],
-      badge: matForm.badge.trim(),
-      badgeColor: orig?.badgeColor ?? "#C7A052",
-      emoji: orig?.emoji ?? "doc",
-      gradient: orig?.gradient ?? "linear-gradient(135deg,#667eea,#764ba2)",
-      pages: Math.max(0, parseInt(matForm.pages, 10) || 0),
-      fileUrl: matForm.fileUrl.trim(),
-      descargable: matForm.descargable,
-      imprimible: matForm.imprimible,
-      muestraGratis: matForm.muestraGratis,
-      status: matForm.status,
-      createdAt: orig?.createdAt ?? nowISO(),
-      updatedAt: nowISO(),
-    });
-    setMatForm(null);
-    setMatId(null);
-    showFlash(orig ? "Material actualizado" : "Material agregado");
+    if (!matPdf && !matForm.fileUrl.trim()) return setMatErr("Selecciona un PDF o escribe su URL.");
+    setSavingMat(true);
+    setMatErr(null);
+    try {
+      const orig = matId ? materiales.find((m) => m.id === matId) : null;
+      const material: Material = {
+        id: orig?.id ?? matDraftId,
+        titulo: matForm.titulo.trim(),
+        autor: matForm.autor.trim(),
+        materia: matForm.materia,
+        tags: orig?.tags ?? [],
+        badge: matForm.badge.trim(),
+        badgeColor: orig?.badgeColor ?? "#C7A052",
+        emoji: orig?.emoji ?? "doc",
+        gradient: orig?.gradient ?? "linear-gradient(135deg,#667eea,#764ba2)",
+        pages: Math.max(0, parseInt(matForm.pages, 10) || 0),
+        fileUrl: matForm.fileUrl.trim(),
+        descargable: matForm.descargable,
+        imprimible: matForm.imprimible,
+        muestraGratis: matForm.muestraGratis,
+        status: matForm.status,
+        createdAt: orig?.createdAt ?? nowISO(),
+        updatedAt: nowISO(),
+      };
+      if (matPdf) {
+        const data = new FormData();
+        data.set("pdf", matPdf);
+        data.set("material", JSON.stringify(material));
+        const uploaded = await uploadLibraryPdf({ data });
+        if ("error" in uploaded) throw new Error(uploaded.error);
+        material.fileUrl = uploaded.fileUrl;
+      }
+      saveMaterial(material);
+      setMatForm(null);
+      setMatId(null);
+      setMatDraftId("");
+      setMatPdf(null);
+      showFlash(orig ? "Material actualizado" : "Material agregado");
+    } catch (error) {
+      setMatErr(error instanceof Error ? error.message : "No se pudo guardar el material.");
+    } finally {
+      setSavingMat(false);
+    }
   };
 
   const toggleMat = (m: Material) => {
@@ -396,7 +424,9 @@ function AdminContenidoPage() {
             </div>
             <div style={{ marginBottom: 14 }}>
               <label style={labelStyle}>Archivo</label>
-              <input value={matForm.fileUrl} onChange={(e) => setMatForm({ ...matForm, fileUrl: e.target.value })} style={inputStyle} placeholder="URL del PDF" />
+              <input type="file" accept="application/pdf,.pdf" onChange={(e) => setMatPdf(e.target.files?.[0] ?? null)} style={{ ...inputStyle, marginBottom: 8 }} aria-label="Subir PDF" />
+              <input value={matForm.fileUrl} onChange={(e) => setMatForm({ ...matForm, fileUrl: e.target.value })} style={inputStyle} placeholder="O URL del PDF existente" aria-label="URL del PDF" />
+              {matPdf && <span style={{ fontSize: ".72rem", color: "#C7A052" }}>Se subirá {matPdf.name} al guardar.</span>}
             </div>
             <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 14 }}>
               {([
@@ -424,8 +454,8 @@ function AdminContenidoPage() {
             )}
 
             <div style={{ display: "flex", gap: 10 }}>
-              <button onClick={() => setMatForm(null)} style={cancelBtnStyle}>Cancelar</button>
-              <button onClick={saveMatForm} style={{ ...confirmBtnStyle, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}><Icon n="check" size={16} /> Guardar material</button>
+              <button onClick={() => setMatForm(null)} disabled={savingMat} style={cancelBtnStyle}>Cancelar</button>
+              <button onClick={saveMatForm} disabled={savingMat} style={{ ...confirmBtnStyle, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}><Icon n="check" size={16} /> {savingMat ? "Subiendo PDF…" : "Guardar material"}</button>
             </div>
           </>
         )}
