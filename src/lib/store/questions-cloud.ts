@@ -96,7 +96,19 @@ async function rpc(args: Partial<RpcArgs>): Promise<BankQuestion[] | null> {
     p_ordered: false,
     ...args,
   } as never);
-  if (error) return null;
+  if (error) {
+    // Sesión caducada (refresh token inválido): la RPC se llama como anónima y
+    // la base responde "permission denied". Se cierra la sesión local para que
+    // el guard de rutas mande a /login en vez de mostrar un banco vacío.
+    if ((error as { code?: string }).code === "42501") {
+      const { data: sess } = await s.auth.getSession();
+      if (!sess.session) {
+        const { logout } = await import("./auth");
+        logout();
+      }
+    }
+    return null;
+  }
   return (data ?? []) as unknown as BankQuestion[];
 }
 
