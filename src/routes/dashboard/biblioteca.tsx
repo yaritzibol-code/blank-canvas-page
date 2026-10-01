@@ -572,7 +572,6 @@ function BibliotecaPage() {
                     page={currentPage}
                     bookmarks={readerProgress?.bookmarks ?? []}
                     visitedCount={readerProgress?.visitedPages?.length ?? 0}
-                    initialMode={readerProgress?.readingMode ?? "vertical"}
                     initialZoom={readerProgress?.readingZoom ?? 1}
                     initialFit={readerProgress?.readingFit ?? "width"}
                     onPreferences={(preferences) => {

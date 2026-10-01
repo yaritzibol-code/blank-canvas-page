@@ -9,7 +9,6 @@ export interface LibraryReadingProgress {
   totalPages: number;
   visitedPages: number[];
   bookmarks: number[];
-  readingMode?: "vertical" | "horizontal";
   readingZoom?: number;
   readingFit?: "width" | "page";
   updatedAt: string;
@@ -49,12 +48,12 @@ export function saveLibraryPage(userId: string, materialId: string, page: number
 export function saveLibraryReaderPreferences(
   userId: string,
   materialId: string,
-  preferences: { mode: "vertical" | "horizontal"; zoom: number; fit: "width" | "page" },
+  preferences: { zoom: number; fit: "width" | "page" },
 ): void {
   if (!userId || !materialId || !Number.isFinite(preferences.zoom)) return;
   update<LibraryReadingProgress[]>(KEY, [], (entries) => entries.map((entry) =>
     entry.userId === userId && entry.materialId === materialId
-      ? { ...entry, readingMode: preferences.mode, readingZoom: preferences.zoom, readingFit: preferences.fit, updatedAt: new Date().toISOString() }
+      ? { ...entry, readingZoom: preferences.zoom, readingFit: preferences.fit, updatedAt: new Date().toISOString() }
       : entry,
   ));
 }

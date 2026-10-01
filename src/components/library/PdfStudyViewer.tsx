@@ -2,7 +2,6 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import type { PDFDocumentProxy } from "pdfjs-dist";
 
 interface OutlineEntry { title: string; page: number; depth: number; }
-type ReadingMode = "vertical" | "horizontal";
 type FitMode = "width" | "page";
 
 interface Props {
@@ -11,10 +10,9 @@ interface Props {
   page: number;
   bookmarks: number[];
   visitedCount: number;
-  initialMode: ReadingMode;
   initialZoom: number;
   initialFit: FitMode;
-  onPreferences: (preferences: { mode: ReadingMode; zoom: number; fit: FitMode }) => void;
+  onPreferences: (preferences: { zoom: number; fit: FitMode }) => void;
   onPage: (page: number, total: number) => void;
   onPageText: (text: string) => void;
   onReady: (total: number) => void;
@@ -63,11 +61,10 @@ function RenderedPage({ pdf, number, scale, onSize }: { pdf: PDFDocumentProxy; n
 }
 
 /** PDF.js conserva el documento cargado y dibuja sólo las páginas cercanas al viewport. */
-export function PdfStudyViewer({ url, title, page, bookmarks, visitedCount, initialMode, initialZoom, initialFit, onPreferences, onPage, onPageText, onReady, onBookmark, onUnavailable, canDownload, canPrint, onDownload, onPrint }: Props) {
+export function PdfStudyViewer({ url, title, page, bookmarks, visitedCount, initialZoom, initialFit, onPreferences, onPage, onPageText, onReady, onBookmark, onUnavailable, canDownload, canPrint, onDownload, onPrint }: Props) {
   const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
   const [outline, setOutline] = useState<OutlineEntry[]>([]);
   const [indexOpen, setIndexOpen] = useState(false);
-  const [mode, setMode] = useState<ReadingMode>(initialMode);
   const [zoom, setZoom] = useState(Math.min(2, Math.max(0.5, initialZoom)));
   const [fit, setFit] = useState<FitMode>(initialFit);
   const [viewportSize, setViewportSize] = useState({ width: 800, height: 800 });
@@ -164,18 +161,17 @@ export function PdfStudyViewer({ url, title, page, bookmarks, visitedCount, init
     const stage = stageRef.current;
     const target = stage?.querySelector<HTMLElement>(`[data-pdf-page="${number}"]`);
     if (stage && target) stage.scrollTo({
-      top: mode === "vertical" ? target.offsetTop : 0,
-      left: mode === "horizontal" ? target.offsetLeft : 0,
+      top: target.offsetTop,
       behavior: "instant",
     });
   };
 
-  // Restaurar la página al abrir y conservarla al cambiar modo, zoom o tamaño.
+  // Restaurar la página al abrir y conservarla al cambiar zoom o tamaño.
   useLayoutEffect(() => {
     if (!pdf) return;
     const frame = requestAnimationFrame(() => scrollToPage(pageRef.current));
     return () => cancelAnimationFrame(frame);
-  }, [pdf, mode, zoom, fit, baseSize.width, baseSize.height, viewportSize.width, viewportSize.height]);
+  }, [pdf, zoom, fit, baseSize.width, baseSize.height, viewportSize.width, viewportSize.height]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -201,7 +197,7 @@ export function PdfStudyViewer({ url, title, page, bookmarks, visitedCount, init
     const onScroll = () => { if (!frame) frame = requestAnimationFrame(identifyVisiblePage); };
     stage.addEventListener("scroll", onScroll, { passive: true });
     return () => { stage.removeEventListener("scroll", onScroll); if (frame) cancelAnimationFrame(frame); };
-  }, [pdf, mode]);
+  }, [pdf]);
 
   const go = (value: number) => {
     if (!total || !Number.isFinite(value)) return;
@@ -211,15 +207,11 @@ export function PdfStudyViewer({ url, title, page, bookmarks, visitedCount, init
     latest.current.onPage(next, total);
     scrollToPage(next);
   };
-  const selectMode = (next: ReadingMode) => {
-    setMode(next);
-    latest.current.onPreferences({ mode: next, zoom, fit });
-  };
   const selectZoom = (next: number, nextFit = fit) => {
     const bounded = Math.min(2, Math.max(0.5, +next.toFixed(1)));
     setFit(nextFit);
     setZoom(bounded);
-    latest.current.onPreferences({ mode, zoom: bounded, fit: nextFit });
+    latest.current.onPreferences({ zoom: bounded, fit: nextFit });
   };
   const onSize = useCallback((number: number, width: number, height: number) => {
     setPageSizes((current) => current[number]?.width === width && current[number]?.height === height
@@ -232,9 +224,6 @@ export function PdfStudyViewer({ url, title, page, bookmarks, visitedCount, init
     <div style={{ display: "flex", flexDirection: "column", minWidth: 0, minHeight: 0, flex: 1, background: "#242a33", color: "white" }}>
       <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap", padding: "6px 10px", background: "#172339", borderBottom: "1px solid rgba(255,255,255,0.12)" }}>
         <button style={control} onClick={() => setIndexOpen((value) => !value)} aria-label="Abrir o cerrar índice">☰ <span className="hidden sm:inline">Índice</span></button>
-        <div role="group" aria-label="Modo de lectura" style={{ display: "flex", border: "1px solid rgba(212,175,104,0.45)", borderRadius: 6, overflow: "hidden" }}>
-          {(["vertical", "horizontal"] as const).map((option) => <button key={option} type="button" onClick={() => selectMode(option)} aria-label={`Lectura ${option}`} aria-pressed={mode === option} style={{ ...control, border: 0, borderRadius: 0, background: mode === option ? "#9b7840" : "#0c1930", padding: "3px 8px" }}>{option === "vertical" ? "↕" : "↔"}<span className="hidden sm:inline"> {option === "vertical" ? "Vertical" : "Horizontal"}</span></button>)}
-        </div>
         <button style={control} disabled={page <= 1 || !total} onClick={() => go(page - 1)} aria-label="Página anterior">←</button>
         <form onSubmit={(event) => { event.preventDefault(); go(Number(pageInput)); }} style={{ display: "flex", alignItems: "center", gap: 4, fontSize: "0.75rem" }}>
           <input aria-label="Ir a la página" inputMode="numeric" value={pageInput} onChange={(event) => setPageInput(event.target.value)} style={{ width: 43, padding: "4px 5px", borderRadius: 5, border: "1px solid rgba(255,255,255,0.25)", background: "#0c1930", color: "white", textAlign: "center" }} />
@@ -262,13 +251,13 @@ export function PdfStudyViewer({ url, title, page, bookmarks, visitedCount, init
             <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 4 }}>{Array.from({ length: total }, (_, index) => <button key={index} onClick={() => { go(index + 1); setIndexOpen(false); }} style={{ ...control, padding: "3px 0", background: index + 1 === page ? "#9b7840" : control.background }}>{index + 1}{bookmarks.includes(index + 1) ? "★" : ""}</button>)}</div>
           </aside>
         </>}
-        <div ref={stageRef} aria-label={`${title}, lectura ${mode}`} style={{ flex: 1, overflow: "auto", minWidth: 0, position: "relative", display: mode === "horizontal" ? "flex" : "block", alignItems: mode === "horizontal" ? "center" : undefined, scrollSnapType: mode === "horizontal" && zoom <= 1 ? "x proximity" : undefined, overscrollBehavior: "contain" }}>
+        <div ref={stageRef} aria-label={`${title}, lectura vertical`} style={{ flex: 1, overflow: "auto", minWidth: 0, position: "relative", overscrollBehavior: "contain" }}>
           {error ? <div role="alert" style={{ padding: 18 }}>{error}</div> : !pdf ? <div role="status" style={{ padding: 18 }}>Abriendo documento…</div> : Array.from({ length: total }, (_, index) => {
             const number = index + 1;
             const dimensions = pageSizes[number] ?? baseSize;
             const width = dimensions.width * scale;
             const height = dimensions.height * scale;
-            return <div key={number} data-pdf-page={number} style={{ boxSizing: "border-box", flex: mode === "horizontal" ? "0 0 auto" : undefined, width: Math.max(viewportSize.width, width + 36), minHeight: height + 36, padding: 18, display: "flex", alignItems: "center", justifyContent: "center", margin: mode === "vertical" ? "0 auto 8px" : undefined, scrollSnapAlign: mode === "horizontal" ? "start" : undefined }}>
+            return <div key={number} data-pdf-page={number} style={{ boxSizing: "border-box", width: Math.max(viewportSize.width, width + 36), minHeight: height + 36, padding: 18, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 8px" }}>
               {Math.abs(number - page) <= renderRadius ? <RenderedPage pdf={pdf} number={number} scale={scale} onSize={onSize} /> : <div aria-hidden="true" style={{ width, height, background: "rgba(255,255,255,0.12)" }} />}
             </div>;
           })}
