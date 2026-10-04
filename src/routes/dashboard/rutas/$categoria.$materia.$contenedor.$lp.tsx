@@ -24,12 +24,18 @@ import { LpEmptyState, LpFullscreen, lpButtonStyle } from "@/components/lp/nav";
 import { lpCategory, lpContainer, lpSubject } from "@/lib/lp/taxonomy";
 import { ATP_LEARNING_PATHS } from "@/lib/lp/atp-content.generated";
 import { ANNEX10_LEARNING_PATHS } from "@/lib/lp/annex10-content.generated";
+import { CIAAC_LEARNING_PATHS } from "@/lib/lp/ciaac-content";
+import { isLearningPathAvailable } from "@/lib/lp/ciaac-availability";
 import { HANDBOOK_LEARNING_PATHS } from "@/lib/lp/handbook-content.generated";
 import { JEPPESEN_LEARNING_PATHS } from "@/lib/lp/jeppesen-content.generated";
 import { LEGISLATION_LEARNING_PATHS } from "@/lib/lp/legislation-content.generated";
 import { useSessionUser, useStore, type YarisContext } from "@/lib/store";
 import { completeLp, lpAccess, lpNeighbors, startLp, subjectProgress } from "@/lib/store/lp-nav";
-import { leaveLearningPath, learningPathOrigin, rememberLearningPathOrigin } from "@/lib/lp/contextual-return";
+import {
+  leaveLearningPath,
+  learningPathOrigin,
+  rememberLearningPathOrigin,
+} from "@/lib/lp/contextual-return";
 
 export const Route = createFileRoute("/dashboard/rutas/$categoria/$materia/$contenedor/$lp")({
   head: () => ({
@@ -90,9 +96,11 @@ function LearningPathPage() {
             icon="lock"
             title={item.titulo}
             description={
-              acceso.lock === "plan"
-                ? "Este learning path está incluido en FlightPath Pro."
-                : "Completa el learning path anterior de la secuencia para abrir este."
+              acceso.lock === "contenido"
+                ? "Este learning path está en preparación. La vista previa incluye únicamente los cinco recorridos del módulo 1 de Aerodinámica."
+                : acceso.lock === "plan"
+                  ? "Este learning path está incluido en FlightPath Pro."
+                  : "Completa el learning path anterior de la secuencia para abrir este."
             }
             action={
               <Link
@@ -116,7 +124,7 @@ function LearningPathPage() {
   const vecinos = estado?.vecinos;
   const completado = acceso?.status === "completado";
   const atpDocument = ATP_LEARNING_PATHS[item.id];
-  const handbookDocument = HANDBOOK_LEARNING_PATHS[item.id];
+  const handbookDocument = CIAAC_LEARNING_PATHS[item.id] ?? HANDBOOK_LEARNING_PATHS[item.id];
   const jeppesenDocument = JEPPESEN_LEARNING_PATHS[item.id];
   const legislationDocument = LEGISLATION_LEARNING_PATHS[item.id];
   const annex10Document = ANNEX10_LEARNING_PATHS[item.id];
@@ -124,7 +132,8 @@ function LearningPathPage() {
   const isJeppesen = subject.id === "linea-aerea/jeppesen";
   const isLegislation = subject.id === "linea-aerea/legislacion";
   const isAnnex10 = subject.id === "linea-aerea/anexo-10-volumen-ii";
-  const isNativeSubject = isHandbook || isJeppesen || isLegislation || isAnnex10;
+  const isNativeSubject =
+    categoria === "ciaac" || isHandbook || isJeppesen || isLegislation || isAnnex10;
   const hasNativeContent =
     item.id === APPLICABLE_REGULATIONS_LP_ID ||
     Boolean(atpDocument) ||
@@ -137,7 +146,10 @@ function LearningPathPage() {
     const [, mat, conte, slug] = id.split("/");
     const target = `/dashboard/rutas/${categoria}/${mat}/${conte}/${slug}`;
     const fallback = `/dashboard/rutas/${categoria}/${materia}/${contenedor}`;
-    rememberLearningPathOrigin(target, learningPathOrigin(window.location.pathname) ?? { href: fallback, scrollY: 0 });
+    rememberLearningPathOrigin(
+      target,
+      learningPathOrigin(window.location.pathname) ?? { href: fallback, scrollY: 0 },
+    );
     void navigate({
       to: "/dashboard/rutas/$categoria/$materia/$contenedor/$lp",
       params: { categoria, materia: mat, contenedor: conte, lp: slug },
@@ -146,128 +158,143 @@ function LearningPathPage() {
 
   return (
     <>
-    <LearningPathExperience
-      key={item.id}
-      identity={{
-        category: cat.titulo, subject: subject.titulo, chapter: cont.titulo, title: item.titulo,
-        id: item.id, categoryId: categoria, subjectId: materia, chapterId: contenedor,
-      }}
-      user={user}
-      onBack={() =>
-        leaveLearningPath(
-          `/dashboard/rutas/${categoria}/${materia}/${contenedor}`,
-          (href) => void navigate({ to: href, replace: true }),
-        )
-      }
-      onYaris={(context) => { setYarisContext(context); setYarisOpen(true); }}
-      subjectProgress={estado?.progreso ?? undefined}
-      actions={
-        <>
-          {vecinos?.prev && (
+      <LearningPathExperience
+        key={item.id}
+        showBrandArtwork={categoria !== "ciaac"}
+        identity={{
+          category: cat.titulo,
+          subject: subject.titulo,
+          chapter: cont.titulo,
+          title: item.titulo,
+          id: item.id,
+          categoryId: categoria,
+          subjectId: materia,
+          chapterId: contenedor,
+        }}
+        user={user}
+        onBack={() =>
+          leaveLearningPath(
+            `/dashboard/rutas/${categoria}/${materia}/${contenedor}`,
+            (href) => void navigate({ to: href, replace: true }),
+          )
+        }
+        onYaris={(context) => {
+          setYarisContext(context);
+          setYarisOpen(true);
+        }}
+        subjectProgress={estado?.progreso ?? undefined}
+        actions={
+          <>
+            {vecinos?.prev && (
+              <button
+                type="button"
+                onClick={() => irA(vecinos.prev!.id)}
+                className="lp-study-neighbor lp-study-neighbor--previous"
+                aria-label={`Anterior: ${vecinos.prev.titulo}`}
+              >
+                <Icon n="chevL" size={15} />
+                <span>Anterior</span>
+              </button>
+            )}
+
+            {!hasNativeContent && !isNativeSubject && !completado && user && (
+              <button
+                type="button"
+                onClick={() => completeLp(user.id, item, subject.titulo)}
+                className="lp-study-neighbor lp-study-neighbor--complete"
+              >
+                <Icon n="check" size={15} />
+                <span>Marcar como completado</span>
+              </button>
+            )}
+
             <button
               type="button"
-              onClick={() => irA(vecinos.prev!.id)}
-              className="lp-study-neighbor lp-study-neighbor--previous"
-              aria-label={`Anterior: ${vecinos.prev.titulo}`}
+              disabled={!completado || !vecinos?.next || !isLearningPathAvailable(vecinos.next.id)}
+              onClick={() => vecinos?.next && irA(vecinos.next.id)}
+              className="lp-study-neighbor lp-study-neighbor--next"
+              title={
+                completado
+                  ? vecinos?.next
+                    ? vecinos.next.titulo
+                    : "Terminaste esta materia"
+                  : "Completa este learning path para avanzar"
+              }
             >
-              <Icon n="chevL" size={15} />
-              <span>Anterior</span>
+              <span>Siguiente</span>
+              <Icon n="chevR" size={15} />
             </button>
-          )}
-
-          {!hasNativeContent && !isNativeSubject && !completado && user && (
-            <button
-              type="button"
-              onClick={() => completeLp(user.id, item, subject.titulo)}
-              className="lp-study-neighbor lp-study-neighbor--complete"
-            >
-              <Icon n="check" size={15} />
-              <span>Marcar como completado</span>
-            </button>
-          )}
-
-          <button
-            type="button"
-            disabled={!completado || !vecinos?.next}
-            onClick={() => vecinos?.next && irA(vecinos.next.id)}
-            className="lp-study-neighbor lp-study-neighbor--next"
-            title={
-              completado
-                ? vecinos?.next
-                  ? vecinos.next.titulo
-                  : "Terminaste esta materia"
-                : "Completa este learning path para avanzar"
-            }
-          >
-            <span>Siguiente</span>
-            <Icon n="chevR" size={15} />
-          </button>
-        </>
-      }
-    >
-      {item.id === APPLICABLE_REGULATIONS_LP_ID && user ? (
-        <ApplicableRegulationsPath
-          userId={user.id}
-          lpId={item.id}
-          completed={completado}
-          onComplete={() => completeLp(user.id, item, subject.titulo)}
-        />
-      ) : atpDocument && user ? (
-        <AtpLearningPath
-          document={atpDocument}
-          userId={user.id}
-          lpId={item.id}
-          completed={completado}
-          onComplete={() => completeLp(user.id, item, subject.titulo)}
-        />
-      ) : handbookDocument && user ? (
-        <HandbookLearningPath
-          document={handbookDocument}
-          userId={user.id}
-          lpId={item.id}
-          completed={completado}
-          onComplete={() => completeLp(user.id, item, subject.titulo)}
-        />
-      ) : jeppesenDocument && user ? (
-        <JeppesenLearningPath
-          document={jeppesenDocument}
-          userId={user.id}
-          lpId={item.id}
-          completed={completado}
-          onComplete={() => completeLp(user.id, item, subject.titulo)}
-        />
-      ) : legislationDocument && user ? (
-        <LegislationLearningPath
-          document={legislationDocument}
-          userId={user.id}
-          lpId={item.id}
-          completed={completado}
-          onComplete={() => completeLp(user.id, item, subject.titulo)}
-        />
-      ) : annex10Document && user ? (
-        <LegislationLearningPath
-          document={annex10Document}
-          userId={user.id}
-          lpId={item.id}
-          completed={completado}
-          onComplete={() => completeLp(user.id, item, subject.titulo)}
-        />
-      ) : (
-        <div className="lp-screen-empty">
-          <LpEmptyState
-            icon="spark"
-            title="Contenido en preparación"
-            description={
-              isNativeSubject
-                ? `Falta el HTML fuente de “${item.titulo}”. Este tema permanece bloqueado dentro de la secuencia hasta integrar su recorrido nativo.`
-                : `Este learning path ya está creado dentro de la secuencia de ${cont.titulo}. Su material de estudio se cargará aquí.`
-            }
+          </>
+        }
+      >
+        {item.id === APPLICABLE_REGULATIONS_LP_ID && user ? (
+          <ApplicableRegulationsPath
+            userId={user.id}
+            lpId={item.id}
+            completed={completado}
+            onComplete={() => completeLp(user.id, item, subject.titulo)}
           />
-        </div>
-      )}
-    </LearningPathExperience>
-    <YarisChatModal open={yarisOpen} onClose={() => setYarisOpen(false)} user={user}
-      seccion={`Learning Path · ${item.titulo}`} context={yarisContext} />
+        ) : atpDocument && user ? (
+          <AtpLearningPath
+            document={atpDocument}
+            userId={user.id}
+            lpId={item.id}
+            completed={completado}
+            onComplete={() => completeLp(user.id, item, subject.titulo)}
+          />
+        ) : handbookDocument && user ? (
+          <HandbookLearningPath
+            document={handbookDocument}
+            userId={user.id}
+            lpId={item.id}
+            completed={completado}
+            onComplete={() => completeLp(user.id, item, subject.titulo)}
+          />
+        ) : jeppesenDocument && user ? (
+          <JeppesenLearningPath
+            document={jeppesenDocument}
+            userId={user.id}
+            lpId={item.id}
+            completed={completado}
+            onComplete={() => completeLp(user.id, item, subject.titulo)}
+          />
+        ) : legislationDocument && user ? (
+          <LegislationLearningPath
+            document={legislationDocument}
+            userId={user.id}
+            lpId={item.id}
+            completed={completado}
+            onComplete={() => completeLp(user.id, item, subject.titulo)}
+          />
+        ) : annex10Document && user ? (
+          <LegislationLearningPath
+            document={annex10Document}
+            userId={user.id}
+            lpId={item.id}
+            completed={completado}
+            onComplete={() => completeLp(user.id, item, subject.titulo)}
+          />
+        ) : (
+          <div className="lp-screen-empty">
+            <LpEmptyState
+              icon="spark"
+              title="Contenido en preparación"
+              description={
+                isNativeSubject
+                  ? `Falta el HTML fuente de “${item.titulo}”. Este tema permanece bloqueado dentro de la secuencia hasta integrar su recorrido nativo.`
+                  : `Este learning path ya está creado dentro de la secuencia de ${cont.titulo}. Su material de estudio se cargará aquí.`
+              }
+            />
+          </div>
+        )}
+      </LearningPathExperience>
+      <YarisChatModal
+        open={yarisOpen}
+        onClose={() => setYarisOpen(false)}
+        user={user}
+        seccion={`Learning Path · ${item.titulo}`}
+        context={yarisContext}
+      />
     </>
   );
 }

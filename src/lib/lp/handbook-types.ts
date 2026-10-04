@@ -1,3 +1,5 @@
+import type { CiaacActivity, CiaacSource } from "./ciaac-content-types";
+
 export interface HandbookCard {
   title: string;
   text: string;
@@ -30,7 +32,7 @@ export interface HandbookFigure {
 export interface HandbookSubtopic {
   level: number;
   name: string;
-  source_pdf_page: number;
+  source_pdf_page: number | null;
   source_print_page: string;
   source_method: string;
 }
@@ -46,6 +48,7 @@ export interface HandbookContentStage {
   title: string;
   cards: HandbookCard[];
   figures: HandbookFigure[];
+  visualStage?: number;
 }
 
 export interface HandbookQuizStage {
@@ -53,11 +56,18 @@ export interface HandbookQuizStage {
   nav: string;
   questions: number[];
   cards?: HandbookCard[];
+  diagnostic?: boolean;
 }
 
 export interface HandbookExerciseStage {
   kind: "exercise";
   nav: string;
+}
+
+export interface HandbookActivityStage {
+  kind: "activity";
+  nav: string;
+  activityIndex: number;
 }
 
 export interface HandbookFinishStage {
@@ -70,7 +80,8 @@ export type HandbookStage =
   | HandbookContentStage
   | HandbookQuizStage
   | HandbookExerciseStage
-  | HandbookFinishStage;
+  | HandbookFinishStage
+  | HandbookActivityStage;
 
 interface HandbookExerciseBase {
   title: string;
@@ -108,11 +119,19 @@ export interface HandbookLearningPathDocument {
   chapter_name: string;
   name: string;
   subtopics: HandbookSubtopic[];
-  source_pdf_page: number;
+  source_pdf_page: number | null;
   source_print_page: string;
   figures: HandbookFigure[];
   exercise: HandbookExercise | null;
   objectives: string[];
   minutes: number;
   stages: HandbookStage[];
+  sourceLabel?: string;
+  chapterLabel?: string;
+  sources?: (CiaacSource & { id: string })[];
+  completionChecks?: string[];
+  ciaac?: {
+    lessonNumber: number;
+    activities: CiaacActivity[];
+  };
 }

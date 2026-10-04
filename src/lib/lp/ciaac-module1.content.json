@@ -1,0 +1,2944 @@
+{
+  "formatVersion": "ciaac-module-content-1",
+  "language": "es-MX",
+  "course": "CIAAC",
+  "subject": "Aerodinámica",
+  "module": {
+    "number": 1,
+    "name": "Introducción y definiciones",
+    "id": "ciaac/aerodinamica/modulo-1-introduccion-y-definiciones"
+  },
+  "sources": {
+    "phak": {
+      "title": "FAA Pilot’s Handbook of Aeronautical Knowledge FAA-H-8083-25C 2023",
+      "role": "Referencia técnica de aerodinámica y sistemas.",
+      "verified_locators": [
+        "4-1 a 4-5",
+        "5-46 a 5-47",
+        "8-1 a 8-2",
+        "11-3 a 11-5"
+      ]
+    },
+    "ciaac-basica": {
+      "title": "CIAAC Aerodinámica Básica",
+      "role": "Referencia curricular de aerodinámica básica.",
+      "verified_locators": [
+        "capítulo 1 páginas impresas 1 a 4",
+        "capítulo 2 páginas impresas 5 a 11"
+      ]
+    },
+    "ciaac-avanzada": {
+      "title": "CIAAC L3 Aerodinámica Avanzada",
+      "role": "Referencia complementaria de aerodinámica.",
+      "verified_locators": [
+        "capítulo 1 páginas impresas 5 a 8"
+      ]
+    },
+    "icao-annex1": {
+      "title": "OACI Anexo 1 Licencias al personal capítulo 1 definiciones",
+      "role": "Definiciones de tiempo de vuelo en el marco OACI estudiado.",
+      "url": "https://www.icao.int/APAC/Meetings/2019%20COSCAP%20SEAEASA%20PEL/AN01_cons.2019_compressed.pdf",
+      "verified_locators": [
+        "página impresa 1-4 del texto OACI disponible de 2019"
+      ],
+      "limit": "Referencia de la edición y el contexto indicados; comprueba la norma aplicable para un registro real. No constituye una revisión integral de vigencia normativa."
+    },
+    "mex-aircraft": {
+      "title": "Ley de Aviación Civil versión consolidada al 3 mayo 2023",
+      "role": "Definición legal de aeronave en la versión indicada.",
+      "url": "https://www.ordenjuridico.gob.mx/Documentos/Federal/html/wo83106.html",
+      "verified_locators": [
+        "artículo 2 fracción II"
+      ],
+      "limit": "Referencia de la edición y el contexto indicados; comprueba la norma aplicable para un registro real. No constituye una revisión integral de vigencia normativa."
+    },
+    "anac-flight-time": {
+      "title": "ANACpedia tiempo de vuelo aviones con fuente OACI",
+      "role": "Referencia terminológica de tiempo de vuelo de aviones.",
+      "url": "https://www2.anac.gov.br/anacpedia/esp-por/tr3237.htm",
+      "verified_locators": [
+        "definición y nota adicional"
+      ],
+      "limit": "Referencia de la edición y el contexto indicados; comprueba la norma aplicable para un registro real. No constituye una revisión integral de vigencia normativa."
+    },
+    "tc-annex1": {
+      "title": "Transport Canada AC 700-052 de 1 agosto 2019",
+      "role": "Corroboración terminológica de la definición OACI para helicópteros.",
+      "url": "https://tc.canada.ca/en/aviation/reference-centre/advisory-circulars/advisory-circular-ac-no-700-052",
+      "verified_locators": [
+        "apartado 2.3 (1) c y d"
+      ],
+      "limit": "Referencia de la edición y el contexto indicados; comprueba la norma aplicable para un registro real. No constituye una revisión integral de vigencia normativa."
+    },
+    "nasa-boundary": {
+      "title": "NASA Glenn Boundary Layer",
+      "role": "Referencia técnica sobre capa límite.",
+      "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/"
+    },
+    "nasa-bernoulli": {
+      "title": "NASA Glenn Bernoulli’s Equation",
+      "role": "Condiciones del modelo de Bernoulli.",
+      "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/bernoullis-equation/"
+    },
+    "nasa-state": {
+      "title": "NASA Glenn Equation of State",
+      "role": "Relación de presión, densidad y temperatura absoluta.",
+      "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/equation-of-state/"
+    },
+    "carmona": {
+      "title": "Aníbal Isidoro Carmona Aerodinámica y Actuaciones del Avión",
+      "role": "Referencia bibliográfica de fluido, viscosidad, capa límite y Bernoulli.",
+      "verified_locators": [
+        "§§1.1–1.5 páginas impresas 19–22",
+        "§§2.5–2.6 páginas impresas 52–55",
+        "§§2.17–2.19 páginas impresas 67–72",
+        "§3.8 página impresa 97"
+      ]
+    }
+  },
+  "lessons": [
+    {
+      "id": "ciaac/aerodinamica/modulo-1-introduccion-y-definiciones/aeronave-en-vuelo-1",
+      "document": {
+        "number": 1,
+        "title": "Cuándo empieza a contar el vuelo",
+        "intro": "Un avión puede seguir en tierra y haber iniciado su tiempo de vuelo. Aprende a separar qué es una aeronave, el hecho físico de estar en el aire y el intervalo que cuenta una definición.",
+        "cards": [
+          {
+            "title": "La idea central",
+            "text": "Aeronave nombra a la máquina. Estar en el aire describe una condición física. Tiempo de vuelo es un intervalo definido para un fin concreto. En este recorrido aplicamos las definiciones OACI indicadas: para aviones, desde el primer movimiento con propósito de despegue hasta la detención final; para helicópteros, desde que el rotor comienza a girar hasta que la aeronave y las palas se detienen al terminar el vuelo.",
+            "covers": [
+              0
+            ],
+            "wide": false
+          },
+          {
+            "title": "Qué es una aeronave",
+            "text": "La definición aeronáutica identifica una máquina que puede mantenerse en la atmósfera gracias a las reacciones del aire, excluyendo las que dependen de la reacción de ese aire contra la superficie terrestre. Importa cómo se sostiene; no basta con que tenga motor, se desplace rápido o transporte personas. Un avión, un helicóptero, un planeador y un globo son ejemplos. El aerodeslizador que flota sobre un colchón de aire apoyado contra el suelo no entra en esta definición.",
+            "covers": [
+              1
+            ],
+            "wide": false
+          },
+          {
+            "title": "Aeronave y tiempo de vuelo",
+            "text": "Una aeronave sigue siendo aeronave cuando está estacionada. El tiempo de vuelo, en cambio, tiene un comienzo y un final definidos. No lo confundas automáticamente con el tiempo físicamente en el aire ni con todas las definiciones legales de «en vuelo». Para contestar una pregunta, identifica el tipo de aeronave, el término exacto y la norma o contexto indicado. Aquí estudiamos el cómputo de tiempo de vuelo del Anexo 1 de OACI.",
+            "covers": [
+              2
+            ],
+            "wide": false
+          },
+          {
+            "title": "Avión del movimiento a la detención",
+            "text": "Para el avión, OACI cuenta desde su primer movimiento con propósito de despegar hasta que finalmente queda detenido al terminar el vuelo. No empieza al elevar las ruedas ni al aplicar potencia de despegue. El push-back o rodaje que inicia la salida puede estar dentro del intervalo; un remolque entre hangares sin propósito de despegar no satisface ese criterio. La expresión «entre calzos» se usa para este intervalo, pero la definición se refiere al movimiento y a la detención final, no al gesto de retirar o colocar un calzo.",
+            "covers": [
+              3
+            ],
+            "wide": false
+          },
+          {
+            "title": "Sigue la secuencia del avión",
+            "text": "Imagina esta línea de tiempo: plataforma, primer movimiento para despegar, carrera de despegue, vuelo, aterrizaje y detención final en plataforma. El reloj del tiempo de vuelo comienza en el primer movimiento para despegar y termina en la detención final. Una espera temporal durante el rodaje no es el final del vuelo, y tocar pista al aterrizar tampoco equivale por sí mismo a detenerse al finalizar la operación.",
+            "covers": [
+              4
+            ],
+            "wide": false
+          },
+          {
+            "title": "Helicóptero del giro al rotor parado",
+            "text": "En la definición OACI estudiada, el tiempo de vuelo del helicóptero comienza cuando las palas del rotor empiezan a girar. Termina cuando el helicóptero queda finalmente detenido al acabar el vuelo y las palas del rotor se han parado. Si las palas ya giran como parte de esa operación, el cómputo puede haber comenzado aunque no haya despegado. Encender únicamente los sistemas, sin giro del rotor, no cumple el inicio descrito. No apliques esta definición a cualquier prueba de mantenimiento ni a registros bajo otra normativa sin comprobar su regla.",
+            "covers": [
+              5
+            ],
+            "wide": false
+          },
+          {
+            "title": "Lee la condición completa",
+            "text": "El tema entrena precisión: «con propósito de despegar» no significa cualquier movimiento; «se detiene al finalizar el vuelo» no significa cualquier parada. En un helicóptero, recuerda también el rotor detenido al final. La distinción entre avión y helicóptero explica por qué los dos relojes del ejemplo no arrancan por el mismo evento.",
+            "covers": [
+              6
+            ],
+            "wide": false
+          },
+          {
+            "title": "Error común",
+            "text": "«El vuelo empieza cuando las ruedas dejan el suelo» confunde despegue con tiempo de vuelo. «Aeronave» y «aeronave en vuelo» tampoco son sinónimos: la primera palabra identifica la máquina, y la segunda requiere un contexto. Evita memorizar una frase como si definiera todos los efectos legales posibles; para las preguntas de este recorrido, la referencia explícita es el tiempo de vuelo según OACI.",
+            "covers": [
+              7
+            ],
+            "wide": false
+          }
+        ],
+        "questions": [
+          {
+            "prompt": "Un avión inicia push-back con propósito de despegar. Según la definición OACI de tiempo de vuelo del avión, ¿ya empezó el cómputo?",
+            "options": [
+              "No; solo cuenta desde que las ruedas dejan la pista.",
+              "Sí; comenzó al iniciar el movimiento con propósito de despegar.",
+              "No; debe aplicar primero la potencia de despegue."
+            ],
+            "correct": 1,
+            "feedback": "El criterio estudiado es el primer movimiento con propósito de despegar. No exige estar ya en el aire ni haber aplicado potencia de despegue. La pregunta especifica tiempo de vuelo OACI; no define todos los usos legales de «en vuelo».",
+            "order": [
+              1,
+              2,
+              0
+            ]
+          },
+          {
+            "prompt": "Verdadero o falso: el criterio de aeronave incluye sostenerse por reacciones del aire que no sean contra la superficie terrestre.",
+            "options": [
+              "Verdadero.",
+              "Falso."
+            ],
+            "correct": 0,
+            "feedback": "Es el criterio esencial de la definición. Tener motor o transportar pasajeros no es suficiente ni necesario por sí solo.",
+            "order": [
+              0,
+              1
+            ]
+          },
+          {
+            "prompt": "Verdadero o falso: el tiempo de vuelo del avión empieza únicamente al separarse las ruedas de la pista.",
+            "options": [
+              "Verdadero.",
+              "Falso."
+            ],
+            "correct": 1,
+            "feedback": "Falso bajo la definición OACI estudiada: empieza con el primer movimiento para despegar. El tiempo en el aire es un intervalo diferente.",
+            "order": [
+              1,
+              0
+            ]
+          },
+          {
+            "prompt": "Verdadero o falso: en la operación de vuelo de un helicóptero, OACI sitúa el inicio del cómputo cuando las palas empiezan a girar.",
+            "options": [
+              "Verdadero.",
+              "Falso."
+            ],
+            "correct": 0,
+            "feedback": "Verdadero para la definición indicada. El final requiere la detención final del helicóptero y del rotor; no extrapoles el criterio sin identificar la normativa aplicable.",
+            "order": [
+              0,
+              1
+            ]
+          },
+          {
+            "prompt": "Un helicóptero enciende sus sistemas y después las palas comienzan a girar para su vuelo. Aún sigue en plataforma. ¿Qué evento inicia el tiempo de vuelo OACI?",
+            "options": [
+              "El encendido de cualquier sistema.",
+              "El inicio del giro de las palas del rotor.",
+              "El primer movimiento horizontal después de despegar."
+            ],
+            "correct": 1,
+            "feedback": "El evento es el comienzo del giro del rotor, no encender un sistema ni avanzar horizontalmente. El marco de la pregunta es la definición OACI de tiempo de vuelo.",
+            "order": [
+              2,
+              0,
+              1
+            ]
+          },
+          {
+            "prompt": "Un alumno dice: «Antes del despegue nada cuenta como tiempo de vuelo». ¿Cuál corrección es precisa para aviones según OACI?",
+            "options": [
+              "El tiempo comienza siempre con el encendido del motor.",
+              "El tiempo comienza al cerrar la primera puerta.",
+              "El tiempo comienza con el primer movimiento para despegar y termina al detenerse finalmente al acabar el vuelo."
+            ],
+            "correct": 2,
+            "feedback": "La frase confunde el intervalo contabilizado con la fase físicamente en el aire. Las otras dos opciones introducen eventos que no son los de la definición estudiada.",
+            "order": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        "tips": [
+          "Tip Yaris: si una respuesta dice «empieza cuando despega», revisa qué te están preguntando. Para el tiempo de vuelo del avión según OACI, la pista es «se mueve con propósito de despegar».",
+          "Avión: movimiento para despegar. Helicóptero: giro del rotor. Primero identifica la definición aplicable."
+        ],
+        "chapter": 1,
+        "chapter_name": "Introducción y definiciones",
+        "name": "Aeronave en vuelo",
+        "subtopics": [
+          {
+            "level": 2,
+            "name": "Qué es una aeronave",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Aeronave y tiempo de vuelo",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Avión del movimiento a la detención",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Sigue la secuencia del avión",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Helicóptero del giro al rotor parado",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Lee la condición completa",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          }
+        ],
+        "source_pdf_page": null,
+        "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+        "figures": [],
+        "exercise": {
+          "kind": "match",
+          "title": "Completa las definiciones",
+          "instruction": "Relaciona cada oración con la palabra que la completa.",
+          "pairs": [
+            [
+              "Una aeronave se sostiene por reacciones del…",
+              "aire"
+            ],
+            [
+              "El tiempo de vuelo del avión inicia al… con propósito de despegar.",
+              "moverse"
+            ],
+            [
+              "En el helicóptero, empiezan a girar las… del rotor.",
+              "palas"
+            ]
+          ],
+          "order": [
+            2,
+            1,
+            0
+          ]
+        },
+        "objectives": [
+          "Explicar qué es una aeronave.",
+          "Distinguir aeronave, vuelo físico y tiempo de vuelo según el marco indicado.",
+          "Identificar el inicio y el final del tiempo de vuelo de aviones y helicópteros en las definiciones OACI estudiadas."
+        ],
+        "minutes": 9,
+        "stages": [
+          {
+            "kind": "intro",
+            "nav": "Despegue"
+          },
+          {
+            "kind": "quiz",
+            "nav": "Preflight check",
+            "questions": [
+              0
+            ]
+          },
+          {
+            "kind": "content",
+            "nav": "Qué es una aeronave",
+            "title": "Qué es una aeronave",
+            "cards": [
+              {
+                "title": "Qué es una aeronave",
+                "text": "La definición aeronáutica identifica una máquina que puede mantenerse en la atmósfera gracias a las reacciones del aire, excluyendo las que dependen de la reacción de ese aire contra la superficie terrestre. Importa cómo se sostiene; no basta con que tenga motor, se desplace rápido o transporte personas. Un avión, un helicóptero, un planeador y un globo son ejemplos. El aerodeslizador que flota sobre un colchón de aire apoyado contra el suelo no entra en esta definición.",
+                "covers": [
+                  1
+                ],
+                "wide": false
+              },
+              {
+                "title": "Aeronave y tiempo de vuelo",
+                "text": "Una aeronave sigue siendo aeronave cuando está estacionada. El tiempo de vuelo, en cambio, tiene un comienzo y un final definidos. No lo confundas automáticamente con el tiempo físicamente en el aire ni con todas las definiciones legales de «en vuelo». Para contestar una pregunta, identifica el tipo de aeronave, el término exacto y la norma o contexto indicado. Aquí estudiamos el cómputo de tiempo de vuelo del Anexo 1 de OACI.",
+                "covers": [
+                  2
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Avión del movimiento a la detención",
+            "title": "Avión del movimiento a la detención",
+            "cards": [
+              {
+                "title": "Avión del movimiento a la detención",
+                "text": "Para el avión, OACI cuenta desde su primer movimiento con propósito de despegar hasta que finalmente queda detenido al terminar el vuelo. No empieza al elevar las ruedas ni al aplicar potencia de despegue. El push-back o rodaje que inicia la salida puede estar dentro del intervalo; un remolque entre hangares sin propósito de despegar no satisface ese criterio. La expresión «entre calzos» se usa para este intervalo, pero la definición se refiere al movimiento y a la detención final, no al gesto de retirar o colocar un calzo.",
+                "covers": [
+                  3
+                ],
+                "wide": false
+              },
+              {
+                "title": "Sigue la secuencia del avión",
+                "text": "Imagina esta línea de tiempo: plataforma, primer movimiento para despegar, carrera de despegue, vuelo, aterrizaje y detención final en plataforma. El reloj del tiempo de vuelo comienza en el primer movimiento para despegar y termina en la detención final. Una espera temporal durante el rodaje no es el final del vuelo, y tocar pista al aterrizar tampoco equivale por sí mismo a detenerse al finalizar la operación.",
+                "covers": [
+                  4
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Helicóptero del giro al rotor parado",
+            "title": "Helicóptero del giro al rotor parado",
+            "cards": [
+              {
+                "title": "Helicóptero del giro al rotor parado",
+                "text": "En la definición OACI estudiada, el tiempo de vuelo del helicóptero comienza cuando las palas del rotor empiezan a girar. Termina cuando el helicóptero queda finalmente detenido al acabar el vuelo y las palas del rotor se han parado. Si las palas ya giran como parte de esa operación, el cómputo puede haber comenzado aunque no haya despegado. Encender únicamente los sistemas, sin giro del rotor, no cumple el inicio descrito. No apliques esta definición a cualquier prueba de mantenimiento ni a registros bajo otra normativa sin comprobar su regla.",
+                "covers": [
+                  5
+                ],
+                "wide": false
+              },
+              {
+                "title": "Lee la condición completa",
+                "text": "El tema entrena precisión: «con propósito de despegar» no significa cualquier movimiento; «se detiene al finalizar el vuelo» no significa cualquier parada. En un helicóptero, recuerda también el rotor detenido al final. La distinción entre avión y helicóptero explica por qué los dos relojes del ejemplo no arrancan por el mismo evento.",
+                "covers": [
+                  6
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Error común",
+            "title": "Error común",
+            "cards": [
+              {
+                "title": "Error común",
+                "text": "«El vuelo empieza cuando las ruedas dejan el suelo» confunde despegue con tiempo de vuelo. «Aeronave» y «aeronave en vuelo» tampoco son sinónimos: la primera palabra identifica la máquina, y la segunda requiere un contexto. Evita memorizar una frase como si definiera todos los efectos legales posibles; para las preguntas de este recorrido, la referencia explícita es el tiempo de vuelo según OACI.",
+                "covers": [
+                  7
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "exercise",
+            "nav": "Conecta las ideas"
+          },
+          {
+            "kind": "quiz",
+            "nav": "Ponlo a prueba 1",
+            "questions": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "kind": "quiz",
+            "nav": "Ponlo a prueba 2",
+            "questions": [
+              4,
+              5
+            ]
+          },
+          {
+            "kind": "content",
+            "nav": "Cierre rápido",
+            "title": "Antes de avanzar",
+            "cards": [
+              {
+                "title": "Lo que debes poder explicar",
+                "text": "1. Definir aeronave por su modo de sustentarse, con la excepción de la reacción contra el suelo. 2. Separar la máquina, el vuelo físico y el tiempo de vuelo definido para un propósito. 3. Explicar el inicio y el final del intervalo OACI para avión y helicóptero.",
+                "covers": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ],
+                "wide": true
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "finish",
+            "nav": "Aterrizaje"
+          }
+        ]
+      },
+      "activities": [
+        {
+          "title": "Verdadero o falso",
+          "kind": "true_false",
+          "instruction": "Decide y justifica las tres afirmaciones originales.",
+          "items": [
+            "La definición de aeronave excluye la reacción del aire contra la superficie de la Tierra.",
+            "En el avión solo se cuenta desde que las ruedas dejan la pista.",
+            "En la definición OACI del helicóptero se cuenta desde que empieza a girar el rotor."
+          ],
+          "answer": [
+            "Verdadero.",
+            "Falso.",
+            "Verdadero, dentro de la definición y operación estudiadas."
+          ],
+          "runtimeMapping": {
+            "questions": [
+              1,
+              2,
+              3
+            ]
+          }
+        },
+        {
+          "title": "Completar la definición",
+          "kind": "fill_blank",
+          "instruction": "Completa: reacciones del __; comienza a __ para despegar; las __ del rotor.",
+          "items": [
+            "aire",
+            "moverse",
+            "palas"
+          ],
+          "answer": "Aire, moverse y palas. Justifica el contexto de tiempo de vuelo OACI.",
+          "runtimeMapping": {
+            "exercise": true
+          }
+        },
+        {
+          "title": "Analiza el helicóptero",
+          "kind": "multiple_choice",
+          "instruction": "Identifica el inicio del cómputo en el caso del rotor en plataforma.",
+          "items": [],
+          "answer": "El giro del rotor inicia el tiempo de vuelo según OACI.",
+          "runtimeMapping": {
+            "questions": [
+              4
+            ]
+          }
+        },
+        {
+          "title": "Detecta el error",
+          "kind": "short_answer",
+          "instruction": "Corrige «Antes de despegar nada cuenta como tiempo de vuelo».",
+          "items": [],
+          "answer": "Para el avión según OACI, el intervalo empieza al moverse con propósito de despegue y acaba con la detención final.",
+          "runtimeMapping": {
+            "questions": [
+              5
+            ]
+          }
+        }
+      ],
+      "completionChecks": [
+        "Definir aeronave por su modo de sustentarse, con la excepción de la reacción contra el suelo.",
+        "Separar la máquina, el vuelo físico y el tiempo de vuelo definido para un propósito.",
+        "Explicar el inicio y el final del intervalo OACI para avión y helicóptero."
+      ],
+      "sourceRefs": [
+        "icao-annex1",
+        "mex-aircraft",
+        "tc-annex1",
+        "anac-flight-time"
+      ]
+    },
+    {
+      "id": "ciaac/aerodinamica/modulo-1-introduccion-y-definiciones/definicion-de-fluido-2",
+      "document": {
+        "number": 2,
+        "title": "El aire también es un fluido",
+        "intro": "No hace falta ver una sustancia ni que sea líquida para que pueda fluir. La interacción del avión con el aire empieza aquí.",
+        "cards": [
+          {
+            "title": "La idea central",
+            "text": "Un fluido puede fluir y cambiar de forma bajo una acción tangencial mantenida. Incluye líquidos y gases: el aire es una mezcla gaseosa y también es un fluido. Cuando un avión se mueve a través del aire no atraviesa un vacío; interactúa con materia que tiene masa, ocupa espacio y se mueve alrededor de sus superficies.",
+            "covers": [
+              0
+            ],
+            "wide": false
+          },
+          {
+            "title": "Qué significa fluido",
+            "text": "En este nivel, recuerda esta definición práctica: materia capaz de fluir. Agua y aire pertenecen al mismo grupo aunque se comporten de forma diferente. La palabra no es un sinónimo exclusivo de líquido. La aerodinámica estudia la interacción con el aire, por lo que reconocerlo como fluido es el punto de partida para comprender presión, sustentación y resistencia.",
+            "covers": [
+              1
+            ],
+            "wide": false
+          },
+          {
+            "title": "Sólido y fluido",
+            "text": "Una pieza de metal conserva aproximadamente su forma y volumen bajo condiciones ordinarias. En cambio, un fluido sigue deformándose cuando se mantiene una acción que hace deslizar unas capas respecto de otras. La organización y las interacciones moleculares ayudan a entender la diferencia, pero «moléculas juntas» no basta para clasificar: las de un líquido también están próximas. La idea útil es cómo responde el material a esa acción.",
+            "covers": [
+              2
+            ],
+            "wide": false
+          },
+          {
+            "title": "Líquido y gas",
+            "text": "Un líquido tiene volumen aproximadamente definido a presión y temperatura dadas, pero toma la forma del recipiente y, en reposo bajo gravedad, presenta un nivel. Un gas no mantiene un volumen propio independiente del recipiente: se expande para ocupar el espacio disponible. Por eso el agua puede quedar en la mitad inferior de un vaso mientras el aire ocupa el espacio libre. Que un gas ocupe un volumen determinado en un recipiente no significa que tenga volumen propio fijo.",
+            "covers": [
+              3
+            ],
+            "wide": false
+          },
+          {
+            "title": "Compara los tres estados",
+            "text": "Piensa en tres recipientes iguales. El cubo sólido mantiene su forma. El líquido se acomoda al fondo y a las paredes, conservando aproximadamente su volumen. Las partículas del gas se distribuyen por el espacio disponible. Esta comparación describe condiciones ordinarias; no afirma que un sólido sea indeformable ni que un líquido sea absolutamente incompresible.",
+            "covers": [
+              4
+            ],
+            "wide": false
+          },
+          {
+            "title": "Por qué el aire cuenta",
+            "text": "Aunque no lo veamos, el aire tiene masa y peso. Puede fluir y deformarse alrededor del fuselaje, alas y otras superficies. El comportamiento depende del movimiento relativo: sirve imaginar un avión avanzando en aire tranquilo o el aire pasando alrededor de un modelo fijo. En ambos casos se estudia una interacción entre el cuerpo y el fluido.",
+            "covers": [
+              5
+            ],
+            "wide": false
+          },
+          {
+            "title": "La viscosidad",
+            "text": "Viscosidad es la resistencia interna del fluido al deslizamiento relativo de sus capas. Por eso agua, miel y aceite espeso no fluyen igual en una comparación controlada. El aire tiene viscosidad aunque fluya con facilidad y sea invisible. No es lo mismo que densidad: un fluido puede ser poco denso y aun así tener resistencia interna al movimiento. Más adelante usarás esta idea para comprender la capa límite.",
+            "covers": [
+              6
+            ],
+            "wide": false
+          },
+          {
+            "title": "Del concepto al avión",
+            "text": "Antes de memorizar fórmulas, imagina el aire como materia que rodea el avión y responde a él. No «se rompe» como una pieza rígida: fluye alrededor de sus formas. Sus propiedades y su movimiento permiten estudiar las fuerzas aerodinámicas. En este tema solo necesitas reconocer fluidez, forma, volumen y viscosidad; la organización del flujo se desarrolla en el siguiente recorrido.",
+            "covers": [
+              7
+            ],
+            "wide": false
+          },
+          {
+            "title": "Error común",
+            "text": "Tres trampas: limitar fluido a líquido; atribuir a un gas un volumen propio fijo; y pensar que el aire no tiene viscosidad porque no se ve. Corrige cada una con el criterio físico: líquidos y gases fluyen, el gas ocupa el espacio disponible y el aire sí presenta resistencia interna al movimiento.",
+            "covers": [
+              8
+            ],
+            "wide": false
+          },
+          {
+            "title": "El perfume en la habitación",
+            "text": "El ejemplo de Yaris ayuda: el vapor de perfume no permanece como un charquito en una esquina; se dispersa y mezcla con el aire. Distingue el vapor de las gotas líquidas del aerosol: son el vapor y su mezcla gaseosa los que ilustran que un gas no conserva un volumen propio fijo. La expansión y la mezcla no significan que desaparezca la materia.",
+            "covers": [
+              9
+            ],
+            "wide": false
+          }
+        ],
+        "questions": [
+          {
+            "prompt": "Un alumno dice: «El aire no puede ser fluido porque no es líquido». ¿Qué lo corrige?",
+            "options": [
+              "Los fluidos solo son líquidos.",
+              "El aire es un fluido porque los gases también fluyen y se deforman.",
+              "El aire solo es fluido dentro de un recipiente cerrado."
+            ],
+            "correct": 1,
+            "feedback": "Fluido incluye líquidos y gases. El aire no necesita ser visible, parecerse al agua ni estar confinado para pertenecer a esa categoría.",
+            "order": [
+              2,
+              0,
+              1
+            ]
+          },
+          {
+            "prompt": "«El aire no se ve ni se comporta igual que el agua, así que no es fluido». ¿Cuál es la mejor respuesta?",
+            "options": [
+              "Es correcto: la visibilidad define a los fluidos.",
+              "Es incorrecto: el aire es una mezcla de gases y los gases son fluidos.",
+              "Es correcto salvo cuando el aire está a alta presión."
+            ],
+            "correct": 1,
+            "feedback": "El criterio es que puede fluir y deformarse. Agua y aire son fluidos aunque tengan diferencias en forma, volumen y compresibilidad.",
+            "order": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "prompt": "Detecta el error: «Los gases no son fluidos porque no tienen forma ni volumen propios».",
+            "options": [
+              "No hay error: un fluido debe tener volumen propio.",
+              "La falta de forma y volumen propios excluye a los gases.",
+              "El error es excluir a los gases: también fluyen y ocupan el espacio disponible."
+            ],
+            "correct": 2,
+            "feedback": "Un gas es un fluido. No tener volumen propio fijo lo diferencia de un líquido, pero no lo saca de la categoría de fluidos.",
+            "order": [
+              1,
+              2,
+              0
+            ]
+          },
+          {
+            "prompt": "¿Qué describe viscosidad?",
+            "options": [
+              "Masa por unidad de volumen.",
+              "Resistencia interna al deslizamiento relativo de las capas de un fluido.",
+              "La obligación de que el fluido sea visible."
+            ],
+            "correct": 1,
+            "feedback": "La viscosidad describe resistencia interna al movimiento relativo. Masa por volumen es densidad, un concepto diferente. El aire presenta ambas propiedades.",
+            "order": [
+              2,
+              0,
+              1
+            ]
+          }
+        ],
+        "tips": [
+          "Ejemplo Yaris: piensa en el vapor de un perfume. Se dispersa por el cuarto; no conserva la forma de un charquito. Líquidos y gases son fluidos, aunque no ocupen un recipiente de la misma manera."
+        ],
+        "chapter": 1,
+        "chapter_name": "Introducción y definiciones",
+        "name": "Definición de fluido",
+        "subtopics": [
+          {
+            "level": 2,
+            "name": "Qué significa fluido",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Sólido y fluido",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Líquido y gas",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Compara los tres estados",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Por qué el aire cuenta",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "La viscosidad",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Del concepto al avión",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          }
+        ],
+        "source_pdf_page": null,
+        "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+        "figures": [],
+        "exercise": {
+          "kind": "match",
+          "title": "Relaciona los estados",
+          "instruction": "Asocia cada estado con su comportamiento en condiciones ordinarias.",
+          "pairs": [
+            [
+              "Sólido",
+              "Conserva aproximadamente forma y volumen."
+            ],
+            [
+              "Líquido",
+              "Conserva aproximadamente volumen y adopta la forma del recipiente."
+            ],
+            [
+              "Gas",
+              "Se expande para ocupar el espacio disponible."
+            ]
+          ],
+          "order": [
+            2,
+            1,
+            0
+          ]
+        },
+        "objectives": [
+          "Definir qué es un fluido.",
+          "Diferenciar sólido, líquido y gas por forma y volumen.",
+          "Explicar por qué el aire es un fluido y reconocer su viscosidad."
+        ],
+        "minutes": 9,
+        "stages": [
+          {
+            "kind": "intro",
+            "nav": "Despegue"
+          },
+          {
+            "kind": "quiz",
+            "nav": "Preflight check",
+            "questions": [
+              0
+            ]
+          },
+          {
+            "kind": "content",
+            "nav": "Qué significa fluido",
+            "title": "Qué significa fluido",
+            "cards": [
+              {
+                "title": "Qué significa fluido",
+                "text": "En este nivel, recuerda esta definición práctica: materia capaz de fluir. Agua y aire pertenecen al mismo grupo aunque se comporten de forma diferente. La palabra no es un sinónimo exclusivo de líquido. La aerodinámica estudia la interacción con el aire, por lo que reconocerlo como fluido es el punto de partida para comprender presión, sustentación y resistencia.",
+                "covers": [
+                  1
+                ],
+                "wide": false
+              },
+              {
+                "title": "Sólido y fluido",
+                "text": "Una pieza de metal conserva aproximadamente su forma y volumen bajo condiciones ordinarias. En cambio, un fluido sigue deformándose cuando se mantiene una acción que hace deslizar unas capas respecto de otras. La organización y las interacciones moleculares ayudan a entender la diferencia, pero «moléculas juntas» no basta para clasificar: las de un líquido también están próximas. La idea útil es cómo responde el material a esa acción.",
+                "covers": [
+                  2
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Líquido y gas",
+            "title": "Líquido y gas",
+            "cards": [
+              {
+                "title": "Líquido y gas",
+                "text": "Un líquido tiene volumen aproximadamente definido a presión y temperatura dadas, pero toma la forma del recipiente y, en reposo bajo gravedad, presenta un nivel. Un gas no mantiene un volumen propio independiente del recipiente: se expande para ocupar el espacio disponible. Por eso el agua puede quedar en la mitad inferior de un vaso mientras el aire ocupa el espacio libre. Que un gas ocupe un volumen determinado en un recipiente no significa que tenga volumen propio fijo.",
+                "covers": [
+                  3
+                ],
+                "wide": false
+              },
+              {
+                "title": "Compara los tres estados",
+                "text": "Piensa en tres recipientes iguales. El cubo sólido mantiene su forma. El líquido se acomoda al fondo y a las paredes, conservando aproximadamente su volumen. Las partículas del gas se distribuyen por el espacio disponible. Esta comparación describe condiciones ordinarias; no afirma que un sólido sea indeformable ni que un líquido sea absolutamente incompresible.",
+                "covers": [
+                  4
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Por qué el aire cuenta",
+            "title": "Por qué el aire cuenta",
+            "cards": [
+              {
+                "title": "Por qué el aire cuenta",
+                "text": "Aunque no lo veamos, el aire tiene masa y peso. Puede fluir y deformarse alrededor del fuselaje, alas y otras superficies. El comportamiento depende del movimiento relativo: sirve imaginar un avión avanzando en aire tranquilo o el aire pasando alrededor de un modelo fijo. En ambos casos se estudia una interacción entre el cuerpo y el fluido.",
+                "covers": [
+                  5
+                ],
+                "wide": false
+              },
+              {
+                "title": "La viscosidad",
+                "text": "Viscosidad es la resistencia interna del fluido al deslizamiento relativo de sus capas. Por eso agua, miel y aceite espeso no fluyen igual en una comparación controlada. El aire tiene viscosidad aunque fluya con facilidad y sea invisible. No es lo mismo que densidad: un fluido puede ser poco denso y aun así tener resistencia interna al movimiento. Más adelante usarás esta idea para comprender la capa límite.",
+                "covers": [
+                  6
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Del concepto al avión",
+            "title": "Del concepto al avión",
+            "cards": [
+              {
+                "title": "Del concepto al avión",
+                "text": "Antes de memorizar fórmulas, imagina el aire como materia que rodea el avión y responde a él. No «se rompe» como una pieza rígida: fluye alrededor de sus formas. Sus propiedades y su movimiento permiten estudiar las fuerzas aerodinámicas. En este tema solo necesitas reconocer fluidez, forma, volumen y viscosidad; la organización del flujo se desarrolla en el siguiente recorrido.",
+                "covers": [
+                  7
+                ],
+                "wide": false
+              },
+              {
+                "title": "Error común",
+                "text": "Tres trampas: limitar fluido a líquido; atribuir a un gas un volumen propio fijo; y pensar que el aire no tiene viscosidad porque no se ve. Corrige cada una con el criterio físico: líquidos y gases fluyen, el gas ocupa el espacio disponible y el aire sí presenta resistencia interna al movimiento.",
+                "covers": [
+                  8
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "El perfume en la habitación",
+            "title": "El perfume en la habitación",
+            "cards": [
+              {
+                "title": "El perfume en la habitación",
+                "text": "El ejemplo de Yaris ayuda: el vapor de perfume no permanece como un charquito en una esquina; se dispersa y mezcla con el aire. Distingue el vapor de las gotas líquidas del aerosol: son el vapor y su mezcla gaseosa los que ilustran que un gas no conserva un volumen propio fijo. La expansión y la mezcla no significan que desaparezca la materia.",
+                "covers": [
+                  9
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "exercise",
+            "nav": "Conecta las ideas"
+          },
+          {
+            "kind": "quiz",
+            "nav": "Ponlo a prueba",
+            "questions": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "kind": "content",
+            "nav": "Cierre rápido",
+            "title": "Antes de avanzar",
+            "cards": [
+              {
+                "title": "Lo que debes poder explicar",
+                "text": "1. Definir fluido sin limitarlo a los líquidos. 2. Comparar forma y volumen de sólido, líquido y gas. 3. Explicar que el aire tiene masa, ocupa espacio, fluye y presenta viscosidad.",
+                "covers": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9
+                ],
+                "wide": true
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "finish",
+            "nav": "Aterrizaje"
+          }
+        ]
+      },
+      "activities": [
+        {
+          "title": "Relacionar columnas",
+          "kind": "match",
+          "instruction": "Relaciona sólido, líquido y gas con forma, volumen y comportamiento.",
+          "items": [
+            "Sólido",
+            "Líquido",
+            "Gas"
+          ],
+          "answer": [
+            "Sólido: forma y volumen aproximadamente definidos.",
+            "Líquido: volumen aproximadamente definido y forma del recipiente.",
+            "Gas: ocupa el espacio disponible."
+          ],
+          "runtimeMapping": {
+            "exercise": true
+          }
+        },
+        {
+          "title": "Analiza el caso del aire",
+          "kind": "multiple_choice",
+          "instruction": "Evalúa la afirmación sobre invisibilidad y comportamiento diferente del agua.",
+          "items": [],
+          "answer": "El aire es una mezcla de gases; los gases son fluidos.",
+          "runtimeMapping": {
+            "questions": [
+              1
+            ]
+          }
+        },
+        {
+          "title": "Detecta el error",
+          "kind": "short_answer",
+          "instruction": "Corrige la frase que excluye gases del concepto de fluido.",
+          "items": [],
+          "answer": "No tener forma o volumen propios no impide fluir. Los gases también son fluidos.",
+          "runtimeMapping": {
+            "questions": [
+              2
+            ]
+          }
+        }
+      ],
+      "completionChecks": [
+        "Definir fluido sin limitarlo a los líquidos.",
+        "Comparar forma y volumen de sólido, líquido y gas.",
+        "Explicar que el aire tiene masa, ocupa espacio, fluye y presenta viscosidad."
+      ],
+      "sourceRefs": [
+        "ciaac-basica",
+        "phak",
+        "carmona"
+      ]
+    },
+    {
+      "id": "ciaac/aerodinamica/modulo-1-introduccion-y-definiciones/capa-limite-flujo-laminar-y-turbulento-3",
+      "document": {
+        "number": 3,
+        "title": "El aire junto al ala cambia",
+        "intro": "La velocidad del aire cerca de una superficie no es uniforme. Entender esa región permite distinguir capa límite, transición y separación sin confundirlas.",
+        "cards": [
+          {
+            "title": "La idea central",
+            "text": "En el marco del ala, el aire inmediatamente junto a la pared tiene velocidad relativa prácticamente nula. Al alejarnos, la velocidad se aproxima a la del flujo exterior local. Esa región afectada por la viscosidad es la capa límite. Puede ser laminar o turbulenta; cambiar de una a otra no significa automáticamente que el aire se haya separado del ala.",
+            "covers": [
+              0
+            ],
+            "wide": false
+          },
+          {
+            "title": "Qué es la capa límite",
+            "text": "La capa límite es una región delgada junto a la superficie donde los efectos viscosos cambian de manera importante la velocidad del flujo. Cerca de la pared, la velocidad relativa a esa pared es prácticamente cero; más lejos se aproxima a la del flujo exterior. En un ala, ese flujo exterior local también puede acelerar o desacelerar a lo largo del perfil, por lo que no conviene imaginar una única velocidad idéntica en todo el entorno.",
+            "covers": [
+              1
+            ],
+            "wide": false
+          },
+          {
+            "title": "Por qué aparece",
+            "text": "La condición de no deslizamiento y la viscosidad transmiten el efecto de la pared hacia el fluido cercano. Las capas próximas se afectan entre sí y aparece un gradiente de velocidad. La capa límite existe incluso sobre una superficie idealmente lisa; la rugosidad no es su causa indispensable. Las irregularidades de un ala real sí pueden modificar su desarrollo y favorecer una transición más temprana.",
+            "covers": [
+              2
+            ],
+            "wide": false
+          },
+          {
+            "title": "Velocidad respecto de qué",
+            "text": "Elige un marco de referencia antes de decir «cero». En un túnel de viento con el modelo fijo, el aire junto a la pared está casi detenido respecto del túnel. En un avión que avanza, ese aire se mueve con la superficie respecto de la Tierra y su velocidad relativa al ala es casi cero. No significa que haya una fila de moléculas inmóviles en el espacio mientras el avión las atraviesa.",
+            "covers": [
+              3
+            ],
+            "wide": false
+          },
+          {
+            "title": "Flujo laminar",
+            "text": "Laminar describe un movimiento ordenado, con capas que se deslizan suavemente y poca mezcla transversal macroscópica. La imagen de hojas de papel que se deslizan unas sobre otras ayuda a reconocerlo. Una capa límite puede iniciar laminar cerca del borde de ataque cuando las condiciones lo permiten, pero no es una garantía para cualquier ala, superficie o régimen de vuelo.",
+            "covers": [
+              4
+            ],
+            "wide": false
+          },
+          {
+            "title": "Flujo turbulento",
+            "text": "En una capa límite turbulenta hay fluctuaciones, remolinos y mayor mezcla entre capas. Esa mezcla transporta cantidad de movimiento hacia la zona cercana a la pared. En condiciones comparables suele aumentar la fricción superficial; también puede ayudar al flujo a resistir un gradiente de presión adverso y demorar la separación. No equivale por sí misma a «flujo separado» ni a turbulencia meteorológica.",
+            "covers": [
+              5
+            ],
+            "wide": false
+          },
+          {
+            "title": "Transición y separación",
+            "text": "Transición es el cambio de capa límite laminar a turbulenta; suele ocurrir en una zona, representada de forma simplificada como un punto. Separación es el desprendimiento del flujo de la superficie. Son procesos distintos. El flujo puede hacerse turbulento y seguir adherido. Aquí basta distinguirlos; la relación detallada entre separación y pérdida aerodinámica corresponde a temas posteriores.",
+            "covers": [
+              6
+            ],
+            "wide": false
+          },
+          {
+            "title": "Compara en condiciones semejantes",
+            "text": "Laminar: movimiento ordenado, poca mezcla y habitualmente menor fricción y espesor. Turbulento: mayor mezcla, fricción y, en una comparación equivalente, normalmente mayor espesor; suele resistir mejor la separación ante un gradiente adverso. Estas tendencias no son una regla de que toda capa turbulenta tenga que ser más gruesa que cualquier capa laminar en cualquier posición. Hay un intercambio entre fricción y resistencia a separarse.",
+            "covers": [
+              7
+            ],
+            "wide": false
+          },
+          {
+            "title": "Rugosidad y contaminación",
+            "text": "Insectos, suciedad, escarcha, hielo e irregularidades pueden perturbar el flujo y adelantar la transición, además de modificar la forma efectiva de la superficie y degradar el comportamiento aerodinámico. No interpretes la capacidad de una capa turbulenta para resistir separación como permiso para dejar contaminación. El estado limpio y las limitaciones y procedimientos aplicables a la aeronave siguen siendo esenciales; esta explicación no sustituye la inspección ni las instrucciones del fabricante.",
+            "covers": [
+              8
+            ],
+            "wide": false
+          },
+          {
+            "title": "Por qué importa",
+            "text": "La capa límite conecta tres ideas del recorrido: el aire tiene viscosidad, la superficie influye y el movimiento cercano a ella difiere del exterior. Esta región participa en la fricción, la separación y el comportamiento aerodinámico. Entenderla evita atribuir todo a una superficie que simplemente «corta el aire» sin interacción.",
+            "covers": [
+              9
+            ],
+            "wide": false
+          },
+          {
+            "title": "Error común",
+            "text": "No confundas transición con separación. No concluyas que toda turbulencia es indeseable ni que la turbulencia vuelve segura un ala sucia. Y cada vez que leas «velocidad cero en la pared», añade mentalmente «respecto de la pared». Son tres comprobaciones que evitan respuestas aparentemente lógicas pero físicamente imprecisas.",
+            "covers": [
+              10
+            ],
+            "wide": false
+          },
+          {
+            "title": "Hojas e incienso",
+            "text": "Yaris propone dos imágenes: hojas que se deslizan para recordar laminar, y humo de incienso que empieza relativamente ordenado y después forma remolinos para recordar transición. El humo es una analogía visual, no una representación exacta de la capa límite de un ala: intervienen también flotación y condiciones del ambiente. Úsalo para reconocer orden y mezcla.",
+            "covers": [
+              11
+            ],
+            "wide": false
+          }
+        ],
+        "questions": [
+          {
+            "prompt": "En el marco del ala, ¿por qué el aire junto a la superficie no se mueve igual que el aire exterior?",
+            "options": [
+              "Todo el aire debe tener exactamente la misma velocidad.",
+              "La viscosidad y la condición en la pared producen una capa límite con variación de velocidad.",
+              "La capa límite aparece solo con el avión detenido."
+            ],
+            "correct": 1,
+            "feedback": "El aire junto a la pared tiene velocidad relativa casi nula; la velocidad aumenta hacia el flujo exterior local. Esto no depende de que el avión esté estacionado.",
+            "order": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "prompt": "El borde delantero tiene insectos y suciedad. ¿Qué efecto es posible?",
+            "options": [
+              "La rugosidad puede adelantar la transición y degradar el comportamiento aerodinámico.",
+              "La rugosidad elimina la viscosidad.",
+              "La rugosidad garantiza que toda el ala conserve flujo laminar."
+            ],
+            "correct": 0,
+            "feedback": "La contaminación puede introducir perturbaciones y alterar la superficie. Que una capa turbulenta a veces resista mejor la separación no justifica contaminar el ala.",
+            "order": [
+              1,
+              2,
+              0
+            ]
+          },
+          {
+            "prompt": "Detecta el error: «Punto de transición significa que el aire se desprende del ala».",
+            "options": [
+              "Es correcto: transición y separación son sinónimos.",
+              "Transición es el cambio laminar a turbulento; separación es el desprendimiento del flujo.",
+              "Transición significa que desaparece la viscosidad."
+            ],
+            "correct": 1,
+            "feedback": "El cambio de régimen no obliga a separarse. Una capa límite turbulenta puede permanecer adherida a la superficie.",
+            "order": [
+              2,
+              0,
+              1
+            ]
+          },
+          {
+            "prompt": "¿Qué significa velocidad casi cero en la pared de un avión en movimiento?",
+            "options": [
+              "Cero respecto de la pared, usando el marco de la aeronave.",
+              "Cero respecto de la Tierra en todo momento.",
+              "Cero en toda la capa límite."
+            ],
+            "correct": 0,
+            "feedback": "El marco de referencia es indispensable. La velocidad relativa cambia al alejarnos de la pared; no es cero en toda la capa límite.",
+            "order": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "prompt": "¿Qué comparación es correcta bajo condiciones semejantes?",
+            "options": [
+              "La capa turbulenta siempre elimina toda resistencia.",
+              "La capa laminar siempre resiste más la separación.",
+              "La turbulenta suele tener más fricción y puede resistir mejor la separación."
+            ],
+            "correct": 2,
+            "feedback": "La mezcla transporta cantidad de movimiento cerca de la pared. Ese beneficio frente a separación coexiste con mayor fricción; no hay un régimen universalmente mejor.",
+            "order": [
+              1,
+              2,
+              0
+            ]
+          }
+        ],
+        "tips": [
+          "Tip Yaris: el aire no resbala perfecto sobre el ala; cerca de la pared se frena respecto de ella.",
+          "Laminar = láminas. Turbulento = torbellinos. Transición cambia el régimen; separación pierde la adherencia.",
+          "El incienso ayuda a imaginar orden y remolinos; no sustituye el modelo físico del ala."
+        ],
+        "chapter": 1,
+        "chapter_name": "Introducción y definiciones",
+        "name": "Capa límite, flujo laminar y turbulento",
+        "subtopics": [
+          {
+            "level": 2,
+            "name": "Qué es la capa límite",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Por qué aparece",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Velocidad respecto de qué",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Flujo laminar",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Flujo turbulento",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Transición y separación",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Compara en condiciones semejantes",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Rugosidad y contaminación",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Por qué importa",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          }
+        ],
+        "source_pdf_page": null,
+        "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+        "figures": [],
+        "exercise": {
+          "kind": "match",
+          "title": "Conecta cuatro conceptos",
+          "instruction": "Relaciona cada concepto con su definición; conserva la distinción entre régimen y región del flujo.",
+          "pairs": [
+            [
+              "Capa límite",
+              "Región junto a una superficie con velocidad afectada por viscosidad."
+            ],
+            [
+              "Flujo laminar",
+              "Movimiento ordenado en capas, con poca mezcla transversal macroscópica."
+            ],
+            [
+              "Flujo turbulento",
+              "Fluctuaciones, remolinos y mayor mezcla entre capas."
+            ],
+            [
+              "Transición",
+              "Cambio de capa límite laminar a turbulenta."
+            ]
+          ],
+          "order": [
+            3,
+            2,
+            1,
+            0
+          ]
+        },
+        "objectives": [
+          "Definir capa límite usando velocidad relativa a la superficie.",
+          "Distinguir flujo laminar, turbulento, transición y separación.",
+          "Explicar cómo viscosidad, perturbaciones y rugosidad modifican el flujo."
+        ],
+        "minutes": 10,
+        "stages": [
+          {
+            "kind": "intro",
+            "nav": "Despegue"
+          },
+          {
+            "kind": "quiz",
+            "nav": "Preflight check",
+            "questions": [
+              0
+            ]
+          },
+          {
+            "kind": "content",
+            "nav": "Qué es la capa límite",
+            "title": "Qué es la capa límite",
+            "cards": [
+              {
+                "title": "Qué es la capa límite",
+                "text": "La capa límite es una región delgada junto a la superficie donde los efectos viscosos cambian de manera importante la velocidad del flujo. Cerca de la pared, la velocidad relativa a esa pared es prácticamente cero; más lejos se aproxima a la del flujo exterior. En un ala, ese flujo exterior local también puede acelerar o desacelerar a lo largo del perfil, por lo que no conviene imaginar una única velocidad idéntica en todo el entorno.",
+                "covers": [
+                  1
+                ],
+                "wide": false
+              },
+              {
+                "title": "Por qué aparece",
+                "text": "La condición de no deslizamiento y la viscosidad transmiten el efecto de la pared hacia el fluido cercano. Las capas próximas se afectan entre sí y aparece un gradiente de velocidad. La capa límite existe incluso sobre una superficie idealmente lisa; la rugosidad no es su causa indispensable. Las irregularidades de un ala real sí pueden modificar su desarrollo y favorecer una transición más temprana.",
+                "covers": [
+                  2
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Velocidad respecto de qué",
+            "title": "Velocidad respecto de qué",
+            "cards": [
+              {
+                "title": "Velocidad respecto de qué",
+                "text": "Elige un marco de referencia antes de decir «cero». En un túnel de viento con el modelo fijo, el aire junto a la pared está casi detenido respecto del túnel. En un avión que avanza, ese aire se mueve con la superficie respecto de la Tierra y su velocidad relativa al ala es casi cero. No significa que haya una fila de moléculas inmóviles en el espacio mientras el avión las atraviesa.",
+                "covers": [
+                  3
+                ],
+                "wide": false
+              },
+              {
+                "title": "Flujo laminar",
+                "text": "Laminar describe un movimiento ordenado, con capas que se deslizan suavemente y poca mezcla transversal macroscópica. La imagen de hojas de papel que se deslizan unas sobre otras ayuda a reconocerlo. Una capa límite puede iniciar laminar cerca del borde de ataque cuando las condiciones lo permiten, pero no es una garantía para cualquier ala, superficie o régimen de vuelo.",
+                "covers": [
+                  4
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Flujo turbulento",
+            "title": "Flujo turbulento",
+            "cards": [
+              {
+                "title": "Flujo turbulento",
+                "text": "En una capa límite turbulenta hay fluctuaciones, remolinos y mayor mezcla entre capas. Esa mezcla transporta cantidad de movimiento hacia la zona cercana a la pared. En condiciones comparables suele aumentar la fricción superficial; también puede ayudar al flujo a resistir un gradiente de presión adverso y demorar la separación. No equivale por sí misma a «flujo separado» ni a turbulencia meteorológica.",
+                "covers": [
+                  5
+                ],
+                "wide": false
+              },
+              {
+                "title": "Transición y separación",
+                "text": "Transición es el cambio de capa límite laminar a turbulenta; suele ocurrir en una zona, representada de forma simplificada como un punto. Separación es el desprendimiento del flujo de la superficie. Son procesos distintos. El flujo puede hacerse turbulento y seguir adherido. Aquí basta distinguirlos; la relación detallada entre separación y pérdida aerodinámica corresponde a temas posteriores.",
+                "covers": [
+                  6
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Compara en condiciones semejantes",
+            "title": "Compara en condiciones semejantes",
+            "cards": [
+              {
+                "title": "Compara en condiciones semejantes",
+                "text": "Laminar: movimiento ordenado, poca mezcla y habitualmente menor fricción y espesor. Turbulento: mayor mezcla, fricción y, en una comparación equivalente, normalmente mayor espesor; suele resistir mejor la separación ante un gradiente adverso. Estas tendencias no son una regla de que toda capa turbulenta tenga que ser más gruesa que cualquier capa laminar en cualquier posición. Hay un intercambio entre fricción y resistencia a separarse.",
+                "covers": [
+                  7
+                ],
+                "wide": false
+              },
+              {
+                "title": "Rugosidad y contaminación",
+                "text": "Insectos, suciedad, escarcha, hielo e irregularidades pueden perturbar el flujo y adelantar la transición, además de modificar la forma efectiva de la superficie y degradar el comportamiento aerodinámico. No interpretes la capacidad de una capa turbulenta para resistir separación como permiso para dejar contaminación. El estado limpio y las limitaciones y procedimientos aplicables a la aeronave siguen siendo esenciales; esta explicación no sustituye la inspección ni las instrucciones del fabricante.",
+                "covers": [
+                  8
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Por qué importa",
+            "title": "Por qué importa",
+            "cards": [
+              {
+                "title": "Por qué importa",
+                "text": "La capa límite conecta tres ideas del recorrido: el aire tiene viscosidad, la superficie influye y el movimiento cercano a ella difiere del exterior. Esta región participa en la fricción, la separación y el comportamiento aerodinámico. Entenderla evita atribuir todo a una superficie que simplemente «corta el aire» sin interacción.",
+                "covers": [
+                  9
+                ],
+                "wide": false
+              },
+              {
+                "title": "Error común",
+                "text": "No confundas transición con separación. No concluyas que toda turbulencia es indeseable ni que la turbulencia vuelve segura un ala sucia. Y cada vez que leas «velocidad cero en la pared», añade mentalmente «respecto de la pared». Son tres comprobaciones que evitan respuestas aparentemente lógicas pero físicamente imprecisas.",
+                "covers": [
+                  10
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Hojas e incienso",
+            "title": "Hojas e incienso",
+            "cards": [
+              {
+                "title": "Hojas e incienso",
+                "text": "Yaris propone dos imágenes: hojas que se deslizan para recordar laminar, y humo de incienso que empieza relativamente ordenado y después forma remolinos para recordar transición. El humo es una analogía visual, no una representación exacta de la capa límite de un ala: intervienen también flotación y condiciones del ambiente. Úsalo para reconocer orden y mezcla.",
+                "covers": [
+                  11
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "exercise",
+            "nav": "Conecta las ideas"
+          },
+          {
+            "kind": "quiz",
+            "nav": "Ponlo a prueba 1",
+            "questions": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "kind": "quiz",
+            "nav": "Ponlo a prueba 2",
+            "questions": [
+              4
+            ]
+          },
+          {
+            "kind": "content",
+            "nav": "Cierre rápido",
+            "title": "Antes de avanzar",
+            "cards": [
+              {
+                "title": "Lo que debes poder explicar",
+                "text": "1. Explicar la variación de velocidad relativa a la pared dentro de la capa límite. 2. Distinguir movimiento laminar y turbulento, con sus tendencias de fricción y separación. 3. Diferenciar transición, separación y efectos de la contaminación.",
+                "covers": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11
+                ],
+                "wide": true
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "finish",
+            "nav": "Aterrizaje"
+          }
+        ]
+      },
+      "activities": [
+        {
+          "title": "Relacionar columnas",
+          "kind": "match",
+          "instruction": "Asocia los cuatro conceptos del borrador con sus definiciones.",
+          "items": [
+            "Capa límite",
+            "Flujo laminar",
+            "Flujo turbulento",
+            "Transición"
+          ],
+          "answer": [
+            "Región viscosa cercana a pared.",
+            "Orden en capas.",
+            "Mezcla y remolinos.",
+            "Cambio laminar a turbulento."
+          ],
+          "runtimeMapping": {
+            "exercise": true
+          }
+        },
+        {
+          "title": "Analiza el ala contaminada",
+          "kind": "multiple_choice",
+          "instruction": "Explica qué puede hacer la rugosidad al flujo.",
+          "items": [],
+          "answer": "Puede adelantar la transición y degradar la aerodinámica; no elimina viscosidad ni garantiza beneficio.",
+          "runtimeMapping": {
+            "questions": [
+              1
+            ]
+          }
+        },
+        {
+          "title": "Detecta el error",
+          "kind": "short_answer",
+          "instruction": "Corrige la confusión entre transición y separación.",
+          "items": [],
+          "answer": "Transición cambia el régimen; separación desprende el flujo de la superficie.",
+          "runtimeMapping": {
+            "questions": [
+              2
+            ]
+          }
+        }
+      ],
+      "completionChecks": [
+        "Explicar la variación de velocidad relativa a la pared dentro de la capa límite.",
+        "Distinguir movimiento laminar y turbulento, con sus tendencias de fricción y separación.",
+        "Diferenciar transición, separación y efectos de la contaminación."
+      ],
+      "sourceRefs": [
+        "nasa-boundary",
+        "phak",
+        "carmona"
+      ]
+    },
+    {
+      "id": "ciaac/aerodinamica/modulo-1-introduccion-y-definiciones/presion-estatica-dinamica-y-total-4",
+      "document": {
+        "number": 4,
+        "title": "Tres presiones una relación",
+        "intro": "Estática, dinámica y total describen cosas distintas. Reconoce qué representa cada una y cuándo puedes sumar estática más dinámica.",
+        "cards": [
+          {
+            "title": "La idea central",
+            "text": "La presión estática ps es una propiedad local del aire, incluso si el aire se mueve. La presión dinámica q = ½ρV² es una magnitud asociada a la energía cinética por unidad de volumen. La presión total pt corresponde a frenar el flujo hasta velocidad cero mediante una desaceleración ideal. En el modelo incompresible estudiado, pt = ps + q. Identificar el modelo importa tanto como recordar la suma.",
+            "covers": [
+              0
+            ],
+            "wide": false
+          },
+          {
+            "title": "Qué es presión",
+            "text": "Presión es fuerza normal por unidad de área: p = F normal / A. La fuerza normal es perpendicular a la superficie. Para la misma fuerza repartida uniformemente, menor área implica mayor presión. En el Sistema Internacional se expresa en pascales: 1 Pa = 1 N/m². Una fuerza sin dividir entre área no es una presión; en algunos textos se usa S para representar esa área.",
+            "covers": [
+              1
+            ],
+            "wide": false
+          },
+          {
+            "title": "Presión estática",
+            "text": "La presión estática es la presión local del fluido. Existe tanto en aire en reposo como en aire en movimiento; la palabra «estática» no obliga a que todo el aire esté quieto. En plataforma sin viento relativo podemos usar la presión atmosférica ambiente como ejemplo. En torno a un ala en vuelo, la presión estática puede variar de un punto a otro. No la identifiques siempre con un único valor ambiental en toda la superficie.",
+            "covers": [
+              2
+            ],
+            "wide": false
+          },
+          {
+            "title": "Presión dinámica",
+            "text": "La presión dinámica se define como q = ½ρV². ρ es densidad del aire y V es la velocidad del flujo respecto del marco elegido, por ejemplo la velocidad del aire respecto de la aeronave. q depende linealmente de ρ y del cuadrado de V: a igual densidad, duplicar V multiplica q por cuatro. Si V es cero, q es cero. Un avión parado sobre tierra puede tener q distinta de cero respecto de él si sopla viento.",
+            "covers": [
+              3
+            ],
+            "wide": false
+          },
+          {
+            "title": "Presión total y estancamiento",
+            "text": "La presión total o de estancamiento es la que se obtendría al desacelerar idealmente el flujo hasta velocidad cero. El punto frontal de un cuerpo o la entrada de un Pitot ayuda a visualizar esa desaceleración. En un flujo real pueden existir pérdidas, por lo que no todo lugar donde la velocidad sea cero recupera sin pérdidas la presión total del flujo de origen. La pared dentro de una capa límite no es intercambiable con un Pitot ideal.",
+            "covers": [
+              4
+            ],
+            "wide": false
+          },
+          {
+            "title": "Cuándo vale la suma",
+            "text": "Para el modelo de flujo incompresible, estacionario, sin aporte de energía, con pérdidas viscosas despreciables y cambio de altura despreciable, la relación a lo largo de una línea de corriente es pt = ps + ½ρV² = ps + q. En ese marco pt se conserva. El módulo usa esta aproximación para introducir las tres magnitudes; no la extrapoles sin corrección a velocidades donde la compresibilidad sea importante.",
+            "covers": [
+              5
+            ],
+            "wide": false
+          },
+          {
+            "title": "Impacto no siempre significa dinámica",
+            "text": "A veces se usa «presión de impacto» para q, pero conviene distinguirlas. Un Pitot capta presión total; la diferencia entre total y estática es la presión de impacto. En la aproximación incompresible esa diferencia coincide con q. En flujo compresible no son, en general, numéricamente iguales. Una flecha que pega de frente a la nariz no identifica una zona que contenga exclusivamente presión dinámica.",
+            "covers": [
+              6
+            ],
+            "wide": false
+          },
+          {
+            "title": "Lee las tres situaciones",
+            "text": "Estática: presión local del aire, con o sin flujo. Dinámica: ½ρV², medida de su movimiento en el marco elegido. Total: presión de una desaceleración ideal hasta reposo. Si V = 0, entonces q = 0 y la total coincide con la estática local. Si se mantiene pt y aumenta V bajo las condiciones del modelo, q aumenta y ps disminuye. Eso no significa que ps deba bajar en cualquier comparación entre dos vuelos distintos.",
+            "covers": [
+              7
+            ],
+            "wide": false
+          },
+          {
+            "title": "Para qué sirve distinguirlas",
+            "text": "El sistema Pitot-estático utiliza estas ideas: el Pitot lleva presión total y las tomas estáticas proporcionan presión estática. Su comparación permite obtener información de velocidad con la calibración y correcciones pertinentes. El altímetro y el indicador de velocidad vertical utilizan la presión estática. Este recorrido introduce las magnitudes; no desarrolla diagnóstico de bloqueos ni procedimientos instrumentales.",
+            "covers": [
+              8
+            ],
+            "wide": false
+          },
+          {
+            "title": "Error común",
+            "text": "Dinámica no es total. La total incluye la contribución estática y, bajo el modelo indicado, la dinámica. Tampoco afirmes que al acelerar «todas las presiones suben»: debes decir qué se mantiene constante. Por último, «avión detenido» no asegura V relativa cero; comprueba si el aire está quieto respecto de él.",
+            "covers": [
+              9
+            ],
+            "wide": false
+          },
+          {
+            "title": "El ejemplo de la pared y el viento",
+            "text": "Yaris propone imaginar una pared. Sin viento relativo hay presión ambiental. Cuando llega viento de frente y se frena en un punto de estancamiento, la presión allí aumenta respecto del flujo exterior. En el modelo incompresible ideal, ese incremento equivale a q y el valor alcanzado es pt. Conserva la imagen «ambiente más efecto de frenar el movimiento», sin llamar q a toda la presión frontal.",
+            "covers": [
+              10
+            ],
+            "wide": false
+          }
+        ],
+        "questions": [
+          {
+            "prompt": "Un avión está en plataforma sin viento y después se mueve respecto del aire. ¿Qué afirmación es correcta?",
+            "options": [
+              "La estática solo existe a alta velocidad.",
+              "La dinámica q depende del movimiento relativo entre aire y aeronave.",
+              "La total debe ser menor que la estática en el modelo estudiado."
+            ],
+            "correct": 1,
+            "feedback": "q = ½ρV² y vale cero cuando V relativa es cero. La estática existe también sin movimiento. La condición sin viento evita confundir velocidad sobre tierra con velocidad respecto del aire.",
+            "order": [
+              1,
+              2,
+              0
+            ]
+          },
+          {
+            "prompt": "¿Cómo se llama la presión local del aire alrededor del avión, aunque exista flujo?",
+            "options": [
+              "Estática.",
+              "Dinámica.",
+              "Únicamente total."
+            ],
+            "correct": 0,
+            "feedback": "Estática no significa que el aire deba estar quieto: es su presión local.",
+            "order": [
+              2,
+              0,
+              1
+            ]
+          },
+          {
+            "prompt": "La diferencia pt − ps obtenida al frenar idealmente el flujo coincide con q bajo el modelo incompresible. ¿Qué concepto identifica esta diferencia?",
+            "options": [
+              "La presión atmosférica siempre nula.",
+              "La llamada presión de impacto.",
+              "La densidad."
+            ],
+            "correct": 1,
+            "feedback": "La presión de impacto es pt − ps; coincide con q en el modelo incompresible, pero no se debe equiparar universalmente en flujo compresible.",
+            "order": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "prompt": "¿Qué presión alcanza un punto de estancamiento ideal respecto del flujo que llega?",
+            "options": [
+              "Solo la dinámica.",
+              "Total.",
+              "Ninguna porque V es cero."
+            ],
+            "correct": 1,
+            "feedback": "Al frenar idealmente el flujo se obtiene presión total. V cero allí no significa presión cero.",
+            "order": [
+              1,
+              2,
+              0
+            ]
+          },
+          {
+            "prompt": "¿Qué magnitud se calcula directamente con ½ρV²?",
+            "options": [
+              "Estática.",
+              "Dinámica.",
+              "Temperatura total."
+            ],
+            "correct": 1,
+            "feedback": "Es la definición de q. Distingue la magnitud asociada al movimiento del valor de la presión local.",
+            "order": [
+              2,
+              0,
+              1
+            ]
+          },
+          {
+            "prompt": "En el modelo incompresible ideal, ¿a qué equivale ps + q?",
+            "options": [
+              "A la presión total.",
+              "A la densidad.",
+              "A la presión estática solamente."
+            ],
+            "correct": 0,
+            "feedback": "La suma es pt bajo las condiciones declaradas. La igualdad no autoriza ignorar compresibilidad, pérdidas o aportes de energía.",
+            "order": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "prompt": "Mini reto: pt = 100 y ps = 80, en las mismas unidades y bajo el modelo incompresible ideal. ¿Cuánto vale q?",
+            "options": [
+              "180 unidades.",
+              "20 unidades.",
+              "80 unidades."
+            ],
+            "correct": 1,
+            "feedback": "q = pt − ps = 100 − 80 = 20 unidades. Conserva unidades homogéneas. Es un ejercicio de resta, no una medición atmosférica real.",
+            "order": [
+              1,
+              2,
+              0
+            ]
+          },
+          {
+            "prompt": "Situación A de un diagrama imaginado: presión local del flujo exterior antes de ser frenado. ¿Qué es?",
+            "options": [
+              "Presión estática.",
+              "Una región sin presión.",
+              "Presión total necesariamente."
+            ],
+            "correct": 0,
+            "feedback": "ps es la presión local del flujo exterior. El hecho de que siga moviéndose no elimina su presión estática.",
+            "order": [
+              2,
+              0,
+              1
+            ]
+          },
+          {
+            "prompt": "Situación B del mismo diagrama imaginado: el valor calculado ½ρV² con las condiciones del flujo exterior. ¿Qué representa?",
+            "options": [
+              "Presión total medida directamente en la nariz.",
+              "Presión dinámica.",
+              "Solo presión estática."
+            ],
+            "correct": 1,
+            "feedback": "B representa una magnitud asociada al movimiento, no una supuesta zona separada que contenga exclusivamente q.",
+            "order": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "prompt": "Situación C del mismo diagrama imaginado: punto frontal de estancamiento ideal donde se frena el flujo. ¿Qué presión identifica?",
+            "options": [
+              "Total.",
+              "Dinámica solamente.",
+              "Cero."
+            ],
+            "correct": 0,
+            "feedback": "La presión recuperada idealmente es total. En ese punto la q local es cero, pero el incremento respecto de la estática exterior corresponde a la q exterior en el modelo incompresible.",
+            "order": [
+              1,
+              2,
+              0
+            ]
+          },
+          {
+            "prompt": "Detecta el error: «Total y dinámica son lo mismo porque el aire pega de frente».",
+            "options": [
+              "Es correcto para cualquier flujo.",
+              "La dinámica siempre incluye toda la estática.",
+              "Se confunde la contribución asociada al movimiento con la presión total recuperada."
+            ],
+            "correct": 2,
+            "feedback": "Bajo el modelo estudiado, pt = ps + q. El Pitot capta total; al restar estática se obtiene la diferencia que coincide con q en el límite incompresible.",
+            "order": [
+              2,
+              0,
+              1
+            ]
+          }
+        ],
+        "tips": [
+          "Ejemplo Yaris: imagina la pared y el viento. La presión local está ahí; al frenar idealmente el viento de frente se recupera presión total.",
+          "Para la suma recuerda también las condiciones: pt = ps + q en el modelo incompresible ideal."
+        ],
+        "chapter": 1,
+        "chapter_name": "Introducción y definiciones",
+        "name": "Presión estática, dinámica y total",
+        "subtopics": [
+          {
+            "level": 2,
+            "name": "Qué es presión",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Presión estática",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Presión dinámica",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Presión total y estancamiento",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Cuándo vale la suma",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Impacto no siempre significa dinámica",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Lee las tres situaciones",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Para qué sirve distinguirlas",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          }
+        ],
+        "source_pdf_page": null,
+        "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+        "figures": [],
+        "exercise": {
+          "kind": "match",
+          "title": "Relaciona magnitud y significado",
+          "instruction": "Elige la definición precisa, sin tratar las tres magnitudes como tres zonas separadas.",
+          "pairs": [
+            [
+              "Presión estática ps",
+              "Presión local del fluido, esté o no en movimiento."
+            ],
+            [
+              "Presión dinámica q",
+              "Magnitud ½ρV² asociada al movimiento en un marco elegido."
+            ],
+            [
+              "Presión total pt",
+              "Presión que se obtiene al frenar idealmente el flujo hasta reposo."
+            ]
+          ],
+          "order": [
+            2,
+            1,
+            0
+          ]
+        },
+        "objectives": [
+          "Definir presión como fuerza normal por unidad de área.",
+          "Diferenciar presión estática, dinámica y total.",
+          "Aplicar pt = ps + q bajo las condiciones del modelo de baja compresibilidad."
+        ],
+        "minutes": 13,
+        "stages": [
+          {
+            "kind": "intro",
+            "nav": "Despegue"
+          },
+          {
+            "kind": "quiz",
+            "nav": "Preflight check",
+            "questions": [
+              0
+            ]
+          },
+          {
+            "kind": "content",
+            "nav": "Qué es presión",
+            "title": "Qué es presión",
+            "cards": [
+              {
+                "title": "Qué es presión",
+                "text": "Presión es fuerza normal por unidad de área: p = F normal / A. La fuerza normal es perpendicular a la superficie. Para la misma fuerza repartida uniformemente, menor área implica mayor presión. En el Sistema Internacional se expresa en pascales: 1 Pa = 1 N/m². Una fuerza sin dividir entre área no es una presión; en algunos textos se usa S para representar esa área.",
+                "covers": [
+                  1
+                ],
+                "wide": false
+              },
+              {
+                "title": "Presión estática",
+                "text": "La presión estática es la presión local del fluido. Existe tanto en aire en reposo como en aire en movimiento; la palabra «estática» no obliga a que todo el aire esté quieto. En plataforma sin viento relativo podemos usar la presión atmosférica ambiente como ejemplo. En torno a un ala en vuelo, la presión estática puede variar de un punto a otro. No la identifiques siempre con un único valor ambiental en toda la superficie.",
+                "covers": [
+                  2
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Presión dinámica",
+            "title": "Presión dinámica",
+            "cards": [
+              {
+                "title": "Presión dinámica",
+                "text": "La presión dinámica se define como q = ½ρV². ρ es densidad del aire y V es la velocidad del flujo respecto del marco elegido, por ejemplo la velocidad del aire respecto de la aeronave. q depende linealmente de ρ y del cuadrado de V: a igual densidad, duplicar V multiplica q por cuatro. Si V es cero, q es cero. Un avión parado sobre tierra puede tener q distinta de cero respecto de él si sopla viento.",
+                "covers": [
+                  3
+                ],
+                "wide": false
+              },
+              {
+                "title": "Presión total y estancamiento",
+                "text": "La presión total o de estancamiento es la que se obtendría al desacelerar idealmente el flujo hasta velocidad cero. El punto frontal de un cuerpo o la entrada de un Pitot ayuda a visualizar esa desaceleración. En un flujo real pueden existir pérdidas, por lo que no todo lugar donde la velocidad sea cero recupera sin pérdidas la presión total del flujo de origen. La pared dentro de una capa límite no es intercambiable con un Pitot ideal.",
+                "covers": [
+                  4
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Cuándo vale la suma",
+            "title": "Cuándo vale la suma",
+            "cards": [
+              {
+                "title": "Cuándo vale la suma",
+                "text": "Para el modelo de flujo incompresible, estacionario, sin aporte de energía, con pérdidas viscosas despreciables y cambio de altura despreciable, la relación a lo largo de una línea de corriente es pt = ps + ½ρV² = ps + q. En ese marco pt se conserva. El módulo usa esta aproximación para introducir las tres magnitudes; no la extrapoles sin corrección a velocidades donde la compresibilidad sea importante.",
+                "covers": [
+                  5
+                ],
+                "wide": false
+              },
+              {
+                "title": "Impacto no siempre significa dinámica",
+                "text": "A veces se usa «presión de impacto» para q, pero conviene distinguirlas. Un Pitot capta presión total; la diferencia entre total y estática es la presión de impacto. En la aproximación incompresible esa diferencia coincide con q. En flujo compresible no son, en general, numéricamente iguales. Una flecha que pega de frente a la nariz no identifica una zona que contenga exclusivamente presión dinámica.",
+                "covers": [
+                  6
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Lee las tres situaciones",
+            "title": "Lee las tres situaciones",
+            "cards": [
+              {
+                "title": "Lee las tres situaciones",
+                "text": "Estática: presión local del aire, con o sin flujo. Dinámica: ½ρV², medida de su movimiento en el marco elegido. Total: presión de una desaceleración ideal hasta reposo. Si V = 0, entonces q = 0 y la total coincide con la estática local. Si se mantiene pt y aumenta V bajo las condiciones del modelo, q aumenta y ps disminuye. Eso no significa que ps deba bajar en cualquier comparación entre dos vuelos distintos.",
+                "covers": [
+                  7
+                ],
+                "wide": false
+              },
+              {
+                "title": "Para qué sirve distinguirlas",
+                "text": "El sistema Pitot-estático utiliza estas ideas: el Pitot lleva presión total y las tomas estáticas proporcionan presión estática. Su comparación permite obtener información de velocidad con la calibración y correcciones pertinentes. El altímetro y el indicador de velocidad vertical utilizan la presión estática. Este recorrido introduce las magnitudes; no desarrolla diagnóstico de bloqueos ni procedimientos instrumentales.",
+                "covers": [
+                  8
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Error común",
+            "title": "Error común",
+            "cards": [
+              {
+                "title": "Error común",
+                "text": "Dinámica no es total. La total incluye la contribución estática y, bajo el modelo indicado, la dinámica. Tampoco afirmes que al acelerar «todas las presiones suben»: debes decir qué se mantiene constante. Por último, «avión detenido» no asegura V relativa cero; comprueba si el aire está quieto respecto de él.",
+                "covers": [
+                  9
+                ],
+                "wide": false
+              },
+              {
+                "title": "El ejemplo de la pared y el viento",
+                "text": "Yaris propone imaginar una pared. Sin viento relativo hay presión ambiental. Cuando llega viento de frente y se frena en un punto de estancamiento, la presión allí aumenta respecto del flujo exterior. En el modelo incompresible ideal, ese incremento equivale a q y el valor alcanzado es pt. Conserva la imagen «ambiente más efecto de frenar el movimiento», sin llamar q a toda la presión frontal.",
+                "covers": [
+                  10
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "exercise",
+            "nav": "Conecta las ideas"
+          },
+          {
+            "kind": "quiz",
+            "nav": "Ponlo a prueba 1",
+            "questions": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "kind": "quiz",
+            "nav": "Ponlo a prueba 2",
+            "questions": [
+              4,
+              5,
+              6
+            ]
+          },
+          {
+            "kind": "quiz",
+            "nav": "Ponlo a prueba 3",
+            "questions": [
+              7,
+              8,
+              9
+            ]
+          },
+          {
+            "kind": "quiz",
+            "nav": "Ponlo a prueba 4",
+            "questions": [
+              10
+            ]
+          },
+          {
+            "kind": "content",
+            "nav": "Cierre rápido",
+            "title": "Antes de avanzar",
+            "cards": [
+              {
+                "title": "Lo que debes poder explicar",
+                "text": "1. Definir presión como fuerza normal por unidad de área y reconocer sus unidades. 2. Distinguir ps, q y pt sin confundir impacto, localización y magnitud. 3. Resolver la suma y la resta de presiones explicando las condiciones del modelo.",
+                "covers": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10
+                ],
+                "wide": true
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "finish",
+            "nav": "Aterrizaje"
+          }
+        ]
+      },
+      "activities": [
+        {
+          "title": "Clasifica la presión",
+          "kind": "classification",
+          "instruction": "Clasifica los cinco casos, con el matiz de impacto y las condiciones de la suma.",
+          "items": [
+            "Presión local del aire.",
+            "Diferencia total menos estática bajo flujo incompresible.",
+            "Estancamiento ideal.",
+            "Magnitud ½ρV².",
+            "Suma ps + q en el modelo."
+          ],
+          "answer": [
+            "Estática.",
+            "Impacto, que coincide con dinámica en este modelo.",
+            "Total.",
+            "Dinámica.",
+            "Total."
+          ],
+          "runtimeMapping": {
+            "questions": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        },
+        {
+          "title": "Mini reto de fórmula",
+          "kind": "calculation",
+          "instruction": "Con pt = 100 y ps = 80 en unidades iguales, calcula q para el modelo estudiado.",
+          "items": [],
+          "answer": "q = 20 unidades.",
+          "runtimeMapping": {
+            "questions": [
+              6
+            ]
+          }
+        },
+        {
+          "title": "Etiqueta el diagrama",
+          "kind": "diagram_label",
+          "instruction": "A: presión del flujo exterior; B: magnitud calculada con ρ y V exteriores; C: estancamiento ideal.",
+          "items": [
+            "A",
+            "B",
+            "C"
+          ],
+          "answer": [
+            "ps",
+            "q",
+            "pt"
+          ],
+          "runtimeMapping": {
+            "questions": [
+              7,
+              8,
+              9
+            ]
+          }
+        },
+        {
+          "title": "Detecta el error",
+          "kind": "short_answer",
+          "instruction": "Corrige la igualdad entre total y dinámica.",
+          "items": [],
+          "answer": "La dinámica es q; la total es ps + q bajo las condiciones declaradas. Un sensor frontal ideal capta total.",
+          "runtimeMapping": {
+            "questions": [
+              10
+            ]
+          }
+        }
+      ],
+      "completionChecks": [
+        "Definir presión como fuerza normal por unidad de área y reconocer sus unidades.",
+        "Distinguir ps, q y pt sin confundir impacto, localización y magnitud.",
+        "Resolver la suma y la resta de presiones explicando las condiciones del modelo."
+      ],
+      "sourceRefs": [
+        "nasa-bernoulli",
+        "phak",
+        "carmona"
+      ]
+    },
+    {
+      "id": "ciaac/aerodinamica/modulo-1-introduccion-y-definiciones/densidad-del-aire-y-factores-que-la-afectan-5",
+      "document": {
+        "number": 5,
+        "title": "Cuánta masa de aire hay disponible",
+        "intro": "El aire caliente, la baja presión y el vapor de agua pueden reducir la densidad. Aprende a comparar condiciones sin convertir tendencias en fórmulas falsas.",
+        "cards": [
+          {
+            "title": "La idea central",
+            "text": "Densidad es masa por volumen: ρ = m/Vol. Para aire de la misma composición, mayor presión aumenta la densidad si la temperatura se mantiene; mayor temperatura absoluta la disminuye si la presión se mantiene. En la atmósfera habitual la densidad suele disminuir al ascender. A igual presión y temperatura, más vapor de agua reduce la masa del mismo volumen de mezcla. «Disminuye cuando aumenta» no siempre significa «es inversamente proporcional».",
+            "covers": [
+              0
+            ],
+            "wide": false
+          },
+          {
+            "title": "Qué mide densidad",
+            "text": "La densidad del aire indica cuánta masa contiene una unidad de volumen. En SI se expresa en kg/m³. Dos cajas iguales pueden contener diferente masa de aire y, por tanto, diferente densidad. Dibujar más moléculas en una caja ayuda si comparas la misma composición. Si cambia la mezcla, como al agregar vapor de agua a igual presión y temperatura, también importa la masa de cada tipo de molécula; contar puntos por sí solo no basta.",
+            "covers": [
+              1
+            ],
+            "wide": false
+          },
+          {
+            "title": "Masa volumen y compresión",
+            "text": "Con el mismo volumen, más masa significa mayor densidad. Con la misma masa, mayor volumen significa menor densidad. El aire puede comprimirse o expandirse, así que la caja del ejemplo puede cambiar de tamaño sin perder moléculas. Al comprimir una masa fija, su densidad aumenta; al expandirla, disminuye. Para interpretar efectos térmicos o de presión, identifica además qué variable has permitido cambiar.",
+            "covers": [
+              2
+            ],
+            "wide": false
+          },
+          {
+            "title": "Temperatura con presión constante",
+            "text": "Si mantienes la presión y la composición, el aire más caliente tiene menor densidad. La energía y agitación molecular aumentan y la misma masa necesita más volumen para mantener esa presión. La relación ideal ρ = p/(R T) muestra que es inversamente proporcional a la temperatura absoluta T, medida en kelvin, no a los grados Celsius. Si calientas aire dentro de un recipiente rígido y sellado, su masa y volumen no cambian: aumenta la presión, no disminuye necesariamente su densidad.",
+            "covers": [
+              3
+            ],
+            "wide": false
+          },
+          {
+            "title": "Presión y altitud",
+            "text": "A igual temperatura y composición, mayor presión significa mayor densidad. En la atmósfera, la presión suele caer al ascender y también cambian temperatura y humedad. En condiciones habituales la caída de presión domina y la densidad disminuye con la altitud, aunque arriba haga más frío. Eso es una tendencia del perfil atmosférico, no la ley ρ proporcional a 1/altitud. Para comparar dos aeropuertos concretos necesitas sus condiciones reales.",
+            "covers": [
+              4
+            ],
+            "wide": false
+          },
+          {
+            "title": "Humedad con presión y temperatura iguales",
+            "text": "El vapor de agua tiene menor masa molecular que el promedio del aire seco que reemplaza. Por eso, a igual presión y temperatura, una mezcla con más vapor de agua tiene menor densidad. No significa que el agua líquida pese menos que el aire ni que humedad alta sea sinónimo de muchas gotas suspendidas. Tampoco es una ley ρ proporcional a 1/humedad. Compara contenido de vapor y mantén claras las condiciones.",
+            "covers": [
+              5
+            ],
+            "wide": false
+          },
+          {
+            "title": "Más denso y menos denso",
+            "text": "Compara una variable a la vez: a igual presión y composición, frío favorece más densidad y calor menos; a igual temperatura y composición, mayor presión favorece más y menor presión menos; a igual presión y temperatura, aire más seco tiene más densidad que aire con más vapor. La combinación de aeropuerto elevado, tarde calurosa y húmeda suele ser desfavorable, mientras frío y baja elevación suelen favorecer densidad. Son pistas cualitativas, no un sustituto del cálculo con datos reales.",
+            "covers": [
+              6
+            ],
+            "wide": false
+          },
+          {
+            "title": "Qué cambia para el ala",
+            "text": "Para la misma velocidad verdadera respecto del aire, misma superficie y mismo coeficiente de sustentación, menor densidad produce menor sustentación. Si la aeronave conserva vuelo recto, nivelado y sin aceleración vertical, la sustentación necesaria sigue equilibrando su peso: el piloto o el sistema debe ajustar las condiciones pertinentes. No afirmes que toda aeronave en aire menos denso necesariamente está produciendo menos sustentación en ese instante.",
+            "covers": [
+              7
+            ],
+            "wide": false
+          },
+          {
+            "title": "Motor hélice y empuje",
+            "text": "Menor densidad suele reducir la masa de aire que puede entrar al motor y la masa que puede acelerar un propulsor. En un motor de aspiración normal puede caer la potencia disponible; el comportamiento de motores sobrealimentados o regulados depende del sistema y de sus límites. La hélice y los motores de turbina también se ven afectados, pero no todos de la misma forma ni en proporción idéntica. Consulta los datos y limitaciones de desempeño del AFM o POH aplicable.",
+            "covers": [
+              8
+            ],
+            "wide": false
+          },
+          {
+            "title": "Error común",
+            "text": "No escribas «densidad inversamente proporcional a temperatura, altitud y humedad» como si las tres fueran relaciones matemáticas iguales. La temperatura necesita presión y composición constantes y escala absoluta. Altitud y humedad requieren su contexto. «Se siente pesado», «arriba hace frío» o «las moléculas se mueven más» no bastan para comparar densidades: comprueba presión, temperatura, composición y volumen.",
+            "covers": [
+              9
+            ],
+            "wide": false
+          },
+          {
+            "title": "La paleta y sus límites",
+            "text": "Imagina una paleta que se derrite cuando se calienta. La imagen recuerda que el calor cambia el comportamiento de la materia, pero no uses la fusión de una paleta para demostrar la densidad del aire: mezcla cambio de estado, composición y temperatura. Para la relación correcta imagina mejor una misma masa de aire que puede expandirse al calentarse mientras conserva la presión.",
+            "covers": [
+              10
+            ],
+            "wide": false
+          },
+          {
+            "title": "La montaña y el avión",
+            "text": "El ejemplo de subir una montaña recuerda que el aire cambia con la altitud. La menor presión hace caer también la presión parcial de oxígeno; en condiciones habituales hay menos masa de aire por volumen, aunque la proporción de oxígeno en aire seco siga siendo aproximadamente la misma. Para el avión, la idea útil es menor masa disponible por volumen para interactuar con alas y propulsión, siempre considerando velocidad, configuración, tipo de motor y condiciones de comparación.",
+            "covers": [
+              11
+            ],
+            "wide": false
+          }
+        ],
+        "questions": [
+          {
+            "prompt": "Como comparación cualitativa de situaciones habituales, ¿cuál favorece menor densidad?",
+            "options": [
+              "Aeropuerto bajo, mañana fría y seca.",
+              "Aeropuerto elevado, tarde calurosa y húmeda.",
+              "Aeropuerto bajo, mañana fría aunque húmeda."
+            ],
+            "correct": 1,
+            "feedback": "La combinación de elevación, calor y humedad suele favorecer menor densidad. Es una orientación cualitativa; para afirmar una densidad o comparar casos concretos hacen falta presión, temperatura y contenido de vapor.",
+            "order": [
+              2,
+              0,
+              1
+            ]
+          },
+          {
+            "prompt": "Completa la tabla: aumenta la temperatura absoluta, con presión y composición constantes. ¿Qué pasa con ρ?",
+            "options": [
+              "Disminuye.",
+              "Aumenta.",
+              "No cambia nunca."
+            ],
+            "correct": 0,
+            "feedback": "Para el gas ideal ρ = p/(R T). La comparación exige p y composición constantes; no sirve aplicar la misma frase a un recipiente rígido sellado.",
+            "order": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "prompt": "Completa la tabla: aumenta la altitud en un perfil atmosférico habitual. ¿Qué suele pasar con ρ?",
+            "options": [
+              "Suele disminuir.",
+              "Debe duplicarse.",
+              "Sigue exactamente 1/altitud."
+            ],
+            "correct": 0,
+            "feedback": "La caída de presión suele dominar. Disminuir con altitud no equivale a una proporcionalidad inversa simple.",
+            "order": [
+              1,
+              2,
+              0
+            ]
+          },
+          {
+            "prompt": "Completa la tabla: aumenta el vapor de agua manteniendo presión y temperatura. ¿Qué pasa con ρ?",
+            "options": [
+              "Disminuye.",
+              "Aumenta porque el agua líquida es pesada.",
+              "No depende en absoluto de la composición."
+            ],
+            "correct": 0,
+            "feedback": "La mezcla contiene una mayor proporción de moléculas de menor masa. Debes mantener iguales presión y temperatura.",
+            "order": [
+              2,
+              0,
+              1
+            ]
+          },
+          {
+            "prompt": "Clasifica el escenario 1: nivel del mar, mañana fría y seca, frente a un aeropuerto elevado, caliente y húmedo en condiciones habituales.",
+            "options": [
+              "Favorece aire más denso.",
+              "Favorece aire menos denso.",
+              "Demuestra una densidad numérica exacta."
+            ],
+            "correct": 0,
+            "feedback": "Baja elevación, frío y sequedad son pistas que favorecen mayor densidad en la comparación cualitativa propuesta. No calculan por sí solas su valor.",
+            "order": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "prompt": "Clasifica el escenario 2: aeropuerto elevado en una tarde calurosa y húmeda, frente al escenario 1.",
+            "options": [
+              "Favorece aire más denso.",
+              "Favorece aire menos denso.",
+              "La humedad vuelve irrelevantes presión y temperatura."
+            ],
+            "correct": 1,
+            "feedback": "La combinación suele reducir la densidad y merece atención en el cálculo de desempeño. No reemplaza los datos reales ni el manual.",
+            "order": [
+              1,
+              2,
+              0
+            ]
+          },
+          {
+            "prompt": "Escenario 3: a la misma presión, un día más frío y con menos vapor de agua que el día de comparación. ¿Qué favorece?",
+            "options": [
+              "Mayor densidad.",
+              "Menor densidad.",
+              "Ninguna diferencia posible."
+            ],
+            "correct": 0,
+            "feedback": "A presión comparable, menor temperatura y menor contenido de vapor favorecen mayor densidad. La condición de igual presión es esencial para la comparación.",
+            "order": [
+              2,
+              0,
+              1
+            ]
+          },
+          {
+            "prompt": "Escenario 4: a la misma presión, un día más caliente y con más vapor de agua que el de comparación. ¿Qué favorece?",
+            "options": [
+              "Mayor densidad.",
+              "Menor densidad.",
+              "Mayor masa molecular del vapor que del aire seco."
+            ],
+            "correct": 1,
+            "feedback": "Calor y más vapor favorecen menor densidad bajo esas condiciones. Vapor no equivale a agua líquida.",
+            "order": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "prompt": "Escenario 5: en el mismo volumen hay menor masa de aire que en el punto de comparación a baja altitud. ¿Cómo clasificas esa densidad?",
+            "options": [
+              "Menor.",
+              "Mayor.",
+              "Igual porque no cambia el volumen."
+            ],
+            "correct": 0,
+            "feedback": "La conclusión sale directamente de ρ = m/Vol: a igual volumen, menor masa es menor densidad.",
+            "order": [
+              1,
+              2,
+              0
+            ]
+          },
+          {
+            "prompt": "A igual presión y temperatura, ¿por qué el aire con más vapor de agua es menos denso?",
+            "options": [
+              "El vapor reemplaza parte del aire seco por moléculas de menor masa.",
+              "El agua líquida siempre pesa menos que el aire.",
+              "La humedad no cambia la densidad."
+            ],
+            "correct": 0,
+            "feedback": "La comparación depende de la composición de la mezcla gaseosa. No compara un recipiente de agua líquida con uno de aire.",
+            "order": [
+              2,
+              0,
+              1
+            ]
+          },
+          {
+            "prompt": "Detecta el error: «En un aeropuerto de montaña el aire debe ser más denso porque hace frío».",
+            "options": [
+              "La afirmación omite el efecto de la presión y las condiciones completas.",
+              "La temperatura nunca influye.",
+              "La altitud reduce siempre la densidad exactamente a la mitad."
+            ],
+            "correct": 0,
+            "feedback": "El frío por sí solo favorece más densidad a presión constante, pero la presión menor a mayor altitud suele dominar. Para el caso real se necesitan datos.",
+            "order": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "prompt": "Una masa de aire se calienta dentro de un recipiente rígido y hermético. ¿Qué afirmación evita la regla incorrecta?",
+            "options": [
+              "La densidad necesariamente disminuye porque sube la temperatura.",
+              "Si masa y volumen permanecen iguales, la densidad permanece igual y la presión aumenta.",
+              "La masa debe desaparecer al calentarse."
+            ],
+            "correct": 1,
+            "feedback": "La definición ρ = m/Vol manda. «Más caliente, menos denso» requiere la comparación apropiada, como mantener constante la presión mientras el gas puede expandirse.",
+            "order": [
+              1,
+              2,
+              0
+            ]
+          },
+          {
+            "prompt": "¿Qué condición hace precisa la frase «menor densidad produce menor sustentación»?",
+            "options": [
+              "Que se mantengan velocidad verdadera respecto del aire, superficie y coeficiente de sustentación.",
+              "Que la aeronave siga nivelada a cualquier velocidad.",
+              "Que se compare solo la sensación de humedad."
+            ],
+            "correct": 0,
+            "feedback": "La fuerza depende también de velocidad y coeficiente de sustentación. En vuelo nivelado estabilizado la sustentación requerida sigue siendo igual al peso.",
+            "order": [
+              2,
+              0,
+              1
+            ]
+          }
+        ],
+        "tips": [
+          "Tip Yaris: calor, elevación y humedad pueden ir en contra de la densidad, pero antes de responder pregunta «¿qué se mantiene igual?».",
+          "Menos masa por volumen puede dejar menos margen de desempeño. Para operar, usa el AFM o POH y las condiciones reales, no solo la nemotecnia."
+        ],
+        "chapter": 1,
+        "chapter_name": "Introducción y definiciones",
+        "name": "Densidad del aire y factores que la afectan",
+        "subtopics": [
+          {
+            "level": 2,
+            "name": "Qué mide densidad",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Masa volumen y compresión",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Temperatura con presión constante",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Presión y altitud",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Humedad con presión y temperatura iguales",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Más denso y menos denso",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Qué cambia para el ala",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          },
+          {
+            "level": 2,
+            "name": "Motor hélice y empuje",
+            "source_pdf_page": null,
+            "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+            "source_method": "Referencia bibliográfica"
+          }
+        ],
+        "source_pdf_page": null,
+        "source_print_page": "Consulta las referencias bibliográficas del recorrido",
+        "figures": [],
+        "exercise": {
+          "kind": "match",
+          "title": "Relaciona causa y condición",
+          "instruction": "Empareja cada variación con su comparación correcta.",
+          "pairs": [
+            [
+              "Aumenta temperatura absoluta",
+              "Menor densidad si presión y composición permanecen constantes."
+            ],
+            [
+              "Aumenta presión",
+              "Mayor densidad si temperatura y composición permanecen constantes."
+            ],
+            [
+              "Aumenta vapor de agua",
+              "Menor densidad si presión y temperatura permanecen constantes."
+            ],
+            [
+              "Aumenta altitud",
+              "Densidad generalmente menor por el perfil atmosférico, sin ley simple 1/altitud."
+            ]
+          ],
+          "order": [
+            3,
+            2,
+            1,
+            0
+          ]
+        },
+        "objectives": [
+          "Definir densidad del aire como masa por unidad de volumen.",
+          "Explicar cómo cambian densidad, masa y volumen.",
+          "Relacionar presión, temperatura, altitud y humedad con la densidad, indicando qué condiciones se mantienen iguales.",
+          "Reconocer por qué menor densidad puede degradar el desempeño de la aeronave."
+        ],
+        "minutes": 14,
+        "stages": [
+          {
+            "kind": "intro",
+            "nav": "Despegue"
+          },
+          {
+            "kind": "quiz",
+            "nav": "Preflight check",
+            "questions": [
+              0
+            ]
+          },
+          {
+            "kind": "content",
+            "nav": "Qué mide densidad",
+            "title": "Qué mide densidad",
+            "cards": [
+              {
+                "title": "Qué mide densidad",
+                "text": "La densidad del aire indica cuánta masa contiene una unidad de volumen. En SI se expresa en kg/m³. Dos cajas iguales pueden contener diferente masa de aire y, por tanto, diferente densidad. Dibujar más moléculas en una caja ayuda si comparas la misma composición. Si cambia la mezcla, como al agregar vapor de agua a igual presión y temperatura, también importa la masa de cada tipo de molécula; contar puntos por sí solo no basta.",
+                "covers": [
+                  1
+                ],
+                "wide": false
+              },
+              {
+                "title": "Masa volumen y compresión",
+                "text": "Con el mismo volumen, más masa significa mayor densidad. Con la misma masa, mayor volumen significa menor densidad. El aire puede comprimirse o expandirse, así que la caja del ejemplo puede cambiar de tamaño sin perder moléculas. Al comprimir una masa fija, su densidad aumenta; al expandirla, disminuye. Para interpretar efectos térmicos o de presión, identifica además qué variable has permitido cambiar.",
+                "covers": [
+                  2
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Temperatura con presión constante",
+            "title": "Temperatura con presión constante",
+            "cards": [
+              {
+                "title": "Temperatura con presión constante",
+                "text": "Si mantienes la presión y la composición, el aire más caliente tiene menor densidad. La energía y agitación molecular aumentan y la misma masa necesita más volumen para mantener esa presión. La relación ideal ρ = p/(R T) muestra que es inversamente proporcional a la temperatura absoluta T, medida en kelvin, no a los grados Celsius. Si calientas aire dentro de un recipiente rígido y sellado, su masa y volumen no cambian: aumenta la presión, no disminuye necesariamente su densidad.",
+                "covers": [
+                  3
+                ],
+                "wide": false
+              },
+              {
+                "title": "Presión y altitud",
+                "text": "A igual temperatura y composición, mayor presión significa mayor densidad. En la atmósfera, la presión suele caer al ascender y también cambian temperatura y humedad. En condiciones habituales la caída de presión domina y la densidad disminuye con la altitud, aunque arriba haga más frío. Eso es una tendencia del perfil atmosférico, no la ley ρ proporcional a 1/altitud. Para comparar dos aeropuertos concretos necesitas sus condiciones reales.",
+                "covers": [
+                  4
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Humedad con presión y temperatura iguales",
+            "title": "Humedad con presión y temperatura iguales",
+            "cards": [
+              {
+                "title": "Humedad con presión y temperatura iguales",
+                "text": "El vapor de agua tiene menor masa molecular que el promedio del aire seco que reemplaza. Por eso, a igual presión y temperatura, una mezcla con más vapor de agua tiene menor densidad. No significa que el agua líquida pese menos que el aire ni que humedad alta sea sinónimo de muchas gotas suspendidas. Tampoco es una ley ρ proporcional a 1/humedad. Compara contenido de vapor y mantén claras las condiciones.",
+                "covers": [
+                  5
+                ],
+                "wide": false
+              },
+              {
+                "title": "Más denso y menos denso",
+                "text": "Compara una variable a la vez: a igual presión y composición, frío favorece más densidad y calor menos; a igual temperatura y composición, mayor presión favorece más y menor presión menos; a igual presión y temperatura, aire más seco tiene más densidad que aire con más vapor. La combinación de aeropuerto elevado, tarde calurosa y húmeda suele ser desfavorable, mientras frío y baja elevación suelen favorecer densidad. Son pistas cualitativas, no un sustituto del cálculo con datos reales.",
+                "covers": [
+                  6
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Qué cambia para el ala",
+            "title": "Qué cambia para el ala",
+            "cards": [
+              {
+                "title": "Qué cambia para el ala",
+                "text": "Para la misma velocidad verdadera respecto del aire, misma superficie y mismo coeficiente de sustentación, menor densidad produce menor sustentación. Si la aeronave conserva vuelo recto, nivelado y sin aceleración vertical, la sustentación necesaria sigue equilibrando su peso: el piloto o el sistema debe ajustar las condiciones pertinentes. No afirmes que toda aeronave en aire menos denso necesariamente está produciendo menos sustentación en ese instante.",
+                "covers": [
+                  7
+                ],
+                "wide": false
+              },
+              {
+                "title": "Motor hélice y empuje",
+                "text": "Menor densidad suele reducir la masa de aire que puede entrar al motor y la masa que puede acelerar un propulsor. En un motor de aspiración normal puede caer la potencia disponible; el comportamiento de motores sobrealimentados o regulados depende del sistema y de sus límites. La hélice y los motores de turbina también se ven afectados, pero no todos de la misma forma ni en proporción idéntica. Consulta los datos y limitaciones de desempeño del AFM o POH aplicable.",
+                "covers": [
+                  8
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "Error común",
+            "title": "Error común",
+            "cards": [
+              {
+                "title": "Error común",
+                "text": "No escribas «densidad inversamente proporcional a temperatura, altitud y humedad» como si las tres fueran relaciones matemáticas iguales. La temperatura necesita presión y composición constantes y escala absoluta. Altitud y humedad requieren su contexto. «Se siente pesado», «arriba hace frío» o «las moléculas se mueven más» no bastan para comparar densidades: comprueba presión, temperatura, composición y volumen.",
+                "covers": [
+                  9
+                ],
+                "wide": false
+              },
+              {
+                "title": "La paleta y sus límites",
+                "text": "Imagina una paleta que se derrite cuando se calienta. La imagen recuerda que el calor cambia el comportamiento de la materia, pero no uses la fusión de una paleta para demostrar la densidad del aire: mezcla cambio de estado, composición y temperatura. Para la relación correcta imagina mejor una misma masa de aire que puede expandirse al calentarse mientras conserva la presión.",
+                "covers": [
+                  10
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "content",
+            "nav": "La montaña y el avión",
+            "title": "La montaña y el avión",
+            "cards": [
+              {
+                "title": "La montaña y el avión",
+                "text": "El ejemplo de subir una montaña recuerda que el aire cambia con la altitud. La menor presión hace caer también la presión parcial de oxígeno; en condiciones habituales hay menos masa de aire por volumen, aunque la proporción de oxígeno en aire seco siga siendo aproximadamente la misma. Para el avión, la idea útil es menor masa disponible por volumen para interactuar con alas y propulsión, siempre considerando velocidad, configuración, tipo de motor y condiciones de comparación.",
+                "covers": [
+                  11
+                ],
+                "wide": false
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "exercise",
+            "nav": "Conecta las ideas"
+          },
+          {
+            "kind": "quiz",
+            "nav": "Ponlo a prueba 1",
+            "questions": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "kind": "quiz",
+            "nav": "Ponlo a prueba 2",
+            "questions": [
+              4,
+              5,
+              6
+            ]
+          },
+          {
+            "kind": "quiz",
+            "nav": "Ponlo a prueba 3",
+            "questions": [
+              7,
+              8,
+              9
+            ]
+          },
+          {
+            "kind": "quiz",
+            "nav": "Ponlo a prueba 4",
+            "questions": [
+              10,
+              11,
+              12
+            ]
+          },
+          {
+            "kind": "content",
+            "nav": "Cierre rápido",
+            "title": "Antes de avanzar",
+            "cards": [
+              {
+                "title": "Lo que debes poder explicar",
+                "text": "1. Definir densidad como masa por volumen sin reducirla siempre al número de moléculas. 2. Explicar efectos de presión y temperatura manteniendo claras sus condiciones. 3. Distinguir la tendencia con altitud del efecto de vapor de agua a igual presión y temperatura. 4. Vincular menor densidad con desempeño sin afirmar que todas las fuerzas o motores responden igual.",
+                "covers": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11
+                ],
+                "wide": true
+              }
+            ],
+            "figures": []
+          },
+          {
+            "kind": "finish",
+            "nav": "Aterrizaje"
+          }
+        ]
+      },
+      "activities": [
+        {
+          "title": "Completa la tabla",
+          "kind": "fill_table",
+          "instruction": "Indica el efecto e incluye la condición de comparación.",
+          "items": [
+            "Temperatura aumenta.",
+            "Altitud aumenta.",
+            "Vapor de agua aumenta."
+          ],
+          "answer": [
+            "Densidad menor a presión y composición constantes.",
+            "Densidad generalmente menor en un perfil atmosférico habitual.",
+            "Densidad menor a presión y temperatura constantes."
+          ],
+          "runtimeMapping": {
+            "questions": [
+              1,
+              2,
+              3
+            ]
+          }
+        },
+        {
+          "title": "Clasifica cinco escenarios",
+          "kind": "classification",
+          "instruction": "Conserva los cinco casos del borrador y agrega las condiciones necesarias para compararlos.",
+          "items": [
+            "Nivel del mar, mañana fría y seca.",
+            "Aeropuerto elevado, tarde caliente y húmeda.",
+            "Día frío y con menos vapor a igual presión.",
+            "Día caliente y con más vapor a igual presión.",
+            "Mismo volumen con menor masa de aire en altitud."
+          ],
+          "answer": [
+            "Más denso en comparación cualitativa.",
+            "Menos denso en comparación cualitativa.",
+            "Más denso.",
+            "Menos denso.",
+            "Menos denso."
+          ],
+          "runtimeMapping": {
+            "questions": [
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          }
+        },
+        {
+          "title": "Elige la explicación de la humedad",
+          "kind": "multiple_choice",
+          "instruction": "Compara aire húmedo y seco bajo las mismas presión y temperatura.",
+          "items": [],
+          "answer": "El vapor tiene menor masa molecular que el promedio del aire seco que reemplaza.",
+          "runtimeMapping": {
+            "questions": [
+              9
+            ]
+          }
+        },
+        {
+          "title": "Detecta el error",
+          "kind": "short_answer",
+          "instruction": "Corrige la explicación de un aeropuerto de montaña basada solo en el frío.",
+          "items": [],
+          "answer": "Debe considerar presión y condiciones completas; al ascender suele dominar la caída de presión.",
+          "runtimeMapping": {
+            "questions": [
+              10
+            ]
+          }
+        }
+      ],
+      "completionChecks": [
+        "Definir densidad como masa por volumen sin reducirla siempre al número de moléculas.",
+        "Explicar efectos de presión y temperatura manteniendo claras sus condiciones.",
+        "Distinguir la tendencia con altitud del efecto de vapor de agua a igual presión y temperatura.",
+        "Vincular menor densidad con desempeño sin afirmar que todas las fuerzas o motores responden igual."
+      ],
+      "sourceRefs": [
+        "nasa-state",
+        "phak",
+        "carmona"
+      ]
+    }
+  ]
+}

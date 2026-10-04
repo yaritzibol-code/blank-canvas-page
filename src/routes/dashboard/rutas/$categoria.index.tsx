@@ -3,6 +3,7 @@ import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { LpBreadcrumbs, LpCard, LpGrid, LpHeader } from "@/components/lp/nav";
 import { CATEGORY_STYLE } from "./index";
 import type { FPIconName } from "@/components/ui/fp-icon";
+import { hasAvailableCiaacContent } from "@/lib/lp/ciaac-availability";
 import { lpCategory, subjectLpCount } from "@/lib/lp/taxonomy";
 import { useSessionUser, useStore } from "@/lib/store";
 import { subjectProgress } from "@/lib/store/lp-nav";
@@ -14,7 +15,20 @@ export const Route = createFileRoute("/dashboard/rutas/$categoria/")({
   component: CategoriaPage,
 });
 
-const SUBJECT_ICONS: FPIconName[] = ["book", "compass", "cloud", "gauge", "radio", "map", "wind", "tower", "shield", "globe", "brain", "doc"];
+const SUBJECT_ICONS: FPIconName[] = [
+  "book",
+  "compass",
+  "cloud",
+  "gauge",
+  "radio",
+  "map",
+  "wind",
+  "tower",
+  "shield",
+  "globe",
+  "brain",
+  "doc",
+];
 
 function CategoriaPage() {
   const { categoria } = Route.useParams();
@@ -46,6 +60,8 @@ function CategoriaPage() {
               to="/dashboard/rutas/$categoria/$materia"
               params={{ categoria: cat.id, materia: slug }}
               title={s.titulo}
+              disabled={!hasAvailableCiaacContent(s.id)}
+              lockReason={!hasAvailableCiaacContent(s.id) ? "En preparación" : undefined}
               icon={SUBJECT_ICONS[i % SUBJECT_ICONS.length]}
               accent={accent}
               meta={`${s.containers.length} ${s.containerLabel.toLowerCase()} · ${subjectLpCount(s)} learning paths${

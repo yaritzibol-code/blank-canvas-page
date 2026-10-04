@@ -14,6 +14,7 @@
  * estadísticas y la actividad reciente que ya existen; el estado "en progreso"
  * vive en la colección `lp_started`.
  */
+import { isLearningPathAvailable } from "@/lib/lp/ciaac-availability";
 import { read, update, nowISO } from "./db";
 import { completeTema, getTemaProgress } from "./domain";
 import { isPaid } from "./gating";
@@ -52,6 +53,7 @@ export function lpStatus(userId: string, lpId: string): LpStatus {
 
 /** Marca que la alumna abrió el Learning Path (una sola vez). */
 export function startLp(userId: string, lpId: string) {
+  if (!isLearningPathAvailable(lpId)) return;
   update<LpStartedRow[]>("lp_started", [], (all) =>
     all.some((r) => r.userId === userId && r.lpId === lpId)
       ? all
@@ -61,14 +63,21 @@ export function startLp(userId: string, lpId: string) {
 
 /** Completa el Learning Path: habilita el siguiente de la secuencia. */
 export function completeLp(userId: string, item: LpItem, subjectTitulo: string) {
-  completeTema(userId, `${LP_TEMA_PREFIX}${item.id}`, null, `${subjectTitulo} · ${item.titulo}`, 15);
+  if (!isLearningPathAvailable(item.id)) return;
+  completeTema(
+    userId,
+    `${LP_TEMA_PREFIX}${item.id}`,
+    null,
+    `${subjectTitulo} · ${item.titulo}`,
+    15,
+  );
 }
 
 export interface LpAccess {
   status: LpStatus;
   allowed: boolean;
   /** Motivo del candado cuando allowed === false. */
-  lock: "previo" | "plan" | null;
+  lock: "previo" | "plan" | "contenido" | null;
   /** Posición dentro de la secuencia de la materia (1-based). */
   posicion: number;
   total: number;
@@ -91,6 +100,9 @@ export function lpAccess(user: User | null, subject: LpSubject, lpId: string): L
     return { status: "no_iniciado", allowed: false, lock: "previo", posicion, total };
   }
   const status = lpStatus(user.id, lpId);
+  if (!isLearningPathAvailable(lpId)) {
+    return { status, allowed: false, lock: "contenido", posicion, total };
+  }
   const cursor = subjectCursor(user.id, subject);
   if (status !== "completado" && index > cursor) {
     return { status, allowed: false, lock: "previo", posicion, total };
@@ -105,7 +117,8 @@ export function lpAccess(user: User | null, subject: LpSubject, lpId: string): L
 export function subjectContinue(userId: string, subject: LpSubject): LpItem | null {
   const seq = subjectSequence(subject);
   const cursor = subjectCursor(userId, subject);
-  return seq[cursor]?.item ?? null;
+  const next = seq[cursor]?.item;
+  return next && isLearningPathAvailable(next.id) ? next : null;
 }
 
 export function subjectProgress(

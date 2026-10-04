@@ -1,4 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
+import { CiaacYarisAvatar, CiaacPathyArt } from "./CiaacOfficialArt";
+import { CiaacActivity } from "./CiaacActivity";
+import { CiaacTeachingVisual } from "./CiaacTeachingVisual";
+import {
+  ciaacResponseReady,
+  emptyCiaacActivity,
+  type CiaacActivityProgress,
+} from "@/lib/lp/ciaac-progress";
 import { LearningPathYarisAvatar } from "./LearningPathCharacters";
 import type {
   HandbookCard,
@@ -29,6 +37,7 @@ interface HandbookJourneyState {
   checks: boolean[];
   exerciseDone: boolean;
   exercise: ExerciseProgress;
+  activityResponses: Record<string, CiaacActivityProgress>;
 }
 
 const emptyExercise = (): ExerciseProgress => ({
@@ -41,14 +50,15 @@ const emptyExercise = (): ExerciseProgress => ({
   feedback: "",
 });
 
-const freshState = (): HandbookJourneyState => ({
+const freshState = (checkCount = 3): HandbookJourneyState => ({
   stage: 0,
   maxStage: 0,
   complete: false,
   answers: {},
-  checks: [false, false, false],
+  checks: Array.from({ length: checkCount }, () => false),
   exerciseDone: false,
   exercise: emptyExercise(),
+  activityResponses: {},
 });
 
 function questionDone(question: HandbookQuestion, value: number | undefined) {
@@ -68,7 +78,8 @@ export function HandbookLearningPath({
   completed: boolean;
   onComplete: () => void;
 }) {
-  const [state, setState] = useState<HandbookJourneyState>(freshState);
+  const checkCount = document.completionChecks?.length ?? 3;
+  const [state, setState] = useState<HandbookJourneyState>(() => freshState(checkCount));
   const [hydrated, setHydrated] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [zoom, setZoom] = useState<HandbookFigure | null>(null);
@@ -79,12 +90,21 @@ export function HandbookLearningPath({
     if (hydrated) return;
     const saved = getLpJourney<HandbookJourneyState>(userId, lpId);
     if (saved && saved.stage < stages.length && saved.maxStage < stages.length) {
-      setState({ ...freshState(), ...saved });
+      setState({
+        ...freshState(checkCount),
+        ...saved,
+        checks: Array.from({ length: checkCount }, (_, index) => Boolean(saved.checks[index])),
+      });
     } else if (completed) {
-      setState({ ...freshState(), stage: 0, maxStage: stages.length - 1, complete: true });
+      setState({
+        ...freshState(checkCount),
+        stage: 0,
+        maxStage: stages.length - 1,
+        complete: true,
+      });
     }
     setHydrated(true);
-  }, [completed, hydrated, lpId, stages.length, userId]);
+  }, [checkCount, completed, hydrated, lpId, stages.length, userId]);
 
   useEffect(() => {
     if (hydrated) saveLpJourney(userId, lpId, state);
@@ -93,14 +113,31 @@ export function HandbookLearningPath({
   const quizComplete =
     current.kind !== "quiz" ||
     current.questions.every((index) =>
-      questionDone(document.questions[index], state.answers[String(index)]),
+      current.diagnostic
+        ? Number.isInteger(state.answers[String(index)])
+        : questionDone(document.questions[index], state.answers[String(index)]),
     );
+  const activity =
+    current.kind === "activity" ? document.ciaac?.activities[current.activityIndex] : undefined;
+  const activityProgress =
+    current.kind === "activity"
+      ? (state.activityResponses[String(current.activityIndex)] ?? emptyCiaacActivity())
+      : emptyCiaacActivity();
+  const activityComplete =
+    Boolean(activity) &&
+    ciaacResponseReady(activity!, activityProgress) &&
+    (activity!.runtimeMapping.questions ?? []).every((index) =>
+      questionDone(document.questions[index], state.answers[String(index)]),
+    ) &&
+    (activity!.kind !== "match" || state.exerciseDone);
   const canContinue =
-    current.kind === "exercise"
-      ? state.exerciseDone
-      : current.kind === "finish"
-        ? state.checks.every(Boolean)
-        : quizComplete;
+    current.kind === "activity"
+      ? activityComplete
+      : current.kind === "exercise"
+        ? state.exerciseDone
+        : current.kind === "finish"
+          ? state.checks.every(Boolean)
+          : quizComplete;
   const percent = state.complete
     ? 100
     : Math.round((state.maxStage / Math.max(1, stages.length - 1)) * 100);
@@ -129,29 +166,38 @@ export function HandbookLearningPath({
     if (!window.confirm("¿Reiniciar este recorrido? Se borrará solamente su avance interno."))
       return;
     resetLpJourney(userId, lpId);
-    setState(freshState());
+    setState(freshState(checkCount));
   };
 
   useLearningPathStageView({
-    labels: stages.map((stage) => stage.nav), current: state.stage,
+    labels: stages.map((stage) => stage.nav),
+    current: state.stage,
     highest: state.maxStage,
     done: stages.map((_, index) => index < state.maxStage || state.complete),
-    percent, onNavigate: goTo, onReset: reset,
+    percent,
+    onNavigate: goTo,
+    onReset: reset,
   });
 
   const guide = state.complete
     ? "Recorrido completo. Puedes repasar cualquier etapa cuando quieras."
-    : current.kind === "quiz"
+    : current.kind === "activity"
       ? canContinue
-        ? "Buen trabajo. Todas las decisiones están justificadas."
-        : "Responde correctamente cada decisión para continuar."
-      : current.kind === "exercise"
-        ? canContinue
-          ? "Actividad comprobada. Ya puedes continuar."
-          : "Completa y comprueba la actividad antes de avanzar."
-        : current.kind === "finish"
-          ? "Confirma las tres ideas que puedes explicar y cierra el recorrido."
-          : "Avanza a tu ritmo. Las etapas completadas quedan abiertas para repaso.";
+        ? "Actividad comprobada. Ya puedes continuar."
+        : "Responde y compara tu explicación antes de continuar."
+      : current.kind === "quiz" && current.diagnostic
+        ? "Haz tu predicción y luego observa qué cambia. No necesitas acertar para explorar."
+        : current.kind === "quiz"
+          ? canContinue
+            ? "Buen trabajo. Todas las decisiones están justificadas."
+            : "Responde correctamente cada decisión para continuar."
+          : current.kind === "exercise"
+            ? canContinue
+              ? "Actividad comprobada. Ya puedes continuar."
+              : "Completa y comprueba la actividad antes de avanzar."
+            : current.kind === "finish"
+              ? "Confirma las ideas que puedes explicar y cierra el recorrido."
+              : "Avanza a tu ritmo. Las etapas completadas quedan abiertas para repaso.";
 
   return (
     <section className={`hb-shell ${menuOpen ? "is-menu-open" : ""}`}>
@@ -166,7 +212,10 @@ export function HandbookLearningPath({
       </button>
       <aside className="hb-sidebar" aria-label="Plan de vuelo">
         <div className="hb-plan">
-          <span>Handbook · Chapter {document.chapter}</span>
+          <span>
+            {document.sourceLabel ?? "Handbook"} · {document.chapterLabel ?? "Chapter"}{" "}
+            {document.chapter}
+          </span>
           <h2>{document.name}</h2>
           <p>{document.title}</p>
         </div>
@@ -195,7 +244,7 @@ export function HandbookLearningPath({
           })}
         </nav>
         <div className="hb-altitude">
-          <img src="/lp/visual/pathy.png" alt="" />
+          {!document.ciaac && <img src="/lp/visual/pathy.png" alt="" />}
           <div>
             <small>Tu altitud</small>
             <strong>{percent}%</strong>
@@ -243,6 +292,13 @@ export function HandbookLearningPath({
 
         <main className="hb-content">
           {current.kind === "intro" && <Intro document={document} />}
+          {current.kind === "content" && document.ciaac && current.nav !== "Cierre rápido" && (
+            <CiaacTeachingVisual
+              key={current.visualStage}
+              lessonNumber={document.ciaac.lessonNumber}
+              stageIndex={current.visualStage}
+            />
+          )}
           {current.kind === "content" && (
             <ContentStage
               title={current.title}
@@ -257,6 +313,7 @@ export function HandbookLearningPath({
           )}
           {current.kind === "quiz" && (
             <QuizStage
+              diagnostic={current.diagnostic}
               cards={current.cards ?? []}
               indexes={current.questions}
               questions={document.questions}
@@ -265,6 +322,49 @@ export function HandbookLearningPath({
                 patchState({ answers: { ...state.answers, [String(index)]: answer } })
               }
             />
+          )}
+          {current.kind === "activity" && activity && (
+            <CiaacActivity
+              activity={activity}
+              progress={activityProgress}
+              onChange={(progress) =>
+                patchState({
+                  activityResponses: {
+                    ...state.activityResponses,
+                    [String(current.activityIndex)]: progress,
+                  },
+                })
+              }
+            >
+              {activity.kind === "match" && document.exercise && (
+                <ExerciseStage
+                  exercise={document.exercise}
+                  progress={state.exercise}
+                  done={state.exerciseDone}
+                  onProgress={(exercise) => patchState({ exercise })}
+                  onDone={() => patchState({ exerciseDone: true })}
+                />
+              )}
+              {(activity.runtimeMapping.questions ?? []).length > 0 && (
+                <section className="hb-card hb-dark hb-quiz-stack">
+                  {activity.runtimeMapping.questions!.map((index) => (
+                    <Question
+                      key={index}
+                      question={document.questions[index]}
+                      value={state.answers[String(index)]}
+                      onAnswer={(answer) =>
+                        patchState({ answers: { ...state.answers, [String(index)]: answer } })
+                      }
+                    />
+                  ))}
+                </section>
+              )}
+              {activityComplete && (
+                <p className="hb-feedback is-correct" role="status">
+                  ✓ Actividad comprobada. Ya puedes continuar.
+                </p>
+              )}
+            </CiaacActivity>
           )}
           {current.kind === "exercise" && document.exercise && (
             <ExerciseStage
@@ -292,7 +392,11 @@ export function HandbookLearningPath({
 
         <footer className="hb-footer">
           <div className="hb-guide">
-            <LearningPathYarisAvatar size={44} ring />
+            {document.ciaac ? (
+              <CiaacYarisAvatar size={44} />
+            ) : (
+              <LearningPathYarisAvatar size={44} ring />
+            )}
             <div>{guide}</div>
           </div>
           <div className="hb-actions">
@@ -347,7 +451,8 @@ function Intro({ document }: { document: HandbookLearningPathDocument }) {
       <section className="hb-hero">
         <div>
           <span className="hb-pill">
-            Chapter {document.chapter} · Learning Path {String(document.number).padStart(2, "0")}
+            {document.chapterLabel ?? "Chapter"} {document.chapter} · Learning Path{" "}
+            {String(document.number).padStart(2, "0")}
           </span>
           <h1>{document.title}</h1>
           <h2>{document.name}</h2>
@@ -362,12 +467,16 @@ function Intro({ document }: { document: HandbookLearningPathDocument }) {
               <strong>{document.minutes} min aprox.</strong>
             </span>
             <span>
-              <small>Chapter</small>
+              <small>{document.chapterLabel ?? "Chapter"}</small>
               <strong>{document.chapter_name}</strong>
             </span>
           </div>
         </div>
-        <img src="/lp/visual/pathy.png" alt="Pathy acompaña el recorrido" />
+        {document.ciaac ? (
+          <CiaacPathyArt />
+        ) : (
+          <img src="/lp/visual/pathy.png" alt="Pathy acompaña el recorrido" />
+        )}
       </section>
       <section className="hb-card hb-dark">
         <span className="hb-overline">La misión</span>
@@ -463,12 +572,14 @@ function Figure({
 }
 
 function QuizStage({
+  diagnostic = false,
   cards,
   indexes,
   questions,
   answers,
   onAnswer,
 }: {
+  diagnostic?: boolean;
   cards: HandbookCard[];
   indexes: number[];
   questions: HandbookQuestion[];
@@ -479,8 +590,12 @@ function QuizStage({
     <>
       <header className="hb-heading">
         <span className="hb-pill">Ponlo a prueba</span>
-        <h2>Decide y explica por qué</h2>
-        <p>Usa lo que acabas de estudiar. El feedback te ayudará a corregir la relación.</p>
+        <h2>{diagnostic ? "Primero, ¿qué crees que sucede?" : "Decide y explica por qué"}</h2>
+        <p>
+          {diagnostic
+            ? "Haz una predicción. Puedes continuar aunque no aciertes: ahora vas a explorar la relación."
+            : "Usa lo que acabas de estudiar. El feedback te ayudará a corregir la relación."}
+        </p>
       </header>
       {cards.length > 0 && (
         <div className="hb-card-grid">
@@ -555,6 +670,36 @@ function Question({
 }
 
 function Source({ document }: { document: HandbookLearningPathDocument }) {
+  if (document.sources)
+    return (
+      <details className="hb-source">
+        <summary>Fuentes y alcance de este recorrido</summary>
+        <p>
+          Adaptación pedagógica de FlightPath. Las referencias se muestran por su función; las
+          páginas impresas no son índices del PDF.
+        </p>
+        <ul>
+          {document.sources.map((source) => (
+            <li key={source.id}>
+              {source.url ? (
+                <a href={source.url} target="_blank" rel="noreferrer">
+                  {source.title}
+                </a>
+              ) : (
+                <strong>{source.title}</strong>
+              )}
+              <p>
+                {source.role}
+                {source.verified_locators?.length
+                  ? ` · ${source.verified_locators.join("; ")}`
+                  : ""}
+              </p>
+              {source.limit && <small>{source.limit}</small>}
+            </li>
+          ))}
+        </ul>
+      </details>
+    );
   return (
     <details className="hb-source">
       <summary>Fuente y alcance de esta etapa</summary>
@@ -578,7 +723,7 @@ function Finish({
   complete: boolean;
   onCheck: (index: number) => void;
 }) {
-  const statements = [
+  const statements = document.completionChecks ?? [
     "Puedo explicar la idea central con mis propias palabras.",
     "Puedo justificar mis respuestas y distinguir las alternativas.",
     "Sé qué subtemas necesito repasar y dónde encontrarlos.",
@@ -594,14 +739,19 @@ function Finish({
             y aplicarla a una decisión.
           </p>
         </div>
-        <img
-          src="/lp/visual/pathy.png"
-          alt="Pathy celebra el recorrido"
-        />
+        {document.ciaac ? (
+          <CiaacPathyArt size={120} celebrate />
+        ) : (
+          <img src="/lp/visual/pathy.png" alt="Pathy celebra el recorrido" />
+        )}
       </section>
       {document.tips.length > 0 && (
         <aside className="hb-tip">
-          <LearningPathYarisAvatar size={52} ring />
+          {document.ciaac ? (
+            <CiaacYarisAvatar size={52} />
+          ) : (
+            <LearningPathYarisAvatar size={52} ring />
+          )}
           <p>
             <strong>Para recordar</strong>
             {document.tips.join(" ")}
@@ -613,6 +763,7 @@ function Finish({
           <button
             key={statement}
             type="button"
+            aria-pressed={Boolean(checks[index])}
             className={checks[index] ? "is-checked" : ""}
             onClick={() => onCheck(index)}
           >

@@ -64,9 +64,11 @@ function ContenedorPage() {
               locked={bloqueado}
               meta={
                 bloqueado
-                  ? a?.lock === "plan"
-                    ? "Disponible con FlightPath Pro"
-                    : "Completa el learning path anterior para abrirlo"
+                  ? a?.lock === "contenido"
+                    ? "Contenido en preparación"
+                    : a?.lock === "plan"
+                      ? "Disponible con FlightPath Pro"
+                      : "Completa el learning path anterior para abrirlo"
                   : `Paso ${a?.posicion} de ${a?.total} en ${subject.titulo}`
               }
               onClick={

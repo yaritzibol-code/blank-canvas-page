@@ -2,6 +2,7 @@
 import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { LpBreadcrumbs, LpCard, LpContinueCard, LpGrid, LpHeader } from "@/components/lp/nav";
 import { CATEGORY_STYLE } from "./index";
+import { hasAvailableCiaacContent } from "@/lib/lp/ciaac-availability";
 import { lpCategory, lpSubject } from "@/lib/lp/taxonomy";
 import { useSessionUser, useStore } from "@/lib/store";
 import { getLpCompleted, subjectContinue, subjectProgress } from "@/lib/store/lp-nav";
@@ -79,6 +80,8 @@ function MateriaPage() {
               to="/dashboard/rutas/$categoria/$materia/$contenedor"
               params={{ categoria, materia, contenedor: slug }}
               title={c.titulo}
+              disabled={!hasAvailableCiaacContent(c.id)}
+              lockReason={!hasAvailableCiaacContent(c.id) ? "En preparación" : undefined}
               icon="list"
               accent={accent}
               meta={`${total} learning paths · ${done} completados`}

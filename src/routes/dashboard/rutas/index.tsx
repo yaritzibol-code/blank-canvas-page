@@ -22,10 +22,7 @@ export const CATEGORY_STYLE: Record<string, { icon: FPIconName; accent: string }
 
 export const Route = createFileRoute("/dashboard/rutas/")({
   head: () => ({
-    meta: [
-      { title: "Learning paths · FlightPath" },
-      { name: "robots", content: "noindex" },
-    ],
+    meta: [{ title: "Learning paths · FlightPath" }, { name: "robots", content: "noindex" }],
   }),
   component: RutasIndex,
 });
@@ -55,7 +52,7 @@ function RutasIndex() {
         total += paths.length;
         const sDone = paths.filter((l) => completed.has(l.id)).length;
         done += sDone;
-        if (cat.id === "linea-aerea" && !continuar && sDone > 0) {
+        if (!continuar && sDone > 0) {
           const item = subjectContinue(userId, subject);
           if (item) {
             const [, materia, contenedor, lp] = item.id.split("/");
@@ -99,29 +96,31 @@ function RutasIndex() {
         />
       )}
 
-      <div className="fd-lp-categories"><LpGrid>
-        {LP_CATEGORIES.map((cat) => {
-          const s = CATEGORY_STYLE[cat.id] ?? { icon: "book", accent: "var(--primary)" };
-          const proximamente = cat.id === "ciaac";
-          return (
-            <LpCategoryCard
-              key={cat.id}
-              to="/dashboard/rutas/$categoria"
-              params={{ categoria: cat.id }}
-              title={cat.titulo}
-              icon={s.icon}
-              accent={s.accent}
-              percent={estado?.percent[cat.id] ?? 0}
-              disabled={proximamente}
-              actionLabel={proximamente ? "Próximamente" : "Entrar"}
-              meta={`${cat.subjects.length} ${cat.subjectLabel.toLowerCase()} · ${cat.subjects.reduce(
-                (n, sub) => n + subjectLpCount(sub),
-                0,
-              )} learning paths`}
-            />
-          );
-        })}
-      </LpGrid></div>
+      <div className="fd-lp-categories">
+        <LpGrid>
+          {LP_CATEGORIES.map((cat) => {
+            const s = CATEGORY_STYLE[cat.id] ?? { icon: "book", accent: "var(--primary)" };
+            const proximamente = false;
+            return (
+              <LpCategoryCard
+                key={cat.id}
+                to="/dashboard/rutas/$categoria"
+                params={{ categoria: cat.id }}
+                title={cat.titulo}
+                icon={s.icon}
+                accent={s.accent}
+                percent={estado?.percent[cat.id] ?? 0}
+                disabled={proximamente}
+                actionLabel={cat.id === "ciaac" ? "Explorar módulo 1" : "Entrar"}
+                meta={`${cat.subjects.length} ${cat.subjectLabel.toLowerCase()} · ${cat.subjects.reduce(
+                  (n, sub) => n + subjectLpCount(sub),
+                  0,
+                )} learning paths`}
+              />
+            );
+          })}
+        </LpGrid>
+      </div>
     </>
   );
 }
