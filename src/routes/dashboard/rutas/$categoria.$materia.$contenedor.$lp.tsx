@@ -15,6 +15,8 @@ import {
   ApplicableRegulationsPath,
 } from "@/components/lp/ApplicableRegulationsPath";
 import { AtpLearningPath } from "@/components/lp/AtpLearningPath";
+import { CiaacAircraftLearningPath } from "@/components/lp/CiaacAircraftLearningPath";
+import { AIRCRAFT_LP_ID } from "@/lib/lp/ciaac-aircraft-journey";
 import { HandbookLearningPath } from "@/components/lp/HandbookLearningPath";
 import { JeppesenLearningPath } from "@/components/lp/JeppesenLearningPath";
 import { LegislationLearningPath } from "@/components/lp/LegislationLearningPath";
@@ -160,7 +162,8 @@ function LearningPathPage() {
     <>
       <LearningPathExperience
         key={item.id}
-        showBrandArtwork={categoria !== "ciaac"}
+        showBrandArtwork={categoria !== "ciaac" || item.id === AIRCRAFT_LP_ID}
+        appearance={item.id === AIRCRAFT_LP_ID ? "conceptual" : undefined}
         identity={{
           category: cat.titulo,
           subject: subject.titulo,
@@ -237,6 +240,14 @@ function LearningPathPage() {
         ) : atpDocument && user ? (
           <AtpLearningPath
             document={atpDocument}
+            userId={user.id}
+            lpId={item.id}
+            completed={completado}
+            onComplete={() => completeLp(user.id, item, subject.titulo)}
+          />
+        ) : item.id === AIRCRAFT_LP_ID && handbookDocument && user ? (
+          <CiaacAircraftLearningPath
+            document={handbookDocument}
             userId={user.id}
             lpId={item.id}
             completed={completado}

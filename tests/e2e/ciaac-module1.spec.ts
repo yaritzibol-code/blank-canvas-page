@@ -11,10 +11,10 @@ const fixture = (lesson: number) => `/tests/fixtures/ciaac-preview.html?lesson=$
 test("prediction is non-blocking, progress survives reload, reset cancellation preserves it", async ({
   page,
 }) => {
-  await page.goto(fixture(1));
+  await page.goto(fixture(2));
   await page.getByRole("button", { name: "Iniciar recorrido", exact: true }).click();
   await expect(page.getByRole("button", { name: "Continuar", exact: true })).toBeDisabled();
-  const question = content.lessons[0].document.questions[0];
+  const question = content.lessons[1].document.questions[0];
   const wrong = question.options.find((_, index) => index !== question.correct)!;
   await page.getByRole("button", { name: wrong, exact: false }).click();
   await expect(page.getByRole("button", { name: "Continuar", exact: true })).toBeEnabled();
@@ -31,7 +31,7 @@ test("prediction is non-blocking, progress survives reload, reset cancellation p
   ).toBeVisible();
 });
 
-for (const lesson of [1, 2, 3, 4, 5]) {
+for (const lesson of [2, 3, 4, 5]) {
   test(`lesson${lesson} has responsive original art and accessible exploration`, async ({
     page,
   }) => {

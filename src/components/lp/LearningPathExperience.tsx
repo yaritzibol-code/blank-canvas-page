@@ -67,6 +67,7 @@ export interface LearningPathIdentity {
 export function LearningPathExperience({
   identity,
   showBrandArtwork = true,
+  appearance,
   user,
   onBack,
   onYaris,
@@ -76,6 +77,7 @@ export function LearningPathExperience({
 }: {
   identity: LearningPathIdentity;
   showBrandArtwork?: boolean;
+  appearance?: "conceptual";
   user: User | null;
   onBack: () => void;
   onYaris: (context: YarisContext) => void;
@@ -115,7 +117,7 @@ export function LearningPathExperience({
     if (!root || typeof IntersectionObserver === "undefined") return;
     const headings = Array.from(
       root.querySelectorAll<HTMLElement>(
-        ".ar-content h1, .ar-content h2, .ar-content h3, .atp-content h1, .atp-content h2, .atp-content h3, .hb-content h1, .hb-content h2, .hb-content h3, .jp-content h1, .jp-content h2, .jp-content h3, .law-main>main h1, .law-main>main h2, .law-main>main h3, .lp-course-content h1, .lp-course-content h2, .lp-course-content h3",
+        ".ar-content h1, .ar-content h2, .ar-content h3, .atp-content h1, .atp-content h2, .atp-content h3, .hb-content h1, .hb-content h2, .hb-content h3, .jp-content h1, .jp-content h2, .jp-content h3, .law-main>main h1, .law-main>main h2, .law-main>main h3, .lp-course-content h1, .lp-course-content h2, .lp-course-content h3, .ciaac-aircraft h1, .ciaac-aircraft h2, .ciaac-aircraft h3",
       ),
     );
     const observer = new IntersectionObserver(
@@ -173,7 +175,7 @@ export function LearningPathExperience({
 
   return (
     <StageContext.Provider value={setView}>
-      <div className="lp-study">
+      <div className={`lp-study${appearance === "conceptual" ? " lp-study--conceptual" : ""}`}>
         <svg
           className="lp-study-svg-filter"
           aria-hidden="true"

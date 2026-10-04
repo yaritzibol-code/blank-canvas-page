@@ -1,6 +1,7 @@
 /** Isolated local UI fixture. This is not a production route and never completes a real user's lesson. */
 import { createRoot } from "react-dom/client";
 import { useState } from "react";
+import { CiaacAircraftLearningPath } from "../../src/components/lp/CiaacAircraftLearningPath";
 import { HandbookLearningPath } from "../../src/components/lp/HandbookLearningPath";
 import { LearningPathExperience } from "../../src/components/lp/LearningPathExperience";
 import { CIAAC_LEARNING_PATHS } from "../../src/lib/lp/ciaac-content";
@@ -28,21 +29,35 @@ function Preview() {
         chapterId: id.split("/")[2],
       }}
       user={null}
-      showBrandArtwork={false}
+      showBrandArtwork={number === 1}
+      appearance={number === 1 ? "conceptual" : undefined}
       onBack={() => history.back()}
       onYaris={() => {}}
     >
-      <HandbookLearningPath
-        key={id}
-        document={document}
-        userId="ciaac-local-test"
-        lpId={id}
-        completed={complete}
-        onComplete={() => {
-          setComplete(true);
-          window.dispatchEvent(new Event("ciaac-preview-complete"));
-        }}
-      />
+      {number === 1 ? (
+        <CiaacAircraftLearningPath
+          document={document}
+          userId="ciaac-local-test"
+          lpId={id}
+          completed={complete}
+          onComplete={() => {
+            setComplete(true);
+            window.dispatchEvent(new Event("ciaac-preview-complete"));
+          }}
+        />
+      ) : (
+        <HandbookLearningPath
+          key={id}
+          document={document}
+          userId="ciaac-local-test"
+          lpId={id}
+          completed={complete}
+          onComplete={() => {
+            setComplete(true);
+            window.dispatchEvent(new Event("ciaac-preview-complete"));
+          }}
+        />
+      )}
       <output data-testid="completion-status" hidden>
         {complete ? "complete" : "incomplete"}
       </output>
