@@ -29,12 +29,12 @@ export function aircraftHandbook(
 ): HandbookLearningPathDocument {
   const concept = [
     card(
-      "Cómo se sostiene",
-      "Una aeronave puede mantenerse en la atmósfera mediante reacciones del aire, excluyendo la reacción de este contra la superficie terrestre. Tener motor no es un requisito: un planeador obtiene sustentación en sus alas al desplazarse respecto del aire. Un globo también es aeronave, aunque se sostenga por flotación y no tenga alas.\n\nEn cambio, el aerodeslizador se apoya en un colchón de aire contra la superficie. Esa diferencia en la forma de sostenerse lo deja fuera de la definición.",
+      "Aeronave: definición formal",
+      "«Toda máquina que puede sustentarse en la atmósfera por reacciones del aire que no sean las reacciones de esta contra la superficie de la tierra.»\n\nAFAC · Lista de Definiciones y Acrónimos, 1 de marzo de 2024, p. 1.\n\nTener motor no es un requisito: un planeador obtiene sustentación en sus alas al desplazarse respecto del aire. Un globo también es aeronave, aunque se sostenga por flotación y no tenga alas.",
     ),
     card(
-      "Qué tiempo estamos midiendo",
-      "Un avión estacionado sigue siendo una aeronave. Cuando hablamos de tiempo de vuelo, preguntamos por un intervalo con principio y final establecidos. Puede incluir momentos en tierra. Las definiciones siguientes corresponden al marco OACI indicado; no definen todos los usos legales de la expresión «en vuelo».",
+      "Aeronave en vuelo: contexto AVSEC",
+      "«Una aeronave, desde el momento en que se cierran todas sus puertas externas después del embarque, hasta el momento en que se abran dichas puertas para el desembarque.»\n\nAFAC · Lista de Definiciones y Acrónimos, 1 de marzo de 2024, p. 1. Esta definición corresponde a seguridad de la aviación civil (AVSEC). No equivale al tiempo de vuelo que calculamos en las siguientes etapas.",
     ),
   ];
   const airplane = [
@@ -59,7 +59,7 @@ export function aircraftHandbook(
   ];
   return {
     ...source,
-    title: "Cuándo empieza a contar el vuelo",
+    title: "¿Cuándo empieza a contar el vuelo?",
     intro:
       "Aprende desde qué momento y hasta cuándo se cuenta el tiempo de vuelo de un avión y de un helicóptero, según las definiciones OACI estudiadas.",
     cards: [
@@ -142,8 +142,8 @@ export function aircraftHandbook(
       { kind: "quiz", nav: "Preflight check", diagnostic: true, questions: [0] },
       {
         kind: "content",
-        nav: "Qué es una aeronave",
-        title: "Qué es una aeronave",
+        nav: "¿Qué es una aeronave?",
+        title: "¿Qué es una aeronave?",
         cards: concept,
         figures: [],
       },
@@ -168,19 +168,22 @@ export function aircraftHandbook(
         kind: "content",
         nav: "Cierre rápido",
         title: "Cierre rápido",
-        cards: [
-          card(
-            "Antes de avanzar",
-            "Un avión aterriza a las 12:20 y se detiene finalmente en plataforma a las 12:27. ¿Qué hora usarías como final de su tiempo de vuelo? Comprueba tu respuesta: 12:27, cuando termina el movimiento al finalizar la operación.",
-            true,
-          ),
-        ],
+        cards: [],
         figures: [],
       },
       { kind: "finish", nav: "Aterrizaje" },
     ],
     ciaac: undefined,
     sources: [
+      {
+        id: "afac-avsec-definitions-2024",
+        title: "AFAC · Lista de Definiciones y Acrónimos · 1 de marzo de 2024",
+        role: "Definiciones formales de aeronave y aeronave en vuelo en el contexto AVSEC.",
+        url: "https://www.gob.mx/cms/uploads/attachment/file/906219/lista-definiciones-acronimos.pdf",
+        verified_locators: ["Página 1 de 11 · revisión Original"],
+        limit:
+          "La definición AVSEC de aeronave en vuelo no sustituye los criterios de tiempo de vuelo estudiados en esta lección.",
+      },
       {
         id: "icao-8984",
         title: "OACI · Manual de medicina aeronáutica civil · Doc 8984, tercera edición",

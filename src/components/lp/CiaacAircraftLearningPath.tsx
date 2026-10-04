@@ -7,7 +7,7 @@ import "./ciaac-aircraft-handbook.css";
 const presentation = {
   className: "aircraft-handbook",
   visual: (stage: number) =>
-    stage >= 1 && stage <= 4 ? <AircraftHandbookVisual stage={stage} /> : null,
+    (stage >= 1 && stage <= 4) || stage === 8 ? <AircraftHandbookVisual stage={stage} /> : null,
   migrate: migrateAircraftHandbookJourney,
 };
 

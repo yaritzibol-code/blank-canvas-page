@@ -14,7 +14,7 @@ async function reachConcept(page: Page) {
 test("native ten-stage flow gates practice and completes once", async ({ page }) => {
   await reachConcept(page);
   await expect(
-    page.getByRole("heading", { name: "Qué es una aeronave", exact: true }),
+    page.getByRole("heading", { name: "¿Qué es una aeronave?", exact: true }),
   ).toBeVisible();
   await expect(page.locator('img[src$="aircraft-support.png"]')).toBeVisible();
   await next(page).click();
@@ -52,7 +52,14 @@ test("native ten-stage flow gates practice and completes once", async ({ page })
   await next(page).click();
   await page.getByRole("button", { name: /No, falta el propósito de despegar/ }).click();
   await next(page).click();
-  await expect(page.getByText(/Comprueba tu respuesta: 12:27/)).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "¿Con qué hora cierras el intervalo?" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "12:20", exact: true }).click();
+  await expect(page.getByText(/El intervalo termina a las 12:27/)).toBeVisible();
+  await page.getByRole("button", { name: "12:27", exact: true }).click();
+  await expect(page.getByText(/Correcto: a las 12:27/)).toBeVisible();
+  await expect(page.getByText("La idea que te llevas:", { exact: true })).toBeVisible();
   await next(page).click();
   await expect(
     page.getByRole("button", { name: "Completar Learning Path", exact: true }),

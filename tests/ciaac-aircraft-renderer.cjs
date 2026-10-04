@@ -233,8 +233,31 @@ assert.equal(
 );
 app.click(next(app));
 assert.equal(app.state.stage, 2);
+assert.match(textContent(app.tree), /¿Qué es una aeronave\?/);
 assert.match(textContent(app.tree), /Un globo también es aeronave/);
-assert.match(textContent(app.tree), /colchón de aire contra la superficie/);
+assert.match(textContent(app.tree), /Toda máquina que puede sustentarse en la atmósfera/);
+assert.match(textContent(app.tree), /se cierran todas sus puertas externas después del embarque/);
+assert.match(textContent(app.tree), /contexto AVSEC/);
+assert.match(textContent(app.tree), /No equivale al tiempo de vuelo/);
+assert.ok(document.sources.some((source) => source.id === "afac-avsec-definitions-2024"));
+assert.match(
+  textContent(app.tree),
+  /que no sean las reacciones de esta contra la superficie de la tierra/,
+);
+assert.match(textContent(app.tree), /Planeador/);
+assert.match(textContent(app.tree), /Globo/);
+assert.doesNotMatch(textContent(app.tree), /aerodeslizador|colchón de aire/i);
+assert.equal(
+  nodes(app.tree, (n) => hasClass(n, "aircraft-mechanisms"))[0].props.children.length,
+  2,
+);
+assert.doesNotMatch(
+  JSON.stringify(document) +
+    nodes(app.tree, (n) => n.type === "img")
+      .map((n) => n.props.alt)
+      .join(" "),
+  /aerodeslizador|colchón de aire/i,
+);
 app.click(next(app));
 assert.equal(app.state.stage, 3);
 assert.match(textContent(app.tree), /68 minutos/);
@@ -279,6 +302,25 @@ answer(4, "No, falta el propósito de despegar.");
 app.click(next(app));
 assert.equal(app.state.stage, 8);
 assert.match(textContent(app.tree), /12:27/);
+assert.doesNotMatch(textContent(app.tree), /Los siete minutos de rodaje/);
+assert.equal(next(app).props.disabled, false, "Closing reflection remains optional");
+app.click(button(app, "12:20"));
+assert.match(textContent(app.tree), /El intervalo termina a las 12:27/);
+assert.match(textContent(app.tree), /Los siete minutos de rodaje/);
+assert.match(textContent(app.tree), /La idea que te llevas/);
+app.click(button(app, "12:27"));
+assert.match(textContent(app.tree), /Correcto: a las 12:27/);
+assert.equal(button(app, "12:27").props["aria-pressed"], true);
+assert.equal(button(app, "12:20").props["aria-pressed"], false);
+const closingJourney = structuredClone(app.state);
+app = mount(closingJourney);
+assert.equal(app.state.stage, 8, "Refresh preserves closing stage");
+assert.doesNotMatch(textContent(app.tree), /Los siete minutos de rodaje/);
+assert.equal(next(app).props.disabled, false, "Optional reflection never blocks after refresh");
+app.click(button(app, "Anterior"));
+assert.equal(app.state.stage, 7);
+app.click(next(app));
+assert.equal(app.state.stage, 8);
 app.click(next(app));
 assert.equal(app.state.stage, 9);
 assert.equal(button(app, "Completar Learning Path").props.disabled, true);

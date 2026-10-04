@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const ROOT = "/lp/ciaac/aircraft-handbook";
 
 function Art({ name, alt, caption }: { name: string; alt: string; caption: string }) {
@@ -24,7 +26,7 @@ export function AircraftHandbookVisual({ stage }: { stage: number }) {
       <div className="aircraft-concepts">
         <Art
           name="aircraft-support"
-          alt="Comparación de tres mecanismos: planeador sostenido por sus alas, globo por flotación y aerodeslizador sobre un colchón de aire contra la superficie."
+          alt="Dos formas de sostenerse: planeador sostenido por sus alas y globo por flotación."
           caption="La forma de sostenerse determina la clasificación"
         />
         <div className="aircraft-mechanisms">
@@ -33,9 +35,6 @@ export function AircraftHandbookVisual({ stage }: { stage: number }) {
           </span>
           <span>
             <strong>Globo</strong>Flotación · sí es aeronave
-          </span>
-          <span>
-            <strong>Aerodeslizador</strong>Colchón contra la superficie · excluido
           </span>
         </div>
       </div>
@@ -96,5 +95,58 @@ export function AircraftHandbookVisual({ stage }: { stage: number }) {
         </ol>
       </div>
     );
+  if (stage === 8) return <AircraftClosingReflection />;
   return null;
+}
+
+/** One optional closing reflection; it never changes the lesson's progression gates. */
+function AircraftClosingReflection() {
+  const [answer, setAnswer] = useState<string | null>(null);
+  return (
+    <section className="hb-card hb-dark">
+      <div className="hb-question" role="group" aria-label="El final del tiempo de vuelo">
+        <h3>¿Con qué hora cierras el intervalo?</h3>
+        <p>
+          Un avión aterriza a las 12:20 y se detiene finalmente en plataforma a las 12:27. ¿Qué hora
+          usarías como final de su tiempo de vuelo?
+        </p>
+        <div className="hb-options">
+          {["12:20", "12:27"].map((time) => (
+            <button
+              key={time}
+              type="button"
+              aria-pressed={answer === time}
+              className={answer === time ? (time === "12:27" ? "is-correct" : "is-wrong") : ""}
+              onClick={() => setAnswer(time)}
+            >
+              {time}
+            </button>
+          ))}
+        </div>
+        {answer !== null && (
+          <div
+            className={`hb-feedback ${answer === "12:27" ? "is-correct" : "is-wrong"}`}
+            role="status"
+          >
+            <strong>
+              {answer === "12:27" ? "Correcto: a las 12:27." : "El intervalo termina a las 12:27."}
+            </strong>{" "}
+            A las 12:20 termina el tramo en el aire. Los siete minutos de rodaje también cuentan: el
+            tiempo de vuelo termina con la detención final en plataforma.
+          </div>
+        )}
+      </div>
+      {answer !== null && (
+        <div className="hb-tip">
+          <p>
+            <strong>La idea que te llevas:</strong> Una aeronave se reconoce por cómo se sostiene.
+            Para medir su tiempo de vuelo, identifica los límites de la operación: en el avión, el
+            movimiento para despegar y la detención final; en el helicóptero, el inicio del giro de
+            las palas y la detención tanto de la aeronave como del rotor. Tiempo de vuelo no es lo
+            mismo que tiempo en el aire.
+          </p>
+        </div>
+      )}
+    </section>
+  );
 }
