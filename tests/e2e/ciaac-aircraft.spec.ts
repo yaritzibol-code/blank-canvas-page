@@ -1,100 +1,87 @@
-/** Isolated first-LP UI cases. Use the fixture server; no account writes are performed. */
+/** Isolated native first-LP UI cases. No account writes are performed. */
 import { test, expect, type Page } from "@playwright/test";
 const URL = "/tests/fixtures/ciaac-preview.html?lesson=1";
 const next = (page: Page) => page.getByRole("button", { name: "Continuar", exact: true });
-async function mapConcepts(page: Page) {
-  const map = page.locator(".av-map");
-  for (const [phrase, slot] of [
-    ["La máquina", "Aeronave"],
-    ["Una condición física", "Físicamente en el aire"],
-    ["Un intervalo definido", "Tiempo de vuelo"],
-  ]) {
-    await map.getByRole("button", { name: phrase, exact: true }).click();
-    await map.getByRole("button", { name: new RegExp(`^${slot}:`) }).click();
-  }
-}
-
-test("five scenes resolve by conceptual choices and finish once", async ({ page }) => {
+async function reachConcept(page: Page) {
   await page.goto(URL);
-  await expect(page.getByRole("heading", { name: "Aeronave en vuelo", exact: true })).toBeVisible();
-  await expect(page.locator('input[type="text"], textarea')).toHaveCount(0);
+  await page.getByRole("button", { name: "Iniciar recorrido", exact: true }).click();
   await expect(next(page)).toBeDisabled();
-  for (const label of ["Avión", "Helicóptero", "Planeador", "Globo", "Aerodeslizador"]) {
-    await page
-      .getByRole("button", { name: new RegExp(`^${label}`) })
-      .first()
-      .click();
-    await page
-      .getByRole("button", {
-        name: label === "Aerodeslizador" ? /^Queda fuera de esta definición/ : /^Es aeronave/,
-      })
+  await expect(page.locator('img[src$="preflight-pushback.png"]')).toBeVisible();
+  await page.getByRole("button", { name: /No, hasta separarse del suelo/ }).click();
+  await expect(next(page)).toBeEnabled();
+  await next(page).click();
+}
+test("native ten-stage flow gates practice and completes once", async ({ page }) => {
+  await reachConcept(page);
+  await expect(
+    page.getByRole("heading", { name: "Qué es una aeronave", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator('img[src$="aircraft-support.png"]')).toBeVisible();
+  await next(page).click();
+  await expect(page.getByText("Tiempo de vuelo · 68 minutos", { exact: true })).toBeVisible();
+  await next(page).click();
+  await expect(page.locator('img[src$="helicopter-rotor.png"]')).toBeVisible();
+  await next(page).click();
+  await expect(next(page)).toBeDisabled();
+  const pairs = page.locator(".hb-pair-grid");
+  const left = pairs.locator(":scope > div").nth(0).getByRole("button");
+  const right = pairs.locator(":scope > div").nth(1).getByRole("button");
+  for (const [i, j] of [
+    [0, 1],
+    [1, 3],
+    [2, 0],
+    [3, 2],
+  ]) {
+    await left.nth(i).click();
+    await right.nth(j).click();
+  }
+  await page.getByRole("button", { name: "Comprobar relaciones", exact: true }).click();
+  await next(page).click();
+  await expect(page.locator(".hb-quiz-with-visual")).toHaveCount(0);
+  const questions = page.locator(".hb-question");
+  for (const [index, label] of [
+    [0, "Verdadero"],
+    [1, "Falso"],
+    [2, "Falso"],
+  ] as const) {
+    await questions
+      .nth(index)
+      .getByRole("button", { name: new RegExp(label) })
       .click();
   }
   await next(page).click();
-  await page.getByRole("button", { name: "En el aire", exact: true }).click();
-  await mapConcepts(page);
+  await page.getByRole("button", { name: /No, falta el propósito de despegar/ }).click();
   await next(page).click();
-  await page.getByLabel("Empieza a contar", { exact: true }).selectOption("3");
+  await expect(page.getByText(/Comprueba tu respuesta: 12:27/)).toBeVisible();
+  await next(page).click();
   await expect(
-    page.getByText("Ese momento inicia el tiempo en el aire.", { exact: false }),
-  ).toBeVisible();
-  await page.getByLabel("Empieza a contar", { exact: true }).selectOption("1");
-  await page.getByLabel("Termina", { exact: true }).selectOption("5");
-  await page.getByRole("button", { name: /^2\. Compara el propósito/ }).click();
-  await page.getByRole("button", { name: /Sí: tiene el propósito de despegar/ }).click();
-  await page.getByRole("button", { name: /^Lo cambian de hangar/ }).click();
-  await page.getByRole("button", { name: /No: no tiene el propósito de despegar/ }).click();
-  await next(page).click();
-  const map = page.locator(".av-map");
-  await map.getByRole("button", { name: "Empieza a girar el rotor", exact: true }).click();
-  await map.getByRole("button", { name: /^Aquí empieza el intervalo:/ }).click();
-  await map
-    .getByRole("button", { name: "Aeronave y palas detenidas al terminar", exact: true })
-    .click();
-  await map.getByRole("button", { name: /^Aquí termina el intervalo:/ }).click();
-  await page.getByRole("button", { name: /^2\. ¿Qué condición falta/ }).click();
-  await page.getByRole("button", { name: /Que las palas del rotor se detengan/ }).click();
-  await next(page).click();
-  await page.getByRole("button", { name: /Sí: importa cómo puede sostenerse/ }).click();
-  await page.getByRole("button", { name: /^2\. Una espera en tierra/ }).click();
-  await page
-    .getByRole("button", { name: /Sigue contando: la operación aún no ha terminado/ })
-    .click();
-  await page.getByRole("button", { name: /^3\. Ya aterrizó, pero/ }).click();
-  await page.getByRole("button", { name: /Que las palas del rotor se detengan/ }).click();
-  await mapConcepts(page);
-  await page.getByRole("button", { name: "Completar recorrido", exact: true }).click();
-  await expect(page.getByTestId("completion-status")).toHaveText("complete");
-  await expect(
-    page.getByRole("button", { name: "Recorrido completado", exact: true }),
+    page.getByRole("button", { name: "Completar Learning Path", exact: true }),
   ).toBeDisabled();
+  for (const check of await page.locator(".hb-checks button").all()) await check.click();
+  await page.getByRole("button", { name: "Completar Learning Path", exact: true }).click();
+  await expect(page.getByTestId("completion-status")).toHaveText("complete");
+  await expect(page.getByRole("button", { name: "Completado", exact: true })).toBeDisabled();
   await page.reload();
-  await expect(page.getByText("Tu recorrido está completado.", { exact: false })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Recorrido completado.", exact: true }),
+  ).toBeVisible();
 });
-
-test("mobile, keyboard, reduced motion and reset cancellation", async ({ page }) => {
+test("preflight and concept remain readable on mobile without horizontal overflow", async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto(URL);
-  const plane = page.getByRole("button", { name: "Planeador", exact: true });
-  await plane.focus();
-  await plane.press("Enter");
-  await expect(plane).toHaveAttribute("aria-pressed", "true");
-  await page.getByRole("button", { name: /^Es aeronave/ }).click();
-  await page.reload();
-  await expect(page.getByRole("button", { name: /^Planeador/ }).first()).toHaveAttribute(
-    "aria-pressed",
-    "true",
-  );
-  page.once("dialog", (dialog) => dialog.dismiss());
-  await page.getByRole("button", { name: "Reiniciar recorrido", exact: true }).click();
-  await expect(page.getByRole("button", { name: /^Planeador/ }).first()).toHaveAttribute(
-    "aria-pressed",
-    "true",
-  );
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(
+  await reachConcept(page);
+  await expect(page.locator('img[src$="aircraft-support.png"]')).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(
     true,
   );
-  await expect(page.locator(".av-pathy img")).toHaveAttribute("src", "/lp/visual/pathy.png");
-  await expect(page.locator(".lp-study")).toHaveClass(/lp-study--conceptual/);
+  await page.screenshot({ path: "qa/approved-aircraft-mobile.png", fullPage: true });
+});
+test("desktop preflight screenshot uses the question and illustration together", async ({
+  page,
+}) => {
+  await page.goto(URL);
+  await page.getByRole("button", { name: "Iniciar recorrido", exact: true }).click();
+  await expect(page.locator('img[src$="preflight-pushback.png"]')).toBeVisible();
+  await page.screenshot({ path: "qa/approved-aircraft-preflight.png", fullPage: true });
 });

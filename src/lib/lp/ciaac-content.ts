@@ -1,3 +1,5 @@
+import { aircraftHandbook } from "./ciaac-aircraft-handbook";
+import { AIRCRAFT_LP_ID } from "./ciaac-aircraft-journey";
 import contentJson from "./ciaac-module1.content.json";
 import type { CiaacModuleContent, CiaacLessonContent } from "./ciaac-content-types";
 import type { HandbookLearningPathDocument, HandbookStage } from "./handbook-types";
@@ -36,7 +38,7 @@ function toLearningPath(lesson: CiaacLessonContent): HandbookLearningPathDocumen
       stages.push({ ...stage, nav: "Antes de explorar", diagnostic: true });
     } else stages.push(stage);
   });
-  return {
+  const document: HandbookLearningPathDocument = {
     ...source,
     questions: source.questions.map((question) => ({
       ...question,
@@ -49,6 +51,7 @@ function toLearningPath(lesson: CiaacLessonContent): HandbookLearningPathDocumen
     sources: lesson.sourceRefs.map((id) => ({ id, ...CIAAC_MODULE_ONE_CONTENT.sources[id] })),
     ciaac: { lessonNumber: source.number, activities: lesson.activities },
   };
+  return lesson.id === AIRCRAFT_LP_ID ? aircraftHandbook(document) : document;
 }
 
 export const CIAAC_LEARNING_PATHS: Record<string, HandbookLearningPathDocument> =

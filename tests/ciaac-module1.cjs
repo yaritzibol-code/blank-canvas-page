@@ -267,6 +267,36 @@ for (const [lessonIndex, lesson] of canonical.lessons.entries()) {
   assert.equal(document.chapter, 1, lesson.id);
   assert.equal(document.chapterLabel, "Módulo", lesson.id);
   assert.equal(document.sourceLabel, "CIAAC · Aerodinámica", lesson.id);
+  if (lessonIndex === 0) {
+    assert.equal(document.stages.length, 10, "Approved first lesson uses native Handbook stages");
+    assert.deepEqual(
+      document.stages.map((stage) => stage.kind),
+      [
+        "intro",
+        "quiz",
+        "content",
+        "content",
+        "content",
+        "exercise",
+        "quiz",
+        "quiz",
+        "content",
+        "finish",
+      ],
+    );
+    assert.equal(
+      document.ciaac,
+      undefined,
+      "No custom activity conversion on the approved first lesson",
+    );
+    assert.deepEqual(
+      document.questions.map((q) => q.correct),
+      [0, 0, 1, 1, 1],
+    );
+    assert.equal(document.minutes, 9);
+    assert.deepEqual(document.subtopics, original.subtopics);
+    continue; // The new first-lesson renderer/content has its own exhaustive regression test.
+  }
   assert.equal(document.ciaac.lessonNumber, lessonIndex + 1, lesson.id);
   exactKeys(
     lesson,

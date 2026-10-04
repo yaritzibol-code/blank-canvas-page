@@ -1,0 +1,314 @@
+/* The first CIAAC lesson only. The shared sky, cloud artwork and native navigation stay intact. */
+.lp-study .lp-study-content .hb-shell.aircraft-handbook {
+  background: rgba(3, 22, 42, 0.78);
+  border: 1px solid #cba55f;
+  border-radius: 22px;
+  color: #f7f1e8;
+  box-shadow: 0 18px 60px #00122640;
+}
+.lp-study .lp-study-content .hb-shell.aircraft-handbook .hb-workspace {
+  background: transparent;
+}
+.lp-study .lp-study-content .hb-shell.aircraft-handbook .hb-content {
+  padding: clamp(18px, 3vw, 44px);
+}
+.lp-study
+  .lp-study-content
+  .hb-shell.aircraft-handbook
+  :is(.hb-card, .hb-hero, .hb-success, .hb-tip, .hb-source, .hb-topbar, .hb-footer) {
+  background: rgba(3, 24, 45, 0.7);
+  color: #f7f1e8;
+  border-color: #cba55f80;
+}
+.lp-study .lp-study-content .hb-shell.aircraft-handbook :is(.hb-hero, .hb-success) {
+  background: transparent;
+  box-shadow: none;
+}
+.lp-study .lp-study-content .hb-shell.aircraft-handbook :is(h1, h2, h3) {
+  color: #fff4e4;
+  font-family: Georgia, "Times New Roman", serif;
+  text-wrap: balance;
+}
+.lp-study .lp-study-content .hb-shell.aircraft-handbook h1 {
+  font-size: clamp(32px, 4.3vw, 62px);
+  line-height: 1.09;
+}
+.lp-study .lp-study-content .hb-shell.aircraft-handbook .hb-heading h2 {
+  font-size: clamp(28px, 3.3vw, 48px);
+  line-height: 1.14;
+}
+.lp-study
+  .lp-study-content
+  .hb-shell.aircraft-handbook
+  :is(p, .hb-question, .hb-options button, .hb-pair-grid button) {
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.65;
+}
+.lp-study .lp-study-content .hb-shell.aircraft-handbook .hb-card p {
+  white-space: pre-line;
+}
+.lp-study
+  .lp-study-content
+  .hb-shell.aircraft-handbook
+  :is(
+    .hb-card p,
+    .hb-heading p,
+    .hb-hero p,
+    .hb-success p,
+    .hb-stats small,
+    .hb-stats strong,
+    .hb-source,
+    .hb-guide,
+    .hb-topbar span,
+    .hb-topbar strong,
+    .hb-progress-area,
+    .hb-pill,
+    .hb-overline,
+    .hb-pills span,
+    .hb-feedback
+  ) {
+  color: #f0e8da;
+}
+.lp-study
+  .lp-study-content
+  .hb-shell.aircraft-handbook
+  :is(
+    .hb-pill,
+    .hb-pills span,
+    .hb-options button,
+    .hb-pair-grid button,
+    .hb-checks button,
+    .hb-actions button,
+    .hb-exercise-actions button
+  ) {
+  background: #06243ddb;
+  color: #fff4e4;
+  border: 1px solid #cba55f9c;
+}
+.lp-study .lp-study-content .hb-shell.aircraft-handbook .hb-overline {
+  color: #f5c96e;
+}
+.lp-study .lp-study-content .hb-shell.aircraft-handbook .hb-source a {
+  color: #ffdb91;
+}
+.lp-study
+  .lp-study-content
+  .hb-shell.aircraft-handbook
+  :is(.hb-stats span, .hb-pair-grid button span, .hb-checks button span) {
+  background: #143954;
+  color: #fff4e4;
+}
+.lp-study .lp-study-content .hb-shell.aircraft-handbook .hb-actions .is-primary,
+.lp-study .lp-study-content .hb-shell.aircraft-handbook .hb-exercise-actions .is-primary {
+  background: linear-gradient(120deg, #d7a94f, #ffda8a);
+  color: #102333;
+}
+.lp-study
+  .lp-study-content
+  .hb-shell.aircraft-handbook
+  :is(
+    .hb-options button.is-correct,
+    .hb-pair-grid button.is-paired,
+    .hb-checks button.is-checked,
+    .hb-feedback.is-correct
+  ) {
+  background: #123c39;
+  color: #e0fff0;
+  border-color: #8edcbd;
+}
+.lp-study
+  .lp-study-content
+  .hb-shell.aircraft-handbook
+  :is(.hb-options button.is-wrong, .hb-feedback.is-wrong) {
+  background: #472b2a;
+  color: #ffe8da;
+  border-color: #e9a17d;
+}
+.lp-study .lp-study-content .hb-shell.aircraft-handbook .hb-pair-grid button.is-active {
+  outline: 2px solid #ffdc92;
+  background: #33516a;
+}
+.lp-study .lp-study-content .hb-shell.aircraft-handbook button:focus-visible {
+  outline: 3px solid #ffe09b;
+  outline-offset: 4px;
+}
+.lp-study .lp-study-content .hb-shell.aircraft-handbook .hb-quiz-with-visual {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+.lp-study .lp-study-content .hb-shell.aircraft-handbook .hb-quiz-with-visual > .aircraft-visual {
+  grid-column: 2;
+  grid-row: 1;
+}
+.lp-study .lp-study-content .hb-shell.aircraft-handbook .hb-quiz-with-visual > .hb-quiz-stack {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+}
+.aircraft-visual {
+  margin: 0 0 24px;
+  border: 1px solid #d4ad67;
+  overflow: hidden;
+  border-radius: 15px;
+  background: #052039;
+}
+.lp-study .lp-study-content .hb-shell.aircraft-handbook .aircraft-visual img {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  height: auto;
+  object-fit: contain;
+  margin: 0;
+  border-radius: 0;
+}
+.aircraft-visual figcaption {
+  padding: 12px 16px;
+  text-align: center;
+  font:
+    20px/1.4 Georgia,
+    serif;
+  color: #fff1d7;
+}
+.aircraft-mechanisms {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: -10px 0 28px;
+  text-align: center;
+}
+.aircraft-mechanisms span {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.aircraft-mechanisms strong {
+  display: block;
+  font-size: 18px;
+  color: #ffcf76;
+}
+.aircraft-timeline {
+  padding: clamp(18px, 2.5vw, 32px);
+  margin: 0 0 28px;
+  border: 1px solid #cba55f;
+  border-radius: 16px;
+  background: #052039b3;
+}
+.aircraft-timeline figcaption {
+  font:
+    25px Georgia,
+    serif;
+  margin-bottom: 22px;
+  color: #f8d38a;
+}
+.aircraft-timeline ol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  text-align: center;
+  gap: 12px;
+}
+.aircraft-timeline li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+.aircraft-timeline li > span {
+  font-size: 36px;
+  color: #ffcc70;
+  border-bottom: 2px solid #d4ad67;
+  width: 100%;
+}
+.aircraft-timeline time {
+  font-size: 23px;
+  color: #ffcf76;
+  font-weight: 700;
+}
+.aircraft-timeline small {
+  color: #cdd9e7;
+  font-size: 13px;
+}
+.aircraft-time-full,
+.aircraft-time-air {
+  border: 1px solid #f2c46c;
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+  font-weight: 700;
+}
+.aircraft-time-full {
+  background: #d5a856;
+  color: #09203a;
+}
+.aircraft-time-air {
+  margin: 12px 11.7647% 0 17.6471%;
+  border: 2px dashed #bad6f2;
+  background: repeating-linear-gradient(135deg, #24496a, #24496a 6px, #1a3e5e 6px, #1a3e5e 12px);
+}
+.aircraft-timeline p {
+  margin: 16px auto 0;
+  text-align: center;
+}
+.aircraft-rotor {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 24px;
+}
+.aircraft-rotor ol {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.aircraft-rotor li {
+  padding: 14px 18px;
+  border-left: 2px solid #d4ad67;
+  line-height: 1.5;
+}
+.aircraft-rotor :is(time, strong) {
+  display: block;
+  color: #ffcf76;
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+.aircraft-rotor li span {
+  display: block;
+  margin-top: 9px;
+  font-weight: 700;
+}
+@media (max-width: 760px) {
+  .lp-study .lp-study-content .hb-shell.aircraft-handbook .hb-quiz-with-visual,
+  .aircraft-rotor {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .lp-study .lp-study-content .hb-shell.aircraft-handbook .hb-quiz-with-visual > * {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .lp-study .lp-study-content .hb-shell.aircraft-handbook .hb-card-grid {
+    grid-template-columns: 1fr;
+  }
+  .aircraft-timeline ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 12px;
+  }
+  .aircraft-mechanisms {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+  .aircraft-mechanisms span {
+    border-left: 2px solid #cba55f;
+    padding-left: 12px;
+  }
+  .aircraft-visual figcaption {
+    font-size: 17px;
+  }
+}

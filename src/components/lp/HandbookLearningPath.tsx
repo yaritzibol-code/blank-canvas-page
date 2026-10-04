@@ -29,7 +29,10 @@ interface ExerciseProgress {
   feedback: string;
 }
 
-interface HandbookJourneyState {
+export interface HandbookJourneyState {
+  version?: string;
+  previousJourney?: unknown;
+  migrationNotice?: boolean;
   stage: number;
   maxStage: number;
   complete: boolean;
@@ -71,12 +74,22 @@ export function HandbookLearningPath({
   lpId,
   completed,
   onComplete,
+  presentation,
 }: {
   document: HandbookLearningPathDocument;
   userId: string;
   lpId: string;
   completed: boolean;
   onComplete: () => void;
+  presentation?: {
+    className: string;
+    visual: (stage: number) => React.ReactNode;
+    migrate: (
+      saved: unknown,
+      completed: boolean,
+      fresh: HandbookJourneyState,
+    ) => HandbookJourneyState;
+  };
 }) {
   const checkCount = document.completionChecks?.length ?? 3;
   const [state, setState] = useState<HandbookJourneyState>(() => freshState(checkCount));
@@ -89,7 +102,9 @@ export function HandbookLearningPath({
   useEffect(() => {
     if (hydrated) return;
     const saved = getLpJourney<HandbookJourneyState>(userId, lpId);
-    if (saved && saved.stage < stages.length && saved.maxStage < stages.length) {
+    if (presentation) {
+      setState(presentation.migrate(saved, completed, freshState(checkCount)));
+    } else if (saved && saved.stage < stages.length && saved.maxStage < stages.length) {
       setState({
         ...freshState(checkCount),
         ...saved,
@@ -104,7 +119,7 @@ export function HandbookLearningPath({
       });
     }
     setHydrated(true);
-  }, [checkCount, completed, hydrated, lpId, stages.length, userId]);
+  }, [checkCount, completed, hydrated, lpId, stages.length, userId, presentation]);
 
   useEffect(() => {
     if (hydrated) saveLpJourney(userId, lpId, state);
@@ -166,7 +181,11 @@ export function HandbookLearningPath({
     if (!window.confirm("¿Reiniciar este recorrido? Se borrará solamente su avance interno."))
       return;
     resetLpJourney(userId, lpId);
-    setState(freshState(checkCount));
+    setState(
+      presentation
+        ? presentation.migrate(null, completed || state.complete, freshState(checkCount))
+        : freshState(checkCount),
+    );
   };
 
   useLearningPathStageView({
@@ -200,7 +219,9 @@ export function HandbookLearningPath({
               : "Avanza a tu ritmo. Las etapas completadas quedan abiertas para repaso.";
 
   return (
-    <section className={`hb-shell ${menuOpen ? "is-menu-open" : ""}`}>
+    <section
+      className={`hb-shell ${presentation?.className ?? ""} ${menuOpen ? "is-menu-open" : ""}`}
+    >
       <style>{styles}</style>
       <button
         type="button"
@@ -291,6 +312,12 @@ export function HandbookLearningPath({
         </header>
 
         <main className="hb-content">
+          {state.migrationNotice && state.stage === 0 && (
+            <p className="hb-feedback" role="status">
+              El tema tiene un recorrido actualizado. Conservamos tu avance anterior; puedes
+              comenzar esta versión desde Despegue.
+            </p>
+          )}
           {current.kind === "intro" && <Intro document={document} />}
           {current.kind === "content" && document.ciaac && current.nav !== "Cierre rápido" && (
             <CiaacTeachingVisual
@@ -302,6 +329,7 @@ export function HandbookLearningPath({
           {current.kind === "content" && (
             <ContentStage
               title={current.title}
+              visual={presentation?.visual(state.stage)}
               cards={current.cards}
               figures={current.figures.map(
                 (figure) =>
@@ -313,6 +341,7 @@ export function HandbookLearningPath({
           )}
           {current.kind === "quiz" && (
             <QuizStage
+              visual={presentation?.visual(state.stage)}
               diagnostic={current.diagnostic}
               cards={current.cards ?? []}
               indexes={current.questions}
@@ -510,7 +539,9 @@ function ContentStage({
   cards,
   figures,
   onZoom,
+  visual,
 }: {
+  visual?: React.ReactNode;
   title: string;
   cards: HandbookCard[];
   figures: HandbookFigure[];
@@ -522,6 +553,7 @@ function ContentStage({
         <span className="hb-pill">Comprende</span>
         <h2>{title}</h2>
       </header>
+      {visual}
       <div className="hb-card-grid">
         {cards.map((card, index) => (
           <Card key={`${index}-${card.title}`} card={card} />
@@ -572,6 +604,7 @@ function Figure({
 }
 
 function QuizStage({
+  visual,
   diagnostic = false,
   cards,
   indexes,
@@ -579,6 +612,7 @@ function QuizStage({
   answers,
   onAnswer,
 }: {
+  visual?: React.ReactNode;
   diagnostic?: boolean;
   cards: HandbookCard[];
   indexes: number[];
@@ -586,6 +620,18 @@ function QuizStage({
   answers: Record<string, number>;
   onAnswer: (index: number, answer: number) => void;
 }) {
+  const quiz = (
+    <section className="hb-card hb-dark hb-quiz-stack">
+      {indexes.map((index) => (
+        <Question
+          key={index}
+          question={questions[index]}
+          value={answers[String(index)]}
+          onAnswer={(answer) => onAnswer(index, answer)}
+        />
+      ))}
+    </section>
+  );
   return (
     <>
       <header className="hb-heading">
@@ -604,16 +650,14 @@ function QuizStage({
           ))}
         </div>
       )}
-      <section className="hb-card hb-dark hb-quiz-stack">
-        {indexes.map((index) => (
-          <Question
-            key={index}
-            question={questions[index]}
-            value={answers[String(index)]}
-            onAnswer={(answer) => onAnswer(index, answer)}
-          />
-        ))}
-      </section>
+      {visual ? (
+        <div className="hb-quiz-with-visual">
+          {visual}
+          {quiz}
+        </div>
+      ) : (
+        quiz
+      )}
     </>
   );
 }
