@@ -15,7 +15,28 @@ export function migrateApprovedAircraftJourney(
   completed: boolean,
   fresh: HandbookJourneyState,
 ): HandbookJourneyState {
-  const version = `${APPROVED_AIRCRAFT_CATALOG.curriculumVersion}:${lpId}:v1`;
+  const versionPrefix = `${APPROVED_AIRCRAFT_CATALOG.curriculumVersion}:${lpId}:`;
+  const version = `${versionPrefix}${document.contentVersion ?? "v1"}`;
+  // AM01 v2 removes only the former standalone piston screen (old index 8).
+  // Shift later positions without resetting a learner or changing their game.
+  // This narrow, deletion-only mapping never maps the 40 legacy LPs into new credit.
+  if (
+    lpId === APPROVED_AIRCRAFT_CATALOG.lessons[0].id &&
+    document.contentVersion === "am01-remove-piston-v2" &&
+    document.stages.length === 18 &&
+    record(saved) &&
+    saved.version === `${versionPrefix}v1`
+  ) {
+    const previous = saved;
+    const remap = (value: unknown) => (index(value, 19) ? value - (value > 8 ? 1 : 0) : 0);
+    saved = {
+      ...previous,
+      version,
+      stage: remap(previous.stage),
+      maxStage: remap(previous.maxStage),
+      previousJourney: previous,
+    };
+  }
   const finished =
     completed || (record(saved) && saved.version === version && saved.complete === true);
   const last = document.stages.length - 1;

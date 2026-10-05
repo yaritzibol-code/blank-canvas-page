@@ -2352,19 +2352,6 @@
         "topic": 1,
         "anchor": 1,
         "pdf_page": 0,
-        "number": "AM01-piston",
-        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
-        "observe": "",
-        "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
-        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
-        "heading": "Motor alternativo",
-        "assetAspectRatio": 1.7768331562167907
-      },
-      {
-        "chapter": 1,
-        "topic": 1,
-        "anchor": 1,
-        "pdf_page": 0,
         "number": "AM01-turbinas",
         "file": "/ciaac-approved/aircraft-classification/engine-arrangements.png",
         "observe": "",
@@ -2739,34 +2726,6 @@
       },
       {
         "kind": "content",
-        "nav": "Tipo de motor: pistón",
-        "title": "Tipo de motor: pistón",
-        "cards": [
-          {
-            "title": "Tipo de motor: pistón",
-            "text": "Se reconoce por cilindros visibles o encapotados (en línea, opuestos o radiales) y un cigüeñal que mueve una hélice.",
-            "covers": [],
-            "wide": true
-          }
-        ],
-        "figures": [
-          {
-            "chapter": 1,
-            "topic": 1,
-            "anchor": 1,
-            "pdf_page": 0,
-            "number": "AM01-piston",
-            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
-            "observe": "",
-            "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
-            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
-            "heading": "Motor alternativo",
-            "assetAspectRatio": 1.7768331562167907
-          }
-        ]
-      },
-      {
-        "kind": "content",
         "nav": "Tipo de motor: turbina",
         "title": "Tipo de motor: turbina",
         "cards": [
@@ -3095,6 +3054,7 @@
         "heading": "Aeronave C",
         "assetAspectRatio": 1.5
       }
-    ]
+    ],
+    "contentVersion": "am01-remove-piston-v2"
   }
 }

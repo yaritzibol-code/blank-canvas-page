@@ -64,9 +64,7 @@ function CategoriaPage() {
               lockReason={!hasAvailableCiaacContent(s.id) ? "En preparación" : undefined}
               icon={SUBJECT_ICONS[i % SUBJECT_ICONS.length]}
               accent={accent}
-              meta={`${s.containers.length} ${s.containerLabel.toLowerCase()} · ${subjectLpCount(s)} learning paths${
-                p && p.done ? ` · ${p.done} completados` : ""
-              }`}
+              meta={`${s.containers.length} ${s.containers.length === 1 ? "módulo" : "módulos"} · ${subjectLpCount(s)} learning paths · ${p?.done ?? 0} completados`}
               percent={p?.percent ?? 0}
               right={<span />}
             />

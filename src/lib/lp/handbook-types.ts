@@ -113,6 +113,8 @@ export type HandbookExercise =
   HandbookMatchExercise | HandbookSequenceExercise | HandbookLabExercise;
 
 export interface HandbookLearningPathDocument {
+  /** Explicit revision for safely restoring progress after a changed stage sequence. */
+  contentVersion?: string;
   number: number;
   title: string;
   intro: string;

@@ -21,7 +21,7 @@
       ],
       "relationships": [],
       "groupingNotes": ["Todos los criterios de clasificación forman un único LP."],
-      "status": "reviewed-content"
+      "status": "pending-user-review"
     },
     {
       "code": "AM02",
