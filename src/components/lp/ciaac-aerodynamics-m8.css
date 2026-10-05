@@ -1,0 +1,72 @@
+.aero8-visual {
+  margin: 1.5rem 0;
+  padding: clamp(12px, 3vw, 24px);
+  border: 1px solid #36536c;
+  border-radius: 18px;
+  background: #0b1d30;
+  color: #e8f0f6;
+}
+.aero8-visual .aero8-kicker {
+  color: #ebbd70;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+}
+.aero8-visual h3 {
+  color: #e8f0f6;
+  margin: 8px 0 18px;
+  font-size: clamp(18px, 3vw, 23px);
+  line-height: 1.3;
+}
+.aero8-visual .aero8-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 16px;
+}
+.aero8-visual .aero8-panel {
+  min-width: 0;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid #2d465f;
+  border-radius: 12px;
+  background: #10263d;
+}
+.aero8-visual .aero8-panel h4 {
+  color: #ebbd70;
+  font-size: 16px;
+  font-weight: 650;
+  margin: 0 0 10px;
+  line-height: 1.4;
+}
+.aero8-visual .aero8-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  border-radius: 6px;
+}
+.aero8-visual .aero8-scroll:focus-visible {
+  outline: 2px solid #78d8e7;
+  outline-offset: 2px;
+}
+.aero8-visual svg {
+  width: 100%;
+  min-width: 320px;
+  height: auto;
+  display: block;
+  overflow: hidden;
+}
+.aero8-visual .aero8-panel figcaption {
+  margin-top: 12px;
+  color: #d5e2ec;
+  font-size: 14px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 420px) {
+  .aero8-visual {
+    padding: 10px;
+    border-radius: 12px;
+  }
+  .aero8-visual .aero8-panel {
+    padding: 10px;
+  }
+}

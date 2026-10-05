@@ -1,5 +1,6 @@
 /** Local isolated UI tests. Run the fixture Vite config at port8081 first. */
 import { test, expect } from "@playwright/test";
+import { moduleOneHandbook } from "../../src/lib/lp/ciaac-module-one-handbook";
 import { readFileSync } from "node:fs";
 import type { CiaacModuleContent } from "../../src/lib/lp/ciaac-content-types";
 const content = JSON.parse(
@@ -19,12 +20,12 @@ test("prediction is non-blocking, progress survives reload, reset cancellation p
   await page.getByRole("button", { name: wrong, exact: false }).click();
   await expect(page.getByRole("button", { name: "Continuar", exact: true })).toBeEnabled();
   await page.getByRole("button", { name: "Continuar", exact: true }).click();
-  await expect(page.locator(".ciaac-visual")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "¿Qué puede fluir?", exact: true })).toBeVisible();
   await page.reload();
-  await expect(page.locator(".ciaac-visual")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "¿Qué puede fluir?", exact: true })).toBeVisible();
   page.once("dialog", (dialog) => dialog.dismiss());
   await page.getByRole("button", { name: "Reiniciar recorrido", exact: true }).click();
-  await expect(page.locator(".ciaac-visual")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "¿Qué puede fluir?", exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Anterior", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Primero, ¿qué crees que sucede?" }),
@@ -48,17 +49,12 @@ for (const lesson of [2, 3, 4, 5]) {
       .getByRole("button", { name: question.options[question.correct], exact: false })
       .click();
     await page.getByRole("button", { name: "Continuar", exact: true }).click();
-    await expect(page.locator(".ciaac-visual")).toBeVisible();
-    await expect(page.locator(".ciaac-visual svg[role=img]").first()).toBeVisible();
+    if (lesson === 2) await page.getByRole("button", { name: "Continuar", exact: true }).click();
+    await expect(page.locator(".ciaac-science-diagram")).toBeVisible();
+    await expect(page.locator(".ciaac-science-diagram svg[role=img]").first()).toBeVisible();
     expect(
       await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1),
     ).toBe(true);
-    const slider = page.locator(".ciaac-visual input[type=range]").first();
-    if (await slider.count()) {
-      await slider.focus();
-      await page.keyboard.press("ArrowRight");
-      await expect(slider).toBeFocused();
-    }
     await page.getByText("Fuentes y alcance de este recorrido", { exact: true }).click();
     await expect(
       page.getByText("Adaptación pedagógica de FlightPath.", { exact: false }),
@@ -66,7 +62,7 @@ for (const lesson of [2, 3, 4, 5]) {
     const sources = page.locator(".hb-source").filter({
       has: page.getByText("Fuentes y alcance de este recorrido", { exact: true }),
     });
-    const references = content.lessons[lesson - 1].sourceRefs.map((id) => content.sources[id]);
+    const references = moduleOneHandbook(content.lessons[lesson - 1].document).sources!;
     await expect(sources.locator("a")).toHaveCount(
       references.filter((source) => source.url).length,
     );

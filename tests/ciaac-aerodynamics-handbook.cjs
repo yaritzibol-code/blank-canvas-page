@@ -1,0 +1,416 @@
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
+const vm = require("node:vm");
+const ts = require("typescript");
+
+const root = path.resolve(__dirname, "..");
+const file = (relative) => path.join(root, relative);
+const read = (relative) => fs.readFileSync(file(relative), "utf8");
+const element = (type, props, key) => ({ type, props: props ?? {}, key });
+const jsx = { jsx: element, jsxs: element, Fragment: Symbol("Fragment") };
+
+// As in ciaac-module1.cjs, transpile the actual TSX into a test-only JSX tree.
+// No DOM, browser, application account, database, or network is involved.
+const compiledScripts = new Map();
+function loader(stubs = {}) {
+  const cache = new Map();
+  return function load(filename) {
+    if (cache.has(filename)) return cache.get(filename).exports;
+    if (filename.endsWith(".css")) return {};
+    if (filename.endsWith(".json")) return JSON.parse(fs.readFileSync(filename, "utf8"));
+    const mod = { exports: {} };
+    cache.set(filename, mod);
+    const stamp = `${filename}:${fs.statSync(filename).mtimeMs}`;
+    if (!compiledScripts.has(stamp))
+      compiledScripts.set(
+        stamp,
+        ts.transpileModule(fs.readFileSync(filename, "utf8"), {
+          compilerOptions: {
+            target: ts.ScriptTarget.ES2022,
+            module: ts.ModuleKind.CommonJS,
+            esModuleInterop: true,
+            jsx: ts.JsxEmit.ReactJSX,
+          },
+        }).outputText,
+      );
+    const js = compiledScripts.get(stamp);
+    const localRequire = (request) => {
+      if (Object.hasOwn(stubs, request)) return stubs[request];
+      if (!request.startsWith(".") && !request.startsWith("@/")) return require(request);
+      const resolved = request.startsWith("@/")
+        ? file(`src/${request.slice(2)}`)
+        : path.resolve(path.dirname(filename), request);
+      const dependency = [resolved, `${resolved}.ts`, `${resolved}.tsx`, `${resolved}.json`].find(
+        (candidate) => fs.existsSync(candidate) && fs.statSync(candidate).isFile(),
+      );
+      assert.ok(dependency, `Unresolved ${request}`);
+      return load(dependency);
+    };
+    vm.runInThisContext(`(function(require, module, exports) {${js}\n})`, { filename })(
+      localRequire,
+      mod,
+      mod.exports,
+    );
+    return mod.exports;
+  };
+}
+const load = loader();
+const { AIRCRAFT_LP_ID, freshAircraftJourney } = load(file("src/lib/lp/ciaac-aircraft-journey.ts"));
+const { CIAAC_LEARNING_PATHS } = load(file("src/lib/lp/ciaac-content.ts"));
+const ids = Object.keys(CIAAC_LEARNING_PATHS);
+let document;
+let activeId;
+function nodes(node, predicate) {
+  if (Array.isArray(node)) return node.flatMap((child) => nodes(child, predicate));
+  if (!node || typeof node !== "object") return [];
+  return [...(predicate(node) ? [node] : []), ...nodes(node.props?.children, predicate)];
+}
+function textContent(node) {
+  if (Array.isArray(node)) return node.map(textContent).join("");
+  if (node === null || node === undefined || typeof node === "boolean") return "";
+  if (typeof node !== "object") return String(node);
+  return node.type === "style" ? "" : textContent(node.props?.children);
+}
+const hasClass = (node, name) => node.props.className?.split(" ").includes(name);
+function button(app, label) {
+  const matches = nodes(
+    app.tree,
+    (node) =>
+      node.type === "button" &&
+      (typeof label === "string"
+        ? textContent(node).trim() === label
+        : label.test(textContent(node))),
+  );
+  assert.equal(
+    matches.length,
+    1,
+    `One button matching ${label}; found ${matches.map(textContent).join(" | ")}`,
+  );
+  return matches[0];
+}
+function mount(saved, completed = false) {
+  const records = new Map();
+  const storage = new Map(
+    ids.map((id) => [id, id === activeId ? structuredClone(saved) : { untouched: id }]),
+  );
+  let currentUserId = "test-user";
+  const secondUserStorage = new Map();
+  const activeStorage = () => (currentUserId === "test-user" ? storage : secondUserStorage);
+  const writes = [];
+  const resets = [];
+  let active;
+  let changed = false;
+  let effects = [];
+  let tree;
+  let stageView;
+  let completeCalls = 0;
+  const app = { storage, writes, resets };
+  const record = () => {
+    const index = active.index++;
+    return [active.slots, index];
+  };
+  const react = {
+    useState(initial) {
+      const [slots, index] = record();
+      if (!(index in slots)) slots[index] = typeof initial === "function" ? initial() : initial;
+      return [
+        slots[index],
+        (next) => {
+          const value = typeof next === "function" ? next(slots[index]) : next;
+          if (!Object.is(value, slots[index])) {
+            slots[index] = value;
+            changed = true;
+          }
+        },
+      ];
+    },
+    useRef(initial) {
+      const [slots, index] = record();
+      if (!(index in slots)) slots[index] = { current: initial };
+      return slots[index];
+    },
+    useEffect(effect, deps) {
+      const [slots, index] = record();
+      if (!(index in slots) || !deps || deps.some((dep, i) => !Object.is(dep, slots[index][i]))) {
+        slots[index] = deps;
+        effects.push(effect);
+      }
+    },
+    useMemo: (factory) => factory(),
+    useId: () => {
+      const [slots, i] = record();
+      if (!(i in slots)) slots[i] = `test-${records.size}-${i}`;
+      return slots[i];
+    },
+  };
+  function runComponent(Component, props, id) {
+    const previous = active;
+    if (!records.has(id)) records.set(id, { slots: [], index: 0 });
+    active = records.get(id);
+    active.index = 0;
+    const value = Component(props);
+    active = previous;
+    return value;
+  }
+  function materialize(node, id = "tree") {
+    if (Array.isArray(node))
+      return node.map((child, index) => materialize(child, `${id}/${child?.key ?? index}`));
+    if (node === null || node === undefined || typeof node === "boolean") return null;
+    if (typeof node !== "object") return node;
+    if (typeof node.type === "function")
+      return materialize(
+        runComponent(node.type, node.props, `${id}/${node.type.name}/${node.key ?? "default"}`),
+        `${id}/rendered`,
+      );
+    return {
+      ...node,
+      props: { ...node.props, children: materialize(node.props.children, `${id}/children`) },
+    };
+  }
+  const { CiaacAerodynamicsLearningPath } = loader({
+    react,
+    "react/jsx-runtime": jsx,
+    "@/components/lp/LearningPathExperience": {
+      useLearningPathStageView: (value) => {
+        stageView = value;
+      },
+    },
+    "@/lib/store/lp-journey": {
+      getLpJourney: (userId, lpId) => {
+        assert.equal(userId, currentUserId);
+        return activeStorage().get(lpId);
+      },
+      saveLpJourney: (userId, lpId, value) => {
+        writes.push([userId, lpId]);
+        activeStorage().set(lpId, structuredClone(value));
+      },
+      resetLpJourney: (userId, lpId) => {
+        resets.push([userId, lpId]);
+        activeStorage().delete(lpId);
+      },
+    },
+  })(file("src/components/lp/CiaacAerodynamicsLearningPath.tsx"));
+  app.render = () => {
+    for (let pass = 0; pass < 30; pass += 1) {
+      changed = false;
+      effects = [];
+      tree = materialize(
+        runComponent(
+          CiaacAerodynamicsLearningPath,
+          {
+            document,
+            userId: currentUserId,
+            lpId: activeId,
+            completed,
+            onComplete: () => {
+              completeCalls += 1;
+            },
+          },
+          "root",
+        ),
+      );
+      for (const effect of effects) effect();
+      if (!changed) return tree;
+    }
+    assert.fail("Hook/effect render did not settle");
+  };
+  app.changeUser = (id) => {
+    currentUserId = id;
+    app.render();
+  };
+  app.click = (node) => {
+    node.props.onClick();
+    app.render();
+  };
+  Object.defineProperties(app, {
+    tree: { get: () => tree },
+    state: { get: () => activeStorage().get(activeId) },
+    view: { get: () => stageView },
+    completeCalls: { get: () => completeCalls },
+  });
+  app.render();
+  return app;
+}
+
+const { migrateAerodynamicsJourney } = load(file("src/lib/lp/ciaac-aerodynamics-journey.ts"));
+const fresh = {
+  stage: 0,
+  maxStage: 0,
+  complete: false,
+  answers: {},
+  checks: [false, false, false],
+  exerciseDone: false,
+  exercise: {
+    pairs: {},
+    selectedLeft: null,
+    sequence: [],
+    visited: [],
+    tokens: [],
+    values: {},
+    feedback: "",
+  },
+  activityResponses: {},
+};
+for (const d of Object.values(CIAAC_LEARNING_PATHS).filter((d) => d.chapter > 1)) {
+  const version = `ciaac-aerodynamics-${d.chapter}-${d.number}-v1`;
+  const recovered = migrateAerodynamicsJourney(
+    d,
+    {
+      version,
+      stage: -1,
+      maxStage: 9999,
+      answers: { 0: 999 },
+      checks: ["true", true],
+      exerciseDone: true,
+      exercise: { pairs: { 0: -1 }, sequence: [-1, 999] },
+    },
+    false,
+    fresh,
+  );
+  assert.equal(recovered.stage, 0);
+  assert.equal(recovered.maxStage, 0);
+  assert.deepEqual(recovered.answers, {});
+  assert.equal(recovered.exerciseDone, false);
+  assert.deepEqual(recovered.checks, [false, true, false]);
+}
+
+const next = (app) => button(app, "Continuar");
+for ([activeId, document] of Object.entries(CIAAC_LEARNING_PATHS).filter(
+  ([id]) => !id.includes("/modulo-1-"),
+)) {
+  assert.equal(document.ciaac, undefined);
+  assert.equal(
+    document.stages.filter((s) => s.kind === "exercise").length,
+    document.exercise ? 1 : 0,
+  );
+  assert.ok(!document.stages.some((s) => s.kind === "activity"));
+  let app = mount({ stage: 6, maxStage: 7, activityResponses: { 2: { answer: "old" } } });
+  assert.equal(app.state.stage, 0);
+  assert.equal(app.state.previousJourney.maxStage, 7);
+  assert.equal(app.state.migrationNotice, true);
+  app.click(button(app, "Iniciar recorrido"));
+  let scientificScenes = 0;
+  for (let stageIndex = 1; stageIndex < document.stages.length - 1; stageIndex++) {
+    const stage = document.stages[stageIndex];
+    if (stage.kind === "content")
+      scientificScenes += nodes(app.tree, (n) => n.type === "svg" && n.props.role === "img").length;
+    assert.equal(app.state.stage, stageIndex);
+    assert.equal(nodes(app.tree, (n) => n.type === "textarea" || n.type === "input").length, 0);
+    if (stage.kind === "quiz") {
+      if (stage.diagnostic)
+        assert.ok(
+          nodes(app.tree, (n) => n.type === "svg" && n.props.role === "img").length > 0,
+          `${activeId}: preflight has contextual visual`,
+        );
+      assert.equal(next(app).props.disabled, true);
+      for (const i of stage.questions) {
+        const q = document.questions[i];
+        const group = nodes(
+          app.tree,
+          (n) => n.props.role === "group" && n.props["aria-label"] === q.prompt,
+        )[0];
+        if (!stage.diagnostic) {
+          app.click(
+            nodes(
+              group,
+              (n) =>
+                n.type === "button" &&
+                textContent(n).endsWith(q.options[(q.correct + 1) % q.options.length]),
+            )[0],
+          );
+          assert.equal(next(app).props.disabled, true, "Wrong mastery choice is gated");
+        }
+        app.click(
+          nodes(
+            group,
+            (n) =>
+              n.type === "button" &&
+              textContent(n).endsWith(
+                q.options[stage.diagnostic ? (q.correct + 1) % q.options.length : q.correct],
+              ),
+          )[0],
+        );
+      }
+    }
+    if (stage.kind === "exercise") {
+      assert.equal(next(app).props.disabled, true);
+      if (document.exercise.kind === "match") {
+        for (const pair of document.exercise.pairs) {
+          app.click(
+            nodes(
+              nodes(app.tree, (n) => hasClass(n, "hb-pair-grid"))[0],
+              (n) => n.type === "button" && textContent(n).endsWith(pair[0]),
+            )[0],
+          );
+          app.click(button(app, pair[1]));
+        }
+        app.click(button(app, "Comprobar relaciones"));
+      } else if (document.exercise.kind === "sequence") {
+        for (const item of document.exercise.items) app.click(button(app, item));
+        app.click(button(app, "Comprobar secuencia"));
+      }
+    }
+    assert.equal(next(app).props.disabled, false);
+    const saved = structuredClone(app.state);
+    app = mount(saved);
+    assert.equal(app.state.stage, stageIndex, "Refresh keeps each stage");
+    if (stageIndex > 1) {
+      app.click(button(app, "Anterior"));
+      assert.equal(app.state.stage, stageIndex - 1, "Back returns to prior stage");
+      app.click(next(app));
+      assert.equal(app.state.stage, stageIndex, "Forward restores current stage");
+    }
+    app.click(next(app));
+  }
+  assert.ok(scientificScenes > 0, `${activeId}: actual scientific diagrams accompany the lesson`);
+  assert.equal(button(app, "Completar Learning Path").props.disabled, true);
+  // Finish checklist buttons carry their state on the enclosing hb-checks region.
+  const checks = nodes(app.tree, (n) => hasClass(n, "hb-checks"))[0];
+  for (let i = 0; i < (document.completionChecks?.length ?? 3); i++) {
+    const region = nodes(app.tree, (n) => hasClass(n, "hb-checks"))[0];
+    app.click(nodes(region, (n) => n.type === "button")[i]);
+  }
+  app.click(button(app, "Completar Learning Path"));
+  assert.equal(app.state.complete, true);
+  assert.equal(app.completeCalls, 1);
+  const completed = mount({ stage: 9, finished: true });
+  assert.equal(completed.state.maxStage, document.stages.length - 1);
+  assert.equal(completed.state.complete, true);
+  const accountCompleted = mount({ stage: 3 }, true);
+  assert.equal(accountCompleted.state.complete, true);
+  assert.equal(accountCompleted.completeCalls, 0);
+  assert.ok(app.writes.every(([, id]) => id === activeId));
+}
+const routeEntries = Object.entries(CIAAC_LEARNING_PATHS).filter(
+  ([id]) => !id.includes("/modulo-1-"),
+);
+[activeId, document] = routeEntries[0];
+const firstRouteId = activeId;
+const switched = mount(null);
+switched.click(button(switched, "Iniciar recorrido"));
+const firstJourney = structuredClone(switched.storage.get(firstRouteId));
+[activeId, document] = routeEntries[1];
+switched.render();
+assert.equal(switched.state.stage, 0, "New route hydrates its own journey");
+assert.equal(switched.state.previousJourney.untouched, activeId);
+assert.deepEqual(
+  switched.storage.get(firstRouteId),
+  firstJourney,
+  "Previous route progress remains isolated",
+);
+
+const beforeUserSwitch = structuredClone(switched.storage.get(activeId));
+switched.changeUser("second-test-user");
+assert.equal(switched.state.stage, 0);
+assert.equal(
+  switched.state.previousJourney,
+  undefined,
+  "A different account never inherits the prior account journey",
+);
+assert.deepEqual(switched.storage.get(activeId), beforeUserSwitch);
+assert.ok(switched.writes.at(-1)[0] === "second-test-user");
+
+console.log(
+  "PASS: reviewed Aerodynamics paths, all stages, selection/matching/sequence gates, refresh, previous-journey retention and completed review access.",
+);

@@ -1,0 +1,67 @@
+/* Isolated scientific figures: no changes to the approved page shell. */
+.aero67-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0;
+  align-items: start;
+}
+.aero67-figure {
+  min-width: 0;
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid rgba(215, 172, 96, 0.29);
+  border-radius: 16px;
+  background: rgba(12, 32, 47, 0.88);
+  color: #e1ebf2;
+}
+.aero67-title {
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.4;
+  color: #e1c080;
+  margin: 0 0 0.7rem;
+}
+.aero67-figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 360px;
+  overflow: visible;
+}
+.aero67-figure figcaption {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #c1d1dc;
+  margin-top: 0.8rem;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 420px) {
+  .aero67-figure {
+    padding: 0.7rem;
+  }
+  .aero67-grid {
+    gap: 0.8rem;
+  }
+  .aero67-figure figcaption {
+    font-size: 1rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aero67-figure * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+.aero67-canvas {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.aero67-canvas svg {
+  min-width: 340px;
+}
+.aero67-canvas:focus-visible {
+  outline: 2px solid #d7ac60;
+  outline-offset: 3px;
+}

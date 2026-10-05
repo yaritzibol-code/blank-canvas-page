@@ -1,4 +1,5 @@
-/** The first reviewed CIAAC module is the only CIAAC content enabled in this preview. */
+import { CIAAC_REVIEWED_AERODYNAMICS_IDS } from "./ciaac-aerodynamics-ids";
+/** Original reviewed introductory module; keep its stable IDs for migrations. */
 export const CIAAC_MODULE_ONE_IDS = [
   "ciaac/aerodinamica/modulo-1-introduccion-y-definiciones/aeronave-en-vuelo-1",
   "ciaac/aerodinamica/modulo-1-introduccion-y-definiciones/definicion-de-fluido-2",
@@ -7,12 +8,13 @@ export const CIAAC_MODULE_ONE_IDS = [
   "ciaac/aerodinamica/modulo-1-introduccion-y-definiciones/densidad-del-aire-y-factores-que-la-afectan-5",
 ] as const;
 
-const ready = new Set<string>(CIAAC_MODULE_ONE_IDS);
+export const CIAAC_AVAILABLE_IDS = [...CIAAC_MODULE_ONE_IDS, ...CIAAC_REVIEWED_AERODYNAMICS_IDS];
+const ready = new Set<string>(CIAAC_AVAILABLE_IDS);
 
 export function isLearningPathAvailable(id: string): boolean {
   return !id.startsWith("ciaac/") || ready.has(id);
 }
 
 export function hasAvailableCiaacContent(id: string): boolean {
-  return !id.startsWith("ciaac") || CIAAC_MODULE_ONE_IDS.some((lp) => lp.startsWith(`${id}/`));
+  return !id.startsWith("ciaac") || CIAAC_AVAILABLE_IDS.some((lp) => lp.startsWith(`${id}/`));
 }

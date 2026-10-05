@@ -1,3 +1,5 @@
+import reviewedAerodynamics from "./ciaac-aerodynamics.content.json";
+import { moduleOneHandbook } from "./ciaac-module-one-handbook";
 import { aircraftHandbook } from "./ciaac-aircraft-handbook";
 import { AIRCRAFT_LP_ID } from "./ciaac-aircraft-journey";
 import contentJson from "./ciaac-module1.content.json";
@@ -51,10 +53,19 @@ function toLearningPath(lesson: CiaacLessonContent): HandbookLearningPathDocumen
     sources: lesson.sourceRefs.map((id) => ({ id, ...CIAAC_MODULE_ONE_CONTENT.sources[id] })),
     ciaac: { lessonNumber: source.number, activities: lesson.activities },
   };
-  return lesson.id === AIRCRAFT_LP_ID ? aircraftHandbook(document) : document;
+  return lesson.id === AIRCRAFT_LP_ID ? aircraftHandbook(document) : moduleOneHandbook(document);
 }
 
-export const CIAAC_LEARNING_PATHS: Record<string, HandbookLearningPathDocument> =
-  Object.fromEntries(
+export const CIAAC_LEARNING_PATHS: Record<string, HandbookLearningPathDocument> = {
+  ...Object.fromEntries(
     CIAAC_MODULE_ONE_CONTENT.lessons.map((lesson) => [lesson.id, toLearningPath(lesson)]),
-  );
+  ),
+  ...Object.fromEntries(
+    Object.entries(
+      reviewedAerodynamics as unknown as Record<string, HandbookLearningPathDocument>,
+    ).map(([id, document]) => [
+      id,
+      { ...document, ciaac: undefined } as unknown as HandbookLearningPathDocument,
+    ]),
+  ),
+};

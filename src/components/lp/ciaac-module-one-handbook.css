@@ -1,0 +1,63 @@
+.ciaac-module-one-handbook .ciaac-science-diagram {
+  margin: 20px 0;
+  padding: clamp(12px, 2vw, 24px);
+  border: 1px solid #cba55f80;
+  border-radius: 16px;
+  background: #06243ddb;
+  color: #f8efdc;
+}
+.ciaac-module-one-handbook .ciaac-science-diagram svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+.ciaac-module-one-handbook .ciaac-science-diagram text {
+  font-family: inherit;
+  font-size: 17px;
+  fill: currentColor;
+}
+.ciaac-module-one-handbook .ciaac-science-diagram text[fill] {
+  fill: #06243d;
+}
+.ciaac-module-one-handbook .ciaac-science-diagram figcaption {
+  margin-top: 14px;
+  color: #efe3cf;
+  font-size: 14px;
+  line-height: 1.6;
+}
+@media (max-width: 540px) {
+  .ciaac-module-one-handbook .ciaac-science-diagram {
+    padding: 8px;
+  }
+  .ciaac-module-one-handbook .ciaac-science-diagram text {
+    font-size: 25px;
+  }
+}
+
+.ciaac-module-one-handbook .ciaac-fluid-context {
+  margin: 20px 0;
+  border: 1px solid #cba55f80;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #06243d;
+}
+.ciaac-module-one-handbook .ciaac-fluid-context img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.ciaac-module-one-handbook .ciaac-fluid-labels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  text-align: center;
+  font-weight: 700;
+  color: #f5ce85;
+  padding: 12px 8px;
+}
+.ciaac-module-one-handbook .ciaac-fluid-context figcaption {
+  padding: 0 18px 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #efe3cf;
+}

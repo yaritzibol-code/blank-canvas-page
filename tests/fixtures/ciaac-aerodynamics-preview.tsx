@@ -1,8 +1,7 @@
 /** Isolated local UI fixture. This is not a production route and never completes a real user's lesson. */
 import { createRoot } from "react-dom/client";
 import { useState } from "react";
-import { CiaacAircraftLearningPath } from "../../src/components/lp/CiaacAircraftLearningPath";
-import { CiaacModuleOneLearningPath } from "../../src/components/lp/CiaacModuleOneLearningPath";
+import { CiaacAerodynamicsLearningPath } from "../../src/components/lp/CiaacAerodynamicsLearningPath";
 import { LearningPathExperience } from "../../src/components/lp/LearningPathExperience";
 import { CIAAC_LEARNING_PATHS } from "../../src/lib/lp/ciaac-content";
 import "../../src/fonts.css";
@@ -10,18 +9,17 @@ import "../../src/styles.css";
 
 const lessons = Object.entries(CIAAC_LEARNING_PATHS);
 function Preview() {
-  const number = Math.max(
-    1,
-    Math.min(5, Number(new URLSearchParams(window.location.search).get("lesson")) || 1),
-  );
-  const [id, document] = lessons[number - 1];
+  const params = new URLSearchParams(window.location.search);
+  const requested = params.get("id");
+  const [id, document] =
+    lessons.find(([id]) => id === requested) ?? lessons.find(([, d]) => d.chapter === 2)!;
   const [complete, setComplete] = useState(false);
   return (
     <LearningPathExperience
       identity={{
         category: "CIAAC",
         subject: "Aerodinámica",
-        chapter: "Módulo 1 · Introducción y definiciones",
+        chapter: `Módulo ${document.chapter} · ${document.chapter_name}`,
         title: document.name,
         id,
         categoryId: "ciaac",
@@ -34,30 +32,14 @@ function Preview() {
       onBack={() => history.back()}
       onYaris={() => {}}
     >
-      {number === 1 ? (
-        <CiaacAircraftLearningPath
-          document={document}
-          userId="ciaac-local-test"
-          lpId={id}
-          completed={complete}
-          onComplete={() => {
-            setComplete(true);
-            window.dispatchEvent(new Event("ciaac-preview-complete"));
-          }}
-        />
-      ) : (
-        <CiaacModuleOneLearningPath
-          key={id}
-          document={document}
-          userId="ciaac-local-test"
-          lpId={id}
-          completed={complete}
-          onComplete={() => {
-            setComplete(true);
-            window.dispatchEvent(new Event("ciaac-preview-complete"));
-          }}
-        />
-      )}
+      <CiaacAerodynamicsLearningPath
+        key={id}
+        document={document}
+        userId="ciaac-local-test"
+        lpId={id}
+        completed={complete}
+        onComplete={() => setComplete(true)}
+      />
       <output data-testid="completion-status" hidden>
         {complete ? "complete" : "incomplete"}
       </output>

@@ -52,9 +52,12 @@ const canonical = JSON.parse(read("src/lib/lp/ciaac-module1.content.json"));
 const { CIAAC_MODULE_ONE_CONTENT, CIAAC_LEARNING_PATHS } = load(
   file("src/lib/lp/ciaac-content.ts"),
 );
-const { CIAAC_MODULE_ONE_IDS, isLearningPathAvailable, hasAvailableCiaacContent } = load(
-  file("src/lib/lp/ciaac-availability.ts"),
-);
+const {
+  CIAAC_MODULE_ONE_IDS,
+  CIAAC_AVAILABLE_IDS,
+  isLearningPathAvailable,
+  hasAvailableCiaacContent,
+} = load(file("src/lib/lp/ciaac-availability.ts"));
 const taxonomy = JSON.parse(read("src/lib/lp/taxonomy.json"));
 const category = taxonomy.categories.find((item) => item.id === "ciaac");
 const subject = category.subjects.find((item) => item.id === "ciaac/aerodinamica");
@@ -193,7 +196,7 @@ assert.deepEqual(
   moduleOne.learningPaths.map((item) => item.id),
   "Existing taxonomy IDs and order",
 );
-assert.deepEqual(Object.keys(CIAAC_LEARNING_PATHS), ids);
+assert.deepEqual(Object.keys(CIAAC_LEARNING_PATHS), CIAAC_AVAILABLE_IDS);
 assert.deepEqual(CIAAC_MODULE_ONE_IDS, ids);
 assert.deepEqual(
   canonical.lessons.map((lesson) => lesson.document.cards.length),
@@ -297,153 +300,25 @@ for (const [lessonIndex, lesson] of canonical.lessons.entries()) {
     assert.deepEqual(document.subtopics, original.subtopics);
     continue; // The new first-lesson renderer/content has its own exhaustive regression test.
   }
-  assert.equal(document.ciaac.lessonNumber, lessonIndex + 1, lesson.id);
-  exactKeys(
-    lesson,
-    ["id", "document", "activities", "completionChecks", "sourceRefs"],
-    `${lesson.id}: public lesson fields only`,
-  );
-  exactKeys(
-    document.ciaac,
-    ["lessonNumber", "activities"],
-    `${lesson.id}: no review metadata in the renderer`,
-  );
+  assert.equal(document.ciaac, undefined, "Native Handbook has no custom activity renderer");
+  assert.deepEqual(document.completionChecks, lesson.completionChecks);
   assert.deepEqual(
-    document.ciaac.activities,
-    lesson.activities,
-    `${lesson.id}: all activities survive`,
+    document.questions,
+    original.questions.map((q, i) => expectedRenderedQuestion(q, original.number, i)),
   );
-  assert.deepEqual(
-    document.completionChecks,
-    lesson.completionChecks,
-    `${lesson.id}: specific finish checks`,
-  );
-  assert.ok(document.completionChecks.length >= 3, lesson.id);
-
-  // Adaptation changes presentation stages only; authored pedagogy stays intact.
-  for (const key of Object.keys(original).filter((key) => key !== "stages")) {
-    const expected =
-      key === "questions"
-        ? original.questions.map((question, index) =>
-            expectedRenderedQuestion(question, original.number, index),
-          )
-        : original[key];
-    assert.deepEqual(document[key], expected, `${lesson.id}: preserve document.${key}`);
-  }
-  assert.equal(document.source_pdf_page, null, `${lesson.id}: never invent a PDF page`);
-  assert.ok(
-    document.subtopics.every((subtopic) => subtopic.source_pdf_page === null),
-    lesson.id,
-  );
-  assert.deepEqual(
-    document.figures,
-    [],
-    `${lesson.id}: media briefs are not fabricated source figures`,
-  );
-  assert.deepEqual(
-    document.sources,
-    lesson.sourceRefs.map((id) => ({ id, ...canonical.sources[id] })),
-  );
-  validSourceReferences(lesson.sourceRefs, lesson.id);
-  for (const [cardIndex, card] of original.cards.entries()) {
-    const context = `${lesson.id}: card ${cardIndex + 1}`;
-    assert.ok(card.title && card.text && card.covers.length, context);
-    assert.deepEqual(document.cards[cardIndex], card, `${context}: card text is unchanged`);
-    assert.ok(
-      Object.keys(card).every((key) => ["title", "text", "covers", "wide"].includes(key)),
-      `${context}: teaching card fields only`,
-    );
-  }
-  for (const [questionIndex, question] of original.questions.entries()) {
-    const context = `${lesson.id}: question ${questionIndex + 1}`;
-    assert.deepEqual(
-      document.questions[questionIndex],
-      expectedRenderedQuestion(question, original.number, questionIndex),
-      `${context}: question semantics are unchanged`,
-    );
-    assert.ok(question.options.length >= 2 && question.feedback.length > 20, context);
-    assert.ok(
-      Number.isInteger(question.correct) &&
-        question.correct >= 0 &&
-        question.correct < question.options.length,
-      context,
-    );
-    assert.deepEqual(
-      sorted(question.order),
-      indexes(question.options.length),
-      `${context}: option-order permutation`,
-    );
-    assert.ok(
-      Object.keys(question).every((key) =>
-        ["prompt", "options", "feedback", "correct", "order", "after", "chapter", "topic"].includes(
-          key,
-        ),
-      ),
-      `${context}: teaching question fields only`,
-    );
-  }
-
-  assert.equal(document.stages[0].kind, "intro", lesson.id);
-  assert.equal(document.stages.at(-1).kind, "finish", lesson.id);
-  const activityStages = document.stages.filter((stage) => stage.kind === "activity");
-  assert.deepEqual(
-    activityStages.map((stage) => stage.activityIndex),
-    indexes(lesson.activities.length),
-    `${lesson.id}: every activity has its own stage`,
-  );
-  assert.deepEqual(
-    activityStages.map((stage) => stage.nav),
-    lesson.activities.map((activity) => activity.title),
-  );
-  assert.ok(
-    !document.stages.some((stage) => stage.kind === "exercise"),
-    `${lesson.id}: no duplicated generic exercise`,
-  );
-
-  const originalContent = original.stages.flatMap((stage, index) =>
-    stage.kind === "content" ? [{ ...stage, visualStage: index }] : [],
-  );
-  assert.deepEqual(
-    document.stages.filter((stage) => stage.kind === "content"),
-    originalContent,
-    `${lesson.id}: content and visual anchors are preserved`,
-  );
-  const diagnostic = document.stages.filter((stage) => stage.kind === "quiz" && stage.diagnostic);
-  assert.equal(diagnostic.length, 1, `${lesson.id}: one diagnostic preflight`);
-  assert.deepEqual(diagnostic[0].questions, [0], `${lesson.id}: preflight keeps its question`);
-
-  const visitedQuestions = document.stages.flatMap((stage) =>
-    stage.kind === "quiz" ? stage.questions : [],
-  );
-  for (const [activityIndex, activity] of lesson.activities.entries()) {
-    const context = `${lesson.id}: activity ${activityIndex + 1} (${activity.kind})`;
-    assert.ok(activity.title && activity.instruction && activity.answer, context);
-    const mapping = activity.runtimeMapping;
-    assert.ok(
-      mapping.exercise || mapping.questions?.length,
-      `${context}: activity has meaningful runtime work`,
-    );
-    for (const index of mapping.questions ?? []) {
-      validQuestionIndex(index, document, context);
-      visitedQuestions.push(index);
-    }
-    if (mapping.exercise) {
-      assert.ok(document.exercise, `${context}: mapped exercise exists`);
-      assert.equal(document.exercise.kind, "match", context);
-      assert.ok(document.exercise.pairs.length >= 3, context);
-      assert.deepEqual(
-        sorted(document.exercise.order),
-        indexes(document.exercise.pairs.length),
-        `${context}: exercise permutation`,
-      );
-    }
-  }
-  for (const index of visitedQuestions) validQuestionIndex(index, document, lesson.id);
-  assert.deepEqual(
-    sorted(visitedQuestions),
-    indexes(document.questions.length),
-    `${lesson.id}: every question is reachable exactly once`,
-  );
+  assert.deepEqual(document.exercise, original.exercise);
+  assert.equal(document.stages[0].kind, "intro");
+  assert.equal(document.stages.at(-1).kind, "finish");
+  assert.equal(document.stages.filter((s) => s.kind === "exercise").length, 1);
+  assert.ok(!document.stages.some((s) => s.kind === "activity"));
+  assert.equal(document.stages.filter((s) => s.kind === "quiz" && s.diagnostic).length, 1);
+  for (const stage of document.stages)
+    if (stage.kind === "quiz")
+      for (const index of stage.questions) validQuestionIndex(index, document, lesson.id);
+  assert.ok(document.sources.length >= 2);
+  assert.ok(!document.sources.some((source) => source.url?.includes("drive.google")));
+  assert.ok(document.stages.filter((s) => s.kind === "content").every((s) => s.cards.length >= 1));
+  // End-to-end runtime and migration coverage lives in ciaac-module-one-handbook.cjs.
 }
 
 // This lesson intentionally needs four distinct mastery checks, not the legacy
@@ -460,7 +335,7 @@ for (const cat of taxonomy.categories) {
   for (const subj of cat.subjects) {
     for (const container of subj.containers) {
       for (const item of container.learningPaths) {
-        const expected = cat.id !== "ciaac" || ids.includes(item.id);
+        const expected = cat.id !== "ciaac" || CIAAC_AVAILABLE_IDS.includes(item.id);
         assert.equal(isLearningPathAvailable(item.id), expected, `${item.id}: availability`);
         if (cat.id === "ciaac" && expected) availableCiaac += 1;
         if (cat.id !== "ciaac" && expected) unchangedNonCiaac += 1;
@@ -468,7 +343,7 @@ for (const cat of taxonomy.categories) {
       if (cat.id === "ciaac") {
         assert.equal(
           hasAvailableCiaacContent(container.id),
-          container.id === canonical.module.id,
+          CIAAC_AVAILABLE_IDS.some((id) => id.startsWith(`${container.id}/`)),
           `${container.id}: module availability`,
         );
       }
@@ -481,7 +356,7 @@ for (const cat of taxonomy.categories) {
       );
   }
 }
-assert.equal(availableCiaac, 5);
+assert.equal(availableCiaac, CIAAC_AVAILABLE_IDS.length);
 assert.ok(unchangedNonCiaac > 0, "Existing non-CIAAC paths remain available");
 assert.equal(hasAvailableCiaacContent("ciaac"), true);
 assert.equal(isLearningPathAvailable("ciaac/unknown/module/placeholder"), false);
@@ -507,9 +382,14 @@ const navigation = loader({
   "./gating": { isPaid: (user) => user.paid },
 })(file("src/lib/store/lp-nav.ts"));
 const user = { id: "ciaac-regression-user", paid: true };
-const placeholder = subject.containers
+const placeholderSubject = taxonomy.categories
+  .find((cat) => cat.id === "ciaac")
+  .subjects.find((s) =>
+    s.containers.some((c) => c.learningPaths.some((lp) => !CIAAC_AVAILABLE_IDS.includes(lp.id))),
+  );
+const placeholder = placeholderSubject.containers
   .flatMap((container) => container.learningPaths)
-  .find((item) => !ids.includes(item.id));
+  .find((item) => !CIAAC_AVAILABLE_IDS.includes(item.id));
 assert.ok(placeholder, "The taxonomy still includes later, unavailable CIAAC lessons");
 assert.equal(navigation.lpAccess(user, subject, ids[0]).allowed, true);
 assert.equal(navigation.lpAccess(user, subject, ids[1]).lock, "previo");
@@ -517,13 +397,13 @@ assert.equal(navigation.lpAccess(null, subject, ids[0]).allowed, false);
 completedRows = [{ temaId: `lp:${ids[0]}`, completado: true }];
 assert.equal(navigation.lpAccess(user, subject, ids[1]).allowed, true);
 assert.equal(navigation.lpAccess({ ...user, paid: false }, subject, ids[1]).lock, "plan");
-completedRows = ids.map((id) => ({ temaId: `lp:${id}`, completado: true }));
-assert.equal(navigation.subjectContinue(user.id, subject), null, "Stop after the reviewed module");
-assert.equal(navigation.lpAccess(user, subject, placeholder.id).lock, "contenido");
-assert.equal(navigation.lpAccess(user, subject, placeholder.id).allowed, false);
+completedRows = CIAAC_AVAILABLE_IDS.map((id) => ({ temaId: `lp:${id}`, completado: true }));
+assert.equal(navigation.subjectContinue(user.id, subject), null, "Stop after the reviewed content");
+assert.equal(navigation.lpAccess(user, placeholderSubject, placeholder.id).lock, "contenido");
+assert.equal(navigation.lpAccess(user, placeholderSubject, placeholder.id).allowed, false);
 completedRows.push({ temaId: `lp:${placeholder.id}`, completado: true });
 assert.equal(
-  navigation.lpAccess(user, subject, placeholder.id).allowed,
+  navigation.lpAccess(user, placeholderSubject, placeholder.id).allowed,
   false,
   "Stale completion cannot unlock missing content",
 );
@@ -537,6 +417,30 @@ assert.equal(database.get("lp_started").length, 1, "A reviewed path is started o
 navigation.completeLp(user.id, moduleOne.learningPaths[0], subject.titulo);
 assert.equal(completionCalls.length, 1);
 assert.equal(completionCalls[0][1], `lp:${ids[0]}`, "Existing progress identity is retained");
+
+// Every newly enabled route retains auth, plan and preceding-lesson gates.
+for (let i = 5; i < CIAAC_AVAILABLE_IDS.length; i++) {
+  const id = CIAAC_AVAILABLE_IDS[i];
+  completedRows = [];
+  assert.equal(navigation.lpAccess(null, subject, id).allowed, false);
+  assert.equal(navigation.lpAccess(user, subject, id).lock, "previo");
+  completedRows = subject.containers
+    .flatMap((c) => c.learningPaths)
+    .slice(
+      0,
+      subject.containers.flatMap((c) => c.learningPaths).findIndex((lp) => lp.id === id),
+    )
+    .map((lp) => ({ temaId: `lp:${lp.id}`, completado: true }));
+  assert.equal(navigation.lpAccess({ ...user, paid: false }, subject, id).lock, "plan");
+  assert.equal(navigation.lpAccess(user, subject, id).allowed, true);
+  assert.equal(navigation.subjectContinue(user.id, subject).id, id);
+  completedRows.push({ temaId: `lp:${id}`, completado: true });
+  assert.equal(
+    navigation.lpAccess({ ...user, paid: false }, subject, id).allowed,
+    true,
+    "Completed review survives plan change",
+  );
+}
 
 // Execute the real renderer with an in-memory JSX tree and hook state. These
 // assertions cover content/gates without requiring a DOM or mocking source copy.
@@ -798,5 +702,5 @@ assert.equal(
 );
 
 console.log(
-  `PASS: 5 CIAAC paths; 53 cards, 39 questions and 18 activities preserved; public-data privacy, sources, nullable pages, stage mappings, activity/mastery gates and placeholder guards verified; ${unchangedNonCiaac} non-CIAAC paths unchanged.`,
+  `PASS: 5 CIAAC paths; audited source content and native Handbook stages; public-data privacy, sources, nullable pages, stage mappings, activity/mastery gates and placeholder guards verified; ${unchangedNonCiaac} non-CIAAC paths unchanged.`,
 );

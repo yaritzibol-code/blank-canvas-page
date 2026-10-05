@@ -1,3 +1,5 @@
+import { CiaacAerodynamicsLearningPath } from "@/components/lp/CiaacAerodynamicsLearningPath";
+import { CIAAC_REVIEWED_AERODYNAMICS_IDS } from "@/lib/lp/ciaac-aerodynamics-ids";
 /**
  * Learning Path individual: contenido, posición en la secuencia, estado y
  * avance anterior/siguiente. La progresión se valida también aquí: si el
@@ -15,6 +17,7 @@ import {
   ApplicableRegulationsPath,
 } from "@/components/lp/ApplicableRegulationsPath";
 import { AtpLearningPath } from "@/components/lp/AtpLearningPath";
+import { CiaacModuleOneLearningPath } from "@/components/lp/CiaacModuleOneLearningPath";
 import { CiaacAircraftLearningPath } from "@/components/lp/CiaacAircraftLearningPath";
 import { AIRCRAFT_LP_ID } from "@/lib/lp/ciaac-aircraft-journey";
 import { HandbookLearningPath } from "@/components/lp/HandbookLearningPath";
@@ -162,8 +165,8 @@ function LearningPathPage() {
     <>
       <LearningPathExperience
         key={item.id}
-        showBrandArtwork={categoria !== "ciaac" || item.id === AIRCRAFT_LP_ID}
-        appearance={item.id === AIRCRAFT_LP_ID ? "conceptual" : undefined}
+        showBrandArtwork={categoria !== "ciaac" || Boolean(handbookDocument)}
+        appearance={categoria === "ciaac" && handbookDocument ? "conceptual" : undefined}
         identity={{
           category: cat.titulo,
           subject: subject.titulo,
@@ -247,6 +250,28 @@ function LearningPathPage() {
           />
         ) : item.id === AIRCRAFT_LP_ID && handbookDocument && user ? (
           <CiaacAircraftLearningPath
+            document={handbookDocument}
+            userId={user.id}
+            lpId={item.id}
+            completed={completado}
+            onComplete={() => completeLp(user.id, item, subject.titulo)}
+          />
+        ) : item.id.startsWith("ciaac/aerodinamica/modulo-1-introduccion-y-definiciones/") &&
+          handbookDocument &&
+          handbookDocument.number >= 2 &&
+          handbookDocument.number <= 5 &&
+          user ? (
+          <CiaacModuleOneLearningPath
+            document={handbookDocument}
+            userId={user.id}
+            lpId={item.id}
+            completed={completado}
+            onComplete={() => completeLp(user.id, item, subject.titulo)}
+          />
+        ) : (CIAAC_REVIEWED_AERODYNAMICS_IDS as readonly string[]).includes(item.id) &&
+          handbookDocument &&
+          user ? (
+          <CiaacAerodynamicsLearningPath
             document={handbookDocument}
             userId={user.id}
             lpId={item.id}

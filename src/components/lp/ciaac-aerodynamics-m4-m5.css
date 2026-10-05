@@ -1,0 +1,80 @@
+.aero45-visual {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 16px;
+  margin: 22px 0;
+}
+.aero45-panel {
+  margin: 0;
+  min-width: 0;
+  padding: 18px 14px 16px;
+  border: 1px solid #365365;
+  border-radius: 16px;
+  background: #122a3a;
+  color: #dbe7ef;
+}
+.aero45-panel-title {
+  color: #e0bb78;
+  font-size: 15px;
+  line-height: 1.4;
+  font-weight: 650;
+  min-height: 22px;
+}
+.aero45-panel svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  margin: 10px 0;
+}
+.aero45-panel figcaption {
+  color: #c7d5de;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.aero45-note,
+.aero45-evidence,
+.aero45-requirements,
+.aero45-process {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 16px 0;
+}
+.aero45-note {
+  padding: 15px 18px;
+  border-left: 3px solid #b38b4b;
+  background: rgba(163, 137, 79, 0.08);
+  border-radius: 0 8px 8px 0;
+}
+.aero45-requirements,
+.aero45-process,
+.aero45-evidence {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+}
+.aero45-requirements span,
+.aero45-evidence > div {
+  padding: 14px;
+  border: 1px solid rgba(120, 146, 160, 0.35);
+  border-radius: 10px;
+}
+.aero45-evidence p {
+  margin: 8px 0 0;
+}
+.aero45-process {
+  padding-left: 26px;
+  list-style: decimal;
+}
+.aero45-process li {
+  padding: 8px;
+}
+@media (max-width: 420px) {
+  .aero45-panel {
+    padding: 15px 10px;
+  }
+  .aero45-visual {
+    gap: 12px;
+  }
+}

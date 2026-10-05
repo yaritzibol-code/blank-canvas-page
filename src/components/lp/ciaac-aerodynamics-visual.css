@@ -1,0 +1,275 @@
+.ciaac-aero-visual {
+  --aero-ink: #15364b;
+  margin: 1.25rem 0;
+  padding: clamp(1rem, 2.5vw, 1.75rem);
+  overflow: hidden;
+  background: #f7f7f0;
+  color: var(--aero-ink);
+  border: 1px solid #d5deda;
+  border-top: 4px solid #c59a50;
+  border-radius: 1rem;
+  box-shadow: 0 7px 22px #082c3910;
+}
+.ciaac-aero-visual .aero-figure-heading {
+  margin-bottom: 1.15rem;
+}
+.ciaac-aero-visual .aero-figure-heading > span {
+  display: block;
+  color: #76602e;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+.ciaac-aero-visual h3 {
+  margin: 0.35rem 0 0;
+  color: #15364b;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  line-height: 1.3;
+}
+.ciaac-aero-visual .aero-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: 1rem;
+  align-items: stretch;
+}
+.ciaac-aero-visual .aero-stack {
+  display: grid;
+  gap: 1rem;
+}
+.ciaac-aero-visual .aero-panel {
+  min-width: 0;
+  padding: 1rem;
+  background: #fffef9;
+  border: 1px solid #dce2df;
+  border-radius: 0.75rem;
+}
+.ciaac-aero-visual h4 {
+  margin: 0 0 0.65rem;
+  font-size: 1.04rem;
+  font-weight: 750;
+  line-height: 1.4;
+  color: #15364b;
+}
+.ciaac-aero-visual .aero-svg-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  border-radius: 0.35rem;
+}
+.ciaac-aero-visual .aero-svg-scroll:focus-visible {
+  outline: 3px solid #aa741c;
+  outline-offset: 3px;
+}
+.ciaac-aero-visual svg {
+  display: block;
+  width: 100%;
+  min-width: 280px;
+  max-width: 440px;
+  height: auto;
+  margin: 0 auto;
+  overflow: visible;
+}
+.ciaac-aero-visual svg text {
+  fill: #15364b;
+  font-family: inherit;
+  font-size: 22px;
+  font-weight: 550;
+}
+.ciaac-aero-visual .aero-formula {
+  padding: 0.85rem 1rem;
+  margin: 0.85rem 0;
+  background: #eaf0ed;
+  color: #15364b;
+  border-left: 3px solid #c19847;
+  border-radius: 0.35rem;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 750;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+.ciaac-aero-visual .aero-panel > .aero-formula:last-child {
+  margin-bottom: 0;
+}
+.ciaac-aero-visual .aero-panel-note {
+  margin: 0.75rem 0 0;
+  color: #41545b;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+.ciaac-aero-visual figcaption {
+  display: block;
+  margin: 1.15rem 0 0;
+  color: #43545a;
+  font-size: 1rem;
+  line-height: 1.7;
+  text-align: left;
+}
+.ciaac-aero-visual .aero-force-case {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(10rem, 0.65fr);
+  gap: 1rem;
+  align-items: center;
+}
+.ciaac-aero-visual .aero-result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.1rem;
+  border: 1px solid #d7dfd9;
+  background: #edf3ed;
+  border-radius: 0.65rem;
+  font-size: 1rem;
+}
+.ciaac-aero-visual .aero-result > span:first-child {
+  color: #506557;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+.ciaac-aero-visual .aero-result strong {
+  font-size: 1.2rem;
+  font-variant-numeric: tabular-nums;
+}
+.ciaac-aero-visual .aero-ledger {
+  margin: 0;
+}
+.ciaac-aero-visual .aero-ledger > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 0.65rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #e1e7e1;
+}
+.ciaac-aero-visual .aero-ledger dt {
+  font-size: 1rem;
+  color: #52666b;
+}
+.ciaac-aero-visual .aero-ledger dd {
+  margin: 0;
+  color: #15364b;
+  font-weight: 800;
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+}
+.ciaac-aero-visual .aero-budget-change {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+.ciaac-aero-visual .aero-budget-change span {
+  padding: 0.65rem 0.8rem;
+  background: #eaf0ed;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 650;
+}
+.ciaac-aero-visual .aero-three-columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 0.6rem;
+}
+.ciaac-aero-visual .aero-three-columns > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+.ciaac-aero-visual .aero-three-columns > div + div {
+  border-left: 1px solid #d7dfd9;
+}
+.ciaac-aero-visual .aero-factor-list {
+  display: grid;
+  gap: 0.85rem;
+}
+.ciaac-aero-visual .aero-factor-list p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.ciaac-aero-visual .aero-factor-list strong {
+  display: block;
+  color: #15364b;
+}
+.ciaac-aero-visual .aero-trend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  text-align: center;
+  padding: 0.8rem;
+  font-size: 1.15rem;
+}
+.ciaac-aero-visual .aero-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem 1rem;
+  font-size: 1rem;
+}
+.ciaac-aero-visual .aero-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.ciaac-aero-visual .aero-line {
+  display: inline-block;
+  width: 1.7rem;
+  border-top: 3px solid #24688d;
+}
+.ciaac-aero-visual .aero-line.parasite {
+  border-top-style: dashed;
+  border-top-color: #aa741c;
+}
+.ciaac-aero-visual .aero-line.induced {
+  border-top-style: dotted;
+  border-top-color: #39786c;
+}
+.ciaac-aero-visual .aero-polar-values {
+  display: grid;
+  gap: 0.65rem;
+}
+.ciaac-aero-visual .aero-polar-values > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding: 0.8rem;
+  border: 1px solid #dce2df;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+.ciaac-aero-visual .aero-polar-values strong,
+.ciaac-aero-visual .aero-polar-values b {
+  grid-column: 1 / -1;
+}
+.ciaac-aero-visual .aero-polar-values .is-best {
+  border-color: #7597a6;
+  background: #edf3f4;
+}
+@media (max-width: 640px) {
+  .ciaac-aero-visual {
+    padding: 0.75rem;
+  }
+  .ciaac-aero-visual .aero-panel {
+    padding: 0.7rem;
+  }
+  .ciaac-aero-visual .aero-force-case {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ciaac-aero-visual .aero-three-columns > div {
+    padding: 0.4rem 0.2rem;
+  }
+}
+.ciaac-aero-visual .aero-pair-bracket {
+  height: 0.8rem;
+  width: 84%;
+  margin: 0.8rem auto -0.3rem;
+  border: 2px solid #9caeaa;
+  border-top: 0;
+}
