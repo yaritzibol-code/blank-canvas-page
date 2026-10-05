@@ -1,0 +1,99 @@
+.aero-concept-visual {
+  width: min(100%, 48rem);
+  margin: 12px auto;
+  padding: 18px;
+  border: 1px solid #c7a05266;
+  border-radius: 14px;
+  background: #10263b;
+  color: #ecf3fa;
+  box-sizing: border-box;
+}
+.aero-concept-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.aero-concept-header h3 {
+  margin: 0;
+  font:
+    22px/1.25 Georgia,
+    serif;
+}
+.aero-concept-header button {
+  flex-shrink: 0;
+  padding: 9px 12px;
+  border: 1px solid #e7c77b;
+  border-radius: 8px;
+  background: #e7c77b;
+  color: #10263b;
+  cursor: pointer;
+  font-size: 12px;
+}
+.aero-concept-header button:focus-visible {
+  outline: 3px solid #78c8ee;
+  outline-offset: 3px;
+}
+.aero-concept-visual svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 275px;
+  margin-top: 12px;
+}
+.aero-concept-visual svg text {
+  fill: #edf3fa;
+  font:
+    16px system-ui,
+    sans-serif;
+}
+.aero-concept-visual figcaption {
+  margin-top: 8px;
+  color: #d5e1ed;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.aero-concept-visual small {
+  display: block;
+  margin-top: 6px;
+  color: #b3c7db;
+  font-size: 11px;
+}
+@media (max-width: 560px) {
+  .aero-concept-visual {
+    padding: 12px;
+  }
+  .aero-concept-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .aero-concept-header h3 {
+    font-size: 20px;
+  }
+  .aero-concept-visual svg text {
+    font-size: 17px;
+  }
+}
+
+/* Focused explanations remain visible; audited depth is one optional expansion away. */
+.ciaac-aerodynamics-handbook .hb-card:has(.hb-card-detail) {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  padding: 12px 0;
+}
+.ciaac-aerodynamics-handbook .hb-card-detail summary {
+  width: fit-content;
+  padding: 10px 0;
+  color: #e7c77b;
+  font-size: 14px;
+  cursor: pointer;
+}
+.ciaac-aerodynamics-handbook .hb-card-detail summary:focus-visible {
+  outline: 2px solid #78c8ee;
+  outline-offset: 3px;
+}
+.ciaac-aerodynamics-handbook .hb-card-detail[open] {
+  border-top: 1px solid #78c8ee66;
+}

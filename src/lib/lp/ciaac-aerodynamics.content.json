@@ -184,9 +184,10 @@
         "cards": [
           {
             "title": "Elige el cuerpo y la referencia",
-            "text": "Antes de sumar fuerzas, elige qué estudias: la aeronave completa, una hélice o una porción de aire. Una fuerza ejercida por la hélice sobre el aire pertenece al análisis del aire; la fuerza del aire sobre la hélice pertenece al análisis del propulsor.\n\nAplicamos las leyes en una referencia aproximadamente inercial: para estos ejemplos locales usamos ejes fijos a tierra y despreciamos los efectos de su rotación. No sumamos fuerzas aparentes de una cabina acelerada a este mismo diagrama. Así podremos relacionar la resultante externa con la aceleración del centro de masa.",
+            "text": "Elige el cuerpo antes de sumar fuerzas: aeronave, hélice o aire. La fuerza hélice→aire pertenece al diagrama del aire; aire→hélice, al del propulsor. En estos ejemplos usamos una referencia terrestre aproximadamente inercial, despreciando su rotación. No mezcles allí fuerzas aparentes de una cabina acelerada; relaciona fuerzas externas con aceleración del centro de masa.",
             "covers": [],
-            "wide": false
+            "wide": false,
+            "detailText": "Antes de sumar fuerzas, elige qué estudias: la aeronave completa, una hélice o una porción de aire. Una fuerza ejercida por la hélice sobre el aire pertenece al análisis del aire; la fuerza del aire sobre la hélice pertenece al análisis del propulsor.\n\nAplicamos las leyes en una referencia aproximadamente inercial: para estos ejemplos locales usamos ejes fijos a tierra y despreciamos los efectos de su rotación. No sumamos fuerzas aparentes de una cabina acelerada a este mismo diagrama. Así podremos relacionar la resultante externa con la aceleración del centro de masa."
           },
           {
             "title": "Primera ley: inercia",
@@ -210,9 +211,10 @@
           },
           {
             "title": "Segunda ley: fuerza neta y masa",
-            "text": "Para el modelo de masa constante, ΣF = m · a. ΣF es la suma de las fuerzas externas, m es la masa y a la aceleración. Fuerza y aceleración tienen dirección. Con la misma masa, una fuerza neta mayor produce mayor aceleración; con la misma fuerza neta, una masa mayor produce menor aceleración. El símbolo F no debe confundirse automáticamente con el empuje de los motores.\n\nMasa se expresa en kilogramos; fuerza, en newtons; aceleración, en m/s². Masa y peso no son la misma magnitud: el peso es la fuerza gravitatoria.",
+            "text": "Con masa constante, ΣF = m·a: suma de fuerzas externas, no solo empuje. Para igual masa, mayor resultante implica mayor aceleración; para igual resultante, más masa implica menor aceleración. Fuerza y aceleración tienen dirección. Unidades: kg, N y m/s². Masa no es peso: el peso es la fuerza gravitatoria.",
             "covers": [],
-            "wide": false
+            "wide": false,
+            "detailText": "Para el modelo de masa constante, ΣF = m · a. ΣF es la suma de las fuerzas externas, m es la masa y a la aceleración. Fuerza y aceleración tienen dirección. Con la misma masa, una fuerza neta mayor produce mayor aceleración; con la misma fuerza neta, una masa mayor produce menor aceleración. El símbolo F no debe confundirse automáticamente con el empuje de los motores.\n\nMasa se expresa en kilogramos; fuerza, en newtons; aceleración, en m/s². Masa y peso no son la misma magnitud: el peso es la fuerza gravitatoria."
           }
         ],
         "figures": []
@@ -224,9 +226,10 @@
         "cards": [
           {
             "title": "Acelerar y desacelerar",
-            "text": "Durante una carrera de despegue, la aceleración depende del balance entre empuje y fuerzas opuestas, además de la masa. Para comparar dos aeronaves solo por su masa, fija la misma fuerza neta. Si únicamente sabes que el empuje es igual, falta conocer las demás fuerzas. En el aterrizaje, reducir la rapidez también es aceleración: su componente va en sentido contrario al movimiento. El signo negativo depende del eje elegido.\n\nEjemplo idealizado: 3 000 N hacia adelante y 1 000 N en contra dan una resultante de 2 000 N. Con masa de 1 000 kg, a = 2 m/s². Manteniendo esa resultante y duplicando la masa a 2 000 kg, a = 1 m/s². Son datos didácticos, no prestaciones de una aeronave.",
+            "text": "Aceleración depende de fuerza neta y masa; igual empuje no basta para comparar si faltan fuerzas opuestas. Frenar también es acelerar, en sentido contrario al movimiento; el signo depende del eje. Ejemplo ideal: 3 000 − 1 000 = 2 000 N; con 1 000 kg, a = 2 m/s². Con igual resultante y 2 000 kg, a = 1 m/s². No son prestaciones reales.",
             "covers": [],
-            "wide": false
+            "wide": false,
+            "detailText": "Durante una carrera de despegue, la aceleración depende del balance entre empuje y fuerzas opuestas, además de la masa. Para comparar dos aeronaves solo por su masa, fija la misma fuerza neta. Si únicamente sabes que el empuje es igual, falta conocer las demás fuerzas. En el aterrizaje, reducir la rapidez también es aceleración: su componente va en sentido contrario al movimiento. El signo negativo depende del eje elegido.\n\nEjemplo idealizado: 3 000 N hacia adelante y 1 000 N en contra dan una resultante de 2 000 N. Con masa de 1 000 kg, a = 2 m/s². Manteniendo esa resultante y duplicando la masa a 2 000 kg, a = 1 m/s². Son datos didácticos, no prestaciones de una aeronave."
           },
           {
             "title": "El carrito del súper",
@@ -567,9 +570,10 @@
         "cards": [
           {
             "title": "Qué dice Bernoulli",
-            "text": "La forma simplificada que usaremos es ps + ½ρV² = constante a lo largo de una línea de corriente. Suponemos flujo estacionario, densidad aproximadamente constante, pérdidas viscosas despreciables, sin aporte o extracción de energía y con cambio de altura despreciable. Bajo esas condiciones, donde V aumenta, ps disminuye. El valor de la constante no se comparte automáticamente entre líneas de corriente distintas.\n\nEstacionario significa que, en cada punto, las propiedades no cambian con el tiempo; no significa que el aire esté quieto. El aire sí es compresible: aquí su cambio de densidad es suficientemente pequeño para aproximarlo como constante.",
+            "text": "ps + ½ρV² se conserva a lo largo de una línea bajo estas condiciones: flujo estacionario, densidad aproximadamente constante, pérdidas despreciables, sin intercambio de energía y cambio de altura despreciable. Entonces mayor V corresponde a menor ps. La constante no es automáticamente igual entre líneas. Estacionario significa propiedades constantes en cada punto, no aire inmóvil; el aire real sigue siendo compresible.",
             "covers": [],
-            "wide": false
+            "wide": false,
+            "detailText": "La forma simplificada que usaremos es ps + ½ρV² = constante a lo largo de una línea de corriente. Suponemos flujo estacionario, densidad aproximadamente constante, pérdidas viscosas despreciables, sin aporte o extracción de energía y con cambio de altura despreciable. Bajo esas condiciones, donde V aumenta, ps disminuye. El valor de la constante no se comparte automáticamente entre líneas de corriente distintas.\n\nEstacionario significa que, en cada punto, las propiedades no cambian con el tiempo; no significa que el aire esté quieto. El aire sí es compresible: aquí su cambio de densidad es suficientemente pequeño para aproximarlo como constante."
           },
           {
             "title": "Un reparto de energía",
@@ -587,9 +591,10 @@
         "cards": [
           {
             "title": "Tres símbolos que no debes mezclar",
-            "text": "ps es la presión estática local del aire. q = ½ρV² es la presión dinámica, una magnitud ligada a densidad y velocidad relativa del flujo. pt es la presión total o de estancamiento ideal. En el límite incompresible, pt = ps + q. Si pt permanece fija, un aumento de q acompaña una reducción de ps. Presión estática no significa «aire obligatoriamente inmóvil».\n\nEjemplo del balance: si pt = 101 000 Pa y q = 400 Pa, ps = 100 600 Pa. Si q pasa a 900 Pa manteniendo pt, ps pasa a 100 100 Pa. La presión estática disminuye 500 Pa; la total no cambia.",
+            "text": "ps es presión estática local; q = ½ρV² es dinámica; pt es total ideal. En el límite incompresible, pt = ps + q. Con pt = 101 000 Pa, pasar q de 400 a 900 Pa reduce ps de 100 600 a 100 100 Pa: baja 500 Pa y pt no cambia. “Estática” no exige aire inmóvil.",
             "covers": [],
-            "wide": false
+            "wide": false,
+            "detailText": "ps es la presión estática local del aire. q = ½ρV² es la presión dinámica, una magnitud ligada a densidad y velocidad relativa del flujo. pt es la presión total o de estancamiento ideal. En el límite incompresible, pt = ps + q. Si pt permanece fija, un aumento de q acompaña una reducción de ps. Presión estática no significa «aire obligatoriamente inmóvil».\n\nEjemplo del balance: si pt = 101 000 Pa y q = 400 Pa, ps = 100 600 Pa. Si q pasa a 900 Pa manteniendo pt, ps pasa a 100 100 Pa. La presión estática disminuye 500 Pa; la total no cambia."
           },
           {
             "title": "Qué se conserva y qué no",
@@ -607,9 +612,10 @@
         "cards": [
           {
             "title": "Venturi: primero continuidad",
-            "text": "El conducto tiene una entrada amplia, una garganta y una salida que se ensancha. En flujo estacionario sin fugas, pasa el mismo caudal másico por cada sección. Con densidad prácticamente constante, reducir el área exige mayor velocidad media: A₁V₁ = A₂V₂. Esa continuidad explica la relación entre área y velocidad. Bernoulli relaciona después ese cambio de velocidad con el de presión estática.\n\nSi la garganta tiene la mitad del área de entrada, la velocidad media se duplica en este modelo. Al cuadrarse V en q, la presión dinámica se hace cuatro veces mayor. La presión estática se obtiene entonces del balance; no se divide por dos.",
+            "text": "Sin fugas y en flujo estacionario, el caudal másico es igual en cada sección. Si la densidad es casi constante, A₁V₁ = A₂V₂: media área exige doble velocidad media. q aumenta entonces cuatro veces; ps se obtiene del balance de Bernoulli, no dividiéndola por dos. Continuidad explica área–velocidad; Bernoulli relaciona velocidad y presión bajo sus condiciones.",
             "covers": [],
-            "wide": false
+            "wide": false,
+            "detailText": "El conducto tiene una entrada amplia, una garganta y una salida que se ensancha. En flujo estacionario sin fugas, pasa el mismo caudal másico por cada sección. Con densidad prácticamente constante, reducir el área exige mayor velocidad media: A₁V₁ = A₂V₂. Esa continuidad explica la relación entre área y velocidad. Bernoulli relaciona después ese cambio de velocidad con el de presión estática.\n\nSi la garganta tiene la mitad del área de entrada, la velocidad media se duplica en este modelo. Al cuadrarse V en q, la presión dinámica se hace cuatro veces mayor. La presión estática se obtiene entonces del balance; no se divide por dos."
           },
           {
             "title": "Venturi: después presión",
@@ -2524,8 +2530,9 @@
         "cards": [
           {
             "title": "Tres referencias que acompañan al avión",
-            "text": "Para describir la orientación del avión usamos tres líneas imaginarias perpendiculares entre sí, con origen en el centro de gravedad. El eje longitudinal sigue la dirección nariz–cola; el lateral o transversal apunta hacia las semialas; el vertical es perpendicular a ambos. Son referencias ligadas al avión: cuando este se inclina, los ejes también se inclinan.\n\n“Vertical” no significa que el eje deba permanecer apuntando hacia el centro de la Tierra durante toda maniobra. Tampoco se trata de barras físicas ni de bisagras. El centro de gravedad puede cambiar con la carga y el consumo de combustible; en el modelo situamos allí el origen.",
-            "covers": []
+            "text": "Los tres ejes se cruzan en el centro de gravedad y acompañan al avión: longitudinal, nariz–cola; lateral, hacia las semialas; vertical, perpendicular a ambos. Al inclinarse el avión, sus ejes también se inclinan. Son referencias imaginarias, no barras ni direcciones fijas respecto de la Tierra. El CG puede cambiar con la carga y el combustible.",
+            "covers": [],
+            "detailText": "Para describir la orientación del avión usamos tres líneas imaginarias perpendiculares entre sí, con origen en el centro de gravedad. El eje longitudinal sigue la dirección nariz–cola; el lateral o transversal apunta hacia las semialas; el vertical es perpendicular a ambos. Son referencias ligadas al avión: cuando este se inclina, los ejes también se inclinan.\n\n“Vertical” no significa que el eje deba permanecer apuntando hacia el centro de la Tierra durante toda maniobra. Tampoco se trata de barras físicas ni de bisagras. El centro de gravedad puede cambiar con la carga y el consumo de combustible; en el modelo situamos allí el origen."
           },
           {
             "title": "Rotación y desplazamiento",
@@ -2565,8 +2572,9 @@
         "cards": [
           {
             "title": "Una maniobra, varias rotaciones",
-            "text": "Al entrar en un viraje coordinado se establece inclinación lateral, se controla la guiñada y se ajusta el cabeceo según la condición buscada. La componente horizontal de la sustentación contribuye a curvar la trayectoria. Identificar guiñada no demuestra por sí solo que el avión esté realizando un viraje coordinado.\n\nEn este módulo estudiamos el avión convencional. Alerones, elevador y timón tienen funciones principales; sus efectos pueden acoplarse y otras aeronaves emplean superficies combinadas. Memoriza la relación eje–rotación, pero observa el mecanismo antes de atribuir todo movimiento a una única superficie.",
-            "covers": []
+            "text": "En un viraje coordinado se combinan alabeo, guiñada y cabeceo. La componente horizontal de la sustentación curva la trayectoria; guiñar por sí solo no demuestra un viraje coordinado. En el avión convencional, cada mando tiene una función principal, pero los efectos pueden acoplarse y existen superficies combinadas.",
+            "covers": [],
+            "detailText": "Al entrar en un viraje coordinado se establece inclinación lateral, se controla la guiñada y se ajusta el cabeceo según la condición buscada. La componente horizontal de la sustentación contribuye a curvar la trayectoria. Identificar guiñada no demuestra por sí solo que el avión esté realizando un viraje coordinado.\n\nEn este módulo estudiamos el avión convencional. Alerones, elevador y timón tienen funciones principales; sus efectos pueden acoplarse y otras aeronaves emplean superficies combinadas. Memoriza la relación eje–rotación, pero observa el mecanismo antes de atribuir todo movimiento a una única superficie."
           }
         ],
         "figures": []
@@ -2717,8 +2725,9 @@
         "cards": [
           {
             "title": "Del mando al momento",
-            "text": "El volante, bastón y pedales son mandos de cabina. Los alerones, el elevador y el timón de dirección son superficies aerodinámicas. Un sistema mecánico, asistido o de otro tipo transmite la orden. Al desviarse la superficie cambia la distribución de presiones y, por tanto, la fuerza aerodinámica. Su distancia al centro de gravedad permite generar un momento de rotación.\n\nLa respuesta depende también del flujo local, de la configuración y de las limitaciones del diseño. Las relaciones siguientes describen un avión convencional en condiciones normales de flujo adherido, no una promesa de respuesta idéntica en cualquier velocidad o ángulo de ataque.",
-            "covers": []
+            "text": "Los mandos de cabina transmiten una orden a las superficies aerodinámicas. Su deflexión cambia la presión y la fuerza; el brazo respecto del CG permite crear un momento. La respuesta depende del flujo, configuración y diseño. Las relaciones del avión convencional presuponen condiciones normales de flujo adherido; no son universales.",
+            "covers": [],
+            "detailText": "El volante, bastón y pedales son mandos de cabina. Los alerones, el elevador y el timón de dirección son superficies aerodinámicas. Un sistema mecánico, asistido o de otro tipo transmite la orden. Al desviarse la superficie cambia la distribución de presiones y, por tanto, la fuerza aerodinámica. Su distancia al centro de gravedad permite generar un momento de rotación.\n\nLa respuesta depende también del flujo local, de la configuración y de las limitaciones del diseño. Las relaciones siguientes describen un avión convencional en condiciones normales de flujo adherido, no una promesa de respuesta idéntica en cualquier velocidad o ángulo de ataque."
           }
         ],
         "figures": []
@@ -2730,8 +2739,9 @@
         "cards": [
           {
             "title": "Una diferencia entre semialas",
-            "text": "Los alerones suelen situarse hacia los extremos del borde de salida. Para iniciar alabeo a la derecha, el derecho sube y el izquierdo baja. La variación local de curvatura reduce la sustentación de la semiala derecha y aumenta la de la izquierda, creando un momento de alabeo a la derecha. El efecto que importa es la diferencia entre ambas semialas, no que un alerón empuje directamente a toda el ala.\n\nEl alerón que baja no hace bajar esa semiala: en este ejemplo aumenta su sustentación y contribuye a elevarla. “Movimientos opuestos” tampoco significa necesariamente ángulos iguales: los alerones diferenciales tienen recorridos distintos.",
-            "covers": []
+            "text": "En el ejemplo convencional de alabeo a la derecha, el alerón derecho sube y el izquierdo baja: disminuye la sustentación derecha y aumenta la izquierda. La diferencia crea el momento. El alerón que baja contribuye a elevar su semiala, no a bajarla. Los recorridos opuestos no tienen que ser iguales: puede haber alerones diferenciales.",
+            "covers": [],
+            "detailText": "Los alerones suelen situarse hacia los extremos del borde de salida. Para iniciar alabeo a la derecha, el derecho sube y el izquierdo baja. La variación local de curvatura reduce la sustentación de la semiala derecha y aumenta la de la izquierda, creando un momento de alabeo a la derecha. El efecto que importa es la diferencia entre ambas semialas, no que un alerón empuje directamente a toda el ala.\n\nEl alerón que baja no hace bajar esa semiala: en este ejemplo aumenta su sustentación y contribuye a elevarla. “Movimientos opuestos” tampoco significa necesariamente ángulos iguales: los alerones diferenciales tienen recorridos distintos."
           },
           {
             "title": "La guiñada adversa",
@@ -2748,13 +2758,15 @@
         "cards": [
           {
             "title": "El elevador cambia el cabeceo",
-            "text": "En una cola convencional, mover el mando hacia atrás eleva el borde de salida del elevador y produce un cambio de fuerza hacia abajo en la cola. Ese cambio genera momento de nariz arriba alrededor del eje lateral. Mover el mando hacia delante produce el efecto opuesto. Es más preciso hablar de cambio de fuerza que afirmar que la cola siempre sostiene una carga hacia abajo en toda condición.\n\nEl elevador no levanta al avión como un ascensor. Primero controla el cabeceo y afecta el ángulo de ataque; el ascenso o descenso resultante depende también de potencia, velocidad y equilibrio de fuerzas. Algunas aeronaves usan estabilizador enterizo o superficies combinadas.",
-            "covers": []
+            "text": "En una cola convencional, elevador arriba produce un cambio de fuerza hacia abajo en la cola y un momento de nariz arriba; el mando contrario invierte ese cambio. Esto controla cabeceo y afecta ángulo de ataque. Ascender o descender depende también de potencia, velocidad y fuerzas. La cola no carga siempre hacia abajo; existen estabilizadores enterizos y otros diseños.",
+            "covers": [],
+            "detailText": "En una cola convencional, mover el mando hacia atrás eleva el borde de salida del elevador y produce un cambio de fuerza hacia abajo en la cola. Ese cambio genera momento de nariz arriba alrededor del eje lateral. Mover el mando hacia delante produce el efecto opuesto. Es más preciso hablar de cambio de fuerza que afirmar que la cola siempre sostiene una carga hacia abajo en toda condición.\n\nEl elevador no levanta al avión como un ascensor. Primero controla el cabeceo y afecta el ángulo de ataque; el ascenso o descenso resultante depende también de potencia, velocidad y equilibrio de fuerzas. Algunas aeronaves usan estabilizador enterizo o superficies combinadas."
           },
           {
             "title": "El timón cambia la guiñada",
-            "text": "Al presionar el pedal derecho, el timón convencional se desvía a la derecha. La fuerza lateral sobre la cola tiende a llevarla a la izquierda y hace girar la nariz a la derecha alrededor del eje vertical. No debe confundirse con el giro de una rueda directriz en tierra.\n\nEn un viraje coordinado, alerones, timón y elevador cumplen tareas complementarias. El timón ayuda a controlar la guiñada; la inclinación de la sustentación permite curvar la trayectoria. Un movimiento de pedal aislado no garantiza el viraje coordinado solicitado.",
-            "covers": []
+            "text": "En el caso convencional, pedal derecho desvía el timón a la derecha: la cola tiende a ir a la izquierda y la nariz a la derecha, alrededor del eje vertical. No funciona como una rueda directriz. La guiñada debe coordinarse con los otros mandos; un pedal aislado no garantiza un viraje coordinado.",
+            "covers": [],
+            "detailText": "Al presionar el pedal derecho, el timón convencional se desvía a la derecha. La fuerza lateral sobre la cola tiende a llevarla a la izquierda y hace girar la nariz a la derecha alrededor del eje vertical. No debe confundirse con el giro de una rueda directriz en tierra.\n\nEn un viraje coordinado, alerones, timón y elevador cumplen tareas complementarias. El timón ayuda a controlar la guiñada; la inclinación de la sustentación permite curvar la trayectoria. Un movimiento de pedal aislado no garantiza el viraje coordinado solicitado."
           }
         ],
         "figures": []
@@ -2939,13 +2951,15 @@
         "cards": [
           {
             "title": "Flaps en el borde de salida",
-            "text": "Los flaps suelen ocupar la zona interior del borde de salida y se extienden de forma simétrica. Cambian la curvatura del perfil; algunos también aumentan el área. Al elevar el coeficiente máximo de sustentación permiten sostener el mismo peso a menor velocidad, si las demás condiciones de la comparación se mantienen.\n\nLos flaps también generan resistencia, especialmente en extensiones grandes. Por eso es incorrecto afirmar que “no frenan”: pueden facilitar un descenso más pronunciado sin aumento de velocidad. La variación de sustentación, resistencia y cabeceo depende del tipo y extensión. Las posiciones y velocidades de uso provienen del AFM/POH.",
-            "covers": []
+            "text": "Los flaps suelen desplegarse simétricamente en la parte interior del borde de salida. Cambian curvatura y, según el tipo, área; aumentar CLmáx permite sostener igual peso a menor velocidad en condiciones comparables. También aumentan resistencia y pueden cambiar el cabeceo. El efecto depende de tipo y extensión; posiciones y velocidades autorizadas proceden del AFM/POH.",
+            "covers": [],
+            "detailText": "Los flaps suelen ocupar la zona interior del borde de salida y se extienden de forma simétrica. Cambian la curvatura del perfil; algunos también aumentan el área. Al elevar el coeficiente máximo de sustentación permiten sostener el mismo peso a menor velocidad, si las demás condiciones de la comparación se mantienen.\n\nLos flaps también generan resistencia, especialmente en extensiones grandes. Por eso es incorrecto afirmar que “no frenan”: pueden facilitar un descenso más pronunciado sin aumento de velocidad. La variación de sustentación, resistencia y cabeceo depende del tipo y extensión. Las posiciones y velocidades de uso provienen del AFM/POH."
           },
           {
             "title": "Slat y slot no son lo mismo",
-            "text": "El slat es un pequeño elemento de borde de ataque; el slot es la ranura o abertura por la que pasa aire. Puede existir una ranura fija o una que se abre al desplegar un slat. La ranura favorece que el flujo permanezca adherido sobre la superficie superior a ángulos de ataque mayores y puede aumentar el coeficiente máximo de sustentación.\n\nNo toda ranura es una superficie móvil, ni todo dispositivo de borde de ataque funciona igual. Hay slats automáticos y accionados por el piloto, además de otros diseños. Aquí interesa reconocer elemento, abertura y función; su operación se estudia con más detalle en el módulo siguiente.",
-            "covers": []
+            "text": "Slat es el elemento de borde de ataque; slot es la abertura por donde pasa aire. Puede haber ranuras fijas o abiertas al desplegar un slat. Su efecto puede favorecer adherencia a mayor ángulo de ataque y aumentar CLmáx. No toda ranura es móvil ni todos los dispositivos delanteros funcionan igual.",
+            "covers": [],
+            "detailText": "El slat es un pequeño elemento de borde de ataque; el slot es la ranura o abertura por la que pasa aire. Puede existir una ranura fija o una que se abre al desplegar un slat. La ranura favorece que el flujo permanezca adherido sobre la superficie superior a ángulos de ataque mayores y puede aumentar el coeficiente máximo de sustentación.\n\nNo toda ranura es una superficie móvil, ni todo dispositivo de borde de ataque funciona igual. Hay slats automáticos y accionados por el piloto, además de otros diseños. Aquí interesa reconocer elemento, abertura y función; su operación se estudia con más detalle en el módulo siguiente."
           }
         ],
         "figures": []
@@ -2957,13 +2971,15 @@
         "cards": [
           {
             "title": "Spoilers",
-            "text": "Son paneles que se levantan desde la superficie superior del ala, alteran el flujo, reducen sustentación y aumentan resistencia. Desplegados simétricamente pueden utilizarse para gestionar el descenso o la velocidad según el diseño. Después del aterrizaje ayudan a descargar el ala y a transferir carga a las ruedas, lo que favorece la frenada.\n\nEn algunos aviones se despliegan de forma asimétrica para ayudar al alabeo. Un spoiler elevado en la semiala derecha reduce su sustentación y contribuye a bajarla. Por eso “secundario” no equivale a “nunca controla un eje”. No deben generalizarse procedimientos de despliegue de una aeronave a otra.",
-            "covers": []
+            "text": "Los spoilers se levantan sobre el ala, reducen sustentación local y aumentan resistencia. Según el diseño, sirven para gestionar energía, ayudar al alabeo o, tras aterrizar, aumentar la carga sobre las ruedas. Un spoiler derecho puede contribuir a bajar esa semiala: “secundario” no significa que nunca controle un eje. Su empleo depende de la aeronave.",
+            "covers": [],
+            "detailText": "Son paneles que se levantan desde la superficie superior del ala, alteran el flujo, reducen sustentación y aumentan resistencia. Desplegados simétricamente pueden utilizarse para gestionar el descenso o la velocidad según el diseño. Después del aterrizaje ayudan a descargar el ala y a transferir carga a las ruedas, lo que favorece la frenada.\n\nEn algunos aviones se despliegan de forma asimétrica para ayudar al alabeo. Un spoiler elevado en la semiala derecha reduce su sustentación y contribuye a bajarla. Por eso “secundario” no equivale a “nunca controla un eje”. No deben generalizarse procedimientos de despliegue de una aeronave a otra."
           },
           {
             "title": "Compensadores",
-            "text": "Un trim tab utiliza una pequeña superficie en el borde de salida de un mando para reducir la fuerza sostenida que necesita el piloto. Otros sistemas cambian la posición del estabilizador. La finalidad es aliviar el esfuerzo para la condición elegida, no aumentar automáticamente la sustentación del ala.\n\nFlap, spoiler y compensador pueden estar próximos a otras superficies, pero ubicación y tamaño no bastan para identificarlos. Pregunta qué cambia: capacidad de sustentación, resistencia, momento de control o esfuerzo sostenido. Una aeronave compensada requiere vigilancia y control continuos.",
-            "covers": []
+            "text": "El trim tab ayuda a reducir el esfuerzo sostenido en un mando; otros sistemas cambian el estabilizador. Compensar busca aliviar esfuerzo en una condición elegida, no aumentar automáticamente sustentación. Para distinguir flap, spoiler y compensador, pregunta qué cambian: capacidad de sustentación, resistencia, momento o esfuerzo. Aun compensado, el avión exige vigilancia y control.",
+            "covers": [],
+            "detailText": "Un trim tab utiliza una pequeña superficie en el borde de salida de un mando para reducir la fuerza sostenida que necesita el piloto. Otros sistemas cambian la posición del estabilizador. La finalidad es aliviar el esfuerzo para la condición elegida, no aumentar automáticamente la sustentación del ala.\n\nFlap, spoiler y compensador pueden estar próximos a otras superficies, pero ubicación y tamaño no bastan para identificarlos. Pregunta qué cambia: capacidad de sustentación, resistencia, momento de control o esfuerzo sostenido. Una aeronave compensada requiere vigilancia y control continuos."
           }
         ],
         "figures": []
@@ -3114,13 +3130,15 @@
         "cards": [
           {
             "title": "La fuerza que estás sosteniendo",
-            "text": "Después de establecer una condición de vuelo puede ser necesario mantener presión continua en el bastón o los pedales. Compensar consiste en ajustar el sistema para reducir esa fuerza sostenida. El equilibrio aerodinámico del avión y el equilibrio de esfuerzos en el mando están relacionados, pero no son la misma comprobación.\n\nEl trim no fija la actitud como un seguro mecánico ni garantiza conservar altitud, velocidad o rumbo frente a perturbaciones. El piloto sigue observando y controlando el vuelo. Una aeronave bien compensada puede desviarse de la condición deseada y requerir intervención.",
-            "covers": []
+            "text": "Compensar reduce el esfuerzo continuo necesario para mantener una condición de vuelo. El equilibrio aerodinámico y el equilibrio de esfuerzos en el mando están relacionados, pero no son la misma comprobación. El trim no bloquea actitud ni garantiza altitud, velocidad o rumbo ante perturbaciones: el piloto sigue controlando.",
+            "covers": [],
+            "detailText": "Después de establecer una condición de vuelo puede ser necesario mantener presión continua en el bastón o los pedales. Compensar consiste en ajustar el sistema para reducir esa fuerza sostenida. El equilibrio aerodinámico del avión y el equilibrio de esfuerzos en el mando están relacionados, pero no son la misma comprobación.\n\nEl trim no fija la actitud como un seguro mecánico ni garantiza conservar altitud, velocidad o rumbo frente a perturbaciones. El piloto sigue observando y controlando el vuelo. Una aeronave bien compensada puede desviarse de la condición deseada y requerir intervención."
           },
           {
             "title": "Controlar y después aliviar",
-            "text": "En la técnica normal se establece la potencia, actitud y configuración necesarias con los mandos apropiados, se estabiliza la condición y se ajusta la compensación para aliviar la presión que aún se sostiene. La secuencia exacta depende del procedimiento del avión y de la maniobra.\n\nNo debe usarse el trim como sustituto rutinario del mando primario. Sin embargo, sería físicamente falso decir que el trim “no puede mover el avión”: al cambiar fuerzas y momentos, un ajuste puede modificar la actitud si el piloto no lo contrarresta. La regla es una técnica de control, no una imposibilidad aerodinámica.",
-            "covers": []
+            "text": "Normalmente se establece y estabiliza la condición con los mandos apropiados y luego se compensa para aliviar el esfuerzo sostenido. La secuencia exacta es la del avión y la maniobra. El trim no sustituye rutinariamente al mando primario; sí puede cambiar fuerzas, momentos y actitud si no se contrarresta.",
+            "covers": [],
+            "detailText": "En la técnica normal se establece la potencia, actitud y configuración necesarias con los mandos apropiados, se estabiliza la condición y se ajusta la compensación para aliviar la presión que aún se sostiene. La secuencia exacta depende del procedimiento del avión y de la maniobra.\n\nNo debe usarse el trim como sustituto rutinario del mando primario. Sin embargo, sería físicamente falso decir que el trim “no puede mover el avión”: al cambiar fuerzas y momentos, un ajuste puede modificar la actitud si el piloto no lo contrarresta. La regla es una técnica de control, no una imposibilidad aerodinámica."
           }
         ],
         "figures": []
@@ -3132,13 +3150,15 @@
         "cards": [
           {
             "title": "Una pequeña fuerza con brazo de palanca",
-            "text": "El trim tab convencional es una aleta regulable cerca del borde de salida de una superficie primaria. El flujo ejerce fuerza sobre el tab y produce un momento respecto de la bisagra de esa superficie. Así ayuda a sostener la desviación que antes requería esfuerzo continuo del piloto.\n\nEn el ejemplo convencional de profundidad, tab abajo favorece elevador arriba y un efecto de nariz arriba; tab arriba favorece elevador abajo y un efecto de nariz abajo. La orientación del tab se interpreta respecto del elevador. No es una equivalencia universal entre la actitud del avión y el ángulo visible de cada superficie: también intervienen la condición de vuelo y el reglaje.",
-            "covers": []
+            "text": "El flujo sobre un trim tab crea una fuerza y un momento respecto de la bisagra del mando principal. En el ejemplo convencional de profundidad, tab abajo favorece elevador arriba y nariz arriba; el efecto contrario ocurre con tab arriba. Interpreta su orientación respecto del elevador: no es una equivalencia universal, pues también intervienen condición de vuelo y reglaje.",
+            "covers": [],
+            "detailText": "El trim tab convencional es una aleta regulable cerca del borde de salida de una superficie primaria. El flujo ejerce fuerza sobre el tab y produce un momento respecto de la bisagra de esa superficie. Así ayuda a sostener la desviación que antes requería esfuerzo continuo del piloto.\n\nEn el ejemplo convencional de profundidad, tab abajo favorece elevador arriba y un efecto de nariz arriba; tab arriba favorece elevador abajo y un efecto de nariz abajo. La orientación del tab se interpreta respecto del elevador. No es una equivalencia universal entre la actitud del avión y el ángulo visible de cada superficie: también intervienen la condición de vuelo y el reglaje."
           },
           {
             "title": "No todos los tabs hacen lo mismo",
-            "text": "Un balance tab está vinculado al mando principal y se mueve en sentido contrario para reducir esfuerzos. Un servo tab recibe la orden y su fuerza aerodinámica contribuye a mover la superficie principal. Un anti-servo tab se mueve en el mismo sentido que el borde de salida del estabilizador enterizo y aumenta el esfuerzo o reduce su sensibilidad; también puede incorporar función de trim.\n\nPor eso no apliques “todo tab se mueve al contrario” a cualquier mecanismo. Se debe identificar primero el sistema. En otras aeronaves la compensación longitudinal se logra variando la incidencia del estabilizador horizontal, sin depender de un pequeño tab en el elevador.",
-            "covers": []
+            "text": "El balance tab se mueve en sentido opuesto al mando para reducir esfuerzo. El servo tab recibe la orden y ayuda a mover la superficie. El anti-servo tab sigue el borde de salida del estabilizador enterizo para aumentar esfuerzo o reducir sensibilidad; también puede incorporar trim. Identifica función y articulación, no solo nombre o aspecto.",
+            "covers": [],
+            "detailText": "Un balance tab está vinculado al mando principal y se mueve en sentido contrario para reducir esfuerzos. Un servo tab recibe la orden y su fuerza aerodinámica contribuye a mover la superficie principal. Un anti-servo tab se mueve en el mismo sentido que el borde de salida del estabilizador enterizo y aumenta el esfuerzo o reduce su sensibilidad; también puede incorporar función de trim.\n\nPor eso no apliques “todo tab se mueve al contrario” a cualquier mecanismo. Se debe identificar primero el sistema. En otras aeronaves la compensación longitudinal se logra variando la incidencia del estabilizador horizontal, sin depender de un pequeño tab en el elevador."
           }
         ],
         "figures": []
@@ -3317,13 +3337,15 @@
         "cards": [
           {
             "title": "Del ala completa al perfil",
-            "text": "Un perfil aerodinámico representa la forma de una sección del ala. El ala real tiene envergadura, puede cambiar de cuerda y perfil hacia la punta y se comporta como un cuerpo tridimensional. El dibujo de un perfil permite estudiar su geometría local, pero no describe por sí solo toda el ala ni sus vórtices de punta.\n\nPara leer el dibujo identifica primero cuál extremo mira hacia el flujo incidente. En el esquema habitual el borde de ataque queda delante y el borde de salida detrás. La superficie superior se llama extradós y la inferior intradós. Estos nombres describen las caras del perfil: el intradós no tiene que ser plano y el extradós no constituye por sí solo toda la curvatura del perfil.",
-            "covers": []
+            "text": "El perfil es una sección local del ala; el ala completa tiene envergadura y comportamiento tridimensional. Identifica ataque, salida, extradós e intradós. Estos nombres describen caras: el intradós no tiene que ser plano. Un perfil aislado no describe toda la geometría del ala ni sus vórtices de punta.",
+            "covers": [],
+            "detailText": "Un perfil aerodinámico representa la forma de una sección del ala. El ala real tiene envergadura, puede cambiar de cuerda y perfil hacia la punta y se comporta como un cuerpo tridimensional. El dibujo de un perfil permite estudiar su geometría local, pero no describe por sí solo toda el ala ni sus vórtices de punta.\n\nPara leer el dibujo identifica primero cuál extremo mira hacia el flujo incidente. En el esquema habitual el borde de ataque queda delante y el borde de salida detrás. La superficie superior se llama extradós y la inferior intradós. Estos nombres describen las caras del perfil: el intradós no tiene que ser plano y el extradós no constituye por sí solo toda la curvatura del perfil."
           },
           {
             "title": "Cuerda y línea media",
-            "text": "La cuerda geométrica es la recta que une el borde de ataque y el de salida; su longitud se representa por c. La línea media de curvatura pasa entre las superficies, a mitad de distancia de ambas según la construcción geométrica empleada. La separación entre esa línea y la cuerda describe la combadura.\n\nEn un perfil simétrico la línea media coincide con la cuerda. En uno combado normalmente se separan. No confundas la cuerda con el contorno superior: la cuerda sigue siendo recta aunque la superficie tenga una curvatura marcada.",
-            "covers": []
+            "text": "La cuerda es la recta entre ataque y salida; su longitud es c. La línea media pasa entre las superficies y su separación de la cuerda describe la combadura. Coinciden en un perfil simétrico y suelen separarse en uno combado. La cuerda sigue siendo recta aunque el contorno superior sea curvo.",
+            "covers": [],
+            "detailText": "La cuerda geométrica es la recta que une el borde de ataque y el de salida; su longitud se representa por c. La línea media de curvatura pasa entre las superficies, a mitad de distancia de ambas según la construcción geométrica empleada. La separación entre esa línea y la cuerda describe la combadura.\n\nEn un perfil simétrico la línea media coincide con la cuerda. En uno combado normalmente se separan. No confundas la cuerda con el contorno superior: la cuerda sigue siendo recta aunque la superficie tenga una curvatura marcada."
           }
         ],
         "figures": []
@@ -3335,13 +3357,15 @@
         "cards": [
           {
             "title": "Espesor y curvatura son distintos",
-            "text": "El espesor describe la separación entre extradós e intradós. La combadura describe cuánto se aparta la línea media de la cuerda. Un perfil puede tener bastante espesor y ser simétrico, o ser delgado y combado. También importa dónde se alcanzan el espesor máximo y la combadura máxima a lo largo de la cuerda.\n\nPara comparar tamaños se usan proporciones respecto de c. Si una sección tiene cuerda de 1,50 m y espesor máximo de 0,18 m, su espesor relativo es 0,18/1,50 = 0,12, es decir, 12 %. Otra sección de 0,75 m de cuerda y 0,09 m de espesor tiene el mismo 12 %, aunque sea más pequeña. Este resultado geométrico no asegura prestaciones aerodinámicas idénticas.",
-            "covers": []
+            "text": "Espesor es la separación entre las caras; combadura es la separación entre línea media y cuerda. Importan sus máximos y dónde aparecen. El espesor relativo permite comparar tamaños: 0,18/1,50 = 0,09/0,75 = 12 %. Igual proporción geométrica no garantiza iguales prestaciones. Un perfil puede ser grueso y simétrico, o delgado y combado.",
+            "covers": [],
+            "detailText": "El espesor describe la separación entre extradós e intradós. La combadura describe cuánto se aparta la línea media de la cuerda. Un perfil puede tener bastante espesor y ser simétrico, o ser delgado y combado. También importa dónde se alcanzan el espesor máximo y la combadura máxima a lo largo de la cuerda.\n\nPara comparar tamaños se usan proporciones respecto de c. Si una sección tiene cuerda de 1,50 m y espesor máximo de 0,18 m, su espesor relativo es 0,18/1,50 = 0,12, es decir, 12 %. Otra sección de 0,75 m de cuerda y 0,09 m de espesor tiene el mismo 12 %, aunque sea más pequeña. Este resultado geométrico no asegura prestaciones aerodinámicas idénticas."
           },
           {
             "title": "El ángulo necesita otra referencia",
-            "text": "El ángulo de ataque se mide entre la cuerda y la dirección del flujo relativo incidente, antes de la perturbación local que produce el perfil. No se mide entre el extradós y el horizonte. Cambiar la orientación de la cuerda respecto del flujo cambia el ángulo de ataque sin cambiar la forma del perfil.\n\nEl ángulo de incidencia instalado, en cambio, relaciona la cuerda con una referencia de la aeronave. No confundas forma, instalación y condición de vuelo. En el dibujo geométrico puedes medir espesor y curvatura aunque todavía no se haya indicado el flujo; para identificar ángulo de ataque necesitas ambas direcciones.",
-            "covers": []
+            "text": "Ángulo de ataque: entre cuerda y flujo relativo incidente, antes de su perturbación por el perfil. Incidencia instalada: entre cuerda y referencia de la aeronave. No uses extradós ni horizonte para medir ataque. Cambiar orientación frente al flujo no cambia la forma del perfil; para medir ataque hacen falta ambas direcciones.",
+            "covers": [],
+            "detailText": "El ángulo de ataque se mide entre la cuerda y la dirección del flujo relativo incidente, antes de la perturbación local que produce el perfil. No se mide entre el extradós y el horizonte. Cambiar la orientación de la cuerda respecto del flujo cambia el ángulo de ataque sin cambiar la forma del perfil.\n\nEl ángulo de incidencia instalado, en cambio, relaciona la cuerda con una referencia de la aeronave. No confundas forma, instalación y condición de vuelo. En el dibujo geométrico puedes medir espesor y curvatura aunque todavía no se haya indicado el flujo; para identificar ángulo de ataque necesitas ambas direcciones."
           }
         ],
         "figures": []
@@ -3486,13 +3510,15 @@
         "cards": [
           {
             "title": "La misión antes que la silueta",
-            "text": "Un avión que necesita operar lentamente y otro que dedica gran parte del vuelo a alta velocidad no exigen exactamente lo mismo a su perfil. El diseñador busca una combinación útil de sustentación, resistencia, momento de cabeceo, comportamiento cerca de la pérdida y posibilidades estructurales. Debe considerar más de una fase de vuelo.\n\nUn contorno que funciona bien en un punto no queda automáticamente elegido para toda la misión. La forma del ala completa, su área y la carga que debe sostener también intervienen. Cambiar el perfil no elimina la necesidad de diseñar el resto de la aeronave ni sustituye sus datos de actuación.",
-            "covers": []
+            "text": "La elección combina sustentación, resistencia, momento, pérdida y necesidades estructurales a lo largo de la misión. Un buen resultado en un solo punto no resuelve todas las fases. También intervienen área, forma del ala completa y carga; cambiar el perfil no sustituye diseñar el avión ni comprobar sus datos de actuación.",
+            "covers": [],
+            "detailText": "Un avión que necesita operar lentamente y otro que dedica gran parte del vuelo a alta velocidad no exigen exactamente lo mismo a su perfil. El diseñador busca una combinación útil de sustentación, resistencia, momento de cabeceo, comportamiento cerca de la pérdida y posibilidades estructurales. Debe considerar más de una fase de vuelo.\n\nUn contorno que funciona bien en un punto no queda automáticamente elegido para toda la misión. La forma del ala completa, su área y la carga que debe sostener también intervienen. Cambiar el perfil no elimina la necesidad de diseñar el resto de la aeronave ni sustituye sus datos de actuación."
           },
           {
             "title": "Tres decisiones geométricas",
-            "text": "La combadura modifica la distribución de presión y puede permitir sustentación positiva con la cuerda alineada con el flujo. El espesor y su distribución influyen en el flujo y en el volumen disponible para estructura o sistemas. La forma del borde de ataque y la evolución del contorno hacia el borde de salida también afectan cómo responde el perfil al aumentar el ángulo de ataque.\n\nNo se deduce el resultado de una sola medida. Aumentar espesor o combadura no es una receta de mejora ilimitada: puede cambiar resistencia, momentos y margen de operación. Las consecuencias deben comprobarse en el régimen previsto.",
-            "covers": []
+            "text": "Combadura, espesor y su distribución, y forma de los bordes influyen en presión, estructura y respuesta al ángulo de ataque. Más espesor o combadura no implica mejora ilimitada: pueden cambiar resistencia, momentos y margen de operación. No deduzcas prestaciones de una sola medida; compruébalas en el régimen previsto.",
+            "covers": [],
+            "detailText": "La combadura modifica la distribución de presión y puede permitir sustentación positiva con la cuerda alineada con el flujo. El espesor y su distribución influyen en el flujo y en el volumen disponible para estructura o sistemas. La forma del borde de ataque y la evolución del contorno hacia el borde de salida también afectan cómo responde el perfil al aumentar el ángulo de ataque.\n\nNo se deduce el resultado de una sola medida. Aumentar espesor o combadura no es una receta de mejora ilimitada: puede cambiar resistencia, momentos y margen de operación. Las consecuencias deben comprobarse en el régimen previsto."
           }
         ],
         "figures": []
@@ -3511,13 +3537,15 @@
         "cards": [
           {
             "title": "Comparar en la misma condición",
-            "text": "La comparación utiliza datos obtenidos por análisis, túnel de viento y ensayos. Para interpretar curvas de coeficiente de sustentación y resistencia hay que conocer las condiciones: número de Reynolds, número de Mach, estado superficial y configuración, entre otras. Un coeficiente no es una etiqueta invariable pegada al perfil.\n\nEl número de Reynolds relaciona efectos de inercia y viscosidad; el número de Mach relaciona velocidad con la del sonido y ayuda a reconocer efectos de compresibilidad. Un modelo pequeño y un ala real no necesariamente producen los mismos resultados solo por tener el mismo contorno y ángulo de ataque. Se necesita una comparación aerodinámica pertinente.",
-            "covers": []
+            "text": "Interpreta los ensayos o curvas con Reynolds, Mach, estado superficial y configuración. Reynolds compara inercia y viscosidad; Mach relaciona velocidad con la del sonido y ayuda a valorar compresibilidad. Igual contorno y ángulo de ataque en un modelo pequeño y un ala real no garantizan igual comportamiento. Los coeficientes dependen de las condiciones.",
+            "covers": [],
+            "detailText": "La comparación utiliza datos obtenidos por análisis, túnel de viento y ensayos. Para interpretar curvas de coeficiente de sustentación y resistencia hay que conocer las condiciones: número de Reynolds, número de Mach, estado superficial y configuración, entre otras. Un coeficiente no es una etiqueta invariable pegada al perfil.\n\nEl número de Reynolds relaciona efectos de inercia y viscosidad; el número de Mach relaciona velocidad con la del sonido y ayuda a reconocer efectos de compresibilidad. Un modelo pequeño y un ala real no necesariamente producen los mismos resultados solo por tener el mismo contorno y ángulo de ataque. Se necesita una comparación aerodinámica pertinente."
           },
           {
             "title": "Leer más que la sustentación máxima",
-            "text": "Un máximo de sustentación mayor puede ser útil para baja velocidad, pero debe evaluarse junto con la resistencia, el momento de cabeceo y la forma en que se pierde sustentación después del máximo. También interesa la resistencia dentro del intervalo donde el avión pasa gran parte de su misión.\n\nSi dos perfiles tienen datos al mismo coeficiente de sustentación y en condiciones comparables, el menor coeficiente de resistencia indica una ventaja de resistencia de perfil en ese punto. No permite afirmar automáticamente que el avión completo tendrá mayor alcance: faltan resistencia del resto de la aeronave, propulsión, peso y régimen de operación.",
-            "covers": []
+            "text": "Compara CLmáx junto con resistencia, momento y evolución tras la pérdida. A igual CL y en condiciones comparables, menor CD significa menor resistencia de perfil en ese punto. No garantiza mayor alcance del avión completo: también cuentan resistencia restante, propulsión, peso y régimen. Valora el intervalo donde se cumple la misión.",
+            "covers": [],
+            "detailText": "Un máximo de sustentación mayor puede ser útil para baja velocidad, pero debe evaluarse junto con la resistencia, el momento de cabeceo y la forma en que se pierde sustentación después del máximo. También interesa la resistencia dentro del intervalo donde el avión pasa gran parte de su misión.\n\nSi dos perfiles tienen datos al mismo coeficiente de sustentación y en condiciones comparables, el menor coeficiente de resistencia indica una ventaja de resistencia de perfil en ese punto. No permite afirmar automáticamente que el avión completo tendrá mayor alcance: faltan resistencia del resto de la aeronave, propulsión, peso y régimen de operación."
           }
         ],
         "figures": []
@@ -3529,8 +3557,9 @@
         "cards": [
           {
             "title": "Un compromiso que puede modificarse",
-            "text": "Flaps y dispositivos de borde de ataque permiten modificar la geometría efectiva para distintas fases. Un ala puede conservar una forma útil en crucero y desplegar dispositivos para ampliar su capacidad a baja velocidad. Se obtienen beneficios, pero también aparecen resistencia, momentos, masa y complejidad.\n\nUn ejemplo de diseño muestra la lógica: si el objetivo es reducir resistencia durante un crucero prolongado, conviene examinar el intervalo de baja resistencia y la sensibilidad a la superficie, además de comprobar que la capacidad de baja velocidad sea suficiente. No basta con elegir el perfil de mayor sustentación máxima. El resultado debe integrarse con el ala completa y verificarse; las ilustraciones de este recorrido no son datos certificados de una aeronave.",
-            "covers": []
+            "text": "Flaps y dispositivos delanteros adaptan la geometría a distintas fases, con beneficios y costes de resistencia, momento, masa y complejidad. Para crucero interesa el intervalo de baja resistencia y la sensibilidad superficial; también debe cumplirse la capacidad a baja velocidad. CLmáx por sí solo no elige el diseño: hay que integrarlo y verificarlo en el ala completa.",
+            "covers": [],
+            "detailText": "Flaps y dispositivos de borde de ataque permiten modificar la geometría efectiva para distintas fases. Un ala puede conservar una forma útil en crucero y desplegar dispositivos para ampliar su capacidad a baja velocidad. Se obtienen beneficios, pero también aparecen resistencia, momentos, masa y complejidad.\n\nUn ejemplo de diseño muestra la lógica: si el objetivo es reducir resistencia durante un crucero prolongado, conviene examinar el intervalo de baja resistencia y la sensibilidad a la superficie, además de comprobar que la capacidad de baja velocidad sea suficiente. No basta con elegir el perfil de mayor sustentación máxima. El resultado debe integrarse con el ala completa y verificarse; las ilustraciones de este recorrido no son datos certificados de una aeronave."
           }
         ],
         "figures": []
@@ -3678,8 +3707,9 @@
         "cards": [
           {
             "title": "Perfil simétrico",
-            "text": "En una sección simétrica las caras son reflejo una de otra respecto de la cuerda. En el caso ideal simétrico, sin deflexiones y con flujo alineado a ángulo de ataque cero, no hay sustentación neta. A un ángulo de ataque distinto de cero puede producir sustentación.\n\nPor eso “sin combadura” no significa “incapaz de volar”. La orientación frente al flujo importa tanto como la forma. La simetría resulta útil cuando se buscan respuestas en ambos sentidos, pero no garantiza por sí misma un valor de sustentación máxima, resistencia o comportamiento en pérdida.",
-            "covers": []
+            "text": "Sus caras son reflejos respecto de la cuerda. En el caso ideal simétrico, sin deflexión y a ataque cero, no hay sustentación neta; con otro ángulo sí puede producirla. Simetría no significa incapacidad de volar ni garantiza CLmáx, resistencia o pérdida. La orientación importa junto con la forma.",
+            "covers": [],
+            "detailText": "En una sección simétrica las caras son reflejo una de otra respecto de la cuerda. En el caso ideal simétrico, sin deflexiones y con flujo alineado a ángulo de ataque cero, no hay sustentación neta. A un ángulo de ataque distinto de cero puede producir sustentación.\n\nPor eso “sin combadura” no significa “incapaz de volar”. La orientación frente al flujo importa tanto como la forma. La simetría resulta útil cuando se buscan respuestas en ambos sentidos, pero no garantiza por sí misma un valor de sustentación máxima, resistencia o comportamiento en pérdida."
           },
           {
             "title": "Perfil combado",
@@ -3696,13 +3726,15 @@
         "cards": [
           {
             "title": "Un objetivo de distribución de presión",
-            "text": "Los perfiles diseñados para favorecer flujo laminar buscan mantener una mayor extensión de capa límite laminar dentro de un intervalo previsto de operación. Esto puede reducir la resistencia por fricción. La distribución de espesor y presión se elige para favorecer ese comportamiento; “laminar” no es simplemente un sinónimo de delgado o simétrico.\n\nLa transición depende de Reynolds, condiciones del flujo y estado de la superficie. Suciedad, rugosidad o contaminación pueden adelantarla y reducir la ventaja prevista. El nombre de la familia no garantiza flujo laminar en toda la superficie ni en todas las fases del vuelo.",
-            "covers": []
+            "text": "Un perfil laminar busca extender la capa límite laminar en un intervalo previsto para reducir fricción. No significa simplemente delgado o simétrico. Reynolds, flujo y superficie condicionan la transición: suciedad o rugosidad pueden adelantarla y reducir la ventaja. El nombre no garantiza flujo laminar en toda la superficie ni en toda fase.",
+            "covers": [],
+            "detailText": "Los perfiles diseñados para favorecer flujo laminar buscan mantener una mayor extensión de capa límite laminar dentro de un intervalo previsto de operación. Esto puede reducir la resistencia por fricción. La distribución de espesor y presión se elige para favorecer ese comportamiento; “laminar” no es simplemente un sinónimo de delgado o simétrico.\n\nLa transición depende de Reynolds, condiciones del flujo y estado de la superficie. Suciedad, rugosidad o contaminación pueden adelantarla y reducir la ventaja prevista. El nombre de la familia no garantiza flujo laminar en toda la superficie ni en todas las fases del vuelo."
           },
           {
             "title": "La pérdida también debe compararse",
-            "text": "La separación del flujo y la evolución del coeficiente de sustentación al aumentar el ángulo de ataque forman parte de las características del perfil. Algunas curvas muestran caída más gradual después del máximo; otras, una pérdida más abrupta. La familia o el aspecto visual no reemplazan esos datos.\n\nAdemás, la pérdida del ala completa depende de factores tridimensionales, torsión, distribución de carga y configuración. No atribuyas automáticamente a todo el avión la curva medida en una sola sección. La contaminación puede alterar tanto el máximo de sustentación como la respuesta cerca de la pérdida.",
-            "covers": []
+            "text": "Las curvas muestran cuánto cae la sustentación después del máximo y si la caída es gradual o abrupta. El aspecto o la familia no reemplaza esos datos. La pérdida del ala completa también depende de torsión, distribución de carga, configuración y efectos tridimensionales. La contaminación puede alterar tanto CLmáx como la respuesta posterior.",
+            "covers": [],
+            "detailText": "La separación del flujo y la evolución del coeficiente de sustentación al aumentar el ángulo de ataque forman parte de las características del perfil. Algunas curvas muestran caída más gradual después del máximo; otras, una pérdida más abrupta. La familia o el aspecto visual no reemplazan esos datos.\n\nAdemás, la pérdida del ala completa depende de factores tridimensionales, torsión, distribución de carga y configuración. No atribuyas automáticamente a todo el avión la curva medida en una sola sección. La contaminación puede alterar tanto el máximo de sustentación como la respuesta cerca de la pérdida."
           }
         ],
         "figures": []
@@ -3714,8 +3746,9 @@
         "cards": [
           {
             "title": "Perfiles para otro régimen",
-            "text": "En diseños destinados al vuelo supersónico aparecen secciones delgadas, de arco circular o doble cuña, que responden a exigencias distintas de las de un avión lento. Su geometría está relacionada con los efectos de compresibilidad y ondas de choque; no debe evaluarse solo por su parecido con un perfil convencional de borde redondeado.\n\nNo toda aeronave rápida usa la misma familia ni toda sección delgada es supersónica. La selección depende del régimen y de los compromisos de la misión. Una misma etiqueta tampoco proporciona una velocidad de pérdida o de crucero.",
-            "covers": []
+            "text": "En supersónico aparecen perfiles delgados, de arco circular o doble cuña, ligados a compresibilidad y ondas de choque. No toda sección delgada es supersónica ni toda aeronave rápida usa la misma familia. La misión y el régimen determinan los compromisos; una etiqueta no proporciona velocidades de pérdida o crucero.",
+            "covers": [],
+            "detailText": "En diseños destinados al vuelo supersónico aparecen secciones delgadas, de arco circular o doble cuña, que responden a exigencias distintas de las de un avión lento. Su geometría está relacionada con los efectos de compresibilidad y ondas de choque; no debe evaluarse solo por su parecido con un perfil convencional de borde redondeado.\n\nNo toda aeronave rápida usa la misma familia ni toda sección delgada es supersónica. La selección depende del régimen y de los compromisos de la misión. Una misma etiqueta tampoco proporciona una velocidad de pérdida o de crucero."
           },
           {
             "title": "Una comparación responsable",

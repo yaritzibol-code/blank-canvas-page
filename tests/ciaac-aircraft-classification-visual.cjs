@@ -13,5 +13,7 @@ const svg = fs.readFileSync(`public${stage.figures[0].file}`, 'utf8');
 for (const term of ['Globo','Avión','Planeador','Sin motor','Con motor','Fuerza aerodinámica']) assert.ok(svg.includes(term));
 assert.match(svg, /prefers-reduced-motion/);
 assert.match(svg, /4s linear 1/);
+assert.match(svg, /class="flow"[^>]*>[\s\S]*M465 190H293M712 200H539/, 'Animated path direction follows the left-pointing relative-air arrows');
+assert.match(svg, /stroke-dashoffset:60[^}]*}to\{stroke-dashoffset:0/);
 assert.doesNotMatch(svg, /<script|<foreignObject/);
 console.log('PASS: classification has concise complete teaching and original support-versus-engine visual.');

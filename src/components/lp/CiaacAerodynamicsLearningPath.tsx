@@ -1,3 +1,4 @@
+import { AeroConceptVisual, hasAeroConcept } from "./AeroConceptVisual";
 import { CiaacAerodynamicsModulesSixSevenVisual } from "./CiaacAerodynamicsModulesSixSevenVisual";
 import { CiaacAerodynamicsModuleEightVisual } from "./CiaacAerodynamicsModuleEightVisual";
 import { CiaacAerodynamicsModulesFourFiveVisual } from "./CiaacAerodynamicsModulesFourFiveVisual";
@@ -17,6 +18,19 @@ export function CiaacAerodynamicsLearningPath(
       className: "aircraft-handbook ciaac-aerodynamics-handbook",
       visual: (stage: number) => {
         const current = document.stages[stage];
+        if (
+          current.kind === "content" &&
+          hasAeroConcept(document.chapter, document.number, current.nav)
+        )
+          return (
+            <AeroConceptVisual
+              key={stage}
+              module={document.chapter}
+              lesson={document.number}
+              nav={current.nav}
+              kind={current.kind}
+            />
+          );
         if (document.chapter === 6 || document.chapter === 7)
           return (
             <CiaacAerodynamicsModulesSixSevenVisual

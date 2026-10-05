@@ -9,7 +9,7 @@
 <path d="M77 186V125M69 137L77 125L85 137" fill="none" stroke="#5cd4e0" stroke-width="4"/>
 <g fill="#b4c8d8"><path d="M313 157L449 157L431 148L353 145L331 123H319L328 147L313 152Z"/><path d="M358 154L399 125H414L389 156L420 175H407L370 161Z"/><path d="M559 157L696 157L685 150L584 147L571 127H561L570 150Z"/><path d="M599 151L653 113H669L630 154L673 186H657L612 161Z"/></g>
 <path d="M452 143V171" stroke="#edbd67" stroke-width="4"/>
-<g class="flow" fill="none" stroke="#5cd4e0" stroke-width="3"><path d="M293 190H465M539 200H712"/></g>
+<g class="flow" fill="none" stroke="#5cd4e0" stroke-width="3"><path d="M465 190H293M712 200H539"/></g>
 <g fill="#5cd4e0"><path d="M293 190l12-6v12Z"/><path d="M539 200l12-6v12Z"/></g>
 <g font-size="18" text-anchor="middle"><text x="134" y="245" fill="#5cd4e0">Flotación</text><text x="380" y="235" fill="#5cd4e0">Fuerza aerodinámica</text><text x="626" y="235" fill="#5cd4e0">Fuerza aerodinámica</text><text x="380" y="258" font-size="15">Aire relativo sobre el ala</text><text x="626" y="258" font-size="15">Aire relativo sobre el ala</text><text x="134" y="291">Sin motor</text><text x="380" y="291" fill="#edbd67">Con motor</text><text x="626" y="291">Sin motor</text></g>
 <text x="24" y="344" font-size="18" fill="#a8bdd0">Sin motor no significa «menos pesada que el aire».</text></g></svg>
