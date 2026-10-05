@@ -1,0 +1,17 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const docs = JSON.parse(fs.readFileSync('src/lib/lp/ciaac-aircraft-engines.content.json', 'utf8'));
+const lesson = Object.values(docs).find(d => d.chapter === 1 && d.number === 1);
+const stage = lesson.stages[2];
+assert.equal(stage.kind, 'content');
+assert.equal(stage.figures.length, 1);
+assert.equal(stage.cards.length, 3);
+assert.ok(stage.cards.every(c => c.text.split(/\s+/).length <= 50));
+const text = JSON.stringify(stage.cards);
+for (const term of ['flotación','planeador','dirigible','autogiro','ornitóptero']) assert.ok(text.includes(term));
+const svg = fs.readFileSync(`public${stage.figures[0].file}`, 'utf8');
+for (const term of ['Globo','Avión','Planeador','Sin motor','Con motor','Fuerza aerodinámica']) assert.ok(svg.includes(term));
+assert.match(svg, /prefers-reduced-motion/);
+assert.match(svg, /4s linear 1/);
+assert.doesNotMatch(svg, /<script|<foreignObject/);
+console.log('PASS: classification has concise complete teaching and original support-versus-engine visual.');

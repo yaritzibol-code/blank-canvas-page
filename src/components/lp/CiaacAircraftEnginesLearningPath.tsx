@@ -12,6 +12,7 @@ export function CiaacAircraftEnginesLearningPath(
   const presentation = useMemo(() => ({
     className: "aircraft-handbook ciaac-aircraft-engines-handbook",
     visual: () => null,
+    figuresFirst: true,
     migrate: (saved: unknown, completed: boolean, fresh: Parameters<typeof migrateAircraftEnginesJourney>[3]) =>
       migrateAircraftEnginesJourney(document, saved, completed, fresh),
   }), [document]);

@@ -100,6 +100,17 @@
         "observe": "Distingue la vista frontal de la vista superior antes de nombrar posición o planta.",
         "alt": "Diagrama original. Una aeronave, varias clasificaciones. Distingue la vista frontal de la vista superior antes de nombrar posición o planta.",
         "caption": "Diagrama original · CIAAC · Aeronaves y motores"
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 2,
+        "pdf_page": 0,
+        "number": "1.1.s2",
+        "file": "/lp/ciaac/aircraft-engines/stage-visuals/m1-m2/m1-t1-s2.svg",
+        "caption": "Diagrama original · Mecanismo de sustentación y presencia de motor son criterios distintos.",
+        "alt": "Globo sin motor sostenido por flotación, avión con motor y planeador sin motor sostenidos por fuerzas aerodinámicas.",
+        "observe": "Compara avión y planeador: cambia el motor, no la familia aerodinámica."
       }
     ],
     "exercise": {
@@ -153,26 +164,45 @@
       {
         "kind": "content",
         "nav": "Qué mantiene la aeronave en el aire",
-        "title": "Qué mantiene la aeronave en el aire",
+        "title": "¿Qué la sostiene?",
         "cards": [
           {
-            "title": "Qué mantiene la aeronave en el aire",
-            "text": "Las aeronaves menos pesadas que el aire, llamadas aerostatos, se sostienen principalmente por flotación: aprovechan el empuje asociado al peso del aire desplazado. Si ese empuje supera su peso total, pueden ascender; cuando ambas fuerzas se equilibran, no hay aceleración vertical. Un globo y un dirigible pertenecen a esta familia. El dirigible incorpora propulsión y gobierno para desplazarse respecto del aire; un globo libre deriva con la masa de aire. El globo cautivo permanece sujeto mediante cables. Rígido, semirrígido y no rígido describen la organización estructural de los dirigibles, no tres mecanismos diferentes de sustentación.\n\nLas aeronaves más pesadas que el aire, o aerodinos, obtienen sustentación principalmente mediante fuerzas aerodinámicas. Necesitan movimiento relativo del aire sobre sus superficies sustentadoras; ese movimiento puede corresponder al avance del avión o al giro del rotor.",
+            "title": "Globo y dirigible: flotación",
+            "text": "Son aerostatos: el empuje del aire desplazado sostiene su peso. Si el empuje supera el peso, pueden acelerar hacia arriba; si se equilibran, no hay aceleración vertical.",
+            "detailText": "El globo libre deriva con la masa de aire; el cautivo queda sujeto por cables. El dirigible añade propulsión y gobierno. Rígido, semirrígido y no rígido describen la estructura del dirigible, no mecanismos distintos de sustentación.",
             "covers": [
               0
-            ],
-            "wide": true
+            ]
           },
           {
-            "title": "Tener motor es otra pregunta",
-            "text": "Un planeador continúa siendo un aerodino aunque carezca de motor: al desplazarse respecto del aire, sus alas producen sustentación. Un avión de ala fija emplea su planta propulsora para sostener el avance, mientras que en un helicóptero las palas giran y actúan como alas. El autogiro también pertenece al ala rotativa. El ornitóptero, incluido en la clasificación histórica, utiliza alas batientes.\n\nError frecuente: clasificar como menos pesada que el aire cualquier aeronave sin motor. El criterio es el mecanismo de sustentación, no la presencia de propulsión ni el peso comparado con otra aeronave. Un planeador pesado y uno ligero conservan la misma clasificación básica.",
+            "title": "Avión y planeador: fuerzas aerodinámicas",
+            "text": "Son aerodinos: sus alas producen sustentación al moverse respecto del aire. El motor del avión ayuda a mantener el avance; el planeador sigue siendo aerodino aunque no tenga motor.",
+            "covers": [
+              0,
+              1
+            ]
+          },
+          {
+            "title": "El criterio es cómo se sostiene",
+            "text": "Tener motor y pesar más que otra aeronave no deciden esta familia. En el helicóptero y el autogiro, las palas giratorias actúan como alas; el ornitóptero histórico emplea alas batientes.",
             "covers": [
               1
-            ],
-            "wide": true
+            ]
           }
         ],
-        "figures": []
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 2,
+            "pdf_page": 0,
+            "number": "1.1.s2",
+            "file": "/lp/ciaac/aircraft-engines/stage-visuals/m1-m2/m1-t1-s2.svg",
+            "caption": "Diagrama original · Mecanismo de sustentación y presencia de motor son criterios distintos.",
+            "alt": "Globo sin motor sostenido por flotación, avión con motor y planeador sin motor sostenidos por fuerzas aerodinámicas.",
+            "observe": "Compara avión y planeador: cambia el motor, no la familia aerodinámica."
+          }
+        ]
       },
       {
         "kind": "content",

@@ -86,6 +86,7 @@ export function HandbookLearningPath({
   presentation?: {
     className: string;
     visual: (stage: number) => React.ReactNode;
+    figuresFirst?: boolean;
     afterStage?: (stage: number) => React.ReactNode;
     migrate: (
       saved: unknown,
@@ -349,6 +350,7 @@ export function HandbookLearningPath({
           {current.kind === "content" && (
             <ContentStage
               title={current.title}
+              figuresFirst={presentation?.figuresFirst}
               visual={presentation?.visual(state.stage)}
               cards={current.cards}
               figures={current.figures.map(
@@ -562,8 +564,10 @@ function ContentStage({
   figures,
   onZoom,
   visual,
+  figuresFirst = false,
 }: {
   visual?: React.ReactNode;
+  figuresFirst?: boolean;
   title: string;
   cards: HandbookCard[];
   figures: HandbookFigure[];
@@ -576,12 +580,15 @@ function ContentStage({
         <h2>{title}</h2>
       </header>
       {visual}
+      {figuresFirst && figures.map((figure) => (
+        <Figure key={figure.number} figure={figure} onZoom={onZoom} />
+      ))}
       <div className="hb-card-grid">
         {cards.map((card, index) => (
           <Card key={`${index}-${card.title}`} card={card} />
         ))}
       </div>
-      {figures.map((figure) => (
+      {!figuresFirst && figures.map((figure) => (
         <Figure key={figure.number} figure={figure} onZoom={onZoom} />
       ))}
     </>
