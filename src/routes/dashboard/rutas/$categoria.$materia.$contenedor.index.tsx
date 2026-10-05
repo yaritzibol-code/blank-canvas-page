@@ -1,7 +1,7 @@
 /** Contenedor → sus Learning Paths, con candado por progresión y por plan. */
 import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
 import { LpBreadcrumbs, LpGrid, LpHeader, LpStepCard } from "@/components/lp/nav";
-import { lpCategory, lpContainer, lpSubject } from "@/lib/lp/taxonomy";
+import { lpCategory, lpContainer, lpSubjectForContainer } from "@/lib/lp/taxonomy";
 import { useSessionUser, useStore } from "@/lib/store";
 import { lpAccess } from "@/lib/store/lp-nav";
 
@@ -17,7 +17,7 @@ function ContenedorPage() {
   const navigate = useNavigate();
   const user = useSessionUser();
   const cat = lpCategory(categoria);
-  const subject = lpSubject(categoria, materia);
+  const subject = lpSubjectForContainer(categoria, materia, contenedor);
   const cont = lpContainer(categoria, materia, contenedor);
 
   const accesos = useStore(() =>

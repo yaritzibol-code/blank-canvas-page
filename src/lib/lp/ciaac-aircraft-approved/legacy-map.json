@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+  "completionPolicy": "retain-legacy-only",
+  "references": [
+    {
+      "approvedCode": "AM01",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-1-clasificacion-de-aeronaves/menos-pesadas-que-el-aire-mas-pesadas-que-el-aire-ala-fija-por-numero--1",
+        "ciaac/aeronaves-y-motores/modulo-1-clasificacion-de-aeronaves/ala-rotativa-2",
+        "ciaac/aeronaves-y-motores/modulo-1-clasificacion-de-aeronaves/por-tipo-y-numero-de-motores-3",
+        "ciaac/aeronaves-y-motores/modulo-1-clasificacion-de-aeronaves/por-tipo-y-posicion-de-tren-de-aterrizaje-4",
+        "ciaac/aeronaves-y-motores/modulo-1-clasificacion-de-aeronaves/por-la-forma-en-que-despegan-y-aterrizan-5",
+        "ciaac/aeronaves-y-motores/modulo-1-clasificacion-de-aeronaves/por-tipo-de-cabina-6"
+      ]
+    },
+    {
+      "approvedCode": "AM02",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-2-estructuras/diseno-de-aeronaves-certificacion-y-aeronavegabilidad-1",
+        "ciaac/aeronaves-y-motores/modulo-2-estructuras/tipos-de-construccion-monocoque-semimonocoque-y-compuesto-2",
+        "ciaac/aeronaves-y-motores/modulo-2-estructuras/alas-arriostradas-y-cantilever-3",
+        "ciaac/aeronaves-y-motores/modulo-2-estructuras/empenaje-vertical-y-horizontal-4",
+        "ciaac/aeronaves-y-motores/modulo-2-estructuras/fuselaje-5"
+      ]
+    },
+    {
+      "approvedCode": "AM03",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/generalidades-y-sinonimos-1",
+        "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/partes-del-motor-y-funciones-de-cada-una-2",
+        "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/clasificacion-por-posicion-de-cilindros-3"
+      ]
+    },
+    {
+      "approvedCode": "AM04",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/ciclo-de-otto-y-traslape-valvular-4"
+      ]
+    },
+    {
+      "approvedCode": "AM05",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/tipos-de-potencia-nominal-indicada-al-freno-5"
+      ]
+    },
+    {
+      "approvedCode": "AM06",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/sistemas-ignicion-induccion-combustible-mezcla-octanaje-succion-enfria-6",
+        "ciaac/aeronaves-y-motores/modulo-5-combustible/sistema-combustible-elementos-descripcion-y-operacion-1",
+        "ciaac/aeronaves-y-motores/modulo-5-combustible/tipos-combustible-y-octanaje-2",
+        "ciaac/aeronaves-y-motores/modulo-5-combustible/operacion-por-carburador-3",
+        "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/sistema-vacio-succion-funcion-indicador-actitud-giro-direccional-y-err-8"
+      ]
+    },
+    {
+      "approvedCode": "AM07",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/anormalidades-preignicion-detonacion-postcombustion-precombustion-7"
+      ]
+    },
+    {
+      "approvedCode": "AM08",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/sistemas-ignicion-induccion-combustible-mezcla-octanaje-succion-enfria-6"
+      ]
+    },
+    {
+      "approvedCode": "AM09",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/helices-fuerzas-tipo-paso-y-potencia-de-plantas-motrices-8"
+      ]
+    },
+    {
+      "approvedCode": "AM10",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-4-motor-a-reaccion-turborreactores/partes-del-motor-y-funciones-1",
+        "ciaac/aeronaves-y-motores/modulo-4-motor-a-reaccion-turborreactores/seccion-difusora-combustion-camaras-alabes-guias-cubierta-de-turbina-y-5"
+      ]
+    },
+    {
+      "approvedCode": "AM11",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-4-motor-a-reaccion-turborreactores/ciclo-brayton-y-diferencias-con-otto-2"
+      ]
+    },
+    {
+      "approvedCode": "AM12",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-4-motor-a-reaccion-turborreactores/tipos-de-motores-a-reaccion-3",
+        "ciaac/aeronaves-y-motores/modulo-4-motor-a-reaccion-turborreactores/relacion-bypass-flujo-primario-secundario-4",
+        "ciaac/aeronaves-y-motores/modulo-4-motor-a-reaccion-turborreactores/ventajas-desventajas-vs-reciprocos-6",
+        "ciaac/aeronaves-y-motores/modulo-4-motor-a-reaccion-turborreactores/causas-por-las-que-varia-generacion-del-empuje-7"
+      ]
+    },
+    {
+      "approvedCode": "AM13",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-4-motor-a-reaccion-turborreactores/anormalidades-desplome-compresor-hot-start-wet-start-hung-start-fod-y--8"
+      ]
+    },
+    {
+      "approvedCode": "AM14",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/neumatico-2",
+        "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/hidraulico-propiedades-usos-liquidos-depositos-ventajas-4"
+      ]
+    },
+    {
+      "approvedCode": "AM15",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/aire-acondicionado-y-presurizacion-tipos-de-control-manual-automatizad-1"
+      ]
+    },
+    {
+      "approvedCode": "AM16",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/proteccion-hielo-lluvia-antihielo-lluvia-inspeccion-pre-vuelo-6"
+      ]
+    },
+    {
+      "approvedCode": "AM17",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/proteccion-contra-fuego-tipos-a-b-c-extintores-detector-5"
+      ]
+    },
+    {
+      "approvedCode": "AM18",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/tren-aterrizaje-clasificacion-operacion-frenos-tambor-balatas-discos-7"
+      ]
+    },
+    {
+      "approvedCode": "AM19",
+      "legacyIds": [
+        "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/sistemas-ignicion-induccion-combustible-mezcla-octanaje-succion-enfria-6",
+        "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/electrico-alimentacion-distribucion-operacion-apu-gpu-3"
+      ]
+    }
+  ],
+  "crossSubjectReferences": [
+    {
+      "legacyId": "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/sistema-vacio-succion-funcion-indicador-actitud-giro-direccional-y-err-8",
+      "targetCodes": ["NV07"],
+      "scope": "El funcionamiento de instrumentos giroscópicos se desarrolla en Navegación; AM06 conserva únicamente la función del sistema de succión."
+    },
+    {
+      "legacyId": "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/sistema-presion-estatica-componentes-y-funcionamiento-9",
+      "targetCodes": ["NV09", "NV10"],
+      "scope": "El sistema pitot-estático y sus instrumentos se desarrollan en Navegación."
+    },
+    {
+      "legacyId": "ciaac/aeronaves-y-motores/modulo-7-comunicaciones-disposiciones-aeronauticas/disposiciones-relativas-al-servicio-de-telecomunicaciones-aeronauticas-1",
+      "targetCodes": ["CO01"],
+      "scope": "Las disposiciones y los servicios de telecomunicaciones se desarrollan en Comunicaciones."
+    }
+  ]
+}

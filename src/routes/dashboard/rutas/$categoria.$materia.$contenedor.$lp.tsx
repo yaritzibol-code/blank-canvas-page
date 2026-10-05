@@ -1,4 +1,6 @@
 import { CiaacAircraftEnginesLearningPath } from "@/components/lp/CiaacAircraftEnginesLearningPath";
+import { CiaacApprovedAircraftLearningPath } from "@/components/lp/CiaacApprovedAircraftLearningPath";
+import { APPROVED_AIRCRAFT_READY_IDS } from "@/lib/lp/ciaac-aircraft-approved/content";
 import { CIAAC_REVIEWED_AIRCRAFT_ENGINES_IDS } from "@/lib/lp/ciaac-aircraft-engines-ids";
 import { CiaacAerodynamicsLearningPath } from "@/components/lp/CiaacAerodynamicsLearningPath";
 import { CIAAC_REVIEWED_AERODYNAMICS_IDS } from "@/lib/lp/ciaac-aerodynamics-ids";
@@ -28,7 +30,7 @@ import { LegislationLearningPath } from "@/components/lp/LegislationLearningPath
 import { LearningPathExperience } from "@/components/lp/LearningPathExperience";
 import { YarisChatModal } from "@/components/shared/YarisChatModal";
 import { LpEmptyState, LpFullscreen, lpButtonStyle } from "@/components/lp/nav";
-import { lpCategory, lpContainer, lpSubject } from "@/lib/lp/taxonomy";
+import { lpCategory, lpContainer, lpSubjectForContainer } from "@/lib/lp/taxonomy";
 import { ATP_LEARNING_PATHS } from "@/lib/lp/atp-content.generated";
 import { ANNEX10_LEARNING_PATHS } from "@/lib/lp/annex10-content.generated";
 import { CIAAC_LEARNING_PATHS } from "@/lib/lp/ciaac-content";
@@ -58,7 +60,7 @@ function LearningPathPage() {
   const [yarisContext, setYarisContext] = useState<YarisContext>({});
   const user = useSessionUser();
   const cat = lpCategory(categoria);
-  const subject = lpSubject(categoria, materia);
+  const subject = lpSubjectForContainer(categoria, materia, contenedor);
   const cont = lpContainer(categoria, materia, contenedor);
   const item = cont?.learningPaths.find((l) => l.id.split("/")[3] === lp) ?? null;
 
@@ -104,7 +106,7 @@ function LearningPathPage() {
             title={item.titulo}
             description={
               acceso.lock === "contenido"
-                ? "Este learning path está en preparación. La vista previa incluye únicamente los cinco recorridos del módulo 1 de Aerodinámica."
+                ? "Este learning path está en preparación. Se abrirá cuando su explicación, apoyos visuales y ejercicios estén listos."
                 : acceso.lock === "plan"
                   ? "Este learning path está incluido en FlightPath Pro."
                   : "Completa el learning path anterior de la secuencia para abrir este."
@@ -173,8 +175,11 @@ function LearningPathPage() {
     onContinue: () => {
       // Recheck at click time in case the user's plan or progress changed.
       const next = lpNeighbors(subject, item.id).next;
-      if (lpAccess(user, subject, item.id).status === "completado" &&
-          next && lpAccess(user, subject, next.id).allowed) {
+      if (
+        lpAccess(user, subject, item.id).status === "completado" &&
+        next &&
+        lpAccess(user, subject, next.id).allowed
+      ) {
         irA(next.id);
       } else {
         void navigate(salir);
@@ -302,7 +307,18 @@ function LearningPathPage() {
             completed={completado}
             onComplete={() => completeLp(user.id, item, subject.titulo)}
           />
-        ) : (CIAAC_REVIEWED_AIRCRAFT_ENGINES_IDS as readonly string[]).includes(item.id) && handbookDocument && user ? (
+        ) : APPROVED_AIRCRAFT_READY_IDS.includes(item.id) && handbookDocument && user ? (
+          <CiaacApprovedAircraftLearningPath
+            completionAction={completionAction}
+            document={handbookDocument}
+            userId={user.id}
+            lpId={item.id}
+            completed={completado}
+            onComplete={() => completeLp(user.id, item, subject.titulo)}
+          />
+        ) : (CIAAC_REVIEWED_AIRCRAFT_ENGINES_IDS as readonly string[]).includes(item.id) &&
+          handbookDocument &&
+          user ? (
           <CiaacAircraftEnginesLearningPath
             completionAction={completionAction}
             document={handbookDocument}

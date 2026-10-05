@@ -1,0 +1,657 @@
+{
+  "version": 5,
+  "coordinateSystem": "All x, y, width and height values are percentages of the full image, with origin at top-left.",
+  "formatPreference": "Full-resolution WebP files are the runtime and zoom assets. Original PNG authoring masters are archived outside the application repository.",
+  "reviewScope": "Illustrative visual recognition only. Visible geometry has been reviewed; these are not manufacturer drawings, dimensions, maintenance instructions, or authoritative lesson terminology.",
+  "labelPolicy": "Semantic region names describe the depicted object only. Map labels and approved lesson terminology to the course source before use. No text or arrows are baked into these assets.",
+  "assets": [
+    {
+      "id": "aircraft-structure-cutaway",
+      "src": "aircraft-structure-cutaway.webp",
+      "width": 1536,
+      "height": 1024,
+      "subject": "Assembled high-wing, single-engine light airplane with selected near-wing and fuselage skin removed.",
+      "depictedGeometry": [
+        "Recognizable full aircraft silhouette",
+        "Spanwise member and chordwise ribs in the near wing",
+        "Transverse fuselage frames and lengthwise members",
+        "High-wing support strut",
+        "Conventional tail and visible landing gear"
+      ],
+      "regions": [
+        {
+          "id": "wing-spanwise-member",
+          "anchor": {
+            "x": 66,
+            "y": 53
+          }
+        },
+        {
+          "id": "wing-ribs",
+          "anchor": {
+            "x": 66,
+            "y": 46
+          }
+        },
+        {
+          "id": "fuselage-frames",
+          "anchor": {
+            "x": 66,
+            "y": 35
+          }
+        },
+        {
+          "id": "fuselage-longitudinal-members",
+          "anchor": {
+            "x": 60,
+            "y": 37
+          }
+        },
+        {
+          "id": "wing-strut",
+          "anchor": {
+            "x": 44,
+            "y": 57
+          }
+        },
+        {
+          "id": "tail",
+          "anchor": {
+            "x": 80,
+            "y": 28
+          }
+        }
+      ],
+      "calloutSafeRegions": [
+        {
+          "x": 30,
+          "y": 3,
+          "width": 36,
+          "height": 18
+        },
+        {
+          "x": 5,
+          "y": 85,
+          "width": 90,
+          "height": 12
+        }
+      ],
+      "limitations": [
+        "Generic illustrative aircraft, not a model-specific maintenance drawing.",
+        "Some far-side gear is occluded; do not use the view to count visible wheels.",
+        "Member sizes, spacing, joints and load paths are illustrative and not dimensionally verified."
+      ]
+    },
+    {
+      "id": "fuselage-construction-comparison",
+      "src": "fuselage-construction-comparison.webp",
+      "width": 1942,
+      "height": 809,
+      "subject": "Three separate construction specimens: tubular triangulated frame, mostly unstiffened shell, shell with frames and lengthwise stiffeners.",
+      "depictedGeometry": [
+        "Left: triangulated tubular frame with a small fabric-like covering section",
+        "Center: mostly empty cylindrical shell with end/forming rings",
+        "Right: cylindrical skin supported by circular frames and continuous lengthwise stiffeners"
+      ],
+      "regions": [
+        {
+          "id": "tubular-truss-specimen",
+          "crop": {
+            "x": 0,
+            "y": 5,
+            "width": 38,
+            "height": 80
+          },
+          "anchor": {
+            "x": 18,
+            "y": 50
+          }
+        },
+        {
+          "id": "shell-specimen",
+          "crop": {
+            "x": 33,
+            "y": 5,
+            "width": 36,
+            "height": 80
+          },
+          "anchor": {
+            "x": 49,
+            "y": 51
+          }
+        },
+        {
+          "id": "stiffened-shell-specimen",
+          "crop": {
+            "x": 65,
+            "y": 5,
+            "width": 35,
+            "height": 80
+          },
+          "anchor": {
+            "x": 84,
+            "y": 47
+          }
+        },
+        {
+          "id": "transverse-frames",
+          "anchor": {
+            "x": 84,
+            "y": 42
+          }
+        },
+        {
+          "id": "longitudinal-stiffeners",
+          "anchor": {
+            "x": 88,
+            "y": 29
+          }
+        }
+      ],
+      "calloutSafeRegions": [
+        {
+          "x": 3,
+          "y": 88,
+          "width": 94,
+          "height": 10
+        }
+      ],
+      "limitations": [
+        "The left specimen depicts a tubular/truss structure; it must not automatically be labeled 'fuselaje compuesto'. Resolve that course terminology from the approved source.",
+        "Center and right may support a source-grounded monocoque / semimonocoque comparison, but joints, wall thicknesses and exact frame spacing are illustrative.",
+        "No material-strength or load-distribution claim is established by the image alone."
+      ]
+    },
+    {
+      "id": "cylinder-layout-comparison",
+      "src": "cylinder-layout-comparison.webp",
+      "width": 1536,
+      "height": 1024,
+      "subject": "Four external, closed-case engines with distinct cylinder arrangements: inline four, V banks, horizontal opposed four, and single-row five-cylinder radial.",
+      "depictedGeometry": [
+        "Top-left: four upright finned cylinders in one row with closed crankcase",
+        "Top-right: two inclined finned cylinder banks with a shared closed central case",
+        "Bottom-left: two horizontal finned cylinders on each side of a closed central case",
+        "Bottom-right: five outward-pointing cylinders in a near-regular five-spoke pattern around a closed round central case"
+      ],
+      "regions": [
+        {
+          "id": "inline",
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "width": 50,
+            "height": 47
+          },
+          "anchor": {
+            "x": 26,
+            "y": 23
+          }
+        },
+        {
+          "id": "v-banks",
+          "crop": {
+            "x": 54,
+            "y": 0,
+            "width": 44,
+            "height": 46
+          },
+          "anchor": {
+            "x": 76,
+            "y": 23
+          }
+        },
+        {
+          "id": "horizontally-opposed",
+          "crop": {
+            "x": 0,
+            "y": 48,
+            "width": 53,
+            "height": 41
+          },
+          "anchor": {
+            "x": 26,
+            "y": 69
+          }
+        },
+        {
+          "id": "radial",
+          "crop": {
+            "x": 57,
+            "y": 43,
+            "width": 40,
+            "height": 52
+          },
+          "anchor": {
+            "x": 77,
+            "y": 71
+          }
+        }
+      ],
+      "calloutSafeRegions": [
+        {
+          "x": 4,
+          "y": 43,
+          "width": 40,
+          "height": 7
+        },
+        {
+          "x": 2,
+          "y": 91,
+          "width": 94,
+          "height": 7
+        }
+      ],
+      "limitations": [
+        "Use for recognizing layout only, not crankshaft/connecting-rod kinematics, valve timing, firing order, engine dimensions, or engine-model identification.",
+        "Every barrel and crankcase is closed; internal pistons, rods and crankshafts are intentionally not depicted. Use the separate cylinder closeup for parts teaching.",
+        "The five-cylinder radial uses an improved near-regular five-spoke pattern. The generated rendering is illustrative rather than dimensioned; do not infer exact angular spacing from pixels."
+      ],
+      "reviewStatus": "Refined exterior-only variant, visually checked after closing all cutaway windows. Four distinct arrangements and five radial cylinders remain visible."
+    },
+    {
+      "id": "aircooled-cylinder-cutaway",
+      "src": "aircooled-cylinder-cutaway.webp",
+      "width": 1672,
+      "height": 941,
+      "subject": "Single static air-cooled piston-cylinder cutaway with two overhead poppet valves, central spark plug, piston, rod and lower case.",
+      "regions": [
+        {
+          "id": "left-port",
+          "anchor": {
+            "x": 36,
+            "y": 17
+          }
+        },
+        {
+          "id": "right-port",
+          "anchor": {
+            "x": 64,
+            "y": 17
+          }
+        },
+        {
+          "id": "spark-plug",
+          "anchor": {
+            "x": 50,
+            "y": 14
+          }
+        },
+        {
+          "id": "piston",
+          "anchor": {
+            "x": 50,
+            "y": 44
+          }
+        },
+        {
+          "id": "connecting-rod",
+          "anchor": {
+            "x": 48,
+            "y": 64
+          }
+        },
+        {
+          "id": "cooling-fins",
+          "anchor": {
+            "x": 62,
+            "y": 40
+          }
+        }
+      ],
+      "calloutSafeRegions": [
+        {
+          "x": 3,
+          "y": 15,
+          "width": 24,
+          "height": 65
+        },
+        {
+          "x": 73,
+          "y": 15,
+          "width": 24,
+          "height": 65
+        }
+      ],
+      "limitations": [
+        "Static parts-recognition image only; do not animate over the fixed piston or valves as if this showed changing stroke states.",
+        "Simplified generic cylinder, not a specific aircraft engine or complete ignition installation."
+      ]
+    },
+    {
+      "id": "four-stroke-cylinder-states",
+      "src": "four-stroke-cylinder-states.webp",
+      "width": 1375,
+      "height": 1144,
+      "subject": "Four matched head/cylinder/piston views with corrected visibly distinct open-versus-seated poppet valve states.",
+      "requiredPresentation": "Use the head-cylinder crop regions below, not the full plate. Add any motion arrows in code outside the raster and obtain phase wording from the approved source.",
+      "depictedGeometry": [
+        "Top-left: left valve lowered from its seat, right valve seated, piston below head",
+        "Top-right: both valves seated, piston near head",
+        "Bottom-left: both valves seated, piston below head, warm chamber fill",
+        "Bottom-right: right valve lowered from its seat, left valve seated, piston below head"
+      ],
+      "regions": [
+        {
+          "id": "intake-cylinder-only",
+          "crop": {
+            "x": 13.5,
+            "y": 0,
+            "width": 29,
+            "height": 28.5
+          },
+          "valveAnchor": {
+            "x": 26.1,
+            "y": 12.3
+          },
+          "pistonAnchor": {
+            "x": 28.3,
+            "y": 20
+          }
+        },
+        {
+          "id": "compression-cylinder-only",
+          "crop": {
+            "x": 57.5,
+            "y": 0,
+            "width": 30,
+            "height": 28.5
+          },
+          "valveAnchor": {
+            "x": 71.4,
+            "y": 11.2
+          },
+          "pistonAnchor": {
+            "x": 71.4,
+            "y": 16.9
+          }
+        },
+        {
+          "id": "power-cylinder-only",
+          "crop": {
+            "x": 13.5,
+            "y": 47.1,
+            "width": 29,
+            "height": 28.5
+          },
+          "valveAnchor": {
+            "x": 28.2,
+            "y": 58.4
+          },
+          "pistonAnchor": {
+            "x": 28.2,
+            "y": 68.2
+          }
+        },
+        {
+          "id": "exhaust-cylinder-only",
+          "crop": {
+            "x": 57.5,
+            "y": 47.1,
+            "width": 30,
+            "height": 28.5
+          },
+          "valveAnchor": {
+            "x": 75.2,
+            "y": 59.7
+          },
+          "pistonAnchor": {
+            "x": 71.4,
+            "y": 68.2
+          }
+        }
+      ],
+      "calloutSafeRegions": [
+        {
+          "x": 0,
+          "y": 8,
+          "width": 12,
+          "height": 29
+        },
+        {
+          "x": 43,
+          "y": 8,
+          "width": 13,
+          "height": 29
+        }
+      ],
+      "limitations": [
+        "The lower generated connecting-rod lengths and crank offsets are not consistent enough for kinematics teaching. They are excluded from the approved crop regions.",
+        "Still images cannot themselves establish upward/downward motion; use source-grounded code overlays or captions.",
+        "Open-valve lift is visually exaggerated so seated versus open states remain clear at lesson size.",
+        "Gas colors are explanatory visual conventions, not actual gas colors.",
+        "The generic static closeup and these state images must not be interchanged as equivalent phase geometry."
+      ]
+    },
+    {
+      "id": "valve-overlap-cylinder",
+      "src": "valve-overlap-cylinder.webp",
+      "width": 1254,
+      "height": 1254,
+      "subject": "Head/cylinder/piston still showing simultaneous open intake and exhaust valves with the piston near the top of its travel.",
+      "requiredPresentation": "Use as a detail of valve overlap during the exhaust-to-intake transition. Do not present it as a fifth stroke or as ignition/compression.",
+      "depictedGeometry": [
+        "Left single-piece poppet valve lowered from its fixed seat, leaving an open inlet passage",
+        "Right single-piece poppet valve lowered simultaneously, leaving an open outlet passage",
+        "Piston near the top of the illustrated cylinder with visible clearance below both valve heads",
+        "Inactive central spark plug; no combustion flame or lower linkage"
+      ],
+      "regions": [
+        {
+          "id": "left-open-valve",
+          "anchor": {
+            "x": 39.5,
+            "y": 48.5
+          }
+        },
+        {
+          "id": "left-open-seat-gap",
+          "anchor": {
+            "x": 33.0,
+            "y": 47.5
+          }
+        },
+        {
+          "id": "right-open-valve",
+          "anchor": {
+            "x": 61.0,
+            "y": 48.5
+          }
+        },
+        {
+          "id": "right-open-seat-gap",
+          "anchor": {
+            "x": 66.5,
+            "y": 47.0
+          }
+        },
+        {
+          "id": "piston-crown-clearance",
+          "anchor": {
+            "x": 50.0,
+            "y": 53.0
+          }
+        },
+        {
+          "id": "piston-crown",
+          "anchor": {
+            "x": 50.0,
+            "y": 56.2
+          }
+        },
+        {
+          "id": "overlap-detail",
+          "crop": {
+            "x": 27,
+            "y": 32,
+            "width": 46,
+            "height": 31
+          }
+        }
+      ],
+      "calloutSafeRegions": [
+        {
+          "x": 6,
+          "y": 1,
+          "width": 88,
+          "height": 9
+        },
+        {
+          "x": 1,
+          "y": 61,
+          "width": 13,
+          "height": 30
+        },
+        {
+          "x": 86,
+          "y": 61,
+          "width": 13,
+          "height": 30
+        }
+      ],
+      "reviewStatus": "Visually reviewed after removing apparent duplicated discs and increasing both open-seat gaps. Each valve is a single connected stem/head; both passages visibly open with clearance above piston.",
+      "limitations": [
+        "Qualitative illustration only; valve lift and clearance are emphasized for visibility and are not dimensioned or mechanically certified.",
+        "Do not infer exact crank angle, overlap duration, timing values or piston-to-valve clearance from this still.",
+        "Blue/red ports are explanatory visual conventions. Both valves being open represents overlap between exhaust and intake, not an additional stroke.",
+        "No lower connecting-rod/crankshaft geometry is included."
+      ]
+    },
+    {
+      "id": "pushrod-valvetrain-cutaway",
+      "src": "pushrod-valvetrain-cutaway.webp",
+      "width": 1227,
+      "height": 1282,
+      "subject": "Single conventional pushrod-operated overhead valve train with an exposed contact chain and fixed central rocker pivot.",
+      "requiredPresentation": "Identify this as one conventional pushrod architecture. Use source-grounded labels; do not imply all engines use this arrangement.",
+      "depictedGeometry": [
+        "Bottom-left eccentric cam lobe in contact with underside of a tappet in its guide",
+        "Single straight pushrod beside the cylinder, with ball ends seated in tappet and rocker cups",
+        "Rocker supported by an obvious central pivot shaft on a bolted fixed pedestal",
+        "Rocker opposite end contacts valve-stem tip above a spring and guide",
+        "Single open mushroom valve head below a closely matching fixed seat; no piston or crankshaft mechanism"
+      ],
+      "regions": [
+        {
+          "id": "cam-lobe",
+          "anchor": {
+            "x": 18.7,
+            "y": 79.1
+          }
+        },
+        {
+          "id": "cam-tappet-contact",
+          "anchor": {
+            "x": 20.0,
+            "y": 68.9
+          }
+        },
+        {
+          "id": "tappet",
+          "anchor": {
+            "x": 19.7,
+            "y": 61.6
+          }
+        },
+        {
+          "id": "pushrod-lower-socket",
+          "anchor": {
+            "x": 20.0,
+            "y": 54.8
+          }
+        },
+        {
+          "id": "pushrod",
+          "anchor": {
+            "x": 20.0,
+            "y": 31.5
+          }
+        },
+        {
+          "id": "pushrod-rocker-contact",
+          "anchor": {
+            "x": 20.0,
+            "y": 8.3
+          }
+        },
+        {
+          "id": "rocker-arm",
+          "anchor": {
+            "x": 33.9,
+            "y": 7.1
+          }
+        },
+        {
+          "id": "rocker-fixed-pivot",
+          "anchor": {
+            "x": 51.0,
+            "y": 7.9
+          }
+        },
+        {
+          "id": "fixed-pedestal",
+          "anchor": {
+            "x": 50.1,
+            "y": 21.3
+          }
+        },
+        {
+          "id": "rocker-valve-tip-contact",
+          "anchor": {
+            "x": 72.4,
+            "y": 16.5
+          }
+        },
+        {
+          "id": "valve-spring",
+          "anchor": {
+            "x": 72.1,
+            "y": 36.3
+          }
+        },
+        {
+          "id": "valve-stem-and-guide",
+          "anchor": {
+            "x": 72.3,
+            "y": 57.7
+          }
+        },
+        {
+          "id": "valve-head",
+          "anchor": {
+            "x": 72.5,
+            "y": 77.1
+          }
+        },
+        {
+          "id": "open-valve-seat-gap",
+          "anchor": {
+            "x": 66.3,
+            "y": 76.7
+          }
+        }
+      ],
+      "calloutSafeRegions": [
+        {
+          "x": 1,
+          "y": 8,
+          "width": 12,
+          "height": 54
+        },
+        {
+          "x": 28,
+          "y": 16,
+          "width": 9,
+          "height": 30
+        }
+      ],
+      "reviewStatus": "All five interfaces visually checked: cam-to-tappet, tappet-to-pushrod, pushrod-to-rocker, fixed rocker pivot, rocker-to-valve tip. No crossed or disconnected rods observed.",
+      "limitations": [
+        "Conventional explanatory example only, not universal engine architecture or a model-specific maintenance drawing.",
+        "Static raised-cam/open-valve state; geometry does not specify exact lift, rocker ratio, clearances, cam profile, dimensions or timing.",
+        "No piston, connecting rod, crankshaft, complete lubrication circuit or full valve-cover assembly is shown.",
+        "Material colors and cutaway castings clarify the chain; they are not a material specification."
+      ]
+    }
+  ]
+}

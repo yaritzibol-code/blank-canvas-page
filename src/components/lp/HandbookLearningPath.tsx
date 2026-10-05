@@ -87,6 +87,11 @@ export function HandbookLearningPath({
     className: string;
     visual: (stage: number) => React.ReactNode;
     figuresFirst?: boolean;
+    renderZoom?: (figure: HandbookFigure) => React.ReactNode;
+    renderFigure?: (
+      figure: HandbookFigure,
+      onZoom: (figure: HandbookFigure) => void,
+    ) => React.ReactNode;
     afterStage?: (stage: number) => React.ReactNode;
     migrate: (
       saved: unknown,
@@ -351,6 +356,7 @@ export function HandbookLearningPath({
             <ContentStage
               title={current.title}
               figuresFirst={presentation?.figuresFirst}
+              renderFigure={presentation?.renderFigure}
               visual={presentation?.visual(state.stage)}
               cards={current.cards}
               figures={current.figures.map(
@@ -418,13 +424,16 @@ export function HandbookLearningPath({
             </CiaacActivity>
           )}
           {current.kind === "exercise" && document.exercise && (
-            <ExerciseStage
-              exercise={document.exercise}
-              progress={state.exercise}
-              done={state.exerciseDone}
-              onProgress={(exercise) => patchState({ exercise })}
-              onDone={() => patchState({ exerciseDone: true })}
-            />
+            <>
+              {presentation?.visual(state.stage)}
+              <ExerciseStage
+                exercise={document.exercise}
+                progress={state.exercise}
+                done={state.exerciseDone}
+                onProgress={(exercise) => patchState({ exercise })}
+                onDone={() => patchState({ exerciseDone: true })}
+              />
+            </>
           )}
           {current.kind === "finish" && (
             <Finish
@@ -488,10 +497,16 @@ export function HandbookLearningPath({
           <button type="button" onClick={() => setZoom(null)}>
             Cerrar ×
           </button>
-          <img src={zoom.file} alt={zoom.alt} />
-          <p>
-            <strong>Figure {zoom.number}.</strong> {zoom.observe}
-          </p>
+          {presentation?.renderZoom ? (
+            presentation.renderZoom(zoom)
+          ) : (
+            <img src={zoom.file} alt={zoom.alt} />
+          )}
+          {!presentation?.renderZoom && (
+            <p>
+              <strong>Figure {zoom.number}.</strong> {zoom.observe}
+            </p>
+          )}
         </div>
       )}
     </section>
@@ -565,9 +580,14 @@ function ContentStage({
   onZoom,
   visual,
   figuresFirst = false,
+  renderFigure,
 }: {
   visual?: React.ReactNode;
   figuresFirst?: boolean;
+  renderFigure?: (
+    figure: HandbookFigure,
+    onZoom: (figure: HandbookFigure) => void,
+  ) => React.ReactNode;
   title: string;
   cards: HandbookCard[];
   figures: HandbookFigure[];
@@ -580,17 +600,27 @@ function ContentStage({
         <h2>{title}</h2>
       </header>
       {visual}
-      {figuresFirst && figures.map((figure) => (
-        <Figure key={figure.number} figure={figure} onZoom={onZoom} />
-      ))}
+      {figuresFirst &&
+        figures.map((figure) =>
+          renderFigure ? (
+            <div key={figure.number}>{renderFigure(figure, onZoom)}</div>
+          ) : (
+            <Figure key={figure.number} figure={figure} onZoom={onZoom} />
+          ),
+        )}
       <div className="hb-card-grid">
         {cards.map((card, index) => (
           <Card key={`${index}-${card.title}`} card={card} />
         ))}
       </div>
-      {!figuresFirst && figures.map((figure) => (
-        <Figure key={figure.number} figure={figure} onZoom={onZoom} />
-      ))}
+      {!figuresFirst &&
+        figures.map((figure) =>
+          renderFigure ? (
+            <div key={figure.number}>{renderFigure(figure, onZoom)}</div>
+          ) : (
+            <Figure key={figure.number} figure={figure} onZoom={onZoom} />
+          ),
+        )}
     </>
   );
 }

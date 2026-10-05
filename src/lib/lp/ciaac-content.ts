@@ -1,4 +1,5 @@
 import reviewedAircraftEngines from "./ciaac-aircraft-engines.content.json";
+import { APPROVED_AIRCRAFT_CONTENT } from "./ciaac-aircraft-approved/content";
 import reviewedAerodynamics from "./ciaac-aerodynamics.content.json";
 import { moduleOneHandbook } from "./ciaac-module-one-handbook";
 import { aircraftHandbook } from "./ciaac-aircraft-handbook";
@@ -70,4 +71,5 @@ export const CIAAC_LEARNING_PATHS: Record<string, HandbookLearningPathDocument> 
     ]),
   ),
   ...(reviewedAircraftEngines as unknown as Record<string, HandbookLearningPathDocument>),
+  ...APPROVED_AIRCRAFT_CONTENT,
 };

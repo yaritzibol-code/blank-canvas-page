@@ -1,0 +1,743 @@
+{
+  "schemaVersion": 1,
+  "title": "AM01 · Clasificación visual de las aeronaves",
+  "coordinateSystem": "Todos los rectángulos y puntos usan porcentajes de la imagen completa; origen arriba a la izquierda. Los recortes no modifican el original.",
+  "visualStyle": "Ilustración tridimensional detallada sobre fondo azul marino oscuro; sin texto incrustado.",
+  "assetStatus": "Revisión visual de píxeles completada para geometría externa y criterios visibles; requiere revisión pedagógica final.",
+  "boards": [
+    {
+      "id": "lighter-than-air",
+      "src": "/ciaac-approved/aircraft-classification/lighter-than-air.png",
+      "width": 1536,
+      "height": 1024,
+      "alt": "Globo aerostático de envolvente naranja y blanca con cesta; dirigible plateado con góndola y dos hélices visibles.",
+      "limitations": [
+        "Los ejemplares no están a escala.",
+        "La imagen ilustra la forma externa; el principio de sustentación requiere explicación aparte.",
+        "La aleta lateral lejana del dirigible queda oculta por perspectiva."
+      ],
+      "calloutSafeRegions": [
+        {
+          "x": 40,
+          "y": 3,
+          "width": 57,
+          "height": 17
+        },
+        {
+          "x": 41,
+          "y": 77,
+          "width": 55,
+          "height": 19
+        }
+      ],
+      "specimens": [
+        {
+          "id": "balloon",
+          "label": "Globo aerostático",
+          "crop": {
+            "x": 0,
+            "y": 3,
+            "width": 40,
+            "height": 91
+          },
+          "visibleCriteria": [
+            "envolvente",
+            "cesta",
+            "sin propulsor visible"
+          ],
+          "anchors": [
+            {
+              "label": "Envolvente",
+              "x": 20,
+              "y": 35
+            },
+            {
+              "label": "Cesta",
+              "x": 19.5,
+              "y": 85.5
+            }
+          ]
+        },
+        {
+          "id": "airship",
+          "label": "Dirigible",
+          "crop": {
+            "x": 40,
+            "y": 22,
+            "width": 60,
+            "height": 53
+          },
+          "visibleCriteria": [
+            "envolvente alargada",
+            "góndola",
+            "hélices",
+            "aletas de cola"
+          ],
+          "anchors": [
+            {
+              "label": "Envolvente",
+              "x": 66,
+              "y": 39
+            },
+            {
+              "label": "Góndola",
+              "x": 63,
+              "y": 66
+            },
+            {
+              "label": "Hélice",
+              "x": 70,
+              "y": 65
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wing-position-cabin-gear",
+      "src": "/ciaac-approved/aircraft-classification/wing-position-cabin-gear.png",
+      "width": 1536,
+      "height": 1024,
+      "alt": "Tres aviones completos: monoplano de ala alta y tren triciclo; monoplano de ala baja y tren triciclo; biplano de cabina abierta con rueda de cola.",
+      "limitations": [
+        "Las vistas muestran las uniones y los apoyos visibles, pero no mecanismos de retracción.",
+        "Cabina cerrada no demuestra presurización.",
+        "Tener hélice no identifica por sí solo el tipo de motor.",
+        "Dos semialas forman un conjunto alar; no deben contarse como dos planos."
+      ],
+      "calloutSafeRegions": [
+        {
+          "x": 1,
+          "y": 8,
+          "width": 15,
+          "height": 17
+        },
+        {
+          "x": 1,
+          "y": 40,
+          "width": 15,
+          "height": 17
+        },
+        {
+          "x": 1,
+          "y": 73,
+          "width": 16,
+          "height": 18
+        }
+      ],
+      "specimens": [
+        {
+          "id": "high-wing-tricycle",
+          "label": "Monoplano de ala alta",
+          "crop": {
+            "x": 15,
+            "y": 0,
+            "width": 74,
+            "height": 32
+          },
+          "visibleCriteria": [
+            "un conjunto alar",
+            "ala sobre cabina",
+            "hélice frontal",
+            "cabina cerrada",
+            "rueda de nariz",
+            "dos ruedas principales"
+          ],
+          "anchors": [
+            {
+              "label": "Unión del ala alta",
+              "x": 46,
+              "y": 9
+            },
+            {
+              "label": "Cabina cerrada",
+              "x": 49,
+              "y": 14
+            },
+            {
+              "label": "Rueda de nariz",
+              "x": 33.5,
+              "y": 26.5
+            },
+            {
+              "label": "Rueda principal cercana",
+              "x": 51.5,
+              "y": 26.5
+            }
+          ]
+        },
+        {
+          "id": "low-wing-tricycle",
+          "label": "Monoplano de ala baja",
+          "crop": {
+            "x": 16,
+            "y": 33,
+            "width": 72,
+            "height": 31
+          },
+          "visibleCriteria": [
+            "un conjunto alar",
+            "ala baja",
+            "hélice frontal",
+            "cabina cerrada",
+            "tren triciclo"
+          ],
+          "anchors": [
+            {
+              "label": "Unión del ala baja",
+              "x": 47,
+              "y": 51
+            },
+            {
+              "label": "Cabina cerrada",
+              "x": 50,
+              "y": 43
+            },
+            {
+              "label": "Rueda de nariz",
+              "x": 35,
+              "y": 58
+            }
+          ]
+        },
+        {
+          "id": "open-cockpit-biplane",
+          "label": "Biplano de cabina abierta",
+          "crop": {
+            "x": 20,
+            "y": 65,
+            "width": 60,
+            "height": 32
+          },
+          "visibleCriteria": [
+            "dos conjuntos alares superpuestos",
+            "montantes",
+            "cabina abierta",
+            "cilindros de motor radial",
+            "dos ruedas principales",
+            "rueda de cola"
+          ],
+          "anchors": [
+            {
+              "label": "Plano superior",
+              "x": 54,
+              "y": 69
+            },
+            {
+              "label": "Plano inferior",
+              "x": 56,
+              "y": 83.5
+            },
+            {
+              "label": "Cabina abierta",
+              "x": 51,
+              "y": 77.5
+            },
+            {
+              "label": "Rueda de cola",
+              "x": 61,
+              "y": 90.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wing-planforms",
+      "src": "/ciaac-approved/aircraft-classification/wing-planforms.png",
+      "width": 1536,
+      "height": 1024,
+      "alt": "Cuatro aviones vistos directamente desde arriba con las alas principales en amarillo: planta rectangular, estrechada, elíptica y en flecha.",
+      "limitations": [
+        "La planta se observa desde arriba; no representa el perfil transversal.",
+        "La posición alta, media o baja del ala no debe inferirse de esta vista superior.",
+        "Las formas son ejemplos visuales idealizados, no planos de un modelo certificado."
+      ],
+      "calloutSafeRegions": [
+        {
+          "x": 4,
+          "y": 27,
+          "width": 12,
+          "height": 11
+        },
+        {
+          "x": 86,
+          "y": 29,
+          "width": 11,
+          "height": 10
+        },
+        {
+          "x": 3,
+          "y": 81,
+          "width": 14,
+          "height": 11
+        },
+        {
+          "x": 86,
+          "y": 86,
+          "width": 11,
+          "height": 10
+        }
+      ],
+      "specimens": [
+        {
+          "id": "rectangular-planform",
+          "label": "Planta rectangular",
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "width": 50,
+            "height": 42
+          },
+          "visibleCriteria": [
+            "bordes aproximadamente paralelos",
+            "cuerda casi constante"
+          ],
+          "anchors": [
+            {
+              "label": "Cuerda casi constante",
+              "x": 12,
+              "y": 16
+            }
+          ]
+        },
+        {
+          "id": "tapered-planform",
+          "label": "Planta estrechada",
+          "crop": {
+            "x": 50,
+            "y": 0,
+            "width": 50,
+            "height": 42
+          },
+          "visibleCriteria": [
+            "cuerda reducida hacia puntas",
+            "contorno trapezoidal"
+          ],
+          "anchors": [
+            {
+              "label": "Punta más estrecha",
+              "x": 92,
+              "y": 17
+            }
+          ]
+        },
+        {
+          "id": "elliptical-planform",
+          "label": "Planta elíptica",
+          "crop": {
+            "x": 0,
+            "y": 42,
+            "width": 50,
+            "height": 58
+          },
+          "visibleCriteria": [
+            "contorno alar curvo"
+          ],
+          "anchors": [
+            {
+              "label": "Contorno curvo",
+              "x": 12,
+              "y": 58
+            }
+          ]
+        },
+        {
+          "id": "swept-planform",
+          "label": "Planta en flecha",
+          "crop": {
+            "x": 50,
+            "y": 42,
+            "width": 50,
+            "height": 58
+          },
+          "visibleCriteria": [
+            "secciones exteriores desplazadas hacia atrás"
+          ],
+          "anchors": [
+            {
+              "label": "Ala en flecha",
+              "x": 88,
+              "y": 69
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "engine-arrangements",
+      "src": "/ciaac-approved/aircraft-classification/engine-arrangements.png",
+      "width": 1536,
+      "height": 1024,
+      "alt": "Tres aviones bimotores: regional con hélices y góndolas alares, reactor con góndolas bajo las alas y reactor ejecutivo con góndolas a ambos lados del fuselaje trasero.",
+      "limitations": [
+        "Los tipos de propulsión son ejemplos designados en la explicación; la imagen externa no permite identificar todos los componentes internos.",
+        "Dos góndolas o dos propulsores identificados permiten practicar el conteo visible; no contar palas como motores.",
+        "El reactor ejecutivo muestra la entrada de su motor lejano parcialmente, por perspectiva.",
+        "La ausencia de ruedas visibles no demuestra por sí sola el mecanismo del tren retráctil."
+      ],
+      "calloutSafeRegions": [
+        {
+          "x": 1,
+          "y": 7,
+          "width": 16,
+          "height": 18
+        },
+        {
+          "x": 1,
+          "y": 40,
+          "width": 18,
+          "height": 17
+        },
+        {
+          "x": 1,
+          "y": 74,
+          "width": 22,
+          "height": 16
+        }
+      ],
+      "specimens": [
+        {
+          "id": "twin-turboprop",
+          "label": "Bimotor con hélices en góndolas alares",
+          "crop": {
+            "x": 18,
+            "y": 0,
+            "width": 66,
+            "height": 30
+          },
+          "visibleCriteria": [
+            "dos hélices",
+            "dos góndolas alares",
+            "ala alta"
+          ],
+          "anchors": [
+            {
+              "label": "Hélice izquierda de la imagen",
+              "x": 32.5,
+              "y": 14.5
+            },
+            {
+              "label": "Hélice derecha de la imagen",
+              "x": 54.2,
+              "y": 17.3
+            }
+          ]
+        },
+        {
+          "id": "underwing-turbofan",
+          "label": "Bimotor con góndolas bajo las alas",
+          "crop": {
+            "x": 21,
+            "y": 32,
+            "width": 65,
+            "height": 32
+          },
+          "visibleCriteria": [
+            "dos tomas de aire con ventilador",
+            "góndolas bajo las alas"
+          ],
+          "anchors": [
+            {
+              "label": "Góndola izquierda de la imagen",
+              "x": 40,
+              "y": 58.5
+            },
+            {
+              "label": "Góndola derecha de la imagen",
+              "x": 55,
+              "y": 59
+            }
+          ]
+        },
+        {
+          "id": "aft-fuselage-turbofan",
+          "label": "Bimotor con góndolas en fuselaje trasero",
+          "crop": {
+            "x": 25,
+            "y": 65,
+            "width": 58,
+            "height": 29
+          },
+          "visibleCriteria": [
+            "dos entradas de góndolas traseras",
+            "cola en T",
+            "alas sin góndolas"
+          ],
+          "anchors": [
+            {
+              "label": "Góndola cercana",
+              "x": 59,
+              "y": 78.5
+            },
+            {
+              "label": "Entrada de góndola lejana",
+              "x": 51.8,
+              "y": 75.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "operating-surfaces",
+      "src": "/ciaac-approved/aircraft-classification/operating-surfaces.png",
+      "width": 1536,
+      "height": 1024,
+      "alt": "Avión sobre una pista, helicóptero en vuelo estacionario sobre plataforma y avión con dos flotadores operando en agua.",
+      "limitations": [
+        "Son escenas ilustrativas; una imagen fija no prueba la trayectoria de despegue ni una capacidad STOL o VTOL específica.",
+        "El helicóptero permite reconocer rotor principal, rotor de cola y patines; no muestra el mecanismo de transmisión.",
+        "Los flotadores visibles no prueban capacidad anfibia; no se ilustran ruedas integradas.",
+        "El agua y el rocío ocultan parte de los extremos posteriores de los flotadores."
+      ],
+      "calloutSafeRegions": [
+        {
+          "x": 1,
+          "y": 3,
+          "width": 18,
+          "height": 14
+        },
+        {
+          "x": 2,
+          "y": 39,
+          "width": 27,
+          "height": 15
+        },
+        {
+          "x": 1,
+          "y": 72,
+          "width": 18,
+          "height": 10
+        }
+      ],
+      "specimens": [
+        {
+          "id": "runway-airplane",
+          "label": "Avión y pista terrestre",
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 30
+          },
+          "visibleCriteria": [
+            "ala fija",
+            "pista",
+            "tren triciclo",
+            "cabina cerrada"
+          ],
+          "anchors": [
+            {
+              "label": "Pista",
+              "x": 29,
+              "y": 24
+            },
+            {
+              "label": "Rueda de nariz",
+              "x": 56,
+              "y": 19
+            }
+          ]
+        },
+        {
+          "id": "hovering-helicopter",
+          "label": "Helicóptero sobre plataforma",
+          "crop": {
+            "x": 8,
+            "y": 30,
+            "width": 80,
+            "height": 36
+          },
+          "visibleCriteria": [
+            "rotor principal",
+            "rotor de cola",
+            "patines",
+            "cabina cerrada"
+          ],
+          "anchors": [
+            {
+              "label": "Rotor principal",
+              "x": 51,
+              "y": 33.5
+            },
+            {
+              "label": "Rotor de cola",
+              "x": 71.5,
+              "y": 44
+            },
+            {
+              "label": "Patines",
+              "x": 47.5,
+              "y": 56
+            }
+          ]
+        },
+        {
+          "id": "floatplane",
+          "label": "Hidroavión de flotadores",
+          "crop": {
+            "x": 0,
+            "y": 66,
+            "width": 100,
+            "height": 34
+          },
+          "visibleCriteria": [
+            "ala fija",
+            "dos flotadores",
+            "agua",
+            "cabina cerrada"
+          ],
+          "anchors": [
+            {
+              "label": "Flotador lejano",
+              "x": 36,
+              "y": 87.5
+            },
+            {
+              "label": "Flotador cercano",
+              "x": 48,
+              "y": 91
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rotor-push-pull",
+      "src": "/ciaac-approved/aircraft-classification/rotor-push-pull.png",
+      "width": 1536,
+      "height": 1024,
+      "alt": "Arriba, autogiro de cabina abierta con rotor superior y hélice propulsora trasera; abajo, avión bimotor de doble botalón con hélice tractora frontal y hélice propulsora posterior en tándem.",
+      "limitations": [
+        "Una imagen fija no demuestra el giro libre ni la autorrotación; esos principios requieren el dato explicativo del ejemplo.",
+        "El autogiro ilustrado no tiene rotor antipar de cola. Su hélice posterior es un propulsor de avance y su disco queda perpendicular al eje longitudinal.",
+        "El avión inferior es un ejemplo genérico de arquitectura bimotor en tándem y doble botalón; no es un plano certificado de un modelo.",
+        "La proyección de las palas y los botalones se superpone parcialmente por perspectiva; no interpretar ese solapamiento gráfico como contacto físico.",
+        "No deducir capacidad de vuelo estacionario del rotor superior del autogiro."
+      ],
+      "calloutSafeRegions": [
+        {
+          "x": 3,
+          "y": 18,
+          "width": 14,
+          "height": 14
+        },
+        {
+          "x": 3,
+          "y": 89,
+          "width": 26,
+          "height": 7
+        }
+      ],
+      "specimens": [
+        {
+          "id": "pusher-gyroplane",
+          "label": "Autogiro con hélice propulsora posterior",
+          "crop": {
+            "x": 2,
+            "y": 1,
+            "width": 96,
+            "height": 49
+          },
+          "visibleCriteria": [
+            "rotor superior de dos palas",
+            "hélice propulsora posterior separada",
+            "motor detrás de los asientos",
+            "cabina abierta",
+            "tren triciclo",
+            "cola con estabilizador y timón sin rotor antipar"
+          ],
+          "anchors": [
+            {
+              "label": "Rotor superior",
+              "x": 47,
+              "y": 4.8
+            },
+            {
+              "label": "Hélice propulsora posterior",
+              "x": 59.5,
+              "y": 22.7
+            },
+            {
+              "label": "Motor de la hélice",
+              "x": 53,
+              "y": 23.5
+            },
+            {
+              "label": "Estabilizador y timón sin rotor de cola",
+              "x": 84.6,
+              "y": 27.2
+            }
+          ]
+        },
+        {
+          "id": "tandem-push-pull",
+          "label": "Bimotor en tándem: tractor y propulsor",
+          "crop": {
+            "x": 2,
+            "y": 50,
+            "width": 96,
+            "height": 45
+          },
+          "visibleCriteria": [
+            "hélice tractora delante de la cabina",
+            "hélice propulsora detrás de la cabina",
+            "dos unidades propulsoras sobre el eje longitudinal",
+            "dos botalones laterales",
+            "dos estabilizadores verticales",
+            "estabilizador horizontal entre las colas",
+            "ala fija alta"
+          ],
+          "anchors": [
+            {
+              "label": "Hélice tractora",
+              "x": 7.5,
+              "y": 75.4
+            },
+            {
+              "label": "Hélice propulsora",
+              "x": 54.4,
+              "y": 67.2
+            },
+            {
+              "label": "Botalón lejano",
+              "x": 65,
+              "y": 63.2
+            },
+            {
+              "label": "Botalón cercano",
+              "x": 71,
+              "y": 72.8
+            },
+            {
+              "label": "Estabilizador horizontal",
+              "x": 85.5,
+              "y": 55.6
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notVisuallyCovered": [
+    "ala media",
+    "triplano",
+    "planeador sin motor",
+    "planta delta",
+    "tres o cuatro motores",
+    "mecanismo de retracción del tren",
+    "hidrocanoa de casco",
+    "capacidad anfibia",
+    "cabina convertible",
+    "presurización",
+    "capacidad STOL",
+    "mecanismos internos de motores y transmisión del rotor",
+    "autorrotación y transmisión del rotor como procesos mecánicos"
+  ],
+  "useConstraints": [
+    "Presentar un criterio por etapa; reutilizar los recortes de un mismo avión para criterios diferentes.",
+    "No deducir geometría oculta ni mecanismos internos a partir de una vista externa.",
+    "Los rótulos pertenecen a la interfaz y deben referirse sólo a la evidencia visible o a los datos explícitamente suministrados."
+  ]
+}

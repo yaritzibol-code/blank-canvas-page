@@ -1,0 +1,42 @@
+[
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am01-clasificacion-visual-de-las-aeronaves",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "98b7c0daefbc511e904bd32354ee01b64839c29d71ff1712aaf033216f3c31d1",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am02-estructura-y-aeronavegabilidad",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "98b7c0daefbc511e904bd32354ee01b64839c29d71ff1712aaf033216f3c31d1",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am03-motor-alternativo",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "98b7c0daefbc511e904bd32354ee01b64839c29d71ff1712aaf033216f3c31d1",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am04-ciclo-de-otto",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "0bfdf81e69fda53b67d4342449197367896887b8878536ed737236f80714b87a",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am05-potencia-del-motor-alternativo",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "98b7c0daefbc511e904bd32354ee01b64839c29d71ff1712aaf033216f3c31d1",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  }
+]

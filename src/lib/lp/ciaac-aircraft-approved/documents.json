@@ -1,0 +1,3100 @@
+{
+  "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am04-ciclo-de-otto": {
+    "number": 4,
+    "title": "Ciclo de Otto",
+    "intro": "Admisión, compresión, expansión y escape. Sigue una fase a la vez y después ubica el traslape.",
+    "name": "Ciclo de Otto",
+    "chapter": 1,
+    "chapter_name": "Aeronaves y motores",
+    "chapterLabel": "Itinerario",
+    "sourceLabel": "CIAAC · Aeronaves y motores",
+    "cards": [
+      {
+        "title": "Ciclo de Otto",
+        "text": "Admisión, compresión, expansión y escape. Sigue una fase a la vez y después ubica el traslape.",
+        "covers": [],
+        "wide": true
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "¿En qué fases del ciclo teórico permanecen cerradas ambas válvulas?",
+        "options": ["Admisión y escape", "Compresión y expansión", "Solo durante el traslape"],
+        "correct": 1,
+        "feedback": "Para comprimir la mezcla y para aprovechar la fuerza de expansión de los gases quemados, la cámara debe estar herméticamente sellada, por lo que ambas válvulas permanecen cerradas durante la compresión y la explosión/fuerza.",
+        "order": [0, 1, 2]
+      },
+      {
+        "prompt": "¿Qué describe el traslape de válvulas?",
+        "options": [
+          "Un quinto tiempo del motor",
+          "La apertura simultánea de ambas válvulas cerca del PMS",
+          "Una válvula abierta y la otra siempre cerrada"
+        ],
+        "correct": 1,
+        "feedback": "El traslape es la apertura simultánea de ambas válvulas cerca del PMA/PMS al finalizar el escape e iniciar la admisión, diseñado para mejorar el barrido de gases y la eficiencia volumétrica.",
+        "order": [0, 1, 2]
+      }
+    ],
+    "tips": [],
+    "subtopics": [
+      {
+        "level": 1,
+        "name": "4 fases ",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado"
+      },
+      {
+        "level": 1,
+        "name": "Traslape valvular",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado"
+      }
+    ],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM04-fase-1",
+        "file": "/ciaac-approved/structures-engines/four-stroke-cylinder-states.webp",
+        "observe": "",
+        "alt": "Estado ilustrativo del cilindro y sus válvulas en una fase del ciclo de cuatro tiempos.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 13.5,
+          "y": 0,
+          "width": 29,
+          "height": 28.5,
+          "assetAspectRatio": 1.2019230769230769
+        },
+        "heading": "Admisión",
+        "assetAspectRatio": 1.2019230769230769
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM04-fase-2",
+        "file": "/ciaac-approved/structures-engines/four-stroke-cylinder-states.webp",
+        "observe": "",
+        "alt": "Estado ilustrativo del cilindro y sus válvulas en una fase del ciclo de cuatro tiempos.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 57.5,
+          "y": 0,
+          "width": 30,
+          "height": 28.5,
+          "assetAspectRatio": 1.2019230769230769
+        },
+        "heading": "Compresión",
+        "assetAspectRatio": 1.2019230769230769
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM04-fase-3",
+        "file": "/ciaac-approved/structures-engines/four-stroke-cylinder-states.webp",
+        "observe": "",
+        "alt": "Estado ilustrativo del cilindro y sus válvulas en una fase del ciclo de cuatro tiempos.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 13.5,
+          "y": 47.1,
+          "width": 29,
+          "height": 28.5,
+          "assetAspectRatio": 1.2019230769230769
+        },
+        "heading": "Expansión",
+        "assetAspectRatio": 1.2019230769230769
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM04-fase-4",
+        "file": "/ciaac-approved/structures-engines/four-stroke-cylinder-states.webp",
+        "observe": "",
+        "alt": "Estado ilustrativo del cilindro y sus válvulas en una fase del ciclo de cuatro tiempos.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 57.5,
+          "y": 47.1,
+          "width": 30,
+          "height": 28.5,
+          "assetAspectRatio": 1.2019230769230769
+        },
+        "heading": "Escape",
+        "assetAspectRatio": 1.2019230769230769
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM04-ciclo",
+        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+        "observe": "4 carreras del pistón · 2 vueltas del cigüeñal.",
+        "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "Relación de giro",
+        "assetAspectRatio": 1.7768331562167907
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM04-traslape",
+        "file": "/ciaac-approved/structures-engines/valve-overlap-cylinder.webp",
+        "observe": "",
+        "alt": "Culata y cilindro con ambas válvulas abiertas cerca del punto muerto superior.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "Entre escape y admisión",
+        "assetAspectRatio": 1.0
+      }
+    ],
+    "exercise": {
+      "kind": "sequence",
+      "title": "Ordena las cuatro fases",
+      "instruction": "Coloca las fases en el orden de un ciclo completo.",
+      "items": ["Admisión", "Compresión", "Expansión", "Escape"],
+      "order": [2, 0, 3, 1]
+    },
+    "objectives": [
+      "Reconozco las cuatro fases.",
+      "Relaciono el movimiento del pistón con las válvulas.",
+      "Distingo el traslape de una fase adicional."
+    ],
+    "completionChecks": [
+      "Reconozco las cuatro fases.",
+      "Relaciono el movimiento del pistón con las válvulas.",
+      "Distingo el traslape de una fase adicional."
+    ],
+    "minutes": 5,
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Comienza"
+      },
+      {
+        "kind": "content",
+        "nav": "Admisión",
+        "title": "Admisión",
+        "cards": [
+          {
+            "title": "Admisión",
+            "text": "Desciende desde el Punto Muerto Superior (PMS / PMA) hasta el Punto Muerto Inferior (PMI / PMB).\n\nVálvula de Admisión: ABIERTA.\n\nVálvula de Escape: CERRADA.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM04-fase-1",
+            "file": "/ciaac-approved/structures-engines/four-stroke-cylinder-states.webp",
+            "observe": "",
+            "alt": "Estado ilustrativo del cilindro y sus válvulas en una fase del ciclo de cuatro tiempos.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 13.5,
+              "y": 0,
+              "width": 29,
+              "height": 28.5,
+              "assetAspectRatio": 1.2019230769230769
+            },
+            "heading": "Admisión",
+            "assetAspectRatio": 1.2019230769230769
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Compresión",
+        "title": "Compresión",
+        "cards": [
+          {
+            "title": "Compresión",
+            "text": "Asciende desde el PMI / PMB hasta el PMS / PMA.\n\nLa mezcla atrapada se comprime en el espacio reducido de la cámara de combustión.\n\nVálvula de Admisión: CERRADA.\n\nVálvula de Escape: CERRADA.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM04-fase-2",
+            "file": "/ciaac-approved/structures-engines/four-stroke-cylinder-states.webp",
+            "observe": "",
+            "alt": "Estado ilustrativo del cilindro y sus válvulas en una fase del ciclo de cuatro tiempos.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 57.5,
+              "y": 0,
+              "width": 30,
+              "height": 28.5,
+              "assetAspectRatio": 1.2019230769230769
+            },
+            "heading": "Compresión",
+            "assetAspectRatio": 1.2019230769230769
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Expansión",
+        "title": "Expansión",
+        "cards": [
+          {
+            "title": "Expansión",
+            "text": "El calor liberado por la rápida combustión genera un enorme incremento de temperatura y presión en los gases atrapados. Esta alta presión actúa directamente sobre la cabeza del pistón, empujándolo hacia abajo.\n\nVálvula de Admisión: CERRADA.\n\nVálvula de Escape: CERRADA.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM04-fase-3",
+            "file": "/ciaac-approved/structures-engines/four-stroke-cylinder-states.webp",
+            "observe": "",
+            "alt": "Estado ilustrativo del cilindro y sus válvulas en una fase del ciclo de cuatro tiempos.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 13.5,
+              "y": 47.1,
+              "width": 29,
+              "height": 28.5,
+              "assetAspectRatio": 1.2019230769230769
+            },
+            "heading": "Expansión",
+            "assetAspectRatio": 1.2019230769230769
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Escape",
+        "title": "Escape",
+        "cards": [
+          {
+            "title": "Escape",
+            "text": "El pistón en su carrera ascendente barre y empuja los gases quemados hacia afuera, desalojándolos por la lumbrera de escape.\n\nVálvula de Admisión: CERRADA.\n\nVálvula de Escape: ABIERTA.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM04-fase-4",
+            "file": "/ciaac-approved/structures-engines/four-stroke-cylinder-states.webp",
+            "observe": "",
+            "alt": "Estado ilustrativo del cilindro y sus válvulas en una fase del ciclo de cuatro tiempos.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 57.5,
+              "y": 47.1,
+              "width": 30,
+              "height": 28.5,
+              "assetAspectRatio": 1.2019230769230769
+            },
+            "heading": "Escape",
+            "assetAspectRatio": 1.2019230769230769
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Cuatro carreras, dos vueltas",
+        "title": "Cuatro carreras, dos vueltas",
+        "cards": [
+          {
+            "title": "Cuatro carreras, dos vueltas",
+            "text": "Un ciclo completo requiere 4 carreras del pistón, lo que equivale a 2 vueltas completas del cigüeñal",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM04-ciclo",
+            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+            "observe": "4 carreras del pistón · 2 vueltas del cigüeñal.",
+            "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "Relación de giro",
+            "assetAspectRatio": 1.7768331562167907
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Traslape de válvulas",
+        "title": "Traslape de válvulas",
+        "cards": [
+          {
+            "title": "Traslape de válvulas",
+            "text": "Es el breve período angular en el ciclo de trabajo en el cual AMBAS VÁLVULAS (admisión y escape) PERMANECEN ABIERTAS AL MISMO TIEMPO.\n\nOcurre cerca del Punto Muerto Superior (PMS / PMA), justo cuando el pistón termina la carrera de escape y comienza la de admisión.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM04-traslape",
+            "file": "/ciaac-approved/structures-engines/valve-overlap-cylinder.webp",
+            "observe": "",
+            "alt": "Culata y cilindro con ambas válvulas abiertas cerca del punto muerto superior.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "Entre escape y admisión",
+            "assetAspectRatio": 1.0
+          }
+        ]
+      },
+      {
+        "kind": "exercise",
+        "nav": "Ordena las cuatro fases"
+      },
+      {
+        "kind": "quiz",
+        "nav": "Comprueba lo aprendido",
+        "questions": [0, 1]
+      },
+      {
+        "kind": "finish",
+        "nav": "Cierra el recorrido"
+      }
+    ],
+    "sources": [
+      {
+        "id": "ciaac-aeronaves-generalidades-historico",
+        "title": "CIAAC · Aeronaves y motores: Generalidades (manual histórico consultado)",
+        "role": "Marco didáctico y terminología histórica; no sustituye los límites y procedimientos del fabricante.",
+        "verified_locators": ["AyM/7-2-4 a AyM/7-2-7; páginas PDF 37–41"]
+      }
+    ]
+  },
+  "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am02-estructura-y-aeronavegabilidad": {
+    "number": 2,
+    "title": "Estructura y aeronavegabilidad",
+    "intro": "Esta cadena conecta el proyecto en papel con la operación diaria en la línea de vuelo:",
+    "name": "Estructura y aeronavegabilidad",
+    "chapter": 1,
+    "chapter_name": "Aeronaves y motores",
+    "chapterLabel": "Itinerario",
+    "sourceLabel": "CIAAC · Aeronaves y motores",
+    "cards": [
+      {
+        "title": "Estructura y aeronavegabilidad",
+        "text": "Esta cadena conecta el proyecto en papel con la operación diaria en la línea de vuelo:",
+        "covers": [],
+        "wide": true
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "¿Qué aprueba el Certificado de Tipo?",
+        "options": [
+          "El diseño de un modelo",
+          "El combustible de un vuelo",
+          "El plan de vuelo del día"
+        ],
+        "correct": 0,
+        "feedback": "El Certificado de Tipo aprueba el modelo (ej. Cessna 172N o Boeing 737-800), no un avión en particular.",
+        "order": [0, 1, 2]
+      },
+      {
+        "prompt": "¿Qué construcción combina piel resistente con mamparos, cuadernas y largueros?",
+        "options": [
+          "Armadura tubular sin piel resistente",
+          "Semimonocoque",
+          "Monocoque sin refuerzo longitudinal"
+        ],
+        "correct": 1,
+        "feedback": "La construcción semi-monocoque es la combinación de refuerzos interiores (cuadernas y largueros) con una piel que soporta parte de las cargas, siendo el diseño utilizado en los aviones de transporte citados en el manual del CIAAC.",
+        "order": [0, 1, 2]
+      }
+    ],
+    "tips": [],
+    "subtopics": [
+      {
+        "level": 1,
+        "name": "Diseño, certificación y aeronavegabilidad.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado"
+      },
+      {
+        "level": 1,
+        "name": "Grupos de estudio: sustentador con alas arriostradas y cantilever; empenajes vertical y horizontal; fuselaje compuesto, monocoque y semimonocoque; tren de aterrizaje y motor.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado"
+      }
+    ],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM02-diseno",
+        "file": "/ciaac-approved/structures-engines/aircraft-structure-cutaway.webp",
+        "observe": "",
+        "alt": "Aeronave de ala alta con parte del revestimiento retirada para mostrar la estructura del ala y del fuselaje.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "Modelo y aeronave individual",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM02-condicion",
+        "file": "/ciaac-approved/structures-engines/aircraft-structure-cutaway.webp",
+        "observe": "",
+        "alt": "Aeronave de ala alta con parte del revestimiento retirada para mostrar la estructura del ala y del fuselaje.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "Conformidad y condición segura",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM02-alas",
+        "file": "/ciaac-approved/structures-engines/aircraft-structure-cutaway.webp",
+        "observe": "",
+        "alt": "Aeronave de ala alta con parte del revestimiento retirada para mostrar la estructura del ala y del fuselaje.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "focus": {
+          "x": 44,
+          "y": 57,
+          "label": "Montante exterior"
+        },
+        "heading": "Ala arriostrada",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM02-fuselaje",
+        "file": "/ciaac-approved/structures-engines/aircraft-structure-cutaway.webp",
+        "observe": "",
+        "alt": "Aeronave de ala alta con parte del revestimiento retirada para mostrar la estructura del ala y del fuselaje.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "focus": {
+          "x": 59,
+          "y": 37,
+          "label": "Fuselaje"
+        },
+        "heading": "Cuerpo central",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM02-armada",
+        "file": "/ciaac-approved/structures-engines/fuselage-construction-comparison.webp",
+        "observe": "",
+        "alt": "Comparación de armadura tubular, casco sin refuerzos longitudinales y piel con cuadernas y largueros.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 0,
+          "y": 5,
+          "width": 38,
+          "height": 80,
+          "assetAspectRatio": 2.400494437577256
+        },
+        "heading": "Terminología del manual CIAAC: compuesta o armada",
+        "assetAspectRatio": 2.400494437577256
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM02-monocoque",
+        "file": "/ciaac-approved/structures-engines/fuselage-construction-comparison.webp",
+        "observe": "",
+        "alt": "Comparación de armadura tubular, casco sin refuerzos longitudinales y piel con cuadernas y largueros.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 33,
+          "y": 5,
+          "width": 36,
+          "height": 80,
+          "assetAspectRatio": 2.400494437577256
+        },
+        "heading": "Monocoque",
+        "assetAspectRatio": 2.400494437577256
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM02-semimonocoque",
+        "file": "/ciaac-approved/structures-engines/fuselage-construction-comparison.webp",
+        "observe": "",
+        "alt": "Comparación de armadura tubular, casco sin refuerzos longitudinales y piel con cuadernas y largueros.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 65,
+          "y": 5,
+          "width": 35,
+          "height": 80,
+          "assetAspectRatio": 2.400494437577256
+        },
+        "heading": "Semimonocoque",
+        "assetAspectRatio": 2.400494437577256
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM02-cola-vertical",
+        "file": "/ciaac-approved/structures-engines/aircraft-structure-cutaway.webp",
+        "observe": "",
+        "alt": "Aeronave de ala alta con parte del revestimiento retirada para mostrar la estructura del ala y del fuselaje.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "focus": {
+          "x": 78,
+          "y": 18,
+          "label": "Empenaje vertical"
+        },
+        "heading": "Estabilizador vertical y timón de dirección",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM02-cola-horizontal",
+        "file": "/ciaac-approved/structures-engines/aircraft-structure-cutaway.webp",
+        "observe": "",
+        "alt": "Aeronave de ala alta con parte del revestimiento retirada para mostrar la estructura del ala y del fuselaje.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "focus": {
+          "x": 84,
+          "y": 34,
+          "label": "Empenaje horizontal"
+        },
+        "heading": "Estabilizador horizontal y elevador",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM02-tren",
+        "file": "/ciaac-approved/structures-engines/aircraft-structure-cutaway.webp",
+        "observe": "",
+        "alt": "Aeronave de ala alta con parte del revestimiento retirada para mostrar la estructura del ala y del fuselaje.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "focus": {
+          "x": 48,
+          "y": 73,
+          "label": "Tren de aterrizaje"
+        },
+        "heading": "Apoyo en tierra o agua",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM02-motor",
+        "file": "/ciaac-approved/structures-engines/aircraft-structure-cutaway.webp",
+        "observe": "",
+        "alt": "Aeronave de ala alta con parte del revestimiento retirada para mostrar la estructura del ala y del fuselaje.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "focus": {
+          "x": 20,
+          "y": 52,
+          "label": "Grupo motopropulsor"
+        },
+        "heading": "Planta motriz",
+        "assetAspectRatio": 1.5
+      }
+    ],
+    "exercise": null,
+    "objectives": [
+      "Distingo diseño de tipo y aeronave individual.",
+      "Reconozco alas, fuselaje, empenaje, tren y grupo motopropulsor.",
+      "Comparo las tres construcciones del fuselaje."
+    ],
+    "completionChecks": [
+      "Distingo diseño de tipo y aeronave individual.",
+      "Reconozco alas, fuselaje, empenaje, tren y grupo motopropulsor.",
+      "Comparo las tres construcciones del fuselaje."
+    ],
+    "minutes": 4,
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Comienza"
+      },
+      {
+        "kind": "content",
+        "nav": "Diseño y aeronave individual",
+        "title": "Diseño y aeronave individual",
+        "cards": [
+          {
+            "title": "Diseño y aeronave individual",
+            "text": "Certificado de Tipo: Aprobación oficial del diseño y modelo genérico de aeronave.\n\nCertificado de Aeronavegabilidad: Documento expedido a una aeronave individual específica (con matrícula y número de serie) que acredita que se encuentra en condiciones de operar de modo seguro.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM02-diseno",
+            "file": "/ciaac-approved/structures-engines/aircraft-structure-cutaway.webp",
+            "observe": "",
+            "alt": "Aeronave de ala alta con parte del revestimiento retirada para mostrar la estructura del ala y del fuselaje.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "Modelo y aeronave individual",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Condición de aeronavegabilidad",
+        "title": "Condición de aeronavegabilidad",
+        "cards": [
+          {
+            "title": "Condición de aeronavegabilidad",
+            "text": "Estado de una aeronave, motor o pieza que se ajusta a su diseño aprobado y está en condiciones de operar de modo seguro.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM02-condicion",
+            "file": "/ciaac-approved/structures-engines/aircraft-structure-cutaway.webp",
+            "observe": "",
+            "alt": "Aeronave de ala alta con parte del revestimiento retirada para mostrar la estructura del ala y del fuselaje.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "Conformidad y condición segura",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Alas arriostradas y cantilever",
+        "title": "Alas arriostradas y cantilever",
+        "cards": [
+          {
+            "title": "Alas arriostradas y cantilever",
+            "text": "Cantilever: Ala limpia sin tirantes ni montantes externos de soporte.\n\nArriostrada (con montantes): Requiere puntales o montantes externos de fijación entre el fuselaje y el ala.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM02-alas",
+            "file": "/ciaac-approved/structures-engines/aircraft-structure-cutaway.webp",
+            "observe": "",
+            "alt": "Aeronave de ala alta con parte del revestimiento retirada para mostrar la estructura del ala y del fuselaje.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "focus": {
+              "x": 44,
+              "y": 57,
+              "label": "Montante exterior"
+            },
+            "heading": "Ala arriostrada",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Fuselaje",
+        "title": "Fuselaje",
+        "cards": [
+          {
+            "title": "Fuselaje",
+            "text": "Cuerpo central que aloja a la tripulación, pasajeros, carga y sistemas, sirviendo como estructura de unión de los demás grupos.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM02-fuselaje",
+            "file": "/ciaac-approved/structures-engines/aircraft-structure-cutaway.webp",
+            "observe": "",
+            "alt": "Aeronave de ala alta con parte del revestimiento retirada para mostrar la estructura del ala y del fuselaje.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "focus": {
+              "x": 59,
+              "y": 37,
+              "label": "Fuselaje"
+            },
+            "heading": "Cuerpo central",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Construcción compuesta o armada",
+        "title": "Construcción compuesta o armada",
+        "cards": [
+          {
+            "title": "Construcción compuesta o armada",
+            "text": "Armadura de tubos de acero soldados en triángulos cubierta de tela o lámina.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM02-armada",
+            "file": "/ciaac-approved/structures-engines/fuselage-construction-comparison.webp",
+            "observe": "",
+            "alt": "Comparación de armadura tubular, casco sin refuerzos longitudinales y piel con cuadernas y largueros.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 0,
+              "y": 5,
+              "width": 38,
+              "height": 80,
+              "assetAspectRatio": 2.400494437577256
+            },
+            "heading": "Terminología del manual CIAAC: compuesta o armada",
+            "assetAspectRatio": 2.400494437577256
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Monocoque",
+        "title": "Monocoque",
+        "cards": [
+          {
+            "title": "Monocoque",
+            "text": "Casco tipo \"cascarón de huevo\" donde la piel exterior soporta las cargas sin armazón longitudinal interno.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM02-monocoque",
+            "file": "/ciaac-approved/structures-engines/fuselage-construction-comparison.webp",
+            "observe": "",
+            "alt": "Comparación de armadura tubular, casco sin refuerzos longitudinales y piel con cuadernas y largueros.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 33,
+              "y": 5,
+              "width": 36,
+              "height": 80,
+              "assetAspectRatio": 2.400494437577256
+            },
+            "heading": "Monocoque",
+            "assetAspectRatio": 2.400494437577256
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Semimonocoque",
+        "title": "Semimonocoque",
+        "cards": [
+          {
+            "title": "Semimonocoque",
+            "text": "Piel resistente apoyada internamente por mamparos, cuadernas y largueros.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM02-semimonocoque",
+            "file": "/ciaac-approved/structures-engines/fuselage-construction-comparison.webp",
+            "observe": "",
+            "alt": "Comparación de armadura tubular, casco sin refuerzos longitudinales y piel con cuadernas y largueros.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 65,
+              "y": 5,
+              "width": 35,
+              "height": 80,
+              "assetAspectRatio": 2.400494437577256
+            },
+            "heading": "Semimonocoque",
+            "assetAspectRatio": 2.400494437577256
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Empenaje vertical",
+        "title": "Empenaje vertical",
+        "cards": [
+          {
+            "title": "Empenaje vertical",
+            "text": "Estabilizador Vertical (Fijo): Da estabilidad direccional.\n\nTimón de Dirección (Rudder - Móvil): Superficie primaria montada en el estabilizador vertical. Es accionada por los pedales de la cabina y gobierna el movimiento de guiñada (yaw) sobre el eje vertical.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM02-cola-vertical",
+            "file": "/ciaac-approved/structures-engines/aircraft-structure-cutaway.webp",
+            "observe": "",
+            "alt": "Aeronave de ala alta con parte del revestimiento retirada para mostrar la estructura del ala y del fuselaje.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "focus": {
+              "x": 78,
+              "y": 18,
+              "label": "Empenaje vertical"
+            },
+            "heading": "Estabilizador vertical y timón de dirección",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Empenaje horizontal",
+        "title": "Empenaje horizontal",
+        "cards": [
+          {
+            "title": "Empenaje horizontal",
+            "text": "Estabilizador Horizontal (Fijo): Da estabilidad longitudinal.\n\nTimón de Profundidad / Elevador (Elevator - Móvil): Superficie primaria montada en el estabilizador horizontal. Es accionada al empujar o jalar el bastón/volante y gobierna el movimiento de cabeceo (pitch) sobre el eje lateral o transversal.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM02-cola-horizontal",
+            "file": "/ciaac-approved/structures-engines/aircraft-structure-cutaway.webp",
+            "observe": "",
+            "alt": "Aeronave de ala alta con parte del revestimiento retirada para mostrar la estructura del ala y del fuselaje.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "focus": {
+              "x": 84,
+              "y": 34,
+              "label": "Empenaje horizontal"
+            },
+            "heading": "Estabilizador horizontal y elevador",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Tren de aterrizaje",
+        "title": "Tren de aterrizaje",
+        "cards": [
+          {
+            "title": "Tren de aterrizaje",
+            "text": "Soporta el peso de la aeronave en tierra o agua y amortigua los impactos del aterrizaje.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM02-tren",
+            "file": "/ciaac-approved/structures-engines/aircraft-structure-cutaway.webp",
+            "observe": "",
+            "alt": "Aeronave de ala alta con parte del revestimiento retirada para mostrar la estructura del ala y del fuselaje.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "focus": {
+              "x": 48,
+              "y": 73,
+              "label": "Tren de aterrizaje"
+            },
+            "heading": "Apoyo en tierra o agua",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Grupo motopropulsor",
+        "title": "Grupo motopropulsor",
+        "cards": [
+          {
+            "title": "Grupo motopropulsor",
+            "text": "Encargado de generar la fuerza de tracción o empuje necesaria para desplazar la aeronave y vencer la resistencia al avance.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM02-motor",
+            "file": "/ciaac-approved/structures-engines/aircraft-structure-cutaway.webp",
+            "observe": "",
+            "alt": "Aeronave de ala alta con parte del revestimiento retirada para mostrar la estructura del ala y del fuselaje.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "focus": {
+              "x": 20,
+              "y": 52,
+              "label": "Grupo motopropulsor"
+            },
+            "heading": "Planta motriz",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "quiz",
+        "nav": "Comprueba lo aprendido",
+        "questions": [0, 1]
+      },
+      {
+        "kind": "finish",
+        "nav": "Cierra el recorrido"
+      }
+    ],
+    "sources": [
+      {
+        "id": "ciaac-aeronaves-generalidades-historico",
+        "title": "CIAAC · Aeronaves y motores: Generalidades (manual histórico consultado)",
+        "role": "Marco didáctico y terminología histórica; no sustituye los límites y procedimientos del fabricante.",
+        "verified_locators": ["AyM/7.1-11 a AyM/7.1-22"]
+      },
+      {
+        "id": "normativa-referencia-consultada",
+        "title": "Reglamento de la Ley de Aviación Civil · edición consultada en el material de estudio",
+        "role": "Referencia conceptual de certificación; no se enseñan plazos ni requisitos como normativa vigente.",
+        "verified_locators": ["Artículos 102 Quinquies y 127, citados en la respuesta consultada."]
+      }
+    ]
+  },
+  "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am05-potencia-del-motor-alternativo": {
+    "number": 5,
+    "title": "Potencia del motor alternativo",
+    "intro": "A lo largo de la transformación de calor en trabajo mecánico ocurren pérdidas por fricción, arrastre de accesorios y disipación térmica.",
+    "name": "Potencia del motor alternativo",
+    "chapter": 1,
+    "chapter_name": "Aeronaves y motores",
+    "chapterLabel": "Itinerario",
+    "sourceLabel": "CIAAC · Aeronaves y motores",
+    "cards": [
+      {
+        "title": "Potencia del motor alternativo",
+        "text": "A lo largo de la transformación de calor en trabajo mecánico ocurren pérdidas por fricción, arrastre de accesorios y disipación térmica.",
+        "covers": [],
+        "wide": true
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "¿Dónde se mide la potencia al freno?",
+        "options": [
+          "En el eje de salida",
+          "En el indicador de presión del cilindro",
+          "En la presión del neumático"
+        ],
+        "correct": 0,
+        "feedback": "Se mide físicamente en el eje de salida del cigüeñal o flecha de la hélice.",
+        "order": [0, 1, 2]
+      },
+      {
+        "prompt": "Con IHP = 200 HP y FHP = 20 HP, ¿cuál es la BHP?",
+        "options": ["220 HP", "180 HP", "200 HP"],
+        "correct": 1,
+        "feedback": "BHP = IHP - FHP = 200 HP - 20 HP = 180 HP",
+        "order": [0, 1, 2]
+      }
+    ],
+    "tips": [],
+    "subtopics": [
+      {
+        "level": 1,
+        "name": "Potencia nominal, indicada y al freno.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado"
+      }
+    ],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 5,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM05-indicada",
+        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+        "observe": "",
+        "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "focus": {
+          "x": 50,
+          "y": 31,
+          "label": "Dentro del cilindro"
+        },
+        "heading": "Potencia indicada · IHP",
+        "assetAspectRatio": 1.7768331562167907
+      },
+      {
+        "chapter": 1,
+        "topic": 5,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM05-freno",
+        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+        "observe": "",
+        "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "focus": {
+          "x": 50,
+          "y": 80,
+          "label": "Salida mecánica"
+        },
+        "heading": "Potencia al freno · BHP",
+        "assetAspectRatio": 1.7768331562167907
+      },
+      {
+        "chapter": 1,
+        "topic": 5,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM05-friccion",
+        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+        "observe": "BHP = IHP − FHP",
+        "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "Potencia de fricción · FHP",
+        "assetAspectRatio": 1.7768331562167907
+      },
+      {
+        "chapter": 1,
+        "topic": 5,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM05-comparacion",
+        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+        "observe": "Ejemplo didáctico de la respuesta consultada; no es una indicación operacional.",
+        "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "200 HP − 20 HP = 180 HP",
+        "assetAspectRatio": 1.7768331562167907
+      },
+      {
+        "chapter": 1,
+        "topic": 5,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM05-nominal",
+        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+        "observe": "Definición del manual histórico consultado. Los límites reales corresponden al fabricante y al modelo.",
+        "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "Potencia nominal · METO en el manual histórico",
+        "assetAspectRatio": 1.7768331562167907
+      }
+    ],
+    "exercise": null,
+    "objectives": [
+      "Distingo potencia indicada y potencia al freno.",
+      "Relaciono la diferencia con las pérdidas mecánicas.",
+      "Reconozco el uso de nominal/METO en el manual histórico."
+    ],
+    "completionChecks": [
+      "Distingo potencia indicada y potencia al freno.",
+      "Relaciono la diferencia con las pérdidas mecánicas.",
+      "Reconozco el uso de nominal/METO en el manual histórico."
+    ],
+    "minutes": 3,
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Comienza"
+      },
+      {
+        "kind": "content",
+        "nav": "Potencia indicada: dentro del cilindro",
+        "title": "Potencia indicada: dentro del cilindro",
+        "cards": [
+          {
+            "title": "Potencia indicada: dentro del cilindro",
+            "text": "Es la suma teórica de trabajo realizado dentro de los cilindros por la combustión y expansión de los gases. No se mide en el eje, sino que se calcula a partir de la presión interna registrada mediante un instrumento llamado Indicador de Diagrama o Indicador de Watt.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 5,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM05-indicada",
+            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+            "observe": "",
+            "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "focus": {
+              "x": 50,
+              "y": 31,
+              "label": "Dentro del cilindro"
+            },
+            "heading": "Potencia indicada · IHP",
+            "assetAspectRatio": 1.7768331562167907
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Potencia al freno: en el eje",
+        "title": "Potencia al freno: en el eje",
+        "cards": [
+          {
+            "title": "Potencia al freno: en el eje",
+            "text": "Es la potencia real y útil entregada al eje de la hélice. Se mide en banco de pruebas acoplando el motor a un Dinamómetro o Freno de Prony.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 5,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM05-freno",
+            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+            "observe": "",
+            "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "focus": {
+              "x": 50,
+              "y": 80,
+              "label": "Salida mecánica"
+            },
+            "heading": "Potencia al freno · BHP",
+            "assetAspectRatio": 1.7768331562167907
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "La diferencia: pérdidas mecánicas",
+        "title": "La diferencia: pérdidas mecánicas",
+        "cards": [
+          {
+            "title": "La diferencia: pérdidas mecánicas",
+            "text": "Es la porción de potencia que consume el propio motor para vencer la fricción mecánica de sus piezas móviles (pistones, cojinetes) y el arrastre de sus accesorios (bombas, magnetos, generador).",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 5,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM05-friccion",
+            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+            "observe": "BHP = IHP − FHP",
+            "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "Potencia de fricción · FHP",
+            "assetAspectRatio": 1.7768331562167907
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Compara en el mismo motor",
+        "title": "Compara en el mismo motor",
+        "cards": [
+          {
+            "title": "Compara en el mismo motor",
+            "text": "BHP = IHP - FHP = 200 HP - 20 HP = 180 HP",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 5,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM05-comparacion",
+            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+            "observe": "Ejemplo didáctico de la respuesta consultada; no es una indicación operacional.",
+            "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "200 HP − 20 HP = 180 HP",
+            "assetAspectRatio": 1.7768331562167907
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Nominal: terminología del manual CIAAC",
+        "title": "Nominal: terminología del manual CIAAC",
+        "cards": [
+          {
+            "title": "Nominal: terminología del manual CIAAC",
+            "text": "Es la potencia máxima especificada por el fabricante para operar a un régimen dado de revoluciones y presión de admisión sin límite de tiempo y sin sufrir daño el motor.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 5,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM05-nominal",
+            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+            "observe": "Definición del manual histórico consultado. Los límites reales corresponden al fabricante y al modelo.",
+            "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "Potencia nominal · METO en el manual histórico",
+            "assetAspectRatio": 1.7768331562167907
+          }
+        ]
+      },
+      {
+        "kind": "quiz",
+        "nav": "Comprueba lo aprendido",
+        "questions": [0, 1]
+      },
+      {
+        "kind": "finish",
+        "nav": "Cierra el recorrido"
+      }
+    ],
+    "sources": [
+      {
+        "id": "ciaac-aeronaves-generalidades-historico",
+        "title": "CIAAC · Aeronaves y motores: Generalidades (manual histórico consultado)",
+        "role": "Marco didáctico y terminología histórica; no sustituye los límites y procedimientos del fabricante.",
+        "verified_locators": [
+          "AyM/7-2-21 a AyM/7-2-23; potencia indicada y al freno: página PDF 56"
+        ]
+      }
+    ]
+  },
+  "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am03-motor-alternativo": {
+    "number": 3,
+    "title": "Motor Alternativo",
+    "intro": "Aunque a menudo se usan indistintamente, cada término resalta una propiedad técnica específica:",
+    "name": "Motor Alternativo",
+    "chapter": 1,
+    "chapter_name": "Aeronaves y motores",
+    "chapterLabel": "Itinerario",
+    "sourceLabel": "CIAAC · Aeronaves y motores",
+    "cards": [
+      {
+        "title": "Motor Alternativo",
+        "text": "Aunque a menudo se usan indistintamente, cada término resalta una propiedad técnica específica:",
+        "covers": [],
+        "wide": true
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "¿Qué pieza móvil recibe la presión de los gases en expansión?",
+        "options": ["El pistón", "La cubierta exterior", "El indicador de velocidad"],
+        "correct": 0,
+        "feedback": "El émbolo es la pieza móvil alojada en el cilindro que recibe la presión de los gases en expansión.",
+        "order": [0, 1, 2]
+      },
+      {
+        "prompt": "¿Qué disposición coloca los cilindros circularmente alrededor de un cárter central?",
+        "options": ["En línea", "Radial", "En V"],
+        "correct": 1,
+        "feedback": "Los cilindros están dispuestos circularmente alrededor de un cárter y cigüeñal central, en forma de rayos de estrella.",
+        "order": [0, 1, 2]
+      }
+    ],
+    "tips": [],
+    "subtopics": [
+      {
+        "level": 1,
+        "name": "Sinonimos",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado"
+      },
+      {
+        "level": 1,
+        "name": "Partes del motor (funciones de cada una de las partes)",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado"
+      },
+      {
+        "level": 1,
+        "name": "Clasificación por la posición de los cilindros ",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado"
+      }
+    ],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM03-nombres",
+        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+        "observe": "",
+        "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "focus": {
+          "x": 50,
+          "y": 44,
+          "label": "Pistón o émbolo"
+        },
+        "heading": "Movimiento alternativo o recíproco",
+        "assetAspectRatio": 1.7768331562167907
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM03-cilindro",
+        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+        "observe": "",
+        "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "focus": {
+          "x": 60,
+          "y": 36,
+          "label": "Cilindro"
+        },
+        "heading": "Cilindro",
+        "assetAspectRatio": 1.7768331562167907
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM03-piston",
+        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+        "observe": "",
+        "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "focus": {
+          "x": 50,
+          "y": 44,
+          "label": "Pistón"
+        },
+        "heading": "Pistón",
+        "assetAspectRatio": 1.7768331562167907
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM03-bulon",
+        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+        "observe": "",
+        "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "focus": {
+          "x": 50,
+          "y": 47,
+          "label": "Perno del pistón"
+        },
+        "heading": "Unión pistón–biela",
+        "assetAspectRatio": 1.7768331562167907
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM03-biela",
+        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+        "observe": "",
+        "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "focus": {
+          "x": 49,
+          "y": 63,
+          "label": "Biela"
+        },
+        "heading": "Biela",
+        "assetAspectRatio": 1.7768331562167907
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM03-ciguenal",
+        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+        "observe": "",
+        "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "focus": {
+          "x": 48,
+          "y": 80,
+          "label": "Cigüeñal"
+        },
+        "heading": "Cigüeñal",
+        "assetAspectRatio": 1.7768331562167907
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM03-carter",
+        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+        "observe": "",
+        "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "focus": {
+          "x": 37,
+          "y": 81,
+          "label": "Cárter"
+        },
+        "heading": "Cárter",
+        "assetAspectRatio": 1.7768331562167907
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM03-valvulas",
+        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+        "observe": "",
+        "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "focus": {
+          "x": 51,
+          "y": 25,
+          "label": "Válvulas"
+        },
+        "heading": "Admisión y escape del modelo ilustrado",
+        "assetAspectRatio": 1.7768331562167907
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM03-levas",
+        "file": "/ciaac-approved/structures-engines/pushrod-valvetrain-cutaway.webp",
+        "observe": "",
+        "alt": "Ejemplo convencional de distribución con leva, empujador, varilla y balancín.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "Ejemplo convencional: de la leva al empujador",
+        "assetAspectRatio": 0.9570982839313572
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM03-balancin",
+        "file": "/ciaac-approved/structures-engines/pushrod-valvetrain-cutaway.webp",
+        "observe": "",
+        "alt": "Cadena mecánica de una distribución convencional por varillas.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "Ejemplo convencional: de la varilla a la válvula",
+        "assetAspectRatio": 0.9570982839313572
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM03-inline",
+        "file": "/ciaac-approved/structures-engines/cylinder-layout-comparison.webp",
+        "observe": "Reconocimiento de disposición; dibujo ilustrativo, no dimensionado.",
+        "alt": "Comparación de motores en línea, en V, horizontalmente opuestos y radial, con cárteres cerrados.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 50,
+          "height": 47,
+          "assetAspectRatio": 1.5
+        },
+        "heading": "Cilindros en línea",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM03-v-banks",
+        "file": "/ciaac-approved/structures-engines/cylinder-layout-comparison.webp",
+        "observe": "Reconocimiento de disposición; dibujo ilustrativo, no dimensionado.",
+        "alt": "Comparación de motores en línea, en V, horizontalmente opuestos y radial, con cárteres cerrados.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 54,
+          "y": 0,
+          "width": 44,
+          "height": 46,
+          "assetAspectRatio": 1.5
+        },
+        "heading": "Cilindros en V",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM03-horizontally-opposed",
+        "file": "/ciaac-approved/structures-engines/cylinder-layout-comparison.webp",
+        "observe": "Reconocimiento de disposición; dibujo ilustrativo, no dimensionado.",
+        "alt": "Comparación de motores en línea, en V, horizontalmente opuestos y radial, con cárteres cerrados.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 0,
+          "y": 48,
+          "width": 53,
+          "height": 41,
+          "assetAspectRatio": 1.5
+        },
+        "heading": "Cilindros horizontalmente opuestos",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM03-radial",
+        "file": "/ciaac-approved/structures-engines/cylinder-layout-comparison.webp",
+        "observe": "Reconocimiento de disposición; dibujo ilustrativo, no dimensionado.",
+        "alt": "Comparación de motores en línea, en V, horizontalmente opuestos y radial, con cárteres cerrados.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 57,
+          "y": 43,
+          "width": 40,
+          "height": 52,
+          "assetAspectRatio": 1.5
+        },
+        "heading": "Cilindros radiales",
+        "assetAspectRatio": 1.5
+      }
+    ],
+    "exercise": null,
+    "objectives": [
+      "Relaciono las piezas con su función.",
+      "Distingo pistón, biela y cigüeñal.",
+      "Reconozco las cuatro disposiciones de cilindros."
+    ],
+    "completionChecks": [
+      "Relaciono las piezas con su función.",
+      "Distingo pistón, biela y cigüeñal.",
+      "Reconozco las cuatro disposiciones de cilindros."
+    ],
+    "minutes": 4,
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Comienza"
+      },
+      {
+        "kind": "content",
+        "nav": "Alternativo, recíproco, de pistón",
+        "title": "Alternativo, recíproco, de pistón",
+        "cards": [
+          {
+            "title": "Alternativo, recíproco, de pistón",
+            "text": "El pistón/émbolo realiza un movimiento de vaivén o traslacional rectilíneo hacia adelante y hacia atrás (de arriba a abajo) dentro del cilindro, el cual se transforma en movimiento circular continuo en el cigüeñal.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM03-nombres",
+            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+            "observe": "",
+            "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "focus": {
+              "x": 50,
+              "y": 44,
+              "label": "Pistón o émbolo"
+            },
+            "heading": "Movimiento alternativo o recíproco",
+            "assetAspectRatio": 1.7768331562167907
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Cilindro",
+        "title": "Cilindro",
+        "cards": [
+          {
+            "title": "Cilindro",
+            "text": "Es la cavidad o cámara en cuyo interior se efectúa la transformación de la energía calorífica del combustible en trabajo mecánico.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM03-cilindro",
+            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+            "observe": "",
+            "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "focus": {
+              "x": 60,
+              "y": 36,
+              "label": "Cilindro"
+            },
+            "heading": "Cilindro",
+            "assetAspectRatio": 1.7768331562167907
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Pistón y anillos",
+        "title": "Pistón y anillos",
+        "cards": [
+          {
+            "title": "Pistón y anillos",
+            "text": "Pieza móvil de aluminio que recibe la fuerza de expansión de los gases. Lleva anillos de compresión arriba (para sellar la cámara de combustión) y anillos lubricadores/rascadores abajo (para controlar y raspar el aceite en la pared del cilindro).",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM03-piston",
+            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+            "observe": "",
+            "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "focus": {
+              "x": 50,
+              "y": 44,
+              "label": "Pistón"
+            },
+            "heading": "Pistón",
+            "assetAspectRatio": 1.7768331562167907
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Perno o bulón",
+        "title": "Perno o bulón",
+        "cards": [
+          {
+            "title": "Perno o bulón",
+            "text": "Perno de acero que une de forma articulada el interior del pistón con la biela.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM03-bulon",
+            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+            "observe": "",
+            "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "focus": {
+              "x": 50,
+              "y": 47,
+              "label": "Perno del pistón"
+            },
+            "heading": "Unión pistón–biela",
+            "assetAspectRatio": 1.7768331562167907
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Biela",
+        "title": "Biela",
+        "cards": [
+          {
+            "title": "Biela",
+            "text": "Transmite la fuerza del pistón al cigüeñal.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM03-biela",
+            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+            "observe": "",
+            "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "focus": {
+              "x": 49,
+              "y": 63,
+              "label": "Biela"
+            },
+            "heading": "Biela",
+            "assetAspectRatio": 1.7768331562167907
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Cigüeñal",
+        "title": "Cigüeñal",
+        "cards": [
+          {
+            "title": "Cigüeñal",
+            "text": "Soportado dentro del cárter, transforma el esfuerzo de las bielas en fuerza giratoria",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM03-ciguenal",
+            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+            "observe": "",
+            "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "focus": {
+              "x": 48,
+              "y": 80,
+              "label": "Cigüeñal"
+            },
+            "heading": "Cigüeñal",
+            "assetAspectRatio": 1.7768331562167907
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Cárter",
+        "title": "Cárter",
+        "cards": [
+          {
+            "title": "Cárter",
+            "text": "Estructura o carcasa exterior (generalmente de aleaciones de aluminio o magnesio) que sostiene los cilindros y el cigüeñal, protege los componentes del polvo, sirve como depósito o recolector de aceite y transmite el jalón de la hélice hacia la estructura del avión.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM03-carter",
+            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+            "observe": "",
+            "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "focus": {
+              "x": 37,
+              "y": 81,
+              "label": "Cárter"
+            },
+            "heading": "Cárter",
+            "assetAspectRatio": 1.7768331562167907
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Válvulas de admisión y escape",
+        "title": "Válvulas de admisión y escape",
+        "cards": [
+          {
+            "title": "Válvulas de admisión y escape",
+            "text": "Válvulas de disco que abren y cierran los ductos del cilindro; la de admisión permite la entrada de mezcla fresca aire-gasolina y la de escape desaloja los gases quemados.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM03-valvulas",
+            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+            "observe": "",
+            "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "focus": {
+              "x": 51,
+              "y": 25,
+              "label": "Válvulas"
+            },
+            "heading": "Admisión y escape del modelo ilustrado",
+            "assetAspectRatio": 1.7768331562167907
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Árbol de levas y empujador",
+        "title": "Árbol de levas y empujador",
+        "cards": [
+          {
+            "title": "Árbol de levas y empujador",
+            "text": "Eje impulsado por engranes desde el cigüeñal provisto de resaltes (levas) que regulan el momento y tiempo de apertura de cada válvula.\n\nBuzos (empujadores): Piezas intermedias en contacto directo con las levas del árbol.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM03-levas",
+            "file": "/ciaac-approved/structures-engines/pushrod-valvetrain-cutaway.webp",
+            "observe": "",
+            "alt": "Ejemplo convencional de distribución con leva, empujador, varilla y balancín.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "Ejemplo convencional: de la leva al empujador",
+            "assetAspectRatio": 0.9570982839313572
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Varilla y balancín",
+        "title": "Varilla y balancín",
+        "cards": [
+          {
+            "title": "Varilla y balancín",
+            "text": "Varillas de empuje (Push rods): Varillas que transmiten el movimiento desde los buzos hasta la cabeza del cilindro.\n\nBalancines (Rocker arms): Palancas pivotantes alojadas en las cajas de balancines de la cabeza del cilindro que presionan el vástago de la válvula para abrirla.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM03-balancin",
+            "file": "/ciaac-approved/structures-engines/pushrod-valvetrain-cutaway.webp",
+            "observe": "",
+            "alt": "Cadena mecánica de una distribución convencional por varillas.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "Ejemplo convencional: de la varilla a la válvula",
+            "assetAspectRatio": 0.9570982839313572
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Cilindros en línea",
+        "title": "Cilindros en línea",
+        "cards": [
+          {
+            "title": "Cilindros en línea",
+            "text": "Los cilindros se disponen uno detrás de otro en un solo banco alineado sobre un cigüeñal común.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM03-inline",
+            "file": "/ciaac-approved/structures-engines/cylinder-layout-comparison.webp",
+            "observe": "Reconocimiento de disposición; dibujo ilustrativo, no dimensionado.",
+            "alt": "Comparación de motores en línea, en V, horizontalmente opuestos y radial, con cárteres cerrados.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 0,
+              "y": 0,
+              "width": 50,
+              "height": 47,
+              "assetAspectRatio": 1.5
+            },
+            "heading": "Cilindros en línea",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Cilindros en V",
+        "title": "Cilindros en V",
+        "cards": [
+          {
+            "title": "Cilindros en V",
+            "text": "Dos bancos de cilindros montados formando un ángulo (de 45°, 60° o 90°) sobre un solo cigüeñal.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM03-v-banks",
+            "file": "/ciaac-approved/structures-engines/cylinder-layout-comparison.webp",
+            "observe": "Reconocimiento de disposición; dibujo ilustrativo, no dimensionado.",
+            "alt": "Comparación de motores en línea, en V, horizontalmente opuestos y radial, con cárteres cerrados.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 54,
+              "y": 0,
+              "width": 44,
+              "height": 46,
+              "assetAspectRatio": 1.5
+            },
+            "heading": "Cilindros en V",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Cilindros horizontalmente opuestos",
+        "title": "Cilindros horizontalmente opuestos",
+        "cards": [
+          {
+            "title": "Cilindros horizontalmente opuestos",
+            "text": "Los cilindros se ubican en dos bancos horizontales colocados unos frente a otros (a 180°) sobre un cigüeñal central.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM03-horizontally-opposed",
+            "file": "/ciaac-approved/structures-engines/cylinder-layout-comparison.webp",
+            "observe": "Reconocimiento de disposición; dibujo ilustrativo, no dimensionado.",
+            "alt": "Comparación de motores en línea, en V, horizontalmente opuestos y radial, con cárteres cerrados.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 0,
+              "y": 48,
+              "width": 53,
+              "height": 41,
+              "assetAspectRatio": 1.5
+            },
+            "heading": "Cilindros horizontalmente opuestos",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Cilindros radiales",
+        "title": "Cilindros radiales",
+        "cards": [
+          {
+            "title": "Cilindros radiales",
+            "text": "Los cilindros están dispuestos circularmente alrededor de un cárter y cigüeñal central, en forma de rayos de estrella.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM03-radial",
+            "file": "/ciaac-approved/structures-engines/cylinder-layout-comparison.webp",
+            "observe": "Reconocimiento de disposición; dibujo ilustrativo, no dimensionado.",
+            "alt": "Comparación de motores en línea, en V, horizontalmente opuestos y radial, con cárteres cerrados.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 57,
+              "y": 43,
+              "width": 40,
+              "height": 52,
+              "assetAspectRatio": 1.5
+            },
+            "heading": "Cilindros radiales",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "quiz",
+        "nav": "Comprueba lo aprendido",
+        "questions": [0, 1]
+      },
+      {
+        "kind": "finish",
+        "nav": "Cierra el recorrido"
+      }
+    ],
+    "sources": [
+      {
+        "id": "ciaac-aeronaves-generalidades-historico",
+        "title": "CIAAC · Aeronaves y motores: Generalidades (manual histórico consultado)",
+        "role": "Marco didáctico y terminología histórica; no sustituye los límites y procedimientos del fabricante.",
+        "verified_locators": ["AyM/7.2-1, 7.2-3 y 7.2-13 a 7.2-20"]
+      }
+    ]
+  },
+  "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am01-clasificacion-visual-de-las-aeronaves": {
+    "number": 1,
+    "title": "Clasificación visual de las aeronaves",
+    "intro": "El primer gran filtro en aviación divide las aeronaves según el principio físico utilizado para sostenerse en el aire.",
+    "name": "Clasificación visual de las aeronaves",
+    "chapter": 1,
+    "chapter_name": "Aeronaves y motores",
+    "chapterLabel": "Itinerario",
+    "sourceLabel": "CIAAC · Aeronaves y motores",
+    "cards": [
+      {
+        "title": "Clasificación visual de las aeronaves",
+        "text": "El primer gran filtro en aviación divide las aeronaves según el principio físico utilizado para sostenerse en el aire.",
+        "covers": [],
+        "wide": true
+      }
+    ],
+    "questions": [],
+    "tips": [],
+    "subtopics": [
+      {
+        "level": 1,
+        "name": "Peso con respecto al aire: aeróstatos y aerodinos.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado"
+      },
+      {
+        "level": 1,
+        "name": "Ala fija: número, posición y forma de las alas; reconocimiento y clasificación general de ala rotativa.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado"
+      },
+      {
+        "level": 1,
+        "name": "Tipo, número y posición de motores; tipo y posición del tren de aterrizaje.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado"
+      },
+      {
+        "level": 1,
+        "name": "Forma de despegue y aterrizaje y tipo de cabina.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado"
+      }
+    ],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-aerostatos",
+        "file": "/ciaac-approved/aircraft-classification/lighter-than-air.png",
+        "observe": "",
+        "alt": "Globo aerostático de envolvente naranja y blanca con cesta; dirigible plateado con góndola y dos hélices visibles.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "Globo y dirigible",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-aerodino",
+        "file": "/ciaac-approved/aircraft-classification/wing-position-cabin-gear.png",
+        "observe": "",
+        "alt": "Monoplano de ala alta",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 15,
+          "y": 0,
+          "width": 74,
+          "height": 32,
+          "assetAspectRatio": 1.5
+        },
+        "heading": "Aerodino de ala fija",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-numero-alas",
+        "file": "/ciaac-approved/aircraft-classification/wing-position-cabin-gear.png",
+        "observe": "",
+        "alt": "Tres aviones completos: monoplano de ala alta y tren triciclo; monoplano de ala baja y tren triciclo; biplano de cabina abierta con rueda de cola.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "Compara monoplano y biplano",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-posicion-ala",
+        "file": "/ciaac-approved/aircraft-classification/wing-position-cabin-gear.png",
+        "observe": "",
+        "alt": "Tres aviones completos: monoplano de ala alta y tren triciclo; monoplano de ala baja y tren triciclo; biplano de cabina abierta con rueda de cola.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "Ala alta y ala baja: observa el encastre",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-forma",
+        "file": "/ciaac-approved/aircraft-classification/wing-planforms.png",
+        "observe": "",
+        "alt": "Cuatro aviones vistos directamente desde arriba con las alas principales en amarillo: planta rectangular, estrechada, elíptica y en flecha.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "La forma se reconoce en vista superior",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-helicoptero",
+        "file": "/ciaac-approved/aircraft-classification/operating-surfaces.png",
+        "observe": "",
+        "alt": "Helicóptero sobre plataforma",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 8,
+          "y": 30,
+          "width": 80,
+          "height": 36,
+          "assetAspectRatio": 1.5
+        },
+        "heading": "Helicóptero",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-autogiro",
+        "file": "/ciaac-approved/aircraft-classification/rotor-push-pull.png",
+        "observe": "",
+        "alt": "Autogiro con hélice propulsora posterior",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 2,
+          "y": 1,
+          "width": 96,
+          "height": 49,
+          "assetAspectRatio": 1.5
+        },
+        "heading": "Autogiro: rotor y hélice separados",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-piston",
+        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+        "observe": "",
+        "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "Motor alternativo",
+        "assetAspectRatio": 1.7768331562167907
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-turbinas",
+        "file": "/ciaac-approved/aircraft-classification/engine-arrangements.png",
+        "observe": "",
+        "alt": "Tres aviones bimotores: regional con hélices y góndolas alares, reactor con góndolas bajo las alas y reactor ejecutivo con góndolas a ambos lados del fuselaje trasero.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "Turbohélice y propulsión a reacción",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-motores",
+        "file": "/ciaac-approved/aircraft-classification/engine-arrangements.png",
+        "observe": "",
+        "alt": "Bimotor con hélices en góndolas alares",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 18,
+          "y": 0,
+          "width": 66,
+          "height": 30,
+          "assetAspectRatio": 1.5
+        },
+        "heading": "Conteo y terminología del manual histórico",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-tandem",
+        "file": "/ciaac-approved/aircraft-classification/rotor-push-pull.png",
+        "observe": "",
+        "alt": "Bimotor en tándem: tractor y propulsor",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 2,
+          "y": 50,
+          "width": 96,
+          "height": 45,
+          "assetAspectRatio": 1.5
+        },
+        "heading": "Tractor delante · propulsor detrás",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-tren",
+        "file": "/ciaac-approved/aircraft-classification/wing-position-cabin-gear.png",
+        "observe": "",
+        "alt": "Tres aviones completos: monoplano de ala alta y tren triciclo; monoplano de ala baja y tren triciclo; biplano de cabina abierta con rueda de cola.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "Busca la rueda de nariz o la rueda de cola",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-tren-fijo",
+        "file": "/ciaac-approved/aircraft-classification/wing-position-cabin-gear.png",
+        "observe": "",
+        "alt": "Monoplano de ala alta",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 15,
+          "y": 0,
+          "width": 74,
+          "height": 32,
+          "assetAspectRatio": 1.5
+        },
+        "heading": "Ejemplo de tren fijo",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-superficies",
+        "file": "/ciaac-approved/aircraft-classification/operating-surfaces.png",
+        "observe": "",
+        "alt": "Avión sobre una pista, helicóptero en vuelo estacionario sobre plataforma y avión con dos flotadores operando en agua.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "Pista, plataforma y agua",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-vertical",
+        "file": "/ciaac-approved/aircraft-classification/operating-surfaces.png",
+        "observe": "",
+        "alt": "Helicóptero sobre plataforma",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 8,
+          "y": 30,
+          "width": 80,
+          "height": 36,
+          "assetAspectRatio": 1.5
+        },
+        "heading": "Operación vertical",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-cabina",
+        "file": "/ciaac-approved/aircraft-classification/wing-position-cabin-gear.png",
+        "observe": "",
+        "alt": "Tres aviones completos: monoplano de ala alta y tren triciclo; monoplano de ala baja y tren triciclo; biplano de cabina abierta con rueda de cola.",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "heading": "Cabina abierta, convertible y cerrada",
+        "assetAspectRatio": 1.5
+      }
+    ],
+    "exercise": {
+      "kind": "match",
+      "title": "Reconoce varias características",
+      "instruction": "Relaciona cada aeronave con la combinación de características que observas.",
+      "pairs": [
+        ["Aeronave A", "Monoplano de ala alta · tren triciclo · cabina cerrada"],
+        ["Aeronave B", "Biplano · tren convencional · cabina abierta"],
+        ["Aeronave C", "Monoplano · dos flotadores · operación sobre agua"]
+      ],
+      "order": [2, 0, 1]
+    },
+    "objectives": [
+      "Clasifico una aeronave con varios criterios.",
+      "Distingo ala fija y ala rotativa.",
+      "Reconozco motores, tren, operación y cabina."
+    ],
+    "completionChecks": [
+      "Clasifico una aeronave con varios criterios.",
+      "Distingo ala fija y ala rotativa.",
+      "Reconozco motores, tren, operación y cabina."
+    ],
+    "minutes": 7,
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Comienza"
+      },
+      {
+        "kind": "content",
+        "nav": "Aeróstatos",
+        "title": "Aeróstatos",
+        "cards": [
+          {
+            "title": "Aeróstatos",
+            "text": "Aeronaves que flotan en la atmósfera mediante la fuerza ascensional (flotabilidad) generada por celdas o depósitos llenos de gases más ligeros que el aire (helio, hidrógeno o aire caliente).",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM01-aerostatos",
+            "file": "/ciaac-approved/aircraft-classification/lighter-than-air.png",
+            "observe": "",
+            "alt": "Globo aerostático de envolvente naranja y blanca con cesta; dirigible plateado con góndola y dos hélices visibles.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "Globo y dirigible",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Aerodinos",
+        "title": "Aerodinos",
+        "cards": [
+          {
+            "title": "Aerodinos",
+            "text": "Aeronaves que se sostienen en el aire mediante reacciones aerodinámicas (sustentación) generadas por el paso del flujo de aire sobre superficies o perfiles aerodinámicos (alas).",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM01-aerodino",
+            "file": "/ciaac-approved/aircraft-classification/wing-position-cabin-gear.png",
+            "observe": "",
+            "alt": "Monoplano de ala alta",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 15,
+              "y": 0,
+              "width": 74,
+              "height": 32,
+              "assetAspectRatio": 1.5
+            },
+            "heading": "Aerodino de ala fija",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Número de alas",
+        "title": "Número de alas",
+        "cards": [
+          {
+            "title": "Número de alas",
+            "text": "Monoplano: Posee una sola ala (construida en una pieza o en secciones).\n\nBiplano: Posee dos alas superpuestas.\n\nTriplano / Multiplano: Tres o más de tres alas",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM01-numero-alas",
+            "file": "/ciaac-approved/aircraft-classification/wing-position-cabin-gear.png",
+            "observe": "",
+            "alt": "Tres aviones completos: monoplano de ala alta y tren triciclo; monoplano de ala baja y tren triciclo; biplano de cabina abierta con rueda de cola.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "Compara monoplano y biplano",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Posición del ala",
+        "title": "Posición del ala",
+        "cards": [
+          {
+            "title": "Posición del ala",
+            "text": "Ala Parasol: El ala está montada por encima y separada del fuselaje mediante montantes o soportes.\n\nAla Alta: Empotrada en la parte superior del fuselaje\n\nAla Media: Empotrada en la mitad/centro de la sección transversal del fuselaje.\n\nAla Baja: Empotrada en la parte inferior del fuselaje",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM01-posicion-ala",
+            "file": "/ciaac-approved/aircraft-classification/wing-position-cabin-gear.png",
+            "observe": "",
+            "alt": "Tres aviones completos: monoplano de ala alta y tren triciclo; monoplano de ala baja y tren triciclo; biplano de cabina abierta con rueda de cola.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "Ala alta y ala baja: observa el encastre",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Forma en planta",
+        "title": "Forma en planta",
+        "cards": [
+          {
+            "title": "Forma en planta",
+            "text": "Ala Rectangular: Subtipo de ala recta que mantiene una cuerda constante desde el encastre o raíz hasta la punta alar\n\nTrapezoidal (Tapered): La cuerda disminuye gradualmente hacia la punta.\n\nElíptica: Distribución de cuerda elíptica\n\nEn Flecha (Swept Wing): Las alas se angulan hacia atrás respecto al eje lateral.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM01-forma",
+            "file": "/ciaac-approved/aircraft-classification/wing-planforms.png",
+            "observe": "",
+            "alt": "Cuatro aviones vistos directamente desde arriba con las alas principales en amarillo: planta rectangular, estrechada, elíptica y en flecha.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "La forma se reconoce en vista superior",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Ala rotativa: helicóptero",
+        "title": "Ala rotativa: helicóptero",
+        "cards": [
+          {
+            "title": "Ala rotativa: helicóptero",
+            "text": "Las aeronaves de ala rotativa (Giroaviones / Rotorcraft) obtienen su sustentación mediante perfiles aerodinámicos (palas) que giran alrededor de un eje.\n\nEl rotor principal está impulsado directamente por el motor mediante una transmisión o eje. Proporciona tanto la sustentación como la tracción para el movimiento horizontal.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM01-helicoptero",
+            "file": "/ciaac-approved/aircraft-classification/operating-surfaces.png",
+            "observe": "",
+            "alt": "Helicóptero sobre plataforma",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 8,
+              "y": 30,
+              "width": 80,
+              "height": 36,
+              "assetAspectRatio": 1.5
+            },
+            "heading": "Helicóptero",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Ala rotativa: autogiro",
+        "title": "Ala rotativa: autogiro",
+        "cards": [
+          {
+            "title": "Ala rotativa: autogiro",
+            "text": "Su rotor NO está conectado al motor en vuelo; gira libremente por autorrotación provocada por el viento relativo.\n\nEl motor mueve una hélice convencional (tractor o propulsora) que empuja la aeronave hacia adelante, y ese avance hace girar el rotor.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM01-autogiro",
+            "file": "/ciaac-approved/aircraft-classification/rotor-push-pull.png",
+            "observe": "",
+            "alt": "Autogiro con hélice propulsora posterior",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 2,
+              "y": 1,
+              "width": 96,
+              "height": 49,
+              "assetAspectRatio": 1.5
+            },
+            "heading": "Autogiro: rotor y hélice separados",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Tipo de motor: pistón",
+        "title": "Tipo de motor: pistón",
+        "cards": [
+          {
+            "title": "Tipo de motor: pistón",
+            "text": "Se reconoce por cilindros visibles o encapotados (en línea, opuestos o radiales) y un cigüeñal que mueve una hélice.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM01-piston",
+            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+            "observe": "",
+            "alt": "Corte detallado de un cilindro con pistón, biela, cigüeñal, bujía y válvulas.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "Motor alternativo",
+            "assetAspectRatio": 1.7768331562167907
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Tipo de motor: turbina",
+        "title": "Tipo de motor: turbina",
+        "cards": [
+          {
+            "title": "Tipo de motor: turbina",
+            "text": "Turbohélice (Turboprop): Turbina de gas que acciona una hélice mediante una caja de engranes reductores.\n\nTurbofán (Turbofan): Turbina de gas dotada de un ventilador frontal (fan) que deriva parte del flujo de aire alrededor del núcleo (flujo secundario/bypass)",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM01-turbinas",
+            "file": "/ciaac-approved/aircraft-classification/engine-arrangements.png",
+            "observe": "",
+            "alt": "Tres aviones bimotores: regional con hélices y góndolas alares, reactor con góndolas bajo las alas y reactor ejecutivo con góndolas a ambos lados del fuselaje trasero.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "Turbohélice y propulsión a reacción",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Número de motores",
+        "title": "Número de motores",
+        "cards": [
+          {
+            "title": "Número de motores",
+            "text": "Monomotor: Un solo motor.\n\nBimotor: Dos motores.\n\nTrimotor: Tres motores\n\nÚnicamente según la taxonomía interna del manual histórico del CIAAC\n\nse denomina multimotor a la aeronave que posee cuatro o más motores\n\nEsta no constituye una definición universal de la OACI/FAA actual.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM01-motores",
+            "file": "/ciaac-approved/aircraft-classification/engine-arrangements.png",
+            "observe": "",
+            "alt": "Bimotor con hélices en góndolas alares",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 18,
+              "y": 0,
+              "width": 66,
+              "height": 30,
+              "assetAspectRatio": 1.5
+            },
+            "heading": "Conteo y terminología del manual histórico",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Tractor, propulsor y tándem",
+        "title": "Tractor, propulsor y tándem",
+        "cards": [
+          {
+            "title": "Tractor, propulsor y tándem",
+            "text": "Hélice Tractora: Instalada en la parte delantera del motor o ala; jala a la aeronave.\n\nHélice Propulsora (Pusher): Instalada en la parte posterior del motor o ala; empuja a la aeronave.\n\nDisposición de dos hélices alineadas en el mismo eje longitudinal: una delantera funcionando como tractora y una trasera como propulsora",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM01-tandem",
+            "file": "/ciaac-approved/aircraft-classification/rotor-push-pull.png",
+            "observe": "",
+            "alt": "Bimotor en tándem: tractor y propulsor",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 2,
+              "y": 50,
+              "width": 96,
+              "height": 45,
+              "assetAspectRatio": 1.5
+            },
+            "heading": "Tractor delante · propulsor detrás",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Tren convencional y triciclo",
+        "title": "Tren convencional y triciclo",
+        "cards": [
+          {
+            "title": "Tren convencional y triciclo",
+            "text": "Tren Convencional: Consta de dos piernas principales al frente (delante del Centro de Gravedad) y un patín o rueda de cola en la parte posterior del fuselaje.\n\nTren Triciclo: Consta de dos piernas principales detrás del Centro de Gravedad y una rueda de nariz orientable en la parte frontal.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM01-tren",
+            "file": "/ciaac-approved/aircraft-classification/wing-position-cabin-gear.png",
+            "observe": "",
+            "alt": "Tres aviones completos: monoplano de ala alta y tren triciclo; monoplano de ala baja y tren triciclo; biplano de cabina abierta con rueda de cola.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "Busca la rueda de nariz o la rueda de cola",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Tren fijo y retráctil",
+        "title": "Tren fijo y retráctil",
+        "cards": [
+          {
+            "title": "Tren fijo y retráctil",
+            "text": "Tren Fijo: La estructura permanece expuesta en todo momento al flujo de aire.\n\nTren Retráctil: Puede plegarse y alojarse dentro del fuselaje, alas o barquillas durante el vuelo mediante sistemas hidráulicos, eléctricos o mecánicos.",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM01-tren-fijo",
+            "file": "/ciaac-approved/aircraft-classification/wing-position-cabin-gear.png",
+            "observe": "",
+            "alt": "Monoplano de ala alta",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 15,
+              "y": 0,
+              "width": 74,
+              "height": 32,
+              "assetAspectRatio": 1.5
+            },
+            "heading": "Ejemplo de tren fijo",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Superficie de operación",
+        "title": "Superficie de operación",
+        "cards": [
+          {
+            "title": "Superficie de operación",
+            "text": "Clasifica la aeronave según el medio físico donde se posa: Terrestre (pistas de tierra/asfalto), Hidroavión/Acuático (agua, mediante flotadores o casco/bote volador) y Anfibio (equipado para operar tanto en tierra como en agua).",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM01-superficies",
+            "file": "/ciaac-approved/aircraft-classification/operating-surfaces.png",
+            "observe": "",
+            "alt": "Avión sobre una pista, helicóptero en vuelo estacionario sobre plataforma y avión con dos flotadores operando en agua.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "Pista, plataforma y agua",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Despegue y aterrizaje",
+        "title": "Despegue y aterrizaje",
+        "cards": [
+          {
+            "title": "Despegue y aterrizaje",
+            "text": "Clasificación independiente basada en la distancia de pista requerida, como aeronaves STOL (Short Take-Off and Landing / despegue y aterrizaje corto) o VTOL (Vertical Take-Off and Landing / despegue y aterrizaje vertical).",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM01-vertical",
+            "file": "/ciaac-approved/aircraft-classification/operating-surfaces.png",
+            "observe": "",
+            "alt": "Helicóptero sobre plataforma",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "crop": {
+              "x": 8,
+              "y": 30,
+              "width": 80,
+              "height": 36,
+              "assetAspectRatio": 1.5
+            },
+            "heading": "Operación vertical",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "content",
+        "nav": "Tipo de cabina",
+        "title": "Tipo de cabina",
+        "cards": [
+          {
+            "title": "Tipo de cabina",
+            "text": "piloto expuesto = Cabina abierta\n\nCabina Convertible: Cuenta con una cubierta o capota desmontable/deslizable que se puede abrir o retirar\n\nCabina Cerrada: El puesto de pilotaje y pasaje está protegido por un fuselaje o cubierta estructural contra el viento e intemperie.\n\nUna cabina cerrada no implica hermeticidad ni presurización",
+            "covers": [],
+            "wide": true
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM01-cabina",
+            "file": "/ciaac-approved/aircraft-classification/wing-position-cabin-gear.png",
+            "observe": "",
+            "alt": "Tres aviones completos: monoplano de ala alta y tren triciclo; monoplano de ala baja y tren triciclo; biplano de cabina abierta con rueda de cola.",
+            "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+            "heading": "Cabina abierta, convertible y cerrada",
+            "assetAspectRatio": 1.5
+          }
+        ]
+      },
+      {
+        "kind": "exercise",
+        "nav": "Reconoce varias características"
+      },
+      {
+        "kind": "finish",
+        "nav": "Cierra el recorrido"
+      }
+    ],
+    "sources": [
+      {
+        "id": "ciaac-aeronaves-generalidades-historico",
+        "title": "CIAAC · Aeronaves y motores: Generalidades (manual histórico consultado)",
+        "role": "Marco didáctico y terminología histórica; no sustituye los límites y procedimientos del fabricante.",
+        "verified_locators": ["AyM/7.1-2 a AyM/7.1-10"]
+      }
+    ],
+    "exerciseFigures": [
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-juego-a",
+        "file": "/ciaac-approved/aircraft-classification/wing-position-cabin-gear.png",
+        "observe": "",
+        "alt": "Monoplano de ala alta",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 15,
+          "y": 0,
+          "width": 74,
+          "height": 32,
+          "assetAspectRatio": 1.5
+        },
+        "heading": "Aeronave A",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-juego-b",
+        "file": "/ciaac-approved/aircraft-classification/wing-position-cabin-gear.png",
+        "observe": "",
+        "alt": "Biplano de cabina abierta",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 20,
+          "y": 65,
+          "width": 60,
+          "height": 32,
+          "assetAspectRatio": 1.5
+        },
+        "heading": "Aeronave B",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM01-juego-c",
+        "file": "/ciaac-approved/aircraft-classification/operating-surfaces.png",
+        "observe": "",
+        "alt": "Hidroavión de flotadores",
+        "caption": "Ilustración original para reconocimiento; geometría no dimensionada.",
+        "crop": {
+          "x": 0,
+          "y": 66,
+          "width": 100,
+          "height": 34,
+          "assetAspectRatio": 1.5
+        },
+        "heading": "Aeronave C",
+        "assetAspectRatio": 1.5
+      }
+    ]
+  }
+}

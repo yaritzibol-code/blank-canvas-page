@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 1,
+  "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+  "subjectId": "ciaac/aeronaves-y-motores",
+  "subjectTitle": "Aeronaves y motores",
+  "containerId": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10",
+  "lessons": [
+    {
+      "code": "AM01",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am01-clasificacion-visual-de-las-aeronaves",
+      "title": "Clasificación visual de las aeronaves",
+      "order": 1,
+      "topics": [
+        "Peso con respecto al aire: aeróstatos y aerodinos.",
+        "Ala fija: número, posición y forma de las alas; reconocimiento y clasificación general de ala rotativa.",
+        "Tipo, número y posición de motores; tipo y posición del tren de aterrizaje.",
+        "Forma de despegue y aterrizaje y tipo de cabina."
+      ],
+      "suggestedSupport": [
+        "Ejemplos visuales breves y un solo minijuego final de reconocimiento con varias características por aeronave."
+      ],
+      "relationships": [],
+      "groupingNotes": ["Todos los criterios de clasificación forman un único LP."],
+      "status": "reviewed-content"
+    },
+    {
+      "code": "AM02",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am02-estructura-y-aeronavegabilidad",
+      "title": "Estructura y aeronavegabilidad",
+      "order": 2,
+      "topics": [
+        "Diseño, certificación y aeronavegabilidad.",
+        "Grupos de estudio: sustentador con alas arriostradas y cantilever; empenajes vertical y horizontal; fuselaje compuesto, monocoque y semimonocoque; tren de aterrizaje y motor."
+      ],
+      "suggestedSupport": ["Reconocer los grupos estructurales sobre una aeronave."],
+      "relationships": [
+        "OP01 y OP02 para el uso de documentos y mantenimiento; MI03 para requisitos y validez documental."
+      ],
+      "groupingNotes": [],
+      "status": "reviewed-content"
+    },
+    {
+      "code": "AM03",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am03-motor-alternativo",
+      "title": "Motor Alternativo",
+      "order": 3,
+      "topics": [
+        "Sinonimos",
+        "Partes del motor (funciones de cada una de las partes)",
+        "Clasificación por la posición de los cilindros "
+      ],
+      "suggestedSupport": [],
+      "relationships": [],
+      "groupingNotes": [],
+      "status": "reviewed-content"
+    },
+    {
+      "code": "AM04",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am04-ciclo-de-otto",
+      "title": "Ciclo de Otto",
+      "order": 4,
+      "topics": ["4 fases ", "Traslape valvular"],
+      "suggestedSupport": [],
+      "relationships": [],
+      "groupingNotes": [],
+      "status": "reviewed-content"
+    },
+    {
+      "code": "AM05",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am05-potencia-del-motor-alternativo",
+      "title": "Potencia del motor alternativo",
+      "order": 5,
+      "topics": ["Potencia nominal, indicada y al freno."],
+      "suggestedSupport": ["Comparar los tres tipos de potencia en un mismo motor."],
+      "relationships": ["AM09 para potencia y fuerzas en las hélices."],
+      "groupingNotes": [],
+      "status": "reviewed-content"
+    },
+    {
+      "code": "AM06",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am06-alimentacion-y-mezcla-del-motor-alternativo",
+      "title": "Alimentación y mezcla del motor alternativo",
+      "order": 6,
+      "topics": [
+        "Sistemas de ignición, inducción y combustible: función, partes, tipos y funcionamiento por carburador.",
+        "Tipos de mezcla, octanaje y función del sistema de succión."
+      ],
+      "suggestedSupport": ["Seguir el recorrido de aire y combustible y reconocer la mezcla."],
+      "relationships": [],
+      "groupingNotes": [],
+      "status": "pending-notebooklm"
+    },
+    {
+      "code": "AM07",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am07-anormalidades-de-la-combustion",
+      "title": "Anormalidades de la combustión",
+      "order": 7,
+      "topics": ["Preignición, detonación y postcombustión; aclaración del término precombustión."],
+      "suggestedSupport": ["Distinguir las anormalidades en situaciones breves."],
+      "relationships": ["AM06 para los sistemas de alimentación e ignición."],
+      "groupingNotes": [],
+      "status": "pending-notebooklm"
+    },
+    {
+      "code": "AM08",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am08-enfriamiento-escape-y-lubricacion",
+      "title": "Enfriamiento escape y lubricación",
+      "order": 8,
+      "topics": [
+        "Enfriamiento, escape y lubricación: función, partes y tipos.",
+        "Aceites, bases y viscosidad."
+      ],
+      "suggestedSupport": ["Reconocer el recorrido y la función de cada sistema."],
+      "relationships": ["AM19 para el sistema eléctrico del motor alternativo."],
+      "groupingNotes": [],
+      "status": "pending-notebooklm"
+    },
+    {
+      "code": "AM09",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am09-helices-tipos-paso-y-fuerzas",
+      "title": "Hélices tipos paso y fuerzas",
+      "order": 9,
+      "topics": [
+        "Tipos de hélice y paso.",
+        "Fuerzas sobre la hélice y potencia de las plantas motrices."
+      ],
+      "suggestedSupport": ["Comparar visualmente tipos y cambios de paso."],
+      "relationships": ["AM05 para potencia nominal, indicada y al freno."],
+      "groupingNotes": [],
+      "status": "pending-notebooklm"
+    },
+    {
+      "code": "AM10",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am10-motor-a-reaccion-y-sus-componentes",
+      "title": "Motor a reacción y sus componentes",
+      "order": 10,
+      "topics": ["Componentes del motor a reacción y sus funciones."],
+      "suggestedSupport": ["Localizar los componentes en un esquema del motor."],
+      "relationships": [],
+      "groupingNotes": [],
+      "status": "pending-notebooklm"
+    },
+    {
+      "code": "AM11",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am11-ciclo-brayton",
+      "title": "Ciclo Brayton",
+      "order": 11,
+      "topics": ["Ciclo Brayton y diferencias con el ciclo Otto."],
+      "suggestedSupport": ["Ordenar el ciclo y compararlo con Otto."],
+      "relationships": ["AM04 para ciclo Otto; AM10 para componentes del motor."],
+      "groupingNotes": [],
+      "status": "pending-notebooklm"
+    },
+    {
+      "code": "AM12",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am12-tipos-de-motores-a-reaccion-y-empuje",
+      "title": "Tipos de motores a reacción y empuje",
+      "order": 12,
+      "topics": [
+        "Tipos de motores a reacción; relación bypass y flujos primario y secundario.",
+        "Ventajas y desventajas frente al motor recíproco y causas de variación del empuje."
+      ],
+      "suggestedSupport": ["Comparar arquitecturas, flujos y generación de empuje."],
+      "relationships": [],
+      "groupingNotes": [],
+      "status": "pending-notebooklm"
+    },
+    {
+      "code": "AM13",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am13-anormalidades-del-motor-a-reaccion",
+      "title": "Anormalidades del motor a reacción",
+      "order": 13,
+      "topics": [
+        "Desplome del compresor; hot start, wet start y hung start.",
+        "FOD y su clasificación."
+      ],
+      "suggestedSupport": [
+        "Reconocimiento de anormalidades a partir de una secuencia o indicación."
+      ],
+      "relationships": [],
+      "groupingNotes": [],
+      "status": "pending-notebooklm"
+    },
+    {
+      "code": "AM14",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am14-sistemas-hidraulico-y-neumatico",
+      "title": "Sistemas hidráulico y neumático",
+      "order": 14,
+      "topics": [
+        "Sistemas hidráulico y neumático: generalidades, función, importancia, partes, tipos y operación.",
+        "Sistema hidráulico: propiedades y uso de líquidos; depósitos y ventajas del sistema."
+      ],
+      "suggestedSupport": ["Seguir el suministro a los equipos consumidores."],
+      "relationships": [],
+      "groupingNotes": [
+        "En AM14 a AM19, cada sistema se estudia por sus generalidades, función, importancia, partes, tipos y operación."
+      ],
+      "status": "pending-notebooklm"
+    },
+    {
+      "code": "AM15",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am15-presurizacion-y-aire-acondicionado",
+      "title": "Presurización y aire acondicionado",
+      "order": 15,
+      "topics": [
+        "Presurización y aire acondicionado: componentes, funciones y operación.",
+        "Tipos de control manual y automatizado citados en el temario, con alcance por validar."
+      ],
+      "suggestedSupport": ["Relacionar suministro, control y condiciones de cabina."],
+      "relationships": ["MD10 para los efectos fisiológicos de la despresurización."],
+      "groupingNotes": [],
+      "status": "pending-notebooklm"
+    },
+    {
+      "code": "AM16",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am16-proteccion-contra-hielo-y-lluvia",
+      "title": "Protección contra hielo y lluvia",
+      "order": 16,
+      "topics": ["Anti-icing y de-icing; protección contra lluvia e inspección previa al vuelo."],
+      "suggestedSupport": ["Reconocer sistemas y comprobaciones previas al vuelo."],
+      "relationships": ["MT13 para la formación meteorológica de hielo."],
+      "groupingNotes": [],
+      "status": "pending-notebooklm"
+    },
+    {
+      "code": "AM17",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am17-fuego-deteccion-y-extincion",
+      "title": "Fuego detección y extinción",
+      "order": 17,
+      "topics": ["Tipos de fuego, clases de extintores y sistemas detectores."],
+      "suggestedSupport": ["Relacionar fuego, detección y extinción."],
+      "relationships": [],
+      "groupingNotes": [],
+      "status": "pending-notebooklm"
+    },
+    {
+      "code": "AM18",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am18-tren-de-aterrizaje-y-frenos",
+      "title": "Tren de aterrizaje y frenos",
+      "order": 18,
+      "topics": [
+        "Ciclo, mecanismos y operación del tren de aterrizaje.",
+        "Sistemas de frenos: tambor, balatas y conjunto de discos."
+      ],
+      "suggestedSupport": ["Secuencia visual de extensión y frenado."],
+      "relationships": ["AM01 para reconocer tipos y posición del tren."],
+      "groupingNotes": [],
+      "status": "pending-notebooklm"
+    },
+    {
+      "code": "AM19",
+      "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am19-sistemas-electricos-y-fuentes-de-alimentacion",
+      "title": "Sistemas eléctricos y fuentes de alimentación",
+      "order": 19,
+      "topics": [
+        "Sistema eléctrico del motor alternativo: función, partes y tipos.",
+        "Alimentación de corriente, distribución y operación del sistema eléctrico.",
+        "APU y GPU."
+      ],
+      "suggestedSupport": ["Seguir la alimentación de un equipo en un diagrama sencillo."],
+      "relationships": [],
+      "groupingNotes": [],
+      "status": "pending-notebooklm"
+    }
+  ]
+}

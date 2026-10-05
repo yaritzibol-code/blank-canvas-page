@@ -3,9 +3,9 @@ import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { LpBreadcrumbs, LpCard, LpContinueCard, LpGrid, LpHeader } from "@/components/lp/nav";
 import { CATEGORY_STYLE } from "./index";
 import { hasAvailableCiaacContent } from "@/lib/lp/ciaac-availability";
-import { lpCategory, lpSubject } from "@/lib/lp/taxonomy";
+import { legacyAircraftSubject, lpCategory, lpSubject } from "@/lib/lp/taxonomy";
 import { useSessionUser, useStore } from "@/lib/store";
-import { getLpCompleted, subjectContinue, subjectProgress } from "@/lib/store/lp-nav";
+import { getLpCompleted, getLpStarted, subjectContinue, subjectProgress } from "@/lib/store/lp-nav";
 
 export const Route = createFileRoute("/dashboard/rutas/$categoria/$materia/")({
   head: () => ({
@@ -20,10 +20,12 @@ function MateriaPage() {
   const userId = user?.id ?? "";
   const cat = lpCategory(categoria);
   const subject = lpSubject(categoria, materia);
+  const legacy = subject?.id === "ciaac/aeronaves-y-motores" ? legacyAircraftSubject() : undefined;
 
   const estado = useStore(() => {
     if (!subject) return null;
     const completed = new Set(getLpCompleted(userId));
+    const started = new Set(getLpStarted(userId));
     const siguiente = subjectContinue(userId, subject);
     return {
       progreso: subjectProgress(userId, subject),
@@ -32,6 +34,16 @@ function MateriaPage() {
         id: c.id,
         done: c.learningPaths.filter((l) => completed.has(l.id)).length,
       })),
+      legacy:
+        legacy &&
+        legacy.containers.some((container) =>
+          container.learningPaths.some((item) => completed.has(item.id) || started.has(item.id)),
+        )
+          ? legacy.containers.map((container) => ({
+              container,
+              done: container.learningPaths.filter((item) => completed.has(item.id)).length,
+            }))
+          : [],
     };
   });
 
@@ -91,6 +103,37 @@ function MateriaPage() {
           );
         })}
       </LpGrid>
+
+      {!!estado?.legacy.length && (
+        <section aria-label="Recorridos anteriores" style={{ marginTop: "2rem" }}>
+          <LpHeader
+            eyebrow="Tu historial"
+            title="Recorridos anteriores"
+            subtitle="Tu avance anterior sigue guardado. Los 19 recorridos reorganizados tienen su propio progreso."
+          />
+          <LpGrid>
+            {estado.legacy.map(({ container, done }) => (
+              <LpCard
+                key={container.id}
+                to="/dashboard/rutas/$categoria/$materia/$contenedor"
+                params={{ categoria, materia, contenedor: container.id.split("/")[2] }}
+                title={container.titulo}
+                icon="list"
+                accent={accent}
+                meta={`${done} de ${container.learningPaths.length} completados · Versión anterior`}
+                percent={Math.round((done / container.learningPaths.length) * 100)}
+                status={
+                  done === 0
+                    ? "no_iniciado"
+                    : done === container.learningPaths.length
+                      ? "completado"
+                      : "en_progreso"
+                }
+              />
+            ))}
+          </LpGrid>
+        </section>
+      )}
     </>
   );
 }

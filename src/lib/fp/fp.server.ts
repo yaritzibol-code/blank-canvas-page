@@ -8,7 +8,7 @@
  * idempotente: correrlo mil veces no duplica un solo punto, y sirve igual para
  * recompensar en caliente que para hacer el backfill histórico.
  */
-import { LP_CATEGORIES, findLp, subjectSequence } from "@/lib/lp/taxonomy";
+import { LP_CATEGORIES, findLp, legacyAircraftSubject, subjectSequence } from "@/lib/lp/taxonomy";
 import { diaMx, sumaDias, type FpProgram } from "./shared";
 
 type Row = Record<string, unknown>;
@@ -147,11 +147,18 @@ export function derivarEventos(estado: Estado, rules: RuleMap): FpEvento[] {
       const programa = programaDeLp(`${cat.id}/x`);
       if (!programa) return;
       cat.subjects.forEach((subject) => {
-        const seq = subjectSequence(subject);
-        if (seq.length === 0) return;
-        const fechas = seq.map(({ item }) => hechos.get(item.id));
-        if (fechas.some((f) => !f)) return;
-        const ultima = fechas.map(String).sort().at(-1)!;
+        const legacy = legacyAircraftSubject();
+        const versions = legacy?.id === subject.id ? [subject, legacy] : [subject];
+        // Historical full-subject completion still earns its pending reward after a
+        // curriculum switch. Keep one stable event key, even if both versions finish.
+        const completionDates = versions.flatMap((version) => {
+          const seq = subjectSequence(version);
+          if (!seq.length) return [];
+          const fechas = seq.map(({ item }) => hechos.get(item.id));
+          return fechas.some((fecha) => !fecha) ? [] : [fechas.map(String).sort().at(-1)!];
+        });
+        const ultima = completionDates.sort()[0];
+        if (!ultima) return;
         out.push({
           eventKey: `materia:${subject.id}`,
           ruleKey: "materia_completa",
@@ -217,7 +224,12 @@ export function derivarEventos(estado: Estado, rules: RuleMap): FpEvento[] {
       if (sospecha) return;
 
       const pct = (correct / total) * 100;
-      const bonusKey = pct >= num(rules, "quiz_bonus_100", "pct", 100) ? "quiz_bonus_100" : pct >= num(rules, "quiz_bonus_90", "pct", 90) ? "quiz_bonus_90" : null;
+      const bonusKey =
+        pct >= num(rules, "quiz_bonus_100", "pct", 100)
+          ? "quiz_bonus_100"
+          : pct >= num(rules, "quiz_bonus_90", "pct", 90)
+            ? "quiz_bonus_90"
+            : null;
       const bonus = bonusKey ? fpDe(rules, bonusKey) : null;
       if (bonusKey && bonus) {
         out.push({
@@ -228,7 +240,8 @@ export function derivarEventos(estado: Estado, rules: RuleMap): FpEvento[] {
           program: programa,
           activityType: "cuestionario",
           activityId: id,
-          activityLabel: bonusKey === "quiz_bonus_100" ? "Bonus: 100% de aciertos" : "Bonus: 90% o más",
+          activityLabel:
+            bonusKey === "quiz_bonus_100" ? "Bonus: 100% de aciertos" : "Bonus: 90% o más",
           detail: `${Math.round(pct)}% de aciertos`,
           occurredAt: fecha,
         });

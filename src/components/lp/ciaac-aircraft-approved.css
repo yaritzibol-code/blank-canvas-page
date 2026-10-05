@@ -1,0 +1,95 @@
+.hb-shell.ciaac-aircraft-approved .am-illustration {
+  width: min(100%, 54rem);
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid rgba(139, 165, 199, 0.25);
+  border-radius: 20px;
+  background: #07182d;
+  color: #edf5ff;
+}
+.am-illustration__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding: 0.8rem 1.15rem;
+  border-bottom: 1px solid rgba(139, 165, 199, 0.16);
+}
+.am-illustration__head > span {
+  font-weight: 700;
+}
+.am-illustration__head button {
+  min-height: 36px;
+  padding: 0.3rem 0.5rem;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #b8d7f5;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.am-illustration__head button:focus-visible {
+  outline: 2px solid #f1c772;
+  outline-offset: 2px;
+}
+.am-illustration__viewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.am-illustration__viewport img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.am-illustration__viewport.is-cropped img {
+  position: absolute;
+}
+.am-illustration__focus {
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #f1c772;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0.45rem rgba(241, 199, 114, 0.18);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: am-focus-attention 1.8s ease-out 2;
+}
+.am-illustration figcaption {
+  padding: 0.9rem 1.15rem 0.55rem;
+  color: #d6e3f1;
+  line-height: 1.5;
+}
+.am-illustration > small {
+  display: block;
+  padding: 0 1.15rem 0.9rem;
+  color: #94a9c2;
+  font-size: 0.65rem;
+}
+.hb-shell.ciaac-aircraft-approved .hb-card-grid {
+  grid-template-columns: 1fr;
+  max-width: 54rem;
+}
+@keyframes am-focus-attention {
+  0% {
+    box-shadow: 0 0 0 0.1rem rgba(241, 199, 114, 0.42);
+  }
+  100% {
+    box-shadow: 0 0 0 0.85rem rgba(241, 199, 114, 0);
+  }
+}
+.am-recognition-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .am-illustration__focus {
+    animation: none;
+  }
+}
+[data-motion="reduced"] .am-illustration__focus {
+  animation: none;
+}
