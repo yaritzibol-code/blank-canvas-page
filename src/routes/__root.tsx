@@ -207,6 +207,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         : []),
       // Pixel de Meta: sólo se inyecta cuando hay ID configurado en `@/lib/meta`.
       ...(isMetaConfigured() ? [{ children: metaPixelBootScript() }] : []),
+      // Pixel de OpenAI (ChatGPT Ads): global `oaiq` independiente de `fbq`.
+      ...(isOaiqConfigured() ? [{ children: oaiqBootScript() }] : []),
     ],
   }),
   shellComponent: RootShell,
