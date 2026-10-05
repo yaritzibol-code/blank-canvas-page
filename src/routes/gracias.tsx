@@ -77,6 +77,7 @@ function GraciasPage() {
   useEffect(() => {
     trackPurchase({ value: valor, currency: recurrente.currency, transactionId: session_id });
     metaTrackSubscription({ value: valor, currency: recurrente.currency, sessionId: session_id });
+    oaiqTrackSubscription({ sessionId: session_id });
   }, [valor, recurrente.currency, session_id]);
 
   return (
