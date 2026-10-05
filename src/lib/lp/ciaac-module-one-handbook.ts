@@ -11,7 +11,7 @@ export function moduleOneHandbook(
       groups: [
         ["¿Qué puede fluir?", [1, 2]],
         ["Forma y volumen", [3, 4, 9]],
-        ["El aire y la viscosidad", [5, 6, 7]],
+        ["El aire y la viscosidad", [5, 6]],
       ],
       checks: [[2, 3]],
     },
@@ -74,6 +74,10 @@ export function moduleOneHandbook(
     9: "La capa límite conecta viscosidad, superficie y movimiento del aire. Participa en la fricción y la separación: el ala interactúa con el aire, no solo lo corta.",
     11: "Hojas deslizándose ayudan a imaginar orden; humo con remolinos, mezcla. El humo es solo una analogía: también intervienen flotación y ambiente, y no reproduce exactamente la capa límite del ala.",
   };
+  const fluidSummaries: Record<number, string> = {
+    5: "El aire tiene masa y peso: fluye y se deforma alrededor del ala. Puedes imaginar un avión que avanza o aire pasando sobre un modelo fijo; importa el movimiento relativo. Esa interacción permite estudiar las fuerzas aerodinámicas.",
+    6: "La viscosidad es la resistencia interna al deslizamiento entre capas de un fluido. El aire también tiene viscosidad, aunque fluya con facilidad. No es densidad: esta última indica masa por volumen. La viscosidad ayuda a explicar la capa límite del siguiente tema.",
+  };
   const content: HandbookStage[] = layout.groups.map(([title, indexes], group) => ({
     kind: "content",
     nav: title,
@@ -82,14 +86,24 @@ export function moduleOneHandbook(
     visualStage: group,
     cards: indexes.map((index, position) => ({
       ...source.cards[index],
+      ...(source.number === 2 && index === 5
+        ? { covers: [...new Set([...source.cards[5].covers, ...source.cards[7].covers])] }
+        : {}),
       ...(source.number === 3 ? { detailText: source.cards[index].text } : {}),
       text:
-        (source.number === 3 ? boundarySummaries[index] : source.cards[index].text)
+        (source.number === 3
+          ? boundarySummaries[index]
+          : source.number === 2 && fluidSummaries[index]
+            ? fluidSummaries[index]
+            : source.cards[index].text
+        )
           .replace("ρ = p/(R T)", "ρ = p/(R T), con presión absoluta p")
           .replace(/El ejemplo de Yaris ayuda: /g, "")
           .replace(/Yaris propone dos imágenes: /g, "Dos imágenes ayudan: ")
           .replace(/Yaris propone imaginar una pared\./g, "Imagina una pared.") +
-        (group === layout.groups.length - 1 && position === indexes.length - 1
+        (source.number !== 2 &&
+        group === layout.groups.length - 1 &&
+        position === indexes.length - 1
           ? `\n\n${errorNotes[source.number]}`
           : ""),
     })),

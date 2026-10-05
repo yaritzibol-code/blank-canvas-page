@@ -226,12 +226,21 @@ for ([activeId, document] of Object.entries(CIAAC_LEARNING_PATHS).filter(
     ...document.stages.flatMap((s) => (s.kind === "content" ? s.cards : [])),
   ];
   for (const card of original.cards.filter(
-    (c) => !["Error común", "La paleta y sus límites"].includes(c.title),
+    (c) => !["Error común", "La paleta y sus límites"].includes(c.title) && !(document.number === 2 && c.title === "Del concepto al avión"),
   )) {
     assert.ok(
       renderedCards.some((c) => c.title === card.title),
       `Preserve technical topic: ${card.title}`,
     );
+  }
+  if (document.number === 2) {
+    const stage = document.stages.find(s => s.nav === "El aire y la viscosidad");
+    assert.equal(stage.cards.length, 2, "Requested concise pair replaces repetitive third card");
+    assert.match(stage.cards[0].text, /movimiento relativo/);
+    assert.match(stage.cards[0].text, /fuerzas aerodinámicas/);
+    assert.match(stage.cards[1].text, /resistencia interna.*capas/);
+    assert.match(stage.cards[1].text, /No es densidad/);
+    assert.ok(original.cards[7].covers.every(c => stage.cards[0].covers.includes(c)));
   }
   assert.equal(document.ciaac, undefined);
   assert.equal(document.stages.filter((s) => s.kind === "exercise").length, 1);

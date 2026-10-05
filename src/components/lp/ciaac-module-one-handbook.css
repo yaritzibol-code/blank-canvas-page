@@ -113,3 +113,75 @@
 .ciaac-module-one-handbook .hb-card-detail[open] {
   border-top: 1px solid #76bfcd80;
 }
+
+/* Compact spatial explanation: full wing first, one separate local velocity detail. */
+.ciaac-module-one-handbook .ciaac-boundary-wing {
+  width: min(100%, 48rem);
+  margin: 12px auto;
+  padding: 14px 18px;
+  box-sizing: border-box;
+  background: #06243d;
+}
+.ciaac-module-one-handbook .ciaac-boundary-wing > svg {
+  max-height: 230px;
+}
+.ciaac-module-one-handbook .ciaac-boundary-wing .boundary-wing-label {
+  font-size: 26px;
+  fill: #f1cb79;
+}
+.ciaac-module-one-handbook .boundary-wing-explanation {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 270px);
+  gap: 18px;
+  align-items: center;
+}
+.ciaac-module-one-handbook .boundary-wing-explanation {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.ciaac-module-one-handbook .boundary-wing-explanation small {
+  display: block;
+  margin-top: 7px;
+  font-size: 11px;
+  color: #b4c9d9;
+}
+.ciaac-module-one-handbook .boundary-wing-detail text {
+  font-size: 12px;
+}
+.ciaac-module-one-handbook .boundary-wing-detail text:first-of-type {
+  font-size: 14px;
+}
+@media (max-width: 620px) {
+  .ciaac-module-one-handbook .ciaac-boundary-wing {
+    padding: 10px;
+  }
+  .ciaac-module-one-handbook .boundary-wing-explanation {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .ciaac-module-one-handbook .boundary-wing-detail {
+    max-width: 270px;
+    margin-inline: auto;
+  }
+  .ciaac-module-one-handbook .ciaac-boundary-wing .boundary-wing-label {
+    font-size: 30px;
+  }
+}
+
+.ciaac-module-one-handbook .ciaac-air-viscosity {
+  width: min(100%, 48rem);
+  margin: 12px auto;
+  padding: 14px 18px;
+  box-sizing: border-box;
+}
+.ciaac-module-one-handbook .ciaac-air-viscosity > svg {
+  max-height: 205px;
+}
+.ciaac-module-one-handbook .ciaac-air-viscosity text {
+  font-size: 16px;
+}
+.ciaac-module-one-handbook .ciaac-air-viscosity figcaption {
+  font-size: 12px;
+  margin-top: 8px;
+}

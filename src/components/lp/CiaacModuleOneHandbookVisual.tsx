@@ -72,102 +72,209 @@ function States() {
     </Diagram>
   );
 }
+// Original illustrative profile. The gold band is magnified and varies along the chord;
+// it is a region affected by viscosity, not a measured thickness or a streamline.
 function Profile() {
+  const surface = (t: number, side: number) => {
+    const camber =
+      t < 0.4 ? (0.035 / 0.16) * (0.8 * t - t * t) : (0.035 / 0.36) * (0.2 + 0.8 * t - t * t);
+    const thickness =
+      0.75 *
+      (0.2969 * Math.sqrt(t) - 0.126 * t - 0.3516 * t ** 2 + 0.2843 * t ** 3 - 0.1036 * t ** 4);
+    return 140 - 530 * camber + side * 530 * thickness;
+  };
+  const points = (side: number, band = false, reverse = false) =>
+    Array.from({ length: 121 }, (_, i) => {
+      const t = (1 - Math.cos((Math.PI * (reverse ? 120 - i : i)) / 120)) / 2;
+      return `${(105 + 530 * t - (band ? 3 * (1 - t) : 0)).toFixed(2)},${(surface(t, side) + (band ? side * (3 + 4 * Math.sqrt(t)) : 0)).toFixed(2)}`;
+    });
+  const airfoil = `M${points(-1).join(" L")} L${points(1, false, true).join(" L")} Z`;
+  const band = `M${points(-1, true).join(" L")} Q645,140 635,147 L${points(1, true, true).join(" L")} Q96,140 102,137 Z`;
   return (
-    <figure className="ciaac-science-diagram ciaac-boundary-profile">
+    <figure className="ciaac-science-diagram ciaac-boundary-wing">
       <svg
-        viewBox="0 0 360 300"
+        viewBox="0 0 720 225"
         role="img"
-        aria-label="Capa límite: el aire aumenta su velocidad al alejarse de una pared fija"
+        aria-label="Capa límite junto a las dos superficies de un perfil alar"
       >
-        <title>Velocidad del aire respecto de una superficie fija</title>
+        <title>La capa límite está junto a la superficie del ala</title>
         <desc>
-          Las flechas apuntan en la dirección del aire: cuanto más largas, mayor velocidad. Dentro
-          de la capa límite, el aire junto a la pared es más lento y, al alejarse, se aproxima a la
-          velocidad del flujo exterior local. En la pared, la velocidad relativa es cero. Ejemplo
-          esquemático de flujo adherido.
+          Perfil claro inmóvil, con ataque redondeado a la izquierda y salida fina a la derecha. La
+          franja dorada ampliada representa la capa límite junto a ambas superficies. Las líneas
+          azules son trayectorias esquemáticas del flujo exterior, no el borde de la capa límite. El
+          grosor no está a escala.
         </desc>
         <defs>
-          <marker
-            id="boundary-speed-arrow"
-            viewBox="0 0 10 10"
-            refX="9"
-            refY="5"
-            markerWidth="4"
-            markerHeight="4"
-            orient="auto"
-          >
-            <path d="M0 0 10 5 0 10Z" fill="#e2b96f" />
-          </marker>
+          <linearGradient id="boundary-wing-white" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#ffffff" />
+            <stop offset="1" stopColor="#c8d8e5" />
+          </linearGradient>
         </defs>
-        {label(180, 20, "Flecha más larga = mayor velocidad")}
-        <text x="14" y="56">
-          Fuera de la
-          <tspan x="14" dy="19">
-            capa límite
-          </tspan>
-        </text>
+        {[-1, 1].flatMap((side) =>
+          [27, 45, 63].map((offset, row) => {
+            const track = Array.from({ length: 101 }, (_, i) => {
+              const x = 18 + (684 * i) / 100;
+              const deflection = (side < 0 ? 56 : 17) * Math.exp(-(((x - 285) / 220) ** 2));
+              return `${x},${140 + side * (offset + deflection)}`;
+            });
+            return (
+              <path
+                key={`${side}-${row}`}
+                data-outer-streamline="true"
+                d={`M${track.join(" L")}`}
+                fill="none"
+                stroke="#62bdeb"
+                strokeWidth="1.5"
+                opacity={0.8 - row * 0.15}
+              />
+            );
+          }),
+        )}
         <path
-          data-speed="exterior"
-          d="M142 63h100"
-          stroke="#e2b96f"
-          strokeWidth="3"
-          markerEnd="url(#boundary-speed-arrow)"
-        />
-        <text x="256" y="68">
-          V exterior
-        </text>
-        <rect
-          x="6"
-          y="98"
-          width="348"
-          height="144"
-          rx="8"
-          fill="#76bfcd"
-          fillOpacity="0.12"
-          stroke="#76bfcd"
+          data-boundary-band="true"
+          d={band}
+          fill="#e6b959"
+          fillOpacity="0.46"
+          stroke="#e8bc66"
           strokeWidth="1"
         />
-        {label(180, 121, "CAPA LÍMITE")}
-        <text x="14" y="155">
-          Más lejos
-          <tspan x="14" dy="19">
-            de la pared
-          </tspan>
-        </text>
         <path
-          data-speed="farther"
-          d="M142 161h76"
-          stroke="#e2b96f"
-          strokeWidth="3"
-          markerEnd="url(#boundary-speed-arrow)"
+          data-profile-airfoil="true"
+          d={airfoil}
+          fill="url(#boundary-wing-white)"
+          stroke="#eff6fc"
+          strokeWidth="1.3"
         />
-        <text x="256" y="166">
-          Mayor V
+        <path d="M410 88 L455 39 H585" fill="none" stroke="#f1cb79" strokeWidth="1.7" />
+        <circle cx="410" cy="88" r="4" fill="#f1cb79" />
+        <text x="461" y="29" className="boundary-wing-label">
+          Capa límite
         </text>
-        <text x="14" y="209">
-          Más cerca
-          <tspan x="14" dy="19">
-            de la pared
-          </tspan>
+      </svg>
+      <figcaption className="boundary-wing-explanation">
+        <div>
+          La franja dorada es la región donde la viscosidad reduce la velocidad del aire: cero en la
+          pared respecto del ala; al alejarse, se aproxima al flujo exterior local. Azul: flujo
+          exterior.
+          <small>
+            Esquema original de flujo adherido, ampliado y sin escala; no es CFD ni representa un
+            grosor constante.
+          </small>
+        </div>
+        <svg
+          className="boundary-wing-detail"
+          viewBox="0 0 270 122"
+          role="img"
+          aria-label="Detalle local ampliado: velocidad cero en la pared y creciente hacia el exterior"
+        >
+          <title>Velocidad respecto del ala, en un detalle local plano</title>
+          <text x="8" y="16">
+            Detalle local ampliado
+          </text>
+          <path data-surface="stationary" d="M8 94H262" stroke="#e7c77b" strokeWidth="3" />
+          <path
+            d="M24 94 C39 92 48 78 59 66 S93 45 120 38"
+            fill="none"
+            stroke="#f1cb79"
+            strokeWidth="1.5"
+          />
+          <path
+            data-speed="nearer"
+            d="M24 79H47L42 76M47 79L42 82"
+            fill="none"
+            stroke="#83caf0"
+            strokeWidth="1.6"
+          />
+          <path
+            data-speed="farther"
+            d="M24 60H72L67 57M72 60L67 63"
+            fill="none"
+            stroke="#83caf0"
+            strokeWidth="1.6"
+          />
+          <path
+            data-speed="exterior"
+            d="M24 38H120L115 35M120 38L115 41"
+            fill="none"
+            stroke="#83caf0"
+            strokeWidth="1.6"
+          />
+          <text x="133" y="42">
+            V exterior local
+          </text>
+          <text x="133" y="85">
+            V = 0
+          </text>
+          <text x="8" y="115">
+            Pared fija · velocidad respecto del ala
+          </text>
+        </svg>
+      </figcaption>
+    </figure>
+  );
+}
+function AirViscosity() {
+  return (
+    <figure className="ciaac-science-diagram ciaac-air-viscosity">
+      <svg
+        viewBox="0 0 720 195"
+        role="img"
+        aria-label="El aire fluye alrededor del ala; sus capas pueden moverse a distinta velocidad"
+      >
+        <title>Aire en movimiento y viscosidad</title>
+        <desc>
+          Un perfil claro tiene borde de ataque redondeado a la izquierda y salida fina a la
+          derecha. Líneas azules muestran aire relativo fluyendo a su alrededor. Aparte, tres capas
+          tienen flechas de distinta longitud: la viscosidad se opone a su deslizamiento relativo.
+          Es una comparación conceptual, no un cálculo del flujo.
+        </desc>
+        <text x="25" y="25">
+          Aire relativo →
         </text>
+        {[-1, 1].flatMap((side) =>
+          [16, 31].map((offset) => (
+            <path
+              key={`${side}-${offset}`}
+              d={`M20 ${108 + side * offset} C85 ${108 + side * offset},100 ${108 + side * (offset + 35)},175 ${108 + side * (offset + 35)} S300 ${108 + side * offset},370 ${108 + side * offset}`}
+              fill="none"
+              stroke="#62bdeb"
+              strokeWidth="1.7"
+            />
+          )),
+        )}
         <path
-          data-speed="nearer"
-          d="M142 215h30"
-          stroke="#e2b96f"
-          strokeWidth="3"
-          markerEnd="url(#boundary-speed-arrow)"
+          data-viscosity-airfoil="true"
+          d="M80 110 C73 93 115 76 165 77 C230 77 300 101 347 117 C271 113 183 132 119 123 C96 120 83 116 80 110Z"
+          fill="#e5eef5"
+          stroke="#f6f9fc"
+          strokeWidth="1.3"
         />
-        <text x="256" y="220">
-          Menor V
+        <text x="115" y="190">
+          Ala inmóvil
         </text>
-        <path data-surface="stationary" d="M6 244H354" stroke="currentColor" strokeWidth="5" />
-        {label(180, 271, "Superficie fija · V = 0")}
-        {label(180, 293, "V: velocidad respecto de la pared")}
+        <path d="M407 32V173" stroke="#7798b2" opacity="0.35" />
+        <text x="440" y="25">
+          Capas a distinta velocidad
+        </text>
+        {[0, 1, 2].map((i) => (
+          <g key={i}>
+            <path d={`M443 ${58 + i * 37}H690`} stroke="#79bbd8" strokeWidth="22" opacity="0.12" />
+            <path
+              data-layer-velocity={i}
+              d={`M460 ${58 + i * 37}h${155 - i * 52}l-6 -4m6 4l-6 4`}
+              stroke="#e7c77b"
+              strokeWidth="2.5"
+              fill="none"
+            />
+          </g>
+        ))}
+        <text x="440" y="171">
+          Deslizamiento entre capas
+        </text>
       </svg>
       <figcaption>
-        Lee desde la pared hacia arriba: el aire pasa de estar en reposo en la superficie a
-        aproximarse a la velocidad exterior local. Ejemplo de flujo adherido, sin escala.
+        Esquema original, sin escala. Las flechas comparan velocidades; la viscosidad se opone al
+        deslizamiento relativo entre capas, no al movimiento uniforme de todo el aire.
       </figcaption>
     </figure>
   );
@@ -379,6 +486,7 @@ export function CiaacModuleOneHandbookVisual({ lesson, group }: { lesson: number
       </figure>
     );
   if (lesson === 2 && group === 1) return <States />;
+  if (lesson === 2 && group === 2) return <AirViscosity />;
   if (lesson === 3 && group === 0) return <Profile />;
   if (lesson === 3 && group === 1) return <AttachedFlowComparison />;
   if (lesson === 3 && group === 2) return <Flow />;
