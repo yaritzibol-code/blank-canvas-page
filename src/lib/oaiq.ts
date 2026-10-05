@@ -33,3 +33,20 @@ export function oaiqMeasure(event: string, params?: Record<string, unknown>): vo
   if (!f) return;
   f("measure", event, params ?? {});
 }
+
+/**
+ * Alta de suscripción, una sola vez por sesión de pago (recargar `/gracias`
+ * no la duplica). Mismo criterio que `metaTrackSubscription`: sin `sessionId`
+ * no hay forma de deduplicarla, así que preferimos no dispararla.
+ */
+export function oaiqTrackSubscription(opts: { sessionId?: string }): void {
+  if (!opts.sessionId || !oaiq()) return;
+  const key = `fp_oaiq_subscription_${opts.sessionId}`;
+  try {
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, "1");
+  } catch {
+    /* almacenamiento bloqueado: preferimos disparar a perder la conversión */
+  }
+  oaiqMeasure("subscription_created", { type: "plan_enrollment" });
+}
