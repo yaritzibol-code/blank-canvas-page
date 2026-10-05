@@ -1,0 +1,126 @@
+.boundary-media {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+  border: 1px solid #c7a05266;
+  border-radius: 16px;
+  background: #101c34;
+  color: #edf2fa;
+}
+.boundary-media h3 {
+  margin: 5px 0 0;
+  font:
+    24px/1.2 Georgia,
+    serif;
+  color: #fff;
+}
+.boundary-media p {
+  margin: 0;
+  color: #d0dbeb;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.boundary-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.boundary-controls button,
+.boundary-load {
+  padding: 10px 14px;
+  border: 1px solid #7184a5;
+  border-radius: 9px;
+  background: #203454;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+}
+.boundary-controls button[aria-pressed="true"] {
+  background: #e7c77b;
+  color: #101c34;
+  border-color: #e7c77b;
+}
+.boundary-controls button:last-child {
+  margin-left: auto;
+}
+.boundary-media button:focus-visible,
+.boundary-media a:focus-visible,
+.boundary-media summary:focus-visible {
+  outline: 3px solid #f18578;
+  outline-offset: 4px;
+}
+.boundary-scene {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  background: #13223d;
+}
+.boundary-label {
+  fill: #f2d892;
+  font:
+    600 15px system-ui,
+    sans-serif;
+}
+.boundary-small {
+  fill: #cfdaeb;
+  font:
+    12px system-ui,
+    sans-serif;
+}
+.boundary-media small {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #b9c8de;
+}
+.boundary-media summary {
+  cursor: pointer;
+  color: #e7c77b;
+  font-size: 13px;
+}
+.boundary-media details p {
+  margin-top: 10px;
+}
+.boundary-video {
+  display: grid;
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid #60739366;
+}
+.boundary-video iframe {
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 16/9;
+  border: 0;
+  border-radius: 10px;
+}
+.boundary-load {
+  justify-self: start;
+  background: #e7c77b;
+  color: #101c34;
+}
+.boundary-video a {
+  color: #f2d892;
+  font-size: 13px;
+  text-underline-offset: 3px;
+}
+@media (max-width: 600px) {
+  .boundary-media {
+    padding: 14px;
+  }
+  .boundary-controls button:last-child {
+    margin-left: 0;
+  }
+  .boundary-controls button {
+    font-size: 12px;
+  }
+  .boundary-media h3 {
+    font-size: 22px;
+  }
+  .boundary-scene {
+    min-height: 210px;
+  }
+  .boundary-small {
+    font-size: 14px;
+  }
+}

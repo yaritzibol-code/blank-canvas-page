@@ -1,3 +1,4 @@
+import { BoundaryFlowMedia, BoundaryFlowVideo } from "./BoundaryFlowMedia";
 import { useMemo, type ComponentProps } from "react";
 import { HandbookLearningPath } from "./HandbookLearningPath";
 import { CiaacModuleOneHandbookVisual } from "./CiaacModuleOneHandbookVisual";
@@ -14,10 +15,17 @@ export function CiaacModuleOneLearningPath(
       className: "aircraft-handbook ciaac-module-one-handbook",
       visual: (stage: number) => {
         const current = document.stages[stage];
+        // Group 1 ("Orden y mezcla") contains the laminar/turbulent definitions.
+        if (document.number === 3 && current.kind === "content" && current.visualStage === 1)
+          return <BoundaryFlowMedia />;
         return current.kind === "content" && current.visualStage !== undefined ? (
           <CiaacModuleOneHandbookVisual lesson={document.number} group={current.visualStage} />
         ) : null;
       },
+      afterStage: (stage: number) =>
+        document.number === 3 && document.stages[stage].kind === "finish" ? (
+          <BoundaryFlowVideo />
+        ) : null,
       migrate: (
         saved: unknown,
         completed: boolean,

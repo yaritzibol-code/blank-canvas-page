@@ -86,6 +86,7 @@ export function HandbookLearningPath({
   presentation?: {
     className: string;
     visual: (stage: number) => React.ReactNode;
+    afterStage?: (stage: number) => React.ReactNode;
     migrate: (
       saved: unknown,
       completed: boolean,
@@ -435,6 +436,7 @@ export function HandbookLearningPath({
               }}
             />
           )}
+          {presentation?.afterStage?.(state.stage)}
           <Source document={document} />
         </main>
 
