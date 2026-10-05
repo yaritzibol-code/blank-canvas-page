@@ -6,7 +6,7 @@ async function reachConcept(page: Page) {
   await page.goto(URL);
   await page.getByRole("button", { name: "Iniciar recorrido", exact: true }).click();
   await expect(next(page)).toBeDisabled();
-  await expect(page.locator('img[src$="preflight-pushback.png"]')).toBeVisible();
+  await expect(page.locator('img[src$="preflight-taxi.png"]')).toBeVisible();
   await page.getByRole("button", { name: /No, hasta separarse del suelo/ }).click();
   await expect(next(page)).toBeEnabled();
   await next(page).click();
@@ -89,6 +89,6 @@ test("desktop preflight screenshot uses the question and illustration together",
 }) => {
   await page.goto(URL);
   await page.getByRole("button", { name: "Iniciar recorrido", exact: true }).click();
-  await expect(page.locator('img[src$="preflight-pushback.png"]')).toBeVisible();
+  await expect(page.locator('img[src$="preflight-taxi.png"]')).toBeVisible();
   await page.screenshot({ path: "qa/approved-aircraft-preflight.png", fullPage: true });
 });

@@ -222,7 +222,7 @@ app.click(button(app, "Iniciar recorrido"));
 assert.equal(app.state.stage, 1);
 assert.equal(next(app).props.disabled, true);
 assert.equal(
-  nodes(app.tree, (n) => n.type === "img" && n.props.src.includes("preflight-pushback")).length,
+  nodes(app.tree, (n) => n.type === "img" && n.props.src.includes("preflight-taxi")).length,
   1,
 );
 app.click(button(app, /No, hasta separarse del suelo/));
@@ -236,14 +236,11 @@ assert.equal(app.state.stage, 2);
 assert.match(textContent(app.tree), /¿Qué es una aeronave\?/);
 assert.match(textContent(app.tree), /Un globo también es aeronave/);
 assert.match(textContent(app.tree), /Toda máquina que puede sustentarse en la atmósfera/);
-assert.match(textContent(app.tree), /se cierran todas sus puertas externas después del embarque/);
-assert.match(textContent(app.tree), /contexto AVSEC/);
-assert.match(textContent(app.tree), /No equivale al tiempo de vuelo/);
-assert.ok(document.sources.some((source) => source.id === "afac-avsec-definitions-2024"));
-assert.match(
-  textContent(app.tree),
-  /que no sean las reacciones de esta contra la superficie de la tierra/,
-);
+assert.match(textContent(app.tree), /Tiempo de vuelo y tiempo en el aire/);
+assert.match(textContent(app.tree), /X1 Operaciones Aeronáuticas/);
+assert.ok(document.sources.some((source) => source.id === "ciaac-x1-operaciones-aeronauticas"));
+assert.doesNotMatch(JSON.stringify(document), /AVSEC|push-back|AFAC|puertas externas/);
+assert.match(textContent(app.tree), /las reacciones del mismo contra la superficie de la tierra/);
 assert.match(textContent(app.tree), /Planeador/);
 assert.match(textContent(app.tree), /Globo/);
 assert.doesNotMatch(textContent(app.tree), /aerodeslizador|colchón de aire/i);
@@ -263,6 +260,13 @@ assert.equal(app.state.stage, 3);
 assert.match(textContent(app.tree), /68 minutos/);
 assert.match(textContent(app.tree), /48 minutos/);
 assert.match(textContent(app.tree), /retirar los calzos/);
+assert.match(
+  textContent(app.tree),
+  /Tiempo total transcurrido desde que la aeronave comienza a moverse por su propia fuerza para despegar, hasta que se detiene al finalizar el vuelo/,
+);
+assert.match(textContent(app.tree), /p. 2-8 \(PDF 20\)/);
+assert.match(document.questions[0].prompt, /por su propia fuerza/);
+assert.match(document.exercise.pairs[0][0], /por su propia fuerza/);
 app.click(next(app));
 assert.equal(app.state.stage, 4);
 assert.match(textContent(app.tree), /09:43/);
@@ -407,7 +411,7 @@ const dirty = migration.migrateAircraftHandbookJourney(
 );
 assert.equal(dirty.stage, 0);
 assert.deepEqual(dirty.answers, {});
-for (const name of ["preflight-pushback", "aircraft-support", "helicopter-rotor"]) {
+for (const name of ["preflight-taxi", "aircraft-support", "helicopter-rotor"]) {
   assert.ok(
     fs.existsSync(file(`public/lp/ciaac/aircraft-handbook/${name}.png`)),
     `Real illustration ${name} exists`,

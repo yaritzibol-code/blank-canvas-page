@@ -30,27 +30,31 @@ export function aircraftHandbook(
   const concept = [
     card(
       "Aeronave: definición formal",
-      "«Toda máquina que puede sustentarse en la atmósfera por reacciones del aire que no sean las reacciones de esta contra la superficie de la tierra.»\n\nAFAC · Lista de Definiciones y Acrónimos, 1 de marzo de 2024, p. 1.\n\nTener motor no es un requisito: un planeador obtiene sustentación en sus alas al desplazarse respecto del aire. Un globo también es aeronave, aunque se sostenga por flotación y no tenga alas.",
+      "«Toda máquina que puede sustentarse en la atmósfera por reacciones del aire que no sean las reacciones del mismo contra la superficie de la tierra.»\n\nSCT / DGAC / CIAAC · X1 Operaciones Aeronáuticas · p. 2-4 (PDF 16).\n\nTener motor no es un requisito: un planeador obtiene sustentación en sus alas al desplazarse respecto del aire. Un globo también es aeronave, aunque se sostenga por flotación y no tenga alas.",
     ),
     card(
-      "Aeronave en vuelo: contexto AVSEC",
-      "«Una aeronave, desde el momento en que se cierran todas sus puertas externas después del embarque, hasta el momento en que se abran dichas puertas para el desembarque.»\n\nAFAC · Lista de Definiciones y Acrónimos, 1 de marzo de 2024, p. 1. Esta definición corresponde a seguridad de la aviación civil (AVSEC). No equivale al tiempo de vuelo que calculamos en las siguientes etapas.",
+      "Tiempo de vuelo y tiempo en el aire",
+      "Aeronave nombra a la máquina. Estar en el aire describe una condición física. Tiempo de vuelo es el intervalo que define el manual CIAAC: puede incluir movimiento en tierra. En las siguientes etapas identificamos sus límites y lo distinguimos del tramo entre despegue y aterrizaje.",
     ),
   ];
   const airplane = [
     card(
+      "Tiempo de vuelo: definición formal",
+      "«Tiempo total transcurrido desde que la aeronave comienza a moverse por su propia fuerza para despegar, hasta que se detiene al finalizar el vuelo.»\n\nSCT / DGAC / CIAAC · X1 Operaciones Aeronáuticas · p. 2-8 (PDF 20).",
+    ),
+    card(
       "Los límites del intervalo",
-      "El tiempo empieza con el primer movimiento destinado al despegue y termina con la detención definitiva al concluir el vuelo. Un traslado entre hangares para mantenimiento no tiene esa finalidad. Una espera temporal durante el rodaje tampoco equivale a haber terminado la operación.\n\nLa expresión «entre calzos» se utiliza para este intervalo. El evento inicial es el movimiento, no simplemente retirar los calzos de un avión que permanece inmóvil.",
+      "El tiempo empieza con el primer movimiento por su propia fuerza para despegar y termina con la detención definitiva al concluir el vuelo. Un traslado entre hangares para mantenimiento no tiene esa finalidad. Una espera temporal durante el rodaje tampoco equivale a haber terminado la operación.\n\nEl manual llama a este intervalo tiempo «entre calzos». El evento inicial es el movimiento por su propia fuerza para despegar, no simplemente retirar los calzos de un avión que permanece inmóvil.",
     ),
     card(
       "Ejemplo completo",
-      "10:00: comienza a moverse para despegar. 10:12: despega. 11:00: aterriza. 11:08: se detiene finalmente en plataforma.\n\nEl tiempo de vuelo es de 68 minutos: de 10:00 a 11:08. Estuvo en el aire 48 minutos: de 10:12 a 11:00. Los veinte minutos restantes corresponden a los tramos en tierra.\n\nNota: Empezar a contar en el despegue o terminar al tocar pista dejaría fuera parte del tiempo de vuelo.",
+      "10:00: comienza a rodar por su propia fuerza para despegar. 10:12: despega. 11:00: aterriza. 11:08: se detiene finalmente en plataforma.\n\nEl tiempo de vuelo es de 68 minutos: de 10:00 a 11:08. Estuvo en el aire 48 minutos: de 10:12 a 11:00. Los veinte minutos restantes corresponden a los tramos en tierra.\n\nNota: Empezar a contar en el despegue o terminar al tocar pista dejaría fuera parte del tiempo de vuelo.",
     ),
   ];
   const helicopter = [
     card(
       "El inicio depende del rotor",
-      "En la operación estudiada, el tiempo comienza cuando las palas empiezan a girar. Encender sistemas sin giro de palas no cumple ese criterio. Tampoco hay que esperar a que los patines abandonen el suelo.",
+      "Para este ejemplo de helicóptero conservamos como referencia complementaria el criterio OACI del Manual de medicina aeronáutica civil, Doc 8984, pp. I-1-18 / I-1-19. El tiempo comienza cuando las palas empiezan a girar. Encender sistemas sin giro de palas no cumple ese criterio. Tampoco hay que esperar a que los patines abandonen el suelo.",
     ),
     card(
       "Dos condiciones para terminar",
@@ -61,7 +65,7 @@ export function aircraftHandbook(
     ...source,
     title: "¿Cuándo empieza a contar el vuelo?",
     intro:
-      "Aprende desde qué momento y hasta cuándo se cuenta el tiempo de vuelo de un avión y de un helicóptero, según las definiciones OACI estudiadas.",
+      "Aprende desde qué momento y hasta cuándo se cuenta el tiempo de vuelo de un avión y de un helicóptero, con el manual CIAAC como fuente principal.",
     cards: [
       card(
         "La misión",
@@ -77,14 +81,14 @@ export function aircraftHandbook(
     figures: [],
     questions: [
       question(
-        "El avión inicia push-back para despegar; sus ruedas siguen apoyadas. ¿Ya empezó su tiempo de vuelo según la definición OACI estudiada?",
+        "El avión comienza a rodar por su propia fuerza para despegar; sus ruedas siguen apoyadas. ¿Ya empezó su tiempo de vuelo según el manual CIAAC?",
         [
           "Sí, con ese movimiento.",
           "No, hasta separarse del suelo.",
           "No, hasta aplicar potencia de despegue.",
         ],
         0,
-        "El movimiento inicia la salida para despegar. No hace falta que las ruedas se hayan separado del suelo.",
+        "El avión comienza a moverse por su propia fuerza para despegar, como indica el manual CIAAC. No hace falta que las ruedas se hayan separado del suelo.",
       ),
       question(
         "Un planeador sin motor puede ser aeronave.",
@@ -105,7 +109,7 @@ export function aircraftHandbook(
         "Falso: a esa hora las palas siguen girando.",
       ),
       question(
-        "Un remolcador traslada un avión entre hangares para mantenimiento. ¿Basta ese movimiento para iniciar el intervalo estudiado?",
+        "Un avión rueda por su propia fuerza entre hangares para mantenimiento. ¿Basta ese movimiento para iniciar el intervalo estudiado?",
         ["Sí, cualquier desplazamiento basta.", "No, falta el propósito de despegar."],
         1,
         "El traslado no tiene propósito de despegar.",
@@ -116,7 +120,10 @@ export function aircraftHandbook(
       title: "Relaciona el evento con su significado",
       instruction: "Conecta las ideas",
       pairs: [
-        ["Primer movimiento del avión para despegar.", "Inicio del tiempo de vuelo del avión."],
+        [
+          "Primer movimiento del avión por su propia fuerza para despegar.",
+          "Inicio del tiempo de vuelo del avión.",
+        ],
         ["Detención final del avión en plataforma.", "Final del tiempo de vuelo del avión."],
         [
           "Las palas empiezan a girar para la operación.",
@@ -130,7 +137,7 @@ export function aircraftHandbook(
       order: [2, 0, 3, 1],
     },
     tips: [
-      "Avión: observa el movimiento y su propósito. Helicóptero: observa también las palas. Para registros reales, comprueba la normativa aplicable.",
+      "Avión: observa el movimiento por su propia fuerza y su propósito de despegar. Helicóptero: observa también las palas. Para registros reales, comprueba la normativa aplicable.",
     ],
     completionChecks: [
       "Reconocer una aeronave por cómo se sustenta.",
@@ -176,24 +183,26 @@ export function aircraftHandbook(
     ciaac: undefined,
     sources: [
       {
-        id: "afac-avsec-definitions-2024",
-        title: "AFAC · Lista de Definiciones y Acrónimos · 1 de marzo de 2024",
-        role: "Definiciones formales de aeronave y aeronave en vuelo en el contexto AVSEC.",
-        url: "https://www.gob.mx/cms/uploads/attachment/file/906219/lista-definiciones-acronimos.pdf",
-        verified_locators: ["Página 1 de 11 · revisión Original"],
+        id: "ciaac-x1-operaciones-aeronauticas",
+        title: "SCT / DGAC / CIAAC · X1 Operaciones Aeronáuticas",
+        role: "Fuente principal: definiciones de aeronave y tiempo de vuelo.",
+        verified_locators: [
+          "Aeronave: p. 2-4 (PDF 16)",
+          "Tiempo de vuelo: p. 2-8 (PDF 20)",
+          "Capítulo fechado en marzo de 1982",
+        ],
         limit:
-          "La definición AVSEC de aeronave en vuelo no sustituye los criterios de tiempo de vuelo estudiados en esta lección.",
+          "Manual de estudio histórico. Para registros reales, comprueba la normativa aplicable.",
       },
       {
         id: "icao-8984",
         title: "OACI · Manual de medicina aeronáutica civil · Doc 8984, tercera edición",
-        role: "Definiciones de tiempo de vuelo de aviones y helicópteros estudiadas.",
+        role: "Referencia complementaria para el criterio de tiempo de vuelo del helicóptero.",
         url: "https://www.icao.int/sites/default/files/2024-12/8984_cons_es.pdf",
         verified_locators: ["I-1-18 / I-1-19 (páginas PDF 34 / 35)"],
         limit:
           "Manual orientativo que remite al Anexo 1. Para registros reales, comprueba la normativa aplicable.",
       },
-      ...(source.sources?.filter((item) => item.id === "mex-aircraft") ?? []),
     ],
   };
 }

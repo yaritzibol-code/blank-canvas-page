@@ -16,9 +16,9 @@ export function AircraftHandbookVisual({ stage }: { stage: number }) {
   if (stage === 1)
     return (
       <Art
-        name="preflight-pushback"
-        alt="Vista elevada de plataforma: un remolcador conectado al tren de nariz inicia el retroceso de un avión con todas sus ruedas apoyadas."
-        caption="Inicio del push-back para una salida programada"
+        name="preflight-taxi"
+        alt="Un avión inicia el rodaje por su propia fuerza para despegar, con todas sus ruedas apoyadas."
+        caption="Inicio del rodaje por su propia fuerza para despegar"
       />
     );
   if (stage === 2)
@@ -45,10 +45,10 @@ export function AircraftHandbookVisual({ stage }: { stage: number }) {
         <figcaption>Una operación completa</figcaption>
         <ol>
           <li>
-            <span aria-hidden="true">↶</span>
+            <span aria-hidden="true">→</span>
             <time>10:00</time>
             <strong>Primer movimiento</strong>
-            <small>Para despegar</small>
+            <small>Por su propia fuerza para despegar</small>
           </li>
           <li>
             <span aria-hidden="true">↗</span>
@@ -141,9 +141,9 @@ function AircraftClosingReflection() {
           <p>
             <strong>La idea que te llevas:</strong> Una aeronave se reconoce por cómo se sostiene.
             Para medir su tiempo de vuelo, identifica los límites de la operación: en el avión, el
-            movimiento para despegar y la detención final; en el helicóptero, el inicio del giro de
-            las palas y la detención tanto de la aeronave como del rotor. Tiempo de vuelo no es lo
-            mismo que tiempo en el aire.
+            movimiento por su propia fuerza para despegar y la detención final; en el helicóptero,
+            el inicio del giro de las palas y la detención tanto de la aeronave como del rotor.
+            Tiempo de vuelo no es lo mismo que tiempo en el aire.
           </p>
         </div>
       )}
