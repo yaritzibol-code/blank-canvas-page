@@ -4,6 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { register, login, resetPassword, ensureSeededAsync, useSessionUser } from "@/lib/store";
 import { lovable } from "@/integrations/lovable";
 import { metaTrack } from "@/lib/meta";
+import { oaiqMeasure } from "@/lib/oaiq";
 
 /**
  * El destino post-login puede traer query (p. ej. `/dashboard/planes?checkout=1&plan=anual`).
@@ -189,6 +190,7 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
       return;
     }
     metaTrack("CompleteRegistration", { content_name: "FlightPath Básica" });
+    oaiqMeasure("registration_completed", { type: "customer_action" });
     if (res.info) {
       // La nube pide confirmar el correo antes de entrar.
       setLoading(false);
