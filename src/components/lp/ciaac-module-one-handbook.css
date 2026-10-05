@@ -81,3 +81,35 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* The boundary-layer comparison stays readable without filling the viewport. */
+.ciaac-module-one-handbook .ciaac-boundary-profile {
+  width: min(100%, 38rem);
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+.ciaac-module-one-handbook .ciaac-boundary-profile text {
+  font-size: 16px;
+}
+
+.ciaac-module-one-handbook .hb-card:has(.hb-card-detail) {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  padding: 12px 0;
+}
+.ciaac-module-one-handbook .hb-card-detail summary {
+  width: fit-content;
+  padding: 10px 0;
+  color: #e2b96f;
+  font-size: 14px;
+  cursor: pointer;
+}
+.ciaac-module-one-handbook .hb-card-detail summary:focus-visible {
+  outline: 2px solid #76bfcd;
+  outline-offset: 3px;
+}
+.ciaac-module-one-handbook .hb-card-detail[open] {
+  border-top: 1px solid #76bfcd80;
+}

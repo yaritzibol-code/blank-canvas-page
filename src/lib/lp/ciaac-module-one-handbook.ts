@@ -61,6 +61,19 @@ export function moduleOneHandbook(
     4: "Nota: Dinámica y total son distintas. Estar detenido sobre tierra no asegura que no haya viento relativo.",
     5: "Nota: No uses una regla de proporcionalidad inversa con altitud o humedad. Para temperatura, indica presión y composición constantes y usa kelvin.",
   };
+  // Boundary-layer pilot: one idea first; the audited explanation remains available.
+  const boundarySummaries: Record<number, string> = {
+    1: "Mira las flechas: junto a la pared, el aire casi no se mueve respecto de ella. Al alejarse, se aproxima al flujo exterior local. La capa límite es la región donde importa ese efecto viscoso; la velocidad exterior puede variar a lo largo del ala.",
+    2: "La viscosidad transmite el efecto de la pared al aire cercano: aparece una variación de velocidad. Ocurre incluso en una superficie lisa; la rugosidad puede adelantar la transición, pero no crea por sí sola la capa límite.",
+    3: "Cero significa respecto del ala. Si el avión avanza, el aire pegado a la superficie avanza con ella respecto de la Tierra. No está inmóvil en el espacio.",
+    4: "Laminar: capas ordenadas, con poca mezcla transversal. Puede aparecer cerca del borde de ataque si las condiciones lo permiten; no ocurre siempre.",
+    5: "Turbulento: fluctuaciones y mezcla entre capas. En condiciones comparables suele generar más fricción, pero puede resistir mejor la separación. Puede seguir adherido; no es lo mismo que turbulencia meteorológica.",
+    6: "Transición cambia el régimen de laminar a turbulento, normalmente en una zona. Separación es el desprendimiento del flujo. Una capa turbulenta puede seguir adherida al ala.",
+    7: "Compara en condiciones semejantes: la capa turbulenta suele tener más mezcla, fricción y espesor, pero resistir mejor la separación ante presión adversa. Son tendencias, no reglas válidas para cualquier posición o flujo.",
+    8: "Suciedad, insectos o hielo pueden adelantar la transición, cambiar la superficie y degradar la aerodinámica. Que el flujo turbulento resista mejor la separación no hace segura un ala contaminada: aplica la inspección y las instrucciones del fabricante.",
+    9: "La capa límite conecta viscosidad, superficie y movimiento del aire. Participa en la fricción y la separación: el ala interactúa con el aire, no solo lo corta.",
+    11: "Hojas deslizándose ayudan a imaginar orden; humo con remolinos, mezcla. El humo es solo una analogía: también intervienen flotación y ambiente, y no reproduce exactamente la capa límite del ala.",
+  };
   const content: HandbookStage[] = layout.groups.map(([title, indexes], group) => ({
     kind: "content",
     nav: title,
@@ -69,8 +82,9 @@ export function moduleOneHandbook(
     visualStage: group,
     cards: indexes.map((index, position) => ({
       ...source.cards[index],
+      ...(source.number === 3 ? { detailText: source.cards[index].text } : {}),
       text:
-        source.cards[index].text
+        (source.number === 3 ? boundarySummaries[index] : source.cards[index].text)
           .replace("ρ = p/(R T)", "ρ = p/(R T), con presión absoluta p")
           .replace(/El ejemplo de Yaris ayuda: /g, "")
           .replace(/Yaris propone dos imágenes: /g, "Dos imágenes ayudan: ")

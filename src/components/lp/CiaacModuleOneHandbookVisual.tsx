@@ -74,32 +74,167 @@ function States() {
 }
 function Profile() {
   return (
-    <Diagram
-      title="Velocidad relativa a la pared dentro de la capa límite"
-      caption="Perfil esquemático junto a una pared fija. La velocidad aumenta desde cero en la pared hasta acercarse a la del flujo exterior local."
-    >
-      <path d="M75 220H655" stroke="currentColor" strokeWidth="6" />
-      {[1, 2, 3, 4].map((i) => (
+    <figure className="ciaac-science-diagram ciaac-boundary-profile">
+      <svg
+        viewBox="0 0 360 300"
+        role="img"
+        aria-label="Capa límite: el aire aumenta su velocidad al alejarse de una pared fija"
+      >
+        <title>Velocidad del aire respecto de una superficie fija</title>
+        <desc>
+          Las flechas apuntan en la dirección del aire: cuanto más largas, mayor velocidad. Dentro
+          de la capa límite, el aire junto a la pared es más lento y, al alejarse, se aproxima a la
+          velocidad del flujo exterior local. En la pared, la velocidad relativa es cero. Ejemplo
+          esquemático de flujo adherido.
+        </desc>
+        <defs>
+          <marker
+            id="boundary-speed-arrow"
+            viewBox="0 0 10 10"
+            refX="9"
+            refY="5"
+            markerWidth="4"
+            markerHeight="4"
+            orient="auto"
+          >
+            <path d="M0 0 10 5 0 10Z" fill="#e2b96f" />
+          </marker>
+        </defs>
+        {label(180, 20, "Flecha más larga = mayor velocidad")}
+        <text x="14" y="56">
+          Fuera de la
+          <tspan x="14" dy="19">
+            capa límite
+          </tspan>
+        </text>
         <path
-          key={i}
-          d={`M170 ${205 - i * 35}h${[15, 80, 155, 225, 250][i]}`}
+          data-speed="exterior"
+          d="M142 63h100"
           stroke="#e2b96f"
           strokeWidth="3"
-          markerEnd="url(#science-arrow)"
+          markerEnd="url(#boundary-speed-arrow)"
         />
-      ))}
-      <circle cx="170" cy="220" r="5" fill="#76bfcd" />
-      <path
-        d="M170 220Q170 175 280 133T420 65"
-        fill="none"
-        stroke="#76bfcd"
-        strokeWidth="3"
-        strokeDasharray="7 5"
-      />
-      {label(545, 64, "Flujo exterior local")}
-      {label(545, 165, "Capa límite")}
-      {label(370, 251, "Pared · velocidad relativa ≈ 0")}
-    </Diagram>
+        <text x="256" y="68">
+          V exterior
+        </text>
+        <rect
+          x="6"
+          y="98"
+          width="348"
+          height="144"
+          rx="8"
+          fill="#76bfcd"
+          fillOpacity="0.12"
+          stroke="#76bfcd"
+          strokeWidth="1"
+        />
+        {label(180, 121, "CAPA LÍMITE")}
+        <text x="14" y="155">
+          Más lejos
+          <tspan x="14" dy="19">
+            de la pared
+          </tspan>
+        </text>
+        <path
+          data-speed="farther"
+          d="M142 161h76"
+          stroke="#e2b96f"
+          strokeWidth="3"
+          markerEnd="url(#boundary-speed-arrow)"
+        />
+        <text x="256" y="166">
+          Mayor V
+        </text>
+        <text x="14" y="209">
+          Más cerca
+          <tspan x="14" dy="19">
+            de la pared
+          </tspan>
+        </text>
+        <path
+          data-speed="nearer"
+          d="M142 215h30"
+          stroke="#e2b96f"
+          strokeWidth="3"
+          markerEnd="url(#boundary-speed-arrow)"
+        />
+        <text x="256" y="220">
+          Menor V
+        </text>
+        <path data-surface="stationary" d="M6 244H354" stroke="currentColor" strokeWidth="5" />
+        {label(180, 271, "Superficie fija · V = 0")}
+        {label(180, 293, "V: velocidad respecto de la pared")}
+      </svg>
+      <figcaption>
+        Lee desde la pared hacia arriba: el aire pasa de estar en reposo en la superficie a
+        aproximarse a la velocidad exterior local. Ejemplo de flujo adherido, sin escala.
+      </figcaption>
+    </figure>
+  );
+}
+function AttachedFlowComparison() {
+  return (
+    <figure className="ciaac-science-diagram ciaac-boundary-profile">
+      <svg
+        viewBox="0 0 360 248"
+        role="img"
+        aria-label="Laminar y turbulento: dos flujos que pueden permanecer adheridos"
+      >
+        <title>Orden y mezcla dentro de la capa límite</title>
+        <desc>
+          Izquierda: capas laminares ordenadas. Derecha: fluctuaciones y mezcla turbulenta. En ambos
+          casos el flujo medio va a la derecha y permanece junto a la superficie. Las líneas son
+          esquemáticas, no trayectorias exactas ni una medida de espesor.
+        </desc>
+        <defs>
+          <marker
+            id="attached-flow-arrow"
+            viewBox="0 0 10 10"
+            refX="9"
+            refY="5"
+            markerWidth="4"
+            markerHeight="4"
+            orient="auto"
+          >
+            <path d="M0 0 10 5 0 10Z" fill="#e2b96f" />
+          </marker>
+        </defs>
+        {label(87, 24, "Laminar")}
+        {label(273, 24, "Turbulento")}
+        <path d="M180 40V197" stroke="#76bfcd" strokeOpacity="0.4" />
+        {[75, 108, 141].map((y) => (
+          <path
+            key={y}
+            data-regime="laminar"
+            d={`M15 ${y}H157`}
+            fill="none"
+            stroke="#e2b96f"
+            strokeWidth="2.5"
+            markerEnd="url(#attached-flow-arrow)"
+          />
+        ))}
+        {[75, 108, 141].map((y, i) => (
+          <path
+            key={y}
+            data-regime="turbulent-attached"
+            d={`M198 ${y}q14 ${i === 1 ? 18 : -14} 28 0t28 0t28 0t28 0h32`}
+            fill="none"
+            stroke={i === 1 ? "#76bfcd" : "#e2b96f"}
+            strokeWidth="2.5"
+            markerEnd="url(#attached-flow-arrow)"
+          />
+        ))}
+        <path d="M10 165H164M196 165H350" stroke="currentColor" strokeWidth="4" />
+        {label(87, 188, "Capas ordenadas")}
+        {label(273, 188, "Mayor mezcla")}
+        {label(180, 214, "Ambos pueden seguir adheridos")}
+        {label(180, 234, "Flujo medio hacia la derecha →")}
+      </svg>
+      <figcaption>
+        Compara el orden de las líneas: la mezcla cambia, pero ninguno de estos dos dibujos muestra
+        separación. Esquema sin escala; no compara espesores.
+      </figcaption>
+    </figure>
   );
 }
 function Flow() {
@@ -245,6 +380,7 @@ export function CiaacModuleOneHandbookVisual({ lesson, group }: { lesson: number
     );
   if (lesson === 2 && group === 1) return <States />;
   if (lesson === 3 && group === 0) return <Profile />;
+  if (lesson === 3 && group === 1) return <AttachedFlowComparison />;
   if (lesson === 3 && group === 2) return <Flow />;
   if (lesson === 4 && (group === 0 || group === 2)) return <Pressure sum={group === 2} />;
   if (lesson === 5 && (group === 0 || group === 2)) return <Density humidity={group === 2} />;

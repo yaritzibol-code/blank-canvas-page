@@ -3,6 +3,8 @@ import type { CiaacActivity, CiaacSource } from "./ciaac-content-types";
 export interface HandbookCard {
   title: string;
   text: string;
+  /** Optional full explanation behind a native disclosure. */
+  detailText?: string;
   covers: number[];
   wide?: boolean;
 }

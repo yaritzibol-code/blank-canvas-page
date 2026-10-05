@@ -591,6 +591,12 @@ function Card({ card }: { card: HandbookCard }) {
     <section className={`hb-card ${card.wide ? "is-wide" : ""}`}>
       <h3>{card.title}</h3>
       <p>{card.text}</p>
+      {card.detailText && (
+        <details className="hb-card-detail">
+          <summary>Ver más: {card.title}</summary>
+          <p>{card.detailText}</p>
+        </details>
+      )}
     </section>
   );
 }
