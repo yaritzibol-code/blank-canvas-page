@@ -15,6 +15,7 @@ import { installClientErrorReporter, reportClientError } from "@/lib/client-erro
 import { useApplyPrefs } from "@/hooks/use-apply-prefs";
 import { GOOGLE_ADS_ID, isAdsConfigured } from "@/lib/ads";
 import { isMetaConfigured, metaPixelBootScript } from "@/lib/meta";
+import { isOaiqConfigured, oaiqBootScript } from "@/lib/oaiq";
 import { useMetaPixel } from "@/hooks/use-meta-pixel";
 import { FlashOfferWatch } from "@/components/shared/FlashOfferWatch";
 
@@ -206,6 +207,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         : []),
       // Pixel de Meta: sólo se inyecta cuando hay ID configurado en `@/lib/meta`.
       ...(isMetaConfigured() ? [{ children: metaPixelBootScript() }] : []),
+      // Pixel de OpenAI (ChatGPT Ads): global `oaiq` independiente de `fbq`.
+      ...(isOaiqConfigured() ? [{ children: oaiqBootScript() }] : []),
     ],
   }),
   shellComponent: RootShell,
