@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CiaacYarisAvatar, CiaacPathyArt } from "./CiaacOfficialArt";
 import { CiaacActivity } from "./CiaacActivity";
 import { CiaacTeachingVisual } from "./CiaacTeachingVisual";
@@ -75,12 +75,14 @@ export function HandbookLearningPath({
   completed,
   onComplete,
   presentation,
+  completionAction,
 }: {
   document: HandbookLearningPathDocument;
   userId: string;
   lpId: string;
   completed: boolean;
   onComplete: () => void;
+  completionAction?: { label: string; onContinue: () => void };
   presentation?: {
     className: string;
     visual: (stage: number) => React.ReactNode;
@@ -95,6 +97,8 @@ export function HandbookLearningPath({
   const [state, setState] = useState<HandbookJourneyState>(() => freshState(checkCount));
   const [hydrated, setHydrated] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const completionStarted = useRef(false);
+  const [completionError, setCompletionError] = useState("");
   const [zoom, setZoom] = useState<HandbookFigure | null>(null);
   const stages = document.stages;
   const current = stages[state.stage];
@@ -167,10 +171,23 @@ export function HandbookLearningPath({
   };
 
   const advance = () => {
+    if (state.complete && completionAction) {
+      if (current.kind === "finish") completionAction.onContinue();
+      else goTo(state.stage + 1);
+      return;
+    }
     if (!canContinue || state.complete) return;
     if (current.kind === "finish") {
-      patchState({ complete: true, maxStage: stages.length - 1 });
-      onComplete();
+      if (completionStarted.current) return;
+      completionStarted.current = true;
+      try {
+        if (!completed) onComplete();
+        patchState({ complete: true, maxStage: stages.length - 1 });
+        setCompletionError("");
+      } catch {
+        completionStarted.current = false;
+        setCompletionError("No se pudo guardar el cierre. Inténtalo de nuevo.");
+      }
       return;
     }
     const next = Math.min(state.stage + 1, stages.length - 1);
@@ -181,6 +198,8 @@ export function HandbookLearningPath({
     if (!window.confirm("¿Reiniciar este recorrido? Se borrará solamente su avance interno."))
       return;
     resetLpJourney(userId, lpId);
+    completionStarted.current = false;
+    setCompletionError("");
     setState(
       presentation
         ? presentation.migrate(null, completed || state.complete, freshState(checkCount))
@@ -428,6 +447,7 @@ export function HandbookLearningPath({
             )}
             <div>{guide}</div>
           </div>
+          {completionError && <p role="alert">{completionError}</p>}
           <div className="hb-actions">
             <button
               type="button"
@@ -439,14 +459,14 @@ export function HandbookLearningPath({
             <button
               type="button"
               className="is-primary"
-              disabled={!canContinue || state.complete}
+              disabled={state.complete && completionAction ? false : !canContinue || state.complete}
               onClick={advance}
             >
               {current.kind === "intro"
                 ? "Iniciar recorrido"
                 : current.kind === "finish"
                   ? state.complete
-                    ? "Completado"
+                    ? (completionAction?.label ?? "Completado")
                     : "Completar Learning Path"
                   : "Continuar"}
             </button>

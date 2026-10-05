@@ -36,7 +36,11 @@
 }
 
 .ciaac-module-one-handbook .ciaac-fluid-context {
-  margin: 20px 0;
+  /* Supporting photograph: leave room for its explanation in the same view.
+     Scope this limit to the raster illustration, not the approved schematics. */
+  width: min(100%, 42rem);
+  width: min(100%, 42rem, 66svh);
+  margin: 24px auto;
   border: 1px solid #cba55f80;
   border-radius: 16px;
   overflow: hidden;
@@ -45,19 +49,35 @@
 .ciaac-module-one-handbook .ciaac-fluid-context img {
   width: 100%;
   height: auto;
+  object-fit: contain;
   display: block;
 }
 .ciaac-module-one-handbook .ciaac-fluid-labels {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
   text-align: center;
   font-weight: 700;
   color: #f5ce85;
-  padding: 12px 8px;
+  padding: 16px 12px 12px;
 }
 .ciaac-module-one-handbook .ciaac-fluid-context figcaption {
-  padding: 0 18px 18px;
+  max-width: 62ch;
+  margin: 0 auto;
+  padding: 0 20px 20px;
   font-size: 14px;
   line-height: 1.6;
   color: #efe3cf;
+}
+
+.ciaac-module-one-handbook .hb-card-grid {
+  gap: clamp(18px, 2vw, 28px);
+}
+.ciaac-module-one-handbook .hb-card-grid > * {
+  min-width: 0;
+}
+@media (max-width: 700px) {
+  .ciaac-module-one-handbook .hb-card-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

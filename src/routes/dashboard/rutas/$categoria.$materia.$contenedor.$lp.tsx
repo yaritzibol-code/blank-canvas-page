@@ -161,6 +161,25 @@ function LearningPathPage() {
     });
   };
 
+  // Reuse the official neighbor and all access gates; never skip a locked LP.
+  const nextAfterCompletion =
+    completado && vecinos?.next && lpAccess(user, subject, vecinos.next.id).allowed
+      ? vecinos.next
+      : null;
+  const completionAction = {
+    label: nextAfterCompletion ? "Continuar al siguiente Learning Path" : "Volver al módulo",
+    onContinue: () => {
+      // Recheck at click time in case the user's plan or progress changed.
+      const next = lpNeighbors(subject, item.id).next;
+      if (lpAccess(user, subject, item.id).status === "completado" &&
+          next && lpAccess(user, subject, next.id).allowed) {
+        irA(next.id);
+      } else {
+        void navigate(salir);
+      }
+    },
+  };
+
   return (
     <>
       <LearningPathExperience
@@ -250,6 +269,7 @@ function LearningPathPage() {
           />
         ) : item.id === AIRCRAFT_LP_ID && handbookDocument && user ? (
           <CiaacAircraftLearningPath
+            completionAction={completionAction}
             document={handbookDocument}
             userId={user.id}
             lpId={item.id}
@@ -262,6 +282,7 @@ function LearningPathPage() {
           handbookDocument.number <= 5 &&
           user ? (
           <CiaacModuleOneLearningPath
+            completionAction={completionAction}
             document={handbookDocument}
             userId={user.id}
             lpId={item.id}
@@ -272,6 +293,7 @@ function LearningPathPage() {
           handbookDocument &&
           user ? (
           <CiaacAerodynamicsLearningPath
+            completionAction={completionAction}
             document={handbookDocument}
             userId={user.id}
             lpId={item.id}
