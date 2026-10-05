@@ -29,8 +29,8 @@ export function aircraftHandbook(
 ): HandbookLearningPathDocument {
   const concept = [
     card(
-      "Aeronave: definición formal",
-      "«Toda máquina que puede sustentarse en la atmósfera por reacciones del aire que no sean las reacciones del mismo contra la superficie de la tierra.»\n\nSCT / DGAC / CIAAC · X1 Operaciones Aeronáuticas · p. 2-4 (PDF 16).\n\nTener motor no es un requisito: un planeador obtiene sustentación en sus alas al desplazarse respecto del aire. Un globo también es aeronave, aunque se sostenga por flotación y no tenga alas.",
+      "Aeronave",
+      "«Toda máquina que puede sustentarse en la atmósfera por reacciones del aire que no sean las reacciones del mismo contra la superficie de la tierra.»\n\nTener motor no es un requisito: un planeador obtiene sustentación en sus alas al desplazarse respecto del aire. Un globo también es aeronave, aunque se sostenga por flotación y no tenga alas.",
     ),
     card(
       "Tiempo de vuelo y tiempo en el aire",
@@ -39,8 +39,8 @@ export function aircraftHandbook(
   ];
   const airplane = [
     card(
-      "Tiempo de vuelo: definición formal",
-      "«Tiempo total transcurrido desde que la aeronave comienza a moverse por su propia fuerza para despegar, hasta que se detiene al finalizar el vuelo.»\n\nSCT / DGAC / CIAAC · X1 Operaciones Aeronáuticas · p. 2-8 (PDF 20).",
+      "Tiempo de vuelo",
+      "«Tiempo total transcurrido desde que la aeronave comienza a moverse por su propia fuerza para despegar, hasta que se detiene al finalizar el vuelo.»",
     ),
     card(
       "Los límites del intervalo",
@@ -54,7 +54,7 @@ export function aircraftHandbook(
   const helicopter = [
     card(
       "El inicio depende del rotor",
-      "Para este ejemplo de helicóptero conservamos como referencia complementaria el criterio OACI del Manual de medicina aeronáutica civil, Doc 8984, pp. I-1-18 / I-1-19. El tiempo comienza cuando las palas empiezan a girar. Encender sistemas sin giro de palas no cumple ese criterio. Tampoco hay que esperar a que los patines abandonen el suelo.",
+      "El tiempo comienza cuando las palas empiezan a girar. Encender sistemas sin giro de palas no cumple ese criterio. Tampoco hay que esperar a que los patines abandonen el suelo.",
     ),
     card(
       "Dos condiciones para terminar",
@@ -195,13 +195,15 @@ export function aircraftHandbook(
           "Manual de estudio histórico. Para registros reales, comprueba la normativa aplicable.",
       },
       {
-        id: "icao-8984",
-        title: "OACI · Manual de medicina aeronáutica civil · Doc 8984, tercera edición",
-        role: "Referencia complementaria para el criterio de tiempo de vuelo del helicóptero.",
-        url: "https://www.icao.int/sites/default/files/2024-12/8984_cons_es.pdf",
-        verified_locators: ["I-1-18 / I-1-19 (páginas PDF 34 / 35)"],
+        id: "afac-co-av-50-07-r3",
+        title: "AFAC · CO AV-50/07 R3 · 2 de mayo de 2023",
+        role: "Tiempo de vuelo del helicóptero; referencia 9 de la bibliografía recomendada en la guía del sustentante.",
+        verified_locators: [
+          "§4.96 · p. 13 de 170 (PDF 13)",
+          "Guía del sustentante · p. 42 · referencia 9",
+        ],
         limit:
-          "Manual orientativo que remite al Anexo 1. Para registros reales, comprueba la normativa aplicable.",
+          "Referencia de la edición indicada. Para registros reales, comprueba la normativa aplicable.",
       },
     ],
   };

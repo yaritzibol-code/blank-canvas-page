@@ -237,9 +237,12 @@ assert.match(textContent(app.tree), /¿Qué es una aeronave\?/);
 assert.match(textContent(app.tree), /Un globo también es aeronave/);
 assert.match(textContent(app.tree), /Toda máquina que puede sustentarse en la atmósfera/);
 assert.match(textContent(app.tree), /Tiempo de vuelo y tiempo en el aire/);
-assert.match(textContent(app.tree), /X1 Operaciones Aeronáuticas/);
+assert.doesNotMatch(
+  textContent(app.tree).split("Fuentes y alcance de este recorrido")[0],
+  /definición formal|X1 Operaciones Aeronáuticas/,
+);
 assert.ok(document.sources.some((source) => source.id === "ciaac-x1-operaciones-aeronauticas"));
-assert.doesNotMatch(JSON.stringify(document), /AVSEC|push-back|AFAC|puertas externas/);
+assert.doesNotMatch(JSON.stringify(document), /AVSEC|push-back|puertas externas/);
 assert.match(textContent(app.tree), /las reacciones del mismo contra la superficie de la tierra/);
 assert.match(textContent(app.tree), /Planeador/);
 assert.match(textContent(app.tree), /Globo/);
@@ -264,12 +267,25 @@ assert.match(
   textContent(app.tree),
   /Tiempo total transcurrido desde que la aeronave comienza a moverse por su propia fuerza para despegar, hasta que se detiene al finalizar el vuelo/,
 );
-assert.match(textContent(app.tree), /p. 2-8 \(PDF 20\)/);
+assert.doesNotMatch(
+  textContent(app.tree).split("Fuentes y alcance de este recorrido")[0],
+  /p. 2-8 \(PDF 20\)/,
+);
 assert.match(document.questions[0].prompt, /por su propia fuerza/);
 assert.match(document.exercise.pairs[0][0], /por su propia fuerza/);
 app.click(next(app));
 assert.equal(app.state.stage, 4);
 assert.match(textContent(app.tree), /09:43/);
+assert.doesNotMatch(
+  textContent(app.tree).split("Fuentes y alcance de este recorrido")[0],
+  /CO AV-50\/07 R3/,
+);
+assert.doesNotMatch(
+  textContent(app.tree).split("Fuentes y alcance de este recorrido")[0],
+  /§4.96, p. 13 \(PDF 13\)/,
+);
+assert.ok(document.sources.some((source) => source.id === "afac-co-av-50-07-r3"));
+assert.ok(!document.sources.some((source) => source.id === "icao-8984"));
 app.click(next(app));
 assert.equal(app.state.stage, 5);
 assert.equal(next(app).props.disabled, true);
