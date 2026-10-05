@@ -1,3 +1,4 @@
+import { CIAAC_REVIEWED_AIRCRAFT_ENGINES_IDS } from "./ciaac-aircraft-engines-ids";
 import { CIAAC_REVIEWED_AERODYNAMICS_IDS } from "./ciaac-aerodynamics-ids";
 /** Original reviewed introductory module; keep its stable IDs for migrations. */
 export const CIAAC_MODULE_ONE_IDS = [
@@ -8,7 +9,7 @@ export const CIAAC_MODULE_ONE_IDS = [
   "ciaac/aerodinamica/modulo-1-introduccion-y-definiciones/densidad-del-aire-y-factores-que-la-afectan-5",
 ] as const;
 
-export const CIAAC_AVAILABLE_IDS = [...CIAAC_MODULE_ONE_IDS, ...CIAAC_REVIEWED_AERODYNAMICS_IDS];
+export const CIAAC_AVAILABLE_IDS = [...CIAAC_MODULE_ONE_IDS, ...CIAAC_REVIEWED_AERODYNAMICS_IDS, ...CIAAC_REVIEWED_AIRCRAFT_ENGINES_IDS];
 const ready = new Set<string>(CIAAC_AVAILABLE_IDS);
 
 export function isLearningPathAvailable(id: string): boolean {

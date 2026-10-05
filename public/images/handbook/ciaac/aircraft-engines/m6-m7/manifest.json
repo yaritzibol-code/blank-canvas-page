@@ -1,0 +1,92 @@
+[
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/aire-acondicionado-y-presurizacion-tipos-de-control-manual-automatizad-1",
+    "stageId": 2,
+    "stageTitle": "Cómo se mantiene la presión",
+    "src": "/images/handbook/ciaac/aircraft-engines/m6-m7/m6-01-cabina.svg",
+    "caption": "Diagrama original: el balance de aire controla la presión de cabina; temperatura y oxígeno son funciones distintas.",
+    "alt": "El aire acondicionado entra a cabina; la válvula outflow regula su salida. Un sensor informa al controlador por líneas discontinuas. La válvula de seguridad es independiente. Refrigerante y oxígeno no son el aire de presurización.",
+    "observe": "Sigue el aire desde la entrada hasta la salida regulada; el controlador sólo transmite una señal."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/neumatico-2",
+    "stageId": 2,
+    "stageTitle": "Qué hace cada componente",
+    "src": "/images/handbook/ciaac/aircraft-engines/m6-m7/m6-02-neumatico.svg",
+    "caption": "Diagrama original: una botella alimenta el circuito neumático; el aire usado puede descargarse al ambiente.",
+    "alt": "Una línea de reposición del compresor atraviesa un antirretorno hacia la botella. El aire almacenado pasa por reductora y control hacia el actuador; el aire usado sale al ambiente. Dos volúmenes contienen el mismo número de partículas para mostrar compresibilidad.",
+    "observe": "Sigue la reposición hacia la botella y distingue el escape del aire utilizado."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/electrico-alimentacion-distribucion-operacion-apu-gpu-3",
+    "stageId": 3,
+    "stageTitle": "APU y GPU",
+    "src": "/images/handbook/ciaac/aircraft-engines/m6-m7/m6-03-electrico.svg",
+    "caption": "Diagrama original: fuentes eléctricas con contactores propios; salida neumática de APU diferenciada.",
+    "alt": "Batería, generador del motor, generador APU y GPU exterior tienen contactores propios hacia las barras. Contactores representados abiertos. Líneas doradas representan conexiones de energía, no electrones. Un bloque APU (turbina) separado muestra una posible salida neumática mediante una flecha azul discontinua; no está conectado al cableado.",
+    "observe": "Distingue cada contactor y separa la energía eléctrica del aire que puede entregar la APU."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/hidraulico-propiedades-usos-liquidos-depositos-ventajas-4",
+    "stageId": 2,
+    "stageTitle": "El circuito básico",
+    "src": "/images/handbook/ciaac/aircraft-engines/m6-m7/m6-04-hidraulico.svg",
+    "caption": "Diagrama original: suministro y retorno hidráulicos; relación entre presión, área y fuerza.",
+    "alt": "Depósito separado de bomba, válvula y actuador. La línea de presión alimenta una cara del actuador; el retorno se muestra funcionalmente simplificado hacia el depósito. A presión igual, duplicar el área duplica la fuerza. Presión y caudal son magnitudes diferentes.",
+    "observe": "Compara las dos caras del actuador y el retorno al depósito; luego duplica el área del pistón."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/proteccion-contra-fuego-tipos-a-b-c-extintores-detector-5",
+    "stageId": 2,
+    "stageTitle": "Detectar y advertir",
+    "src": "/images/handbook/ciaac/aircraft-engines/m6-m7/m6-05-fuego.svg",
+    "caption": "Diagrama original: detección termoeléctrica y extinción son funciones separadas.",
+    "alt": "El calor afecta una unión de metales distintos y genera una señal respecto a una referencia térmica; el sistema interpreta la señal y advierte. Extintor portátil separado de la cadena de detección. Clases A, B y C bajo convención FAA/NFPA; no se prescribe un agente universal.",
+    "observe": "Distingue la unión caliente, la referencia térmica y el equipo portátil independiente."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/proteccion-hielo-lluvia-antihielo-lluvia-inspeccion-pre-vuelo-6",
+    "stageId": 1,
+    "stageTitle": "Prevenir y retirar hielo",
+    "src": "/images/handbook/ciaac/aircraft-engines/m6-m7/m6-06-hielo-lluvia.svg",
+    "caption": "Diagrama original: calor, bota neumática y tratamiento del vidrio actúan de formas distintas.",
+    "alt": "Tres cortes independientes: borde calentado para anti-hielo, bota neumática deformada que fractura hielo, y vidrio con tratamiento hidrofóbico para lluvia. Las fuentes térmica y neumática se rotulan por separado. No se representa protección total de una aeronave.",
+    "observe": "Compara prevenir la formación de hielo, fracturar hielo existente y desplazar gotas."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/tren-aterrizaje-clasificacion-operacion-frenos-tambor-balatas-discos-7",
+    "stageId": 3,
+    "stageTitle": "Tambor y ejemplo histórico",
+    "src": "/images/handbook/ciaac/aircraft-engines/m6-m7/m6-07-frenos.svg",
+    "caption": "Diagrama original: disco y tambor histórico con tubo expansor convierten energía en calor.",
+    "alt": "Disco giratorio azul apretado por elementos fijos grises. Tambor histórico giratorio con tubo expansor interno dorado que empuja bloques radiales; no usa palanca automotriz. Las siluetas de tren convencional y triciclo ilustran disposición de ruedas, separada de fijo o retráctil.",
+    "observe": "Observa qué pieza gira y cómo se aplica fricción en cada corte."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/sistema-vacio-succion-funcion-indicador-actitud-giro-direccional-y-err-8",
+    "stageId": 1,
+    "stageTitle": "La corriente que mueve el rotor",
+    "src": "/images/handbook/ciaac/aircraft-engines/m6-m7/m6-08-vacio.svg",
+    "caption": "Diagrama original: instrumentos giroscópicos de actitud y rumbo alimentados en paralelo por aire.",
+    "alt": "Aire filtrado atraviesa en paralelo un indicador de actitud y un indicador direccional, llega al colector y luego a la bomba que descarga al ambiente. Indicador de succión conectado al colector; reguladora admite aire al lado de succión. No hay altímetro conectado.",
+    "observe": "Ambos giros reciben aire en paralelo antes del colector y la bomba."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-6-sistemas-aeronave/sistema-presion-estatica-componentes-y-funcionamiento-9",
+    "stageId": 1,
+    "stageTitle": "Dos presiones y tres indicaciones",
+    "src": "/images/handbook/ciaac/aircraft-engines/m6-m7/m6-09-pitot-estatica.svg",
+    "caption": "Diagrama original: la presión total y la estática llegan a instrumentos diferentes.",
+    "alt": "Pitot entrega presión total Pt al anemómetro. La presión estática Ps se ramifica al anemómetro, altímetro y VSI. En un VSI convencional, Ps llega directamente a la cápsula y mediante una restricción a la caja. Pt menos Ps aproxima presión dinámica sólo a baja compresibilidad.",
+    "observe": "Sólo el anemómetro recibe Pt; los tres instrumentos reciben Ps."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-7-comunicaciones-disposiciones-aeronauticas/disposiciones-relativas-al-servicio-de-telecomunicaciones-aeronauticas-1",
+    "stageId": 1,
+    "stageTitle": "Cuatro partes del servicio",
+    "src": "/images/handbook/ciaac/aircraft-engines/m6-m7/m7-01-servicios.svg",
+    "caption": "Diagrama original: cuatro servicios aeronáuticos clasificados por su función.",
+    "alt": "Servicio fijo entre estaciones; móvil entre tierra y aeronave; radionavegación proporciona orientación mediante radioayudas; radiodifusión envía información desde un emisor a múltiples receptores. Es un mapa de funciones, no una asignación de frecuencias ni una limitación a voz.",
+    "observe": "Identifica los extremos de cada enlace y la función del servicio."
+  }
+]

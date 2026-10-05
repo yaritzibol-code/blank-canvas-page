@@ -216,7 +216,7 @@ function mount(saved, completed = false) {
 
 const next = (app) => button(app, "Continuar");
 for ([activeId, document] of Object.entries(CIAAC_LEARNING_PATHS).filter(
-  ([id, d]) => id.includes("/modulo-1-") && d.number > 1,
+  ([id, d]) => id.startsWith("ciaac/aerodinamica/modulo-1-") && d.number > 1,
 )) {
   const original = JSON.parse(read("src/lib/lp/ciaac-module1.content.json")).lessons.find(
     (l) => l.id === activeId,

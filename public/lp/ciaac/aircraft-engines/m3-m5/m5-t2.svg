@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" role="img" aria-labelledby="m5-t2-title m5-t2-desc">
+<title id="m5-t2-title">Combustible: propiedades independientes</title>
+<desc id="m5-t2-desc">Tipo y aprobación determinan compatibilidad con motor y aeronave; octanaje caracteriza resistencia a detonación en ensayos. En combustión normal avanza un frente de llama desde la chispa. En detonación también se autoenciende mezcla restante por delante de ese frente. Limpieza y volatilidad son propiedades separadas. El octanaje no mide energía ni autoriza sustituciones.</desc>
+<defs>
+<marker id="m5-t2-cyan" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#64d9e8"/></marker>
+<marker id="m5-t2-gold" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#efc66e"/></marker>
+<marker id="m5-t2-sunset" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#f49d78"/></marker>
+<marker id="m5-t2-pale" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#e7eff6"/></marker>
+<marker id="m5-t2-line" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#668098"/></marker>
+</defs>
+<rect width="760" height="460" rx="18" fill="#0b172a"/>
+<g font-family="DejaVu Sans, Arial, sans-serif" font-size="18" fill="#e7eff6" stroke-linecap="round" stroke-linejoin="round">
+<text x="28" y="36" font-size="25" font-weight="700" fill="#e7eff6" text-anchor="start">Combustible: propiedades independientes</text>
+<rect x="26" y="58" width="346" height="105" rx="12" fill="#12243a" stroke="#668098" stroke-width="1.5"/>
+<rect x="388" y="58" width="346" height="105" rx="12" fill="#12243a" stroke="#668098" stroke-width="1.5"/>
+<text x="43" y="87" font-size="21" font-weight="700" fill="#64d9e8" text-anchor="start">Tipo y aprobación</text>
+<text x="43" y="116" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Compatibilidad con motor</text>
+<text x="43" y="143" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">y aeronave</text>
+<path d="M324 80H346L356 90V135H324Z" stroke="#668098" stroke-width="2" fill="none"/>
+<path d="M344 81V93H355" stroke="#668098" stroke-width="2" fill="none"/>
+<path d="M331 114l6 6 12-14" stroke="#64d9e8" stroke-width="3" fill="none"/>
+<text x="406" y="87" font-size="21" font-weight="700" fill="#efc66e" text-anchor="start">Octanaje</text>
+<text x="406" y="116" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Resistencia a detonación</text>
+<text x="406" y="143" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">en ensayos</text>
+<rect x="26" y="178" width="346" height="157" rx="12" fill="#12243a" stroke="#668098" stroke-width="1.5"/>
+<rect x="45" y="224" width="308" height="63" rx="11" fill="#0b172a" stroke="#e7eff6" stroke-width="2.5"/>
+<rect x="45" y="275" width="308" height="12" rx="1" fill="#12243a" stroke="#e7eff6" stroke-width="1.5"/>
+<path d="M62 226H145Q199 252 145 272H62Z" stroke="#efc66e" stroke-width="0" fill="#5b4930"/>
+<path d="M145 227Q198 251 145 272" stroke="#efc66e" stroke-width="4" fill="none"/>
+<path d="M68 214v23" stroke="#efc66e" stroke-width="5" fill="none"/>
+<path d="M68 239l-5 7 9-2-3 8" stroke="#efc66e" stroke-width="2" fill="none"/>
+<path d="M181 249h25" stroke="#efc66e" stroke-width="2" fill="none" marker-end="url(#m5-t2-gold)"/>
+<circle cx="231" cy="238" r="2" fill="#64d9e8" stroke="#64d9e8" stroke-width="1"/>
+<circle cx="250" cy="255" r="2" fill="#64d9e8" stroke="#64d9e8" stroke-width="1"/>
+<circle cx="291" cy="240" r="2" fill="#64d9e8" stroke="#64d9e8" stroke-width="1"/>
+<circle cx="322" cy="260" r="2" fill="#64d9e8" stroke="#64d9e8" stroke-width="1"/>
+<circle cx="224" cy="264" r="2" fill="#64d9e8" stroke="#64d9e8" stroke-width="1"/>
+<circle cx="312" cy="235" r="2" fill="#64d9e8" stroke="#64d9e8" stroke-width="1"/>
+<rect x="388" y="178" width="346" height="157" rx="12" fill="#12243a" stroke="#668098" stroke-width="1.5"/>
+<rect x="407" y="224" width="308" height="63" rx="11" fill="#0b172a" stroke="#e7eff6" stroke-width="2.5"/>
+<rect x="407" y="275" width="308" height="12" rx="1" fill="#12243a" stroke="#e7eff6" stroke-width="1.5"/>
+<path d="M424 226H507Q561 252 507 272H424Z" stroke="#efc66e" stroke-width="0" fill="#5b4930"/>
+<path d="M507 227Q560 251 507 272" stroke="#efc66e" stroke-width="4" fill="none"/>
+<path d="M430 214v23" stroke="#efc66e" stroke-width="5" fill="none"/>
+<path d="M430 239l-5 7 9-2-3 8" stroke="#efc66e" stroke-width="2" fill="none"/>
+<path d="M543 249h25" stroke="#efc66e" stroke-width="2" fill="none" marker-end="url(#m5-t2-gold)"/>
+<circle cx="593" cy="238" r="2" fill="#64d9e8" stroke="#64d9e8" stroke-width="1"/>
+<circle cx="612" cy="255" r="2" fill="#64d9e8" stroke="#64d9e8" stroke-width="1"/>
+<circle cx="653" cy="240" r="2" fill="#64d9e8" stroke="#64d9e8" stroke-width="1"/>
+<circle cx="684" cy="260" r="2" fill="#64d9e8" stroke="#64d9e8" stroke-width="1"/>
+<circle cx="586" cy="264" r="2" fill="#64d9e8" stroke="#64d9e8" stroke-width="1"/>
+<circle cx="674" cy="235" r="2" fill="#64d9e8" stroke="#64d9e8" stroke-width="1"/>
+<text x="44" y="206" font-size="20" font-weight="700" fill="#64d9e8" text-anchor="start">Combustión normal</text>
+<text x="408" y="206" font-size="20" font-weight="700" fill="#f49d78" text-anchor="start">Detonación</text>
+<text x="44" y="315" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Frente de llama progresivo</text>
+<path d="M651 230l5 11 13-4-7 12 11 8-14 1-2 13-8-10-12 5 5-13-10-7 13-3Z" stroke="#f49d78" stroke-width="2" fill="#743e37"/>
+<path d="M668 232l6-5 M672 265l7 5 M633 231l-5-6" stroke="#f49d78" stroke-width="2" fill="none"/>
+<text x="406" y="315" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Autoignición del gas restante</text>
+<text x="28" y="359" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">El octanaje no mide energía ni autoriza sustituciones.</text>
+<rect x="26" y="378" width="346" height="65" rx="11" fill="#12243a" stroke="#668098" stroke-width="1.5"/>
+<rect x="388" y="378" width="346" height="65" rx="11" fill="#12243a" stroke="#668098" stroke-width="1.5"/>
+<path d="M47 392l-12 23q0 15 12 15t12-15Z" stroke="#64d9e8" stroke-width="2" fill="none"/>
+<path d="M40 419l6 5 8-10" stroke="#64d9e8" stroke-width="2.5" fill="none"/>
+<text x="77" y="403" font-size="19" font-weight="700" fill="#64d9e8" text-anchor="start">Limpieza</text>
+<text x="77" y="431" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Sin agua ni partículas</text>
+<path d="M406 428h26 M406 420q-6-8 1-15t0-14 M418 420q-6-8 1-15t0-14 M430 420q-6-8 1-15t0-14" stroke="#efc66e" stroke-width="2" fill="none"/>
+<text x="447" y="403" font-size="19" font-weight="700" fill="#efc66e" text-anchor="start">Volatilidad</text>
+<text x="447" y="431" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Facilidad para formar vapor</text>
+</g>
+</svg>

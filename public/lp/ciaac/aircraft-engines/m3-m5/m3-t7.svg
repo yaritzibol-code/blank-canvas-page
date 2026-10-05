@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="390" viewBox="0 0 760 390" role="img" aria-labelledby="ae-m3t7-title ae-m3t7-desc">
+<title id="ae-m3t7-title">Dónde y cuándo empieza a arder</title>
+<desc id="ae-m3t7-desc">Comparación conceptual. Normal: la chispa inicia un frente de llama. Preignición: un punto caliente inicia antes de la chispa prevista. Detonación: autoignición rápida de mezcla restante, separada del frente de llama normal. No representa tiempos, presiones ni dimensiones a escala.</desc>
+<rect width="760" height="390" rx="20" fill="#0b182b"/>
+<g font-family="Arial,sans-serif" fill="#e2eaf1">
+<text x="26" y="40" font-size="25" font-weight="bold">Dónde y cuándo empieza a arder</text>
+<text x="26" y="69" font-size="17" fill="#9aafc2">Tres mecanismos · no una secuencia de fallas</text>
+<g fill="#15273c" stroke="#47647d" stroke-width="2"><rect x="24" y="94" width="226" height="235" rx="12"/><rect x="267" y="94" width="226" height="235" rx="12"/><rect x="510" y="94" width="226" height="235" rx="12"/></g>
+<g font-size="22" text-anchor="middle"><text x="137" y="126">Normal</text><text x="380" y="126">Preignición</text><text x="623" y="126">Detonación</text></g>
+<g stroke="#a9bfd0" stroke-width="3" fill="#0b182b"><path d="M50 242V163H224V242Z"/><path d="M293 242V163H467V242Z"/><path d="M536 242V163H710V242Z"/></g>
+<g stroke="#a9bfd0" stroke-width="4"><path d="M50 238H224M293 238H467M536 238H710"/><path d="M87 148V179M330 148V179M573 148V179"/></g>
+<g fill="#f4ca70"><path d="M86 174l-6 13h9l-6 15 15-22h-10l5-6Z"/><path d="M572 174l-6 13h9l-6 15 15-22h-10l5-6Z"/></g>
+<g fill="#f4ca70" fill-opacity=".28" stroke="#f4ca70" stroke-width="4"><path d="M54 171Q140 176 158 221H54Z"/><path d="M463 171Q408 169 377 221H463Z"/><path d="M540 171Q591 175 614 221H540Z"/></g>
+<circle cx="455" cy="166" r="9" fill="#f3946c"/>
+<path d="M669 177l6 14 16-4-9 14 12 12-18-1-7 17-7-16-18 3 11-14-10-13 17 3Z" fill="#f3946c" fill-opacity=".4" stroke="#f3946c" stroke-width="3"/>
+<g font-size="18" text-anchor="middle"><text x="137" y="275" fill="#f4ca70">Chispa → llama</text><text x="380" y="275" fill="#f3946c">Punto caliente</text><text x="623" y="275" fill="#f3946c">Mezcla restante</text><text x="137" y="306">Encendido previsto</text><text x="380" y="306">Antes de la chispa</text><text x="623" y="306">Autoignición rápida</text></g>
+<text x="26" y="362" font-size="17" fill="#9aafc2">Esquemas conceptuales · identifica el mecanismo, no sólo el síntoma.</text>
+</g></svg>

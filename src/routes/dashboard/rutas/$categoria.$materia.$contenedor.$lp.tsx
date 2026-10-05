@@ -1,3 +1,5 @@
+import { CiaacAircraftEnginesLearningPath } from "@/components/lp/CiaacAircraftEnginesLearningPath";
+import { CIAAC_REVIEWED_AIRCRAFT_ENGINES_IDS } from "@/lib/lp/ciaac-aircraft-engines-ids";
 import { CiaacAerodynamicsLearningPath } from "@/components/lp/CiaacAerodynamicsLearningPath";
 import { CIAAC_REVIEWED_AERODYNAMICS_IDS } from "@/lib/lp/ciaac-aerodynamics-ids";
 /**
@@ -293,6 +295,15 @@ function LearningPathPage() {
           handbookDocument &&
           user ? (
           <CiaacAerodynamicsLearningPath
+            completionAction={completionAction}
+            document={handbookDocument}
+            userId={user.id}
+            lpId={item.id}
+            completed={completado}
+            onComplete={() => completeLp(user.id, item, subject.titulo)}
+          />
+        ) : (CIAAC_REVIEWED_AIRCRAFT_ENGINES_IDS as readonly string[]).includes(item.id) && handbookDocument && user ? (
+          <CiaacAircraftEnginesLearningPath
             completionAction={completionAction}
             document={handbookDocument}
             userId={user.id}

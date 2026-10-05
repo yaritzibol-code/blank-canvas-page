@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" role="img" aria-labelledby="m5-t3-title m5-t3-desc">
+<title id="m5-t3-title">Cómo dosifica un carburador</title>
+<desc id="m5-t3-desc">Corte conceptual de carburador de flotador con aire descendente. La cuba contiene combustible; el flotador actúa sobre la válvula de entrada. La boquilla conecta combustible con la garganta del venturi. La mayor presión en la cuba respecto de la garganta impulsa el combustible. La mariposa está aguas abajo del venturi. Una ampliación muestra hielo estrechando garganta y mariposa, sin ajustes ni temperaturas operativas.</desc>
+<defs>
+<marker id="m5-t3-cyan" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#64d9e8"/></marker>
+<marker id="m5-t3-gold" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#efc66e"/></marker>
+<marker id="m5-t3-sunset" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#f49d78"/></marker>
+<marker id="m5-t3-pale" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#e7eff6"/></marker>
+<marker id="m5-t3-line" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#668098"/></marker>
+</defs>
+<rect width="760" height="500" rx="18" fill="#0b172a"/>
+<g font-family="DejaVu Sans, Arial, sans-serif" font-size="18" fill="#e7eff6" stroke-linecap="round" stroke-linejoin="round">
+<text x="28" y="37" font-size="26" font-weight="700" fill="#e7eff6" text-anchor="start">Cómo dosifica un carburador</text>
+<path d="M30 66H55" stroke="#64d9e8" stroke-width="3" fill="none"/>
+<text x="65" y="73" font-size="18" font-weight="400" fill="#64d9e8" text-anchor="start">Aire</text>
+<path d="M137 66H162" stroke="#efc66e" stroke-width="3" fill="none"/>
+<text x="172" y="73" font-size="18" font-weight="400" fill="#efc66e" text-anchor="start">Combustible</text>
+<path d="M330 66H355" stroke="#e7eff6" stroke-width="2" fill="none" stroke-dasharray="4 4"/>
+<text x="365" y="73" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Diferencia de presión</text>
+<path d="M280 103V145Q280 165 315 203V227Q300 258 280 287V425 M424 103V145Q424 165 388 203V227Q404 258 424 287V425" stroke="#e7eff6" stroke-width="6" fill="none"/>
+<path d="M290 104V143Q290 165 325 202V228Q312 260 290 289V424 M414 104V143Q414 165 378 202V228Q391 260 414 289V424" stroke="#668098" stroke-width="1.5" fill="none"/>
+<path d="M352 108V178" stroke="#64d9e8" stroke-width="5" fill="none" marker-end="url(#m5-t3-cyan)"/>
+<path d="M350 246V290" stroke="#64d9e8" stroke-width="3" fill="none" marker-end="url(#m5-t3-cyan)"/>
+<path d="M350 378V421" stroke="#64d9e8" stroke-width="4" fill="none" marker-end="url(#m5-t3-cyan)"/>
+<rect x="48" y="226" width="158" height="136" rx="8" fill="#12243a" stroke="#e7eff6" stroke-width="3"/>
+<path d="M51 289L78 289H203V351Q203 359 195 359H61Q51 359 51 351Z" stroke="#efc66e" stroke-width="0" fill="#655638"/>
+<path d="M51 289H203" stroke="#efc66e" stroke-width="2" fill="none"/>
+<path d="M26 214H85V235" stroke="#efc66e" stroke-width="4" fill="none" marker-end="url(#m5-t3-gold)"/>
+<path d="M77 235H94 M79 238l7 14 7-14" stroke="#e7eff6" stroke-width="2.5" fill="#12243a"/>
+<path d="M86 251L100 262H117" stroke="#e7eff6" stroke-width="2" fill="none"/>
+<circle cx="100" cy="262" r="3" fill="#e7eff6" stroke="#e7eff6" stroke-width="2"/>
+<rect x="112" y="274" width="65" height="23" rx="9" fill="#12243a" stroke="#efc66e" stroke-width="2"/>
+<path d="M116 274V263H100" stroke="#e7eff6" stroke-width="2" fill="none"/>
+<text x="29" y="174" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Válvula</text>
+<text x="29" y="197" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">de entrada</text>
+<path d="M130 195L98 228" stroke="#668098" stroke-width="1.5" fill="none"/>
+<text x="43" y="406" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Flotador</text>
+<path d="M130 400L145 301" stroke="#668098" stroke-width="1.5" fill="none"/>
+<text x="52" y="386" font-size="19" font-weight="400" fill="#efc66e" text-anchor="start">Cuba</text>
+<path d="M186 340H239V230H348" stroke="#efc66e" stroke-width="7" fill="none"/>
+<path d="M203 339H227" stroke="#efc66e" stroke-width="2" fill="none" marker-end="url(#m5-t3-gold)"/>
+<path d="M277 230H335" stroke="#efc66e" stroke-width="2" fill="none" marker-end="url(#m5-t3-gold)"/>
+<path d="M341 223v14" stroke="#e7eff6" stroke-width="2" fill="none"/>
+<circle cx="357" cy="239" r="2" fill="#efc66e" stroke="#efc66e" stroke-width="2"/>
+<circle cx="349" cy="249" r="2" fill="#efc66e" stroke="#efc66e" stroke-width="2"/>
+<circle cx="366" cy="257" r="2" fill="#efc66e" stroke="#efc66e" stroke-width="2"/>
+<circle cx="342" cy="267" r="2" fill="#efc66e" stroke="#efc66e" stroke-width="2"/>
+<text x="423" y="259" font-size="18" font-weight="400" fill="#efc66e" text-anchor="start">Boquilla</text>
+<path d="M416 251L358 231" stroke="#668098" stroke-width="1.5" fill="none"/>
+<path d="M179 250H220V155H302L345 211" stroke="#e7eff6" stroke-width="2" fill="none" stroke-dasharray="5 5" marker-end="url(#m5-t3-pale)"/>
+<text x="29" y="111" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Presión en cuba</text>
+<text x="29" y="135" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">mayor que en garganta</text>
+<text x="428" y="157" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Venturi</text>
+<path d="M424 165L391 206" stroke="#668098" stroke-width="1.5" fill="none"/>
+<path d="M292 319L412 365" stroke="#e7eff6" stroke-width="7" fill="none"/>
+<circle cx="352" cy="342" r="7" fill="#12243a" stroke="#e7eff6" stroke-width="2"/>
+<text x="429" y="367" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Mariposa</text>
+<path d="M428 351L383 354" stroke="#668098" stroke-width="1.5" fill="none"/>
+<text x="278" y="456" font-size="19" font-weight="400" fill="#64d9e8" text-anchor="start">Hacia el múltiple</text>
+<path d="M352 427V436" stroke="#64d9e8" stroke-width="2" fill="none" marker-end="url(#m5-t3-cyan)"/>
+<rect x="538" y="96" width="195" height="330" rx="12" fill="#12243a" stroke="#668098" stroke-width="1.5"/>
+<text x="557" y="127" font-size="19" font-weight="700" fill="#64d9e8" text-anchor="start">Detalle: hielo</text>
+<path d="M565 149V168L596 199V221L565 254V299 M705 149V168L674 199V221L705 254V299" stroke="#e7eff6" stroke-width="3" fill="none"/>
+<path d="M588 192l11 3 8 11-3 10 6 10-12 10-11 3 8-18V202Z" stroke="#64d9e8" stroke-width="2" fill="#336e87"/>
+<path d="M681 192l-11 3-8 11 3 10-6 10 12 10 11 3-8-18V202Z" stroke="#64d9e8" stroke-width="2" fill="#336e87"/>
+<path d="M578 263L692 285" stroke="#e7eff6" stroke-width="4" fill="none"/>
+<path d="M581 257l13 2 5 4 15 1 8 5 15 1 8 5 20 2 20 6" stroke="#64d9e8" stroke-width="5" fill="none"/>
+<circle cx="635" cy="274" r="5" fill="#12243a" stroke="#e7eff6" stroke-width="2"/>
+<path d="M635 151V186" stroke="#64d9e8" stroke-width="2.5" fill="none" marker-end="url(#m5-t3-cyan)"/>
+<path d="M635 299V315" stroke="#64d9e8" stroke-width="2.5" fill="none" marker-end="url(#m5-t3-cyan)"/>
+<text x="557" y="350" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">En garganta</text>
+<text x="557" y="375" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">y mariposa</text>
+<text x="557" y="409" font-size="18" font-weight="400" fill="#64d9e8" text-anchor="start">Reduce el paso</text>
+<text x="28" y="486" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Corte conceptual de un carburador de flotador; los diseños varían.</text>
+</g>
+</svg>

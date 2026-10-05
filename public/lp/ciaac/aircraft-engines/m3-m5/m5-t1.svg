@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" role="img" aria-labelledby="m5-t1-title m5-t1-desc">
+<title id="m5-t1-title">Del tanque al dosificador</title>
+<desc id="m5-t1-desc">Un único recorrido conceptual: tanque, selectora, filtro, bomba y dosificador. Un venteo independiente conecta la parte gaseosa del tanque con la atmósfera. Cantidad, presión y caudal se muestran como observaciones distintas. Un tanque con líquido y venteo obstruido ilustra que puede fallar el flujo. Orden y componentes varían entre instalaciones.</desc>
+<defs>
+<marker id="m5-t1-cyan" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#64d9e8"/></marker>
+<marker id="m5-t1-gold" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#efc66e"/></marker>
+<marker id="m5-t1-sunset" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#f49d78"/></marker>
+<marker id="m5-t1-pale" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#e7eff6"/></marker>
+<marker id="m5-t1-line" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#668098"/></marker>
+</defs>
+<rect width="760" height="460" rx="18" fill="#0b172a"/>
+<g font-family="DejaVu Sans, Arial, sans-serif" font-size="18" fill="#e7eff6" stroke-linecap="round" stroke-linejoin="round">
+<text x="28" y="37" font-size="26" font-weight="700" fill="#e7eff6" text-anchor="start">Del tanque al dosificador</text>
+<text x="29" y="78" font-size="18" font-weight="400" fill="#64d9e8" text-anchor="start">Atmósfera</text>
+<path d="M140 83H164V108H81V124" stroke="#64d9e8" stroke-width="2.5" fill="none" stroke-dasharray="6 5" marker-end="url(#m5-t1-cyan)"/>
+<text x="195" y="97" font-size="18" font-weight="400" fill="#64d9e8" text-anchor="start">Venteo</text>
+<rect x="29" y="125" width="104" height="77" rx="8" fill="#12243a" stroke="#e7eff6" stroke-width="2.5"/>
+<path d="M32 164Q48 159 65 164T100 164T130 164V192Q130 199 122 199H41Q32 199 32 190Z" stroke="#efc66e" stroke-width="0" fill="#efc66e"/>
+<path d="M40 143H122" stroke="#668098" stroke-width="1.5" fill="none" stroke-dasharray="3 6"/>
+<text x="80" y="231" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="middle">Tanque</text>
+<path d="M134 166H193" stroke="#efc66e" stroke-width="4" fill="none" marker-end="url(#m5-t1-gold)"/>
+<circle cx="222" cy="166" r="25" fill="#12243a" stroke="#e7eff6" stroke-width="2.5"/>
+<path d="M207 181L238 151 M222 140V131" stroke="#e7eff6" stroke-width="3" fill="none"/>
+<text x="222" y="231" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="middle">Selectora</text>
+<path d="M248 166H299" stroke="#efc66e" stroke-width="4" fill="none" marker-end="url(#m5-t1-gold)"/>
+<rect x="307" y="137" width="61" height="58" rx="6" fill="#12243a" stroke="#e7eff6" stroke-width="2.5"/>
+<path d="M315 143v45" stroke="#668098" stroke-width="1.3" fill="none"/>
+<path d="M325 143v45" stroke="#668098" stroke-width="1.3" fill="none"/>
+<path d="M335 143v45" stroke="#668098" stroke-width="1.3" fill="none"/>
+<path d="M345 143v45" stroke="#668098" stroke-width="1.3" fill="none"/>
+<path d="M355 143v45" stroke="#668098" stroke-width="1.3" fill="none"/>
+<path d="M313 145h48" stroke="#668098" stroke-width="1.3" fill="none"/>
+<path d="M313 155h48" stroke="#668098" stroke-width="1.3" fill="none"/>
+<path d="M313 165h48" stroke="#668098" stroke-width="1.3" fill="none"/>
+<path d="M313 175h48" stroke="#668098" stroke-width="1.3" fill="none"/>
+<path d="M313 185h48" stroke="#668098" stroke-width="1.3" fill="none"/>
+<text x="337" y="231" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="middle">Filtro</text>
+<path d="M369 166H423" stroke="#efc66e" stroke-width="4" fill="none" marker-end="url(#m5-t1-gold)"/>
+<circle cx="453" cy="166" r="26" fill="#12243a" stroke="#e7eff6" stroke-width="2.5"/>
+<path d="M438 149L470 166 438 183Z" stroke="#efc66e" stroke-width="1.5" fill="#efc66e"/>
+<text x="453" y="231" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="middle">Bomba</text>
+<path d="M481 166H552" stroke="#efc66e" stroke-width="4" fill="none" marker-end="url(#m5-t1-gold)"/>
+<rect x="562" y="132" width="154" height="70" rx="10" fill="#12243a" stroke="#e7eff6" stroke-width="2.5"/>
+<path d="M581 167H698" stroke="#efc66e" stroke-width="2" fill="none"/>
+<path d="M622 147L644 184 M644 148L622 184" stroke="#efc66e" stroke-width="3" fill="none"/>
+<text x="639" y="231" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="middle">Dosificador</text>
+<rect x="23" y="264" width="463" height="161" rx="12" fill="#12243a" stroke="#668098" stroke-width="1.5"/>
+<path d="M176 280V410" stroke="#668098" stroke-width="1" fill="none"/>
+<path d="M329 280V410" stroke="#668098" stroke-width="1" fill="none"/>
+<text x="100" y="293" font-size="19" font-weight="700" fill="#e7eff6" text-anchor="middle">Cantidad</text>
+<text x="253" y="293" font-size="19" font-weight="700" fill="#e7eff6" text-anchor="middle">Presión</text>
+<text x="406" y="293" font-size="19" font-weight="700" fill="#e7eff6" text-anchor="middle">Caudal</text>
+<rect x="76" y="312" width="49" height="42" rx="3" fill="#0b172a" stroke="#668098" stroke-width="1.5"/>
+<path d="M78 334H123V352H78Z" stroke="#efc66e" stroke-width="0" fill="#efc66e"/>
+<text x="100" y="385" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="middle">Cuánto hay</text>
+<text x="100" y="409" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="middle">en el tanque</text>
+<circle cx="253" cy="335" r="24" fill="#0b172a" stroke="#668098" stroke-width="2"/>
+<path d="M235 340A19 19 0 0 1 270 327" stroke="#64d9e8" stroke-width="2" fill="none"/>
+<path d="M253 335L264 322" stroke="#e7eff6" stroke-width="3" fill="none"/>
+<circle cx="253" cy="335" r="3" fill="#e7eff6" stroke="#e7eff6" stroke-width="2"/>
+<text x="253" y="385" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="middle">Condición en</text>
+<text x="253" y="409" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="middle">un punto</text>
+<path d="M357 335H451" stroke="#efc66e" stroke-width="3" fill="none" marker-end="url(#m5-t1-gold)"/>
+<circle cx="371" cy="321" r="2" fill="#efc66e" stroke="#efc66e" stroke-width="2"/>
+<circle cx="394" cy="321" r="2" fill="#efc66e" stroke="#efc66e" stroke-width="2"/>
+<circle cx="417" cy="321" r="2" fill="#efc66e" stroke="#efc66e" stroke-width="2"/>
+<text x="406" y="385" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="middle">Cantidad por</text>
+<text x="406" y="409" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="middle">tiempo</text>
+<rect x="500" y="264" width="236" height="161" rx="12" fill="#12243a" stroke="#f49d78" stroke-width="1.5"/>
+<text x="518" y="293" font-size="19" font-weight="700" fill="#f49d78" text-anchor="start">Venteo obstruido</text>
+<rect x="516" y="336" width="59" height="58" rx="6" fill="#0b172a" stroke="#e7eff6" stroke-width="2"/>
+<path d="M518 366H573V387Q573 392 567 392H524Q518 392 518 386Z" stroke="#efc66e" stroke-width="0" fill="#efc66e"/>
+<path d="M545 335V319H585" stroke="#64d9e8" stroke-width="2.5" fill="none" stroke-dasharray="5 4"/>
+<path d="M579 312l13 14 M592 312l-13 14" stroke="#f49d78" stroke-width="3" fill="none"/>
+<path d="M575 380H600" stroke="#efc66e" stroke-width="2.5" fill="none" stroke-dasharray="3 5"/>
+<text x="605" y="340" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Hay líquido;</text>
+<text x="605" y="364" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">el flujo</text>
+<text x="605" y="388" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">puede fallar.</text>
+<text x="28" y="451" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Esquema conceptual: el orden y los componentes varían.</text>
+</g>
+</svg>

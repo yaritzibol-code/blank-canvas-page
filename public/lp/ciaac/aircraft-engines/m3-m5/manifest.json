@@ -1,0 +1,90 @@
+[
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/generalidades-y-sinonimos-1",
+    "stageId": 3,
+    "src": "/lp/ciaac/aircraft-engines/m3-m5/m3-t1.svg",
+    "caption": "La energía pasa del combustible al pistón, después al eje y a la hélice. Parte sale como calor.",
+    "alt": "Cadena de energía: combustible, gases sobre pistón, biela y cigüeñal, hélice y aire acelerado. Una rama representa energía que se disipa con escape y enfriamiento; no tiene proporciones numéricas.",
+    "observe": "Sigue la cadena: el pistón no empuja directamente al avión."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/partes-del-motor-y-funciones-de-cada-una-2",
+    "stageId": 1,
+    "src": "/lp/ciaac/aircraft-engines/m3-m5/m3-t2.svg",
+    "caption": "Corte conceptual del cilindro: contener, sellar, transmitir esfuerzo y renovar la carga.",
+    "alt": "Culata y paredes contienen la cámara. Dos válvulas regulan gases y dos bujías aportan la chispa. Anillos rodean el pistón. El perno lo une a una biela que transmite esfuerzo al cigüeñal. Las flechas de fuerza lineal y giro son independientes.",
+    "observe": "Distingue las válvulas de las bujías y la fuerza lineal del giro."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/clasificacion-por-posicion-de-cilindros-3",
+    "stageId": 1,
+    "src": "/lp/ciaac/aircraft-engines/m3-m5/m3-t3.svg",
+    "caption": "Cuatro disposiciones de cilindros referidas al mismo eje del cigüeñal.",
+    "alt": "Cuatro esquemas. En línea se muestra de lado y de frente. Las disposiciones en V, opuestos y radial se ven de frente; el círculo dorado marca el eje del cigüeñal. El radial incluye una segunda fila desplazada y tenue, dentro del mismo motor.",
+    "observe": "Identifica la vista antes de comparar; la estrella tenue representa otra fila del mismo motor."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/ciclo-de-otto-y-traslape-valvular-4",
+    "stageId": 4,
+    "src": "/lp/ciaac/aircraft-engines/m3-m5/m3-t4.svg",
+    "caption": "Las cuatro carreras ideales ocupan 720°. El traslape real se muestra en una banda cualitativa aparte.",
+    "alt": "Secuencia ideal 0 a 720 grados: admisión con pistón descendente y admisión abierta; compresión ascendente con ambas válvulas cerradas; expansión descendente con ambas cerradas; escape ascendente con escape abierto. La chispa se ubica cerca del PMS de compresión. Una banda separada y cualitativa muestra traslape únicamente entre escape y admisión; no especifica grados de reglaje.",
+    "observe": "Compara dos PMS distintos: compresión para el encendido, escape–admisión para el traslape."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/tipos-de-potencia-nominal-indicada-al-freno-5",
+    "stageId": 4,
+    "src": "/lp/ciaac/aircraft-engines/m3-m5/m3-t5.svg",
+    "caption": "Ejemplo ilustrativo: potencia indicada menos resistencias internas deja potencia disponible en el eje.",
+    "alt": "Balance ilustrativo: 120 de potencia indicada se separan en 20 para vencer resistencias internas y 100 disponibles en el eje, denominadas potencia al freno. Potencia nominal aparece en una tarjeta independiente como valor declarado bajo condiciones definidas.",
+    "observe": "La potencia nominal es un valor declarado bajo condiciones definidas; no una rama adicional del balance."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/sistemas-ignicion-induccion-combustible-mezcla-octanaje-succion-enfria-6",
+    "stageId": 4,
+    "src": "/lp/ciaac/aircraft-engines/m3-m5/m3-t6.svg",
+    "caption": "Los flujos de aire, combustible, aceite y calor cumplen funciones diferentes alrededor del cilindro.",
+    "alt": "Esquema funcional de aire y combustible hacia un cilindro, chispa, circuito de aceite, enfriamiento exterior y gases de escape. Dos carriles separados distinguen magnetos a bujías y chispa, de batería a arranque eléctrico y giro del cigüeñal. La independencia de batería y alternador solo se refiere al ejemplo convencional con magnetos.",
+    "observe": "En el ejemplo convencional, la ignición por magneto se distingue del circuito eléctrico de arranque."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/helices-fuerzas-tipo-paso-y-potencia-de-plantas-motrices-8",
+    "stageId": 1,
+    "src": "/lp/ciaac/aircraft-engines/m3-m5/m3-t8.svg",
+    "caption": "La velocidad tangencial aumenta con el radio; la torsión cambia el ángulo de sección.",
+    "alt": "Una pala tiene mayor velocidad tangencial en su punta que cerca de la raíz y cambia de ángulo por torsión geométrica. Un triángulo separado suma velocidades de rotación y avance. El gobernador responde a las RPM modificando paso y carga dentro de límites; la carga realimenta las RPM. Se distinguen fuerza centrífuga radial y flexión de la pala.",
+    "observe": "El gobernador modifica paso y carga para responder a cambios de RPM, dentro de sus límites."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-5-combustible/sistema-combustible-elementos-descripcion-y-operacion-1",
+    "stageId": 1,
+    "src": "/lp/ciaac/aircraft-engines/m3-m5/m5-t1.svg",
+    "caption": "Recorrido conceptual desde el tanque al dosificador, con venteo independiente hacia la atmósfera.",
+    "alt": "Un único recorrido conceptual: tanque, selectora, filtro, bomba y dosificador. Un venteo independiente conecta la parte gaseosa del tanque con la atmósfera. Cantidad, presión y caudal se muestran como observaciones distintas. Un tanque con líquido y venteo obstruido ilustra que puede fallar el flujo. Orden y componentes varían entre instalaciones.",
+    "observe": "El orden y los componentes varían por instalación. Cantidad, presión y caudal no son intercambiables."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-5-combustible/tipos-combustible-y-octanaje-2",
+    "stageId": 1,
+    "src": "/lp/ciaac/aircraft-engines/m3-m5/m5-t2.svg",
+    "caption": "Tipo aprobado y resistencia antidetonante son criterios distintos.",
+    "alt": "Tipo y aprobación determinan compatibilidad con motor y aeronave; octanaje caracteriza resistencia a detonación en ensayos. En combustión normal avanza un frente de llama desde la chispa. En detonación también se autoenciende mezcla restante por delante de ese frente. Limpieza y volatilidad son propiedades separadas. El octanaje no mide energía ni autoriza sustituciones.",
+    "observe": "Compara un frente de llama normal con la autoignición de la carga restante; el octanaje no mide energía."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-5-combustible/operacion-por-carburador-3",
+    "stageId": 3,
+    "src": "/lp/ciaac/aircraft-engines/m3-m5/m5-t3.svg",
+    "caption": "Corte conceptual del carburador: cuba, flotador, entrada, boquilla, venturi y mariposa.",
+    "alt": "Corte conceptual de carburador de flotador con aire descendente. La cuba contiene combustible; el flotador actúa sobre la válvula de entrada. La boquilla conecta combustible con la garganta del venturi. La mayor presión en la cuba respecto de la garganta impulsa el combustible. La mariposa está aguas abajo del venturi. Una ampliación muestra hielo estrechando garganta y mariposa, sin ajustes ni temperaturas operativas.",
+    "observe": "Relaciona la presión reducida de la garganta con el suministro de combustible desde la cuba."
+  },
+  {
+    "learningPathId": "ciaac/aeronaves-y-motores/modulo-3-motor-alternativo-reciproco-sistema-motopropulsor/anormalidades-preignicion-detonacion-postcombustion-precombustion-7",
+    "stageId": 1,
+    "src": "/lp/ciaac/aircraft-engines/m3-m5/m3-t7.svg",
+    "caption": "Diagrama original · Compara el origen de la llama y el momento respecto de la chispa prevista.",
+    "alt": "Tres cilindros conceptuales: combustión normal iniciada por bujía; preignición iniciada por punto caliente antes de la chispa; detonación con frente de llama y autoignición separada en la mezcla restante.",
+    "observe": "En la preignición, un punto caliente inicia el fuego antes. En la detonación, la mezcla restante se autoenciende durante la combustión."
+  }
+]

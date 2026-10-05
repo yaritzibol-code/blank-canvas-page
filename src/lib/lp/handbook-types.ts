@@ -21,6 +21,8 @@ export interface HandbookQuestion {
 }
 
 export interface HandbookFigure {
+  /** Optional attribution for original teaching graphics. */
+  caption?: string;
   chapter: number;
   topic: number;
   anchor: number;

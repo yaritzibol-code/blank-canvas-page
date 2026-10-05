@@ -252,7 +252,7 @@ const fresh = {
   },
   activityResponses: {},
 };
-for (const d of Object.values(CIAAC_LEARNING_PATHS).filter((d) => d.chapter > 1)) {
+for (const d of Object.entries(CIAAC_LEARNING_PATHS).filter(([id, d]) => id.startsWith("ciaac/aerodinamica/") && d.chapter > 1).map(([, d]) => d)) {
   const version = `ciaac-aerodynamics-${d.chapter}-${d.number}-v1`;
   const recovered = migrateAerodynamicsJourney(
     d,
@@ -277,7 +277,7 @@ for (const d of Object.values(CIAAC_LEARNING_PATHS).filter((d) => d.chapter > 1)
 
 const next = (app) => button(app, "Continuar");
 for ([activeId, document] of Object.entries(CIAAC_LEARNING_PATHS).filter(
-  ([id]) => !id.includes("/modulo-1-"),
+  ([id]) => id.startsWith("ciaac/aerodinamica/") && !id.includes("/modulo-1-"),
 )) {
   assert.equal(document.ciaac, undefined);
   assert.equal(
@@ -383,7 +383,7 @@ for ([activeId, document] of Object.entries(CIAAC_LEARNING_PATHS).filter(
   assert.ok(app.writes.every(([, id]) => id === activeId));
 }
 const routeEntries = Object.entries(CIAAC_LEARNING_PATHS).filter(
-  ([id]) => !id.includes("/modulo-1-"),
+  ([id]) => id.startsWith("ciaac/aerodinamica/") && !id.includes("/modulo-1-"),
 );
 [activeId, document] = routeEntries[0];
 const firstRouteId = activeId;

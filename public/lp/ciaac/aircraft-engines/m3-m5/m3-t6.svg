@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" role="img" aria-labelledby="m3-t6-title m3-t6-desc">
+<title id="m3-t6-title">Un cilindro, varios sistemas</title>
+<desc id="m3-t6-desc">Esquema funcional de aire y combustible hacia un cilindro, chispa, circuito de aceite, enfriamiento exterior y gases de escape. Dos carriles separados distinguen magnetos a bujías y chispa, de batería a arranque eléctrico y giro del cigüeñal. La independencia de batería y alternador solo se refiere al ejemplo convencional con magnetos.</desc>
+<defs>
+<marker id="m3-t6-cyan" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#64d9e8"/></marker>
+<marker id="m3-t6-gold" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#efc66e"/></marker>
+<marker id="m3-t6-sunset" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#f49d78"/></marker>
+<marker id="m3-t6-pale" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#e7eff6"/></marker>
+<marker id="m3-t6-line" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#668098"/></marker>
+</defs>
+<rect width="760" height="500" rx="18" fill="#0b172a"/>
+<g font-family="DejaVu Sans, Arial, sans-serif" font-size="18" fill="#e7eff6" stroke-linecap="round" stroke-linejoin="round">
+<text x="28" y="38" font-size="26" font-weight="700" fill="#e7eff6" text-anchor="start">Un cilindro, varios sistemas</text>
+<path d="M313 156H477" stroke="#668098" stroke-width="3" fill="none"/>
+<path d="M313 167H477" stroke="#668098" stroke-width="3" fill="none"/>
+<path d="M313 178H477" stroke="#668098" stroke-width="3" fill="none"/>
+<path d="M313 189H477" stroke="#668098" stroke-width="3" fill="none"/>
+<path d="M313 200H477" stroke="#668098" stroke-width="3" fill="none"/>
+<path d="M313 211H477" stroke="#668098" stroke-width="3" fill="none"/>
+<path d="M313 222H477" stroke="#668098" stroke-width="3" fill="none"/>
+<rect x="329" y="103" width="131" height="138" rx="14" fill="#0b172a" stroke="#e7eff6" stroke-width="3"/>
+<path d="M344 116H445V223H344Z" stroke="#668098" stroke-width="1.5" fill="none"/>
+<rect x="345" y="211" width="98" height="28" rx="2" fill="#12243a" stroke="#e7eff6" stroke-width="2"/>
+<path d="M345 218H443 M345 225H443" stroke="#668098" stroke-width="2" fill="none"/>
+<circle cx="394" cy="226" r="5" fill="#efc66e" stroke="#efc66e" stroke-width="2"/>
+<path d="M394 231L394 274" stroke="#e7eff6" stroke-width="9" fill="none"/>
+<circle cx="394" cy="277" r="22" fill="#12243a" stroke="#e7eff6" stroke-width="3"/>
+<circle cx="394" cy="277" r="7" fill="#efc66e" stroke="#efc66e" stroke-width="2"/>
+<rect x="361" y="91" width="10" height="23" rx="2" fill="#12243a" stroke="#efc66e" stroke-width="2"/>
+<path d="M366 115l-5 9 8-3-4 8" stroke="#efc66e" stroke-width="2" fill="none"/>
+<rect x="413" y="91" width="10" height="23" rx="2" fill="#12243a" stroke="#efc66e" stroke-width="2"/>
+<path d="M418 115l-5 9 8-3-4 8" stroke="#efc66e" stroke-width="2" fill="none"/>
+<text x="550" y="78" font-size="20" font-weight="400" fill="#efc66e" text-anchor="start">Chispa</text>
+<path d="M544 86H478L428 107" stroke="#efc66e" stroke-width="2.5" fill="none" marker-end="url(#m3-t6-gold)"/>
+<text x="39" y="91" font-size="20" font-weight="400" fill="#64d9e8" text-anchor="start">Aire</text>
+<path d="M39 112H212" stroke="#64d9e8" stroke-width="4" fill="none" marker-end="url(#m3-t6-cyan)"/>
+<text x="39" y="161" font-size="20" font-weight="400" fill="#efc66e" text-anchor="start">Combustible</text>
+<path d="M39 178H238V148" stroke="#efc66e" stroke-width="4" fill="none" marker-end="url(#m3-t6-gold)"/>
+<circle cx="239" cy="128" r="20" fill="#12243a" stroke="#668098" stroke-width="2"/>
+<path d="M226 124l10 4 9-6 M233 137l9-5" stroke="#64d9e8" stroke-width="2" fill="none"/>
+<circle cx="243" cy="136" r="2" fill="#efc66e" stroke="#efc66e" stroke-width="2"/>
+<path d="M262 128H319" stroke="#64d9e8" stroke-width="4" fill="none" marker-end="url(#m3-t6-cyan)"/>
+<text x="218" y="202" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Mezcla</text>
+<path d="M460 137H511V144H696" stroke="#f49d78" stroke-width="5" fill="none" marker-end="url(#m3-t6-sunset)"/>
+<text x="572" y="126" font-size="20" font-weight="400" fill="#f49d78" text-anchor="start">Escape</text>
+<path d="M289 159V216Q289 231 308 231" stroke="#64d9e8" stroke-width="2.5" fill="none" marker-end="url(#m3-t6-cyan)"/>
+<path d="M493 169V218Q493 230 517 230H550" stroke="#64d9e8" stroke-width="2.5" fill="none" marker-end="url(#m3-t6-cyan)"/>
+<text x="548" y="263" font-size="19" font-weight="400" fill="#64d9e8" text-anchor="start">Enfriamiento</text>
+<path d="M568 244V230" stroke="#668098" stroke-width="1.5" fill="none"/>
+<rect x="34" y="230" width="133" height="59" rx="10" fill="#12243a" stroke="#efc66e" stroke-width="1.5"/>
+<text x="100" y="254" font-size="18" font-weight="400" fill="#efc66e" text-anchor="middle">Circuito</text>
+<text x="100" y="278" font-size="18" font-weight="400" fill="#efc66e" text-anchor="middle">de aceite</text>
+<path d="M169 243H278V272H368" stroke="#efc66e" stroke-width="3" fill="none" marker-end="url(#m3-t6-gold)"/>
+<path d="M419 280H500V306H101V292" stroke="#efc66e" stroke-width="2.5" fill="none" marker-end="url(#m3-t6-gold)"/>
+<rect x="26" y="324" width="708" height="54" rx="10" fill="#12243a" stroke="#668098" stroke-width="1.5"/>
+<text x="42" y="356" font-size="19" font-weight="700" fill="#64d9e8" text-anchor="start">Ignición</text>
+<text x="188" y="357" font-size="19" font-weight="400" fill="#efc66e" text-anchor="start">Magnetos</text>
+<path d="M285 350H329" stroke="#efc66e" stroke-width="2.5" fill="none" marker-end="url(#m3-t6-gold)"/>
+<text x="351" y="357" font-size="19" font-weight="400" fill="#efc66e" text-anchor="start">Bujías</text>
+<path d="M429 350H483" stroke="#efc66e" stroke-width="2.5" fill="none" marker-end="url(#m3-t6-gold)"/>
+<text x="505" y="357" font-size="19" font-weight="400" fill="#efc66e" text-anchor="start">Chispa</text>
+<rect x="26" y="390" width="708" height="54" rx="10" fill="#12243a" stroke="#668098" stroke-width="1.5"/>
+<text x="42" y="423" font-size="19" font-weight="700" fill="#64d9e8" text-anchor="start">Arranque</text>
+<text x="188" y="423" font-size="19" font-weight="400" fill="#e7eff6" text-anchor="start">Batería</text>
+<path d="M269 416H309" stroke="#e7eff6" stroke-width="2.5" fill="none" marker-end="url(#m3-t6-pale)"/>
+<text x="328" y="413" font-size="19" font-weight="400" fill="#e7eff6" text-anchor="start">Arranque</text>
+<text x="328" y="436" font-size="19" font-weight="400" fill="#e7eff6" text-anchor="start">eléctrico</text>
+<path d="M438 416H478" stroke="#e7eff6" stroke-width="2.5" fill="none" marker-end="url(#m3-t6-pale)"/>
+<text x="500" y="413" font-size="19" font-weight="400" fill="#e7eff6" text-anchor="start">Giro inicial del</text>
+<text x="500" y="436" font-size="19" font-weight="400" fill="#e7eff6" text-anchor="start">cigüeñal</text>
+<text x="28" y="475" font-size="18" font-weight="400" fill="#e7eff6" text-anchor="start">Ejemplo convencional: magnetos independientes de batería y alternador.</text>
+</g>
+</svg>

@@ -620,8 +620,12 @@ function Figure({
       </div>
       <img src={figure.file} alt={figure.alt} />
       <figcaption>
-        Figure {figure.number} · Pilot’s Handbook of Aeronautical Knowledge · página PDF{" "}
-        {figure.pdf_page}.
+        {figure.caption ?? (
+          <>
+            Figure {figure.number} · Pilot’s Handbook of Aeronautical Knowledge · página PDF{" "}
+            {figure.pdf_page}.
+          </>
+        )}
       </figcaption>
       <details>
         <summary>Qué observar en esta figura</summary>
