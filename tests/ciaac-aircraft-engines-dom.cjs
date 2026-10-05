@@ -96,6 +96,9 @@ const remount = async () => { await React.act(async () => reactRoot.unmount()); 
     for (let i = 1; i < doc.stages.length - 1; i++) {
       assert.equal(state().stage, i); const stage = doc.stages[i];
       if (stage.kind === 'content') {
+        const figure = document.querySelector('.hb-figure');
+        const grid = document.querySelector('.hb-card-grid');
+        if (figure && grid) assert.ok(figure.compareDocumentPosition(grid) & window.Node.DOCUMENT_POSITION_FOLLOWING, 'Teaching visual precedes explanation cards');
         for (const image of document.querySelectorAll('.hb-figure img')) {
           figures++; assert.ok(image.alt.length > 20);
           const svg = read(`public${image.getAttribute('src')}`);

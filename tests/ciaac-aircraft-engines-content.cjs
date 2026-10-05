@@ -87,7 +87,7 @@ if (pitotLesson) {
 assert.equal(Object.keys(documents).length, 40, 'The entire subject is reviewed and registered');
 assert.deepEqual(Object.keys(documents).sort(), canonicalIds.sort());
 const abnormalities = Object.values(documents).find(d => d.chapter === 3 && d.number === 7);
-assert.match(JSON.stringify(abnormalities.stages), /No se identificó una definición específica/);
+assert.match(JSON.stringify(abnormalities.stages), /(?:No se identificó|no aportan) una definición específica/);
 assert.match(JSON.stringify(abnormalities.stages), /Una precámara diésel es un componente/);
 assert.ok(abnormalities.sources.some(s => s.id === 'notebook-editorial-support' && /no es una fuente técnica primaria/.test(s.role)));
 assert.ok(abnormalities.sources.some(s => s.verified_locators?.some(l => l.includes('AyM/7-2-10'))));

@@ -22,3 +22,19 @@
   margin: .75rem auto 0;
   line-height: 1.5;
 }
+
+/* Concise explanations remain readable beside the teaching image. */
+.hb-shell.ciaac-aircraft-engines-handbook .hb-card-grid {
+  width: 100%;
+  max-width: 58rem;
+  margin-inline: auto;
+  gap: 1rem;
+  align-items: start;
+}
+.hb-shell.ciaac-aircraft-engines-handbook .hb-card p {
+  max-width: 65ch;
+}
+.hb-shell.ciaac-aircraft-engines-handbook .hb-card-detail {
+  margin-top: .85rem;
+  line-height: 1.6;
+}
