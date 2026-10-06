@@ -161,6 +161,83 @@ for (const x of [-1, 101, NaN, Infinity, "40", 10]) {
   config.parts[0].x = x;
   invalid(mechanism, config, "Anchors must be original-asset percentages inside the reviewed crop");
 }
+const separatedBoard = structuredClone(mechanismBoard);
+Object.assign(separatedBoard.parts[0], { labelX: 30, labelY: 22 });
+assert.deepEqual(validate(mechanism, separatedBoard), []);
+const separatedDom = new JSDOM(
+  renderToStaticMarkup(
+    React.createElement(Board, {
+      stage: mechanism,
+      board: separatedBoard,
+    }),
+  ),
+).window.document;
+assert.equal(separatedDom.querySelector(".am-board__anchor").style.left, "25%");
+assert.equal(separatedDom.querySelector(".am-board__anchor").style.top, "20%");
+assert.equal(separatedDom.querySelector(".am-board__physical-point").style.left, "50%");
+assert.equal(separatedDom.querySelector(".am-board__physical-point").style.top, "50%");
+const leader = separatedDom.querySelector(".am-board__leaders line");
+assert.deepEqual(
+  ["x1", "y1", "x2", "y2"].map((name) => leader.getAttribute(name)),
+  ["50", "50", "25", "20"],
+);
+assert.equal(leader.getAttribute("vector-effect"), "non-scaling-stroke");
+assert.equal(separatedDom.querySelector(".am-board__leaders").getAttribute("aria-hidden"), "true");
+for (const coordinates of [
+  { labelX: 30 },
+  { labelY: 22 },
+  { labelX: NaN, labelY: 22 },
+  { labelX: "30", labelY: 22 },
+  { labelX: 101, labelY: 22 },
+  { labelX: 10, labelY: 22 },
+  { labelX: 30, labelY: 90 },
+]) {
+  const config = structuredClone(mechanismBoard);
+  Object.assign(config.parts[0], coordinates);
+  invalid(
+    mechanism,
+    config,
+    "Separated labels stay paired, finite and inside the same source crop",
+  );
+}
+const contextualStage = { ...comparison, figures: [...comparison.figures, figure("WHOLE")] };
+const contextualBoard = { ...comparisonBoard, contextFigureNumber: "WHOLE" };
+assert.deepEqual(validate(contextualStage, contextualBoard), []);
+const contextualDom = new JSDOM(
+  renderToStaticMarkup(
+    React.createElement(Board, {
+      stage: contextualStage,
+      board: contextualBoard,
+    }),
+  ),
+).window.document;
+assert.equal(contextualDom.querySelectorAll(".am-board__context img").length, 1);
+assert.equal(
+  contextualDom.querySelector(".am-board__context img").getAttribute("src"),
+  "/canonical-WHOLE.webp",
+);
+assert.equal(contextualDom.querySelectorAll(".am-board__panel").length, 2);
+assert.equal(contextualDom.querySelectorAll(".am-board__card").length, comparison.cards.length);
+assert.equal(
+  contextualDom
+    .querySelector(".am-board__context")
+    .style.getPropertyValue("--board-context-figure-width"),
+  "min(100%, 33vh, 24rem)",
+);
+invalid(
+  {
+    ...contextualStage,
+    figures: [...comparison.figures, { ...figure("WHOLE"), assetAspectRatio: undefined }],
+  },
+  contextualBoard,
+  "Context viewport and image must retain one coordinate system",
+);
+for (const contextFigureNumber of ["missing", "A", ""])
+  invalid(
+    contextualStage,
+    { ...comparisonBoard, contextFigureNumber },
+    "Context never hides or reuses a compared figure",
+  );
 for (const badCrop of [
   null,
   {},
@@ -584,13 +661,82 @@ const verifySourceCards = (stage) => {
         }
       }
     }
+    const nextDocuments = Object.entries(authored).filter(([, doc]) => doc.number >= 11);
+    assert.equal(nextDocuments.length, 9);
+    const nextBoards = nextDocuments.flatMap(([, doc]) =>
+      doc.stages.filter((stage) => stage.kind === "content"),
+    );
+    for (const stage of nextBoards) {
+      const snapshot = JSON.stringify(stage);
+      assert.deepEqual(validate(stage, stage.board), [], stage.title);
+      await render(stage, stage.board);
+      verifySourceCards(stage);
+      assert.equal(document.querySelector("[data-board-fallback]"), null);
+      assert.equal(document.querySelectorAll("img").length, stage.figures.length);
+      for (const figure of stage.figures) {
+        assert.ok(fs.existsSync(path.join(root, "public", figure.file.replace(/^\//, ""))));
+      }
+      if (stage.board.contextFigureNumber) {
+        const context = stage.figures.find((f) => f.number === stage.board.contextFigureNumber);
+        const region = document.querySelector(".am-board__context");
+        assert.equal(region.querySelector("img").getAttribute("src"), context.file);
+        await click(region.querySelector("button"));
+        assert.equal(zooms.at(-1), context);
+      }
+      if (stage.board.kind === "mechanism") {
+        const master = stage.figures.find((f) => f.number === stage.board.figureNumber);
+        const canvasImage = document.querySelector(".am-board__canvas img");
+        assert.equal(canvasImage.getAttribute("src"), master.file);
+        const originalImage = canvasImage.outerHTML;
+        const anchors = [...document.querySelectorAll(".am-board__anchor")];
+        const selectors = [...document.querySelectorAll(".am-board__part-select")];
+        assert.equal(anchors.length, stage.board.parts.length);
+        const separated = stage.board.parts.filter((part) => part.labelX !== undefined);
+        assert.equal(document.querySelectorAll(".am-board__leaders line").length, separated.length);
+        assert.equal(
+          document.querySelectorAll(".am-board__physical-point").length,
+          separated.length,
+        );
+        for (const [index, part] of stage.board.parts.entries()) {
+          const label = toBoardPoint(
+            part.labelX === undefined ? part : { x: part.labelX, y: part.labelY },
+            master.crop,
+          );
+          assert.ok(Math.abs(parseFloat(anchors[index].style.left) - label.x) < 1e-8);
+          assert.ok(Math.abs(parseFloat(anchors[index].style.top) - label.y) < 1e-8);
+          await click(selectors[index]);
+          assert.equal(anchors[index].getAttribute("aria-pressed"), "true");
+          assert.equal(canvasImage.outerHTML, originalImage);
+          verifySourceCards(stage);
+        }
+        anchors[0].focus();
+        await key(anchors[0], "End");
+        assert.equal(document.activeElement, anchors.at(-1));
+        await key(anchors.at(-1), "Home");
+        assert.equal(document.activeElement, anchors[0]);
+        await click(document.querySelector(".am-board__master-head button"));
+        assert.equal(zooms.at(-1), master);
+      } else {
+        const panels = [...document.querySelectorAll(".am-board__panel")];
+        assert.equal(panels.length, stage.board.panels.length);
+        for (const [index, panel] of panels.entries()) {
+          const figure = stage.figures.find(
+            (f) => f.number === stage.board.panels[index].figureNumber,
+          );
+          assert.equal(panel.querySelector("img").getAttribute("src"), figure.file);
+          await click(panel.querySelector(".am-illustration__head button"));
+          assert.equal(zooms.at(-1), figure);
+        }
+      }
+      assert.equal(JSON.stringify(stage), snapshot);
+    }
     const productionContent = load(
       path.join(root, "src/lib/lp/ciaac-aircraft-approved/content.ts"),
     );
     assert.equal(
       productionContent.APPROVED_AIRCRAFT_READY_IDS.length,
-      10,
-      "Only the two explicitly reviewed five-lesson blocks are available",
+      19,
+      "All 19 source-reviewed Aircraft lessons are available",
     );
     assert.ok(productionContent.APPROVED_AIRCRAFT_READY_IDS.includes(am10Id));
     assert.ok(productionContent.APPROVED_AIRCRAFT_READY_IDS.includes(am07Id));
@@ -712,7 +858,7 @@ const verifySourceCards = (stage) => {
     assert.match(css, /calc\(\(100% - 1\.3rem\) \/ 3\)/);
     assert.doesNotMatch(css, /line-clamp|text-overflow:\s*ellipsis|@keyframes/);
     console.log(
-      `PASS: concurrent comparison panels and exact source pairing, independent shared source notes in both modes, static master/keyboard selection, ${invalidCount} invalid mappings/geometry cases, 7 native-diagram guard cases, crop math, canonical zoom, disclosure preservation, SSR and safe fallback; all ${actualBoards.length + combustionBoards.length + remainingBoards.length} actual AM06–AM10 boards, verified runtime asset hashes, no duplicate category headings, production 10 reviewed and unreviewed content still blocked. Responsive CSS inspected; pixel layout not browser-verified.`,
+      `PASS: concurrent comparison panels and exact source pairing, independent shared source notes in both modes, static master/keyboard selection, ${invalidCount} invalid mappings/geometry cases, 7 native-diagram guard cases, crop math, canonical zoom, disclosure preservation, SSR and safe fallback; all ${actualBoards.length + combustionBoards.length + remainingBoards.length} actual AM06–AM10 boards, verified runtime asset hashes, no duplicate category headings, plus ${nextBoards.length} actual AM11–AM19 boards with context/leader geometry, click/keyboard selection, source text and canonical zoom preserved; 19 reviewed and unreviewed content still blocked. Responsive CSS inspected; pixel layout not browser-verified.`,
     );
   } finally {
     await React.act(() => reactRoot.unmount());

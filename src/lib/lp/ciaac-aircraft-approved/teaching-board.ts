@@ -13,9 +13,15 @@ export interface ApprovedAircraftMechanismPart {
   /** Percentages of the original asset, before its canonical crop. */
   x: number;
   y: number;
+  /** Optional separated label position in the same original-asset coordinates.
+   * The physical point stays at x/y and is joined by a non-directional leader. */
+  labelX?: number;
+  labelY?: number;
 }
 
 export type ApprovedAircraftTeachingBoardConfig = {
+  /** Whole assembly shown once above the local comparison or mechanism detail. */
+  contextFigureNumber?: string;
   /** Shared source notes, never attached to one category or physical component. */
   noteCardIndexes?: number[];
 } & (
@@ -122,6 +128,11 @@ export function validateApprovedAircraftTeachingBoard(
     return figure;
   };
 
+  if (board.contextFigureNumber !== undefined) {
+    const context = recordFigureReference(board.contextFigureNumber);
+    if (context && context.crop === undefined && !finite(context.assetAspectRatio))
+      errors.push("A bounded context image needs its original asset aspect ratio.");
+  }
   if (board.kind === "comparison") {
     if (!Array.isArray(board.panels) || board.panels.length < 2) {
       errors.push("A comparison needs at least two visible panels.");
@@ -164,6 +175,15 @@ export function validateApprovedAircraftTeachingBoard(
           const point = toBoardPoint({ x: part.x, y: part.y }, figure.crop);
           if (!percent(point.x) || !percent(point.y)) {
             errors.push("Mechanism anchors must remain inside the canonical crop.");
+          }
+        }
+        if (part.labelX !== undefined || part.labelY !== undefined) {
+          if (!percent(part.labelX) || !percent(part.labelY)) {
+            errors.push("Separated labels require both original-asset percentage coordinates.");
+          } else if (figure?.crop && record(figure.crop)) {
+            const label = toBoardPoint({ x: part.labelX, y: part.labelY }, figure.crop);
+            if (!percent(label.x) || !percent(label.y))
+              errors.push("Separated labels must remain inside the canonical crop.");
           }
         }
       }

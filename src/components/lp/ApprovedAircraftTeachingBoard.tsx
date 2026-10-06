@@ -1,4 +1,4 @@
-import { useId, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
+import { Fragment, useId, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import type { HandbookCard, HandbookContentStage, HandbookFigure } from "@/lib/lp/handbook-types";
 import {
   toBoardPoint,
@@ -61,6 +61,28 @@ function BoardNotes({ stage, board }: Pick<ApprovedAircraftTeachingBoardProps, "
   );
 }
 
+function BoardContext({ stage, board, onZoom }: ApprovedAircraftTeachingBoardProps) {
+  if (board.contextFigureNumber === undefined) return null;
+  const figure = stage.figures.find(
+    (item) => item.number === board.contextFigureNumber,
+  )! as ApprovedAircraftFigure;
+  const ratio = figure.crop
+    ? (figure.crop.assetAspectRatio * figure.crop.width) / figure.crop.height
+    : figure.assetAspectRatio!;
+  return (
+    <div
+      className="am-board__context"
+      style={
+        {
+          "--board-context-figure-width": `min(100%, ${22 * ratio}vh, ${16 * ratio}rem)`,
+        } as CSSProperties
+      }
+    >
+      <ApprovedAircraftIllustration figure={figure} onZoom={onZoom} />
+    </div>
+  );
+}
+
 /** Content only. The native lesson owns its heading, sources, navigation, and progress. */
 export function ApprovedAircraftTeachingBoard({
   stage,
@@ -101,6 +123,7 @@ export function ApprovedAircraftTeachingBoard({
       role="group"
       aria-label={`Comparación: ${stage.title}`}
     >
+      <BoardContext stage={stage} board={board} onZoom={onZoom} />
       <div className="am-board__comparison-grid" data-panel-count={board.panels.length}>
         {board.panels.map((panel, index) => {
           const figure = stage.figures.find(
@@ -189,8 +212,9 @@ function MechanismBoard({
     <div
       className="am-board am-board--mechanism"
       role="group"
-      aria-label={`Componentes: ${stage.title}`}
+      aria-label={`Referencias: ${stage.title}`}
     >
+      <BoardContext stage={stage} board={board} onZoom={onZoom} />
       <div className="am-board__mechanism-layout">
         <figure className="am-board__master" aria-describedby={`${id}-instruction`}>
           <div className="am-board__master-head">
@@ -202,7 +226,7 @@ function MechanismBoard({
             )}
           </div>
           <p className="am-board__instruction" id={`${id}-instruction`}>
-            Selecciona un nombre o un número para localizar la pieza.
+            Selecciona un nombre o un número para localizar su referencia.
           </p>
           <div className="am-board__image-space">
             <div
@@ -226,26 +250,63 @@ function MechanismBoard({
                   }
                 />
               </div>
+              {board.parts.some((part) => part.labelX !== undefined) && (
+                <svg
+                  className="am-board__leaders"
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  {board.parts.map((part, index) => {
+                    if (part.labelX === undefined || part.labelY === undefined) return null;
+                    const point = toBoardPoint(part, crop);
+                    const label = toBoardPoint({ x: part.labelX, y: part.labelY }, crop);
+                    return (
+                      <line
+                        key={part.cardIndex}
+                        x1={point.x}
+                        y1={point.y}
+                        x2={label.x}
+                        y2={label.y}
+                        className={index === active ? "is-selected" : undefined}
+                        vectorEffect="non-scaling-stroke"
+                      />
+                    );
+                  })}
+                </svg>
+              )}
               {board.parts.map((part, index) => {
                 const point = toBoardPoint(part, crop);
+                const label =
+                  part.labelX !== undefined && part.labelY !== undefined
+                    ? toBoardPoint({ x: part.labelX, y: part.labelY }, crop)
+                    : point;
                 return (
-                  <button
-                    key={part.cardIndex}
-                    ref={(element) => {
-                      markers.current[index] = element;
-                    }}
-                    type="button"
-                    className="am-board__anchor"
-                    id={`${id}-anchor-${index}`}
-                    aria-label={`${index + 1}. ${stage.cards[part.cardIndex].title}`}
-                    aria-controls={`${id}-card-${index}`}
-                    aria-pressed={index === active}
-                    style={{ left: `${point.x}%`, top: `${point.y}%` }}
-                    onClick={() => setSelected(index)}
-                    onKeyDown={(event) => chooseWithKeys(event, index, markers)}
-                  >
-                    {index + 1}
-                  </button>
+                  <Fragment key={part.cardIndex}>
+                    {part.labelX !== undefined && (
+                      <span
+                        aria-hidden="true"
+                        className={`am-board__physical-point${index === active ? " is-selected" : ""}`}
+                        style={{ left: `${point.x}%`, top: `${point.y}%` }}
+                      />
+                    )}
+                    <button
+                      ref={(element) => {
+                        markers.current[index] = element;
+                      }}
+                      type="button"
+                      className="am-board__anchor"
+                      id={`${id}-anchor-${index}`}
+                      aria-label={`${index + 1}. ${stage.cards[part.cardIndex].title}`}
+                      aria-controls={`${id}-card-${index}`}
+                      aria-pressed={index === active}
+                      style={{ left: `${label.x}%`, top: `${label.y}%` }}
+                      onClick={() => setSelected(index)}
+                      onKeyDown={(event) => chooseWithKeys(event, index, markers)}
+                    >
+                      {index + 1}
+                    </button>
+                  </Fragment>
                 );
               })}
             </div>
@@ -257,7 +318,7 @@ function MechanismBoard({
             {stage.cards[board.parts[active].cardIndex].title}
           </p>
         </figure>
-        <div className="am-board__functions" role="group" aria-label="Componentes y funciones">
+        <div className="am-board__functions" role="group" aria-label="Referencias y funciones">
           {board.parts.map((part, index) => {
             const card = stage.cards[part.cardIndex];
             return (

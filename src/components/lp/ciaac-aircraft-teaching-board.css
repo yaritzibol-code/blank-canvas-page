@@ -38,6 +38,48 @@
   border-radius: 16px;
   background: #07182d;
 }
+.am-board__leaders {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.am-board__leaders line {
+  stroke: #172554;
+  stroke-width: 1.5px;
+}
+.am-board__leaders line.is-selected {
+  stroke: #c2410c;
+  stroke-width: 2.5px;
+}
+.am-board__physical-point {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border: 1px solid white;
+  border-radius: 50%;
+  background: #172554;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.am-board__physical-point.is-selected {
+  background: #c2410c;
+}
+.am-board__context {
+  width: min(100%, 36rem);
+  margin-inline: auto;
+}
+.am-board .am-board__context .am-illustration__viewport {
+  width: var(--board-context-figure-width) !important;
+}
+.am-board .am-board__context .am-illustration__viewport:not(.is-cropped) img {
+  max-height: 22vh;
+}
+.am-board .am-board__context .am-illustration__head > span {
+  display: block;
+}
 .am-board__panel {
   padding: 0.55rem;
 }

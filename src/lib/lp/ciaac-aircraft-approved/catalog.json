@@ -149,7 +149,7 @@
       "suggestedSupport": ["Ordenar el ciclo y compararlo con Otto."],
       "relationships": ["AM04 para ciclo Otto; AM10 para componentes del motor."],
       "groupingNotes": [],
-      "status": "pending-notebooklm"
+      "status": "reviewed-content"
     },
     {
       "code": "AM12",
@@ -163,7 +163,7 @@
       "suggestedSupport": ["Comparar arquitecturas, flujos y generación de empuje."],
       "relationships": [],
       "groupingNotes": [],
-      "status": "pending-notebooklm"
+      "status": "reviewed-content"
     },
     {
       "code": "AM13",
@@ -179,7 +179,7 @@
       ],
       "relationships": [],
       "groupingNotes": [],
-      "status": "pending-notebooklm"
+      "status": "reviewed-content"
     },
     {
       "code": "AM14",
@@ -195,7 +195,7 @@
       "groupingNotes": [
         "En AM14 a AM19, cada sistema se estudia por sus generalidades, función, importancia, partes, tipos y operación."
       ],
-      "status": "pending-notebooklm"
+      "status": "reviewed-content"
     },
     {
       "code": "AM15",
@@ -209,7 +209,7 @@
       "suggestedSupport": ["Relacionar suministro, control y condiciones de cabina."],
       "relationships": ["MD10 para los efectos fisiológicos de la despresurización."],
       "groupingNotes": [],
-      "status": "pending-notebooklm"
+      "status": "reviewed-content"
     },
     {
       "code": "AM16",
@@ -220,7 +220,7 @@
       "suggestedSupport": ["Reconocer sistemas y comprobaciones previas al vuelo."],
       "relationships": ["MT13 para la formación meteorológica de hielo."],
       "groupingNotes": [],
-      "status": "pending-notebooklm"
+      "status": "reviewed-content"
     },
     {
       "code": "AM17",
@@ -231,7 +231,7 @@
       "suggestedSupport": ["Relacionar fuego, detección y extinción."],
       "relationships": [],
       "groupingNotes": [],
-      "status": "pending-notebooklm"
+      "status": "reviewed-content"
     },
     {
       "code": "AM18",
@@ -245,7 +245,7 @@
       "suggestedSupport": ["Secuencia visual de extensión y frenado."],
       "relationships": ["AM01 para reconocer tipos y posición del tren."],
       "groupingNotes": [],
-      "status": "pending-notebooklm"
+      "status": "reviewed-content"
     },
     {
       "code": "AM19",
@@ -260,7 +260,7 @@
       "suggestedSupport": ["Seguir la alimentación de un equipo en un diagrama sencillo."],
       "relationships": [],
       "groupingNotes": [],
-      "status": "pending-notebooklm"
+      "status": "reviewed-content"
     }
   ]
 }

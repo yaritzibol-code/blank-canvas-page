@@ -78,5 +78,77 @@
     "scopeReviewed": true,
     "visualsReviewed": true,
     "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am11-ciclo-brayton",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "3b07b8202e9035ecb8215c2e37404e9016aeb123d41f642ea1e597ad17fb0153",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am12-tipos-de-motores-a-reaccion-y-empuje",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "fa3b8080d0ef09d14d8df66e1c02ebc7ddbdabf01e1c6eb74442daac95e417c0",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am13-anormalidades-del-motor-a-reaccion",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "5bcdfc1eb3f9f5fefb6f6006f2d599b9d180d3753b99ecdc783f0ce438908634",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am14-sistemas-hidraulico-y-neumatico",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "fa3b8080d0ef09d14d8df66e1c02ebc7ddbdabf01e1c6eb74442daac95e417c0",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am15-presurizacion-y-aire-acondicionado",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "fa3b8080d0ef09d14d8df66e1c02ebc7ddbdabf01e1c6eb74442daac95e417c0",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am16-proteccion-contra-hielo-y-lluvia",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "2244914cd2d8e86690dadb4c38a56bc1287efd903ad23ebc7451e0d5de9379a4",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am17-fuego-deteccion-y-extincion",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "2244914cd2d8e86690dadb4c38a56bc1287efd903ad23ebc7451e0d5de9379a4",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am18-tren-de-aterrizaje-y-frenos",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "e338be88035692aa91b6a53a5c3774990a57a835e323c97bd7dc190a46bbea90",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am19-sistemas-electricos-y-fuentes-de-alimentacion",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "2244914cd2d8e86690dadb4c38a56bc1287efd903ad23ebc7451e0d5de9379a4",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
   }
 ]

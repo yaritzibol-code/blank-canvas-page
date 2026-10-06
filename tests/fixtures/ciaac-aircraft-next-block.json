@@ -1,0 +1,338 @@
+{
+  "baseCommit": "750a5b810b1ea0cefc35768a2ca329728ba25218",
+  "existingDocumentHashes": {
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am04-ciclo-de-otto": "d3b1e97698c63dc392f5f2c24445c1a8b751de622722ab38a302b92d353b1d0f",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am02-estructura-y-aeronavegabilidad": "d1370b294d1474efd318dbc5a86f644afabb19955db5bfce7fc88e8aa601ae3e",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am05-potencia-del-motor-alternativo": "e2bd12e00e18959fd69c410362ec984ccc839d195ef93b1c98a094e02d8c1232",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am03-motor-alternativo": "6e4fc5b49442aeb0cfe50a3739d9328a482af761abc4515343e7d2404e20063e",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am01-clasificacion-visual-de-las-aeronaves": "c63a20a69d703a9e1b7ead87984f79a4bc8cf6df21c906e04f31de0531152b32",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am10-motor-a-reaccion-y-sus-componentes": "a41f4d35e235e4e97ab8b01ea30ca3d4a6736d8b350c4cdef4c723c6ce9b8dce",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am07-anormalidades-de-la-combustion": "cbbb0433d39fed5aaeb04aab2280986f9b5a0699f5994634d78ae98892c49e5b",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am06-alimentacion-y-mezcla-del-motor-alternativo": "e9f8c069105171e66d1beec7bfa49e6fab4ead99bd3b5181227eb6990034d76e",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am08-enfriamiento-escape-y-lubricacion": "078d652920f692daad2c5958437c01b038a102b228d7d21fce67997d5c78710a",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am09-helices-tipos-paso-y-fuerzas": "8b870ed42eaa6b71c6ee6ea1ca33c13f3717e1d30c742d67fe85f49af603a3e2"
+  },
+  "newSourceContentHashes": {
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am11-ciclo-brayton": "c3574e4323626708fa130edc6772c1ffe979776972d6eae363f8f71a1d4ba0e4",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am12-tipos-de-motores-a-reaccion-y-empuje": "7cf06b120009c5ef774bbfcfb5ff4a5a36bcf9090933038751b4732913072776",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am13-anormalidades-del-motor-a-reaccion": "fb9955f75ff2682551c6d27934b225fb38de356653a6b21d637668ee8a7ebc87",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am14-sistemas-hidraulico-y-neumatico": "f916a6807ea5142d5d4c2ef1d3aaa878074c8dc9e318dbf84b7d9fea08d20f44",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am15-presurizacion-y-aire-acondicionado": "24ed5558fb16eb0f92cca2e8e295650348c686fb38f1cb6eeb76a6946e92c9d8",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am16-proteccion-contra-hielo-y-lluvia": "c4aa967cd14231f1cfeaf02b85aa2423cb31fa7a69a5e82fb43a0ccb722d8ffe",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am17-fuego-deteccion-y-extincion": "cac150094834c5fdb0272f2ce4ebdaf91415c7723c739f622f7d1b4b0564cab0",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am18-tren-de-aterrizaje-y-frenos": "9858146eee232b7ed583d67d1dba6c5aaaeb51f0c079c8fd6b86285fb853c853",
+    "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am19-sistemas-electricos-y-fuentes-de-alimentacion": "a6b34ce2d44bc55979d90e8f978be9be43cbad6681953b7df68fee6cfcb413e4"
+  },
+  "runtimeAssets": [
+    {
+      "file": "/ciaac-approved/engine-systems/propeller-fixed-master.webp",
+      "bytes": 98026,
+      "sha256": "de14f934693f2e327d85dd9978e48482d39c57338f12d66476035d059542d6ac"
+    },
+    {
+      "file": "/ciaac-approved/fluid-cabin/faa-air-cycle-machine-cutaway-fig16-67.webp",
+      "bytes": 286356,
+      "sha256": "4dcb3b80f777eedc196a1fd9f898be61638c010a0099cc7415d72616279e344f"
+    },
+    {
+      "file": "/ciaac-approved/fluid-cabin/faa-air-cycle-pack-loop-fig16-63.webp",
+      "bytes": 229728,
+      "sha256": "d279da2fe7382e7d979461a3e727bf1bf3b95e298becaf82667ad9deaef3ceeb"
+    },
+    {
+      "file": "/ciaac-approved/fluid-cabin/faa-b737-800-pressurization-panel-fig16-53.webp",
+      "bytes": 116986,
+      "sha256": "6f7c6b2c7b2899e358a038d1172c5191513d48ac38b4cfe496cffaf4f4508299"
+    },
+    {
+      "file": "/ciaac-approved/fluid-cabin/faa-b777-distribution-recirculation-fig16-71.webp",
+      "bytes": 88784,
+      "sha256": "2af75b626f2d8df117e3696514505fae9f7dca897a03b1be0c7261987c28a04d"
+    },
+    {
+      "file": "/ciaac-approved/fluid-cabin/faa-cabin-pressurization-instruments-fig7-42.webp",
+      "bytes": 121856,
+      "sha256": "18049435a5c432f4486d83783e5d46c5d6966f6965519bc6d48606024d54634c"
+    },
+    {
+      "file": "/ciaac-approved/fluid-cabin/faa-complete-hydraulic-circuit-fig12-45.webp",
+      "bytes": 53280,
+      "sha256": "db80fede1ca8381ebbd8ea825398c0553d3dc87d82af0fa16874bc019193a1d8"
+    },
+    {
+      "file": "/ciaac-approved/fluid-cabin/faa-hydraulic-dimensional-context-fig7-36.webp",
+      "bytes": 51664,
+      "sha256": "266fb1e32c71b7891b9c38a25fe6dfffbda8e9713b9340c2ac217d13055160ec"
+    },
+    {
+      "file": "/ciaac-approved/fluid-cabin/faa-hydraulic-seal-packings-fig12-58.webp",
+      "bytes": 84738,
+      "sha256": "55ebaf0523ec17f03c5b993d2087981916dbd5ba7f77813e4b35ad13f00fd3eb"
+    },
+    {
+      "file": "/ciaac-approved/fluid-cabin/faa-outflow-regulator-cutaway-fig16-54.webp",
+      "bytes": 221890,
+      "sha256": "a7c0498524a7a3f8d7223b862bc57635dd3f9944af7cbcdcd8d610282358fc28"
+    },
+    {
+      "file": "/ciaac-approved/fluid-cabin/faa-piston-cabin-pressurization-fig7-40.webp",
+      "bytes": 121214,
+      "sha256": "154263397321074e40f11274b867a3cbd96c2e73bbb3e015f0f16879cb2231ab"
+    },
+    {
+      "file": "/ciaac-approved/fluid-cabin/faa-pneumatic-bottle-system-fig12-70.webp",
+      "bytes": 90914,
+      "sha256": "077b382819cf6254fffb53e0302543a9f88140b2d1d271b7d58321bb8f6e4b0d"
+    },
+    {
+      "file": "/ciaac-approved/fluid-cabin/faa-vapor-cycle-loop-fig16-74.webp",
+      "bytes": 187340,
+      "sha256": "2383e373177be2b1ac0b3aa25d04aaefbca7c7f8aef1efcc380ace7e9ac4ec69"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/electrical-protection-source-plate.webp",
+      "bytes": 127734,
+      "sha256": "a385ea76a896c69b22059dfa3703694ea8214797f3be0e9b61b8253cb0b0e2cc"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/external-power-source-plate.webp",
+      "bytes": 91950,
+      "sha256": "290f62527f5640fef992ef508758e88eb2a4aed7b64b3841a1e72b2b63cdccc2"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/faa-757-anti-skid-system.webp",
+      "bytes": 193964,
+      "sha256": "e7e2bedc1fe3f36e11f0f5f3f9a44d542070dcfd3d71fe7574d05f6cc5dd7d79"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/faa-alternator-control-distribution.webp",
+      "bytes": 60872,
+      "sha256": "adb5c0562b051fe8f1e2f84f1221b56669c993819e9e0c9d0576dac9e419121c"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/faa-apu-inlet-screen.webp",
+      "bytes": 743230,
+      "sha256": "9e4815ab8230f1eef285e5b329f0bec36b20762f2bb4dc43ace3c92583ceee8d"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/faa-dc-generator-cutaway.webp",
+      "bytes": 344780,
+      "sha256": "b0a1056524d1ba456935f47b1383ffa3a373c4aeb3076cc3383da629859d96fd"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/faa-disc-brake-cleveland.webp",
+      "bytes": 268966,
+      "sha256": "ae1cd3d01117c5350d157849e62b6ad5eacb0da3124193ded7a35e49e7219ff3"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/faa-dual-magneto-ignition.webp",
+      "bytes": 222156,
+      "sha256": "269b0cc97a521647efd930f5a3819961517d0604e063debb48b397773ae854f0"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/faa-emergency-gear-release.webp",
+      "bytes": 122572,
+      "sha256": "3b71eb8d45768218237c00b01f3dbf8c8621c388436ad286831077e4a8df8005"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/faa-gear-retraction-linkage.webp",
+      "bytes": 158184,
+      "sha256": "d10b1b46ba5807b68710ca5baf13b91978a53cb01252898920743383b3256f94"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/faa-inverter-hardware.webp",
+      "bytes": 54594,
+      "sha256": "7352e833b708bf8ef853dcc487ba10a01dcdadfced0931b656c035375006807b"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/faa-manual-gear-drive.webp",
+      "bytes": 243936,
+      "sha256": "80e9326bb6eb8893492caa7d940d2c938f5dab30d74ec7b97575a3c0ac4f1a28"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/faa-multidisc-brake-stack.webp",
+      "bytes": 233366,
+      "sha256": "dac3bbc6794f29e25c1694515f93795534a6d1b9e5f4d6a88862e321beb529f4"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/faa-pneumatic-emergency-gear.webp",
+      "bytes": 91796,
+      "sha256": "b7dd87809a59a4e046b600be07adff2e0b55a3b5f664e3ac8f6135014e6bf65f"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/faa-rectified-alternator-circuit.webp",
+      "bytes": 12210,
+      "sha256": "ff3ec140e1f569553e1c419364cb07e9fe561384713d197bc6fa28a086e0cd4b"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/faa-split-bus-distribution.webp",
+      "bytes": 27584,
+      "sha256": "d7a871d349ab8968f8a70aa5f15d767725a98d7a9f2b352e6218387bae803e08"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/gear-details-source-plate.webp",
+      "bytes": 591980,
+      "sha256": "fcc5a3a8dbbf461db1c6c0bd512897a7f8bfa36feb12e3d0fa0bdb9c152f8f0a"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/gear-orientation-source-plate.webp",
+      "bytes": 139864,
+      "sha256": "102aa4fc225be4f6d1b422e4c946a9fd0e38d9fa0e8bb0ec9656a6166b80a891"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/generic-internal-shoe-drum.svg",
+      "bytes": 3068,
+      "sha256": "7e9d8f78599bf640b4999e69984e40975216417160e75fda786321d3f3c62d05"
+    },
+    {
+      "file": "/ciaac-approved/gear-electric/oleo-source-plate.webp",
+      "bytes": 477176,
+      "sha256": "d9a3fe1e1d1bf392c2acdc9b8b38b3f2a42167984bcc30853005dffc8b9872d5"
+    },
+    {
+      "file": "/ciaac-approved/ice-fire/faa-electric-probe-locations.webp",
+      "bytes": 156392,
+      "sha256": "6f509a576b53791d4a1fdd5eb3900ee74385d51c262a9b4ca632757c014aeba4"
+    },
+    {
+      "file": "/ciaac-approved/ice-fire/faa-fixed-fire-bottle-distribution.webp",
+      "bytes": 154488,
+      "sha256": "f45d29765c448b3012467bc320fd8a19a9f7d6aac68a4492dfc89e35ece679ea"
+    },
+    {
+      "file": "/ciaac-approved/ice-fire/faa-hand-operated-gate-valve.webp",
+      "bytes": 140716,
+      "sha256": "4472f1fed8c0e19ad38b432517c99e2ce7bd6f400aea9c4063e038fc37d10559"
+    },
+    {
+      "file": "/ciaac-approved/ice-fire/faa-heated-leading-edge.webp",
+      "bytes": 88470,
+      "sha256": "95c20c431aa147a11f4495a6b5cbed71c7398db591b9f8af396407ff0fba818d"
+    },
+    {
+      "file": "/ciaac-approved/ice-fire/faa-iced-leading-edge.webp",
+      "bytes": 33508,
+      "sha256": "218bfd171e3ee35b79e0218329c089c250f77fdd637b4b3b22b4a39a32abd094"
+    },
+    {
+      "file": "/ciaac-approved/ice-fire/faa-pneumatic-boot-states.webp",
+      "bytes": 246146,
+      "sha256": "7938464e779bdd35f5fedf6d0039650176ae889f6e2627ab3b87f403aac24402"
+    },
+    {
+      "file": "/ciaac-approved/ice-fire/faa-portable-halon-extinguisher.webp",
+      "bytes": 89876,
+      "sha256": "022313475fdc800188c26c1eb3170d348a5f493bd65630c187b5b0c25ee7a7ac"
+    },
+    {
+      "file": "/ciaac-approved/ice-fire/fire-agents-concept.webp",
+      "bytes": 1296882,
+      "sha256": "9b68f06313efdc0eeddf72ce517aeba79c9480132b9df3f00b27f24219fd11af"
+    },
+    {
+      "file": "/ciaac-approved/ice-fire/fire-detection-source-plate.webp",
+      "bytes": 817678,
+      "sha256": "fa53037acd45a1466479ae3dd8477aa7e9f6e98ae61251bd6833966cd2f04255"
+    },
+    {
+      "file": "/ciaac-approved/ice-fire/fire-materials-concept.webp",
+      "bytes": 1563238,
+      "sha256": "952995cae4b3959a1dbb8cd287f80206e50da1f365291709e5a5cf4eddc102e5"
+    },
+    {
+      "file": "/ciaac-approved/ice-fire/fire-triangle.svg",
+      "bytes": 25811,
+      "sha256": "a044c207c5d13e785ec1ef71d8d6af1a681045e40885354b26306032f06340bb"
+    },
+    {
+      "file": "/ciaac-approved/ice-fire/ice-technologies-source-plate.webp",
+      "bytes": 609382,
+      "sha256": "b4df26183444bb8ccc8420dee7050b452ae349fdff96e6ae1f592153b4934bf8"
+    },
+    {
+      "file": "/ciaac-approved/ice-fire/piper-pa28-aircraft-context.webp",
+      "bytes": 1230282,
+      "sha256": "17e655e650e04e9c96f7cb3a08a197698391c91983b239d514560943169b15a0"
+    },
+    {
+      "file": "/ciaac-approved/ice-fire/rain-protection-source-plate.webp",
+      "bytes": 309738,
+      "sha256": "e28e405bd903319e6488ac45a210413a5cc0b1e6185d5c47b82fcd621c36cc82"
+    },
+    {
+      "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+      "bytes": 93774,
+      "sha256": "dc4e886588b3192e1d680079da23cf7d4137eb1c4f3f6646869c9415847e0cc0"
+    },
+    {
+      "file": "/ciaac-approved/turbine-systems/blade-attached.svg",
+      "bytes": 1234,
+      "sha256": "d15e3f163887a2e0d2463544bbb95d039820cd96980a5aca84ad3affc160005b"
+    },
+    {
+      "file": "/ciaac-approved/turbine-systems/blade-separated.svg",
+      "bytes": 1313,
+      "sha256": "a7a4aff7820d387aecacdfb31b261b05487fdce0250a0d7f5e96f7d191a413d6"
+    },
+    {
+      "file": "/ciaac-approved/turbine-systems/brayton-ideal-pv.svg",
+      "bytes": 5420,
+      "sha256": "b8f38d63d0c94bde4202ddcd95d1b446607acd4e310d67cbcecdfd59d3fd0761"
+    },
+    {
+      "file": "/ciaac-approved/turbine-systems/faa-dual-spool-compressor.webp",
+      "bytes": 126260,
+      "sha256": "deb2f937ea69a098693825fe975b4af89421781ace6572df71f78bee817a2fab"
+    },
+    {
+      "file": "/ciaac-approved/turbine-systems/faa-turbofan-bypass.webp",
+      "bytes": 134290,
+      "sha256": "1fdf86875ca4fdaa65c8719f78b16ea948b5b2c5edc7fbcd5647aaa0151cb15b"
+    },
+    {
+      "file": "/ciaac-approved/turbine-systems/faa-turbojet.webp",
+      "bytes": 129148,
+      "sha256": "727a64413efb2867ad98c1222cb9705736f48e8b5ba50761b79a973a8c5454a8"
+    },
+    {
+      "file": "/ciaac-approved/turbine-systems/faa-turboprop.webp",
+      "bytes": 116558,
+      "sha256": "8722a5fa27bda33fbc83e601d8b2121aa7aade2a477c8599d04e14700d8b9fc0"
+    },
+    {
+      "file": "/ciaac-approved/turbine-systems/faa-turboshaft.webp",
+      "bytes": 98938,
+      "sha256": "d2c234572b18d8bbabae8d6c787c671a2e70795ff97b87e579e2a65ea07fcf17"
+    },
+    {
+      "file": "/ciaac-approved/turbine-systems/fod-examples.webp",
+      "bytes": 307280,
+      "sha256": "f4caf001e77d1b585e77a4156f8c3e97a57192e7a30557534d944865d7a08c0a"
+    },
+    {
+      "file": "/ciaac-approved/turbine-systems/hot-start.svg",
+      "bytes": 1024,
+      "sha256": "8bf6139174dec00429dae2fd7fa5d9ae593f06a68f442cba5f46f10c6247f8cc"
+    },
+    {
+      "file": "/ciaac-approved/turbine-systems/hung-start.svg",
+      "bytes": 1025,
+      "sha256": "f2abdb590db10b6ffadba5a1e1627389519719e336386f550dde5a6b12da4630"
+    },
+    {
+      "file": "/ciaac-approved/turbine-systems/otto-ideal-pv.svg",
+      "bytes": 5441,
+      "sha256": "8be3f01978eb9191a901e0ea6d498b36a4934f8cb9e0ddaf750baa45754cb2b0"
+    },
+    {
+      "file": "/ciaac-approved/turbine-systems/turbine-temperature-stations.svg",
+      "bytes": 2778,
+      "sha256": "44cc1f9425c39646c937cb5d2a3900d2ef0be79dfed69884364574bed3ee5df0"
+    },
+    {
+      "file": "/ciaac-approved/turbine-systems/wet-start.svg",
+      "bytes": 880,
+      "sha256": "36160b9468ad7e96f5b295b52cfb90d08a8ea5b64778479f38245fdded42dffe"
+    }
+  ]
+}
