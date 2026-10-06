@@ -24,8 +24,7 @@ export function Pricing() {
               FlightPath Basic
             </div>
             <div className="mt-5 flex items-baseline gap-2">
-              <span className="font-display text-6xl tracking-tight text-ink">bash</span>
-              <span className="text-ink/45 text-sm">MXN</span>
+              <span className="font-display text-6xl tracking-tight text-ink">Gratis</span>
             </div>
             <p className="text-[14px] text-ink/55 mt-3">
               Crea tu cuenta y conoce la plataforma con funciones limitadas y básicas.

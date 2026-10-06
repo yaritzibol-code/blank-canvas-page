@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useId } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Eye, EyeOff } from "lucide-react";
 import { register, login, resetPassword, ensureSeededAsync, useSessionUser } from "@/lib/store";
@@ -162,6 +162,7 @@ const googleMsgStyle: React.CSSProperties = {
 
 function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?: string }) {
   const navigate = useNavigate();
+  const fieldId = useId();
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
   const [nombre, setNombre] = useState("");
@@ -250,8 +251,9 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
         </div>
       </div>
 
-      <Field label="Nombre completo">
+      <Field htmlFor={`${fieldId}-name`} label="Nombre completo">
         <input
+          id={`${fieldId}-name`}
           type="text"
           placeholder="Ej. María González"
           required
@@ -263,8 +265,9 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
         />
       </Field>
 
-      <Field label="Correo electrónico">
+      <Field htmlFor={`${fieldId}-email`} label="Correo electrónico">
         <input
+          id={`${fieldId}-email`}
           type="email"
           placeholder="tu@correo.com"
           required
@@ -276,10 +279,16 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
         />
       </Field>
 
-      <Field label="Contraseña" hint="Usa letras, números y símbolos para mayor seguridad.">
+      <Field
+        htmlFor={`${fieldId}-password`}
+        label="Contraseña"
+        hint="Usa letras, números y símbolos para mayor seguridad."
+      >
         <div style={{ position: "relative" }}>
           <input
+            id={`${fieldId}-password`}
             type={showPw ? "text" : "password"}
+            aria-describedby={`${fieldId}-password-hint`}
             placeholder="Mínimo 8 caracteres"
             required
             style={{ ...inputStyle, paddingRight: 44 }}
@@ -290,6 +299,7 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
           />
           <button
             type="button"
+            aria-label={showPw ? "Ocultar contraseña" : "Mostrar contraseña"}
             onClick={() => setShowPw(!showPw)}
             style={{
               position: "absolute",
@@ -370,6 +380,7 @@ function RegisterForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirect
 
 function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?: string }) {
   const navigate = useNavigate();
+  const fieldId = useId();
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -422,8 +433,9 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
         <p style={{ fontSize: ".85rem", color: "#93A4BF", lineHeight: 1.5 }}>
           Escribe tu correo y te enviaremos un enlace para crear una contraseña nueva.
         </p>
-        <Field label="Correo electrónico">
+        <Field htmlFor={`${fieldId}-email`} label="Correo electrónico">
           <input
+            id={`${fieldId}-email`}
             type="email"
             placeholder="tu@correo.com"
             style={inputStyle}
@@ -466,8 +478,9 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <Field label="Correo electrónico">
+      <Field htmlFor={`${fieldId}-email`} label="Correo electrónico">
         <input
+          id={`${fieldId}-email`}
           type="email"
           placeholder="tu@correo.com"
           style={inputStyle}
@@ -478,9 +491,10 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
         />
       </Field>
 
-      <Field label="Contraseña">
+      <Field htmlFor={`${fieldId}-password`} label="Contraseña">
         <div style={{ position: "relative" }}>
           <input
+            id={`${fieldId}-password`}
             type={showPw ? "text" : "password"}
             placeholder="Tu contraseña"
             style={{ ...inputStyle, paddingRight: 44 }}
@@ -494,6 +508,7 @@ function LoginForm({ onSwitch, redirectTo }: { onSwitch: () => void; redirectTo?
           />
           <button
             type="button"
+            aria-label={showPw ? "Ocultar contraseña" : "Mostrar contraseña"}
             onClick={() => setShowPw(!showPw)}
             style={{
               position: "absolute",
@@ -580,10 +595,12 @@ const inputStyle: React.CSSProperties = {
 };
 
 function Field({
+  htmlFor,
   label,
   hint,
   children,
 }: {
+  htmlFor: string;
   label: string;
   hint?: string;
   children: React.ReactNode;
@@ -591,6 +608,7 @@ function Field({
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
       <label
+        htmlFor={htmlFor}
         style={{
           fontSize: "0.78rem",
           fontWeight: 700,
@@ -603,7 +621,11 @@ function Field({
         {label}
       </label>
       {children}
-      {hint && <span style={{ fontSize: "0.75rem", color: "#93A4BF" }}>{hint}</span>}
+      {hint && (
+        <span id={`${htmlFor}-hint`} style={{ fontSize: "0.75rem", color: "#93A4BF" }}>
+          {hint}
+        </span>
+      )}
     </div>
   );
 }
