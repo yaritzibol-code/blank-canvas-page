@@ -1,4 +1,5 @@
 import type { CiaacActivity, CiaacSource } from "./ciaac-content-types";
+import type { ApprovedAircraftTeachingBoardConfig } from "./ciaac-aircraft-approved/teaching-board";
 
 export interface HandbookCard {
   title: string;
@@ -52,6 +53,10 @@ export interface HandbookContentStage {
   title: string;
   cards: HandbookCard[];
   figures: HandbookFigure[];
+  /** Optional source-linked visual grouping; one navigation step can compare related parts. */
+  board?: ApprovedAircraftTeachingBoardConfig;
+  /** AM09-only native geometry overlays on its verified, stationary propeller master. */
+  propellerDiagram?: "geometry" | "pitch" | "forces";
   visualStage?: number;
 }
 

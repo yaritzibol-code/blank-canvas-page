@@ -38,5 +38,45 @@
     "scopeReviewed": true,
     "visualsReviewed": true,
     "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am06-alimentacion-y-mezcla-del-motor-alternativo",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "d36918f05cf64227562a99cfd929531b14e906f65a0bfc1d171348475301c22b",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am07-anormalidades-de-la-combustion",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "d36918f05cf64227562a99cfd929531b14e906f65a0bfc1d171348475301c22b",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am08-enfriamiento-escape-y-lubricacion",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "d36918f05cf64227562a99cfd929531b14e906f65a0bfc1d171348475301c22b",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am09-helices-tipos-paso-y-fuerzas",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "d36918f05cf64227562a99cfd929531b14e906f65a0bfc1d171348475301c22b",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am10-motor-a-reaccion-y-sus-componentes",
+    "curriculumVersion": "ciaac-aircraft-approved-2026-10-05",
+    "notebooklmExplanationSha256": "d36918f05cf64227562a99cfd929531b14e906f65a0bfc1d171348475301c22b",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
   }
 ]

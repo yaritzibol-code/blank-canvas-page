@@ -1,11 +1,13 @@
 import { useMemo, type ComponentProps } from "react";
-import type { HandbookFigure } from "@/lib/lp/handbook-types";
+import type { HandbookContentStage, HandbookFigure } from "@/lib/lp/handbook-types";
 import { HandbookLearningPath } from "./HandbookLearningPath";
 import {
   ApprovedAircraftIllustration,
   type ApprovedAircraftFigure,
 } from "./ApprovedAircraftIllustration";
 import { migrateApprovedAircraftJourney } from "@/lib/lp/ciaac-aircraft-approved/journey";
+import { ApprovedAircraftTeachingBoard } from "./ApprovedAircraftTeachingBoard";
+import { ApprovedPropellerDiagram } from "./ApprovedPropellerDiagram";
 import "./ciaac-aircraft-handbook.css";
 import "./ciaac-aircraft-engines-handbook.css";
 
@@ -29,6 +31,50 @@ export function CiaacApprovedAircraftLearningPath(
           </div>
         ) : null,
       figuresFirst: true,
+      renderContent: (stage: HandbookContentStage, onZoom: (figure: HandbookFigure) => void) =>
+        stage.propellerDiagram && document.number === 9 ? (
+          <>
+            <header className="hb-heading">
+              <span className="hb-pill">Comprende</span>
+              <h2>{stage.title}</h2>
+            </header>
+            <ApprovedPropellerDiagram
+              mode={stage.propellerDiagram}
+              figure={stage.figures[0]}
+              onZoom={onZoom}
+            />
+            <div className="hb-card-grid">
+              {stage.cards.map((card, i) => (
+                <section
+                  className={`hb-card ${card.wide ? "is-wide" : ""}`}
+                  key={`${i}:${card.title}`}
+                >
+                  <h3>{card.title}</h3>
+                  <p>{card.text}</p>
+                  {card.detailText && (
+                    <details className="hb-card-detail">
+                      <summary>Ver más: {card.title}</summary>
+                      <p>{card.detailText}</p>
+                    </details>
+                  )}
+                </section>
+              ))}
+            </div>
+          </>
+        ) : stage.board ? (
+          <>
+            <header className="hb-heading">
+              <span className="hb-pill">Comprende</span>
+              <h2>{stage.title}</h2>
+            </header>
+            <ApprovedAircraftTeachingBoard
+              key={stage.nav}
+              stage={stage}
+              board={stage.board}
+              onZoom={onZoom}
+            />
+          </>
+        ) : null,
       // Keep any reviewed crop when enlarged; excluded generated mechanics stay excluded.
       renderZoom: (figure: HandbookFigure) => (
         <ApprovedAircraftIllustration figure={figure} expanded />

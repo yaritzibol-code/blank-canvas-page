@@ -88,7 +88,7 @@
       "suggestedSupport": ["Seguir el recorrido de aire y combustible y reconocer la mezcla."],
       "relationships": [],
       "groupingNotes": [],
-      "status": "pending-notebooklm"
+      "status": "reviewed-content"
     },
     {
       "code": "AM07",
@@ -99,7 +99,7 @@
       "suggestedSupport": ["Distinguir las anormalidades en situaciones breves."],
       "relationships": ["AM06 para los sistemas de alimentación e ignición."],
       "groupingNotes": [],
-      "status": "pending-notebooklm"
+      "status": "reviewed-content"
     },
     {
       "code": "AM08",
@@ -113,7 +113,7 @@
       "suggestedSupport": ["Reconocer el recorrido y la función de cada sistema."],
       "relationships": ["AM19 para el sistema eléctrico del motor alternativo."],
       "groupingNotes": [],
-      "status": "pending-notebooklm"
+      "status": "reviewed-content"
     },
     {
       "code": "AM09",
@@ -127,7 +127,7 @@
       "suggestedSupport": ["Comparar visualmente tipos y cambios de paso."],
       "relationships": ["AM05 para potencia nominal, indicada y al freno."],
       "groupingNotes": [],
-      "status": "pending-notebooklm"
+      "status": "reviewed-content"
     },
     {
       "code": "AM10",
@@ -138,7 +138,7 @@
       "suggestedSupport": ["Localizar los componentes en un esquema del motor."],
       "relationships": [],
       "groupingNotes": [],
-      "status": "pending-notebooklm"
+      "status": "reviewed-content"
     },
     {
       "code": "AM11",

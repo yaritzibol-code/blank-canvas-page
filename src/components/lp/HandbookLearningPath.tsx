@@ -10,6 +10,7 @@ import {
 import { LearningPathYarisAvatar } from "./LearningPathCharacters";
 import type {
   HandbookCard,
+  HandbookContentStage,
   HandbookExercise,
   HandbookFigure,
   HandbookLabExercise,
@@ -90,6 +91,10 @@ export function HandbookLearningPath({
     renderZoom?: (figure: HandbookFigure) => React.ReactNode;
     renderFigure?: (
       figure: HandbookFigure,
+      onZoom: (figure: HandbookFigure) => void,
+    ) => React.ReactNode;
+    renderContent?: (
+      stage: HandbookContentStage,
       onZoom: (figure: HandbookFigure) => void,
     ) => React.ReactNode;
     afterStage?: (stage: number) => React.ReactNode;
@@ -352,21 +357,22 @@ export function HandbookLearningPath({
               stageIndex={current.visualStage}
             />
           )}
-          {current.kind === "content" && (
-            <ContentStage
-              title={current.title}
-              figuresFirst={presentation?.figuresFirst}
-              renderFigure={presentation?.renderFigure}
-              visual={presentation?.visual(state.stage)}
-              cards={current.cards}
-              figures={current.figures.map(
-                (figure) =>
-                  document.figures.find((candidate) => candidate.number === figure.number) ??
-                  figure,
-              )}
-              onZoom={setZoom}
-            />
-          )}
+          {current.kind === "content" &&
+            (presentation?.renderContent?.(current, setZoom) ?? (
+              <ContentStage
+                title={current.title}
+                figuresFirst={presentation?.figuresFirst}
+                renderFigure={presentation?.renderFigure}
+                visual={presentation?.visual(state.stage)}
+                cards={current.cards}
+                figures={current.figures.map(
+                  (figure) =>
+                    document.figures.find((candidate) => candidate.number === figure.number) ??
+                    figure,
+                )}
+                onZoom={setZoom}
+              />
+            ))}
           {current.kind === "quiz" && (
             <QuizStage
               visual={presentation?.visual(state.stage)}

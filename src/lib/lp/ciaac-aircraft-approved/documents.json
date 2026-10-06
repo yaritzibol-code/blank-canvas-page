@@ -3056,5 +3056,2777 @@
       }
     ],
     "contentVersion": "am01-remove-piston-v2"
+  },
+  "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am10-motor-a-reaccion-y-sus-componentes": {
+    "number": 10,
+    "title": "Motor a reacción y sus componentes",
+    "intro": "Para entender el proceso continuo del motor a reacción, seguimos la trayectoria del flujo de aire desde la entrada hasta la salida:",
+    "name": "Motor a reacción y sus componentes",
+    "chapter": 1,
+    "chapter_name": "Aeronaves y motores",
+    "chapterLabel": "Itinerario",
+    "sourceLabel": "CIAAC · Aeronaves y motores",
+    "cards": [
+      {
+        "title": "Motor a reacción y sus componentes",
+        "text": "Para entender el proceso continuo del motor a reacción, seguimos la trayectoria del flujo de aire desde la entrada hasta la salida:",
+        "covers": [],
+        "wide": true
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Durante el funcionamiento continuo de un motor turborreactor en vuelo, ¿cuál es la función principal de la turbina en la secuencia del flujo de aire?",
+        "options": [
+          "Comprimir el aire atmosférico entrante para elevar su presión antes de la cámara de combustión.",
+          "Extraer energía de los gases calientes de combustión para hacer girar el eje que impulsa al compresor.",
+          "Inyectar y encender de forma ininterrumpida el combustible mediante chispas eléctricas continuas."
+        ],
+        "correct": 1,
+        "feedback": "La turbina se ubica inmediatamente después de la cámara de combustión. Su función principal es transformar parte de la energía térmica y cinética de los gases calientes en energía mecánica rotacional, haciendo girar la flecha o eje que acciona el compresor ubicado en la parte frontal del motor.",
+        "order": [0, 1, 2]
+      }
+    ],
+    "tips": [],
+    "subtopics": [],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 10,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM10-flow",
+        "file": "/ciaac-approved/engine-systems/axial-turbojet-cutaway.webp",
+        "observe": "",
+        "alt": "Corte longitudinal de un turborreactor con entrada, compresor, cámara de combustión, turbina, eje común y tobera.",
+        "caption": "Ilustración técnica conceptual; no dimensionada.",
+        "heading": "Recorrido del aire",
+        "assetAspectRatio": 1.7768331562167907,
+        "crop": {
+          "x": 0.0,
+          "y": 12.75239107332625,
+          "width": 100.0,
+          "height": 69.07545164718385,
+          "assetAspectRatio": 1.7768331562167907
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 10,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM10-shaft",
+        "file": "/ciaac-approved/engine-systems/axial-turbojet-cutaway.webp",
+        "observe": "",
+        "alt": "Detalle del compresor, el eje común, la cámara de combustión y la turbina.",
+        "caption": "Ilustración técnica conceptual; no dimensionada.",
+        "heading": "Turbina, eje y compresor",
+        "assetAspectRatio": 1.7768331562167907,
+        "crop": {
+          "x": 7.775119617224881,
+          "y": 18.597236981934113,
+          "width": 74.16267942583733,
+          "height": 54.19766206163656,
+          "assetAspectRatio": 1.7768331562167907
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 10,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM10-axial",
+        "file": "/ciaac-approved/engine-systems/axial-turbojet-cutaway.webp",
+        "observe": "",
+        "alt": "Detalle del compresor axial con etapas de álabes y eje central.",
+        "caption": "Ilustración técnica conceptual; no dimensionada.",
+        "heading": "Compresor axial",
+        "assetAspectRatio": 1.7768331562167907,
+        "crop": {
+          "x": 17.3444976076555,
+          "y": 18.597236981934113,
+          "width": 26.31578947368421,
+          "height": 53.13496280552603,
+          "assetAspectRatio": 1.7768331562167907
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 10,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM10-centrifugal",
+        "file": "/ciaac-approved/engine-systems/centrifugal-compressor.webp",
+        "observe": "",
+        "alt": "Impulsor centrífugo azul rodeado por álabes fijos del difusor.",
+        "caption": "Ilustración técnica conceptual; no dimensionada.",
+        "heading": "Compresor centrífugo",
+        "assetAspectRatio": 1
+      }
+    ],
+    "exercise": null,
+    "objectives": [
+      "Reconocer la función de la turbina en la extracción de energía de los gases para impulsar el compresor."
+    ],
+    "completionChecks": [
+      "Describe la transformación del flujo de aire a lo largo de cada sección del motor de reacción."
+    ],
+    "minutes": 8,
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Despegue"
+      },
+      {
+        "kind": "content",
+        "nav": "Recorrido del aire por el motor",
+        "title": "Recorrido del aire por el motor",
+        "cards": [
+          {
+            "title": "Toma de Aire",
+            "text": "Capta el aire atmosférico del exterior, reduce su turbulencia y encauza un flujo uniforme hacia la primera etapa del compresor.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Compresor",
+            "text": "El compresor absorbe trabajo mecánico suministrado por el eje para elevar la presión y densidad del aire fresco entrante.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Cámara de Combustión",
+            "text": "Recibe el aire comprimido, lo mezcla con combustible (turbosina/kerosene) inyectado a presión y lo enciende. Aunque se requiere una chispa eléctrica inicial (ignitores) para el arranque, una vez iniciada la combustión es continua y autosostenida",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Turbina",
+            "text": "Extrae una parte de la energía cinética y térmica de los gases en expansión para hacer girar el eje del motor.",
+            "covers": [],
+            "wide": false,
+            "detailText": "Ruedas con álabes expuestas directamente al flujo de gases ardientes que salen de la cámara de combustión."
+          },
+          {
+            "title": "Tobera de escape",
+            "text": "la tobera de escape (exhaust nozzle) es el conducto final diseñado para dirigir y acelerar la salida de los gases en expansión hacia la atmósfera",
+            "covers": [],
+            "wide": false,
+            "detailText": "su geometría se adapta a la envolvente de diseño del avión (pudiendo ser convergente, convergente-divergente o de geometría variable), por lo que no todas las toberas son puramente convergentes."
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 10,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM10-flow",
+            "file": "/ciaac-approved/engine-systems/axial-turbojet-cutaway.webp",
+            "observe": "",
+            "alt": "Corte longitudinal de un turborreactor con entrada, compresor, cámara de combustión, turbina, eje común y tobera.",
+            "caption": "Ilustración técnica conceptual; no dimensionada.",
+            "heading": "Recorrido del aire",
+            "assetAspectRatio": 1.7768331562167907,
+            "crop": {
+              "x": 0.0,
+              "y": 12.75239107332625,
+              "width": 100.0,
+              "height": 69.07545164718385,
+              "assetAspectRatio": 1.7768331562167907
+            }
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "AM10-flow",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 5.980861244019139,
+              "y": 34.64399574920298
+            },
+            {
+              "cardIndex": 1,
+              "x": 26.555023923444978,
+              "y": 42.720510095642936
+            },
+            {
+              "cardIndex": 2,
+              "x": 55.442583732057415,
+              "y": 36.55685441020191
+            },
+            {
+              "cardIndex": 3,
+              "x": 69.85645933014354,
+              "y": 40.70138150903294
+            },
+            {
+              "cardIndex": 4,
+              "x": 90.311004784689,
+              "y": 32.19978746014878
+            }
+          ]
+        }
+      },
+      {
+        "kind": "content",
+        "nav": "Turbina, eje y compresor",
+        "title": "Turbina, eje y compresor",
+        "cards": [
+          {
+            "title": "Eje de Transmisión",
+            "text": "Conecta mecánicamente la turbina con el compresor ubicado en la sección delantera.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Compresor",
+            "text": "El compresor absorbe trabajo mecánico suministrado por el eje para elevar la presión y densidad del aire fresco entrante.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Turbina",
+            "text": "La turbina extrae energía de los gases calientes de combustión para impulsar el eje que hace girar al compresor y accesorios.",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 10,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM10-shaft",
+            "file": "/ciaac-approved/engine-systems/axial-turbojet-cutaway.webp",
+            "observe": "",
+            "alt": "Detalle del compresor, el eje común, la cámara de combustión y la turbina.",
+            "caption": "Ilustración técnica conceptual; no dimensionada.",
+            "heading": "Turbina, eje y compresor",
+            "assetAspectRatio": 1.7768331562167907,
+            "crop": {
+              "x": 7.775119617224881,
+              "y": 18.597236981934113,
+              "width": 74.16267942583733,
+              "height": 54.19766206163656,
+              "assetAspectRatio": 1.7768331562167907
+            }
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "AM10-shaft",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 55.622009569377994,
+              "y": 47.07757704569607
+            },
+            {
+              "cardIndex": 1,
+              "x": 26.555023923444978,
+              "y": 42.720510095642936
+            },
+            {
+              "cardIndex": 2,
+              "x": 69.85645933014354,
+              "y": 40.70138150903294
+            }
+          ]
+        }
+      },
+      {
+        "kind": "content",
+        "nav": "Compresor axial y centrífugo",
+        "title": "Compresor axial y centrífugo",
+        "cards": [
+          {
+            "title": "Compresor axial",
+            "text": "el aire se desplaza de forma aproximadamente paralela al eje de rotación atravesando etapas sucesivas de álabes rotores y estatores fijos para incrementar gradualmente la presión",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Compresor centrífugo",
+            "text": "utiliza un impulsor giratorio (impeller) que acelera el flujo de aire hacia afuera en dirección radial impulsándolo hacia un difusor que transforma la velocidad en presión.",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 10,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM10-axial",
+            "file": "/ciaac-approved/engine-systems/axial-turbojet-cutaway.webp",
+            "observe": "",
+            "alt": "Detalle del compresor axial con etapas de álabes y eje central.",
+            "caption": "Ilustración técnica conceptual; no dimensionada.",
+            "heading": "Compresor axial",
+            "assetAspectRatio": 1.7768331562167907,
+            "crop": {
+              "x": 17.3444976076555,
+              "y": 18.597236981934113,
+              "width": 26.31578947368421,
+              "height": 53.13496280552603,
+              "assetAspectRatio": 1.7768331562167907
+            }
+          },
+          {
+            "chapter": 1,
+            "topic": 10,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM10-centrifugal",
+            "file": "/ciaac-approved/engine-systems/centrifugal-compressor.webp",
+            "observe": "",
+            "alt": "Impulsor centrífugo azul rodeado por álabes fijos del difusor.",
+            "caption": "Ilustración técnica conceptual; no dimensionada.",
+            "heading": "Compresor centrífugo",
+            "assetAspectRatio": 1
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Compresor axial",
+              "figureNumber": "AM10-axial",
+              "cardIndexes": [0]
+            },
+            {
+              "title": "Compresor centrífugo",
+              "figureNumber": "AM10-centrifugal",
+              "cardIndexes": [1]
+            }
+          ]
+        }
+      },
+      {
+        "kind": "quiz",
+        "nav": "Comprueba",
+        "questions": [0]
+      },
+      {
+        "kind": "finish",
+        "nav": "Aterrizaje"
+      }
+    ],
+    "sources": [
+      {
+        "id": "faa-phak-7",
+        "title": "FAA · Pilot’s Handbook of Aeronautical Knowledge, Chapter 7",
+        "role": "Verificación complementaria de componentes y funciones del motor de turbina.",
+        "url": "https://www.faa.gov/sites/faa.gov/files/09_phak_ch7.pdf",
+        "verified_locators": ["7-20–7-22"]
+      },
+      {
+        "id": "faa-amt-powerplant-3",
+        "title": "FAA · AMT Powerplant, Chapter 3",
+        "role": "Verificación complementaria de geometrías de tobera.",
+        "url": "https://www.faa.gov/sites/faa.gov/files/05_amtp_ch3.pdf",
+        "verified_locators": ["3-26"]
+      }
+    ],
+    "contentVersion": "am10-grouped-v1"
+  },
+  "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am07-anormalidades-de-la-combustion": {
+    "number": 7,
+    "title": "Anormalidades de la combustión",
+    "intro": "En un motor alternativo de aviación, la combustión no es una explosión instantánea, sino un proceso de quemado progresivo, rápido y uniforme de la mezcla aire-gasolina dentro del cilindro.",
+    "name": "Anormalidades de la combustión",
+    "chapter": 1,
+    "chapter_name": "Aeronaves y motores",
+    "chapterLabel": "Itinerario",
+    "sourceLabel": "CIAAC · Aeronaves y motores",
+    "cards": [
+      {
+        "title": "Anormalidades de la combustión",
+        "text": "En un motor alternativo de aviación, la combustión no es una explosión instantánea, sino un proceso de quemado progresivo, rápido y uniforme de la mezcla aire-gasolina dentro del cilindro.",
+        "covers": [],
+        "wide": true
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "¿Cuál es la diferencia conceptual fundamental en el momento de ocurrencia entre la preignición y la detonación en un motor alternativo?",
+        "options": [
+          "La preignición ocurre antes del salto de la chispa normal de la bujía, mientras que la detonación ocurre después del salto de la chispa como una explosión incontrolada de la mezcla remanente.",
+          "La preignición ocurre durante la carrera de escape, mientras que la detonación ocurre antes del inicio de la carrera de compresión.",
+          "La preignición solo ocurre en motores a reacción, mientras que la detonación es un ajuste normal del mando de mezcla."
+        ],
+        "correct": 0,
+        "feedback": "La preignición se define por el encendido prematuro provocado por un punto caliente antes de que salte la chispa en las bujías, mientras que la detonación inicia con un salto de chispa normal, pero finaliza con la explosión instantánea e incontrolada de la porción de mezcla no quemada.",
+        "order": [0, 1, 2]
+      }
+    ],
+    "tips": [],
+    "subtopics": [],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM07-normal",
+        "file": "/ciaac-approved/engine-systems/combustion-states.webp",
+        "observe": "",
+        "alt": "La Combustión Normal: corte conceptual estático de cilindro y conductos.",
+        "caption": "Comparación conceptual de ubicación y origen; sin escala temporal.",
+        "heading": "La Combustión Normal",
+        "assetAspectRatio": 3.0,
+        "crop": {
+          "x": 0.8287292817679558,
+          "y": 0.0,
+          "width": 33.42541436464088,
+          "height": 100.0,
+          "assetAspectRatio": 3.0
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM07-preignition",
+        "file": "/ciaac-approved/engine-systems/combustion-states.webp",
+        "observe": "",
+        "alt": "Preignición: corte conceptual estático de cilindro y conductos.",
+        "caption": "Comparación conceptual de ubicación y origen; sin escala temporal.",
+        "heading": "Preignición",
+        "assetAspectRatio": 3.0,
+        "crop": {
+          "x": 34.25414364640884,
+          "y": 0.0,
+          "width": 33.14917127071823,
+          "height": 100.0,
+          "assetAspectRatio": 3.0
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM07-detonation",
+        "file": "/ciaac-approved/engine-systems/combustion-states.webp",
+        "observe": "",
+        "alt": "Detonación: corte conceptual estático de cilindro y conductos.",
+        "caption": "Comparación conceptual de ubicación y origen; sin escala temporal.",
+        "heading": "Detonación",
+        "assetAspectRatio": 3.0,
+        "crop": {
+          "x": 67.40331491712708,
+          "y": 0.0,
+          "width": 32.59668508287293,
+          "height": 100.0,
+          "assetAspectRatio": 3.0
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM07-backfire",
+        "file": "/ciaac-approved/engine-systems/combustion-locations.webp",
+        "observe": "",
+        "alt": "Explosión en la admisión (Backfire): corte conceptual estático de cilindro y conductos.",
+        "caption": "Comparación conceptual de ubicación y origen; sin escala temporal.",
+        "heading": "Explosión en la admisión (Backfire)",
+        "assetAspectRatio": 2.0,
+        "crop": {
+          "x": 0.0,
+          "y": 10.710259301014656,
+          "width": 50.0,
+          "height": 77.7903043968433,
+          "assetAspectRatio": 2.0
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM07-afterfire",
+        "file": "/ciaac-approved/engine-systems/combustion-locations.webp",
+        "observe": "",
+        "alt": "Explosión en el escape (Afterfire): corte conceptual estático de cilindro y conductos.",
+        "caption": "Comparación conceptual de ubicación y origen; sin escala temporal.",
+        "heading": "Explosión en el escape (Afterfire)",
+        "assetAspectRatio": 2.0,
+        "crop": {
+          "x": 50.0,
+          "y": 10.710259301014656,
+          "width": 50.0,
+          "height": 77.7903043968433,
+          "assetAspectRatio": 2.0
+        }
+      }
+    ],
+    "exercise": null,
+    "objectives": [
+      "Identificar las diferencias físicas entre la detonación y la preignición durante el ciclo de combustión.",
+      "Reconocer la ubicación contextual de los eventos de explosión en la admisión (backfire) y en el tubo de escape (afterfire)."
+    ],
+    "completionChecks": [
+      "Identifica si un evento de inflamación fuera de la cámara ocurre en el colector de admisión (backfire) o en el tubo de escape (afterfire)."
+    ],
+    "minutes": 6,
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Despegue"
+      },
+      {
+        "kind": "content",
+        "nav": "Combustión normal, preignición y detonación",
+        "title": "Combustión normal, preignición y detonación",
+        "cards": [
+          {
+            "title": "La Combustión Normal",
+            "text": "A partir de la chispa, los frentes de flama avanzan de forma ordenada a través de la cámara de combustión.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Preignición",
+            "text": "Ocurre cuando la mezcla aire-combustible se enciende espontáneamente ANTES del salto normal de la chispa de la bujía.",
+            "covers": [],
+            "wide": false,
+            "detailText": "Es provocada por puntos calientes (hot spots) en el interior del cilindro, como depósitos incandescentes de carbón en el pistón o válvulas, o aisladores de bujía agrietados."
+          },
+          {
+            "title": "Detonación",
+            "text": "Es la combustión espontánea, instantánea y explosiva de la porción de mezcla no quemada (end gas) dentro de la cámara. Ocurre DESPUÉS del salto de la chispa: el inicio de la combustión es normal, pero la presión y temperatura hacen que la carga restante explote de golpe.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Causas típicas",
+            "text": "Uso de un octanaje inferior al especificado, operación a alta potencia con mezcla demasiado pobre, o presiones de admisión elevadas combinadas con sobrecalentamiento del motor.",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM07-normal",
+            "file": "/ciaac-approved/engine-systems/combustion-states.webp",
+            "observe": "",
+            "alt": "La Combustión Normal: corte conceptual estático de cilindro y conductos.",
+            "caption": "Comparación conceptual de ubicación y origen; sin escala temporal.",
+            "heading": "La Combustión Normal",
+            "assetAspectRatio": 3.0,
+            "crop": {
+              "x": 0.8287292817679558,
+              "y": 0.0,
+              "width": 33.42541436464088,
+              "height": 100.0,
+              "assetAspectRatio": 3.0
+            }
+          },
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM07-preignition",
+            "file": "/ciaac-approved/engine-systems/combustion-states.webp",
+            "observe": "",
+            "alt": "Preignición: corte conceptual estático de cilindro y conductos.",
+            "caption": "Comparación conceptual de ubicación y origen; sin escala temporal.",
+            "heading": "Preignición",
+            "assetAspectRatio": 3.0,
+            "crop": {
+              "x": 34.25414364640884,
+              "y": 0.0,
+              "width": 33.14917127071823,
+              "height": 100.0,
+              "assetAspectRatio": 3.0
+            }
+          },
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM07-detonation",
+            "file": "/ciaac-approved/engine-systems/combustion-states.webp",
+            "observe": "",
+            "alt": "Detonación: corte conceptual estático de cilindro y conductos.",
+            "caption": "Comparación conceptual de ubicación y origen; sin escala temporal.",
+            "heading": "Detonación",
+            "assetAspectRatio": 3.0,
+            "crop": {
+              "x": 67.40331491712708,
+              "y": 0.0,
+              "width": 32.59668508287293,
+              "height": 100.0,
+              "assetAspectRatio": 3.0
+            }
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "La Combustión Normal",
+              "figureNumber": "AM07-normal",
+              "cardIndexes": [0]
+            },
+            {
+              "title": "Preignición",
+              "figureNumber": "AM07-preignition",
+              "cardIndexes": [1]
+            },
+            {
+              "title": "Detonación",
+              "figureNumber": "AM07-detonation",
+              "cardIndexes": [2]
+            }
+          ],
+          "noteCardIndexes": [3]
+        }
+      },
+      {
+        "kind": "content",
+        "nav": "Combustión en admisión y escape; términos",
+        "title": "Combustión en admisión y escape; términos",
+        "cards": [
+          {
+            "title": "Explosión en la admisión (Backfire)",
+            "text": "Múltiple o ductos del sistema de admisión.\n\nRetorno de llama hacia el sistema de inducción durante la apertura de la válvula de admisión o por velocidad reducida de combustión.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Explosión en el escape (Afterfire)",
+            "text": "Colector o tubo de escape.\n\nIgnición de mezcla no quemada o parcialmente quemada",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Postcombustión",
+            "text": "El término «postcombustión» no constituye una clasificación formal establecida en la fuente CIAAC",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Verificación Documental del Término «Precombustión»",
+            "text": "En las páginas consultadas del manual AERONAVES Y MOTORES GENERALIDADES.pdf (págs. AyM/7-2-10 y AyM/7-2-11), el término «precombustión» no figura clasificado como una anomalía independiente.",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM07-backfire",
+            "file": "/ciaac-approved/engine-systems/combustion-locations.webp",
+            "observe": "",
+            "alt": "Explosión en la admisión (Backfire): corte conceptual estático de cilindro y conductos.",
+            "caption": "Comparación conceptual de ubicación y origen; sin escala temporal.",
+            "heading": "Explosión en la admisión (Backfire)",
+            "assetAspectRatio": 2.0,
+            "crop": {
+              "x": 0.0,
+              "y": 10.710259301014656,
+              "width": 50.0,
+              "height": 77.7903043968433,
+              "assetAspectRatio": 2.0
+            }
+          },
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM07-afterfire",
+            "file": "/ciaac-approved/engine-systems/combustion-locations.webp",
+            "observe": "",
+            "alt": "Explosión en el escape (Afterfire): corte conceptual estático de cilindro y conductos.",
+            "caption": "Comparación conceptual de ubicación y origen; sin escala temporal.",
+            "heading": "Explosión en el escape (Afterfire)",
+            "assetAspectRatio": 2.0,
+            "crop": {
+              "x": 50.0,
+              "y": 10.710259301014656,
+              "width": 50.0,
+              "height": 77.7903043968433,
+              "assetAspectRatio": 2.0
+            }
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Explosión en la admisión (Backfire)",
+              "figureNumber": "AM07-backfire",
+              "cardIndexes": [0]
+            },
+            {
+              "title": "Explosión en el escape (Afterfire)",
+              "figureNumber": "AM07-afterfire",
+              "cardIndexes": [1]
+            }
+          ],
+          "noteCardIndexes": [2, 3]
+        }
+      },
+      {
+        "kind": "quiz",
+        "nav": "Comprueba",
+        "questions": [0]
+      },
+      {
+        "kind": "finish",
+        "nav": "Aterrizaje"
+      }
+    ],
+    "sources": [
+      {
+        "id": "ciaac-aeronaves-generalidades-historico",
+        "title": "CIAAC · Aeronaves y motores: Generalidades",
+        "role": "Combustión normal, preignición y detonación.",
+        "verified_locators": ["AyM/7-2-9–12; PDF 43–46"]
+      },
+      {
+        "id": "faa-amt-powerplant-10",
+        "title": "FAA · AMT Powerplant, Chapter 10",
+        "role": "Verificación complementaria de backfire y afterfire.",
+        "url": "https://www.faa.gov/sites/faa.gov/files/12_amtp_ch10_0.pdf",
+        "verified_locators": ["10-31"]
+      }
+    ],
+    "contentVersion": "am07-grouped-v1"
+  },
+  "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am06-alimentacion-y-mezcla-del-motor-alternativo": {
+    "number": 6,
+    "title": "Alimentación y mezcla del motor alternativo",
+    "intro": "La presente lección utiliza como modelo de referencia didáctico la arquitectura convencional de un motor de aviación a gasolina con encendido por chispa, carburador de flotador y sistema dual de magnetos, reconociendo que la presencia de estos componentes y la configuración del sistema varían según el diseño específico del fabricante.",
+    "name": "Alimentación y mezcla del motor alternativo",
+    "chapter": 1,
+    "chapter_name": "Aeronaves y motores",
+    "chapterLabel": "Itinerario",
+    "sourceLabel": "CIAAC · Aeronaves y motores",
+    "cards": [
+      {
+        "title": "Alimentación y mezcla del motor alternativo",
+        "text": "La presente lección utiliza como modelo de referencia didáctico la arquitectura convencional de un motor de aviación a gasolina con encendido por chispa, carburador de flotador y sistema dual de magnetos, reconociendo que la presencia de estos componentes y la configuración del sistema varían según el diseño específico del fabricante.",
+        "covers": [],
+        "wide": true
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Durante el ascenso hacia una altitud de crucero elevada en una aeronave con motor alimentado por carburador, ¿por qué motivo el piloto debe reajustar el mando de mezcla de acuerdo con la lista de verificación del POH?",
+        "options": [
+          "Porque el combustible en los tanques alares aumenta su densidad con la altitud.",
+          "Porque la menor densidad del aire en altitud enriquece la mezcla de forma natural, requiriendo reducir el flujo de combustible para restaurar la proporción adecuada.",
+          "Porque la bomba de vacío fuerza un exceso de aire hacia el múltiple de admisión al ascender."
+        ],
+        "correct": 1,
+        "feedback": "Al aumentar la altitud, la densidad del aire disminuye y la masa de oxígeno que entra al motor se reduce. Como el carburador entrega un flujo de combustible desproporcionado respecto a la masa de aire fresco, la mezcla se vuelve rica. El piloto debe ajustar el mando de mezcla para restringir el flujo de gasolina según las indicaciones del POH.",
+        "order": [0, 1, 2]
+      }
+    ],
+    "tips": [],
+    "subtopics": [],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 6,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM06-gravity",
+        "file": "/ciaac-approved/engine-systems/faa-fuel-gravity-vs-pump.webp",
+        "observe": "",
+        "alt": "Por gravedad: fragmento del esquema original de la FAA.",
+        "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+        "heading": "Por gravedad",
+        "assetAspectRatio": 0.5283842794759825,
+        "crop": {
+          "x": 2.066115702479339,
+          "y": 0.8733624454148471,
+          "width": 95.86776859504133,
+          "height": 47.05240174672489,
+          "assetAspectRatio": 0.5283842794759825
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 6,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM06-pump",
+        "file": "/ciaac-approved/engine-systems/faa-fuel-gravity-vs-pump.webp",
+        "observe": "",
+        "alt": "Mediante bombas: fragmento del esquema original de la FAA.",
+        "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+        "heading": "Mediante bombas",
+        "assetAspectRatio": 0.5283842794759825,
+        "crop": {
+          "x": 2.066115702479339,
+          "y": 48.580786026200876,
+          "width": 95.86776859504133,
+          "height": 49.12663755458515,
+          "assetAspectRatio": 0.5283842794759825
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 6,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM06-induction",
+        "file": "/ciaac-approved/engine-systems/faa-induction-airbox-carburetor.webp",
+        "observe": "",
+        "alt": "Sistema de Inducción y Carburación: fragmento del esquema original de la FAA.",
+        "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+        "heading": "Sistema de Inducción y Carburación",
+        "assetAspectRatio": 2.243119266055046,
+        "crop": {
+          "x": 21.7280163599182,
+          "y": 2.293577981651376,
+          "width": 57.259713701431494,
+          "height": 81.42201834862385,
+          "assetAspectRatio": 2.243119266055046
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 6,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM06-float",
+        "file": "/ciaac-approved/engine-systems/faa-float-carburetor.webp",
+        "observe": "",
+        "alt": "Cuba de Nivel Constante: fragmento del esquema original de la FAA.",
+        "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+        "heading": "Cuba de Nivel Constante",
+        "assetAspectRatio": 1.536050156739812,
+        "crop": {
+          "x": 52.55102040816326,
+          "y": 26.253918495297807,
+          "width": 25.765306122448976,
+          "height": 49.76489028213166,
+          "assetAspectRatio": 1.536050156739812
+        },
+        "focus": {
+          "x": 65.3061224489796,
+          "y": 46.23824451410658,
+          "label": "Cuba de Nivel Constante"
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 6,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM06-venturi",
+        "file": "/ciaac-approved/engine-systems/faa-float-carburetor.webp",
+        "observe": "",
+        "alt": "Tubo Venturi: fragmento del esquema original de la FAA.",
+        "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+        "heading": "Tubo Venturi",
+        "assetAspectRatio": 1.536050156739812,
+        "crop": {
+          "x": 32.142857142857146,
+          "y": 36.05015673981191,
+          "width": 21.428571428571427,
+          "height": 33.69905956112852,
+          "assetAspectRatio": 1.536050156739812
+        },
+        "focus": {
+          "x": 41.3265306122449,
+          "y": 51.56739811912225,
+          "label": "Tubo Venturi"
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 6,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM06-throttle",
+        "file": "/ciaac-approved/engine-systems/faa-float-carburetor.webp",
+        "observe": "",
+        "alt": "Mariposa de Admisión: fragmento del esquema original de la FAA.",
+        "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+        "heading": "Mariposa de Admisión",
+        "assetAspectRatio": 1.536050156739812,
+        "crop": {
+          "x": 26.836734693877553,
+          "y": 13.871473354231975,
+          "width": 27.346938775510203,
+          "height": 30.094043887147336,
+          "assetAspectRatio": 1.536050156739812
+        },
+        "focus": {
+          "x": 41.0204081632653,
+          "y": 30.799373040752354,
+          "label": "Mariposa de Admisión"
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 6,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM06-idle",
+        "file": "/ciaac-approved/engine-systems/faa-carburetor-idling.webp",
+        "observe": "",
+        "alt": "Sistema de Ralentí: fragmento del esquema original de la FAA.",
+        "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+        "heading": "Sistema de Ralentí",
+        "assetAspectRatio": 0.8135593220338984,
+        "crop": {
+          "x": 14.895833333333334,
+          "y": 12.033898305084746,
+          "width": 80.0,
+          "height": 82.20338983050848,
+          "assetAspectRatio": 0.8135593220338984
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 6,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM06-economizer",
+        "file": "/ciaac-approved/engine-systems/faa-carburetor-economizer.webp",
+        "observe": "",
+        "alt": "Economizador: fragmento del esquema original de la FAA.",
+        "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+        "heading": "Economizador",
+        "assetAspectRatio": 0.9958333333333333,
+        "crop": {
+          "x": 8.158995815899582,
+          "y": 5.729166666666666,
+          "width": 84.51882845188284,
+          "height": 80.625,
+          "assetAspectRatio": 0.9958333333333333
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 6,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM06-accelerator",
+        "file": "/ciaac-approved/engine-systems/faa-carburetor-accelerator.webp",
+        "observe": "",
+        "alt": "Bomba de Aceleración: fragmento del esquema original de la FAA.",
+        "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+        "heading": "Bomba de Aceleración",
+        "assetAspectRatio": 1.0663716814159292,
+        "crop": {
+          "x": 7.780082987551867,
+          "y": 5.530973451327434,
+          "width": 85.06224066390041,
+          "height": 79.64601769911505,
+          "assetAspectRatio": 1.0663716814159292
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 6,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM06-pressure",
+        "file": "/ciaac-approved/engine-systems/faa-pressure-carburetor.webp",
+        "observe": "",
+        "alt": "Carburador de inyección / presión: fragmento del esquema original de la FAA.",
+        "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+        "heading": "Carburador de inyección / presión",
+        "assetAspectRatio": 1.085972850678733,
+        "crop": {
+          "x": 11.5625,
+          "y": 15.384615384615385,
+          "width": 65.9375,
+          "height": 78.05429864253394,
+          "assetAspectRatio": 1.085972850678733
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 6,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM06-injection",
+        "file": "/ciaac-approved/engine-systems/faa-port-fuel-injection.webp",
+        "observe": "",
+        "alt": "Inyección en puertos de admisión: fragmento del esquema original de la FAA.",
+        "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+        "heading": "Inyección en puertos de admisión",
+        "assetAspectRatio": 1.7183098591549295,
+        "crop": {
+          "x": 1.0245901639344261,
+          "y": 13.732394366197184,
+          "width": 61.98770491803278,
+          "height": 66.90140845070422,
+          "assetAspectRatio": 1.7183098591549295
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 6,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM06-mixture",
+        "file": "/ciaac-approved/engine-systems/faa-float-carburetor.webp",
+        "observe": "",
+        "alt": "Mezcla y mando: fragmento del esquema original de la FAA.",
+        "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+        "heading": "Mezcla y mando",
+        "assetAspectRatio": 1.536050156739812,
+        "crop": {
+          "x": 25.0,
+          "y": 13.322884012539186,
+          "width": 53.06122448979592,
+          "height": 63.479623824451416,
+          "assetAspectRatio": 1.536050156739812
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 6,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM06-ignition",
+        "file": "/ciaac-approved/engine-systems/faa-dual-magneto-ignition.webp",
+        "observe": "",
+        "alt": "Ignición y encendido doble: fragmento del esquema original de la FAA.",
+        "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+        "heading": "Ignición y encendido doble",
+        "assetAspectRatio": 1.7097902097902098
+      },
+      {
+        "chapter": 1,
+        "topic": 6,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM06-vacuum",
+        "file": "/ciaac-approved/engine-systems/faa-vacuum-instruments-flow.webp",
+        "observe": "",
+        "alt": "Succión y manómetro: fragmento del esquema original de la FAA.",
+        "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+        "heading": "Succión y manómetro",
+        "assetAspectRatio": 1.9635627530364372
+      }
+    ],
+    "exercise": null,
+    "objectives": [
+      "Identificar la función de los sistemas de inducción, carburación e ignición por magnetos en la operación de la planta motriz.",
+      "Reconocer el propósito del sistema de succión o vacío accionado por el motor en la alimentación de instrumentos giroscópicos."
+    ],
+    "completionChecks": [
+      "Explica la secuencia de preparación y suministro de la mezcla aire-combustible e ignición hacia los cilindros.",
+      "Describe cómo el manómetro de succión indica la depresión generada por la bomba de vacío para operar los giroscopios de a bordo."
+    ],
+    "minutes": 12,
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Despegue"
+      },
+      {
+        "kind": "content",
+        "nav": "Recorrido del aire y del combustible",
+        "title": "Recorrido del aire y del combustible",
+        "cards": [
+          {
+            "title": "Sistemas de Alimentación",
+            "text": "El Combustible: Proviene de los tanques (alimentado por gravedad o impulsado por bombas a presión) y llega al carburador o al sistema de inyección.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Sistema de Inducción y Carburación",
+            "text": "El sistema de inducción capta el aire exterior, lo mezcla con el combustible en proporciones controladas y lo distribuye a los cilindros mediante el múltiple de admisión.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Grado de Octanaje (Índice de Octano)",
+            "text": "Mide la resistencia antidetonante del combustible, es decir, su capacidad para soportar elevadas presiones y temperaturas en el cilindro sin autoinflamarse de forma explosiva.",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 6,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM06-gravity",
+            "file": "/ciaac-approved/engine-systems/faa-fuel-gravity-vs-pump.webp",
+            "observe": "",
+            "alt": "Por gravedad: fragmento del esquema original de la FAA.",
+            "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+            "heading": "Por gravedad",
+            "assetAspectRatio": 0.5283842794759825,
+            "crop": {
+              "x": 2.066115702479339,
+              "y": 0.8733624454148471,
+              "width": 95.86776859504133,
+              "height": 47.05240174672489,
+              "assetAspectRatio": 0.5283842794759825
+            }
+          },
+          {
+            "chapter": 1,
+            "topic": 6,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM06-pump",
+            "file": "/ciaac-approved/engine-systems/faa-fuel-gravity-vs-pump.webp",
+            "observe": "",
+            "alt": "Mediante bombas: fragmento del esquema original de la FAA.",
+            "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+            "heading": "Mediante bombas",
+            "assetAspectRatio": 0.5283842794759825,
+            "crop": {
+              "x": 2.066115702479339,
+              "y": 48.580786026200876,
+              "width": 95.86776859504133,
+              "height": 49.12663755458515,
+              "assetAspectRatio": 0.5283842794759825
+            }
+          },
+          {
+            "chapter": 1,
+            "topic": 6,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM06-induction",
+            "file": "/ciaac-approved/engine-systems/faa-induction-airbox-carburetor.webp",
+            "observe": "",
+            "alt": "Sistema de Inducción y Carburación: fragmento del esquema original de la FAA.",
+            "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+            "heading": "Sistema de Inducción y Carburación",
+            "assetAspectRatio": 2.243119266055046,
+            "crop": {
+              "x": 21.7280163599182,
+              "y": 2.293577981651376,
+              "width": 57.259713701431494,
+              "height": 81.42201834862385,
+              "assetAspectRatio": 2.243119266055046
+            }
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Por gravedad",
+              "figureNumber": "AM06-gravity",
+              "cardIndexes": []
+            },
+            {
+              "title": "Mediante bombas",
+              "figureNumber": "AM06-pump",
+              "cardIndexes": []
+            },
+            {
+              "title": "Sistema de Inducción y Carburación",
+              "figureNumber": "AM06-induction",
+              "cardIndexes": [1]
+            }
+          ],
+          "noteCardIndexes": [0, 2]
+        }
+      },
+      {
+        "kind": "content",
+        "nav": "Carburador de flotador: partes y funcionamiento",
+        "title": "Carburador de flotador: partes y funcionamiento",
+        "cards": [
+          {
+            "title": "Cuba de Nivel Constante",
+            "text": "Depósito con un flotador y una válvula de aguja que mantiene un nivel continuo de gasolina para alimentar el surtidor.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Tubo Venturi",
+            "text": "Conducto que acelera el flujo de aire y reduce su presión estática (Efecto Venturi), generando la succión necesaria para extraer y pulverizar el combustible.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Mariposa de Admisión",
+            "text": "Disco metálico regulado por la palanca de gases de la cabina.\n\nLa mariposa de admisión regula la cantidad de mezcla que pasa hacia los cilindros.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Sistema de Ralentí",
+            "text": "Suministra mezcla a bajas revoluciones cuando la mariposa está casi cerrada.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Economizador",
+            "text": "Válvula que enriquece la mezcla a potencias elevadas para refrigerar las cabezas de los cilindros y prevenir la detonación.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Bomba de Aceleración",
+            "text": "Inyecta un chorro adicional de combustible durante movimientos bruscos del acelerador para evitar que el motor se ahogue por un empobrecimiento momentáneo.",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 6,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM06-float",
+            "file": "/ciaac-approved/engine-systems/faa-float-carburetor.webp",
+            "observe": "",
+            "alt": "Cuba de Nivel Constante: fragmento del esquema original de la FAA.",
+            "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+            "heading": "Cuba de Nivel Constante",
+            "assetAspectRatio": 1.536050156739812,
+            "crop": {
+              "x": 52.55102040816326,
+              "y": 26.253918495297807,
+              "width": 25.765306122448976,
+              "height": 49.76489028213166,
+              "assetAspectRatio": 1.536050156739812
+            },
+            "focus": {
+              "x": 65.3061224489796,
+              "y": 46.23824451410658,
+              "label": "Cuba de Nivel Constante"
+            }
+          },
+          {
+            "chapter": 1,
+            "topic": 6,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM06-venturi",
+            "file": "/ciaac-approved/engine-systems/faa-float-carburetor.webp",
+            "observe": "",
+            "alt": "Tubo Venturi: fragmento del esquema original de la FAA.",
+            "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+            "heading": "Tubo Venturi",
+            "assetAspectRatio": 1.536050156739812,
+            "crop": {
+              "x": 32.142857142857146,
+              "y": 36.05015673981191,
+              "width": 21.428571428571427,
+              "height": 33.69905956112852,
+              "assetAspectRatio": 1.536050156739812
+            },
+            "focus": {
+              "x": 41.3265306122449,
+              "y": 51.56739811912225,
+              "label": "Tubo Venturi"
+            }
+          },
+          {
+            "chapter": 1,
+            "topic": 6,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM06-throttle",
+            "file": "/ciaac-approved/engine-systems/faa-float-carburetor.webp",
+            "observe": "",
+            "alt": "Mariposa de Admisión: fragmento del esquema original de la FAA.",
+            "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+            "heading": "Mariposa de Admisión",
+            "assetAspectRatio": 1.536050156739812,
+            "crop": {
+              "x": 26.836734693877553,
+              "y": 13.871473354231975,
+              "width": 27.346938775510203,
+              "height": 30.094043887147336,
+              "assetAspectRatio": 1.536050156739812
+            },
+            "focus": {
+              "x": 41.0204081632653,
+              "y": 30.799373040752354,
+              "label": "Mariposa de Admisión"
+            }
+          },
+          {
+            "chapter": 1,
+            "topic": 6,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM06-idle",
+            "file": "/ciaac-approved/engine-systems/faa-carburetor-idling.webp",
+            "observe": "",
+            "alt": "Sistema de Ralentí: fragmento del esquema original de la FAA.",
+            "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+            "heading": "Sistema de Ralentí",
+            "assetAspectRatio": 0.8135593220338984,
+            "crop": {
+              "x": 14.895833333333334,
+              "y": 12.033898305084746,
+              "width": 80.0,
+              "height": 82.20338983050848,
+              "assetAspectRatio": 0.8135593220338984
+            }
+          },
+          {
+            "chapter": 1,
+            "topic": 6,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM06-economizer",
+            "file": "/ciaac-approved/engine-systems/faa-carburetor-economizer.webp",
+            "observe": "",
+            "alt": "Economizador: fragmento del esquema original de la FAA.",
+            "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+            "heading": "Economizador",
+            "assetAspectRatio": 0.9958333333333333,
+            "crop": {
+              "x": 8.158995815899582,
+              "y": 5.729166666666666,
+              "width": 84.51882845188284,
+              "height": 80.625,
+              "assetAspectRatio": 0.9958333333333333
+            }
+          },
+          {
+            "chapter": 1,
+            "topic": 6,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM06-accelerator",
+            "file": "/ciaac-approved/engine-systems/faa-carburetor-accelerator.webp",
+            "observe": "",
+            "alt": "Bomba de Aceleración: fragmento del esquema original de la FAA.",
+            "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+            "heading": "Bomba de Aceleración",
+            "assetAspectRatio": 1.0663716814159292,
+            "crop": {
+              "x": 7.780082987551867,
+              "y": 5.530973451327434,
+              "width": 85.06224066390041,
+              "height": 79.64601769911505,
+              "assetAspectRatio": 1.0663716814159292
+            }
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Cuba de Nivel Constante",
+              "figureNumber": "AM06-float",
+              "cardIndexes": [0]
+            },
+            {
+              "title": "Tubo Venturi",
+              "figureNumber": "AM06-venturi",
+              "cardIndexes": [1]
+            },
+            {
+              "title": "Mariposa de Admisión",
+              "figureNumber": "AM06-throttle",
+              "cardIndexes": [2]
+            },
+            {
+              "title": "Sistema de Ralentí",
+              "figureNumber": "AM06-idle",
+              "cardIndexes": [3]
+            },
+            {
+              "title": "Economizador",
+              "figureNumber": "AM06-economizer",
+              "cardIndexes": [4]
+            },
+            {
+              "title": "Bomba de Aceleración",
+              "figureNumber": "AM06-accelerator",
+              "cardIndexes": [5]
+            }
+          ]
+        }
+      },
+      {
+        "kind": "content",
+        "nav": "Carburador de presión e inyección en puertos",
+        "title": "Carburador de presión e inyección en puertos",
+        "cards": [
+          {
+            "title": "Carburador de inyección / presión",
+            "text": "Dosifica el combustible a alta presión\n\nReduce la vulnerabilidad al congelamiento en la garganta y disminuye la sensibilidad a la actitud de vuelo en comparación con el carburador de flotador.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Inyección en puertos de admisión",
+            "text": "Prescinde del carburador y distribuye el combustible presurizado mediante líneas individuales hacia inyectores situados en la toma de admisión de cada cilindro o puerto de entrada.",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 6,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM06-pressure",
+            "file": "/ciaac-approved/engine-systems/faa-pressure-carburetor.webp",
+            "observe": "",
+            "alt": "Carburador de inyección / presión: fragmento del esquema original de la FAA.",
+            "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+            "heading": "Carburador de inyección / presión",
+            "assetAspectRatio": 1.085972850678733,
+            "crop": {
+              "x": 11.5625,
+              "y": 15.384615384615385,
+              "width": 65.9375,
+              "height": 78.05429864253394,
+              "assetAspectRatio": 1.085972850678733
+            }
+          },
+          {
+            "chapter": 1,
+            "topic": 6,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM06-injection",
+            "file": "/ciaac-approved/engine-systems/faa-port-fuel-injection.webp",
+            "observe": "",
+            "alt": "Inyección en puertos de admisión: fragmento del esquema original de la FAA.",
+            "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+            "heading": "Inyección en puertos de admisión",
+            "assetAspectRatio": 1.7183098591549295,
+            "crop": {
+              "x": 1.0245901639344261,
+              "y": 13.732394366197184,
+              "width": 61.98770491803278,
+              "height": 66.90140845070422,
+              "assetAspectRatio": 1.7183098591549295
+            }
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Carburador de inyección / presión",
+              "figureNumber": "AM06-pressure",
+              "cardIndexes": [0]
+            },
+            {
+              "title": "Inyección en puertos de admisión",
+              "figureNumber": "AM06-injection",
+              "cardIndexes": [1]
+            }
+          ]
+        }
+      },
+      {
+        "kind": "content",
+        "nav": "Mezcla: proporción, mando y temperatura",
+        "title": "Mezcla: proporción, mando y temperatura",
+        "cards": [
+          {
+            "title": "Tipos de Mezcla",
+            "text": "La mezcla es la relación en peso entre el aire y el combustible:\n\nMezcla Estequiométrica: Proporción químicamente equilibrada en la que el oxígeno y el combustible se queman por completo.\n\nMezcla Rica: Presenta un mayor contenido de combustible.\n\nMezcla Pobre: Contiene una mayor proporción de aire.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Ajuste del Mando de Mezcla",
+            "text": "Al ascender, la densidad del aire atmosférico disminuye (menos moléculas de oxígeno por volumen), por lo que la mezcla se enriquece de forma natural.",
+            "covers": [],
+            "wide": false,
+            "detailText": "El piloto ajusta el mando de mezcla en cabina para restringir el flujo de gasolina, manteniendo la relación de aire y combustible de acuerdo con las tablas y procedimientos especificados en el Manual de Vuelo (POH) de la aeronave."
+          },
+          {
+            "title": "Efecto del empobrecimiento de la mezcla",
+            "text": "El efecto de empobrecer la mezcla aire-combustible sobre la temperatura de la carga y la tendencia a la detonación depende de la proporción inicial de la mezcla, del régimen de potencia y de las condiciones operativas de la aeronave",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 6,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM06-mixture",
+            "file": "/ciaac-approved/engine-systems/faa-float-carburetor.webp",
+            "observe": "",
+            "alt": "Mezcla y mando: fragmento del esquema original de la FAA.",
+            "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+            "heading": "Mezcla y mando",
+            "assetAspectRatio": 1.536050156739812,
+            "crop": {
+              "x": 25.0,
+              "y": 13.322884012539186,
+              "width": 53.06122448979592,
+              "height": 63.479623824451416,
+              "assetAspectRatio": 1.536050156739812
+            }
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "AM06-mixture",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 40.816326530612244,
+              "y": 52.11598746081505
+            },
+            {
+              "cardIndex": 1,
+              "x": 57.04081632653061,
+              "y": 58.22884012539185
+            }
+          ],
+          "noteCardIndexes": [2]
+        }
+      },
+      {
+        "kind": "content",
+        "nav": "Ignición y encendido doble",
+        "title": "Ignición y encendido doble",
+        "cards": [
+          {
+            "title": "Sistema de Ignición",
+            "text": "El sistema de ignición genera la descarga eléctrica para encender la mezcla dentro de cada cilindro.\n\nMagnetos: Son generadores eléctricos autónomos accionados mecánicamente por el motor. Son totalmente independientes del sistema eléctrico general (batería y alternador) de la aeronave.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Doble Encendido",
+            "text": "Cada cilindro dispone de dos bujías alimentadas por dos magnetos independientes (Izquierda y Derecha)\n\nDos chispas simultáneas inician dos frentes de flama, logrando una combustión más rápida y uniforme.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Falla parcial del sistema de ignición",
+            "text": "Si una de las magnetos de un sistema dual de ignición falla en vuelo, la magneto restante puede mantener el salto de chispa en los cilindros permitiendo un funcionamiento continuado o degradado del motor",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 6,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM06-ignition",
+            "file": "/ciaac-approved/engine-systems/faa-dual-magneto-ignition.webp",
+            "observe": "",
+            "alt": "Ignición y encendido doble: fragmento del esquema original de la FAA.",
+            "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+            "heading": "Ignición y encendido doble",
+            "assetAspectRatio": 1.7097902097902098
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "AM06-ignition",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 43.558282208588956,
+              "y": 85.83916083916084
+            },
+            {
+              "cardIndex": 1,
+              "x": 35.02044989775051,
+              "y": 21.59090909090909
+            }
+          ],
+          "noteCardIndexes": [2]
+        }
+      },
+      {
+        "kind": "content",
+        "nav": "Succión: bomba, instrumentos y manómetro",
+        "title": "Succión: bomba, instrumentos y manómetro",
+        "cards": [
+          {
+            "title": "Sistema de Succión (Vacío)",
+            "text": "En aeronaves equipadas con este sistema, una bomba de vacío impulsada mecánicamente por el motor extrae aire de las cajas de los instrumentos de vuelo giroscópicos (como el Horizonte Artificial y el Giro Direccional), creando una depresión que hace girar sus rotores a altas velocidades.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Manómetro de succión",
+            "text": "El manómetro de succión en la cabina permite al piloto confirmar que el sistema opera dentro del rango de presión especificado en el Manual de Vuelo.",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 6,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM06-vacuum",
+            "file": "/ciaac-approved/engine-systems/faa-vacuum-instruments-flow.webp",
+            "observe": "",
+            "alt": "Succión y manómetro: fragmento del esquema original de la FAA.",
+            "caption": "Esquema representativo; valores y disposición propios del ejemplo.",
+            "heading": "Succión y manómetro",
+            "assetAspectRatio": 1.9635627530364372
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "AM06-vacuum",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 69.27835051546391,
+              "y": 58.2995951417004
+            },
+            {
+              "cardIndex": 1,
+              "x": 20.412371134020617,
+              "y": 59.91902834008097
+            }
+          ]
+        }
+      },
+      {
+        "kind": "quiz",
+        "nav": "Comprueba",
+        "questions": [0]
+      },
+      {
+        "kind": "finish",
+        "nav": "Aterrizaje"
+      }
+    ],
+    "sources": [
+      {
+        "id": "ciaac-aeronaves-generalidades-historico",
+        "title": "CIAAC · Aeronaves y motores: Generalidades",
+        "role": "Marco didáctico histórico; configuración de referencia, no procedimiento universal.",
+        "verified_locators": [
+          "AyM/7-4-1–7; PDF 66–72",
+          "AyM/7-5-3; PDF 75",
+          "AyM/7-7-7 y 7-7-11; PDF 105 y 109"
+        ]
+      },
+      {
+        "id": "faa-am06-figure-1",
+        "title": "Pilot’s Handbook of Aeronautical Knowledge · FAA-H-8083-25C",
+        "role": "Diagramas técnicos de referencia; material original de la FAA.",
+        "url": "https://www.faa.gov/sites/faa.gov/files/09_phak_ch7.pdf",
+        "verified_locators": ["Fig. 7-30, p. 7-26", "Fig. 7-13, p. 7-11", "Fig. 7-16, p. 7-15"]
+      },
+      {
+        "id": "faa-am06-figure-2",
+        "title": "Aviation Maintenance Technician Handbook—Powerplant · FAA-H-8083-32B",
+        "role": "Diagramas técnicos de referencia; material original de la FAA.",
+        "url": "https://www.faa.gov/sites/faa.gov/files/05_amtp_ch3.pdf",
+        "verified_locators": ["Fig. 3-2, p. 3-2"]
+      },
+      {
+        "id": "faa-am06-figure-3",
+        "title": "Aviation Maintenance Technician Handbook—Powerplant · FAA-H-8083-32B",
+        "role": "Diagramas técnicos de referencia; material original de la FAA.",
+        "url": "https://www.faa.gov/sites/faa.gov/files/04_amtp_ch2.pdf",
+        "verified_locators": [
+          "Fig. 2-7, p. 2-6",
+          "Fig. 2-15, p. 2-12",
+          "Fig. 2-18, p. 2-13",
+          "Fig. 2-20, p. 2-14",
+          "Fig. 2-23, p. 2-15"
+        ]
+      },
+      {
+        "id": "faa-am06-figure-4",
+        "title": "Pilot’s Handbook of Aeronautical Knowledge · FAA-H-8083-25C",
+        "role": "Diagramas técnicos de referencia; material original de la FAA.",
+        "url": "https://www.faa.gov/sites/faa.gov/files/10_phak_ch8.pdf",
+        "verified_locators": ["Fig. 8-20, p. 8-17"]
+      }
+    ],
+    "contentVersion": "am06-grouped-v1"
+  },
+  "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am08-enfriamiento-escape-y-lubricacion": {
+    "number": 8,
+    "title": "Enfriamiento escape y lubricación",
+    "intro": "Durante el funcionamiento de un motor alternativo, la combustión genera temperaturas muy elevadas dentro de los cilindros.",
+    "name": "Enfriamiento escape y lubricación",
+    "chapter": 1,
+    "chapter_name": "Aeronaves y motores",
+    "chapterLabel": "Itinerario",
+    "sourceLabel": "CIAAC · Aeronaves y motores",
+    "cards": [
+      {
+        "title": "Enfriamiento escape y lubricación",
+        "text": "Durante el funcionamiento de un motor alternativo, la combustión genera temperaturas muy elevadas dentro de los cilindros.",
+        "covers": [],
+        "wide": true
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "¿Cuál es la diferencia estructural y de flujo entre un sistema de lubricación de cárter húmedo (wet sump) y uno de cárter seco (dry sump)?",
+        "options": [
+          "El cárter húmedo almacena la reserva de aceite en el colector inferior del propio motor, mientras que el cárter seco utiliza un depósito externo separado del cual se suministra el aceite y al cual retorna mediante bombas de barrido (scavenge pumps).",
+          "El cárter húmedo aloja el depósito de aceite en la sección del empenaje, mientras que el cárter seco almacena el fluido en el interior de las camisas de los cilindros.",
+          "El cárter húmedo opera exclusivamente por salpicado gravitacional sin bomba mecánica, mientras que el cárter seco utiliza un compresor neumático dedicado."
+        ],
+        "correct": 0,
+        "feedback": "En el sistema de cárter húmedo, el aceite se deposita en la parte inferior del cárter del propio motor. En el sistema de cárter seco, el lubricante se almacena en un tanque externo independiente y es recuperado del cárter por medio de bombas de barrido (scavenge pumps)",
+        "order": [0, 1, 2]
+      }
+    ],
+    "tips": [],
+    "subtopics": [],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 8,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM08-air",
+        "file": "/ciaac-approved/engine-systems/faa-cooling-baffles-cowl-flaps.webp",
+        "observe": "",
+        "alt": "Enfriamiento por Aire: esquema de referencia del sistema.",
+        "caption": "Ejemplo didáctico; disposición y valores no universales.",
+        "heading": "Enfriamiento por Aire",
+        "assetAspectRatio": 1.3471074380165289
+      },
+      {
+        "chapter": 1,
+        "topic": 8,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM08-liquid",
+        "file": "/ciaac-approved/engine-systems/liquid-cooling-cutaway.webp",
+        "observe": "",
+        "alt": "Sistema de enfriamiento por líquido: esquema de referencia del sistema.",
+        "caption": "Ejemplo didáctico; disposición y valores no universales.",
+        "heading": "Sistema de enfriamiento por líquido",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 8,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM08-fins",
+        "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+        "observe": "",
+        "alt": "Detalle de las aletas exteriores del cilindro y su culata.",
+        "caption": "Ilustración técnica conceptual; no dimensionada.",
+        "heading": "Aletas de Enfriamiento",
+        "assetAspectRatio": 1.7768331562167907,
+        "crop": {
+          "x": 35,
+          "y": 23,
+          "width": 30,
+          "height": 35,
+          "assetAspectRatio": 1.7768331562167907
+        },
+        "focus": {
+          "x": 60,
+          "y": 36,
+          "label": "Aletas exteriores"
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 8,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM08-baffles",
+        "file": "/ciaac-approved/engine-systems/faa-cooling-baffles-cowl-flaps.webp",
+        "observe": "",
+        "alt": "Deflectores: esquema de referencia del sistema.",
+        "caption": "Ejemplo didáctico; disposición y valores no universales.",
+        "heading": "Deflectores",
+        "assetAspectRatio": 1.3471074380165289,
+        "crop": {
+          "x": 62.372188139059304,
+          "y": 24.104683195592287,
+          "width": 27.096114519427406,
+          "height": 30.303030303030305,
+          "assetAspectRatio": 1.3471074380165289
+        },
+        "focus": {
+          "x": 81.18609406952966,
+          "y": 39.94490358126722,
+          "label": "Deflectores"
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 8,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM08-cowl",
+        "file": "/ciaac-approved/engine-systems/faa-cooling-baffles-cowl-flaps.webp",
+        "observe": "",
+        "alt": "Aletas de Capot: esquema de referencia del sistema.",
+        "caption": "Ejemplo didáctico; disposición y valores no universales.",
+        "heading": "Aletas de Capot",
+        "assetAspectRatio": 1.3471074380165289,
+        "crop": {
+          "x": 69.01840490797547,
+          "y": 61.294765840220386,
+          "width": 30.16359918200409,
+          "height": 33.40220385674931,
+          "assetAspectRatio": 1.3471074380165289
+        },
+        "focus": {
+          "x": 82.41308793456032,
+          "y": 76.03305785123968,
+          "label": "Aletas de Capot"
+        }
+      },
+      {
+        "chapter": 1,
+        "topic": 8,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM08-exhaust",
+        "file": "/ciaac-approved/engine-systems/faa-exhaust-heater-shroud.webp",
+        "observe": "",
+        "alt": "Colector y envolvente de intercambio térmico: esquema de referencia del sistema.",
+        "caption": "Ejemplo didáctico; disposición y valores no universales.",
+        "heading": "Colector y envolvente de intercambio térmico",
+        "assetAspectRatio": 0.9056603773584906
+      },
+      {
+        "chapter": 1,
+        "topic": 8,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM08-wet",
+        "file": "/ciaac-approved/engine-systems/faa-wet-sump-oil.webp",
+        "observe": "",
+        "alt": "Cárter Húmedo: esquema de referencia del sistema.",
+        "caption": "Ejemplo didáctico; disposición y valores no universales.",
+        "heading": "Cárter Húmedo",
+        "assetAspectRatio": 1.7846715328467153
+      },
+      {
+        "chapter": 1,
+        "topic": 8,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM08-dry",
+        "file": "/ciaac-approved/engine-systems/faa-dry-sump-oil.webp",
+        "observe": "",
+        "alt": "Cárter Seco: esquema de referencia del sistema.",
+        "caption": "Ejemplo didáctico; disposición y valores no universales.",
+        "heading": "Cárter Seco",
+        "assetAspectRatio": 1.5523809523809524
+      },
+      {
+        "chapter": 1,
+        "topic": 8,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM08-film",
+        "file": "/ciaac-approved/engine-systems/faa-oil-film.webp",
+        "observe": "",
+        "alt": "Película de aceite: esquema de referencia del sistema.",
+        "caption": "Ejemplo didáctico; disposición y valores no universales.",
+        "heading": "Película de aceite",
+        "assetAspectRatio": 1.4662576687116564
+      }
+    ],
+    "exercise": null,
+    "objectives": [
+      "Identificar los mecanismos de transferencia de calor en motores enfriados por aire y por líquido.",
+      "Reconocer la función del aceite lubricante en la reducción de fricción, sellado y disipación térmica."
+    ],
+    "completionChecks": [
+      "Describe la función de las aletas de refrigeración y de la circulación de fluido refrigerante en camisas térmicas.",
+      "Distingue la ubicación del depósito de aceite entre un sistema de cárter húmedo y uno de cárter seco."
+    ],
+    "minutes": 10,
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Despegue"
+      },
+      {
+        "kind": "content",
+        "nav": "Enfriamiento por aire y por líquido",
+        "title": "Enfriamiento por aire y por líquido",
+        "cards": [
+          {
+            "title": "Enfriamiento por Aire",
+            "text": "Utiliza el flujo de aire de impacto generado por el desplazamiento de la aeronave y el soplo de la hélice para disipar el calor.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Sistema de enfriamiento por líquido",
+            "text": "En el sistema de enfriamiento por líquido, un fluido refrigerante adecuado según el diseño del motor es circulado por una bomba a través de camisas térmicas dispuestas alrededor de los cilindros y culatas para absorber el calor, transfiriéndolo hacia un radiador o intercambiador donde se disipa al aire exterior mediante regulación térmica.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Enfriamiento por líquido",
+            "text": "La afirmación contenida en el manual CIAAC respecto a que este sistema quedó en desuso refleja una perspectiva histórica propia de su época de edición, pues existen motores de aviación actuales que emplean enfriamiento por líquido o sistemas mixtos aire/líquido.",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 8,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM08-air",
+            "file": "/ciaac-approved/engine-systems/faa-cooling-baffles-cowl-flaps.webp",
+            "observe": "",
+            "alt": "Enfriamiento por Aire: esquema de referencia del sistema.",
+            "caption": "Ejemplo didáctico; disposición y valores no universales.",
+            "heading": "Enfriamiento por Aire",
+            "assetAspectRatio": 1.3471074380165289
+          },
+          {
+            "chapter": 1,
+            "topic": 8,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM08-liquid",
+            "file": "/ciaac-approved/engine-systems/liquid-cooling-cutaway.webp",
+            "observe": "",
+            "alt": "Sistema de enfriamiento por líquido: esquema de referencia del sistema.",
+            "caption": "Ejemplo didáctico; disposición y valores no universales.",
+            "heading": "Sistema de enfriamiento por líquido",
+            "assetAspectRatio": 1.5
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Enfriamiento por Aire",
+              "figureNumber": "AM08-air",
+              "cardIndexes": [0]
+            },
+            {
+              "title": "Sistema de enfriamiento por líquido",
+              "figureNumber": "AM08-liquid",
+              "cardIndexes": [1]
+            }
+          ],
+          "noteCardIndexes": [2]
+        }
+      },
+      {
+        "kind": "content",
+        "nav": "Aletas, deflectores y salida del aire",
+        "title": "Aletas, deflectores y salida del aire",
+        "cards": [
+          {
+            "title": "Aletas de Enfriamiento",
+            "text": "Crestas metálicas exteriores en las cabezas de aluminio y barriles de acero de los cilindros que aumentan la superficie de contacto expuesta al aire.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Deflectores",
+            "text": "Láminas metálicas que guían el aire entrante para que circule ceñido alrededor de la parte posterior de los cilindros.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Aletas de Capot",
+            "text": "Compuertas regulables en la parte inferior trasera del encapotado (cowling).",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 8,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM08-fins",
+            "file": "/ciaac-approved/structures-engines/aircooled-cylinder-cutaway.webp",
+            "observe": "",
+            "alt": "Detalle de las aletas exteriores del cilindro y su culata.",
+            "caption": "Ilustración técnica conceptual; no dimensionada.",
+            "heading": "Aletas de Enfriamiento",
+            "assetAspectRatio": 1.7768331562167907,
+            "crop": {
+              "x": 35,
+              "y": 23,
+              "width": 30,
+              "height": 35,
+              "assetAspectRatio": 1.7768331562167907
+            },
+            "focus": {
+              "x": 60,
+              "y": 36,
+              "label": "Aletas exteriores"
+            }
+          },
+          {
+            "chapter": 1,
+            "topic": 8,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM08-baffles",
+            "file": "/ciaac-approved/engine-systems/faa-cooling-baffles-cowl-flaps.webp",
+            "observe": "",
+            "alt": "Deflectores: esquema de referencia del sistema.",
+            "caption": "Ejemplo didáctico; disposición y valores no universales.",
+            "heading": "Deflectores",
+            "assetAspectRatio": 1.3471074380165289,
+            "crop": {
+              "x": 62.372188139059304,
+              "y": 24.104683195592287,
+              "width": 27.096114519427406,
+              "height": 30.303030303030305,
+              "assetAspectRatio": 1.3471074380165289
+            },
+            "focus": {
+              "x": 81.18609406952966,
+              "y": 39.94490358126722,
+              "label": "Deflectores"
+            }
+          },
+          {
+            "chapter": 1,
+            "topic": 8,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM08-cowl",
+            "file": "/ciaac-approved/engine-systems/faa-cooling-baffles-cowl-flaps.webp",
+            "observe": "",
+            "alt": "Aletas de Capot: esquema de referencia del sistema.",
+            "caption": "Ejemplo didáctico; disposición y valores no universales.",
+            "heading": "Aletas de Capot",
+            "assetAspectRatio": 1.3471074380165289,
+            "crop": {
+              "x": 69.01840490797547,
+              "y": 61.294765840220386,
+              "width": 30.16359918200409,
+              "height": 33.40220385674931,
+              "assetAspectRatio": 1.3471074380165289
+            },
+            "focus": {
+              "x": 82.41308793456032,
+              "y": 76.03305785123968,
+              "label": "Aletas de Capot"
+            }
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Aletas de Enfriamiento",
+              "figureNumber": "AM08-fins",
+              "cardIndexes": [0]
+            },
+            {
+              "title": "Deflectores",
+              "figureNumber": "AM08-baffles",
+              "cardIndexes": [1]
+            },
+            {
+              "title": "Aletas de Capot",
+              "figureNumber": "AM08-cowl",
+              "cardIndexes": [2]
+            }
+          ]
+        }
+      },
+      {
+        "kind": "content",
+        "nav": "Escape, silenciador y calefacción",
+        "title": "Escape, silenciador y calefacción",
+        "cards": [
+          {
+            "title": "El Sistema de Escape",
+            "text": "El sistema de escape recoge los gases quemados al abrirse las válvulas de escape, los canaliza de forma segura fuera de la estructura y atenúa el nivel de ruido.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Silenciador",
+            "text": "El silenciador reduce las ondas sonoras.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Advertencia de Seguridad",
+            "text": "Una fisura o grieta interna en el silenciador puede permitir la entrada de monóxido de carbono (CO) al sistema de calefacción de la cabina, con riesgo grave de envenenamiento e incapacitación de la tripulación.",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 8,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM08-exhaust",
+            "file": "/ciaac-approved/engine-systems/faa-exhaust-heater-shroud.webp",
+            "observe": "",
+            "alt": "Colector y envolvente de intercambio térmico: esquema de referencia del sistema.",
+            "caption": "Ejemplo didáctico; disposición y valores no universales.",
+            "heading": "Colector y envolvente de intercambio térmico",
+            "assetAspectRatio": 0.9056603773584906
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "AM08-exhaust",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 46.875,
+              "y": 40.56603773584906
+            }
+          ],
+          "noteCardIndexes": [1, 2]
+        }
+      },
+      {
+        "kind": "content",
+        "nav": "Lubricación: funciones y tipos de cárter",
+        "title": "Lubricación: funciones y tipos de cárter",
+        "cards": [
+          {
+            "title": "Funciones del Aceite",
+            "text": "Reducción de fricción: Crea una película fluida entre las piezas metálicas móviles.\n\nEnfriamiento interno: Absorbe el calor de pistones y cojinetes no expuestos al aire y lo traslada al radiador.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Sellado y limpieza",
+            "text": "Mantiene la compresión entre los anillos y la pared del cilindro, y transporta impurezas hacia el filtro.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Cárter Húmedo",
+            "text": "El aceite se almacena en el colector inferior del propio cárter del motor. Una bomba impulsada por el motor lo distribuye a presión y regresa por gravedad.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Cárter Seco",
+            "text": "El aceite se almacena en un tanque externo. Emplea bombas de presión para alimentar el circuito y bombas de barrido (scavenge pumps) que recogen el aceite del cárter y lo envían al tanque",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 8,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM08-wet",
+            "file": "/ciaac-approved/engine-systems/faa-wet-sump-oil.webp",
+            "observe": "",
+            "alt": "Cárter Húmedo: esquema de referencia del sistema.",
+            "caption": "Ejemplo didáctico; disposición y valores no universales.",
+            "heading": "Cárter Húmedo",
+            "assetAspectRatio": 1.7846715328467153
+          },
+          {
+            "chapter": 1,
+            "topic": 8,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM08-dry",
+            "file": "/ciaac-approved/engine-systems/faa-dry-sump-oil.webp",
+            "observe": "",
+            "alt": "Cárter Seco: esquema de referencia del sistema.",
+            "caption": "Ejemplo didáctico; disposición y valores no universales.",
+            "heading": "Cárter Seco",
+            "assetAspectRatio": 1.5523809523809524
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Cárter Húmedo",
+              "figureNumber": "AM08-wet",
+              "cardIndexes": [2]
+            },
+            {
+              "title": "Cárter Seco",
+              "figureNumber": "AM08-dry",
+              "cardIndexes": [3]
+            }
+          ],
+          "noteCardIndexes": [0, 1]
+        }
+      },
+      {
+        "kind": "content",
+        "nav": "Aceites: base, aditivos y viscosidad",
+        "title": "Aceites: base, aditivos y viscosidad",
+        "cards": [
+          {
+            "title": "Bases de Aceite",
+            "text": "Los lubricantes para motores recíprocos se componen de una base fluida (mineral, sintética o mezcla) y de un paquete de aditivos adaptado al tipo de servicio.\n\nLa selección del lubricante debe realizarse respetando la especificación técnica aprobada por el fabricante del motor.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Dispersante sin cenizas (Ashless Dispersant - AD)",
+            "text": "El término dispersante sin cenizas (Ashless Dispersant - AD) designa un aditivo independiente que mantiene los contaminantes microscópicos en suspensión sin dejar depósitos metálicos calcinados en el motor, y no constituye una base de aceite mutuamente exclusiva.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Viscosidad",
+            "text": "La viscosidad es la resistencia interna de un fluido a fluir.",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 8,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM08-film",
+            "file": "/ciaac-approved/engine-systems/faa-oil-film.webp",
+            "observe": "",
+            "alt": "Película de aceite: esquema de referencia del sistema.",
+            "caption": "Ejemplo didáctico; disposición y valores no universales.",
+            "heading": "Película de aceite",
+            "assetAspectRatio": 1.4662576687116564
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "AM08-film",
+          "parts": [
+            {
+              "cardIndex": 2,
+              "x": 46.02510460251046,
+              "y": 48.466257668711656
+            }
+          ],
+          "noteCardIndexes": [0, 1]
+        }
+      },
+      {
+        "kind": "quiz",
+        "nav": "Comprueba",
+        "questions": [0]
+      },
+      {
+        "kind": "finish",
+        "nav": "Aterrizaje"
+      }
+    ],
+    "sources": [
+      {
+        "id": "ciaac-aeronaves-generalidades-historico",
+        "title": "CIAAC · Aeronaves y motores: Generalidades",
+        "role": "Funciones y tipos de lubricación; terminología histórica.",
+        "verified_locators": ["AyM/7-3-1–7; PDF 58–64"]
+      },
+      {
+        "id": "faa-amt-powerplant-6",
+        "title": "FAA · AMT Powerplant, Chapter 6",
+        "role": "Verificación complementaria de bases, aditivos y lubricación.",
+        "url": "https://www.faa.gov/sites/faa.gov/files/08_amtp_ch6.pdf",
+        "verified_locators": ["6-1 y 6-3–6-4"]
+      },
+      {
+        "id": "faa-amt-powerplant-11",
+        "title": "FAA · AMT Powerplant, Chapter 11",
+        "role": "Ejemplos de enfriamiento por aire, líquido y combinado.",
+        "url": "https://www.faa.gov/sites/faa.gov/files/13_amtp_ch11.pdf",
+        "verified_locators": ["11-3"]
+      },
+      {
+        "id": "faa-am08-figure-3",
+        "title": "Aviation Maintenance Technician Handbook—Powerplant · FAA-H-8083-32B",
+        "role": "Diagramas técnicos de referencia; material original de la FAA.",
+        "url": "https://www.faa.gov/sites/faa.gov/files/08_amtp_ch6.pdf",
+        "verified_locators": ["Fig. 6-55, p. 6-35", "Fig. 6-4, p. 6-5", "Fig. 6-2, p. 6-1"]
+      },
+      {
+        "id": "faa-am08-figure-4",
+        "title": "Pilot’s Handbook of Aeronautical Knowledge · FAA-H-8083-25C",
+        "role": "Diagramas técnicos de referencia; material original de la FAA.",
+        "url": "https://www.faa.gov/sites/faa.gov/files/09_phak_ch7.pdf",
+        "verified_locators": ["Fig. 7-17, p. 7-16"]
+      },
+      {
+        "id": "faa-am08-figure-5",
+        "title": "Aviation Maintenance Technician Handbook—Powerplant · FAA-H-8083-32B",
+        "role": "Diagramas técnicos de referencia; material original de la FAA.",
+        "url": "https://www.faa.gov/sites/faa.gov/files/05_amtp_ch3.pdf",
+        "verified_locators": ["Fig. 3-39, p. 3-21"]
+      },
+      {
+        "id": "faa-liquid-geometry",
+        "title": "FAA · AMT Powerplant, Chapter 11",
+        "role": "Referencia técnica de la topología del circuito ilustrado de refrigeración líquida.",
+        "url": "https://www.faa.gov/sites/faa.gov/files/13_amtp_ch11.pdf",
+        "verified_locators": ["11-4–11-5, Fig. 11-4"]
+      }
+    ],
+    "contentVersion": "am08-grouped-v1"
+  },
+  "ciaac/aeronaves-y-motores/itinerario-aprobado-2026-10/am09-helices-tipos-paso-y-fuerzas": {
+    "number": 9,
+    "title": "Hélices tipos paso y fuerzas",
+    "intro": "La hélice es el dispositivo propulsor que transforma la potencia mecánica rotacional entregada por el eje del motor (potencia al freno) en fuerza de tracción o empuje, permitiendo el avance de la aeronave.",
+    "name": "Hélices tipos paso y fuerzas",
+    "chapter": 1,
+    "chapter_name": "Aeronaves y motores",
+    "chapterLabel": "Itinerario",
+    "sourceLabel": "CIAAC · Aeronaves y motores",
+    "cards": [
+      {
+        "title": "Hélices tipos paso y fuerzas",
+        "text": "La hélice es el dispositivo propulsor que transforma la potencia mecánica rotacional entregada por el eje del motor (potencia al freno) en fuerza de tracción o empuje, permitiendo el avance de la aeronave.",
+        "covers": [],
+        "wide": true
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "¿En qué consiste aerodinámicamente el perfilamiento (feathering) de las palas de una hélice ante la falla del motor?",
+        "options": [
+          "En colocar las palas en un ángulo de paso negativo para producir tracción inversa sobre la pista.",
+          "En orientar las palas hasta quedar cerca de la alineación paralela con el viento relativo para reducir la resistencia aerodinámica de molinete (windmilling).",
+          "En fijar el paso de las palas en su posición mínima (paso bajo) para acelerar la rotación del motor inoperativo."
+        ],
+        "correct": 1,
+        "feedback": "El perfilamiento gira el perfil de las palas hasta alinearlo sustancialmente con la dirección del flujo de aire incidente, reduciendo la superficie expuesta para minimizar la resistencia aerodinámica\n\nEsto disminuye sustancialmente el arrastre, aunque no elimina la totalidad de la resistencia ni garantiza por sí solo el control direccional o las actuaciones de la aeronave.",
+        "order": [0, 1, 2]
+      }
+    ],
+    "tips": [],
+    "subtopics": [],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 9,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM09-geometry",
+        "file": "/ciaac-approved/engine-systems/propeller-fixed-master.webp",
+        "observe": "",
+        "alt": "Hélice de dos palas de paso fijo, con eje posterior proyectado hacia arriba a la izquierda.",
+        "caption": "Ilustración conceptual de paso fijo; no es un mecanismo de perfilamiento.",
+        "heading": "Hélice de referencia",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 9,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM09-pitch",
+        "file": "/ciaac-approved/engine-systems/propeller-fixed-master.webp",
+        "observe": "",
+        "alt": "Hélice de dos palas de paso fijo, con eje posterior proyectado hacia arriba a la izquierda.",
+        "caption": "Ilustración conceptual de paso fijo; no es un mecanismo de perfilamiento.",
+        "heading": "Hélice de referencia",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 9,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM09-fixed",
+        "file": "/ciaac-approved/engine-systems/propeller-fixed-master.webp",
+        "observe": "",
+        "alt": "Conjunto de hélice metálica con raíces integrales.",
+        "caption": "Ilustración conceptual de construcción fija.",
+        "heading": "Hélice de Paso Fijo",
+        "assetAspectRatio": 1.5
+      },
+      {
+        "chapter": 1,
+        "topic": 9,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM09-ground",
+        "file": "/ciaac-approved/engine-systems/ground-adjustable-section.svg",
+        "observe": "",
+        "alt": "Sección conceptual normal a la raíz cilíndrica de una pala, entre dos mitades del cubo sujetas por pernos.",
+        "caption": "Sección genérica del cubo; no representa un modelo ni procedimiento de montaje.",
+        "heading": "Hélice de Paso Ajustable en Tierra",
+        "assetAspectRatio": 1.411764705882353
+      },
+      {
+        "chapter": 1,
+        "topic": 9,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM09-constant",
+        "file": "/ciaac-approved/engine-systems/faa-propeller-governor.webp",
+        "observe": "",
+        "alt": "Corte de un gobernador de hélice con contrapesos, resorte, válvula y bomba.",
+        "caption": "Ejemplo de gobernador; no define un sentido universal del flujo de aceite.",
+        "heading": "Hélice de Velocidad Constante",
+        "assetAspectRatio": 1.138095238095238
+      },
+      {
+        "chapter": 1,
+        "topic": 9,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM09-feather",
+        "file": "/ciaac-approved/engine-systems/feathered-blade-section.svg",
+        "observe": "",
+        "alt": "Sección de perfil de pala alineada con flechas paralelas de flujo de aire.",
+        "caption": "Vista de sección sin escala ni ángulo operativo prescrito.",
+        "heading": "Hélice Perfilable",
+        "assetAspectRatio": 1.411764705882353
+      },
+      {
+        "chapter": 1,
+        "topic": 9,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "AM09-forces",
+        "file": "/ciaac-approved/engine-systems/propeller-fixed-master.webp",
+        "observe": "",
+        "alt": "Hélice de dos palas de paso fijo, con eje posterior proyectado hacia arriba a la izquierda.",
+        "caption": "Ilustración conceptual de paso fijo; no es un mecanismo de perfilamiento.",
+        "heading": "Hélice de referencia",
+        "assetAspectRatio": 1.5
+      }
+    ],
+    "exercise": null,
+    "objectives": [
+      "Identificar la función de la hélice en la conversión del par motor en fuerza de tracción.",
+      "Reconocer el propósito del perfilamiento (feathering) de las palas ante la detención del motor."
+    ],
+    "completionChecks": [
+      "Explica la relación entre el ángulo de paso de la pala y las condiciones de operación de la aeronave.",
+      "Describe cómo la orientación de la pala paralela al viento relativo reduce la resistencia aerodinámica de molinete (windmilling)."
+    ],
+    "minutes": 9,
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Despegue"
+      },
+      {
+        "kind": "content",
+        "nav": "Hélice: potencia y geometría de la pala",
+        "title": "Hélice: potencia y geometría de la pala",
+        "cards": [
+          {
+            "title": "Función Básica de la Hélice",
+            "text": "La hélice es el dispositivo propulsor que transforma la potencia mecánica rotacional entregada por el eje del motor (potencia al freno) en fuerza de tracción o empuje, permitiendo el avance de la aeronave.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Potencia al Freno",
+            "text": "Es la potencia mecánica real disponible en el árbol del cigüeñal (Brake Horsepower).",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Torcimiento o alabeo gradual",
+            "text": "Dado que la punta de la pala se desplaza a una velocidad lineal mucho mayor que la raíz durante la misma rotación, la pala incorpora un torcimiento o alabeo gradual: el ángulo de la pala disminuye progresivamente desde la raíz hasta la punta.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "El ángulo de paso de la pala",
+            "text": "El ángulo de paso de la pala (el ángulo formado entre la cuerda del perfil y el plano de rotación) determina cómo interactúa la hélice con el aire y la carga que impone al motor.",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 9,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM09-geometry",
+            "file": "/ciaac-approved/engine-systems/propeller-fixed-master.webp",
+            "observe": "",
+            "alt": "Hélice de dos palas de paso fijo, con eje posterior proyectado hacia arriba a la izquierda.",
+            "caption": "Ilustración conceptual de paso fijo; no es un mecanismo de perfilamiento.",
+            "heading": "Hélice de referencia",
+            "assetAspectRatio": 1.5
+          }
+        ],
+        "propellerDiagram": "geometry"
+      },
+      {
+        "kind": "content",
+        "nav": "Paso geométrico, efectivo y resbalamiento",
+        "title": "Paso geométrico, efectivo y resbalamiento",
+        "cards": [
+          {
+            "title": "Paso Geométrico",
+            "text": "Es la distancia teórica que la hélice avanzaría en línea recta durante una vuelta completa si girara dentro de un medio sólido perfecto.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Paso Efectivo",
+            "text": "Es la distancia real que la hélice avanza en el aire durante esa misma revolución.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Resbalamiento",
+            "text": "La diferencia entre el avance teórico y el real se denomina resbalamiento (slip)",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 9,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM09-pitch",
+            "file": "/ciaac-approved/engine-systems/propeller-fixed-master.webp",
+            "observe": "",
+            "alt": "Hélice de dos palas de paso fijo, con eje posterior proyectado hacia arriba a la izquierda.",
+            "caption": "Ilustración conceptual de paso fijo; no es un mecanismo de perfilamiento.",
+            "heading": "Hélice de referencia",
+            "assetAspectRatio": 1.5
+          }
+        ],
+        "propellerDiagram": "pitch"
+      },
+      {
+        "kind": "content",
+        "nav": "Tipos de hélice y perfilamiento",
+        "title": "Tipos de hélice y perfilamiento",
+        "cards": [
+          {
+            "title": "Hélice de Paso Fijo",
+            "text": "El ángulo de las palas es permanente y no se puede modificar en vuelo ni en tierra; se diseña como un compromiso optimizado para ascenso o para crucero.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Hélice de Paso Ajustable en Tierra",
+            "text": "Permite ajustar mecánicamente el ángulo de las palas únicamente con la aeronave detenida en tierra.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Hélice de Velocidad Constante",
+            "text": "Utiliza un gobernador hidráulico que ajusta automáticamente el ángulo de las palas durante el vuelo para mantener constantes las RPM seleccionadas por el piloto, adaptándose a cambios de altitud y potencia.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Hélice Perfilable",
+            "text": "Permite girar las palas hasta colocarlas paralelas al flujo de aire\n\nSe utiliza en aeronaves multimotores ante una falla de motor para reducir al mínimo la resistencia aerodinámica de molinete (drag).",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 9,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM09-fixed",
+            "file": "/ciaac-approved/engine-systems/propeller-fixed-master.webp",
+            "observe": "",
+            "alt": "Conjunto de hélice metálica con raíces integrales.",
+            "caption": "Ilustración conceptual de construcción fija.",
+            "heading": "Hélice de Paso Fijo",
+            "assetAspectRatio": 1.5
+          },
+          {
+            "chapter": 1,
+            "topic": 9,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM09-ground",
+            "file": "/ciaac-approved/engine-systems/ground-adjustable-section.svg",
+            "observe": "",
+            "alt": "Sección conceptual normal a la raíz cilíndrica de una pala, entre dos mitades del cubo sujetas por pernos.",
+            "caption": "Sección genérica del cubo; no representa un modelo ni procedimiento de montaje.",
+            "heading": "Hélice de Paso Ajustable en Tierra",
+            "assetAspectRatio": 1.411764705882353
+          },
+          {
+            "chapter": 1,
+            "topic": 9,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM09-constant",
+            "file": "/ciaac-approved/engine-systems/faa-propeller-governor.webp",
+            "observe": "",
+            "alt": "Corte de un gobernador de hélice con contrapesos, resorte, válvula y bomba.",
+            "caption": "Ejemplo de gobernador; no define un sentido universal del flujo de aceite.",
+            "heading": "Hélice de Velocidad Constante",
+            "assetAspectRatio": 1.138095238095238
+          },
+          {
+            "chapter": 1,
+            "topic": 9,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM09-feather",
+            "file": "/ciaac-approved/engine-systems/feathered-blade-section.svg",
+            "observe": "",
+            "alt": "Sección de perfil de pala alineada con flechas paralelas de flujo de aire.",
+            "caption": "Vista de sección sin escala ni ángulo operativo prescrito.",
+            "heading": "Hélice Perfilable",
+            "assetAspectRatio": 1.411764705882353
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Hélice de Paso Fijo",
+              "figureNumber": "AM09-fixed",
+              "cardIndexes": [0]
+            },
+            {
+              "title": "Hélice de Paso Ajustable en Tierra",
+              "figureNumber": "AM09-ground",
+              "cardIndexes": [1]
+            },
+            {
+              "title": "Hélice de Velocidad Constante",
+              "figureNumber": "AM09-constant",
+              "cardIndexes": [2]
+            },
+            {
+              "title": "Hélice Perfilable",
+              "figureNumber": "AM09-feather",
+              "cardIndexes": [3]
+            }
+          ]
+        }
+      },
+      {
+        "kind": "content",
+        "nav": "Fuerzas y esfuerzos sobre la hélice",
+        "title": "Fuerzas y esfuerzos sobre la hélice",
+        "cards": [
+          {
+            "title": "Fuerza de Tracción (Esfuerzo de Flexión)",
+            "text": "La resistencia del aire al ser empujado genera una fuerza paralela al eje de vuelo que tiende a doblar las palas hacia adelante.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Fuerza Centrífuga (Esfuerzo de Tensión)",
+            "text": "Producida por la rotación a altas velocidades, tiende a jalar las palas hacia afuera del núcleo central, sometiendo la raíz a elevados esfuerzos de estiramiento.",
+            "covers": [],
+            "wide": false
+          },
+          {
+            "title": "Momentos de Torsión de la Pala",
+            "text": "Torsión Aerodinámica: La presión del aire sobre el perfil tiende a girar la pala hacia un ángulo de paso mayor.\n\nTorsión Centrífuga: La distribución de masa en rotación genera una fuerza natural que tiende a girar la pala hacia un ángulo de paso menor (paso bajo).",
+            "covers": [],
+            "wide": false
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 9,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "AM09-forces",
+            "file": "/ciaac-approved/engine-systems/propeller-fixed-master.webp",
+            "observe": "",
+            "alt": "Hélice de dos palas de paso fijo, con eje posterior proyectado hacia arriba a la izquierda.",
+            "caption": "Ilustración conceptual de paso fijo; no es un mecanismo de perfilamiento.",
+            "heading": "Hélice de referencia",
+            "assetAspectRatio": 1.5
+          }
+        ],
+        "propellerDiagram": "forces"
+      },
+      {
+        "kind": "quiz",
+        "nav": "Comprueba",
+        "questions": [0]
+      },
+      {
+        "kind": "finish",
+        "nav": "Aterrizaje"
+      }
+    ],
+    "sources": [
+      {
+        "id": "ciaac-aeronaves-generalidades-historico",
+        "title": "CIAAC · Aeronaves y motores: Generalidades",
+        "role": "Hélices: geometría, paso, fuerzas y perfilamiento.",
+        "verified_locators": ["AyM/7-6-1–7; PDF 78–84"]
+      },
+      {
+        "id": "faa-glossary-feathered",
+        "title": "FAA · Pilot/Controller Glossary, Feathered Propeller",
+        "role": "Verificación complementaria del objetivo de reducir la resistencia.",
+        "url": "https://www.faa.gov/air_traffic/publications/atpubs/pcg_html/glossary-f.html",
+        "verified_locators": ["FEATHERED PROPELLER"]
+      },
+      {
+        "id": "faa-propeller-diagrams",
+        "title": "FAA · AMT Powerplant, Chapter 7",
+        "role": "Referencia de geometría, tipos de hélice y gobernador; fotografía original del gobernador.",
+        "url": "https://www.faa.gov/sites/faa.gov/files/09_amtp_ch7.pdf",
+        "verified_locators": ["7-2–7-6", "Fig. 7-15, p. 7-9"]
+      }
+    ],
+    "contentVersion": "am09-grouped-v1"
   }
 }

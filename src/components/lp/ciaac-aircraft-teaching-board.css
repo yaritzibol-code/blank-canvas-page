@@ -1,0 +1,317 @@
+.am-board {
+  --board-ink: #edf5ff;
+  --board-muted: #ccd9e8;
+  --board-accent: #f1c772;
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 1rem;
+  color: var(--board-ink);
+}
+.am-board *,
+.am-board *::before,
+.am-board *::after {
+  box-sizing: border-box;
+}
+.am-board__comparison-grid {
+  display: grid;
+  min-width: 0;
+  /* Keep at most three readable categories per row, and two on normal phones. */
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, max(9.375rem, calc((100% - 1.3rem) / 3))), 1fr)
+  );
+  gap: 0.65rem;
+  align-items: start;
+}
+.am-board__comparison-grid:is([data-panel-count="2"], [data-panel-count="4"]) {
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, max(9.375rem, calc((100% - 0.65rem) / 2))), 1fr)
+  );
+}
+.am-board__panel,
+.am-board__master {
+  min-width: 0;
+  margin: 0;
+  border: 1px solid #8ba5c740;
+  border-radius: 16px;
+  background: #07182d;
+}
+.am-board__panel {
+  padding: 0.55rem;
+}
+.am-board .am-board__panel-title {
+  margin: 0 0 0.8rem;
+  color: var(--board-accent);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.am-board .am-illustration {
+  min-width: 0;
+  border-radius: 12px;
+}
+.am-board .am-illustration__head {
+  padding: 0.65rem 0.8rem;
+}
+.am-board .am-illustration__head > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.am-board--comparison .am-illustration__head > span {
+  display: none;
+}
+.am-board--comparison .am-illustration__head {
+  justify-content: flex-end;
+}
+.am-board--comparison .am-illustration__head:not(:has(button)) {
+  display: none;
+}
+.am-board--comparison .am-illustration__viewport {
+  width: var(--board-figure-width, 100%) !important;
+}
+.am-board--comparison .am-illustration__head button {
+  min-height: 44px;
+}
+.am-board .am-illustration__viewport:not(.is-cropped) img {
+  max-height: 44vh;
+  object-fit: contain;
+}
+.am-board--comparison .am-illustration__viewport:not(.is-cropped) img {
+  max-height: 28vh;
+}
+.am-board--comparison .am-board__card {
+  padding: 0.6rem;
+}
+.am-board--comparison .am-board__card h3 {
+  font-size: 0.875rem;
+}
+.am-board .am-illustration figcaption {
+  padding: 0.7rem 0.8rem;
+  font-size: 0.85rem;
+}
+.am-board .am-illustration > small {
+  padding-inline: 0.8rem;
+}
+.am-board__panel-cards,
+.am-board__functions {
+  display: grid;
+  min-width: 0;
+  gap: 0.7rem;
+}
+.am-board__panel-cards {
+  margin-top: 0.8rem;
+}
+.am-board__card {
+  min-width: 0;
+  padding: 0.9rem;
+  border: 1px solid #8ba5c733;
+  border-radius: 12px;
+  background: #10263c;
+  overflow-wrap: anywhere;
+}
+.am-board .am-board__card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+.am-board .am-board__card p,
+.lp-study .lp-study-content .hb-shell.aircraft-handbook .am-board .am-board__card p {
+  margin: 0;
+  color: var(--board-muted);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  white-space: pre-line;
+}
+.am-board .am-board__detail {
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+}
+.am-board .am-board__detail summary {
+  width: auto;
+  padding: 0.4rem 0;
+  color: var(--board-accent);
+  font-weight: 600;
+  cursor: pointer;
+}
+.am-board .am-board__detail p {
+  margin-top: 0.5rem;
+}
+.am-board__mechanism-layout {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+.am-board__notes {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 0.65rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid #8ba5c740;
+}
+.am-board__master-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #8ba5c729;
+  font-weight: 700;
+}
+.am-board__master-head button {
+  min-height: 44px;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #8ba5c755;
+  border-radius: 8px;
+  background: #10263c;
+  color: var(--board-ink);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.am-board .am-board__instruction,
+.am-board .am-board__selection,
+.lp-study
+  .lp-study-content
+  .hb-shell.aircraft-handbook
+  .am-board
+  :is(.am-board__instruction, .am-board__selection) {
+  margin: 0;
+  padding: 0.7rem 1rem;
+  color: var(--board-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+/* The padded area lets edge anchors retain visible focus outlines without moving
+   their centers away from the original physical part. Only the asset is clipped. */
+.am-board__image-space {
+  padding: 1.35rem;
+}
+.am-board__canvas {
+  position: relative;
+  margin-inline: auto;
+  max-height: 44vh;
+}
+.am-board__image-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.am-board__image-clip img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.am-board__anchor {
+  position: absolute;
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  place-items: center;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #163d70;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 800;
+  line-height: 1;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+.am-board__anchor::before {
+  content: "";
+  position: absolute;
+  inset: -0.4rem;
+  border-radius: inherit;
+}
+.am-board__anchor[aria-pressed="true"] {
+  z-index: 1;
+  background: var(--board-accent);
+  color: #17233a;
+  border-color: #17233a;
+  box-shadow: 0 0 0 4px #f1c77266;
+}
+.am-board__master figcaption,
+.am-board__master > small {
+  display: block;
+  padding: 0 1rem 0.7rem;
+  color: var(--board-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.am-board__master > small {
+  font-size: 0.7rem;
+}
+.am-board .am-board__selection {
+  border-top: 1px solid #8ba5c729;
+}
+.am-board__card.is-selected {
+  border-color: var(--board-accent);
+  box-shadow: inset 3px 0 0 var(--board-accent);
+}
+.am-board__part-select {
+  display: flex;
+  width: 100%;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.2rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--board-ink);
+  text-align: left;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.am-board__number {
+  display: grid;
+  width: 1.7rem;
+  height: 1.7rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid #8ba5c780;
+  border-radius: 50%;
+  color: var(--board-accent);
+  font:
+    700 0.8rem/1 system-ui,
+    sans-serif;
+}
+.am-board button:focus-visible,
+.am-board summary:focus-visible {
+  outline: 3px solid var(--board-accent);
+  outline-offset: 3px;
+}
+@media (max-width: 800px) {
+  .am-board__mechanism-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .am-board__functions {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  }
+}
+@media (max-width: 300px) {
+  .am-board__comparison-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .am-board *,
+  .am-board *::before,
+  .am-board *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+[data-motion="reduced"] .am-board * {
+  animation: none !important;
+  transition: none !important;
+}

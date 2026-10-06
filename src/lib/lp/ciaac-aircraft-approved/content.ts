@@ -2,6 +2,7 @@ import documentsJson from "./documents.json";
 import publicationReviewJson from "./publication-review.json";
 import { APPROVED_AIRCRAFT_CATALOG, APPROVED_AIRCRAFT_FIRST_BLOCK_IDS } from "./catalog";
 import type { HandbookFigure, HandbookLearningPathDocument } from "../handbook-types";
+import { validateApprovedAircraftTeachingBoard } from "./teaching-board";
 
 export interface AircraftPublicationReview {
   id: string;
@@ -152,14 +153,16 @@ function usableDocument(document: HandbookLearningPathDocument, title: string): 
     } else if (stage.kind === "finish") {
       if (index !== document.stages.length - 1) return false;
     } else if (stage.kind === "content") {
-      // One focused explanation per stage; no uniform stage count or padding requirement.
+      // A legacy-style stage stays focused. An explicit board can compare related
+      // source cards together only when every card is paired to a reviewed visual.
       if (
         !nonblank(stage.title) ||
         !Array.isArray(stage.cards) ||
-        stage.cards.length !== 1 ||
-        !stage.cards[0] ||
-        !nonblank(stage.cards[0].title) ||
-        !nonblank(stage.cards[0].text) ||
+        !stage.cards.length ||
+        (stage.board === undefined &&
+          stage.propellerDiagram === undefined &&
+          stage.cards.length !== 1) ||
+        stage.cards.some((card) => !card || !nonblank(card.title) || !nonblank(card.text)) ||
         !Array.isArray(stage.figures) ||
         !stage.figures.length ||
         stage.figures.some((figure) => {
@@ -178,6 +181,27 @@ function usableDocument(document: HandbookLearningPathDocument, title: string): 
         })
       )
         return false;
+      if (
+        stage.board !== undefined &&
+        validateApprovedAircraftTeachingBoard(stage, stage.board).length
+      )
+        return false;
+      if (stage.propellerDiagram !== undefined) {
+        const figure = stage.figures[0] as HandbookFigure & {
+          crop?: unknown;
+          assetAspectRatio?: unknown;
+        };
+        if (
+          document.number !== 9 ||
+          !["geometry", "pitch", "forces"].includes(stage.propellerDiagram) ||
+          stage.figures.length !== 1 ||
+          stage.board !== undefined ||
+          figure.file !== "/ciaac-approved/engine-systems/propeller-fixed-master.webp" ||
+          figure.crop !== undefined ||
+          figure.assetAspectRatio !== 1.5
+        )
+          return false;
+      }
       explanationCount++;
     } else if (stage.kind === "quiz") {
       if (
