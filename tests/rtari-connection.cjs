@@ -92,7 +92,7 @@ const esbuild = createRequire(require.resolve("vite/package.json"))("esbuild");
         url === "/api/rtari/session"
           ? {
               value: "fixture",
-              sessionId: "fixture-session",
+              sessionId: "00000000-0000-4000-8000-000000000001",
               model: "fixture-model",
               maxMinutos: 20,
             }
