@@ -4,10 +4,11 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useLocation,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { initAppStore, useSessionUser } from "@/lib/store";
 import { usePresence } from "@/hooks/use-presence";
 import { useActivityTracker } from "@/hooks/use-activity-tracker";
@@ -227,7 +228,6 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <FlashOfferWatch />
         {children}
         <Scripts />
       </body>
@@ -237,7 +237,30 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { pathname } = useLocation();
+  const isReview = pathname.replace(/\/$/, "") === "/admin/revision-learning-paths";
+  const appStarted = useRef(false);
+  // A client-side entry from an already running app must discard its sync timers/cache.
+  const needsFreshDocument = isReview && appStarted.current;
+  useEffect(() => {
+    if (needsFreshDocument) window.location.replace(window.location.href);
+  }, [needsFreshDocument]);
+  if (!isReview) appStarted.current = true;
 
+  return (
+    <QueryClientProvider client={queryClient}>
+      {needsFreshDocument ? (
+        <p role="status">Abriendo revisión aislada…</p>
+      ) : isReview ? (
+        <Outlet />
+      ) : (
+        <AppRuntime />
+      )}
+    </QueryClientProvider>
+  );
+}
+
+function AppRuntime() {
   useEffect(() => {
     initAppStore();
     installClientErrorReporter();
@@ -253,8 +276,9 @@ function RootComponent() {
   useMetaPixel();
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
+      <FlashOfferWatch />
       <Outlet />
-    </QueryClientProvider>
+    </>
   );
 }

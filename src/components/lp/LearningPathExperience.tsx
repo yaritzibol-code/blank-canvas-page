@@ -74,6 +74,7 @@ export function LearningPathExperience({
   actions,
   subjectProgress,
   children,
+  reviewOnly = false,
 }: {
   identity: LearningPathIdentity;
   showBrandArtwork?: boolean;
@@ -84,6 +85,7 @@ export function LearningPathExperience({
   actions?: ReactNode;
   subjectProgress?: { done: number; total: number; percent: number };
   children: ReactNode;
+  reviewOnly?: boolean;
 }) {
   const [view, setView] = useState<LearningPathStageView | null>(null);
   const [reportOpen, setReportOpen] = useState(false);
@@ -199,16 +201,18 @@ export function LearningPathExperience({
               )}
             </span>
             <button type="button" className="lp-study-back" onClick={onBack}>
-              ← Regresar a Learning Paths
+              {reviewOnly ? "← Elegir otro Learning Path" : "← Regresar a Learning Paths"}
             </button>
-            <div className="lp-study-actions">
-              <button type="button" onClick={() => setReportOpen(true)}>
-                Reportar contenido
-              </button>
-              <button type="button" onClick={() => onYaris(studyContext)}>
-                Pregúntale a Yaris
-              </button>
-            </div>
+            {!reviewOnly && (
+              <div className="lp-study-actions">
+                <button type="button" onClick={() => setReportOpen(true)}>
+                  Reportar contenido
+                </button>
+                <button type="button" onClick={() => onYaris(studyContext)}>
+                  Pregúntale a Yaris
+                </button>
+              </div>
+            )}
           </div>
           <div className="lp-study-context" aria-label="Ubicación en Learning Paths">
             {[identity.category, identity.subject, identity.chapter, identity.title].map(
@@ -231,24 +235,28 @@ export function LearningPathExperience({
               <div className="lp-study-progress-summary">
                 <strong>{stage}</strong>
                 <span>
-                  {view.done.filter(Boolean).length} de {labels.length} etapas · {view.percent}%
+                  {reviewOnly
+                    ? "Revisión de administrador · sin guardar avance"
+                    : `${view.done.filter(Boolean).length} de ${labels.length} etapas · ${view.percent}%`}
                 </span>
                 {view.onReset && (
                   <button type="button" onClick={view.onReset}>
-                    Reiniciar recorrido
+                    {reviewOnly ? "Limpiar prueba local" : "Reiniciar recorrido"}
                   </button>
                 )}
               </div>
-              <div
-                className="lp-study-progress-track"
-                role="progressbar"
-                aria-label="Progreso del Learning Path"
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={view.percent}
-              >
-                <span style={{ width: `${view.percent}%` }} />
-              </div>
+              {!reviewOnly && (
+                <div
+                  className="lp-study-progress-track"
+                  role="progressbar"
+                  aria-label="Progreso del Learning Path"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={view.percent}
+                >
+                  <span style={{ width: `${view.percent}%` }} />
+                </div>
+              )}
               <details className="lp-study-mobile-stages">
                 <summary>
                   Etapa {view.current + 1} de {labels.length} · Ver recorrido
@@ -265,14 +273,16 @@ export function LearningPathExperience({
           {children}
         </div>
         {actions && <footer className="lp-study-outer-actions">{actions}</footer>}
-        <ReportProblemModal
-          open={reportOpen}
-          onClose={() => setReportOpen(false)}
-          user={user}
-          seccion="Learning Paths"
-          recurso={reportResource}
-          tipoInicial="Material incorrecto o incompleto"
-        />
+        {!reviewOnly && (
+          <ReportProblemModal
+            open={reportOpen}
+            onClose={() => setReportOpen(false)}
+            user={user}
+            seccion="Learning Paths"
+            recurso={reportResource}
+            tipoInicial="Material incorrecto o incompleto"
+          />
+        )}
       </div>
     </StageContext.Provider>
   );

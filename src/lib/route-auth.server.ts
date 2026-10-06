@@ -66,3 +66,9 @@ export async function loadRouteProfile(auth: RouteAuth): Promise<RouteProfile> {
 
   return { data, isPro, isAdmin: admin, nombre: String(data.nombre ?? "").trim() };
 }
+
+/** Review access never trusts the browser's mirrored profile or paid-plan flag. */
+export async function isRouteAdmin(auth: RouteAuth): Promise<boolean> {
+  const { data, error } = await auth.supabase.rpc("is_admin");
+  return !error && data === true;
+}

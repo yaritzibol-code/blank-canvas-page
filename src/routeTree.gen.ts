@@ -49,6 +49,7 @@ import { Route as AdminEstudiantesRouteImport } from './routes/admin/estudiantes
 import { Route as AdminGamificacionRouteImport } from './routes/admin/gamificacion'
 import { Route as AdminNotificacionesRouteImport } from './routes/admin/notificaciones'
 import { Route as AdminPerfilRouteImport } from './routes/admin/perfil'
+import { Route as AdminRevisionLearningPathsRouteImport } from './routes/admin/revision-learning-paths'
 import { Route as AdminSoporteRouteImport } from './routes/admin/soporte'
 import { Route as AdminUsuariosActivosRouteImport } from './routes/admin/usuarios-activos'
 import { Route as AdminWhatsappRouteImport } from './routes/admin/whatsapp'
@@ -84,6 +85,7 @@ import { Route as AdminOperacionesIndexRouteImport } from './routes/admin/operac
 import { Route as AdminOperacionesDisputasRouteImport } from './routes/admin/operaciones/disputas'
 import { Route as AdminOperacionesStripeRouteImport } from './routes/admin/operaciones/stripe'
 import { Route as AdminOperacionesYarisRouteImport } from './routes/admin/operaciones/yaris'
+import { Route as ApiAdminLearningPathReviewRouteImport } from './routes/api/admin/learning-path-review'
 import { Route as ApiPublicClientErrorsRouteImport } from './routes/api/public/client-errors'
 import { Route as ApiRtariDebriefRouteImport } from './routes/api/rtari/debrief'
 import { Route as ApiRtariSaldoRouteImport } from './routes/api/rtari/saldo'
@@ -303,6 +305,12 @@ const AdminPerfilRoute = AdminPerfilRouteImport.update({
   path: '/admin/perfil',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRevisionLearningPathsRoute =
+  AdminRevisionLearningPathsRouteImport.update({
+    id: '/admin/revision-learning-paths',
+    path: '/admin/revision-learning-paths',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AdminSoporteRoute = AdminSoporteRouteImport.update({
   id: '/admin/soporte',
   path: '/admin/soporte',
@@ -479,6 +487,12 @@ const AdminOperacionesYarisRoute = AdminOperacionesYarisRouteImport.update({
   path: '/admin/operaciones/yaris',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminLearningPathReviewRoute =
+  ApiAdminLearningPathReviewRouteImport.update({
+    id: '/api/admin/learning-path-review',
+    path: '/api/admin/learning-path-review',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicClientErrorsRoute = ApiPublicClientErrorsRouteImport.update({
   id: '/api/public/client-errors',
   path: '/api/public/client-errors',
@@ -612,6 +626,7 @@ export interface FileRoutesByFullPath {
   '/admin/gamificacion': typeof AdminGamificacionRoute
   '/admin/notificaciones': typeof AdminNotificacionesRoute
   '/admin/perfil': typeof AdminPerfilRoute
+  '/admin/revision-learning-paths': typeof AdminRevisionLearningPathsRoute
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
   '/admin/whatsapp': typeof AdminWhatsappRoute
@@ -647,6 +662,7 @@ export interface FileRoutesByFullPath {
   '/admin/operaciones/disputas': typeof AdminOperacionesDisputasRoute
   '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
+  '/api/admin/learning-path-review': typeof ApiAdminLearningPathReviewRoute
   '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
   '/api/rtari/debrief': typeof ApiRtariDebriefRoute
   '/api/rtari/saldo': typeof ApiRtariSaldoRoute
@@ -705,6 +721,7 @@ export interface FileRoutesByTo {
   '/admin/gamificacion': typeof AdminGamificacionRoute
   '/admin/notificaciones': typeof AdminNotificacionesRoute
   '/admin/perfil': typeof AdminPerfilRoute
+  '/admin/revision-learning-paths': typeof AdminRevisionLearningPathsRoute
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
   '/admin/whatsapp': typeof AdminWhatsappRoute
@@ -739,6 +756,7 @@ export interface FileRoutesByTo {
   '/admin/operaciones/disputas': typeof AdminOperacionesDisputasRoute
   '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
+  '/api/admin/learning-path-review': typeof ApiAdminLearningPathReviewRoute
   '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
   '/api/rtari/debrief': typeof ApiRtariDebriefRoute
   '/api/rtari/saldo': typeof ApiRtariSaldoRoute
@@ -799,6 +817,7 @@ export interface FileRoutesById {
   '/admin/gamificacion': typeof AdminGamificacionRoute
   '/admin/notificaciones': typeof AdminNotificacionesRoute
   '/admin/perfil': typeof AdminPerfilRoute
+  '/admin/revision-learning-paths': typeof AdminRevisionLearningPathsRoute
   '/admin/soporte': typeof AdminSoporteRoute
   '/admin/usuarios-activos': typeof AdminUsuariosActivosRoute
   '/admin/whatsapp': typeof AdminWhatsappRoute
@@ -834,6 +853,7 @@ export interface FileRoutesById {
   '/admin/operaciones/disputas': typeof AdminOperacionesDisputasRoute
   '/admin/operaciones/stripe': typeof AdminOperacionesStripeRoute
   '/admin/operaciones/yaris': typeof AdminOperacionesYarisRoute
+  '/api/admin/learning-path-review': typeof ApiAdminLearningPathReviewRoute
   '/api/public/client-errors': typeof ApiPublicClientErrorsRoute
   '/api/rtari/debrief': typeof ApiRtariDebriefRoute
   '/api/rtari/saldo': typeof ApiRtariSaldoRoute
@@ -895,6 +915,7 @@ export interface FileRouteTypes {
     | '/admin/gamificacion'
     | '/admin/notificaciones'
     | '/admin/perfil'
+    | '/admin/revision-learning-paths'
     | '/admin/soporte'
     | '/admin/usuarios-activos'
     | '/admin/whatsapp'
@@ -930,6 +951,7 @@ export interface FileRouteTypes {
     | '/admin/operaciones/disputas'
     | '/admin/operaciones/stripe'
     | '/admin/operaciones/yaris'
+    | '/api/admin/learning-path-review'
     | '/api/public/client-errors'
     | '/api/rtari/debrief'
     | '/api/rtari/saldo'
@@ -988,6 +1010,7 @@ export interface FileRouteTypes {
     | '/admin/gamificacion'
     | '/admin/notificaciones'
     | '/admin/perfil'
+    | '/admin/revision-learning-paths'
     | '/admin/soporte'
     | '/admin/usuarios-activos'
     | '/admin/whatsapp'
@@ -1022,6 +1045,7 @@ export interface FileRouteTypes {
     | '/admin/operaciones/disputas'
     | '/admin/operaciones/stripe'
     | '/admin/operaciones/yaris'
+    | '/api/admin/learning-path-review'
     | '/api/public/client-errors'
     | '/api/rtari/debrief'
     | '/api/rtari/saldo'
@@ -1081,6 +1105,7 @@ export interface FileRouteTypes {
     | '/admin/gamificacion'
     | '/admin/notificaciones'
     | '/admin/perfil'
+    | '/admin/revision-learning-paths'
     | '/admin/soporte'
     | '/admin/usuarios-activos'
     | '/admin/whatsapp'
@@ -1116,6 +1141,7 @@ export interface FileRouteTypes {
     | '/admin/operaciones/disputas'
     | '/admin/operaciones/stripe'
     | '/admin/operaciones/yaris'
+    | '/api/admin/learning-path-review'
     | '/api/public/client-errors'
     | '/api/rtari/debrief'
     | '/api/rtari/saldo'
@@ -1176,6 +1202,7 @@ export interface RootRouteChildren {
   AdminGamificacionRoute: typeof AdminGamificacionRoute
   AdminNotificacionesRoute: typeof AdminNotificacionesRoute
   AdminPerfilRoute: typeof AdminPerfilRoute
+  AdminRevisionLearningPathsRoute: typeof AdminRevisionLearningPathsRoute
   AdminSoporteRoute: typeof AdminSoporteRoute
   AdminUsuariosActivosRoute: typeof AdminUsuariosActivosRoute
   AdminWhatsappRoute: typeof AdminWhatsappRoute
@@ -1192,6 +1219,7 @@ export interface RootRouteChildren {
   AdminOperacionesDisputasRoute: typeof AdminOperacionesDisputasRoute
   AdminOperacionesStripeRoute: typeof AdminOperacionesStripeRoute
   AdminOperacionesYarisRoute: typeof AdminOperacionesYarisRoute
+  ApiAdminLearningPathReviewRoute: typeof ApiAdminLearningPathReviewRoute
   ApiPublicClientErrorsRoute: typeof ApiPublicClientErrorsRoute
   ApiRtariDebriefRoute: typeof ApiRtariDebriefRoute
   ApiRtariSaldoRoute: typeof ApiRtariSaldoRoute
@@ -1487,6 +1515,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPerfilRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/revision-learning-paths': {
+      id: '/admin/revision-learning-paths'
+      path: '/admin/revision-learning-paths'
+      fullPath: '/admin/revision-learning-paths'
+      preLoaderRoute: typeof AdminRevisionLearningPathsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/soporte': {
       id: '/admin/soporte'
       path: '/admin/soporte'
@@ -1732,6 +1767,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminOperacionesYarisRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/learning-path-review': {
+      id: '/api/admin/learning-path-review'
+      path: '/api/admin/learning-path-review'
+      fullPath: '/api/admin/learning-path-review'
+      preLoaderRoute: typeof ApiAdminLearningPathReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/client-errors': {
       id: '/api/public/client-errors'
       path: '/api/public/client-errors'
@@ -1970,6 +2012,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminGamificacionRoute: AdminGamificacionRoute,
   AdminNotificacionesRoute: AdminNotificacionesRoute,
   AdminPerfilRoute: AdminPerfilRoute,
+  AdminRevisionLearningPathsRoute: AdminRevisionLearningPathsRoute,
   AdminSoporteRoute: AdminSoporteRoute,
   AdminUsuariosActivosRoute: AdminUsuariosActivosRoute,
   AdminWhatsappRoute: AdminWhatsappRoute,
@@ -1986,6 +2029,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminOperacionesDisputasRoute: AdminOperacionesDisputasRoute,
   AdminOperacionesStripeRoute: AdminOperacionesStripeRoute,
   AdminOperacionesYarisRoute: AdminOperacionesYarisRoute,
+  ApiAdminLearningPathReviewRoute: ApiAdminLearningPathReviewRoute,
   ApiPublicClientErrorsRoute: ApiPublicClientErrorsRoute,
   ApiRtariDebriefRoute: ApiRtariDebriefRoute,
   ApiRtariSaldoRoute: ApiRtariSaldoRoute,

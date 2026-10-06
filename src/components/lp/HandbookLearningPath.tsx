@@ -77,12 +77,15 @@ export function HandbookLearningPath({
   onComplete,
   presentation,
   completionAction,
+  reviewOnly = false,
 }: {
   document: HandbookLearningPathDocument;
   userId: string;
   lpId: string;
   completed: boolean;
   onComplete: () => void;
+  /** Admin inspection: no journey reads, migrations, writes, or completion callbacks. */
+  reviewOnly?: boolean;
   completionAction?: { label: string; onContinue: () => void };
   presentation?: {
     className: string;
@@ -117,6 +120,10 @@ export function HandbookLearningPath({
 
   useEffect(() => {
     if (hydrated) return;
+    if (reviewOnly) {
+      setHydrated(true);
+      return;
+    }
     const saved = getLpJourney<HandbookJourneyState>(userId, lpId);
     if (presentation) {
       setState(presentation.migrate(saved, completed, freshState(checkCount)));
@@ -135,11 +142,11 @@ export function HandbookLearningPath({
       });
     }
     setHydrated(true);
-  }, [checkCount, completed, hydrated, lpId, stages.length, userId, presentation]);
+  }, [checkCount, completed, hydrated, lpId, stages.length, userId, presentation, reviewOnly]);
 
   useEffect(() => {
-    if (hydrated) saveLpJourney(userId, lpId, state);
-  }, [hydrated, lpId, state, userId]);
+    if (hydrated && !reviewOnly) saveLpJourney(userId, lpId, state);
+  }, [hydrated, lpId, state, userId, reviewOnly]);
 
   const quizComplete =
     current.kind !== "quiz" ||
@@ -177,12 +184,17 @@ export function HandbookLearningPath({
     setState((value) => ({ ...value, ...patch }));
 
   const goTo = (index: number) => {
-    if (index < 0 || index >= stages.length || index > state.maxStage) return;
+    if (index < 0 || index >= stages.length || (!reviewOnly && index > state.maxStage)) return;
     patchState({ stage: index });
     setMenuOpen(false);
   };
 
   const advance = () => {
+    if (reviewOnly) {
+      if (current.kind === "finish") completionAction?.onContinue();
+      else goTo(state.stage + 1);
+      return;
+    }
     if (state.complete && completionAction) {
       if (current.kind === "finish") completionAction.onContinue();
       else goTo(state.stage + 1);
@@ -207,6 +219,11 @@ export function HandbookLearningPath({
   };
 
   const reset = () => {
+    if (reviewOnly) {
+      setState(freshState(checkCount));
+      setZoom(null);
+      return;
+    }
     if (!window.confirm("¿Reiniciar este recorrido? Se borrará solamente su avance interno."))
       return;
     resetLpJourney(userId, lpId);
@@ -222,32 +239,34 @@ export function HandbookLearningPath({
   useLearningPathStageView({
     labels: stages.map((stage) => stage.nav),
     current: state.stage,
-    highest: state.maxStage,
-    done: stages.map((_, index) => index < state.maxStage || state.complete),
-    percent,
+    highest: reviewOnly ? stages.length - 1 : state.maxStage,
+    done: stages.map((_, index) => !reviewOnly && (index < state.maxStage || state.complete)),
+    percent: reviewOnly ? 0 : percent,
     onNavigate: goTo,
     onReset: reset,
   });
 
-  const guide = state.complete
-    ? "Recorrido completo. Puedes repasar cualquier etapa cuando quieras."
-    : current.kind === "activity"
-      ? canContinue
-        ? "Actividad comprobada. Ya puedes continuar."
-        : "Responde y compara tu explicación antes de continuar."
-      : current.kind === "quiz" && current.diagnostic
-        ? "Haz tu predicción y luego observa qué cambia. No necesitas acertar para explorar."
-        : current.kind === "quiz"
-          ? canContinue
-            ? "Buen trabajo. Todas las decisiones están justificadas."
-            : "Responde correctamente cada decisión para continuar."
-          : current.kind === "exercise"
+  const guide = reviewOnly
+    ? "Revisión de administrador: explora cualquier etapa. Las respuestas y el avance no se guardan."
+    : state.complete
+      ? "Recorrido completo. Puedes repasar cualquier etapa cuando quieras."
+      : current.kind === "activity"
+        ? canContinue
+          ? "Actividad comprobada. Ya puedes continuar."
+          : "Responde y compara tu explicación antes de continuar."
+        : current.kind === "quiz" && current.diagnostic
+          ? "Haz tu predicción y luego observa qué cambia. No necesitas acertar para explorar."
+          : current.kind === "quiz"
             ? canContinue
-              ? "Actividad comprobada. Ya puedes continuar."
-              : "Completa y comprueba la actividad antes de avanzar."
-            : current.kind === "finish"
-              ? "Confirma las ideas que puedes explicar y cierra el recorrido."
-              : "Avanza a tu ritmo. Las etapas completadas quedan abiertas para repaso.";
+              ? "Buen trabajo. Todas las decisiones están justificadas."
+              : "Responde correctamente cada decisión para continuar."
+            : current.kind === "exercise"
+              ? canContinue
+                ? "Actividad comprobada. Ya puedes continuar."
+                : "Completa y comprueba la actividad antes de avanzar."
+              : current.kind === "finish"
+                ? "Confirma las ideas que puedes explicar y cierra el recorrido."
+                : "Avanza a tu ritmo. Las etapas completadas quedan abiertas para repaso.";
 
   return (
     <section
@@ -273,8 +292,8 @@ export function HandbookLearningPath({
         </div>
         <nav className="hb-waypoints" aria-label="Etapas del Learning Path">
           {stages.map((stage, index) => {
-            const locked = index > state.maxStage;
-            const done = index < state.maxStage || state.complete;
+            const locked = !reviewOnly && index > state.maxStage;
+            const done = !reviewOnly && (index < state.maxStage || state.complete);
             return (
               <button
                 key={`${index}-${stage.nav}`}
@@ -298,15 +317,15 @@ export function HandbookLearningPath({
         <div className="hb-altitude">
           {!document.ciaac && <img src="/lp/visual/pathy.png" alt="" />}
           <div>
-            <small>Tu altitud</small>
-            <strong>{percent}%</strong>
+            <small>{reviewOnly ? "Modo de revisión" : "Tu altitud"}</small>
+            <strong>{reviewOnly ? "Sin guardar avance" : `${percent}%`}</strong>
             <span>
-              {state.maxStage + 1} de {stages.length} etapas abiertas
+              {reviewOnly ? stages.length : state.maxStage + 1} de {stages.length} etapas abiertas
             </span>
           </div>
         </div>
         <button type="button" className="hb-reset" onClick={reset}>
-          ↻ Empezar de nuevo
+          {reviewOnly ? "↻ Limpiar prueba local" : "↻ Empezar de nuevo"}
         </button>
       </aside>
 
@@ -328,7 +347,13 @@ export function HandbookLearningPath({
             <strong>{current.nav}</strong>
           </div>
           <div className="hb-progress-area">
-            <span>{canContinue ? "Etapa lista" : "Misión en curso"}</span>
+            <span>
+              {reviewOnly
+                ? "Revisión · sin guardar"
+                : canContinue
+                  ? "Etapa lista"
+                  : "Misión en curso"}
+            </span>
             <div
               className="hb-progress"
               role="progressbar"
@@ -478,16 +503,26 @@ export function HandbookLearningPath({
             <button
               type="button"
               className="is-primary"
-              disabled={state.complete && completionAction ? false : !canContinue || state.complete}
+              disabled={
+                reviewOnly
+                  ? false
+                  : state.complete && completionAction
+                    ? false
+                    : !canContinue || state.complete
+              }
               onClick={advance}
             >
-              {current.kind === "intro"
-                ? "Iniciar recorrido"
-                : current.kind === "finish"
-                  ? state.complete
-                    ? (completionAction?.label ?? "Completado")
-                    : "Completar Learning Path"
-                  : "Continuar"}
+              {reviewOnly
+                ? current.kind === "finish"
+                  ? "Salir de la revisión"
+                  : "Siguiente etapa"
+                : current.kind === "intro"
+                  ? "Iniciar recorrido"
+                  : current.kind === "finish"
+                    ? state.complete
+                      ? (completionAction?.label ?? "Completado")
+                      : "Completar Learning Path"
+                    : "Continuar"}
             </button>
           </div>
         </footer>

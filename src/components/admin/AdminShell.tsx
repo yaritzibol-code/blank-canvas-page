@@ -108,6 +108,7 @@ const ADMIN_NAV: { label: string; items: NavItem[] }[] = [
     items: [
       { icon: "help", label: "Banco de preguntas", key: "banco", path: "/admin/banco" },
       { icon: "play", label: "Clases y materiales", key: "contenido", path: "/admin/contenido" },
+      { icon: "eye", label: "Revisar Learning Paths", path: "/admin/revision-learning-paths" },
     ],
   },
   {
@@ -319,6 +320,7 @@ export function AdminShell({
                   <Link
                     key={item.label}
                     to={item.path as "/dashboard"}
+                    reloadDocument={item.path === "/admin/revision-learning-paths"}
                     style={itemBase(!!item.key && item.key === active)}
                   >
                     <span
