@@ -34,7 +34,7 @@
         "Relación: MI03 para requisitos documentales; OP01 para uso de registros."
       ],
       "groupingNotes": [],
-      "status": "pending-content"
+      "status": "content-candidate-reviewed"
     },
     {
       "code": "ST03",
@@ -51,7 +51,7 @@
       ],
       "relationships": [],
       "groupingNotes": [],
-      "status": "pending-content"
+      "status": "content-candidate-reviewed"
     },
     {
       "code": "ST04",
@@ -83,7 +83,7 @@
         "Relación: CO08 para tecnología radar."
       ],
       "groupingNotes": [],
-      "status": "pending-content"
+      "status": "content-candidate-reviewed"
     },
     {
       "code": "ST06",
@@ -101,7 +101,7 @@
         "Relación: CO05 para señales y comunicaciones de emergencia."
       ],
       "groupingNotes": [],
-      "status": "pending-content"
+      "status": "content-candidate-reviewed"
     },
     {
       "code": "ST07",

@@ -142,9 +142,14 @@ let boards = 0,
   figures = 0;
 for (const [id, doc] of Object.entries(docs)) {
   assert.equal(doc.questions.length, 0, "No invented multiple-choice questions");
-  assert.equal(doc.exercise.kind, "sequence");
-  assert.deepEqual(doc.exercise.order, [2, 0, 1]);
-  assert.deepEqual([...doc.exercise.order].sort(), [0, 1, 2]);
+  assert.ok(["match", "sequence"].includes(doc.exercise.kind));
+  const exerciseLength =
+    doc.exercise.kind === "match" ? doc.exercise.pairs.length : doc.exercise.items.length;
+  const correctOrder = Array.from({ length: exerciseLength }, (_, i) => i);
+  assert.deepEqual(
+    [...doc.exercise.order].sort((a, b) => a - b),
+    correctOrder,
+  );
   const stages = doc.stages.filter((s) => s.kind === "content");
   const html = renderToStaticMarkup(
     React.createElement(
@@ -198,7 +203,14 @@ for (const [id, doc] of Object.entries(docs)) {
     ...state,
     stage: 3,
     maxStage: 3,
-    exercise: { ...state.exercise, sequence: [0, 1, 2] },
+    exercise: {
+      ...state.exercise,
+      sequence: doc.exercise.kind === "sequence" ? correctOrder : [],
+      pairs:
+        doc.exercise.kind === "match"
+          ? Object.fromEntries(correctOrder.map((i) => [String(i), i]))
+          : {},
+    },
   };
   const resumed = migrate(id, doc, saved, false, fresh, catalog.curriculumVersion);
   assert.equal(resumed.stage, 3);
@@ -268,10 +280,32 @@ const subject = navLoad(`${approved}catalog.ts`).approvedTransitSubject();
 const user = { id: "fixture-reviewer" };
 assert.equal(nav.lpAccess(user, subject, approvedIds[0]).allowed, true);
 completedIds = [approvedIds[0]];
-assert.equal(nav.lpAccess(user, subject, approvedIds[1]).lock, "contenido");
+assert.equal(nav.lpAccess(user, subject, approvedIds[1]).allowed, true);
 assert.equal(nav.lpAccess(user, subject, approvedIds[3]).lock, "previo");
 assert.equal(nav.lpAccess(user, subject, approvedIds[6]).lock, "previo");
-assert.equal(nav.subjectContinue(user.id, subject), null, "Never skip a pending gap");
+assert.equal(nav.subjectContinue(user.id, subject).id, approvedIds[1]);
+for (let i = 0; i < approvedIds.length; i++) {
+  completedIds = approvedIds.slice(0, i);
+  assert.equal(nav.lpAccess(user, subject, approvedIds[i]).allowed, true);
+  if (i + 1 < approvedIds.length)
+    assert.equal(nav.lpAccess(user, subject, approvedIds[i + 1]).lock, "previo");
+}
+// Missing review still creates a real content gap; progression must never skip it.
+const gapReviews = fixtureReviews.filter((r) => r.id !== approvedIds[1]);
+const gap = collect(docs, gapReviews);
+assert.equal(gap[approvedIds[1]], undefined);
+assert.ok(gap[approvedIds[2]]);
+const gapNav = loader({
+  [`${approved}publication-review.json`]: gapReviews,
+  "src/lib/store/db.ts": { read: () => [], nowISO: () => "test" },
+  "src/lib/store/domain.ts": {
+    getTemaProgress: () => [{ temaId: `lp:${approvedIds[0]}`, completado: true }],
+  },
+  "src/lib/store/gating.ts": { isPaid: () => true },
+})("src/lib/store/lp-nav.ts");
+assert.equal(gapNav.lpAccess(user, subject, approvedIds[1]).lock, "contenido");
+assert.equal(gapNav.lpAccess(user, subject, approvedIds[2]).lock, "previo");
+assert.equal(gapNav.subjectContinue(user.id, subject), null, "Never skip a missing review gap");
 assert.equal(nav.lpNeighbors(subject, approvedIds[3]).prev.id, approvedIds[2]);
 assert.equal(nav.lpNeighbors(subject, approvedIds[3]).next.id, approvedIds[4]);
 completedIds = legacyItems.map((item) => item.id);
@@ -300,8 +334,9 @@ console.log(
       boards,
       cards,
       figures,
-      openQuestionsAndAnswers: 9,
-      sequenceExercises: 3,
+      openQuestionsAndAnswers: 19,
+      sequenceExercises: 5,
+      matchingExercises: 2,
       productionActivation: actualActive,
       nativeBrowserQA: "pending",
     },

@@ -38,8 +38,8 @@ const reviewed = collectReadyApprovedTransitDocuments(
   publicationReviewJson as AircraftPublicationReview[],
 );
 
-/** ST01 activates the complete seven-place outline; missing intermediate lessons
- * remain unavailable and retain the existing sequential progression locks. */
+/** ST01 activates the seven-place outline. Each lesson remains independently
+ * gated by its reviewed document and the existing sequential progression locks. */
 export const APPROVED_TRANSIT_ACTIVE = APPROVED_TRANSIT_ACTIVATION_IDS.every((id) => reviewed[id]);
 export const APPROVED_TRANSIT_CONTENT = APPROVED_TRANSIT_ACTIVE ? reviewed : {};
 export const APPROVED_TRANSIT_READY_IDS = Object.keys(APPROVED_TRANSIT_CONTENT);

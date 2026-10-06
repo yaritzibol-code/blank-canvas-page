@@ -1,0 +1,558 @@
+[
+  {
+    "code": "ST02",
+    "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st02-plan-de-vuelo-y-llenado-de-bitacora",
+    "packageFilename": "ST02-Plan-vuelo-bitacora-integration-candidate-20261006.zip",
+    "packageSha256": "f3ea28de18a21e29d91c4b6ff8154014b2460cf12bd700cc6657479fbedbf572",
+    "candidateKey": "ST02",
+    "documentSha256": "9f9399ead912e5f86736500bc446e86967f5a2ab936b42f81bc42f44073c9782",
+    "candidateDocumentFileSha256": "ffdacbd3274b94c5b2a77f97fac5e55d8c67241b8cf18274396a1664637c3513",
+    "assessmentFileSha256": "01f8c1cf69e1c72c3361e36727b921303b3b3d14be1426d9c1620d0c62bb4b60",
+    "sourceFiles": [
+      {
+        "path": "provenance/source-sections/ST02-A_learner.md",
+        "sha256": "6a9fcce73cf4221bd872d76b6dee66e2a542687b65ac973db9a7042647255d3a"
+      },
+      {
+        "path": "provenance/source-sections/ST02-B_learner.md",
+        "sha256": "ce1c45d7dfb6f08c9a649863a18c8164e8711ad5fd849170997df175ef10ea4e"
+      },
+      {
+        "path": "provenance/source-sections/ST02-C_learner.md",
+        "sha256": "8bbe9c171cb894e6a4a12d97121b5ea4806b2ae4334b5ba718c45664f2a23f96"
+      },
+      {
+        "path": "provenance/source-sections/ST02-D_learner.md",
+        "sha256": "db342e1337fd68ed68b6487bd99bd69e179b46730f705e56b63f97935d1eec06"
+      },
+      {
+        "path": "provenance/source-sections/ST02-E_learner.md",
+        "sha256": "e4ebc94ca0d2a2ec8c0f9bc57e9a40f5d09952b7aaa27daf56f29f190c0e1c3d"
+      },
+      {
+        "path": "provenance/source-sections/ST02-F_learner.md",
+        "sha256": "b2821bb6a6276aef07ec85179070eb3229ce9d474e91da9b3ed55fbf15e2aee3"
+      },
+      {
+        "path": "provenance/source-sections/ST02-F2_learner.md",
+        "sha256": "4b64bcf1f3cc16c5eb99acc8b690796ae0c2a7f024d2c3dcda2ec061c749d797"
+      },
+      {
+        "path": "provenance/assessment-cleared/ST02-case-learner.md",
+        "sha256": "a5c8a35d5052a50c0166da4fbaf7aef735df4e7279891495d01823e02a00f582"
+      }
+    ],
+    "captureAssembly": "Exact source bytes in listed order, joined by two LF bytes.",
+    "notebooklmExplanationSha256": "8ae6838a40d6ce002428bc0ca543c2c0207ce41ae9623ddbd07ca22df8a13b23",
+    "sourceMapFiles": [
+      {
+        "path": "provenance/card-source-spans.json",
+        "sha256": "e0d3193a061978ca4dead27968ed9136dd6ae8e7f694ebad54619f1f62fd67db"
+      }
+    ],
+    "assets": [
+      {
+        "path": "ciaac-approved/flight-plan/aircraft-log.svg",
+        "sha256": "c042125b94f28930a2f76f94b3d9276cd1dd8d44abc84aa3bd51aa3d54308518"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/aircraft-type.svg",
+        "sha256": "bca0b1c19adeb016b6a9f0ac7c5f6effbe8caa089f0e634c5ff917407e1d6480"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/arrival-closure.svg",
+        "sha256": "94650b834310b0b128120d95d3bb26ad2397b45585fe0097deb9c2d8e86d967c"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/case-arrival.svg",
+        "sha256": "6b828481da608d096fa9e36c5e1d609589b59a2d682c55827b571b7f3848dd5f"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/case-coding.svg",
+        "sha256": "0b5c09fead4ee24e5e9553bb77997f0e30aafd8824d721e3b49c07a75119a073"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/case-context.svg",
+        "sha256": "90aa5a3c58a1f94d6d238426e2a80c078b4b1ea6bd584895339cb14c3ac643c8"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/case-reporting.svg",
+        "sha256": "3e67ccdd2c4ef09bb072c7b5efa7bf63926802a14be1d21a1f0170cfb6eaca6e"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/delay-time.svg",
+        "sha256": "eb98ce2e56b4cf59a9d7cc923602e30e99951f5f5509901512a52e117b7452d7"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/departure-field.svg",
+        "sha256": "bd067ef8c0e40022c72e16323bc6b9d433a028da0bd48281e80141c656eadbad"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/departure-message.svg",
+        "sha256": "7bb02627fc741c7c25d5c4988a63248926e793032f5393b283732a6555773947"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/destination-field.svg",
+        "sha256": "82bda398cd2ec714d5dda3baff780661ecfc9fce4e06d7e6019f0750245cce9c"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/equipment-example.svg",
+        "sha256": "b499607eb0d4c026b8ea60cbc5526d4424195fb2abd0dfc68747c3e7f7170664"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/equipment-nav.svg",
+        "sha256": "b931b9db4501521547a9600c49a746295453d1bc4942f3a688bed9849f42da52"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/equipment-surveillance.svg",
+        "sha256": "46c1f19e361b2a8a48e7674dc3f43471a4ef9d7247dc7c0c4db50da6f2308f36"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/eta-change.svg",
+        "sha256": "25427e7e4131812662bd355c362d360396770b153280e0a8a3bbcee449e0d753"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/filing-time.svg",
+        "sha256": "18f5fdddd86a7a5b509b242b5990c301d95e5a0d5d1da8ef11cebbdd860d04c9"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/flight-type.svg",
+        "sha256": "8becc66c0ec275deef90d8332e8b704ac68c259a137f4c300df7660b82e02405"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/identification.svg",
+        "sha256": "121ee1dc05b34fcae40484f42d0f81eec3507072b1dcbcc81d2d9f08d77b2448"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/intentional-change.svg",
+        "sha256": "43c5d68e8018c83d7871dd89365cadf9c0ef227a211b7a76adcd61cd826afada"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/log-duty.svg",
+        "sha256": "ed9818ce1b8fb0b15fe80f9c50124f67a7f8333bc3b76aad24247cf826d560f4"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/operational-plan.svg",
+        "sha256": "071229b73636e3ab60e131ae95f1771851ce014b95cf6386ff077cb1a4cac8a6"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/other-data.svg",
+        "sha256": "ce3227c73cea873812d53c8b539088fda7bb6c4f9d0e865ffc7f797fe3130646"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/pbn.svg",
+        "sha256": "1fc1486a7b72f9d954954be00cb5c4fb8caf4fdcf3fe239fc2109e8f7acbf87c"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/pilot-log.svg",
+        "sha256": "5c540823a0819b61a9ed0760e6ee609915a53b69e441e952ba614ae26fe1150c"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/route-field.svg",
+        "sha256": "5193992920b4ce6384dfdc437fc5c8ddf360e684fc633c0ea163e6c492f552e3"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/rules.svg",
+        "sha256": "ed3062de86a791f981e86a390be1917853aed6243f7de17235e7b422b47b7d7f"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/supplementary.svg",
+        "sha256": "a6e3b5d2ccfc82cf75f6be58a2750d5e25afc93c6bd59ab7736e09d885ad7ac0"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/tas-change.svg",
+        "sha256": "b8af7fc3bf42db93143b2a483f6496c5f308ea9aef48ab27e67687201dd4055b"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/tas-example.svg",
+        "sha256": "cc5b97b386d51d5301cdcada64fb611d0473b951d3f21595349315f20e178bb3"
+      },
+      {
+        "path": "ciaac-approved/flight-plan/wake.svg",
+        "sha256": "052c19736e39e163f042f0e646a0ea5ebe00f12c65a7718ab11a650f29e1fde1"
+      }
+    ],
+    "boards": 9,
+    "cards": 32,
+    "nativeBrowserQA": "Pending; no browser denial retries",
+    "historicalSourceQualifications": "Preserved unchanged from finalized package; not certification of operational currentness.",
+    "documentHashEncoding": "UTF-8 JSON.stringify with recursively sorted object keys; array order unchanged"
+  },
+  {
+    "code": "ST03",
+    "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st03-organizacion-del-espacio-aereo",
+    "packageFilename": "ST03-Organizacion-espacio-aereo-integration-candidate-20261006.zip",
+    "packageSha256": "393f02fcfb5aa17878da83b5e68e7f1c66888a12100b2ba0de769bb531967b61",
+    "candidateKey": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st03-organizacion-del-espacio-aereo",
+    "documentSha256": "8bab4dc65684d0ed51581641d6fe6fd4f97ab8afdfdb3661c4e422b1d39d5c97",
+    "candidateDocumentFileSha256": "d097b6b4e293fecb76914deebb3669ab09ac229664693245e556445091ecebb3",
+    "assessmentFileSha256": "d368672d5747cd08d5e95cdfa6fee1c3aa8daa5e6891020eb2a90584f68b68e1",
+    "sourceFiles": [
+      {
+        "path": "provenance/ST03-learner.md",
+        "sha256": "504923ce46983121612fb558ce8c4087cb979927795f15f73902b080003c1907"
+      }
+    ],
+    "captureAssembly": "Exact source bytes in listed order, joined by two LF bytes.",
+    "notebooklmExplanationSha256": "504923ce46983121612fb558ce8c4087cb979927795f15f73902b080003c1907",
+    "sourceMapFiles": [
+      {
+        "path": "provenance/card-source-spans.json",
+        "sha256": "f8644a72be88e30d1f02f5a1f13d6fd8ac8c0d990c0f245bae5443c7b65ce35a"
+      }
+    ],
+    "assets": [
+      {
+        "path": "ciaac-approved/airspace/airspace-profile.svg",
+        "sha256": "f56c4df55de5683ac64155438eacce1b142c3278f0762d1bde10e029088a17ba"
+      },
+      {
+        "path": "ciaac-approved/airspace/case-protection.svg",
+        "sha256": "d2bbc492fc55efcc18e19f4211f59b2875a828808e5a95216b5ff98e5c141e1b"
+      },
+      {
+        "path": "ciaac-approved/airspace/class-a.svg",
+        "sha256": "f7d372b8043a275e8b949fd5e83f72509181c79ef62597e7ff23f820652057fd"
+      },
+      {
+        "path": "ciaac-approved/airspace/class-b.svg",
+        "sha256": "0f963fdf94e1eb795cb77a19e522b70607fdada781c3380ee8cb49ed3c80ea7d"
+      },
+      {
+        "path": "ciaac-approved/airspace/class-c.svg",
+        "sha256": "1ed176f793e074f2bee5d7ecc08b98fb17f3660d7b9f4a8dc530c290fa66b307"
+      },
+      {
+        "path": "ciaac-approved/airspace/class-d.svg",
+        "sha256": "5e016d6d08f70b2b5b57a2194b852acf6e477d5359bffcbf8e61d4ab5cc12955"
+      },
+      {
+        "path": "ciaac-approved/airspace/class-e.svg",
+        "sha256": "51cbe99b7fb7985a02b455db6e804f781d1ae5b2746a58c71153ca7ecb7e0caf"
+      },
+      {
+        "path": "ciaac-approved/airspace/class-f.svg",
+        "sha256": "f5aca7c4fe36a036c227d1c403eb8b595daf4e7eaf15b38c2bcd2f45934f122d"
+      },
+      {
+        "path": "ciaac-approved/airspace/class-g.svg",
+        "sha256": "de7f5a8bd278912c027c81a4daee7fb0a34b5c1cae8e547ec12b40647f949e9b"
+      },
+      {
+        "path": "ciaac-approved/airspace/grid-mora.svg",
+        "sha256": "6fb47159cabd93afd48597e4278a2f9e750199f697d5bce76dc86a6db153a05d"
+      },
+      {
+        "path": "ciaac-approved/airspace/mea-profile.svg",
+        "sha256": "000cd0d5d551888cd3c15a7f742c58d45c930ea4f3f867e25846baa971243512"
+      },
+      {
+        "path": "ciaac-approved/airspace/moca-profile.svg",
+        "sha256": "fb9faa1508cbc3c6107f186a1ef013b9de8d0cf0c2a54ec63270d1310b292efc"
+      },
+      {
+        "path": "ciaac-approved/airspace/mora-margin.svg",
+        "sha256": "2e8298844788d1515665407170469b306d1f0cf1d831ce3edfb61c70db265641"
+      },
+      {
+        "path": "ciaac-approved/airspace/route-mora.svg",
+        "sha256": "4188fcc65c5a5feae589e4997f66c939f7c361343eaf61ed82a29c58ec8bfae5"
+      },
+      {
+        "path": "ciaac-approved/airspace/special-plan.svg",
+        "sha256": "0b4b3f58fddce6b6bfbbcce129092e1d7e4f6b8e90f0b784842ccffc53302f73"
+      },
+      {
+        "path": "ciaac-approved/airspace/vmc-b.svg",
+        "sha256": "446ec1d4382d54c1a6cd8ff5f5c17d183f1ad877f48f437434eee1d725ab7de9"
+      },
+      {
+        "path": "ciaac-approved/airspace/vmc-cde.svg",
+        "sha256": "a7f8a22086eaaad31612ae0b78b0e90965f151d0d21263296a375fdb8bdbe167"
+      },
+      {
+        "path": "ciaac-approved/airspace/vmc-fg-high.svg",
+        "sha256": "fe89feaf1f52c211782a539780aea3051c5d2a7dd50185ccc2c8ed0105c3c8f0"
+      },
+      {
+        "path": "ciaac-approved/airspace/vmc-fg-low.svg",
+        "sha256": "9d0f67b4dab8d06170e7f1d72640ea98be2e6668c644092eeccdacb36ed490fa"
+      }
+    ],
+    "boards": 7,
+    "cards": 34,
+    "nativeBrowserQA": "Pending; no browser denial retries",
+    "historicalSourceQualifications": "Preserved unchanged from finalized package; not certification of operational currentness.",
+    "documentHashEncoding": "UTF-8 JSON.stringify with recursively sorted object keys; array order unchanged"
+  },
+  {
+    "code": "ST05",
+    "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st05-control-radar-y-sus-limitaciones",
+    "packageFilename": "ST05-Radar-vigilancia-integration-candidate-20261006.zip",
+    "packageSha256": "feffedc16fceb8dfcd7b11593cee11f17310a31c9ba3ce45afff52944f744197",
+    "candidateKey": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st05-control-radar-y-sus-limitaciones",
+    "documentSha256": "73bde86feb0e9dcf5820fbff891e5da90b1d11579f117fb78644c91d1ce0a472",
+    "candidateDocumentFileSha256": "05f3bdb50fb2bc33aeb3d69c8053ac8dabd2b3f7212236c27a177c05e2d4387d",
+    "assessmentFileSha256": "3075c6a9b08ef5128077eaf4cbec3a2091aaa9c12ea5a0724808967badc48803",
+    "sourceFiles": [
+      {
+        "path": "provenance/source-sections/ST05-01.md",
+        "sha256": "4b25e71ae1ab7b8499e9061240107e3fa387aab9cacd6bbc2282b31053e4aeb2"
+      },
+      {
+        "path": "provenance/source-sections/ST05-02.md",
+        "sha256": "0330aba4a1f3c0c3915244659024740b6666011c1f811fd43b39f487213bef37"
+      },
+      {
+        "path": "provenance/source-sections/ST05-03.md",
+        "sha256": "99d1e5e8f987ea4b89ce3a9a7215472907230839bc19501d32c327ea6031cc6a"
+      },
+      {
+        "path": "provenance/source-sections/ST05-04.md",
+        "sha256": "b64a527b5e9acd3ccae94fe0be3de9165fe23577805ddc187503db00df923e0f"
+      },
+      {
+        "path": "provenance/source-sections/ST05-05.md",
+        "sha256": "9b30431e2ea3804cb5bee90caa4e8789db123742550999c07889a058dbd1f3be"
+      },
+      {
+        "path": "provenance/source-sections/ST05-CASO.md",
+        "sha256": "c4e660d581793757023e51bc11b608f72340a3ae1d179b2de8a9a06bf53f1d39"
+      },
+      {
+        "path": "provenance/source-sections/ST05-ALCANCE.md",
+        "sha256": "104909e0d722106fa3e4ce50cc90402eddc27df81f0a9003143b9db42ba31bcd"
+      }
+    ],
+    "captureAssembly": "Exact source bytes in listed order, joined by two LF bytes.",
+    "notebooklmExplanationSha256": "3434472fe00b8c3c9aa1508cb0f2b0bd24087456f1f43fcc27d288be871137eb",
+    "sourceMapFiles": [
+      {
+        "path": "provenance/card-source-spans.json",
+        "sha256": "6e046809acc4611d94929e64773395b809d4b708de647e4e25b772c39a8c02e1"
+      }
+    ],
+    "assets": [
+      {
+        "path": "ciaac-approved/radar-surveillance/adsb.svg",
+        "sha256": "fb992fa79c5ece5da95da305321bfcc5eacd88de3788bd89721137bcda8ec27e"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/airborne-failure.svg",
+        "sha256": "7d96eb255b75d56892194b4abeb77ad12ba77b0dbbbbf5adb62bb9d8ed43952c"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/case-context.svg",
+        "sha256": "132df03701126fa54baee30e960eb14ec7dd38964eb1ce93bfa159955968b7a6"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/case-obstacles.svg",
+        "sha256": "81f6dfaeb721ce480ef12fb1bed7ae71bfdb68516a894759f14324b46d839a0f"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/case-radio.svg",
+        "sha256": "dee23a7a50991b4eab1c7c327aac5b3ed67b6a7424d24b32f526271425b926a4"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/case-total-failure.svg",
+        "sha256": "c1e0756022ce21fd875ca0382b31a96a6f3b66f5b5ef53a8c7b0ce05178e57db"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/code1200.svg",
+        "sha256": "800b927c747a972f19008f1ff1dc989b596ef7988aa1eadbff2c19d993aa1e4c"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/code2000.svg",
+        "sha256": "91be9cb4cb2b9c1bf0dbf50543f419adf0b024706b564894184a29bd133ecbf5"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/code7500.svg",
+        "sha256": "35b5b18fa014abbebe37d377c450bd04853990f4091e24eedee843499eb6b610"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/code7600.svg",
+        "sha256": "e50c413d41d12dee4065b5793842d6c594614dde711f8c64885296c6a96f73e9"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/code7700.svg",
+        "sha256": "a9086b75db901ac857cf42ccacd6e1e0b5f483907ef292cbb592c8d0995c2862"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/exception-half-vertical.svg",
+        "sha256": "e0c88da1601756e7afc4d93a6a154c1f163b8623e57e5c01adfb382d4d37ba8e"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/final-all-conditions.svg",
+        "sha256": "d199ddaa369658a22401e30b19b1aff06aa6c2ea15d33987f386f9ae5bdec274"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/final-runway.svg",
+        "sha256": "967b591f2453e291074eb0f789eaeabd1c73d86666d7266a0b75653b06f70faa"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/final-surveillance.svg",
+        "sha256": "154d69ff7b308511707525d04d52f0790897f7e2b327419479230853506b13c8"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/final-wake-publication.svg",
+        "sha256": "962fba699be284d044ec478dab891ec9fbdf347cf518119054214c6209164ef6"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/ground-failure.svg",
+        "sha256": "dcfbe607ee14acec0418adfa76a315abc94c68cdd1ad6c80b7f6aadd0850a16a"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/identity-lost.svg",
+        "sha256": "bf56e9e4731a68c797815e444acde39896215ce7a4b2039bc1b0d70bd288f32b"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/minimum-base.svg",
+        "sha256": "ddb7773088c05e81ab4269838605f8cef9c420aebc699b741fda5a33969f0e99"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/minimum-reduction.svg",
+        "sha256": "3b97b8609b92d1e85ed37ac108ade876bc3364a631c7d52f849a8517a42d18d7"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/mlat.svg",
+        "sha256": "2c5e3bf33a52ea7d2079edf4a4566ef29c45fa288e5616dcee32c93332707085"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/planned-transfer.svg",
+        "sha256": "dcf98d65baf078bdc6786130044e3de6abd321a59c9a49b5ae06371d36cbe26a"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/psr.svg",
+        "sha256": "24d4b2bf96221f59d2bcdec986d3b8897ae9e68b4fd675c0d3db32c140f696eb"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/radio-failure.svg",
+        "sha256": "2040329f51571d287d6ad5d800ca092c3012620d1b1a4044d3d1a5395da7c65a"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/ssr.svg",
+        "sha256": "8eace6fcf8cb0166c5c6ee475b14ff8994f34830be9f0eddc5afae2a88a4b80b"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/symbol-edges.svg",
+        "sha256": "5cc56c77caaa0d862450205c798672d49bbfbf106ba4473f3ec933bf15c96a37"
+      },
+      {
+        "path": "ciaac-approved/radar-surveillance/vector-endpoint.svg",
+        "sha256": "bfea49f978ae0f70d61947bf708371f71c1c926076b17ba451e8f9414f08c6b1"
+      }
+    ],
+    "boards": 8,
+    "cards": 42,
+    "nativeBrowserQA": "Pending; no browser denial retries",
+    "historicalSourceQualifications": "Preserved unchanged from finalized package; not certification of operational currentness.",
+    "documentHashEncoding": "UTF-8 JSON.stringify with recursively sorted object keys; array order unchanged"
+  },
+  {
+    "code": "ST06",
+    "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st06-alerta-busqueda-y-salvamento",
+    "packageFilename": "ST06-Alerta-SAR-integration-candidate-20261006.zip",
+    "packageSha256": "e78bef461a071598372f0d5ab54b28092c02247ad1f70a6dcfd78aeabdc3f858",
+    "candidateKey": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st06-alerta-busqueda-y-salvamento",
+    "documentSha256": "004415fa3b9cbd62ddd83a0b9bd2bcd6d8d49af7551e761406bbdf63fb40b2c7",
+    "candidateDocumentFileSha256": "fc6b2ad356ca162d6e3e785ee08b253adfe919eb3b6e179a1af780e5bcdbc95b",
+    "assessmentFileSha256": "dd6dae15ddd9d44f4dcb8b6cc6cc2cba6b62c351fc01d9b82faef246dae255fd",
+    "sourceFiles": [
+      {
+        "path": "provenance/source-sections/ST06-learner.md",
+        "sha256": "5602140e7cf5d6407ecd60ce78063f6b3d373126d77f542666d6ef33c889e3f5"
+      },
+      {
+        "path": "provenance/assessment/ST06.case-qa.md",
+        "sha256": "82f087ce513952893600d7f3d0296360b9a8eb400e46276010189b7e0d65e3ce"
+      }
+    ],
+    "captureAssembly": "Exact source bytes in listed order, joined by two LF bytes.",
+    "notebooklmExplanationSha256": "5ecd7745150c0294942deb0f341c4ed15af86d654bbb96ca3fafdca5492d5be9",
+    "sourceMapFiles": [
+      {
+        "path": "provenance/card-source-spans.json",
+        "sha256": "6b19919a77b92a12ca95cdecd88ad4cb5c263e82f2b6428009c204ea8af1150e"
+      }
+    ],
+    "assets": [
+      {
+        "path": "ciaac-approved/alert-sar/afac-network.svg",
+        "sha256": "f044ecd8892c2a45ed5114aedf6429713db73e921c0dc7d47afa91ef7fec8cd7"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/alerfa.svg",
+        "sha256": "ec6c0cd6f5209935d45e840a0e0780511e9ebc129678d6e7130035b95422513b"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/arrival-notice.svg",
+        "sha256": "ca98bc99ce0bb4ffb2d991b1e6ba12523dd6494abb6d9568bbc78573b668e137"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/case-detresfa.svg",
+        "sha256": "bf6fc21d7c25471e5987e0541834b733e459a0595cb31f7b19da7608a33a8305"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/case-incerfa.svg",
+        "sha256": "8981d35d1aa75320e605292d876a20e8a315a0740301fd00be63d6d6bad4bc09"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/case-timeline.svg",
+        "sha256": "efcf344733298fa2e513cdcb853a96c1788753d3e0985a49006792c98908a964"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/ciaiabs.svg",
+        "sha256": "834a818abbe7382dc1fdb617f5ce981e1dd3af69ea7415c6f5c99555adf52240"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/detresfa.svg",
+        "sha256": "48112fc9fcdfaea4cd76b8c9f2366005a37000c7d0fbc16b476163dc5682adcb"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/end-emergency.svg",
+        "sha256": "fbc6069d4d358b78cc733239d29cd018f0b6852b45c6e63416ee2a6aba3db2e1"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/historical-basis.svg",
+        "sha256": "8a1e4e20cc7d85407a5c2a9c1a718e450171181540eeb7658d2b41da05c50075"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/incerfa.svg",
+        "sha256": "866db533b64444990106b865eac9b47a69f8d119ab4ec92c482624102aa60097"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/legal-closure.svg",
+        "sha256": "3f7f82895d706d726b4f415286cb9222987748201bab22df0b42e717ff7350e7"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/message-order.svg",
+        "sha256": "747744519421cb5324fa9bafa63b06824f5e7de2fd80a8e5759615bd8733f1e3"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/normal-contact.svg",
+        "sha256": "0d6be5a4aec0f4594d76be8271ecaeee138088f51fbb4b9afadc8401afbc3741"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/notify-rcc.svg",
+        "sha256": "006a1fd50e3f08f03c40c75d217aab1020c5ea5fd4d44634ba2f2282d81f816e"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/pending-operational.svg",
+        "sha256": "2960776f3261e564cf563ef754a5e31c3fa24a5f732153bc54f3a1641a9f22f9"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/phase-evidence.svg",
+        "sha256": "eae8d67b8e0ff992901f068401731700dfd87e19332bf6bf654cd4d7ec84529b"
+      },
+      {
+        "path": "ciaac-approved/alert-sar/scope.svg",
+        "sha256": "2a9230091977d11bb54cee2184f8f43065a8efc20ee3a416192dc20bf8ff4799"
+      }
+    ],
+    "boards": 7,
+    "cards": 30,
+    "nativeBrowserQA": "Pending; no browser denial retries",
+    "historicalSourceQualifications": "Preserved unchanged from finalized package; not certification of operational currentness.",
+    "documentHashEncoding": "UTF-8 JSON.stringify with recursively sorted object keys; array order unchanged"
+  }
+]

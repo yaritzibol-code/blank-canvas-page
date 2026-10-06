@@ -78,6 +78,11 @@ const review = (selected) =>
     (i) => i.id.startsWith("ciaac/aeronaves-y-motores/") && i.renderer === "approved-aircraft",
   );
   assert.equal(aircraft.length, 19, "all AM01–AM19 available");
+  const transit = catalog.items.filter((i) =>
+    i.id.startsWith("ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/"),
+  );
+  assert.equal(transit.length, 7, "all ST01–ST07 available to isolated review");
+  assert.ok(transit.every((i) => i.renderer === "approved-aircraft"));
   assert.equal(learningPathReviewPayload("ciaac/not-ready/placeholder"), null);
   const original = structuredClone(saved);
   let quizzes = 0,

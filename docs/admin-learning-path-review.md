@@ -5,7 +5,7 @@ Entry: `/admin/revision-learning-paths`, also linked as **Revisar Learning Paths
 ## Scope and guard
 
 - The browser requests `/api/admin/learning-path-review` with its current authenticated bearer token. The server uses `authenticateRequest` and a strict successful `is_admin` RPC result. Local mirrored roles, paid plans, and query parameters never authorize review.
-- Only available registered CIAAC and Handbook documents in the active taxonomy are listed. The AM baseline catalog contains 174 entries (37 CIAAC Aerodynamics, 19 AM, 118 Handbook); 40 preserved legacy aircraft/engines routes are outside this selector, while their normal URLs remain unchanged. The native CIAAC presentation wrappers are retained, including the approved teaching-board renderer for ready ST lessons. Unsupported ATP, Jeppesen, legislation and Annex 10 renderers are not exposed as working review modes.
+- Only available registered CIAAC and Handbook documents in the active taxonomy are listed. The AM baseline catalog contains 174 entries (37 CIAAC Aerodynamics, 19 AM, 118 Handbook); 40 preserved legacy aircraft/engines routes are outside this selector, while their normal URLs remain unchanged. The native CIAAC presentation wrappers are retained, including the approved teaching-board renderer for all seven ready ST01–ST07 lessons (181 entries total with the unchanged 174-entry AM baseline). Unsupported ATP, Jeppesen, legislation and Annex 10 renderers are not exposed as working review modes.
 - No roles, paid-access logic, student sequence logic, migrations, credentials or database schema are changed.
 
 ## State isolation

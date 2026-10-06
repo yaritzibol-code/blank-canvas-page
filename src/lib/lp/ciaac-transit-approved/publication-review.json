@@ -8,9 +8,41 @@
     "assessmentReviewed": true
   },
   {
+    "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st02-plan-de-vuelo-y-llenado-de-bitacora",
+    "curriculumVersion": "ciaac-transit-approved-2026-10-05",
+    "notebooklmExplanationSha256": "8ae6838a40d6ce002428bc0ca543c2c0207ce41ae9623ddbd07ca22df8a13b23",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st03-organizacion-del-espacio-aereo",
+    "curriculumVersion": "ciaac-transit-approved-2026-10-05",
+    "notebooklmExplanationSha256": "504923ce46983121612fb558ce8c4087cb979927795f15f73902b080003c1907",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
     "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st04-coordinar-con-control-y-operar-sin-torre",
     "curriculumVersion": "ciaac-transit-approved-2026-10-05",
     "notebooklmExplanationSha256": "464f807329f7431efa523ee082bb5629d1836adb51fecb873e9e3a52027e2180",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st05-control-radar-y-sus-limitaciones",
+    "curriculumVersion": "ciaac-transit-approved-2026-10-05",
+    "notebooklmExplanationSha256": "3434472fe00b8c3c9aa1508cb0f2b0bd24087456f1f43fcc27d288be871137eb",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st06-alerta-busqueda-y-salvamento",
+    "curriculumVersion": "ciaac-transit-approved-2026-10-05",
+    "notebooklmExplanationSha256": "5ecd7745150c0294942deb0f341c4ed15af86d654bbb96ca3fafdca5492d5be9",
     "scopeReviewed": true,
     "visualsReviewed": true,
     "assessmentReviewed": true
