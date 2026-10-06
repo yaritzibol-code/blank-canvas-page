@@ -83,7 +83,7 @@ function usableFigure(figure: HandbookFigure): boolean {
 
 /** Fail closed on malformed authored JSON before it can reach the native renderer.
  * Asset existence and source/explanation review are additionally checked before release. */
-function usableDocument(document: HandbookLearningPathDocument, title: string): boolean {
+export function usableDocument(document: HandbookLearningPathDocument, title: string): boolean {
   if (
     !document ||
     document.title !== title ||

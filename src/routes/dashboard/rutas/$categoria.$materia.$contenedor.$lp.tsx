@@ -1,6 +1,8 @@
 import { CiaacAircraftEnginesLearningPath } from "@/components/lp/CiaacAircraftEnginesLearningPath";
 import { CiaacApprovedAircraftLearningPath } from "@/components/lp/CiaacApprovedAircraftLearningPath";
 import { APPROVED_AIRCRAFT_READY_IDS } from "@/lib/lp/ciaac-aircraft-approved/content";
+import { APPROVED_TRANSIT_READY_IDS } from "@/lib/lp/ciaac-transit-approved/content";
+import { APPROVED_TRANSIT_CATALOG } from "@/lib/lp/ciaac-transit-approved/catalog";
 import { CIAAC_REVIEWED_AIRCRAFT_ENGINES_IDS } from "@/lib/lp/ciaac-aircraft-engines-ids";
 import { CiaacAerodynamicsLearningPath } from "@/components/lp/CiaacAerodynamicsLearningPath";
 import { CIAAC_REVIEWED_AERODYNAMICS_IDS } from "@/lib/lp/ciaac-aerodynamics-ids";
@@ -307,8 +309,16 @@ function LearningPathPage() {
             completed={completado}
             onComplete={() => completeLp(user.id, item, subject.titulo)}
           />
-        ) : APPROVED_AIRCRAFT_READY_IDS.includes(item.id) && handbookDocument && user ? (
+        ) : (APPROVED_AIRCRAFT_READY_IDS.includes(item.id) ||
+            APPROVED_TRANSIT_READY_IDS.includes(item.id)) &&
+          handbookDocument &&
+          user ? (
           <CiaacApprovedAircraftLearningPath
+            journeyCurriculumVersion={
+              APPROVED_TRANSIT_READY_IDS.includes(item.id)
+                ? APPROVED_TRANSIT_CATALOG.curriculumVersion
+                : undefined
+            }
             completionAction={completionAction}
             document={handbookDocument}
             userId={user.id}

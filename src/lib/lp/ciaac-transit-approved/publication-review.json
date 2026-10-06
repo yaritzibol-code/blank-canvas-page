@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st01-servicios-de-transito-aereo",
+    "curriculumVersion": "ciaac-transit-approved-2026-10-05",
+    "notebooklmExplanationSha256": "f2d86f34c0f64c0b784ca12dbf91c60415f88d4f7385cb7c91305ec8ed44f18f",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st04-coordinar-con-control-y-operar-sin-torre",
+    "curriculumVersion": "ciaac-transit-approved-2026-10-05",
+    "notebooklmExplanationSha256": "464f807329f7431efa523ee082bb5629d1836adb51fecb873e9e3a52027e2180",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  },
+  {
+    "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st07-aplicar-el-reglaje-altimetrico",
+    "curriculumVersion": "ciaac-transit-approved-2026-10-05",
+    "notebooklmExplanationSha256": "e2c56d551c7f3aafcd5b9fcac40478c5f16dff7c2d8ac0dbe772064d82a6e6af",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true
+  }
+]

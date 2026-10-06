@@ -9,6 +9,8 @@
 import raw from "./taxonomy.json";
 import { approvedAircraftSubject } from "./ciaac-aircraft-approved/catalog";
 import { APPROVED_AIRCRAFT_ACTIVE } from "./ciaac-aircraft-approved/content";
+import { approvedTransitSubject } from "./ciaac-transit-approved/catalog";
+import { APPROVED_TRANSIT_ACTIVE } from "./ciaac-transit-approved/content";
 
 export interface LpItem {
   /** Id único y estable: "categoria/materia/contenedor/tema-n". */
@@ -46,22 +48,35 @@ const originalAircraftSubject = originalCategories
   .find((category) => category.id === "ciaac")
   ?.subjects.find((subject) => subject.id === "ciaac/aeronaves-y-motores");
 
+const originalTransitSubject = originalCategories
+  .find((category) => category.id === "ciaac")
+  ?.subjects.find((subject) => subject.id === "ciaac/servicios-de-transito-aereo");
+
 /** The approved structure is an overlay; the legacy taxonomy and its stable IDs stay intact. */
-export const LP_CATEGORIES: LpCategory[] = APPROVED_AIRCRAFT_ACTIVE
-  ? originalCategories.map((category) =>
-      category.id === "ciaac"
-        ? {
-            ...category,
-            subjects: category.subjects.map((subject) =>
-              subject.id === "ciaac/aeronaves-y-motores" ? approvedAircraftSubject() : subject,
-            ),
-          }
-        : category,
-    )
-  : originalCategories;
+export const LP_CATEGORIES: LpCategory[] =
+  APPROVED_AIRCRAFT_ACTIVE || APPROVED_TRANSIT_ACTIVE
+    ? originalCategories.map((category) =>
+        category.id === "ciaac"
+          ? {
+              ...category,
+              subjects: category.subjects.map((subject) =>
+                subject.id === "ciaac/aeronaves-y-motores" && APPROVED_AIRCRAFT_ACTIVE
+                  ? approvedAircraftSubject()
+                  : subject.id === "ciaac/servicios-de-transito-aereo" && APPROVED_TRANSIT_ACTIVE
+                    ? approvedTransitSubject()
+                    : subject,
+              ),
+            }
+          : category,
+      )
+    : originalCategories;
 
 export function legacyAircraftSubject(): LpSubject | undefined {
   return APPROVED_AIRCRAFT_ACTIVE ? originalAircraftSubject : undefined;
+}
+
+export function legacyTransitSubject(): LpSubject | undefined {
+  return APPROVED_TRANSIT_ACTIVE ? originalTransitSubject : undefined;
 }
 
 export function lpCategory(id: string): LpCategory | undefined {
@@ -89,7 +104,9 @@ export function lpSubjectForContainer(
   containerSlug: string,
 ): LpSubject | undefined {
   const subject = lpSubject(categoriaId, subjectSlug);
-  const legacy = legacyAircraftSubject();
+  const legacy = [legacyAircraftSubject(), legacyTransitSubject()].find(
+    (candidate) => candidate?.id === subject?.id,
+  );
   return legacy &&
     subject?.id === legacy.id &&
     legacy.containers.some((container) => container.id === `${legacy.id}/${containerSlug}`)

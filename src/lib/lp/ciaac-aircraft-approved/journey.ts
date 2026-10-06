@@ -14,8 +14,9 @@ export function migrateApprovedAircraftJourney(
   saved: unknown,
   completed: boolean,
   fresh: HandbookJourneyState,
+  curriculumVersion = APPROVED_AIRCRAFT_CATALOG.curriculumVersion,
 ): HandbookJourneyState {
-  const versionPrefix = `${APPROVED_AIRCRAFT_CATALOG.curriculumVersion}:${lpId}:`;
+  const versionPrefix = `${curriculumVersion}:${lpId}:`;
   const version = `${versionPrefix}${document.contentVersion ?? "v1"}`;
   // AM01 v2 removes only the former standalone piston screen (old index 8).
   // Shift later positions without resetting a learner or changing their game.

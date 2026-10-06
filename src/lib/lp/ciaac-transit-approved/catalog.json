@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "curriculumVersion": "ciaac-transit-approved-2026-10-05",
+  "subjectId": "ciaac/servicios-de-transito-aereo",
+  "subjectTitle": "Servicios de tránsito aéreo",
+  "containerId": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10",
+  "lessons": [
+    {
+      "code": "ST01",
+      "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st01-servicios-de-transito-aereo",
+      "title": "Servicios de tránsito aéreo",
+      "order": 1,
+      "topics": [
+        "Generalidades y servicios de control, información, asesoramiento de vuelo y alerta.",
+        "Asesoramiento: objeto, espacios de aplicación y responsabilidades de ATS y del piloto."
+      ],
+      "suggestedSupport": [],
+      "relationships": [
+        "Relación: ST06 para fases de alerta."
+      ],
+      "groupingNotes": [],
+      "status": "content-candidate-reviewed"
+    },
+    {
+      "code": "ST02",
+      "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st02-plan-de-vuelo-y-llenado-de-bitacora",
+      "title": "Plan de vuelo y llenado de bitácora",
+      "order": 2,
+      "topics": [
+        "Plan de vuelo y llenado de bitácora."
+      ],
+      "suggestedSupport": [],
+      "relationships": [
+        "Relación: MI03 para requisitos documentales; OP01 para uso de registros."
+      ],
+      "groupingNotes": [],
+      "status": "pending-content"
+    },
+    {
+      "code": "ST03",
+      "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st03-organizacion-del-espacio-aereo",
+      "title": "Organización del espacio aéreo",
+      "order": 3,
+      "topics": [
+        "FIR, áreas y zonas de control; clasificación de espacios controlados y no controlados.",
+        "Zonas restringidas, peligrosas y prohibidas.",
+        "MOCA, MEA, MORA y grid MORA."
+      ],
+      "suggestedSupport": [
+        "Apoyo propuesto: Clasificar zonas sobre un perfil y una carta."
+      ],
+      "relationships": [],
+      "groupingNotes": [],
+      "status": "pending-content"
+    },
+    {
+      "code": "ST04",
+      "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st04-coordinar-con-control-y-operar-sin-torre",
+      "title": "Coordinar con control y operar sin torre",
+      "order": 4,
+      "topics": [
+        "Monitoreo de frecuencias y autorizaciones.",
+        "Control terrestre, torre, salidas/aproximación y centro de control con frecuencias en ruta.",
+        "Operaciones en aeródromos no controlados: AFIS y UNICOM."
+      ],
+      "suggestedSupport": [],
+      "relationships": [
+        "Relación: CO03 y CO05 para fraseología y comunicaciones anormales."
+      ],
+      "groupingNotes": [],
+      "status": "content-candidate-reviewed"
+    },
+    {
+      "code": "ST05",
+      "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st05-control-radar-y-sus-limitaciones",
+      "title": "Control radar y sus limitaciones",
+      "order": 5,
+      "topics": [
+        "Control por radar: identificación, separación, guía vectorial, limitaciones, fallas y emergencias."
+      ],
+      "suggestedSupport": [],
+      "relationships": [
+        "Relación: CO08 para tecnología radar."
+      ],
+      "groupingNotes": [],
+      "status": "pending-content"
+    },
+    {
+      "code": "ST06",
+      "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st06-alerta-busqueda-y-salvamento",
+      "title": "Alerta búsqueda y salvamento",
+      "order": 6,
+      "topics": [
+        "Fases de emergencia: INCERFA, ALERFA y DETRESFA.",
+        "Organización de los servicios de búsqueda y salvamento en México."
+      ],
+      "suggestedSupport": [
+        "Apoyo propuesto: Ordenar un caso por fases de alerta."
+      ],
+      "relationships": [
+        "Relación: CO05 para señales y comunicaciones de emergencia."
+      ],
+      "groupingNotes": [],
+      "status": "pending-content"
+    },
+    {
+      "code": "ST07",
+      "id": "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st07-aplicar-el-reglaje-altimetrico",
+      "title": "Aplicar el reglaje altimétrico",
+      "order": 7,
+      "topics": [
+        "Elevación, altitud y altura.",
+        "Uso operacional de QNH, QNE y QFE."
+      ],
+      "suggestedSupport": [
+        "Apoyo propuesto: Elegir el ajuste en escenarios con referencias distintas."
+      ],
+      "relationships": [
+        "Relación: NV09 para funcionamiento, errores y clases de altitud."
+      ],
+      "groupingNotes": [],
+      "status": "content-candidate-reviewed"
+    }
+  ]
+}

@@ -1,0 +1,3171 @@
+{
+  "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st01-servicios-de-transito-aereo": {
+    "number": 1,
+    "title": "Servicios de tránsito aéreo",
+    "name": "Servicios de tránsito aéreo",
+    "intro": "Generalidades y servicios de control, información, asesoramiento de vuelo y alerta. Asesoramiento: objeto, espacios de aplicación y responsabilidades de ATS y del piloto.",
+    "chapter": 1,
+    "chapter_name": "Servicios de tránsito aéreo",
+    "cards": [
+      {
+        "title": "Alcance aprobado",
+        "text": "Generalidades y servicios de control, información, asesoramiento de vuelo y alerta. Asesoramiento: objeto, espacios de aplicación y responsabilidades de ATS y del piloto.",
+        "covers": [],
+        "wide": true
+      }
+    ],
+    "questions": [],
+    "tips": [
+      "MGTAM 2019 y las ediciones OACI/CIAAC citadas son fuentes históricas. Este material académico no certifica vigencia operacional actual.",
+      "D y E conservan diferencias entre prosa y tabla del MGTAM; no se sustituyen por una tabla genérica OACI.",
+      "Los localizadores bibliográficos corregidos están en Fuentes. Las marcas heredadas y el texto exacto se conservan en la procedencia."
+    ],
+    "subtopics": [
+      {
+        "level": 1,
+        "name": "Generalidades y servicios de control, información, asesoramiento de vuelo y alerta.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado ST01"
+      },
+      {
+        "level": 1,
+        "name": "Asesoramiento: objeto, espacios de aplicación y responsabilidades de ATS y del piloto.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado ST01"
+      }
+    ],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-ats-structure",
+        "file": "/ciaac-approved/air-traffic-services/ats-structure.svg",
+        "alt": "El recuadro superior agrupa control, información de vuelo y alerta conforme a la división formal del Anexo 11 §2.3. El asesoramiento queda diferenciado como modalidad dentro del marco genérico ATS, aplicada a IFR participantes en Clase F.",
+        "heading": "Tres servicios en §2.3, marco genérico ATS más amplio",
+        "observe": "SERVICIO DE CONTROL (ATC): Prevenir colisiones y acelerar el tránsito.\n(Área - ACC / Aproximación - APP / Aeródromo - TWR)\n[2. SERVICIO DE INFORMACIÓN (FIS)] ─► Consejos e información útil para la navegación.\nSERVICIO DE ASESORAMIENTO: Sugerencias de separación en Clase F (Transitorio).\nSERVICIO DE ALERTA: Notificar a Búsqueda y Salvamento (SAR) y auxilio.",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 1.7297297297297298
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-02-acc",
+        "file": "/ciaac-approved/air-traffic-services/acc.svg",
+        "alt": "Ámbitos de servicio citados para ACC: control de área a vuelos controlados en CTA/UTA. El esquema relaciona el servicio con los ámbitos de la fuente; no representa trayectorias, límites ni competencia exclusiva.",
+        "heading": "ACC · ámbitos citados",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-02-app",
+        "file": "/ciaac-approved/air-traffic-services/app.svg",
+        "alt": "Ámbitos de servicio citados para APP: llegadas y salidas en TMA o CTR. La ramificación relaciona funciones, no trayectorias de vuelo ni puntos de transferencia o competencia exclusiva.",
+        "heading": "APP · ámbitos citados",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 1.0746268656716418
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-02-twr",
+        "file": "/ciaac-approved/air-traffic-services/twr.svg",
+        "alt": "TWR: área de maniobras y circuito de tránsito. Esquema de alcance, sin trayectorias operacionales prescritas.",
+        "heading": "TWR · aeródromo",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-03-class-a",
+        "file": "/ciaac-approved/air-traffic-services/class-a.svg",
+        "alt": "Histórico. Exclusivo IFR. Línea continua: ATC separa IFR de IFR.",
+        "heading": "Clase A · MGTAM 2019",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-03-class-b",
+        "file": "/ciaac-approved/air-traffic-services/class-b.svg",
+        "alt": "Histórico. Pares de categorías, no aeronaves concretas ni trayectorias. ATC separa IFR/IFR, IFR/VFR y VFR/VFR.",
+        "heading": "Clase B · pares de categorías de vuelo",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 0.96
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-03-class-c",
+        "file": "/ciaac-approved/air-traffic-services/class-c.svg",
+        "alt": "Histórico. Pares de categorías, no aeronaves concretas ni trayectorias. ATC separa IFR/IFR e IFR/VFR. VFR recibe información de tránsito VFR/VFR; esta última relación no representa separación.",
+        "heading": "Clase C · pares de categorías de vuelo",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 0.96
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-04-class-d",
+        "file": "/ciaac-approved/air-traffic-services/class-d.svg",
+        "alt": "MGTAM 2019 Clase D: la prosa describe separación de aeródromo, visual y de pista, en el circuito y dentro de aeródromos controlados. La tabla enumera IFR del IFR y separación de aeródromo IFR/VFR en las inmediaciones; ** marca diferencias explícitas respecto al Apéndice 4 de Anexo 11. Los textos íntegros acompañan el diagrama.",
+        "heading": "Clase D: prosa y tabla históricas diferenciadas",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 0.9230769230769231
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-04-class-e",
+        "file": "/ciaac-approved/air-traffic-services/class-e.svg",
+        "alt": "MGTAM 2019 Clase E. Prosa: separación reglamentaria IFR del IFR; VFR del IFR en la medida de lo posible, siempre y cuando el VFR establezca comunicación con ATC. Tabla: separación IFR del IFR. El asterisco sencillo es una llamada visual a estas condiciones, distinta de las marcas ** originales de Clase D.",
+        "heading": "Clase E: prosa condicional y tabla histórica",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 0.9
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-05-advisory-ats",
+        "file": "/ciaac-approved/air-traffic-services/advisory-ats.svg",
+        "alt": "La dependencia ATS transmite sugerencias y consejos, información de tránsito conocido y prioridades definidas por la fuente; no emite autorizaciones ni órdenes en este servicio.",
+        "heading": "Dependencia ATS · asesoramiento",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-05-advisory-pilot",
+        "file": "/ciaac-approved/air-traffic-services/advisory-pilot.svg",
+        "alt": "El piloto evalúa y decide si acepta la sugerencia o adopta una alternativa; comunica su decisión sin demora. Se conservan aparte el plan de vuelo, sus cambios cuando sea factible y la escucha continua.",
+        "heading": "Piloto al mando · decisión y comunicación",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 1.0746268656716418
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-06-fis-contrast",
+        "file": "/ciaac-approved/air-traffic-services/fis-contrast.svg",
+        "alt": "FIS: todas las clases de espacio, IFR y VFR; datos y avisos sobre clima, NOTAMs y tráfico. No otorga autorizaciones. Las obligaciones del piloto permanecen.",
+        "heading": "FIS · alcance y emisión",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 1.0285714285714285
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-06-advisory-contrast",
+        "file": "/ciaac-approved/air-traffic-services/advisory-contrast.svg",
+        "alt": "Asesoramiento: Clase F, vuelos IFR participantes; aconseja o sugiere maniobras para evitar conflictos IFR. No otorga autorizaciones.",
+        "heading": "Asesoramiento · alcance y emisión",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 1.0285714285714285
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-07-fis-network",
+        "file": "/ciaac-approved/air-traffic-services/fis-network.svg",
+        "alt": "El FIS puede prestarse por OSIV, FIC y dependencias de control. El control tiene prioridad sobre FIS. Los textos distinguen asesoría y seguimiento OSIV, FIC en una FIR, AFIS en aeródromos no controlados y vigilancia ATS para FIS.",
+        "heading": "FIS · dependencias e información",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-07-alert-chain",
+        "file": "/ciaac-approved/air-traffic-services/alert-chain.svg",
+        "alt": "El servicio de alerta notifica a los organismos pertinentes, RCC, respecto a aeronaves que necesitan ayuda SAR y auxilia a dichos organismos. El ámbito obligatorio conserva las tres categorías de la fuente; las fases y sus disparadores corresponden a ST06.",
+        "heading": "Alerta · notificar y auxiliar",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-08-case-message",
+        "file": "/ciaac-approved/air-traffic-services/case-message.svg",
+        "alt": "Naturaleza del mensaje. SUGERENCIA. Clase F. No es autorización. La pregunta abierta y solución completa permanecen al pie.",
+        "heading": "Naturaleza del mensaje",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-08-case-decision",
+        "file": "/ciaac-approved/air-traffic-services/case-decision.svg",
+        "alt": "Responsabilidad del piloto. PILOTO. Evalúa → decide. Acepta o alternativa. La pregunta abierta y solución completa permanecen al pie.",
+        "heading": "Responsabilidad del piloto",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-08-case-communication",
+        "file": "/ciaac-approved/air-traffic-services/case-communication.svg",
+        "alt": "Comunicación de la decisión. DECISIÓN. Piloto → ATS. Sin demora. La pregunta abierta y solución completa permanecen al pie.",
+        "heading": "Comunicación de la decisión",
+        "observe": "",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST01-screen-08-case-context",
+        "file": "/ciaac-approved/air-traffic-services/case-context.svg",
+        "alt": "Caso académico, no instrucción operativa: XA-TYZ recibe una sugerencia de rumbo 040° y ascenso FL160 por tráfico IFR estimado en ocho minutos. El gráfico no prescribe una trayectoria, un margen de separación ni aceptación automática.",
+        "heading": "Caso de asesoramiento: escenario original",
+        "observe": "Un avión bimotor de aviación general realiza un vuelo IFR fuera de espacio aéreo controlado dentro de un espacio aéreo con servicio de asesoramiento (Espacio Aéreo Clase F). Mientras navega en su nivel de crucero asignado, la Unidad de Asesoramiento de Tránsito Aéreo observa en su presentación de situación la presencia de otro tráfico IFR estimado en su misma ruta y altitud. La dependencia ATS transmite el siguiente mensaje al piloto:\n\"XA-TYZ, SUGIERO virar a la derecha rumbo 040° e iniciar ascenso a Nivel de Vuelo 160 por tráfico IFR estimado en sentido opuesto en su misma ruta en 8 minutos.\"",
+        "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+        "assetAspectRatio": 1.8823529411764706
+      }
+    ],
+    "exercise": {
+      "kind": "sequence",
+      "title": "Del consejo a la comunicación",
+      "instruction": "Ordena la evaluación, la decisión y la comunicación descritas en el caso. Es una adaptación del texto original; las tres preguntas abiertas y sus soluciones se conservan completas.",
+      "items": [
+        "evaluar la sugerencia",
+        "decidir si la acepta o no",
+        "comunicar su decisión a la dependencia ATS sin demora"
+      ],
+      "order": [
+        2,
+        0,
+        1
+      ]
+    },
+    "objectives": [
+      "Generalidades y servicios de control, información, asesoramiento de vuelo y alerta.",
+      "Asesoramiento: objeto, espacios de aplicación y responsabilidades de ATS y del piloto."
+    ],
+    "completionChecks": [
+      "¿Constituye el mensaje emitido por la unidad ATS una \"autorización\" obligatoria del servicio de control de tránsito aéreo?",
+      "¿Cuál es el deber y la responsabilidad legal del piloto al mando ante esta sugerencia en espacio aéreo Clase F?",
+      "¿Qué acción de comunicación está obligado a ejecutar el piloto tras tomar su decisión?"
+    ],
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Despegue"
+      },
+      {
+        "id": "ST01-screen-01",
+        "kind": "content",
+        "nav": "ATS: estructura y alcance",
+        "title": "ATS: estructura y alcance",
+        "cards": [
+          {
+            "title": "Definición de Servicios de Tránsito Aéreo",
+            "text": "Definición de Servicios de Tránsito Aéreo (ATS): Expresión genérica que se aplica, según el caso, al servicio de información de vuelo, servicio de alerta, servicio de asesoramiento de tránsito aéreo y servicio de control de tránsito aéreo (control de área, control de aproximación o control de aeródromo).",
+            "covers": []
+          },
+          {
+            "title": "División formal del Anexo 11",
+            "text": "Enumeración Literal del Anexo 11:\nEl Anexo 11 de la OACI en su numeral 2.3 divide formalmente los servicios de tránsito aéreo en tres servicios principales:\nEl servicio de control de tránsito aéreo (§2.3.1).\nEl servicio de información de vuelo (§2.3.2).\nEl servicio de alerta (§2.3.3).",
+            "covers": []
+          },
+          {
+            "title": "Integración del Servicio de Asesoramiento",
+            "text": "Integración del Servicio de Asesoramiento: Aunque el numeral §2.3 del Anexo 11 no lo lista como una cuarta categoría principal dentro de su esquema primario, el Servicio de Asesoramiento de Tránsito Aéreo se define formalmente en el Capítulo 1 del Anexo 11  y en el manual del CIAAC  como una modalidad especializada dentro del marco de los servicios ATS, diseñada para proporcionar sugerencias de separación a vuelos IFR dentro de espacios aéreos con asesoramiento (Clase F).",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-ats-structure",
+            "file": "/ciaac-approved/air-traffic-services/ats-structure.svg",
+            "alt": "El recuadro superior agrupa control, información de vuelo y alerta conforme a la división formal del Anexo 11 §2.3. El asesoramiento queda diferenciado como modalidad dentro del marco genérico ATS, aplicada a IFR participantes en Clase F.",
+            "heading": "Tres servicios en §2.3, marco genérico ATS más amplio",
+            "observe": "SERVICIO DE CONTROL (ATC): Prevenir colisiones y acelerar el tránsito.\n(Área - ACC / Aproximación - APP / Aeródromo - TWR)\n[2. SERVICIO DE INFORMACIÓN (FIS)] ─► Consejos e información útil para la navegación.\nSERVICIO DE ASESORAMIENTO: Sugerencias de separación en Clase F (Transitorio).\nSERVICIO DE ALERTA: Notificar a Búsqueda y Salvamento (SAR) y auxilio.",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 1.7297297297297298
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "ST01-ats-structure",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 10,
+              "labelX": 94,
+              "labelY": 10
+            },
+            {
+              "cardIndex": 1,
+              "x": 50,
+              "y": 42,
+              "labelX": 94,
+              "labelY": 42
+            },
+            {
+              "cardIndex": 2,
+              "x": 50,
+              "y": 78,
+              "labelX": 94,
+              "labelY": 78
+            }
+          ]
+        }
+      },
+      {
+        "id": "ST01-screen-02",
+        "kind": "content",
+        "nav": "ATC: área, aproximación y aeródromo",
+        "title": "ATC: área, aproximación y aeródromo",
+        "cards": [
+          {
+            "title": "ACC: Centro de Control de Área",
+            "text": "Centro de Control de Área (ACC): Suministra servicio de control a vuelos controlados en las áreas de control (CTA/UTA).",
+            "covers": []
+          },
+          {
+            "title": "APP: Oficina de Control de Aproximación",
+            "text": "Oficina de Control de Aproximación (APP): Suministra servicio de control a llegadas y salidas en áreas de control terminal (TMA) o zonas de control (CTR).",
+            "covers": []
+          },
+          {
+            "title": "TWR: Torre de Control de Aeródromo",
+            "text": "Torre de Control de Aeródromo (TWR): Suministra servicio de control para el tránsito de aeródromo en el área de maniobras y circuito de tránsito.",
+            "covers": []
+          },
+          {
+            "title": "Suministro del servicio ATC",
+            "text": "Suministro del Servicio por Clases de Espacio Aéreo:\nNorma Internacional OACI: Se suministra ATC a todos los vuelos IFR en Clases A, B, C, D y E; a todos los vuelos VFR en Clases B, C y D; y a todos los vuelos VFR especiales.\nConforme al Anexo 11 §3.1, abarca a todo el tránsito de aeródromo en aeródromos controlados.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-02-acc",
+            "file": "/ciaac-approved/air-traffic-services/acc.svg",
+            "alt": "Ámbitos de servicio citados para ACC: control de área a vuelos controlados en CTA/UTA. El esquema relaciona el servicio con los ámbitos de la fuente; no representa trayectorias, límites ni competencia exclusiva.",
+            "heading": "ACC · ámbitos citados",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-02-app",
+            "file": "/ciaac-approved/air-traffic-services/app.svg",
+            "alt": "Ámbitos de servicio citados para APP: llegadas y salidas en TMA o CTR. La ramificación relaciona funciones, no trayectorias de vuelo ni puntos de transferencia o competencia exclusiva.",
+            "heading": "APP · ámbitos citados",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 1.0746268656716418
+          },
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-02-twr",
+            "file": "/ciaac-approved/air-traffic-services/twr.svg",
+            "alt": "TWR: área de maniobras y circuito de tránsito. Esquema de alcance, sin trayectorias operacionales prescritas.",
+            "heading": "TWR · aeródromo",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 1.125
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "ACC",
+              "figureNumber": "ST01-screen-02-acc",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "APP",
+              "figureNumber": "ST01-screen-02-app",
+              "cardIndexes": [
+                1
+              ]
+            },
+            {
+              "title": "TWR",
+              "figureNumber": "ST01-screen-02-twr",
+              "cardIndexes": [
+                2
+              ]
+            }
+          ],
+          "noteCardIndexes": [
+            3
+          ]
+        }
+      },
+      {
+        "id": "ST01-screen-03",
+        "kind": "content",
+        "nav": "Clases A, B y C · MGTAM 2019",
+        "title": "Clases A, B y C · MGTAM 2019",
+        "cards": [
+          {
+            "title": "Clase A",
+            "text": "Clase A: Exclusivo IFR. ATC separa IFR de IFR.",
+            "covers": []
+          },
+          {
+            "title": "Clase B",
+            "text": "Clase B: Permite IFR y VFR. ATC separa IFR/IFR, IFR/VFR y VFR/VFR.",
+            "covers": []
+          },
+          {
+            "title": "Clase C",
+            "text": "Clase C: Permite IFR y VFR. ATC separa IFR/IFR e IFR/VFR. VFR recibe información de tránsito VFR/VFR.",
+            "covers": []
+          },
+          {
+            "title": "Estructura histórica nacional",
+            "text": "Estructura Histórica Nacional (MGTAM SENEAM 2019, Tabla 4-2.3, PDF págs. 94–96):",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-03-class-a",
+            "file": "/ciaac-approved/air-traffic-services/class-a.svg",
+            "alt": "Histórico. Exclusivo IFR. Línea continua: ATC separa IFR de IFR.",
+            "heading": "Clase A · MGTAM 2019",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-03-class-b",
+            "file": "/ciaac-approved/air-traffic-services/class-b.svg",
+            "alt": "Histórico. Pares de categorías, no aeronaves concretas ni trayectorias. ATC separa IFR/IFR, IFR/VFR y VFR/VFR.",
+            "heading": "Clase B · pares de categorías de vuelo",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 0.96
+          },
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-03-class-c",
+            "file": "/ciaac-approved/air-traffic-services/class-c.svg",
+            "alt": "Histórico. Pares de categorías, no aeronaves concretas ni trayectorias. ATC separa IFR/IFR e IFR/VFR. VFR recibe información de tránsito VFR/VFR; esta última relación no representa separación.",
+            "heading": "Clase C · pares de categorías de vuelo",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 0.96
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Clase A",
+              "figureNumber": "ST01-screen-03-class-a",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "Clase B",
+              "figureNumber": "ST01-screen-03-class-b",
+              "cardIndexes": [
+                1
+              ]
+            },
+            {
+              "title": "Clase C",
+              "figureNumber": "ST01-screen-03-class-c",
+              "cardIndexes": [
+                2
+              ]
+            }
+          ],
+          "noteCardIndexes": [
+            3
+          ]
+        }
+      },
+      {
+        "id": "ST01-screen-04",
+        "kind": "content",
+        "nav": "Clases D y E · prosa y tabla históricas",
+        "title": "Clases D y E · prosa y tabla históricas",
+        "cards": [
+          {
+            "title": "Clase D · prosa",
+            "text": "Prosa MGTAM 2019:\nSe proporciona separación de aeródromo (visual y de pista) al vuelo IFR del IFR, al IFR del VFR y VFR del VFR en el circuito y dentro de los aeródromos controlados.",
+            "covers": []
+          },
+          {
+            "title": "Clase D · tabla y marcas **",
+            "text": "Tabla MGTAM 2019 (Tabla 4-2.3, PDF 95, folio 4-30):\n1) IFR del IFR**\n2) Separación de aeródromo al IFR/VFR en las inmediaciones de los aeródromos controlados**\n(las marcas ** denotan diferencias explícitas respecto al Apéndice 4 del Anexo 11 OACI).",
+            "covers": []
+          },
+          {
+            "title": "Clase E · prosa condicional",
+            "text": "Prosa MGTAM 2019:\nSe permiten vuelos IFR y VFR. Los vuelos IFR están sujetos al ATC. Se suministra separación reglamentaria al vuelo IFR del IFR; y al VFR del IFR en la medida de lo posible, siempre y cuando el VFR establezca comunicación con el ATC.",
+            "covers": []
+          },
+          {
+            "title": "Clase E · tabla",
+            "text": "Tabla MGTAM 2019 (Tabla 4-2.3, PDF 96, folio 4-31):\nSeparación del vuelo IFR del IFR.",
+            "covers": []
+          },
+          {
+            "title": "Límites del servicio ATC",
+            "text": "Aclaración sobre la Naturaleza del ATC: El servicio de control no constituye una \"garantía absoluta\" de separación anticolisión en todas las circunstancias, sino una prestación regulada sujeta a las limitaciones visuales, de equipo y de la clase de espacio aéreo aplicable.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-04-class-d",
+            "file": "/ciaac-approved/air-traffic-services/class-d.svg",
+            "alt": "MGTAM 2019 Clase D: la prosa describe separación de aeródromo, visual y de pista, en el circuito y dentro de aeródromos controlados. La tabla enumera IFR del IFR y separación de aeródromo IFR/VFR en las inmediaciones; ** marca diferencias explícitas respecto al Apéndice 4 de Anexo 11. Los textos íntegros acompañan el diagrama.",
+            "heading": "Clase D: prosa y tabla históricas diferenciadas",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 0.9230769230769231
+          },
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-04-class-e",
+            "file": "/ciaac-approved/air-traffic-services/class-e.svg",
+            "alt": "MGTAM 2019 Clase E. Prosa: separación reglamentaria IFR del IFR; VFR del IFR en la medida de lo posible, siempre y cuando el VFR establezca comunicación con ATC. Tabla: separación IFR del IFR. El asterisco sencillo es una llamada visual a estas condiciones, distinta de las marcas ** originales de Clase D.",
+            "heading": "Clase E: prosa condicional y tabla histórica",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 0.9
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Clase D",
+              "figureNumber": "ST01-screen-04-class-d",
+              "cardIndexes": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Clase E",
+              "figureNumber": "ST01-screen-04-class-e",
+              "cardIndexes": [
+                2,
+                3
+              ]
+            }
+          ],
+          "noteCardIndexes": [
+            4
+          ]
+        }
+      },
+      {
+        "id": "ST01-screen-05",
+        "kind": "content",
+        "nav": "Asesoramiento: ATS y piloto al mando",
+        "title": "Asesoramiento: ATS y piloto al mando",
+        "cards": [
+          {
+            "title": "Sugerencias, consejos y tránsito",
+            "text": "Deberes y Modo de Actuación de la Dependencia ATS:\nLa dependencia ATS no emite \"autorizaciones\" ni \"ordenes\", sino únicamente sugerencias y consejos, utilizando la fraseología \"sugiero\" o \"aconseja\".\nAconseja a las aeronaves salir a horas especificadas y volar a niveles determinados si no se prevé conflicto con tránsito conocido.\nTransmite información sobre tránsito en conflicto conocido equivalente a la del servicio de control.\nAl sugerir medidas de evasión, la dependencia dará prioridad a la aeronave que ya se encuentra operando dentro del espacio aéreo respecto de aquélla que pretende ingresar.\nEficiencia en la Comunicación (Nota §9.1.4.3): Toda interacción entre el piloto y el servicio asesor debe realizarse mediante un intercambio de mensajes eficiente, manteniendo una estricta uniformidad en la fraseología aeronáutica.",
+            "covers": []
+          },
+          {
+            "title": "Plan de vuelo, decisión y escucha",
+            "text": "Deberes y Responsabilidades del Piloto al Mando:\nEl piloto de un vuelo IFR que utilice el servicio debe presentar plan de vuelo y notificar sus cambios, pero el vuelo no está sujeto a aprobación previa.\nCambios en el FPL: El piloto debe notificar su intención de modificar el plan de vuelo antes de efectuar el cambio y esperar el acuse de recibo o indicación de la dependencia ATS cuando sea factible.\nEvaluación y Decisión: Incumbe al piloto al mando la responsabilidad de evaluar la sugerencia y decidir si la acepta o no.\nNotificación Obligatoria sin Demora: El piloto debe comunicar su decisión a la dependencia ATS sin demora, informando si seguirá la sugerencia o qué acción alternativa adoptará.\nMantener escucha continua en la frecuencia aeroterrestre designada.",
+            "covers": []
+          },
+          {
+            "title": "Objeto y espacio de aplicación",
+            "text": "Objeto y Espacio Aéreo de Aplicación: El Servicio de Asesoramiento de Tránsito Aéreo tiene por objeto hacer que la información sobre peligros de colisión sea más eficaz de lo que sería mediante el simple suministro del servicio de información de vuelo. Se proporciona únicamente a vuelos IFR participantes que operen dentro de espacio aéreo con asesoramiento (Clase F).",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-05-advisory-ats",
+            "file": "/ciaac-approved/air-traffic-services/advisory-ats.svg",
+            "alt": "La dependencia ATS transmite sugerencias y consejos, información de tránsito conocido y prioridades definidas por la fuente; no emite autorizaciones ni órdenes en este servicio.",
+            "heading": "Dependencia ATS · asesoramiento",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-05-advisory-pilot",
+            "file": "/ciaac-approved/air-traffic-services/advisory-pilot.svg",
+            "alt": "El piloto evalúa y decide si acepta la sugerencia o adopta una alternativa; comunica su decisión sin demora. Se conservan aparte el plan de vuelo, sus cambios cuando sea factible y la escucha continua.",
+            "heading": "Piloto al mando · decisión y comunicación",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 1.0746268656716418
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Dependencia ATS",
+              "figureNumber": "ST01-screen-05-advisory-ats",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "Piloto al mando",
+              "figureNumber": "ST01-screen-05-advisory-pilot",
+              "cardIndexes": [
+                1
+              ]
+            }
+          ],
+          "noteCardIndexes": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "ST01-screen-06",
+        "kind": "content",
+        "nav": "FIS y asesoramiento: alcance y emisión",
+        "title": "FIS y asesoramiento: alcance y emisión",
+        "cards": [
+          {
+            "title": "Servicio de Información (FIS)",
+            "text": "Espacio Aéreo Aplicable: Todas las Clases de Espacio\nTipo de Vuelo Atendido: IFR y VFR\nCarácter de la Emisión: Proporciona datos e avisos (clima, NOTAMs, tráfico)\nEmisión de Autorización: NO otorga autorizaciones",
+            "covers": []
+          },
+          {
+            "title": "Servicio de Asesoramiento",
+            "text": "Espacio Aéreo Aplicable: Clase F (Espacio con asesoramiento)\nTipo de Vuelo Atendido: Vuelos IFR participantes\nCarácter de la Emisión: Aconseja/Sugiere maniobras para evitar conflictos IFR\nEmisión de Autorización: NO otorga autorizaciones (\"sugiero\")",
+            "covers": []
+          },
+          {
+            "title": "Responsabilidades que permanecen",
+            "text": "El suministro del Servicio de Información de Vuelo (FIS) no altera las reglas de vuelo aplicables ni exime al piloto al mando de sus responsabilidades inherentes relativas a la vigilancia visual continua, separación respecto de otras aeronaves y prevención de colisiones",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-06-fis-contrast",
+            "file": "/ciaac-approved/air-traffic-services/fis-contrast.svg",
+            "alt": "FIS: todas las clases de espacio, IFR y VFR; datos y avisos sobre clima, NOTAMs y tráfico. No otorga autorizaciones. Las obligaciones del piloto permanecen.",
+            "heading": "FIS · alcance y emisión",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 1.0285714285714285
+          },
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-06-advisory-contrast",
+            "file": "/ciaac-approved/air-traffic-services/advisory-contrast.svg",
+            "alt": "Asesoramiento: Clase F, vuelos IFR participantes; aconseja o sugiere maniobras para evitar conflictos IFR. No otorga autorizaciones.",
+            "heading": "Asesoramiento · alcance y emisión",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 1.0285714285714285
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Servicio de Información (FIS)",
+              "figureNumber": "ST01-screen-06-fis-contrast",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "Servicio de Asesoramiento",
+              "figureNumber": "ST01-screen-06-advisory-contrast",
+              "cardIndexes": [
+                1
+              ]
+            }
+          ],
+          "noteCardIndexes": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "ST01-screen-07",
+        "kind": "content",
+        "nav": "Información de vuelo y alerta",
+        "title": "Información de vuelo y alerta",
+        "cards": [
+          {
+            "title": "FIS: objeto y alcance",
+            "text": "Objeto y Alcance: Suministrado con el fin de facilitar información útil para la realización segura y eficaz de los vuelos. Se proporciona a todas las aeronaves a las que se suministre servicio ATS, o que de otro modo tengan conocimiento las dependencias ATS. No está restringido únicamente a las clases E, F o G, sino que se presta en todo espacio aéreo donde opere el ATS.",
+            "covers": []
+          },
+          {
+            "title": "Dependencias encargadas y AFIS",
+            "text": "Dependencias Encargadas: Prestado por un Centro de Información de Vuelo (FIC), una Oficina del Servicio de Información de Vuelo (OSIV) o por las dependencias de control (ACC, APP, TWR), teniendo prioridad el control sobre el FIS. El servicio AFIS se proporciona en aeródromos no controlados.",
+            "covers": []
+          },
+          {
+            "title": "OSIV",
+            "text": "Oficina del Servicio de Información de Vuelo (OSIV): Dependencia de SENEAM encargada de brindar asesoría operacional y meteorológica previa al vuelo (incluyendo la formulación y recepción del plan de vuelo) y de ejercer la vigilancia o seguimiento del vuelo desde su inicio hasta su conclusión.",
+            "covers": []
+          },
+          {
+            "title": "FIC",
+            "text": "Centro de Información de Vuelo (FIC): Dependencia establecida para prestar el servicio de información de vuelo y el servicio de alerta dentro de una Región de Información de Vuelo (FIR).",
+            "covers": []
+          },
+          {
+            "title": "Dependencias de control",
+            "text": "Dependencias de Control (ATC): Torres de Control de Aeródromo (TWR), Control de Aproximación (APP) y Centro de Control de Área (ACC).",
+            "covers": []
+          },
+          {
+            "title": "Vigilancia ATS para FIS",
+            "text": "Vigilancia ATS para FIS: La información de un sistema de vigilancia ATS puede utilizarse para proporcionar a aeronaves identificadas información sobre tránsito en conflicto y asistencia de navegación.",
+            "covers": []
+          },
+          {
+            "title": "Alerta: objeto y alcance",
+            "text": "Objeto y Alcance: Suministrado para notificar a los organismos pertinentes (Centros Coordinadores de Salvamento - RCC) respecto a aeronaves que necesitan ayuda de búsqueda y salvamento (SAR), y auxiliar a dichos organismos.",
+            "covers": []
+          },
+          {
+            "title": "Ámbito obligatorio del servicio de alerta",
+            "text": "Ámbito de Aplicación Obligatorio:\nSe prestará el Servicio de Alerta:\nA todas las aeronaves a las que se suministre servicio de control de tránsito aéreo (ATC).\nEn la medida de lo posible, a todas las demás aeronaves que hayan presentado un plan de vuelo o de las que se tenga conocimiento por otros medios.\nA todas las aeronaves de las que se sepa o sospeche que están siendo objeto de interferencia ilícita.",
+            "covers": []
+          },
+          {
+            "title": "Relación con ST06",
+            "text": "Aclaración de Alcance: El detalle operativo de las tres Fases de Emergencia (INCERFA, ALERFA, DETRESFA) y sus disparadores temporales específicos corresponde al alcance del Learning Path ST06.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-07-fis-network",
+            "file": "/ciaac-approved/air-traffic-services/fis-network.svg",
+            "alt": "El FIS puede prestarse por OSIV, FIC y dependencias de control. El control tiene prioridad sobre FIS. Los textos distinguen asesoría y seguimiento OSIV, FIC en una FIR, AFIS en aeródromos no controlados y vigilancia ATS para FIS.",
+            "heading": "FIS · dependencias e información",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-07-alert-chain",
+            "file": "/ciaac-approved/air-traffic-services/alert-chain.svg",
+            "alt": "El servicio de alerta notifica a los organismos pertinentes, RCC, respecto a aeronaves que necesitan ayuda SAR y auxilia a dichos organismos. El ámbito obligatorio conserva las tres categorías de la fuente; las fases y sus disparadores corresponden a ST06.",
+            "heading": "Alerta · notificar y auxiliar",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 1.125
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Información de vuelo",
+              "figureNumber": "ST01-screen-07-fis-network",
+              "cardIndexes": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            },
+            {
+              "title": "Servicio de alerta",
+              "figureNumber": "ST01-screen-07-alert-chain",
+              "cardIndexes": [
+                6,
+                7,
+                8
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "ST01-screen-08",
+        "kind": "content",
+        "nav": "Caso Clase F: decidir y comunicar",
+        "title": "Caso Clase F: decidir y comunicar",
+        "cards": [
+          {
+            "title": "1. Naturaleza del mensaje",
+            "text": "¿Constituye el mensaje emitido por la unidad ATS una \"autorización\" obligatoria del servicio de control de tránsito aéreo?",
+            "covers": [],
+            "detailText": "Naturaleza del Mensaje ATS: NO constituye una autorización del ATC. Conforme al Capítulo 9 del Doc 4444 PANS-ATM, al Capítulo 9 del MGTAM SENEAM  y al manual SERVICIOS DE TRÁNSITO AÉREO del CIAAC (Cap. 4, Folio impreso 54, PDF pág. 56), las dependencias que prestan el servicio de asesoramiento en Clase F no emiten \"autorizaciones\" ni \"ordenes\", sino únicamente \"sugerencias y consejos\", empleando expresamente términos como \"sugiero\" o \"aconseja\"."
+          },
+          {
+            "title": "2. Deber y responsabilidad del piloto",
+            "text": "¿Cuál es el deber y la responsabilidad legal del piloto al mando ante esta sugerencia en espacio aéreo Clase F?",
+            "covers": [],
+            "detailText": "Deber y Responsabilidad del Piloto al Mando:\nConforme al Capítulo 9 del Doc 4444 y al manual SERVICIOS DE TRÁNSITO AÉREO del CIAAC, incumbe exclusivamente al piloto al mando la responsabilidad de evaluar la sugerencia recibida y decidir si la acepta o si adopta una medida alternativa."
+          },
+          {
+            "title": "3. Comunicación de la decisión",
+            "text": "¿Qué acción de comunicación está obligado a ejecutar el piloto tras tomar su decisión?",
+            "covers": [],
+            "detailText": "Acción de Comunicación Obligatoria:\nEl piloto está obligado por la reglamentación aeronáutica a comunicar su decisión a la dependencia ATS sin demora (informando si seguirá la sugerencia o qué rumbo/altitud alternativo mantendrá), manteniendo en todo momento la escucha continua en la frecuencia de radio asignada."
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-08-case-message",
+            "file": "/ciaac-approved/air-traffic-services/case-message.svg",
+            "alt": "Naturaleza del mensaje. SUGERENCIA. Clase F. No es autorización. La pregunta abierta y solución completa permanecen al pie.",
+            "heading": "Naturaleza del mensaje",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-08-case-decision",
+            "file": "/ciaac-approved/air-traffic-services/case-decision.svg",
+            "alt": "Responsabilidad del piloto. PILOTO. Evalúa → decide. Acepta o alternativa. La pregunta abierta y solución completa permanecen al pie.",
+            "heading": "Responsabilidad del piloto",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-08-case-communication",
+            "file": "/ciaac-approved/air-traffic-services/case-communication.svg",
+            "alt": "Comunicación de la decisión. DECISIÓN. Piloto → ATS. Sin demora. La pregunta abierta y solución completa permanecen al pie.",
+            "heading": "Comunicación de la decisión",
+            "observe": "",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST01-screen-08-case-context",
+            "file": "/ciaac-approved/air-traffic-services/case-context.svg",
+            "alt": "Caso académico, no instrucción operativa: XA-TYZ recibe una sugerencia de rumbo 040° y ascenso FL160 por tráfico IFR estimado en ocho minutos. El gráfico no prescribe una trayectoria, un margen de separación ni aceptación automática.",
+            "heading": "Caso de asesoramiento: escenario original",
+            "observe": "Un avión bimotor de aviación general realiza un vuelo IFR fuera de espacio aéreo controlado dentro de un espacio aéreo con servicio de asesoramiento (Espacio Aéreo Clase F). Mientras navega en su nivel de crucero asignado, la Unidad de Asesoramiento de Tránsito Aéreo observa en su presentación de situación la presencia de otro tráfico IFR estimado en su misma ruta y altitud. La dependencia ATS transmite el siguiente mensaje al piloto:\n\"XA-TYZ, SUGIERO virar a la derecha rumbo 040° e iniciar ascenso a Nivel de Vuelo 160 por tráfico IFR estimado en sentido opuesto en su misma ruta en 8 minutos.\"",
+            "caption": "Esquema conceptual original. No representa una escala ni un procedimiento operativo.",
+            "assetAspectRatio": 1.8823529411764706
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Naturaleza del mensaje",
+              "figureNumber": "ST01-screen-08-case-message",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "Responsabilidad del piloto",
+              "figureNumber": "ST01-screen-08-case-decision",
+              "cardIndexes": [
+                1
+              ]
+            },
+            {
+              "title": "Comunicación de la decisión",
+              "figureNumber": "ST01-screen-08-case-communication",
+              "cardIndexes": [
+                2
+              ]
+            }
+          ],
+          "contextFigureNumber": "ST01-screen-08-case-context"
+        }
+      },
+      {
+        "kind": "exercise",
+        "nav": "Del consejo a la comunicación"
+      },
+      {
+        "kind": "finish",
+        "nav": "Aterrizaje"
+      }
+    ],
+    "sources": [
+      {
+        "id": "st01-anexo11",
+        "title": "OACI · Anexo 11 · 14.ª edición, julio de 2016",
+        "role": "Fuente histórica. Localizadores corregidos para la copia auditada; no certifica vigencia operacional actual.",
+        "verified_locators": [
+          "Definición ATS: PDF31, folio1-11; asesoramiento: PDF30, folio1-10",
+          "División §2.3: PDF34–35, folios2-2/2-3; clases §2.6: PDF36, folio2-4",
+          "ATC §3.1–.2: PDF53, folio3-1; FIS §4.1: PDF65, folio4-1",
+          "Alerta §5.1: PDF77, folio5-1; FIC: definición PDF24 y §2.10 PDF38"
+        ]
+      },
+      {
+        "id": "st01-mgtam",
+        "title": "SENEAM · MGTAM · 3.ª edición, 1 de enero de 2019",
+        "role": "Estructura histórica nacional. Prosa y tabla D/E conservadas por separado.",
+        "verified_locators": [
+          "Unidades ATC: §4.1.1–.3, PDF66, folio4-1; §4.2: FIS/alerta",
+          "Clases: prosa PDF93–94; tabla A–D PDF95, folio4-30; E–G PDF96, folio4-31",
+          "Asesoramiento: §9.1.4.1.3 PDF256, folio9-4; §9.1.4.3.1 PDF257, folio9-5",
+          "FIS §9.1: PDF253, folio9-1; vigilancia §8.11: PDF252, folio8-33",
+          "AFIS: PDF55, folio1-31; OSIV: PDF39/48/55"
+        ]
+      },
+      {
+        "id": "st01-ciaac",
+        "title": "CIAAC · Servicios de Tránsito Aéreo · material histórico",
+        "role": "Sin fecha impresa verificada. La foliación aplica exclusivamente al ejemplar auditado.",
+        "verified_locators": [
+          "Definición ATS: PDF4, folio impreso1",
+          "Suministro FIS: PDF53, folio51",
+          "Asesoramiento: PDF55–57, folios53–55",
+          "Alerta: PDF59–60, folios57–58"
+        ]
+      },
+      {
+        "id": "st01-doc4444",
+        "title": "OACI · Doc 4444 PANS-ATM · 15.ª edición, 2007",
+        "role": "Fuente histórica auditada fuera del cuaderno; la marca heredada PDF PENDIENTE permanece en el original.",
+        "verified_locators": [
+          "Asesoramiento §9.1.4: PDF195–197",
+          "Vigilancia para FIS §8.11: PDF192"
+        ]
+      }
+    ],
+    "minutes": 22,
+    "sourceLabel": "CIAAC · Servicios de tránsito aéreo",
+    "chapterLabel": "Itinerario",
+    "contentVersion": "st01-grouped-candidate-20261006-v1"
+  },
+  "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st04-coordinar-con-control-y-operar-sin-torre": {
+    "number": 4,
+    "title": "Coordinar con control y operar sin torre",
+    "name": "Coordinar con control y operar sin torre",
+    "intro": "Monitoreo de frecuencias y autorizaciones. Control terrestre, torre, salidas/aproximación y centro de control con frecuencias en ruta. Operaciones en aeródromos no controlados: AFIS y UNICOM.",
+    "chapter": 1,
+    "chapter_name": "Servicios de tránsito aéreo",
+    "cards": [
+      {
+        "title": "Alcance aprobado",
+        "text": "Monitoreo de frecuencias y autorizaciones. Control terrestre, torre, salidas/aproximación y centro de control con frecuencias en ruta. Operaciones en aeródromos no controlados: AFIS y UNICOM.",
+        "covers": [],
+        "wide": true
+      }
+    ],
+    "questions": [],
+    "tips": [
+      "Secuencias, puestos y jurisdicciones dependen de la organización y acuerdos locales.",
+      "Frecuencias y procedimientos reales deben verificarse en la PIA/AIP efectiva.",
+      "AFIS y UNICOM se comparan como servicios distintos; el régimen mexicano vigente de UNICOM no se certifica aquí.",
+      "Relación: CO03 y CO05 para fraseología y comunicaciones anormales."
+    ],
+    "subtopics": [
+      {
+        "level": 1,
+        "name": "Monitoreo de frecuencias y autorizaciones.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado ST04"
+      },
+      {
+        "level": 1,
+        "name": "Control terrestre, torre, salidas/aproximación y centro de control con frecuencias en ruta.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado ST04"
+      },
+      {
+        "level": 1,
+        "name": "Operaciones en aeródromos no controlados: AFIS y UNICOM.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado ST04"
+      }
+    ],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-delivery",
+        "file": "/ciaac-approved/atc-coordination/delivery.svg",
+        "alt": "Delivery tramita la autorización IFR inicial antes del rodaje; los puestos dependen de la organización local.",
+        "heading": "Entrega de autorizaciones",
+        "observe": "Las funciones de Control de Terreno / Superficie (GND) y Entregas de Autorización (Delivery) se prestan conforme a los puestos de control efectivamente establecidos en la organización local del aeródromo.",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.0909090909090908
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-ground-apron",
+        "file": "/ciaac-approved/atc-coordination/ground-apron.svg",
+        "alt": "Ground y gestión de plataforma se distinguen. Se muestran dos funciones sin inventar un límite aeroportuario; la organización real es local.",
+        "heading": "Rodaje y plataforma",
+        "observe": "",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.0909090909090908
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-tower",
+        "file": "/ciaac-approved/atc-coordination/tower.svg",
+        "alt": "La Torre controla el tránsito de aeródromo y autoriza despegue y aterrizaje; dibujo conceptual de pista y circuito, sin rumbo ni escala.",
+        "heading": "Torre de control de aeródromo",
+        "observe": "",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.0909090909090908
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-approach",
+        "file": "/ciaac-approved/atc-coordination/approach.svg",
+        "alt": "Servicio a vuelos controlados que llegan o salen de una zona terminal. No representa propiedad exclusiva de APP sobre todo el espacio controlado.",
+        "heading": "Control de aproximación",
+        "observe": "",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.0909090909090908
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-area",
+        "file": "/ciaac-approved/atc-coordination/area.svg",
+        "alt": "ACC suministra control a vuelos en ruta dentro de áreas de control designadas; el contorno es simbólico y no delimita espacio aéreo real.",
+        "heading": "Control de área",
+        "observe": "",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.0909090909090908
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-service-structure",
+        "file": "/ciaac-approved/atc-coordination/service-structure.svg",
+        "alt": "El servicio de aproximación puede prestarlo APP, TWR o ACC con funciones combinadas, conforme a la estructura local. No implica tres autorizaciones simultáneas.",
+        "heading": "Un servicio, distintas dependencias",
+        "observe": "",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 2.1052631578947367
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-departure",
+        "file": "/ciaac-approved/atc-coordination/departure.svg",
+        "alt": "Delivery, Ground, TWR, APP y ACC son una secuencia típica de comunicaciones; no es universal. Puestos y transferencias dependen de la organización y acuerdos locales.",
+        "heading": "Salida: secuencia orientativa",
+        "observe": "Esquema orientativo: los puestos, el orden y el momento de las transferencias dependen de los acuerdos locales. La transferencia de control y la de comunicaciones se rigen por sus arreglos aplicables.",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.0909090909090908
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-arrival",
+        "file": "/ciaac-approved/atc-coordination/arrival.svg",
+        "alt": "Trayecto típico ACC, APP, TWR, GND. La línea discontinua representa la posibilidad alternativa ACC a TWR; no una etapa adicional obligatoria.",
+        "heading": "Llegada: trayecto y variante",
+        "observe": "",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.0909090909090908
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-contact",
+        "file": "/ciaac-approved/atc-coordination/contact.svg",
+        "alt": "El piloto sintoniza la nueva frecuencia e inicia comunicación oral activa de dos vías con la dependencia indicada.",
+        "heading": "CONTACTE / COMUNÍQUESE",
+        "observe": "Ejemplo didáctico de la fuente: “Contacte Centro en [FREC. PIA]”.",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.0909090909090908
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-monitor",
+        "file": "/ciaac-approved/atc-coordination/monitor.svg",
+        "alt": "El piloto sintoniza y escucha sin llamada inicial, hasta que la estación llame o los reportes obligatorios o la situación operacional exijan transmitir.",
+        "heading": "MANTENGA ESCUCHA",
+        "observe": "Ejemplo didáctico de la fuente: “Mantenga escucha Torre en [FREC. PIA]”. *La estación puede llamar; los reportes obligatorios o la situación operacional pueden exigir transmisión.",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.0909090909090908
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-readback-loop",
+        "file": "/ciaac-approved/atc-coordination/readback-loop.svg",
+        "alt": "La tripulación colaciona elementos de seguridad: ruta, instrucciones de pista y datos de vuelo. ATC escucha, comprueba y corrige discrepancias.",
+        "heading": "Colación: confirmar y comprobar",
+        "observe": "",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.5584415584415585
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-afis",
+        "file": "/ciaac-approved/atc-coordination/afis.svg",
+        "alt": "AFIS informa sobre viento, altímetro, pista sugerida y tránsito conocido; no emite autorizaciones ATC de rodaje, despegue o aterrizaje.",
+        "heading": "AFIS: información de vuelo",
+        "observe": "La comparación no equipara AFIS y UNICOM.",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.0909090909090908
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-unicom",
+        "file": "/ciaac-approved/atc-coordination/unicom.svg",
+        "alt": "Estación consultiva no gubernamental: informa a solicitud sobre servicios de tierra y datos generales del aeródromo. No equivale a AFIS; régimen mexicano vigente no verificado aquí.",
+        "heading": "UNICOM: estación consultiva",
+        "observe": "Definición comparativa conservada. El régimen mexicano específico de UNICOM y su aplicación local vigente no están certificados en este candidato.",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.0909090909090908
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-selfannounce",
+        "file": "/ciaac-approved/atc-coordination/selfannounce.svg",
+        "alt": "Momentos didácticos de autoanuncio: antes del rodaje y entrada a pista, incorporación al circuito y pista desalojada. El gráfico no fija distancias, cadencias ni un procedimiento mexicano universal.",
+        "heading": "Prácticas didácticas sin torre",
+        "observe": "Lista didáctica: no establece distancias, periodicidad obligatoria ni un procedimiento mexicano universal. Canal y prácticas aplicables: PIA efectiva y disposiciones locales.",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.0909090909090908
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-case-monitor",
+        "file": "/ciaac-approved/atc-coordination/case-monitor.svg",
+        "alt": "La instrucción MANTENGA ESCUCHA exige escuchar sin llamada activa inicial, conservando las excepciones de llamada de la estación y necesidad operacional o reportes.",
+        "heading": "Caso: ¿llamada inmediata?",
+        "observe": "*La estación puede llamar; la situación operacional o los reportes de auto-anuncio pueden requerir transmisión.",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.0909090909090908
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-case-afis",
+        "file": "/ciaac-approved/atc-coordination/case-afis.svg",
+        "alt": "AFIS no autoriza aterrizaje, despegue ni rodaje. En el caso ficticio, la selección de pista y decisión de aterrizar corresponden al piloto al mando.",
+        "heading": "Caso: ¿autorización de aterrizaje?",
+        "observe": "",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.0909090909090908
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-case-readback",
+        "file": "/ciaac-approved/atc-coordination/case-readback.svg",
+        "alt": "Se mantienen los elementos completos de la solución: ruta ATC, instrucciones de pista y datos de vuelo; el detalle íntegro aparece bajo la pregunta.",
+        "heading": "Caso: elementos de colación",
+        "observe": "",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.0909090909090908
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST04-case-context",
+        "file": "/ciaac-approved/atc-coordination/case-context.svg",
+        "alt": "Bimotor IFR en VMC a 10 NM de un aeródromo no controlado. Frecuencia A es un marcador según PIA efectiva; 10 NM es un dato del caso, no un umbral de autoanuncio.",
+        "heading": "Escenario ficticio: llegada a AFIS",
+        "observe": "Un avión bimotor privado en vuelo IFR procede hacia un aeródromo no controlado que cuenta únicamente con una estación del Servicio de Información de Vuelo de Aeródromo (AFIS) operando en el canal común publicado en la carta (Frecuencia A / [FRECUENCIA SEGÚN PIA EFECTIVA]).\nAl aproximarse a 10 NM del aeródromo en condiciones VMC, el controlador del Centro de Control de Área (ACC) previa transferencia emite la instrucción: \"XA-LMN, MANTENGA ESCUCHA AFIS en Frecuencia A\".\nUna vez sintonizada la Frecuencia A, el piloto escucha la siguiente emisión de la estación AFIS:\n\"Viento de superficie 090 grados a 12 nudos, altímetro QNH 30.12 inHg, pista sugerida 09, dos tráficos ultraligeros operando en el circuito de la Pista 09.\"\nPosteriormente, la aeronave se incorpora al tramo con el viento (downwind) de la Pista 09.\n\nAlcance didáctico: 10 NM es exclusivamente un dato del escenario ficticio; no es una distancia universal para reportar. Frecuencia A es un marcador, no una frecuencia de aeropuerto.",
+        "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+        "assetAspectRatio": 1.0909090909090908
+      }
+    ],
+    "exercise": {
+      "kind": "sequence",
+      "title": "Recorre únicamente el escenario ficticio",
+      "instruction": "Ordena estos tres momentos del caso. No es una secuencia universal de dependencias ATC. Las tres preguntas originales y sus soluciones completas permanecen en el tablero del caso.",
+      "items": [
+        "Al aproximarse a 10 NM del aeródromo en condiciones VMC, el controlador del Centro de Control de Área (ACC) previa transferencia emite la instrucción: \"XA-LMN, MANTENGA ESCUCHA AFIS en Frecuencia A\".",
+        "Una vez sintonizada la Frecuencia A, el piloto escucha la siguiente emisión de la estación AFIS:",
+        "Posteriormente, la aeronave se incorpora al tramo con el viento (downwind) de la Pista 09."
+      ],
+      "order": [
+        2,
+        0,
+        1
+      ]
+    },
+    "objectives": [
+      "Monitoreo de frecuencias y autorizaciones.",
+      "Control terrestre, torre, salidas/aproximación y centro de control con frecuencias en ruta.",
+      "Operaciones en aeródromos no controlados: AFIS y UNICOM."
+    ],
+    "completionChecks": [
+      "De acuerdo con la instrucción \"Mantenga escucha AFIS\", ¿debía la tripulación realizar una llamada de radio activa e inmediata a la estación AFIS al sintonizar el canal?",
+      "¿Posee la estación AFIS la facultad legal para autorizar el aterrizaje de la aeronave al completar el tramo final?",
+      "¿Cuáles son los elementos críticos de seguridad relacionados con la pista y el vuelo que deben colacionarse obligatoriamente cuando una dependencia ATC emite una autorización de rodaje o ruta?"
+    ],
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Despegue"
+      },
+      {
+        "id": "ST04-01",
+        "kind": "content",
+        "nav": "En tierra y pista: funciones distintas",
+        "title": "En tierra y pista: funciones distintas",
+        "cards": [
+          {
+            "title": "Entrega de autorizaciones",
+            "text": "Entrega de Autorizaciones (Clearance Delivery): Tramita y expide la autorización inicial del plan de vuelo IFR antes del rodaje.",
+            "covers": []
+          },
+          {
+            "title": "Control de superficie",
+            "text": "Control de Superficie (Ground / Superficie): Ejerce el control del tránsito en el área de maniobras (calles de rodaje, puntos de espera). No equivale a la gestión universal de plataforma (Apron Management), la cual en aeropuertos de alta densidad puede ser coordinada por la administración del aeródromo.",
+            "covers": []
+          },
+          {
+            "title": "Torre de control de aeródromo",
+            "text": "Torre de Control de Aeródromo (TWR / Torre): Responsable del control del tránsito de aeródromo en el circuito de vuelo y sobre la pista activa. Posee la competencia exclusiva para autorizar el despegue y el aterrizaje.",
+            "covers": []
+          },
+          {
+            "title": "Organización local",
+            "text": "Control de Superficie y Plataforma: Las funciones de Control de Terreno / Superficie (GND) y Entregas de Autorización (Delivery) se prestan conforme a los puestos de control efectivamente establecidos en la organización local del aeródromo.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-delivery",
+            "file": "/ciaac-approved/atc-coordination/delivery.svg",
+            "alt": "Delivery tramita la autorización IFR inicial antes del rodaje; los puestos dependen de la organización local.",
+            "heading": "Entrega de autorizaciones",
+            "observe": "Las funciones de Control de Terreno / Superficie (GND) y Entregas de Autorización (Delivery) se prestan conforme a los puestos de control efectivamente establecidos en la organización local del aeródromo.",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.0909090909090908
+          },
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-ground-apron",
+            "file": "/ciaac-approved/atc-coordination/ground-apron.svg",
+            "alt": "Ground y gestión de plataforma se distinguen. Se muestran dos funciones sin inventar un límite aeroportuario; la organización real es local.",
+            "heading": "Rodaje y plataforma",
+            "observe": "",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.0909090909090908
+          },
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-tower",
+            "file": "/ciaac-approved/atc-coordination/tower.svg",
+            "alt": "La Torre controla el tránsito de aeródromo y autoriza despegue y aterrizaje; dibujo conceptual de pista y circuito, sin rumbo ni escala.",
+            "heading": "Torre de control de aeródromo",
+            "observe": "",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.0909090909090908
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Delivery",
+              "figureNumber": "ST04-delivery",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "Ground y plataforma",
+              "figureNumber": "ST04-ground-apron",
+              "cardIndexes": [
+                1
+              ]
+            },
+            {
+              "title": "Torre de control",
+              "figureNumber": "ST04-tower",
+              "cardIndexes": [
+                2
+              ]
+            }
+          ],
+          "noteCardIndexes": [
+            3
+          ]
+        }
+      },
+      {
+        "id": "ST04-02",
+        "kind": "content",
+        "nav": "Aproximación y área: servicio y dependencia",
+        "title": "Aproximación y área: servicio y dependencia",
+        "cards": [
+          {
+            "title": "Control de aproximación",
+            "text": "Control de Aproximación (APP / Aproximación / Salidas): Suministra control a los vuelos controlados que llegan o salen de una zona terminal (TMA).",
+            "covers": []
+          },
+          {
+            "title": "Centro de control de área",
+            "text": "Centro de Control de Área (ACC / Control): Suministra control a los vuelos en ruta dentro de áreas de control designadas (CTA/UTA).",
+            "covers": []
+          },
+          {
+            "title": "Servicio y dependencia",
+            "text": "Distinción entre Servicio y Dependencia: El servicio de control de aproximación puede ser proporcionado por una oficina de control de aproximación (APP) independiente, por una torre de control de aeródromo (TWR) o por un centro de control de área (ACC) con funciones combinadas, según la estructura del espacio aéreo local (MGTAM §4.1.2, PDF pág. 66). Por ende, no se atribuye exclusividad operativa a la dependencia APP.",
+            "covers": []
+          },
+          {
+            "title": "Delimitación de autorizaciones",
+            "text": "Delimitación de Autorizaciones: Se mantiene la distinción formal entre la autorización de aproximación (emitida por la dependencia que suministre el control de aproximación) y la autorización de aterrizaje/despegue (competencia exclusiva de la Torre de Control de Aeródromo).",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-approach",
+            "file": "/ciaac-approved/atc-coordination/approach.svg",
+            "alt": "Servicio a vuelos controlados que llegan o salen de una zona terminal. No representa propiedad exclusiva de APP sobre todo el espacio controlado.",
+            "heading": "Control de aproximación",
+            "observe": "",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.0909090909090908
+          },
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-area",
+            "file": "/ciaac-approved/atc-coordination/area.svg",
+            "alt": "ACC suministra control a vuelos en ruta dentro de áreas de control designadas; el contorno es simbólico y no delimita espacio aéreo real.",
+            "heading": "Control de área",
+            "observe": "",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.0909090909090908
+          },
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-service-structure",
+            "file": "/ciaac-approved/atc-coordination/service-structure.svg",
+            "alt": "El servicio de aproximación puede prestarlo APP, TWR o ACC con funciones combinadas, conforme a la estructura local. No implica tres autorizaciones simultáneas.",
+            "heading": "Un servicio, distintas dependencias",
+            "observe": "",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 2.1052631578947367
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Aproximación",
+              "figureNumber": "ST04-approach",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "En ruta",
+              "figureNumber": "ST04-area",
+              "cardIndexes": [
+                1
+              ]
+            }
+          ],
+          "noteCardIndexes": [
+            2,
+            3
+          ],
+          "contextFigureNumber": "ST04-service-structure"
+        }
+      },
+      {
+        "id": "ST04-03",
+        "kind": "content",
+        "nav": "Transferencias: recorridos y variantes",
+        "title": "Transferencias: recorridos y variantes",
+        "cards": [
+          {
+            "title": "Secuencia de transferencia de comunicaciones",
+            "text": "La secuencia de transferencia entre dependencias no es una regla fija e inmutable; varía según la infraestructura de cada aeródromo, la densidad del tránsito y las Cartas de Acuerdo (LoA) suscritas entre las dependencias involucradas.",
+            "covers": []
+          },
+          {
+            "title": "Llegada: coordinación local",
+            "text": "Durante la fase de llegada, la responsabilidad del control y el cambio de frecuencia de comunicación se transfieren de forma coordinada a lo largo de la ruta de vuelo, según los puntos y momentos fijados en los acuerdos de carta de coordinación local:",
+            "covers": []
+          },
+          {
+            "title": "Ruta a aproximación",
+            "text": "Ruta a Aproximación (ACC → APP): El Centro de Control de Área (ACC) transfiere la aeronave a la dependencia de Control de Aproximación (APP).",
+            "covers": []
+          },
+          {
+            "title": "Caso directo",
+            "text": "Caso Directo (ACC → TWR): el ACC transfiere la comunicación y el control directamente a la Torre de Control de Aeródromo (TWR).",
+            "covers": []
+          },
+          {
+            "title": "Aproximación a aeródromo",
+            "text": "Aproximación a Aeródromo (APP → TWR): APP transfiere la aeronave a la frecuencia de TWR.",
+            "covers": []
+          },
+          {
+            "title": "Aeródromo a superficie",
+            "text": "Aeródromo a Superficie (TWR → GND): TWR instruye cambiar a la frecuencia de Control de Terreno/Superficie (GND) para el rodaje a la plataforma.",
+            "covers": []
+          },
+          {
+            "title": "Frecuencias operativas",
+            "text": "Asignación de Canales de Frecuencia: Toda frecuencia operativa debe obtenerse de la Publicación de Información Aeronáutica (PIA / AIP) efectiva para el aeródromo correspondiente ([FRECUENCIA SEGÚN PIA EFECTIVA]).",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-departure",
+            "file": "/ciaac-approved/atc-coordination/departure.svg",
+            "alt": "Delivery, Ground, TWR, APP y ACC son una secuencia típica de comunicaciones; no es universal. Puestos y transferencias dependen de la organización y acuerdos locales.",
+            "heading": "Salida: secuencia orientativa",
+            "observe": "Esquema orientativo: los puestos, el orden y el momento de las transferencias dependen de los acuerdos locales. La transferencia de control y la de comunicaciones se rigen por sus arreglos aplicables.",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.0909090909090908
+          },
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-arrival",
+            "file": "/ciaac-approved/atc-coordination/arrival.svg",
+            "alt": "Trayecto típico ACC, APP, TWR, GND. La línea discontinua representa la posibilidad alternativa ACC a TWR; no una etapa adicional obligatoria.",
+            "heading": "Llegada: trayecto y variante",
+            "observe": "",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.0909090909090908
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Salida típica",
+              "figureNumber": "ST04-departure",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "Llegada y caso directo",
+              "figureNumber": "ST04-arrival",
+              "cardIndexes": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          ],
+          "noteCardIndexes": [
+            6
+          ]
+        }
+      },
+      {
+        "id": "ST04-04",
+        "kind": "content",
+        "nav": "CONTACTE y MANTENGA ESCUCHA",
+        "title": "CONTACTE y MANTENGA ESCUCHA",
+        "cards": [
+          {
+            "title": "CONTACTE / COMUNÍQUESE",
+            "text": "CONTACTE / COMUNÍQUESE (CONTACT): Instruye a la tripulación a sintonizar la nueva frecuencia y establecer una llamada oral activa de dos vías con la dependencia nombrada.",
+            "covers": []
+          },
+          {
+            "title": "MANTENGA ESCUCHA",
+            "text": "MANTENGA ESCUCHA (MONITOR): Instruye a la tripulación a sintonizar y escuchar el canal indicado sin realizar la llamada inicial, permaneciendo a la escucha hasta que la estación terrestre inicie la llamada o hasta que los reportes obligatorios/situación operacional exijan la transmisión.",
+            "covers": []
+          },
+          {
+            "title": "Escucha de la frecuencia ATS asignada",
+            "text": "Durante el vuelo en ruta, la tripulación mantendrá la vigilancia continua en la frecuencia de trabajo ATS asignada.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-contact",
+            "file": "/ciaac-approved/atc-coordination/contact.svg",
+            "alt": "El piloto sintoniza la nueva frecuencia e inicia comunicación oral activa de dos vías con la dependencia indicada.",
+            "heading": "CONTACTE / COMUNÍQUESE",
+            "observe": "Ejemplo didáctico de la fuente: “Contacte Centro en [FREC. PIA]”.",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.0909090909090908
+          },
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-monitor",
+            "file": "/ciaac-approved/atc-coordination/monitor.svg",
+            "alt": "El piloto sintoniza y escucha sin llamada inicial, hasta que la estación llame o los reportes obligatorios o la situación operacional exijan transmitir.",
+            "heading": "MANTENGA ESCUCHA",
+            "observe": "Ejemplo didáctico de la fuente: “Mantenga escucha Torre en [FREC. PIA]”. *La estación puede llamar; los reportes obligatorios o la situación operacional pueden exigir transmisión.",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.0909090909090908
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "CONTACTE / COMUNÍQUESE",
+              "figureNumber": "ST04-contact",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "MANTENGA ESCUCHA",
+              "figureNumber": "ST04-monitor",
+              "cardIndexes": [
+                1
+              ]
+            }
+          ],
+          "noteCardIndexes": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "ST04-05",
+        "kind": "content",
+        "nav": "Colación: el circuito de comprobación",
+        "title": "Colación: el circuito de comprobación",
+        "cards": [
+          {
+            "title": "Autorizaciones de ruta",
+            "text": "Autorizaciones de ruta emitidas por el ATC.",
+            "covers": []
+          },
+          {
+            "title": "Autorizaciones e instrucciones de pista",
+            "text": "Autorizaciones e instrucciones para entrar, aterrizar, despegar, mantenerse fuera de, cruzar, rodar y retroceder en cualquier pista.",
+            "covers": []
+          },
+          {
+            "title": "Datos de seguridad del vuelo",
+            "text": "Pista en uso, reglaje altimétrico (QNH/QFE), código de transpondedor (SSR), instrucciones de nivel de vuelo, rumbo, velocidad y nivel de transición.",
+            "covers": []
+          },
+          {
+            "title": "Comprobación del controlador",
+            "text": "El controlador escuchará la colación para comprobar que la instrucción fue recibida y entendida correctamente, corrigiendo cualquier discrepancia en el acto.",
+            "covers": []
+          },
+          {
+            "title": "Elementos directamente relacionados con la seguridad",
+            "text": "La tripulación de vuelo debe colacionar oralmente aquellos elementos de las autorizaciones e instrucciones que estén directamente relacionados con la seguridad de los vuelos:",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-readback-loop",
+            "file": "/ciaac-approved/atc-coordination/readback-loop.svg",
+            "alt": "La tripulación colaciona elementos de seguridad: ruta, instrucciones de pista y datos de vuelo. ATC escucha, comprueba y corrige discrepancias.",
+            "heading": "Colación: confirmar y comprobar",
+            "observe": "",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.5584415584415585
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "ST04-readback-loop",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 18,
+              "y": 64,
+              "labelX": 10,
+              "labelY": 48
+            },
+            {
+              "cardIndex": 1,
+              "x": 50,
+              "y": 64,
+              "labelX": 50,
+              "labelY": 48
+            },
+            {
+              "cardIndex": 2,
+              "x": 82,
+              "y": 64,
+              "labelX": 90,
+              "labelY": 48
+            },
+            {
+              "cardIndex": 3,
+              "x": 50,
+              "y": 90,
+              "labelX": 90,
+              "labelY": 90
+            }
+          ],
+          "noteCardIndexes": [
+            4
+          ]
+        }
+      },
+      {
+        "id": "ST04-06",
+        "kind": "content",
+        "nav": "Sin torre: información, consulta y vigilancia",
+        "title": "Sin torre: información, consulta y vigilancia",
+        "cards": [
+          {
+            "title": "Servicio de información de vuelo de aeródromo",
+            "text": "Servicio de información provisto por la autoridad o proveedor ATS en la zona de información de un aeródromo no controlado.\nNaturaleza Funcional: Suministra datos de viento, altímetro, pista sugerida y tránsito conocido. AFIS NO ES CONTROL DE TRÁNSITO AÉREO Y NO EMITE AUTORIZACIONES DE DESPEGUE, RODAJE NI ATERRIZAJE.",
+            "covers": []
+          },
+          {
+            "title": "Estación consultiva UNICOM",
+            "text": "Estación de radiocomunicación consultiva no gubernamental que proporciona información práctica de servicios de tierra y datos generales del aeródromo a solicitud.",
+            "covers": []
+          },
+          {
+            "title": "Auto-anuncios didácticos",
+            "text": "Auto-anuncios (Self-announce): Como práctica didáctica de seguridad orientada a mantener la conciencia situacional, emitir reportes de posición en el canal común del aeródromo ([FRECUENCIA SEGÚN PIA EFECTIVA]):\nAntes del rodaje y antes de ingresar a la pista para despegue.\nAl incorporarse al circuito de tránsito (tramo con el viento, inicial, base y final).\nAl completar el aterrizaje y desalojar la pista activa.",
+            "covers": []
+          },
+          {
+            "title": "Vigilancia visual",
+            "text": "Vigilancia: Mantenimiento prioritario de la vigilancia visual constante (See and Avoid) y observancia del patrón de circuito de tránsito estándar.",
+            "covers": []
+          },
+          {
+            "title": "Selección de pista",
+            "text": "Selección de Pista: En ausencia de torre, la decisión final sobre la pista a utilizar recae sobre la persona piloto al mando, quien evaluará el viento (manga de viento), la información de AFIS/UNICOM y el tránsito visual observado.",
+            "covers": []
+          },
+          {
+            "title": "Aeródromo sin torre activa",
+            "text": "Cuando se opera en un aeródromo que carece de torre de control de aeródromo activa, la operación se conduce bajo el principio de información de vuelo y observación visual de tránsito:",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-afis",
+            "file": "/ciaac-approved/atc-coordination/afis.svg",
+            "alt": "AFIS informa sobre viento, altímetro, pista sugerida y tránsito conocido; no emite autorizaciones ATC de rodaje, despegue o aterrizaje.",
+            "heading": "AFIS: información de vuelo",
+            "observe": "La comparación no equipara AFIS y UNICOM.",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.0909090909090908
+          },
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-unicom",
+            "file": "/ciaac-approved/atc-coordination/unicom.svg",
+            "alt": "Estación consultiva no gubernamental: informa a solicitud sobre servicios de tierra y datos generales del aeródromo. No equivale a AFIS; régimen mexicano vigente no verificado aquí.",
+            "heading": "UNICOM: estación consultiva",
+            "observe": "Definición comparativa conservada. El régimen mexicano específico de UNICOM y su aplicación local vigente no están certificados en este candidato.",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.0909090909090908
+          },
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-selfannounce",
+            "file": "/ciaac-approved/atc-coordination/selfannounce.svg",
+            "alt": "Momentos didácticos de autoanuncio: antes del rodaje y entrada a pista, incorporación al circuito y pista desalojada. El gráfico no fija distancias, cadencias ni un procedimiento mexicano universal.",
+            "heading": "Prácticas didácticas sin torre",
+            "observe": "Lista didáctica: no establece distancias, periodicidad obligatoria ni un procedimiento mexicano universal. Canal y prácticas aplicables: PIA efectiva y disposiciones locales.",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.0909090909090908
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "AFIS",
+              "figureNumber": "ST04-afis",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "UNICOM",
+              "figureNumber": "ST04-unicom",
+              "cardIndexes": [
+                1
+              ]
+            },
+            {
+              "title": "Prácticas didácticas",
+              "figureNumber": "ST04-selfannounce",
+              "cardIndexes": [
+                2,
+                3
+              ]
+            }
+          ],
+          "noteCardIndexes": [
+            4,
+            5
+          ]
+        }
+      },
+      {
+        "id": "ST04-07",
+        "kind": "content",
+        "nav": "Caso integrador: AFIS y colación",
+        "title": "Caso integrador: AFIS y colación",
+        "cards": [
+          {
+            "title": "1. ¿Llamada activa inmediata?",
+            "text": "De acuerdo con la instrucción \"Mantenga escucha AFIS\", ¿debía la tripulación realizar una llamada de radio activa e inmediata a la estación AFIS al sintonizar el canal?",
+            "covers": [],
+            "detailText": "Interpretación de la Fraseología \"MANTENGA ESCUCHA\" (CO AV-26/11 R3 Sec. 6.1.3, PDF págs. 10–11 / MGTAM Cap. 12, PDF pág. 308):\nNO. Conforme a la CO AV-26/11 R3 (PDF págs. 10–11), la instrucción \"Mantenga escucha\" exige sintonizar el canal indicado y permanecer a la escucha de las emisiones sin iniciar una llamada activa de dos vías, hasta que la estación llame a la aeronave o la situación operacional/reportes de auto-anuncio lo requieran."
+          },
+          {
+            "title": "2. ¿AFIS autoriza el aterrizaje?",
+            "text": "¿Posee la estación AFIS la facultad legal para autorizar el aterrizaje de la aeronave al completar el tramo final?",
+            "covers": [],
+            "detailText": "Facultades de la Estación AFIS (SENEAM MGTAM Cap. 1, PDF pág. 55, y Tabla 4-2.3 / Jeppesen Manual PDF pág. 55):\nNO. AFIS es un servicio de información de vuelo de aeródromo que proporciona datos de viento, altímetro, pista sugerida y tránsito conocido en espacio aéreo no controlado. AFIS no es control de tránsito aéreo y carece de autoridad para emitir autorizaciones ATC de aterrizaje, despegue o rodaje. La decisión de aterrizar y la selección de la pista corresponden al piloto al mando, emitiendo reportes de auto-anuncio para la conciencia situacional del circuito."
+          },
+          {
+            "title": "3. ¿Qué elementos se colacionan?",
+            "text": "¿Cuáles son los elementos críticos de seguridad relacionados con la pista y el vuelo que deben colacionarse obligatoriamente cuando una dependencia ATC emite una autorización de rodaje o ruta?",
+            "covers": [],
+            "detailText": "Elementos de Colación Obligatoria por Seguridad (Doc 4444 §4.5.7.5.1, PDF pág. 58):\nConforme al numeral §4.5.7.5.1 del Doc 4444 PANS-ATM, la tripulación debe colacionar obligatoriamente los elementos de seguridad: autorizaciones de ruta ATC, instrucciones para entrar, aterrizar, despegar, mantenerse fuera de, cruzar, rodar y retroceder en cualquier pista, así como la pista en uso, QNH, código SSR, nivel de vuelo, rumbo, velocidad y nivel de transición."
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-case-monitor",
+            "file": "/ciaac-approved/atc-coordination/case-monitor.svg",
+            "alt": "La instrucción MANTENGA ESCUCHA exige escuchar sin llamada activa inicial, conservando las excepciones de llamada de la estación y necesidad operacional o reportes.",
+            "heading": "Caso: ¿llamada inmediata?",
+            "observe": "*La estación puede llamar; la situación operacional o los reportes de auto-anuncio pueden requerir transmisión.",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.0909090909090908
+          },
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-case-afis",
+            "file": "/ciaac-approved/atc-coordination/case-afis.svg",
+            "alt": "AFIS no autoriza aterrizaje, despegue ni rodaje. En el caso ficticio, la selección de pista y decisión de aterrizar corresponden al piloto al mando.",
+            "heading": "Caso: ¿autorización de aterrizaje?",
+            "observe": "",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.0909090909090908
+          },
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-case-readback",
+            "file": "/ciaac-approved/atc-coordination/case-readback.svg",
+            "alt": "Se mantienen los elementos completos de la solución: ruta ATC, instrucciones de pista y datos de vuelo; el detalle íntegro aparece bajo la pregunta.",
+            "heading": "Caso: elementos de colación",
+            "observe": "",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.0909090909090908
+          },
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST04-case-context",
+            "file": "/ciaac-approved/atc-coordination/case-context.svg",
+            "alt": "Bimotor IFR en VMC a 10 NM de un aeródromo no controlado. Frecuencia A es un marcador según PIA efectiva; 10 NM es un dato del caso, no un umbral de autoanuncio.",
+            "heading": "Escenario ficticio: llegada a AFIS",
+            "observe": "Un avión bimotor privado en vuelo IFR procede hacia un aeródromo no controlado que cuenta únicamente con una estación del Servicio de Información de Vuelo de Aeródromo (AFIS) operando en el canal común publicado en la carta (Frecuencia A / [FRECUENCIA SEGÚN PIA EFECTIVA]).\nAl aproximarse a 10 NM del aeródromo en condiciones VMC, el controlador del Centro de Control de Área (ACC) previa transferencia emite la instrucción: \"XA-LMN, MANTENGA ESCUCHA AFIS en Frecuencia A\".\nUna vez sintonizada la Frecuencia A, el piloto escucha la siguiente emisión de la estación AFIS:\n\"Viento de superficie 090 grados a 12 nudos, altímetro QNH 30.12 inHg, pista sugerida 09, dos tráficos ultraligeros operando en el circuito de la Pista 09.\"\nPosteriormente, la aeronave se incorpora al tramo con el viento (downwind) de la Pista 09.\n\nAlcance didáctico: 10 NM es exclusivamente un dato del escenario ficticio; no es una distancia universal para reportar. Frecuencia A es un marcador, no una frecuencia de aeropuerto.",
+            "caption": "Esquema educativo original, sin escala. No es una carta ni un procedimiento operacional.",
+            "assetAspectRatio": 1.0909090909090908
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "MANTENGA ESCUCHA",
+              "figureNumber": "ST04-case-monitor",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "Facultades de AFIS",
+              "figureNumber": "ST04-case-afis",
+              "cardIndexes": [
+                1
+              ]
+            },
+            {
+              "title": "Colación de seguridad",
+              "figureNumber": "ST04-case-readback",
+              "cardIndexes": [
+                2
+              ]
+            }
+          ],
+          "contextFigureNumber": "ST04-case-context"
+        }
+      },
+      {
+        "kind": "exercise",
+        "nav": "Recorre el caso"
+      },
+      {
+        "kind": "finish",
+        "nav": "Aterrizaje"
+      }
+    ],
+    "sources": [
+      {
+        "id": "st04-mgtam2019",
+        "title": "SENEAM · MGTAM · 3.ª edición · 1 enero 2019",
+        "role": "Sustento histórico y didáctico; no acredita vigencia operacional actual.",
+        "verified_locators": [
+          "Cap. 1, PDF 55: plataforma e información de vuelo de aeródromo",
+          "§§4.1–4.3, PDF 66–68: servicios y transferencias",
+          "§4.5.7.4.1–.2, PDF 75–76: colación",
+          "§12.1.8, PDF 308: transferencia de comunicaciones"
+        ]
+      },
+      {
+        "id": "st04-doc4444",
+        "title": "OACI · Doc 4444 PANS-ATM · 15.ª edición · 2007",
+        "role": "Sustento histórico de elementos de seguridad y comprobación de colación.",
+        "verified_locators": [
+          "§4.5.7.5.1–.2, PDF 58"
+        ]
+      },
+      {
+        "id": "st04-co26",
+        "title": "CO AV-26/11 R3",
+        "role": "Fraseología cotejada para CONTACTE / COMUNÍQUESE y MANTENGA ESCUCHA.",
+        "verified_locators": [
+          "Sección 6.1.3, folios 9–10 de 61, PDF 10–11"
+        ]
+      }
+    ],
+    "minutes": 18,
+    "sourceLabel": "CIAAC · Servicios de tránsito aéreo",
+    "chapterLabel": "Itinerario",
+    "contentVersion": "st04-grouped-candidate-20261006-v1"
+  },
+  "ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/st07-aplicar-el-reglaje-altimetrico": {
+    "number": 7,
+    "title": "Aplicar el reglaje altimétrico",
+    "name": "Aplicar el reglaje altimétrico",
+    "intro": "Elevación, altitud y altura. Uso operacional de QNH, QNE y QFE.",
+    "chapter": 1,
+    "chapter_name": "Servicios de tránsito aéreo",
+    "cards": [
+      {
+        "title": "Alcance aprobado",
+        "text": "Elevación, altitud y altura. Uso operacional de QNH, QNE y QFE.",
+        "covers": [],
+        "wide": true
+      }
+    ],
+    "questions": [],
+    "tips": [
+      "Contenido académico: las referencias históricas 18,500 ft / FL195 no certifican los valores operacionales vigentes."
+    ],
+    "subtopics": [
+      {
+        "level": 1,
+        "name": "Elevación, altitud y altura.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado ST07"
+      },
+      {
+        "level": 1,
+        "name": "Uso operacional de QNH, QNE y QFE.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado ST07"
+      }
+    ],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-01-elevation",
+        "file": "/ciaac-approved/altimetry/elevation.svg",
+        "alt": "Elevación: distancia vertical con la referencia rotulada. Esquema sin escala; el terreno cambia y la referencia especificada permanece fija.",
+        "heading": "Elevación",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-01-altitude",
+        "file": "/ciaac-approved/altimetry/altitude.svg",
+        "alt": "Altitud: distancia vertical con la referencia rotulada. Esquema sin escala; el terreno cambia y la referencia especificada permanece fija.",
+        "heading": "Altitud",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-01-height",
+        "file": "/ciaac-approved/altimetry/height.svg",
+        "alt": "Altura: distancia vertical con la referencia rotulada. Esquema sin escala; el terreno cambia y la referencia especificada permanece fija.",
+        "heading": "Altura",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-02-pressure-altitude",
+        "file": "/ciaac-approved/altimetry/pressure-altitude.svg",
+        "alt": "Presión atmosférica expresada como altitud ISA con reglaje estándar.",
+        "heading": "Altitud presión",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-02-indicated-altitude",
+        "file": "/ciaac-approved/altimetry/indicated-altitude.svg",
+        "alt": "Lectura del altímetro en la carátula. En la definición de esta fuente, con QNH local.",
+        "heading": "Altitud indicada",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-02-true-altitude",
+        "file": "/ciaac-approved/altimetry/true-altitude.svg",
+        "alt": "Distancia vertical real al nivel medio del mar; se distingue de la lectura barométrica.",
+        "heading": "Altitud verdadera",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-02-density-altitude",
+        "file": "/ciaac-approved/altimetry/density-altitude.svg",
+        "alt": "Altitud presión corregida por la desviación de temperatura respecto de ISA.",
+        "heading": "Altitud densidad",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-03-qnh",
+        "file": "/ciaac-approved/altimetry/qnh.svg",
+        "alt": "QNH: presión reducida al nivel medio del mar según ISA. En tierra indica la elevación del campo; en vuelo, altitud.",
+        "heading": "QNH",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-03-qfe",
+        "file": "/ciaac-approved/altimetry/qfe.svg",
+        "alt": "QFE: referencia del campo o umbral. Cero ideal exclusivamente en ese punto; altura barométrica en vuelo, no AGL universal.",
+        "heading": "QFE",
+        "observe": "En el punto de referencia QFE y bajo el modelo ideal: cero; en vuelo: altura barométrica sobre esa referencia.",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-03-qne",
+        "file": "/ciaac-approved/altimetry/qne.svg",
+        "alt": "QNE: presión estándar. La indicación es altitud presión o niveles de vuelo; el plano no tiene posición geométrica fija respecto del MSL.",
+        "heading": "QNE",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-03-instrument-relation",
+        "file": "/ciaac-approved/altimetry/instrument-relation.svg",
+        "alt": "La presión estática medida y el reglaje de referencia se relacionan mediante la calibración ISA del altímetro aneroide.",
+        "heading": "Cómo se forma la lectura",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 2.0
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-transition",
+        "file": "/ciaac-approved/altimetry/transition.svg",
+        "alt": "TL por encima de TA; capa de transición entre ambos. Niveles de vuelo arriba y altitudes abajo. Sin valores universales.",
+        "heading": "Estructura de transición",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.4814814814814814
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-05-pressure-error",
+        "file": "/ciaac-approved/altimetry/pressure-error.svg",
+        "alt": "QNH sin reajustar; de alta a baja presión, mantener la misma indicación lleva a menor altitud real.",
+        "heading": "Error de presión",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-05-cold-error",
+        "file": "/ciaac-approved/altimetry/cold-error.svg",
+        "alt": "A igual indicación barométrica, la columna de aire frío tiene menor altura real. Referencia común; esquema conceptual, no tabla de corrección.",
+        "heading": "Error por aire frío",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-06-historical-values",
+        "file": "/ciaac-approved/altimetry/historical-values.svg",
+        "alt": "Valores históricos del MGTAM 2019: TA 18,500 ft MSL y TL FL195. No se presentan como vigentes.",
+        "heading": "Referencia histórica",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-06-current-values",
+        "file": "/ciaac-approved/altimetry/current-values.svg",
+        "alt": "Para la operación actual se requiere comprobar TA y TL aplicables en PIA/AIP ENR 1.7 y cartas vigentes. Este candidato no certifica esos valores.",
+        "heading": "Verificación operacional pendiente",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-07-case-ground",
+        "file": "/ciaac-approved/altimetry/case-ground.svg",
+        "alt": "Caso ficticio: elevación 7,340 ft MSL, QNH 30.12 y QNE 29.92 inHg. Diferencia de menos 0.20 inHg, aproximación menos 200 ft; resultado 7,140 ft de altitud presión.",
+        "heading": "Alfa: lectura en plataforma",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-07-case-ascent",
+        "file": "/ciaac-approved/altimetry/case-ascent.svg",
+        "alt": "Simulación académica: QNH 30.12; al pasar por TA histórica de 18,500 ft se usa QNE 29.92; nivel final FL220.",
+        "heading": "Ascenso del caso",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-07-case-descent",
+        "file": "/ciaac-approved/altimetry/case-descent.svg",
+        "alt": "Simulación académica: con QNE 29.92 se desciende por el TL histórico FL195; se cambia a QNH Bravo 29.82 para expresar altitudes.",
+        "heading": "Descenso del caso",
+        "observe": "",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 1.125
+      },
+      {
+        "chapter": 1,
+        "topic": 7,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "ST07-07-case-context",
+        "file": "/ciaac-approved/altimetry/case-context.svg",
+        "alt": "Ruta didáctica del caso: plataforma de Alfa, crucero FL220 y descenso a Bravo. No es una ruta real ni un procedimiento publicado.",
+        "heading": "Escenario ficticio: Alfa a Bravo",
+        "observe": "Un avión de negocios en vuelo IFR se encuentra estacionado en la plataforma de un aeródromo ficticio \"Alfa\" (elevación oficial de la plataforma/campo = 7,340 ft MSL; reglaje QNH local del momento = 30.12 inHg; reglaje estándar QNE = 29.92 inHg).\n\nSupuestos de cálculo didáctico: Para estimar la indicación en la subescala barométrica, se aplica la regla heurística lineal aproximada de 1,000 ft por cada 1.0 inHg de diferencia de presión (200 ft por 0.20 inHg). Para fines de este ejercicio examinable, se consideran la Altitud de Transición histórica de 18,500 ft MSL y el Nivel de Transición FL195.\n\nLa aeronave prepara su salida IFR en la plataforma del aeródromo \"Alfa\".\nLa tripulación despega y asciende en ruta hasta nivelar a FL220.\nPosteriormente, la aeronave inicia el descenso hacia el aeródromo de destino \"Bravo\", donde el control de tránsito aéreo le transmite el QNH local de 29.82 inHg.",
+        "caption": "Esquema conceptual original. No está a escala.",
+        "assetAspectRatio": 2.1052631578947367
+      }
+    ],
+    "exercise": {
+      "kind": "sequence",
+      "title": "Recorre el caso ficticio",
+      "instruction": "Ordena los tres pasos del escenario ficticio. Las preguntas y soluciones completas están en el caso integrador.",
+      "items": [
+        "La aeronave prepara su salida IFR en la plataforma del aeródromo \"Alfa\".",
+        "La tripulación despega y asciende en ruta hasta nivelar a FL220.",
+        "Posteriormente, la aeronave inicia el descenso hacia el aeródromo de destino \"Bravo\", donde el control de tránsito aéreo le transmite el QNH local de 29.82 inHg."
+      ],
+      "order": [
+        2,
+        0,
+        1
+      ]
+    },
+    "objectives": [
+      "Elevación, altitud y altura.",
+      "Uso operacional de QNH, QNE y QFE."
+    ],
+    "completionChecks": [
+      "Si en la plataforma del aeródromo \"Alfa\" el piloto ajusta la subescala del altímetro a 29.92 inHg (QNE), ¿cuál será la lectura aproximada que mostrará el altímetro en tierra y qué indicará si ajusta el reglaje QFE en la subescala?",
+      "Durante el ascenso a través de la Altitud de Transición histórica (18,500 ft MSL), ¿qué acción obligatoria realiza el piloto sobre la subescala del altímetro y cómo expresa la posición vertical de la aeronave al alcanzar FL220?",
+      "Al descender a través del Nivel de Transición histórico (FL195) hacia el aeródromo \"Bravo\", ¿qué cambio de reglaje ejecuta la tripulación y cómo se expresa la posición vertical a partir de ese momento?"
+    ],
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Despegue"
+      },
+      {
+        "id": "ST07-01",
+        "kind": "content",
+        "nav": "Elevación, altitud y altura",
+        "title": "Elevación, altitud y altura",
+        "cards": [
+          {
+            "title": "Elevación (Elevation)",
+            "text": "Distancia vertical entre un punto o nivel sobre la superficie de la tierra (o fijado a ella) y el nivel medio del mar (MSL). Ej. La elevación oficial publicada de un aeródromo.",
+            "covers": []
+          },
+          {
+            "title": "Altitud (Altitude)",
+            "text": "Distancia vertical entre un nivel, punto u objeto considerado como punto, y el nivel medio del mar (MSL).",
+            "covers": []
+          },
+          {
+            "title": "Altura (Height)",
+            "text": "Distancia vertical entre un nivel, punto u objeto considerado como punto, y una referencia especificada (por ejemplo, la elevación del aeródromo o el umbral de la pista).",
+            "covers": []
+          },
+          {
+            "title": "Conceptos fundamentales",
+            "text": "Conforme al Anexo 11 de la OACI, al MGTAM de SENEAM  y a los manuales técnicos del CIAAC, la posición vertical y las distancias en la atmósfera se clasifican bajo definiciones reglamentarias precisas:",
+            "covers": []
+          },
+          {
+            "title": "QFE y terreno variable",
+            "text": "El reglaje QFE mide la altura barométrica referida al punto de presión utilizado (elevación del aeródromo o umbral de pista), por lo que no representa de forma universal ni exacta la altura geométrica sobre el terreno variable que se sobrevuela. El cero ideal corresponde estrictamente al punto físico de la referencia barométrica seleccionada.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-01-elevation",
+            "file": "/ciaac-approved/altimetry/elevation.svg",
+            "alt": "Elevación: distancia vertical con la referencia rotulada. Esquema sin escala; el terreno cambia y la referencia especificada permanece fija.",
+            "heading": "Elevación",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-01-altitude",
+            "file": "/ciaac-approved/altimetry/altitude.svg",
+            "alt": "Altitud: distancia vertical con la referencia rotulada. Esquema sin escala; el terreno cambia y la referencia especificada permanece fija.",
+            "heading": "Altitud",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-01-height",
+            "file": "/ciaac-approved/altimetry/height.svg",
+            "alt": "Altura: distancia vertical con la referencia rotulada. Esquema sin escala; el terreno cambia y la referencia especificada permanece fija.",
+            "heading": "Altura",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Elevación",
+              "figureNumber": "ST07-01-elevation",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "Altitud",
+              "figureNumber": "ST07-01-altitude",
+              "cardIndexes": [
+                1
+              ]
+            },
+            {
+              "title": "Altura",
+              "figureNumber": "ST07-01-height",
+              "cardIndexes": [
+                2
+              ]
+            }
+          ],
+          "noteCardIndexes": [
+            3,
+            4
+          ]
+        }
+      },
+      {
+        "id": "ST07-02",
+        "kind": "content",
+        "nav": "Lectura, presión, realidad y densidad",
+        "title": "Lectura, presión, realidad y densidad",
+        "cards": [
+          {
+            "title": "Altitud Presión (Pressure Altitude / PA)",
+            "text": "Expresión de la presión atmosférica mediante la altitud que corresponde a esa presión en la Atmósfera Tipo Internacional (ISA). Se obtiene al ajustar la subescala del altímetro a la presión estándar de 29.92 inHg o 1013.25 hPa (QNE).",
+            "covers": []
+          },
+          {
+            "title": "Altitud Indicada (Indicated Altitude)",
+            "text": "Lectura sin corregir obtenida directamente en la carátula del altímetro cuando la subescala barométrica tiene ajustado el reglaje QNH local.",
+            "covers": []
+          },
+          {
+            "title": "Altitud Verdadera (True Altitude)",
+            "text": "Distancia vertical real medida en pies sobre el nivel medio del mar (MSL). Se calcula corrigiendo la altitud indicada/presión por variaciones de temperatura y presión no estándar de la atmósfera real.",
+            "covers": []
+          },
+          {
+            "title": "Altitud Densidad (Density Altitude / DA)",
+            "text": "Altitud presión corregida por desviaciones de la temperatura respecto a la Atmósfera Tipo (ISA). Representa la altitud equivalente en la ISA a la cual se encuentra la densidad del aire existente; es el parámetro crítico para evaluar las actuaciones del motor y la carrera de despegue.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-02-pressure-altitude",
+            "file": "/ciaac-approved/altimetry/pressure-altitude.svg",
+            "alt": "Presión atmosférica expresada como altitud ISA con reglaje estándar.",
+            "heading": "Altitud presión",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-02-indicated-altitude",
+            "file": "/ciaac-approved/altimetry/indicated-altitude.svg",
+            "alt": "Lectura del altímetro en la carátula. En la definición de esta fuente, con QNH local.",
+            "heading": "Altitud indicada",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-02-true-altitude",
+            "file": "/ciaac-approved/altimetry/true-altitude.svg",
+            "alt": "Distancia vertical real al nivel medio del mar; se distingue de la lectura barométrica.",
+            "heading": "Altitud verdadera",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-02-density-altitude",
+            "file": "/ciaac-approved/altimetry/density-altitude.svg",
+            "alt": "Altitud presión corregida por la desviación de temperatura respecto de ISA.",
+            "heading": "Altitud densidad",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Altitud presión",
+              "figureNumber": "ST07-02-pressure-altitude",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "Altitud indicada",
+              "figureNumber": "ST07-02-indicated-altitude",
+              "cardIndexes": [
+                1
+              ]
+            },
+            {
+              "title": "Altitud verdadera",
+              "figureNumber": "ST07-02-true-altitude",
+              "cardIndexes": [
+                2
+              ]
+            },
+            {
+              "title": "Altitud densidad",
+              "figureNumber": "ST07-02-density-altitude",
+              "cardIndexes": [
+                3
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "ST07-03",
+        "kind": "content",
+        "nav": "Una lectura, tres referencias",
+        "title": "Una lectura, tres referencias",
+        "cards": [
+          {
+            "title": "QNH (Reglaje Altimétrico para Elevación)",
+            "text": "Ajuste de la subescala del altímetro con la presión obtenida en el aeródromo y reducida al nivel medio del mar aplicando el gradiente de la atmósfera tipo ISA.\nComportamiento: Estando la aeronave en tierra en el aeródromo, el altímetro indicará la elevación oficial del campo. En vuelo, el instrumento indicará altitud respecto al MSL.",
+            "covers": []
+          },
+          {
+            "title": "QFE (Presión de la Estación / Umbral)",
+            "text": "Ajuste de la subescala con el valor de la presión atmosférica real medida en la elevación del aeródromo o en el umbral de la pista de aproximación de precisión.\nComportamiento: Estando la aeronave en tierra sobre el punto de referencia de presión utilizado, el altímetro indicará exactamente CERO pies. En vuelo, indicará la altura (HEIGHT) con respecto a dicha referencia.",
+            "covers": []
+          },
+          {
+            "title": "QNE / Ajuste Estándar",
+            "text": "Ajuste de la subescala con el valor de presión de la atmósfera tipo a nivel del mar (29.92 pulgadas de mercurio o 1013.25 hectopascales/milibares).\nComportamiento: Se utiliza para volar en espacio aéreo controlado por encima de la altitud de transición, expresándose la posición vertical en Niveles de Vuelo (FL — Flight Levels) para garantizar la separación vertical entre aeronaves.",
+            "covers": []
+          },
+          {
+            "title": "Altímetro barométrico",
+            "text": "El altímetro barométrico es un barómetro aneroide calibrado según la Atmósfera Tipo Internacional (ISA). La lectura del altímetro barométrico relaciona la presión estática medida con el reglaje de referencia introducido en la subescala, conforme a su calibración:",
+            "covers": []
+          },
+          {
+            "title": "QFE: precisión de la referencia",
+            "text": "El reglaje QFE mide la altura barométrica referida al punto de presión utilizado (elevación del aeródromo o umbral de pista), por lo que no representa de forma universal ni exacta la altura geométrica sobre el terreno variable que se sobrevuela. El cero ideal corresponde estrictamente al punto físico de la referencia barométrica seleccionada.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-03-qnh",
+            "file": "/ciaac-approved/altimetry/qnh.svg",
+            "alt": "QNH: presión reducida al nivel medio del mar según ISA. En tierra indica la elevación del campo; en vuelo, altitud.",
+            "heading": "QNH",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-03-qfe",
+            "file": "/ciaac-approved/altimetry/qfe.svg",
+            "alt": "QFE: referencia del campo o umbral. Cero ideal exclusivamente en ese punto; altura barométrica en vuelo, no AGL universal.",
+            "heading": "QFE",
+            "observe": "En el punto de referencia QFE y bajo el modelo ideal: cero; en vuelo: altura barométrica sobre esa referencia.",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-03-qne",
+            "file": "/ciaac-approved/altimetry/qne.svg",
+            "alt": "QNE: presión estándar. La indicación es altitud presión o niveles de vuelo; el plano no tiene posición geométrica fija respecto del MSL.",
+            "heading": "QNE",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-03-instrument-relation",
+            "file": "/ciaac-approved/altimetry/instrument-relation.svg",
+            "alt": "La presión estática medida y el reglaje de referencia se relacionan mediante la calibración ISA del altímetro aneroide.",
+            "heading": "Cómo se forma la lectura",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 2.0
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "QNH",
+              "figureNumber": "ST07-03-qnh",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "QFE",
+              "figureNumber": "ST07-03-qfe",
+              "cardIndexes": [
+                1
+              ]
+            },
+            {
+              "title": "QNE",
+              "figureNumber": "ST07-03-qne",
+              "cardIndexes": [
+                2
+              ]
+            }
+          ],
+          "noteCardIndexes": [
+            3,
+            4
+          ],
+          "contextFigureNumber": "ST07-03-instrument-relation"
+        }
+      },
+      {
+        "id": "ST07-04",
+        "kind": "content",
+        "nav": "Transición: TA, TL y capa",
+        "title": "Transición: TA, TL y capa",
+        "cards": [
+          {
+            "title": "Altitud de Transición (TA)",
+            "text": "Altitud especificada por la autoridad ATS en las proximidades de un aeródromo a la cual, o por debajo de la cual, la posición vertical de una aeronave se controla y expresa en altitudes (QNH).",
+            "covers": []
+          },
+          {
+            "title": "Nivel de Transición (TL)",
+            "text": "El nivel de vuelo más bajo utilizable por encima de la altitud de transición establecida para el aeródromo o TMA.",
+            "covers": []
+          },
+          {
+            "title": "Capa de Transición",
+            "text": "Espacio aéreo comprendido entre la altitud de transición y el nivel de transición. En esta capa no se asigna vuelo nivelado de crucero.",
+            "covers": []
+          },
+          {
+            "title": "Durante el Ascenso",
+            "text": "Durante el Ascenso: La posición vertical se expresa en altitudes (QNH) hasta la altitud de transición. Al ascender a través de la TA, el piloto cambia el reglaje del altímetro a QNE (29.92 inHg / 1013.25 hPa), expresando la posición vertical en Niveles de Vuelo (FL).",
+            "covers": []
+          },
+          {
+            "title": "Durante el Descenso",
+            "text": "Durante el Descenso: La posición vertical se expresa en niveles de vuelo (QNE) hasta el nivel de transición. Al descender a través del TL, el piloto cambia el reglaje al QNH local del aeródromo, expresando la posición vertical en altitudes.",
+            "covers": []
+          },
+          {
+            "title": "Estructura de transición",
+            "text": "La coordinación del tránsito aéreo en las proximidades de los aeródromos y en ruta requiere una estructura estandarizada para pasar del control por altitud (QNH) al control por niveles de vuelo (QNE):",
+            "covers": []
+          },
+          {
+            "title": "Contexto Histórico SENEAM/CIAAC y Advertencia de Vigencia",
+            "text": "Punto de Examen Histórico: En la bibliografía guía del CIAAC y en el MGTAM 2019 de SENEAM, se referencia históricamente la Altitud de Transición de 18,500 ft MSL y el Nivel de Transición FL195 para el espacio aéreo mexicano.\nAplicación Operacional Real (2026): La Altitud y Nivel de Transición aplicables a cada aeródromo o área de control en la operación actual deben verificarse en la PIA/AIP México Sección ENR 1.7 y en las cartas instrumentales vigentes (PENDIENTE FUENTE VIGENTE).",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-transition",
+            "file": "/ciaac-approved/altimetry/transition.svg",
+            "alt": "TL por encima de TA; capa de transición entre ambos. Niveles de vuelo arriba y altitudes abajo. Sin valores universales.",
+            "heading": "Estructura de transición",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.4814814814814814
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "ST07-transition",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 17,
+              "y": 63,
+              "labelX": 7,
+              "labelY": 74
+            },
+            {
+              "cardIndex": 1,
+              "x": 17,
+              "y": 26.7,
+              "labelX": 7,
+              "labelY": 16
+            },
+            {
+              "cardIndex": 2,
+              "x": 50,
+              "y": 51,
+              "labelX": 92,
+              "labelY": 51
+            }
+          ],
+          "noteCardIndexes": [
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      },
+      {
+        "id": "ST07-05",
+        "kind": "content",
+        "nav": "Presión y frío: indicación frente a realidad",
+        "title": "Presión y frío: indicación frente a realidad",
+        "cards": [
+          {
+            "title": "Error por Variación de Presión Atmosférica",
+            "text": "Mecanismo: Si una aeronave vuela de una zona de alta presión hacia una zona de baja presión barométrica sin ajustar el reglaje QNH en la subescala, la presión sentida por las cápsulas aneroides disminuye, haciendo que el altímetro simule un ascenso. El piloto (o el piloto automático) descenderá la aeronave para mantener la altitud indicada asignada.\nResultado Peligroso: La altitud indicada será mayor que la altitud verdadera (la aeronave vuela más bajo de lo que indica el instrumento).\nRegla Mnemotécnica: \"De alta a baja presión, el altímetro indica de más\" (High to Low, Look Out Below).",
+            "covers": []
+          },
+          {
+            "title": "Error por Variación de Temperatura (Efecto de Aire Frío)",
+            "text": "Mecanismo: La atmósfera tipo ISA asume una temperatura a nivel del mar de +15 °C y un gradiente térmico vertical de -2 °C (-1.98 °C) por cada 1,000 ft de ascenso. En masas de aire extremadamente frío, las moléculas de aire se comprimen, reduciendo la altura real de la columna de presión.\nResultado Peligroso: Al volar en aire más frío que la temperatura estándar ISA, el altímetro indicará una altitud mayor que la altitud verdadera real de la aeronave (el avión vuela más cerca de los obstáculos de lo que indica el altímetro).\nRegla Mnemotécnica: \"De caliente a frío, el altímetro indica de más\" (Hot to Cold, Look Out Below).",
+            "covers": []
+          },
+          {
+            "title": "Errores altimétricos",
+            "text": "Las variaciones de la atmósfera real respecto al modelo teórico de la Atmósfera Tipo Internacional (ISA) generan desviaciones entre la altitud indicada en el instrumento y la altitud verdadera de la aeronave:",
+            "covers": []
+          },
+          {
+            "title": "Aritmética Aritmética Heurística y Supuestos de Cálculo",
+            "text": "Relación Heurística Aproximada: En niveles bajos de la atmósfera tipo (ISA) a nivel del mar, una diferencia de 1.0 pulgada de mercurio (1.0 inHg) corresponde aproximadamente a 1,000 pies de altitud (o aprox. 28 a 30 pies por cada hectopascal/milibar).\nNaturaleza del Cálculo: Esta regla es una aproximación aritmética simplificada para la enseñanza, no una ecuación termodinámica exacta. Las variaciones reales varían no linealmente con la temperatura y la altitud, requiriéndose el uso de computadores de vuelo o tablas barométricas para cálculos de precisión.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-05-pressure-error",
+            "file": "/ciaac-approved/altimetry/pressure-error.svg",
+            "alt": "QNH sin reajustar; de alta a baja presión, mantener la misma indicación lleva a menor altitud real.",
+            "heading": "Error de presión",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-05-cold-error",
+            "file": "/ciaac-approved/altimetry/cold-error.svg",
+            "alt": "A igual indicación barométrica, la columna de aire frío tiene menor altura real. Referencia común; esquema conceptual, no tabla de corrección.",
+            "heading": "Error por aire frío",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Cambio de presión",
+              "figureNumber": "ST07-05-pressure-error",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "Aire más frío que ISA",
+              "figureNumber": "ST07-05-cold-error",
+              "cardIndexes": [
+                1
+              ]
+            }
+          ],
+          "noteCardIndexes": [
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "ST07-06",
+        "kind": "content",
+        "nav": "Histórico y verificación vigente",
+        "title": "Histórico y verificación vigente",
+        "cards": [
+          {
+            "title": "Uso para Examen CIAAC (Fuentes Históricas del Cuaderno)",
+            "text": "La enseñanza teórica del CIAAC toma como respaldo documental el Manual de Servicios de Tránsito Aéreo del CIAAC  y el MGTAM 3.ª ed. 2019 de SENEAM, citando la Altitud de Transición de 18,500 ft y Nivel de Transición FL195.",
+            "covers": []
+          },
+          {
+            "title": "Operación Real Vigente (2026)",
+            "text": "En la práctica de vuelo real, los valores de la Altitud de Transición (TA) y Nivel de Transición (TL) específicos para cada espacio aéreo o aeródromo se verifican obligatoriamente en la Publicación de Información Aeronáutica (PIA / AIP México) Sección ENR 1.7 y cartas de llegada/salida vigentes (PENDIENTE FUENTE VIGENTE).",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-06-historical-values",
+            "file": "/ciaac-approved/altimetry/historical-values.svg",
+            "alt": "Valores históricos del MGTAM 2019: TA 18,500 ft MSL y TL FL195. No se presentan como vigentes.",
+            "heading": "Referencia histórica",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-06-current-values",
+            "file": "/ciaac-approved/altimetry/current-values.svg",
+            "alt": "Para la operación actual se requiere comprobar TA y TL aplicables en PIA/AIP ENR 1.7 y cartas vigentes. Este candidato no certifica esos valores.",
+            "heading": "Verificación operacional pendiente",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Histórico: MGTAM 2019",
+              "figureNumber": "ST07-06-historical-values",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "Operación actual: por verificar",
+              "figureNumber": "ST07-06-current-values",
+              "cardIndexes": [
+                1
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "ST07-07",
+        "kind": "content",
+        "nav": "Caso integrador: Alfa → FL220 → Bravo",
+        "title": "Caso integrador: Alfa → FL220 → Bravo",
+        "cards": [
+          {
+            "title": "1. Pregunta: lecturas en Alfa",
+            "text": "Si en la plataforma del aeródromo \"Alfa\" el piloto ajusta la subescala del altímetro a 29.92 inHg (QNE), ¿cuál será la lectura aproximada que mostrará el altímetro en tierra y qué indicará si ajusta el reglaje QFE en la subescala?",
+            "covers": [],
+            "detailText": "Lecturas en Tierra con Reglajes QNE y QFE:\nCon Reglaje QNE (29.92 inHg): La subescala de 29.92 inHg está 0.20 inHg por debajo del QNH del campo (30.12 inHg). Aplicando la regla heurística lineal aproximada de 1,000 ft/inHg (0.20 inHg ≈ 200 ft), la carátula indicará una Altitud Presión aproximada de 7,340 ft - 200 ft = 7,140 ft.\nAclaración de Cálculo: Esta cifra es una aproximación aritmética didáctica bajo supuestos de la ISA; no representa la altitud verdadera física de la aeronave, ni una conversión exacta a hectopascales, ni corresponde a la elevación del Aeropuerto Internacional de la Ciudad de México (MMMX).\nCon Reglaje QFE: Al ajustar en la subescala la presión atmosférica real medida en la estación, el altímetro indicará exactamente CERO pies estando en tierra sobre la referencia de presión definida (elevación del campo o umbral). En vuelo, el instrumento indicará la altura barométrica (HEIGHT) sobre dicha referencia especificada."
+          },
+          {
+            "title": "2. Pregunta: ascenso a FL220",
+            "text": "Durante el ascenso a través de la Altitud de Transición histórica (18,500 ft MSL), ¿qué acción obligatoria realiza el piloto sobre la subescala del altímetro y cómo expresa la posición vertical de la aeronave al alcanzar FL220?",
+            "covers": [],
+            "detailText": "Procedimiento en Ascenso y Transición Histórica:\nDurante el ascenso inicial, la posición vertical se controla en altitudes (QNH 30.12 inHg). Al ascender a través de la Altitud de Transición histórica de 18,500 ft MSL, el piloto cambia la subescala al reglaje estándar QNE (29.92 inHg / 1013.25 hPa). Al nivelar en crucero, la posición vertical se expresa formalmente como Nivel de Vuelo 220 (FL220)."
+          },
+          {
+            "title": "3. Pregunta: descenso a Bravo",
+            "text": "Al descender a través del Nivel de Transición histórico (FL195) hacia el aeródromo \"Bravo\", ¿qué cambio de reglaje ejecuta la tripulación y cómo se expresa la posición vertical a partir de ese momento?",
+            "covers": [],
+            "detailText": "Procedimiento en Descenso y Transición Histórica:\nDurante el descenso en ruta, la posición vertical se expresa en niveles de vuelo (QNE 29.92 inHg). Al descender a través del Nivel de Transición histórico FL195, la tripulación ajusta la subescala al QNH local de destino (29.82 inHg). A partir de ese momento, la posición vertical se expresa y controla en altitudes (pies MSL) hasta el aterrizaje.\nDisclaimer Operacional: Las cifras de 18,500 ft / FL195 se utilizan en este ejercicio exclusivamente como simulación académica curricular. La operación real en 2026 exige consultar la PIA/AIP México Sección ENR 1.7 y la carta de aeródromo vigente (PENDIENTE FUENTE VIGENTE)."
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-07-case-ground",
+            "file": "/ciaac-approved/altimetry/case-ground.svg",
+            "alt": "Caso ficticio: elevación 7,340 ft MSL, QNH 30.12 y QNE 29.92 inHg. Diferencia de menos 0.20 inHg, aproximación menos 200 ft; resultado 7,140 ft de altitud presión.",
+            "heading": "Alfa: lectura en plataforma",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-07-case-ascent",
+            "file": "/ciaac-approved/altimetry/case-ascent.svg",
+            "alt": "Simulación académica: QNH 30.12; al pasar por TA histórica de 18,500 ft se usa QNE 29.92; nivel final FL220.",
+            "heading": "Ascenso del caso",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-07-case-descent",
+            "file": "/ciaac-approved/altimetry/case-descent.svg",
+            "alt": "Simulación académica: con QNE 29.92 se desciende por el TL histórico FL195; se cambia a QNH Bravo 29.82 para expresar altitudes.",
+            "heading": "Descenso del caso",
+            "observe": "",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 1.125
+          },
+          {
+            "chapter": 1,
+            "topic": 7,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "ST07-07-case-context",
+            "file": "/ciaac-approved/altimetry/case-context.svg",
+            "alt": "Ruta didáctica del caso: plataforma de Alfa, crucero FL220 y descenso a Bravo. No es una ruta real ni un procedimiento publicado.",
+            "heading": "Escenario ficticio: Alfa a Bravo",
+            "observe": "Un avión de negocios en vuelo IFR se encuentra estacionado en la plataforma de un aeródromo ficticio \"Alfa\" (elevación oficial de la plataforma/campo = 7,340 ft MSL; reglaje QNH local del momento = 30.12 inHg; reglaje estándar QNE = 29.92 inHg).\n\nSupuestos de cálculo didáctico: Para estimar la indicación en la subescala barométrica, se aplica la regla heurística lineal aproximada de 1,000 ft por cada 1.0 inHg de diferencia de presión (200 ft por 0.20 inHg). Para fines de este ejercicio examinable, se consideran la Altitud de Transición histórica de 18,500 ft MSL y el Nivel de Transición FL195.\n\nLa aeronave prepara su salida IFR en la plataforma del aeródromo \"Alfa\".\nLa tripulación despega y asciende en ruta hasta nivelar a FL220.\nPosteriormente, la aeronave inicia el descenso hacia el aeródromo de destino \"Bravo\", donde el control de tránsito aéreo le transmite el QNH local de 29.82 inHg.",
+            "caption": "Esquema conceptual original. No está a escala.",
+            "assetAspectRatio": 2.1052631578947367
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Alfa: lecturas en tierra",
+              "figureNumber": "ST07-07-case-ground",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "Ascenso: transición histórica",
+              "figureNumber": "ST07-07-case-ascent",
+              "cardIndexes": [
+                1
+              ]
+            },
+            {
+              "title": "Bravo: descenso histórico",
+              "figureNumber": "ST07-07-case-descent",
+              "cardIndexes": [
+                2
+              ]
+            }
+          ],
+          "contextFigureNumber": "ST07-07-case-context"
+        }
+      },
+      {
+        "kind": "exercise",
+        "nav": "Recorre el caso"
+      },
+      {
+        "kind": "finish",
+        "nav": "Aterrizaje"
+      }
+    ],
+    "sources": [
+      {
+        "id": "st07-anexo11",
+        "title": "OACI Anexo11, 14.ª edición, julio2016",
+        "role": "Fuente histórica con localizadores corregidos por la auditoría; no certifica vigencia operacional 2026.",
+        "verified_locators": [
+          "Cap.1 definiciones, folio1-3; PDF 23"
+        ]
+      },
+      {
+        "id": "st07-anexo2",
+        "title": "OACI Anexo2, 10.ª edición, julio2005; PDF15: Enmienda41,20-11-2008",
+        "role": "Fuente histórica con localizadores corregidos por la auditoría; no certifica vigencia operacional 2026.",
+        "verified_locators": [
+          "Cap.1 Nivel de vuelo, notas1–2, folio1-3; PDF 15"
+        ]
+      },
+      {
+        "id": "st07-mgtam2019",
+        "title": "SENEAM, Manual de Gestión de Tránsito Aéreo de México, 3.ª edición, 1 enero2019",
+        "role": "Fuente histórica con localizadores corregidos por la auditoría; no certifica vigencia operacional 2026.",
+        "verified_locators": [
+          "Cap.1 Capa de transición, folio1-11; PDF 35",
+          "§12.1.13, folio12-5; PDF 309",
+          "Altitud/presión/TA/indicada PDF31; altura32; capa35; elevación40; PDF 31, 32, 35, 40",
+          "Nivel de vuelo, notas1–2, folios1-23/1-24; PDF 47, 48",
+          "§4.10.1, folio4-16; PDF 81"
+        ]
+      },
+      {
+        "id": "st07-ciaac-st-drive",
+        "title": "CIAAC Servicios de Tránsito Aéreo, copia123 páginas; sin fecha impresa verificada",
+        "role": "Fuente histórica con localizadores corregidos por la auditoría; no certifica vigencia operacional 2026.",
+        "verified_locators": [
+          "Términos altimétricos PDF9; folios47–48 PDF49–50; PDF 9, 49, 50"
+        ]
+      },
+      {
+        "id": "st07-doc4444",
+        "title": "OACI Doc4444 PANS-ATM, 15.ª edición,2007",
+        "role": "Fuente histórica con localizadores corregidos por la auditoría; no certifica vigencia operacional 2026.",
+        "verified_locators": [
+          "Altitud20; presión/TA/altura21; capa23; elevación25; TL/nivel de vuelo y notas28; PDF 20, 21, 23, 25, 28",
+          "§4.10.1.1 PDF62–63; §4.10.2.1–.2 PDF63; §4.10.4 PDF64; PDF 62, 63, 64"
+        ]
+      }
+    ],
+    "minutes": 18,
+    "sourceLabel": "CIAAC · Servicios de tránsito aéreo",
+    "chapterLabel": "Itinerario",
+    "contentVersion": "st07-grouped-candidate-20261006-v1"
+  }
+}

@@ -13,9 +13,12 @@ import "./ciaac-aircraft-engines-handbook.css";
 
 /** Native flow; each approved stage keeps one explanation beside its own visual. */
 export function CiaacApprovedAircraftLearningPath(
-  props: Omit<ComponentProps<typeof HandbookLearningPath>, "presentation">,
+  props: Omit<ComponentProps<typeof HandbookLearningPath>, "presentation"> & {
+    journeyCurriculumVersion?: string;
+  },
 ) {
-  const { document, lpId } = props;
+  const { journeyCurriculumVersion, ...handbookProps } = props;
+  const { document, lpId } = handbookProps;
   const exerciseFigures = (
     document as typeof document & { exerciseFigures?: ApprovedAircraftFigure[] }
   ).exerciseFigures;
@@ -86,11 +89,23 @@ export function CiaacApprovedAircraftLearningPath(
         saved: unknown,
         completed: boolean,
         fresh: Parameters<typeof migrateApprovedAircraftJourney>[4],
-      ) => migrateApprovedAircraftJourney(lpId, document, saved, completed, fresh),
+      ) =>
+        migrateApprovedAircraftJourney(
+          lpId,
+          document,
+          saved,
+          completed,
+          fresh,
+          journeyCurriculumVersion,
+        ),
     }),
-    [document, lpId, exerciseFigures],
+    [document, lpId, exerciseFigures, journeyCurriculumVersion],
   );
   return (
-    <HandbookLearningPath key={`${props.userId}:${lpId}`} {...props} presentation={presentation} />
+    <HandbookLearningPath
+      key={`${props.userId}:${lpId}`}
+      {...handbookProps}
+      presentation={presentation}
+    />
   );
 }

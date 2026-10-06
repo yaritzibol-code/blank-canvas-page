@@ -3,7 +3,13 @@ import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { LpBreadcrumbs, LpCard, LpContinueCard, LpGrid, LpHeader } from "@/components/lp/nav";
 import { CATEGORY_STYLE } from "./index";
 import { hasAvailableCiaacContent } from "@/lib/lp/ciaac-availability";
-import { legacyAircraftSubject, lpCategory, lpSubject } from "@/lib/lp/taxonomy";
+import {
+  legacyAircraftSubject,
+  legacyTransitSubject,
+  lpCategory,
+  lpSubject,
+  subjectLpCount,
+} from "@/lib/lp/taxonomy";
 import { useSessionUser, useStore } from "@/lib/store";
 import { getLpCompleted, getLpStarted, subjectContinue, subjectProgress } from "@/lib/store/lp-nav";
 
@@ -20,7 +26,12 @@ function MateriaPage() {
   const userId = user?.id ?? "";
   const cat = lpCategory(categoria);
   const subject = lpSubject(categoria, materia);
-  const legacy = subject?.id === "ciaac/aeronaves-y-motores" ? legacyAircraftSubject() : undefined;
+  const legacy =
+    subject?.id === "ciaac/aeronaves-y-motores"
+      ? legacyAircraftSubject()
+      : subject?.id === "ciaac/servicios-de-transito-aereo"
+        ? legacyTransitSubject()
+        : undefined;
 
   const estado = useStore(() => {
     if (!subject) return null;
@@ -109,7 +120,7 @@ function MateriaPage() {
           <LpHeader
             eyebrow="Tu historial"
             title="Recorridos anteriores"
-            subtitle="Tu avance anterior sigue guardado. Los 19 recorridos reorganizados tienen su propio progreso."
+            subtitle={`Tu avance anterior sigue guardado. Los ${subjectLpCount(subject)} recorridos reorganizados tienen su propio progreso.`}
           />
           <LpGrid>
             {estado.legacy.map(({ container, done }) => (
