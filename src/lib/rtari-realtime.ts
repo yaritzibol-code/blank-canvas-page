@@ -20,9 +20,15 @@ import { RTARI_MAX_MINUTOS, type RtariNivel, type RtariVoice } from "@/modules/r
 
 /** Cuánto se espera la transcripción del alumno antes de seguir sin ella. */
 const ESPERA_TRANSCRIPCION_MS = 12_000;
+const ESPERA_CONEXION_MS = 30_000;
 
 export type RtariEstado =
-  "inactiva" | "conectando" | "en_curso" | "terminando" | "terminada" | "error";
+  | "inactiva"
+  | "conectando"
+  | "en_curso"
+  | "terminando"
+  | "terminada"
+  | "error";
 
 export interface RtariTurn {
   role: "examiner" | "candidate";
@@ -32,7 +38,13 @@ export interface RtariTurn {
 }
 
 export type RtariErrorCode =
-  "sin_sesion" | "requiere_pro" | "sin_minutos" | "sin_configurar" | "micro" | "red" | "openai";
+  | "sin_sesion"
+  | "requiere_pro"
+  | "sin_minutos"
+  | "sin_configurar"
+  | "micro"
+  | "red"
+  | "openai";
 
 export class RtariError extends Error {
   code: RtariErrorCode;
@@ -117,6 +129,8 @@ export class RtariRealtimeSession {
   private recDone: Promise<Blob | null> | null = null;
   private cutoffTimer: ReturnType<typeof setTimeout> | null = null;
   private startedAt = 0;
+  private endedAt = 0;
+  private cancelConnectionWait: (() => void) | null = null;
   private estado: RtariEstado = "inactiva";
   private parciales = new Map<string, string>();
   private cb: RtariCallbacks;
@@ -201,7 +215,7 @@ export class RtariRealtimeSession {
 
   /** ms transcurridos desde que arrancó la entrevista. */
   elapsed(): number {
-    return this.startedAt === 0 ? 0 : Date.now() - this.startedAt;
+    return this.startedAt === 0 ? 0 : (this.endedAt || Date.now()) - this.startedAt;
   }
 
   onLevel(fn: LevelListener | null) {
@@ -297,19 +311,23 @@ export class RtariRealtimeSession {
     this.dc = dc;
     dc.addEventListener("message", (e) => this.onEvent(e.data as string));
 
+    const disconnected = () => {
+      if (this.cancelada || this.estado !== "en_curso") return;
+      this.stop();
+      this.setEstado("terminada");
+      this.cb.onError?.(new RtariError("red", "Se cortó la conexión con el sinodal."));
+    };
+    dc.addEventListener("close", disconnected);
+    dc.addEventListener("error", disconnected);
     pc.addEventListener("connectionstatechange", () => {
-      if (pc.connectionState === "failed" || pc.connectionState === "disconnected") {
-        if (this.estado === "en_curso") {
-          this.cb.onError?.(new RtariError("red", "Se cortó la conexión con el sinodal."));
-          this.setEstado("terminada");
-          this.stop();
-        }
-      }
+      if (["failed", "disconnected", "closed"].includes(pc.connectionState)) disconnected();
     });
 
     try {
       const offer = await pc.createOffer();
+      if (this.cancelada) return this.abortar();
       await pc.setLocalDescription(offer);
+      if (this.cancelada) return this.abortar();
 
       const res = await fetch(
         `https://api.openai.com/v1/realtime/calls?model=${encodeURIComponent(secret.model)}`,
@@ -329,14 +347,18 @@ export class RtariRealtimeSession {
       // Última oportunidad de no conectar: pasado este punto ya hay audio.
       if (this.cancelada) return this.abortar();
       await pc.setRemoteDescription({ type: "answer", sdp: answer });
+      if (this.cancelada) return this.abortar();
+      await this.waitForChannel(pc, dc);
     } catch (err) {
       if (err instanceof RtariError) throw err;
+      if (this.cancelada) return this.abortar();
       this.fail(new RtariError("red", "No pude abrir la sesión de voz. Revisa tu conexión."));
     }
 
     if (this.cancelada) return this.abortar();
 
     this.startedAt = Date.now();
+    this.endedAt = 0;
     this.setEstado("en_curso");
     void markPracticeSession({ data: { id: this.sessionId, action: "connected" } }).catch(() => {});
 
@@ -348,8 +370,37 @@ export class RtariRealtimeSession {
     }, tope * 60_000);
 
     // El sinodal abre la entrevista en cuanto el canal está listo.
-    if (dc.readyState === "open") this.pedirRespuesta();
-    else dc.addEventListener("open", () => this.pedirRespuesta(), { once: true });
+    this.pedirRespuesta();
+  }
+
+  /** SDP acceptance is not proof that ICE/DTLS and the data channel connected. */
+  private waitForChannel(pc: RTCPeerConnection, dc: RTCDataChannel): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const finish = (error?: Error) => {
+        clearTimeout(timer);
+        dc.removeEventListener("open", opened);
+        dc.removeEventListener("close", failed);
+        dc.removeEventListener("error", failed);
+        pc.removeEventListener("connectionstatechange", changed);
+        this.cancelConnectionWait = null;
+        if (error) reject(error);
+        else resolve();
+      };
+      const opened = () => finish();
+      const failed = () => finish(new Error("Voice channel unavailable"));
+      const changed = () => {
+        if (["failed", "closed", "disconnected"].includes(pc.connectionState)) failed();
+      };
+      const timer = setTimeout(failed, ESPERA_CONEXION_MS);
+      this.cancelConnectionWait = opened;
+      dc.addEventListener("open", opened);
+      dc.addEventListener("close", failed);
+      dc.addEventListener("error", failed);
+      pc.addEventListener("connectionstatechange", changed);
+      if (this.cancelada || dc.readyState === "open") opened();
+      else if (dc.readyState === "closed") failed();
+      else changed();
+    });
   }
 
   /**
@@ -479,7 +530,7 @@ export class RtariRealtimeSession {
    * seguidos son más rápidos que el viaje de ida y vuelta.
    */
   private pedirRespuesta() {
-    if (this.respuestaEnCurso) return;
+    if (this.cancelada || this.dc?.readyState !== "open" || this.respuestaEnCurso) return;
     this.respuestaEnCurso = true;
     this.send({ type: "response.create" });
   }
@@ -545,6 +596,8 @@ export class RtariRealtimeSession {
   stop() {
     soltarElTurno(this);
     this.cancelada = true;
+    if (this.startedAt && !this.endedAt) this.endedAt = Date.now();
+    this.cancelConnectionWait?.();
     this.respuestaEnCurso = false;
     this.repeticionPendiente = false;
     if (this.cutoffTimer) {
@@ -671,9 +724,7 @@ export class RtariRealtimeSession {
     if (type === "conversation.item.input_audio_transcription.completed") {
       const text = String(evt.transcript ?? "").trim();
       const id = String(evt.item_id ?? "");
-      const turn: RtariTurn | null = text
-        ? { role: "candidate", text, at: this.elapsed() }
-        : null;
+      const turn: RtariTurn | null = text ? { role: "candidate", text, at: this.elapsed() } : null;
       const hueco = this.cola.find((e) => e.itemId === id && e.turn === null);
       if (hueco) {
         if (turn) hueco.turn = turn;
@@ -684,7 +735,6 @@ export class RtariRealtimeSession {
       this.vaciarCola();
       return;
     }
-
 
     if (type === "error") {
       // Si la respuesta murió a medias, soltar la bandera: si no, el sinodal
