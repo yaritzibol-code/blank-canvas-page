@@ -14,6 +14,7 @@ import {
   markFlashSeen,
   useFlashOffer,
 } from "@/lib/flash-offer";
+import { BENEFICIOS_PRO } from "@/lib/pricing";
 import { isPaid, useSessionUser } from "@/lib/store";
 import { Confetti } from "@/components/shared/Confetti";
 import { Icon } from "@/components/ui/fp-icon";
@@ -22,17 +23,6 @@ const BRAND = "#7A5C1E";
 const FONT = "'Manrope', sans-serif";
 const DISPLAY = "'Bricolage Grotesque', 'Manrope', sans-serif";
 const SETUP_LIST = 3000;
-
-/** Todo lo que se desbloquea con Pro (mismo listado que la card de precios). */
-const BENEFICIOS = [
-  "Banco completo: CIAAC, ATP, Jeppesen y Handbook",
-  "Cuestionarios y simuladores ilimitados",
-  "Yaris con IA: te explica y te acompaña",
-  "Análisis de desempeño por materia con Pathy",
-  "Biblioteca y manuales completos",
-  "Recordatorios de estudio por WhatsApp",
-  "Módulos nuevos conforme se liberan",
-];
 
 export function FlashOfferWatch() {
   const navigate = useNavigate();
@@ -187,7 +177,7 @@ export function FlashOfferWatch() {
                   </span>
                 </div>
                 <ul style={{ listStyle: "none", padding: 0, margin: "14px 0 0", display: "grid", gap: 9 }}>
-                  {BENEFICIOS.map((b) => (
+                  {BENEFICIOS_PRO.map((b) => (
                     <li key={b} style={{ display: "flex", gap: 9, alignItems: "flex-start" }}>
                       <span aria-hidden="true" style={{ color: "#C7A052", fontWeight: 900, lineHeight: 1.35 }}>✓</span>
                       <span style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.78)", lineHeight: 1.35 }}>{b}</span>

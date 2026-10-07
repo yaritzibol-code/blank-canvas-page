@@ -15,6 +15,13 @@ import {
 } from "@/lib/pricing";
 import { logBillingEvent } from "@/lib/billing-audit.server";
 import type { Attribution } from "@/lib/meta";
+import {
+  FLASH_RECHAZO_MIN,
+  OFERTA_PRO_PCT,
+  OFERTA_PRO_VIGENCIA_MS,
+  oferta20Vigente,
+  type OfertaProEstado,
+} from "@/lib/oferta-pro";
 
 type CheckoutResult = { clientSecret: string } | { error: string };
 type PortalResult = { url: string } | { error: string };
@@ -179,11 +186,15 @@ interface FlashOfferRow {
 /**
  * Arranca (una única vez por cuenta) la oferta relámpago por pago abandonado.
  * El servidor guarda la ventana para que el descuento no pueda falsificarse
- * desde el navegador.
+ * desde el navegador. Si se dispara por rechazar el popup del 20%
+ * (`origen: "rechazo_oferta"`) la ventana dura sólo 10 minutos.
  */
 export const startFlashOffer = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }): Promise<{ expiresAt: number } | { none: true }> => {
+  .inputValidator((data?: { origen?: "checkout" | "rechazo_oferta" }) => ({
+    origen: data?.origen === "rechazo_oferta" ? ("rechazo_oferta" as const) : ("checkout" as const),
+  }))
+  .handler(async ({ data, context }): Promise<{ expiresAt: number } | { none: true }> => {
     const { supabase, userId } = context;
     const { data: row } = await supabase
       .from("profiles")
@@ -200,7 +211,9 @@ export const startFlashOffer = createServerFn({ method: "POST" })
       return { none: true };
     }
     const startedAt = Date.now();
-    const expiresAt = startedAt + FLASH_DURATION_MS;
+    const duracion =
+      data.origen === "rechazo_oferta" ? FLASH_RECHAZO_MIN * 60_000 : FLASH_DURATION_MS;
+    const expiresAt = startedAt + duracion;
     await supabase
       .from("profiles")
       .update({ data: { ...perfil, flashOffer: { startedAt, expiresAt } } as never })
@@ -230,6 +243,29 @@ async function flashSetupCoupon(
     applies_to: { products: [productId] },
     max_redemptions: 1,
     redeem_by: Math.floor((Date.now() + FLASH_DURATION_MS) / 1000),
+  });
+  return coupon.id;
+}
+
+/**
+ * Cupón del popup de conversión: 20% sobre la inscripción, de un solo uso y
+ * sólo mientras sigue vigente la oferta que vio el alumno.
+ */
+async function ofertaProCoupon(
+  stripe: Stripe,
+  setupPriceId: string,
+  venceEn: number,
+): Promise<string> {
+  const price = await stripe.prices.retrieve(setupPriceId);
+  const productId = typeof price.product === "string" ? price.product : price.product.id;
+  const coupon = await stripe.coupons.create({
+    percent_off: OFERTA_PRO_PCT,
+    duration: "once",
+    name: `Oferta Pro · ${OFERTA_PRO_PCT}% en la inscripción`,
+    applies_to: { products: [productId] },
+    max_redemptions: 1,
+    // Al menos una hora: quien abre el pago al final de la ventana alcanza a pagar.
+    redeem_by: Math.floor(Math.max(venceEn, Date.now() + 60 * 60_000) / 1000),
   });
   return coupon.id;
 }
@@ -300,6 +336,8 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       environment: StripeEnv;
       promoCode?: string;
       flash?: boolean;
+      /** Viene del popup del 20%: el servidor revalida que siga vigente. */
+      oferta20?: boolean;
       attribution?: Attribution;
     }) => {
       if (!/^[a-zA-Z0-9_-]+$/.test(data.priceId)) throw new Error("Invalid priceId");
@@ -400,6 +438,24 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
           }
         }
       }
+      // 20% del popup de conversión. Si además corre la relámpago, gana esa
+      // (es mayor); Stripe sólo admite un descuento por sesión.
+      if (!discounts && data.oferta20 && setupPriceId) {
+        const ofertaPro = perfilData.ofertaPro as OfertaProEstado | undefined;
+        const ultimo = ofertaPro?.intentos?.at(-1);
+        if (ultimo && oferta20Vigente(ofertaPro, Date.now())) {
+          try {
+            const couponId = await ofertaProCoupon(
+              stripe,
+              setupPriceId,
+              ultimo.en + OFERTA_PRO_VIGENCIA_MS,
+            );
+            discounts = [{ coupon: couponId }];
+          } catch {
+            /* sin descuento: el checkout abre al precio normal */
+          }
+        }
+      }
 
 
       const attrMeta = attributionMetadata(data.attribution);
@@ -443,6 +499,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
           stripe_price_id: stripePrice.id,
           setup_price_id: setupPriceId,
           promo_code: data.promoCode ?? null,
+          discount_coupon: discounts && "coupon" in discounts[0] ? discounts[0].coupon : null,
           customer: customerId,
           mode: session.mode,
           attribution: attrMeta.subscription,

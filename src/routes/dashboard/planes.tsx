@@ -40,12 +40,14 @@ export const Route = createFileRoute("/dashboard/planes")({
   component: PlanesPage,
   // `?checkout=1` abre el checkout de Stripe en cuanto la página está lista
   // y `?plan=anual|mensual` respeta el ciclo elegido en la landing de precios.
+  // `?oferta=20` llega del popup de conversión (el servidor revalida el 20%).
   validateSearch: (
     search: Record<string, unknown>,
-  ): { checkout?: 1; plan?: "mensual" | "anual"; flash?: 1 } => ({
+  ): { checkout?: 1; plan?: "mensual" | "anual"; flash?: 1; oferta?: 20 } => ({
     ...(search.checkout === "1" || search.checkout === 1 || search.checkout === true ? { checkout: 1 as const } : {}),
     ...(search.flash === "1" || search.flash === 1 || search.flash === true ? { flash: 1 as const } : {}),
     ...(search.plan === "anual" || search.plan === "mensual" ? { plan: search.plan } : {}),
+    ...(search.oferta === "20" || search.oferta === 20 ? { oferta: 20 as const } : {}),
   }),
 });
 
@@ -65,7 +67,7 @@ interface SubRow {
 function PlanesPage() {
   const { user, ready } = useRequireAuth();
   const navigate = useNavigate();
-  const { checkout, plan } = Route.useSearch();
+  const { checkout, plan, oferta } = Route.useSearch();
   const [cupon, setCupon] = useState("");
   const [sub, setSub] = useState<SubRow | null>(null);
   const [subChecked, setSubChecked] = useState(false);
@@ -202,6 +204,8 @@ function PlanesPage() {
           // Oferta relámpago viva: el servidor revalida la ventana y aplica el
           // descuento de inscripción a $1,500.
           ...(flashOfferActive() ? { flash: true as const } : {}),
+          // Popup del 20%: sólo aplica si la relámpago no está corriendo.
+          ...(oferta === 20 ? { oferta20: true as const } : {}),
           // fbclid/UTM del anuncio: el webhook los usa para atribuir la compra en Meta.
           attribution: getAttribution(),
         },

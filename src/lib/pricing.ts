@@ -82,6 +82,17 @@ export function mesesAhorrados(monthly: PlanPrice, annual: PlanPrice): number {
   return Math.max(0, Math.round((monthly.amount * 12 - annual.amount) / monthly.amount));
 }
 
+/** Todo lo que se desbloquea con Pro (mismo listado que la card de precios). */
+export const BENEFICIOS_PRO = [
+  "Banco completo: CIAAC, ATP, Jeppesen y Handbook",
+  "Cuestionarios y simuladores ilimitados",
+  "Yaris con IA: te explica y te acompaña",
+  "Análisis de desempeño por materia con Pathy",
+  "Biblioteca y manuales completos",
+  "Recordatorios de estudio por WhatsApp",
+  "Módulos nuevos conforme se liberan",
+];
+
 /** Texto completo del cobro de Pro: inscripción + mensualidad. */
 export function formatProTotal(setup: PlanPrice, monthly: PlanPrice): string {
   return `${formatPrice(setup)} de inscripción + ${formatPriceWithInterval(monthly)}`;
