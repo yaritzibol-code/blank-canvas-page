@@ -578,7 +578,9 @@ async function seedCloudContent(): Promise<void> {
  * Campos de facturación cuyo dueño es el servidor (webhook de Stripe y
  * `syncMyPlan`). El espejo local NUNCA debe subirlos para su propia cuenta:
  * si lo hace, un localStorage viejo con `plan: "basica"` degrada a un usuario
- * que sí está pagando y el plan queda parpadeando entre básica y Pro.
+ * que sí está pagando y el plan queda parpadeando entre básica y Pro. Las
+ * ofertas que anota el servidor (`flashOffer`, `ofertaPro`) siguen la misma
+ * regla: una copia vieja las borraría y el popup volvería a salir.
  */
 const CAMPOS_DE_FACTURACION = [
   "plan",
@@ -586,6 +588,8 @@ const CAMPOS_DE_FACTURACION = [
   "accessStatus",
   "accessEnd",
   "accessStart",
+  "flashOffer",
+  "ofertaPro",
 ] as const;
 
 /**

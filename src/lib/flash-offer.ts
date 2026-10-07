@@ -2,7 +2,8 @@
  * Oferta relámpago por checkout abandonado.
  *
  * Si alguien abre el pago y se sale sin completarlo, se dispara **una sola
- * vez** una oferta de 30 minutos que baja la inscripción a $1,500. Mientras
+ * vez** una oferta de 30 minutos que baja la inscripción a $1,500 (10 minutos
+ * si llega por rechazar el popup del 20%, ver `@/lib/oferta-pro`). Mientras
  * corre, un contador fijo acompaña al usuario por toda la app; al vencer, la
  * oferta se marca como consumida y no vuelve a aparecer.
  */
@@ -77,6 +78,16 @@ export function startFlashOffer(): FlashOfferState | null {
   };
   write(state);
   return state;
+}
+
+/**
+ * Adopta la ventana que abrió el servidor (p. ej. al rechazar el popup del
+ * 20%), aunque este navegador ya tuviera una oferta anterior guardada.
+ */
+export function adoptFlashOffer(expiresAt: number) {
+  const s = read();
+  if (s && !s.done && s.expiresAt === expiresAt) return;
+  write({ startedAt: Date.now(), expiresAt });
 }
 
 /** Marca el popup grande como visto (el contador del navbar permanece). */
