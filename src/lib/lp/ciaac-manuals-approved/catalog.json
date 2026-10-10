@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "curriculumVersion": "ciaac-manuals-approved-2026-10-05",
+  "subjectId": "ciaac/manuales-de-informacion-aeronautica",
+  "subjectTitle": "Manuales de información aeronáutica",
+  "containerId": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10",
+  "lessons": [
+    {
+      "code": "MI01",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi01-funcion-y-estructura-de-la-pia",
+      "title": "Función y estructura de la PIA",
+      "order": 1,
+      "topics": [
+        "Función y estructura de la PIA."
+      ],
+      "suggestedSupport": [],
+      "relationships": [],
+      "groupingNotes": [],
+      "status": "local-source-audit-review"
+    },
+    {
+      "code": "MI02",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi02-interpretar-notam-y-publicaciones-complementarias",
+      "title": "Interpretar NOTAM y publicaciones complementarias",
+      "order": 2,
+      "topics": [
+        "NOTAM: clasificación e interpretación; AIC, SUP, SNOWTAM y ASHTAM.",
+        "Consulta de estas publicaciones en PIA y Jeppesen."
+      ],
+      "suggestedSupport": [],
+      "relationships": [],
+      "groupingNotes": [],
+      "status": "local-source-audit-review"
+    },
+    {
+      "code": "MI03",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi03-documentos-obligatorios-a-bordo",
+      "title": "Documentos obligatorios a bordo",
+      "order": 3,
+      "topics": [
+        "GEN: requisitos y validez de toda la documentación a bordo.",
+        "Póliza de seguros, certificados de matrícula, aeronavegabilidad y homologación de ruido, bitácora y licencia de estación radioaeronáutica.",
+        "Manifiesto de peso y balance, manual de vuelo, MEL, cartas, plan de vuelo, listas, MGO, plan operacional y PIA."
+      ],
+      "suggestedSupport": [
+        "Apoyo propuesto: Comprobar un expediente documental breve."
+      ],
+      "relationships": [
+        "Relación: OP01 y OP02 para función y uso de manuales y registros; aquí se concentra el requisito documental."
+      ],
+      "groupingNotes": [],
+      "status": "local-source-audit-review"
+    },
+    {
+      "code": "MI04",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi04-referencias-generales-y-lectura-de-la-pia",
+      "title": "Referencias generales y lectura de la PIA",
+      "order": 4,
+      "topics": [
+        "Indicadores de lugar, elevación y códigos IATA/OACI; ejemplos del temario: MMMX, MMMA, MMGL, MMMY, ISLW e ISLP.",
+        "Consulta de conversiones NM/km, m/ft, °C/°F y minutos/horas; puesta y salida del sol.",
+        "Simbología compartida con la lectura de cartas Jeppesen."
+      ],
+      "suggestedSupport": [
+        "Apoyo propuesto: Localizar cada dato dentro de una publicación."
+      ],
+      "relationships": [
+        "Relación: NV01, NV02 y NV12 para practicar unidades y cálculos; MI07 para la simbología de cartas."
+      ],
+      "groupingNotes": [],
+      "status": "local-source-audit-review"
+    },
+    {
+      "code": "MI05",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi05-reglas-generales-en-enr",
+      "title": "Reglas generales en ENR",
+      "order": 5,
+      "topics": [
+        "Derecho de paso en vuelo y en tierra; luces de aeronaves y señales visuales en tierra.",
+        "Restricciones de velocidad, ATIS y circuito de tránsito."
+      ],
+      "suggestedSupport": [
+        "Apoyo propuesto: Elegir la regla aplicable a escenas breves."
+      ],
+      "relationships": [
+        "Relación: ST04 para interacción con control; OP10 para letreros e iluminación del aeródromo."
+      ],
+      "groupingNotes": [],
+      "status": "local-source-audit-review"
+    },
+    {
+      "code": "MI06",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi06-consultar-reglas-vfr-ifr-y-vuelo-visual-especial",
+      "title": "Consultar reglas VFR IFR y vuelo visual especial",
+      "order": 6,
+      "topics": [
+        "VFR: mínimos meteorológicos, altitudes, prohibiciones y SVFR.",
+        "IFR: generalidades, mínimos meteorológicos y altitudes."
+      ],
+      "suggestedSupport": [
+        "Apoyo propuesto: Comparar dos consultas de reglas en la PIA."
+      ],
+      "relationships": [
+        "Relación: OP03 para aplicación operacional y combustible; LG14 para el marco reglamentario."
+      ],
+      "groupingNotes": [],
+      "status": "local-source-audit-review"
+    },
+    {
+      "code": "MI07",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi07-leer-una-carta-de-aproximacion-jeppesen",
+      "title": "Leer una carta de aproximación Jeppesen",
+      "order": 7,
+      "topics": [
+        "Generalidades, abreviaturas y simbología.",
+        "Categorías de aeronaves por velocidad de aproximación.",
+        "IAF, IF, FAF, MAP y frustrada; formato, encabezado, elementos, MSA y criterio de establecimiento, vista en planta, perfil y mínimos según categoría."
+      ],
+      "suggestedSupport": [
+        "Apoyo propuesto: Identificar elementos sobre una carta completa."
+      ],
+      "relationships": [
+        "Relación: OP09 para aplicación durante la trayectoria de aproximación."
+      ],
+      "groupingNotes": [],
+      "status": "local-source-audit-review"
+    },
+    {
+      "code": "MI08",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi08-reconocer-los-tipos-de-aproximacion",
+      "title": "Reconocer los tipos de aproximación",
+      "order": 8,
+      "topics": [
+        "Aproximaciones de no precisión y de precisión; referencias a ILS y GPS del temario.",
+        "Circle to land y lectura de sus diferencias en las cartas."
+      ],
+      "suggestedSupport": [
+        "Apoyo propuesto: Comparar dos o tres cartas representativas."
+      ],
+      "relationships": [
+        "Relación: CO06 y CO07 para funcionamiento de las radioayudas."
+      ],
+      "groupingNotes": [],
+      "status": "local-source-audit-review"
+    },
+    {
+      "code": "MI09",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi09-leer-un-arco-dme",
+      "title": "Leer un arco DME",
+      "order": 9,
+      "topics": [
+        "Arco DME y su lectura en carta."
+      ],
+      "suggestedSupport": [],
+      "relationships": [
+        "Relación: NV14 y NV15 para virajes de procedimiento e intercepción de radiales."
+      ],
+      "groupingNotes": [],
+      "status": "local-source-audit-review"
+    },
+    {
+      "code": "MI10",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi10-leer-patrones-de-espera",
+      "title": "Leer patrones de espera",
+      "order": 10,
+      "topics": [
+        "Patrones de espera standard y no standard y su lectura en carta."
+      ],
+      "suggestedSupport": [],
+      "relationships": [
+        "Relación: NV14 y NV15 para virajes de procedimiento e intercepción de radiales."
+      ],
+      "groupingNotes": [],
+      "status": "local-source-audit-review"
+    }
+  ]
+}

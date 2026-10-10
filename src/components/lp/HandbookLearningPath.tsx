@@ -32,6 +32,12 @@ interface ExerciseProgress {
 
 export interface HandbookJourneyState {
   version?: string;
+  assessmentVersion?: string;
+  previousAssessments?: Array<{
+    version: string | null;
+    exercise: unknown;
+    exerciseDone: boolean;
+  }>;
   previousJourney?: unknown;
   migrationNotice?: boolean;
   stage: number;
@@ -168,13 +174,18 @@ export function HandbookLearningPath({
       questionDone(document.questions[index], state.answers[String(index)]),
     ) &&
     (activity!.kind !== "match" || state.exerciseDone);
+  const revisedExercisePending =
+    !reviewOnly &&
+    Boolean(document.assessmentVersion && document.exercise) &&
+    !state.complete &&
+    !state.exerciseDone;
   const canContinue =
     current.kind === "activity"
       ? activityComplete
       : current.kind === "exercise"
         ? state.exerciseDone
         : current.kind === "finish"
-          ? state.checks.every(Boolean)
+          ? state.checks.every(Boolean) && !revisedExercisePending
           : quizComplete;
   const percent = state.complete
     ? 100
@@ -467,16 +478,35 @@ export function HandbookLearningPath({
             </>
           )}
           {current.kind === "finish" && (
-            <Finish
-              document={document}
-              checks={state.checks}
-              complete={state.complete}
-              onCheck={(index) => {
-                const checks = [...state.checks];
-                checks[index] = !checks[index];
-                patchState({ checks });
-              }}
-            />
+            <>
+              <Finish
+                document={document}
+                checks={state.checks}
+                complete={state.complete}
+                onCheck={(index) => {
+                  const checks = [...state.checks];
+                  checks[index] = !checks[index];
+                  patchState({ checks });
+                }}
+              />
+              {revisedExercisePending && (
+                <section className="hb-card" aria-label="Ejercicio actualizado pendiente">
+                  <p role="status">
+                    Este ejercicio tiene un ejemplo actualizado. Resuélvelo antes de completar el
+                    recorrido; conservas tu avance y tus comprobaciones.
+                  </p>
+                  <div className="hb-actions">
+                    <button
+                      type="button"
+                      className="is-primary"
+                      onClick={() => goTo(stages.findIndex((stage) => stage.kind === "exercise"))}
+                    >
+                      Revisar ejercicio actualizado
+                    </button>
+                  </div>
+                </section>
+              )}
+            </>
           )}
           {presentation?.afterStage?.(state.stage)}
           <Source document={document} />

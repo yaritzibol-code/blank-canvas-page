@@ -1,0 +1,684 @@
+{
+  "schemaVersion": 2,
+  "fixtureScope": "public-runtime-integrity",
+  "documentHashMethod": "SHA256 of sorted-key JavaScript JSON serialization, arrays unchanged",
+  "limitations": [
+    "Runtime and asset identities only. This fixture does not contain original authoring records or assert historical source reconstruction."
+  ],
+  "records": [
+    {
+      "code": "MI01",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi01-funcion-y-estructura-de-la-pia",
+      "contentVersion": "mi01-grouped-candidate-20261006-v1",
+      "documentSha256": "b91d4e75ce7c945da024b7dd6cbbcc0bb374dd2b96afa84d0a93eea18cffc7e0",
+      "reviewIdentity": {
+        "notebooklmExplanationSha256": "9f144c8679f30fbf443948e0f269ba151ccfcefa4108d86e53e1dee2d04fa47e",
+        "sourceInputSetSha256": "d0a85854801fe787a9d57f94e0de6f9e52cde65eb00f0fefecf73e5a57a4a086"
+      }
+    },
+    {
+      "code": "MI02",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi02-interpretar-notam-y-publicaciones-complementarias",
+      "contentVersion": "mi02-grouped-candidate-20261006-v1",
+      "documentSha256": "14c5334cb23203642ba0475d5e3daa0e8a8bf65b581fe19e41b0b00737cd55f5",
+      "reviewIdentity": {
+        "notebooklmExplanationSha256": "246f521bb923e82cfe0ac12747b545ef45570d7af93a3ab73a61d1ae624005df",
+        "sourceInputSetSha256": "d23ff5364441727dfe634b3e747a392838d98b3ba1c832b39e8030f2a64ba1ae"
+      }
+    },
+    {
+      "code": "MI03",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi03-documentos-obligatorios-a-bordo",
+      "contentVersion": "mi03-grouped-candidate-20261006-v1",
+      "documentSha256": "3b667abf9b983e9866942a818dba93dd24576df388212fbeff1ecc0a47efd2b1",
+      "reviewIdentity": {
+        "notebooklmExplanationSha256": "8bcbc57fc01aad6e06a8bc3e9d19253fee9ee5339c4cc7fdfb285ec4b29c314b",
+        "sourceInputSetSha256": "71b967cdbbcc197fba0fde60cc1f7bc97baa59779626c22729c0bd9547737ea3"
+      }
+    },
+    {
+      "code": "MI04",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi04-referencias-generales-y-lectura-de-la-pia",
+      "contentVersion": "mi04-grouped-candidate-20261006-v1",
+      "documentSha256": "fd76ea0a7a06b6e1b506771bcdbddf28f0619853365edcce853d36998bac9b6d",
+      "reviewIdentity": {
+        "notebooklmExplanationSha256": "c3213d3522e8a39080c1977cae1cae6d0e14a25bd7c03330ce79abdf83c21ea6",
+        "sourceInputSetSha256": "3311c7a7ba790aa63dcb75573af5ee650c10a448976fd4d3b090ac7630747260"
+      }
+    },
+    {
+      "code": "MI05",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi05-reglas-generales-en-enr",
+      "contentVersion": "mi05-grouped-candidate-20261006-v1",
+      "documentSha256": "2d945b78ff3258d9e7cf29c5f171290f6877821ca2c550c36743522e25f9fb9d",
+      "reviewIdentity": {
+        "notebooklmExplanationSha256": "8c1ad3d11f0e4ef2314febd8b61ce3f40f3698ef2734b4926eca649b9b6255ac",
+        "sourceInputSetSha256": "d9589eae524527ea15659b38a5ba2b318dd715096b392b8f3d57676dca7674f4"
+      }
+    },
+    {
+      "code": "MI06",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi06-consultar-reglas-vfr-ifr-y-vuelo-visual-especial",
+      "contentVersion": "mi06-grouped-candidate-20261006-v1",
+      "documentSha256": "d7f1b4a75a4c8438b182659313b07cfdf120132fb253d3057e8798e6b5820157",
+      "reviewIdentity": {
+        "notebooklmExplanationSha256": "5d1e00a3e9518809b7a16091a78038afdfebb8d4d16f3847d32ed7159ce63c83",
+        "sourceInputSetSha256": "a9e382f91e83ca2fdbda19e359438711d402d18b027be03171a35d252a42f37f"
+      }
+    },
+    {
+      "code": "MI07",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi07-leer-una-carta-de-aproximacion-jeppesen",
+      "contentVersion": "mi07-grouped-candidate-20261006-v1",
+      "documentSha256": "702b0eb63f1ffe53d21bfbaf5d15ca0e335014fdc0248540bca1d94468b67ad6",
+      "reviewIdentity": {
+        "notebooklmExplanationSha256": "d89b78cbc16cf1cb441a6f645a9cfa371baf8333fb6ac24c8e5624bea00e3efd",
+        "sourceInputSetSha256": "2c8eb4b49ccaebaaabe38680b1c2207cf071485fe0ed8c812050d6b23442d895"
+      }
+    },
+    {
+      "code": "MI08",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi08-reconocer-los-tipos-de-aproximacion",
+      "contentVersion": "mi08-grouped-candidate-20261006-v1",
+      "documentSha256": "c0e7fc04c8cf891a3e598a3072c0a7933420961de948bc37661d1c97b919cf70",
+      "reviewIdentity": {
+        "notebooklmExplanationSha256": "4214af3f10c1f070843b302239519a35996d44698722ef2c83183e607546bcc0",
+        "sourceInputSetSha256": "270c9af32b7cc029d96deb1d0292a2abb04b10c44cf24620e4a4678a7bfd6351"
+      }
+    },
+    {
+      "code": "MI09",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi09-leer-un-arco-dme",
+      "contentVersion": "mi09-grouped-candidate-20261006-v1",
+      "documentSha256": "ddb7f552bf58eaa06988c9cae200945cef55370db7308d3158b6fd37960d1195",
+      "reviewIdentity": {
+        "notebooklmExplanationSha256": "a17f278f61a22c21bda5f470298228e460fdb910529ac364e19d64f58ef3bc54",
+        "sourceInputSetSha256": "9252356e396f4600d41afa27ad8c869f04942a8196220b114377a4daa8a339bc"
+      }
+    },
+    {
+      "code": "MI10",
+      "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi10-leer-patrones-de-espera",
+      "contentVersion": "mi10-grouped-candidate-20261006-v1",
+      "documentSha256": "47888acf8edf5e25673777a03edade2e75fff3da991740695d5df6094a857625",
+      "reviewIdentity": {
+        "notebooklmExplanationSha256": "c782d98cb4bd71ba31928863f19ad398dc1acdbda6132f3eabb466e4c844c686",
+        "sourceInputSetSha256": "ac4091684b65a67f6a83b78cc9ff9a48418052a3b3f2c73b1ec899e7cdfa236f"
+      }
+    }
+  ],
+  "assets": [
+    {
+      "file": "public/ciaac-approved/mi/m810-gdl-full.png",
+      "sha256": "f887ab3ef152bfee6b13cc38bc0586d5bf695e81f3f72be3d04f12282571ab5d"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-gdl-min.png",
+      "sha256": "bb8369f5fd0be6085802e3049cb79a38bdeda9958380692c9aa10d330cf87291"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-gdl-plan.png",
+      "sha256": "efd76e87fb03c008852c1bf46bf3954217ad967ed0f56b1500bd9cc679aeb908"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-gdl-profile.png",
+      "sha256": "9d98b777dce0e4cb75583345321a0e94647057ef2e4228837aac3930e776da18"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-gdl-missed.png",
+      "sha256": "e0d58b51741a2b26efa5b263730ef493e5d0e05b14cdac345153e77a56c85f42"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-mex-ils.png",
+      "sha256": "658cd5ebfefe33cdb3a587aaf0bf21b48d201ec940bbc9029d333b960adbef7f"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-mex-rnp.png",
+      "sha256": "14d69349148f0acd0aa88acedc3039f019dd5bf5126a45c4524762316b7090db"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-mex-ils-min.png",
+      "sha256": "0a2c1a9e9c0701c0b95fb686ee364daf5ec2bbb9f22977a804b6a225b7ca4311"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-mex-rnp-min.png",
+      "sha256": "f973dfae83a593fbe1b544e4feb461e3a5c051ae15d8081d4b3b32b3ce2b75b2"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-mex-rnp-head.png",
+      "sha256": "de6b06d3e659effd32ad2496c889d9d64f90619886765762873cdd3fea12e306"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-slw-full.png",
+      "sha256": "c421cc9cd6e2ae76b1f4e88e0513c57422a2417449716c223b87c792372f08c3"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-slw-plan.png",
+      "sha256": "353cb1dab131835c83979dfd0ff4fdf52d61216b309a922c16d94cee91c4c6ed"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-slw-west.png",
+      "sha256": "98a3f3f63afd0819447bf3749a2435183061e0fbcb9d586dcb7e2266c24990b6"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-slw-north.png",
+      "sha256": "1a433c1bb4a7a12a86a8621ef8ed2bf374118f3944f1f5b836ef8972d71072d2"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-slw-profile.png",
+      "sha256": "04dc0d5bbc1a52e2d8ac3019d9191f7ae08db8a34ccbf0e740e73f6c7684f396"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-slw-hold.png",
+      "sha256": "02edc61f7ed7985836cbcc652b6c06653fead744937d71682d02de5861dfe328"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-slw-missed.png",
+      "sha256": "7145ccbbdf7d49a367974862c0a0461581a2bd3717f4a751dff548b79c5ef149"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-profile-3d.svg",
+      "sha256": "29e419383907be3c7740135209a87ffbea47ffb05aa5223bd4e440e55ae87acf"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-profile-2d.svg",
+      "sha256": "2baf4a70f6fdb24bf9243c07edacb189b4a1a49a5d2c7232cddcbd39c39c3313"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-ils-components.svg",
+      "sha256": "4e97a1e983b590b6fc57102d6506248ff2e7ace01c658e085433d36eb95c62e3"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-dme-geometry.svg",
+      "sha256": "fe4bd303d5679aa2f81337ab4e3ac63e42b39d01ef9c78377eb19b3b955cfbda"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-slant.svg",
+      "sha256": "7444b94b7528e0d094f36523ef847a4fc87f6cc4d1c0a650e26ad1efc382b76f"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-transition.svg",
+      "sha256": "8d54580d50302d24ed0e3e768512fe43031389b34769c0673cf7b5b780ca4dfc"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-holding-right.svg",
+      "sha256": "2d02bf006d234375abcec82e9c5ef00824deb44c126d26b2960b14c4bda384f2"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-holding-left.svg",
+      "sha256": "36357eddca87024232e35bdac04474d6df4fdd5bfe89a5414842eb2b857276c4"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-clock.svg",
+      "sha256": "026357150c654f1250d3c860598202e7f8c1d4369e2416c255d3d7a40af40d77"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-speeds.svg",
+      "sha256": "dd1ea923ddbadac66c299bb3b1b3638d638a1272f5439dd1be9d43276b424d62"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-entries.svg",
+      "sha256": "2e411e64ea1e44f0e20c82b6f8325406452d21b8e69f7bbfd4745e0483cd0ce6"
+    },
+    {
+      "file": "public/ciaac-approved/mi/m810-left-north.svg",
+      "sha256": "c57620cd51a9da8f1839e4ffd1d1ab62c70ab44d22aca9d5ebfb01d6c641162b"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi01-historical.svg",
+      "sha256": "52fa81fcab5a8063c54526b582f37b2c5aa117a4e78bd2e5c675e39a76ca18be"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi01-three-parts.svg",
+      "sha256": "90dfcc74b0452193a2f6e56b7c886bfffe824505578ee243dde45c9a82a368cb"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi01-gen.svg",
+      "sha256": "5b5158959f47405e7473620e93c7d7a128c85b7ad990c1505488edbbe9e22607"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi01-enr.svg",
+      "sha256": "514741dd91122ed4dc529698698986c7a9669f2d80eaa367015cd6fdb9699c69"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi01-ad.svg",
+      "sha256": "85f7271a7679e8b6ddbdd23807d4cc6486bbfdbfe0e03081fa36f22200a98daa"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi01-lookup.svg",
+      "sha256": "95930e924a661084282153ffb472395dde9dba1d1f4a4b3c3f61b0d63a90081f"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi01-assessment.svg",
+      "sha256": "11c7d4273af70f75300d4f4f3df9bb09daa66c8ea53dee5998836977f2c99a36"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi02-base.svg",
+      "sha256": "2f605cd449f6ada1d0c1493ef52d6947d38276a8600ffe028af805f8a739f135"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi02-notices.svg",
+      "sha256": "4789402a62baa2cc92b63c6fe04c7482e51c6182ee383c38beed73d1e481ffaf"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi02-special.svg",
+      "sha256": "bb3eee444807c5d7ac3ca8445a5532fd5ff2a02f2db8af35061c4a1bdb60549f"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi02-airac.svg",
+      "sha256": "f8d5ab0f7b5624d8d68735064b4dbbac36461c4a33ea1a7728ea8a0a3d3e64b0"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi02-notam.svg",
+      "sha256": "65ebd2f02a851e743b0d0dba7dccc0bff5ee8d320c2b41ccb2925b107f10071a"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi02-snow-history.svg",
+      "sha256": "19fd119b7d88a0e6c14a6c19c0c0f0fa77e95abb84da3e26304ffcc0529a5679"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi02-snow-grf.svg",
+      "sha256": "fc361568029e8ce50ab2c56df70fed6406a76373c8e4b1ba358a7c273b89f99a"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi02-ais.svg",
+      "sha256": "eb371c18205cce2a18d4e14760957cfffbf23425875653e4321105e4c346c836"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi02-jeppesen.svg",
+      "sha256": "988a16f20f6490f4a5d83a00e0483afffd5f25a21904182c456e057f77114756"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi02-case.svg",
+      "sha256": "590188c86e6960549c89fbf6efbb4bf4282adf8b45d0762eb88ebab48d6d147e"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi03-commercial.svg",
+      "sha256": "5542b9804fe4ea5b50f1edd58c6420c6943313061af1077a241657cd4c2597a0"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi03-private.svg",
+      "sha256": "6fe6349e2ab9e685a3816c47a1c07a997b18a4a0f74a0fa1f0a48d9042f6fb77"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi03-aircraft.svg",
+      "sha256": "6978207173b9bb2762d1de3de44d05e9f157a82083fc90e6193952c2736cf54b"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi03-crew.svg",
+      "sha256": "e64d8736836c89b7f228409afd0c37b8ebfb7aa6d71b302810898202d5f02649"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi03-operation.svg",
+      "sha256": "7c29ef1fde234f77e1e421a410840a250267a8a45302a2c91d899861418edae2"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi03-records.svg",
+      "sha256": "2c320b83b1b0be734c8f64c8c20aff8634278370f8549a2c3fb742cd6afa0e02"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi03-mel.svg",
+      "sha256": "ee86bf60af27a1aafe1e15a37e960d8e47059b785128de479bdbabb763fd1fcc"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi03-no-mel.svg",
+      "sha256": "e7700761492c61b4ba9c7071efc805a450094cdd59a9b05292943561300b19ec"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi03-private-case.svg",
+      "sha256": "a608b76d55c99557cb00d067c12b4b94e59de7b30da12db409293351748633c7"
+    },
+    {
+      "file": "public/ciaac-approved/mi-intro/mi03-commercial-case.svg",
+      "sha256": "bf74a1b97fea3f8f165b8710cdadc7a05989c190015d4cdf76c1c6d9f25cff7a"
+    },
+    {
+      "file": "public/ciaac-approved/mi/mmio-header.png",
+      "sha256": "68f905d5286455aae6c92922bc27662be5f507419d3b2392a8e8504fff963e0a"
+    },
+    {
+      "file": "public/ciaac-approved/mi/mmsp-header.png",
+      "sha256": "696c3212f2ed9d1c5e7d9f33f657606cd2c076ad6bbc09de345f8d904e9d8738"
+    },
+    {
+      "file": "public/ciaac-approved/mi/mmma-info.png",
+      "sha256": "838ea711a9f5cfc36744a8a05e6b62fd9f308ffee48e0e94fd9e21fa7e3b72ca"
+    },
+    {
+      "file": "public/ciaac-approved/mi/mmmx-full.png",
+      "sha256": "658cd5ebfefe33cdb3a587aaf0bf21b48d201ec940bbc9029d333b960adbef7f"
+    },
+    {
+      "file": "public/ciaac-approved/mi/mmmx-header.png",
+      "sha256": "c5b426fccd90675316a0af02cdc88c02cbd40f9fcbf3ab4f1843db9a16031862"
+    },
+    {
+      "file": "public/ciaac-approved/mi/mmmx-msa.png",
+      "sha256": "8a7a5ff240fb1d1ef203ca4be03d89f906dc4cc849e9db706864de22ee97ae92"
+    },
+    {
+      "file": "public/ciaac-approved/mi/mmmx-plan.png",
+      "sha256": "fef59ffcc1943ee06255d3c554559a8e5b03808590b69800e9d1cd6ef013680f"
+    },
+    {
+      "file": "public/ciaac-approved/mi/mmmx-profile.png",
+      "sha256": "ce09ddf5034dfee6ed3abe6727591b1353e33fad3dc2517ae0b86137b7102948"
+    },
+    {
+      "file": "public/ciaac-approved/mi/mmmx-minima.png",
+      "sha256": "0a2c1a9e9c0701c0b95fb686ee364daf5ec2bbb9f22977a804b6a225b7ca4311"
+    },
+    {
+      "file": "public/ciaac-approved/mi/mmmx-missed.png",
+      "sha256": "c6cbaaf95878d262afbe4266f53b3e213e0c0b549ec153c7a8b762de5a65f2ae"
+    },
+    {
+      "file": "public/ciaac-approved/mi/chart-legend.png",
+      "sha256": "3606a4a8b3b88ea268a690b39175907d20d8f1c9f4ece69eda46e46362998c67"
+    },
+    {
+      "file": "public/ciaac-approved/mi/ciaac-symbols.png",
+      "sha256": "7604021bc39e47e71eebbfa65ce63333f0e0f3cc93e28a8a8c4bace631d94367"
+    },
+    {
+      "file": "public/ciaac-approved/mi/codes.svg",
+      "sha256": "5ee9e929ddb1b1adaa9358eceafee5a55a6e65171239964e5289f028708a6f74"
+    },
+    {
+      "file": "public/ciaac-approved/mi/zzzz.svg",
+      "sha256": "9ccadb2768799b24d1d260c0d6c9bd1ef7bdc988f6a5005a2c83ece13ea59909"
+    },
+    {
+      "file": "public/ciaac-approved/mi/afil.svg",
+      "sha256": "d019d00a7d8b1a44601d2571120d51f5b6ec86e12fed861242f7300e0d35f191"
+    },
+    {
+      "file": "public/ciaac-approved/mi/altitud.svg",
+      "sha256": "10462a6da843428d6f26083127ba1875050d4d1bb929f25d2b10c0544571fef3"
+    },
+    {
+      "file": "public/ciaac-approved/mi/altura.svg",
+      "sha256": "f144ada49a7b83d6afe8387395fe104527a6eaaca3c32b0ed0846ffce9a432b8"
+    },
+    {
+      "file": "public/ciaac-approved/mi/agl.svg",
+      "sha256": "48b6e8205f02730f12e99d0363d19d6fede7351170dfed6a6ab776d35f82c3c4"
+    },
+    {
+      "file": "public/ciaac-approved/mi/nm.svg",
+      "sha256": "dd4978fddbbea493819da1008e3744014787d912b9e3547d3daca4781e19bf98"
+    },
+    {
+      "file": "public/ciaac-approved/mi/ft.svg",
+      "sha256": "f9ee51826deca85235e7dd7f2ffde09566280562a9d187dc38b68c4f078eb680"
+    },
+    {
+      "file": "public/ciaac-approved/mi/temp.svg",
+      "sha256": "2abc750f37b8e3115400f105aa56d93f299e3b6d497363dff52f73f37624e218"
+    },
+    {
+      "file": "public/ciaac-approved/mi/time.svg",
+      "sha256": "5bfab67d167664c15c66c4337a82c8236f3b784f316b46657ac7d062de95fbb0"
+    },
+    {
+      "file": "public/ciaac-approved/mi/solar.svg",
+      "sha256": "0c455bd75159ee14e6595bec757a9276343b3a68dd4a63453def662e2e09d94d"
+    },
+    {
+      "file": "public/ciaac-approved/mi/prd.svg",
+      "sha256": "5ed2ada37626a13d55a9d4ca841e3e000556586ec16f8214e771d0d65e3561c7"
+    },
+    {
+      "file": "public/ciaac-approved/mi/vat.svg",
+      "sha256": "883d57fcd3b379ae9b50289fc7a6ac055162c3ca82e45c173647eed7f0ff8ae1"
+    },
+    {
+      "file": "public/ciaac-approved/mi/categories.svg",
+      "sha256": "0543e2256c64fa1a227da6e0e7e40311be62c5255100096022f2facfea2c33f7"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/right-front.svg",
+      "sha256": "a35775b5e5f30998b73fad237ddb1386d978a0397209bc0549ffa3a15a379cef"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/right-converge.svg",
+      "sha256": "03f7f8af6406b0b8ca4df8a16ddf1d1402c749c6eb943958fe439904c4330885"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/right-overtake.svg",
+      "sha256": "17fb10623549446a726a1b441530c2ca2a5da8f98b34c375f888ca7d5b6c58ec"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/right-landing.svg",
+      "sha256": "b8ab556e9b69322292dfd6aea786b8a19503932ccbed494937472a11059b730c"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/ground-cross.svg",
+      "sha256": "6e19af80ec32019fb6c5ebe33085d0d8b7e07bd68f4bd04a2f719847d4902378"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/ground-departure.svg",
+      "sha256": "6314a52fae3e83ec380afa4c767bac61d046bb886624dd2dfb29a82cd6ee9171"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/ground-stopbar.svg",
+      "sha256": "f845ab07c09d29ec4f730c4f49ee8f470a36bcf8aa91e9908389e54b9c4c81af"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/light-sectors.svg",
+      "sha256": "1c153043848fcb18ab43bbe5840f8dd7ea4fd768a092e8b05a7d0366fd455289"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/signal-green-steady.svg",
+      "sha256": "ed910cb4728b8f8b14adf7419a21194b695a5eafe4581458274cea6bb7aacb24"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/signal-green-flash.svg",
+      "sha256": "f22427baac2398e0c9e7af9eeede43194f4c2efd027fd7b18bea11de451ae555"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/signal-red-steady.svg",
+      "sha256": "1cfd9f7e04cd882171c997dfe6b3c47d4c135ae45ca2cd2adfe1d2d6f200e90a"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/signal-red-flash.svg",
+      "sha256": "7f7618122184a7223c3f960a56837312bc421cf466aa18cc4e893716a45c2302"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/signal-white-flash.svg",
+      "sha256": "abaf5a3974be62ae0ea110ea2b3b10277ba8cb7ed5289c151b22f76886fc9a2e"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/signal-red-flare.svg",
+      "sha256": "d6f9e019db78a51baa8b8cdff444f29cfc2fc130675fe6bcc82657b3b0360cbb"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/signal-surface-prohibited.svg",
+      "sha256": "a330fa78ca38a1c0704c2b5a2f5d1d728d4f262cdefd2cc48950db054c0669d2"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/signal-surface-caution.svg",
+      "sha256": "0aad4bc3c38afb364b3e4b8c9608ffd2b64d6070cbb027a9c2d5b9ceb3dc7c23"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/signal-surface-dumbbell.svg",
+      "sha256": "014c62dafdba4f993cd91fac66fa409d2da24a43caa0ed2c5897738f82aa16f7"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/signal-surface-barred-dumbbell.svg",
+      "sha256": "124ea38daa667ba118ba1207aaa2a69c3eec339722e26706aca79a2322f584cc"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/signal-surface-closed.svg",
+      "sha256": "57cb53122b0b9b5569201a8691eba5c6413c99769668a7ced093207aa616470d"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/signal-surface-landing-t.svg",
+      "sha256": "08f716c11e8a5130033a955471f912d58402043b4637f8d237cacae46ca4ff92"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/signal-surface-right-traffic.svg",
+      "sha256": "078c805f0efc0965f6dcc26cde3a6c18faa4916fc5c1cb84cacdd7d58d27ef46"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/signal-surface-ats-c.svg",
+      "sha256": "6178266d8fef044788386f9091bf823d2fb2cb3dbfef3b5a41d5c71b84865d2e"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/signal-surface-gliders.svg",
+      "sha256": "22c25460b7b8795ecd5f64b67be3f1a152b3ed57e332db1c7064e98dbc373bb9"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/speed-a.svg",
+      "sha256": "692885050874e4318d73fd31ec5eaf42cb26a8ad4fa957551845fd57a4aadfc1"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/speed-bcd.svg",
+      "sha256": "0556db1866d46c3363939994da08779e8d971280d7d87545e5760a38797399a5"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/speed-e.svg",
+      "sha256": "6c30f9774bc766d12c3f2874687e761bd21d7129e67fd3551b1e988d5551893b"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/speed-f.svg",
+      "sha256": "cb2479780c4788d77f0050e34920f74799cde25bf80c310892f0be91ca481348"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/speed-g.svg",
+      "sha256": "8a1c669d3b831a2ced8f22983fb44b084e929225f59f90b92eb0d5f854be5aca"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/circuit-complete.svg",
+      "sha256": "e38222127580f7ec7153537251de593549d9ae3d735bf6d733415aa79b6ca980"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/ack-flight.svg",
+      "sha256": "d77433bbcafc9f70d2e00fea6a03a570f3abd37569bb952deef0cdf699378d36"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/ack-ground.svg",
+      "sha256": "8dbfc102ae919d7497dc8f4695f11ea6de64e580df1bd9975833a0661321de04"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/case-towing.svg",
+      "sha256": "629100bd35f3630b6bda7a9fc79b38ab9c74927e9d32ab3da3aaeb68af897f09"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/case-tower.svg",
+      "sha256": "75325da09bd1f9e78483be1805193b6ef528289173b2fdbf24acfef39737d5ff"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/rules-vfr.svg",
+      "sha256": "0aaeabb2e1e1c1e6b04fa098a2bc19b000ebb87d4bfe7ac6f73b08365fe7c1c9"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/rules-ifr.svg",
+      "sha256": "da7f95d9694998ed15628f4f8feb76ffed9ab51f34d7c5a7818f3f27072e398f"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/rules-svfr.svg",
+      "sha256": "4504ae7ded68163bc52f873cf16c36a33e494e0166380c8514f1a0d9cd6e02e8"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/vmc-oaci-upper.svg",
+      "sha256": "258a8f88ed7bc6281ab74fa98486789f00299d8df60df3fd91cf6b5e833f4c99"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/vmc-oaci-middle.svg",
+      "sha256": "fb76ccc687be17f81ddf40ba66148ca5695043fa294490a0565e8cc8fb331ed6"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/vmc-oaci-lower.svg",
+      "sha256": "4233488b7345ea5e36cc9627ff05205b4ad13197963d80224741d3931e564f36"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/vmc-oaci-fg.svg",
+      "sha256": "2891e4e9f0de2a7ebed399e6b3eb12975b4fcc665e52ea32b214b999ecd968be"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/vmc-mex-b.svg",
+      "sha256": "64ee43dfbad5d0032e2fbad135c9fb9fbd6de16159faac5eceef79063ead1bd5"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/vmc-mex-cde.svg",
+      "sha256": "f6a29b6dd746e55d903e774dbd3ca090dd0a2b572c804e653f8f3d79fa3e0e23"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/vmc-mex-fg-high.svg",
+      "sha256": "d352a630f0aa72366eaaff0cb2dfa2fee597de09caae85a4fb478d1f4341ebb9"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/vmc-mex-fg-low.svg",
+      "sha256": "68e754ca4471190a55cb77ccfc68744ff67d793075b8a5016b84de14d5d3fcf0"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/minimum-vfr-populated.svg",
+      "sha256": "e457c197e6f6bd5c396161fa8ee5a2a76f72de8457c70d8059d218269633b162"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/minimum-vfr-other.svg",
+      "sha256": "6b1378f3718c3b0c9c69995905b155d873a7caa27c7de0e982f2d87918628535"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/minimum-ifr-radius.svg",
+      "sha256": "9b7165e02a66a585ed90d27a3224c268358ec5297ecf40b2abe8631c9e3fd061"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/semicircle-east.svg",
+      "sha256": "505ad182eb54cdf3f24a070bf1f38cb0222add370b1f28da5b4cbdc348814c04"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/semicircle-west.svg",
+      "sha256": "07a7524582703f23d0e426c49ec7528b0ee504d76b251f779fbd05288a0c2426"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/consult-vfr-night.svg",
+      "sha256": "3fd3ed54d6d92653c7e195f94fe70deaffc68b7c92e9af10dbeb394d4106aa77"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/consult-vfr-speed.svg",
+      "sha256": "1728f2de68868aa9e3918db7e454657dd679afdb8da1eb0c473e20da6a6ce50c"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/consult-vfr-rvsm.svg",
+      "sha256": "7f7217e7299d3e73f84da17db38823be0995ecbfbafb744b0bf2c58c9b301205"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/consult-ifr-approach.svg",
+      "sha256": "8bf0bfc68216f4eb1e00ceb65d1f227496b60485718220000b4dabf0c508b9d8"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/consult-ifr-takeoff.svg",
+      "sha256": "00a69e9e0f6508058c7c2e819944f66f07a87183b905eec9dd70d8f87d477da5"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/deterioration-amend.svg",
+      "sha256": "e21b125d3fcee290bd2e6834ce0365ad018c925da4d46bf7a943bc4045f600c1"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/deterioration-continue.svg",
+      "sha256": "8cdd61b3c939ebb33f13c83b77ff70ff850f74ce4776ee2f0ced42b18ac7e39a"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/deterioration-svfr.svg",
+      "sha256": "25f9feba7a6ee83c0d66400922542cd3d5f0f5a19c6029d1588fb38098f41373"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/deterioration-ifr.svg",
+      "sha256": "e74d899f5ddb31994fc20e0b5b56956d4034a337071ed54c2a22add7f5c8228e"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/case-vfr-track.svg",
+      "sha256": "e1db4cff52f50229f6957f7eb80d1a09eeb69de70dd70e55497d6f8edc9254e9"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/case-svfr.svg",
+      "sha256": "bbc09d986dae23fcb19a224bd7df65e8d58ef7b366900eaaf912249cc88b3f6d"
+    },
+    {
+      "file": "public/ciaac-approved/mi-rules/case-ifr-profile.svg",
+      "sha256": "757adfdaf41ffdddd7d7bb359fd1cd9ab58ea5c00be7c530c356ec353679224d"
+    }
+  ]
+}

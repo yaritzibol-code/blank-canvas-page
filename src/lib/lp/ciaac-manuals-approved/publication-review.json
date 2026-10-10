@@ -1,0 +1,112 @@
+[
+  {
+    "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi01-funcion-y-estructura-de-la-pia",
+    "curriculumVersion": "ciaac-manuals-approved-2026-10-05",
+    "notebooklmExplanationSha256": "9f144c8679f30fbf443948e0f269ba151ccfcefa4108d86e53e1dee2d04fa47e",
+    "sourceInputSetSha256": "d0a85854801fe787a9d57f94e0de6f9e52cde65eb00f0fefecf73e5a57a4a086",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true,
+    "reviewScope": "Bounded local editorial source review, 2026-10-08. Frozen primary passages and inherited chart images distinguished; original provenance retained. Static SVG/SSR checks only; authenticated browser, mobile, zoom and accessibility QA pending. Not operational certification or permission to publish.",
+    "auditRevision": "ciaac-mi-source-reconstruction-v2-2026-10-08"
+  },
+  {
+    "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi02-interpretar-notam-y-publicaciones-complementarias",
+    "curriculumVersion": "ciaac-manuals-approved-2026-10-05",
+    "notebooklmExplanationSha256": "246f521bb923e82cfe0ac12747b545ef45570d7af93a3ab73a61d1ae624005df",
+    "sourceInputSetSha256": "d23ff5364441727dfe634b3e747a392838d98b3ba1c832b39e8030f2a64ba1ae",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true,
+    "reviewScope": "Bounded local editorial source review, 2026-10-08. Frozen primary passages and inherited chart images distinguished; original provenance retained. Static SVG/SSR checks only; authenticated browser, mobile, zoom and accessibility QA pending. Not operational certification or permission to publish.",
+    "auditRevision": "ciaac-mi-source-reconstruction-v2-2026-10-08"
+  },
+  {
+    "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi03-documentos-obligatorios-a-bordo",
+    "curriculumVersion": "ciaac-manuals-approved-2026-10-05",
+    "notebooklmExplanationSha256": "8bcbc57fc01aad6e06a8bc3e9d19253fee9ee5339c4cc7fdfb285ec4b29c314b",
+    "sourceInputSetSha256": "71b967cdbbcc197fba0fde60cc1f7bc97baa59779626c22729c0bd9547737ea3",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true,
+    "reviewScope": "Bounded local editorial source review, 2026-10-08. Frozen primary passages and inherited chart images distinguished; original provenance retained. Static SVG/SSR checks only; authenticated browser, mobile, zoom and accessibility QA pending. Not operational certification or permission to publish.",
+    "auditRevision": "ciaac-mi-source-reconstruction-v2-2026-10-08"
+  },
+  {
+    "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi04-referencias-generales-y-lectura-de-la-pia",
+    "curriculumVersion": "ciaac-manuals-approved-2026-10-05",
+    "notebooklmExplanationSha256": "c3213d3522e8a39080c1977cae1cae6d0e14a25bd7c03330ce79abdf83c21ea6",
+    "sourceInputSetSha256": "3311c7a7ba790aa63dcb75573af5ee650c10a448976fd4d3b090ac7630747260",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true,
+    "reviewScope": "Bounded local editorial source review, 2026-10-08. Frozen primary passages and inherited chart images distinguished; original provenance retained. Static SVG/SSR checks only; authenticated browser, mobile, zoom and accessibility QA pending. Not operational certification or permission to publish.",
+    "auditRevision": "ciaac-mi-source-reconstruction-v2-2026-10-08"
+  },
+  {
+    "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi05-reglas-generales-en-enr",
+    "curriculumVersion": "ciaac-manuals-approved-2026-10-05",
+    "notebooklmExplanationSha256": "8c1ad3d11f0e4ef2314febd8b61ce3f40f3698ef2734b4926eca649b9b6255ac",
+    "sourceInputSetSha256": "d9589eae524527ea15659b38a5ba2b318dd715096b392b8f3d57676dca7674f4",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true,
+    "reviewScope": "Bounded local editorial source review, 2026-10-08. Frozen primary passages and inherited chart images distinguished; original provenance retained. Static SVG/SSR checks only; authenticated browser, mobile, zoom and accessibility QA pending. Not operational certification or permission to publish.",
+    "auditRevision": "ciaac-mi-source-reconstruction-v2-2026-10-08"
+  },
+  {
+    "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi06-consultar-reglas-vfr-ifr-y-vuelo-visual-especial",
+    "curriculumVersion": "ciaac-manuals-approved-2026-10-05",
+    "notebooklmExplanationSha256": "5d1e00a3e9518809b7a16091a78038afdfebb8d4d16f3847d32ed7159ce63c83",
+    "sourceInputSetSha256": "a9e382f91e83ca2fdbda19e359438711d402d18b027be03171a35d252a42f37f",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true,
+    "reviewScope": "Bounded local editorial source review, 2026-10-08. Frozen primary passages and inherited chart images distinguished; original provenance retained. Static SVG/SSR checks only; authenticated browser, mobile, zoom and accessibility QA pending. Not operational certification or permission to publish.",
+    "auditRevision": "ciaac-mi-source-reconstruction-v2-2026-10-08"
+  },
+  {
+    "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi07-leer-una-carta-de-aproximacion-jeppesen",
+    "curriculumVersion": "ciaac-manuals-approved-2026-10-05",
+    "notebooklmExplanationSha256": "d89b78cbc16cf1cb441a6f645a9cfa371baf8333fb6ac24c8e5624bea00e3efd",
+    "sourceInputSetSha256": "2c8eb4b49ccaebaaabe38680b1c2207cf071485fe0ed8c812050d6b23442d895",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true,
+    "reviewScope": "Bounded local editorial source review, 2026-10-08. Frozen primary passages and inherited chart images distinguished; original provenance retained. Static SVG/SSR checks only; authenticated browser, mobile, zoom and accessibility QA pending. Not operational certification or permission to publish.",
+    "auditRevision": "ciaac-mi-source-reconstruction-v2-2026-10-08"
+  },
+  {
+    "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi08-reconocer-los-tipos-de-aproximacion",
+    "curriculumVersion": "ciaac-manuals-approved-2026-10-05",
+    "notebooklmExplanationSha256": "4214af3f10c1f070843b302239519a35996d44698722ef2c83183e607546bcc0",
+    "sourceInputSetSha256": "270c9af32b7cc029d96deb1d0292a2abb04b10c44cf24620e4a4678a7bfd6351",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true,
+    "reviewScope": "Bounded local editorial source review, 2026-10-08. Frozen primary passages and inherited chart images distinguished; original provenance retained. Static SVG/SSR checks only; authenticated browser, mobile, zoom and accessibility QA pending. Not operational certification or permission to publish.",
+    "auditRevision": "ciaac-mi-source-reconstruction-v2-2026-10-08"
+  },
+  {
+    "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi09-leer-un-arco-dme",
+    "curriculumVersion": "ciaac-manuals-approved-2026-10-05",
+    "notebooklmExplanationSha256": "a17f278f61a22c21bda5f470298228e460fdb910529ac364e19d64f58ef3bc54",
+    "sourceInputSetSha256": "9252356e396f4600d41afa27ad8c869f04942a8196220b114377a4daa8a339bc",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true,
+    "reviewScope": "Bounded local editorial source review, 2026-10-08. Frozen primary passages and inherited chart images distinguished; original provenance retained. Static SVG/SSR checks only; authenticated browser, mobile, zoom and accessibility QA pending. Not operational certification or permission to publish.",
+    "auditRevision": "ciaac-mi-source-reconstruction-v2-2026-10-08"
+  },
+  {
+    "id": "ciaac/manuales-de-informacion-aeronautica/itinerario-aprobado-2026-10/mi10-leer-patrones-de-espera",
+    "curriculumVersion": "ciaac-manuals-approved-2026-10-05",
+    "notebooklmExplanationSha256": "c782d98cb4bd71ba31928863f19ad398dc1acdbda6132f3eabb466e4c844c686",
+    "sourceInputSetSha256": "ac4091684b65a67f6a83b78cc9ff9a48418052a3b3f2c73b1ec899e7cdfa236f",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true,
+    "reviewScope": "Bounded local editorial source review, 2026-10-08. Frozen primary passages and inherited chart images distinguished; original provenance retained. Static SVG/SSR checks only; authenticated browser, mobile, zoom and accessibility QA pending. Not operational certification or permission to publish.",
+    "auditRevision": "ciaac-mi-source-reconstruction-v2-2026-10-08"
+  }
+]

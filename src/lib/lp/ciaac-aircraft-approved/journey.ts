@@ -41,7 +41,13 @@ export function migrateApprovedAircraftJourney(
   const finished =
     completed || (record(saved) && saved.version === version && saved.complete === true);
   const last = document.stages.length - 1;
-  const state = { ...fresh, version, complete: finished, maxStage: finished ? last : 0 };
+  const state = {
+    ...fresh,
+    version,
+    ...(document.assessmentVersion ? { assessmentVersion: document.assessmentVersion } : {}),
+    complete: finished,
+    maxStage: finished ? last : 0,
+  };
   if (!record(saved) || saved.version !== version)
     return {
       ...state,
@@ -77,7 +83,7 @@ export function migrateApprovedAircraftJourney(
   if (record(saved.exercise) && Array.isArray(saved.exercise.sequence))
     for (const value of saved.exercise.sequence)
       if (index(value, sequenceCount) && !sequence.includes(value)) sequence.push(value);
-  return {
+  const restored: HandbookJourneyState = {
     ...state,
     maxStage,
     stage: index(saved.stage, maxStage + 1) ? saved.stage : 0,
@@ -101,4 +107,33 @@ export function migrateApprovedAircraftJourney(
     migrationNotice: saved.migrationNotice === true && maxStage === 0,
     ...(Object.hasOwn(saved, "previousJourney") ? { previousJourney: saved.previousJourney } : {}),
   };
+  // An authored replacement may change exercise data without changing the route.
+  // Retain completion, navigation, quiz answers and checks. Archive the former
+  // exercise attempt once, then start only this exercise's new revision empty.
+  // This is lazy restoration on opening the lesson, never a bulk store migration.
+  if (document.assessmentVersion) {
+    const history = Array.isArray(saved.previousAssessments)
+      ? saved.previousAssessments.filter(
+          (entry): entry is NonNullable<HandbookJourneyState["previousAssessments"]>[number] =>
+            record(entry) &&
+            (entry.version === null || typeof entry.version === "string") &&
+            typeof entry.exerciseDone === "boolean" &&
+            Object.hasOwn(entry, "exercise"),
+        )
+      : [];
+    restored.previousAssessments = history;
+    if (saved.assessmentVersion !== document.assessmentVersion) {
+      restored.previousAssessments = [
+        ...history,
+        {
+          version: typeof saved.assessmentVersion === "string" ? saved.assessmentVersion : null,
+          exercise: saved.exercise,
+          exerciseDone: saved.exerciseDone === true,
+        },
+      ];
+      restored.exercise = fresh.exercise;
+      restored.exerciseDone = false;
+    }
+  }
+  return restored;
 }

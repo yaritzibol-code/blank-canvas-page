@@ -22,6 +22,10 @@ const approvedIds = catalog.lessons.map((lesson) => lesson.id);
 const compilationCache = new Map();
 
 function loader(overrides = {}) {
+  overrides = {
+    "src/lib/lp/ciaac-manuals-approved/publication-review.json": [],
+    ...overrides,
+  };
   const cache = new Map();
   function load(filename) {
     const relative = path.relative(root, filename).split(path.sep).join("/");

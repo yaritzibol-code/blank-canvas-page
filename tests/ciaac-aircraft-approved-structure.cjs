@@ -151,6 +151,7 @@ for (const active of [false, true]) {
     [`${approved}content.ts`]: { APPROVED_AIRCRAFT_ACTIVE: active },
     // This Aircraft-only activation fixture holds the independent Transit rollout off.
     "src/lib/lp/ciaac-transit-approved/publication-review.json": [],
+    "src/lib/lp/ciaac-manuals-approved/publication-review.json": [],
   })("src/lib/lp/taxonomy.ts");
   const subject = taxonomy.lpSubject("ciaac", "aeronaves-y-motores");
   const sequence = taxonomy.subjectSequence(subject).map(({ item }) => item.id);
@@ -734,6 +735,7 @@ for (const active of [false, true]) {
   const rewardEngine = loader({
     [`${approved}content.ts`]: { APPROVED_AIRCRAFT_ACTIVE: active },
     "src/lib/lp/ciaac-transit-approved/publication-review.json": [],
+    "src/lib/lp/ciaac-manuals-approved/publication-review.json": [],
   })("src/lib/fp/fp.server.ts");
   for (const [label, oldIds, newIds, expectedBonus] of [
     ["partial legacy", legacyIds.slice(0, -1), [], 0],

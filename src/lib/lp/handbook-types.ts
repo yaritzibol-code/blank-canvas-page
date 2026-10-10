@@ -120,6 +120,8 @@ export type HandbookExercise =
 export interface HandbookLearningPathDocument {
   /** Explicit revision for safely restoring progress after a changed stage sequence. */
   contentVersion?: string;
+  /** Revises only the exercise attempt; earned completion and navigation are retained. */
+  assessmentVersion?: string;
   number: number;
   title: string;
   intro: string;

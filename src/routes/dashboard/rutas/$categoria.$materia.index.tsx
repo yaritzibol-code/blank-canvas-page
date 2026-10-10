@@ -6,6 +6,7 @@ import { hasAvailableCiaacContent } from "@/lib/lp/ciaac-availability";
 import {
   legacyAircraftSubject,
   legacyTransitSubject,
+  legacyManualsSubject,
   lpCategory,
   lpSubject,
   subjectLpCount,
@@ -31,7 +32,9 @@ function MateriaPage() {
       ? legacyAircraftSubject()
       : subject?.id === "ciaac/servicios-de-transito-aereo"
         ? legacyTransitSubject()
-        : undefined;
+        : subject?.id === "ciaac/manuales-de-informacion-aeronautica"
+          ? legacyManualsSubject()
+          : undefined;
 
   const estado = useStore(() => {
     if (!subject) return null;

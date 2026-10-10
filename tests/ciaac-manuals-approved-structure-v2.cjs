@@ -1,0 +1,374 @@
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
+const vm = require("node:vm");
+const ts = require("typescript");
+const React = require("react");
+const { renderToStaticMarkup } = require("react-dom/server");
+const { JSDOM } = require("jsdom");
+const root = path.resolve(__dirname, "..");
+const file = (relative) => path.join(root, relative);
+const json = (relative) => JSON.parse(fs.readFileSync(file(relative), "utf8"));
+const approved = "src/lib/lp/ciaac-manuals-approved/";
+const catalog = json(`${approved}catalog.json`);
+const docs = json(`${approved}documents.json`);
+const sourceIds = Object.keys(docs);
+const raw = json("src/lib/lp/taxonomy.json");
+const oldSubject = raw.categories
+  .find((category) => category.id === "ciaac")
+  .subjects.find((subject) => subject.id === catalog.subjectId);
+const legacyItems = oldSubject.containers.flatMap((container) => container.learningPaths);
+const approvedIds = catalog.lessons.map((lesson) => lesson.id);
+const compilationCache = new Map();
+
+function loader(overrides = {}) {
+  const cache = new Map();
+  function load(filename) {
+    const relative = path.relative(root, filename).split(path.sep).join("/");
+    if (Object.hasOwn(overrides, relative)) return overrides[relative];
+    if (filename.endsWith(".css")) return {};
+    if (cache.has(filename)) return cache.get(filename).exports;
+    if (filename.endsWith(".json")) {
+      const exports = JSON.parse(fs.readFileSync(filename, "utf8"));
+      cache.set(filename, { exports });
+      return exports;
+    }
+    const mod = { exports: {} };
+    cache.set(filename, mod);
+    const stamp = `${filename}:${fs.statSync(filename).mtimeMs}`;
+    if (!compilationCache.has(stamp)) {
+      compilationCache.set(
+        stamp,
+        ts.transpileModule(fs.readFileSync(filename, "utf8"), {
+          compilerOptions: {
+            target: ts.ScriptTarget.ES2022,
+            module: ts.ModuleKind.CommonJS,
+            esModuleInterop: true,
+            jsx: ts.JsxEmit.ReactJSX,
+          },
+        }).outputText,
+      );
+    }
+    const localRequire = (request) => {
+      if (!request.startsWith(".") && !request.startsWith("@/")) return require(request);
+      const base = request.startsWith("@/")
+        ? file(`src/${request.slice(2)}`)
+        : path.resolve(path.dirname(filename), request);
+      const resolved = [base, `${base}.ts`, `${base}.tsx`, `${base}.json`].find(
+        (candidate) => fs.existsSync(candidate) && fs.statSync(candidate).isFile(),
+      );
+      assert.ok(resolved, `Unresolved ${request} from ${relative}`);
+      return load(resolved);
+    };
+    vm.runInThisContext(`(function(require, module, exports) {${compilationCache.get(stamp)}\n})`, {
+      filename,
+    })(localRequire, mod, mod.exports);
+    return mod.exports;
+  }
+  return (relative) => load(file(relative));
+}
+
+const load = loader();
+const content = load(`${approved}content.ts`);
+const { collectReadyApprovedManualsDocuments: collect } = content;
+const { migrateApprovedAircraftJourney: migrate } = load(
+  "src/lib/lp/ciaac-aircraft-approved/journey.ts",
+);
+// These records exist in memory solely to exercise fail-closed gate branches.
+// They are not publication approvals or a source-review artifact.
+const fixtureReviews = sourceIds.map((id) => ({
+  id,
+  curriculumVersion: catalog.curriculumVersion,
+  notebooklmExplanationSha256: "a".repeat(64),
+  scopeReviewed: true,
+  visualsReviewed: true,
+  assessmentReviewed: true,
+}));
+assert.deepEqual(
+  catalog.lessons.map((lesson) => lesson.code),
+  Array.from({ length: 10 }, (_, i) => `MI${String(i + 1).padStart(2, "0")}`),
+);
+assert.deepEqual(
+  catalog.lessons.map((lesson) => lesson.order),
+  Array.from({ length: 10 }, (_, i) => i + 1),
+);
+assert.equal(legacyItems.length, 46);
+for (const id of approvedIds) {
+  assert.equal(id.split("/").length, 4);
+  assert.ok(id.startsWith(`${catalog.containerId}/`));
+  assert.ok(!legacyItems.some((item) => item.id === id));
+}
+const actualReviews = json(`${approved}publication-review.json`);
+const actualReady = collect(docs, actualReviews);
+const actualActive = Boolean(actualReady[approvedIds[0]]);
+assert.equal(content.APPROVED_MANUALS_ACTIVE, actualActive);
+assert.deepEqual(content.APPROVED_MANUALS_READY_IDS, actualActive ? Object.keys(actualReady) : []);
+assert.deepEqual(collect(docs, []), {});
+assert.deepEqual(Object.keys(collect(docs, fixtureReviews)), sourceIds);
+for (const key of ["scopeReviewed", "visualsReviewed", "assessmentReviewed"])
+  assert.deepEqual(
+    collect(
+      docs,
+      fixtureReviews.map((r) => ({ ...r, [key]: false })),
+    ),
+    {},
+  );
+for (const override of [{ curriculumVersion: "wrong" }, { notebooklmExplanationSha256: "invalid" }])
+  assert.deepEqual(
+    collect(
+      docs,
+      fixtureReviews.map((r) => ({ ...r, ...override })),
+    ),
+    {},
+  );
+assert.deepEqual(collect(docs, [...fixtureReviews, ...fixtureReviews]), {});
+for (const id of sourceIds) {
+  const copy = structuredClone(docs);
+  copy[id].title += " changed";
+  assert.ok(!collect(copy, fixtureReviews)[id]);
+  const missingAssessment = structuredClone(docs);
+  delete missingAssessment[id].exercise;
+  assert.ok(!collect(missingAssessment, fixtureReviews)[id]);
+  const badFigure = structuredClone(docs);
+  badFigure[id].stages.find((s) => s.kind === "content").figures[0].alt += " different";
+  assert.ok(!collect(badFigure, fixtureReviews)[id]);
+}
+const normalized = (s) => s.replace(/\s+/g, " ").trim();
+const { ApprovedAircraftTeachingBoard: Board } = load(
+  "src/components/lp/ApprovedAircraftTeachingBoard.tsx",
+);
+let boards = 0,
+  cards = 0,
+  figures = 0;
+for (const [id, doc] of Object.entries(docs)) {
+  assert.equal(doc.questions.length, 0, "No invented multiple-choice questions");
+  assert.ok(["match", "sequence"].includes(doc.exercise.kind));
+  const exerciseLength =
+    doc.exercise.kind === "match" ? doc.exercise.pairs.length : doc.exercise.items.length;
+  const correctOrder = Array.from({ length: exerciseLength }, (_, i) => i);
+  assert.deepEqual(
+    [...doc.exercise.order].sort((a, b) => a - b),
+    correctOrder,
+  );
+  const stages = doc.stages.filter((s) => s.kind === "content");
+  const html = renderToStaticMarkup(
+    React.createElement(
+      "main",
+      null,
+      ...stages.map((stage) =>
+        React.createElement(Board, {
+          key: stage.id,
+          stage,
+          board: stage.board,
+          onZoom: () => {},
+        }),
+      ),
+    ),
+  );
+  const dom = new JSDOM(html).window.document;
+  const text = normalized(dom.body.textContent);
+  const ids = [...dom.querySelectorAll("[id]")].map((el) => el.id);
+  assert.equal(new Set(ids).size, ids.length, `${id}: unique DOM IDs`);
+  for (const stage of stages) {
+    boards++;
+    figures += stage.figures.length;
+    for (const card of stage.cards) {
+      cards++;
+      assert.ok(text.includes(normalized(card.text)), `${id}: source card ${card.title}`);
+      if (card.detailText)
+        assert.ok(
+          text.includes(normalized(card.detailText)),
+          `${id}: full source answer ${card.title}`,
+        );
+    }
+    if (stage.board.contextFigureNumber) {
+      const context = stage.figures.find((f) => f.number === stage.board.contextFigureNumber);
+      assert.ok(text.includes(normalized(context.observe)), `${id}: scenario context included`);
+      if (stage === stages.at(-1))
+        assert.ok(
+          text.indexOf(normalized(context.observe)) < text.indexOf(normalized(stage.cards[0].text)),
+          `${id}: scenario before questions`,
+        );
+    }
+  }
+  for (const figure of doc.figures) assert.ok(fs.existsSync(file(`public${figure.file}`)));
+  const fresh = {
+    stage: 0,
+    maxStage: 0,
+    answers: {},
+    checks: doc.completionChecks.map(() => false),
+    exercise: { pairs: {}, sequence: [], selectedLeft: null },
+    exerciseDone: false,
+    complete: false,
+  };
+  const state = migrate(id, doc, null, false, fresh, catalog.curriculumVersion);
+  assert.equal(state.version, `${catalog.curriculumVersion}:${id}:${doc.contentVersion}`);
+  assert.ok(!state.version.startsWith("ciaac-aircraft-approved"));
+  const saved = {
+    ...state,
+    stage: 3,
+    maxStage: 3,
+    exercise: {
+      ...state.exercise,
+      sequence: doc.exercise.kind === "sequence" ? correctOrder : [],
+      pairs:
+        doc.exercise.kind === "match"
+          ? Object.fromEntries(correctOrder.map((i) => [String(i), i]))
+          : {},
+    },
+  };
+  const resumed = migrate(id, doc, saved, false, fresh, catalog.curriculumVersion);
+  assert.equal(resumed.stage, 3);
+  assert.equal(resumed.exerciseDone, true);
+  const mismatch = migrate(
+    id,
+    doc,
+    { ...saved, version: "legacy" },
+    false,
+    fresh,
+    catalog.curriculumVersion,
+  );
+  assert.equal(mismatch.stage, 0);
+  assert.equal(mismatch.complete, false);
+  assert.equal(mismatch.previousJourney.version, "legacy");
+}
+for (const amActive of [false, true])
+  for (const stActive of [false, true]) {
+    const taxonomy = loader({
+      "src/lib/lp/ciaac-aircraft-approved/content.ts": {
+        APPROVED_AIRCRAFT_ACTIVE: amActive,
+        usableDocument: load("src/lib/lp/ciaac-aircraft-approved/content.ts").usableDocument,
+      },
+      [`${approved}content.ts`]: { APPROVED_MANUALS_ACTIVE: stActive },
+    })("src/lib/lp/taxonomy.ts");
+    const subject = taxonomy.lpSubject("ciaac", "manuales-de-informacion-aeronautica");
+    assert.deepEqual(
+      taxonomy.subjectSequence(subject).map(({ item }) => item.id),
+      stActive ? approvedIds : legacyItems.map((item) => item.id),
+    );
+    assert.equal(taxonomy.subjectLpCount(subject), stActive ? 10 : 46);
+    for (const item of legacyItems) {
+      const found = taxonomy.findLp(item.id);
+      assert.ok(found);
+      assert.deepEqual(found.item, item);
+      assert.deepEqual(found.subject, oldSubject);
+    }
+    assert.equal(
+      taxonomy.subjectLpCount(taxonomy.lpSubject("ciaac", "aeronaves-y-motores")),
+      amActive ? 19 : 40,
+    );
+  }
+const readyLoad = loader({
+  [`${approved}publication-review.json`]: fixtureReviews,
+});
+const available = readyLoad("src/lib/lp/ciaac-availability.ts");
+const registry = readyLoad("src/lib/lp/ciaac-content.ts");
+for (const id of approvedIds) {
+  assert.equal(available.isLearningPathAvailable(id), sourceIds.includes(id));
+  assert.equal(Boolean(registry.CIAAC_LEARNING_PATHS[id]), sourceIds.includes(id));
+}
+let completedIds = [];
+const navLoad = loader({
+  [`${approved}publication-review.json`]: fixtureReviews,
+  "src/lib/store/db.ts": {
+    read: () => [],
+    update: () => {
+      throw Error("Read-only test");
+    },
+    nowISO: () => "test",
+  },
+  "src/lib/store/domain.ts": {
+    getTemaProgress: () => completedIds.map((id) => ({ temaId: `lp:${id}`, completado: true })),
+    completeTema: () => {
+      throw Error("Read-only test");
+    },
+  },
+  "src/lib/store/gating.ts": { isPaid: () => true },
+});
+const nav = navLoad("src/lib/store/lp-nav.ts");
+const subject = navLoad(`${approved}catalog.ts`).approvedManualsSubject();
+const user = { id: "fixture-reviewer" };
+assert.equal(nav.lpAccess(user, subject, approvedIds[0]).allowed, true);
+completedIds = [approvedIds[0]];
+assert.equal(nav.lpAccess(user, subject, approvedIds[1]).allowed, true);
+assert.equal(nav.lpAccess(user, subject, approvedIds[3]).lock, "previo");
+assert.equal(nav.lpAccess(user, subject, approvedIds[6]).lock, "previo");
+assert.equal(nav.subjectContinue(user.id, subject).id, approvedIds[1]);
+for (let i = 0; i < approvedIds.length; i++) {
+  completedIds = approvedIds.slice(0, i);
+  assert.equal(nav.lpAccess(user, subject, approvedIds[i]).allowed, true);
+  if (i + 1 < approvedIds.length)
+    assert.equal(nav.lpAccess(user, subject, approvedIds[i + 1]).lock, "previo");
+}
+// Missing review still creates a real content gap; progression must never skip it.
+const gapReviews = fixtureReviews.filter((r) => r.id !== approvedIds[1]);
+const gap = collect(docs, gapReviews);
+assert.equal(gap[approvedIds[1]], undefined);
+assert.ok(gap[approvedIds[2]]);
+const gapNav = loader({
+  [`${approved}publication-review.json`]: gapReviews,
+  "src/lib/store/db.ts": { read: () => [], nowISO: () => "test" },
+  "src/lib/store/domain.ts": {
+    getTemaProgress: () => [{ temaId: `lp:${approvedIds[0]}`, completado: true }],
+  },
+  "src/lib/store/gating.ts": { isPaid: () => true },
+})("src/lib/store/lp-nav.ts");
+assert.equal(gapNav.lpAccess(user, subject, approvedIds[1]).lock, "contenido");
+assert.equal(gapNav.lpAccess(user, subject, approvedIds[2]).lock, "previo");
+assert.equal(gapNav.subjectContinue(user.id, subject), null, "Never skip a missing review gap");
+assert.equal(nav.lpNeighbors(subject, approvedIds[3]).prev.id, approvedIds[2]);
+assert.equal(nav.lpNeighbors(subject, approvedIds[3]).next.id, approvedIds[4]);
+completedIds = legacyItems.map((item) => item.id);
+assert.equal(
+  nav.subjectProgress(user.id, subject).done,
+  0,
+  "No legacy completion becomes approved-MI credit",
+);
+const payload = load("src/lib/lp/admin-review.server.ts").learningPathReviewPayload(null);
+assert.equal(payload.items.length, 191);
+for (const id of approvedIds)
+  assert.equal(payload.items.find((x) => x.id === id).renderer, "approved-aircraft");
+assert.equal(boards, 69);
+assert.equal(cards, 328);
+assert.equal(figures, 169);
+const basic = loader({
+  "src/lib/store/db.ts": { read: () => [], nowISO: () => "test" },
+  "src/lib/store/domain.ts": {
+    getTemaProgress: () =>
+      approvedIds.slice(0, 1).map((id) => ({ temaId: `lp:${id}`, completado: true })),
+  },
+  "src/lib/store/gating.ts": { isPaid: () => false },
+})("src/lib/store/lp-nav.ts");
+assert.equal(
+  basic.lpAccess(user, subject, approvedIds[1]).lock,
+  "plan",
+  "Basic still stops after one lesson",
+);
+assert.equal(basic.lpAccess(null, subject, approvedIds[0]).allowed, false);
+const route = fs.readFileSync(
+  file("src/routes/dashboard/rutas/$categoria.$materia.$contenedor.$lp.tsx"),
+  "utf8",
+);
+assert.ok(route.includes("APPROVED_MANUALS_READY_IDS.includes(item.id)"));
+assert.ok(route.includes("journeyCurriculumVersion="));
+assert.ok(
+  route.indexOf("if (acceso && !acceso.allowed)") <
+    route.indexOf("<CiaacApprovedAircraftLearningPath"),
+);
+console.log(
+  JSON.stringify(
+    {
+      status: "passed",
+      lessons: sourceIds.length,
+      outline: approvedIds.length,
+      legacyUrls: legacyItems.length,
+      boards,
+      cards,
+      figures,
+      localReviewActivation: actualActive,
+      nativeBrowserQA: "pending",
+    },
+    null,
+    2,
+  ),
+);

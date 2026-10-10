@@ -4,6 +4,7 @@ import { HANDBOOK_LEARNING_PATHS } from "./handbook-content.generated";
 import { isLearningPathAvailable } from "./ciaac-availability";
 import { AIRCRAFT_LP_ID } from "./ciaac-aircraft-journey";
 import { APPROVED_AIRCRAFT_READY_IDS } from "./ciaac-aircraft-approved/content";
+import { APPROVED_MANUALS_READY_IDS } from "./ciaac-manuals-approved/content";
 import { CIAAC_REVIEWED_AERODYNAMICS_IDS } from "./ciaac-aerodynamics-ids";
 import { CIAAC_REVIEWED_AIRCRAFT_ENGINES_IDS } from "./ciaac-aircraft-engines-ids";
 import type { ReviewItem, ReviewPayload, ReviewRenderer } from "./admin-review-types";
@@ -24,6 +25,7 @@ function renderer(id: string): ReviewRenderer {
   // still gate each lesson; the prefix never makes missing ST content reviewable.
   if (
     APPROVED_AIRCRAFT_READY_IDS.includes(id) ||
+    APPROVED_MANUALS_READY_IDS.includes(id) ||
     id.startsWith("ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/")
   )
     return "approved-aircraft";
