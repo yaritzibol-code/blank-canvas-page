@@ -24,6 +24,7 @@ const compilationCache = new Map();
 function loader(overrides = {}) {
   overrides = {
     "src/lib/lp/ciaac-manuals-approved/publication-review.json": [],
+    "src/lib/lp/ciaac-operations-approved/publication-review.json": [],
     ...overrides,
   };
   const cache = new Map();

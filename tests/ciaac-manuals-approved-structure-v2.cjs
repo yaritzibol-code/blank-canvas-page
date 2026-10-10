@@ -325,7 +325,11 @@ assert.equal(
   "No legacy completion becomes approved-MI credit",
 );
 const payload = load("src/lib/lp/admin-review.server.ts").learningPathReviewPayload(null);
-assert.equal(payload.items.length, 191);
+assert.equal(
+  payload.items.length,
+  191 + 5,
+  "Preserve the MI baseline and add five reviewed OP lessons",
+);
 for (const id of approvedIds)
   assert.equal(payload.items.find((x) => x.id === id).renderer, "approved-aircraft");
 assert.equal(boards, 69);

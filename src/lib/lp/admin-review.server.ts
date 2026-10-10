@@ -5,6 +5,7 @@ import { isLearningPathAvailable } from "./ciaac-availability";
 import { AIRCRAFT_LP_ID } from "./ciaac-aircraft-journey";
 import { APPROVED_AIRCRAFT_READY_IDS } from "./ciaac-aircraft-approved/content";
 import { APPROVED_MANUALS_READY_IDS } from "./ciaac-manuals-approved/content";
+import { APPROVED_OPERATIONS_READY_IDS } from "./ciaac-operations-approved/content";
 import { CIAAC_REVIEWED_AERODYNAMICS_IDS } from "./ciaac-aerodynamics-ids";
 import { CIAAC_REVIEWED_AIRCRAFT_ENGINES_IDS } from "./ciaac-aircraft-engines-ids";
 import type { ReviewItem, ReviewPayload, ReviewRenderer } from "./admin-review-types";
@@ -26,6 +27,7 @@ function renderer(id: string): ReviewRenderer {
   if (
     APPROVED_AIRCRAFT_READY_IDS.includes(id) ||
     APPROVED_MANUALS_READY_IDS.includes(id) ||
+    APPROVED_OPERATIONS_READY_IDS.includes(id) ||
     id.startsWith("ciaac/servicios-de-transito-aereo/itinerario-aprobado-2026-10/")
   )
     return "approved-aircraft";

@@ -2,6 +2,7 @@ import { CIAAC_REVIEWED_AIRCRAFT_ENGINES_IDS } from "./ciaac-aircraft-engines-id
 import { APPROVED_AIRCRAFT_READY_IDS } from "./ciaac-aircraft-approved/content";
 import { APPROVED_TRANSIT_READY_IDS } from "./ciaac-transit-approved/content";
 import { APPROVED_MANUALS_READY_IDS } from "./ciaac-manuals-approved/content";
+import { APPROVED_OPERATIONS_READY_IDS } from "./ciaac-operations-approved/content";
 import { CIAAC_REVIEWED_AERODYNAMICS_IDS } from "./ciaac-aerodynamics-ids";
 /** Original reviewed introductory module; keep its stable IDs for migrations. */
 export const CIAAC_MODULE_ONE_IDS = [
@@ -19,6 +20,7 @@ export const CIAAC_AVAILABLE_IDS = [
   ...APPROVED_AIRCRAFT_READY_IDS,
   ...APPROVED_TRANSIT_READY_IDS,
   ...APPROVED_MANUALS_READY_IDS,
+  ...APPROVED_OPERATIONS_READY_IDS,
 ];
 const ready = new Set<string>(CIAAC_AVAILABLE_IDS);
 

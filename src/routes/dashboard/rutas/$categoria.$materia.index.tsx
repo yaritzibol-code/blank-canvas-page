@@ -7,6 +7,7 @@ import {
   legacyAircraftSubject,
   legacyTransitSubject,
   legacyManualsSubject,
+  legacyOperationsSubject,
   lpCategory,
   lpSubject,
   subjectLpCount,
@@ -34,7 +35,9 @@ function MateriaPage() {
         ? legacyTransitSubject()
         : subject?.id === "ciaac/manuales-de-informacion-aeronautica"
           ? legacyManualsSubject()
-          : undefined;
+          : subject?.id === "ciaac/operaciones-aeronauticas"
+            ? legacyOperationsSubject()
+            : undefined;
 
   const estado = useStore(() => {
     if (!subject) return null;

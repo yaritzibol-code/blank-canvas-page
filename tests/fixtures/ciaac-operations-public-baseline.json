@@ -1,0 +1,140 @@
+{
+  "baselineAvailableCount": 113,
+  "baselineReviewCount": 191,
+  "baselineIdsSha256": "6ea993d243dc993921e2044a29684281eba070d2d4a0a56ca9712a311911abc5",
+  "baselineCategoriesSha256": "b7b569f8ce7cc0592a6194b06563bfa07697b64535dd1d7cfef9013537a1c012",
+  "baselinePublicFilesCount": 926,
+  "baselinePublicFilesSha256": "aa851e9774a482b2121ae04843f1d8483b3ddb9efb6e041c1d4e4167d11342d2",
+  "protectedFiles": {
+    "package-lock.json": "54d93f2c77606a534ae5df3fb1b4c56e05fad5a2a154492b5c39e6a924d74398",
+    "package.json": "98464fbb1a6fb9a17141852203c03aa1c844634b00d766c13ab612b58bb15976",
+    "src/lib/fp/fp.server.ts": "e964dd160a26b04fe248da89a67b6ad7d716dd58811873d9f46dffe47e419a75",
+    "src/lib/logros/engine.ts": "c14b2d87283db43f6139023ed2934957224ccf188809c72a166d7b7347020135",
+    "src/lib/lp/admin-review-types.ts": "e0967aa0a60b45dd1f9620c8e1a0e93d392498ec3d0bc5fb325d5b5ddf6d07ee",
+    "src/lib/lp/annex10-content.generated.ts": "a33d30f5ef127001880448c2e9f6876530b068b82122dad86a1d130f36b1ec92",
+    "src/lib/lp/atp-content.2026.ts": "2c732bd570bbc7092a577eabe2b06db06f8797a1fa6aef5df9095467fc7a2172",
+    "src/lib/lp/atp-content.generated.ts": "fef7389e3499465e9e019caf4087cff4a5bfad91e60de44f19d87a224c270067",
+    "src/lib/lp/atp-flashcards-2025-2026.json": "237f6aa2ee7c23bfd3a30ddb22f9ac86bdd3ea1dcb64c037c053f6654e95ec9e",
+    "src/lib/lp/atp-new-paths.2026.ts": "2c3a1a72b1681a58bd02a16edb9a28c5d97d7c0f7c1717368e4df41152cbbf28",
+    "src/lib/lp/atp-references.2026.json": "36715a138a1022847009ef6c08edaae987f465c716ab827275f14058b7b59133",
+    "src/lib/lp/atp-types.ts": "1ca288a176e9d555e9c1f547b5bec9c7e0f8a030aedd496095f8ca79c54c9dcd",
+    "src/lib/lp/ciaac-aerodynamics-ids.ts": "d837735851ec098906e1406e319e216a86c8106373baf819865324461b5b1686",
+    "src/lib/lp/ciaac-aerodynamics-journey.ts": "637dd1d68d1f3e037aa53bfda392670769d92ef9cad5a90845c69d8356c5989c",
+    "src/lib/lp/ciaac-aerodynamics.content.json": "517d00603deb8728bb4fc6dccca9522ecd880d1b8000345836ddc55941fbad68",
+    "src/lib/lp/ciaac-aircraft-approved/catalog.json": "ea17aec25be2ae10bd899da1818f19468ab72970af3999175b8d54ae86b7b745",
+    "src/lib/lp/ciaac-aircraft-approved/catalog.ts": "290ddb9d834c505e8f36748e0ecc64769b3f2faaea33dfa10bb51f42df616443",
+    "src/lib/lp/ciaac-aircraft-approved/content.ts": "411ed936cf2facfca5f3766df12f5d069a96d08e7f474b7f41a0ac140328d40f",
+    "src/lib/lp/ciaac-aircraft-approved/documents.json": "8a2232dfbfecd5454bf6cc8eaac6d68f82a4b03602e8944dee25c84d1928d0ea",
+    "src/lib/lp/ciaac-aircraft-approved/journey.ts": "6126ec9586681691973b6a602af516994ec845d4961223084e6a51480170ccfd",
+    "src/lib/lp/ciaac-aircraft-approved/legacy-map.json": "70ae22652fa419fe109d866670db43f22151205e802cf4c387d6710a133c7794",
+    "src/lib/lp/ciaac-aircraft-approved/publication-review.json": "6f883fe7406d2b33bbf38c2f565efe06f5f64c13cc5571db3c309449e256ca65",
+    "src/lib/lp/ciaac-aircraft-approved/teaching-board.ts": "68f4a8dcc9f6de09e40dc8a34ad38232a4e88d0d8076d90f75ec4dda0ed86f57",
+    "src/lib/lp/ciaac-aircraft-engines-ids.ts": "15dfd3e928d6406515081ac4ed91841bb1f112121e6afefa8db1a8f1cd067ae1",
+    "src/lib/lp/ciaac-aircraft-engines-journey.ts": "1a4dc80395bd0396b54cf0536f596f2965b30bf0e84fd03dd0fe9b1a1769944d",
+    "src/lib/lp/ciaac-aircraft-engines.content.json": "782451f49c74f5363c126fda0b2761886965a7243a1666ecf86a4d8419429bcf",
+    "src/lib/lp/ciaac-aircraft-handbook-journey.ts": "33faf899a38162c13842f471fd2d3682b9fee1f6ce2aa42882d043e46fa0d183",
+    "src/lib/lp/ciaac-aircraft-handbook.ts": "26dc9e1096044665deed2602c7eb3709cea2f18b85f8c66418116986c45623de",
+    "src/lib/lp/ciaac-aircraft-journey.ts": "c6e12808e9e88e177ce9538e3f820d2ae080e1aa94787c6a47ba9836a2a28dbe",
+    "src/lib/lp/ciaac-content-types.ts": "2b5a000680c407997413a448543b11c7e3899a5a00d39d81efca7d2531ddb991",
+    "src/lib/lp/ciaac-manuals-approved/catalog.json": "c79580cf09570b235df1848aa18de9d54d2715129d8f81a7e7c5238e5bcc1e7c",
+    "src/lib/lp/ciaac-manuals-approved/catalog.ts": "cf0013f97311acd1f48b61001bd560eab79ebc4987c9b937825c62f50749d16b",
+    "src/lib/lp/ciaac-manuals-approved/content.ts": "9f328970c7f70870d1079764c63ce37cf8ff09e04b5374f782471cc9f3cecd1c",
+    "src/lib/lp/ciaac-manuals-approved/documents.json": "bd22a13b7b96c4fc476c5eb2c57f726e72740386318e819d37149fa583e2ee2b",
+    "src/lib/lp/ciaac-manuals-approved/publication-review.json": "150c0eb81b99d6c194e92e43f0825c5934bddef9bf90c6ba9891144e9bf2083c",
+    "src/lib/lp/ciaac-module-one-handbook-journey.ts": "6625823064cfa563f7583a274a47d46549c1286b9ac7c84f0f73cd694e7e2a38",
+    "src/lib/lp/ciaac-module-one-handbook.ts": "2e4e43fa002847f5705f2889c376935aac7b1853d50384800821ba1c4fdcbb87",
+    "src/lib/lp/ciaac-module1.content.json": "ea867ce7a33fe29e5083570a6d1c63b1608ddb524ef62ffeb8d5efec301ff0a3",
+    "src/lib/lp/ciaac-progress.ts": "ee47a9979a5e9c4feedba864f59cee8405268f402f78834d24f15ad4d11000d5",
+    "src/lib/lp/ciaac-transit-approved/catalog.json": "27789b31e727dc08ab1916acd131f6fe7af51f92759c30b8ce0b0d6446d097cd",
+    "src/lib/lp/ciaac-transit-approved/catalog.ts": "78a16e8b63e16117dda4591baf2e4ab44527fd7c7cba3d88a4762261080d76f7",
+    "src/lib/lp/ciaac-transit-approved/content.ts": "e0f11eec461d5450de3d4c4518d106f51bf8c50b37a428ccdfd8453b8537ed71",
+    "src/lib/lp/ciaac-transit-approved/documents.json": "1a6e89c11d206c501ff20c40c828fb087e834d84554b65ac8787d27faac71edd",
+    "src/lib/lp/ciaac-transit-approved/publication-review.json": "ff01223fc0c027769d90361517a23b3ffdbc33eea4371df490a8e1f5810b0503",
+    "src/lib/lp/contextual-return.ts": "1e4bc59d61996226d6a241814cadaf23e85e54960873c1f01a7d6b91f252317b",
+    "src/lib/lp/course-types.ts": "4ba0a045eeadaa99d3b7d38619644ec6c2e33cec0f774ca0a9f93e605e48f4f8",
+    "src/lib/lp/handbook-content.generated.ts": "f55e326fd2c80b450c8dc8388da29fc072b0d244211675478f34935166d76851",
+    "src/lib/lp/handbook-types.ts": "2fbc7550623d0b23e54ae788de6f39362d65dfd945b9c4b7f42fed63218c3276",
+    "src/lib/lp/jeppesen-content.generated.ts": "b1c884a19945031cfb0875f3fc73049c406f750fe91e2124366c1b8377357673",
+    "src/lib/lp/jeppesen-types.ts": "ae2f7f603a41f8b7dfc751ef470b905419e7ed48bdd96d8675ebb33d1b00cf51",
+    "src/lib/lp/legislation-content.generated.ts": "35a5563a08b0d26c41429cf58543330169efbb0172bf528d4cb1763710f15732",
+    "src/lib/lp/legislation-types.ts": "1e6586cd4980a2a7888ca3ad25132d9a8265b23003d2ac349fbf2d16ed03fd55",
+    "src/lib/lp/registry.ts": "f61c97be3d316a5782edc55d8d4062c41d43f048105a0df0f723654d85906030",
+    "src/lib/lp/taxonomy.json": "456ef04f7829986ac40a17290e7f6d12f2fafb087b5c1791f0d043c5af44cbc3",
+    "src/lib/store/domain.ts": "2fc48342916ff9c9343eddb8b12446e8482f7d11135b2ff99f7b49629f3e10a2",
+    "src/lib/store/gating.ts": "f70a11b566b7e498456858012db978fd259831fd3c8e3e1e18bf4427e3c826f3",
+    "src/lib/store/lp-journey.ts": "a67799381f5947a0cf25aa25f5b67ab9ce85795c2b6f0df43bf2b8b15e3eb7dc",
+    "src/lib/store/lp-nav.ts": "93adb9b3c0a52a8b47064127bda5f2b6538485473f0462fbf4a5dda64cfe79ce",
+    "vite.config.ts": "d60cc34fc5e6269f32bcc34cc989efc80114851990c45583f990d442faf21242"
+  },
+  "operationsValidators": {
+    "catalog.ts": "536133635d91852a700a315e8bbbdb49e9fd64e23f8e6fbf6d372472998b86d8",
+    "content.ts": "940f0dc2ee5ea891a62d8fc44c6d899f76de27027cc164d69ece4378ded53392"
+  },
+  "operationsAssets": {
+    "public/ciaac-approved/op/oc-case-doc.svg": "558a8317564cbbfa0ab4b7ffbb3da0cc1eed6f309bddd077413d8e8d943f56c4",
+    "public/ciaac-approved/op/oc-manuals.svg": "bc14018bda59f127830fb62e16be6f1a13c662c6ac704c7112a7cbe8176c0668",
+    "public/ciaac-approved/op/oc-mel.svg": "801c777732daa16fa814445376ba372316c54a3d19f65d8adce5816aa9cc51fb",
+    "public/ciaac-approved/op/oc-roles.svg": "3856ffb573c66c51e4588b56d9687e27f64e5f80b21601370f437e5b8c00ca80",
+    "public/ciaac-approved/op/oc-validity.svg": "133d3f92452ae65b383dda0ebb66486102db5fa6982bf17b5da1c5120c29ca3e",
+    "public/ciaac-approved/op/or-op03-duty-case.svg": "d74e39ea95eb76454c38190c0317ee1f7dfc73a7bf5c490f3d779f8740ec5647",
+    "public/ciaac-approved/op/or-op03-duty-scope.svg": "f707137f3fabefd1f805554cdc25dc8e19bd42769abecc1f2a7a506538708840",
+    "public/ciaac-approved/op/or-op03-fuel-components.svg": "5e88fb10e74636f1856cd323b7911c89c2c719c0d295904f8bf7af3fa2ef96f0",
+    "public/ciaac-approved/op/or-op03-preflight.svg": "34ca0db61d21f543513f833a4dbd833f5a15e45dd967fb6c3f04db9e5a89984a",
+    "public/ciaac-approved/op/or-op03-reserve-sources.svg": "a6757858e875d6e4e75e2b3df7a58859800eed04fbd712b490492fc0a3a9f202",
+    "public/ciaac-approved/op/or-op03-rest-restart.svg": "891c86b830df653ca8f8873e1c636647d921671f173c041ce452be29141f02c7",
+    "public/ciaac-approved/op/or-op03-route-weather.svg": "c3e23ff003845e5f2425c3c20e6e06576c8d3c8d0be0608b3ffd752e1e7a5da0",
+    "public/ciaac-approved/op/or-op03-weather-rules.svg": "b9a2df873310573a0779219fcce1ab0c7e20e1f250120cac44b5bd3a53f71487",
+    "public/ciaac-approved/op/or-op04-empty-weights.svg": "ac718e8eda84b746b38088f3a28dc38a2304188474e0c778d15147e9c1aa793c",
+    "public/ciaac-approved/op/or-op04-mass-flow.svg": "190cc5aaf7c48291a783c5f50ea572f119ac1f63583f206b48e3618c166e1e54",
+    "public/ciaac-approved/op/or-op04-mzfw.svg": "0ad5189b4444afc1252d2cbea1bfa59d75bcb133da5fa6e04e3bbd759379331e",
+    "public/ciaac-approved/op/or-op04-structural-margins.svg": "b3205b8de6d7f31ce2ed87504a5e8957e2a6404f001e90df3fcb2cc40b91bc5c",
+    "public/ciaac-approved/op/or-op04-useful-load.svg": "6ac7b685f24f7410c21326283a25a2e99bf5022071dc6c6d1117c93cb2490cb5",
+    "public/ciaac-approved/op/or-op05-cg-calculation.svg": "d165d93c66a26d6531c1384cc33740cde950b2151b3b4ecc961117520f7a0671",
+    "public/ciaac-approved/op/or-op05-datum.svg": "d42759e26c4e23293f73922dde25acc6723f2745b196356bf70c06adf7a6149a",
+    "public/ciaac-approved/op/or-op05-load-stations.svg": "fbfe6ea36fb7803994be1a18e8c64db8ae2c7d7f2b3667759332d855a7069832",
+    "public/ciaac-approved/op/or-op05-mac.svg": "68cc7925a93e2ff9e8e9a83c74aef3bc63e5d7b2fe165aab98ef5a368e0102b3",
+    "public/ciaac-approved/op/or-op05-relocation.svg": "722390d67047d15edcc74cf9e73293bd2353f110ccdd4608195eb8033d2a6a4b"
+  },
+  "lessons": {
+    "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op01-usar-manuales-y-documentos-de-operacion": {
+      "contentVersion": "op01-grouped-private-20261006-v1",
+      "assessmentVersion": null,
+      "exerciseSha256": "03e4fa83007e09f499b666e907ea1ab24abdf3e673faa06cedce207ed2e970f1",
+      "documentSha256": "a8c3f7bf1773e4592cf360676027ab2ccd62f5a9234a4c187914bf75f34ee743"
+    },
+    "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op02-comprobar-la-condicion-tecnica-de-la-aeronave": {
+      "contentVersion": "op02-grouped-private-20261006-v1",
+      "assessmentVersion": null,
+      "exerciseSha256": "353752b1b63be8ac131997ba61d37527541eea30eafb23b1d1531ada921bfe37",
+      "documentSha256": "d93b63e44e47202cbcc00fe1937f5dfe4c24ca8829e3b8dddeca8a35f8780a21"
+    },
+    "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op03-preparar-una-operacion-vfr-o-ifr": {
+      "contentVersion": "op03-grouped-private-20261006-v1",
+      "assessmentVersion": null,
+      "exerciseSha256": "f1f1d7add158e0c6621dc07f123c8aa185e7491dc92c773dc21cc3cd50bc6035",
+      "documentSha256": "3c31b2430af4fef6201c2a92d8ae6fe7f70c0d82a19908f47bc36e15e2857d35"
+    },
+    "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op04-reconocer-los-pesos-y-limites-de-la-aeronave": {
+      "contentVersion": "op04-grouped-private-20261006-v1",
+      "assessmentVersion": null,
+      "exerciseSha256": "f1e03a498028fa69b87b433aa172d1a576095f7167257570a0d77b7e4f6fa024",
+      "documentSha256": "21bc10300b041a2177990fa4369a5169657b76674e59c1339f6d752154d4e404"
+    },
+    "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op05-calcular-el-centro-de-gravedad": {
+      "contentVersion": "op05-grouped-private-20261006-v1",
+      "assessmentVersion": null,
+      "exerciseSha256": "fff6ab880f2a6d1c7fa91c276bc87f5c2618c64265a0c4e56d25f0c5659b7120",
+      "documentSha256": "16a1e56295c0f4159dc987fbadee8228186b2d949172981d9f069c0fcd7b985a"
+    }
+  },
+  "editorialOverlay": {
+    "revision": "equivalent-visual-reference-wording-2026-10-10",
+    "scope": "One equivalent wording change in an original SVG and the matching teaching card. Exercises, completion checks, versions and source references are unchanged.",
+    "reviewedSourceAssets": {
+      "public/ciaac-approved/op/or-op03-weather-rules.svg": "69905e1855549b7f8211b7b466fe52d79a30afeeee10a2626aaed31fc54560d1"
+    },
+    "reviewedSourceDocuments": {
+      "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op03-preparar-una-operacion-vfr-o-ifr": "98ffd8c1e04daa6697cd648cbdb8d25345a2692f7b9eeb4bafa94d3aab12fbc2"
+    }
+  }
+}

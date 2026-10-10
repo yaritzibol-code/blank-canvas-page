@@ -1,0 +1,52 @@
+[
+  {
+    "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op01-usar-manuales-y-documentos-de-operacion",
+    "curriculumVersion": "ciaac-operations-approved-2026-10-05",
+    "notebooklmExplanationSha256": "d9608d02589800ccf560e6a655c2ee83982dd7ba51d277a9ff2919a302abc2dd",
+    "sourceInputSetSha256": "b5772db9f4489144d0be3dfecfa114dd3c5350dfbf9c61e090ea710427a751fb",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true,
+    "reviewScope": "Bounded editorial review of historical teaching scope, static original SVG visuals, and preserved exercises, cases and answers, 2026-10-10. Authenticated browser, mobile, focus and keyboard, zoom and modal QA remain pending. Not operational certification."
+  },
+  {
+    "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op02-comprobar-la-condicion-tecnica-de-la-aeronave",
+    "curriculumVersion": "ciaac-operations-approved-2026-10-05",
+    "notebooklmExplanationSha256": "39834b0b24197e9fff5a622512c9fe5026a9ab3a84ab8cc50b949a777033d9df",
+    "sourceInputSetSha256": "37ec8b5b071039c2c193c304b6797f3df0269165244412b3531e30cabf1169e5",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true,
+    "reviewScope": "Bounded editorial review of historical teaching scope, static original SVG visuals, and preserved exercises, cases and answers, 2026-10-10. Authenticated browser, mobile, focus and keyboard, zoom and modal QA remain pending. Not operational certification."
+  },
+  {
+    "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op03-preparar-una-operacion-vfr-o-ifr",
+    "curriculumVersion": "ciaac-operations-approved-2026-10-05",
+    "notebooklmExplanationSha256": "8cc162a0bf71cee4f6639b680dbda9ef4defb7bab7b7149f24dee4ab584dbb63",
+    "sourceInputSetSha256": "63347e5a9e1588c8af24686a9a40f81a6e228b790e34a3614ffb4cd3d054014a",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true,
+    "reviewScope": "Bounded editorial review of historical teaching scope, static original SVG visuals, and preserved exercises, cases and answers, 2026-10-10. Authenticated browser, mobile, focus and keyboard, zoom and modal QA remain pending. Not operational certification."
+  },
+  {
+    "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op04-reconocer-los-pesos-y-limites-de-la-aeronave",
+    "curriculumVersion": "ciaac-operations-approved-2026-10-05",
+    "notebooklmExplanationSha256": "822c4511b302426485328bcc8449f34845e8106d696228339147f933c460de9e",
+    "sourceInputSetSha256": "7c207d2520bd01a69ba6af81519c1a70233740412b36d33d9b81a9cac2fad100",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true,
+    "reviewScope": "Bounded editorial review of historical teaching scope, static original SVG visuals, and preserved exercises, cases and answers, 2026-10-10. Authenticated browser, mobile, focus and keyboard, zoom and modal QA remain pending. Not operational certification."
+  },
+  {
+    "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op05-calcular-el-centro-de-gravedad",
+    "curriculumVersion": "ciaac-operations-approved-2026-10-05",
+    "notebooklmExplanationSha256": "b0fa45a8c3b91117a83a648ce3f85f058e1ba36f0f73bbefa6df70079126a661",
+    "sourceInputSetSha256": "4e98a117ddfc8a021869cf66b6fd1009dd5d9508caf508c908fa0b8c60cb47aa",
+    "scopeReviewed": true,
+    "visualsReviewed": true,
+    "assessmentReviewed": true,
+    "reviewScope": "Bounded editorial review of historical teaching scope, static original SVG visuals, and preserved exercises, cases and answers, 2026-10-10. Authenticated browser, mobile, focus and keyboard, zoom and modal QA remain pending. Not operational certification."
+  }
+]

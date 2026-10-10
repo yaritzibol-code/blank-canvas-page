@@ -1,0 +1,3627 @@
+{
+  "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op01-usar-manuales-y-documentos-de-operacion": {
+    "number": 1,
+    "title": "Usar manuales y documentos de operación",
+    "name": "Usar manuales y documentos de operación",
+    "intro": "Función y uso de AFM, QRH, POH, MGO y SOPs. Uso de la bitácora de vuelo y aplicación del certificado de matrícula.",
+    "cards": [
+      {
+        "title": "Usar manuales y documentos de operación",
+        "text": "Función y uso de AFM, QRH, POH, MGO y SOPs. Uso de la bitácora de vuelo y aplicación del certificado de matrícula.",
+        "covers": []
+      }
+    ],
+    "questions": [],
+    "tips": [],
+    "chapter": 1,
+    "chapter_name": "Operaciones aéreas",
+    "subtopics": [
+      {
+        "level": 1,
+        "name": "Función y uso de AFM, QRH, POH, MGO y SOPs.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado OP01"
+      },
+      {
+        "level": 1,
+        "name": "Uso de la bitácora de vuelo y aplicación del certificado de matrícula.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado OP01"
+      }
+    ],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP01-1-manuals",
+        "file": "/ciaac-approved/op/oc-manuals.svg",
+        "alt": "Documentos con funciones diferenciadas",
+        "heading": "Documentos con funciones diferenciadas",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP01-2-manuals",
+        "file": "/ciaac-approved/op/oc-manuals.svg",
+        "alt": "Documentos con funciones diferenciadas",
+        "heading": "Documentos con funciones diferenciadas",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP01-3-roles",
+        "file": "/ciaac-approved/op/oc-roles.svg",
+        "alt": "Liberación técnica y aceptación del comandante",
+        "heading": "Liberación técnica y aceptación del comandante",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP01-4-case-doc",
+        "file": "/ciaac-approved/op/oc-case-doc.svg",
+        "alt": "Caso de aula · documentación",
+        "heading": "Caso de aula · documentación",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP01-5-mel",
+        "file": "/ciaac-approved/op/oc-mel.svg",
+        "alt": "Evaluación documental MEL",
+        "heading": "Evaluación documental MEL",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 1,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP01-6-case-doc",
+        "file": "/ciaac-approved/op/oc-case-doc.svg",
+        "alt": "Caso de aula · documentación",
+        "heading": "Caso de aula · documentación",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      }
+    ],
+    "exercise": {
+      "kind": "match",
+      "title": "Comprueba la lectura",
+      "instruction": "Relaciona los conceptos. El caso y su resolución completos permanecen en los tableros.",
+      "pairs": [
+        [
+          "AFM",
+          "Limitaciones y datos de rendimiento"
+        ],
+        [
+          "Bitácora",
+          "Registro técnico-operativo"
+        ],
+        [
+          "MGO",
+          "Manual del operador"
+        ]
+      ],
+      "order": [
+        1,
+        2,
+        0
+      ]
+    },
+    "objectives": [
+      "Función y uso de AFM, QRH, POH, MGO y SOPs.",
+      "Uso de la bitácora de vuelo y aplicación del certificado de matrícula."
+    ],
+    "minutes": 20,
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Despegue"
+      },
+      {
+        "id": "OP01-01",
+        "kind": "content",
+        "nav": "1. Sistema Integrado De Manuales Operacionales (Afm, Poh, Qrh, Mgo Y Sop)",
+        "title": "1. Sistema Integrado De Manuales Operacionales (Afm, Poh, Qrh, Mgo Y Sop)",
+        "cards": [
+          {
+            "title": "1. SISTEMA INTEGRADO DE MANUALES OPERACIONALES (AFM, POH, QRH, MGO Y SOP)",
+            "text": "Cada documento cumple una función distinta: información de la aeronave, procedimientos del operador, listas de comprobación o registro de hechos. Antes de usarlo se comprueban identificación de aeronave, revisión y aprobación aplicables. Esta lección estudia las disposiciones mexicanas en las ediciones identificadas; no acredita su vigencia para un vuelo concreto. RLAC, reforma 31-05-2023, arts. 109, 124 y 131; FAA PHAK 25C, p. 9-2, como contraste técnico estadounidense.",
+            "covers": []
+          },
+          {
+            "title": "AFM (Airplane Flight Manual)",
+            "text": "El AFM contiene las limitaciones, procedimientos e información de rendimiento de la aeronave. La aplicabilidad corresponde al modelo, configuración y documentación aprobada. En el marco mexicano estudiado, RLAC art. 124 exige operar conforme al certificado de aeronavegabilidad y dentro de las limitaciones de operación y rendimiento del manual de vuelo; los arts. 109.IV y 131.VI tratan su suministro y presencia a bordo. No sustituye el resto de documentos exigibles. Contraste de función: FAA PHAK 25C, p. 9-2.",
+            "covers": []
+          },
+          {
+            "title": "POH (Pilot's Operating Handbook)",
+            "text": "El POH es publicado por el fabricante. En el contexto FAA descrito en PHAK 25C, p. 9-2, contiene información AFM aprobada y su portada identifica las secciones aprobadas como AFM. No se debe inferir que toda sección esté aprobada ni que un manual genérico de propietario sea equivalente. Se verifican portada, número de serie, configuración, revisiones y suplementos del ejemplar aplicable. Esta descripción estadounidense no establece por sí sola la aprobación mexicana.",
+            "covers": []
+          },
+          {
+            "title": "QRH (Quick Reference Handbook)",
+            "text": "El QRH organiza listas y procedimientos de consulta rápida de la aeronave o del operador; su alcance concreto se comprueba en el propio manual. No es una combinación automática de AFM y MGO ni puede suponerse que contenga todas las listas. El RLAC art. 109.VII exige listas para las fases de operación y emergencias, coherentes con los manuales aplicables y diseñadas con criterios de factores humanos; ese artículo no impone un formato único llamado QRH.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP01-1-manuals",
+            "file": "/ciaac-approved/op/oc-manuals.svg",
+            "alt": "Documentos con funciones diferenciadas",
+            "heading": "Documentos con funciones diferenciadas",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP01-1-manuals",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP01-02",
+        "kind": "content",
+        "nav": "Mgo (Manual General De Operaciones)",
+        "title": "Mgo (Manual General De Operaciones)",
+        "cards": [
+          {
+            "title": "MGO (Manual General de Operaciones)",
+            "text": "El MGO reúne la organización y los procedimientos del explotador. RLAC, reforma 31-05-2023, art. 109.II exige elaborar y modificar el manual con autorización AFAC; su último párrafo extiende esa fracción también a las personas operadoras aéreas. Es distinto del requisito de llevarlo a bordo: art. 131.XIII lo incluye para las modalidades correspondientes, pero el último párrafo de 131 omite XIII al enumerar lo exigible a las personas operadoras aéreas. Se identifica la modalidad jurídica aplicable antes de concluir qué documento debe portarse.",
+            "covers": []
+          },
+          {
+            "title": "SOP (Standard Operating Procedures)",
+            "text": "Los SOP son procedimientos estandarizados que definen cómo se ejecutan y coordinan tareas dentro de una operación. Su contenido y distribución de funciones dependen de la aeronave, tripulación y manuales del operador. No se confunde PIC (responsabilidad de mando) con PF/PM (funciones de vuelo y monitoreo), ni se impone una tripulación de dos pilotos a todas las aeronaves. El RLAC art. 109.V–VII sustenta instrucción, responsabilidades y listas; la FAA AC 120-71B es orientación estadounidense sobre SOP, no una norma mexicana por sí sola.",
+            "covers": []
+          },
+          {
+            "title": "2. REGISTROS TÉCNICOS Y CERTIFICADOS LEGALES: LIBRO DE BITÁCORA VS. CERTIFICADO DE MATRÍCULA Y PÓLIZA DE SEGURO",
+            "text": "La bitácora documenta la actividad técnico-operativa. La matrícula identifica jurídicamente a la aeronave; el seguro cubre las responsabilidades previstas en la póliza y en el marco aplicable. Ninguno reemplaza los otros. Referencias: LAC, compilación reforma 14-11-2025, arts. 32, 44–45 y 74; RLAC, reforma 31-05-2023, arts. 100, 110, 119 y 131.",
+            "covers": []
+          },
+          {
+            "title": "Naturaleza Legal y Función",
+            "text": "La bitácora aprobada recoge los registros requeridos, incluidas las fallas que reporta el piloto al mando y las anotaciones de mantenimiento que correspondan. No se confunde con la bitácora personal del piloto. El certificado de matrícula acredita la nacionalidad y matrícula; no acredita por sí solo la condición técnica. La póliza acredita el seguro, no el retorno al servicio. El contenido exacto de registros se rige por el formato y disposiciones aplicables (RLAC arts. 81, 100, 110.I, 119.II y 131).",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP01-2-manuals",
+            "file": "/ciaac-approved/op/oc-manuals.svg",
+            "alt": "Documentos con funciones diferenciadas",
+            "heading": "Documentos con funciones diferenciadas",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP01-2-manuals",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP01-03",
+        "kind": "content",
+        "nav": "Formato Y Admisibilidad De Copias",
+        "title": "Formato Y Admisibilidad De Copias",
+        "cards": [
+          {
+            "title": "Formato y Admisibilidad de Copias",
+            "text": "En las ediciones estudiadas, LAC art. 32 (PDF 23) admite certificados de matrícula y aeronavegabilidad vigentes o copias certificadas. RLAC art. 131.III exige la bitácora a bordo; art. 110.I exige libros aprobados. Para el seguro, art. 131.XI contempla póliza vigente o copia fotostática con constancia de inscripción en el Registro Aeronáutico Mexicano; art. 67 incluye la alternativa de copia certificada ante fedatario. No se deduce una autorización general para usar cualquier fotografía o archivo digital; deben cumplirse las condiciones del documento y soporte autorizado.",
+            "covers": []
+          },
+          {
+            "title": "Registro de Fallas y Liberación de Mantenimiento",
+            "text": "El piloto al mando notifica y asienta las fallas o anormalidades que observe (RLAC art. 119.II). La aplicación y liberación de mantenimiento tienen sus responsables y registros: art. 138 exige conservar la documentación y que los trabajos ejecutados lleven firma y licencia del mecánico y número del taller. La matrícula y el seguro no sustituyen estos registros técnicos.",
+            "covers": []
+          },
+          {
+            "title": "Firma del Registro de Combustible y Conservación",
+            "text": "RLAC art. 110.II (PDF 51) prevé que el registro de carga de combustible lo firme la persona comandante o piloto al mando, el copiloto o la persona designada por aquéllas. El responsable de la operación conserva esos registros tres meses. El precepto no dice aquí que toda anotación de combustible tenga que estar en la bitácora ni fija en este inciso una ubicación en tierra. La matrícula y el seguro tienen otra función.",
+            "covers": []
+          },
+          {
+            "title": "Alcance del caso",
+            "text": "El caso que sigue es una simulación documental de aula. No aporta una MEL real ni autoriza a efectuar trabajos o despachar una aeronave.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP01-3-roles",
+            "file": "/ciaac-approved/op/oc-roles.svg",
+            "alt": "Liberación técnica y aceptación del comandante",
+            "heading": "Liberación técnica y aceptación del comandante",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP01-3-roles",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP01-04",
+        "kind": "content",
+        "nav": "A. Escenario Táctico",
+        "title": "A. Escenario Táctico",
+        "cards": [
+          {
+            "title": "A. ESCENARIO TÁCTICO",
+            "text": "Caso ficticio: antes de un vuelo nacional comercial IFR, una tripulación revisa documentación y una anotación de luz de cortesía inoperativa en cabina de pasajeros. No se proporcionan modelo, MEL, ítem ni procedimientos del operador. La pregunta es qué debe verificarse, no si esa luz permite por sí sola despachar.",
+            "covers": []
+          },
+          {
+            "title": "B. SECUENCIA Y VERIFICACIÓN DOCUMENTAL A BORDO (RLAC ARTÍCULO 131 / REMISIÓN A MI03)",
+            "text": "Para este supuesto comercial se verifica el catálogo del RLAC art. 131 (PDF 61–62), según modalidad: certificados, bitácora, manual de vuelo, MEL cuando corresponda, cartas e información aeronáutica, documentos de planificación y demás exigibles. MI03 es una conexión de estudio, no una sustitución del catálogo ni una certificación de que todo documento ya está presente. No basta constatar la matrícula y olvidar la aeronavegabilidad.",
+            "covers": []
+          },
+          {
+            "title": "Asentamiento Obligatorio en Bitácora",
+            "text": "La falla observada se registra y comunica conforme al RLAC art. 119.II. Una anotación de falla no es una liberación técnica ni prueba de que exista un diferimiento autorizado.",
+            "covers": []
+          },
+          {
+            "title": "Evaluación de Componentes Inoperativos bajo MEL Aprobada",
+            "text": "Se identifica la MEL aprobada aplicable y se comprueba si existe un ítem que cubra exactamente la falla y configuración. También se revisan condiciones, procedimientos, limitaciones, plazo e interacción con otros elementos inoperativos. Sin esos datos, no puede determinarse aquí un diferimiento (RLAC art. 128; NOM-008-SCT3-2002, texto original, §6.8.5).",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP01-4-case-doc",
+            "file": "/ciaac-approved/op/oc-case-doc.svg",
+            "alt": "Caso de aula · documentación",
+            "heading": "Caso de aula · documentación",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP01-4-case-doc",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP01-05",
+        "kind": "content",
+        "nav": "C. Evaluación Técnica Y Operacional De Fallas (Rlac Arts. 110, 119 Y Mel)",
+        "title": "C. Evaluación Técnica Y Operacional De Fallas (Rlac Arts. 110, 119 Y Mel)",
+        "cards": [
+          {
+            "title": "C. EVALUACIÓN TÉCNICA Y OPERACIONAL DE FALLAS (RLAC ARTS. 110, 119 Y MEL)",
+            "text": "Que una luz parezca poco importante no autoriza a diferirla. En este caso no se ha aportado la MEL: queda pendiente identificar el ítem aplicable y si permite la operación propuesta. El fundamento general es RLAC art. 128 y NOM-008-SCT3-2002 §6.8.5; no una MEL inventada para el ejercicio.",
+            "covers": []
+          },
+          {
+            "title": "C. EVALUACIÓN TÉCNICA Y OPERACIONAL DE FALLAS (RLAC ARTS. 110, 119 Y MEL)",
+            "text": "Si la MEL aplicable permite diferir la falla, deben cumplirse todas sus condiciones y limitaciones. No se prescribe aquí desconectar, aislar o desactivar la luz: una acción física sólo procede conforme al documento aprobado y por personal facultado.",
+            "covers": []
+          },
+          {
+            "title": "C. EVALUACIÓN TÉCNICA Y OPERACIONAL DE FALLAS (RLAC ARTS. 110, 119 Y MEL)",
+            "text": "Las indicaciones M y O remiten a procedimientos de mantenimiento y de operaciones. Se comprueban las instrucciones y quién está autorizado para ejecutarlas y registrarlas. La existencia de una indicación O no permite concluir que desaparezcan otras acciones M o requisitos de liberación. La distinción se documenta en la NOM-EM-018-SCT3-2023, Apéndice A §5.3(c), utilizada sólo como referencia histórica; RLAC art. 138 trata los registros de mantenimiento.",
+            "covers": []
+          },
+          {
+            "title": "Registro de Carga de Combustible",
+            "text": "El registro de carga de combustible sigue RLAC art. 110.II: puede firmarlo el comandante/piloto al mando, el copiloto o persona designada por aquéllas; se conserva tres meses. Verificar este registro es una tarea distinta de resolver la falla de la luz.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP01-5-mel",
+            "file": "/ciaac-approved/op/oc-mel.svg",
+            "alt": "Evaluación documental MEL",
+            "heading": "Evaluación documental MEL",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP01-5-mel",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP01-06",
+        "kind": "content",
+        "nav": "Carácter Pedagógico Del Dictamen",
+        "title": "Carácter Pedagógico Del Dictamen",
+        "cards": [
+          {
+            "title": "Carácter Pedagógico del Dictamen",
+            "text": "Resultado del ejercicio: con los datos dados no se acredita que la aeronave sea despachable. Faltan el ítem y condiciones de la MEL, su cumplimiento documentado y la comprobación de los demás requisitos. Una respuesta válida identifica esas verificaciones sin inventar una categoría de diferimiento.",
+            "covers": []
+          },
+          {
+            "title": "Aclaración legal",
+            "text": "La resolución es pedagógica. No equivale a autorización AFAC, liberación de mantenimiento, aceptación del comandante ni autorización ATC; estas funciones no son intercambiables.",
+            "covers": []
+          },
+          {
+            "title": "C. EVALUACIÓN TÉCNICA Y OPERACIONAL DE FALLAS (RLAC ARTS. 110, 119 Y MEL)",
+            "text": "Antes de una operación real deben acreditarse la condición de aeronavegabilidad, certificados, liberación de mantenimiento y equipos requeridos (RLAC art. 116.I–III), además de documentación aplicable del art. 131. La MEL, si corresponde, sólo permite operar dentro de sus condiciones; no sustituye esos requisitos.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 1,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP01-6-case-doc",
+            "file": "/ciaac-approved/op/oc-case-doc.svg",
+            "alt": "Caso de aula · documentación",
+            "heading": "Caso de aula · documentación",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP01-6-case-doc",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "kind": "exercise",
+        "nav": "Comprueba la lectura"
+      },
+      {
+        "kind": "finish",
+        "nav": "Aterrizaje"
+      }
+    ],
+    "sources": [
+      {
+        "id": "op01-source-phak9",
+        "title": "FAA-H-8083-25C (2023), capítulo independiente publicado por FAA",
+        "role": "FAA; Estados Unidos; material docente Cotejo dirigido de pasajes seleccionados; no certificación integral del LP ni vigencia operacional2026. La página oficial identifica el conjunto25C; no se afirma identidad con todos los bytes de la primera tirada2023 ni incorporación de addenda posteriores.",
+        "verified_locators": [
+          "Páginas PDF del archivo fuente cotejado: 2. Las correspondencias con páginas impresas se conservan en el texto y en la evidencia del cotejo."
+        ],
+        "url": "https://www.faa.gov/sites/faa.gov/files/11_phak_ch9.pdf"
+      },
+      {
+        "id": "op01-complete-rlac",
+        "title": "RLAC · compilación con reforma 31-05-2023",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LAC.pdf",
+        "verified_locators": [
+          "Arts. 67, 81, 100, 109–110, 116, 119, 124, 128, 131 y 138; PDF 31, 35, 44, 49–52, 54–59, 61–62 y 65"
+        ],
+        "role": "México. Lectura de artículos completos para este contenido docente; no certificación de normativa operacional futura."
+      },
+      {
+        "id": "op01-complete-lac",
+        "title": "Ley de Aviación Civil · reforma 14-11-2025",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAC.pdf",
+        "verified_locators": [
+          "Arts. 30, 32, 44–45 y 74; nacionalidad y matrícula: arts. 44–45"
+        ],
+        "role": "México; funciones de certificados y seguro en la edición cotejada."
+      },
+      {
+        "id": "op01-complete-mel-history",
+        "title": "NOM-EM-018-SCT3-2023 · referencia histórica",
+        "url": "https://sidof.segob.gob.mx/notas/docFuente/5716875",
+        "verified_locators": [
+          "Apéndice A, §§1, 3–5.9; especialmente §5.3(c)"
+        ],
+        "role": "Texto histórico para terminología M/O; no se afirma vigencia en 2026."
+      },
+      {
+        "id": "op01-qrh-nasa",
+        "title": "NASA/TM-2014-218382 · procedimientos no normales",
+        "url": "https://ntrs.nasa.gov/api/citations/20190002686/downloads/20190002686.pdf?attachment=true",
+        "verified_locators": [
+          "Glosario, folio xiv: Procedure, Quick Reference Card/Checklist y Quick Reference Handbook"
+        ],
+        "role": "Investigación primaria estadounidense; define QRH y QRC, no establece requisitos mexicanos de aprobación."
+      }
+    ],
+    "completionChecks": [
+      "AFM",
+      "Bitácora",
+      "MGO"
+    ],
+    "sourceLabel": "CIAAC · Operaciones aéreas",
+    "chapterLabel": "Itinerario",
+    "contentVersion": "op01-grouped-private-20261006-v1"
+  },
+  "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op02-comprobar-la-condicion-tecnica-de-la-aeronave": {
+    "number": 2,
+    "title": "Comprobar la condición técnica de la aeronave",
+    "name": "Comprobar la condición técnica de la aeronave",
+    "intro": "Uso de la bitácora de mantenimiento; programa e inspecciones de mantenimiento. Aplicación del certificado de aeronavegabilidad y MEL.",
+    "cards": [
+      {
+        "title": "Comprobar la condición técnica de la aeronave",
+        "text": "Uso de la bitácora de mantenimiento; programa e inspecciones de mantenimiento. Aplicación del certificado de aeronavegabilidad y MEL.",
+        "covers": []
+      }
+    ],
+    "questions": [],
+    "tips": [],
+    "chapter": 1,
+    "chapter_name": "Operaciones aéreas",
+    "subtopics": [
+      {
+        "level": 1,
+        "name": "Uso de la bitácora de mantenimiento; programa e inspecciones de mantenimiento.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado OP02"
+      },
+      {
+        "level": 1,
+        "name": "Aplicación del certificado de aeronavegabilidad y MEL.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado OP02"
+      }
+    ],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP02-1-validity",
+        "file": "/ciaac-approved/op/oc-validity.svg",
+        "alt": "Vigencia y plazo administrativo",
+        "heading": "Vigencia y plazo administrativo",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP02-2-validity",
+        "file": "/ciaac-approved/op/oc-validity.svg",
+        "alt": "Vigencia y plazo administrativo",
+        "heading": "Vigencia y plazo administrativo",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP02-3-roles",
+        "file": "/ciaac-approved/op/oc-roles.svg",
+        "alt": "Liberación técnica y aceptación del comandante",
+        "heading": "Liberación técnica y aceptación del comandante",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP02-4-validity",
+        "file": "/ciaac-approved/op/oc-validity.svg",
+        "alt": "Vigencia y plazo administrativo",
+        "heading": "Vigencia y plazo administrativo",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP02-5-roles",
+        "file": "/ciaac-approved/op/oc-roles.svg",
+        "alt": "Liberación técnica y aceptación del comandante",
+        "heading": "Liberación técnica y aceptación del comandante",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP02-6-mel",
+        "file": "/ciaac-approved/op/oc-mel.svg",
+        "alt": "Evaluación documental MEL",
+        "heading": "Evaluación documental MEL",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP02-7-mel",
+        "file": "/ciaac-approved/op/oc-mel.svg",
+        "alt": "Evaluación documental MEL",
+        "heading": "Evaluación documental MEL",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP02-8-mel",
+        "file": "/ciaac-approved/op/oc-mel.svg",
+        "alt": "Evaluación documental MEL",
+        "heading": "Evaluación documental MEL",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP02-9-mel",
+        "file": "/ciaac-approved/op/oc-mel.svg",
+        "alt": "Evaluación documental MEL",
+        "heading": "Evaluación documental MEL",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP02-10-case-doc",
+        "file": "/ciaac-approved/op/oc-case-doc.svg",
+        "alt": "Caso de aula · documentación",
+        "heading": "Caso de aula · documentación",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP02-11-case-doc",
+        "file": "/ciaac-approved/op/oc-case-doc.svg",
+        "alt": "Caso de aula · documentación",
+        "heading": "Caso de aula · documentación",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP02-12-mel",
+        "file": "/ciaac-approved/op/oc-mel.svg",
+        "alt": "Evaluación documental MEL",
+        "heading": "Evaluación documental MEL",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 2,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP02-13-mel",
+        "file": "/ciaac-approved/op/oc-mel.svg",
+        "alt": "Evaluación documental MEL",
+        "heading": "Evaluación documental MEL",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala.",
+        "assetAspectRatio": 1.6666666666666667
+      }
+    ],
+    "exercise": {
+      "kind": "match",
+      "title": "Comprueba la lectura",
+      "instruction": "Relaciona los conceptos. El caso y su resolución completos permanecen en los tableros.",
+      "pairs": [
+        [
+          "60 días",
+          "Plazo administrativo, sin prórroga de vuelo"
+        ],
+        [
+          "MEL",
+          "Documento aprobado aplicable"
+        ],
+        [
+          "Liberación",
+          "Responsabilidad técnica"
+        ]
+      ],
+      "order": [
+        1,
+        2,
+        0
+      ]
+    },
+    "objectives": [
+      "Uso de la bitácora de mantenimiento; programa e inspecciones de mantenimiento.",
+      "Aplicación del certificado de aeronavegabilidad y MEL."
+    ],
+    "minutes": 20,
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Despegue"
+      },
+      {
+        "id": "OP02-01",
+        "kind": "content",
+        "nav": "1. Revisión De La Condición De Aeronavegabilidad Y Control Técnico En El Libro De Bitácora",
+        "title": "1. Revisión De La Condición De Aeronavegabilidad Y Control Técnico En El Libro De Bitácora",
+        "cards": [
+          {
+            "title": "1. REVISIÓN DE LA CONDICIÓN DE AERONAVEGABILIDAD Y CONTROL TÉCNICO EN EL LIBRO DE BITÁCORA",
+            "text": "La condición técnica se verifica con información y evidencia de aeronavegabilidad, no sólo con la existencia de un certificado. Se distinguen responsabilidad de mantenimiento y comprobaciones del piloto al mando. Este LP estudia LAC (reforma 14-11-2025), RLAC (reforma 31-05-2023) y normas históricas identificadas; no valida un despacho real ni afirma vigencia operacional futura.",
+            "covers": []
+          },
+          {
+            "title": "A. Certificado de Aeronavegabilidad y Sus Vencimientos",
+            "text": "El certificado de aeronavegabilidad y sus condiciones se verifican junto con la condición real de la aeronave. Referencias cotejadas: LAC art. 32, PDF 23; RLAC arts. 116.I–II y 127, PDF 54 y 59. Un certificado dentro de fecha no elimina una falla que impida una operación segura.",
+            "covers": []
+          },
+          {
+            "title": "Vigencia Legal",
+            "text": "En las ediciones citadas, LAC art. 32 y RLAC art. 127 establecen dos años de vigencia del certificado. La LAC permite llevar a bordo certificados vigentes o copias certificadas. RLAC art. 131.I incluye el certificado de homologación de ruido anexo al de aeronavegabilidad, según la modalidad aplicable. No se transforma esta duración legal en garantía de aeronavegabilidad continua.",
+            "covers": []
+          },
+          {
+            "title": "Plazo Administrativo de Revalidación (60 días naturales)",
+            "text": "Plazo Administrativo de Revalidación (60 días naturales): Al concluir la vigencia de dos años, el operador dispone de un plazo de 60 días naturales para iniciar el trámite de revalidación ante la AFAC (RLAC Art. 127, párrafo quinto, texto reformado el 31-05-2023, PDF 59). Transcurrido dicho plazo sin iniciar el trámite, la AFAC procederá a la cancelación de la marca de nacionalidad y matrícula.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP02-1-validity",
+            "file": "/ciaac-approved/op/oc-validity.svg",
+            "alt": "Vigencia y plazo administrativo",
+            "heading": "Vigencia y plazo administrativo",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP02-1-validity",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP02-02",
+        "kind": "content",
+        "nav": "Aclaración Operacional Obligatoria",
+        "title": "Aclaración Operacional Obligatoria",
+        "cards": [
+          {
+            "title": "Aclaración Operacional Obligatoria",
+            "text": "Aclaración Operacional Obligatoria: Estos 60 días naturales constituyen un plazo exclusivamente administrativo para la gestión del trámite de revalidación y NO representan una prórroga de vuelo ni autorizan a operar la aeronave con el certificado vencido en vuelos comerciales o privados ordinarios.",
+            "covers": []
+          },
+          {
+            "title": "Certificado de Aeronavegabilidad Especial (LAC Art. 32 Bis)",
+            "text": "LAC art. 32 Bis, PDF 23: cuando no se cumplen plenamente los requisitos de aeronavegabilidad pero la aeronave puede efectuar un vuelo seguro, la autoridad puede otorgar un certificado especial para los propósitos del artículo. Requiere su otorgamiento y condiciones; no surge automáticamente por solicitarlo ni convierte un vuelo comercial ordinario en permitido.",
+            "covers": []
+          },
+          {
+            "title": "A. Certificado de Aeronavegabilidad y Sus Vencimientos",
+            "text": "Propósito del art. 32 Bis.I: traslado a un lugar de reparación, alteración, mantenimiento o almacenamiento, dentro o fuera del territorio nacional. La viabilidad de cada vuelo depende de evaluación y condiciones autorizadas; no se deduce de este ejemplo.",
+            "covers": []
+          },
+          {
+            "title": "A. Certificado de Aeronavegabilidad y Sus Vencimientos",
+            "text": "Realizar vuelos de prueba (Fracc. II).",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP02-2-validity",
+            "file": "/ciaac-approved/op/oc-validity.svg",
+            "alt": "Vigencia y plazo administrativo",
+            "heading": "Vigencia y plazo administrativo",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP02-2-validity",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP02-03",
+        "kind": "content",
+        "nav": "A. Certificado De Aeronavegabilidad Y Sus Vencimientos",
+        "title": "A. Certificado De Aeronavegabilidad Y Sus Vencimientos",
+        "cards": [
+          {
+            "title": "A. Certificado de Aeronavegabilidad y Sus Vencimientos",
+            "text": "Evacuación de aeronaves en zonas con peligro inminente (Fracc. III).",
+            "covers": []
+          },
+          {
+            "title": "A. Certificado de Aeronavegabilidad y Sus Vencimientos",
+            "text": "Vuelos de demostración a clientes potenciales en aeronaves de nueva producción que hayan completado satisfactoriamente las pruebas de vuelo de producción (LAC, art. 32 Bis, fracc. IV; texto reformado el 03-05-2023, cotejado en compilación oficial con última reforma 14-11-2025, PDF 23).",
+            "covers": []
+          },
+          {
+            "title": "B. Libro de Bitácora de la Aeronave",
+            "text": "El RLAC art. 110.I (PDF 51) responsabiliza a concesionarias, asignatarias, permisionarias y operadoras de contar con libros de bitácora aprobados por AFAC. Es distinto del programa de mantenimiento e inspección del art. 135.II. La bitácora del avión tampoco es la bitácora personal del tripulante (art. 81).",
+            "covers": []
+          },
+          {
+            "title": "C. Deslinde entre Liberación de Mantenimiento y Aceptación del Comandante",
+            "text": "La liberación de mantenimiento documenta los trabajos y la condición técnica dentro de su alcance. La comprobación previa del piloto al mando verifica los requisitos para el vuelo previsto. Una no sustituye a la otra (RLAC arts. 116.I–III, 119.II y 138).",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP02-3-roles",
+            "file": "/ciaac-approved/op/oc-roles.svg",
+            "alt": "Liberación técnica y aceptación del comandante",
+            "heading": "Liberación técnica y aceptación del comandante",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP02-3-roles",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP02-04",
+        "kind": "content",
+        "nav": "Liberación De Mantenimiento / Retorno Al Servicio",
+        "title": "Liberación De Mantenimiento / Retorno Al Servicio",
+        "cards": [
+          {
+            "title": "Liberación de Mantenimiento / Retorno al Servicio",
+            "text": "La liberación se emite conforme a los trabajos y procedimientos aplicables por personal facultado. RLAC art. 138 exige registros firmados con número de licencia del mecánico y número del taller; art. 116.II exige que la aeronave cuente con liberación de mantenimiento antes del vuelo. No basta una firma de aceptación del piloto ni una anotación genérica de que la falla es menor.",
+            "covers": []
+          },
+          {
+            "title": "Aceptación y Conformidad del Comandante / PIC",
+            "text": "Antes del vuelo el piloto al mando verifica aeronavegabilidad, certificados vigentes, liberación de mantenimiento e instrumentos/equipos necesarios (RLAC art. 116.I–III, PDF 54–55). La forma de documentar su aceptación se verifica en los procedimientos aplicables; estos artículos no justifican afirmar una firma universal específica de aceptación en bitácora. El mando no reemplaza la habilitación técnica de mantenimiento.",
+            "covers": []
+          },
+          {
+            "title": "Certificado de Aeronavegabilidad",
+            "text": "Emisor / Responsable Legal: Agencia Federal de Aviación Civil (AFAC).\nVigencia / Alcance: 2 años. Requiere renovación. Cuenta con 60 días naturales administrativos post-vencimiento para trámite (sin autorizar vuelo).\nMarco Normativo y Cita Verificada: • Ley de Aviación Civil Art. 32\nRLAC Arts. 127 y 131 Fracc. I",
+            "covers": []
+          },
+          {
+            "title": "Certificado Especial de Aeronavegabilidad",
+            "text": "Emisor / Responsable Legal: AFAC.\nVigencia / Alcance: Autorización temporal para vuelos específicos (traslado a taller, pruebas, evacuación) en aeronaves capaces de volar seguro.\nMarco Normativo y Cita Verificada: • Ley de Aviación Civil Art. 32 Bis",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP02-4-validity",
+            "file": "/ciaac-approved/op/oc-validity.svg",
+            "alt": "Vigencia y plazo administrativo",
+            "heading": "Vigencia y plazo administrativo",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP02-4-validity",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP02-05",
+        "kind": "content",
+        "nav": "Libro De Bitácora De La Aeronave",
+        "title": "Libro De Bitácora De La Aeronave",
+        "cards": [
+          {
+            "title": "Libro de Bitácora de la Aeronave",
+            "text": "Documento aprobado de a bordo para los registros técnico-operativos exigidos y las anotaciones correspondientes de fallas y mantenimiento. Su contenido concreto depende del formato y las disposiciones aplicables. El registro de carga de combustible exigido por RLAC art. 110.II se comprueba por separado; ese artículo no determina que deba ser una anotación en esta bitácora. Referencias: RLAC arts. 110.I–II, 119 y 131, reforma 31-05-2023.",
+            "covers": []
+          },
+          {
+            "title": "Liberación de Mantenimiento",
+            "text": "Emisor / Responsable Legal: Taller Aeronáutico / Técnico con Licencia habilitada.\nVigencia / Alcance: Acredita que los trabajos técnicos se ejecutaron conforme a datos aprobados (retorno al servicio).\nMarco Normativo y Cita Verificada: • RLAC Arts. 116 Fracc. II y 138\nNOM-008-SCT3-2002 §2.31",
+            "covers": []
+          },
+          {
+            "title": "Aceptación del Comandante (PIC)",
+            "text": "Emisor / Responsable Legal: Comandante / Piloto al Mando.\nVigencia / Alcance: Verificación operacional final previa al vuelo sobre la aeronavegabilidad y existencia de liberación técnica.\nMarco Normativo y Cita Verificada: • RLAC Arts. 116 Fracc. I y I Bis, y 119",
+            "covers": []
+          },
+          {
+            "title": "2. PROGRAMAS DE MANTENIMIENTO E INSPECCIÓN VS. EVALUACIÓN Y DIFERIMIENTO BAJO MEL",
+            "text": "Programa de mantenimiento y MEL son instrumentos diferentes. Las categorías M/O y de reparación que siguen se estudian en el texto histórico NOM-EM-018-SCT3-2023, Apéndice A; no se presume su vigencia en 2026. Para operar deben consultarse el programa y la MEL aprobados y aplicables.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP02-5-roles",
+            "file": "/ciaac-approved/op/oc-roles.svg",
+            "alt": "Liberación técnica y aceptación del comandante",
+            "heading": "Liberación técnica y aceptación del comandante",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP02-5-roles",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP02-06",
+        "kind": "content",
+        "nav": "2. Programas De Mantenimiento E Inspección Vs. Evaluación Y Diferimiento Bajo Mel",
+        "title": "2. Programas De Mantenimiento E Inspección Vs. Evaluación Y Diferimiento Bajo Mel",
+        "cards": [
+          {
+            "title": "2. PROGRAMAS DE MANTENIMIENTO E INSPECCIÓN VS. EVALUACIÓN Y DIFERIMIENTO BAJO MEL",
+            "text": "Las inspecciones programadas conservan la aeronavegabilidad; la MEL regula, cuando procede, condiciones para operar con elementos inoperativos. Una MEL no aplaza por sí sola una inspección ni reemplaza el programa. Fuentes: RLAC arts. 128 y 135.II; NOM-008-SCT3-2002, texto original, §§6.8.5 y 6.9.1–6.9.2.",
+            "covers": []
+          },
+          {
+            "title": "Programa de mantenimiento e inspección",
+            "text": "RLAC art. 135.II exige mantenimiento conforme a manuales del fabricante y programas de mantenimiento e inspección aprobados por AFAC. Ese inciso no asigna universalmente intervalos de 100 horas o anuales. Los intervalos y tareas se determinan en el programa y demás requisitos aplicables, incluidas directivas de aeronavegabilidad; no exclusivamente por una tabla genérica. NOM-008-SCT3-2002 §§6.9.1(a)(3)–(5) y 6.9.2.",
+            "covers": []
+          },
+          {
+            "title": "Delimitación de alcance",
+            "text": "No se presume una MEL utilizable para cualquier aeronave o falla. Debe identificarse el documento aprobado correspondiente a tipo, variante y configuración, cuando proceda conforme a RLAC art. 128 y NOM-008-SCT3-2002 §6.8.5. Si falta o no cubre el elemento, no puede justificarse el diferimiento por esta vía. Una consulta al fabricante no equivale a autorización. El certificado especial de LAC art. 32 Bis tiene propósito y condiciones propios.",
+            "covers": []
+          },
+          {
+            "title": "Requisitos de Evaluación Técnica en la MEL",
+            "text": "Evaluar una MEL implica identificar el elemento, revisión aplicable, número instalado/requerido, condiciones, plazos, procedimientos y efecto combinado de otras fallas. Se trata de una lista de comprobaciones documentales, no de instrucciones para desactivar sistemas (NOM-008-SCT3-2002 §6.8.5; NOM-EM-018-SCT3-2023 histórica, Apéndice A).",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP02-6-mel",
+            "file": "/ciaac-approved/op/oc-mel.svg",
+            "alt": "Evaluación documental MEL",
+            "heading": "Evaluación documental MEL",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP02-6-mel",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP02-07",
+        "kind": "content",
+        "nav": "Verificación De Ítem Específico",
+        "title": "Verificación De Ítem Específico",
+        "cards": [
+          {
+            "title": "Verificación de Ítem Específico",
+            "text": "Se comprueba que la falla y configuración correspondan al elemento de la MEL aprobada. El uso de capítulos ATA es una forma de organización contemplada en el Apéndice A §5.2 de la NOM de emergencia histórica; encontrar un número ATA por sí solo no prueba que se permita diferir una falla.",
+            "covers": []
+          },
+          {
+            "title": "Revisión y Enmienda Vigente",
+            "text": "Se verifica la revisión aprobada aplicable, sus páginas efectivas y su relación con la MMEL del modelo/configuración. La MMEL no reemplaza la MEL del explotador. Referencia histórica: NOM-EM-018-SCT3-2023, Apéndice A §§3–5.9; §3.16 define MMEL y no es por sí solo el requisito completo de actualización.",
+            "covers": []
+          },
+          {
+            "title": "Verificación de Provisos / Condiciones",
+            "text": "Se revisan todas las condiciones y restricciones del ítem y la interacción con otras fallas. Una restricción a una condición de vuelo o una acción técnica no se inventa a partir del nombre del componente. Sólo se aplica cuando figura en los documentos aprobados correspondientes.",
+            "covers": []
+          },
+          {
+            "title": "Identificación de Procedimientos Operacionales (\"O\") y de Mantenimiento (\"M\")",
+            "text": "En la referencia histórica, M indica un procedimiento de mantenimiento y O uno de operaciones. La MEL debe incluir las indicaciones y procedimientos necesarios; pueden coexistir en un mismo ítem. No son permisos para omitir los registros ni otros requisitos (Apéndice A §§5.3(c), 5.5 y 5.7).",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP02-7-mel",
+            "file": "/ciaac-approved/op/oc-mel.svg",
+            "alt": "Evaluación documental MEL",
+            "heading": "Evaluación documental MEL",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP02-7-mel",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP02-08",
+        "kind": "content",
+        "nav": "Procedimiento De Mantenimiento (\"M\")",
+        "title": "Procedimiento De Mantenimiento (\"M\")",
+        "cards": [
+          {
+            "title": "Procedimiento de Mantenimiento (\"M\")",
+            "text": "M identifica un procedimiento del área de mantenimiento con límites e instrucciones en el manual aplicable, efectuado por personal con la licencia que avala su capacidad. El texto histórico es NOM-EM-018-SCT3-2023, Apéndice A §5.3(c). No se prescribe aquí desconectar, remover o probar equipo; los registros pertinentes se rigen, entre otros, por RLAC art. 138.",
+            "covers": []
+          },
+          {
+            "title": "Procedimiento Operacional (\"O\")",
+            "text": "O identifica un procedimiento del área de operaciones, con límites e instrucciones del manual aplicable y personal con licencia/capacidad correspondiente en el texto histórico. Se comprueba quién puede realizarlo. Una O no anula una M que también exista, una condición previa o la liberación necesaria; no se declara una exención general de mantenimiento.",
+            "covers": []
+          },
+          {
+            "title": "Alcance histórico de la referencia MEL",
+            "text": "La NOM-EM-018-SCT3-2023 se usa sólo como documento histórico: su §13.1 prevé seis meses prorrogables por igual periodo. No se utiliza para afirmar qué norma está vigente en 2026. Las fechas y condiciones de una operación real requieren verificar la disposición y aprobaciones que le correspondan.",
+            "covers": []
+          },
+          {
+            "title": "Categorías de reparación: referencia histórica",
+            "text": "La tabla histórica del Apéndice A §5.3(a) presenta A con el plazo indicado para el componente; B hasta tres días naturales después de detectarse; C hasta diez y D hasta 120 a partir de presentarse. No se trasladan estos números a una falla real sin la MEL, reglas de cómputo y condiciones aprobadas.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP02-8-mel",
+            "file": "/ciaac-approved/op/oc-mel.svg",
+            "alt": "Evaluación documental MEL",
+            "heading": "Evaluación documental MEL",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP02-8-mel",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP02-09",
+        "kind": "content",
+        "nav": "Declaración De Pendiente Por Falta De Documentación",
+        "title": "Declaración De Pendiente Por Falta De Documentación",
+        "cards": [
+          {
+            "title": "Declaración de Pendiente por Falta de Documentación",
+            "text": "Sin MEL aprobada aplicable y sin un ítem que cubra la falla, el caso no demuestra que exista un diferimiento permitido. Consultar ingeniería o fabricante sirve para reunir información, pero no sustituye las aprobaciones, acciones ni registros exigibles. La conclusión docente es que el diferimiento no está acreditado.",
+            "covers": []
+          },
+          {
+            "title": "Programa de mantenimiento e inspección",
+            "text": "Se comprueban manuales, programa de mantenimiento e inspección y demás requisitos aplicables. No se inventa un intervalo para la aeronave del caso, que no está identificada. RLAC art. 135.II y NOM-008-SCT3-2002 §§6.9.1–6.9.2.",
+            "covers": []
+          },
+          {
+            "title": "Categoría A",
+            "text": "En la tabla histórica NOM-EM-018-SCT3-2023, Apéndice A §5.3(a): plazo indicado en columna 4, dependiente del componente. El ejercicio no asigna esta categoría a la luz del caso.",
+            "covers": []
+          },
+          {
+            "title": "Categoría B",
+            "text": "En la misma tabla histórica: máximo tres días naturales después de detectarse la falla. Para un caso real se comprueban la categoría, cómputo y condiciones de la MEL aplicable; no se asigna B por analogía.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP02-9-mel",
+            "file": "/ciaac-approved/op/oc-mel.svg",
+            "alt": "Evaluación documental MEL",
+            "heading": "Evaluación documental MEL",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP02-9-mel",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP02-10",
+        "kind": "content",
+        "nav": "Categoría C",
+        "title": "Categoría C",
+        "cards": [
+          {
+            "title": "Categoría C",
+            "text": "En la misma tabla histórica: máximo diez días naturales a partir de presentarse la falla. No es un permiso genérico de diez días para cualquier componente.",
+            "covers": []
+          },
+          {
+            "title": "Categoría D",
+            "text": "En la misma tabla histórica: máximo 120 días naturales a partir de presentarse la falla. No es un permiso genérico de 120 días; se verifica la MEL concreta.",
+            "covers": []
+          },
+          {
+            "title": "Alcance del caso",
+            "text": "Caso ficticio de aula para diferenciar vencimiento de certificado, diferimiento de equipo y liberación técnica. No autoriza vuelo ni intervención de mantenimiento.",
+            "covers": []
+          },
+          {
+            "title": "A. ESCENARIO TÁCTICO",
+            "text": "Durante la inspección previa al vuelo de un avión bimotor comercial regular (IFR), el piloto al mando revisa la bitácora y detecta una anotación técnica: el sistema de aviso de bomba de combustible auxiliar izquierda presenta un indicador luminoso inoperativo. Asimismo, se constata en la documentación de a bordo que el Certificado de Aeronavegabilidad ordinario cumplió su vigencia de 2 años hace 15 días naturales y la empresa no ha iniciado el trámite de revalidación.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP02-10-case-doc",
+            "file": "/ciaac-approved/op/oc-case-doc.svg",
+            "alt": "Caso de aula · documentación",
+            "heading": "Caso de aula · documentación",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP02-10-case-doc",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP02-11",
+        "kind": "content",
+        "nav": "Evaluación De La Vigencia Del Certificado De Aeronavegabilidad",
+        "title": "Evaluación De La Vigencia Del Certificado De Aeronavegabilidad",
+        "cards": [
+          {
+            "title": "Evaluación de la Vigencia del Certificado de Aeronavegabilidad",
+            "text": "Primera comprobación: el certificado ordinario venció hace 15 días. El plazo administrativo posterior al vencimiento no extiende la autorización para el vuelo comercial ordinario descrito.",
+            "covers": []
+          },
+          {
+            "title": "Constatación",
+            "text": "En el caso, 15 días está dentro de los 60 días naturales del art. 127 para iniciar la revalidación. Esto no satisface el requisito de certificado vigente de LAC art. 32 y RLAC art. 116.I Bis. Son dos preguntas diferentes: tramitar a tiempo y poder iniciar el vuelo.",
+            "covers": []
+          },
+          {
+            "title": "Dictamen de Despacho Ordinario",
+            "text": "Respuesta del ejercicio: con certificado ordinario vencido no se acredita el cumplimiento documental para la salida comercial propuesta. No es una autorización o negativa administrativa emitida por esta plataforma; es la conclusión de los datos dados y los artículos estudiados.",
+            "covers": []
+          },
+          {
+            "title": "Evaluación de la Salida Extraordinaria (LAC Art. 32 Bis)",
+            "text": "Una eventual operación distinta con certificado especial exige un propósito admisible, evaluación de seguridad y otorgamiento de la autoridad conforme a LAC art. 32 Bis. Su mera posibilidad no permite realizar la misión comercial original.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP02-11-case-doc",
+            "file": "/ciaac-approved/op/oc-case-doc.svg",
+            "alt": "Caso de aula · documentación",
+            "heading": "Caso de aula · documentación",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP02-11-case-doc",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP02-12",
+        "kind": "content",
+        "nav": "B. Evaluación Y Resolución Técnica Paso A Paso",
+        "title": "B. Evaluación Y Resolución Técnica Paso A Paso",
+        "cards": [
+          {
+            "title": "B. EVALUACIÓN Y RESOLUCIÓN TÉCNICA PASO A PASO",
+            "text": "Si fuera necesario un traslado para reparación o mantenimiento, el operador podría plantear la solicitud de certificado especial para ese propósito. No se asegura que se conceda, que la aeronave pueda volar segura ni que la revalidación exija viajar a otro lugar. Todo ello requiere evaluación y condiciones concretas.",
+            "covers": []
+          },
+          {
+            "title": "Evaluación de la Falla en Bitácora bajo la MEL",
+            "text": "Segunda comprobación, independiente del vencimiento: identificar qué falla existe y si la MEL permite operar con ella. Reparar o diferir la luz no renueva el certificado; renovar el certificado tampoco demuestra que la falla esté resuelta.",
+            "covers": []
+          },
+          {
+            "title": "Verificación de Ítem",
+            "text": "Se necesita la MEL aprobada de tipo, variante y configuración para verificar el sistema de aviso de bomba del caso. El enunciado no aporta ese documento ni su ítem; por tanto, no pueden declararse categoría, plazo o permiso de diferimiento. RLAC art. 128 y NOM-008-SCT3-2002 §6.8.5.",
+            "covers": []
+          },
+          {
+            "title": "Evaluación de Provisos y Procedimientos O/M",
+            "text": "Si existe un ítem aplicable, se comprueban número requerido, condiciones, procedimientos O/M, personal facultado, plazo y registros. La siguiente comprobación no debe inventar una forma alternativa de vigilar la bomba.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP02-12-mel",
+            "file": "/ciaac-approved/op/oc-mel.svg",
+            "alt": "Evaluación documental MEL",
+            "heading": "Evaluación documental MEL",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP02-12-mel",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "OP02-13",
+        "kind": "content",
+        "nav": "B. Evaluación Y Resolución Técnica Paso A Paso",
+        "title": "B. Evaluación Y Resolución Técnica Paso A Paso",
+        "cards": [
+          {
+            "title": "B. EVALUACIÓN Y RESOLUCIÓN TÉCNICA PASO A PASO",
+            "text": "No se dispone de un procedimiento aprobado que permita reemplazar la indicación luminosa por una lectura de presión u otra señal. Por ello no se propone esa sustitución. Sólo la documentación aplicable puede establecer una condición de diferimiento para la falla descrita.",
+            "covers": []
+          },
+          {
+            "title": "B. EVALUACIÓN Y RESOLUCIÓN TÉCNICA PASO A PASO",
+            "text": "Si la MEL aprobada aplicable permite el diferimiento, registrar la categoría y el plazo que efectivamente indique para ese ítem, junto con las acciones requeridas. Sin esa MEL, la categoría y el diferimiento permanecen pendientes de confirmación documental.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 2,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP02-13-mel",
+            "file": "/ciaac-approved/op/oc-mel.svg",
+            "alt": "Evaluación documental MEL",
+            "heading": "Evaluación documental MEL",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP02-13-mel",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 50,
+              "y": 50,
+              "labelX": 91,
+              "labelY": 8
+            }
+          ],
+          "noteCardIndexes": [
+            1
+          ]
+        }
+      },
+      {
+        "kind": "exercise",
+        "nav": "Comprueba la lectura"
+      },
+      {
+        "kind": "finish",
+        "nav": "Aterrizaje"
+      }
+    ],
+    "sources": [
+      {
+        "id": "op02-source-lac",
+        "title": "LAC compilación última reforma14-11-2025;32Bis texto reformado03-05-2023",
+        "role": "México; no sustituye silenciosamente la edición histórica2023 Cotejo dirigido de pasajes seleccionados; no certificación integral del LP ni vigencia operacional2026.",
+        "verified_locators": [
+          "Páginas PDF del archivo fuente cotejado: 1, 23. Las correspondencias con páginas impresas se conservan en el texto y en la evidencia del cotejo."
+        ],
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAC.pdf"
+      },
+      {
+        "id": "op02-source-nom008",
+        "title": "NOM-008-SCT3-2002, texto original",
+        "role": "México; norma histórica. No se declara edición consolidada ni vigencia2026 Cotejo dirigido de pasajes seleccionados; no certificación integral del LP ni vigencia operacional2026.",
+        "verified_locators": [
+          "Páginas PDF del archivo fuente cotejado: 1, 10, 13, 14, 15, 16, 17, 22, 24, 26, 27, 42. Las correspondencias con páginas impresas se conservan en el texto y en la evidencia del cotejo."
+        ],
+        "url": "https://platiica.economia.gob.mx/wp-content/uploads/sites/2/PDF_Normas_Publicas/008sct3.pdf"
+      },
+      {
+        "id": "op02-source-rlac",
+        "title": "RLAC última reforma31-05-2023",
+        "role": "México; normativa histórica Cotejo dirigido de pasajes seleccionados; no certificación integral del LP ni vigencia operacional2026.",
+        "verified_locators": [
+          "Páginas PDF del archivo fuente cotejado: 1, 58, 59. Las correspondencias con páginas impresas se conservan en el texto y en la evidencia del cotejo."
+        ],
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LAC.pdf"
+      },
+      {
+        "id": "op02-complete-rlac",
+        "title": "RLAC · reforma 31-05-2023, artículos completos",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LAC.pdf",
+        "verified_locators": [
+          "Arts. 81, 110, 116, 119, 127–128, 131, 135 y 138"
+        ],
+        "role": "México; lectura integral de los artículos citados para la lección. No sustituye documentos aprobados de una aeronave."
+      },
+      {
+        "id": "op02-complete-mel-history",
+        "title": "NOM-EM-018-SCT3-2023 · referencia histórica",
+        "url": "https://sidof.segob.gob.mx/notas/docFuente/5716875",
+        "verified_locators": [
+          "§13.1; Apéndice A §§1–5.9; categorías §5.3(a); M/O §5.3(c)"
+        ],
+        "role": "Referencia histórica expresamente acotada, sin afirmación de vigencia en 2026 ni asignación de categorías reales."
+      }
+    ],
+    "completionChecks": [
+      "60 días",
+      "MEL",
+      "Liberación"
+    ],
+    "sourceLabel": "CIAAC · Operaciones aéreas",
+    "chapterLabel": "Itinerario",
+    "contentVersion": "op02-grouped-private-20261006-v1"
+  },
+  "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op03-preparar-una-operacion-vfr-o-ifr": {
+    "number": 3,
+    "title": "Preparar una operación VFR o IFR",
+    "name": "Preparar una operación VFR o IFR",
+    "intro": "Aplicación de reglas VFR e IFR; obligaciones del piloto. Combustible, VMC e IMC según el tipo de operación. Aplicación de los tiempos de servicio y jornadas de la tripulación en la preparación de una operación.",
+    "cards": [
+      {
+        "title": "Preparar una operación VFR o IFR",
+        "text": "Aplicación de reglas VFR e IFR; obligaciones del piloto. Combustible, VMC e IMC según el tipo de operación. Aplicación de los tiempos de servicio y jornadas de la tripulación en la preparación de una operación.",
+        "covers": []
+      }
+    ],
+    "questions": [],
+    "tips": [],
+    "chapter": 1,
+    "chapter_name": "Operaciones aéreas",
+    "subtopics": [
+      {
+        "level": 1,
+        "name": "Aplicación de reglas VFR e IFR; obligaciones del piloto.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado OP03"
+      },
+      {
+        "level": 1,
+        "name": "Combustible, VMC e IMC según el tipo de operación.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado OP03"
+      },
+      {
+        "level": 1,
+        "name": "Aplicación de los tiempos de servicio y jornadas de la tripulación en la preparación de una operación.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado OP03"
+      }
+    ],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP03-1-op03-fuel-components",
+        "file": "/ciaac-approved/op/or-op03-fuel-components.svg",
+        "alt": "El combustible se construye por componentes",
+        "heading": "El combustible se construye por componentes",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP03-2-op03-reserve-sources",
+        "file": "/ciaac-approved/op/or-op03-reserve-sources.svg",
+        "alt": "Una misma misión, dos referencias separadas",
+        "heading": "Una misma misión, dos referencias separadas",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP03-3-op03-weather-rules",
+        "file": "/ciaac-approved/op/or-op03-weather-rules.svg",
+        "alt": "El tiempo meteorológico y las reglas son ejes distintos",
+        "heading": "El tiempo meteorológico y las reglas son ejes distintos",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP03-4-op03-route-weather",
+        "file": "/ciaac-approved/op/or-op03-route-weather.svg",
+        "alt": "Un reporte de destino no describe toda la ruta",
+        "heading": "Un reporte de destino no describe toda la ruta",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP03-5-op03-duty-scope",
+        "file": "/ciaac-approved/op/or-op03-duty-scope.svg",
+        "alt": "La relación laboral determina el alcance de la LFT",
+        "heading": "La relación laboral determina el alcance de la LFT",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP03-6-op03-preflight",
+        "file": "/ciaac-approved/op/or-op03-preflight.svg",
+        "alt": "La preparación une información, cálculo y equipo",
+        "heading": "La preparación une información, cálculo y equipo",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP03-7-op03-duty-case",
+        "file": "/ciaac-approved/op/or-op03-duty-case.svg",
+        "alt": "28 h + 2 h 15 min = 30 h 15 min",
+        "heading": "28 h + 2 h 15 min = 30 h 15 min",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP03-7-op03-rest-restart",
+        "file": "/ciaac-approved/op/or-op03-rest-restart.svg",
+        "alt": "El reinicio exige el relevo específico del artículo 82",
+        "heading": "El reinicio exige el relevo específico del artículo 82",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP03-8-op03-reserve-sources",
+        "file": "/ciaac-approved/op/or-op03-reserve-sources.svg",
+        "alt": "Una misma misión, dos referencias separadas",
+        "heading": "Una misma misión, dos referencias separadas",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP03-8-op03-route-weather",
+        "file": "/ciaac-approved/op/or-op03-route-weather.svg",
+        "alt": "Un reporte de destino no describe toda la ruta",
+        "heading": "Un reporte de destino no describe toda la ruta",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 3,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP03-9-op03-duty-scope",
+        "file": "/ciaac-approved/op/or-op03-duty-scope.svg",
+        "alt": "La relación laboral determina el alcance de la LFT",
+        "heading": "La relación laboral determina el alcance de la LFT",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      }
+    ],
+    "exercise": {
+      "kind": "match",
+      "title": "Comprueba la lectura",
+      "instruction": "Relaciona los conceptos. Los casos, preguntas y soluciones completos permanecen en sus tableros.",
+      "pairs": [
+        [
+          "VMC / IMC",
+          "Condiciones meteorológicas"
+        ],
+        [
+          "VFR / IFR",
+          "Reglas de vuelo"
+        ],
+        [
+          "Descanso ordinario",
+          "No reinicia el período de 7 días"
+        ]
+      ],
+      "order": [
+        1,
+        2,
+        0
+      ]
+    },
+    "objectives": [
+      "Aplicación de reglas VFR e IFR; obligaciones del piloto.",
+      "Combustible, VMC e IMC según el tipo de operación.",
+      "Aplicación de los tiempos de servicio y jornadas de la tripulación en la preparación de una operación."
+    ],
+    "minutes": 25,
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Despegue"
+      },
+      {
+        "id": "OP03-01",
+        "kind": "content",
+        "nav": "Reservas: marcos separados",
+        "title": "Reservas: marcos separados",
+        "cards": [
+          {
+            "title": "Planificación y fuente histórica",
+            "text": "La planificación considera combustible utilizable, meteorología, demoras, ruta, masa y configuración. Se separan las fuentes: el manual histórico CIAAC, el Anexo 6 Parte I estudiado y un contraste FAA. Ninguno permite escoger la cifra menor por preferencia. En operaciones aereas.pdf, PDF 26–27, folios 2-14–2-15, CIAAC presenta para aviones de hélice un supuesto sin alternativa con destino más 45 minutos, y otro con alternativa más 45 minutos. Es enseñanza histórica; sus rótulos VFR/IFR no demuestran que todo vuelo IFR necesite alternativa ni que todo VFR esté exento.",
+            "covers": []
+          },
+          {
+            "title": "Combustible por componentes: Anexo 6 Parte I",
+            "text": "El manual CIAAC histórico distingue los turborreactores y emplea 30 minutos de espera a 450 m/1,500 ft sobre destino o alternativa, además de contingencias en los supuestos que describe. No se confunde ese resumen con el Anexo 6 Parte I, 11ª edición 2018, §§4.3.6.2–4.3.6.3: rodaje, trayecto, contingencia, combustible de alternativa, reserva final, adicional cuando corresponda y discrecional. La contingencia del esquema prescriptivo es 5% del trayecto, nunca inferior a cinco minutos de espera sobre destino en las condiciones indicadas. La reserva final es 45 minutos para émbolo con condiciones fijadas por el Estado del explotador; para turbina, 30 minutos en espera a 450 m/1,500 ft sobre la elevación del aeródromo, en condiciones estándar y con masa estimada a la llegada. §4.3.6.6 permite variaciones aprobadas: no es una fórmula universal de despacho.",
+            "covers": []
+          },
+          {
+            "title": "Contraste de aviones y ala rotativa",
+            "text": "Contraste estadounidense histórico, 14 CFR de 01-01-2008: §91.151(a) para avión VFR contempla combustible hasta el primer punto de aterrizaje previsto y después al menos 30 minutos de día o 45 de noche, a crucero normal, considerando viento y meteorología prevista. §91.167 distingue vuelo en condiciones IFR, alternativa según sus excepciones y 45 minutos después para aviones. No es ley mexicana ni se atribuye a Anexo 6 Parte II. La atribución anterior a la 10ª edición de esa Parte II no se recertifica sin su original. Para ala rotativa mexicana se revisa separadamente CO AV-50/07 R3.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP03-1-op03-fuel-components",
+            "file": "/ciaac-approved/op/or-op03-fuel-components.svg",
+            "alt": "El combustible se construye por componentes",
+            "heading": "El combustible se construye por componentes",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP03-1-op03-fuel-components",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "id": "OP03-02",
+        "kind": "content",
+        "nav": "Comparar reservas por fuente",
+        "title": "Comparar reservas por fuente",
+        "cards": [
+          {
+            "title": "Comparación de marcos",
+            "text": "CO AV-50/07 R3, 2 de mayo de 2023, §§7.12.3–7.12.8, trata aquí helicópteros de servicio al público. VFR: destino, reserva final de 20 minutos a alcance óptimo y combustible adicional por contingencias. IFR distingue sin alternativa (§7.12.5.1), con alternativa (§7.12.6) y destino aislado (§7.12.7). En el caso con alternativa incluye aproximación frustrada, vuelo y aproximación al alternativa, reserva de 30 minutos en espera a 450 m/1,500 ft sobre el alternativa en condiciones normales, aproximación/aterrizaje y contingencias. No se aplica esta circular a un avión de ala fija ni se afirma vigencia en 2026.",
+            "covers": []
+          },
+          {
+            "title": "Manual Docente CIAAC",
+            "text": "CIAAC histórico, operaciones aereas.pdf PDF 26, folio 2-14: aviones de hélice; en el supuesto docente sin alternativa, destino más 45 minutos. El documento no identifica aquí un AFM concreto ni permite convertir minutos a masa sin consumo.",
+            "covers": []
+          },
+          {
+            "title": "Manual Docente CIAAC",
+            "text": "CIAAC histórico, PDF 27, folio 2-15: turborreactores; la referencia de 30 minutos corresponde a espera a 450 m/1,500 ft sobre el aeródromo dentro de los supuestos descritos. Debe conservarse el resto de componentes, no sólo la reserva final.",
+            "covers": []
+          },
+          {
+            "title": "Anexo 6 Parte I (OACI)",
+            "text": "Anexo 6 Parte I, 11ª edición 2018, §4.3.6.3: transporte comercial internacional en aviones. No confundir reserva final con combustible total, ni turbina con sólo turborreactor. Sin alternativa, el esquema ordinario de §4.3.6.3(d)(3) incluye 15 minutos de espera sobre destino además de la reserva final; los destinos aislados tienen reglas propias. No se generaliza la suma a todas las operaciones.",
+            "covers": []
+          },
+          {
+            "title": "FAA: contraste VFR histórico",
+            "text": "14 CFR, edición histórica 01-01-2008, §91.151(a): avión VFR, combustible para llegar al primer punto de aterrizaje previsto y, después, continuar volando al menos 30 minutos de día o 45 de noche, a crucero normal y considerando viento/meteo. Es un contraste de jurisdicción para reconocer que las reglas dependen de fuente y ámbito. No sustituye la disposición mexicana ni recupera la cita pendiente de Anexo 6 Parte II.",
+            "covers": []
+          },
+          {
+            "title": "Circular CO AV-50/07 R3",
+            "text": "CO AV-50/07 R3, edición 02-05-2023, PDF 27–28: en la sección de helicópteros de servicio al público, VFR 20 minutos a alcance óptimo y casos IFR con reserva de 30 minutos a velocidad de espera, más los demás componentes correspondientes. La cita del caso IFR con alternativa es §7.12.6, no §7.12.5.1.",
+            "covers": []
+          },
+          {
+            "title": "Regla Mexicana Aplicable",
+            "text": "Para un vuelo mexicano real deben identificarse modalidad, aeronave, disposición aplicable y MGO/AFM aprobados. Este ejercicio no acredita esos documentos ni resuelve una cantidad real de despacho. NOM-008-SCT3-2002 §6.8.12 se refiere a bitácoras; no respalda cifras de reserva. RLAC art. 115 exige combustible y aceite suficientes con las reservas reglamentarias.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP03-2-op03-reserve-sources",
+            "file": "/ciaac-approved/op/or-op03-reserve-sources.svg",
+            "alt": "Una misma misión, dos referencias separadas",
+            "heading": "Una misma misión, dos referencias separadas",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP03-2-op03-reserve-sources",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      },
+      {
+        "id": "OP03-03",
+        "kind": "content",
+        "nav": "VMC e IFR: dimensiones distintas",
+        "title": "VMC e IFR: dimensiones distintas",
+        "cards": [
+          {
+            "title": "Condiciones y reglas",
+            "text": "VMC/IMC describen condiciones meteorológicas; VFR/IFR son reglas de vuelo. Son dimensiones distintas: puede volarse IFR en VMC. Se estudia la terminología del MGTAM, 3ª edición 2019, §4.19.1, y del Anexo 2 histórico; no se infiere la regla permitida en una ruta concreta sólo del cielo visible.",
+            "covers": []
+          },
+          {
+            "title": "Mínimos del aeródromo y alcance",
+            "text": "MGTAM 2019, §4.19.1 y §4.19.1.1.1, folio 4-35: para ala fija dentro o en las inmediaciones de un aeródromo indica techo de 1,500 ft y visibilidad de 3 SM (5 km en la equivalencia operacional del texto). No son mínimos VMC universales para toda la ruta ni la delimitación geométrica de una CTR. En ruta se comprueban clase de espacio, altitud, visibilidad y distancia de nubes. Las unidades equivalentes del manual son redondeadas, no identidades matemáticas exactas.",
+            "covers": []
+          },
+          {
+            "title": "IFR y referencias visuales",
+            "text": "IFR no significa ausencia obligatoria de referencias exteriores. La operación sigue los procedimientos y autorizaciones aplicables, incluso en VMC; ver la pista no cancela automáticamente el plan IFR ni autoriza bajar de mínimos. RLAC art. 158 exige cumplir condiciones de ingreso a espacios con servicios ATS; no establece por sí solo una lista universal de equipos ni mínimos IFR.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP03-3-op03-weather-rules",
+            "file": "/ciaac-approved/op/or-op03-weather-rules.svg",
+            "alt": "El tiempo meteorológico y las reglas son ejes distintos",
+            "heading": "El tiempo meteorológico y las reglas son ejes distintos",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP03-3-op03-weather-rules",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "id": "OP03-04",
+        "kind": "content",
+        "nav": "Noche, ruta y mínimos",
+        "title": "Noche, ruta y mínimos",
+        "cards": [
+          {
+            "title": "Noche y meteorología en ruta",
+            "text": "Anexo 2, 10ª edición 2005, §4.3, somete el VFR entre puesta y salida del sol a las condiciones de la autoridad ATS competente. No es una autorización universal de vuelo nocturno. Un reporte de destino de 1,800 ft/8 km supera los dos umbrales de aeródromo del ejemplo MGTAM 2019; no prueba VMC en ruta, separación de nubes, suficiencia de luz o autorización de operación. Deben comprobarse información y requisitos correspondientes.",
+            "covers": []
+          },
+          {
+            "title": "Vuelo bajo Reglas VFR",
+            "text": "VFR ordinario exige los mínimos y condiciones aplicables al espacio y operación. En el ejemplo histórico de aeródromo de ala fija, los valores son techo 1,500 ft y visibilidad 3 SM (5 km redondeados). VFR especial es una operación sujeta a condiciones y autorización específicas, no un permiso general para continuar VFR en IMC.",
+            "covers": []
+          },
+          {
+            "title": "Vuelo bajo Reglas IFR",
+            "text": "IFR puede efectuarse en VMC o IMC con las condiciones y procedimientos correspondientes. Las referencias visuales pueden ser parte del vuelo; no sustituyen autorizaciones, altitudes o mínimos. La separación ATC depende de clase de espacio y servicio, no sólo de las letras IFR.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP03-4-op03-route-weather",
+            "file": "/ciaac-approved/op/or-op03-route-weather.svg",
+            "alt": "Un reporte de destino no describe toda la ruta",
+            "heading": "Un reporte de destino no describe toda la ruta",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP03-4-op03-route-weather",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "id": "OP03-05",
+        "kind": "content",
+        "nav": "Aplicabilidad: LFT y RLAC",
+        "title": "Aplicabilidad: LFT y RLAC",
+        "cards": [
+          {
+            "title": "Fatiga y legislación citada",
+            "text": "La fatiga exige distinguir tiempo de vuelo, servicio y descanso. LFT arts. 215–227 regula el trabajo de tripulaciones de aeronaves civiles con matrícula mexicana dentro de una relación laboral. En la compilación con reforma 14-05-2026, art. 225 fija como regla 8 horas efectivas diurnas, 7 nocturnas y 7.5 mixtas, con descanso horizontal equivalente antes o al cumplir la jornada y tratamiento extraordinario del excedente. No convierte el pago de horas extra en dispensa de seguridad. LAC arts. 78 Ter–Sexies y RLAC art. 82 tienen alcance operacional propio.",
+            "covers": []
+          },
+          {
+            "title": "Ámbito y límites RLAC",
+            "text": "Un propietario que vuela su avión particular sin relación laboral no tiene ese vínculo regulado por LFT; ello no elimina las reglas de seguridad. RLAC art. 82 (reforma 31-05-2023, PDF 35–36) establece 90 horas en 30 días naturales, 1,000 en 365 y 30 en siete. Al completar 30 en siete días o menos, exige relevo de toda actividad aeronáutica las siguientes 24 horas y reinicia el periodo de siete días. Descansos ordinarios no reinician las ventanas. Si se volaron más de 8 h 30 min en 24 horas, exige 24 horas de descanso antes de otro servicio; este párrafo no dice que 8 h 30 min sea un máximo diario absoluto. El artículo contempla excepciones y variaciones autorizadas, que no se presumen.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP03-5-op03-duty-scope",
+            "file": "/ciaac-approved/op/or-op03-duty-scope.svg",
+            "alt": "La relación laboral determina el alcance de la LFT",
+            "heading": "La relación laboral determina el alcance de la LFT",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP03-5-op03-duty-scope",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "OP03-06",
+        "kind": "content",
+        "nav": "Información para la preparación",
+        "title": "Información para la preparación",
+        "cards": [
+          {
+            "title": "Información y equipamiento",
+            "text": "Preparar el vuelo implica verificar meteorología y NOTAM, ruta y alternativas, plan ATS/operacional según proceda, masa/CG, condición técnica y equipo adecuado. RLAC arts. 115–116, 131–133, 158 y 160 son las referencias mexicanas estudiadas. Art. 116.VIII trata aprobación del plan; art. 160, apertura/cierre. No se atribuye ese requisito al art. 158. Los instrumentos de velocidad, altitud, actitud, rumbo y navegación son categorías de verificación; la lista exacta depende de aeronave, reglas, espacio y aprobaciones. No se exige aquí simultáneamente VOR, DME, ILS y GNSS para todo IFR.",
+            "covers": []
+          },
+          {
+            "title": "Límites por ámbito de operación",
+            "text": "Comparación docente entre un tripulante de transporte comercial con relación laboral en aeronave mexicana y un propietario particular sin relación laboral. Además del contraste que sigue, se aplican las disposiciones específicas de cada operación; no es una lista exhaustiva de obligaciones.",
+            "covers": []
+          },
+          {
+            "title": "Marco Jurídico Aplicable",
+            "text": "Comercial del ejemplo: LFT arts. 215–227 y marco operacional LAC/RLAC. Particular sin relación laboral: no se crea una relación LFT por pilotar su avión; conserva las obligaciones operacionales pertinentes. LAC art. 78 Ter.III incluye expresamente aeronaves para uso particular en gestión de fatiga. No corresponde decir «RLAC 82 exclusivamente».",
+            "covers": []
+          },
+          {
+            "title": "Jornada Máxima Diurna de Vuelo",
+            "text": "LFT art. 225: referencia diurna de 8 horas efectivas, con la salvedad legal de descanso horizontal equivalente y tiempo extraordinario. No se aplica como jornada laboral a un propietario sin vínculo laboral. RLAC art. 82 contiene un requisito distinto: descanso antes del siguiente servicio si se superaron 8 h 30 min en 24 horas.",
+            "covers": []
+          },
+          {
+            "title": "Límite en 24 Horas y Descanso",
+            "text": "RLAC art. 82: después de más de 8 h 30 min de vuelo en 24 horas se requieren 24 horas de descanso antes de otro servicio. Se necesitan horas exactas de inicio/fin; sumar simplemente «ayer» y «hoy» no establece la ventana pertinente. Esto no elimina otros límites ni permite programar indiscriminadamente el excedente.",
+            "covers": []
+          },
+          {
+            "title": "Límite en 7 Días Consecutivos",
+            "text": "RLAC art. 82: máximo de 30 horas en siete días naturales; completadas las 30 en ese periodo o menor, relevo de toda actividad aeronáutica las siguientes 24 horas y reinicio del periodo de siete días. El descanso ordinario no reinicia por sí mismo las ventanas de cómputo.",
+            "covers": []
+          },
+          {
+            "title": "Límite Mensual y Anual",
+            "text": "LFT art. 224: hasta 90 horas efectivas mensuales dentro de su ámbito laboral. RLAC art. 82: 90 horas en 30 días naturales consecutivos y 1,000 en 365. Mes y ventana de 30 días no son intercambiables; cada límite se verifica por separado.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP03-6-op03-preflight",
+            "file": "/ciaac-approved/op/or-op03-preflight.svg",
+            "alt": "La preparación une información, cálculo y equipo",
+            "heading": "La preparación une información, cálculo y equipo",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP03-6-op03-preflight",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      },
+      {
+        "id": "OP03-07",
+        "kind": "content",
+        "nav": "Caso hipotético: comercial IFR",
+        "title": "Caso hipotético: comercial IFR",
+        "cards": [
+          {
+            "title": "Situación y datos",
+            "text": "Caso ficticio: vuelo comercial nacional IFR en turborreactor de 2 h 15 min; el ejercicio exige alternativa. Se aplica como modelo de combustible el esquema histórico Anexo 6 Parte I 2018, sin afirmar que eso determine por sí solo la norma mexicana del vuelo. El piloto acumula 28 horas en los seis días anteriores y siete horas ayer. Se estipula que todas cuentan en la ventana evaluada, que no hubo relevo específico que reiniciara siete días y que no existe variación autorizada.",
+            "covers": []
+          },
+          {
+            "title": "Solución de combustible",
+            "text": "Estructura de cálculo docente: rodaje + trayecto + contingencia + alternativa (incluida frustrada y trayecto/aterrizaje allí) + reserva final + adicional si corresponde + discrecional. Para el turborreactor, el marco histórico usa reserva final de 30 minutos en espera a 450 m/1,500 ft sobre el alternativa, condiciones estándar y masa estimada a la llegada. No se calcula un total en kg o litros: faltan consumos, ruta al alternativa y otros datos. 2 h 15 min es duración del trayecto, no cantidad de combustible.",
+            "covers": []
+          },
+          {
+            "title": "Ventanas y datos faltantes",
+            "text": "Cómputo docente: 28 h + 2 h 15 min = 30 h 15 min, es decir 15 min sobre 30 h en la ventana estipulada. Por ese motivo el vuelo no cabe en el límite ordinario del caso. Las siete horas de ayer no bastan para resolver además la regla de 24 horas: faltan horarios exactos y descanso. No se llama límite absoluto de 8 h 30 min al supuesto de descanso del tercer párrafo.",
+            "covers": []
+          },
+          {
+            "title": "Relevo especial y resolución",
+            "text": "El relevo específico tras completar 30 horas permite el reinicio de siete días previsto por art. 82; un descanso ordinario intermedio no lo hace. Bajo los supuestos declarados no procede asignar al piloto este vuelo completo dentro de la ventana. No se inventan una excepción, un fraccionamiento de misión o una autorización especial para salvar el exceso.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP03-7-op03-duty-case",
+            "file": "/ciaac-approved/op/or-op03-duty-case.svg",
+            "alt": "28 h + 2 h 15 min = 30 h 15 min",
+            "heading": "28 h + 2 h 15 min = 30 h 15 min",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          },
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP03-7-op03-rest-restart",
+            "file": "/ciaac-approved/op/or-op03-rest-restart.svg",
+            "alt": "El reinicio exige el relevo específico del artículo 82",
+            "heading": "El reinicio exige el relevo específico del artículo 82",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "28 h + 2 h 15 min = 30 h 15 min",
+              "figureNumber": "OP03-7-op03-duty-case",
+              "cardIndexes": [
+                0,
+                2
+              ]
+            },
+            {
+              "title": "El reinicio exige el relevo específico del artículo 82",
+              "figureNumber": "OP03-7-op03-rest-restart",
+              "cardIndexes": [
+                3
+              ]
+            }
+          ],
+          "noteCardIndexes": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "OP03-08",
+        "kind": "content",
+        "nav": "Caso hipotético: privado VFR",
+        "title": "Caso hipotético: privado VFR",
+        "cards": [
+          {
+            "title": "Situación y datos",
+            "text": "Caso ficticio: propietario sin relación laboral prepara un vuelo VFR diurno de dos horas en monomotor de hélice. Reporte del destino: techo 1,800 ft y visibilidad 8 km. Se comparan dos referencias históricas de combustible, sin decidir cuál autoriza una operación mexicana real.",
+            "covers": []
+          },
+          {
+            "title": "Reservas separadas por fuente",
+            "text": "Referencia CIAAC histórica, PDF 26/folio 2-14: supuesto sin alternativa, destino más 45 minutos. Contraste independiente estadounidense, 14 CFR 91.151(a), edición 2008: destino más al menos 30 minutos a crucero normal en VFR diurno, considerando viento y meteorología. No son opciones de libre elección. La cita anterior a Anexo 6 Parte II no queda validada por esta coincidencia numérica; se sustituye expresamente por la fuente FAA cotejada. Para cantidad real faltan consumos y la regla mexicana aplicable.",
+            "covers": []
+          },
+          {
+            "title": "Meteorología y alcance del ejercicio",
+            "text": "1,800 ft supera 1,500 ft por 300 ft; 8 km supera 5 km por 3 km. Sólo se comparan techo/visibilidad reportados con esos umbrales históricos de aeródromo MGTAM 2019. No se deduce VMC en ruta ni autorización de salida. La preparación real exige las demás comprobaciones de RLAC art. 116 y los documentos del art. 131; los arts. 158 y 160 no son una dispensa de ellas.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP03-8-op03-reserve-sources",
+            "file": "/ciaac-approved/op/or-op03-reserve-sources.svg",
+            "alt": "Una misma misión, dos referencias separadas",
+            "heading": "Una misma misión, dos referencias separadas",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          },
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP03-8-op03-route-weather",
+            "file": "/ciaac-approved/op/or-op03-route-weather.svg",
+            "alt": "Un reporte de destino no describe toda la ruta",
+            "heading": "Un reporte de destino no describe toda la ruta",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "Una misma misión, dos referencias separadas",
+              "figureNumber": "OP03-8-op03-reserve-sources",
+              "cardIndexes": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Un reporte de destino no describe toda la ruta",
+              "figureNumber": "OP03-8-op03-route-weather",
+              "cardIndexes": [
+                2
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "OP03-09",
+        "kind": "content",
+        "nav": "Comprobación integrada: 89 h + 2 h",
+        "title": "Comprobación integrada: 89 h + 2 h",
+        "cards": [
+          {
+            "title": "Comprobación integrada: horas y reserva final",
+            "text": "Caso integrado ficticio: un piloto de operación comercial en aeronave mexicana acumula 89 horas previas que, al terminar el vuelo inmediato propuesto, seguirían dentro de la misma ventana de 30 días naturales consecutivos evaluada. Se propone un vuelo inmediato de dos horas, sin variación autorizada. ¿Cabe en el límite ordinario de RLAC art. 82? Como pregunta independiente, ¿qué reserva final usa el modelo Anexo 6 Parte I 2018 para un avión de turbina?",
+            "covers": [],
+            "detailText": "89 + 2 = 91 horas: supera por una hora el límite de 90 horas en 30 días naturales del marco ordinario del caso, por lo que no cabe asignarlo en esa ventana. No se confunde con el mes de LFT art. 224. En el modelo internacional histórico, reserva final de turbina: 30 minutos a velocidad de espera a 450 m/1,500 ft sobre la elevación del alternativa, o destino si no se requiere alternativa, con condiciones estándar y masa estimada a la llegada. Es sólo reserva final: no el combustible total ni una aprobación de despacho mexicano."
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 3,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP03-9-op03-duty-scope",
+            "file": "/ciaac-approved/op/or-op03-duty-scope.svg",
+            "alt": "La relación laboral determina el alcance de la LFT",
+            "heading": "La relación laboral determina el alcance de la LFT",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP03-9-op03-duty-scope",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ]
+        }
+      },
+      {
+        "kind": "exercise",
+        "nav": "Comprueba la lectura"
+      },
+      {
+        "kind": "finish",
+        "nav": "Aterrizaje"
+      }
+    ],
+    "sources": [
+      {
+        "id": "op03-source-nom008",
+        "title": "NOM-008-SCT3-2002, texto original",
+        "role": "México; norma histórica. No se declara edición consolidada ni vigencia2026 Cotejo dirigido de pasajes seleccionados; no certificación integral del LP ni vigencia operacional2026.",
+        "verified_locators": [
+          "Páginas PDF del archivo fuente cotejado: 1, 10, 13, 14, 15, 16, 17, 22, 24, 26, 27, 42. Las correspondencias con páginas impresas se conservan en el texto y en la evidencia del cotejo."
+        ],
+        "url": "https://platiica.economia.gob.mx/wp-content/uploads/sites/2/PDF_Normas_Publicas/008sct3.pdf"
+      },
+      {
+        "id": "op03-complete-annex6i",
+        "title": "OACI Anexo 6 Parte I · 11ª edición 2018",
+        "url": "https://www.icao.int/sites/default/files/safety/CAPSCA/PublishingImages/Pages/ICAO-SARPs-%28Annexes-and-PANS%29/Annex%206.pdf",
+        "verified_locators": [
+          "§§4.3.6.1–4.3.6.7, folios 4-11–4-13, PDF 69–71"
+        ],
+        "role": "Original OACI histórico para transporte comercial internacional en aviones; no prueba de aplicabilidad a una operación mexicana ni de edición vigente."
+      },
+      {
+        "id": "op03-complete-faa-comparison",
+        "title": "14 CFR Parte 91 · edición 01-01-2008",
+        "url": "https://www.govinfo.gov/content/pkg/CFR-2008-title14-vol2/pdf/CFR-2008-title14-vol2-part91-subpartB.pdf",
+        "verified_locators": [
+          "§91.151, folios 525–526; §91.167, folio 528"
+        ],
+        "role": "Estados Unidos; contraste histórico independiente. Sustituye expresamente la atribución no comprobada a Anexo 6 Parte II; no se afirma equivalencia entre documentos."
+      },
+      {
+        "id": "op03-complete-lft",
+        "title": "Ley Federal del Trabajo · reforma 14-05-2026",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+        "verified_locators": [
+          "Arts. 215, 222–227"
+        ],
+        "role": "México; texto descargado e identificado por su portada, distinto de extractos web con otra fecha. Jornada laboral no equivale a ventana operacional."
+      },
+      {
+        "id": "op03-complete-rlac",
+        "title": "RLAC · reforma 31-05-2023",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LAC.pdf",
+        "verified_locators": [
+          "Art. 82 PDF 35–36; arts. 115–116, 131–133, 158 y 160"
+        ],
+        "role": "Lectura de artículos completos para los supuestos docentes."
+      },
+      {
+        "id": "op03-complete-lac",
+        "title": "LAC · reforma 14-11-2025",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAC.pdf",
+        "verified_locators": [
+          "Arts. 78 Ter–78 Sexies"
+        ],
+        "role": "México; incluye el ámbito de aeronaves para uso particular en gestión de fatiga."
+      },
+      {
+        "id": "op03-coav-attached",
+        "title": "CO AV-50/07 R3 · 2 de mayo de 2023",
+        "url": "https://www.gob.mx/cms/uploads/attachment/file/834131/co-av-50-07-r3-10052023.pdf",
+        "verified_locators": [
+          "Copia aportada: portada PDF 1; §§7.12.3–7.12.8, PDF 27–28"
+        ],
+        "role": "Referencia histórica mexicana de ala rotativa. La sección cotejada trata helicópteros de servicio al público."
+      },
+      {
+        "id": "op03-annex2-complete",
+        "title": "OACI Anexo 2 · 10ª edición 2005",
+        "url": "https://web.udi.edu.co/files/img/ANEXO.2.pdf",
+        "verified_locators": [
+          "§4.3, folio 4-1/PDF 30; copia completa 65 páginas"
+        ],
+        "role": "Original histórico en espejo institucional UDI; cotejo de VFR nocturno, sin incorporación mexicana automática."
+      }
+    ],
+    "completionChecks": [
+      "VMC / IMC",
+      "VFR / IFR",
+      "Descanso ordinario"
+    ],
+    "sourceLabel": "CIAAC · Operaciones aéreas",
+    "chapterLabel": "Itinerario",
+    "contentVersion": "op03-grouped-private-20261006-v1"
+  },
+  "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op04-reconocer-los-pesos-y-limites-de-la-aeronave": {
+    "number": 4,
+    "title": "Reconocer los pesos y límites de la aeronave",
+    "name": "Reconocer los pesos y límites de la aeronave",
+    "intro": "Payload, peso utilizable, EW, BOW, ZFW, MZFW, RW, MRW, TOW, LDW, MTOW y MLDW. Relación entre pesos de operación y sus límites.",
+    "cards": [
+      {
+        "title": "Reconocer los pesos y límites de la aeronave",
+        "text": "Payload, peso utilizable, EW, BOW, ZFW, MZFW, RW, MRW, TOW, LDW, MTOW y MLDW. Relación entre pesos de operación y sus límites.",
+        "covers": []
+      }
+    ],
+    "questions": [],
+    "tips": [],
+    "chapter": 1,
+    "chapter_name": "Operaciones aéreas",
+    "subtopics": [
+      {
+        "level": 1,
+        "name": "Payload, peso utilizable, EW, BOW, ZFW, MZFW, RW, MRW, TOW, LDW, MTOW y MLDW.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado OP04"
+      },
+      {
+        "level": 1,
+        "name": "Relación entre pesos de operación y sus límites.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado OP04"
+      }
+    ],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP04-1-op04-empty-weights",
+        "file": "/ciaac-approved/op/or-op04-empty-weights.svg",
+        "alt": "Peso vacío: identificar primero la definición",
+        "heading": "Peso vacío: identificar primero la definición",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP04-2-op04-useful-load",
+        "file": "/ciaac-approved/op/or-op04-useful-load.svg",
+        "alt": "Dos términos, dos bases de cálculo",
+        "heading": "Dos términos, dos bases de cálculo",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP04-3-op04-mzfw",
+        "file": "/ciaac-approved/op/or-op04-mzfw.svg",
+        "alt": "El combustible no corrige una sobrecarga de ZFW",
+        "heading": "El combustible no corrige una sobrecarga de ZFW",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP04-4-op04-mass-flow",
+        "file": "/ciaac-approved/op/or-op04-mass-flow.svg",
+        "alt": "La masa cambia a lo largo de la operación",
+        "heading": "La masa cambia a lo largo de la operación",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP04-5-op04-mass-flow",
+        "file": "/ciaac-approved/op/or-op04-mass-flow.svg",
+        "alt": "La masa cambia a lo largo de la operación",
+        "heading": "La masa cambia a lo largo de la operación",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 4,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP04-6-op04-structural-margins",
+        "file": "/ciaac-approved/op/or-op04-structural-margins.svg",
+        "alt": "Cuatro pesos reales, cuatro límites estructurales",
+        "heading": "Cuatro pesos reales, cuatro límites estructurales",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      }
+    ],
+    "exercise": {
+      "kind": "match",
+      "title": "Comprueba la lectura",
+      "instruction": "Relaciona los conceptos. Los casos, preguntas y soluciones completos permanecen en sus tableros.",
+      "pairs": [
+        [
+          "ZFW",
+          "BOW + Payload"
+        ],
+        [
+          "TOW",
+          "RW − combustible de rodaje"
+        ],
+        [
+          "LDW",
+          "TOW − combustible de ruta"
+        ]
+      ],
+      "order": [
+        1,
+        2,
+        0
+      ]
+    },
+    "objectives": [
+      "Payload, peso utilizable, EW, BOW, ZFW, MZFW, RW, MRW, TOW, LDW, MTOW y MLDW.",
+      "Relación entre pesos de operación y sus límites."
+    ],
+    "minutes": 25,
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Despegue"
+      },
+      {
+        "id": "OP04-01",
+        "kind": "content",
+        "nav": "EW y BEW: conservar la fuente",
+        "title": "EW y BEW: conservar la fuente",
+        "cards": [
+          {
+            "title": "EW histórico CIAAC",
+            "text": "Peso Vacío Histórico (EW / Empty Weight): Conforme al manual docente del CIAAC (operaciones aereas.pdf, pág. 39 / folio 3-5), el peso vacío incluye la estructura (planeador), los motores, todo el equipo fijo instalado, el lastre, los líquidos de los sistemas operativos, así como el combustible y aceite residuales (no utilizables o atrapados en las líneas y sumideros).",
+            "covers": []
+          },
+          {
+            "title": "BEW GAMA / FAA",
+            "text": "Peso Vacío Básico (BEW / Basic Empty Weight, GAMA): según FAA-H-8083-25C, cap. 10, pp. 10-4–10-5, el BEW es el peso vacío estándar más el equipo opcional y especial instalado. El peso vacío estándar ya incluye estructura, motores, equipo permanente, lastre fijo, fluido hidráulico, combustible no utilizable y aceite de motor lleno; no debe sumarse el aceite una segunda vez. El EW del manual histórico CIAAC, PDF 39/folio 3-5, considera aceite residual; se mantienen separadas ambas definiciones.",
+            "covers": []
+          },
+          {
+            "title": "BOW / OEW",
+            "text": "BOW (Basic Operating Weight): para este módulo se adopta la convención de peso vacío más tripulación requerida, su equipaje y los elementos estándar de operación, como comidas y agua potable. FAA AC 120-27F (6 de mayo de 2019), apéndice A.3, ofrece esta definición como referencia técnica estadounidense. La composición concreta se verifica en la documentación de peso y balance del operador; las siglas BOW, OEW y APS no se consideran automáticamente equivalentes. Antes de sumar partidas, comprueba qué combustible, aceite, tripulación y servicios ya están incluidos.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP04-1-op04-empty-weights",
+            "file": "/ciaac-approved/op/or-op04-empty-weights.svg",
+            "alt": "Peso vacío: identificar primero la definición",
+            "heading": "Peso vacío: identificar primero la definición",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP04-1-op04-empty-weights",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "id": "OP04-02",
+        "kind": "content",
+        "nav": "Payload y carga utilizable",
+        "title": "Payload y carga utilizable",
+        "cards": [
+          {
+            "title": "Payload",
+            "text": "Carga útil o de paga (payload, convención de este módulo): pasajeros, su equipaje de mano y facturado, carga y correo, sin volver a añadir la tripulación ni los elementos ya incluidos en BOW. El manual histórico CIAAC enumera pasajeros, equipaje, carga y correo (PDF 39, folio 3-5). La definición GAMA reproducida por PHAK, capítulo 10, p. 10-5, usa «ocupantes, carga y equipaje»; no debe mezclarse automáticamente con la base BOW adoptada aquí.",
+            "covers": []
+          },
+          {
+            "title": "Useful Load FAA",
+            "text": "Useful load, en la convención FAA para aviación general: diferencia entre el peso bruto máximo admisible y el peso vacío básico de referencia. PHAK, capítulo 10, p. 10-5, enumera piloto, copiloto, pasajeros, equipaje, combustible utilizable y aceite drenable. La lista debe interpretarse con la definición de peso vacío usada: si el BEW ya incluye aceite lleno, ese aceite no se suma otra vez. No es una equivalencia universal con el «peso utilizable» del manual CIAAC.",
+            "covers": []
+          },
+          {
+            "title": "Peso utilizable CIAAC",
+            "text": "Peso Utilizable Histórico (CIAAC operaciones aereas.pdf, pág. 40 / folio 3-6): Diferencia resultante de restar el peso de operación al Peso Máximo de Despegue (MTOW). Se conserva deslindado del concepto FAA sin mezclarlos.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP04-2-op04-useful-load",
+            "file": "/ciaac-approved/op/or-op04-useful-load.svg",
+            "alt": "Dos términos, dos bases de cálculo",
+            "heading": "Dos términos, dos bases de cálculo",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP04-2-op04-useful-load",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "id": "OP04-03",
+        "kind": "content",
+        "nav": "Peso real y límite estructural",
+        "title": "Peso real y límite estructural",
+        "cards": [
+          {
+            "title": "ZFW y MZFW",
+            "text": "ZFW (Zero Fuel Weight): peso real del avión excluyendo el combustible utilizable. Con la convención de esta lección, ZFW = BOW + payload. Puede calcularse aunque el avión ya tenga combustible: no describe necesariamente un instante anterior al abastecimiento.\nMZFW (Maximum Zero Fuel Weight): máximo permitido para ese peso sin combustible utilizable, según la definición GAMA de PHAK, capítulo 10, p. 10-5, y la documentación aplicable del avión. Es un límite distinto del ZFW real.\nAgregar combustible a los tanques no disminuye el ZFW ni subsana que ZFW sea mayor que MZFW. Tampoco permite cargar libremente las alas o incumplir límites de compartimentos y distribución. El manual CIAAC, PDF 39–40, usa terminología histórica que debe conservarse separada de esta distinción entre valor real y máximo.",
+            "covers": []
+          },
+          {
+            "title": "Rampa y despegue",
+            "text": "RW (Ramp Weight) o peso de rampa: peso real al inicio de la operación en tierra. En este modelo, TOW = RW − combustible previsto para puesta en marcha, calentamiento y rodaje; ese consumo se descuenta una sola vez.\nMRW, o máximo de rampa/rodaje: límite máximo aplicable en esa fase.\nTOW (Takeoff Weight): peso real al comenzar la carrera de despegue. MTOW: máximo permitido para comenzar esa carrera. Debe distinguirse el máximo certificado del peso de despegue admisible para las condiciones de pista y rendimiento.\nReferencias técnicas: FAA AC 120-27F, apéndice A.16–A.17 (A-2); FAA-H-8083-1B, p. 2-6. Las relaciones históricas del manual CIAAC están en PDF 40, folio 3-6.",
+            "covers": []
+          },
+          {
+            "title": "Aterrizaje",
+            "text": "LDW / LW (Landing Weight - Peso de Aterrizaje): Peso estimado de la aeronave al momento de la toma de contacto en el destino (LDW = TOW - Trip Fuel / Combustible consumido en ruta).\nMLDW (Maximum Landing Weight): PHAK FAA-H-8083-25C, cap. 10, p. 10-5 define el máximo normalmente permitido al aterrizar. En el manual histórico CIAAC, PDF 40/folio 3-6, el peso máximo de aterrizaje también está sujeto a la longitud disponible de pista y las condiciones de aproximación fallida. No se atribuye a ese pasaje un límite exclusivamente estructural independiente de la pista. En una operación concreta se deben comprobar los límites y el rendimiento del AFM; RLAC art. 126, fraccs. IV–V (reforma 31-05-2023, PDF 58).",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP04-3-op04-mzfw",
+            "file": "/ciaac-approved/op/or-op04-mzfw.svg",
+            "alt": "El combustible no corrige una sobrecarga de ZFW",
+            "heading": "El combustible no corrige una sobrecarga de ZFW",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP04-3-op04-mzfw",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "id": "OP04-04",
+        "kind": "content",
+        "nav": "Relaciones entre pesos",
+        "title": "Relaciones entre pesos",
+        "cards": [
+          {
+            "title": "Ecuaciones de masa",
+            "text": "En el modelo de esta lección, BOW ya incluye tripulación, servicios, aceite y combustible no utilizable que correspondan a su definición; payload excluye esas partidas. Se supone que los únicos cambios de peso durante el vuelo son los consumos de combustible indicados.\nZFW = BOW + payload\nTOW = ZFW + combustible utilizable al despegue\nRW = TOW + combustible consumido en la operación en tierra\nLDW = TOW − combustible de viaje consumido desde el inicio del despegue hasta el aterrizaje.\nAquí «combustible de viaje» incluye ascenso, crucero, descenso y aproximación del vuelo considerado; no solo el crucero.",
+            "covers": []
+          },
+          {
+            "title": "Reales y máximos certificados",
+            "text": "ZFW, RW, TOW y LDW son pesos reales o estimados de una operación concreta. Para planificar se comparan con los máximos aplicables MZFW, MRW, MTOW y MLDW; además deben cumplirse CG, distribución de carga y rendimiento. El peso admisible puede reducirse por pista disponible, obstáculos, altitud de presión, temperatura, viento, configuración y capacidad de ascenso. Prevalece la restricción más exigente.\nEste criterio corresponde a planificación normal. No sustituye procedimientos específicos del fabricante para situaciones anormales, como un aterrizaje por encima del peso máximo normal. Referencias: RLAC, reforma 31-05-2023, arts. 124 y 126; FAA AC 120-27F, §2.3.2 y A.15–A.18, como contraste técnico.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP04-4-op04-mass-flow",
+            "file": "/ciaac-approved/op/or-op04-mass-flow.svg",
+            "alt": "La masa cambia a lo largo de la operación",
+            "heading": "La masa cambia a lo largo de la operación",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP04-4-op04-mass-flow",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "OP04-05",
+        "kind": "content",
+        "nav": "Caso hipotético: datos y cálculos",
+        "title": "Caso hipotético: datos y cálculos",
+        "cards": [
+          {
+            "title": "Supuestos explícitos",
+            "text": "Caso hipotético de un bimotor regional. Se adoptan exclusivamente para el ejercicio estos máximos: MRW = 16,500 lb; MTOW = 16,400 lb; MLDW = 15,600 lb; MZFW = 14,000 lb.\nBOW = 9,500 lb, con tripulación, servicios y combustible no utilizable ya incluidos; payload = 3,800 lb.\nCombustible utilizable en rampa = 2,200 lb: 100 lb para la operación en tierra, 1,400 lb para el viaje hasta el aterrizaje y 700 lb previstos como remanente. No se ha demostrado que ese remanente satisfaga la reserva exigible. Se supone que no hay otros cambios de peso.",
+            "covers": []
+          },
+          {
+            "title": "ZFW y rampa",
+            "text": "Cálculo del Peso Sin Combustible (ZFW):\nZFW=BOW+Payload=9,500 lb+3,800 lb=13,300 lb\nEvaluación contra MZFW (14,000 lb):\n13,300 lb≤14,000 lb⇒Margen disponible: +700 lb (CUMPLE)\nCálculo del Peso de Rampa (RW):\nRW=ZFW+Combustible Total=13,300 lb+2,200 lb=15,500 lb\nEvaluación contra MRW (16,500 lb):\n15,500 lb≤16,500 lb⇒Margen disponible: +1,000 lb (CUMPLE)",
+            "covers": []
+          },
+          {
+            "title": "Despegue y aterrizaje",
+            "text": "Cálculo del Peso de Despegue (TOW):\nTOW=RW−Combustible de Rodaje=15,500 lb−100 lb=15,400 lb\nEvaluación contra MTOW (16,400 lb):\n15,400 lb≤16,400 lb⇒Margen disponible: +1,000 lb (CUMPLE)\nCálculo del Peso de Aterrizaje (LDW):\nLDW=TOW−Combustible de Ruta=15,400 lb−1,400 lb=14,000 lb\nEvaluación contra MLDW (15,600 lb):\n14,000 lb≤15,600 lb⇒Margen disponible: +1,600 lb (CUMPLE)",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP04-5-op04-mass-flow",
+            "file": "/ciaac-approved/op/or-op04-mass-flow.svg",
+            "alt": "La masa cambia a lo largo de la operación",
+            "heading": "La masa cambia a lo largo de la operación",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP04-5-op04-mass-flow",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "id": "OP04-06",
+        "kind": "content",
+        "nav": "Caso hipotético: márgenes y límites",
+        "title": "Caso hipotético: márgenes y límites",
+        "cards": [
+          {
+            "title": "Conclusión restringida",
+            "text": "Conclusión del caso: los cuatro pesos calculados cumplen los máximos hipotéticos indicados: ZFW 13,300 ≤ 14,000 lb; RW 15,500 ≤ 16,500 lb; TOW 15,400 ≤ 16,400 lb; LDW 14,000 ≤ 15,600 lb. Esta comprobación aritmética no autoriza un despacho real. Faltan las verificaciones siguientes.",
+            "covers": []
+          },
+          {
+            "title": "Comprobaciones pendientes",
+            "text": "Comprobaciones pendientes:\n1. CG y distribución de carga en rampa, despegue, vuelo y aterrizaje, junto con límites de asientos, compartimentos y carga de piso.\n2. Rendimiento de despegue y aterrizaje, incluidas las distancias TORA, TODA, ASDA y LDA que correspondan, obstáculos, altitud de presión, temperatura, viento y ascenso con un motor inoperativo.\n3. Combustible: verificar que las 700 lb remanentes cubran los requisitos aplicables al tipo de avión y operación; aquí no se ha comprobado una reserva reglamentaria.\n4. Aeronavegabilidad, mantenimiento y documentación exigible.\nReferencias de alcance: FAA AC 120-27F, §2.3.2; PHAK, pp. 10-3–10-7; RLAC, reforma 31-05-2023, arts. 124 y 126. La CO AV-50/07 R3 aportada trata aeronaves de ala rotativa y no sustenta el requisito de reserva de este avión.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 4,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP04-6-op04-structural-margins",
+            "file": "/ciaac-approved/op/or-op04-structural-margins.svg",
+            "alt": "Cuatro pesos reales, cuatro límites estructurales",
+            "heading": "Cuatro pesos reales, cuatro límites estructurales",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP04-6-op04-structural-margins",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1
+          ]
+        }
+      },
+      {
+        "kind": "exercise",
+        "nav": "Comprueba la lectura"
+      },
+      {
+        "kind": "finish",
+        "nav": "Aterrizaje"
+      }
+    ],
+    "sources": [
+      {
+        "id": "ciaac-historical",
+        "title": "CIAAC, X-1 Operaciones Aeronáuticas, ejemplar histórico aportado; fecha editorial no identificada",
+        "role": "Manual docente mexicano histórico. Las fuentes FAA/14 CFR son contraste técnico estadounidense; las mexicanas se identifican por la edición cotejada. Este cotejo no declara vigencia operacional en 2026 ni autoriza despacho.",
+        "verified_locators": [
+          "PDF35–40, folios3-1–3-6; PDF26–27 solo para contexto histórico de combustible."
+        ]
+      },
+      {
+        "id": "faa-phak10",
+        "title": "FAA PHAK, capítulo10, Weight and Balance",
+        "role": "Capítulo oficial asociado al FAA-H-8083-25C por catálogoFAA. Se cotejan los bytes disponibles sin afirmar identidad con la primera tirada2023. Las fuentes FAA/14 CFR son contraste técnico estadounidense; las mexicanas se identifican por la edición cotejada. Este cotejo no declara vigencia operacional en 2026 ni autoriza despacho.",
+        "verified_locators": [
+          "pp.10-3–10-7, PDF3–7."
+        ],
+        "url": "https://www.faa.gov/sites/faa.gov/files/12_phak_ch10.pdf"
+      },
+      {
+        "id": "faa-ac12027f",
+        "title": "FAA AC120-27F, Aircraft Weight and Balance Control (6 de mayo de2019)",
+        "role": "Las fuentes FAA/14 CFR son contraste técnico estadounidense; las mexicanas se identifican por la edición cotejada. Este cotejo no declara vigencia operacional en 2026 ni autoriza despacho.",
+        "verified_locators": [
+          "§§2.3.2–2.3.3, pp.2-6–2-7(PDF13–14);A.3,A.6,A.8,A.9 pp.A-1(PDF35);A.15–A.23 pp.A-2(PDF36)."
+        ],
+        "url": "https://www.faa.gov/documentLibrary/media/Advisory_Circular/AC_120-27F.pdf"
+      },
+      {
+        "id": "faa-wb1b",
+        "title": "FAA-H-8083-1B, Weight & Balance Handbook (2016)",
+        "role": "Se usa el pasaje histórico, sin declarar incorporación de addenda2025. Las fuentes FAA/14 CFR son contraste técnico estadounidense; las mexicanas se identifican por la edición cotejada. Este cotejo no declara vigencia operacional en 2026 ni autoriza despacho.",
+        "verified_locators": [
+          "pp.2-2–2-6 (PDF22–26);3-9(PDF41);9-10(PDF82)."
+        ],
+        "url": "https://www.faa.gov/sites/faa.gov/files/regulations_policies/handbooks_manuals/aviation/FAA-H-8083-1.pdf"
+      },
+      {
+        "id": "rlac-2023",
+        "title": "Reglamento de la Ley de Aviación Civil, última reforma del ejemplar31-05-2023",
+        "role": "Las fuentes FAA/14 CFR son contraste técnico estadounidense; las mexicanas se identifican por la edición cotejada. Este cotejo no declara vigencia operacional en 2026 ni autoriza despacho.",
+        "verified_locators": [
+          "arts.124–126, PDF58."
+        ],
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LAC.pdf"
+      }
+    ],
+    "completionChecks": [
+      "ZFW",
+      "TOW",
+      "LDW"
+    ],
+    "sourceLabel": "CIAAC · Operaciones aéreas",
+    "chapterLabel": "Itinerario",
+    "contentVersion": "op04-grouped-private-20261006-v1"
+  },
+  "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op05-calcular-el-centro-de-gravedad": {
+    "number": 5,
+    "title": "Calcular el centro de gravedad",
+    "name": "Calcular el centro de gravedad",
+    "intro": "Datum, centro de gravedad, límites FWD CG y AFT CG. Momento positivo y negativo, cuerda aerodinámica media (CAM) y brazo de palanca. Determinación del centro de gravedad dentro del problema de peso, carga y balance.",
+    "cards": [
+      {
+        "title": "Calcular el centro de gravedad",
+        "text": "Datum, centro de gravedad, límites FWD CG y AFT CG. Momento positivo y negativo, cuerda aerodinámica media (CAM) y brazo de palanca. Determinación del centro de gravedad dentro del problema de peso, carga y balance.",
+        "covers": []
+      }
+    ],
+    "questions": [],
+    "tips": [],
+    "chapter": 1,
+    "chapter_name": "Operaciones aéreas",
+    "subtopics": [
+      {
+        "level": 1,
+        "name": "Datum, centro de gravedad, límites FWD CG y AFT CG.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado OP05"
+      },
+      {
+        "level": 1,
+        "name": "Momento positivo y negativo, cuerda aerodinámica media (CAM) y brazo de palanca.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado OP05"
+      },
+      {
+        "level": 1,
+        "name": "Determinación del centro de gravedad dentro del problema de peso, carga y balance.",
+        "source_pdf_page": null,
+        "source_print_page": "",
+        "source_method": "Alcance aprobado OP05"
+      }
+    ],
+    "source_pdf_page": null,
+    "source_print_page": "",
+    "figures": [
+      {
+        "chapter": 1,
+        "topic": 5,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP05-1-op05-datum",
+        "file": "/ciaac-approved/op/or-op05-datum.svg",
+        "alt": "El datum fija el origen y el signo de cada brazo",
+        "heading": "El datum fija el origen y el signo de cada brazo",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 5,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP05-2-op05-datum",
+        "file": "/ciaac-approved/op/or-op05-datum.svg",
+        "alt": "El datum fija el origen y el signo de cada brazo",
+        "heading": "El datum fija el origen y el signo de cada brazo",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 5,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP05-3-op05-mac",
+        "file": "/ciaac-approved/op/or-op05-mac.svg",
+        "alt": "Del brazo del CG al porcentaje de la CAM",
+        "heading": "Del brazo del CG al porcentaje de la CAM",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 5,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP05-4-op05-load-stations",
+        "file": "/ciaac-approved/op/or-op05-load-stations.svg",
+        "alt": "Cada carga se ubica en su estación",
+        "heading": "Cada carga se ubica en su estación",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 5,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP05-5-op05-cg-calculation",
+        "file": "/ciaac-approved/op/or-op05-cg-calculation.svg",
+        "alt": "El centro de gravedad es un cociente de sumas",
+        "heading": "El centro de gravedad es un cociente de sumas",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 5,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP05-5-op05-mac",
+        "file": "/ciaac-approved/op/or-op05-mac.svg",
+        "alt": "Del brazo del CG al porcentaje de la CAM",
+        "heading": "Del brazo del CG al porcentaje de la CAM",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      },
+      {
+        "chapter": 1,
+        "topic": 5,
+        "anchor": 1,
+        "pdf_page": 0,
+        "number": "OP05-6-op05-relocation",
+        "file": "/ciaac-approved/op/or-op05-relocation.svg",
+        "alt": "Mover carga cambia el momento, no el peso total",
+        "heading": "Mover carga cambia el momento, no el peso total",
+        "observe": "",
+        "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+        "assetAspectRatio": 1.6666666666666667
+      }
+    ],
+    "exercise": {
+      "kind": "match",
+      "title": "Comprueba la lectura",
+      "instruction": "Relaciona los conceptos. Los casos, preguntas y soluciones completos permanecen en sus tableros.",
+      "pairs": [
+        [
+          "Peso total del caso",
+          "5,460 lb"
+        ],
+        [
+          "Momento total del caso",
+          "1,175,800 lb-in"
+        ],
+        [
+          "CG inicial del caso",
+          "215.35 in"
+        ],
+        [
+          "CG reubicado del caso",
+          "217.53 in"
+        ]
+      ],
+      "order": [
+        1,
+        2,
+        3,
+        0
+      ]
+    },
+    "objectives": [
+      "Datum, centro de gravedad, límites FWD CG y AFT CG.",
+      "Momento positivo y negativo, cuerda aerodinámica media (CAM) y brazo de palanca.",
+      "Determinación del centro de gravedad dentro del problema de peso, carga y balance."
+    ],
+    "minutes": 25,
+    "stages": [
+      {
+        "kind": "intro",
+        "nav": "Despegue"
+      },
+      {
+        "id": "OP05-01",
+        "kind": "content",
+        "nav": "Datum, brazo y centro de gravedad",
+        "title": "Datum, brazo y centro de gravedad",
+        "cards": [
+          {
+            "title": "Modelo estático",
+            "text": "La posición longitudinal del CG se obtiene con un modelo estático de pesos y momentos respecto de un datum. Se calcula el momento de cada elemento, se suman pesos y momentos algebraicamente y se divide el momento total entre el peso total. Referencias: CIAAC, PDF 35–38, folios 3-1–3-4; PHAK, pp. 10-4–10-7.",
+            "covers": []
+          },
+          {
+            "title": "Datum y brazo",
+            "text": "Datum: plano vertical de referencia elegido por el fabricante, normalmente identificado como estación cero, desde el cual se miden los brazos longitudinales. Su posición se consulta en la documentación del avión.\nBrazo: distancia horizontal desde el datum hasta el CG del elemento. En la convención usada aquí, es positivo a popa del datum y negativo a proa. Usa siempre las mismas unidades y la convención publicada para ese avión.\nUna estación identifica una posición mediante su distancia al datum; no es una carga. Referencias: CIAAC PDF 35 y 38, folios 3-1 y 3-4; PHAK pp. 10-4–10-6.",
+            "covers": []
+          },
+          {
+            "title": "Centro de gravedad",
+            "text": "Centro de gravedad: punto donde se considera concentrado el peso total del avión para el cálculo del equilibrio. El CG tiene posición longitudinal, lateral y vertical; este ejercicio calcula solo su estación longitudinal.\nEstación del CG = suma algebraica de momentos / suma de pesos.\nReferencias: CIAAC PDF 35–36, folios 3-1–3-2; PHAK pp. 10-4 y 10-7.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 5,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP05-1-op05-datum",
+            "file": "/ciaac-approved/op/or-op05-datum.svg",
+            "alt": "El datum fija el origen y el signo de cada brazo",
+            "heading": "El datum fija el origen y el signo de cada brazo",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP05-1-op05-datum",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "id": "OP05-02",
+        "kind": "content",
+        "nav": "Momento estático y ejemplo negativo",
+        "title": "Momento estático y ejemplo negativo",
+        "cards": [
+          {
+            "title": "Distinguir los momentos",
+            "text": "El momento de peso y balance se calcula como peso × brazo y conserva el signo de ese brazo respecto al datum. Ese signo no determina por sí solo si el avión cabeceará hacia arriba o hacia abajo en vuelo. Para estudiar el equilibrio de cabeceo se consideran los momentos de todas las fuerzas pertinentes respecto al CG.\nEl pasaje histórico CIAAC de PDF 39, folio 3-5, usa lenguaje de nariz arriba/abajo; no se emplea aquí como definición del signo de los momentos de carga. Para este cálculo se sigue la convención de PHAK, pp. 10-4–10-6.",
+            "covers": []
+          },
+          {
+            "title": "Ejemplo hipotético: radar",
+            "text": "Ejemplo hipotético: datum en el mamparo de fuego. Un radar de 15 lb se encuentra 20 in por delante del datum; su brazo es −20 in.\nMomento = 15 lb × (−20 in) = −300 lb-in.\nEse valor se suma algebraicamente con los demás momentos. No determina por sí solo la actitud de cabeceo. La posición del datum y los valores del ejemplo son supuestos docentes. Referencia del método: PHAK pp. 10-4–10-6; FAA-H-8083-1B, pp. 2-2–2-4.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 5,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP05-2-op05-datum",
+            "file": "/ciaac-approved/op/or-op05-datum.svg",
+            "alt": "El datum fija el origen y el signo de cada brazo",
+            "heading": "El datum fija el origen y el signo de cada brazo",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP05-2-op05-datum",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "OP05-03",
+        "kind": "content",
+        "nav": "MAC y envolvente del fabricante",
+        "title": "MAC y envolvente del fabricante",
+        "cards": [
+          {
+            "title": "Cuerda aerodinámica media",
+            "text": "La cuerda aerodinámica media (CAM o MAC) es una longitud de referencia del ala usada, entre otras cosas, para expresar la posición del CG. Para peso y balance se toman del fabricante su longitud y la estación de su borde de ataque, LEMAC.\n%MAC = [(CG − LEMAC) / MAC] × 100.\nCG y LEMAC deben medirse desde el mismo datum, con la misma convención y unidad; MAC es una longitud, no una estación.\nReferencias: FAA AC 120-27F, apéndice A.19 (A-2); FAA-H-8083-1B, p. 3-9, figura 3-18.",
+            "covers": []
+          },
+          {
+            "title": "Vínculos y límites FWD / AFT",
+            "text": "Los pesos y máximos se estudian en OP04. Aquí se comprueba que el CG longitudinal esté entre los límites delantero (FWD) y posterior (AFT) aplicables. Se obtienen del AFM/POH, TCDS o documentación de peso y balance del fabricante, y pueden variar con peso, configuración o fase de vuelo. Usa la envolvente de peso y CG correspondiente, no el diagrama V-n. La relación entre CG, estabilidad y control se estudia en Aerodinámica. Referencias: PHAK p. 10-3; FAA AC 120-27F, §§2.3.2–2.3.3.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 5,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP05-3-op05-mac",
+            "file": "/ciaac-approved/op/or-op05-mac.svg",
+            "alt": "Del brazo del CG al porcentaje de la CAM",
+            "heading": "Del brazo del CG al porcentaje de la CAM",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP05-3-op05-mac",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "OP05-04",
+        "kind": "content",
+        "nav": "Caso hipotético: carga y estaciones",
+        "title": "Caso hipotético: carga y estaciones",
+        "cards": [
+          {
+            "title": "BOW: tripulación ya incluida",
+            "text": "Supuesto del ejercicio: BOW = 4,000 lb a la estación 210 in y ya incluye piloto, copiloto y sus elementos de operación. Por eso no se añaden otras 340 lb a 130 in por tripulación. Esta inclusión es una condición expresa del problema, coherente con la definición BOW de FAA AC 120-27F, A.3; siempre se verifica qué incluye el peso de referencia real.",
+            "covers": []
+          },
+          {
+            "title": "Datos de entrada",
+            "text": "Datos de Entrada Correctos:\nBOW: 4,000 lb @ 210 in\nPasajeros Fila 1 (2 pax): 340 lb @ 180 in\nPasajeros Fila 2 (2 pax): 340 lb @ 250 in\nEquipaje: 180 lb @ 320 in\nCombustible utilizable (el no utilizable ya está en BOW): 600 lb @ 220 in\nDatos de Ala: LEMAC=200 in, CAM=100 in\nLímites Hipotéticos de CG para este Peso en el AFM: 215.0 in a 235.0 in",
+            "covers": []
+          },
+          {
+            "title": "Peso Básico de Operación (BOW) (incluye tripulación)",
+            "text": "Elemento / Estación: Peso Básico de Operación (BOW) (incluye tripulación)\nPeso (lb): 4,000\nBrazo (in): 210.0\nMomento (lb-in): 840,000",
+            "covers": []
+          },
+          {
+            "title": "Pasajeros Fila 1",
+            "text": "Elemento / Estación: Pasajeros Fila 1\nPeso (lb): 340\nBrazo (in): 180.0\nMomento (lb-in): 61,200",
+            "covers": []
+          },
+          {
+            "title": "Pasajeros Fila 2",
+            "text": "Elemento / Estación: Pasajeros Fila 2\nPeso (lb): 340\nBrazo (in): 250.0\nMomento (lb-in): 85,000",
+            "covers": []
+          },
+          {
+            "title": "Equipaje",
+            "text": "Elemento / Estación: Equipaje\nPeso (lb): 180\nBrazo (in): 320.0\nMomento (lb-in): 57,600",
+            "covers": []
+          },
+          {
+            "title": "Combustible Total",
+            "text": "Elemento / Estación: Combustible utilizable\nPeso (lb): 600\nBrazo (in): 220.0\nMomento (lb-in): 132,000",
+            "covers": []
+          },
+          {
+            "title": "TOTALES",
+            "text": "Elemento / Estación: TOTALES\nPeso (lb): 5,460 lb\nBrazo (in): —\nMomento (lb-in): 1,175,800 lb-in",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 5,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP05-4-op05-load-stations",
+            "file": "/ciaac-approved/op/or-op05-load-stations.svg",
+            "alt": "Cada carga se ubica en su estación",
+            "heading": "Cada carga se ubica en su estación",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP05-4-op05-load-stations",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        }
+      },
+      {
+        "id": "OP05-05",
+        "kind": "content",
+        "nav": "Caso hipotético: CG y porcentaje MAC",
+        "title": "Caso hipotético: CG y porcentaje MAC",
+        "cards": [
+          {
+            "title": "Resultado del CG",
+            "text": "3. COMPROBACIÓN DE RESULTADOS Y %MAC\nPosición del Centro de Gravedad (CG):\nCG = 1,175,800 lb-in / 5,460 lb = 215.3479... in ≈ 215.35 in",
+            "covers": []
+          },
+          {
+            "title": "Porcentaje MAC y límites",
+            "text": "Con el cociente sin redondear, %MAC = [(215.347985… − 200) / 100] × 100 = 15.347985…% ≈ 15.35% MAC.\nEl CG inicial, 215.35 in, se encuentra dentro del intervalo hipotético dado para 5,460 lb: 215.0–235.0 in. Esta es una comprobación del estado inicial, no de todo el vuelo.",
+            "covers": []
+          },
+          {
+            "title": "Dictamen y alcance",
+            "text": "La carga inicial produce CG = 215.35 in (15.35% MAC) a 5,460 lb y cumple el intervalo hipotético dado. Falta verificar límites de peso, asientos, compartimentos y piso, y el CG durante el consumo de combustible y demás cambios de configuración o carga.\nComo el combustible está a 220 in, detrás del CG inicial, su consumo mueve el CG hacia delante. No puede concluirse cumplimiento durante todo el vuelo con un único intervalo dado solo para el peso inicial. Esta simulación no autoriza un despacho.",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 5,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP05-5-op05-cg-calculation",
+            "file": "/ciaac-approved/op/or-op05-cg-calculation.svg",
+            "alt": "El centro de gravedad es un cociente de sumas",
+            "heading": "El centro de gravedad es un cociente de sumas",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          },
+          {
+            "chapter": 1,
+            "topic": 5,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP05-5-op05-mac",
+            "file": "/ciaac-approved/op/or-op05-mac.svg",
+            "alt": "Del brazo del CG al porcentaje de la CAM",
+            "heading": "Del brazo del CG al porcentaje de la CAM",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "comparison",
+          "panels": [
+            {
+              "title": "El centro de gravedad es un cociente de sumas",
+              "figureNumber": "OP05-5-op05-cg-calculation",
+              "cardIndexes": [
+                0
+              ]
+            },
+            {
+              "title": "Del brazo del CG al porcentaje de la CAM",
+              "figureNumber": "OP05-5-op05-mac",
+              "cardIndexes": [
+                1
+              ]
+            }
+          ],
+          "noteCardIndexes": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "OP05-06",
+        "kind": "content",
+        "nav": "Reubicación hipotética del pasajero",
+        "title": "Reubicación hipotética del pasajero",
+        "cards": [
+          {
+            "title": "Supuesto condicionado",
+            "text": "Reubicación hipotética de carga: mover un pasajero de 170 lb desde la fila 1, estación 180 in, hasta una plaza disponible en la estación 250 in. Se supone que esa plaza existe y que los límites de asiento, fila y compartimento permiten el cambio. El peso total permanece constante.",
+            "covers": []
+          },
+          {
+            "title": "Cambio de momento",
+            "text": "Cambio de Momento (ΔMomento):\nΔMomento=170 lb×(250 in−180 in)=170 lb×(+70 in)=+11,900 lb-in\nNuevo Momento Total:\nMomento Nuevo=1,175,800 lb-in+11,900 lb-in=1,187,700 lb-in\nPeso Total (Sin Cambio): 5,460 lb",
+            "covers": []
+          },
+          {
+            "title": "Nuevo CG y %MAC",
+            "text": "Nuevo CG:\nCG nuevo = 1,187,700 lb-in / 5,460 lb = 217.5274... in ≈ 217.53 in\nNuevo %MAC: %MAC nuevo = ( (217.53 - 200) / (100)) × 100 = 17.53% MAC",
+            "covers": []
+          }
+        ],
+        "figures": [
+          {
+            "chapter": 1,
+            "topic": 5,
+            "anchor": 1,
+            "pdf_page": 0,
+            "number": "OP05-6-op05-relocation",
+            "file": "/ciaac-approved/op/or-op05-relocation.svg",
+            "alt": "Mover carga cambia el momento, no el peso total",
+            "heading": "Mover carga cambia el momento, no el peso total",
+            "observe": "",
+            "caption": "Esquema conceptual de aula; no está a escala. Fuentes y límites en el texto asociado.",
+            "assetAspectRatio": 1.6666666666666667
+          }
+        ],
+        "board": {
+          "kind": "mechanism",
+          "figureNumber": "OP05-6-op05-relocation",
+          "parts": [
+            {
+              "cardIndex": 0,
+              "x": 95,
+              "y": 6
+            }
+          ],
+          "noteCardIndexes": [
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "kind": "exercise",
+        "nav": "Comprueba la lectura"
+      },
+      {
+        "kind": "finish",
+        "nav": "Aterrizaje"
+      }
+    ],
+    "sources": [
+      {
+        "id": "ciaac-historical",
+        "title": "CIAAC, X-1 Operaciones Aeronáuticas, ejemplar histórico aportado; fecha editorial no identificada",
+        "role": "Manual docente mexicano histórico. Las fuentes FAA/14 CFR son contraste técnico estadounidense; las mexicanas se identifican por la edición cotejada. Este cotejo no declara vigencia operacional en 2026 ni autoriza despacho.",
+        "verified_locators": [
+          "PDF35–40, folios3-1–3-6; PDF26–27 solo para contexto histórico de combustible."
+        ]
+      },
+      {
+        "id": "faa-phak10",
+        "title": "FAA PHAK, capítulo10, Weight and Balance",
+        "role": "Capítulo oficial asociado al FAA-H-8083-25C por catálogoFAA. Se cotejan los bytes disponibles sin afirmar identidad con la primera tirada2023. Las fuentes FAA/14 CFR son contraste técnico estadounidense; las mexicanas se identifican por la edición cotejada. Este cotejo no declara vigencia operacional en 2026 ni autoriza despacho.",
+        "verified_locators": [
+          "pp.10-3–10-7, PDF3–7."
+        ],
+        "url": "https://www.faa.gov/sites/faa.gov/files/12_phak_ch10.pdf"
+      },
+      {
+        "id": "faa-ac12027f",
+        "title": "FAA AC120-27F, Aircraft Weight and Balance Control (6 de mayo de2019)",
+        "role": "Las fuentes FAA/14 CFR son contraste técnico estadounidense; las mexicanas se identifican por la edición cotejada. Este cotejo no declara vigencia operacional en 2026 ni autoriza despacho.",
+        "verified_locators": [
+          "§§2.3.2–2.3.3, pp.2-6–2-7(PDF13–14);A.3,A.6,A.8,A.9 pp.A-1(PDF35);A.15–A.23 pp.A-2(PDF36)."
+        ],
+        "url": "https://www.faa.gov/documentLibrary/media/Advisory_Circular/AC_120-27F.pdf"
+      },
+      {
+        "id": "faa-wb1b",
+        "title": "FAA-H-8083-1B, Weight & Balance Handbook (2016)",
+        "role": "Se usa el pasaje histórico, sin declarar incorporación de addenda2025. Las fuentes FAA/14 CFR son contraste técnico estadounidense; las mexicanas se identifican por la edición cotejada. Este cotejo no declara vigencia operacional en 2026 ni autoriza despacho.",
+        "verified_locators": [
+          "pp.2-2–2-6 (PDF22–26);3-9(PDF41);9-10(PDF82)."
+        ],
+        "url": "https://www.faa.gov/sites/faa.gov/files/regulations_policies/handbooks_manuals/aviation/FAA-H-8083-1.pdf"
+      }
+    ],
+    "completionChecks": [
+      "Peso total del caso",
+      "Momento total del caso",
+      "CG inicial del caso",
+      "CG reubicado del caso"
+    ],
+    "sourceLabel": "CIAAC · Operaciones aéreas",
+    "chapterLabel": "Itinerario",
+    "contentVersion": "op05-grouped-private-20261006-v1"
+  }
+}

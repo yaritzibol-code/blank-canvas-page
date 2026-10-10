@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "curriculumVersion": "ciaac-operations-approved-2026-10-05",
+  "subjectId": "ciaac/operaciones-aeronauticas",
+  "subjectTitle": "Operaciones aeronáuticas",
+  "containerId": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10",
+  "lessons": [
+    {
+      "code": "OP01",
+      "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op01-usar-manuales-y-documentos-de-operacion",
+      "title": "Usar manuales y documentos de operación",
+      "order": 1
+    },
+    {
+      "code": "OP02",
+      "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op02-comprobar-la-condicion-tecnica-de-la-aeronave",
+      "title": "Comprobar la condición técnica de la aeronave",
+      "order": 2
+    },
+    {
+      "code": "OP03",
+      "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op03-preparar-una-operacion-vfr-o-ifr",
+      "title": "Preparar una operación VFR o IFR",
+      "order": 3
+    },
+    {
+      "code": "OP04",
+      "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op04-reconocer-los-pesos-y-limites-de-la-aeronave",
+      "title": "Reconocer los pesos y límites de la aeronave",
+      "order": 4
+    },
+    {
+      "code": "OP05",
+      "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op05-calcular-el-centro-de-gravedad",
+      "title": "Calcular el centro de gravedad",
+      "order": 5
+    },
+    {
+      "code": "OP06",
+      "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op06-velocidades-operacionales-y-sus-limites",
+      "title": "Velocidades operacionales y sus límites",
+      "order": 6
+    },
+    {
+      "code": "OP07",
+      "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op07-calcular-velocidades-para-el-rendimiento",
+      "title": "Calcular velocidades para el rendimiento",
+      "order": 7
+    },
+    {
+      "code": "OP08",
+      "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op08-analizar-la-trayectoria-de-despegue",
+      "title": "Analizar la trayectoria de despegue",
+      "order": 8
+    },
+    {
+      "code": "OP09",
+      "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op09-analizar-la-aproximacion-y-el-aterrizaje",
+      "title": "Analizar la aproximación y el aterrizaje",
+      "order": 9
+    },
+    {
+      "code": "OP10",
+      "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op10-reconocer-areas-senales-y-luces-del-aerodromo",
+      "title": "Reconocer áreas señales y luces del aeródromo",
+      "order": 10
+    },
+    {
+      "code": "OP11",
+      "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op11-distancias-declaradas-y-pista-remanente",
+      "title": "Distancias declaradas y pista remanente",
+      "order": 11
+    },
+    {
+      "code": "OP12",
+      "id": "ciaac/operaciones-aeronauticas/itinerario-aprobado-2026-10/op12-riesgos-en-pista-y-condiciones-extremas",
+      "title": "Riesgos en pista y condiciones extremas",
+      "order": 12
+    }
+  ]
+}
