@@ -4,7 +4,12 @@ const path = require("node:path");
 const crypto = require("node:crypto");
 const root = path.resolve(__dirname, "..");
 const json = (p) => JSON.parse(fs.readFileSync(path.join(root, p), "utf8"));
-const docs = json("src/lib/lp/ciaac-aircraft-approved/documents.json");
+const { restoreText } = require("./helpers/ciaac-am-st-source-corrections-v2.cjs");
+const documentPath = "src/lib/lp/ciaac-aircraft-approved/documents.json";
+// Preserve original source fixtures; audited deltas must invert to exact public bytes.
+const docs = JSON.parse(
+  restoreText(documentPath, fs.readFileSync(path.join(root, documentPath), "utf8")),
+);
 const fixture = json("tests/fixtures/ciaac-aircraft-next-block.json");
 const canonical = (x) =>
   Array.isArray(x)
@@ -60,5 +65,5 @@ assert.equal(am18.contentVersion, "am18-grouped-candidate-v3-corr2");
 assert.equal(am18.questions[0].correct, 1);
 assert.equal(am18.completionChecks[0], am18.questions[0].prompt);
 console.log(
-  "PASS: AM01–10 exact document preservation; AM11–19 reviewed text, 17 assessments, unique canonical figures, CORR2 question/answer mirror and 62 source-exact runtime assets.",
+  "PASS: original AM01–19 source identities after declared audit inversion; 17 assessments, unique canonical figures, CORR2 question/answer mirror and 62 source-exact runtime assets.",
 );

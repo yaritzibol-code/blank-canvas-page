@@ -145,7 +145,15 @@ assert.deepEqual(document.exercise, {
   ],
   order: [2, 0, 1],
 });
-assert.deepEqual(document.sources, [
+// The audit adds a separately checked PHAK passport; preserve this original source fixture.
+const { restoreText } = require("./helpers/ciaac-am-st-source-corrections-v2.cjs");
+const originalDocument = JSON.parse(
+  restoreText(
+    `${approved}documents.json`,
+    fs.readFileSync(file(`${approved}documents.json`), "utf8"),
+  ),
+)[firstId];
+assert.deepEqual(originalDocument.sources, [
   {
     id: "ciaac-aeronaves-generalidades-historico",
     title: "CIAAC · Aeronaves y motores: Generalidades (manual histórico consultado)",

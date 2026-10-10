@@ -1193,7 +1193,7 @@
       },
       {
         "title": "Ejemplo aritmético de TAS",
-        "text": "Caso Práctico (Evaluación Aritmética de TAS): Una reducción de la TAS promedio de 280 nudos a 260 nudos al nivel de crucero representa una disminución relativa del 7.14% (|260 - 280| / 280 = 20 / 280 = 0.0714). Dado que 7.14% excede el umbral normativo del 5%, es obligatorio notificar de inmediato el cambio a la dependencia ATC.",
+        "text": "Caso Práctico (Evaluación Aritmética de TAS): La reducción de la TAS promedio de 280 a 260 nudos equivale al 7.14% respecto de 280 nudos (|260 - 280| / 280 = 20 / 280 = 0.0714). Para aplicar el Anexo 2 §3.6.2.2 b), la comparación debe hacerse con la TAS consignada en el plan de vuelo: si ésta fuera 280 nudos, la variación real o prevista superaría el 5% y se notificaría a la dependencia ATS correspondiente. El escenario no identifica 280 nudos como TAS consignada en el FPL; ese dato debe comprobarse antes de concluir que se activa el deber de notificación por velocidad. La regla se refiere al promedio al nivel de crucero entre puntos de notificación en un vuelo controlado.",
         "covers": []
       },
       {
@@ -1240,7 +1240,7 @@
       {
         "title": "2. Reportes de TAS y ETA",
         "text": "¿Cuáles son las obligaciones inmediatas de reporte de la tripulación en vuelo ante las desviaciones de velocidad y tiempo?",
-        "detailText": "Variación de la Velocidad Aerodinámica Verdadera (TAS) (Anexo 2 §3.6.2.2 b): En un vuelo controlado, si el promedio de velocidad verdadera aerodinámica al nivel de crucero entre puntos de notificación varía, o se espera que varíe, en un 5% en más o en menos respecto a la consignada en el plan de vuelo, se notificará a la dependencia correspondiente de los servicios de tránsito aéreo.\n\nCaso Práctico (Evaluación Aritmética de TAS): Una reducción de la TAS promedio de 280 nudos a 260 nudos al nivel de crucero representa una disminución relativa del 7.14% (|260 - 280| / 280 = 20 / 280 = 0.0714). Dado que 7.14% excede el umbral normativo del 5%, es obligatorio notificar de inmediato el cambio a la dependencia ATC.\n\nLa demora acumulada de 5 minutos supera el límite de 3 minutos estipulado en el Anexo 2 (§3.6.2.2 c).\n\nCambio de la Hora Prevista (ETA) (Anexo 2 §3.6.2.2 c): En un vuelo controlado, si la hora prevista de llegada al próximo punto de notificación aplicable, al límite de región de información de vuelo o al aeródromo de destino, el que esté antes, resulta errónea en más de 3 minutos con respecto a la notificada a los servicios de tránsito aéreo, o con relación a otro período de tiempo que haya prescrito la autoridad ATS competente o que se base en acuerdos regionales de navegación aérea, la nueva hora prevista, revisada, se notificará lo antes posible a la dependencia correspondiente de los servicios de tránsito aéreo.",
+        "detailText": "Variación de la Velocidad Aerodinámica Verdadera (TAS) (Anexo 2 §3.6.2.2 b): En un vuelo controlado, si el promedio de velocidad verdadera aerodinámica al nivel de crucero entre puntos de notificación varía, o se espera que varíe, en un 5% en más o en menos respecto a la consignada en el plan de vuelo, se notificará a la dependencia correspondiente de los servicios de tránsito aéreo.\n\nCaso Práctico (Evaluación Aritmética de TAS): La reducción de la TAS promedio de 280 a 260 nudos equivale al 7.14% respecto de 280 nudos (|260 - 280| / 280 = 20 / 280 = 0.0714). Para aplicar el Anexo 2 §3.6.2.2 b), la comparación debe hacerse con la TAS consignada en el plan de vuelo: si ésta fuera 280 nudos, la variación real o prevista superaría el 5% y se notificaría a la dependencia ATS correspondiente. El escenario no identifica 280 nudos como TAS consignada en el FPL; ese dato debe comprobarse antes de concluir que se activa el deber de notificación por velocidad. La regla se refiere al promedio al nivel de crucero entre puntos de notificación en un vuelo controlado.\n\nLa demora acumulada de 5 minutos supera el límite de 3 minutos estipulado en el Anexo 2 (§3.6.2.2 c).\n\nCambio de la Hora Prevista (ETA) (Anexo 2 §3.6.2.2 c): En un vuelo controlado, si la hora prevista de llegada al próximo punto de notificación aplicable, al límite de región de información de vuelo o al aeródromo de destino, el que esté antes, resulta errónea en más de 3 minutos con respecto a la notificada a los servicios de tránsito aéreo, o con relación a otro período de tiempo que haya prescrito la autoridad ATS competente o que se base en acuerdos regionales de navegación aérea, la nueva hora prevista, revisada, se notificará lo antes posible a la dependencia correspondiente de los servicios de tránsito aéreo.",
         "covers": []
       },
       {
@@ -2250,7 +2250,7 @@
           },
           {
             "title": "Ejemplo aritmético de TAS",
-            "text": "Caso Práctico (Evaluación Aritmética de TAS): Una reducción de la TAS promedio de 280 nudos a 260 nudos al nivel de crucero representa una disminución relativa del 7.14% (|260 - 280| / 280 = 20 / 280 = 0.0714). Dado que 7.14% excede el umbral normativo del 5%, es obligatorio notificar de inmediato el cambio a la dependencia ATC.",
+            "text": "Caso Práctico (Evaluación Aritmética de TAS): La reducción de la TAS promedio de 280 a 260 nudos equivale al 7.14% respecto de 280 nudos (|260 - 280| / 280 = 20 / 280 = 0.0714). Para aplicar el Anexo 2 §3.6.2.2 b), la comparación debe hacerse con la TAS consignada en el plan de vuelo: si ésta fuera 280 nudos, la variación real o prevista superaría el 5% y se notificaría a la dependencia ATS correspondiente. El escenario no identifica 280 nudos como TAS consignada en el FPL; ese dato debe comprobarse antes de concluir que se activa el deber de notificación por velocidad. La regla se refiere al promedio al nivel de crucero entre puntos de notificación en un vuelo controlado.",
             "covers": []
           }
         ],
@@ -2484,7 +2484,7 @@
           {
             "title": "2. Reportes de TAS y ETA",
             "text": "¿Cuáles son las obligaciones inmediatas de reporte de la tripulación en vuelo ante las desviaciones de velocidad y tiempo?",
-            "detailText": "Variación de la Velocidad Aerodinámica Verdadera (TAS) (Anexo 2 §3.6.2.2 b): En un vuelo controlado, si el promedio de velocidad verdadera aerodinámica al nivel de crucero entre puntos de notificación varía, o se espera que varíe, en un 5% en más o en menos respecto a la consignada en el plan de vuelo, se notificará a la dependencia correspondiente de los servicios de tránsito aéreo.\n\nCaso Práctico (Evaluación Aritmética de TAS): Una reducción de la TAS promedio de 280 nudos a 260 nudos al nivel de crucero representa una disminución relativa del 7.14% (|260 - 280| / 280 = 20 / 280 = 0.0714). Dado que 7.14% excede el umbral normativo del 5%, es obligatorio notificar de inmediato el cambio a la dependencia ATC.\n\nLa demora acumulada de 5 minutos supera el límite de 3 minutos estipulado en el Anexo 2 (§3.6.2.2 c).\n\nCambio de la Hora Prevista (ETA) (Anexo 2 §3.6.2.2 c): En un vuelo controlado, si la hora prevista de llegada al próximo punto de notificación aplicable, al límite de región de información de vuelo o al aeródromo de destino, el que esté antes, resulta errónea en más de 3 minutos con respecto a la notificada a los servicios de tránsito aéreo, o con relación a otro período de tiempo que haya prescrito la autoridad ATS competente o que se base en acuerdos regionales de navegación aérea, la nueva hora prevista, revisada, se notificará lo antes posible a la dependencia correspondiente de los servicios de tránsito aéreo.",
+            "detailText": "Variación de la Velocidad Aerodinámica Verdadera (TAS) (Anexo 2 §3.6.2.2 b): En un vuelo controlado, si el promedio de velocidad verdadera aerodinámica al nivel de crucero entre puntos de notificación varía, o se espera que varíe, en un 5% en más o en menos respecto a la consignada en el plan de vuelo, se notificará a la dependencia correspondiente de los servicios de tránsito aéreo.\n\nCaso Práctico (Evaluación Aritmética de TAS): La reducción de la TAS promedio de 280 a 260 nudos equivale al 7.14% respecto de 280 nudos (|260 - 280| / 280 = 20 / 280 = 0.0714). Para aplicar el Anexo 2 §3.6.2.2 b), la comparación debe hacerse con la TAS consignada en el plan de vuelo: si ésta fuera 280 nudos, la variación real o prevista superaría el 5% y se notificaría a la dependencia ATS correspondiente. El escenario no identifica 280 nudos como TAS consignada en el FPL; ese dato debe comprobarse antes de concluir que se activa el deber de notificación por velocidad. La regla se refiere al promedio al nivel de crucero entre puntos de notificación en un vuelo controlado.\n\nLa demora acumulada de 5 minutos supera el límite de 3 minutos estipulado en el Anexo 2 (§3.6.2.2 c).\n\nCambio de la Hora Prevista (ETA) (Anexo 2 §3.6.2.2 c): En un vuelo controlado, si la hora prevista de llegada al próximo punto de notificación aplicable, al límite de región de información de vuelo o al aeródromo de destino, el que esté antes, resulta errónea en más de 3 minutos con respecto a la notificada a los servicios de tránsito aéreo, o con relación a otro período de tiempo que haya prescrito la autoridad ATS competente o que se base en acuerdos regionales de navegación aérea, la nueva hora prevista, revisada, se notificará lo antes posible a la dependencia correspondiente de los servicios de tránsito aéreo.",
             "covers": []
           },
           {
@@ -2720,10 +2720,10 @@
         "pdf_page": 0,
         "number": "ST03-class-b",
         "file": "/ciaac-approved/airspace/class-b.svg",
-        "alt": "Clase B. El resumen visual acompaña íntegra su explicación. Radio: tabla histórica mexicana MGTAM 2019, no tabla común OACI. Las condiciones completas de autorización, separación, información y asesoramiento están junto a esta figura. Las marcas ** heredadas permanecen sin inventar una nueva restricción.",
+        "alt": "Clase B según OACI Anexo 11, 14.ª edición 2016, Apéndice 4, AP 4-1/PDF 105: separación entre todas las aeronaves, comunicación continua en ambos sentidos y autorización ATC para IFR y VFR. La discrepancia entre la prosa y las celdas A/B de la tabla MGTAM 2019 se explica por separado en el texto; esta figura no corrige silenciosamente esa tabla histórica mexicana.",
         "heading": "Clase B: servicio y radio",
         "observe": "",
-        "caption": "Esquema conceptual original, sin escala. No es una carta operacional.",
+        "caption": "Esquema conceptual original, sin escala. OACI Anexo 11, 14.ª edición 2016, Apéndice 4, AP 4-1/PDF 105. La discrepancia MGTAM 2019 se conserva en el texto. No es una carta operacional.",
         "assetAspectRatio": 0.9473684210526315
       },
       {
@@ -3147,7 +3147,7 @@
           },
           {
             "title": "Clase B · servicios y radio histórica",
-            "text": "Clase B: Permite vuelos IFR y VFR. Se proporciona servicio de control de tránsito aéreo a todos los vuelos, separando IFR de IFR, IFR de VFR y VFR de VFR.\nRadiocomunicación (MGTAM 2019, tabla 4-2.3, PDF 95–96): Clase B: Continua en ambos sentidos para los vuelos IFR y VFR.**",
+            "text": "Clase B: Permite vuelos IFR y VFR. La prosa del MGTAM 2019 §4.16.3.1 (PDF 93–94, pp. 4-28–4-29) proporciona servicio de control de tránsito aéreo a todos los vuelos y separación IFR/IFR, IFR/VFR y VFR/VFR.\nLectura literal de la tabla 4-2.3 (PDF 95, p. 4-30): las clases A y B comparten las celdas “Servicio de Control de Tránsito Aéreo a los vuelos IFR” y “Continua en ambos sentidos para los vuelos IFR”. La celda “IFR y VFR.**” de radiocomunicación corresponde a C y D. Se conserva esta diferencia entre la prosa y la tabla históricas.\nComparación OACI: el Anexo 11, 14ª ed. 2016, Apéndice 4 (PDF 105, AP 4-1), presenta por separado B/IFR y B/VFR; ambas filas tienen servicio de control de tránsito aéreo, separación entre todas las aeronaves, comunicación continua en ambos sentidos y autorización ATC.",
             "covers": []
           },
           {
@@ -3202,10 +3202,10 @@
             "pdf_page": 0,
             "number": "ST03-class-b",
             "file": "/ciaac-approved/airspace/class-b.svg",
-            "alt": "Clase B. El resumen visual acompaña íntegra su explicación. Radio: tabla histórica mexicana MGTAM 2019, no tabla común OACI. Las condiciones completas de autorización, separación, información y asesoramiento están junto a esta figura. Las marcas ** heredadas permanecen sin inventar una nueva restricción.",
+            "alt": "Clase B según OACI Anexo 11, 14.ª edición 2016, Apéndice 4, AP 4-1/PDF 105: separación entre todas las aeronaves, comunicación continua en ambos sentidos y autorización ATC para IFR y VFR. La discrepancia entre la prosa y las celdas A/B de la tabla MGTAM 2019 se explica por separado en el texto; esta figura no corrige silenciosamente esa tabla histórica mexicana.",
             "heading": "Clase B: servicio y radio",
             "observe": "",
-            "caption": "Esquema conceptual original, sin escala. No es una carta operacional.",
+            "caption": "Esquema conceptual original, sin escala. OACI Anexo 11, 14.ª edición 2016, Apéndice 4, AP 4-1/PDF 105. La discrepancia MGTAM 2019 se conserva en el texto. No es una carta operacional.",
             "assetAspectRatio": 0.9473684210526315
           },
           {
@@ -3723,7 +3723,8 @@
         "title": "OACI · Anexo11, copia 14.ª edición 2016",
         "role": "Definiciones y clasificación internacional citadas. No se convierte la radio mexicana en requisito común OACI. Reserva editorial sobre la mención heredada julio2018 conservada en procedencia.",
         "verified_locators": [
-          "FIR: Cap.1; clasificación ATS: Apéndice4 (texto aceptado)"
+          "FIR: Cap.1; clasificación ATS: Apéndice4 (texto aceptado)",
+          "Apéndice 4, AP 4-1, PDF 105: filas B/IFR y B/VFR; 14.ª edición, julio 2016. Comparación separada de tabla4-2.3 MGTAM2019."
         ]
       },
       {
@@ -4926,9 +4927,9 @@
         "pdf_page": 0,
         "number": "ST05-vector-endpoint",
         "file": "/ciaac-approved/radar-surveillance/vector-endpoint.svg",
-        "alt": "Primero identificación e información al piloto. La trayectoria dorada simboliza guía vectorial fuera de una ruta publicada; no asigna rumbos ni altitudes. La responsabilidad ATC por franqueamiento de obstáculos se prolonga hasta el punto donde el piloto reanuda efectivamente su propia navegación, marcado en verde. Terminar de emitir vectores no adelanta ese punto.",
+        "alt": "Primero identificación e información al piloto. La trayectoria dorada simboliza guía vectorial fuera de una ruta publicada; no asigna rumbos ni altitudes. La responsabilidad ATC por franqueamiento de obstáculos se prolonga hasta el punto donde el piloto reanuda efectivamente su propia navegación, marcado en verde. Terminar de emitir vectores no adelanta ese punto. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.",
         "heading": "Identificación, vectores y reanudación",
-        "observe": "Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación.",
+        "observe": "Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.",
         "caption": "Esquema educativo original, sin escala. MGTAM 2019: estudio histórico. No es una carta operacional.",
         "assetAspectRatio": 1.4107883817427387
       },
@@ -5108,7 +5109,7 @@
         "pdf_page": 0,
         "number": "ST05-case-obstacles",
         "file": "/ciaac-approved/radar-surveillance/case-obstacles.svg",
-        "alt": "La solución conserva la responsabilidad por obstáculos hasta llegar al punto de reanudación de navegación propia; el tramo y el punto son conceptuales.",
+        "alt": "La solución conserva la responsabilidad por obstáculos hasta llegar al punto de reanudación de navegación propia; el tramo y el punto son conceptuales. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.",
         "heading": "Caso: hasta el punto de reanudación",
         "observe": "",
         "caption": "Esquema educativo original, sin escala. MGTAM 2019: estudio histórico. No es una carta operacional.",
@@ -5469,12 +5470,12 @@
           },
           {
             "title": "Responsabilidad y MVA",
-            "text": "Responsabilidad del Franqueamiento de Terreno: Cuando un controlador proporciona guía vectorial a un vuelo IFR (o asigna una ruta directa que desvía a la aeronave de su ruta ATS publicada), el controlador es responsable de autorizar rumbos y altitudes que mantengan en todo momento el franqueamiento de obstáculos prescrito, basándose en las Altitudes Mínimas de Vectoramiento (MVA).",
+            "text": "Responsabilidad del Franqueamiento de Terreno: Cuando un controlador proporciona guía vectorial a un vuelo IFR (o asigna una ruta directa que desvía a la aeronave de su ruta ATS publicada), el controlador es responsable de autorizar rumbos y altitudes que mantengan en todo momento el franqueamiento de obstáculos prescrito, basándose en las Altitudes Mínimas de Vectoramiento (MVA).\nSiempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.",
             "covers": []
           },
           {
             "title": "Llegar al punto de reanudación",
-            "text": "Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Al terminar la guía vectorial, el controlador dará al piloto las instrucciones para reanudarla, la posición de la aeronave y las instrucciones apropiadas si hubo un desvío de la ruta previamente asignada.",
+            "text": "Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas. Al terminar la guía vectorial, el controlador dará al piloto las instrucciones para reanudarla, la posición de la aeronave y las instrucciones apropiadas si hubo un desvío de la ruta previamente asignada.",
             "covers": []
           }
         ],
@@ -5486,9 +5487,9 @@
             "pdf_page": 0,
             "number": "ST05-vector-endpoint",
             "file": "/ciaac-approved/radar-surveillance/vector-endpoint.svg",
-            "alt": "Primero identificación e información al piloto. La trayectoria dorada simboliza guía vectorial fuera de una ruta publicada; no asigna rumbos ni altitudes. La responsabilidad ATC por franqueamiento de obstáculos se prolonga hasta el punto donde el piloto reanuda efectivamente su propia navegación, marcado en verde. Terminar de emitir vectores no adelanta ese punto.",
+            "alt": "Primero identificación e información al piloto. La trayectoria dorada simboliza guía vectorial fuera de una ruta publicada; no asigna rumbos ni altitudes. La responsabilidad ATC por franqueamiento de obstáculos se prolonga hasta el punto donde el piloto reanuda efectivamente su propia navegación, marcado en verde. Terminar de emitir vectores no adelanta ese punto. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.",
             "heading": "Identificación, vectores y reanudación",
-            "observe": "Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación.",
+            "observe": "Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.",
             "caption": "Esquema educativo original, sin escala. MGTAM 2019: estudio histórico. No es una carta operacional.",
             "assetAspectRatio": 1.4107883817427387
           }
@@ -5985,7 +5986,7 @@
             "title": "1. Responsabilidad por obstáculos",
             "text": "Durante la ejecución de la guía vectorial fuera de la aerovía, ¿quién asume la responsabilidad del franqueamiento de obstáculos sobre el terreno montañoso y hasta qué momento se mantiene?",
             "covers": [],
-            "detailText": "Responsabilidad en Guía Vectorial:\nAl autorizar vectores fuera de una ruta ATS publicada, el controlador de tránsito aéreo es responsable de expedir instrucciones que garanticen el margen de franqueamiento de obstáculos prescrito, asignando altitudes a o por encima de la Altitud Mínima de Vectoramiento (MVA).\nEsta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Al terminar la guía vectorial, el controlador dará al piloto las instrucciones para reanudarla, la posición de la aeronave y las instrucciones apropiadas si hubo un desvío de la ruta previamente asignada."
+            "detailText": "Responsabilidad en Guía Vectorial:\nAl autorizar vectores fuera de una ruta ATS publicada, el controlador de tránsito aéreo es responsable de expedir instrucciones que garanticen el margen de franqueamiento de obstáculos prescrito, asignando altitudes a o por encima de la Altitud Mínima de Vectoramiento (MVA).\nEsta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas. Al terminar la guía vectorial, el controlador dará al piloto las instrucciones para reanudarla, la posición de la aeronave y las instrucciones apropiadas si hubo un desvío de la ruta previamente asignada."
           },
           {
             "title": "2. Falla total y medida temporal",
@@ -6008,7 +6009,7 @@
             "pdf_page": 0,
             "number": "ST05-case-obstacles",
             "file": "/ciaac-approved/radar-surveillance/case-obstacles.svg",
-            "alt": "La solución conserva la responsabilidad por obstáculos hasta llegar al punto de reanudación de navegación propia; el tramo y el punto son conceptuales.",
+            "alt": "La solución conserva la responsabilidad por obstáculos hasta llegar al punto de reanudación de navegación propia; el tramo y el punto son conceptuales. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.",
             "heading": "Caso: hasta el punto de reanudación",
             "observe": "",
             "caption": "Esquema educativo original, sin escala. MGTAM 2019: estudio histórico. No es una carta operacional.",
@@ -6987,7 +6988,7 @@
         "cards": [
           {
             "title": "Uso histórico para estudio",
-            "text": "Las normas de evaluación teórica del CIAAC se fundamentan en el Manual de Gestión de Tránsito Aéreo de México (MGTAM 3.ª ed. 2019, PDF pág. 259), el Manual de Servicios de Tránsito Aéreo del CIAAC (Folios 59–60, PDF págs. 61–62) y la 14.ª Edición del Anexo 11 de la OACI (2016, PDF págs. 61–62).",
+            "text": "Las normas de evaluación teórica del CIAAC se fundamentan en el Manual de Gestión de Tránsito Aéreo de México (MGTAM 3.ª ed. 2019, PDF pág. 259), el Manual de Servicios de Tránsito Aéreo del CIAAC (Folios 59–60, PDF págs. 61–62) y la 14.ª Edición del Anexo 11 de la OACI (2016, PDF págs. 77–78).",
             "covers": []
           },
           {

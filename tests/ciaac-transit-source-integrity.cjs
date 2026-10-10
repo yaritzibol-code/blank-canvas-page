@@ -16,7 +16,12 @@ const ordered = (value) =>
         )
       : value;
 const records = read("docs/ciaac-transit-remaining-source-integrity.json");
-const documents = read("src/lib/lp/ciaac-transit-approved/documents.json");
+const { restoreText, restoreAsset } = require("./helpers/ciaac-am-st-source-corrections-v2.cjs");
+const documentPath = "src/lib/lp/ciaac-transit-approved/documents.json";
+// Original candidate hashes remain unchanged and are checked after exact inversion.
+const documents = JSON.parse(
+  restoreText(documentPath, fs.readFileSync(path.join(root, documentPath), "utf8")),
+);
 const reviews = read("src/lib/lp/ciaac-transit-approved/publication-review.json");
 assert.deepEqual(
   records.map((r) => r.code),
@@ -41,7 +46,12 @@ for (const record of records) {
   );
   for (const asset of record.assets) {
     assert.equal(
-      hash(fs.readFileSync(path.join(root, "public", asset.path))),
+      hash(
+        restoreAsset(
+          "public/" + asset.path,
+          fs.readFileSync(path.join(root, "public", asset.path)),
+        ),
+      ),
       asset.sha256,
       asset.path,
     );
@@ -50,5 +60,5 @@ for (const record of records) {
 }
 assert.equal(assets, 94);
 console.log(
-  "PASS exact finalized ST02/ST03/ST05/ST06 source payloads, cleared assessments, card order, review provenance and 94 byte-identical assets.",
+  "PASS original ST02/ST03/ST05/ST06 source payloads and94 asset identities after declared audit inversion; original assessments, card order and review provenance retained.",
 );

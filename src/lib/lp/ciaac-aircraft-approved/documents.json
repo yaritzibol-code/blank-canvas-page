@@ -2829,7 +2829,7 @@
         "cards": [
           {
             "title": "Tren convencional y triciclo",
-            "text": "Tren Convencional: Consta de dos piernas principales al frente (delante del Centro de Gravedad) y un patín o rueda de cola en la parte posterior del fuselaje.\n\nTren Triciclo: Consta de dos piernas principales detrás del Centro de Gravedad y una rueda de nariz orientable en la parte frontal.",
+            "text": "Tren Convencional: Consta de dos piernas principales al frente (delante del Centro de Gravedad) y un patín o rueda de cola en la parte posterior del fuselaje.\n\nTren Triciclo: Consta de dos piernas principales detrás del Centro de Gravedad y una rueda de nariz en la parte frontal, dirigible o de giro libre según el diseño.",
             "covers": [],
             "wide": true
           }
@@ -2990,7 +2990,19 @@
         "id": "ciaac-aeronaves-generalidades-historico",
         "title": "CIAAC · Aeronaves y motores: Generalidades (manual histórico consultado)",
         "role": "Marco didáctico y terminología histórica; no sustituye los límites y procedimientos del fabricante.",
-        "verified_locators": ["AyM/7.1-2 a AyM/7.1-10"]
+        "verified_locators": [
+          "AyM/7.1-2 a AyM/7.1-10"
+        ]
+      },
+      {
+        "id": "am01-faa-phak-25c-landing-gear",
+        "title": "FAA · Pilot’s Handbook of Aeronautical Knowledge · FAA-H-8083-25C (2023)",
+        "url": "https://www.faa.gov/sites/faa.gov/files/09_phak_ch7.pdf",
+        "role": "Referencia técnica complementaria estadounidense: rueda de nariz dirigible o de giro libre según diseño.",
+        "verified_locators": [
+          "7-33: Tricycle Landing Gear; PDF físico 33 del capítulo 7."
+        ],
+        "limit": "Fuente técnica estadounidense de 2023; no sustituye AFM/POH ni acredita una instalación concreta."
       }
     ],
     "exerciseFigures": [
@@ -3812,7 +3824,7 @@
         "title": "FAA · AMT Powerplant, Chapter 10",
         "role": "Verificación complementaria de backfire y afterfire.",
         "url": "https://www.faa.gov/sites/faa.gov/files/12_amtp_ch10_0.pdf",
-        "verified_locators": ["10-31"]
+        "verified_locators": ["10-30–10-31"]
       }
     ],
     "contentVersion": "am07-grouped-v1"
@@ -6126,7 +6138,7 @@
         "role": "Fuente principal: funcionamiento físico del motor, cuatro tiempos y combustión progresiva.",
         "verified_locators": [
           "AyM/7.1-7, PDF 15: motor de turbina y descarga por tobera.",
-          "AyM/7-2-3, PDF 36: cuatro tiempos del motor alternativo.",
+          "AyM/7-2-3, PDF 37: cuatro tiempos del motor alternativo.",
           "AyM/7-2-9, PDF 43: combustión progresiva real."
         ]
       },
@@ -7409,12 +7421,12 @@
         "prompt": "¿Cuál es la función principal del acumulador dentro de un circuito hidráulico de aviación?",
         "options": [
           "Inyectar aire sangrado directamente al depósito para evaporar los residuos de humedad.",
-          "Almacenar fluido presurizado contra un volumen de nitrógeno comprimido para amortiguar fluctuaciones de presión, proveer volumen suplementario en demandas altas y ofrecer una fuente limitada de presión de emergencia.",
+          "Almacenar fluido presurizado contra un volumen de gas comprimido (nitrógeno o aire, según la instalación) para amortiguar fluctuaciones de presión, proveer volumen suplementario en demandas altas y ofrecer una fuente limitada de presión de emergencia.",
           "Filtrar las impurezas metálicas de la bomba principal sustituyendo al filtro de derivación."
         ],
         "correct": 1,
         "order": [0, 1, 2],
-        "feedback": "El acumulador hidráulico almacena energía de presión al comprimir nitrógeno gaseoso detrás de un diafragma o pistón, amortiguando impactos dinámicos en el fluido y suministrando una reserva de presión para el circuito."
+        "feedback": "El acumulador hidráulico almacena energía de presión al comprimir gas (nitrógeno o aire, según la instalación) detrás de un diafragma o pistón, amortiguando impactos dinámicos en el fluido y suministrando una reserva de presión para el circuito."
       }
     ],
     "tips": [],
@@ -7709,7 +7721,7 @@
             "text": "Amortigua picos bruscos de presión y choques mecánicos (golpe de ariete).",
             "covers": [],
             "wide": false,
-            "detailText": "Recipiente metálico provisto de una división física (pistón o diafragma de goma) cargado internamente con nitrógeno comprimido por un lado y fluido hidráulico por el otro.\n\nAlmacena volumen presurizado para responder a demandas simultáneas de varios actuadores.\n\nProporciona una fuente suplementaria o de emergencia de presión hidráulica limitada ante una falla de la bomba."
+            "detailText": "Recipiente metálico provisto de una división física (pistón o diafragma de goma) cargado internamente con nitrógeno o aire comprimido, según la instalación, por un lado y fluido hidráulico por el otro.\n\nAlmacena volumen presurizado para responder a demandas simultáneas de varios actuadores.\n\nProporciona una fuente suplementaria o de emergencia de presión hidráulica limitada ante una falla de la bomba."
           }
         ],
         "figures": [
@@ -7893,7 +7905,9 @@
         "title": "Pilot’s Handbook of Aeronautical Knowledge · FAA-H-8083-25C, 2023",
         "role": "Figuras técnicas de referencia; los ejemplos conservan la arquitectura y las indicaciones de la fuente.",
         "url": "https://www.faa.gov/sites/faa.gov/files/09_phak_ch7.pdf",
-        "verified_locators": ["Fig. 7-36, p. 7-33"]
+        "verified_locators": [
+          "Fig. 7-36, p. 7-33"
+        ]
       },
       {
         "id": "faa-am14-source-2",
@@ -7904,7 +7918,8 @@
           "Fig. 12-70, p. 12-47",
           "Fig. 12-58, p. 12-35",
           "Fig. 12-45, p. 12-28",
-          "Fig. 16-63, p. 16-37"
+          "Fig. 16-63, p. 16-37",
+          "12-29, Accumulators: carga con nitrógeno o aire según instalación; PDF físico 708 del manual completo."
         ]
       }
     ],
@@ -9215,17 +9230,17 @@
         "text": "Agente sofocante que desplaza el oxígeno del área",
         "covers": [],
         "wide": false,
-        "detailText": "No deja residuos, pero posee una capacidad limitada de enfriamiento térmico posterior."
+        "detailText": "No deja residuos, pero posee una capacidad limitada de enfriamiento térmico posterior. La FAA (AMT Airframe, 2023, 17-10) no recomienda CO2 para extintores portátiles de uso interior y lo considera inadecuado como equipo de cabina de mando o pasajeros."
       },
       {
         "title": "Polvo químico",
-        "text": "Debido a que sus residuos finos pueden resultar altamente corrosivos o abrasivos para componentes electrónicos y mecanismos sensibles, su uso en la cabina está restringido por las especificaciones de la etiqueta del extintor y del fabricante.",
+        "text": "La FAA (AMT Airframe, 2023, 17-10) considera los extintores portátiles de polvo químico inadecuados como equipo de cabina de mando o pasajeros por el riesgo de corrosión de equipos electrónicos, la posible pérdida de visibilidad durante la descarga y los problemas de limpieza.",
         "covers": [],
         "wide": false
       },
       {
         "title": "Agentes limpios",
-        "text": "Agentes de evaporación rápida que inhiben químicamente la combustión en fuegos Clase B y C (y Clase A según la instalación aprobada) sin dejar residuos.",
+        "text": "Agentes no conductores, líquidos volátiles o gaseosos, que no dejan residuos al evaporarse. El mecanismo de extinción puede ser químico o térmico según el agente. La clase de fuego, la zona de uso y la aprobación dependen del agente y equipo autorizados.",
         "covers": [],
         "wide": false
       },
@@ -9439,7 +9454,7 @@
         "file": "/ciaac-approved/ice-fire/fire-agents-concept.webp",
         "observe": "",
         "alt": "Extintor conceptual con trompeta de CO₂ y nube de descarga ilustrativa sobre una bandeja.",
-        "caption": "Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación.",
+        "caption": "Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación. FAA AMT Airframe (2023), 17-10: los extintores portátiles de CO2 son inadecuados como equipo de cabina de mando o pasajeros.",
         "heading": "CO2",
         "assetAspectRatio": 1,
         "crop": {
@@ -9459,7 +9474,7 @@
         "file": "/ciaac-approved/ice-fire/fire-agents-concept.webp",
         "observe": "",
         "alt": "Demostración conceptual de polvo químico fino con depósito visible sobre una bandeja.",
-        "caption": "Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación.",
+        "caption": "Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación. FAA AMT Airframe (2023), 17-10: los extintores portátiles de polvo químico son inadecuados como equipo de cabina de mando o pasajeros.",
         "heading": "Polvo químico",
         "assetAspectRatio": 1,
         "crop": {
@@ -9754,17 +9769,17 @@
             "text": "Agente sofocante que desplaza el oxígeno del área",
             "covers": [],
             "wide": false,
-            "detailText": "No deja residuos, pero posee una capacidad limitada de enfriamiento térmico posterior."
+            "detailText": "No deja residuos, pero posee una capacidad limitada de enfriamiento térmico posterior. La FAA (AMT Airframe, 2023, 17-10) no recomienda CO2 para extintores portátiles de uso interior y lo considera inadecuado como equipo de cabina de mando o pasajeros."
           },
           {
             "title": "Polvo químico",
-            "text": "Debido a que sus residuos finos pueden resultar altamente corrosivos o abrasivos para componentes electrónicos y mecanismos sensibles, su uso en la cabina está restringido por las especificaciones de la etiqueta del extintor y del fabricante.",
+            "text": "La FAA (AMT Airframe, 2023, 17-10) considera los extintores portátiles de polvo químico inadecuados como equipo de cabina de mando o pasajeros por el riesgo de corrosión de equipos electrónicos, la posible pérdida de visibilidad durante la descarga y los problemas de limpieza.",
             "covers": [],
             "wide": false
           },
           {
             "title": "Agentes limpios",
-            "text": "Agentes de evaporación rápida que inhiben químicamente la combustión en fuegos Clase B y C (y Clase A según la instalación aprobada) sin dejar residuos.",
+            "text": "Agentes no conductores, líquidos volátiles o gaseosos, que no dejan residuos al evaporarse. El mecanismo de extinción puede ser químico o térmico según el agente. La clase de fuego, la zona de uso y la aprobación dependen del agente y equipo autorizados.",
             "covers": [],
             "wide": false
           },
@@ -9805,7 +9820,7 @@
             "file": "/ciaac-approved/ice-fire/fire-agents-concept.webp",
             "observe": "",
             "alt": "Extintor conceptual con trompeta de CO₂ y nube de descarga ilustrativa sobre una bandeja.",
-            "caption": "Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación.",
+            "caption": "Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación. FAA AMT Airframe (2023), 17-10: los extintores portátiles de CO2 son inadecuados como equipo de cabina de mando o pasajeros.",
             "heading": "CO2",
             "assetAspectRatio": 1,
             "crop": {
@@ -9825,7 +9840,7 @@
             "file": "/ciaac-approved/ice-fire/fire-agents-concept.webp",
             "observe": "",
             "alt": "Demostración conceptual de polvo químico fino con depósito visible sobre una bandeja.",
-            "caption": "Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación.",
+            "caption": "Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación. FAA AMT Airframe (2023), 17-10: los extintores portátiles de polvo químico son inadecuados como equipo de cabina de mando o pasajeros.",
             "heading": "Polvo químico",
             "assetAspectRatio": 1,
             "crop": {
@@ -10103,6 +10118,16 @@
           "Página impresa 7-4-4; página 69 del PDF: cierre de combustible en el tapafuego.",
           "Página impresa 7-5-5; página 77 del PDF: termopar y alarma de incendio."
         ]
+      },
+      {
+        "id": "am17-faa-ac150-5210-6e",
+        "title": "FAA · Aircraft Fire Extinguishing Agents for Airports · AC 150/5210-6E, 27 de noviembre de 2023",
+        "url": "https://www.faa.gov/documentLibrary/media/Advisory_Circular/AC-150-5210-6e-arff-ext-agents.pdf",
+        "role": "Verificación física de la definición y de los mecanismos de agentes limpios.",
+        "verified_locators": [
+          "§§1.3.1–1.3.1.1, páginas impresas 1-2–1-3; páginas físicas PDF 6–7."
+        ],
+        "limit": "La AC trata extinción aeroportuaria (ARFF) en Estados Unidos. Se utiliza sólo para contrastar definición y mecanismos; no acredita aprobación para uso en cabina ni constituye norma mexicana."
       }
     ]
   },

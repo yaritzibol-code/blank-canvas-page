@@ -1,0 +1,556 @@
+{
+  "publicFixture": "Public runtime regression data. Historical didactic before/after values and file hashes do not grant source, examination or operational approval.",
+  "schemaVersion": 1,
+  "baseCommit": "807ef5b58457e1d402968326721bdc86710c0879",
+  "files": [
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "beforeSha256": "dec3a37a39095c89e2cda05add19a13136c51b9726847a365492fe465c10bd16",
+      "afterSha256": "8a2232dfbfecd5454bf6cc8eaac6d68f82a4b03602e8944dee25c84d1928d0ea"
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "beforeSha256": "075070a8d553aa1920c4b640e18a0b2c0be72e04fdb21545fd2fea933347ba32",
+      "afterSha256": "1a6e89c11d206c501ff20c40c828fb087e834d84554b65ac8787d27faac71edd"
+    }
+  ],
+  "changes": [
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am01-clasificacion-visual-de-las-aeronaves/stages/11/cards/0/text",
+      "before": "Tren Convencional: Consta de dos piernas principales al frente (delante del Centro de Gravedad) y un patín o rueda de cola en la parte posterior del fuselaje.\n\nTren Triciclo: Consta de dos piernas principales detrás del Centro de Gravedad y una rueda de nariz orientable en la parte frontal.",
+      "after": "Tren Convencional: Consta de dos piernas principales al frente (delante del Centro de Gravedad) y un patín o rueda de cola en la parte posterior del fuselaje.\n\nTren Triciclo: Consta de dos piernas principales detrás del Centro de Gravedad y una rueda de nariz en la parte frontal, dirigible o de giro libre según el diseño.",
+      "beforeRaw": "\"Tren Convencional: Consta de dos piernas principales al frente (delante del Centro de Gravedad) y un patín o rueda de cola en la parte posterior del fuselaje.\\n\\nTren Triciclo: Consta de dos piernas principales detrás del Centro de Gravedad y una rueda de nariz orientable en la parte frontal.\"",
+      "afterRaw": "\"Tren Convencional: Consta de dos piernas principales al frente (delante del Centro de Gravedad) y un patín o rueda de cola en la parte posterior del fuselaje.\\n\\nTren Triciclo: Consta de dos piernas principales detrás del Centro de Gravedad y una rueda de nariz en la parte frontal, dirigible o de giro libre según el diseño.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am07-anormalidades-de-la-combustion/sources/1/verified_locators/0",
+      "before": "10-31",
+      "after": "10-30–10-31",
+      "beforeRaw": "\"10-31\"",
+      "afterRaw": "\"10-30–10-31\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am11-ciclo-brayton/sources/0/verified_locators/1",
+      "before": "AyM/7-2-3, PDF 36: cuatro tiempos del motor alternativo.",
+      "after": "AyM/7-2-3, PDF 37: cuatro tiempos del motor alternativo.",
+      "beforeRaw": "\"AyM/7-2-3, PDF 36: cuatro tiempos del motor alternativo.\"",
+      "afterRaw": "\"AyM/7-2-3, PDF 37: cuatro tiempos del motor alternativo.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am14-sistemas-hidraulico-y-neumatico/stages/3/cards/6/detailText",
+      "before": "Recipiente metálico provisto de una división física (pistón o diafragma de goma) cargado internamente con nitrógeno comprimido por un lado y fluido hidráulico por el otro.\n\nAlmacena volumen presurizado para responder a demandas simultáneas de varios actuadores.\n\nProporciona una fuente suplementaria o de emergencia de presión hidráulica limitada ante una falla de la bomba.",
+      "after": "Recipiente metálico provisto de una división física (pistón o diafragma de goma) cargado internamente con nitrógeno o aire comprimido, según la instalación, por un lado y fluido hidráulico por el otro.\n\nAlmacena volumen presurizado para responder a demandas simultáneas de varios actuadores.\n\nProporciona una fuente suplementaria o de emergencia de presión hidráulica limitada ante una falla de la bomba.",
+      "beforeRaw": "\"Recipiente metálico provisto de una división física (pistón o diafragma de goma) cargado internamente con nitrógeno comprimido por un lado y fluido hidráulico por el otro.\\n\\nAlmacena volumen presurizado para responder a demandas simultáneas de varios actuadores.\\n\\nProporciona una fuente suplementaria o de emergencia de presión hidráulica limitada ante una falla de la bomba.\"",
+      "afterRaw": "\"Recipiente metálico provisto de una división física (pistón o diafragma de goma) cargado internamente con nitrógeno o aire comprimido, según la instalación, por un lado y fluido hidráulico por el otro.\\n\\nAlmacena volumen presurizado para responder a demandas simultáneas de varios actuadores.\\n\\nProporciona una fuente suplementaria o de emergencia de presión hidráulica limitada ante una falla de la bomba.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am14-sistemas-hidraulico-y-neumatico/questions/0/feedback",
+      "before": "El acumulador hidráulico almacena energía de presión al comprimir nitrógeno gaseoso detrás de un diafragma o pistón, amortiguando impactos dinámicos en el fluido y suministrando una reserva de presión para el circuito.",
+      "after": "El acumulador hidráulico almacena energía de presión al comprimir gas (nitrógeno o aire, según la instalación) detrás de un diafragma o pistón, amortiguando impactos dinámicos en el fluido y suministrando una reserva de presión para el circuito.",
+      "beforeRaw": "\"El acumulador hidráulico almacena energía de presión al comprimir nitrógeno gaseoso detrás de un diafragma o pistón, amortiguando impactos dinámicos en el fluido y suministrando una reserva de presión para el circuito.\"",
+      "afterRaw": "\"El acumulador hidráulico almacena energía de presión al comprimir gas (nitrógeno o aire, según la instalación) detrás de un diafragma o pistón, amortiguando impactos dinámicos en el fluido y suministrando una reserva de presión para el circuito.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am14-sistemas-hidraulico-y-neumatico/questions/0/options/1",
+      "before": "Almacenar fluido presurizado contra un volumen de nitrógeno comprimido para amortiguar fluctuaciones de presión, proveer volumen suplementario en demandas altas y ofrecer una fuente limitada de presión de emergencia.",
+      "after": "Almacenar fluido presurizado contra un volumen de gas comprimido (nitrógeno o aire, según la instalación) para amortiguar fluctuaciones de presión, proveer volumen suplementario en demandas altas y ofrecer una fuente limitada de presión de emergencia.",
+      "beforeRaw": "\"Almacenar fluido presurizado contra un volumen de nitrógeno comprimido para amortiguar fluctuaciones de presión, proveer volumen suplementario en demandas altas y ofrecer una fuente limitada de presión de emergencia.\"",
+      "afterRaw": "\"Almacenar fluido presurizado contra un volumen de gas comprimido (nitrógeno o aire, según la instalación) para amortiguar fluctuaciones de presión, proveer volumen suplementario en demandas altas y ofrecer una fuente limitada de presión de emergencia.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am17-fuego-deteccion-y-extincion/cards/7/detailText",
+      "before": "No deja residuos, pero posee una capacidad limitada de enfriamiento térmico posterior.",
+      "after": "No deja residuos, pero posee una capacidad limitada de enfriamiento térmico posterior. La FAA (AMT Airframe, 2023, 17-10) no recomienda CO2 para extintores portátiles de uso interior y lo considera inadecuado como equipo de cabina de mando o pasajeros.",
+      "beforeRaw": "\"No deja residuos, pero posee una capacidad limitada de enfriamiento térmico posterior.\"",
+      "afterRaw": "\"No deja residuos, pero posee una capacidad limitada de enfriamiento térmico posterior. La FAA (AMT Airframe, 2023, 17-10) no recomienda CO2 para extintores portátiles de uso interior y lo considera inadecuado como equipo de cabina de mando o pasajeros.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am17-fuego-deteccion-y-extincion/stages/2/cards/1/detailText",
+      "before": "No deja residuos, pero posee una capacidad limitada de enfriamiento térmico posterior.",
+      "after": "No deja residuos, pero posee una capacidad limitada de enfriamiento térmico posterior. La FAA (AMT Airframe, 2023, 17-10) no recomienda CO2 para extintores portátiles de uso interior y lo considera inadecuado como equipo de cabina de mando o pasajeros.",
+      "beforeRaw": "\"No deja residuos, pero posee una capacidad limitada de enfriamiento térmico posterior.\"",
+      "afterRaw": "\"No deja residuos, pero posee una capacidad limitada de enfriamiento térmico posterior. La FAA (AMT Airframe, 2023, 17-10) no recomienda CO2 para extintores portátiles de uso interior y lo considera inadecuado como equipo de cabina de mando o pasajeros.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am17-fuego-deteccion-y-extincion/cards/8/text",
+      "before": "Debido a que sus residuos finos pueden resultar altamente corrosivos o abrasivos para componentes electrónicos y mecanismos sensibles, su uso en la cabina está restringido por las especificaciones de la etiqueta del extintor y del fabricante.",
+      "after": "La FAA (AMT Airframe, 2023, 17-10) considera los extintores portátiles de polvo químico inadecuados como equipo de cabina de mando o pasajeros por el riesgo de corrosión de equipos electrónicos, la posible pérdida de visibilidad durante la descarga y los problemas de limpieza.",
+      "beforeRaw": "\"Debido a que sus residuos finos pueden resultar altamente corrosivos o abrasivos para componentes electrónicos y mecanismos sensibles, su uso en la cabina está restringido por las especificaciones de la etiqueta del extintor y del fabricante.\"",
+      "afterRaw": "\"La FAA (AMT Airframe, 2023, 17-10) considera los extintores portátiles de polvo químico inadecuados como equipo de cabina de mando o pasajeros por el riesgo de corrosión de equipos electrónicos, la posible pérdida de visibilidad durante la descarga y los problemas de limpieza.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am17-fuego-deteccion-y-extincion/stages/2/cards/2/text",
+      "before": "Debido a que sus residuos finos pueden resultar altamente corrosivos o abrasivos para componentes electrónicos y mecanismos sensibles, su uso en la cabina está restringido por las especificaciones de la etiqueta del extintor y del fabricante.",
+      "after": "La FAA (AMT Airframe, 2023, 17-10) considera los extintores portátiles de polvo químico inadecuados como equipo de cabina de mando o pasajeros por el riesgo de corrosión de equipos electrónicos, la posible pérdida de visibilidad durante la descarga y los problemas de limpieza.",
+      "beforeRaw": "\"Debido a que sus residuos finos pueden resultar altamente corrosivos o abrasivos para componentes electrónicos y mecanismos sensibles, su uso en la cabina está restringido por las especificaciones de la etiqueta del extintor y del fabricante.\"",
+      "afterRaw": "\"La FAA (AMT Airframe, 2023, 17-10) considera los extintores portátiles de polvo químico inadecuados como equipo de cabina de mando o pasajeros por el riesgo de corrosión de equipos electrónicos, la posible pérdida de visibilidad durante la descarga y los problemas de limpieza.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am17-fuego-deteccion-y-extincion/cards/9/text",
+      "before": "Agentes de evaporación rápida que inhiben químicamente la combustión en fuegos Clase B y C (y Clase A según la instalación aprobada) sin dejar residuos.",
+      "after": "Agentes no conductores, líquidos volátiles o gaseosos, que no dejan residuos al evaporarse. El mecanismo de extinción puede ser químico o térmico según el agente. La clase de fuego, la zona de uso y la aprobación dependen del agente y equipo autorizados.",
+      "beforeRaw": "\"Agentes de evaporación rápida que inhiben químicamente la combustión en fuegos Clase B y C (y Clase A según la instalación aprobada) sin dejar residuos.\"",
+      "afterRaw": "\"Agentes no conductores, líquidos volátiles o gaseosos, que no dejan residuos al evaporarse. El mecanismo de extinción puede ser químico o térmico según el agente. La clase de fuego, la zona de uso y la aprobación dependen del agente y equipo autorizados.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am17-fuego-deteccion-y-extincion/stages/2/cards/3/text",
+      "before": "Agentes de evaporación rápida que inhiben químicamente la combustión en fuegos Clase B y C (y Clase A según la instalación aprobada) sin dejar residuos.",
+      "after": "Agentes no conductores, líquidos volátiles o gaseosos, que no dejan residuos al evaporarse. El mecanismo de extinción puede ser químico o térmico según el agente. La clase de fuego, la zona de uso y la aprobación dependen del agente y equipo autorizados.",
+      "beforeRaw": "\"Agentes de evaporación rápida que inhiben químicamente la combustión en fuegos Clase B y C (y Clase A según la instalación aprobada) sin dejar residuos.\"",
+      "afterRaw": "\"Agentes no conductores, líquidos volátiles o gaseosos, que no dejan residuos al evaporarse. El mecanismo de extinción puede ser químico o térmico según el agente. La clase de fuego, la zona de uso y la aprobación dependen del agente y equipo autorizados.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am01-clasificacion-visual-de-las-aeronaves/sources",
+      "before": [
+        {
+          "id": "ciaac-aeronaves-generalidades-historico",
+          "title": "CIAAC · Aeronaves y motores: Generalidades (manual histórico consultado)",
+          "role": "Marco didáctico y terminología histórica; no sustituye los límites y procedimientos del fabricante.",
+          "verified_locators": ["AyM/7.1-2 a AyM/7.1-10"]
+        }
+      ],
+      "after": [
+        {
+          "id": "ciaac-aeronaves-generalidades-historico",
+          "title": "CIAAC · Aeronaves y motores: Generalidades (manual histórico consultado)",
+          "role": "Marco didáctico y terminología histórica; no sustituye los límites y procedimientos del fabricante.",
+          "verified_locators": ["AyM/7.1-2 a AyM/7.1-10"]
+        },
+        {
+          "id": "am01-faa-phak-25c-landing-gear",
+          "title": "FAA · Pilot’s Handbook of Aeronautical Knowledge · FAA-H-8083-25C (2023)",
+          "url": "https://www.faa.gov/sites/faa.gov/files/09_phak_ch7.pdf",
+          "role": "Referencia técnica complementaria estadounidense: rueda de nariz dirigible o de giro libre según diseño.",
+          "verified_locators": ["7-33: Tricycle Landing Gear; PDF físico 33 del capítulo 7."],
+          "limit": "Fuente técnica estadounidense de 2023; no sustituye AFM/POH ni acredita una instalación concreta."
+        }
+      ],
+      "beforeRaw": "[\n      {\n        \"id\": \"ciaac-aeronaves-generalidades-historico\",\n        \"title\": \"CIAAC · Aeronaves y motores: Generalidades (manual histórico consultado)\",\n        \"role\": \"Marco didáctico y terminología histórica; no sustituye los límites y procedimientos del fabricante.\",\n        \"verified_locators\": [\"AyM/7.1-2 a AyM/7.1-10\"]\n      }\n    ]",
+      "afterRaw": "[\n      {\n        \"id\": \"ciaac-aeronaves-generalidades-historico\",\n        \"title\": \"CIAAC · Aeronaves y motores: Generalidades (manual histórico consultado)\",\n        \"role\": \"Marco didáctico y terminología histórica; no sustituye los límites y procedimientos del fabricante.\",\n        \"verified_locators\": [\n          \"AyM/7.1-2 a AyM/7.1-10\"\n        ]\n      },\n      {\n        \"id\": \"am01-faa-phak-25c-landing-gear\",\n        \"title\": \"FAA · Pilot’s Handbook of Aeronautical Knowledge · FAA-H-8083-25C (2023)\",\n        \"url\": \"https://www.faa.gov/sites/faa.gov/files/09_phak_ch7.pdf\",\n        \"role\": \"Referencia técnica complementaria estadounidense: rueda de nariz dirigible o de giro libre según diseño.\",\n        \"verified_locators\": [\n          \"7-33: Tricycle Landing Gear; PDF físico 33 del capítulo 7.\"\n        ],\n        \"limit\": \"Fuente técnica estadounidense de 2023; no sustituye AFM/POH ni acredita una instalación concreta.\"\n      }\n    ]"
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am14-sistemas-hidraulico-y-neumatico/sources",
+      "before": [
+        {
+          "id": "faa-am14-source-1",
+          "title": "Pilot’s Handbook of Aeronautical Knowledge · FAA-H-8083-25C, 2023",
+          "role": "Figuras técnicas de referencia; los ejemplos conservan la arquitectura y las indicaciones de la fuente.",
+          "url": "https://www.faa.gov/sites/faa.gov/files/09_phak_ch7.pdf",
+          "verified_locators": ["Fig. 7-36, p. 7-33"]
+        },
+        {
+          "id": "faa-am14-source-2",
+          "title": "Aviation Maintenance Technician Handbook - Airframe · FAA-H-8083-31B, 2023",
+          "role": "Figuras técnicas de referencia; los ejemplos conservan la arquitectura y las indicaciones de la fuente.",
+          "url": "https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/FAA-H-8083-31B_Aviation_Maintenance_Technician_Handbook.pdf",
+          "verified_locators": [
+            "Fig. 12-70, p. 12-47",
+            "Fig. 12-58, p. 12-35",
+            "Fig. 12-45, p. 12-28",
+            "Fig. 16-63, p. 16-37"
+          ]
+        }
+      ],
+      "after": [
+        {
+          "id": "faa-am14-source-1",
+          "title": "Pilot’s Handbook of Aeronautical Knowledge · FAA-H-8083-25C, 2023",
+          "role": "Figuras técnicas de referencia; los ejemplos conservan la arquitectura y las indicaciones de la fuente.",
+          "url": "https://www.faa.gov/sites/faa.gov/files/09_phak_ch7.pdf",
+          "verified_locators": ["Fig. 7-36, p. 7-33"]
+        },
+        {
+          "id": "faa-am14-source-2",
+          "title": "Aviation Maintenance Technician Handbook - Airframe · FAA-H-8083-31B, 2023",
+          "role": "Figuras técnicas de referencia; los ejemplos conservan la arquitectura y las indicaciones de la fuente.",
+          "url": "https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/FAA-H-8083-31B_Aviation_Maintenance_Technician_Handbook.pdf",
+          "verified_locators": [
+            "Fig. 12-70, p. 12-47",
+            "Fig. 12-58, p. 12-35",
+            "Fig. 12-45, p. 12-28",
+            "Fig. 16-63, p. 16-37",
+            "12-29, Accumulators: carga con nitrógeno o aire según instalación; PDF físico 708 del manual completo."
+          ]
+        }
+      ],
+      "beforeRaw": "[\n      {\n        \"id\": \"faa-am14-source-1\",\n        \"title\": \"Pilot’s Handbook of Aeronautical Knowledge · FAA-H-8083-25C, 2023\",\n        \"role\": \"Figuras técnicas de referencia; los ejemplos conservan la arquitectura y las indicaciones de la fuente.\",\n        \"url\": \"https://www.faa.gov/sites/faa.gov/files/09_phak_ch7.pdf\",\n        \"verified_locators\": [\"Fig. 7-36, p. 7-33\"]\n      },\n      {\n        \"id\": \"faa-am14-source-2\",\n        \"title\": \"Aviation Maintenance Technician Handbook - Airframe · FAA-H-8083-31B, 2023\",\n        \"role\": \"Figuras técnicas de referencia; los ejemplos conservan la arquitectura y las indicaciones de la fuente.\",\n        \"url\": \"https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/FAA-H-8083-31B_Aviation_Maintenance_Technician_Handbook.pdf\",\n        \"verified_locators\": [\n          \"Fig. 12-70, p. 12-47\",\n          \"Fig. 12-58, p. 12-35\",\n          \"Fig. 12-45, p. 12-28\",\n          \"Fig. 16-63, p. 16-37\"\n        ]\n      }\n    ]",
+      "afterRaw": "[\n      {\n        \"id\": \"faa-am14-source-1\",\n        \"title\": \"Pilot’s Handbook of Aeronautical Knowledge · FAA-H-8083-25C, 2023\",\n        \"role\": \"Figuras técnicas de referencia; los ejemplos conservan la arquitectura y las indicaciones de la fuente.\",\n        \"url\": \"https://www.faa.gov/sites/faa.gov/files/09_phak_ch7.pdf\",\n        \"verified_locators\": [\n          \"Fig. 7-36, p. 7-33\"\n        ]\n      },\n      {\n        \"id\": \"faa-am14-source-2\",\n        \"title\": \"Aviation Maintenance Technician Handbook - Airframe · FAA-H-8083-31B, 2023\",\n        \"role\": \"Figuras técnicas de referencia; los ejemplos conservan la arquitectura y las indicaciones de la fuente.\",\n        \"url\": \"https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/FAA-H-8083-31B_Aviation_Maintenance_Technician_Handbook.pdf\",\n        \"verified_locators\": [\n          \"Fig. 12-70, p. 12-47\",\n          \"Fig. 12-58, p. 12-35\",\n          \"Fig. 12-45, p. 12-28\",\n          \"Fig. 16-63, p. 16-37\",\n          \"12-29, Accumulators: carga con nitrógeno o aire según instalación; PDF físico 708 del manual completo.\"\n        ]\n      }\n    ]"
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am17-fuego-deteccion-y-extincion/sources",
+      "before": [
+        {
+          "id": "am17-faa-airframe",
+          "title": "FAA · Aviation Maintenance Technician Handbook—Airframe · FAA-H-8083-31B (2023)",
+          "url": "https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/FAA-H-8083-31B_Aviation_Maintenance_Technician_Handbook.pdf",
+          "role": "Referencia visual y comprobación técnica complementaria.",
+          "verified_locators": [
+            "14-26, figura 14-43: mecanismo de válvula de combustible; párrafo Manually-Operated Gate Valves",
+            "17-9–17-10: agentes extintores; 17-10, figura 17-11",
+            "17-17, figura 17-22"
+          ],
+          "limit": "La figura 14-43 es un ejemplo de mecanismo; la instalación en tapafuego se sustenta por separado en CIAAC AyM/7-4-4."
+        },
+        {
+          "id": "am17-faa-powerplant9",
+          "title": "FAA · Aviation Maintenance Technician Handbook—Powerplant · capítulo 9 (2023)",
+          "url": "https://www.faa.gov/sites/faa.gov/files/11_amtp_ch9.pdf",
+          "role": "Referencia visual: detección térmica, termopar, aviso y distribución de agente.",
+          "verified_locators": [
+            "9-2, figura 9-2; 9-5, figura 9-5; 9-7, figura 9-7; 9-8, figura 9-8; 9-14, figura 9-20"
+          ]
+        },
+        {
+          "id": "am17-ciaac-original",
+          "title": "CIAAC · Aeronaves y motores · manual original",
+          "role": "Cierre de combustible y par termoeléctrico.",
+          "verified_locators": [
+            "Página impresa 7-4-4; página 69 del PDF: cierre de combustible en el tapafuego.",
+            "Página impresa 7-5-5; página 77 del PDF: termopar y alarma de incendio."
+          ]
+        }
+      ],
+      "after": [
+        {
+          "id": "am17-faa-airframe",
+          "title": "FAA · Aviation Maintenance Technician Handbook—Airframe · FAA-H-8083-31B (2023)",
+          "url": "https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/FAA-H-8083-31B_Aviation_Maintenance_Technician_Handbook.pdf",
+          "role": "Referencia visual y comprobación técnica complementaria.",
+          "verified_locators": [
+            "14-26, figura 14-43: mecanismo de válvula de combustible; párrafo Manually-Operated Gate Valves",
+            "17-9–17-10: agentes extintores; 17-10, figura 17-11",
+            "17-17, figura 17-22"
+          ],
+          "limit": "La figura 14-43 es un ejemplo de mecanismo; la instalación en tapafuego se sustenta por separado en CIAAC AyM/7-4-4."
+        },
+        {
+          "id": "am17-faa-powerplant9",
+          "title": "FAA · Aviation Maintenance Technician Handbook—Powerplant · capítulo 9 (2023)",
+          "url": "https://www.faa.gov/sites/faa.gov/files/11_amtp_ch9.pdf",
+          "role": "Referencia visual: detección térmica, termopar, aviso y distribución de agente.",
+          "verified_locators": [
+            "9-2, figura 9-2; 9-5, figura 9-5; 9-7, figura 9-7; 9-8, figura 9-8; 9-14, figura 9-20"
+          ]
+        },
+        {
+          "id": "am17-ciaac-original",
+          "title": "CIAAC · Aeronaves y motores · manual original",
+          "role": "Cierre de combustible y par termoeléctrico.",
+          "verified_locators": [
+            "Página impresa 7-4-4; página 69 del PDF: cierre de combustible en el tapafuego.",
+            "Página impresa 7-5-5; página 77 del PDF: termopar y alarma de incendio."
+          ]
+        },
+        {
+          "id": "am17-faa-ac150-5210-6e",
+          "title": "FAA · Aircraft Fire Extinguishing Agents for Airports · AC 150/5210-6E, 27 de noviembre de 2023",
+          "url": "https://www.faa.gov/documentLibrary/media/Advisory_Circular/AC-150-5210-6e-arff-ext-agents.pdf",
+          "role": "Verificación física de la definición y de los mecanismos de agentes limpios.",
+          "verified_locators": [
+            "§§1.3.1–1.3.1.1, páginas impresas 1-2–1-3; páginas físicas PDF 6–7."
+          ],
+          "limit": "La AC trata extinción aeroportuaria (ARFF) en Estados Unidos. Se utiliza sólo para contrastar definición y mecanismos; no acredita aprobación para uso en cabina ni constituye norma mexicana."
+        }
+      ],
+      "beforeRaw": "[\n      {\n        \"id\": \"am17-faa-airframe\",\n        \"title\": \"FAA · Aviation Maintenance Technician Handbook—Airframe · FAA-H-8083-31B (2023)\",\n        \"url\": \"https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/FAA-H-8083-31B_Aviation_Maintenance_Technician_Handbook.pdf\",\n        \"role\": \"Referencia visual y comprobación técnica complementaria.\",\n        \"verified_locators\": [\n          \"14-26, figura 14-43: mecanismo de válvula de combustible; párrafo Manually-Operated Gate Valves\",\n          \"17-9–17-10: agentes extintores; 17-10, figura 17-11\",\n          \"17-17, figura 17-22\"\n        ],\n        \"limit\": \"La figura 14-43 es un ejemplo de mecanismo; la instalación en tapafuego se sustenta por separado en CIAAC AyM/7-4-4.\"\n      },\n      {\n        \"id\": \"am17-faa-powerplant9\",\n        \"title\": \"FAA · Aviation Maintenance Technician Handbook—Powerplant · capítulo 9 (2023)\",\n        \"url\": \"https://www.faa.gov/sites/faa.gov/files/11_amtp_ch9.pdf\",\n        \"role\": \"Referencia visual: detección térmica, termopar, aviso y distribución de agente.\",\n        \"verified_locators\": [\n          \"9-2, figura 9-2; 9-5, figura 9-5; 9-7, figura 9-7; 9-8, figura 9-8; 9-14, figura 9-20\"\n        ]\n      },\n      {\n        \"id\": \"am17-ciaac-original\",\n        \"title\": \"CIAAC · Aeronaves y motores · manual original\",\n        \"role\": \"Cierre de combustible y par termoeléctrico.\",\n        \"verified_locators\": [\n          \"Página impresa 7-4-4; página 69 del PDF: cierre de combustible en el tapafuego.\",\n          \"Página impresa 7-5-5; página 77 del PDF: termopar y alarma de incendio.\"\n        ]\n      }\n    ]",
+      "afterRaw": "[\n      {\n        \"id\": \"am17-faa-airframe\",\n        \"title\": \"FAA · Aviation Maintenance Technician Handbook—Airframe · FAA-H-8083-31B (2023)\",\n        \"url\": \"https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/FAA-H-8083-31B_Aviation_Maintenance_Technician_Handbook.pdf\",\n        \"role\": \"Referencia visual y comprobación técnica complementaria.\",\n        \"verified_locators\": [\n          \"14-26, figura 14-43: mecanismo de válvula de combustible; párrafo Manually-Operated Gate Valves\",\n          \"17-9–17-10: agentes extintores; 17-10, figura 17-11\",\n          \"17-17, figura 17-22\"\n        ],\n        \"limit\": \"La figura 14-43 es un ejemplo de mecanismo; la instalación en tapafuego se sustenta por separado en CIAAC AyM/7-4-4.\"\n      },\n      {\n        \"id\": \"am17-faa-powerplant9\",\n        \"title\": \"FAA · Aviation Maintenance Technician Handbook—Powerplant · capítulo 9 (2023)\",\n        \"url\": \"https://www.faa.gov/sites/faa.gov/files/11_amtp_ch9.pdf\",\n        \"role\": \"Referencia visual: detección térmica, termopar, aviso y distribución de agente.\",\n        \"verified_locators\": [\n          \"9-2, figura 9-2; 9-5, figura 9-5; 9-7, figura 9-7; 9-8, figura 9-8; 9-14, figura 9-20\"\n        ]\n      },\n      {\n        \"id\": \"am17-ciaac-original\",\n        \"title\": \"CIAAC · Aeronaves y motores · manual original\",\n        \"role\": \"Cierre de combustible y par termoeléctrico.\",\n        \"verified_locators\": [\n          \"Página impresa 7-4-4; página 69 del PDF: cierre de combustible en el tapafuego.\",\n          \"Página impresa 7-5-5; página 77 del PDF: termopar y alarma de incendio.\"\n        ]\n      },\n      {\n        \"id\": \"am17-faa-ac150-5210-6e\",\n        \"title\": \"FAA · Aircraft Fire Extinguishing Agents for Airports · AC 150/5210-6E, 27 de noviembre de 2023\",\n        \"url\": \"https://www.faa.gov/documentLibrary/media/Advisory_Circular/AC-150-5210-6e-arff-ext-agents.pdf\",\n        \"role\": \"Verificación física de la definición y de los mecanismos de agentes limpios.\",\n        \"verified_locators\": [\n          \"§§1.3.1–1.3.1.1, páginas impresas 1-2–1-3; páginas físicas PDF 6–7.\"\n        ],\n        \"limit\": \"La AC trata extinción aeroportuaria (ARFF) en Estados Unidos. Se utiliza sólo para contrastar definición y mecanismos; no acredita aprobación para uso en cabina ni constituye norma mexicana.\"\n      }\n    ]"
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am17-fuego-deteccion-y-extincion/figures/6/caption",
+      "before": "Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación.",
+      "after": "Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación. FAA AMT Airframe (2023), 17-10: los extintores portátiles de CO2 son inadecuados como equipo de cabina de mando o pasajeros.",
+      "beforeRaw": "\"Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación.\"",
+      "afterRaw": "\"Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación. FAA AMT Airframe (2023), 17-10: los extintores portátiles de CO2 son inadecuados como equipo de cabina de mando o pasajeros.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am17-fuego-deteccion-y-extincion/stages/2/figures/1/caption",
+      "before": "Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación.",
+      "after": "Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación. FAA AMT Airframe (2023), 17-10: los extintores portátiles de CO2 son inadecuados como equipo de cabina de mando o pasajeros.",
+      "beforeRaw": "\"Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación.\"",
+      "afterRaw": "\"Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación. FAA AMT Airframe (2023), 17-10: los extintores portátiles de CO2 son inadecuados como equipo de cabina de mando o pasajeros.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am17-fuego-deteccion-y-extincion/figures/7/caption",
+      "before": "Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación.",
+      "after": "Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación. FAA AMT Airframe (2023), 17-10: los extintores portátiles de polvo químico son inadecuados como equipo de cabina de mando o pasajeros.",
+      "beforeRaw": "\"Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación.\"",
+      "afterRaw": "\"Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación. FAA AMT Airframe (2023), 17-10: los extintores portátiles de polvo químico son inadecuados como equipo de cabina de mando o pasajeros.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-aircraft-approved/documents.json",
+      "pointer": "/ciaac~1aeronaves-y-motores~1itinerario-aprobado-2026-10~1am17-fuego-deteccion-y-extincion/stages/2/figures/2/caption",
+      "before": "Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación.",
+      "after": "Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación. FAA AMT Airframe (2023), 17-10: los extintores portátiles de polvo químico son inadecuados como equipo de cabina de mando o pasajeros.",
+      "beforeRaw": "\"Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación.\"",
+      "afterRaw": "\"Ilustración conceptual original. La apariencia del recipiente no acredita su agente, clasificación ni aprobación. FAA AMT Airframe (2023), 17-10: los extintores portátiles de polvo químico son inadecuados como equipo de cabina de mando o pasajeros.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st02-plan-de-vuelo-y-llenado-de-bitacora/cards/21/text",
+      "before": "Caso Práctico (Evaluación Aritmética de TAS): Una reducción de la TAS promedio de 280 nudos a 260 nudos al nivel de crucero representa una disminución relativa del 7.14% (|260 - 280| / 280 = 20 / 280 = 0.0714). Dado que 7.14% excede el umbral normativo del 5%, es obligatorio notificar de inmediato el cambio a la dependencia ATC.",
+      "after": "Caso Práctico (Evaluación Aritmética de TAS): La reducción de la TAS promedio de 280 a 260 nudos equivale al 7.14% respecto de 280 nudos (|260 - 280| / 280 = 20 / 280 = 0.0714). Para aplicar el Anexo 2 §3.6.2.2 b), la comparación debe hacerse con la TAS consignada en el plan de vuelo: si ésta fuera 280 nudos, la variación real o prevista superaría el 5% y se notificaría a la dependencia ATS correspondiente. El escenario no identifica 280 nudos como TAS consignada en el FPL; ese dato debe comprobarse antes de concluir que se activa el deber de notificación por velocidad. La regla se refiere al promedio al nivel de crucero entre puntos de notificación en un vuelo controlado.",
+      "beforeRaw": "\"Caso Práctico (Evaluación Aritmética de TAS): Una reducción de la TAS promedio de 280 nudos a 260 nudos al nivel de crucero representa una disminución relativa del 7.14% (|260 - 280| / 280 = 20 / 280 = 0.0714). Dado que 7.14% excede el umbral normativo del 5%, es obligatorio notificar de inmediato el cambio a la dependencia ATC.\"",
+      "afterRaw": "\"Caso Práctico (Evaluación Aritmética de TAS): La reducción de la TAS promedio de 280 a 260 nudos equivale al 7.14% respecto de 280 nudos (|260 - 280| / 280 = 20 / 280 = 0.0714). Para aplicar el Anexo 2 §3.6.2.2 b), la comparación debe hacerse con la TAS consignada en el plan de vuelo: si ésta fuera 280 nudos, la variación real o prevista superaría el 5% y se notificaría a la dependencia ATS correspondiente. El escenario no identifica 280 nudos como TAS consignada en el FPL; ese dato debe comprobarse antes de concluir que se activa el deber de notificación por velocidad. La regla se refiere al promedio al nivel de crucero entre puntos de notificación en un vuelo controlado.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st02-plan-de-vuelo-y-llenado-de-bitacora/cards/30/detailText",
+      "before": "Variación de la Velocidad Aerodinámica Verdadera (TAS) (Anexo 2 §3.6.2.2 b): En un vuelo controlado, si el promedio de velocidad verdadera aerodinámica al nivel de crucero entre puntos de notificación varía, o se espera que varíe, en un 5% en más o en menos respecto a la consignada en el plan de vuelo, se notificará a la dependencia correspondiente de los servicios de tránsito aéreo.\n\nCaso Práctico (Evaluación Aritmética de TAS): Una reducción de la TAS promedio de 280 nudos a 260 nudos al nivel de crucero representa una disminución relativa del 7.14% (|260 - 280| / 280 = 20 / 280 = 0.0714). Dado que 7.14% excede el umbral normativo del 5%, es obligatorio notificar de inmediato el cambio a la dependencia ATC.\n\nLa demora acumulada de 5 minutos supera el límite de 3 minutos estipulado en el Anexo 2 (§3.6.2.2 c).\n\nCambio de la Hora Prevista (ETA) (Anexo 2 §3.6.2.2 c): En un vuelo controlado, si la hora prevista de llegada al próximo punto de notificación aplicable, al límite de región de información de vuelo o al aeródromo de destino, el que esté antes, resulta errónea en más de 3 minutos con respecto a la notificada a los servicios de tránsito aéreo, o con relación a otro período de tiempo que haya prescrito la autoridad ATS competente o que se base en acuerdos regionales de navegación aérea, la nueva hora prevista, revisada, se notificará lo antes posible a la dependencia correspondiente de los servicios de tránsito aéreo.",
+      "after": "Variación de la Velocidad Aerodinámica Verdadera (TAS) (Anexo 2 §3.6.2.2 b): En un vuelo controlado, si el promedio de velocidad verdadera aerodinámica al nivel de crucero entre puntos de notificación varía, o se espera que varíe, en un 5% en más o en menos respecto a la consignada en el plan de vuelo, se notificará a la dependencia correspondiente de los servicios de tránsito aéreo.\n\nCaso Práctico (Evaluación Aritmética de TAS): La reducción de la TAS promedio de 280 a 260 nudos equivale al 7.14% respecto de 280 nudos (|260 - 280| / 280 = 20 / 280 = 0.0714). Para aplicar el Anexo 2 §3.6.2.2 b), la comparación debe hacerse con la TAS consignada en el plan de vuelo: si ésta fuera 280 nudos, la variación real o prevista superaría el 5% y se notificaría a la dependencia ATS correspondiente. El escenario no identifica 280 nudos como TAS consignada en el FPL; ese dato debe comprobarse antes de concluir que se activa el deber de notificación por velocidad. La regla se refiere al promedio al nivel de crucero entre puntos de notificación en un vuelo controlado.\n\nLa demora acumulada de 5 minutos supera el límite de 3 minutos estipulado en el Anexo 2 (§3.6.2.2 c).\n\nCambio de la Hora Prevista (ETA) (Anexo 2 §3.6.2.2 c): En un vuelo controlado, si la hora prevista de llegada al próximo punto de notificación aplicable, al límite de región de información de vuelo o al aeródromo de destino, el que esté antes, resulta errónea en más de 3 minutos con respecto a la notificada a los servicios de tránsito aéreo, o con relación a otro período de tiempo que haya prescrito la autoridad ATS competente o que se base en acuerdos regionales de navegación aérea, la nueva hora prevista, revisada, se notificará lo antes posible a la dependencia correspondiente de los servicios de tránsito aéreo.",
+      "beforeRaw": "\"Variación de la Velocidad Aerodinámica Verdadera (TAS) (Anexo 2 §3.6.2.2 b): En un vuelo controlado, si el promedio de velocidad verdadera aerodinámica al nivel de crucero entre puntos de notificación varía, o se espera que varíe, en un 5% en más o en menos respecto a la consignada en el plan de vuelo, se notificará a la dependencia correspondiente de los servicios de tránsito aéreo.\\n\\nCaso Práctico (Evaluación Aritmética de TAS): Una reducción de la TAS promedio de 280 nudos a 260 nudos al nivel de crucero representa una disminución relativa del 7.14% (|260 - 280| / 280 = 20 / 280 = 0.0714). Dado que 7.14% excede el umbral normativo del 5%, es obligatorio notificar de inmediato el cambio a la dependencia ATC.\\n\\nLa demora acumulada de 5 minutos supera el límite de 3 minutos estipulado en el Anexo 2 (§3.6.2.2 c).\\n\\nCambio de la Hora Prevista (ETA) (Anexo 2 §3.6.2.2 c): En un vuelo controlado, si la hora prevista de llegada al próximo punto de notificación aplicable, al límite de región de información de vuelo o al aeródromo de destino, el que esté antes, resulta errónea en más de 3 minutos con respecto a la notificada a los servicios de tránsito aéreo, o con relación a otro período de tiempo que haya prescrito la autoridad ATS competente o que se base en acuerdos regionales de navegación aérea, la nueva hora prevista, revisada, se notificará lo antes posible a la dependencia correspondiente de los servicios de tránsito aéreo.\"",
+      "afterRaw": "\"Variación de la Velocidad Aerodinámica Verdadera (TAS) (Anexo 2 §3.6.2.2 b): En un vuelo controlado, si el promedio de velocidad verdadera aerodinámica al nivel de crucero entre puntos de notificación varía, o se espera que varíe, en un 5% en más o en menos respecto a la consignada en el plan de vuelo, se notificará a la dependencia correspondiente de los servicios de tránsito aéreo.\\n\\nCaso Práctico (Evaluación Aritmética de TAS): La reducción de la TAS promedio de 280 a 260 nudos equivale al 7.14% respecto de 280 nudos (|260 - 280| / 280 = 20 / 280 = 0.0714). Para aplicar el Anexo 2 §3.6.2.2 b), la comparación debe hacerse con la TAS consignada en el plan de vuelo: si ésta fuera 280 nudos, la variación real o prevista superaría el 5% y se notificaría a la dependencia ATS correspondiente. El escenario no identifica 280 nudos como TAS consignada en el FPL; ese dato debe comprobarse antes de concluir que se activa el deber de notificación por velocidad. La regla se refiere al promedio al nivel de crucero entre puntos de notificación en un vuelo controlado.\\n\\nLa demora acumulada de 5 minutos supera el límite de 3 minutos estipulado en el Anexo 2 (§3.6.2.2 c).\\n\\nCambio de la Hora Prevista (ETA) (Anexo 2 §3.6.2.2 c): En un vuelo controlado, si la hora prevista de llegada al próximo punto de notificación aplicable, al límite de región de información de vuelo o al aeródromo de destino, el que esté antes, resulta errónea en más de 3 minutos con respecto a la notificada a los servicios de tránsito aéreo, o con relación a otro período de tiempo que haya prescrito la autoridad ATS competente o que se base en acuerdos regionales de navegación aérea, la nueva hora prevista, revisada, se notificará lo antes posible a la dependencia correspondiente de los servicios de tránsito aéreo.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st02-plan-de-vuelo-y-llenado-de-bitacora/stages/7/cards/3/text",
+      "before": "Caso Práctico (Evaluación Aritmética de TAS): Una reducción de la TAS promedio de 280 nudos a 260 nudos al nivel de crucero representa una disminución relativa del 7.14% (|260 - 280| / 280 = 20 / 280 = 0.0714). Dado que 7.14% excede el umbral normativo del 5%, es obligatorio notificar de inmediato el cambio a la dependencia ATC.",
+      "after": "Caso Práctico (Evaluación Aritmética de TAS): La reducción de la TAS promedio de 280 a 260 nudos equivale al 7.14% respecto de 280 nudos (|260 - 280| / 280 = 20 / 280 = 0.0714). Para aplicar el Anexo 2 §3.6.2.2 b), la comparación debe hacerse con la TAS consignada en el plan de vuelo: si ésta fuera 280 nudos, la variación real o prevista superaría el 5% y se notificaría a la dependencia ATS correspondiente. El escenario no identifica 280 nudos como TAS consignada en el FPL; ese dato debe comprobarse antes de concluir que se activa el deber de notificación por velocidad. La regla se refiere al promedio al nivel de crucero entre puntos de notificación en un vuelo controlado.",
+      "beforeRaw": "\"Caso Práctico (Evaluación Aritmética de TAS): Una reducción de la TAS promedio de 280 nudos a 260 nudos al nivel de crucero representa una disminución relativa del 7.14% (|260 - 280| / 280 = 20 / 280 = 0.0714). Dado que 7.14% excede el umbral normativo del 5%, es obligatorio notificar de inmediato el cambio a la dependencia ATC.\"",
+      "afterRaw": "\"Caso Práctico (Evaluación Aritmética de TAS): La reducción de la TAS promedio de 280 a 260 nudos equivale al 7.14% respecto de 280 nudos (|260 - 280| / 280 = 20 / 280 = 0.0714). Para aplicar el Anexo 2 §3.6.2.2 b), la comparación debe hacerse con la TAS consignada en el plan de vuelo: si ésta fuera 280 nudos, la variación real o prevista superaría el 5% y se notificaría a la dependencia ATS correspondiente. El escenario no identifica 280 nudos como TAS consignada en el FPL; ese dato debe comprobarse antes de concluir que se activa el deber de notificación por velocidad. La regla se refiere al promedio al nivel de crucero entre puntos de notificación en un vuelo controlado.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st02-plan-de-vuelo-y-llenado-de-bitacora/stages/9/cards/1/detailText",
+      "before": "Variación de la Velocidad Aerodinámica Verdadera (TAS) (Anexo 2 §3.6.2.2 b): En un vuelo controlado, si el promedio de velocidad verdadera aerodinámica al nivel de crucero entre puntos de notificación varía, o se espera que varíe, en un 5% en más o en menos respecto a la consignada en el plan de vuelo, se notificará a la dependencia correspondiente de los servicios de tránsito aéreo.\n\nCaso Práctico (Evaluación Aritmética de TAS): Una reducción de la TAS promedio de 280 nudos a 260 nudos al nivel de crucero representa una disminución relativa del 7.14% (|260 - 280| / 280 = 20 / 280 = 0.0714). Dado que 7.14% excede el umbral normativo del 5%, es obligatorio notificar de inmediato el cambio a la dependencia ATC.\n\nLa demora acumulada de 5 minutos supera el límite de 3 minutos estipulado en el Anexo 2 (§3.6.2.2 c).\n\nCambio de la Hora Prevista (ETA) (Anexo 2 §3.6.2.2 c): En un vuelo controlado, si la hora prevista de llegada al próximo punto de notificación aplicable, al límite de región de información de vuelo o al aeródromo de destino, el que esté antes, resulta errónea en más de 3 minutos con respecto a la notificada a los servicios de tránsito aéreo, o con relación a otro período de tiempo que haya prescrito la autoridad ATS competente o que se base en acuerdos regionales de navegación aérea, la nueva hora prevista, revisada, se notificará lo antes posible a la dependencia correspondiente de los servicios de tránsito aéreo.",
+      "after": "Variación de la Velocidad Aerodinámica Verdadera (TAS) (Anexo 2 §3.6.2.2 b): En un vuelo controlado, si el promedio de velocidad verdadera aerodinámica al nivel de crucero entre puntos de notificación varía, o se espera que varíe, en un 5% en más o en menos respecto a la consignada en el plan de vuelo, se notificará a la dependencia correspondiente de los servicios de tránsito aéreo.\n\nCaso Práctico (Evaluación Aritmética de TAS): La reducción de la TAS promedio de 280 a 260 nudos equivale al 7.14% respecto de 280 nudos (|260 - 280| / 280 = 20 / 280 = 0.0714). Para aplicar el Anexo 2 §3.6.2.2 b), la comparación debe hacerse con la TAS consignada en el plan de vuelo: si ésta fuera 280 nudos, la variación real o prevista superaría el 5% y se notificaría a la dependencia ATS correspondiente. El escenario no identifica 280 nudos como TAS consignada en el FPL; ese dato debe comprobarse antes de concluir que se activa el deber de notificación por velocidad. La regla se refiere al promedio al nivel de crucero entre puntos de notificación en un vuelo controlado.\n\nLa demora acumulada de 5 minutos supera el límite de 3 minutos estipulado en el Anexo 2 (§3.6.2.2 c).\n\nCambio de la Hora Prevista (ETA) (Anexo 2 §3.6.2.2 c): En un vuelo controlado, si la hora prevista de llegada al próximo punto de notificación aplicable, al límite de región de información de vuelo o al aeródromo de destino, el que esté antes, resulta errónea en más de 3 minutos con respecto a la notificada a los servicios de tránsito aéreo, o con relación a otro período de tiempo que haya prescrito la autoridad ATS competente o que se base en acuerdos regionales de navegación aérea, la nueva hora prevista, revisada, se notificará lo antes posible a la dependencia correspondiente de los servicios de tránsito aéreo.",
+      "beforeRaw": "\"Variación de la Velocidad Aerodinámica Verdadera (TAS) (Anexo 2 §3.6.2.2 b): En un vuelo controlado, si el promedio de velocidad verdadera aerodinámica al nivel de crucero entre puntos de notificación varía, o se espera que varíe, en un 5% en más o en menos respecto a la consignada en el plan de vuelo, se notificará a la dependencia correspondiente de los servicios de tránsito aéreo.\\n\\nCaso Práctico (Evaluación Aritmética de TAS): Una reducción de la TAS promedio de 280 nudos a 260 nudos al nivel de crucero representa una disminución relativa del 7.14% (|260 - 280| / 280 = 20 / 280 = 0.0714). Dado que 7.14% excede el umbral normativo del 5%, es obligatorio notificar de inmediato el cambio a la dependencia ATC.\\n\\nLa demora acumulada de 5 minutos supera el límite de 3 minutos estipulado en el Anexo 2 (§3.6.2.2 c).\\n\\nCambio de la Hora Prevista (ETA) (Anexo 2 §3.6.2.2 c): En un vuelo controlado, si la hora prevista de llegada al próximo punto de notificación aplicable, al límite de región de información de vuelo o al aeródromo de destino, el que esté antes, resulta errónea en más de 3 minutos con respecto a la notificada a los servicios de tránsito aéreo, o con relación a otro período de tiempo que haya prescrito la autoridad ATS competente o que se base en acuerdos regionales de navegación aérea, la nueva hora prevista, revisada, se notificará lo antes posible a la dependencia correspondiente de los servicios de tránsito aéreo.\"",
+      "afterRaw": "\"Variación de la Velocidad Aerodinámica Verdadera (TAS) (Anexo 2 §3.6.2.2 b): En un vuelo controlado, si el promedio de velocidad verdadera aerodinámica al nivel de crucero entre puntos de notificación varía, o se espera que varíe, en un 5% en más o en menos respecto a la consignada en el plan de vuelo, se notificará a la dependencia correspondiente de los servicios de tránsito aéreo.\\n\\nCaso Práctico (Evaluación Aritmética de TAS): La reducción de la TAS promedio de 280 a 260 nudos equivale al 7.14% respecto de 280 nudos (|260 - 280| / 280 = 20 / 280 = 0.0714). Para aplicar el Anexo 2 §3.6.2.2 b), la comparación debe hacerse con la TAS consignada en el plan de vuelo: si ésta fuera 280 nudos, la variación real o prevista superaría el 5% y se notificaría a la dependencia ATS correspondiente. El escenario no identifica 280 nudos como TAS consignada en el FPL; ese dato debe comprobarse antes de concluir que se activa el deber de notificación por velocidad. La regla se refiere al promedio al nivel de crucero entre puntos de notificación en un vuelo controlado.\\n\\nLa demora acumulada de 5 minutos supera el límite de 3 minutos estipulado en el Anexo 2 (§3.6.2.2 c).\\n\\nCambio de la Hora Prevista (ETA) (Anexo 2 §3.6.2.2 c): En un vuelo controlado, si la hora prevista de llegada al próximo punto de notificación aplicable, al límite de región de información de vuelo o al aeródromo de destino, el que esté antes, resulta errónea en más de 3 minutos con respecto a la notificada a los servicios de tránsito aéreo, o con relación a otro período de tiempo que haya prescrito la autoridad ATS competente o que se base en acuerdos regionales de navegación aérea, la nueva hora prevista, revisada, se notificará lo antes posible a la dependencia correspondiente de los servicios de tránsito aéreo.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st05-control-radar-y-sus-limitaciones/stages/3/cards/2/text",
+      "before": "Responsabilidad del Franqueamiento de Terreno: Cuando un controlador proporciona guía vectorial a un vuelo IFR (o asigna una ruta directa que desvía a la aeronave de su ruta ATS publicada), el controlador es responsable de autorizar rumbos y altitudes que mantengan en todo momento el franqueamiento de obstáculos prescrito, basándose en las Altitudes Mínimas de Vectoramiento (MVA).",
+      "after": "Responsabilidad del Franqueamiento de Terreno: Cuando un controlador proporciona guía vectorial a un vuelo IFR (o asigna una ruta directa que desvía a la aeronave de su ruta ATS publicada), el controlador es responsable de autorizar rumbos y altitudes que mantengan en todo momento el franqueamiento de obstáculos prescrito, basándose en las Altitudes Mínimas de Vectoramiento (MVA).\nSiempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.",
+      "beforeRaw": "\"Responsabilidad del Franqueamiento de Terreno: Cuando un controlador proporciona guía vectorial a un vuelo IFR (o asigna una ruta directa que desvía a la aeronave de su ruta ATS publicada), el controlador es responsable de autorizar rumbos y altitudes que mantengan en todo momento el franqueamiento de obstáculos prescrito, basándose en las Altitudes Mínimas de Vectoramiento (MVA).\"",
+      "afterRaw": "\"Responsabilidad del Franqueamiento de Terreno: Cuando un controlador proporciona guía vectorial a un vuelo IFR (o asigna una ruta directa que desvía a la aeronave de su ruta ATS publicada), el controlador es responsable de autorizar rumbos y altitudes que mantengan en todo momento el franqueamiento de obstáculos prescrito, basándose en las Altitudes Mínimas de Vectoramiento (MVA).\\nSiempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st05-control-radar-y-sus-limitaciones/figures/9/observe",
+      "before": "Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación.",
+      "after": "Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.",
+      "beforeRaw": "\"Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación.\"",
+      "afterRaw": "\"Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st05-control-radar-y-sus-limitaciones/stages/3/cards/3/text",
+      "before": "Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Al terminar la guía vectorial, el controlador dará al piloto las instrucciones para reanudarla, la posición de la aeronave y las instrucciones apropiadas si hubo un desvío de la ruta previamente asignada.",
+      "after": "Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas. Al terminar la guía vectorial, el controlador dará al piloto las instrucciones para reanudarla, la posición de la aeronave y las instrucciones apropiadas si hubo un desvío de la ruta previamente asignada.",
+      "beforeRaw": "\"Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Al terminar la guía vectorial, el controlador dará al piloto las instrucciones para reanudarla, la posición de la aeronave y las instrucciones apropiadas si hubo un desvío de la ruta previamente asignada.\"",
+      "afterRaw": "\"Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas. Al terminar la guía vectorial, el controlador dará al piloto las instrucciones para reanudarla, la posición de la aeronave y las instrucciones apropiadas si hubo un desvío de la ruta previamente asignada.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st05-control-radar-y-sus-limitaciones/stages/3/figures/0/observe",
+      "before": "Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación.",
+      "after": "Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.",
+      "beforeRaw": "\"Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación.\"",
+      "afterRaw": "\"Esta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st05-control-radar-y-sus-limitaciones/stages/8/cards/0/detailText",
+      "before": "Responsabilidad en Guía Vectorial:\nAl autorizar vectores fuera de una ruta ATS publicada, el controlador de tránsito aéreo es responsable de expedir instrucciones que garanticen el margen de franqueamiento de obstáculos prescrito, asignando altitudes a o por encima de la Altitud Mínima de Vectoramiento (MVA).\nEsta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Al terminar la guía vectorial, el controlador dará al piloto las instrucciones para reanudarla, la posición de la aeronave y las instrucciones apropiadas si hubo un desvío de la ruta previamente asignada.",
+      "after": "Responsabilidad en Guía Vectorial:\nAl autorizar vectores fuera de una ruta ATS publicada, el controlador de tránsito aéreo es responsable de expedir instrucciones que garanticen el margen de franqueamiento de obstáculos prescrito, asignando altitudes a o por encima de la Altitud Mínima de Vectoramiento (MVA).\nEsta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas. Al terminar la guía vectorial, el controlador dará al piloto las instrucciones para reanudarla, la posición de la aeronave y las instrucciones apropiadas si hubo un desvío de la ruta previamente asignada.",
+      "beforeRaw": "\"Responsabilidad en Guía Vectorial:\\nAl autorizar vectores fuera de una ruta ATS publicada, el controlador de tránsito aéreo es responsable de expedir instrucciones que garanticen el margen de franqueamiento de obstáculos prescrito, asignando altitudes a o por encima de la Altitud Mínima de Vectoramiento (MVA).\\nEsta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Al terminar la guía vectorial, el controlador dará al piloto las instrucciones para reanudarla, la posición de la aeronave y las instrucciones apropiadas si hubo un desvío de la ruta previamente asignada.\"",
+      "afterRaw": "\"Responsabilidad en Guía Vectorial:\\nAl autorizar vectores fuera de una ruta ATS publicada, el controlador de tránsito aéreo es responsable de expedir instrucciones que garanticen el margen de franqueamiento de obstáculos prescrito, asignando altitudes a o por encima de la Altitud Mínima de Vectoramiento (MVA).\\nEsta responsabilidad del controlador persiste hasta que la aeronave llegue a un punto en que el piloto reanude su propia navegación. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas. Al terminar la guía vectorial, el controlador dará al piloto las instrucciones para reanudarla, la posición de la aeronave y las instrucciones apropiadas si hubo un desvío de la ruta previamente asignada.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st05-control-radar-y-sus-limitaciones/figures/9/alt",
+      "before": "Primero identificación e información al piloto. La trayectoria dorada simboliza guía vectorial fuera de una ruta publicada; no asigna rumbos ni altitudes. La responsabilidad ATC por franqueamiento de obstáculos se prolonga hasta el punto donde el piloto reanuda efectivamente su propia navegación, marcado en verde. Terminar de emitir vectores no adelanta ese punto.",
+      "after": "Primero identificación e información al piloto. La trayectoria dorada simboliza guía vectorial fuera de una ruta publicada; no asigna rumbos ni altitudes. La responsabilidad ATC por franqueamiento de obstáculos se prolonga hasta el punto donde el piloto reanuda efectivamente su propia navegación, marcado en verde. Terminar de emitir vectores no adelanta ese punto. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.",
+      "beforeRaw": "\"Primero identificación e información al piloto. La trayectoria dorada simboliza guía vectorial fuera de una ruta publicada; no asigna rumbos ni altitudes. La responsabilidad ATC por franqueamiento de obstáculos se prolonga hasta el punto donde el piloto reanuda efectivamente su propia navegación, marcado en verde. Terminar de emitir vectores no adelanta ese punto.\"",
+      "afterRaw": "\"Primero identificación e información al piloto. La trayectoria dorada simboliza guía vectorial fuera de una ruta publicada; no asigna rumbos ni altitudes. La responsabilidad ATC por franqueamiento de obstáculos se prolonga hasta el punto donde el piloto reanuda efectivamente su propia navegación, marcado en verde. Terminar de emitir vectores no adelanta ese punto. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st05-control-radar-y-sus-limitaciones/stages/3/figures/0/alt",
+      "before": "Primero identificación e información al piloto. La trayectoria dorada simboliza guía vectorial fuera de una ruta publicada; no asigna rumbos ni altitudes. La responsabilidad ATC por franqueamiento de obstáculos se prolonga hasta el punto donde el piloto reanuda efectivamente su propia navegación, marcado en verde. Terminar de emitir vectores no adelanta ese punto.",
+      "after": "Primero identificación e información al piloto. La trayectoria dorada simboliza guía vectorial fuera de una ruta publicada; no asigna rumbos ni altitudes. La responsabilidad ATC por franqueamiento de obstáculos se prolonga hasta el punto donde el piloto reanuda efectivamente su propia navegación, marcado en verde. Terminar de emitir vectores no adelanta ese punto. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.",
+      "beforeRaw": "\"Primero identificación e información al piloto. La trayectoria dorada simboliza guía vectorial fuera de una ruta publicada; no asigna rumbos ni altitudes. La responsabilidad ATC por franqueamiento de obstáculos se prolonga hasta el punto donde el piloto reanuda efectivamente su propia navegación, marcado en verde. Terminar de emitir vectores no adelanta ese punto.\"",
+      "afterRaw": "\"Primero identificación e información al piloto. La trayectoria dorada simboliza guía vectorial fuera de una ruta publicada; no asigna rumbos ni altitudes. La responsabilidad ATC por franqueamiento de obstáculos se prolonga hasta el punto donde el piloto reanuda efectivamente su propia navegación, marcado en verde. Terminar de emitir vectores no adelanta ese punto. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st05-control-radar-y-sus-limitaciones/figures/23/alt",
+      "before": "La solución conserva la responsabilidad por obstáculos hasta llegar al punto de reanudación de navegación propia; el tramo y el punto son conceptuales.",
+      "after": "La solución conserva la responsabilidad por obstáculos hasta llegar al punto de reanudación de navegación propia; el tramo y el punto son conceptuales. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.",
+      "beforeRaw": "\"La solución conserva la responsabilidad por obstáculos hasta llegar al punto de reanudación de navegación propia; el tramo y el punto son conceptuales.\"",
+      "afterRaw": "\"La solución conserva la responsabilidad por obstáculos hasta llegar al punto de reanudación de navegación propia; el tramo y el punto son conceptuales. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st05-control-radar-y-sus-limitaciones/stages/8/figures/0/alt",
+      "before": "La solución conserva la responsabilidad por obstáculos hasta llegar al punto de reanudación de navegación propia; el tramo y el punto son conceptuales.",
+      "after": "La solución conserva la responsabilidad por obstáculos hasta llegar al punto de reanudación de navegación propia; el tramo y el punto son conceptuales. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.",
+      "beforeRaw": "\"La solución conserva la responsabilidad por obstáculos hasta llegar al punto de reanudación de navegación propia; el tramo y el punto son conceptuales.\"",
+      "afterRaw": "\"La solución conserva la responsabilidad por obstáculos hasta llegar al punto de reanudación de navegación propia; el tramo y el punto son conceptuales. Siempre que sea necesario, en la altitud mínima pertinente para guía vectorial se incluirá una corrección para tener en cuenta el efecto de bajas temperaturas.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st03-organizacion-del-espacio-aereo/stages/3/cards/1/text",
+      "before": "Clase B: Permite vuelos IFR y VFR. Se proporciona servicio de control de tránsito aéreo a todos los vuelos, separando IFR de IFR, IFR de VFR y VFR de VFR.\nRadiocomunicación (MGTAM 2019, tabla 4-2.3, PDF 95–96): Clase B: Continua en ambos sentidos para los vuelos IFR y VFR.**",
+      "after": "Clase B: Permite vuelos IFR y VFR. La prosa del MGTAM 2019 §4.16.3.1 (PDF 93–94, pp. 4-28–4-29) proporciona servicio de control de tránsito aéreo a todos los vuelos y separación IFR/IFR, IFR/VFR y VFR/VFR.\nLectura literal de la tabla 4-2.3 (PDF 95, p. 4-30): las clases A y B comparten las celdas “Servicio de Control de Tránsito Aéreo a los vuelos IFR” y “Continua en ambos sentidos para los vuelos IFR”. La celda “IFR y VFR.**” de radiocomunicación corresponde a C y D. Se conserva esta diferencia entre la prosa y la tabla históricas.\nComparación OACI: el Anexo 11, 14ª ed. 2016, Apéndice 4 (PDF 105, AP 4-1), presenta por separado B/IFR y B/VFR; ambas filas tienen servicio de control de tránsito aéreo, separación entre todas las aeronaves, comunicación continua en ambos sentidos y autorización ATC.",
+      "beforeRaw": "\"Clase B: Permite vuelos IFR y VFR. Se proporciona servicio de control de tránsito aéreo a todos los vuelos, separando IFR de IFR, IFR de VFR y VFR de VFR.\\nRadiocomunicación (MGTAM 2019, tabla 4-2.3, PDF 95–96): Clase B: Continua en ambos sentidos para los vuelos IFR y VFR.**\"",
+      "afterRaw": "\"Clase B: Permite vuelos IFR y VFR. La prosa del MGTAM 2019 §4.16.3.1 (PDF 93–94, pp. 4-28–4-29) proporciona servicio de control de tránsito aéreo a todos los vuelos y separación IFR/IFR, IFR/VFR y VFR/VFR.\\nLectura literal de la tabla 4-2.3 (PDF 95, p. 4-30): las clases A y B comparten las celdas “Servicio de Control de Tránsito Aéreo a los vuelos IFR” y “Continua en ambos sentidos para los vuelos IFR”. La celda “IFR y VFR.**” de radiocomunicación corresponde a C y D. Se conserva esta diferencia entre la prosa y la tabla históricas.\\nComparación OACI: el Anexo 11, 14ª ed. 2016, Apéndice 4 (PDF 105, AP 4-1), presenta por separado B/IFR y B/VFR; ambas filas tienen servicio de control de tránsito aéreo, separación entre todas las aeronaves, comunicación continua en ambos sentidos y autorización ATC.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st06-alerta-busqueda-y-salvamento/stages/7/cards/0/text",
+      "before": "Las normas de evaluación teórica del CIAAC se fundamentan en el Manual de Gestión de Tránsito Aéreo de México (MGTAM 3.ª ed. 2019, PDF pág. 259), el Manual de Servicios de Tránsito Aéreo del CIAAC (Folios 59–60, PDF págs. 61–62) y la 14.ª Edición del Anexo 11 de la OACI (2016, PDF págs. 61–62).",
+      "after": "Las normas de evaluación teórica del CIAAC se fundamentan en el Manual de Gestión de Tránsito Aéreo de México (MGTAM 3.ª ed. 2019, PDF pág. 259), el Manual de Servicios de Tránsito Aéreo del CIAAC (Folios 59–60, PDF págs. 61–62) y la 14.ª Edición del Anexo 11 de la OACI (2016, PDF págs. 77–78).",
+      "beforeRaw": "\"Las normas de evaluación teórica del CIAAC se fundamentan en el Manual de Gestión de Tránsito Aéreo de México (MGTAM 3.ª ed. 2019, PDF pág. 259), el Manual de Servicios de Tránsito Aéreo del CIAAC (Folios 59–60, PDF págs. 61–62) y la 14.ª Edición del Anexo 11 de la OACI (2016, PDF págs. 61–62).\"",
+      "afterRaw": "\"Las normas de evaluación teórica del CIAAC se fundamentan en el Manual de Gestión de Tránsito Aéreo de México (MGTAM 3.ª ed. 2019, PDF pág. 259), el Manual de Servicios de Tránsito Aéreo del CIAAC (Folios 59–60, PDF págs. 61–62) y la 14.ª Edición del Anexo 11 de la OACI (2016, PDF págs. 77–78).\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st03-organizacion-del-espacio-aereo/sources",
+      "before": [
+        {
+          "id": "st03-mgtam-2019",
+          "title": "SENEAM · MGTAM, 3.ª edición, 2019",
+          "role": "Fuente histórica mexicana. Radio y VMC se mantienen separados del estándar común OACI; no certifica vigencia operacional.",
+          "verified_locators": [
+            "Definiciones FIR/CTA/TMA/CTR/ATZ/ADA: Cap.4, PDF92–93",
+            "Clases y radio: tabla4-2.3, PDF95–96",
+            "VMC: §4.19.1, PDF100",
+            "MEA/MOCA/MVA/MIA: Cap.1, PDF32"
+          ]
+        },
+        {
+          "id": "st03-anexo11",
+          "title": "OACI · Anexo11, copia 14.ª edición 2016",
+          "role": "Definiciones y clasificación internacional citadas. No se convierte la radio mexicana en requisito común OACI. Reserva editorial sobre la mención heredada julio2018 conservada en procedencia.",
+          "verified_locators": ["FIR: Cap.1; clasificación ATS: Apéndice4 (texto aceptado)"]
+        },
+        {
+          "id": "st03-jeppesen",
+          "title": "Jeppesen · General Airway Manual, copia auditada 2026",
+          "role": "Mínimos y cobertura Jeppesen. Reserva bibliográfica heredada 2021 no reabre texto aceptado. Regla MOCA de 22 NM limitada a EE.UU. TERPS/FAA y cartografía asociada.",
+          "verified_locators": ["Glossary MEA/MOCA: PDF82", "Route MORA: PDF90", "Grid MORA: PDF75"]
+        },
+        {
+          "id": "st03-anexo2",
+          "title": "OACI · Anexo2, copia auditada",
+          "role": "Caso conceptual de vuelo IFR controlado. No es autorización operacional ni desarrolla emergencias.",
+          "verified_locators": [
+            "Cap.3, §3.6.2.1 y §3.6.2.3, PDF26 (localizador conservado del texto aceptado)"
+          ]
+        }
+      ],
+      "after": [
+        {
+          "id": "st03-mgtam-2019",
+          "title": "SENEAM · MGTAM, 3.ª edición, 2019",
+          "role": "Fuente histórica mexicana. Radio y VMC se mantienen separados del estándar común OACI; no certifica vigencia operacional.",
+          "verified_locators": [
+            "Definiciones FIR/CTA/TMA/CTR/ATZ/ADA: Cap.4, PDF92–93",
+            "Clases y radio: tabla4-2.3, PDF95–96",
+            "VMC: §4.19.1, PDF100",
+            "MEA/MOCA/MVA/MIA: Cap.1, PDF32"
+          ]
+        },
+        {
+          "id": "st03-anexo11",
+          "title": "OACI · Anexo11, copia 14.ª edición 2016",
+          "role": "Definiciones y clasificación internacional citadas. No se convierte la radio mexicana en requisito común OACI. Reserva editorial sobre la mención heredada julio2018 conservada en procedencia.",
+          "verified_locators": [
+            "FIR: Cap.1; clasificación ATS: Apéndice4 (texto aceptado)",
+            "Apéndice 4, AP 4-1, PDF 105: filas B/IFR y B/VFR; 14.ª edición, julio 2016. Comparación separada de tabla4-2.3 MGTAM2019."
+          ]
+        },
+        {
+          "id": "st03-jeppesen",
+          "title": "Jeppesen · General Airway Manual, copia auditada 2026",
+          "role": "Mínimos y cobertura Jeppesen. Reserva bibliográfica heredada 2021 no reabre texto aceptado. Regla MOCA de 22 NM limitada a EE.UU. TERPS/FAA y cartografía asociada.",
+          "verified_locators": ["Glossary MEA/MOCA: PDF82", "Route MORA: PDF90", "Grid MORA: PDF75"]
+        },
+        {
+          "id": "st03-anexo2",
+          "title": "OACI · Anexo2, copia auditada",
+          "role": "Caso conceptual de vuelo IFR controlado. No es autorización operacional ni desarrolla emergencias.",
+          "verified_locators": [
+            "Cap.3, §3.6.2.1 y §3.6.2.3, PDF26 (localizador conservado del texto aceptado)"
+          ]
+        }
+      ],
+      "beforeRaw": "[\n      {\n        \"id\": \"st03-mgtam-2019\",\n        \"title\": \"SENEAM · MGTAM, 3.ª edición, 2019\",\n        \"role\": \"Fuente histórica mexicana. Radio y VMC se mantienen separados del estándar común OACI; no certifica vigencia operacional.\",\n        \"verified_locators\": [\n          \"Definiciones FIR/CTA/TMA/CTR/ATZ/ADA: Cap.4, PDF92–93\",\n          \"Clases y radio: tabla4-2.3, PDF95–96\",\n          \"VMC: §4.19.1, PDF100\",\n          \"MEA/MOCA/MVA/MIA: Cap.1, PDF32\"\n        ]\n      },\n      {\n        \"id\": \"st03-anexo11\",\n        \"title\": \"OACI · Anexo11, copia 14.ª edición 2016\",\n        \"role\": \"Definiciones y clasificación internacional citadas. No se convierte la radio mexicana en requisito común OACI. Reserva editorial sobre la mención heredada julio2018 conservada en procedencia.\",\n        \"verified_locators\": [\n          \"FIR: Cap.1; clasificación ATS: Apéndice4 (texto aceptado)\"\n        ]\n      },\n      {\n        \"id\": \"st03-jeppesen\",\n        \"title\": \"Jeppesen · General Airway Manual, copia auditada 2026\",\n        \"role\": \"Mínimos y cobertura Jeppesen. Reserva bibliográfica heredada 2021 no reabre texto aceptado. Regla MOCA de 22 NM limitada a EE.UU. TERPS/FAA y cartografía asociada.\",\n        \"verified_locators\": [\n          \"Glossary MEA/MOCA: PDF82\",\n          \"Route MORA: PDF90\",\n          \"Grid MORA: PDF75\"\n        ]\n      },\n      {\n        \"id\": \"st03-anexo2\",\n        \"title\": \"OACI · Anexo2, copia auditada\",\n        \"role\": \"Caso conceptual de vuelo IFR controlado. No es autorización operacional ni desarrolla emergencias.\",\n        \"verified_locators\": [\n          \"Cap.3, §3.6.2.1 y §3.6.2.3, PDF26 (localizador conservado del texto aceptado)\"\n        ]\n      }\n    ]",
+      "afterRaw": "[\n      {\n        \"id\": \"st03-mgtam-2019\",\n        \"title\": \"SENEAM · MGTAM, 3.ª edición, 2019\",\n        \"role\": \"Fuente histórica mexicana. Radio y VMC se mantienen separados del estándar común OACI; no certifica vigencia operacional.\",\n        \"verified_locators\": [\n          \"Definiciones FIR/CTA/TMA/CTR/ATZ/ADA: Cap.4, PDF92–93\",\n          \"Clases y radio: tabla4-2.3, PDF95–96\",\n          \"VMC: §4.19.1, PDF100\",\n          \"MEA/MOCA/MVA/MIA: Cap.1, PDF32\"\n        ]\n      },\n      {\n        \"id\": \"st03-anexo11\",\n        \"title\": \"OACI · Anexo11, copia 14.ª edición 2016\",\n        \"role\": \"Definiciones y clasificación internacional citadas. No se convierte la radio mexicana en requisito común OACI. Reserva editorial sobre la mención heredada julio2018 conservada en procedencia.\",\n        \"verified_locators\": [\n          \"FIR: Cap.1; clasificación ATS: Apéndice4 (texto aceptado)\",\n          \"Apéndice 4, AP 4-1, PDF 105: filas B/IFR y B/VFR; 14.ª edición, julio 2016. Comparación separada de tabla4-2.3 MGTAM2019.\"\n        ]\n      },\n      {\n        \"id\": \"st03-jeppesen\",\n        \"title\": \"Jeppesen · General Airway Manual, copia auditada 2026\",\n        \"role\": \"Mínimos y cobertura Jeppesen. Reserva bibliográfica heredada 2021 no reabre texto aceptado. Regla MOCA de 22 NM limitada a EE.UU. TERPS/FAA y cartografía asociada.\",\n        \"verified_locators\": [\n          \"Glossary MEA/MOCA: PDF82\",\n          \"Route MORA: PDF90\",\n          \"Grid MORA: PDF75\"\n        ]\n      },\n      {\n        \"id\": \"st03-anexo2\",\n        \"title\": \"OACI · Anexo2, copia auditada\",\n        \"role\": \"Caso conceptual de vuelo IFR controlado. No es autorización operacional ni desarrolla emergencias.\",\n        \"verified_locators\": [\n          \"Cap.3, §3.6.2.1 y §3.6.2.3, PDF26 (localizador conservado del texto aceptado)\"\n        ]\n      }\n    ]"
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st03-organizacion-del-espacio-aereo/figures/3/alt",
+      "before": "Clase B. El resumen visual acompaña íntegra su explicación. Radio: tabla histórica mexicana MGTAM 2019, no tabla común OACI. Las condiciones completas de autorización, separación, información y asesoramiento están junto a esta figura. Las marcas ** heredadas permanecen sin inventar una nueva restricción.",
+      "after": "Clase B según OACI Anexo 11, 14.ª edición 2016, Apéndice 4, AP 4-1/PDF 105: separación entre todas las aeronaves, comunicación continua en ambos sentidos y autorización ATC para IFR y VFR. La discrepancia entre la prosa y las celdas A/B de la tabla MGTAM 2019 se explica por separado en el texto; esta figura no corrige silenciosamente esa tabla histórica mexicana.",
+      "beforeRaw": "\"Clase B. El resumen visual acompaña íntegra su explicación. Radio: tabla histórica mexicana MGTAM 2019, no tabla común OACI. Las condiciones completas de autorización, separación, información y asesoramiento están junto a esta figura. Las marcas ** heredadas permanecen sin inventar una nueva restricción.\"",
+      "afterRaw": "\"Clase B según OACI Anexo 11, 14.ª edición 2016, Apéndice 4, AP 4-1/PDF 105: separación entre todas las aeronaves, comunicación continua en ambos sentidos y autorización ATC para IFR y VFR. La discrepancia entre la prosa y las celdas A/B de la tabla MGTAM 2019 se explica por separado en el texto; esta figura no corrige silenciosamente esa tabla histórica mexicana.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st03-organizacion-del-espacio-aereo/stages/3/figures/1/alt",
+      "before": "Clase B. El resumen visual acompaña íntegra su explicación. Radio: tabla histórica mexicana MGTAM 2019, no tabla común OACI. Las condiciones completas de autorización, separación, información y asesoramiento están junto a esta figura. Las marcas ** heredadas permanecen sin inventar una nueva restricción.",
+      "after": "Clase B según OACI Anexo 11, 14.ª edición 2016, Apéndice 4, AP 4-1/PDF 105: separación entre todas las aeronaves, comunicación continua en ambos sentidos y autorización ATC para IFR y VFR. La discrepancia entre la prosa y las celdas A/B de la tabla MGTAM 2019 se explica por separado en el texto; esta figura no corrige silenciosamente esa tabla histórica mexicana.",
+      "beforeRaw": "\"Clase B. El resumen visual acompaña íntegra su explicación. Radio: tabla histórica mexicana MGTAM 2019, no tabla común OACI. Las condiciones completas de autorización, separación, información y asesoramiento están junto a esta figura. Las marcas ** heredadas permanecen sin inventar una nueva restricción.\"",
+      "afterRaw": "\"Clase B según OACI Anexo 11, 14.ª edición 2016, Apéndice 4, AP 4-1/PDF 105: separación entre todas las aeronaves, comunicación continua en ambos sentidos y autorización ATC para IFR y VFR. La discrepancia entre la prosa y las celdas A/B de la tabla MGTAM 2019 se explica por separado en el texto; esta figura no corrige silenciosamente esa tabla histórica mexicana.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st03-organizacion-del-espacio-aereo/figures/3/caption",
+      "before": "Esquema conceptual original, sin escala. No es una carta operacional.",
+      "after": "Esquema conceptual original, sin escala. OACI Anexo 11, 14.ª edición 2016, Apéndice 4, AP 4-1/PDF 105. La discrepancia MGTAM 2019 se conserva en el texto. No es una carta operacional.",
+      "beforeRaw": "\"Esquema conceptual original, sin escala. No es una carta operacional.\"",
+      "afterRaw": "\"Esquema conceptual original, sin escala. OACI Anexo 11, 14.ª edición 2016, Apéndice 4, AP 4-1/PDF 105. La discrepancia MGTAM 2019 se conserva en el texto. No es una carta operacional.\""
+    },
+    {
+      "file": "src/lib/lp/ciaac-transit-approved/documents.json",
+      "pointer": "/ciaac~1servicios-de-transito-aereo~1itinerario-aprobado-2026-10~1st03-organizacion-del-espacio-aereo/stages/3/figures/1/caption",
+      "before": "Esquema conceptual original, sin escala. No es una carta operacional.",
+      "after": "Esquema conceptual original, sin escala. OACI Anexo 11, 14.ª edición 2016, Apéndice 4, AP 4-1/PDF 105. La discrepancia MGTAM 2019 se conserva en el texto. No es una carta operacional.",
+      "beforeRaw": "\"Esquema conceptual original, sin escala. No es una carta operacional.\"",
+      "afterRaw": "\"Esquema conceptual original, sin escala. OACI Anexo 11, 14.ª edición 2016, Apéndice 4, AP 4-1/PDF 105. La discrepancia MGTAM 2019 se conserva en el texto. No es una carta operacional.\""
+    }
+  ],
+  "assets": [
+    {
+      "file": "public/ciaac-approved/radar-surveillance/vector-endpoint.svg",
+      "beforeSha256": "bfea49f978ae0f70d61947bf708371f71c1c926076b17ba451e8f9414f08c6b1",
+      "afterSha256": "8bab425574660454a0b63f2c937822fc93e09f70556385efe779d852088f4e87",
+      "beforeText": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"680\" height=\"482\" viewBox=\"0 0 680 482\" role=\"img\" aria-labelledby=\"title desc\"><title id=\"title\">Identificación, vectores y reanudación</title><desc id=\"desc\">Primero identificación e información al piloto. La trayectoria dorada simboliza guía vectorial fuera de una ruta publicada; no asigna rumbos ni altitudes. La responsabilidad ATC por franqueamiento de obstáculos se prolonga hasta el punto donde el piloto reanuda efectivamente su propia navegación, marcado en verde. Terminar de emitir vectores no adelanta ese punto.</desc><rect width=\"680\" height=\"482\" rx=\"18\" fill=\"#081b31\"/><g font-family=\"DejaVu Sans, sans-serif\"><rect x=\"24\" y=\"23\" width=\"278\" height=\"46\" rx=\"12\" fill=\"#163249\" stroke=\"#80c5e5\" stroke-width=\"2\"/><text x=\"163.0\" y=\"56.08\" font-size=\"28\" fill=\"#80c5e5\" text-anchor=\"middle\" font-weight=\"600\">IDENTIFICAR</text><line x1=\"304\" y1=\"46\" x2=\"352\" y2=\"46\" stroke=\"#e9bd70\" stroke-width=\"3\" /><path d=\"M343.22417438109625 41.20574461395797 L352 46 L343.22417438109625 50.79425538604203\" fill=\"none\" stroke=\"#e9bd70\" stroke-width=\"3\"/><rect x=\"361\" y=\"23\" width=\"295\" height=\"46\" rx=\"12\" fill=\"#163249\" stroke=\"#80c5e5\" stroke-width=\"2\"/><text x=\"508.5\" y=\"55.72\" font-size=\"27\" fill=\"#80c5e5\" text-anchor=\"middle\" font-weight=\"600\">Informar al piloto</text><line x1=\"35\" y1=\"169\" x2=\"640\" y2=\"169\" stroke=\"#bfcede\" stroke-width=\"4\" stroke-dasharray=\"13 11\"/><text x=\"35\" y=\"151\" font-size=\"28\" fill=\"#bfcede\" text-anchor=\"start\" font-weight=\"500\">Ruta publicada</text><line x1=\"105\" y1=\"169\" x2=\"240\" y2=\"256\" stroke=\"#e9bd70\" stroke-width=\"5\" /><path d=\"M235.22034971256375 247.21621134533564 L240 256 L230.02624063887 255.2760357700328\" fill=\"none\" stroke=\"#e9bd70\" stroke-width=\"5\"/><line x1=\"240\" y1=\"256\" x2=\"444\" y2=\"256\" stroke=\"#e9bd70\" stroke-width=\"5\" /><path d=\"M435.22417438109625 251.20574461395796 L444 256 L435.22417438109625 260.79425538604204\" fill=\"none\" stroke=\"#e9bd70\" stroke-width=\"5\"/><line x1=\"444\" y1=\"256\" x2=\"559\" y2=\"169\" stroke=\"#e9bd70\" stroke-width=\"5\" /><path d=\"M549.1088223440407 170.47125952104068 L559 169 L554.8937961028118 178.1180639148186\" fill=\"none\" stroke=\"#e9bd70\" stroke-width=\"5\"/><line x1=\"559\" y1=\"169\" x2=\"646\" y2=\"169\" stroke=\"#93d5c3\" stroke-width=\"5\" /><path d=\"M637.2241743810963 164.20574461395796 L646 169 L637.2241743810963 173.79425538604204\" fill=\"none\" stroke=\"#93d5c3\" stroke-width=\"5\"/><path d=\"M-38 8 L32 8 Q48 5 35 0 L9 -2 L-11 -22 L-19 -22 L-11 -1 L-27 -1 L-36 -10 L-42 -10 Z\" transform=\"translate(283,248) scale(0.65)\" fill=\"#e9bd70\"/><circle cx=\"559\" cy=\"169\" r=\"10\" fill=\"#93d5c3\" stroke=\"#93d5c3\" stroke-width=\"3\"/><line x1=\"559\" y1=\"184\" x2=\"559\" y2=\"339\" stroke=\"#93d5c3\" stroke-width=\"2\" stroke-dasharray=\"6 6\"/><path d=\"M95 340 L150 274 L200 335 L259 299 L304 340Z\" fill=\"#314d5f\"/><text x=\"40\" y=\"378\" font-size=\"29\" fill=\"#e9bd70\" text-anchor=\"start\" font-weight=\"500\">Rumbos + altitudes / MVA</text><line x1=\"38\" y1=\"415\" x2=\"557\" y2=\"415\" stroke=\"#e9bd70\" stroke-width=\"9\" /><line x1=\"557\" y1=\"405\" x2=\"557\" y2=\"427\" stroke=\"#93d5c3\" stroke-width=\"4\" /><text x=\"39\" y=\"456\" font-size=\"28\" fill=\"#e9bd70\" text-anchor=\"start\" font-weight=\"500\">Responsabilidad ATC hasta este punto</text><text x=\"365\" y=\"307\" font-size=\"27\" fill=\"#93d5c3\" text-anchor=\"start\" font-weight=\"500\">Reanuda su</text><text x=\"365\" y=\"341\" font-size=\"27\" fill=\"#93d5c3\" text-anchor=\"start\" font-weight=\"500\">navegación</text></g></svg>"
+    },
+    {
+      "file": "public/ciaac-approved/radar-surveillance/case-obstacles.svg",
+      "beforeSha256": "81f6dfaeb721ce480ef12fb1bed7ae71bfdb68516a894759f14324b46d839a0f",
+      "afterSha256": "fabdc59968043829b0006e0524bf2d46918bda39ec8ce853feaa61a56135720b",
+      "beforeText": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"350\" viewBox=\"0 0 360 350\" role=\"img\" aria-labelledby=\"title desc\"><title id=\"title\">Caso: hasta el punto de reanudación</title><desc id=\"desc\">La solución conserva la responsabilidad por obstáculos hasta llegar al punto de reanudación de navegación propia; el tramo y el punto son conceptuales.</desc><rect width=\"360\" height=\"350\" rx=\"18\" fill=\"#081b31\"/><g font-family=\"DejaVu Sans, sans-serif\"><line x1=\"39\" y1=\"107\" x2=\"302\" y2=\"107\" stroke=\"#e9bd70\" stroke-width=\"6\" /><path d=\"M293.22417438109625 102.20574461395798 L302 107 L293.22417438109625 111.79425538604202\" fill=\"none\" stroke=\"#e9bd70\" stroke-width=\"6\"/><circle cx=\"302\" cy=\"107\" r=\"11\" fill=\"#93d5c3\" stroke=\"#93d5c3\" stroke-width=\"3\"/><line x1=\"302\" y1=\"121\" x2=\"302\" y2=\"185\" stroke=\"#93d5c3\" stroke-width=\"2\" stroke-dasharray=\"6 5\"/><text x=\"180\" y=\"233\" font-size=\"31\" fill=\"#93d5c3\" text-anchor=\"middle\" font-weight=\"500\">Hasta reanudar</text><text x=\"180\" y=\"278\" font-size=\"31\" fill=\"#93d5c3\" text-anchor=\"middle\" font-weight=\"500\">su navegación</text><text x=\"180\" y=\"329\" font-size=\"25\" fill=\"#e9bd70\" text-anchor=\"middle\" font-weight=\"500\">Franqueamiento / MVA</text></g></svg>"
+    },
+    {
+      "file": "public/ciaac-approved/airspace/class-b.svg",
+      "beforeSha256": "0f963fdf94e1eb795cb77a19e522b70607fdada781c3380ee8cb49ed3c80ea7d",
+      "afterSha256": "defd777c903f3bd0d5deb6ffccdfa350fee0d3890980e0733b325c58c184a06a",
+      "beforeText": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"380\" viewBox=\"0 0 360 380\" role=\"img\" aria-labelledby=\"title desc\"><title id=\"title\">Clase B: servicio y radio</title><desc id=\"desc\">Clase B. El resumen visual acompaña íntegra su explicación. Radio: tabla histórica mexicana MGTAM 2019, no tabla común OACI. Las condiciones completas de autorización, separación, información y asesoramiento están junto a esta figura. Las marcas ** heredadas permanecen sin inventar una nueva restricción.</desc><rect width=\"360\" height=\"380\" rx=\"16\" fill=\"#091b30\"/><g font-family=\"DejaVu Sans,sans-serif\" fill=\"#f8f1df\"><text x=\"22\" y=\"41\" font-size=\"34\" fill=\"#eac475\" text-anchor=\"start\" font-weight=\"500\">CLASE B</text><text x=\"22\" y=\"87\" font-size=\"23\" fill=\"#89c7e2\" text-anchor=\"start\" font-weight=\"500\">SEPARACIÓN</text><text x=\"22\" y=\"126\" font-size=\"29\" fill=\"#f8f1df\" text-anchor=\"start\" font-weight=\"500\">IFR / IFR</text><text x=\"22\" y=\"164\" font-size=\"29\" fill=\"#f8f1df\" text-anchor=\"start\" font-weight=\"500\">IFR / VFR</text><text x=\"22\" y=\"202\" font-size=\"29\" fill=\"#f8f1df\" text-anchor=\"start\" font-weight=\"500\">VFR / VFR</text><line x1=\"22\" y1=\"225\" x2=\"338\" y2=\"225\" stroke=\"#cad6e1\" stroke-width=\"1\"/><text x=\"22\" y=\"261\" font-size=\"22\" fill=\"#89c7e2\" text-anchor=\"start\" font-weight=\"500\">RADIO · MGTAM 2019</text><text x=\"22\" y=\"299\" font-size=\"28\" fill=\"#f8f1df\" text-anchor=\"start\" font-weight=\"500\">IFR + VFR **</text><text x=\"22\" y=\"335\" font-size=\"22\" fill=\"#f8f1df\" text-anchor=\"start\" font-weight=\"500\">Continua · ambos sentidos</text></g></svg>"
+    }
+  ],
+  "limitations": [
+    "El cotejo confirma texto y localizadores históricos. No valida que el Anexo 11 sea bibliografía oficial del examen ni la afirmación de normas de evaluación; esa atribución curricular requiere respaldo independiente. No se propone modificar aplicación didáctica, casos, plazos ni reservas existentes."
+  ]
+}
