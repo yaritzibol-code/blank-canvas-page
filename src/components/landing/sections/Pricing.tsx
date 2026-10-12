@@ -1,5 +1,13 @@
 import { SectionHead, Icon, Pill, Btn } from "../shared";
-import { PRO_MONTHLY_FALLBACK, PRO_ANNUAL_FALLBACK, mesesAhorrados } from "@/lib/pricing";
+import {
+  PRO_MONTHLY_FALLBACK,
+  PRO_ANNUAL_FALLBACK,
+  PRO_SETUP_FALLBACK,
+  formatPrice,
+  mesesAhorrados,
+} from "@/lib/pricing";
+
+import { RTARI_MINUTOS_INCLUIDOS_PRO } from "@/modules/rtari/config";
 
 export function Pricing() {
   const ahorroMeses = mesesAhorrados(PRO_MONTHLY_FALLBACK, PRO_ANNUAL_FALLBACK);
@@ -84,6 +92,10 @@ export function Pricing() {
                   </span>
                 )}
               </div>
+              <p className="mt-3 text-[13px] text-white/70">
+                + {formatPrice(PRO_SETUP_FALLBACK)} de inscripción única, junto con tu primer
+                periodo mensual o anual.
+              </p>
               <div className="mt-3 rounded-xl bg-white/[0.06] border border-white/10 px-4 py-3">
                 <div className="text-[11px] uppercase tracking-[0.16em] font-bold text-white/35 mb-2">
                   Desbloquea hoy mismo
@@ -93,7 +105,7 @@ export function Pricing() {
                     "Banco CIAAC 2,800+ explicado",
                     "Simulador real de 310 preguntas",
                     "Aptitudes COMPASS (Slalom, Memoria…)",
-                    "RTARI Inglés por voz ilimitado",
+                    `RTARI Inglés: ${RTARI_MINUTOS_INCLUIDOS_PRO} minutos de voz al mes`,
                     "100+ manuales en biblioteca",
                     "Tutor Yaris AI 24/7 sin límites",
                   ].map((f, i) => (

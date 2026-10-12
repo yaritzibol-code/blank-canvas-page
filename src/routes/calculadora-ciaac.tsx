@@ -215,7 +215,8 @@ function Calculadora() {
                     className="mt-2 w-full h-12 rounded-xl border border-ink/15 bg-white px-4 text-[15px] text-ink focus:outline-none focus:border-coral-600"
                   />
                   <span className="mt-1.5 block text-[12px] text-ink/40">
-                    Precargada: la convocatoria CIAAC del 17 de agosto de 2026.
+                    La fecha precargada es una referencia de planificación. Ajústala a la fecha
+                    confirmada de tu examen.
                   </span>
                 </label>
 

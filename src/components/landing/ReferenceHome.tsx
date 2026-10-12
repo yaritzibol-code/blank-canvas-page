@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { COMPASS_MODULES, SIMULACRO_MIN_APROX } from "@/modules/compass/config";
 import { Nav } from "./shared";
 import { mountReferenceMotion } from "./reference-motion";
 import "./reference-home.css";
@@ -742,9 +743,9 @@ export function ReferenceHome({
                     }
                   </p>
                   <div className="rd-59">
-                    <span className="rd-60">{"6 ejercicios"}</span>
+                    <span className="rd-60">{`${COMPASS_MODULES.length} ejercicios`}</span>
                     <span className="rd-60">{"5 niveles"}</span>
-                    <span className="rd-60">{"Simulacro 20 min"}</span>
+                    <span className="rd-60">{`Simulacro ~${SIMULACRO_MIN_APROX} min`}</span>
                   </div>
                   <a className="card-link rd-61" href="/examen-compass">
                     {"Más información "}

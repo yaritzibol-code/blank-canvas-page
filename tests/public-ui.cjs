@@ -68,6 +68,7 @@ function load(file) {
   return context.exports;
 }
 modules["@/lib/pricing"] = load("src/lib/pricing.ts");
+modules["@/modules/rtari/config"] = load("src/modules/rtari/config.ts");
 const { AuthPage } = load("src/components/auth/AuthPage.tsx");
 const { Pricing } = load("src/components/landing/sections/Pricing.tsx");
 const root = createRoot(document.getElementById("root"));
