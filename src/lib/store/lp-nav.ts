@@ -16,6 +16,8 @@
  */
 import { isLearningPathAvailable } from "@/lib/lp/ciaac-availability";
 import { read, update, nowISO } from "./db";
+import { getSessionUser, isAuthSettled } from "./auth";
+import { isCiaacStudentAccessPaused } from "@/lib/lp/ciaac-student-availability";
 import { completeTema, getTemaProgress } from "./domain";
 import { isPaid } from "./gating";
 import type { User } from "./types";
@@ -51,9 +53,17 @@ export function lpStatus(userId: string, lpId: string): LpStatus {
   return getLpStarted(userId).includes(lpId) ? "en_progreso" : "no_iniciado";
 }
 
+/** Re-read the authenticated profile for imperative calls and continuation links. */
+function sessionUserFor(userId: string): User | null {
+  if (!isAuthSettled()) return null;
+  const user = getSessionUser();
+  return user?.id === userId ? user : null;
+}
+
 /** Marca que la alumna abrió el Learning Path (una sola vez). */
 export function startLp(userId: string, lpId: string) {
-  if (!isLearningPathAvailable(lpId)) return;
+  if (isCiaacStudentAccessPaused(sessionUserFor(userId), lpId) || !isLearningPathAvailable(lpId))
+    return;
   update<LpStartedRow[]>("lp_started", [], (all) =>
     all.some((r) => r.userId === userId && r.lpId === lpId)
       ? all
@@ -63,7 +73,11 @@ export function startLp(userId: string, lpId: string) {
 
 /** Completa el Learning Path: habilita el siguiente de la secuencia. */
 export function completeLp(userId: string, item: LpItem, subjectTitulo: string) {
-  if (!isLearningPathAvailable(item.id)) return;
+  if (
+    isCiaacStudentAccessPaused(sessionUserFor(userId), item.id) ||
+    !isLearningPathAvailable(item.id)
+  )
+    return;
   completeTema(
     userId,
     `${LP_TEMA_PREFIX}${item.id}`,
@@ -77,7 +91,7 @@ export interface LpAccess {
   status: LpStatus;
   allowed: boolean;
   /** Motivo del candado cuando allowed === false. */
-  lock: "previo" | "plan" | "contenido" | null;
+  lock: "previo" | "plan" | "contenido" | "disponibilidad" | null;
   /** Posición dentro de la secuencia de la materia (1-based). */
   posicion: number;
   total: number;
@@ -96,6 +110,9 @@ export function lpAccess(user: User | null, subject: LpSubject, lpId: string): L
   const index = seq.findIndex((s) => s.item.id === lpId);
   const total = seq.length;
   const posicion = index + 1;
+  if (isCiaacStudentAccessPaused(isAuthSettled() ? user : null, lpId)) {
+    return { status: "no_iniciado", allowed: false, lock: "disponibilidad", posicion, total };
+  }
   if (!user || index === -1) {
     return { status: "no_iniciado", allowed: false, lock: "previo", posicion, total };
   }
@@ -115,6 +132,7 @@ export function lpAccess(user: User | null, subject: LpSubject, lpId: string): L
 
 /** Siguiente Learning Path por estudiar en la materia (o null si terminó). */
 export function subjectContinue(userId: string, subject: LpSubject): LpItem | null {
+  if (isCiaacStudentAccessPaused(sessionUserFor(userId), subject.id)) return null;
   const seq = subjectSequence(subject);
   const cursor = subjectCursor(userId, subject);
   const next = seq[cursor]?.item;

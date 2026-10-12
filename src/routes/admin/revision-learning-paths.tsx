@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { AdminReviewLearningPath } from "@/components/lp/AdminReviewLearningPath";
+import { AdminReviewWorkspace } from "@/components/lp/AdminReviewWorkspace";
 import type { ReviewPayload } from "@/lib/lp/admin-review-types";
 
 export const Route = createFileRoute("/admin/revision-learning-paths")({
@@ -22,7 +23,6 @@ function AdminLearningPathReviewPage() {
   const navigate = useNavigate();
   const [result, setResult] = useState<{ lp?: string; payload: ReviewPayload } | null>(null);
   const [error, setError] = useState("");
-  const [query, setQuery] = useState("");
 
   useEffect(() => {
     let cancelled = false;
@@ -125,76 +125,14 @@ function AdminLearningPathReviewPage() {
       ) : payload.selected ? (
         <AdminReviewLearningPath selected={payload.selected} onExit={() => select()} />
       ) : (
-        <main style={{ padding: 24, maxWidth: 1200, margin: "auto" }}>
-          <h1 style={{ fontSize: "2rem" }}>Revisar Learning Paths</h1>
-          <p>
-            Abre cualquier recorrido disponible y salta entre sus etapas, ejercicios y figuras sin
-            completar los anteriores.
-          </p>
-          <p>
-            Se incluyen los recorridos CIAAC y Handbook disponibles del temario activo que usan el
-            visor nativo compatible. Los recorridos en preparación y otros visores todavía no están
-            habilitados aquí.
-          </p>
-          <label htmlFor="review-search">Buscar por materia, título o código</label>
-          <input
-            id="review-search"
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            style={{
-              display: "block",
-              width: "100%",
-              margin: "12px 0 24px",
-              padding: 12,
-              background: "#102e48",
-              color: "white",
-              border: "1px solid #d4af6b",
-              borderRadius: 8,
-            }}
-          />
-          <ul
-            style={{
-              display: "grid",
-              gap: 12,
-              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
-              listStyle: "none",
-              padding: 0,
-            }}
-          >
-            {payload.items
-              .filter((item) =>
-                `${item.id} ${item.title} ${item.category} ${item.subject}`
-                  .toLocaleLowerCase("es")
-                  .includes(query.toLocaleLowerCase("es")),
-              )
-              .map((item) => (
-                <li key={item.id}>
-                  <button
-                    type="button"
-                    onClick={() => select(item.id)}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      padding: 20,
-                      background: "#102e48",
-                      color: "#f8f0df",
-                      border: "1px solid #d4af6b66",
-                      borderRadius: 12,
-                      textAlign: "left",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <small>
-                      {item.category} · {item.subject}
-                    </small>
-                    <strong style={{ display: "block", marginTop: 8 }}>{item.title}</strong>
-                    <span>{item.chapter}</span>
-                  </button>
-                </li>
-              ))}
-          </ul>
-        </main>
+        <AdminReviewWorkspace
+          publishedItems={payload.items}
+          onPublishedSelect={select}
+          onAccessError={(message) => {
+            setResult(null);
+            setError(message);
+          }}
+        />
       )}
     </div>
   );

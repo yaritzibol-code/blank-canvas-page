@@ -63,7 +63,7 @@
     "src/lib/store/domain.ts": "2fc48342916ff9c9343eddb8b12446e8482f7d11135b2ff99f7b49629f3e10a2",
     "src/lib/store/gating.ts": "f70a11b566b7e498456858012db978fd259831fd3c8e3e1e18bf4427e3c826f3",
     "src/lib/store/lp-journey.ts": "a67799381f5947a0cf25aa25f5b67ab9ce85795c2b6f0df43bf2b8b15e3eb7dc",
-    "src/lib/store/lp-nav.ts": "93adb9b3c0a52a8b47064127bda5f2b6538485473f0462fbf4a5dda64cfe79ce",
+    "src/lib/store/lp-nav.ts": "359c42e0fb7b0803ad97e6748ac9deac1dfdd54335a1b6ee197d3338c6fb2f9e",
     "vite.config.ts": "d60cc34fc5e6269f32bcc34cc989efc80114851990c45583f990d442faf21242"
   },
   "operationsValidators": {

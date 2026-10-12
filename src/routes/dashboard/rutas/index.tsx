@@ -12,7 +12,8 @@ import {
 } from "@/components/lp/nav";
 import type { FPIconName } from "@/components/ui/fp-icon";
 import { LP_CATEGORIES, subjectLpCount } from "@/lib/lp/taxonomy";
-import { useSessionUser, useStore } from "@/lib/store";
+import { isCiaacStudentAccessPaused } from "@/lib/lp/ciaac-student-availability";
+import { isAuthSettled, useSessionUser, useStore } from "@/lib/store";
 import { getLpCompleted, subjectContinue } from "@/lib/store/lp-nav";
 
 export const CATEGORY_STYLE: Record<string, { icon: FPIconName; accent: string }> = {
@@ -100,7 +101,7 @@ function RutasIndex() {
         <LpGrid>
           {LP_CATEGORIES.map((cat) => {
             const s = CATEGORY_STYLE[cat.id] ?? { icon: "book", accent: "var(--primary)" };
-            const proximamente = false;
+            const proximamente = isCiaacStudentAccessPaused(isAuthSettled() ? user : null, cat.id);
             return (
               <LpCategoryCard
                 key={cat.id}
@@ -111,7 +112,13 @@ function RutasIndex() {
                 accent={s.accent}
                 percent={estado?.percent[cat.id] ?? 0}
                 disabled={proximamente}
-                actionLabel={cat.id === "ciaac" ? "Explorar módulo 1" : "Entrar"}
+                actionLabel={
+                  proximamente
+                    ? "Aún no disponible"
+                    : cat.id === "ciaac"
+                      ? "Explorar módulo 1"
+                      : "Entrar"
+                }
                 meta={`${cat.subjects.length} ${cat.subjectLabel.toLowerCase()} · ${cat.subjects.reduce(
                   (n, sub) => n + subjectLpCount(sub),
                   0,

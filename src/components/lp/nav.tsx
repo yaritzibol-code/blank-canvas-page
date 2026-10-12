@@ -356,7 +356,7 @@ export function LpCategoryCard({
       to={disabled ? undefined : to}
       params={params}
       disabled={disabled}
-      label={disabled ? `${title}, próximamente` : title}
+      label={disabled ? `${title}, ${actionLabel ?? "Próximamente"}` : title}
       style={{
         ...cardBase,
         padding: 22,
@@ -370,7 +370,7 @@ export function LpCategoryCard({
         style={{
           position: "absolute",
           inset: 0,
-          background: `linear-gradient(160deg, ${mix(accent, 12, "transparent")}, transparent 62%)`,
+          background: `linear-gradient(160deg, ${mix(disabled ? "var(--muted-foreground)" : accent, 12, "transparent")}, transparent 62%)`,
           pointerEvents: "none",
         }}
       />

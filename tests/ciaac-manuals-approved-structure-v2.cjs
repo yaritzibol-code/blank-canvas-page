@@ -283,11 +283,13 @@ const navLoad = loader({
       throw Error("Read-only test");
     },
   },
+  "src/lib/lp/ciaac-admin-verification.ts": { hasVerifiedCiaacAdminAccess: () => true },
+  "src/lib/store/auth.ts": { getSessionUser: () => user, isAuthSettled: () => true },
   "src/lib/store/gating.ts": { isPaid: () => true },
 });
 const nav = navLoad("src/lib/store/lp-nav.ts");
 const subject = navLoad(`${approved}catalog.ts`).approvedManualsSubject();
-const user = { id: "fixture-reviewer" };
+const user = { role: "admin", id: "fixture-reviewer" };
 assert.equal(nav.lpAccess(user, subject, approvedIds[0]).allowed, true);
 completedIds = [approvedIds[0]];
 assert.equal(nav.lpAccess(user, subject, approvedIds[1]).allowed, true);
@@ -311,6 +313,8 @@ const gapNav = loader({
   "src/lib/store/domain.ts": {
     getTemaProgress: () => [{ temaId: `lp:${approvedIds[0]}`, completado: true }],
   },
+  "src/lib/lp/ciaac-admin-verification.ts": { hasVerifiedCiaacAdminAccess: () => true },
+  "src/lib/store/auth.ts": { getSessionUser: () => user, isAuthSettled: () => true },
   "src/lib/store/gating.ts": { isPaid: () => true },
 })("src/lib/store/lp-nav.ts");
 assert.equal(gapNav.lpAccess(user, subject, approvedIds[1]).lock, "contenido");
@@ -341,6 +345,8 @@ const basic = loader({
     getTemaProgress: () =>
       approvedIds.slice(0, 1).map((id) => ({ temaId: `lp:${id}`, completado: true })),
   },
+  "src/lib/lp/ciaac-admin-verification.ts": { hasVerifiedCiaacAdminAccess: () => true },
+  "src/lib/store/auth.ts": { getSessionUser: () => user, isAuthSettled: () => true },
   "src/lib/store/gating.ts": { isPaid: () => false },
 })("src/lib/store/lp-nav.ts");
 assert.equal(

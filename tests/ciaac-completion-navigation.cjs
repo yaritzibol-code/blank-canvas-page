@@ -11,12 +11,14 @@ Object.assign(global, {window:dom.window,document:dom.window.document,HTMLElemen
 const {createRoot} = require("react-dom/client");
 let failCompletion=false;
 let saved=null, done=[], awards=0, navigations=[], view, params, version=0;
-let user={id:"completion-qa",plan:"pro"};
+let user = { role: "admin", id: "completion-qa", plan: "pro" };
 const listeners=new Set();
 const notify=()=>{version++; listeners.forEach(f=>f());};
 const stubs={
   "@/lib/store/db":{read:()=>[], update:()=>{}, nowISO:()=>""},
   "@/lib/store/domain":{getTemaProgress:()=>done.map(id=>({temaId:"lp:"+id,completado:true})),completeTema:(_u,id)=>{if(failCompletion)throw Error("save failed");done.push(id.slice(3));awards++;notify();}},
+  "@/lib/lp/ciaac-admin-verification": { hasVerifiedCiaacAdminAccess: () => true },
+  "@/lib/store/auth": { getSessionUser: () => user, isAuthSettled: () => true },
   "@/lib/store/gating":{isPaid:u=>u.plan==="pro"},
   "@/lib/store":{useSessionUser:()=>user,useStore:f=>{React.useSyncExternalStore(cb=>{listeners.add(cb);return()=>listeners.delete(cb);},()=>version);return f();}},
   "@/lib/store/lp-journey":{getLpJourney:()=>saved,saveLpJourney:(_u,_l,s)=>{saved=structuredClone(s);},resetLpJourney:()=>{saved=null;}},
@@ -54,7 +56,8 @@ async function mount(index,{completed=false,restore=null,plan="pro",gap=false}={
   document.body.innerHTML='<div id="root"></div>';
   const item=sequence[index], doc=docs[item.id];
   const [categoria,materia,contenedor,lp]=item.id.split("/");
-  params={categoria,materia,contenedor,lp};user={id:"completion-qa",plan};
+  params = { categoria, materia, contenedor, lp };
+  user = { role: "admin", id: "completion-qa", plan };
   done=sequence.slice(0,index+(completed?1:0)).map(i=>i.id);
   if(gap)done=done.filter(id=>id!==sequence[0].id);
   saved=restore??{version:index<5?(index===0?"ciaac-aircraft-handbook-v1":"ciaac-module-one-handbook-"+doc.number+"-v1"):`ciaac-aerodynamics-${doc.chapter}-${doc.number}-v1`,stage:doc.stages.length-1,maxStage:doc.stages.length-1,checks:[true,true,true],answers:{},exercise:{pairs:{},sequence:[],visited:[],tokens:[],values:{},feedback:""},activityResponses:{},complete:completed};

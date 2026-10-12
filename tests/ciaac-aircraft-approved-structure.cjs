@@ -668,12 +668,14 @@ const navigationLoader = loader({
   "src/lib/store/domain.ts": {
     getTemaProgress: (userId) => completedRows.filter((row) => row.userId === userId),
   },
+  "src/lib/lp/ciaac-admin-verification.ts": { hasVerifiedCiaacAdminAccess: () => true },
+  "src/lib/store/auth.ts": { getSessionUser: () => pro, isAuthSettled: () => true },
   "src/lib/store/gating.ts": { isPaid: (user) => user.plan === "pro" },
 });
 const navigation = navigationLoader("src/lib/store/lp-nav.ts");
 const navigationTaxonomy = navigationLoader("src/lib/lp/taxonomy.ts");
 const newSubject = navigationTaxonomy.lpSubject("ciaac", "aeronaves-y-motores");
-const pro = { id: "owner", plan: "pro" };
+const pro = { role: "admin", id: "owner", plan: "pro" };
 assert.deepEqual(navigation.subjectProgress(pro.id, newSubject), {
   done: 0,
   total: 19,
@@ -702,7 +704,11 @@ assert.equal(
   "plan",
 );
 assert.equal(
-  navigation.lpAccess({ id: "different-user", plan: "pro" }, newSubject, approvedIds[1]).lock,
+  navigation.lpAccess(
+    { id: "different-user", plan: "pro", role: "admin" },
+    newSubject,
+    approvedIds[1],
+  ).lock,
   "previo",
 );
 completedRows = [

@@ -109,13 +109,15 @@ function LearningPathPage() {
         <div className="lp-screen-empty">
           <LpEmptyState
             icon="lock"
-            title={item.titulo}
+            title={acceso.lock === "disponibilidad" ? "Aún no disponible" : item.titulo}
             description={
-              acceso.lock === "contenido"
-                ? "Este learning path está en preparación. Se abrirá cuando su explicación, apoyos visuales y ejercicios estén listos."
-                : acceso.lock === "plan"
-                  ? "Este learning path está incluido en FlightPath Pro."
-                  : "Completa el learning path anterior de la secuencia para abrir este."
+              acceso.lock === "disponibilidad"
+                ? "Los Learning Paths CIAAC aún no están disponibles. Tu avance guardado se conserva."
+                : acceso.lock === "contenido"
+                  ? "Este learning path está en preparación. Se abrirá cuando su explicación, apoyos visuales y ejercicios estén listos."
+                  : acceso.lock === "plan"
+                    ? "Este learning path está incluido en FlightPath Pro."
+                    : "Completa el learning path anterior de la secuencia para abrir este."
             }
             action={
               <Link

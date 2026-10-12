@@ -379,9 +379,12 @@ const navigation = loader({
     getTemaProgress: () => completedRows,
     completeTema: (...args) => completionCalls.push(args),
   },
+  // Existing progression/editorial regression: an exempt authenticated admin.
+  "./ciaac-admin-verification": { hasVerifiedCiaacAdminAccess: () => true },
+  "./auth": { getSessionUser: () => user, isAuthSettled: () => true },
   "./gating": { isPaid: (user) => user.paid },
 })(file("src/lib/store/lp-nav.ts"));
-const user = { id: "ciaac-regression-user", paid: true };
+const user = { role: "admin", id: "ciaac-regression-user", paid: true };
 const placeholderSubject = taxonomy.categories
   .find((cat) => cat.id === "ciaac")
   .subjects.find((s) =>

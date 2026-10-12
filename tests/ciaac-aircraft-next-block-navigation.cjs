@@ -24,7 +24,7 @@ let saved = null,
   view,
   params,
   version = 0;
-let user = { id: "completion-qa", plan: "pro" };
+let user = { role: "admin", id: "completion-qa", plan: "pro" };
 const listeners = new Set();
 const notify = () => {
   version++;
@@ -41,6 +41,8 @@ const stubs = {
       notify();
     },
   },
+  "@/lib/lp/ciaac-admin-verification": { hasVerifiedCiaacAdminAccess: () => true },
+  "@/lib/store/auth": { getSessionUser: () => user, isAuthSettled: () => true },
   "@/lib/store/gating": { isPaid: (u) => u.plan === "pro" },
   "@/lib/store": {
     useSessionUser: () => user,
@@ -134,7 +136,7 @@ async function mount(index, { completed = false, restore = null, plan = "pro", g
     doc = docs[item.id];
   const [categoria, materia, contenedor, lp] = item.id.split("/");
   params = { categoria, materia, contenedor, lp };
-  user = { id: "completion-qa", plan };
+  user = { role: "admin", id: "completion-qa", plan };
   done = sequence.slice(0, index + (completed ? 1 : 0)).map((i) => i.id);
   if (gap) done = done.filter((id) => id !== sequence[0].id);
   saved = restore ?? {

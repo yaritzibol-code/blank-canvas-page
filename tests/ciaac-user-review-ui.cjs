@@ -321,6 +321,8 @@ const routeLoad = loader({
     getTemaProgress: (userId) => progressRows.filter((row) => row.userId === userId),
     completeTema: noWrite,
   },
+  "src/lib/lp/ciaac-admin-verification.ts": { hasVerifiedCiaacAdminAccess: () => true },
+  "src/lib/store/auth.ts": { getSessionUser: () => currentUser, isAuthSettled: () => true },
   "src/lib/store/gating.ts": { isPaid: noWrite },
 });
 const taxonomy = routeLoad("src/lib/lp/taxonomy.ts");

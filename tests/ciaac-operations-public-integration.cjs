@@ -173,10 +173,13 @@ const navStubs = {
     getTemaProgress: () => completedIds.map((id) => ({ temaId: `lp:${id}`, completado: true })),
     completeTema: () => assert.fail("No progress mutation"),
   },
+  // Existing progression/editorial regression: an exempt authenticated admin.
+  "./ciaac-admin-verification": { hasVerifiedCiaacAdminAccess: () => true },
+  "./auth": { getSessionUser: () => user, isAuthSettled: () => true },
   "./gating": { isPaid: () => paid },
 };
 const nav = loader(navStubs)(file("src/lib/store/lp-nav.ts"));
-const user = { id: "public-integration-test" };
+const user = { role: "admin", id: "public-integration-test" };
 assert.equal(nav.lpAccess(null, subject, ids[0]).allowed, false);
 for (let i = 0; i < 5; i++) {
   completedIds = ids.slice(0, i);
