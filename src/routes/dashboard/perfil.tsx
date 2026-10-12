@@ -195,6 +195,7 @@ function PerfilPage() {
   const infoField = (label: string, field: keyof Info, type: "text" | "date" = "text") => (
     <div style={{ flex: "1 1 240px", minWidth: 0 }}>
       <label
+        htmlFor={editing ? `profile-${field}` : undefined}
         style={{
           fontSize: ".75rem",
           fontWeight: 700,
@@ -207,13 +208,21 @@ function PerfilPage() {
       </label>
       {editing ? (
         <input
+          id={`profile-${field}`}
           type={type}
+          readOnly={field === "email"}
+          aria-describedby={field === "email" ? "profile-email-help" : undefined}
           value={draft[field]}
           onChange={(e) => setDraft((d) => ({ ...d, [field]: e.target.value }))}
           style={inputStyle}
         />
       ) : (
         <div style={displayStyle}>{info[field]}</div>
+      )}
+      {editing && field === "email" && (
+        <p id="profile-email-help" style={{ fontSize: ".75rem", marginTop: 5 }}>
+          El correo de inicio de sesión no se modifica desde el perfil.
+        </p>
       )}
     </div>
   );
